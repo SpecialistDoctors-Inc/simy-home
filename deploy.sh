@@ -16,9 +16,17 @@ aws s3 cp index.html s3://$BUCKET_NAME/index.html --content-type "text/html; cha
 aws s3 cp privacy.html s3://$BUCKET_NAME/privacy.html --content-type "text/html; charset=utf-8"
 aws s3 cp terms.html s3://$BUCKET_NAME/terms.html --content-type "text/html; charset=utf-8"
 aws s3 cp seller-info.html s3://$BUCKET_NAME/seller-info.html --content-type "text/html; charset=utf-8"
+aws s3 cp error.html s3://$BUCKET_NAME/error.html --content-type "text/html; charset=utf-8"
 
 # CSSファイルをアップロード
-aws s3 cp styles.css s3://$BUCKET_NAME/styles.css --content-type "text/css"
+aws s3 cp styles.1.css s3://$BUCKET_NAME/styles.1.css --content-type "text/css"
+
+# jsファイルをアップロード
+aws s3 cp carousel.js s3://$BUCKET_NAME/carousel.js --content-type "application/javascript"
+aws s3 cp header-animation.js s3://$BUCKET_NAME/header-animation.js --content-type "application/javascript"
+
+# 画像ファイルをアップロード
+aws s3 cp img/ s3://$BUCKET_NAME/img/ --recursive --content-type "image/png"
 
 # app-ads.txtをアップロード
 aws s3 cp app-ads.txt s3://$BUCKET_NAME/app-ads.txt
