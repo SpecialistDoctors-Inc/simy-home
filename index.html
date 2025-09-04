@@ -1,50 +1,177 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Mentor - ホーム</title>
-    <link rel="stylesheet" href="styles.css">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>AI Mentor</title>
+	<link rel="stylesheet" href="styles.1.css">
+	<script src="header-animation.js" defer></script>
+	<script src="carousel.js" defer></script>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>AI Mentor</h1>
-            <p class="subtitle">AIによる人生変革支援</p>
-        </header>
-        
-        <main>
-            <section class="content">
-                <h2>AI Mentorについて</h2>
-                <p>AI Mentorは、個人の人生をリデザインし、「やりたいこと」を「実行」し、最終的に「成功」へと導くアプリケーションです。</p>
-                
-                <div class="features">
-                    <h3>主な機能</h3>
-                    <ul>
-                        <li>パーソナライズされたAIメンタリング体験</li>
-                        <li>24時間365日利用可能なサポート</li>
-                        <li>進捗追跡とフィードバック</li>
-                        <li>人生変革のガイダンス</li>
-                    </ul>
-                </div>
-                
-                <div class="company-info">
-                    <h3>運営会社</h3>
-                    <p>AwakApp Inc.</p>
-                </div>
-            </section>
-        </main>
-        
-        <footer>
-            <div class="footer-links">
-                <a href="privacy.html">プライバシーポリシー</a>
-                <span class="separator">|</span>
-                <a href="terms.html">利用規約</a>
-                <span class="separator">|</span>
-                <a href="seller-info.html">特定商取引法に基づく表記</a>
-            </div>
-            <p class="copyright">&copy; 2025 AI Mentor. All rights reserved.</p>
-        </footer>
-    </div>
+	<header class="header fixed-header" id="mainHeader">
+		<div class="header-inner">
+			<img src="img/aim_logo_Horizontal_white.png" alt="AI Mentor" class="logo">
+			<a href="https://apps.apple.com/us/app/ai-mentor-app/id6745385262" target="_blank" rel="noopener" class="header-btn">Get Started</a>
+		</div>
+	</header>
+
+	<main class="main">
+        <div class="content">
+		<!-- ヒーロー -->
+		<section class="hero">
+				<img src="img/1.png" alt="AI Mentor">
+		</section>
+		<section>
+				<img src="img/2.png" alt="AI Mentor">
+		</section>
+		<section>
+				<img src="img/3.png" alt="AI Mentor">
+		</section>
+		<section>
+				<img src="img/4.png" alt="AI Mentor">
+		</section>
+		<section>
+				<img src="img/5.png" alt="AI Mentor">
+		</section>
+		<!-- WHEN YOU'RE STUCK, ASK AN EXPERT INSTANTLY -->
+		<section class="how-block">
+			<h3>WHEN YOU'RE STUCK, ASK AN EXPERT INSTANTLY</h3>
+			<h4>Real Expert Knowledge via<br/>AI Avatars</h4>
+			<p>Hit a roadblock?<br/>Connect with AI avatars powered by the insights of real mentors and professional trainers.<br/>They help you break down the issue and identify what to do next — like a coach, always ready.</p>
+			<div class="carousel-simple">
+				<div class="carousel-track">
+					<img src="img/avatar1.png" alt="AI Mentor Avatar 1" class="carousel-avatar" style="display: block;">
+					<img src="img/avatar2.png" alt="AI Mentor Avatar 2" class="carousel-avatar" style="display: none;">
+					<img src="img/avatar3.png" alt="AI Mentor Avatar 3" class="carousel-avatar" style="display: none;">
+					<img src="img/avatar4.png" alt="AI Mentor Avatar 4" class="carousel-avatar" style="display: none;">
+					<img src="img/avatar5.png" alt="AI Mentor Avatar 5" class="carousel-avatar" style="display: none;">
+					<img src="img/avatar6.png" alt="AI Mentor Avatar 6" class="carousel-avatar" style="display: none;">
+					<img src="img/avatar7.png" alt="AI Mentor Avatar 7" class="carousel-avatar" style="display: none;">
+				</div>
+				<div class="carousel-indicators">
+					<button class="carousel-indicator" data-index="0" aria-label="Show avatar 1"></button>
+					<button class="carousel-indicator" data-index="1" aria-label="Show avatar 2"></button>
+					<button class="carousel-indicator" data-index="2" aria-label="Show avatar 3"></button>
+					<button class="carousel-indicator" data-index="3" aria-label="Show avatar 4"></button>
+					<button class="carousel-indicator" data-index="4" aria-label="Show avatar 5"></button>
+					<button class="carousel-indicator" data-index="5" aria-label="Show avatar 6"></button>
+					<button class="carousel-indicator" data-index="6" aria-label="Show avatar 7"></button>
+				</div>
+			</div>
+		</section>
+
+		<!-- TURN YOUR GOALS INTO REAL MOMENTUM -->
+		<section>
+			<img src="img/6.png" alt="AI Mentor">
+		</section>
+
+		<!-- WHO IT'S FOR -->
+		<section class="who-for">
+			<h2>WHO IT'S FOR</h2>
+			<div class="who-list">
+				<div class="who-item">
+					<p>FOUNDERS AND STARTUP TEAMS</p>
+					<img src="img/for1.png" alt="スタートアップチーム" class="who-img">
+				</div>
+				<div class="who-item">
+					<p>PROJECT MANAGERS TIRED OF CHASING TASKS</p>
+					<img src="img/for2.png" alt="プロジェクトマネージャー" class="who-img">
+				</div>
+				<div class="who-item">
+					<p>SOLO WORKERS BALANCING TOO MUCH</p>
+					<img src="img/for3.png" alt="個人ワーカー" class="who-img">
+				</div>
+				<div class="who-item">
+					<p>REMOTE TEAMS NEEDING FOLLOW THROUGH, NOT MORE MEETINGS</p>
+					<img src="img/for4.png" alt="リモートチーム" class="who-img">
+				</div>
+			</div>
+		</section>
+
+		<!-- COST -->
+		<section class="cost">
+		<h2>COST</h2>
+		<div class="cost-cards-wrapper">
+			<div class="cost-card cost-card-free">
+				<div class="cost-card-header">
+					<h3>Freemium</h3>
+					<p class="cost-card-desc">For everyone just getting started</p>
+				</div>
+				<div class="cost-card-price">
+					<span class="cost-card-yen">¥0</span>
+					<span class="cost-card-free-text">that means Free!</span>
+				</div>
+				<div class="cost-card-note">No credit card required</div>
+				<ul class="cost-card-features">
+					<li>1 time/day Try instant updates</li>
+					<li>External Connect: Google Calendar + Gmail</li>
+					<li>1 Connectable Services</li>
+					<li>5 times/month  2-Click Offload</li>
+					<li>5 times/month Goal Setting</li>
+				</ul>
+			</div>
+			<div class="cost-card cost-card-pro">
+				<div class="cost-card-header">
+					<h3>Plus</h3>
+					<span class="cost-card-popular">POPULAR</span>
+				</div>
+				<div class="cost-card-price">
+					<span class="cost-card-yen">$29.99</span>
+					<span class="cost-card-per">/seat/month, billed annually</span>
+					<span class="cost-card-monthly">or $39.99 billed monthly</span>
+				</div>
+				<a class="cost-card-btn" href="https://apps.apple.com/us/app/ai-mentor-app/id6745385262" target="_blank" rel="noopener">Choose Pro</a>
+				<ul class="cost-card-features">
+					<li>10 times/day Try instant updates</li>
+					<li>Unlimited Try generation*</li>
+					<li>External Connect: + Teams / Notion / GitHub / Slack</li>
+					<li>10 Connectable Services</li>
+					<li>Communication Support</li>
+					<li>Unlimited 2-Click Offload</li>
+					<li>Unlimited Follow-through</li>
+					<li>50 times/month Goal Setting</li>
+					<li>No Ads</li>
+				</ul>
+			</div>
+		</div>
+		</section>
+        <section class="aim-mentor">
+            <h2 class="aim-mentor-title">START DRIVING<br>YOUR DAY<br>WITH AI MENTOR</h2>
+            <img src="img/aim_logo_Vertical_black.png" alt="AI Mentor Logo" class="aim-mentor-logo">
+            <div class="aim-mentor-trial">Free trial available</div>
+            <a class="aim-mentor-btn" href="https://apps.apple.com/us/app/ai-mentor-app/id6745385262" target="_blank" rel="noopener">Get Started</a>
+		</section>
+		<section>
+			<img src="img/12.png" alt="AI Mentor" >
+		</section>
+		<section class="intergrates">
+            <h2>AI Mentor intergrates with...</h2>
+		</section>
+        </div>
+	</main>
+
+	<!-- フッター -->
+	<footer class="footer">
+		<div class="footer-inner">
+			<img src="img/aim_logo_Horizontal_black_ns.png" alt="AI Mentor ロゴ" class="footer-logo">
+			<div class="footer-menu">
+				<a href="terms.html">Terms of Use</a>
+				<a href="privacy.html">Privacy Policy</a>
+				<!-- <a href="#">Commercial Transactions Law</a>
+				<a href="#">Contact Us</a> -->
+			</div>
+			<!-- <div class="footer-sns" style="display:flex; justify-content:center; gap:24px; margin-bottom:24px;">
+				<a href="#"><img src="img/8.png" alt="Instagram" class="sns-icon" style="width:40px;"></a>
+				<a href="#"><img src="img/12.png" alt="YouTube" class="sns-icon" style="width:40px;"></a>
+				<a href="#"><img src="img/aim_logo_Vertical_black-1.png" alt="X" class="sns-icon" style="width:40px;"></a>
+				<a href="#"><img src="img/aim_logo_Vertical_black.png" alt="TikTok" class="sns-icon" style="width:40px;"></a>
+			</div> -->
+			<div class="awakapp">
+				<img src="img/awakapp.png" alt="AwakApp ロゴ">
+			</div>
+			<p class="copyright">Copyright 2023 AwakApp.</p>
+		</div>
+	</footer>
 </body>
 </html>
