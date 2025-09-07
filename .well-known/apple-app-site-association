@@ -1,23 +1,37 @@
 {
     "applinks": {
-        "apps": [],
         "details": [
             {
-                "appID": "S746URZ949.app.aimentor.dev",
-                "paths": [
-                    "/dev-app/*"
+                "appIDs": [
+                    "S746URZ949.app.aimentor.dev"
+                ],
+                "components": [
+                    {
+                        "/": "/dev-app/*",
+                        "comment": "開発環境アプリ用"
+                    }
                 ]
             },
             {
-                "appID": "S746URZ949.app.aimentor.stg",
-                "paths": [
-                    "/stg-app/*"
+                "appIDs": [
+                    "S746URZ949.app.aimentor.stg"
+                ],
+                "components": [
+                    {
+                        "/": "/stg-app/*",
+                        "comment": "ステージング環境アプリ用"
+                    }
                 ]
             },
             {
-                "appID": "S746URZ949.app.aimentor",
-                "paths": [
-                    "/app/*"
+                "appIDs": [
+                    "S746URZ949.app.aimentor"
+                ],
+                "components": [
+                    {
+                        "/": "/app/*",
+                        "comment": "本番環境アプリ用"
+                    }
                 ]
             }
         ]
