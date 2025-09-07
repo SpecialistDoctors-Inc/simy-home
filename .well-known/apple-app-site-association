@@ -1,0 +1,25 @@
+{
+    "applinks": {
+        "apps": [],
+        "details": [
+            {
+                "appID": "S746URZ949.app.aimentor.dev",
+                "paths": [
+                    "/dev-app/*"
+                ]
+            },
+            {
+                "appID": "S746URZ949.app.aimentor.stg",
+                "paths": [
+                    "/stg-app/*"
+                ]
+            },
+            {
+                "appID": "S746URZ949.app.aimentor",
+                "paths": [
+                    "/app/*"
+                ]
+            }
+        ]
+    }
+}

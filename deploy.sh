@@ -31,6 +31,9 @@ aws s3 cp img/ s3://$BUCKET_NAME/img/ --recursive --content-type "image/png"
 # app-ads.txtをアップロード
 aws s3 cp app-ads.txt s3://$BUCKET_NAME/app-ads.txt
 
+# .well-knownディレクトリをアップロード
+aws s3 cp .well-known/ s3://$BUCKET_NAME/.well-known/ --recursive --content-type "application/json"
+
 echo "アップロード完了！"
 echo "ウェブサイトを確認してください："
 echo "http://$BUCKET_NAME.s3-website-ap-northeast-1.amazonaws.com"
