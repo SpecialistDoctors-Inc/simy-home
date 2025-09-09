@@ -50,7 +50,7 @@ export default function LanguageSwitcher({ currentLocale = 'en' }: { currentLoca
           padding: '8px 12px',
           borderRadius: '6px',
           border: '1px solid #ddd',
-          backgroundColor: 'white',
+          backgroundColor: '#ffffffa6',
           fontSize: '14px'
         }}
       >

@@ -23,7 +23,7 @@ export default function Home() {
 
   return (
     <main>
-      <Header />
+        <Header />
       <LanguageSwitcher currentLocale="en" />
       <div className="content">
         <Hero />
@@ -32,8 +32,8 @@ export default function Home() {
         <Pricing />
         <CallToAction />
         <Integrations />
+        <Footer />
       </div>
-      <Footer />
     </main>
   )
 }

@@ -1,7 +1,11 @@
+'use client'
+
 import { useTranslation } from 'react-i18next'
+import { useEffect, useState } from 'react'
 
 export default function WhoItsFor() {
   const { t } = useTranslation()
+  const [isDesktop, setIsDesktop] = useState(false)
 
   const targetUsers = [
     { key: 'founders', image: '/img/for1.png' },
@@ -10,35 +14,54 @@ export default function WhoItsFor() {
     { key: 'remoteTeams', image: '/img/for4.png' }
   ]
 
+  useEffect(() => {
+    const checkScreen = () => {
+      setIsDesktop(window.innerWidth >= 768)
+    }
+    checkScreen()
+    window.addEventListener('resize', checkScreen)
+    return () => window.removeEventListener('resize', checkScreen)
+  }, [])
+
   return (
     <section style={{
-      padding: '64px 0 0'
+      padding: isDesktop ? '70px 12px' : '64px 0 0'
     }}>
       <h2 style={{
-        fontSize: '32px',
+        fontSize: isDesktop ? '48px' : '32px',
         color: '#BFBFBF',
         textAlign: 'center',
-        marginBottom: '16px'
+        marginBottom: isDesktop ? '32px' : '16px'
       }}>
         {t('whoItsFor.title')}
       </h2>
       <div style={{
         display: 'flex',
-        flexDirection: 'column',
-        gap: '12px',
-        width: '100%'
+        flexWrap: 'wrap',
+        flexDirection: isDesktop ? 'row' : 'column',
+        gap: isDesktop ? '8px' : '12px',
+        width: '100%',
+        justifyContent: isDesktop ? 'center' : undefined,
+        alignItems: isDesktop ? 'stretch' : undefined
       }}>
         {targetUsers.map((user) => (
           <div key={user.key} style={{
-            textAlign: 'left'
+            textAlign: 'left',
+            flex: isDesktop ? '1' : undefined,
+            maxWidth: isDesktop ? '320px' : undefined,
           }}>
             <p style={{
-              fontSize: 'clamp(1.4rem, 3vw, 1.8rem)',
-              padding: '8px 8px 0',
+              display: 'flex',
+              alignItems: isDesktop ? 'center' : 'flex-start',
+              justifyContent: isDesktop ? 'center' : 'flex-start',
+              height: isDesktop ? '10rem' : 'auto',
+              margin:'auto',
+              fontSize: isDesktop ? 'clamp(1rem, 2vw, 1.4rem)' : 'clamp(1.4rem, 3vw, 1.8rem)',
+              padding: isDesktop ? '16px 8px' : '8px',
               fontWeight: '800',
               whiteSpace: 'pre-line',
-              margin: 0,
               lineHeight: '1.4',
+              textAlign: isDesktop ? 'center' : 'left',
             }}>
               {t(`whoItsFor.${user.key}.title`)}
             </p>
@@ -49,7 +72,7 @@ export default function WhoItsFor() {
                 width: '100%',
                 height: 'auto',
                 display: 'block',
-                margin: '0 auto'
+                margin: isDesktop ? '0 auto' : '0 auto'
               }}
             />
           </div>

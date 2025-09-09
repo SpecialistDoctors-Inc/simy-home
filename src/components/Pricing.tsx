@@ -1,30 +1,42 @@
 import { useTranslation } from 'react-i18next'
+import { useEffect, useState } from 'react'
 
 export default function Pricing() {
   const { t } = useTranslation()
+  const [isDesktop, setIsDesktop] = useState(false)
+
+  useEffect(() => {
+    const checkScreen = () => {
+      setIsDesktop(window.innerWidth >= 768)
+    }
+    checkScreen()
+    window.addEventListener('resize', checkScreen)
+    return () => window.removeEventListener('resize', checkScreen)
+  }, [])
 
   return (
     <section style={{
-      padding: '64px 0 16px',
+      padding: isDesktop ? '96px 0 32px' : '64px 0 16px',
       backgroundColor: '#EDEDED'
     }}>
       <h2 style={{
-        fontSize: '32px',
+        fontSize: isDesktop ? '48px' : '32px',
         color: '#BFBFBF',
         textAlign: 'center',
-        marginBottom: '16px'
+        marginBottom: isDesktop ? '32px' : '16px'
       }}>
         {t('pricing.title')}
       </h2>
       <div style={{
         display: 'flex',
-        gap: '32px',
+        gap: isDesktop ? '48px' : '32px',
         justifyContent: 'flex-start',
-        margin: '48px 0',
-        overflowX: 'auto',
+        margin: isDesktop ? '64px auto' : '48px 0',
+        overflowX:  'scroll',
         width: '100%',
-        paddingBottom: '8px',
-        paddingLeft: '16px',
+        maxWidth:isDesktop?'fit-content' :  '100%',
+        paddingBottom: isDesktop ? '24px' : '8px',
+        paddingLeft:  '16px',
         paddingRight: '16px',
         scrollbarWidth: 'none'
       }}>
@@ -32,8 +44,9 @@ export default function Pricing() {
           background: '#fff',
           borderRadius: '18px',
           boxShadow: '0 4px 16px rgba(40, 60, 120, 0.10)',
-          padding: '32px 28px 32px 28px',
-          minWidth: '80%',
+          padding: isDesktop ? '48px 40px 48px 40px' : '32px 28px 32px 28px',
+          minWidth: isDesktop ? '420px' : '80%',
+          maxWidth: isDesktop ? '420px' : undefined,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'flex-start',
@@ -45,7 +58,7 @@ export default function Pricing() {
             marginBottom: '16px'
           }}>
             <h3 style={{
-              fontSize: '1.5rem',
+              fontSize: isDesktop ? '2rem' : '1.5rem',
               fontWeight: '700',
               margin: 0,
               color: '#222'
@@ -53,7 +66,7 @@ export default function Pricing() {
               {t('pricing.freemium.title')}
             </h3>
             <p style={{
-              fontSize: '1rem',
+              fontSize: isDesktop ? '1.2rem' : '1rem',
               color: '#888',
               marginTop: '4px'
             }}>
@@ -67,14 +80,14 @@ export default function Pricing() {
             alignItems: 'flex-start'
           }}>
             <span style={{
-              fontSize: '2.2rem',
+              fontSize: isDesktop ? '2.6rem' : '2.2rem',
               fontWeight: '700',
               color: '#222'
             }}>
               {t('pricing.freemium.price')}
             </span>
             <span style={{
-              fontSize: '1rem',
+              fontSize: isDesktop ? '1.2rem' : '1rem',
               color: '#888',
               marginTop: '2px'
             }}>
@@ -82,7 +95,7 @@ export default function Pricing() {
             </span>
           </div>
           <div style={{
-            fontSize: '0.95rem',
+            fontSize: isDesktop ? '1.1rem' : '0.95rem',
             color: '#2d4cff',
             marginBottom: '16px'
           }}>
@@ -94,7 +107,7 @@ export default function Pricing() {
             margin: '8px 0 0 0'
           }}>
             <li style={{
-              fontSize: '1rem',
+              fontSize: isDesktop ? '1.2rem' : '1rem',
               color: '#222',
               marginBottom: '10px',
               paddingLeft: '24px',
@@ -105,12 +118,12 @@ export default function Pricing() {
                 position: 'absolute',
                 left: 0,
                 color: '#222',
-                fontSize: '1.1rem'
+                fontSize: isDesktop ? '1.3rem' : '1.1rem'
               }}>✓</span>
               {t('pricing.freemium.features.updates')}
             </li>
             <li style={{
-              fontSize: '1rem',
+              fontSize: isDesktop ? '1.2rem' : '1rem',
               color: '#222',
               marginBottom: '10px',
               paddingLeft: '24px',
@@ -120,12 +133,12 @@ export default function Pricing() {
                 position: 'absolute',
                 left: 0,
                 color: '#222',
-                fontSize: '1.1rem'
+                fontSize: isDesktop ? '1.3rem' : '1.1rem'
               }}>✓</span>
               {t('pricing.freemium.features.externalConnect')}
             </li>
             <li style={{
-              fontSize: '1rem',
+              fontSize: isDesktop ? '1.2rem' : '1rem',
               color: '#222',
               marginBottom: '10px',
               paddingLeft: '24px',
@@ -135,12 +148,12 @@ export default function Pricing() {
                 position: 'absolute',
                 left: 0,
                 color: '#222',
-                fontSize: '1.1rem'
+                fontSize: isDesktop ? '1.3rem' : '1.1rem'
               }}>✓</span>
               {t('pricing.freemium.features.connectableServices')}
             </li>
             <li style={{
-              fontSize: '1rem',
+              fontSize: isDesktop ? '1.2rem' : '1rem',
               color: '#222',
               marginBottom: '10px',
               paddingLeft: '24px',
@@ -150,12 +163,12 @@ export default function Pricing() {
                 position: 'absolute',
                 left: 0,
                 color: '#222',
-                fontSize: '1.1rem'
+                fontSize: isDesktop ? '1.3rem' : '1.1rem'
               }}>✓</span>
               {t('pricing.freemium.features.offload')}
             </li>
             <li style={{
-              fontSize: '1rem',
+              fontSize: isDesktop ? '1.2rem' : '1rem',
               color: '#222',
               marginBottom: '10px',
               paddingLeft: '24px',
@@ -165,19 +178,19 @@ export default function Pricing() {
                 position: 'absolute',
                 left: 0,
                 color: '#222',
-                fontSize: '1.1rem'
+                fontSize: isDesktop ? '1.3rem' : '1.1rem'
               }}>✓</span>
               {t('pricing.freemium.features.goalSetting')}
             </li>
           </ul>
         </div>
-        
         <div style={{
           background: '#fff',
           borderRadius: '18px',
           boxShadow: '0 4px 16px rgba(40, 60, 120, 0.10)',
-          padding: '32px 28px 32px 28px',
-          minWidth: '80%',
+          padding: isDesktop ? '48px 40px 48px 40px' : '32px 28px 32px 28px',
+          minWidth: isDesktop ? '420px' : '80%',
+          maxWidth: isDesktop ? '420px' : undefined,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'flex-start',
@@ -189,7 +202,7 @@ export default function Pricing() {
             marginBottom: '16px'
           }}>
             <h3 style={{
-              fontSize: '1.5rem',
+              fontSize: isDesktop ? '2rem' : '1.5rem',
               fontWeight: '700',
               margin: 0,
               color: '#2d4cff'
@@ -218,21 +231,21 @@ export default function Pricing() {
             alignItems: 'flex-start'
           }}>
             <span style={{
-              fontSize: '2.2rem',
+              fontSize: isDesktop ? '2.6rem' : '2.2rem',
               fontWeight: '700',
               color: '#2d4cff'
             }}>
               {t('pricing.plus.price')}
             </span>
             <span style={{
-              fontSize: '1rem',
+              fontSize: isDesktop ? '1.2rem' : '1rem',
               color: '#222',
               marginTop: '2px'
             }}>
               {t('pricing.plus.period')}
             </span>
             <span style={{
-              fontSize: '0.95rem',
+              fontSize: isDesktop ? '1.1rem' : '0.95rem',
               color: '#888',
               marginTop: '2px'
             }}>
@@ -249,9 +262,9 @@ export default function Pricing() {
               background: '#2d4cff',
               color: '#fff',
               fontWeight: '700',
-              fontSize: '1.1rem',
+              fontSize: isDesktop ? '1.3rem' : '1.1rem',
               borderRadius: '12px',
-              padding: '12px 32px',
+              padding: isDesktop ? '16px 40px' : '12px 32px',
               marginBottom: '18px',
               textAlign: 'center',
               textDecoration: 'none',
@@ -278,7 +291,7 @@ export default function Pricing() {
               'noAds'
             ].map((feature, index) => (
               <li key={index} style={{
-                fontSize: '1rem',
+                fontSize: isDesktop ? '1.2rem' : '1rem',
                 color: '#222',
                 marginBottom: '10px',
                 paddingLeft: '24px',
@@ -288,7 +301,7 @@ export default function Pricing() {
                   position: 'absolute',
                   left: 0,
                   color: '#2d4cff',
-                  fontSize: '1.1rem'
+                  fontSize: isDesktop ? '1.3rem' : '1.1rem'
                 }}>✓</span>
                 {t(`pricing.plus.features.${feature}`)}
               </li>
