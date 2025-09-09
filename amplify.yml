@@ -3,17 +3,13 @@ frontend:
   phases:
     preBuild:
       commands:
+        - nvm use 20
         - npm ci
     build:
       commands:
         - echo "NEXT_PUBLIC_APP_ENV=$NEXT_PUBLIC_APP_ENV" >> .env.local
         - npm run next-sitemap
-        - mkdir -p out
-        - cp -r public/* out/
-        - cp *.html out/
-        - cp public/sitemap*.xml out/
-        # Create an empty required-server-files.json to satisfy Amplify
-        - echo '{}' > out/required-server-files.json
+        - npm run build
   artifacts:
     baseDirectory: out
     files:
