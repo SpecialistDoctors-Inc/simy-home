@@ -7,8 +7,11 @@ frontend:
     build:
       commands:
         - echo "NEXT_PUBLIC_APP_ENV=$NEXT_PUBLIC_APP_ENV" >> .env.local
-        - npm run build
         - npm run next-sitemap
+        - mkdir -p out
+        - cp -r public/* out/
+        - cp *.html out/
+        - cp public/sitemap*.xml out/
   artifacts:
     baseDirectory: out
     files:
@@ -16,4 +19,3 @@ frontend:
   cache:
     paths:
       - node_modules/**/*
-      - .next/cache/**/*
