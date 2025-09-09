@@ -1,21 +1,23 @@
 version: 1
-frontend:
-  phases:
-    preBuild:
-      commands:
-        - npm ci
-    build:
-      commands:
-        - echo "NEXT_PUBLIC_APP_ENV=$NEXT_PUBLIC_APP_ENV" >> .env.local
-        - npm run next-sitemap
-        - mkdir -p out
-        - cp -r public/* out/
-        - cp *.html out/
-        - cp public/sitemap*.xml out/
-  artifacts:
-    baseDirectory: out
-    files:
-      - "**/*"
-  cache:
-    paths:
-      - node_modules/**/*
+applications:
+  - frontend:
+      phases:
+        preBuild:
+          commands:
+            - npm ci
+        build:
+          commands:
+            - echo "NEXT_PUBLIC_APP_ENV=$NEXT_PUBLIC_APP_ENV" >> .env.local
+            - npm run next-sitemap
+            - mkdir -p out
+            - cp -r public/* out/
+            - cp *.html out/
+            - cp public/sitemap*.xml out/
+      artifacts:
+        baseDirectory: out
+        files:
+          - "**/*"
+      cache:
+        paths:
+          - node_modules/**/*
+      buildType: 'STATIC'
