@@ -1,19 +1,20 @@
 version: 1
-frontend:
-  phases:
-    preBuild:
-      commands:
-        - nvm use 20
-        - npm ci
-    build:
-      commands:
-        - echo "NEXT_PUBLIC_APP_ENV=$NEXT_PUBLIC_APP_ENV" >> .env.local
-        - npm run next-sitemap
-        - npm run build
-  artifacts:
-    baseDirectory: out
-    files:
-      - "**/*"
-  cache:
-    paths:
-      - node_modules/**/*
+applications:
+  - appRoot:
+    frontend:
+      phases:
+        preBuild:
+          commands:
+            - npm ci
+        build:
+          commands:
+            - echo "NEXT_PUBLIC_APP_ENV=$NEXT_PUBLIC_APP_ENV" >> .env.local
+            - npm run next-sitemap
+            - npm run build
+      artifacts:
+        baseDirectory: .next
+        files:
+          - "**/*"
+      cache:
+        paths:
+          - node_modules/**/*
