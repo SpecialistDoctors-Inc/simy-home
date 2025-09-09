@@ -7,8 +7,8 @@ frontend:
     build:
       commands:
         - echo "NEXT_PUBLIC_APP_ENV=$NEXT_PUBLIC_APP_ENV" >> .env.local
-        - npm run next-sitemap --config next-sitemap.config.js
         - npm run build
+        - npm run next-sitemap
   artifacts:
     baseDirectory: out
     files:
