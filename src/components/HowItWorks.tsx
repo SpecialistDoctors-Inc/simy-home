@@ -55,14 +55,14 @@ export default function HowItWorks() {
          <h3 style={isDesktop
           ? {
               color: 'white',
-              fontSize: 'clamp(3rem, 7vw, 3.2rem)',
+              fontSize: '3rem',
               fontWeight: 'bold',
               marginBottom: '24px',
               whiteSpace: 'pre-line'
             }
           : {
               color: 'white',
-              fontSize: 'clamp(2.4rem, 6vw, 4rem)',
+              fontSize: 'clamp(2.4rem, 6vw, 2rem)',
               fontWeight: 'bold',
               marginBottom: '12px',
               whiteSpace: 'pre-line'
@@ -72,7 +72,7 @@ export default function HowItWorks() {
         </h3>
         <h4 style={isDesktop
           ? {
-              fontSize: 'clamp(1.2rem, 4vw, 2rem)',
+              fontSize: '1.6rem',
               color: 'white',
               padding: '24px 0 28px 0',
               lineHeight: '1.6',

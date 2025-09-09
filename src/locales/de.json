@@ -46,12 +46,20 @@
         "goalSetting": "5 Mal/Monat Zielsetzung"
       }
     },
+    "basic": {
+      "title": "Basic",
+      "monthlyPrice": "24,99 €",
+      "annualPrice": "19,99 €",
+      "period": "/Benutzer/Monat, jährlich abgerechnet",
+      "monthly": "oder 24,99 € monatlich abgerechnet",
+      "annual": "jährlich abgerechnet 19,99 €"
+    },
     "plus": {
       "title": "Plus",
       "popular": "BELIEBT",
-      "price": "27€",
+      "price": "49,99 €",
       "period": "/Benutzer/Monat, jährlich abgerechnet",
-      "monthly": "oder 37€ monatlich abgerechnet",
+      "monthly": "oder 36,99 € jährlich abgerechnet",
       "buttonText": "Pro wählen",
       "features": {
         "updates": "10 Mal/Tag Sofortige Updates testen",
@@ -64,6 +72,14 @@
         "goalSetting": "50 Mal/Monat Zielsetzung",
         "noAds": "Keine Werbung"
       }
+    },
+    "pro": {
+      "title": "Pro",
+      "monthlyPrice": "123,99 €",
+      "annualPrice": "97,99 €",
+      "period": "/Benutzer/Monat, jährlich abgerechnet",
+      "monthly": "oder 123,99 € monatlich abgerechnet",
+      "annual": "jährlich abgerechnet 97,99 €"
     }
   },
   "callToAction": {

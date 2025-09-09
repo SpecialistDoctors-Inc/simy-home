@@ -47,11 +47,11 @@
       }
     },
     "plus": {
-      "title": "Plus",
-      "popular": "POPULAR",
-      "price": "$29.99",
-      "period": "/seat/month, billed annually",
-      "monthly": "or $39.99 billed monthly",
+  "title": "Plus",
+  "popular": "POPULAR",
+  "price": "$29.99",
+  "period": "/seat/month, billed annually",
+  "monthly": "or $39.99 billed monthly",
       "buttonText": "Choose Pro",
       "features": {
         "updates": "10 times/day Try instant updates",
@@ -64,8 +64,24 @@
         "goalSetting": "50 times/month Goal Setting",
         "noAds": "No Ads"
       }
-    }
-  },
+    },
+      "basic": {
+  "title": "Basic",
+  "monthlyPrice": "$19.99",
+  "annualPrice": "$15.99",
+  "period": "/seat/month, billed annually",
+  "monthly": "or $19.99 billed monthly",
+  "annual": "billed annually $15.99"
+      },
+      "pro": {
+  "title": "Pro",
+  "monthlyPrice": "$99.99",
+  "annualPrice": "$79.99",
+  "period": "/seat/month, billed annually",
+        "monthly": "or $99.99 billed monthly",
+        "annual": "billed annually $79.99"
+      }
+    },
   "callToAction": {
     "title": "START DRIVING<br>YOUR DAY<br>WITH AI MENTOR",
     "logoAlt": "AI Mentor Logo",

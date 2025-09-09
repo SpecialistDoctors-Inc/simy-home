@@ -37,7 +37,7 @@ export default function Section5() {
       }>
         <h2 style={isDesktop
           ? {
-              fontSize: 'clamp(3rem, 7vw, 4rem)',
+              fontSize: '4rem',
               padding: 'clamp(20px, 6vw, 40px)',
               fontWeight: 'bold',
               lineHeight: '1.1',

@@ -46,12 +46,20 @@
         "goalSetting": "5 vezes/mês Definição de Metas"
       }
     },
+    "basic": {
+      "title": "Basic",
+      "monthlyPrice": "R$109,90",
+      "annualPrice": "R$89,90",
+      "period": "/usuário/mês, cobrado anualmente",
+      "monthly": "ou R$109,90 cobrado mensalmente",
+      "annual": "cobrado anualmente R$89,90"
+    },
     "plus": {
       "title": "Plus",
       "popular": "POPULAR",
-      "price": "R$150",
+      "price": "R$219,90",
       "period": "/usuário/mês, cobrado anualmente",
-      "monthly": "ou R$200 cobrado mensalmente",
+      "monthly": "ou R$169,90 cobrado anualmente",
       "buttonText": "Escolher Pro",
       "features": {
         "updates": "10 vezes/dia Teste atualizações instantâneas",
@@ -64,6 +72,14 @@
         "goalSetting": "50 vezes/mês Definição de Metas",
         "noAds": "Sem Anúncios"
       }
+    },
+    "pro": {
+      "title": "Pro",
+      "monthlyPrice": "R$549,90",
+      "annualPrice": "R$439,90",
+      "period": "/usuário/mês, cobrado anualmente",
+      "monthly": "ou R$549,90 cobrado mensalmente",
+      "annual": "cobrado anualmente R$439,90"
     }
   },
   "callToAction": {

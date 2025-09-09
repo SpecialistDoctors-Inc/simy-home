@@ -40,7 +40,7 @@ export default function Section4() {
         <h2 style={isDesktop
           ? {
               padding: 'clamp(20px, 6vw, 40px)',
-              fontSize: 'clamp(3.2rem, 7vw, 5rem)',
+              fontSize: '4rem',
               fontWeight: 'bold',
               lineHeight: '1.1',
               whiteSpace: 'pre-line'

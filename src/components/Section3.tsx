@@ -22,7 +22,7 @@ export default function Section3() {
       display: 'block', 
       width: '100%',
       backgroundColor: 'black',
-      padding: isDesktop ? 'clamp(40px, 12vw, 80px) 0' : 'clamp(20px, 8vw, 30px) 0',
+      padding: isDesktop ? '20px 0' : 'clamp(20px, 8vw, 30px) 0',
     }}>
       <div style={{
         textAlign: 'center',
@@ -30,7 +30,7 @@ export default function Section3() {
         width: '100%',
       }}>
         <h2 style={{
-          fontSize: isDesktop ? 'clamp(2.8rem, 10vw, 4rem)' : 'clamp(2rem, 8vw, 2rem)',
+          fontSize: isDesktop ? '2rem' : 'clamp(2rem, 8vw, 2rem)',
           fontWeight: 'bold',
           letterSpacing: '0.1em',
           lineHeight: '1.1',

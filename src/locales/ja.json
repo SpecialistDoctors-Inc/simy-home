@@ -47,11 +47,11 @@
       }
     },
     "plus": {
-      "title": "プラス",
-      "popular": "人気",
-      "price": "¥3,980",
-      "period": "/ユーザー/月、年払い",
-      "monthly": "または月払い ¥5,280",
+  "title": "プラス",
+  "popular": "人気",
+  "price": "¥4,480",
+  "period": "/ユーザー/月、年払い",
+  "monthly": "または月払い ¥5,980",
       "buttonText": "プロを選ぶ",
       "features": {
         "updates": "1日10回 インスタント更新を試す",
@@ -64,8 +64,24 @@
         "goalSetting": "月50回 目標設定",
         "noAds": "広告なし"
       }
-    }
-  },
+    },
+    "basic": {
+  "title": "ベーシック",
+  "monthlyPrice": "2,980円",
+  "annualPrice": "2,480円",
+  "period": "/ユーザー/月、年払い",
+  "monthly": "または月払い 2,980円",
+  "annual": "年払い 2,480円"
+    },
+    "pro": {
+  "title": "プロ",
+  "monthlyPrice": "14,800円",
+  "annualPrice": "11,980円",
+  "period": "/ユーザー/月、年払い",
+  "monthly": "または月払い 14,800円",
+  "annual": "年払い 11,980円"
+      }
+    },
   "callToAction": {
     "title": "AI MENTOR で<br>あなたの一日を<br>スタートしよう",
     "logoAlt": "AI メンター ロゴ",

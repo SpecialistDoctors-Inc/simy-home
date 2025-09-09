@@ -46,12 +46,20 @@
         "goalSetting": "5 volte/mese Impostazione Obiettivi"
       }
     },
+    "basic": {
+      "title": "Basic",
+      "monthlyPrice": "24,99 €",
+      "annualPrice": "19,99 €",
+      "period": "/utente/mese, fatturato annualmente",
+      "monthly": "o 24,99 € fatturato mensilmente",
+      "annual": "fatturato annualmente 19,99 €"
+    },
     "plus": {
       "title": "Plus",
       "popular": "POPOLARE",
-      "price": "27€",
+      "price": "49,99 €",
       "period": "/utente/mese, fatturato annualmente",
-      "monthly": "o 37€ fatturato mensilmente",
+      "monthly": "o 36,99 € fatturato annualmente",
       "buttonText": "Scegli Pro",
       "features": {
         "updates": "10 volte/giorno Prova aggiornamenti istantanei",
@@ -64,6 +72,14 @@
         "goalSetting": "50 volte/mese Impostazione Obiettivi",
         "noAds": "Nessuna Pubblicità"
       }
+    },
+    "pro": {
+      "title": "Pro",
+      "monthlyPrice": "123,99 €",
+      "annualPrice": "97,99 €",
+      "period": "/utente/mese, fatturato annualmente",
+      "monthly": "o 123,99 € fatturato mensilmente",
+      "annual": "fatturato annualmente 97,99 €"
     }
   },
   "callToAction": {
