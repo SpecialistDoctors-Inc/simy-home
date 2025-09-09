@@ -1,0 +1,122 @@
+'use client'
+
+import { useState, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
+import Section6 from './Section6'
+
+export default function HowItWorks() {
+  const { t } = useTranslation()
+  const [currentIndex, setCurrentIndex] = useState(0)
+  
+  const avatars = [
+    '/img/avatar2.png',
+    '/img/avatar3.png',
+    '/img/avatar6.png'
+  ]
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % avatars.length)
+    }, 3000)
+
+    return () => clearInterval(interval)
+  }, [avatars.length])
+
+  return (
+    <>
+      <section style={{
+        backgroundColor: 'black',
+        padding: '80px 16px 40px',
+        borderBottom: '1px solid #eee',
+        textAlign: 'left'
+      }}>
+        <h3 style={{
+          color: 'white',
+          fontSize: 'clamp(2.4rem, 6vw, 4rem)',
+          fontWeight: 'bold',
+          marginBottom: '12px',
+          whiteSpace: 'pre-line'
+        }}>
+          {t('howItWorks.title')}
+        </h3>
+        <h4 style={{
+          fontSize: 'clamp(0.8rem, 3vw, 1.2rem)',
+          color: 'white',
+          padding: '17px 0 20px 0',
+          lineHeight: '1.4',
+          whiteSpace: 'pre-line',
+        }} 
+        dangerouslySetInnerHTML={{ __html: t('howItWorks.subtitle') }} />
+        <p style={{
+          color: 'white',
+          fontSize: '0.8rem',
+          whiteSpace: 'pre-line',
+          lineHeight: '1.4',
+        }} 
+        dangerouslySetInnerHTML={{ __html: t('howItWorks.description') }} />
+        <div style={{
+          position: 'relative',
+          width: '100%',
+          maxWidth: '340px',
+          margin: '32px auto 0 auto',
+          overflow: 'hidden',
+          borderRadius: '16px',
+          boxShadow: '0 2px 12px rgba(0,0,0,0.06)',
+          padding: '8px 0 32px 0'
+        }}>
+          <div style={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}>
+            {avatars.map((avatar, index) => (
+              <img
+                key={index}
+                src={avatar}
+                alt={`AI Mentor Avatar ${index + 1}`}
+                style={{
+                  width: '80%',
+                  objectFit: 'contain',
+                  borderRadius: '12px',
+                  boxShadow: '0 1px 6px rgba(0,0,0,0.04)',
+                  display: index === currentIndex ? 'block' : 'none',
+                  margin: '0 auto'
+                }}
+              />
+            ))}
+          </div>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            gap: '6px',
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            bottom: '12px',
+            zIndex: 2
+          }}>
+            {avatars.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentIndex(index)}
+                aria-label={`Show avatar ${index + 1}`}
+                style={{
+                  width: index === currentIndex ? '30px' : '10px',
+                  height: '10px',
+                  borderRadius: '14px',
+                  background: index === currentIndex ? '#2a4d7c' : 'white',
+                  border: 'none',
+                  cursor: 'pointer',
+                  transition: 'background 0.2s'
+                }}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <Section6 />
+    </>
+  )
+}
