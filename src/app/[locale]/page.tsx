@@ -30,8 +30,8 @@ export default function LocalePage({ params: { locale } }: { params: { locale: s
         <Pricing />
         <CallToAction />
         <Integrations />
+        <Footer />
       </div>
-      <Footer />
     </main>
   )
 }
