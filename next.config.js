@@ -7,6 +7,17 @@ const nextConfig = {
     disableStaticImages: true,
     formats: ["image/webp"],
   },
+  async headers() {
+    return [
+      {
+        "source": "/.well-known/apple-app-site-association",
+        "headers": [{
+          "key": "Content-Type",
+          "value": "application/json"
+        }]
+      }
+    ]
+  },
   webpack: function (config) {
     config.module.rules.push({
       test: /\.md$/,
