@@ -7,14 +7,11 @@ const nextConfig = {
     disableStaticImages: true,
     formats: ["image/webp"],
   },
-  async headers() {
+  async rewrites() {
     return [
       {
         "source": "/.well-known/apple-app-site-association",
-        "headers": [{
-          "key": "Content-Type",
-          "value": "application/json"
-        }]
+        "destination": "/.well-known/apple-app-site-association.json"
       }
     ]
   },
