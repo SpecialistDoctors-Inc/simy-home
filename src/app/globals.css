@@ -187,12 +187,6 @@ body {
     scroll-padding-top:64px;
     scrollbar-width: none;
 }
-
-@media (min-width: 768px) {
-    .content {
-        max-width: 1440px;
-    }
-}
 section {
     background: #fff;
     text-align: center;
@@ -212,6 +206,15 @@ section img {
 }
 
 
+@media (min-width: 768px) {
+    .content {
+        max-width: 1440px;
+    }
+    section.hero {
+        max-width: 1440px;
+        background-color: #E2E6E7;
+    }
+}
 
 /* ===== ヘッダー ===== */
 .header.fixed-header {
