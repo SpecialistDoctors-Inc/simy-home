@@ -14,6 +14,7 @@ export default function Footer() {
         <div className="footer-menu">
           <a href="/terms">{t('footer.termsOfUse')}</a>
           <a href="/privacy">{t('footer.privacyPolicy')}</a>
+          <a href="/seller-info">{t('footer.sellerInfo')}</a>
         </div>
         <div className="awakapp">
           <img 
