@@ -1,0 +1,365 @@
+/* MyPage Layout */
+.mypage-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+}
+
+.mypage-header {
+    margin-bottom: 32px;
+}
+
+.mypage-title {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #1a1a1a;
+}
+
+.user-info {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 4px;
+}
+
+/* Card Base Styles */
+.monthly-limit-card,
+.usage-display-card,
+.payment-method-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e5e5e5;
+}
+
+/* Monthly Limit Card */
+.card-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0 0 8px 0;
+    color: #1a1a1a;
+}
+
+.card-description {
+    font-size: 14px;
+    color: #666;
+    margin: 0 0 24px 0;
+}
+
+.limit-display {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.limit-amount {
+    font-size: 36px;
+    font-weight: 700;
+    color: #1a1a1a;
+}
+
+.limit-note {
+    font-size: 12px;
+    color: #999;
+    text-align: right;
+    line-height: 1.4;
+}
+
+/* Slider */
+.slider-container {
+    margin-bottom: 20px;
+}
+
+.slider {
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background: linear-gradient(to right, #0066FF 0%, #0066FF var(--slider-progress, 20%), #e5e5e5 var(--slider-progress, 20%), #e5e5e5 100%);
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #0066FF;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.slider::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #0066FF;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.slider.locked {
+    background: linear-gradient(to right, #999 0%, #999 var(--slider-progress, 20%), #e5e5e5 var(--slider-progress, 20%), #e5e5e5 100%);
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.slider.locked::-webkit-slider-thumb {
+    background: #999;
+    cursor: not-allowed;
+}
+
+.slider.locked::-moz-range-thumb {
+    background: #999;
+    cursor: not-allowed;
+}
+
+.slider-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+    font-size: 14px;
+    color: #666;
+}
+
+/* Preset Buttons */
+.preset-buttons {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.preset-btn {
+    flex: 1;
+    padding: 12px 16px;
+    border: 2px solid #e5e5e5;
+    border-radius: 8px;
+    background: #ffffff;
+    font-size: 16px;
+    font-weight: 600;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.preset-btn:hover:not(.locked) {
+    border-color: #0066FF;
+    color: #0066FF;
+}
+
+.preset-btn.active {
+    border-color: #0066FF;
+    background: #0066FF;
+    color: #ffffff;
+}
+
+.preset-btn.locked {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+/* Safety Lock */
+.safety-lock-container {
+    margin-bottom: 20px;
+}
+
+.safety-lock-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 12px;
+    color: #666;
+    line-height: 1.4;
+}
+
+.safety-lock-label input[type="checkbox"] {
+    margin-top: 2px;
+    cursor: pointer;
+}
+
+.warning-text {
+    font-size: 13px;
+    color: #666;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Usage Display Card */
+.effective-date {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.effective-date .label {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+.effective-date .date {
+    font-size: 16px;
+    color: #1a1a1a;
+}
+
+.usage-stats {
+    margin-bottom: 20px;
+}
+
+.usage-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.usage-label {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+.usage-percentage {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+.usage-amount {
+    font-size: 16px;
+    color: #1a1a1a;
+    margin-left: auto;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: #e5e5e5;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: #1a3a52;
+    transition: width 0.3s ease;
+}
+
+.remaining-amount {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.remaining-label {
+    font-size: 16px;
+    color: #666;
+}
+
+.remaining-value {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+/* Payment Method Card */
+.payment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.payment-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0;
+}
+
+.payment-logo {
+    height: 32px;
+}
+
+.stripe-logo {
+    height: 100%;
+    width: auto;
+}
+
+.manage-payment-btn {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background: transparent;
+    border: none;
+    color: #0066FF;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: left;
+    transition: opacity 0.2s;
+}
+
+.manage-payment-btn:hover {
+    opacity: 0.7;
+}
+
+/* Loading & Error States */
+.loading-container,
+.error-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+    font-size: 18px;
+    color: #666;
+}
+
+.error-container {
+    flex-direction: column;
+    gap: 16px;
+}
+
+.login-btn {
+    padding: 12px 24px;
+    background: #0066FF;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.login-btn:hover {
+    background: #0052CC;
+}
+
+/* Logout button */
+.logout-btn {
+    padding: 8px 12px;
+    background: #f7f7f7;
+    color: #333;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.logout-btn:hover {
+    background: #eeeeee;
+}

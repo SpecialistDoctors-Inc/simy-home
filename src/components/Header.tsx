@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
+import '../lib/i18n'
 
 export default function Header() {
   const { t } = useTranslation()
@@ -65,11 +66,11 @@ export default function Header() {
           src="/img/aim_logo_Horizontal_white.png" 
           alt="AI Mentor" 
           className="logo"
+          style={{ cursor: 'pointer' }}
+          onClick={() => window.location.href = '/'}
         />
         <a 
-          href="https://apps.apple.com/us/app/ai-mentor-app/id6745385262" 
-          target="_blank" 
-          rel="noopener" 
+          href="/login" 
           className="header-btn"
         >
           {t('header.getStarted')}
