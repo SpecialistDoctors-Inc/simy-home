@@ -20,9 +20,6 @@ export default function GoogleLoginButton({  className }: Props) {
           redirectTo: `${window.location.origin}/auth/callback`,
         },
       });
-
-      console.log('Google login data:', data);
-      console.log('Google login error:', error);
   };
 
   return (
@@ -41,6 +38,7 @@ export default function GoogleLoginButton({  className }: Props) {
         fontSize: 16,
         cursor: 'pointer',
         width: 260,
+        justifyContent: 'center',
       }}
     >
       <img

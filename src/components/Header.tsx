@@ -4,7 +4,11 @@ import { useState, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import '../lib/i18n'
 
-export default function Header() {
+type HeaderProps = {
+  showInstallButton?: boolean;
+};
+
+export default function Header({ showInstallButton = false }: HeaderProps) {
   const { t } = useTranslation()
   const [isScrolled, setIsScrolled] = useState(false)
   const [isVisible, setIsVisible] = useState(true)
@@ -62,19 +66,30 @@ export default function Header() {
   return (
     <header className={`header fixed-header ${isVisible ? 'show' : 'hide'}`}>
       <div className="header-inner">
-        <img 
-          src="/img/aim_logo_Horizontal_white.png" 
-          alt="AI Mentor" 
+        <img
+          src="/img/aim_logo_Horizontal_white.png"
+          alt="AI Mentor"
           className="logo"
           style={{ cursor: 'pointer' }}
           onClick={() => window.location.href = '/'}
         />
-        <a 
-          href="/login" 
-          className="header-btn"
-        >
-          {t('header.getStarted')}
-        </a>
+        {showInstallButton ? (
+          <a
+            href="https://apps.apple.com/us/app/ai-mentor-app/id6745385262"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="header-btn"
+          >
+            {t('header.installApp')}
+          </a>
+        ) : (
+          <a
+            href="/login"
+            className="header-btn"
+          >
+            {t('header.getStarted')}
+          </a>
+        )}
       </div>
     </header>
   )

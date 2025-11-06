@@ -1,23 +1,24 @@
 "use client";
 
+import { createClient } from '@/utils/supabase/client';
 import React from 'react';
 
 type Props = {
-  onClick?: () => void;
   className?: string;
 };
 
 /**
  * Apple ログインボタン（クライアントコンポーネント）
- * - デフォルトでは no-op の onClick。実装時に onClick を渡してください。
  */
-export default function AppleLoginButton({ onClick, className }: Props) {
-  const handleClick = () => {
-    if (onClick) return onClick();
-    // TODO: Apple ログイン処理を実装
-    if (process.env.NODE_ENV !== 'production') {
-      console.log('Apple login clicked');
-    }
+export default function AppleLoginButton({ className }: Props) {
+  const handleClick = async () => {
+    const supabase = createClient();
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: 'apple',
+      options: {
+        redirectTo: `${window.location.origin}/auth/callback`,
+      },
+    });
   };
 
   return (
@@ -36,6 +37,7 @@ export default function AppleLoginButton({ onClick, className }: Props) {
         fontSize: 16,
         cursor: 'pointer',
         width: 260,
+        justifyContent: 'center',
       }}
     >
       <img
