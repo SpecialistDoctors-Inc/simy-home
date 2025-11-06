@@ -120,7 +120,7 @@ export default function PaymentMethod({ provider = "stripe" }: PaymentMethodProp
 
             <div style={{
                 marginTop: '12px',
-                fontSize: '12px',
+                fontSize: '14px',
                 color: '#666',
                 textAlign: 'center'
             }}>

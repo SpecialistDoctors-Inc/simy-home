@@ -41,7 +41,7 @@ export default function UsageDisplay({
       <div className="remaining-amount">
         <span className="remaining-label">残り</span>
         <span className="remaining-value">
-          {limit === 0 ? "unlimited" : `$${remaining}`}
+          {limit === 0 ? "上限未設定" : `$${remaining}`}
         </span>
       </div>
     </div>

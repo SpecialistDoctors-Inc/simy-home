@@ -55,7 +55,7 @@ export default function MonthlyLimit({
 
       <div className="limit-display">
         <span className="limit-amount">
-          {!isSafetyLocked ? "unlimited" : `${limit}USD`}
+          {!isSafetyLocked ? "上限未設定" : `${limit}USD`}
         </span>
       </div>
 
@@ -63,18 +63,18 @@ export default function MonthlyLimit({
         <input
           type="range"
           min="10"
-          max="500"
+          max="300"
           value={limit}
           onChange={handleSliderChange}
           className={`slider ${!isSafetyLocked ? "locked" : ""}`}
           disabled={!isSafetyLocked}
           style={{
-            background: `linear-gradient(to right, ${!isSafetyLocked ? "#999" : "#0066FF"} 0%, ${!isSafetyLocked ? "#999" : "#0066FF"} ${((limit - 10) / (500 - 10)) * 100}%, #e5e5e5 ${((limit - 10) / (500 - 10)) * 100}%, #e5e5e5 100%)`,
+            background: `linear-gradient(to right, ${!isSafetyLocked ? "#999" : "#0066FF"} 0%, ${!isSafetyLocked ? "#999" : "#0066FF"} ${((limit - 10) / (300 - 10)) * 100}%, #e5e5e5 ${((limit - 10) / (300 - 10)) * 100}%, #e5e5e5 100%)`,
           }}
         />
         <div className="slider-labels">
           <span>$10</span>
-          <span>$500</span>
+          <span>$300</span>
         </div>
       </div>
 

@@ -18,7 +18,7 @@
 }
 
 .user-info {
-    font-size: 14px;
+    font-size: 16px;
     color: #666;
     margin-bottom: 4px;
 }
@@ -44,7 +44,7 @@
 }
 
 .card-description {
-    font-size: 14px;
+    font-size: 18px;
     color: #666;
     margin: 0 0 24px 0;
 }
@@ -63,7 +63,7 @@
 }
 
 .limit-note {
-    font-size: 12px;
+    font-size: 18px;
     color: #999;
     text-align: right;
     line-height: 1.4;
@@ -127,7 +127,7 @@
     display: flex;
     justify-content: space-between;
     margin-top: 8px;
-    font-size: 14px;
+    font-size: 20px;
     color: #666;
 }
 
@@ -144,7 +144,7 @@
     border: 2px solid #e5e5e5;
     border-radius: 8px;
     background: #ffffff;
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 600;
     color: #666;
     cursor: pointer;
@@ -177,7 +177,7 @@
     align-items: center;
     gap: 8px;
     cursor: pointer;
-    font-size: 12px;
+    font-size: 18px;
     color: #666;
     line-height: 1.4;
 }
@@ -185,10 +185,12 @@
 .safety-lock-label input[type="checkbox"] {
     margin-top: 2px;
     cursor: pointer;
+    width: 20px;
+    height: 20px;
 }
 
 .warning-text {
-    font-size: 13px;
+    font-size: 16px;
     color: #666;
     margin: 0;
     line-height: 1.5;
@@ -204,13 +206,13 @@
 }
 
 .effective-date .label {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 600;
     color: #1a1a1a;
 }
 
 .effective-date .date {
-    font-size: 16px;
+    font-size: 18px;
     color: #1a1a1a;
 }
 
@@ -226,19 +228,19 @@
 }
 
 .usage-label {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 600;
     color: #1a1a1a;
 }
 
 .usage-percentage {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 600;
     color: #1a1a1a;
 }
 
 .usage-amount {
-    font-size: 16px;
+    font-size: 18px;
     color: #1a1a1a;
     margin-left: auto;
 }
@@ -264,7 +266,7 @@
 }
 
 .remaining-label {
-    font-size: 16px;
+    font-size: 18px;
     color: #666;
 }
 
@@ -300,12 +302,12 @@
 
 .manage-payment-btn {
     display: block;
-    width: 100%;
+    width: 200px;
     padding: 12px;
     background: transparent;
     border: none;
     color: #0066FF;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 600;
     cursor: pointer;
     text-align: left;
@@ -338,7 +340,7 @@
     color: white;
     border: none;
     border-radius: 8px;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 600;
     cursor: pointer;
     transition: background 0.2s;
@@ -355,7 +357,7 @@
     color: #333;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
-    font-size: 14px;
+    font-size: 18px;
     font-weight: 600;
     cursor: pointer;
 }
