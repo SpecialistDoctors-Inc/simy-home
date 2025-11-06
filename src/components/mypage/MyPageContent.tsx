@@ -6,6 +6,7 @@ import { createClient as createSupabaseClient } from "@/utils/supabase/client";
 import MonthlyLimit from "@/components/mypage/MonthlyLimit";
 import UsageDisplay from "@/components/mypage/UsageDisplay";
 import PaymentMethod from "@/components/mypage/PaymentMethod";
+import ServiceStatus from "@/components/mypage/ServiceStatus";
 import "./mypage.css";
 
 type Props = {
@@ -20,6 +21,7 @@ type UserSettingsRow = {
   monthly_limit_currency: string | null; // text
   current_month_usage: number | null; // numeric
   usage_reset_date: string | null; // timestamptz
+  is_active: boolean | null; // boolean
   created_at: string | null; // timestamptz
   updated_at: string | null; // timestamptz
 };
@@ -29,10 +31,22 @@ type UserSettingsRow = {
  * ログイン済みユーザーの情報、使用量、決済方法を表示
  */
 export default function MyPageContent({ user, onLogout }: Props) {
-  // 取得失敗時は現在のPGのデフォルト値（現状はコンポーネントのデフォルトと同義）をそのまま使う
+  // 取得失敗時は現在のPGのデフォルト値(現状はコンポーネントのデフォルトと同義)をそのまま使う
   const [monthlyLimit, setMonthlyLimit] = useState<number>(0);
   const [currentUsage, setCurrentUsage] = useState<number>(0);
   const [effectiveDate, setEffectiveDate] = useState<string>("");
+  
+  // Payment method states
+  const [hasPaymentMethod, setHasPaymentMethod] = useState(false);
+  const [customerInfo, setCustomerInfo] = useState<{
+    customerId?: string;
+    last4?: string;
+    brand?: string;
+  }>({});
+  
+  // Service active state
+  const [isActive, setIsActive] = useState(true);
+  const [isUpdatingActive, setIsUpdatingActive] = useState(false);
 
   useEffect(() => {
     const fetchUserSettings = async () => {
@@ -50,8 +64,6 @@ export default function MyPageContent({ user, onLogout }: Props) {
           throw new Error(`No user_settings found for user.id = ${user.id}`);
         }
 
-        // console.log("user_settings", JSON.stringify(data, null, 2));
-
         if (typeof data.monthly_limit_amount === "number") {
           setMonthlyLimit(data.monthly_limit_amount);
         }
@@ -60,19 +72,84 @@ export default function MyPageContent({ user, onLogout }: Props) {
         }
         if (data.usage_reset_date) {
           const d = new Date(data.usage_reset_date);
-          // "May 1" 形式で表示
-          const formatted = new Intl.DateTimeFormat("en-US", {
+          const formatted = new Intl.DateTimeFormat("ja-JP", {
+            year: "numeric",
             month: "long",
             day: "numeric",
           }).format(d);
           setEffectiveDate(formatted);
+        }
+        if (typeof data.is_active === "boolean") {
+          setIsActive(data.is_active);
         }
       } catch (e) {
         console.error("Error fetching user_settings:", e);
       }
     };
 
+    const loadPaymentMethodInfo = async () => {
+      try {
+        const supabase = createSupabaseClient();
+
+        const { data, error } = await supabase.functions.invoke(
+          "stripe-get-customer?user_id=" + user.id,
+          {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+          }
+        );
+
+        if (error || !data) {
+          setHasPaymentMethod(false);
+          setCustomerInfo({});
+
+          const { data: createData, error: createError } =
+            await supabase.functions.invoke("stripe-create-customer", {
+              body: {
+                user_id: user.id,
+              },
+            });
+          if (createError) {
+            console.error("Error creating Stripe customer:", createError);
+          }
+          return;
+        }
+
+        // レスポンスの構造を整形
+        const responseData = data as {
+          ok?: boolean;
+          customer?: { id: string };
+          payment_method?: { last4?: string; brand?: string };
+        };
+
+        const customerId = responseData.customer?.id;
+        const last4 = responseData.payment_method?.last4;
+        const brand = responseData.payment_method?.brand;
+
+        if (customerId && last4 && brand) {
+          setHasPaymentMethod(true);
+          setCustomerInfo({ customerId, last4, brand });
+        } else {
+          setHasPaymentMethod(false);
+          setCustomerInfo({});
+
+          const { data: createData, error: createError } =
+            await supabase.functions.invoke("stripe-create-customer", {
+              body: {
+                user_id: user.id,
+              },
+            });
+          if (createError) {
+            console.error("Error creating Stripe customer:", createError);
+          }
+        }
+      } catch (error) {
+        console.error("Error loading payment method info:", error);
+      }
+    };
+
     fetchUserSettings();
+    loadPaymentMethodInfo();
   }, [user.id]);
 
   const handleLimitChange = async (newLimit: number) => {
@@ -104,11 +181,36 @@ export default function MyPageContent({ user, onLogout }: Props) {
 
       if (updateError) {
         console.error("Failed to update user_settings:", updateError.message);
-      } else {
-        // console.log("user_settings updated:", newLimit);
-      }
+      } 
     } catch (e) {
       console.error("Unexpected error in handleLimitChange:", e);
+    }
+  };
+
+  const handleActiveToggle = async (newIsActive: boolean) => {
+    setIsUpdatingActive(true);
+    try {
+      const supabase = createSupabaseClient();
+
+      const { error: updateError } = await supabase
+        .from("user_settings")
+        .update({
+          is_active: newIsActive,
+          updated_at: new Date().toISOString(),
+        })
+        .eq("id", user.id);
+
+      if (updateError) {
+        console.error("Failed to update is_active:", updateError.message);
+        alert("利用状態の更新に失敗しました。");
+      } else {
+        setIsActive(newIsActive);
+      }
+    } catch (e) {
+      console.error("Unexpected error in handleActiveToggle:", e);
+      alert("利用状態の更新に失敗しました。");
+    } finally {
+      setIsUpdatingActive(false);
     }
   };
 
@@ -150,18 +252,32 @@ export default function MyPageContent({ user, onLogout }: Props) {
         </p>
       </div>
 
-      <MonthlyLimit
-        defaultLimit={monthlyLimit}
-        onLimitChange={handleLimitChange}
-      />
+      {hasPaymentMethod ? (
+        <>
+          <ServiceStatus
+            isActive={isActive}
+            isUpdating={isUpdatingActive}
+            onToggle={handleActiveToggle}
+          />
+          <MonthlyLimit
+            isActive={isActive}
+            defaultLimit={monthlyLimit}
+            onLimitChange={handleLimitChange}
+          />
+          <UsageDisplay
+            currentUsage={currentUsage}
+            limit={monthlyLimit}
+            effectiveDate={effectiveDate}
+          />
+        </>
+      ) : null}
 
-      <UsageDisplay
-        currentUsage={currentUsage}
-        limit={monthlyLimit}
-        effectiveDate={effectiveDate}
+      <PaymentMethod 
+        provider="stripe"
+        hasPaymentMethod={hasPaymentMethod}
+        customerInfo={customerInfo}
+        userId={user.id}
       />
-
-      <PaymentMethod provider="stripe" />
     </div>
   );
 }

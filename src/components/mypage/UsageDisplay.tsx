@@ -18,7 +18,7 @@ export default function UsageDisplay({
   return (
     <div className="usage-display-card">
       <div className="effective-date">
-        <span className="label">適用日</span>
+        <span className="label">リセット日</span>
         <span className="date">{effectiveDate}</span>
       </div>
 

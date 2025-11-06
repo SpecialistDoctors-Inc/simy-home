@@ -1,66 +1,37 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { createClient } from "@/utils/supabase/client";
 
 interface PaymentMethodProps {
     provider?: string;
-}
-
-export default function PaymentMethod({ provider = "stripe" }: PaymentMethodProps) {
-    const [loading, setLoading] = useState(false);
-    const [hasPaymentMethod, setHasPaymentMethod] = useState(false);
-    const [customerInfo, setCustomerInfo] = useState<{
+    hasPaymentMethod: boolean;
+    customerInfo: {
         customerId?: string;
         last4?: string;
         brand?: string;
-    }>({});
-
-    useEffect(() => {
-        loadPaymentMethodInfo();
-    }, []);
-
-    const loadPaymentMethodInfo = async () => {
-        try {
-            const supabase = createClient();
-            const { data: { user } } = await supabase.auth.getUser();
-
-            if (!user) return;
-
-            // ユーザーメタデータからStripe顧客情報を取得
-            const customerId = user.user_metadata?.stripe_customer_id;
-            const paymentMethodInfo = user.user_metadata?.payment_method;
-
-            if (customerId) {
-                setCustomerInfo({
-                    customerId,
-                    last4: paymentMethodInfo?.last4,
-                    brand: paymentMethodInfo?.brand,
-                });
-                setHasPaymentMethod(!!paymentMethodInfo);
-            }
-        } catch (error) {
-            console.error('Error loading payment method info:', error);
-        }
     };
+    userId: string;
+}
+
+export default function PaymentMethod({ 
+    provider = "stripe",
+    hasPaymentMethod,
+    customerInfo,
+    userId
+}: PaymentMethodProps) {
+    const [loading, setLoading] = useState(false);
 
     const handleManagePayment = async () => {
         try {
             setLoading(true);
             const supabase = createClient();
-            const { data: { user }, error: userError } = await supabase.auth.getUser();
 
-            if (userError || !user) {
-                alert('ログインが必要です。');
-                return;
-            }
-
-            // Supabase Edge Function 経由でSetup Sessionを作成（SSRやnpmのサーバー依存なし）
-            const { data, error } = await supabase.functions.invoke('create-setup-session', {
+            const { data, error } = await supabase.functions.invoke('stripe-start-session', {
                 body: {
-                    customerId: user.user_metadata?.stripe_customer_id,
-                    userId: user.id,
-                    email: user.email,
+                    user_id: userId,
+                    success_url: window.location.origin + "/login",
+                    cancel_url: window.location.origin + "/login",
                 }
             });
 
@@ -75,7 +46,6 @@ export default function PaymentMethod({ provider = "stripe" }: PaymentMethodProp
         } catch (error) {
             console.error('Error opening payment setup:', error);
             alert('支払い設定の開始に失敗しました。時間をおいて再度お試しください。');
-         
         } finally {
             setLoading(false);
         }

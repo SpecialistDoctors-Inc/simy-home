@@ -13,7 +13,6 @@ type Props = {
 export default function GoogleLoginButton({  className }: Props) {
   const handleClick = async () => {
       const supabase = createClient()
-      console.log(`${window.location.origin}/auth/callback`)
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {

@@ -26,13 +26,89 @@
 /* Card Base Styles */
 .monthly-limit-card,
 .usage-display-card,
-.payment-method-card {
+.payment-method-card,
+.service-status-card {
     background: #ffffff;
     border-radius: 12px;
     padding: 24px;
     margin-bottom: 24px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     border: 1px solid #e5e5e5;
+}
+
+/* Service Status Card */
+.service-status-card .status-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.service-status-card .status-title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+}
+
+.service-status-card .status-description {
+    margin: 8px 0 0 0;
+    font-size: 14px;
+    color: #666;
+}
+
+.service-status-card .toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    cursor: pointer;
+}
+
+.service-status-card .toggle-switch.disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.service-status-card .toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.service-status-card .toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 34px;
+}
+
+.service-status-card .toggle-slider.active {
+    background-color: #4CAF50;
+}
+
+.service-status-card .toggle-slider.disabled {
+    cursor: not-allowed;
+}
+
+.service-status-card .toggle-slider::before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+}
+
+.service-status-card .toggle-slider.active::before {
+    transform: translateX(26px);
 }
 
 /* Monthly Limit Card */
@@ -57,6 +133,7 @@
 }
 
 .limit-amount {
+    height: 60px;
     font-size: 36px;
     font-weight: 700;
     color: #1a1a1a;
@@ -263,6 +340,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    height: 30px;
 }
 
 .remaining-label {
@@ -302,16 +380,17 @@
 
 .manage-payment-btn {
     display: block;
-    width: 200px;
+    width: 180px;
     padding: 12px;
-    background: transparent;
+    background: #0066FF;
     border: none;
-    color: #0066FF;
+    color: #ffffff;
     font-size: 18px;
     font-weight: 600;
     cursor: pointer;
-    text-align: left;
+    text-align: center;
     transition: opacity 0.2s;
+    border-radius: 8px;
 }
 
 .manage-payment-btn:hover {

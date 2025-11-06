@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 interface MonthlyLimitProps {
   defaultLimit: number;
   onLimitChange?: (newLimit: number) => void;
+  isActive: boolean;
 }
 
 const PRESET_VALUES = [10, 30, 50, 100];
@@ -12,6 +13,7 @@ const PRESET_VALUES = [10, 30, 50, 100];
 export default function MonthlyLimit({
   defaultLimit,
   onLimitChange,
+  isActive,
 }: MonthlyLimitProps) {
   const [limit, setLimit] = useState(defaultLimit);
   const [isSafetyLocked, setIsSafetyLocked] = useState(
@@ -55,7 +57,7 @@ export default function MonthlyLimit({
 
       <div className="limit-display">
         <span className="limit-amount">
-          {!isSafetyLocked ? "上限未設定" : `${limit}USD`}
+          {!isSafetyLocked ? "上限未設定" : `$${limit}`}
         </span>
       </div>
 
@@ -67,9 +69,9 @@ export default function MonthlyLimit({
           value={limit}
           onChange={handleSliderChange}
           className={`slider ${!isSafetyLocked ? "locked" : ""}`}
-          disabled={!isSafetyLocked}
+          disabled={!isSafetyLocked || !isActive}
           style={{
-            background: `linear-gradient(to right, ${!isSafetyLocked ? "#999" : "#0066FF"} 0%, ${!isSafetyLocked ? "#999" : "#0066FF"} ${((limit - 10) / (300 - 10)) * 100}%, #e5e5e5 ${((limit - 10) / (300 - 10)) * 100}%, #e5e5e5 100%)`,
+            background: `linear-gradient(to right, ${!isSafetyLocked || !isActive ? "#999" : "#0066FF"} 0%, ${!isSafetyLocked ||  !isActive  ? "#999" : "#0066FF"} ${((limit - 10) / (300 - 10)) * 100}%, #e5e5e5 ${((limit - 10) / (300 - 10)) * 100}%, #e5e5e5 100%)`,
           }}
         />
         <div className="slider-labels">
@@ -83,8 +85,8 @@ export default function MonthlyLimit({
           <button
             key={value}
             onClick={() => handlePresetClick(value)}
-            className={`preset-btn ${limit === value ? "active" : ""} ${!isSafetyLocked ? "locked" : ""}`}
-            disabled={!isSafetyLocked}
+            className={`preset-btn ${limit === value ? "active" : ""} ${!isSafetyLocked  ||  !isActive ? "locked" : ""}`}
+            disabled={!isSafetyLocked || !isActive }
           >
             ${value}
           </button>
