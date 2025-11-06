@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { User } from "@supabase/supabase-js";
 import { createClient as createSupabaseClient } from "@/utils/supabase/client";
 import MonthlyLimit from "@/components/mypage/MonthlyLimit";
@@ -13,21 +13,103 @@ type Props = {
   onLogout?: () => void;
 };
 
+// DB・user_settingsの全カラム
+type UserSettingsRow = {
+  id: string; // uuid (auth.users.id と一致)
+  monthly_limit_amount: number | null; // numeric
+  monthly_limit_currency: string | null; // text
+  current_month_usage: number | null; // numeric
+  usage_reset_date: string | null; // timestamptz
+  created_at: string | null; // timestamptz
+  updated_at: string | null; // timestamptz
+};
+
 /**
  * MyPageのメインコンテンツコンポーネント
  * ログイン済みユーザーの情報、使用量、決済方法を表示
  */
 export default function MyPageContent({ user, onLogout }: Props) {
-  const [monthlyLimit, setMonthlyLimit] = useState(100);
+  // 取得失敗時は現在のPGのデフォルト値（現状はコンポーネントのデフォルトと同義）をそのまま使う
+  const [monthlyLimit, setMonthlyLimit] = useState<number>(0);
+  const [currentUsage, setCurrentUsage] = useState<number>(0);
+  const [effectiveDate, setEffectiveDate] = useState<string>("");
 
-  // Mock data - replace with actual data from your backend
-  const currentUsage = 48; // Example: $48 used
-  const effectiveDate = "May 1";
+  useEffect(() => {
+    const fetchUserSettings = async () => {
+      try {
+        const supabase = createSupabaseClient();
+        const { data, error } = await supabase
+          .from("user_settings")
+          .select("*")
+          .eq("id", user.id)
+          .maybeSingle<UserSettingsRow>();
 
-  const handleLimitChange = (newLimit: number) => {
+        if (error) throw error;
+        // 行が無いならエラーにする
+        if (!data) {
+          throw new Error(`No user_settings found for user.id = ${user.id}`);
+        }
+
+        // console.log("user_settings", JSON.stringify(data, null, 2));
+
+        if (typeof data.monthly_limit_amount === "number") {
+          setMonthlyLimit(data.monthly_limit_amount);
+        }
+        if (typeof data.current_month_usage === "number") {
+          setCurrentUsage(data.current_month_usage);
+        }
+        if (data.usage_reset_date) {
+          const d = new Date(data.usage_reset_date);
+          // "May 1" 形式で表示
+          const formatted = new Intl.DateTimeFormat("en-US", {
+            month: "long",
+            day: "numeric",
+          }).format(d);
+          setEffectiveDate(formatted);
+        }
+      } catch (e) {
+        console.error("Error fetching user_settings:", e);
+      }
+    };
+
+    fetchUserSettings();
+  }, [user.id]);
+
+  const handleLimitChange = async (newLimit: number) => {
     setMonthlyLimit(newLimit);
-    // TODO: Save to backend
-    console.log("New limit:", newLimit);
+    try {
+      const supabase = createSupabaseClient();
+
+      // idの存在確認（存在しない場合はエラー）
+      const { data: existing, error: selectError } = await supabase
+        .from("user_settings")
+        .select("id")
+        .eq("id", user.id)
+        .maybeSingle();
+
+      if (selectError) throw selectError;
+      if (!existing) {
+        throw new Error(
+          `No existing user_settings row found for id = ${user.id}`
+        );
+      }
+
+      const { error: updateError } = await supabase
+        .from("user_settings")
+        .update({
+          monthly_limit_amount: newLimit,
+          updated_at: new Date().toISOString(),
+        })
+        .eq("id", user.id);
+
+      if (updateError) {
+        console.error("Failed to update user_settings:", updateError.message);
+      } else {
+        // console.log("user_settings updated:", newLimit);
+      }
+    } catch (e) {
+      console.error("Unexpected error in handleLimitChange:", e);
+    }
   };
 
   const handleLogout = async () => {
@@ -46,9 +128,19 @@ export default function MyPageContent({ user, onLogout }: Props) {
   return (
     <div className="mypage-container">
       <div className="mypage-header">
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12, paddingTop: 80 }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            gap: 12,
+            paddingTop: 80,
+          }}
+        >
           <h1 className="mypage-title">マイページ</h1>
-          <button className="logout-btn" onClick={handleLogout}>ログアウト</button>
+          <button className="logout-btn" onClick={handleLogout}>
+            ログアウト
+          </button>
         </div>
         <p className="user-info">
           <strong>メールアドレス:</strong> {user.email}
@@ -69,9 +161,7 @@ export default function MyPageContent({ user, onLogout }: Props) {
         effectiveDate={effectiveDate}
       />
 
-      <PaymentMethod
-        provider="stripe"
-      />
+      <PaymentMethod provider="stripe" />
     </div>
   );
 }
