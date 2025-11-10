@@ -30,7 +30,7 @@ export default function PaymentMethod({
             const { data, error } = await supabase.functions.invoke('stripe-start-session', {
                 body: {
                     user_id: userId,
-                    success_url: window.location.origin + "/login",
+                    success_url: hasPaymentMethod ? window.location.origin + "/login" : window.location.origin + "/redirect",
                     cancel_url: window.location.origin + "/login",
                 }
             });
