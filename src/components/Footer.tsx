@@ -6,11 +6,14 @@ export default function Footer() {
   return (
     <footer className="footer">
       <div className="footer-inner">
-        <img 
-          src="/img/aim_logo_Horizontal_black_ns.png" 
-          alt={t('footer.logoAlt')} 
-          className="footer-logo"
-        />
+        <a href="/" className="logo-link">
+          <img
+            src="/img/icon.png"
+            alt="AI Mentor"
+            className="logo"
+          />
+          <h1>SIMY</h1>
+        </a>
         <div className="footer-menu">
           <a href="/terms">{t('footer.termsOfUse')}</a>
           <a href="/privacy">{t('footer.privacyPolicy')}</a>
