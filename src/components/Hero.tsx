@@ -17,12 +17,14 @@ export default function Hero() {
         止まっているタスクも、<br />
         次に動かすべきアクションも、<br />
         一目で見えるダッシュボード。</h2>
-      <a
-        href="/login"
-        className="header-btn"
-      >
+      <div>
+        <a
+          href="/login"
+          className="header-btn"
+        >
           {t('header.getStarted')}
         </a>
+      </div>
     </section>
   )
 }

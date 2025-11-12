@@ -261,9 +261,16 @@ section img {
 }
 
 .hero .header-btn{
-    width: fit-content;
+    width: 100%;
     margin: auto;
+    padding: 10px 28px;
+    font-size: 1rem;
 }
+
+.hero > div{
+    padding: 0 16px;
+}
+
 
 .section2 h2{
     font-size: 2rem;
@@ -341,10 +348,10 @@ section img {
     display: block;
     background: #246EAD;
     color: #fff;
-    padding: 10px 28px;
+    padding: 8px 28px;
     border-radius: 8px;
     font-weight: bold;
-    font-size: 1rem;
+    font-size: 0.8rem;
     text-decoration: none;
     transition: background 0.2s;
 }
@@ -858,6 +865,8 @@ margin-top: 8px;
 
 .pricing .header-btn{
     margin: auto;
+    padding: 10px 28px;
+    font-size: 1rem;
 }
 
 .pricing-card-features {
@@ -885,16 +894,12 @@ margin-top: 8px;
 
 /* Mobile styles */
 @media (max-width: 768px) {
-    .logo-link-mobile {
-        display: block;
-    }
-
-    .logo-link-pc {
-        display: none;
-    }
     section img {
         width: auto;
         max-width: 80vw;
         max-height: 80vh;
+    }
+    .hero .hero-image {
+        max-width: 100%;
     }
 }
