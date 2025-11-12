@@ -8,11 +8,10 @@ export default function Footer() {
       <div className="footer-inner">
         <a href="/" className="logo-link">
           <img
-            src="/img/icon.png"
+            src="/img/icon_large.png"
             alt="AI Mentor"
             className="logo"
           />
-          <h1>SIMY</h1>
         </a>
         <div className="footer-menu">
           <a href="/terms">{t('footer.termsOfUse')}</a>
@@ -21,7 +20,7 @@ export default function Footer() {
         </div>
         <div className="awakapp">
           <img 
-            src="/img/awakapp.png" 
+            src="/img/awakapp_black.png" 
             alt={t('footer.awakappAlt')}
           />
         </div>

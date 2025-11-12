@@ -63,13 +63,19 @@ export default function Header({ showInstallButton = false }: HeaderProps) {
   return (
     <header className={`header fixed-header ${isVisible ? 'show' : 'hide'}`}>
       <div className="header-inner">
-        <a href="/" className="logo-link">
+        <a href="/" className="logo-link-pc">
+          <img
+            src="/img/icon_large.png"
+            alt="AI Mentor"
+            className="logo"
+          />
+        </a>
+        <a href="/" className="logo-link-mobile">
           <img
             src="/img/icon.png"
             alt="AI Mentor"
             className="logo"
           />
-          <h1>SIMY</h1>
         </a>
         {showInstallButton ? (
           <a

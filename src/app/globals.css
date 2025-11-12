@@ -241,13 +241,14 @@ section.hero {
 }
 
 section img {
+    max-width: 300px;
     width: 100%;
     display: block;
     margin: 0 auto;
 }
 
 .hero .hero-image{
-    margin: 16px;
+    margin: 16px auto;
 }
 
 .hero h1{
@@ -309,6 +310,19 @@ section img {
     justify-content: space-between;
     align-items: center;
     padding: 0 24px;
+}
+
+.logo-link-mobile {
+    display: none;
+    text-decoration: none;
+}
+
+.logo-link-pc {
+    display: flex;
+    align-items: center;
+    color: #266FAD;
+    gap: 4px;
+    text-decoration: none;
 }
 
 .logo-link {
@@ -604,7 +618,7 @@ section img {
 }
 
 .aim-mentor img{
-margin-top: 24px;
+    margin-top: 24px;
     height: auto;
     width: 50%;
 }
@@ -676,8 +690,7 @@ margin-top: 8px;
 
 /* ===== フッター ===== */
 .footer {
-    background: linear-gradient(180deg, #6ee7e7 0%, #3b82f6 100%);
-    color: #222;
+    background: #fff;
     text-align: center;
     padding: 48px 0 32px 0;
 }
@@ -693,6 +706,10 @@ margin-top: 8px;
 .footer .logo-link {
     gap: 16px;
     margin-bottom: 32px;
+}
+
+.footer .logo {
+    height: 80px;
 }
 
 .footer-menu {
@@ -728,7 +745,7 @@ margin-top: 8px;
 }
 
 .footer-links a {
-    color: #fff;
+    color: #222;
     text-decoration: none;
     padding: 0 8px;
     font-size: 1rem;
@@ -777,7 +794,7 @@ margin-top: 8px;
 }
 
 .copyright{
-    color: white !important;
+    color: #222 !important;
     font-size: 10px !important;
 }
 
@@ -868,12 +885,16 @@ margin-top: 8px;
 
 /* Mobile styles */
 @media (max-width: 768px) {
-    .header .logo-link h1{
+    .logo-link-mobile {
+        display: block;
+    }
+
+    .logo-link-pc {
         display: none;
     }
-    section img{
+    section img {
         width: auto;
-        max-width: 100%;
+        max-width: 80vw;
         max-height: 80vh;
     }
 }
