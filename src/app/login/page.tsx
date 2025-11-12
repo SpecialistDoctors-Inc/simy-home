@@ -7,6 +7,7 @@ import Header from '@/components/Header';
 import MyPageContent from '@/components/mypage/MyPageContent';
 import { createClient } from '@/utils/supabase/client';
 import { User } from '@supabase/supabase-js';
+import { useTranslation } from 'react-i18next';
 
 /**
  * ログイン/設定統合ページ
@@ -14,8 +15,10 @@ import { User } from '@supabase/supabase-js';
 export default function Login() {
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
+      const { i18n } = useTranslation()
 
     useEffect(() => {
+        i18n.changeLanguage('ja')
         const supabase = createClient();
 
         // 現在のユーザーセッションを取得
@@ -35,7 +38,7 @@ export default function Login() {
         return () => {
             subscription.unsubscribe();
         };
-    }, []);
+    }, [i18n]);
 
     const handleLogout = async () => {
         setUser(null);

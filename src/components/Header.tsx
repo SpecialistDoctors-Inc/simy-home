@@ -10,7 +10,6 @@ type HeaderProps = {
 
 export default function Header({ showInstallButton = false }: HeaderProps) {
   const { t } = useTranslation()
-  const [isScrolled, setIsScrolled] = useState(false)
   const [isVisible, setIsVisible] = useState(true)
   const lastScrollY = useRef(0)
 
@@ -24,7 +23,6 @@ export default function Header({ showInstallButton = false }: HeaderProps) {
 
       // スクロール位置が50px以上の場合のみヘッダーの表示/非表示を制御
       if (currentScrollY > 50) {
-        setIsScrolled(true)
         
         // 下にスクロールしている場合はヘッダーを隠す
         if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
@@ -36,7 +34,6 @@ export default function Header({ showInstallButton = false }: HeaderProps) {
         }
       } else {
         // ページトップ付近では常にヘッダーを表示
-        setIsScrolled(false)
         setIsVisible(true)
       }
 
@@ -66,13 +63,20 @@ export default function Header({ showInstallButton = false }: HeaderProps) {
   return (
     <header className={`header fixed-header ${isVisible ? 'show' : 'hide'}`}>
       <div className="header-inner">
-        <img
-          src="/img/aim_logo_Horizontal_white.png"
-          alt="AI Mentor"
-          className="logo"
-          style={{ cursor: 'pointer' }}
-          onClick={() => window.location.href = '/'}
-        />
+        <a href="/" className="logo-link-pc">
+          <img
+            src="/img/icon_large.png"
+            alt="AI Mentor"
+            className="logo"
+          />
+        </a>
+        <a href="/" className="logo-link-mobile">
+          <img
+            src="/img/icon.png"
+            alt="AI Mentor"
+            className="logo"
+          />
+        </a>
         {showInstallButton ? (
           <a
             href="https://apps.apple.com/us/app/ai-mentor-app/id6745385262"

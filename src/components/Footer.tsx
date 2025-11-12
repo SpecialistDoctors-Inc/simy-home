@@ -6,11 +6,13 @@ export default function Footer() {
   return (
     <footer className="footer">
       <div className="footer-inner">
-        <img 
-          src="/img/aim_logo_Horizontal_black_ns.png" 
-          alt={t('footer.logoAlt')} 
-          className="footer-logo"
-        />
+        <a href="/" className="logo-link">
+          <img
+            src="/img/icon_large.png"
+            alt="AI Mentor"
+            className="logo"
+          />
+        </a>
         <div className="footer-menu">
           <a href="/terms">{t('footer.termsOfUse')}</a>
           <a href="/privacy">{t('footer.privacyPolicy')}</a>
@@ -18,7 +20,7 @@ export default function Footer() {
         </div>
         <div className="awakapp">
           <img 
-            src="/img/awakapp.png" 
+            src="/img/awakapp_black.png" 
             alt={t('footer.awakappAlt')}
           />
         </div>
