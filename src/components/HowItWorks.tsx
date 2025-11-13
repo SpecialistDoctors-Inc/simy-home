@@ -133,7 +133,7 @@ export default function HowItWorks() {
               <img
                 key={index}
                 src={avatar}
-                alt={`AI Mentor Avatar ${index + 1}`}
+                alt={`SIMY Avatar ${index + 1}`}
                 style={isDesktop
                   ? {
                       width: '80%',

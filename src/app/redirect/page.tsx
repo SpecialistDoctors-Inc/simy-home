@@ -72,7 +72,7 @@ export default function RedirectPage() {
             color: '#1a1a1a',
             marginBottom: '12px'
           }}>
-            AI Mentor
+            SIMY
           </h1>
 
           <p style={{

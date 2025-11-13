@@ -66,14 +66,14 @@ export default function Header({ showInstallButton = false }: HeaderProps) {
         <a href="/" className="logo-link-pc">
           <img
             src="/img/icon_large.png"
-            alt="AI Mentor"
+            alt="SIMY"
             className="logo"
           />
         </a>
         <a href="/" className="logo-link-mobile">
           <img
             src="/img/icon.png"
-            alt="AI Mentor"
+            alt="SIMY"
             className="logo"
           />
         </a>
