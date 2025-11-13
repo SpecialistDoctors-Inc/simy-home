@@ -4,8 +4,8 @@ import { Metadata } from 'next'
 import '../markdown.css'
 
 export const metadata: Metadata = {
-  title: 'Terms of Use - AI Mentor',
-  description: 'Terms of Use for AI Mentor application',
+  title: 'Terms of Use - SIMY',
+  description: 'Terms of Use for SIMY application',
 }
 
 export default function TermsPage() {

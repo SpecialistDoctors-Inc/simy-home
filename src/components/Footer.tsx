@@ -9,7 +9,7 @@ export default function Footer() {
         <a href="/" className="logo-link">
           <img
             src="/img/icon_large.png"
-            alt="AI Mentor"
+            alt="SIMY"
             className="logo"
           />
         </a>

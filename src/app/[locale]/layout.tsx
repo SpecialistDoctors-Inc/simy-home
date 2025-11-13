@@ -6,7 +6,7 @@ import { notFound } from 'next/navigation'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'AI Mentor',
+  title: 'SIMY',
   description: 'When you\'re stuck, ask an expert instantly. Real expert knowledge via AI avatars.',
 }
 

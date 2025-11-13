@@ -4,8 +4,8 @@ import { Metadata } from 'next'
 import '../markdown.css'
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy - AI Mentor',
-  description: 'Privacy Policy for AI Mentor application',
+  title: 'Privacy Policy - SIMY',
+  description: 'Privacy Policy for SIMY application',
 }
 
 export default function PrivacyPage() {
