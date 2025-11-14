@@ -1,13 +1,40 @@
 "use client";
 
+import { createClient } from "@/utils/supabase/client";
+
 interface NextStepsProps {
   hasPaymentMethod: boolean;
+  userId: string;
 }
 
-export default function NextSteps({ hasPaymentMethod }: NextStepsProps) {
-  const handleRegisterCard = () => {
-    // カード登録画面へ遷移
-    // PaymentMethodコンポーネントの管理ボタンと同じ動作
+export default function NextSteps({ 
+  hasPaymentMethod,
+  userId
+ }: NextStepsProps) {
+  const handleRegisterCard = async () => { 
+    try {
+        const supabase = createClient();
+
+        const { data, error } = await supabase.functions.invoke('stripe-start-session', {
+            body: {
+              user_id: userId,
+              success_url: hasPaymentMethod ? window.location.origin + "/login" : window.location.origin + "/redirect",
+              cancel_url: window.location.origin + "/login",
+            }
+        });
+
+        if (error) {
+            throw error;
+        }
+
+        const { url } = (data ?? {}) as { url?: string };
+        if (!url) throw new Error('Invalid session URL');
+        window.location.href = url;
+
+    } catch (error) {
+        console.error('Error opening payment setup:', error);
+        alert('支払い設定の開始に失敗しました。時間をおいて再度お試しください。');
+    }
   };
 
   return (

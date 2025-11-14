@@ -76,7 +76,7 @@ export default function MyPageContent({ user, onLogout }: Props) {
         if (typeof data.current_month_usage === "number") {
           setCurrentUsage(data.current_month_usage);
         }
-        if (data.usage_reset_date) {
+        if (data.usage_reset_date && hasPaymentMethod) {
           const d = new Date(data.usage_reset_date);
           const formatted = new Intl.DateTimeFormat("ja-JP", {
             year: "numeric",
@@ -84,6 +84,8 @@ export default function MyPageContent({ user, onLogout }: Props) {
             day: "numeric",
           }).format(d);
           setEffectiveDate(formatted);
+        } else {
+          setEffectiveDate("");
         }
         if (typeof data.is_active === "boolean") {
           setIsActive(data.is_active);
@@ -255,8 +257,8 @@ export default function MyPageContent({ user, onLogout }: Props) {
         </div>
       ) : (
         <>
-          <SimyLaunchSection />
-          <NextSteps hasPaymentMethod={hasPaymentMethod} />
+          {hasPaymentMethod? <></> : <SimyLaunchSection />}
+          {hasPaymentMethod? <></> : <NextSteps hasPaymentMethod={hasPaymentMethod} userId={user.id} />}
           <MonthlyLimit
             isActive={isActive}
             defaultLimit={monthlyLimit}
@@ -267,7 +269,7 @@ export default function MyPageContent({ user, onLogout }: Props) {
             limit={monthlyLimit}
             effectiveDate={effectiveDate}
           />
-          <PaymentMethod 
+          <PaymentMethod
             provider="stripe"
             hasPaymentMethod={hasPaymentMethod}
             customerInfo={customerInfo}
