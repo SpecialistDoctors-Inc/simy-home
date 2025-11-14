@@ -76,7 +76,7 @@ export default function MyPageContent({ user, onLogout }: Props) {
         if (typeof data.current_month_usage === "number") {
           setCurrentUsage(data.current_month_usage);
         }
-        if (data.usage_reset_date && hasPaymentMethod) {
+        if (data.usage_reset_date) {
           const d = new Date(data.usage_reset_date);
           const formatted = new Intl.DateTimeFormat("ja-JP", {
             year: "numeric",
@@ -267,7 +267,7 @@ export default function MyPageContent({ user, onLogout }: Props) {
           <UsageDisplay
             currentUsage={currentUsage}
             limit={monthlyLimit}
-            effectiveDate={effectiveDate}
+            effectiveDate={hasPaymentMethod ? effectiveDate : ""}
           />
           <PaymentMethod
             provider="stripe"
