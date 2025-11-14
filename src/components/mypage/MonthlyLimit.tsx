@@ -8,7 +8,7 @@ interface MonthlyLimitProps {
   isActive: boolean;
 }
 
-const PRESET_VALUES = [10, 30, 50, 100];
+const PRESET_VALUES = [1, 10, 30, 50, 100];
 
 export default function MonthlyLimit({
   defaultLimit,
@@ -64,18 +64,18 @@ export default function MonthlyLimit({
       <div className="slider-container">
         <input
           type="range"
-          min="10"
+          min="1"
           max="300"
           value={limit}
           onChange={handleSliderChange}
           className={`slider ${!isSafetyLocked ? "locked" : ""}`}
           disabled={!isSafetyLocked || !isActive}
           style={{
-            background: `linear-gradient(to right, ${!isSafetyLocked || !isActive ? "#999" : "#246FAC"} 0%, ${!isSafetyLocked ||  !isActive  ? "#999" : "#246FAC"} ${((limit - 10) / (300 - 10)) * 100}%, #e5e5e5 ${((limit - 10) / (300 - 10)) * 100}%, #e5e5e5 100%)`,
+            background: `linear-gradient(to right, ${!isSafetyLocked || !isActive ? "#999" : "#246FAC"} 0%, ${!isSafetyLocked ||  !isActive  ? "#999" : "#246FAC"} ${((limit - 1) / (300 - 1)) * 100}%, #e5e5e5 ${((limit - 1) / (300 - 1)) * 100}%, #e5e5e5 100%)`,
           }}
         />
         <div className="slider-labels">
-          <span>$10</span>
+          <span>$1</span>
           <span>$300</span>
         </div>
       </div>
