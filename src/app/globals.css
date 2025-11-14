@@ -208,10 +208,11 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Noto Sans JP', sans-serif;
 }
 
 body {
-    font-family: 'DIN 2014', 'Segoe UI', 'Hiragino Sans', 'Meiryo', sans-serif;
+    font-family: 'Noto Sans JP', sans-serif;
     background: #f1f1f1;
     color: #222;
 }
@@ -222,15 +223,12 @@ body {
     overflow-y: auto;
     margin: 0 auto 0;
     max-width: 400px;
-    scroll-snap-type: y proximity;
-    scroll-padding-top:64px;
     scrollbar-width: none;
 }
 
 section {
     background: #fff;
     text-align: center;
-    scroll-snap-align: start;
 }
 
 section.hero {
@@ -291,22 +289,25 @@ section img {
 }
 
 /* ===== ヘッダー ===== */
-.header.fixed-header {
+.header{
     background: #fff;
     padding: 2px 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    position: fixed;
-    top: 0;
-    left: 0;
     width: 100%;
     z-index: 1000;
     transition: transform 0.35s cubic-bezier(.4,0,.2,1), box-shadow 0.3s;
     will-change: transform;
 }
 
-.header.fixed-header.show {
+.fixed-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.header.show {
     transform: translateY(0);
 }
 
@@ -896,6 +897,15 @@ margin-top: 8px;
 
 /* Mobile styles */
 @media (max-width: 768px) {
+    .content {
+        scroll-snap-type: y proximity;
+        scroll-padding-top:64px;
+    }
+
+    section {
+        scroll-snap-align: start;
+    }
+
     section img {
         width: auto;
         max-width: 80vw;
@@ -903,5 +913,9 @@ margin-top: 8px;
     }
     .hero .hero-image {
         max-width: 100%;
+    }
+
+    .header-inner {
+        padding: 0 16px;
     }
 }

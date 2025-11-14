@@ -17,11 +17,6 @@ export default function UsageDisplay({
 
   return (
     <div className="usage-display-card">
-      <div className="effective-date">
-        <span className="label">リセット日</span>
-        <span className="date">{effectiveDate}</span>
-      </div>
-
       <div className="usage-stats">
         <div className="usage-row">
           <span className="usage-label">現在の利用額</span>
@@ -43,6 +38,11 @@ export default function UsageDisplay({
         <span className="remaining-value">
           {limit === 0 ? "上限未設定" : `$${remaining}`}
         </span>
+      </div>
+
+      <div className="effective-date">
+        <span className="label">次回リセット日</span>
+        <span className="date">{effectiveDate}</span>
       </div>
     </div>
   );

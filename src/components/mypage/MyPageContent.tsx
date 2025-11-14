@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import type { User } from "@supabase/supabase-js";
 import { createClient as createSupabaseClient } from "@/utils/supabase/client";
+import SimyLaunchSection from "@/components/mypage/SimyLaunchSection";
+import NextSteps from "@/components/mypage/NextSteps";
 import MonthlyLimit from "@/components/mypage/MonthlyLimit";
 import UsageDisplay from "@/components/mypage/UsageDisplay";
 import PaymentMethod from "@/components/mypage/PaymentMethod";
@@ -238,20 +240,7 @@ export default function MyPageContent({ user, onLogout }: Props) {
   return (
     <div className="mypage-container">
       <div className="mypage-header">
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            gap: 12,
-            paddingTop: 80,
-          }}
-        >
-          <h1 className="mypage-title">マイページ</h1>
-          <button className="logout-btn" onClick={handleLogout}>
-            ログアウト
-          </button>
-        </div>
+        <h1 className="mypage-title">マイページ</h1>
         <p className="user-info">
           <strong>メールアドレス:</strong> {user.email}
         </p>
@@ -261,55 +250,37 @@ export default function MyPageContent({ user, onLogout }: Props) {
       </div>
 
       {isLoading ? (
-        <div style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          minHeight: '300px'
-        }}>
-          <div style={{
-            width: '50px',
-            height: '50px',
-            border: '5px solid #f3f3f3',
-            borderTop: '5px solid #3498db',
-            borderRadius: '50%',
-            animation: 'spin 1s linear infinite'
-          }} />
-          <style jsx>{`
-            @keyframes spin {
-              0% { transform: rotate(0deg); }
-              100% { transform: rotate(360deg); }
-            }
-          `}</style>
+        <div className="loading-container">
+          <div className="loading-spinner" />
         </div>
       ) : (
         <>
-          {hasPaymentMethod ? (
-            <>
-              <ServiceStatus
-                isActive={isActive}
-                isUpdating={isUpdatingActive}
-                onToggle={handleActiveToggle}
-              />
-              <MonthlyLimit
-                isActive={isActive}
-                defaultLimit={monthlyLimit}
-                onLimitChange={handleLimitChange}
-              />
-              <UsageDisplay
-                currentUsage={currentUsage}
-                limit={monthlyLimit}
-                effectiveDate={effectiveDate}
-              />
-            </>
-          ) : null}
-
+          <SimyLaunchSection />
+          <NextSteps hasPaymentMethod={hasPaymentMethod} />
+          <MonthlyLimit
+            isActive={isActive}
+            defaultLimit={monthlyLimit}
+            onLimitChange={handleLimitChange}
+          />
+          <UsageDisplay
+            currentUsage={currentUsage}
+            limit={monthlyLimit}
+            effectiveDate={effectiveDate}
+          />
           <PaymentMethod 
             provider="stripe"
             hasPaymentMethod={hasPaymentMethod}
             customerInfo={customerInfo}
             userId={user.id}
           />
+          <ServiceStatus
+            isActive={isActive}
+            isUpdating={isUpdatingActive}
+            onToggle={handleActiveToggle}
+          />
+          <button className="logout-btn btn" onClick={handleLogout}>
+            ログアウト
+          </button>
         </>
       )}
     </div>

@@ -22,7 +22,7 @@ export default function MonthlyLimit({
 
   // 親の defaultLimit が更新されたら内部 state も更新
   useEffect(() => {
-    setLimit(defaultLimit);
+    setLimit(defaultLimit == 0 ? 300 :defaultLimit);
     setIsSafetyLocked(defaultLimit == 0 ? false : true);
   }, [defaultLimit]);
 
@@ -41,7 +41,7 @@ export default function MonthlyLimit({
 
   const handleIsSafetyCheck = (checked: boolean) => {
     if (!checked) {
-      setLimit(0);
+      setLimit(300);
       onLimitChange?.(0);
     } else {
       setLimit(10);
@@ -71,7 +71,7 @@ export default function MonthlyLimit({
           className={`slider ${!isSafetyLocked ? "locked" : ""}`}
           disabled={!isSafetyLocked || !isActive}
           style={{
-            background: `linear-gradient(to right, ${!isSafetyLocked || !isActive ? "#999" : "#0066FF"} 0%, ${!isSafetyLocked ||  !isActive  ? "#999" : "#0066FF"} ${((limit - 10) / (300 - 10)) * 100}%, #e5e5e5 ${((limit - 10) / (300 - 10)) * 100}%, #e5e5e5 100%)`,
+            background: `linear-gradient(to right, ${!isSafetyLocked || !isActive ? "#999" : "#246FAC"} 0%, ${!isSafetyLocked ||  !isActive  ? "#999" : "#246FAC"} ${((limit - 10) / (300 - 10)) * 100}%, #e5e5e5 ${((limit - 10) / (300 - 10)) * 100}%, #e5e5e5 100%)`,
           }}
         />
         <div className="slider-labels">
@@ -85,7 +85,7 @@ export default function MonthlyLimit({
           <button
             key={value}
             onClick={() => handlePresetClick(value)}
-            className={`preset-btn ${limit === value ? "active" : ""} ${!isSafetyLocked  ||  !isActive ? "locked" : ""}`}
+            className={`preset-btn btn ${limit === value ? "active" : ""} ${!isSafetyLocked  ||  !isActive ? "locked" : ""}`}
             disabled={!isSafetyLocked || !isActive }
           >
             ${value}

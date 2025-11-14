@@ -31,7 +31,7 @@ export default function AppleLoginButton({ className }: Props) {
         border: 'none',
         padding: '12px 24px',
         borderRadius: 6,
-        margin: '12px 0',
+        margin: '6px 0',
         display: 'flex',
         alignItems: 'center',
         fontSize: 16,
@@ -45,7 +45,7 @@ export default function AppleLoginButton({ className }: Props) {
         alt="Apple"
         style={{ width: 24, height: 24, marginRight: 12, filter: 'invert(1)' }}
       />
-      Appleで続行
+      Appleで始める
     </button>
   );
 }

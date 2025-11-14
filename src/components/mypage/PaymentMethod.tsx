@@ -68,33 +68,21 @@ export default function PaymentMethod({
             </div>
 
             {hasPaymentMethod && customerInfo.last4 && (
-                <div className="payment-info" style={{
-                    padding: '12px',
-                    background: '#f5f5f5',
-                    borderRadius: '6px',
-                    marginBottom: '16px'
-                }}>
-                    <div style={{ fontSize: '14px', color: '#666' }}>
+                <div className="payment-info">
+                    <div className="payment-card-details">
                         登録済みカード: {customerInfo.brand?.toUpperCase()} •••• {customerInfo.last4}
                     </div>
                 </div>
             )}
 
-            <button
-                className="manage-payment-btn"
-                onClick={handleManagePayment}
-                disabled={loading}
-            >
-                {loading ? '読み込み中...' : hasPaymentMethod ? '支払い方法を変更' : 'カードを登録'}
-            </button>
-
-            <div style={{
-                marginTop: '12px',
-                fontSize: '14px',
-                color: '#666',
-                textAlign: 'center'
-            }}>
-                従量課金用のカード情報を登録します
+            <div className="payment-actions">
+                <button
+                    className="manage-payment-btn btn"
+                    onClick={handleManagePayment}
+                    disabled={loading}
+                >
+                    {loading ? '読み込み中...' : hasPaymentMethod ? '支払い方法を変更' : 'カードを登録'}
+                </button>
             </div>
         </div>
     );

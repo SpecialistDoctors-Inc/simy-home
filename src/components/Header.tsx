@@ -6,9 +6,11 @@ import '../lib/i18n'
 
 type HeaderProps = {
   showInstallButton?: boolean;
+  showButton?: boolean;
+  fixed?: boolean;
 };
 
-export default function Header({ showInstallButton = false }: HeaderProps) {
+export default function Header({ fixed = true, showButton = true, showInstallButton = false }: HeaderProps) {
   const { t } = useTranslation()
   const [isVisible, setIsVisible] = useState(true)
   const lastScrollY = useRef(0)
@@ -61,7 +63,7 @@ export default function Header({ showInstallButton = false }: HeaderProps) {
   }, [])
 
   return (
-    <header className={`header fixed-header ${isVisible ? 'show' : 'hide'}`}>
+    <header className={`header ${fixed ? 'fixed-header' : ''} ${isVisible ? 'show' : 'hide'}`}>
       <div className="header-inner">
         <a href="/" className="logo-link-pc">
           <img
@@ -77,7 +79,8 @@ export default function Header({ showInstallButton = false }: HeaderProps) {
             className="logo"
           />
         </a>
-        {showInstallButton ? (
+        
+        {showButton && showInstallButton ? (
           <a
             href="https://apps.apple.com/us/app/ai-mentor-app/id6745385262"
             target="_blank"
@@ -86,14 +89,14 @@ export default function Header({ showInstallButton = false }: HeaderProps) {
           >
             {t('header.installApp')}
           </a>
-        ) : (
+        ) : showButton ?(
           <a
             href="/login"
             className="header-btn"
           >
             {t('header.getStarted')}
           </a>
-        )}
+        ) : <></>}
       </div>
     </header>
   )
