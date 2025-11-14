@@ -100,7 +100,7 @@ export default function MonthlyLimit({
             checked={isSafetyLocked}
             onChange={(e) => handleIsSafetyCheck(e.target.checked)}
           />
-          <span style={{ fontSize: "18px", fontWeight: "600" }}>
+          <span className="safety-lock-text">
             Safetyロック
           </span>
         </label>

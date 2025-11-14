@@ -152,7 +152,7 @@
 }
 
 .step-icon {
-    font-size: 18px;
+    font-size: 16px;
     margin-left: auto;
 }
 
@@ -263,7 +263,7 @@
 }
 
 .limit-note {
-    font-size: 18px;
+    font-size: 16px;
     color: #999;
     text-align: right;
     line-height: 1.4;
@@ -327,7 +327,7 @@
     display: flex;
     justify-content: space-between;
     margin-top: 8px;
-    font-size: 18px;
+    font-size: 16px;
     color: #666;
 }
 
@@ -345,7 +345,7 @@
     border-radius: 8px;
     background: #ffffff;
     color: #666;
-    font-size: 18px;
+    font-size: 16px;
 }
 
 .preset-btn:hover:not(.locked) {
@@ -375,7 +375,7 @@
     align-items: center;
     gap: 8px;
     cursor: pointer;
-    font-size: 18px;
+    font-size: 16px;
     line-height: 1.4;
 }
 
@@ -385,6 +385,11 @@
     width: 20px;
     height: 20px;
     accent-color: #246FAC;
+}
+
+.safety-lock-text {
+    font-size: 16px;
+    font-weight: 600;
 }
 
 .warning-text {
@@ -401,12 +406,12 @@
 }
 
 .effective-date .label {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600;
 }
 
 .effective-date .date {
-    font-size: 18px;
+    font-size: 16px;
 }
 
 .usage-stats {
@@ -426,12 +431,12 @@
 }
 
 .usage-percentage {
-    font-size: 18px;
+    font-size: 16px;
     color: #666;
 }
 
 .usage-amount {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600;
     margin-left: auto;
 }
@@ -460,11 +465,11 @@
 }
 
 .remaining-label {
-    font-size: 18px;
+    font-size: 16px;
 }
 
 .remaining-value {
-    font-size: 18px;
+    font-size: 16px;
 }
 
 /* Payment Method Card */
@@ -552,7 +557,7 @@
     justify-content: center;
     align-items: center;
     min-height: 400px;
-    font-size: 18px;
+    font-size: 16px;
     color: #666;
 }
 
@@ -567,7 +572,7 @@
     color: white;
     border: none;
     border-radius: 8px;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600;
     cursor: pointer;
     transition: background 0.2s;
