@@ -1,5 +1,5 @@
 module.exports = {
-  siteUrl: "https://ai-mentor.app/",
+  siteUrl: "https://simy.one/",
   generateRobotsTxt: true,
   sitemapSize: 7000,
   outDir: "./public",
@@ -18,28 +18,28 @@ module.exports = {
 
     // ホームページ
     res.push({
-      loc: `https://ai-mentor.app/`,
+      loc: `https://simy.one/`,
       priority: 1.0,
       lastmod: new Date().toISOString(),
     });
 
     // Terms of Use ページ
     res.push({
-      loc: `https://ai-mentor.app/terms.html`,
+      loc: `https://simy.one/terms.html`,
       priority: 0.7,
       lastmod: new Date().toISOString(),
     });
 
     // Privacy Policy ページ
     res.push({
-      loc: `https://ai-mentor.app/privacy.html`,
+      loc: `https://simy.one/privacy.html`,
       priority: 0.7,
       lastmod: new Date().toISOString(),
     });
 
     // Seller Information Disclosure ページ
     res.push({
-      loc: `https://ai-mentor.app/seller-info.html`,
+      loc: `https://simy.one/seller-info.html`,
       priority: 0.7,
       lastmod: new Date().toISOString(),
     });

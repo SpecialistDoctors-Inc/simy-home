@@ -2,38 +2,167 @@
 .mypage-container {
     max-width: 600px;
     margin: 0 auto;
-    padding: 40px 20px;
+    padding: 16px 10px;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
 }
 
 .mypage-header {
-    margin-bottom: 32px;
+    margin-bottom: 20px;
+}
+
+.mypage-header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
 }
 
 .mypage-title {
-    font-size: 32px;
+    font-size: 24px;
     font-weight: 700;
     margin-bottom: 8px;
-    color: #1a1a1a;
 }
 
 .user-info {
-    font-size: 16px;
+    font-size: 12px;
     color: #666;
-    margin-bottom: 4px;
+    margin-bottom: 2px;
 }
 
 /* Card Base Styles */
 .monthly-limit-card,
 .usage-display-card,
 .payment-method-card,
-.service-status-card {
+.service-status-card,
+.next-steps {
     background: #ffffff;
     border-radius: 12px;
     padding: 24px;
-    margin-bottom: 24px;
+    margin-bottom: 12px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     border: 1px solid #e5e5e5;
+}
+
+.promo-banner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    background: #EFF8FF;
+    border-radius: 12px;
+    padding: 16px 16px;
+    margin-bottom: 12px;
+    border: 1px solid #e5e5e5;
+}
+
+.promo-text {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.message-text {
+    font-size: 14px;
+}
+
+.btn {
+    display: block;
+    padding: 6px 20px 8px;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 14px;
+    text-decoration: none;
+    transition: background-color 0.2s;
+    cursor: pointer;
+    box-sizing: border-box;
+    border: 2px solid #246EAD;
+}
+
+.launch-simy-btn {
+    background-color: #246EAD;
+    color: #fff;
+    margin: 0 0 0 auto;
+}
+
+.launch-simy-btn:hover {
+    background-color: #1769c7;
+}
+
+.next-steps {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.next-steps-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 16px 0;
+}
+
+.step-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.step-number {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #D6D6D6;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 700;
+    flex-shrink: 0;
+    padding-bottom: 2px;
+}
+
+.step-number.active {
+    background: #246EAD;
+    color: #ffffff;
+}
+
+.step-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.step-label {
+    font-size: 14px;
+    color: #333;
+    margin: 0;
+}
+
+.step-action-btn {
+    background: #ffffff;
+    color: #246FAD;
+    border: 2px solid #246FAD;
+}
+
+.step-action-btn:hover {
+    background: #246FAD;
+    color: #ffffff;
+}
+
+.step-icon {
+    font-size: 16px;
+    margin-left: auto;
+}
+
+.step-divider {
+    width: 2px;
+    height: 40px;
+    background: #222;
+    margin-left: 13px;
+    margin-top: 4px;
+    margin-bottom: 4px;
 }
 
 /* Service Status Card */
@@ -44,14 +173,12 @@
 }
 
 .service-status-card .status-title {
-    margin: 0;
-    font-size: 18px;
+    margin-bottom: 16px;
+    font-size: 20px;
     font-weight: 600;
-    color: #333;
 }
 
 .service-status-card .status-description {
-    margin: 8px 0 0 0;
     font-size: 14px;
     color: #666;
 }
@@ -59,8 +186,8 @@
 .service-status-card .toggle-switch {
     position: relative;
     display: inline-block;
-    width: 60px;
-    height: 34px;
+    width: 54px;
+    height: 28px;
     cursor: pointer;
 }
 
@@ -98,8 +225,8 @@
 .service-status-card .toggle-slider::before {
     position: absolute;
     content: "";
-    height: 26px;
-    width: 26px;
+    height: 20px;
+    width: 20px;
     left: 4px;
     bottom: 4px;
     background-color: white;
@@ -113,34 +240,30 @@
 
 /* Monthly Limit Card */
 .card-title {
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 700;
     margin: 0 0 8px 0;
-    color: #1a1a1a;
 }
 
 .card-description {
-    font-size: 18px;
+    font-size: 14px;
     color: #666;
-    margin: 0 0 24px 0;
+    margin-bottom: 16px;
 }
 
 .limit-display {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 24px;
 }
 
 .limit-amount {
-    height: 60px;
     font-size: 36px;
     font-weight: 700;
-    color: #1a1a1a;
 }
 
 .limit-note {
-    font-size: 18px;
+    font-size: 16px;
     color: #999;
     text-align: right;
     line-height: 1.4;
@@ -148,14 +271,14 @@
 
 /* Slider */
 .slider-container {
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 }
 
 .slider {
     width: 100%;
     height: 6px;
     border-radius: 3px;
-    background: linear-gradient(to right, #0066FF 0%, #0066FF var(--slider-progress, 20%), #e5e5e5 var(--slider-progress, 20%), #e5e5e5 100%);
+    background: linear-gradient(to right, #246FAC 0%, #246FAC var(--slider-progress, 20%), #e5e5e5 var(--slider-progress, 20%), #e5e5e5 100%);
     outline: none;
     -webkit-appearance: none;
     appearance: none;
@@ -169,7 +292,7 @@
     width: 24px;
     height: 24px;
     border-radius: 50%;
-    background: #0066FF;
+    background: #246FAC;
     cursor: pointer;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
@@ -178,7 +301,7 @@
     width: 24px;
     height: 24px;
     border-radius: 50%;
-    background: #0066FF;
+    background: #246FAC;
     cursor: pointer;
     border: none;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -204,38 +327,36 @@
     display: flex;
     justify-content: space-between;
     margin-top: 8px;
-    font-size: 20px;
+    font-size: 16px;
     color: #666;
 }
 
 /* Preset Buttons */
 .preset-buttons {
+    flex-wrap: wrap;
     display: flex;
-    gap: 12px;
-    margin-bottom: 24px;
+    gap: 8px;
+    margin-bottom: 16px;
 }
 
 .preset-btn {
     flex: 1;
-    padding: 12px 16px;
     border: 2px solid #e5e5e5;
     border-radius: 8px;
     background: #ffffff;
-    font-size: 20px;
-    font-weight: 600;
     color: #666;
-    cursor: pointer;
-    transition: all 0.2s;
+    font-size: 16px;
 }
 
 .preset-btn:hover:not(.locked) {
-    border-color: #0066FF;
-    color: #0066FF;
+    border-color: #246FAC;
+    background: #246FAC;
+    color: #ffffff;
 }
 
 .preset-btn.active {
-    border-color: #0066FF;
-    background: #0066FF;
+    border-color: #246FAC;
+    background: #246FAC;
     color: #ffffff;
 }
 
@@ -246,7 +367,7 @@
 
 /* Safety Lock */
 .safety-lock-container {
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 }
 
 .safety-lock-label {
@@ -254,8 +375,7 @@
     align-items: center;
     gap: 8px;
     cursor: pointer;
-    font-size: 18px;
-    color: #666;
+    font-size: 16px;
     line-height: 1.4;
 }
 
@@ -264,10 +384,16 @@
     cursor: pointer;
     width: 20px;
     height: 20px;
+    accent-color: #246FAC;
+}
+
+.safety-lock-text {
+    font-size: 16px;
+    font-weight: 600;
 }
 
 .warning-text {
-    font-size: 16px;
+    font-size: 14px;
     color: #666;
     margin: 0;
     line-height: 1.5;
@@ -277,48 +403,41 @@
 .effective-date {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 24px;
-    padding-bottom: 16px;
-    border-bottom: 1px solid #e5e5e5;
 }
 
 .effective-date .label {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600;
-    color: #1a1a1a;
 }
 
 .effective-date .date {
-    font-size: 18px;
-    color: #1a1a1a;
+    font-size: 16px;
 }
 
 .usage-stats {
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 }
 
 .usage-row {
     display: flex;
     align-items: center;
     gap: 12px;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
 }
 
 .usage-label {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 600;
-    color: #1a1a1a;
 }
 
 .usage-percentage {
-    font-size: 18px;
-    font-weight: 600;
-    color: #1a1a1a;
+    font-size: 16px;
+    color: #666;
 }
 
 .usage-amount {
-    font-size: 18px;
-    color: #1a1a1a;
+    font-size: 16px;
+    font-weight: 600;
     margin-left: auto;
 }
 
@@ -340,18 +459,17 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 30px;
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
 }
 
 .remaining-label {
-    font-size: 18px;
-    color: #666;
+    font-size: 16px;
 }
 
 .remaining-value {
-    font-size: 20px;
-    font-weight: 600;
-    color: #1a1a1a;
+    font-size: 16px;
 }
 
 /* Payment Method Card */
@@ -365,7 +483,6 @@
 .payment-title {
     font-size: 20px;
     font-weight: 700;
-    color: #1a1a1a;
     margin: 0;
 }
 
@@ -378,33 +495,69 @@
     width: auto;
 }
 
-.manage-payment-btn {
-    display: block;
-    width: 180px;
+.payment-info {
     padding: 12px;
-    background: #0066FF;
-    border: none;
+    background: #f5f5f5;
+    border-radius: 6px;
+    margin-bottom: 16px;
+}
+
+.payment-card-details {
+    font-size: 14px;
+    color: #666;
+}
+
+.payment-actions {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+}
+
+.manage-payment-btn {
+    background: #246FAC;
     color: #ffffff;
-    font-size: 18px;
-    font-weight: 600;
-    cursor: pointer;
-    text-align: center;
-    transition: opacity 0.2s;
-    border-radius: 8px;
+    border: 2px solid #246FAC;
 }
 
-.manage-payment-btn:hover {
-    opacity: 0.7;
+.free-trial-link {
+    font-size: 14px;
+    color: #666;
+    text-decoration: none;
 }
 
-/* Loading & Error States */
-.loading-container,
+.free-trial-link:hover {
+    text-decoration: underline;
+}
+
+/* Loading State */
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Error States */
 .error-container {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 400px;
-    font-size: 18px;
+    font-size: 16px;
     color: #666;
 }
 
@@ -415,11 +568,11 @@
 
 .login-btn {
     padding: 12px 24px;
-    background: #0066FF;
+    background: #246FAC;
     color: white;
     border: none;
     border-radius: 8px;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600;
     cursor: pointer;
     transition: background 0.2s;
@@ -431,16 +584,38 @@
 
 /* Logout button */
 .logout-btn {
-    padding: 8px 12px;
     background: #f7f7f7;
     color: #333;
     border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    font-size: 18px;
-    font-weight: 600;
-    cursor: pointer;
+    margin: 16px auto;
 }
 
 .logout-btn:hover {
     background: #eeeeee;
+}
+
+.login-loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 120px;
+}
+
+.login-welcome-container {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 120px 0 60px;
+    min-height: 100vh;
+}
+
+.login-welcome-heading {
+    margin-bottom: 40px;
+    text-align: center;
+    padding: 0 16px;
+}
+
+.login-page-logo{
+    height: 80px;
 }

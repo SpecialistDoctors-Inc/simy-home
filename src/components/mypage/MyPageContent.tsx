@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import type { User } from "@supabase/supabase-js";
 import { createClient as createSupabaseClient } from "@/utils/supabase/client";
+import SimyLaunchSection from "@/components/mypage/SimyLaunchSection";
+import NextSteps from "@/components/mypage/NextSteps";
 import MonthlyLimit from "@/components/mypage/MonthlyLimit";
 import UsageDisplay from "@/components/mypage/UsageDisplay";
 import PaymentMethod from "@/components/mypage/PaymentMethod";
@@ -47,8 +49,12 @@ export default function MyPageContent({ user, onLogout }: Props) {
   // Service active state
   const [isActive, setIsActive] = useState(true);
   const [isUpdatingActive, setIsUpdatingActive] = useState(false);
+  
+  // Loading state
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    setIsLoading(true);
     const fetchUserSettings = async () => {
       try {
         const supabase = createSupabaseClient();
@@ -78,6 +84,8 @@ export default function MyPageContent({ user, onLogout }: Props) {
             day: "numeric",
           }).format(d);
           setEffectiveDate(formatted);
+        } else {
+          setEffectiveDate("");
         }
         if (typeof data.is_active === "boolean") {
           setIsActive(data.is_active);
@@ -148,8 +156,12 @@ export default function MyPageContent({ user, onLogout }: Props) {
       }
     };
 
-    fetchUserSettings();
-    loadPaymentMethodInfo();
+    const loadData = async () => {
+      await Promise.all([fetchUserSettings(), loadPaymentMethodInfo()]);
+      setIsLoading(false);
+    };
+    
+    loadData();
   }, [user.id]);
 
   const handleLimitChange = async (newLimit: number) => {
@@ -230,20 +242,7 @@ export default function MyPageContent({ user, onLogout }: Props) {
   return (
     <div className="mypage-container">
       <div className="mypage-header">
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            gap: 12,
-            paddingTop: 80,
-          }}
-        >
-          <h1 className="mypage-title">マイページ</h1>
-          <button className="logout-btn" onClick={handleLogout}>
-            ログアウト
-          </button>
-        </div>
+        <h1 className="mypage-title">マイページ</h1>
         <p className="user-info">
           <strong>メールアドレス:</strong> {user.email}
         </p>
@@ -252,13 +251,14 @@ export default function MyPageContent({ user, onLogout }: Props) {
         </p>
       </div>
 
-      {hasPaymentMethod ? (
+      {isLoading ? (
+        <div className="loading-container">
+          <div className="loading-spinner" />
+        </div>
+      ) : (
         <>
-          <ServiceStatus
-            isActive={isActive}
-            isUpdating={isUpdatingActive}
-            onToggle={handleActiveToggle}
-          />
+          {hasPaymentMethod? <></> : <SimyLaunchSection />}
+          {hasPaymentMethod? <></> : <NextSteps hasPaymentMethod={hasPaymentMethod} userId={user.id} />}
           <MonthlyLimit
             isActive={isActive}
             defaultLimit={monthlyLimit}
@@ -267,17 +267,24 @@ export default function MyPageContent({ user, onLogout }: Props) {
           <UsageDisplay
             currentUsage={currentUsage}
             limit={monthlyLimit}
-            effectiveDate={effectiveDate}
+            effectiveDate={hasPaymentMethod ? effectiveDate : ""}
           />
+          <PaymentMethod
+            provider="stripe"
+            hasPaymentMethod={hasPaymentMethod}
+            customerInfo={customerInfo}
+            userId={user.id}
+          />
+          <ServiceStatus
+            isActive={isActive}
+            isUpdating={isUpdatingActive}
+            onToggle={handleActiveToggle}
+          />
+          <button className="logout-btn btn" onClick={handleLogout}>
+            ログアウト
+          </button>
         </>
-      ) : null}
-
-      <PaymentMethod 
-        provider="stripe"
-        hasPaymentMethod={hasPaymentMethod}
-        customerInfo={customerInfo}
-        userId={user.id}
-      />
+      )}
     </div>
   );
 }

@@ -3,10 +3,13 @@
 import React, { useEffect, useState } from 'react';
 import GoogleLoginButton from '@/components/auth/GoogleLoginButton';
 import AppleLoginButton from '@/components/auth/AppleLoginButton';
-import Header from '@/components/Header';
 import MyPageContent from '@/components/mypage/MyPageContent';
 import { createClient } from '@/utils/supabase/client';
 import { User } from '@supabase/supabase-js';
+import { useTranslation } from 'react-i18next';
+import '../../lib/i18n'
+import '@/components/mypage/mypage.css';
+import Header from '@/components/Header';
 
 /**
  * ログイン/設定統合ページ
@@ -14,8 +17,10 @@ import { User } from '@supabase/supabase-js';
 export default function Login() {
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
+      const { i18n } = useTranslation()
 
     useEffect(() => {
+        i18n.changeLanguage('ja')
         const supabase = createClient();
 
         // 現在のユーザーセッションを取得
@@ -35,7 +40,7 @@ export default function Login() {
         return () => {
             subscription.unsubscribe();
         };
-    }, []);
+    }, [i18n]);
 
     const handleLogout = async () => {
         setUser(null);
@@ -44,8 +49,8 @@ export default function Login() {
     if (loading) {
         return (
             <main>
-                <Header />
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 120 }}>
+                <Header fixed={false} showButton={false} />
+                <div className="login-loading-container">
                     <div>読み込み中...</div>
                 </div>
             </main>
@@ -56,7 +61,7 @@ export default function Login() {
     if (user) {
         return (
             <main>
-                <Header showInstallButton={true} />
+                <Header fixed={false} showButton={false} />
                 <MyPageContent user={user} onLogout={handleLogout} />
             </main>
         );
@@ -65,9 +70,15 @@ export default function Login() {
     // 未ログインの場合はログインボタンを表示
     return (
         <main>
-            <Header />
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 120 }}>
-                <h2 style={{ marginBottom: 40 }}>Login / Sign Up</h2>
+            <div className="login-welcome-container">
+                <a href="/" className="login-page-logo-link">
+                    <img
+                        src="/img/icon_large.png"
+                        alt="SIMY"
+                        className="logo login-page-logo"
+                    />
+                </a>
+                <h2 className="login-welcome-heading">ようこそ SIMY へ</h2>
                 <GoogleLoginButton />
                 <AppleLoginButton />
             </div>

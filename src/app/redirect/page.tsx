@@ -54,7 +54,7 @@ export default function RedirectPage() {
         alignItems: 'center',
         justifyContent: 'center',
         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-        padding: '20px'
+        padding: '100px 20px'
       }}>
         <div style={{
           maxWidth: '500px',
@@ -72,7 +72,7 @@ export default function RedirectPage() {
             color: '#1a1a1a',
             marginBottom: '12px'
           }}>
-            AI Mentor
+            SIMY
           </h1>
 
           <p style={{

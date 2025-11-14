@@ -63,7 +63,7 @@ export default function SellerInfoPage() {
           <span className="separator">|</span>
           <Link href="/terms">利用規約</Link>
         </div>
-        <p className="copyright">&copy; 2025 AI Mentor. All rights reserved.</p>
+        <p className="copyright">&copy; 2025 AwakApp Inc. All rights reserved.</p>
       </footer>
     </div>
   );
