@@ -11,7 +11,7 @@ export default function Pricing() {
         <div className="pricing-card pricing-card-single">
           <div className="pricing-card-header">
             <h3 className="pricing-card-price-large">
-              0-10 USD<span className="pricing-card-period-inline">/月（税別）</span>
+              0-1 USD<span className="pricing-card-period-inline">/月（税別）</span>
             </h3>
             <p className="pricing-card-tagline">
               上限ガード付き・従量課金制
@@ -45,11 +45,11 @@ export default function Pricing() {
             </li>
             <li className="pricing-card-feature">
               <span className="pricing-card-feature-check">•</span>
-              月10 USDで自動停止(上限ガード)
+              月1 USDで自動停止(上限ガード)
             </li>
             <li className="pricing-card-feature">
               <span className="pricing-card-feature-check">•</span>
-              10 USD単位または任意金額でトップアップ可能
+              1 USD単位または任意金額でトップアップ可能
             </li>
           </ul>
           <a
