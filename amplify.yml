@@ -6,6 +6,7 @@ applications:
         preBuild:
           commands:
             - npm ci
+            - npm run prebuild
         build:
           commands:
             - echo "NEXT_PUBLIC_APP_ENV=$NEXT_PUBLIC_APP_ENV" >> .env.local

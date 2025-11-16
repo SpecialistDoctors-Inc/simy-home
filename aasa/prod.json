@@ -1,0 +1,17 @@
+{
+    "applinks": {
+        "details": [
+            {
+                "appIDs": [
+                    "S746URZ949.app.aimentor"
+                ],
+                "components": [
+                    {
+                        "/": "/app/*",
+                        "comment": "本番環境アプリ用"
+                    }
+                ]
+            }
+        ]
+    }
+}
