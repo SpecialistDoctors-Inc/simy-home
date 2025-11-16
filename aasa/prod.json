@@ -5,6 +5,9 @@
                 "appIDs": [
                     "S746URZ949.app.aimentor.dev"
                 ],
+                "paths": [
+                    "*"
+                ],
                 "components": [
                     {
                         "/": "/dev-app/*",
@@ -16,6 +19,9 @@
                 "appIDs": [
                     "S746URZ949.app.aimentor.stg"
                 ],
+                "paths": [
+                    "*"
+                ],
                 "components": [
                     {
                         "/": "/stg-app/*",
@@ -26,6 +32,9 @@
             {
                 "appIDs": [
                     "S746URZ949.app.aimentor"
+                ],
+                "paths": [
+                    "*"
                 ],
                 "components": [
                     {
