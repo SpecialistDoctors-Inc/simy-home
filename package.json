@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "next-sitemap": "next-sitemap --config next-sitemap.config.js"
+    "next-sitemap": "next-sitemap --config next-sitemap.config.js",
+    "prebuild": "node scripts/copy-aasa.js"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",

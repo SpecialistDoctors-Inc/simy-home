@@ -1,0 +1,24 @@
+{
+    "applinks": {
+        "details": [
+            {
+                "appIDs": [
+                    "S746URZ949.app.aimentor.dev"
+                ],
+                "components": [
+                    {
+                        "/": "/auth/callback"
+                    },
+                    {
+                        "/": "/auth/*"
+                    }
+                ]
+            }
+        ]
+    },
+    "webcredentials": {
+        "apps": [
+            "S746URZ949.app.aimentor.dev"
+        ]
+    }
+}

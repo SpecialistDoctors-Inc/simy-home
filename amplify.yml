@@ -6,6 +6,7 @@ applications:
         preBuild:
           commands:
             - npm ci
+            - npm run prebuild
         build:
           commands:
             - echo "NEXT_PUBLIC_APP_ENV=$NEXT_PUBLIC_APP_ENV" >> .env.local
@@ -18,3 +19,12 @@ applications:
       cache:
         paths:
           - node_modules/**/*
+    customHeaders:
+      - pattern: "/.well-known/apple-app-site-association"
+        headers: []
+      - pattern: "/.well-known/**"
+        headers: []
+      - pattern: "**/*"
+        headers:
+          - key: "WWW-Authenticate"
+            value: 'Basic realm="Restricted"'
