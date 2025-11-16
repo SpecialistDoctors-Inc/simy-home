@@ -3,6 +3,28 @@
         "details": [
             {
                 "appIDs": [
+                    "S746URZ949.app.aimentor.dev"
+                ],
+                "components": [
+                    {
+                        "/": "/dev-app/*",
+                        "comment": "開発環境アプリ用"
+                    }
+                ]
+            },
+            {
+                "appIDs": [
+                    "S746URZ949.app.aimentor.stg"
+                ],
+                "components": [
+                    {
+                        "/": "/stg-app/*",
+                        "comment": "ステージング環境アプリ用"
+                    }
+                ]
+            },
+            {
+                "appIDs": [
                     "S746URZ949.app.aimentor"
                 ],
                 "components": [
@@ -12,6 +34,13 @@
                     }
                 ]
             }
+        ]
+    },
+    "webcredentials": {
+        "apps": [
+            "S746URZ949.app.aimentor.dev",
+            "S746URZ949.app.aimentor.stg",
+            "S746URZ949.app.aimentor"
         ]
     }
 }
