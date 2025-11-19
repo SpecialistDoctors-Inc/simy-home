@@ -40,7 +40,18 @@ export default function AuthCallback() {
         }
 
         if (session) {
-          window.location.href = '/login';
+          // リファラーをチェックしてモバイルアプリログインかどうか判定
+          const isAppLogin = document.referrer.includes('/auth/app-login') ||
+                            sessionStorage.getItem('app_login') === 'true';
+
+          if (isAppLogin) {
+            // モバイルアプリログインの場合は、mobile-verifyに遷移
+            sessionStorage.removeItem('app_login');
+            window.location.href = '/auth/mobile-verify';
+          } else {
+            // 通常のログインの場合は/loginへ
+            window.location.href = '/login';
+          }
         } else {
           const code = params.get('code');
 
@@ -58,7 +69,16 @@ export default function AuthCallback() {
                 }
               }, 2000);
             } else if (data.session) {
-              window.location.href = '/login';
+              // セッション確立後も同じロジック
+              const isAppLogin = document.referrer.includes('/auth/app-login') ||
+                                sessionStorage.getItem('app_login') === 'true';
+
+              if (isAppLogin) {
+                sessionStorage.removeItem('app_login');
+                window.location.href = '/auth/mobile-verify';
+              } else {
+                window.location.href = '/login';
+              }
             }
           } else {
             console.error('❌ No code and no session');

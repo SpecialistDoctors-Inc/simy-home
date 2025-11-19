@@ -118,7 +118,10 @@ export default function RedirectPage() {
               fontSize: '16px',
               fontWeight: '600',
               transition: 'transform 0.2s, box-shadow 0.2s',
-              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)'
+              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+              width: '100%',
+              maxWidth: '280px',
+              boxSizing: 'border-box'
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = 'translateY(-2px)';
@@ -131,6 +134,38 @@ export default function RedirectPage() {
           >
             App Storeで開く
           </a>
+
+          {/* アプリログインボタン */}
+          <div style={{ marginTop: '16px' }}>
+            <a
+              href="/auth/app-login"
+              style={{
+                display: 'inline-block',
+                background: 'transparent',
+                color: '#667eea',
+                padding: '16px 32px',
+                borderRadius: '12px',
+                textDecoration: 'none',
+                fontSize: '16px',
+                fontWeight: '600',
+                border: '2px solid #667eea',
+                transition: 'all 0.2s',
+                width: '100%',
+                maxWidth: '280px',
+                boxSizing: 'border-box'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = '#667eea';
+                e.currentTarget.style.color = 'white';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'transparent';
+                e.currentTarget.style.color = '#667eea';
+              }}
+            >
+              🔐 アプリでログイン
+            </a>
+          </div>
 
           {/* フッター情報 */}
           <p style={{
