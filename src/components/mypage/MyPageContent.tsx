@@ -242,7 +242,27 @@ export default function MyPageContent({ user, onLogout }: Props) {
   return (
     <div className="mypage-container">
       <div className="mypage-header">
-        <h1 className="mypage-title">マイページ</h1>
+        <div className="mypage-header-top">
+          <h1 className="mypage-title">マイページ</h1>
+          <a
+            href="/auth/app-login"
+            className="btn app-login-btn"
+            style={{
+              display: 'inline-block',
+              textAlign: 'center',
+              textDecoration: 'none',
+              background: '#667eea',
+              color: 'white',
+              border: '2px solid #667eea',
+              padding: '8px 16px',
+              fontSize: '14px',
+              margin: 0,
+              whiteSpace: 'nowrap'
+            }}
+          >
+            🔐 アプリへログイン
+          </a>
+        </div>
         <p className="user-info">
           <strong>メールアドレス:</strong> {user.email}
         </p>
@@ -280,6 +300,7 @@ export default function MyPageContent({ user, onLogout }: Props) {
             isUpdating={isUpdatingActive}
             onToggle={handleActiveToggle}
           />
+
           <button className="logout-btn btn" onClick={handleLogout}>
             ログアウト
           </button>
