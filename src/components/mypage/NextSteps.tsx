@@ -11,14 +11,19 @@ export default function NextSteps({
   hasPaymentMethod,
   userId
  }: NextStepsProps) {
-  const handleRegisterCard = async () => { 
+  const handleRegisterCard = async () => {
     try {
         const supabase = createClient();
+
+        // アプリからのアクセスかチェック
+        const isFromApp = sessionStorage.getItem('app_login') === 'true';
 
         const { data, error } = await supabase.functions.invoke('stripe-start-session', {
             body: {
               user_id: userId,
-              success_url: hasPaymentMethod ? window.location.origin + "/login" : window.location.origin + "/redirect",
+              success_url: isFromApp
+                  ? window.location.origin + "/auth/mobile-verify"
+                  : (hasPaymentMethod ? window.location.origin + "/login" : window.location.origin + "/redirect"),
               cancel_url: window.location.origin + "/login",
             }
         });
