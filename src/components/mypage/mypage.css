@@ -594,28 +594,109 @@
     background: #eeeeee;
 }
 
+/* Login Page Styles */
 .login-loading-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 120px;
+    justify-content: center;
+    min-height: 100vh;
+    background: url('/img/background.png') center center / cover no-repeat;
 }
 
 .login-welcome-container {
-    background-color: white;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
     align-items: center;
-    padding: 120px 0 60px;
+    padding: 60px 60px;
     min-height: 100vh;
+    background: url('/img/background.png') center center / cover no-repeat;
+    box-sizing: border-box;
+}
+
+.login-card {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+    max-width: 420px;
+    width: 100%;
+    justify-self: end;
+    margin-right: 80px;
+}
+
+.login-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.login-page-logo-link {
+    display: inline-block;
+}
+
+.login-page-logo {
+    height: 56px;
+    width: auto;
+}
+
+.login-no-account-link {
+    color: #6366F1;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.login-no-account-link:hover {
+    text-decoration: underline;
+}
+
+.login-welcome-subheading {
+    font-weight: 600;
+    font-size: 18px;
+    margin: 0 0 16px 0;
+    color: #1a1a1a;
+    line-height: 1.2;
 }
 
 .login-welcome-heading {
-    margin-bottom: 40px;
-    text-align: center;
-    padding: 0 16px;
+    font-size: 40px;
+    font-weight: 700;
+    margin: 0 0 40px 0;
+    color: #1a1a1a;
+    line-height: 1.2;
 }
 
-.login-page-logo{
-    height: 80px;
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .login-welcome-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        padding: 60px 40px;
+    }
+    
+    .login-card {
+        justify-self: center;
+        max-width: 500px;
+        margin-right: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .login-welcome-container {
+        padding: 40px 20px;
+    }
+    
+    .login-card {
+        padding: 32px 24px;
+        border-radius: 16px;
+    }
+    
+    .login-welcome-heading {
+        font-size: 32px;
+        margin-bottom: 20px;
+    }
 }

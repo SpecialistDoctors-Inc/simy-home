@@ -7,14 +7,17 @@ export default function Section2() {
 
   return (
     <section className="section2">
-      <h2>SIMYのご紹介</h2>
-      <h3>❶ SlackやZoom、Teamsの会話を<br/>
-      AIが読み取り、進捗を自動で整理・更新</h3>
-      <img 
-        src="/img/1.png" 
-        alt={t('hero.altText')}
-        className="section2-image"
-      />
+      <div>
+        <h2>{t('section2b.title')}</h2>
+        <h3 dangerouslySetInnerHTML={{ __html: t('section2b.subtitle') }} />
+      </div>
+      <div>
+        <img
+          src="/img/1.png"
+          alt={t('hero.altText')}
+          className="section2-image"
+        />
+      </div>
     </section>
   )
 }

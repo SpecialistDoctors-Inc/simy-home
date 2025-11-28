@@ -5,7 +5,6 @@ import Header from '@/components/Header'
 import Hero from '@/components/Hero'
 import Pricing from '@/components/Pricing'
 import Footer from '@/components/Footer'
-import LanguageSwitcher from '@/components/LanguageSwitcher'
 import Section2 from '@/components/Section2'
 import Section3 from '@/components/Section3'
 
@@ -15,8 +14,7 @@ export default function LocalePage({ params: { locale } }: { params: { locale: s
 
   return (
       <main>
-      <Header />
-      <LanguageSwitcher currentLocale="ja" />
+      <Header locale={locale} />
       <div className="content">
         <Hero />
         <Section2 />
