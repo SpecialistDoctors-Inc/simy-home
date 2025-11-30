@@ -986,12 +986,12 @@ margin-top: 8px;
     }
 
     .content {
-        scroll-snap-type: y proximity;
-        scroll-padding-top:64px;
+        /* scroll-snap-type: y proximity; */
+        /* scroll-padding-top:64px; */
     }
 
     section {
-        scroll-snap-align: start;
+        /* scroll-snap-align: start; */
     }
 
     section.hero{
