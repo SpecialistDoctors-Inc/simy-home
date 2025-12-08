@@ -13,7 +13,7 @@ export default function Section2() {
       </div>
       <div>
         <img
-          src="/img/1.png"
+          src={t('section2b.image')}
           alt={t('hero.altText')}
           className="section2-image"
         />

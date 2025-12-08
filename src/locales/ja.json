@@ -48,11 +48,11 @@
       }
     },
     "plus": {
-  "title": "プラス",
-  "popular": "人気",
-  "price": "¥4,480",
-  "period": "/ユーザー/月、年払い",
-  "monthly": "または月払い ¥5,980",
+      "title": "プラス",
+      "popular": "人気",
+      "price": "¥4,480",
+      "period": "/ユーザー/月、年払い",
+      "monthly": "または月払い ¥5,980",
       "buttonText": "プロを選ぶ",
       "features": {
         "updates": "1日10回 インスタント更新を試す",
@@ -67,22 +67,22 @@
       }
     },
     "basic": {
-  "title": "ベーシック",
-  "monthlyPrice": "2,980円",
-  "annualPrice": "2,480円",
-  "period": "/ユーザー/月、年払い",
-  "monthly": "または月払い 2,980円",
-  "annual": "年払い 2,480円"
+      "title": "ベーシック",
+      "monthlyPrice": "2,980円",
+      "annualPrice": "2,480円",
+      "period": "/ユーザー/月、年払い",
+      "monthly": "または月払い 2,980円",
+      "annual": "年払い 2,480円"
     },
     "pro": {
-  "title": "プロ",
-  "monthlyPrice": "14,800円",
-  "annualPrice": "11,980円",
-  "period": "/ユーザー/月、年払い",
-  "monthly": "または月払い 14,800円",
-  "annual": "年払い 11,980円"
-      }
-    },
+      "title": "プロ",
+      "monthlyPrice": "14,800円",
+      "annualPrice": "11,980円",
+      "period": "/ユーザー/月、年払い",
+      "monthly": "または月払い 14,800円",
+      "annual": "年払い 11,980円"
+    }
+  },
   "callToAction": {
     "title": "SIMY で<br>あなたの一日を<br>スタートしよう",
     "logoAlt": "SIMY ロゴ",
@@ -117,12 +117,12 @@
     "altText": "SIMY"
   },
   "footer": {
-  "logoAlt": "SIMY ロゴ",
-  "termsOfUse": "利用規約",
-  "privacyPolicy": "プライバシーポリシー",
-  "sellerInfo": "特定商取引法に基づく表記",
-  "awakappAlt": "AwakApp ロゴ",
-  "copyright": "Copyright 2025 AwakApp."
+    "logoAlt": "SIMY ロゴ",
+    "termsOfUse": "利用規約",
+    "privacyPolicy": "プライバシーポリシー",
+    "sellerInfo": "特定商取引法に基づく表記",
+    "awakappAlt": "AwakApp ロゴ",
+    "copyright": "Copyright 2025 AwakApp."
   },
   "hero2": {
     "title": "人にお願いした仕事<br />今どうなってる？",
@@ -130,10 +130,12 @@
   },
   "section2b": {
     "title": "SIMYのご紹介",
-    "subtitle": "❶ SlackやZoom、Teamsの会話を<br/>AIが読み取り、進捗を自動で整理・更新"
+    "subtitle": "❶ SlackやZoom、Teamsの会話を<br/>AIが読み取り、進捗を自動で整理・更新",
+    "image": "/img/1.png"
   },
   "section3b": {
-    "subtitle": "❷ 個々人の止まっているタスクも、<br/>次に動かすべきアクションも、<br/>一目で見えるダッシュボード"
+    "subtitle": "❷ 個々人の止まっているタスクも、<br/>次に動かすべきアクションも、<br/>一目で見えるダッシュボード",
+    "image": "/img/2.png"
   },
   "pricing2": {
     "title": "価格表",

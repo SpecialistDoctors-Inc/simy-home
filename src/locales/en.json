@@ -48,11 +48,11 @@
       }
     },
     "plus": {
-  "title": "Plus",
-  "popular": "POPULAR",
-  "price": "$29.99",
-  "period": "/seat/month, billed annually",
-  "monthly": "or $39.99 billed monthly",
+      "title": "Plus",
+      "popular": "POPULAR",
+      "price": "$29.99",
+      "period": "/seat/month, billed annually",
+      "monthly": "or $39.99 billed monthly",
       "buttonText": "Choose Pro",
       "features": {
         "updates": "10 times/day Try instant updates",
@@ -66,23 +66,23 @@
         "noAds": "No Ads"
       }
     },
-      "basic": {
-  "title": "Basic",
-  "monthlyPrice": "$19.99",
-  "annualPrice": "$15.99",
-  "period": "/seat/month, billed annually",
-  "monthly": "or $19.99 billed monthly",
-  "annual": "billed annually $15.99"
-      },
-      "pro": {
-  "title": "Pro",
-  "monthlyPrice": "$99.99",
-  "annualPrice": "$79.99",
-  "period": "/seat/month, billed annually",
-        "monthly": "or $99.99 billed monthly",
-        "annual": "billed annually $79.99"
-      }
+    "basic": {
+      "title": "Basic",
+      "monthlyPrice": "$19.99",
+      "annualPrice": "$15.99",
+      "period": "/seat/month, billed annually",
+      "monthly": "or $19.99 billed monthly",
+      "annual": "billed annually $15.99"
     },
+    "pro": {
+      "title": "Pro",
+      "monthlyPrice": "$99.99",
+      "annualPrice": "$79.99",
+      "period": "/seat/month, billed annually",
+      "monthly": "or $99.99 billed monthly",
+      "annual": "billed annually $79.99"
+    }
+  },
   "callToAction": {
     "title": "START DRIVING<br>YOUR DAY<br>WITH SIMY",
     "logoAlt": "SIMY Logo",
@@ -117,12 +117,12 @@
     "altText": "SIMY"
   },
   "footer": {
-  "logoAlt": "SIMY Logo",
-  "termsOfUse": "Terms of Use",
-  "privacyPolicy": "Privacy Policy",
-  "sellerInfo": "Legal Notice",
-  "awakappAlt": "AwakApp Logo",
-  "copyright": "Copyright 2025 AwakApp."
+    "logoAlt": "SIMY Logo",
+    "termsOfUse": "Terms of Use",
+    "privacyPolicy": "Privacy Policy",
+    "sellerInfo": "Legal Notice",
+    "awakappAlt": "AwakApp Logo",
+    "copyright": "Copyright 2025 AwakApp."
   },
   "hero2": {
     "title": "Where did that<br />task go?",
@@ -130,10 +130,12 @@
   },
   "section2b": {
     "title": "Meet SIMY",
-    "subtitle": "❶ AI reads your Email, Slack, Zoom<br/>and auto-updates task progress"
+    "subtitle": "❶ AI reads your Email, Slack, Zoom<br/>and auto-updates task progress",
+    "image": "/img/1_en.png"
   },
   "section3b": {
-    "subtitle": "❷ One dashboard shows<br />what's blocked,<br/>who to nudge,<br />what's next.<br/>Stop chasing. Start knowing."
+    "subtitle": "❷ One dashboard shows<br />what's blocked,<br/>who to nudge,<br />what's next.<br/>Stop chasing. Start knowing.",
+    "image": "/img/2_en.png"
   },
   "pricing2": {
     "title": "Simple Pricing",
