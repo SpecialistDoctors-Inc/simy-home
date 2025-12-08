@@ -5,25 +5,30 @@ export default function Hero() {
   
   return (
     <section className="hero">
-      <img 
-        src="/img/top.png" 
-        alt={t('hero.altText')}
-        className="hero-image"
-      />
-      <h1>人にお願いした仕事<br />今どうなってる？</h1>
-      <h2>お願いしたすべてのタスクを、<br />
-        ひとつの画面で進捗管理。
-        <br /><br />
-        止まっているタスクも、<br />
-        次に動かすべきアクションも、<br />
-        一目で見えるダッシュボード。</h2>
       <div>
-        <a
-          href="/login"
-          className="header-btn"
-        >
-          {t('header.getStarted')}
-        </a>
+        <img 
+          src="/img/fv.png" 
+          alt={t('hero.altText')}
+          className="hero-image"
+        />
+      </div>
+      <div>
+        <h1 dangerouslySetInnerHTML={{ __html: t('hero2.title') }} />
+        <h2 dangerouslySetInnerHTML={{ __html: t('hero2.subtitle') }} />
+        <div>
+          <a
+            href="https://apps.apple.com/jp/app/simy/id6745385262"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="header-btn"
+          >
+            <img
+              src="/img/apple_install.svg"
+              alt="Download on the App Store"
+              className="appstore-badge"
+            />
+          </a>
+        </div>
       </div>
     </section>
   )

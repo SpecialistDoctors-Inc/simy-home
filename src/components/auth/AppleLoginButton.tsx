@@ -30,13 +30,13 @@ export default function AppleLoginButton({ className }: Props) {
         color: '#fff',
         border: 'none',
         padding: '12px 24px',
-        borderRadius: 6,
-        margin: '6px 0',
+        borderRadius: 12,
+        margin: '12px 0',
         display: 'flex',
         alignItems: 'center',
         fontSize: 16,
         cursor: 'pointer',
-        width: 260,
+        width: '100%',
         justifyContent: 'center',
       }}
     >

@@ -7,14 +7,16 @@ export default function Section3() {
 
   return (
     <section className="section3">
-      <h3>❷ 個々人の止まっているタスクも、<br/>
-      次に動かすべきアクションも、<br/>
-      一目で見えるダッシュボード</h3>
-      <img 
-        src="/img/2.png" 
-        alt={t('hero.altText')}
-        className="section3-image"
-      />
+      <div>
+        <h3 dangerouslySetInnerHTML={{ __html: t('section3b.subtitle') }} />
+      </div>
+      <div>
+        <img
+          src={t('section3b.image')}
+          alt={t('hero.altText')}
+          className="section3-image"
+        />
+      </div>
     </section>
   )
 }

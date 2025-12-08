@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { createClient } from '@/utils/supabase/client';
 
 const APP_SCHEME = 'simy.dev:';
-const APP_STORE_URL = 'https://apps.apple.com/us/app/ai-mentor-app/id6745385262';
+const APP_STORE_URL = 'https://apps.apple.com/jp/app/simy/id6745385262';
 
 export default function MobileVerifyPage() {
   const [status, setStatus] = useState<'verifying' | 'success' | 'error'>('verifying');

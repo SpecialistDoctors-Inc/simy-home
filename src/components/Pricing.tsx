@@ -5,58 +5,55 @@ export default function Pricing() {
  
   return (
     <section className="pricing">
-      <h2 className="pricing-title">価格表</h2>
-      <h3 className="pricing-subtitle">使った分だけ<br/>トークン数に応じた料金体系</h3>
+      <h2 className="pricing-title">{t('pricing2.title')}</h2>
       <div className="pricing-container">
         <div className="pricing-card pricing-card-single">
           <div className="pricing-card-header">
             <h3 className="pricing-card-price-large">
-              0-1 USD<span className="pricing-card-period-inline">/月（税別）</span>
+              {t('pricing2.price')}
             </h3>
             <p className="pricing-card-tagline">
-              上限ガード付き・従量課金制
+              {t('pricing2.tagline')}
             </p>
           </div>
-          
+
           <ul className="pricing-card-features">
             <li className="pricing-card-feature">
               <span className="pricing-card-feature-check">•</span>
-              Gmail / Slack / Zoom の会話をAIが自動解析
+              {t('pricing2.features.autoAnalysis')}
             </li>
             <li className="pricing-card-feature">
               <span className="pricing-card-feature-check">•</span>
-              他人に依頼した仕事の進捗を自動で整理・可視化
+              {t('pricing2.features.progressVisualization')}
             </li>
             <li className="pricing-card-feature">
               <span className="pricing-card-feature-check">•</span>
-              停滞している依頼や次に動かすべきアクションを提示
+              {t('pricing2.features.actionSuggestion')}
             </li>
             <li className="pricing-card-feature">
               <span className="pricing-card-feature-check">•</span>
-              関連するタスクを文脈から自動リンク
+              {t('pricing2.features.autoLink')}
             </li>
             <li className="pricing-card-feature">
               <span className="pricing-card-feature-check">•</span>
-              ダッシュボードで「誰が・何を・どこまで」一目で把握
+              {t('pricing2.features.dashboard')}
             </li>
             <li className="pricing-card-feature">
               <span className="pricing-card-feature-check">•</span>
-              利用量に応じて自動課金
-            </li>
-            <li className="pricing-card-feature">
-              <span className="pricing-card-feature-check">•</span>
-              月1 USDで自動停止(上限ガード)
-            </li>
-            <li className="pricing-card-feature">
-              <span className="pricing-card-feature-check">•</span>
-              1 USD単位または任意金額でトップアップ可能
+              {t('pricing2.features.autoCharge')}
             </li>
           </ul>
           <a
-            href="/login"
+            href="https://apps.apple.com/jp/app/simy/id6745385262"
+            target="_blank"
+            rel="noopener noreferrer"
             className="header-btn"
           >
-            {t('header.getStarted')}
+            <img
+              src="/img/apple_install.svg"
+              alt="Download on the App Store"
+              className="appstore-badge"
+            />
           </a>
         </div>
       </div>

@@ -71,16 +71,21 @@ export default function Login() {
     return (
         <main>
             <div className="login-welcome-container">
-                <a href="/" className="login-page-logo-link">
-                    <img
-                        src="/img/icon_large.png"
-                        alt="SIMY"
-                        className="logo login-page-logo"
-                    />
-                </a>
-                <h2 className="login-welcome-heading">ようこそ SIMY へ</h2>
-                <GoogleLoginButton />
-                <AppleLoginButton />
+                <div className="login-card">
+                    <div className="login-card-header">
+                        <a href="/" className="login-page-logo-link">
+                            <img
+                                src="/img/icon_large.png"
+                                alt="SIMY"
+                                className="login-page-logo"
+                            />
+                        </a>
+                        <h3 className="login-welcome-subheading">ようこそ SIMY へ</h3>
+                    </div>
+                    <h2 className="login-welcome-heading">Sign in</h2>
+                    <GoogleLoginButton />
+                    <AppleLoginButton />
+                </div>
             </div>
         </main>
     );

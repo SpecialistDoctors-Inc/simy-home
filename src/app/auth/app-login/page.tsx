@@ -34,7 +34,7 @@ export default function AppLoginPage() {
   if (isChecking) {
     return (
       <main>
-        <Header showInstallButton={false} />
+        <Header />
         <div style={{
           minHeight: '100vh',
           display: 'flex',

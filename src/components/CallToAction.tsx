@@ -67,7 +67,7 @@ export default function CallToAction() {
         {t('callToAction.trialAvailable')}
       </div>
       <a 
-        href="https://apps.apple.com/us/app/ai-mentor-app/id6745385262" 
+        href="https://apps.apple.com/jp/app/simy/id6745385262" 
         target="_blank" 
         rel="noopener"
         style={{

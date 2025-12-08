@@ -3,7 +3,7 @@
 import Header from '@/components/Header';
 import { useEffect, useRef } from 'react';
 
-const APP_STORE_URL = 'https://apps.apple.com/us/app/ai-mentor-app/id6745385262';
+const APP_STORE_URL = 'https://apps.apple.com/jp/app/simy/id6745385262';
 const APP_SCHEME = 'app.aimentor.auth://';
 
 export default function RedirectPage() {
@@ -47,7 +47,7 @@ export default function RedirectPage() {
 
     return (
       <main>
-        <Header showInstallButton={true} />
+        <Header />
         <div style={{
         minHeight: '100vh',
         display: 'flex',

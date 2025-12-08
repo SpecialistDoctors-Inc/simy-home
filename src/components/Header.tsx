@@ -3,14 +3,16 @@
 import { useState, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import '../lib/i18n'
+import LanguageSwitcher from './LanguageSwitcher';
 
 type HeaderProps = {
   showInstallButton?: boolean;
   showButton?: boolean;
   fixed?: boolean;
+  locale?: string;
 };
 
-export default function Header({ fixed = true, showButton = true, showInstallButton = false }: HeaderProps) {
+export default function Header({ fixed = true, showButton = true, showInstallButton = false , locale }: HeaderProps) {
   const { t } = useTranslation()
   const [isVisible, setIsVisible] = useState(true)
   const lastScrollY = useRef(0)
@@ -79,24 +81,31 @@ export default function Header({ fixed = true, showButton = true, showInstallBut
             className="logo"
           />
         </a>
-        
-        {showButton && showInstallButton ? (
-          <a
-            href="https://apps.apple.com/us/app/ai-mentor-app/id6745385262"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="header-btn"
-          >
-            {t('header.installApp')}
-          </a>
-        ) : showButton ?(
-          <a
-            href="/login"
-            className="header-btn"
-          >
-            {t('header.getStarted')}
-          </a>
-        ) : <></>}
+        <div>
+          {showButton ? (
+            <a
+              href="https://apps.apple.com/jp/app/simy/id6745385262"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="header-btn"
+            >
+              <img
+                src="/img/apple_install.svg"
+                alt="Download on the App Store"
+                className="appstore-badge"
+              />
+            </a>
+          ) : showInstallButton ?(
+            <a
+              href="/login"
+              className="header-btn"
+            >
+              {t('header.getStarted')}
+            </a>
+          ) : <></>}
+
+          <LanguageSwitcher currentLocale={locale} />
+        </div>
       </div>
     </header>
   )
