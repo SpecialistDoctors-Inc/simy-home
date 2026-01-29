@@ -1,7 +1,7 @@
 # SIMY Privacy Policy
 
-**Effective Date: November 13, 2025**  
-**Last Updated: November 13, 2025**
+**Effective Date: January 29, 2026**  
+**Last Updated: January 29, 2026**
 
 This Privacy Policy describes how AwakApp Inc. ("Company," "we," "our," or "us"), a California corporation, collects, uses, discloses, and protects personal information from users of SIMY (the "Service").
 
@@ -89,30 +89,9 @@ We use your personal information for the following purposes:
 - Personalize your experience by tailoring content and recommendations
 - Improve Service quality, performance, and functionality through analysis and testing
 
-### 4.2 AI Model Training and Development
+### 4.2 No AI Model Training 
 
-We use your User Content to develop, train, fine-tune, and improve our artificial intelligence models, algorithms, and machine learning systems. This includes:
-
-- Using User Content as training data for AI models
-- Creating derivative works and improvements to AI capabilities
-- Generating anonymized, aggregated, or de-identified datasets
-- Developing new features and AI-powered functionality
-
-**Voice Data Processing and AI Training:**
-- Voice recordings are automatically transcribed to text using speech recognition technology
-- Voice transcriptions are treated as User Content and may be used to train AI language models
-- Voice recordings themselves may be analyzed to improve speech recognition accuracy, voice-to-text conversion quality, and natural language understanding
-- Audio patterns and characteristics may be analyzed in aggregate to enhance AI performance
-- We do not use voice data to create individual biometric voiceprints for identification or authentication purposes
-- Voice data used in AI training may be retained in anonymized or aggregated form
-
-This use is perpetual and survives account deletion, as User Content (including voice transcriptions and audio analysis) may be incorporated into trained AI models that cannot feasibly be "untrained." You grant us an irrevocable license for these purposes as described in our Terms of Use, Section 8.1.
-
-**Opt-Out:** You may request to opt out of future use of your User Content (including voice data) for AI training by contacting privacy@simy.one. We will make commercially reasonable efforts to honor such requests within 90 days where technically feasible. However:
-- Opt-out does not apply retroactively to models already trained
-- We are not obligated to retrain or modify existing models
-- Opt-out does not apply to anonymized or aggregated data
-- Opting out may reduce Service quality for you, particularly for voice-related features
+We do not use your User Content, voice recordings, or any other personal information to train, develop, or improve our foundational artificial intelligence models or machine learning algorithms. Your data is used exclusively to provide the Service's features (such as generating transcriptions or AI-powered insights for your specific use) and is not incorporated into any shared AI training datasets.
 
 ### 4.3 Analytics and Business Operations
 
@@ -142,7 +121,11 @@ We do not sell your personal information to third parties, and we do not use it 
 
 We may share your information in the following limited circumstances:
 
-### 5.1 Service Providers
+### 5.1 Google API User Data Policy (Limited Use)
+
+**SIMY's use and transfer of information received from Google APIs to any other app will adhere to the [Google API User Data Policy](https://developers.google.com/terms/api-services-user-data-policy), including the Limited Use requirements.** We do not use Google user data for AI model training, nor do we disclose it to third parties except as necessary to provide or improve the Service's features or as required by law.
+
+### 5.2 Service Providers
 
 We share information with third-party service providers who perform services on our behalf, including:
 - Cloud hosting and infrastructure providers
@@ -153,11 +136,11 @@ We share information with third-party service providers who perform services on 
 
 These service providers are contractually obligated to use your information only for providing services to us and to maintain appropriate security measures. However, we are not liable for their data practices, security failures, or breaches.
 
-### 5.2 Business Transfers
+### 5.3 Business Transfers
 
 In the event of a merger, acquisition, reorganization, sale of assets, or bankruptcy, your information may be transferred to the acquiring or surviving entity. We will notify you via email or prominent notice on the Service before your information is transferred and becomes subject to a different privacy policy.
 
-### 5.3 Legal Requirements and Protection
+### 5.4 Legal Requirements and Protection
 
 We may disclose your information when we believe in good faith that disclosure is necessary to:
 - Comply with applicable laws, regulations, legal processes, or governmental requests
@@ -165,26 +148,23 @@ We may disclose your information when we believe in good faith that disclosure i
 - Detect, prevent, or address fraud, security, or technical issues
 - Protect the rights, property, or safety of the Company, our users, or the public
 
-### 5.4 Third-Party Integrations
+### 5.5 Third-Party Integrations
 
 If you connect third-party services (Slack, Teams, Zoom, etc.), information may be shared with those platforms according to their privacy policies and your authorization. We are not responsible for third-party data practices.
 
-### 5.5 Aggregated and Anonymized Data
+### 5.6 Aggregated and Anonymized Data
 
 We may share anonymized, aggregated, or de-identified information that cannot reasonably be used to identify you, including for research, analytics, marketing, or other business purposes.
 
 ## 6. Data Retention
 
 **Personal Data:** We retain your personal information for as long as your account is active or as needed to provide the Service. Upon account deletion, we generally delete personal data within 90 days, except:
-- User Content used for AI training may be retained indefinitely as it is incorporated into trained models and anonymized datasets
 - Information required for legal, security, or operational purposes (e.g., transaction records, fraud prevention, legal compliance) may be retained longer as required or permitted by law
 - Backups may retain information according to standard retention schedules
 
 **Voice and Audio Data Retention:**
 - **Active voice recordings:** Retained while your account is active or until you delete them
 - **Voice transcriptions:** Treated as User Content and subject to the same retention policies as text content
-- **Voice data used for AI training:** May be retained indefinitely in anonymized or aggregated form as part of trained models
-- **Voice metadata:** Retained for operational purposes and may be included in backups
 - **After account deletion:** Voice recordings are generally deleted within 90 days, but transcriptions and data incorporated into AI models may be retained as described above
 
 You may request deletion of your voice data used for training by contacting privacy@simy.one. We will honor such requests within 90 days where technically feasible, but previously trained models will not be retrained.
@@ -348,6 +328,7 @@ By using the Service, you acknowledge that:
 
 ✓ You have read and understood this Privacy Policy  
 ✓ You consent to the collection, use, and disclosure of your information as described  
+✓ **You understand that your User Content is NOT used to train foundational AI models**
 ✓ You understand that your User Content may be used to train AI models  
 ✓ You consent to voice recording, transcription, and use of voice data for AI training  
 ✓ You are responsible for obtaining all necessary recording consents from other parties  
