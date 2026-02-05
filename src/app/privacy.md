@@ -326,12 +326,11 @@ For users in jurisdictions with specific requirements, please include your locat
 
 By using the Service, you acknowledge that:
 
-✓ You have read and understood this Privacy Policy  
-✓ You consent to the collection, use, and disclosure of your information as described  
-✓ **You understand that your User Content is NOT used to train foundational AI models**
-✓ You understand that your User Content may be used to train AI models  
-✓ You consent to voice recording, transcription, and use of voice data for AI training  
-✓ You are responsible for obtaining all necessary recording consents from other parties  
+✓ You have read and understood this Privacy Policy
+✓ You consent to the collection, use, and disclosure of your information as described
+✓ You understand that your User Content is NOT used to train foundational AI models
+✓ You consent to voice recording and transcription for service delivery
+✓ You are responsible for obtaining all necessary recording consents from other parties
 ✓ You are 18 years of age or older  
 ✓ You are not located in a sanctioned jurisdiction  
 ✓ You will not input prohibited data types (except voice data as described)  
