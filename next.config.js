@@ -8,16 +8,24 @@ const nextConfig = {
     formats: ["image/webp"],
   },
   async rewrites() {
-    return [
-      {
-        "source": "/.well-known/apple-app-site-association",
-        "destination": "/.well-known/apple-app-site-association.json"
-      },
-      {
-        "source": "/test/",
-        "destination": "/test/index.html"
-      }
-    ]
+    return {
+      beforeFiles: [
+        {
+          "source": "/test",
+          "destination": "/test/index.html"
+        },
+        {
+          "source": "/test/",
+          "destination": "/test/index.html"
+        }
+      ],
+      afterFiles: [
+        {
+          "source": "/.well-known/apple-app-site-association",
+          "destination": "/.well-known/apple-app-site-association.json"
+        }
+      ]
+    }
   },
   webpack: function (config) {
     config.module.rules.push({
