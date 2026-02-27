@@ -12,6 +12,10 @@ const nextConfig = {
       {
         "source": "/.well-known/apple-app-site-association",
         "destination": "/.well-known/apple-app-site-association.json"
+      },
+      {
+        "source": "/test/",
+        "destination": "/test/index.html"
       }
     ]
   },
