@@ -12,11 +12,15 @@ const nextConfig = {
       beforeFiles: [
         {
           "source": "/test",
-          "destination": "/test/index.html"
+          "destination": "https://dymm24rvj9h9y.cloudfront.net/index.html"
         },
         {
           "source": "/test/",
-          "destination": "/test/index.html"
+          "destination": "https://dymm24rvj9h9y.cloudfront.net/index.html"
+        },
+        {
+          "source": "/test/:path*",
+          "destination": "https://dymm24rvj9h9y.cloudfront.net/:path*"
         }
       ],
       afterFiles: [
