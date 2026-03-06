@@ -1,37 +1,50 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
-
 ## Repository Overview
 
-This is a legal documentation repository for the SIMY application. It contains no source code but rather houses important legal documents in Microsoft Word format.
+Static website for [simy.one](https://simy.one), hosted on AWS CloudFront + S3.
 
-## Repository Contents
+## Repository Structure
 
-The repository contains three main legal documents:
-- SIMY Terms of Use.docx - Terms and conditions for using the SIMY service
-- Privacy Policy.docx - Privacy policy governing data collection and usage
-- Seller Information Disclosure.docx - Required seller/vendor information disclosure
+```
+simy-home/
+├── site/                          ← Static site (deployed to S3)
+│   ├── index.html
+│   ├── error.html
+│   └── *.png                      ← Images
+├── infra/
+│   └── terraform/                 ← CloudFront + S3 infrastructure
+│       ├── versions.tf
+│       ├── variables.tf
+│       ├── main.tf
+│       ├── outputs.tf
+│       └── environments/
+│           └── prod.tfvars
+├── .github/workflows/
+│   └── deploy-site.yml            ← Static site deploy (S3 sync + CF invalidation)
+└── CLAUDE.md
+```
 
-## Important Context
+## Infrastructure
 
-This repository is part of the larger awakapp ecosystem which includes:
-- ai-mentor-app - The main SIMY application
-- ai-mentor-services - Backend services
-- ai-mentor-svc - Additional services
-- Related projects: ai-tutor-app, ai-tutor-exp
+- **S3**: Private bucket with versioning, accessed via CloudFront OAC
+- **CloudFront**: PriceClass_200 (Asia included), HTTP/2+3, redirect to HTTPS
+- **ACM**: Certificate for simy.one + www.simy.one (us-east-1)
+- **Route53**: A/AAAA records pointing to CloudFront
+- **GitHub Actions**: OIDC-authenticated deploy (S3 sync + CF invalidation)
 
-## Working with This Repository
+## Commands
 
-Since this is a documentation-only repository:
-- There are no build, test, or lint commands
-- Changes to documents should be tracked via Git commits with clear messages explaining legal updates
-- The .docx files are binary and cannot be directly edited via text tools
-- To view or edit documents, they must be downloaded and opened in Microsoft Word or compatible software
+No build commands. The site is static HTML/CSS/images.
 
-## Git Workflow
+### Terraform
 
-When committing changes to legal documents:
-1. Use clear, descriptive commit messages that explain what legal changes were made
-2. Consider the impact of legal document changes on the associated SIMY applications
-3. Ensure all three documents remain consistent with each other when making updates
+```bash
+cd infra/terraform
+terraform init
+terraform plan -var-file="environments/prod.tfvars"
+```
+
+## Deployment
+
+Push changes to `site/` on `main` branch triggers automatic deployment via GitHub Actions.
