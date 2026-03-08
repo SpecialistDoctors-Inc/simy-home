@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — SIMY</title>
+<meta name="description" content="SIMY Privacy Policy. Learn how AwakApp Inc. collects, uses, discloses, and protects your personal information.">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="favicon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --deep-navy: #0a0a1a;
+  --navy: #0e0e24;
+  --navy-light: #131338;
+  --slate: #2a2a5c;
+  --mint: #7EEDC6;
+  --mint-dim: rgba(126, 237, 198, 0.08);
+  --mint-glow: rgba(126, 237, 198, 0.15);
+  --sky: #4A9FE8;
+  --sky-dim: rgba(74, 159, 232, 0.08);
+  --white: #f0f0f8;
+  --gray: #7a7a9e;
+  --gray-light: #b0b0cc;
+  --accent-gradient: linear-gradient(135deg, #7EEDC6 0%, #4A9FE8 100%);
+}
+
+html { font-size: 16px; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--deep-navy);
+  color: var(--white);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a:focus-visible { outline: 2px solid var(--mint); outline-offset: 3px; border-radius: 4px; }
+
+/* Navigation */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  padding: 18px 0;
+  background: rgba(10, 10, 26, 0.92);
+  backdrop-filter: blur(24px) saturate(1.2);
+  -webkit-backdrop-filter: blur(24px) saturate(1.2);
+  border-bottom: 1px solid rgba(126, 237, 198, 0.04);
+}
+.nav-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  max-width: 1140px; margin: 0 auto; padding: 0 clamp(24px, 4vw, 60px);
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 6px;
+  text-decoration: none; color: var(--white);
+}
+.nav-logo-icon {
+  width: 40px; height: 40px; border-radius: 10px;
+  overflow: hidden; flex-shrink: 0;
+}
+.nav-logo-icon img { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; display: block; }
+.nav-logo-text { display: flex; flex-direction: column; line-height: 1.1; }
+.nav-logo-text .nav-brand { font-weight: 800; font-size: 1.25rem; letter-spacing: 0.04em; }
+.nav-logo-text .nav-tagline {
+  font-size: 0.5rem; font-weight: 500; letter-spacing: 0.08em;
+  color: var(--gray); text-transform: uppercase;
+}
+.nav-back {
+  color: var(--gray); text-decoration: none; font-size: 0.85rem;
+  font-weight: 500; transition: color 0.2s;
+}
+.nav-back:hover { color: var(--mint); }
+
+/* Content */
+.container { max-width: 1140px; margin: 0 auto; padding: 0 clamp(24px, 4vw, 60px); }
+
+.policy-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding-top: 120px;
+  padding-bottom: 80px;
+}
+
+.policy-header {
+  margin-bottom: 48px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.policy-header h1 {
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin-bottom: 16px;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.policy-meta {
+  font-size: 0.85rem;
+  color: var(--gray);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.policy-body h2 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-top: 48px;
+  margin-bottom: 16px;
+  color: var(--white);
+}
+
+.policy-body h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-top: 28px;
+  margin-bottom: 12px;
+  color: var(--gray-light);
+}
+
+.policy-body p {
+  margin-bottom: 16px;
+  color: var(--gray-light);
+  font-size: 0.95rem;
+  line-height: 1.75;
+}
+
+.policy-body ul {
+  margin-bottom: 16px;
+  padding-left: 24px;
+  list-style: none;
+}
+
+.policy-body ul li {
+  position: relative;
+  padding-left: 16px;
+  margin-bottom: 8px;
+  color: var(--gray-light);
+  font-size: 0.95rem;
+  line-height: 1.75;
+}
+
+.policy-body ul li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--mint);
+  opacity: 0.6;
+}
+
+.policy-body ol {
+  margin-bottom: 16px;
+  padding-left: 24px;
+  counter-reset: ack-counter;
+  list-style: none;
+}
+
+.policy-body ol li {
+  position: relative;
+  padding-left: 28px;
+  margin-bottom: 8px;
+  color: var(--gray-light);
+  font-size: 0.95rem;
+  line-height: 1.75;
+  counter-increment: ack-counter;
+}
+
+.policy-body ol li::before {
+  content: counter(ack-counter) ".";
+  position: absolute;
+  left: 0;
+  font-weight: 600;
+  color: var(--mint);
+  opacity: 0.8;
+}
+
+.policy-body strong {
+  color: var(--white);
+  font-weight: 600;
+}
+
+.policy-body .important-note {
+  background: var(--mint-dim);
+  border-left: 3px solid var(--mint);
+  padding: 16px 20px;
+  border-radius: 0 8px 8px 0;
+  margin: 20px 0;
+}
+
+.policy-body .important-note p {
+  color: var(--white);
+  margin-bottom: 0;
+}
+
+.policy-body .disclaimer-block {
+  background: rgba(255, 107, 107, 0.06);
+  border-left: 3px solid rgba(255, 107, 107, 0.4);
+  padding: 16px 20px;
+  border-radius: 0 8px 8px 0;
+  margin: 20px 0;
+  font-size: 0.9rem;
+}
+
+.policy-body .disclaimer-block p {
+  color: var(--gray-light);
+  margin-bottom: 0;
+}
+
+.policy-body a {
+  color: var(--mint);
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+.policy-body a:hover { opacity: 0.8; }
+
+/* Footer */
+footer {
+  padding: 48px 0 36px;
+  border-top: 1px solid rgba(255,255,255,0.04);
+}
+.footer-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 20px;
+}
+.footer-tagline { font-size: 1rem; font-weight: 700; margin-bottom: 6px; letter-spacing: -0.02em; }
+.footer-right {
+  display: flex; align-items: center; gap: 20px;
+  font-size: 0.75rem; color: var(--gray);
+}
+.footer-right a { color: var(--gray); text-decoration: none; transition: color 0.2s; }
+.footer-right a:hover { color: var(--mint); }
+.footer-sep { opacity: 0.3; }
+
+@media (max-width: 768px) {
+  .policy-content { padding-top: 100px; padding-bottom: 60px; }
+  .policy-header h1 { font-size: 1.8rem; }
+  .policy-body h2 { font-size: 1.15rem; margin-top: 36px; }
+  .footer-inner { flex-direction: column; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="simy-hp.html" class="nav-logo">
+      <div class="nav-logo-icon"><img src="simy-icon.png" alt="SIMY icon"></div>
+      <div class="nav-logo-text">
+        <span class="nav-brand">SIMY</span>
+        <span class="nav-tagline">Voice to Code, One Shot</span>
+      </div>
+    </a>
+    <a href="simy-hp.html" class="nav-back">&larr; Back to Home</a>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="policy-content">
+
+    <div class="policy-header">
+      <h1>Privacy Policy</h1>
+      <div class="policy-meta">
+        <span>Effective Date: February 28, 2026</span>
+        <span>Last Updated: February 28, 2026</span>
+      </div>
+    </div>
+
+    <div class="policy-body">
+
+      <p>This Privacy Policy describes how AwakApp Inc. ("Company," "we," "our," or "us"), a California corporation, collects, uses, discloses, and protects personal information from users of SIMY (the "Service"). By using the Service, you consent to the data practices described herein.</p>
+
+      <h2>1. Eligibility and Age Restrictions</h2>
+      <p>The Service is intended solely for users 18 years of age or older. We do not knowingly collect information from individuals under 18. If we discover such data, it will be deleted promptly. Age eligibility is determined by self-certification; users bear sole responsibility for misrepresentation.</p>
+
+      <h2>2. Information We Collect</h2>
+
+      <h3>2.1 Information You Provide</h3>
+      <ul>
+        <li><strong>Account Data:</strong> Name, email, authentication credentials, and payment information (processed by third-party providers).</li>
+        <li><strong>User Content:</strong> Text, code, documents, and files you input or create.</li>
+        <li><strong>Voice and Audio Data:</strong> Voice recordings, audio messages, and the resulting transcriptions. We collect metadata such as duration and timestamps.</li>
+      </ul>
+
+      <h3>2.2 Information Collected Automatically</h3>
+      <ul>
+        <li><strong>Technical Data:</strong> IP address, device type, operating system, and approximate geographic location.</li>
+        <li><strong>Usage Data:</strong> Features used, pages viewed, and actions taken within the Service.</li>
+        <li><strong>Cookies:</strong> We use cookies to improve user experience and analyze Service performance.</li>
+      </ul>
+
+      <h3>2.3 Information from Third Parties</h3>
+      <p>If you connect third-party services (Slack, GitHub, Zoom, Google Workspace, etc.), we receive data as authorized by those platforms' respective permission settings.</p>
+
+      <h2>3. Recording Consent and Compliance</h2>
+      <div class="important-note">
+        <p><strong>Crucial Responsibility:</strong> By using voice recording features, you represent and warrant that you have obtained all necessary consents from all parties involved in the conversation, as required by applicable laws (including "all-party consent" states like California). The Company is not responsible for illegal recordings made by users.</p>
+      </div>
+
+      <h2>4. How We Use Your Information (AI Training Policy)</h2>
+      <p>Our use of User Content for AI development depends on your subscription plan:</p>
+      <ul>
+        <li><strong>(a) Standard and Pro Plans (Individual):</strong> We may use User Content and voice transcriptions to train, fine-tune, and improve our AI models and machine learning algorithms.</li>
+        <li><strong>(b) Enterprise and Business Plans:</strong> We DO NOT use your User Content or voice data to train our global AI models. Your data is used exclusively to provide the Service to your organization.</li>
+        <li><strong>(c) Google User Data:</strong> Notwithstanding any other provision, information received from Google APIs will NEVER be used for AI model training, in strict adherence to the Google API User Data Policy's Limited Use requirements.</li>
+        <li><strong>(d) Biometric Data:</strong> We do NOT use voice data to create biometric voiceprints or for individual authentication.</li>
+      </ul>
+
+      <h2>5. Information Sharing and Disclosure</h2>
+      <p>We do not sell your personal information. We share data only in these cases:</p>
+      <ul>
+        <li><strong>Service Providers:</strong> Cloud hosting (AWS/GCP), payment processors (Stripe), and analytics tools.</li>
+        <li><strong>Legal Requirements:</strong> To comply with lawful requests by public authorities or to protect our legal rights.</li>
+        <li><strong>Business Transfers:</strong> In the event of a merger, sale, or bankruptcy.</li>
+      </ul>
+
+      <h2>6. Data Retention</h2>
+      <ul>
+        <li><strong>General Data:</strong> We retain personal data as long as your account is active. Upon account deletion, we generally delete data within 90 days.</li>
+        <li><strong>Exceptions:</strong> We may retain data longer if required for legal compliance, dispute resolution, or as part of anonymized/aggregated datasets. Backups may persist for a limited period per our standard cycle.</li>
+        <li><strong>AI Models:</strong> For Standard/Pro users, data already incorporated into trained models cannot be retroactively deleted.</li>
+      </ul>
+
+      <h2>7. Your Privacy Rights (GDPR &amp; CCPA)</h2>
+      <p>Depending on your location (e.g., EEA, UK, California), you may have the following rights:</p>
+      <ul>
+        <li><strong>Access, Correct, or Delete</strong> your personal information.</li>
+        <li><strong>Object to or Restrict</strong> certain processing activities.</li>
+        <li><strong>Data Portability</strong> to receive your data in a structured format.</li>
+        <li><strong>Opt-Out of AI Training:</strong> Standard/Pro users may request to opt-out of future training by emailing <a href="mailto:privacy@simy.one">privacy@simy.one</a>.</li>
+      </ul>
+
+      <h2>8. Data Security and Disclaimers</h2>
+
+      <h3>8.1 No Specific Regulatory Compliance</h3>
+      <div class="disclaimer-block">
+        <p><strong>IMPORTANT:</strong> You acknowledge that the Company has NOT yet obtained SOC2 Type II, HIPAA, or PCI DSS certifications.</p>
+      </div>
+      <ul>
+        <li>You are strictly prohibited from inputting "Highly Sensitive Personal Data" (e.g., health records, credit card numbers, SSNs).</li>
+        <li>While we use industry-standard encryption, we do not guarantee absolute security. You accept all inherent risks of online data transmission.</li>
+      </ul>
+
+      <h2>9. International Data Transfers</h2>
+      <p>Your data may be transferred to and processed in the United States. For users in the EEA/UK, we rely on Standard Contractual Clauses (SCCs) to ensure an adequate level of data protection.</p>
+
+      <h2>10. Data Breach Notification</h2>
+      <p>In the event of a breach posing a risk to your rights, we will notify you via email or through the Service without undue delay, and within 72 hours where required by law (e.g., GDPR).</p>
+
+      <h2>11. Contact Information</h2>
+      <p>AwakApp Inc.<br>
+      Privacy Requests: <a href="mailto:privacy@simy.one">privacy@simy.one</a><br>
+      General Inquiries: <a href="mailto:info@simy.one">info@simy.one</a></p>
+
+      <h2>12. Acknowledgment</h2>
+      <div class="important-note">
+        <p><strong>BY USING SIMY, YOU ACKNOWLEDGE AND AGREE THAT:</strong></p>
+      </div>
+      <ol>
+        <li>You have read and understood this Privacy Policy.</li>
+        <li>Enterprise data is NOT used for training; Standard/Pro data IS used.</li>
+        <li>The Service is NOT yet SOC2 or HIPAA compliant.</li>
+        <li>You are 100% responsible for obtaining recording consents from others.</li>
+        <li>You are 18 years of age or older and not in a sanctioned jurisdiction.</li>
+      </ol>
+
+      <p style="margin-top: 32px; font-weight: 600; color: var(--white);">IF YOU DO NOT AGREE TO THESE TERMS, DO NOT USE THE SERVICE.</p>
+
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-tagline">Record. Ship. Done.</div>
+      <div class="footer-right">
+        <a href="simy-hp.html">Home</a>
+        <span class="footer-sep">|</span>
+        <a href="terms.html">Terms of Use</a>
+        <span class="footer-sep">|</span>
+        <span>&copy; 2026 SIMY. All rights reserved.</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

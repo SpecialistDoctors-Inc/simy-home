@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms of Use — SIMY</title>
+<meta name="description" content="SIMY Terms of Use. Read about the terms and conditions governing your use of the SIMY service.">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="favicon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --deep-navy: #0a0a1a;
+  --navy: #0e0e24;
+  --navy-light: #131338;
+  --slate: #2a2a5c;
+  --mint: #7EEDC6;
+  --mint-dim: rgba(126, 237, 198, 0.08);
+  --mint-glow: rgba(126, 237, 198, 0.15);
+  --sky: #4A9FE8;
+  --sky-dim: rgba(74, 159, 232, 0.08);
+  --white: #f0f0f8;
+  --gray: #7a7a9e;
+  --gray-light: #b0b0cc;
+  --accent-gradient: linear-gradient(135deg, #7EEDC6 0%, #4A9FE8 100%);
+}
+
+html { font-size: 16px; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--deep-navy);
+  color: var(--white);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a:focus-visible { outline: 2px solid var(--mint); outline-offset: 3px; border-radius: 4px; }
+
+/* Navigation */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  padding: 18px 0;
+  background: rgba(10, 10, 26, 0.92);
+  backdrop-filter: blur(24px) saturate(1.2);
+  -webkit-backdrop-filter: blur(24px) saturate(1.2);
+  border-bottom: 1px solid rgba(126, 237, 198, 0.04);
+}
+.nav-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  max-width: 1140px; margin: 0 auto; padding: 0 clamp(24px, 4vw, 60px);
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 6px;
+  text-decoration: none; color: var(--white);
+}
+.nav-logo-icon {
+  width: 40px; height: 40px; border-radius: 10px;
+  overflow: hidden; flex-shrink: 0;
+}
+.nav-logo-icon img { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; display: block; }
+.nav-logo-text { display: flex; flex-direction: column; line-height: 1.1; }
+.nav-logo-text .nav-brand { font-weight: 800; font-size: 1.25rem; letter-spacing: 0.04em; }
+.nav-logo-text .nav-tagline {
+  font-size: 0.5rem; font-weight: 500; letter-spacing: 0.08em;
+  color: var(--gray); text-transform: uppercase;
+}
+.nav-back {
+  color: var(--gray); text-decoration: none; font-size: 0.85rem;
+  font-weight: 500; transition: color 0.2s;
+}
+.nav-back:hover { color: var(--mint); }
+
+/* Content */
+.container { max-width: 1140px; margin: 0 auto; padding: 0 clamp(24px, 4vw, 60px); }
+
+.terms-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding-top: 120px;
+  padding-bottom: 80px;
+}
+
+.terms-header {
+  margin-bottom: 48px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.terms-header h1 {
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin-bottom: 16px;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.terms-meta {
+  font-size: 0.85rem;
+  color: var(--gray);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.terms-body h2 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-top: 48px;
+  margin-bottom: 16px;
+  color: var(--white);
+}
+
+.terms-body h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-top: 28px;
+  margin-bottom: 12px;
+  color: var(--gray-light);
+}
+
+.terms-body p {
+  margin-bottom: 16px;
+  color: var(--gray-light);
+  font-size: 0.95rem;
+  line-height: 1.75;
+}
+
+.terms-body ul {
+  margin-bottom: 16px;
+  padding-left: 24px;
+  list-style: none;
+}
+
+.terms-body ul li {
+  position: relative;
+  padding-left: 16px;
+  margin-bottom: 8px;
+  color: var(--gray-light);
+  font-size: 0.95rem;
+  line-height: 1.75;
+}
+
+.terms-body ul li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--mint);
+  opacity: 0.6;
+}
+
+.terms-body ol {
+  margin-bottom: 16px;
+  padding-left: 24px;
+  counter-reset: ack-counter;
+  list-style: none;
+}
+
+.terms-body ol li {
+  position: relative;
+  padding-left: 28px;
+  margin-bottom: 8px;
+  color: var(--gray-light);
+  font-size: 0.95rem;
+  line-height: 1.75;
+  counter-increment: ack-counter;
+}
+
+.terms-body ol li::before {
+  content: counter(ack-counter) ".";
+  position: absolute;
+  left: 0;
+  font-weight: 600;
+  color: var(--mint);
+  opacity: 0.8;
+}
+
+.terms-body strong {
+  color: var(--white);
+  font-weight: 600;
+}
+
+.terms-body .important-note {
+  background: var(--mint-dim);
+  border-left: 3px solid var(--mint);
+  padding: 16px 20px;
+  border-radius: 0 8px 8px 0;
+  margin: 20px 0;
+}
+
+.terms-body .important-note p {
+  color: var(--white);
+  margin-bottom: 0;
+}
+
+.terms-body .disclaimer-block {
+  background: rgba(255, 107, 107, 0.06);
+  border-left: 3px solid rgba(255, 107, 107, 0.4);
+  padding: 16px 20px;
+  border-radius: 0 8px 8px 0;
+  margin: 20px 0;
+  font-size: 0.9rem;
+}
+
+.terms-body .disclaimer-block p {
+  color: var(--gray-light);
+  margin-bottom: 0;
+}
+
+.terms-body a {
+  color: var(--mint);
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+.terms-body a:hover { opacity: 0.8; }
+
+/* Footer */
+footer {
+  padding: 48px 0 36px;
+  border-top: 1px solid rgba(255,255,255,0.04);
+}
+.footer-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 20px;
+}
+.footer-tagline { font-size: 1rem; font-weight: 700; margin-bottom: 6px; letter-spacing: -0.02em; }
+.footer-right {
+  display: flex; align-items: center; gap: 20px;
+  font-size: 0.75rem; color: var(--gray);
+}
+.footer-right a { color: var(--gray); text-decoration: none; transition: color 0.2s; }
+.footer-right a:hover { color: var(--mint); }
+.footer-sep { opacity: 0.3; }
+
+@media (max-width: 768px) {
+  .terms-content { padding-top: 100px; padding-bottom: 60px; }
+  .terms-header h1 { font-size: 1.8rem; }
+  .terms-body h2 { font-size: 1.15rem; margin-top: 36px; }
+  .footer-inner { flex-direction: column; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="simy-hp.html" class="nav-logo">
+      <div class="nav-logo-icon"><img src="simy-icon.png" alt="SIMY icon"></div>
+      <div class="nav-logo-text">
+        <span class="nav-brand">SIMY</span>
+        <span class="nav-tagline">Voice to Code, One Shot</span>
+      </div>
+    </a>
+    <a href="simy-hp.html" class="nav-back">&larr; Back to Home</a>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="terms-content">
+
+    <div class="terms-header">
+      <h1>Terms of Use</h1>
+      <div class="terms-meta">
+        <span>Effective Date: February 28, 2026</span>
+        <span>Last Updated: February 28, 2026</span>
+      </div>
+    </div>
+
+    <div class="terms-body">
+
+      <p>These Terms of Use ("Terms") govern your use of SIMY (the "Service"), operated by AwakApp Inc. ("Company," "we," "our," or "us"), a California corporation. By accessing or using the Service, you agree to be bound by these Terms.</p>
+
+      <h2>1. Scope and Agreement</h2>
+      <p>These Terms apply to all users. By using the Service, you confirm you have read, understood, and agreed to these Terms and our Privacy Policy. The Company has no obligation to monitor your compliance; you are solely responsible for your use.</p>
+
+      <h2>2. Eligibility and Registration</h2>
+      <p>By using the Service, you represent that:</p>
+      <ul>
+        <li>You are at least 18 years of age.</li>
+        <li>You have the legal capacity to enter into binding contracts.</li>
+        <li>All registration information is accurate.</li>
+      </ul>
+      <p>Eligibility is determined by self-certification. The Company bears no liability for misrepresentation of age or identity.</p>
+
+      <h2>3. Geographic Restrictions and Compliance</h2>
+      <p>You represent that you are not located in a U.S. sanctioned country (e.g., Cuba, Iran, North Korea, Syria) or on any restricted party list (OFAC SDN, etc.). You are solely responsible for compliance with local and international export control laws.</p>
+
+      <h2>4. Description of the Service</h2>
+      <p>SIMY is an AI-powered engineering and productivity tool that processes conversations (voice/text) to generate code and manage development tasks. Features may change, be limited, or discontinued at any time without notice.</p>
+
+      <h2>5. User Responsibilities and Prohibited Data</h2>
+
+      <h3>5.1 General Responsibilities</h3>
+      <p>You are solely responsible for all content input and for verifying all AI-generated outputs before use.</p>
+
+      <h3>5.2 Prohibited Data</h3>
+      <div class="important-note">
+        <p><strong>IMPORTANT:</strong> The Service is NOT currently certified for highly regulated data. You covenant that you will NOT input:</p>
+      </div>
+      <ul>
+        <li>Protected Health Information (PHI) under HIPAA.</li>
+        <li>Payment Card Information (PCI) or financial credentials.</li>
+        <li>Government-classified information or ITAR-controlled technical data.</li>
+        <li>Passwords, API keys, or security tokens in a plain-text format.</li>
+      </ul>
+
+      <h3>5.3 Recording Consent</h3>
+      <p>You are solely responsible for obtaining all necessary consents from all parties before recording any conversation. You must comply with all applicable wiretapping and eavesdropping laws (e.g., "all-party consent" jurisdictions).</p>
+
+      <h2>6. Intellectual Property and User Content License</h2>
+      <p>The Service and its original content are owned by the Company.</p>
+
+      <h3>6.1 License Grant and AI Training Policy</h3>
+      <p>You retain ownership of your "User Content." However, you grant the Company a license to use it to provide and improve the Service. AI training usage depends on your subscription plan:</p>
+      <ul>
+        <li><strong>(a) Standard and Pro Plans (Individual):</strong> You agree that the Company may use your User Content to train, fine-tune, and improve our AI models and algorithms.</li>
+        <li><strong>(b) Enterprise and Business Plans:</strong> The Company will NOT use your User Content to train or improve our global AI models. Your data remains isolated to your organization's use and internal technical support.</li>
+        <li><strong>(c) Anonymized Data:</strong> We may use anonymized, aggregated data from all plans for analytical purposes.</li>
+      </ul>
+
+      <h2>7. AI Outputs and Disclaimers</h2>
+      <p>AI-generated code and suggestions ("AI Output") may be inaccurate, biased, or contain errors.</p>
+      <div class="important-note">
+        <p><strong>Human-in-the-Loop:</strong> You MUST review and test all AI Output. The Company is not liable for bugs, security vulnerabilities, or system failures caused by AI-generated code.</p>
+      </div>
+
+      <h2>8. Paid Services</h2>
+      <p>Fees are non-refundable. Subscriptions auto-renew unless cancelled via account settings or by emailing <a href="mailto:support@simy.one">support@simy.one</a>.</p>
+
+      <h2>9. Third-Party Integrations</h2>
+      <p>We integrate with GitHub, Slack, Zoom, etc. We are not responsible for the privacy practices or availability of these third-party platforms.</p>
+
+      <h2>10. Service Modifications and Termination</h2>
+      <p>We may terminate your access at any time for any reason, including suspected policy violations or security risks. Upon termination, the license grant for AI models (for non-enterprise users) survives.</p>
+
+      <h2>11. Disclaimers (Security &amp; Compliance)</h2>
+      <div class="disclaimer-block">
+        <p><strong>THE SERVICE IS PROVIDED "AS IS."</strong></p>
+      </div>
+      <ul>
+        <li><strong>No SOC2/HIPAA/PCI:</strong> You acknowledge that the Company has NOT yet obtained SOC2 Type II, HIPAA, or PCI DSS certifications.</li>
+        <li><strong>No Physical Isolation:</strong> Unless specifically agreed in a separate written Enterprise Agreement, the Service does not provide physical database isolation.</li>
+        <li><strong>Security Risk:</strong> While we use industry-standard encryption, we do not guarantee that the Service is immune to unauthorized access or data breaches.</li>
+      </ul>
+
+      <h2>12. Limitation of Liability</h2>
+      <div class="disclaimer-block">
+        <p><strong>TO THE MAXIMUM EXTENT PERMITTED BY LAW:</strong></p>
+      </div>
+      <ul>
+        <li>Our total liability is limited to 50% of the amount you paid us in the 12 months preceding the claim. If you paid $0, our liability is $0.</li>
+        <li>We are not liable for indirect, incidental, or consequential damages, including loss of profits, data, or business opportunities.</li>
+      </ul>
+
+      <h2>13. Indemnification</h2>
+      <p>You agree to indemnify and hold the Company harmless from any claims arising from:</p>
+      <ul>
+        <li>(a) Your misuse of the Service;</li>
+        <li>(b) Your violation of these Terms;</li>
+        <li>(c) Your input of prohibited data (PHI, PCI, etc.); or</li>
+        <li>(d) Your failure to obtain recording consent.</li>
+      </ul>
+
+      <h2>14. Governing Law and Dispute Resolution</h2>
+      <p>These Terms are governed by California law. Any disputes shall be resolved exclusively in the state or federal courts located in San Francisco County, California. You waive your right to a jury trial and class action.</p>
+
+      <h2>15. Changes to Terms</h2>
+      <p>We may update these Terms at any time. Material changes will be notified 30 days in advance. Continued use constitutes acceptance of the new Terms.</p>
+
+      <h2>16. Contact Information</h2>
+      <p>AwakApp Inc.<br>
+      Privacy: <a href="mailto:privacy@simy.one">privacy@simy.one</a><br>
+      Support: <a href="mailto:support@simy.one">support@simy.one</a></p>
+
+      <h2>17. Acknowledgment</h2>
+      <div class="important-note">
+        <p><strong>BY USING THE SERVICE, YOU ACKNOWLEDGE:</strong></p>
+      </div>
+      <ol>
+        <li>You are 18+ and not a sanctioned party.</li>
+        <li>Enterprise data is NOT used for AI training; Individual/Pro data IS used.</li>
+        <li>The Service is NOT SOC2/HIPAA compliant at this time.</li>
+        <li>You have obtained all necessary recording consents.</li>
+        <li>You accept the strictly limited liability of the Company.</li>
+      </ol>
+
+      <p style="margin-top: 32px; font-weight: 600; color: var(--white);">IF YOU DO NOT AGREE, DO NOT USE THE SERVICE.</p>
+
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-tagline">Record. Ship. Done.</div>
+      <div class="footer-right">
+        <a href="simy-hp.html">Home</a>
+        <span class="footer-sep">|</span>
+        <span>&copy; 2026 SIMY. All rights reserved.</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

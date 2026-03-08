@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SIMY — Capture the Conversation. Ship the code.</title>
-<meta name="description" content="No prompts needed. Just record your meeting — SIMY understands the conversation and auto-generates code, reviews, and pull requests in one shot.">
+<title>SIMY — Meetings End. Code Ships.</title>
+<meta name="description" content="No meeting notes. No task management. No prompts. Just record — SIMY auto-generates code, reviews, and pull requests.">
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="favicon-180.png">
@@ -120,9 +120,9 @@ nav.scrolled { padding: 12px 0; background: rgba(10, 10, 26, 0.92); }
 
 /* ===== HERO ===== */
 .hero {
-  min-height: 100vh; display: flex; align-items: center;
+  display: flex; align-items: flex-start;
   position: relative; overflow: hidden;
-  padding: clamp(130px, 18vw, 220px) 0 clamp(60px, 8vw, 100px);
+  padding: clamp(100px, 12vw, 140px) 0 clamp(60px, 8vw, 100px);
 }
 .hero-bg { position: absolute; inset: 0; z-index: 0; }
 .hero-bg .orb-1 {
@@ -155,8 +155,8 @@ nav.scrolled { padding: 12px 0; background: rgba(10, 10, 26, 0.92); }
   font-size: 0.75rem; font-weight: 600; color: var(--mint);
   letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 28px;
 }
-.hero-eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--mint); animation: blink 2s ease-in-out infinite; }
-@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+.hero-eyebrow .dot { width: 8px; height: 8px; border-radius: 50%; background: #ff3b3b; animation: recPulse 1.5s ease-in-out infinite; box-shadow: 0 0 0 0 rgba(255, 59, 59, 0.5); }
+@keyframes recPulse { 0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(255, 59, 59, 0.5); } 50% { opacity: 0.7; box-shadow: 0 0 0 6px rgba(255, 59, 59, 0); } }
 
 .hero h1 {
   font-size: clamp(2.6rem, 5.5vw, 4.8rem); font-weight: 900;
@@ -323,6 +323,15 @@ nav.scrolled { padding: 12px 0; background: rgba(10, 10, 26, 0.92); }
 .pilot-cta .btn-primary {
   font-size: 1rem; padding: 14px 36px;
   box-shadow: 0 12px 40px rgba(126,237,198,0.15);
+}
+.pilot-lottery-note {
+  margin-top: 16px;
+  font-size: 0.78rem;
+  color: var(--gray);
+  line-height: 1.6;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* ===== PR IMPACT SHOWCASE ===== */
@@ -840,6 +849,139 @@ footer {
   font-size: 0.75rem; font-weight: 600; color: var(--mint);
 }
 .step-label-badge svg { width: 15px; height: 15px; stroke: var(--mint); }
+
+/* ===== AI FLOW DIAGRAM ===== */
+.ai-flow { background: var(--deep-navy); position: relative; }
+.ai-flow::before {
+  content: ''; position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(126,237,198,0.04) 0%, transparent 65%);
+  pointer-events: none;
+}
+.ai-flow-diagram {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 0; position: relative; z-index: 1;
+}
+
+/* Top node: Meeting */
+.ai-flow-node {
+  display: flex; align-items: center; gap: 14px;
+  padding: 20px 36px; border-radius: 16px;
+  font-size: 1.15rem; font-weight: 700; color: var(--white);
+  position: relative; z-index: 1;
+}
+.ai-flow-node.node-meeting {
+  background: linear-gradient(135deg, rgba(74,159,232,0.12) 0%, rgba(126,237,198,0.08) 100%);
+  border: 1px solid rgba(74,159,232,0.25);
+  box-shadow: 0 8px 32px rgba(74,159,232,0.1);
+}
+.ai-flow-node.node-human {
+  background: linear-gradient(135deg, rgba(126,237,198,0.12) 0%, rgba(74,159,232,0.08) 100%);
+  border: 1px solid rgba(126,237,198,0.25);
+  box-shadow: 0 8px 32px rgba(126,237,198,0.1);
+}
+.ai-flow-node-icon {
+  width: 48px; height: 48px; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem;
+}
+.node-meeting .ai-flow-node-icon {
+  background: var(--sky-dim); border: 1px solid rgba(74,159,232,0.2);
+}
+.node-human .ai-flow-node-icon {
+  background: var(--mint-dim); border: 1px solid rgba(126,237,198,0.2);
+}
+.ai-flow-node-icon svg { width: 24px; height: 24px; }
+.node-meeting .ai-flow-node-icon svg { stroke: var(--sky); }
+.node-human .ai-flow-node-icon svg { stroke: var(--mint); }
+
+/* Connecting vertical line + arrow */
+.ai-flow-connector {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 0; position: relative; padding: 8px 0;
+}
+.ai-flow-line {
+  width: 2px; height: 40px;
+  background: linear-gradient(180deg, rgba(74,159,232,0.4), rgba(126,237,198,0.4));
+}
+.ai-flow-arrow-down {
+  width: 0; height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 10px solid rgba(126,237,198,0.5);
+}
+
+/* AI Processing box */
+.ai-flow-ai-box {
+  width: 100%; max-width: 720px;
+  background: linear-gradient(135deg, rgba(126,237,198,0.04) 0%, rgba(74,159,232,0.03) 100%);
+  border: 1px solid rgba(126,237,198,0.15);
+  border-radius: 20px; padding: 36px 32px;
+  position: relative; overflow: hidden;
+}
+.ai-flow-ai-box::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: var(--accent-gradient);
+  border-radius: 20px 20px 0 0;
+}
+.ai-flow-ai-header {
+  display: flex; align-items: center; gap: 10px;
+  justify-content: center; margin-bottom: 28px;
+}
+.ai-flow-ai-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 20px; border-radius: 100px;
+  background: var(--mint-dim); border: 1px solid rgba(126,237,198,0.15);
+  font-size: 0.8rem; font-weight: 700; color: var(--mint);
+  letter-spacing: 0.06em; text-transform: uppercase;
+}
+.ai-flow-ai-badge .ai-pulse {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--mint);
+  animation: livePulse 2s ease-in-out infinite;
+}
+.ai-flow-capabilities {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+}
+.ai-flow-cap {
+  text-align: center; padding: 20px 10px; border-radius: 14px;
+  background: rgba(255,255,255,0.025);
+  border: 1px solid rgba(255,255,255,0.06);
+  transition: all 0.3s;
+}
+.ai-flow-cap:hover {
+  border-color: rgba(126,237,198,0.2);
+  background: rgba(126,237,198,0.04);
+  transform: translateY(-3px);
+}
+.ai-flow-cap-icon {
+  width: 44px; height: 44px; border-radius: 12px;
+  background: var(--mint-dim); border: 1px solid rgba(126,237,198,0.1);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 12px;
+}
+.ai-flow-cap-icon svg { width: 22px; height: 22px; stroke: var(--mint); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.ai-flow-cap-title {
+  font-size: 0.8rem; font-weight: 700; color: var(--white);
+  line-height: 1.35; letter-spacing: -0.01em;
+}
+.ai-flow-cap-sub {
+  font-size: 0.68rem; color: var(--gray); margin-top: 4px; line-height: 1.4;
+}
+
+/* Responsive AI Flow */
+@media (max-width: 768px) {
+  .ai-flow-capabilities { grid-template-columns: repeat(2, 1fr); }
+  .ai-flow-node { padding: 16px 24px; font-size: 1rem; }
+  .ai-flow-node-icon { width: 40px; height: 40px; }
+  .ai-flow-ai-box { padding: 28px 20px; }
+}
+@media (max-width: 480px) {
+  .ai-flow-capabilities { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .ai-flow-cap { padding: 16px 8px; }
+  .ai-flow-node { padding: 14px 20px; font-size: 0.95rem; gap: 10px; }
+}
 
 /* ===== UI & DEMO ===== */
 .demo-section { background: var(--navy); }
@@ -1408,14 +1550,14 @@ body.rtl .case-summary-item { text-align: center; }
   <div class="container hero-content">
     <div class="hero-eyebrow fade-in">
       <span class="dot"></span>
-      <span data-i18n="hero.eyebrow">No Prompts Needed</span>
+      <span data-i18n="hero.eyebrow">Capture the Conversation</span>
     </div>
     <h1 class="fade-in fd1" data-i18n-html="hero.title">
-      <span class="br">Capture the Conversation.</span>
-      <span class="br"><span class="gradient-text">Ship the code.</span></span>
+      <span class="br">Meetings End.</span>
+      <span class="br"><span class="gradient-text">Code Ships.</span></span>
     </h1>
     <p class="sub-headline fade-in fd2" data-i18n-html="hero.subHeadline">
-      No prompts needed. Just record your conversation — SIMY understands the context and <em>auto-generates code, reviews, and pull requests</em>.
+      No meeting notes. No task management. No prompts. Just record — SIMY <em>auto-generates code, reviews, and pull requests</em>.
     </p>
     <div class="hero-actions fade-in fd3">
       <a href="#cta" class="btn-primary">
@@ -1461,7 +1603,7 @@ body.rtl .case-summary-item { text-align: center; }
 <!-- =============================== -->
 <section class="social-proof">
   <div class="container">
-    <div class="social-proof-label" data-i18n="social.label">Trusted by engineering teams that ship without rework</div>
+    <div class="social-proof-label" data-i18n="social.label">Backed by investors who believe in zero-rework engineering</div>
     <div class="logo-row">
       <div class="logo-item">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
@@ -1593,6 +1735,102 @@ body.rtl .case-summary-item { text-align: center; }
 <div class="section-divider"></div>
 
 <!-- =============================== -->
+<!-- AI FLOW DIAGRAM                   -->
+<!-- =============================== -->
+<section class="ai-flow" id="ai-flow">
+  <div class="container section-inner">
+    <div class="section-label fade-in" data-i18n="aiflow.label">AI Flow</div>
+    <h2 class="section-title fade-in" data-i18n-html="aiflow.title">From Meeting to Implementation.<br><span class="gradient-text">AI Handles the Rest.</span></h2>
+    <p class="section-desc fade-in" data-i18n="aiflow.desc">Your meeting ends. SIMY's AI automatically extracts decisions, decomposes tasks, and prepares everything — so humans can focus purely on implementation.</p>
+    <div class="ai-flow-diagram">
+      <!-- Top Node: Meeting -->
+      <div class="ai-flow-node node-meeting fade-in">
+        <div class="ai-flow-node-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+        </div>
+        <span data-i18n="aiflow.meeting">Meeting / Conversation</span>
+      </div>
+
+      <!-- Connector -->
+      <div class="ai-flow-connector fade-in">
+        <div class="ai-flow-line"></div>
+        <div class="ai-flow-arrow-down"></div>
+      </div>
+
+      <!-- AI Processing Box -->
+      <div class="ai-flow-ai-box fade-in">
+        <div class="ai-flow-ai-header">
+          <div class="ai-flow-ai-badge">
+            <span class="ai-pulse"></span>
+            <span data-i18n="aiflow.aiAuto">AI Automatically Processes</span>
+          </div>
+        </div>
+        <div class="ai-flow-capabilities">
+          <div class="ai-flow-cap fade-in">
+            <div class="ai-flow-cap-icon">
+              <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            </div>
+            <div class="ai-flow-cap-title" data-i18n="aiflow.cap1Title">Decision Extraction</div>
+            <div class="ai-flow-cap-sub" data-i18n="aiflow.cap1Sub">Identifies key decisions from conversations</div>
+          </div>
+          <div class="ai-flow-cap fade-in fd1">
+            <div class="ai-flow-cap-icon">
+              <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+            </div>
+            <div class="ai-flow-cap-title" data-i18n="aiflow.cap2Title">Task Decomposition</div>
+            <div class="ai-flow-cap-sub" data-i18n="aiflow.cap2Sub">Breaks down into actionable tasks</div>
+          </div>
+          <div class="ai-flow-cap fade-in fd2">
+            <div class="ai-flow-cap-icon">
+              <svg viewBox="0 0 24 24"><line x1="12" y1="2" x2="12" y2="22"/><polyline points="17 7 12 2 7 7"/><line x1="4" y1="12" x2="20" y2="12"/></svg>
+            </div>
+            <div class="ai-flow-cap-title" data-i18n="aiflow.cap3Title">Priority Assignment</div>
+            <div class="ai-flow-cap-sub" data-i18n="aiflow.cap3Sub">Ranks tasks by urgency and impact</div>
+          </div>
+          <div class="ai-flow-cap fade-in fd3">
+            <div class="ai-flow-cap-icon">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><circle cx="5" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="19" cy="18" r="2"/><line x1="12" y1="9" x2="5" y2="8"/><line x1="12" y1="9" x2="19" y2="8"/><line x1="12" y1="15" x2="5" y2="16"/><line x1="12" y1="15" x2="19" y2="16"/></svg>
+            </div>
+            <div class="ai-flow-cap-title" data-i18n="aiflow.cap4Title">Dependency Analysis</div>
+            <div class="ai-flow-cap-sub" data-i18n="aiflow.cap4Sub">Maps task relationships and order</div>
+          </div>
+          <div class="ai-flow-cap fade-in fd3">
+            <div class="ai-flow-cap-icon">
+              <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+            </div>
+            <div class="ai-flow-cap-title" data-i18n="aiflow.cap5Title">Knowledge Storage</div>
+            <div class="ai-flow-cap-sub" data-i18n="aiflow.cap5Sub">Preserves context for future reference</div>
+          </div>
+          <div class="ai-flow-cap fade-in fd3">
+            <div class="ai-flow-cap-icon">
+              <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="ai-flow-cap-title" data-i18n="aiflow.cap6Title">Architecture Verification</div>
+            <div class="ai-flow-cap-sub" data-i18n="aiflow.cap6Sub">Verifies architectural boundaries before PR</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Connector -->
+      <div class="ai-flow-connector fade-in">
+        <div class="ai-flow-line"></div>
+        <div class="ai-flow-arrow-down"></div>
+      </div>
+
+      <!-- Bottom Node: Humans Focus -->
+      <div class="ai-flow-node node-human fade-in">
+        <div class="ai-flow-node-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        </div>
+        <span data-i18n="aiflow.human">Humans Focus on Implementation</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- =============================== -->
 <!-- ALWAYS-ON INSIGHT                 -->
 <!-- =============================== -->
 <section class="insight-section" id="always-on">
@@ -1686,10 +1924,6 @@ body.rtl .case-summary-item { text-align: center; }
         <div class="exp-stat-label">Success Rate (26 / 30)</div>
       </div>
       <div class="exp-hero-stat">
-        <div class="exp-stat-value gradient-text">$1.95</div>
-        <div class="exp-stat-label">Average Cost per Task</div>
-      </div>
-      <div class="exp-hero-stat">
         <div class="exp-stat-value gradient-text">96.3%</div>
         <div class="exp-stat-label">Message Reduction</div>
       </div>
@@ -1700,37 +1934,37 @@ body.rtl .case-summary-item { text-align: center; }
         <div class="exp-card-header"><div class="exp-num">01</div><span class="exp-status success">SUCCESS</span></div>
         <div class="exp-card-title">Causal Ordering Fix</div>
         <div class="exp-card-layer">Model + DB</div>
-        <div class="exp-card-metrics"><div class="exp-reduction-bar"><div class="exp-reduction-fill" style="width:96%"></div></div><div class="exp-card-stats"><div class="exp-card-stat"><div class="val">26→1</div><div class="lbl">Msgs</div></div><div class="exp-card-stat"><div class="val">$1.61</div><div class="lbl">Cost</div></div><div class="exp-card-stat"><div class="val">3:52</div><div class="lbl">Time</div></div></div></div>
+        <div class="exp-card-metrics"><div class="exp-reduction-bar"><div class="exp-reduction-fill" style="width:96%"></div></div><div class="exp-card-stats"><div class="exp-card-stat"><div class="val">26→1</div><div class="lbl">Msgs</div></div></div></div>
       </div>
       <div class="exp-card fade-in fd1">
         <div class="exp-card-header"><div class="exp-num">02</div><span class="exp-status success">SUCCESS</span></div>
         <div class="exp-card-title">Badge Count Mismatch</div>
         <div class="exp-card-layer">Edge Fn + UI</div>
-        <div class="exp-card-metrics"><div class="exp-reduction-bar"><div class="exp-reduction-fill" style="width:97%"></div></div><div class="exp-card-stats"><div class="exp-card-stat"><div class="val">30→1</div><div class="lbl">Msgs</div></div><div class="exp-card-stat"><div class="val">$2.96</div><div class="lbl">Cost</div></div><div class="exp-card-stat"><div class="val">6:42</div><div class="lbl">Time</div></div></div></div>
+        <div class="exp-card-metrics"><div class="exp-reduction-bar"><div class="exp-reduction-fill" style="width:97%"></div></div><div class="exp-card-stats"><div class="exp-card-stat"><div class="val">30→1</div><div class="lbl">Msgs</div></div></div></div>
       </div>
       <div class="exp-card fade-in fd2">
         <div class="exp-card-header"><div class="exp-num">03</div><span class="exp-status success">SUCCESS</span></div>
         <div class="exp-card-title">History Type Expansion</div>
         <div class="exp-card-layer">Model + DB + Migration</div>
-        <div class="exp-card-metrics"><div class="exp-reduction-bar"><div class="exp-reduction-fill" style="width:99%"></div></div><div class="exp-card-stats"><div class="exp-card-stat"><div class="val">121→1</div><div class="lbl">Msgs</div></div><div class="exp-card-stat"><div class="val">$1.14</div><div class="lbl">Cost</div></div><div class="exp-card-stat"><div class="val">4:31</div><div class="lbl">Time</div></div></div></div>
+        <div class="exp-card-metrics"><div class="exp-reduction-bar"><div class="exp-reduction-fill" style="width:99%"></div></div><div class="exp-card-stats"><div class="exp-card-stat"><div class="val">121→1</div><div class="lbl">Msgs</div></div></div></div>
       </div>
       <div class="exp-card fade-in fd3">
         <div class="exp-card-header"><div class="exp-num">04</div><span class="exp-status success">SUCCESS</span></div>
         <div class="exp-card-title">TDD Board Models</div>
         <div class="exp-card-layer">Model + Service</div>
-        <div class="exp-card-metrics"><div class="exp-reduction-bar"><div class="exp-reduction-fill" style="width:96%"></div></div><div class="exp-card-stats"><div class="exp-card-stat"><div class="val">25→1</div><div class="lbl">Msgs</div></div><div class="exp-card-stat"><div class="val">$1.04</div><div class="lbl">Cost</div></div><div class="exp-card-stat"><div class="val">3:42</div><div class="lbl">Time</div></div></div></div>
+        <div class="exp-card-metrics"><div class="exp-reduction-bar"><div class="exp-reduction-fill" style="width:96%"></div></div><div class="exp-card-stats"><div class="exp-card-stat"><div class="val">25→1</div><div class="lbl">Msgs</div></div></div></div>
       </div>
       <div class="exp-card fade-in">
         <div class="exp-card-header"><div class="exp-num">05</div><span class="exp-status success">SUCCESS</span></div>
         <div class="exp-card-title">Thread Message Fetch</div>
         <div class="exp-card-layer">Edge Fn + Deno Test</div>
-        <div class="exp-card-metrics"><div class="exp-reduction-bar"><div class="exp-reduction-fill" style="width:93%"></div></div><div class="exp-card-stats"><div class="exp-card-stat"><div class="val">15→1</div><div class="lbl">Msgs</div></div><div class="exp-card-stat"><div class="val">$2.37</div><div class="lbl">Cost</div></div><div class="exp-card-stat"><div class="val">5:09</div><div class="lbl">Time</div></div></div></div>
+        <div class="exp-card-metrics"><div class="exp-reduction-bar"><div class="exp-reduction-fill" style="width:93%"></div></div><div class="exp-card-stats"><div class="exp-card-stat"><div class="val">15→1</div><div class="lbl">Msgs</div></div></div></div>
       </div>
       <div class="exp-card fade-in fd1">
         <div class="exp-card-header"><div class="exp-num">06</div><span class="exp-status success">SUCCESS</span></div>
         <div class="exp-card-title">VTT Parser + Upload</div>
         <div class="exp-card-layer">Full Stack</div>
-        <div class="exp-card-metrics"><div class="exp-reduction-bar"><div class="exp-reduction-fill" style="width:97%"></div></div><div class="exp-card-stats"><div class="exp-card-stat"><div class="val">35→1</div><div class="lbl">Msgs</div></div><div class="exp-card-stat"><div class="val">$2.60</div><div class="lbl">Cost</div></div><div class="exp-card-stat"><div class="val">7:08</div><div class="lbl">Time</div></div></div></div>
+        <div class="exp-card-metrics"><div class="exp-reduction-bar"><div class="exp-reduction-fill" style="width:97%"></div></div><div class="exp-card-stats"><div class="exp-card-stat"><div class="val">35→1</div><div class="lbl">Msgs</div></div></div></div>
       </div>
     </div>
 
@@ -1880,47 +2114,6 @@ body.rtl .case-summary-item { text-align: center; }
   </div>
 </section>
 
-<!-- =============================== -->
-<!-- CTA SECTION                      -->
-<!-- =============================== -->
-<section class="cta-section" id="cta">
-  <div class="cta-glow"></div>
-  <div class="container" style="position:relative;z-index:1;">
-    <div class="cta-scarcity fade-in">
-      <span data-i18n-html="cta.scarcity">&#9889; 10,000 Founding Partners</span>
-    </div>
-    <h2 class="section-title fade-in" style="margin:0 auto 16px;max-width:520px;text-align:center;" data-i18n-html="cta.title">
-      Start Recording.<br><span class="gradient-text">Start Shipping.</span>
-    </h2>
-    <p class="section-desc fade-in" style="margin:0 auto 40px;text-align:center;max-width:480px;" data-i18n="cta.desc">
-      The first generation should pass review. Founding partners get full access to SIMY\u2019s spec-aware, architecture-respecting code generation.
-    </p>
-    <div class="cta-incentive-box fade-in">
-      <div class="cta-incentive-grid">
-        <div class="cta-incentive-item">
-          <div class="val">$5</div>
-          <div class="lbl" data-i18n="cta.credits">SIMY Credits</div>
-        </div>
-        <div class="cta-incentive-item">
-          <div class="val" data-i18n="cta.setupVal">10K</div>
-          <div class="lbl" data-i18n="cta.setup">Max Users</div>
-        </div>
-        <div class="cta-incentive-item">
-          <div class="val">1:1</div>
-          <div class="lbl" data-i18n="cta.onboarding">Onboarding</div>
-        </div>
-      </div>
-      <div class="cta-slots" data-i18n-html="cta.slots">Early access &mdash; Shape what&rsquo;s next</div>
-    </div>
-    <div class="cta-actions fade-in">
-      <a href="#" class="btn-primary">
-        <span data-i18n="cta.reserveBtn">Reserve your Slot</span>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </a>
-      <a href="#evidence" class="btn-secondary" data-i18n="cta.seeResults">See Results First</a>
-    </div>
-  </div>
-</section>
 
 <!-- =============================== -->
 <!-- PILOT PROGRAM                    -->
@@ -1934,7 +2127,7 @@ body.rtl .case-summary-item { text-align: center; }
           <span class="pilot-badge" data-i18n="pilot.badge">Applications Open</span>
         </div>
         <h2 class="pilot-title" data-i18n-html="pilot.title">Pilot Program</h2>
-        <p class="pilot-desc" data-i18n="pilot.desc">Shape the future of software development. 10,000 founding partners will define how teams ship code.</p>
+        <p class="pilot-desc" data-i18n="pilot.desc">Install the app and enter the lottery. 10,000 founding partners will be selected to shape the future of software development.</p>
       </div>
       <div class="pilot-benefits">
         <div class="pilot-benefit-item">
@@ -1971,6 +2164,7 @@ body.rtl .case-summary-item { text-align: center; }
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           <span data-i18n="pilot.ctaBtn">Become a Founding Partner</span>
         </a>
+        <p class="pilot-lottery-note" data-i18n="pilot.lotteryNote">Selected by lottery after app installation. Winners will be notified exclusively within the app.</p>
       </div>
     </div>
   </div>
@@ -1990,7 +2184,7 @@ body.rtl .case-summary-item { text-align: center; }
           <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         </button>
         <div class="faq-answer">
-          <p data-i18n="faq.a1">SIMY is polyglot by design. It supports TypeScript, JavaScript, Python, Go, Java, Kotlin, Rust, and more. The System Blueprint adapts to whatever stack you use—monorepo, microservices, or monolith.</p>
+          <p data-i18n="faq.a1">SIMY supports polyglot codebases and works with a wide range of languages including TypeScript, JavaScript, Python, Go, Java, Kotlin, and Rust. It also adapts to various architectures such as monorepos, microservices, and monoliths.</p>
         </div>
       </div>
       <div class="faq-item fade-in fd1">
@@ -2075,9 +2269,9 @@ body.rtl .case-summary-item { text-align: center; }
         </a>
       </div>
       <div class="footer-right">
-        <a href="#" data-i18n="footer.privacy">Privacy Policy</a>
+        <a href="privacy.html" data-i18n="footer.privacy">Privacy Policy</a>
         <span class="footer-sep">|</span>
-        <a href="#" data-i18n="footer.terms">Terms of Service</a>
+        <a href="terms.html" data-i18n="footer.terms">Terms of Service</a>
         <span class="footer-sep">|</span>
         <span>&copy; 2026 SIMY. All rights reserved.</span>
       </div>
@@ -2146,14 +2340,14 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 const T = {
 en: {
 "nav.beforeAfter":"Before / After","nav.evidence":"Evidence","nav.cta":"Reserve your Slot","nav.howItWorks":"How It Works","nav.security":"Security","nav.faq":"FAQ",
-"hero.eyebrow":"No Prompts Needed",
-"hero.title":'<span class="br">Capture the Conversation.</span><span class="br"><span class="gradient-text">Ship the code.</span></span>',
-"hero.subHeadline":'No prompts needed. Just record your conversation — SIMY understands the context and <em>auto-generates code, reviews, and pull requests</em>.',
+"hero.eyebrow":"Capture the Conversation",
+"hero.title":'<span class="br">Meetings End.</span><span class="br"><span class="gradient-text">Code Ships.</span></span>',
+"hero.subHeadline":'No meeting notes. No task management. No prompts. Just record — SIMY <em>auto-generates code, reviews, and pull requests</em>.',
 "hero.flow1":"Record","hero.flow2":"Understand","hero.flow3":"Code","hero.flow4":"PR",
 "hero.ctaPrimary":"Reserve your Slot","hero.ctaSecondary":"See How It Works",
 "hero.statLabel":"Code review pass rate — from meeting recording alone","hero.statSub":"No prompts. No spec misreads. Just record and ship.",
 "prImpact.label":"Real Impact","prImpact.title":'Pull Requests per Engineer, per Day.<br><span class="gradient-text">17.7\u00d7 More Output.</span>',"prImpact.before":"Before SIMY","prImpact.after":"With SIMY","prImpact.unit":"PRs / engineer / day","prImpact.context":"Measured across the SIMY engineering team. Same engineers, same codebase — just SIMY.",
-"social.label":"Trusted by engineering teams that ship without rework",
+"social.label":"Backed by investors who believe in zero-rework engineering",
 "social.quote1":"\u201cWith SIMY, the first generated output passed our code review without a single comment. No naming issues, no layer violations, no spec misreads. We\u2019ve eliminated rework from our workflow.\u201d",
 "social.role1":"CTO, Specialist Doctors Inc.",
 "social.quote2":"\u201cOur PM explains a feature in a Zoom call, and by the time the meeting ends, SIMY already has a pull request ready. No spec documents, no back-and-forth. The code matches exactly what was discussed.\u201d",
@@ -2164,6 +2358,7 @@ en: {
 "hiw.step1Title":"Capture Your Conversations","hiw.step1Desc":"Connect Zoom, Teams, Slack, or Gmail. SIMY automatically captures specs, requirements, and decisions from meetings, chats, and emails.",
 "hiw.step2Title":"Autonomous Execution","hiw.step2Desc":"SIMY manages development tasks as an Action list. It codes, tests, and reviews on behalf of your engineers — autonomously.",
 "hiw.step3Title":"Delivery","hiw.step3Desc":"Review-ready code, automated code reviews, and pull requests — delivered to your GitHub. Ready to merge.",
+"aiflow.label":"AI Flow","aiflow.title":'From Meeting to Implementation.<br><span class="gradient-text">AI Handles the Rest.</span>',"aiflow.desc":"Your meeting ends. SIMY's AI automatically extracts decisions, decomposes tasks, and prepares everything — so humans can focus purely on implementation.","aiflow.meeting":"Meeting / Conversation","aiflow.aiAuto":"AI Automatically Processes","aiflow.cap1Title":"Decision Extraction","aiflow.cap1Sub":"Identifies key decisions from conversations","aiflow.cap2Title":"Task Decomposition","aiflow.cap2Sub":"Breaks down into actionable tasks","aiflow.cap3Title":"Priority Assignment","aiflow.cap3Sub":"Ranks tasks by urgency and impact","aiflow.cap4Title":"Dependency Analysis","aiflow.cap4Sub":"Maps task relationships and order","aiflow.cap5Title":"Knowledge Storage","aiflow.cap5Sub":"Preserves context for future reference","aiflow.cap6Title":"Architecture Verification","aiflow.cap6Sub":"Verifies architectural boundaries before PR","aiflow.human":"Humans Focus on Implementation",
 "insight.headline":'Close Your Laptop.<br><span class="gradient-text">The Code Keeps Shipping.</span>',"insight.body":"SIMY\u2019s cloud agents don\u2019t stop when you do. Every important decision from your meeting is automatically converted into an Action \u2014 and with one tap of \u201cAsk AI Agent,\u201d coding, testing, and review happen without you.","insight.pain1":"No more closing your laptop for a meeting, then realizing an hour later: \u201cI forgot to start the AI job.\u201d","insight.pain2":"No more planning \u201cwhich hard task to assign before bed for a 10-hour run.\u201d","insight.punchline":"The work is already done.",
 "ba.label":"Before / After","ba.title":'Before SIMY vs.<br><span class="gradient-text">After SIMY.</span>',"ba.desc":"Stop writing prompts and fixing AI output. Just capture your conversations and let SIMY handle the rest.",
 "ba.beforeTag":"Before SIMY","ba.beforeTitle":"Traditional AI Coding",
@@ -2206,9 +2401,9 @@ en: {
 "cta.scarcity":"&#9889; 10,000 Founding Partners","cta.title":'Start Recording.<br><span class="gradient-text">Start Shipping.</span>',"cta.desc":"Just record your meetings. SIMY handles the code, the review, and the pull request. Founding partners get full access.",
 "cta.credits":"SIMY Credits","cta.setupVal":"10K","cta.setup":"Max Users","cta.onboarding":"Onboarding","cta.slots":"Early access &mdash; Shape what&rsquo;s next",
 "cta.reserveBtn":"Reserve your Slot","cta.seeResults":"See Results First",
-"pilot.badge":"Applications Open","pilot.title":"Pilot Program","pilot.desc":"Shape the future of software development. 10,000 founding partners will define how teams ship code.","pilot.credit":"$5 SIMY Credits","pilot.creditSub":"Start building, day one","pilot.users":"10,000 Founders","pilot.usersSub":"Shape the product with us","pilot.onboarding":"Dedicated Onboarding","pilot.onboardingSub":"1:1 setup with our engineering team","pilot.support":"Priority Support","pilot.supportSub":"Direct Slack channel with response SLA","pilot.ctaBtn":"Become a Founding Partner",
+"pilot.badge":"Applications Open","pilot.title":"Pilot Program","pilot.desc":"Install the app and enter the lottery. 10,000 founding partners will be selected to shape the future of software development.","pilot.credit":"$5 SIMY Credits","pilot.creditSub":"Start building, day one","pilot.users":"10,000 Founders","pilot.usersSub":"Shape the product with us","pilot.onboarding":"Dedicated Onboarding","pilot.onboardingSub":"1:1 setup with our engineering team","pilot.support":"Priority Support","pilot.supportSub":"Direct Slack channel with response SLA","pilot.ctaBtn":"Become a Founding Partner","pilot.lotteryNote":"Selected by lottery after app installation. Winners will be notified exclusively within the app.",
 "faq.label":"FAQ","faq.title":'Common Questions.<br><span class="gradient-text">Clear Answers.</span>',
-"faq.q1":"What programming languages does SIMY support?","faq.a1":"SIMY is polyglot by design. It supports TypeScript, JavaScript, Python, Go, Java, Kotlin, Rust, and more. It adapts to whatever stack you use—monorepo, microservices, or monolith.",
+"faq.q1":"What programming languages does SIMY support?","faq.a1":"SIMY supports polyglot codebases and works with a wide range of languages including TypeScript, JavaScript, Python, Go, Java, Kotlin, and Rust. It also adapts to various architectures such as monorepos, microservices, and monoliths.",
 "faq.q2":"How does SIMY integrate with CI/CD?","faq.a2":"SIMY integrates directly with GitHub Actions, GitLab CI, and other pipelines. Generated code comes with passing tests and can be auto-merged via your existing deployment workflow.",
 "faq.q3":"What does the pilot program cost?","faq.a3":"Pilot partners receive $5 in SIMY credits to start. After the pilot period, pricing is usage-based at approximately $1–2 per task. No seat licenses, no hidden fees. You pay only for what SIMY generates.",
 "faq.q4":"Do I really not need to write prompts?","faq.a4":"Correct. SIMY extracts requirements, specs, and decisions directly from your meeting recordings and team conversations. You never need to write a prompt — just have your normal meetings and SIMY handles the rest.",
@@ -2223,14 +2418,14 @@ en: {
 },
 ja: {
 "nav.beforeAfter":"Before / After","nav.evidence":"実績","nav.cta":"今すぐ予約","nav.howItWorks":"仕組み","nav.security":"セキュリティ","nav.faq":"FAQ",
-"hero.eyebrow":"プロンプト不要",
-"hero.title":'<span class="br">Capture the Conversation.</span><span class="br"><span class="gradient-text">Ship the code.</span></span>',
-"hero.subHeadline":'プロンプトは不要。会話を録音するだけ — SIMYがコンテキストを理解し、<em>コード・レビュー・プルリクエストを自動生成</em>します。',
+"hero.eyebrow":"会話をキャプチャ",
+"hero.title":'<span class="br">Meetings End.</span><span class="br"><span class="gradient-text">Code Ships.</span></span>',
+"hero.subHeadline":'議事録不要。タスク管理不要。プロンプト不要。録音するだけ — SIMYが<em>コード・レビュー・プルリクエストを自動生成</em>します。',
 "hero.flow1":"録音","hero.flow2":"理解","hero.flow3":"コード","hero.flow4":"PR",
 "hero.ctaPrimary":"今すぐ予約","hero.ctaSecondary":"仕組みを見る",
 "hero.statLabel":"会議の録音だけでコードレビュー通過率","hero.statSub":"プロンプト不要。仕様の誤読なし。録音して出荷するだけ。",
 "prImpact.label":"実績","prImpact.title":'1日あたりのPR数、1人あたり。<br><span class="gradient-text">17.7倍のアウトプット。</span>',"prImpact.before":"SIMY導入前","prImpact.after":"SIMY導入後","prImpact.unit":"PR数 / エンジニア / 日","prImpact.context":"SIMYエンジニアチームでの実測値。同じエンジニア、同じコードベース — SIMYだけが違い。",
-"social.label":"リワークなしで出荷するエンジニアリングチームから信頼",
+"social.label":"リワークゼロのエンジニアリングを信じる投資家が支援",
 "social.quote1":"「SIMYの初回生成物が、一つのコメントもなくコードレビューを通過しました。命名の問題なし、レイヤー違反なし、仕様の誤読なし。リワークがワークフローから消えました。」",
 "social.role1":"CTO, Specialist Doctors Inc.",
 "social.quote2":"「PMがZoomで機能を説明し、会議が終わる頃にはSIMYがプルリクを準備しています。仕様書もやり取りも不要。議論された内容と完全に一致するコードが出てきます。」",
@@ -2241,6 +2436,7 @@ ja: {
 "hiw.step1Title":"会話をキャプチャする","hiw.step1Desc":"Zoom、Teams、Slack、Gmailを接続。SIMYが会議・チャット・メールから仕様・要件・決定事項を自動抽出します。",
 "hiw.step2Title":"自律実行","hiw.step2Desc":"開発すべき内容をActionリストとして管理。SIMYがエンジニアに代わってコーディング・テスト・レビューを自律的に実行します。",
 "hiw.step3Title":"納品","hiw.step3Desc":"レビュー済みコード、自動コードレビュー、プルリクエスト — GitHubに納品。マージ準備完了。",
+"aiflow.label":"AIフロー","aiflow.title":'会議から実装へ。<br><span class="gradient-text">AIが残りを処理。</span>',"aiflow.desc":"会議が終わると、SIMYのAIが自動で意思決定を抽出、タスクを分解、すべてを準備 — 人間は実装に専念できます。","aiflow.meeting":"会議 / 会話","aiflow.aiAuto":"AIが自動で処理","aiflow.cap1Title":"意思決定抽出","aiflow.cap1Sub":"会話から重要な決定事項を特定","aiflow.cap2Title":"タスク分解","aiflow.cap2Sub":"実行可能なタスクに分解","aiflow.cap3Title":"優先度付け","aiflow.cap3Sub":"緊急度と影響度でランク付け","aiflow.cap4Title":"依存関係解析","aiflow.cap4Sub":"タスクの関係性と順序をマッピング","aiflow.cap5Title":"ナレッジ保存","aiflow.cap5Sub":"将来の参照のためにコンテキストを保存","aiflow.cap6Title":"アーキテクチャ検証","aiflow.cap6Sub":"PR作成前にアーキテクチャ境界を検証","aiflow.human":"人間は実装に専念",
 "insight.headline":'ノートパソコンを閉じても、<br><span class="gradient-text">コードは出荷され続ける。</span>',"insight.body":"SIMYのクラウドエージェントは、あなたが手を止めても止まりません。会議で話した重要な内容はすべてActionに変換され、「Ask AI Agent」ボタンを押すだけで、コーディングからテストまで自動的に実行されます。","insight.pain1":"会議に集中するためにノートパソコンを閉じたあと、「AIエージェントにジョブを走らせていなかった、1時間無駄にした」と後悔することはもうありません。","insight.pain2":"寝る前に「難しいタスクを任せて10時間処理させよう」と考える必要もありません。","insight.punchline":"作業は、すでに終わっています。",
 "ba.label":"Before / After","ba.title":'SIMY導入前 vs.<br><span class="gradient-text">SIMY導入後。</span>',"ba.desc":"プロンプトを書いてAI出力を修正する作業をやめましょう。会話をキャプチャして、あとはSIMYにお任せ。",
 "ba.beforeTag":"SIMY導入前","ba.beforeTitle":"従来のAIコーディング",
@@ -2283,9 +2479,9 @@ ja: {
 "cta.scarcity":"&#9889; ファウンディングパートナー 1万名","cta.title":'会話を録るだけ。<br><span class="gradient-text">コードが届く。</span>',"cta.desc":"会話をキャプチャするだけ。SIMYがコード、レビュー、プルリクエストを処理します。ファウンディングパートナーにはフルアクセスが提供されます。",
 "cta.credits":"SIMYクレジット","cta.setupVal":"10K","cta.setup":"最大ユーザー数","cta.onboarding":"オンボーディング","cta.slots":"アーリーアクセス &mdash; 次を創る側へ",
 "cta.reserveBtn":"今すぐ予約","cta.seeResults":"まず実績を見る",
-"pilot.badge":"応募受付中","pilot.title":"パイロットプログラム","pilot.desc":"ソフトウェア開発の未来を創る。1万人のファウンディングパートナーが、チームの出荷方法を再定義する。","pilot.credit":"$5 SIMYクレジット","pilot.creditSub":"初日からビルド開始","pilot.users":"1万人のFounders","pilot.usersSub":"プロダクトを一緒に創る","pilot.onboarding":"専任オンボーディング","pilot.onboardingSub":"エンジニアチームと1:1でセットアップ","pilot.support":"優先サポート","pilot.supportSub":"Slack専用チャンネルで迅速対応","pilot.ctaBtn":"ファウンディングパートナーになる",
+"pilot.badge":"応募受付中","pilot.title":"パイロットプログラム","pilot.desc":"アプリをインストールして抽選にエントリー。1万人のファウンディングパートナーを選出し、ソフトウェア開発の未来を共に創ります。","pilot.credit":"$5 SIMYクレジット","pilot.creditSub":"初日からビルド開始","pilot.users":"1万人のFounders","pilot.usersSub":"プロダクトを一緒に創る","pilot.onboarding":"専任オンボーディング","pilot.onboardingSub":"エンジニアチームと1:1でセットアップ","pilot.support":"優先サポート","pilot.supportSub":"Slack専用チャンネルで迅速対応","pilot.ctaBtn":"ファウンディングパートナーになる","pilot.lotteryNote":"アプリをインストール後、抽選で選出されます。当選者のみ、アプリ内でご連絡いたします。",
 "faq.label":"FAQ","faq.title":'よくある質問。<br><span class="gradient-text">明確な回答。</span>',
-"faq.q1":"SIMYはどのプログラミング言語に対応していますか？","faq.a1":"SIMYはポリグロット設計です。TypeScript、JavaScript、Python、Go、Java、Kotlin、Rustなどに対応。モノレポ、マイクロサービス、モノリスなど、あらゆるスタックに適応します。",
+"faq.q1":"SIMYはどのプログラミング言語に対応していますか？","faq.a1":"SIMYは、ポリグロットなコードベースに対応しており、TypeScript、JavaScript、Python、Go、Java、Kotlin、Rustなど幅広い言語で利用できます。モノレポ、マイクロサービス、モノリスなど、さまざまなアーキテクチャにも適応可能です。",
 "faq.q2":"SIMYはCI/CDとどのように統合しますか？","faq.a2":"SIMYはGitHub Actions、GitLab CI、その他のパイプラインと直接統合します。生成コードはテスト済みで、既存のデプロイワークフローで自動マージ可能です。",
 "faq.q3":"パイロットプログラムの費用は？","faq.a3":"パイロットパートナーには$5のSIMYクレジットを提供。パイロット後はタスクあたり約$1〜2の従量課金。シートライセンスなし、隠れた費用なし。SIMYが生成した分だけお支払い。",
 "faq.q4":"本当にプロンプトを書かなくていいのですか？","faq.a4":"はい。SIMYは会議の録音やチームの会話から、要件・仕様・決定事項を直接抽出します。プロンプトを書く必要は一切ありません — 普段通りの会議をするだけで、SIMYが残りを処理します。",
@@ -2300,14 +2496,14 @@ ja: {
 },
 zh: {
 "nav.evidence":"\u6570\u636E\u8BC1\u636E","nav.cta":"Reserve your Slot","nav.howItWorks":"\u5DE5\u4F5C\u539F\u7406","nav.security":"\u5B89\u5168","nav.faq":"\u5E38\u89C1\u95EE\u9898",
-"hero.eyebrow":"No Prompts Needed",
-"hero.title":'<span class="br">Capture the Conversation.</span><span class="br"><span class="gradient-text">Ship the code.</span></span>',
-"hero.subHeadline":"No prompts needed. Just record your conversation — SIMY understands the context and <em>auto-generates code, reviews, and pull requests</em>.",
+"hero.eyebrow":"Capture the Conversation",
+"hero.title":'<span class="br">Meetings End.</span><span class="br"><span class="gradient-text">Code Ships.</span></span>',
+"hero.subHeadline":"No meeting notes. No task management. No prompts. Just record — SIMY <em>auto-generates code, reviews, and pull requests</em>.",
 
 "hero.ctaPrimary":"Reserve your Slot","hero.ctaSecondary":"See How It Works",
 "hero.statLabel":"Code review pass rate — from meeting recording alone","hero.statSub":"No prompts. No spec misreads. Just record and ship.",
 "prImpact.label":"Real Impact","prImpact.title":'Pull Requests per Engineer, per Day.<br><span class="gradient-text">17.7× More Output.</span>',"prImpact.before":"Before SIMY","prImpact.after":"With SIMY","prImpact.unit":"PRs / engineer / day","prImpact.context":"Measured across the SIMY engineering team. Same engineers, same codebase — just SIMY.",
-"social.label":"\u53D7\u5230\u65E0\u9700\u8FD4\u5DE5\u5373\u53EF\u4EA4\u4ED8\u7684\u5DE5\u7A0B\u56E2\u961F\u4FE1\u8D56",
+"social.label":"\u76F8\u4FE1\u96F6\u8FD4\u5DE5\u5DE5\u7A0B\u7684\u6295\u8D44\u8005\u652F\u6301",
 "social.quote1":"\u201CSIMY\u7684\u9996\u6B21\u751F\u6210\u4EA7\u51FA\u76F4\u63A5\u901A\u8FC7\u4E86\u6211\u4EEC\u7684\u4EE3\u7801\u5BA1\u67E5\uFF0C\u6CA1\u6709\u4E00\u6761\u8BC4\u8BBA\u3002\u6CA1\u6709\u547D\u540D\u95EE\u9898\uFF0C\u6CA1\u6709\u5206\u5C42\u8FDD\u89C4\uFF0C\u6CA1\u6709\u9700\u6C42\u8BEF\u8BFB\u3002\u8FD4\u5DE5\u4ECE\u6211\u4EEC\u7684\u5DE5\u4F5C\u6D41\u4E2D\u6D88\u5931\u4E86\u3002\u201D",
 "social.role1":"CTO\uFF0CSpecialist Doctors Inc.",
 "social.quote2":"\u201cOur PM explains a feature in a Zoom call, and by the time the meeting ends, SIMY already has a pull request ready. No spec documents, no back-and-forth. The code matches exactly what was discussed.\u201d",
@@ -2343,13 +2539,14 @@ zh: {
 "cta.scarcity":"&#9889; 10,000\u540D\u521B\u59CB\u5408\u4F19\u4EBA","cta.title":'Start Recording.<br><span class="gradient-text">Start Shipping.</span>',"cta.desc":"Just record your meetings. SIMY handles the code, the review, and the pull request. Founding partners get full access.",
 "cta.credits":"SIMY\u989D\u5EA6","cta.setupVal":"10K","cta.setup":"\u6700\u5927\u7528\u6237\u6570","cta.onboarding":"\u5165\u804C\u57F9\u8BAD","cta.slots":"\u62A2\u5148\u4F53\u9A8C &mdash; \u5B9A\u4E49\u672A\u6765",
 "cta.reserveBtn":"Reserve your Slot","cta.seeResults":"See Results First",
-"pilot.badge":"\u5F00\u653E\u7533\u8BF7","pilot.title":"\u8BD5\u70B9\u8BA1\u5212","pilot.desc":"\u5B9A\u4E49\u8F6F\u4EF6\u5F00\u53D1\u7684\u672A\u6765\u300210,000\u540D\u521B\u59CB\u5408\u4F19\u4EBA\u5C06\u91CD\u65B0\u5B9A\u4E49\u56E2\u961F\u4EA4\u4ED8\u4EE3\u7801\u7684\u65B9\u5F0F\u3002","pilot.credit":"$5 SIMY\u989D\u5EA6","pilot.creditSub":"\u7B2C\u4E00\u5929\u5C31\u5F00\u59CB\u6784\u5EFA","pilot.users":"10,000\u540D Founders","pilot.usersSub":"\u4E0E\u6211\u4EEC\u5171\u540C\u6253\u9020\u4EA7\u54C1","pilot.onboarding":"\u4E13\u5C5E\u5165\u804C\u57F9\u8BAD","pilot.onboardingSub":"\u4E0E\u5DE5\u7A0B\u56E2\u961F1:1\u8BBE\u7F6E","pilot.support":"\u4F18\u5148\u652F\u6301","pilot.supportSub":"Slack\u4E13\u5C5E\u9891\u9053\u5FEB\u901F\u54CD\u5E94","pilot.ctaBtn":"\u6210\u4E3A\u521B\u59CB\u5408\u4F19\u4EBA",
+"pilot.badge":"\u5F00\u653E\u7533\u8BF7","pilot.title":"\u8BD5\u70B9\u8BA1\u5212","pilot.desc":"\u5B89\u88C5\u5E94\u7528\u53C2\u4E0E\u62BD\u7B7E\u300210,000\u540D\u521B\u59CB\u5408\u4F19\u4EBA\u5C06\u88AB\u9009\u4E2D\uFF0C\u5171\u540C\u5B9A\u4E49\u8F6F\u4EF6\u5F00\u53D1\u7684\u672A\u6765\u3002","pilot.credit":"$5 SIMY\u989D\u5EA6","pilot.creditSub":"\u7B2C\u4E00\u5929\u5C31\u5F00\u59CB\u6784\u5EFA","pilot.users":"10,000\u540D Founders","pilot.usersSub":"\u4E0E\u6211\u4EEC\u5171\u540C\u6253\u9020\u4EA7\u54C1","pilot.onboarding":"\u4E13\u5C5E\u5165\u804C\u57F9\u8BAD","pilot.onboardingSub":"\u4E0E\u5DE5\u7A0B\u56E2\u961F1:1\u8BBE\u7F6E","pilot.support":"\u4F18\u5148\u652F\u6301","pilot.supportSub":"Slack\u4E13\u5C5E\u9891\u9053\u5FEB\u901F\u54CD\u5E94","pilot.ctaBtn":"\u6210\u4E3A\u521B\u59CB\u5408\u4F19\u4EBA","pilot.lotteryNote":"\u5B89\u88C5\u5E94\u7528\u540E\u901A\u8FC7\u62BD\u7B7E\u9009\u51FA\u3002\u4EC5\u4E2D\u7B7E\u8005\u5C06\u5728\u5E94\u7528\u5185\u6536\u5230\u901A\u77E5\u3002",
 "footer.tagline":"Record. Ship. Done.","footer.philosophy":"Philosophy: <code>Meeting + Codebase = One Shot</code>","footer.privacy":"\u9690\u79C1\u653F\u7B56","footer.terms":"\u670D\u52A1\u6761\u6B3E",
 "appStore.label":"\u4ECEApp Store\u4E0B\u8F7D",
 "hiw.label":"工作原理","hiw.title":'How It Works:<br><span class="gradient-text">3 Steps to Zero Rework.</span>',"hiw.desc":"From meeting recording to merged pull request — no prompts, no manual specs, no rework.",
 "hiw.step1Title":"Capture Your Conversations","hiw.step1Desc":"Connect Zoom, Teams, Slack, or Gmail. SIMY automatically captures specs, requirements, and decisions from meetings, chats, and emails.",
 "hiw.step2Title":"Autonomous Execution","hiw.step2Desc":"SIMY manages development tasks as an Action list. It codes, tests, and reviews on behalf of your engineers — autonomously.",
 "hiw.step3Title":"Delivery","hiw.step3Desc":"Review-ready code, automated code reviews, and pull requests — delivered to your GitHub. Ready to merge.",
+"aiflow.label":"AI\u6D41\u7A0B","aiflow.title":'\u4ECE\u4F1A\u8BAE\u5230\u5B9E\u73B0\u3002<br><span class="gradient-text">AI\u5904\u7406\u5176\u4F59\u3002</span>',"aiflow.desc":"\u4F1A\u8BAE\u7ED3\u675F\u540E\uFF0CSIMY\u7684AI\u81EA\u52A8\u63D0\u53D6\u51B3\u7B56\u3001\u5206\u89E3\u4EFB\u52A1\u3001\u51C6\u5907\u4E00\u5207 \u2014 \u8BA9\u4EBA\u7C7B\u4E13\u6CE8\u4E8E\u5B9E\u73B0\u3002","aiflow.meeting":"\u4F1A\u8BAE / \u5BF9\u8BDD","aiflow.aiAuto":"AI\u81EA\u52A8\u5904\u7406","aiflow.cap1Title":"\u51B3\u7B56\u63D0\u53D6","aiflow.cap1Sub":"\u4ECE\u5BF9\u8BDD\u4E2D\u8BC6\u522B\u5173\u952E\u51B3\u7B56","aiflow.cap2Title":"\u4EFB\u52A1\u5206\u89E3","aiflow.cap2Sub":"\u5206\u89E3\u4E3A\u53EF\u6267\u884C\u4EFB\u52A1","aiflow.cap3Title":"\u4F18\u5148\u7EA7\u5206\u914D","aiflow.cap3Sub":"\u6309\u7D27\u6025\u6027\u548C\u5F71\u54CD\u529B\u6392\u5E8F","aiflow.cap4Title":"\u4F9D\u8D56\u5173\u7CFB\u5206\u6790","aiflow.cap4Sub":"\u6620\u5C04\u4EFB\u52A1\u5173\u7CFB\u548C\u987A\u5E8F","aiflow.cap5Title":"\u77E5\u8BC6\u5B58\u50A8","aiflow.cap5Sub":"\u4FDD\u5B58\u4E0A\u4E0B\u6587\u4EE5\u4F9B\u672A\u6765\u53C2\u8003","aiflow.cap6Title":"\u67B6\u6784\u9A8C\u8BC1","aiflow.cap6Sub":"PR\u521B\u5EFA\u524D\u9A8C\u8BC1\u67B6\u6784\u8FB9\u754C","aiflow.human":"\u4EBA\u7C7B\u4E13\u6CE8\u4E8E\u5B9E\u73B0",
 "insight.headline":'合上笔记本电脑。<br><span class="gradient-text">代码继续交付。</span>',"insight.body":"SIMY的云端代理不会因为你停下而停下。会议中的每个重要决策都会自动转化为Action——只需点击「Ask AI Agent」，编码、测试和审查就会自动完成。","insight.pain1":"再也不会合上笔记本参加会议后，一小时后才想起：「忘了启动AI任务了。」","insight.pain2":"再也不需要睡前规划「让AI处理哪个难题跑10个小时」。","insight.punchline":"工作已经完成了。",
 "demo.label":"Demo","demo.title":'看看区别。<br><span class="gradient-text">并排对比。</span>',"demo.desc":"标准AI忽略你的代码库。SIMY继承它。比较输出。",
 "demo.standardLabel":"标准AI","demo.simyLabel":"SIMY",
@@ -2365,7 +2562,7 @@ zh: {
 "security.tag2":"访问控制","security.card2Title":"基于沟通的访问控制","security.card2Desc":"访问严格限制于原始Slack频道或Gmail线程（收件人/抄送）的参与者。未经授权的人无法查看你的对话。",
 "security.tag3":"数据政策","security.card3Title":"零训练保证","security.card3Desc":"你的专有数据和代码绝不用于训练全球模型。你的知识产权永远是你的。",
 "faq.label":"常见问题","faq.title":'常见问题。<br><span class="gradient-text">清晰解答。</span>',
-"faq.q1":"SIMY支持哪些编程语言？","faq.a1":"SIMY采用多语言设计。支持TypeScript、JavaScript、Python、Go、Java、Kotlin、Rust等。系统蓝图适应你使用的任何技术栈——monorepo、微服务或单体应用。",
+"faq.q1":"SIMY支持哪些编程语言？","faq.a1":"SIMY支持多语言代码库，可使用TypeScript、JavaScript、Python、Go、Java、Kotlin、Rust等多种语言。同时也适应monorepo、微服务、单体应用等各种架构。",
 "faq.q2":"SIMY如何与CI/CD集成？","faq.a2":"SIMY直接与GitHub Actions、GitLab CI及其他管道集成。生成的代码附带通过的测试，可通过现有部署工作流自动合并。",
 "faq.q3":"试点计划费用是多少？","faq.a3":"试点合作伙伴获得$5的SIMY额度。试点期后，按使用量计费，每个任务约$1-2。无席位许可证，无隐藏费用。你只为SIMY生成的内容付费。",
 "story.label":"我们的故事","story.title":'Bridging the Gap<br><span class="gradient-text">Between Meetings and Code.</span>',
@@ -2377,14 +2574,14 @@ zh: {
 },
 hi: {
 "nav.evidence":"\u092A\u094D\u0930\u092E\u093E\u0923","nav.cta":"Reserve your Slot","nav.howItWorks":"\u0915\u0948\u0938\u0947 \u0915\u093E\u092E \u0915\u0930\u0924\u093E \u0939\u0948","nav.security":"\u0938\u0941\u0930\u0915\u094D\u0937\u093E","nav.faq":"FAQ",
-"hero.eyebrow":"No Prompts Needed",
-"hero.title":'<span class="br">Capture the Conversation.</span><span class="br"><span class="gradient-text">Ship the code.</span></span>',
-"hero.subHeadline":"No prompts needed. Just record your conversation — SIMY understands the context and <em>auto-generates code, reviews, and pull requests</em>.",
+"hero.eyebrow":"Capture the Conversation",
+"hero.title":'<span class="br">Meetings End.</span><span class="br"><span class="gradient-text">Code Ships.</span></span>',
+"hero.subHeadline":"No meeting notes. No task management. No prompts. Just record — SIMY <em>auto-generates code, reviews, and pull requests</em>.",
 
 "hero.ctaPrimary":"Reserve your Slot","hero.ctaSecondary":"See How It Works",
 "hero.statLabel":"Code review pass rate — from meeting recording alone","hero.statSub":"No prompts. No spec misreads. Just record and ship.",
 "prImpact.label":"Real Impact","prImpact.title":'Pull Requests per Engineer, per Day.<br><span class="gradient-text">17.7× More Output.</span>',"prImpact.before":"Before SIMY","prImpact.after":"With SIMY","prImpact.unit":"PRs / engineer / day","prImpact.context":"Measured across the SIMY engineering team. Same engineers, same codebase — just SIMY.",
-"social.label":"\u092C\u093F\u0928\u093E \u0930\u0940\u0935\u0930\u094D\u0915 \u0915\u0947 \u0936\u093F\u092A \u0915\u0930\u0928\u0947 \u0935\u093E\u0932\u0940 \u0907\u0902\u091C\u0940\u0928\u093F\u092F\u0930\u093F\u0902\u0917 \u091F\u0940\u092E\u094B\u0902 \u0926\u094D\u0935\u093E\u0930\u093E \u0935\u093F\u0936\u094D\u0935\u0938\u0928\u0940\u092F",
+"social.label":"\u091C\u093C\u0940\u0930\u094B-\u0930\u0940\u0935\u0930\u094D\u0915 \u0907\u0902\u091C\u0940\u0928\u093F\u092F\u0930\u093F\u0902\u0917 \u092E\u0947\u0902 \u0935\u093F\u0936\u094D\u0935\u093E\u0938 \u0930\u0916\u0928\u0947 \u0935\u093E\u0932\u0947 \u0928\u093F\u0935\u0947\u0936\u0915\u094B\u0902 \u0926\u094D\u0935\u093E\u0930\u093E \u0938\u092E\u0930\u094D\u0925\u093F\u0924",
 "social.quote1":"\u201CSIMY \u0915\u093E \u092A\u0939\u0932\u093E \u0906\u0909\u091F\u092A\u0941\u091F \u092C\u093F\u0928\u093E \u090F\u0915 \u092D\u0940 \u0915\u092E\u0947\u0902\u091F \u0915\u0947 \u0939\u092E\u093E\u0930\u0947 \u0915\u094B\u0921 \u0930\u093F\u0935\u094D\u092F\u0942 \u0938\u0947 \u092A\u093E\u0938 \u0939\u094B \u0917\u092F\u093E\u0964 \u0915\u094B\u0908 \u0928\u0947\u092E\u093F\u0902\u0917 \u0907\u0936\u094D\u092F\u0942 \u0928\u0939\u0940\u0902, \u0915\u094B\u0908 \u0932\u0947\u092F\u0930 \u0935\u093E\u092F\u0932\u0947\u0936\u0928 \u0928\u0939\u0940\u0902, \u0915\u094B\u0908 \u0938\u094D\u092A\u0947\u0915 \u092E\u093F\u0938\u0930\u0940\u0921 \u0928\u0939\u0940\u0902\u0964 \u0930\u0940\u0935\u0930\u094D\u0915 \u0939\u092E\u093E\u0930\u0947 \u0935\u0930\u094D\u0915\u0930\u094D\u0932\u094B \u0938\u0947 \u0917\u093E\u092F\u092C \u0939\u094B \u0917\u092F\u093E\u0964\u201D",
 "social.role1":"CTO, Specialist Doctors Inc.",
 "social.quote2":"\u201cOur PM explains a feature in a Zoom call, and by the time the meeting ends, SIMY already has a pull request ready. No spec documents, no back-and-forth. The code matches exactly what was discussed.\u201d",
@@ -2420,13 +2617,14 @@ hi: {
 "cta.scarcity":"&#9889; 10,000 \u092B\u093E\u0909\u0902\u0921\u093F\u0902\u0917 \u092A\u093E\u0930\u094D\u091F\u0928\u0930\u094D\u0938","cta.title":'Start Recording.<br><span class="gradient-text">Start Shipping.</span>',"cta.desc":"Just record your meetings. SIMY handles the code, the review, and the pull request. Founding partners get full access.",
 "cta.credits":"SIMY \u0915\u094D\u0930\u0947\u0921\u093F\u091F","cta.setupVal":"10K","cta.setup":"\u0905\u0927\u093F\u0915\u0924\u092E \u092F\u0942\u091C\u093C\u0930\u094D\u0938","cta.onboarding":"\u0911\u0928\u092C\u094B\u0930\u094D\u0921\u093F\u0902\u0917","cta.slots":"\u0905\u0930\u094D\u0932\u0940 \u090F\u0915\u094D\u0938\u0947\u0938 &mdash; \u092D\u0935\u093F\u0937\u094D\u092F \u0917\u0922\u093C\u0947\u0902",
 "cta.reserveBtn":"Reserve your Slot","cta.seeResults":"See Results First",
-"pilot.badge":"\u0906\u0935\u0947\u0926\u0928 \u0916\u0941\u0932\u0947 \u0939\u0948\u0902","pilot.title":"\u092A\u093E\u092F\u0932\u091F \u092A\u094D\u0930\u094B\u0917\u094D\u0930\u093E\u092E","pilot.desc":"\u0938\u0949\u092B\u094D\u091F\u0935\u0947\u092F\u0930 \u0921\u0947\u0935\u0932\u092A\u092E\u0947\u0902\u091F \u0915\u093E \u092D\u0935\u093F\u0937\u094D\u092F \u0917\u0922\u093C\u0947\u0902\u0964 10,000 \u092B\u093E\u0909\u0902\u0921\u093F\u0902\u0917 \u092A\u093E\u0930\u094D\u091F\u0928\u0930\u094D\u0938 \u0924\u092F \u0915\u0930\u0947\u0902\u0917\u0947 \u0915\u093F \u091F\u0940\u092E\u0947\u0902 \u0915\u094B\u0921 \u0915\u0948\u0938\u0947 \u0936\u093F\u092A \u0915\u0930\u0924\u0940 \u0939\u0948\u0902\u0964","pilot.credit":"$5 SIMY \u0915\u094D\u0930\u0947\u0921\u093F\u091F","pilot.creditSub":"\u092A\u0939\u0932\u0947 \u0926\u093F\u0928 \u0938\u0947 \u092C\u093F\u0932\u094D\u0921 \u0915\u0930\u0947\u0902","pilot.users":"10,000 Founders","pilot.usersSub":"\u092A\u094D\u0930\u094B\u0921\u0915\u094D\u091F \u0915\u094B \u0938\u093E\u0925 \u092E\u093F\u0932\u0915\u0930 \u092C\u0928\u093E\u090F\u0902","pilot.onboarding":"\u0938\u092E\u0930\u094D\u092A\u093F\u0924 \u0911\u0928\u092C\u094B\u0930\u094D\u0921\u093F\u0902\u0917","pilot.onboardingSub":"\u0907\u0902\u091C\u0940\u0928\u093F\u092F\u0930\u093F\u0902\u0917 \u091F\u0940\u092E \u0915\u0947 \u0938\u093E\u0925 1:1 \u0938\u0947\u091F\u0905\u092A","pilot.support":"\u092A\u094D\u0930\u093E\u0925\u092E\u093F\u0915\u0924\u093E \u0938\u092A\u094B\u0930\u094D\u091F","pilot.supportSub":"Slack \u091A\u0948\u0928\u0932 \u0938\u0947 \u0924\u094D\u0935\u0930\u093F\u0924 \u092A\u094D\u0930\u0924\u093F\u0915\u094D\u0930\u093F\u092F\u093E","pilot.ctaBtn":"\u092B\u093E\u0909\u0902\u0921\u093F\u0902\u0917 \u092A\u093E\u0930\u094D\u091F\u0928\u0930 \u092C\u0928\u0947\u0902",
+"pilot.badge":"\u0906\u0935\u0947\u0926\u0928 \u0916\u0941\u0932\u0947 \u0939\u0948\u0902","pilot.title":"\u092A\u093E\u092F\u0932\u091F \u092A\u094D\u0930\u094B\u0917\u094D\u0930\u093E\u092E","pilot.desc":"\u0910\u092A \u0907\u0902\u0938\u094D\u091F\u0949\u0932 \u0915\u0930\u0947\u0902 \u0914\u0930 \u0932\u0949\u091F\u0930\u0940 \u092E\u0947\u0902 \u092D\u093E\u0917 \u0932\u0947\u0902\u0964 10,000 \u092B\u093E\u0909\u0902\u0921\u093F\u0902\u0917 \u092A\u093E\u0930\u094D\u091F\u0928\u0930\u094D\u0938 \u0915\u094B \u091A\u0941\u0928\u093E \u091C\u093E\u090F\u0917\u093E \u091C\u094B \u0938\u0949\u092B\u094D\u091F\u0935\u0947\u092F\u0930 \u0915\u093E \u092D\u0935\u093F\u0937\u094D\u092F \u0917\u0922\u093C\u0947\u0902\u0917\u0947\u0964","pilot.credit":"$5 SIMY \u0915\u094D\u0930\u0947\u0921\u093F\u091F","pilot.creditSub":"\u092A\u0939\u0932\u0947 \u0926\u093F\u0928 \u0938\u0947 \u092C\u093F\u0932\u094D\u0921 \u0915\u0930\u0947\u0902","pilot.users":"10,000 Founders","pilot.usersSub":"\u092A\u094D\u0930\u094B\u0921\u0915\u094D\u091F \u0915\u094B \u0938\u093E\u0925 \u092E\u093F\u0932\u0915\u0930 \u092C\u0928\u093E\u090F\u0902","pilot.onboarding":"\u0938\u092E\u0930\u094D\u092A\u093F\u0924 \u0911\u0928\u092C\u094B\u0930\u094D\u0921\u093F\u0902\u0917","pilot.onboardingSub":"\u0907\u0902\u091C\u0940\u0928\u093F\u092F\u0930\u093F\u0902\u0917 \u091F\u0940\u092E \u0915\u0947 \u0938\u093E\u0925 1:1 \u0938\u0947\u091F\u0905\u092A","pilot.support":"\u092A\u094D\u0930\u093E\u0925\u092E\u093F\u0915\u0924\u093E \u0938\u092A\u094B\u0930\u094D\u091F","pilot.supportSub":"Slack \u091A\u0948\u0928\u0932 \u0938\u0947 \u0924\u094D\u0935\u0930\u093F\u0924 \u092A\u094D\u0930\u0924\u093F\u0915\u094D\u0930\u093F\u092F\u093E","pilot.ctaBtn":"\u092B\u093E\u0909\u0902\u0921\u093F\u0902\u0917 \u092A\u093E\u0930\u094D\u091F\u0928\u0930 \u092C\u0928\u0947\u0902","pilot.lotteryNote":"\u0910\u092A \u0907\u0902\u0938\u094D\u091F\u0949\u0932 \u0915\u0930\u0928\u0947 \u0915\u0947 \u092C\u093E\u0926 \u0932\u0949\u091F\u0930\u0940 \u0938\u0947 \u091A\u092F\u0928\u0964 \u0935\u093F\u091C\u0947\u0924\u093E\u0913\u0902 \u0915\u094B \u0915\u0947\u0935\u0932 \u0910\u092A \u0915\u0947 \u092D\u0940\u0924\u0930 \u0938\u0942\u091A\u093F\u0924 \u0915\u093F\u092F\u093E \u091C\u093E\u090F\u0917\u093E\u0964",
 "footer.tagline":"Record. Ship. Done.","footer.philosophy":"Philosophy: <code>Meeting + Codebase = One Shot</code>","footer.privacy":"\u0917\u094B\u092A\u0928\u0940\u092F\u0924\u093E \u0928\u0940\u0924\u093F","footer.terms":"\u0938\u0947\u0935\u093E \u0915\u0940 \u0936\u0930\u094D\u0924\u0947\u0902",
 "appStore.label":"App Store \u0938\u0947 \u0921\u093E\u0909\u0928\u0932\u094B\u0921 \u0915\u0930\u0947\u0902",
 "hiw.label":"कैसे काम करता है","hiw.title":'How It Works:<br><span class="gradient-text">3 Steps to Zero Rework.</span>',"hiw.desc":"From meeting recording to merged pull request — no prompts, no manual specs, no rework.",
 "hiw.step1Title":"Capture Your Conversations","hiw.step1Desc":"Connect Zoom, Teams, Slack, or Gmail. SIMY automatically captures specs, requirements, and decisions from meetings, chats, and emails.",
 "hiw.step2Title":"Autonomous Execution","hiw.step2Desc":"SIMY manages development tasks as an Action list. It codes, tests, and reviews on behalf of your engineers — autonomously.",
 "hiw.step3Title":"Delivery","hiw.step3Desc":"Review-ready code, automated code reviews, and pull requests — delivered to your GitHub. Ready to merge.",
+"aiflow.label":"AI \u092B\u094D\u0932\u094B","aiflow.title":'\u092E\u0940\u091F\u093F\u0902\u0917 \u0938\u0947 \u0907\u092E\u094D\u092A\u094D\u0932\u0940\u092E\u0947\u0902\u091F\u0947\u0936\u0928 \u0924\u0915\u0964<br><span class="gradient-text">AI \u092C\u093E\u0915\u0940 \u0938\u092C \u0938\u0902\u092D\u093E\u0932\u0924\u093E \u0939\u0948\u0964</span>',"aiflow.desc":"\u092E\u0940\u091F\u093F\u0902\u0917 \u0916\u0924\u094D\u092E \u0939\u094B\u0924\u0940 \u0939\u0948\u0964 SIMY \u0915\u093E AI \u0938\u094D\u0935\u091A\u093E\u0932\u093F\u0924 \u0930\u0942\u092A \u0938\u0947 \u0928\u093F\u0930\u094D\u0923\u092F \u0928\u093F\u0915\u093E\u0932\u0924\u093E \u0939\u0948, \u091F\u093E\u0938\u094D\u0915 \u0935\u093F\u092D\u093E\u091C\u093F\u0924 \u0915\u0930\u0924\u093E \u0939\u0948 \u2014 \u0924\u093E\u0915\u093F \u092E\u0928\u0941\u0937\u094D\u092F \u0915\u0947\u0935\u0932 \u0907\u092E\u094D\u092A\u094D\u0932\u0940\u092E\u0947\u0902\u091F\u0947\u0936\u0928 \u092A\u0930 \u0927\u094D\u092F\u093E\u0928 \u0926\u0947 \u0938\u0915\u0947\u0902\u0964","aiflow.meeting":"\u092E\u0940\u091F\u093F\u0902\u0917 / \u0935\u093E\u0930\u094D\u0924\u093E\u0932\u093E\u092A","aiflow.aiAuto":"AI \u0938\u094D\u0935\u091A\u093E\u0932\u093F\u0924 \u0930\u0942\u092A \u0938\u0947 \u092A\u094D\u0930\u094B\u0938\u0947\u0938 \u0915\u0930\u0924\u093E \u0939\u0948","aiflow.cap1Title":"\u0928\u093F\u0930\u094D\u0923\u092F \u0928\u093F\u0937\u094D\u0915\u0930\u094D\u0937\u0923","aiflow.cap1Sub":"\u0935\u093E\u0930\u094D\u0924\u093E\u0932\u093E\u092A \u0938\u0947 \u092E\u0939\u0924\u094D\u0935\u092A\u0942\u0930\u094D\u0923 \u0928\u093F\u0930\u094D\u0923\u092F\u094B\u0902 \u0915\u0940 \u092A\u0939\u091A\u093E\u0928","aiflow.cap2Title":"\u091F\u093E\u0938\u094D\u0915 \u0935\u093F\u092D\u093E\u091C\u0928","aiflow.cap2Sub":"\u0915\u093E\u0930\u094D\u092F\u092F\u094B\u0917\u094D\u092F \u091F\u093E\u0938\u094D\u0915 \u092E\u0947\u0902 \u0935\u093F\u092D\u093E\u091C\u093F\u0924","aiflow.cap3Title":"\u092A\u094D\u0930\u093E\u0925\u092E\u093F\u0915\u0924\u093E \u0928\u093F\u0930\u094D\u0927\u093E\u0930\u0923","aiflow.cap3Sub":"\u0924\u093E\u0924\u094D\u0915\u093E\u0932\u093F\u0915\u0924\u093E \u0914\u0930 \u092A\u094D\u0930\u092D\u093E\u0935 \u0915\u0947 \u0905\u0928\u0941\u0938\u093E\u0930 \u0930\u0948\u0902\u0915\u093F\u0902\u0917","aiflow.cap4Title":"\u0928\u093F\u0930\u094D\u092D\u0930\u0924\u093E \u0935\u093F\u0936\u094D\u0932\u0947\u0937\u0923","aiflow.cap4Sub":"\u091F\u093E\u0938\u094D\u0915 \u0938\u0902\u092C\u0902\u0927\u094B\u0902 \u0914\u0930 \u0915\u094D\u0930\u092E \u0915\u093E \u092E\u0948\u092A\u093F\u0902\u0917","aiflow.cap5Title":"\u0928\u0949\u0932\u0947\u091C \u0938\u094D\u091F\u094B\u0930\u0947\u091C","aiflow.cap5Sub":"\u092D\u0935\u093F\u0937\u094D\u092F \u0915\u0947 \u0938\u0902\u0926\u0930\u094D\u092D \u0915\u0947 \u0932\u093F\u090F \u0938\u0902\u0926\u0930\u094D\u092D \u0938\u0941\u0930\u0915\u094D\u0937\u093F\u0924","aiflow.cap6Title":"\u0906\u0930\u094D\u0915\u093F\u091F\u0947\u0915\u094D\u091A\u0930 \u0938\u0924\u094D\u092F\u093E\u092A\u0928","aiflow.cap6Sub":"PR \u0938\u0947 \u092A\u0939\u0932\u0947 \u0906\u0930\u094D\u0915\u093F\u091F\u0947\u0915\u094D\u091A\u0930\u0932 \u0938\u0940\u092E\u093E\u0913\u0902 \u0915\u0940 \u091C\u093E\u0902\u091A","aiflow.human":"\u092E\u0928\u0941\u0937\u094D\u092F \u0907\u092E\u094D\u092A\u094D\u0932\u0940\u092E\u0947\u0902\u091F\u0947\u0936\u0928 \u092A\u0930 \u0927\u094D\u092F\u093E\u0928 \u0926\u0947\u0902",
 "insight.headline":'लैपटॉप बंद करें।<br><span class="gradient-text">कोड शिप होता रहेगा।</span>',"insight.body":"SIMY के क्लाउड एजेंट आपके रुकने पर नहीं रुकते। आपकी मीटिंग का हर महत्वपूर्ण फैसला स्वचालित रूप से Action में बदल जाता है — और \u201cAsk AI Agent\u201d पर एक टैप से कोडिंग, टेस्टिंग और रिव्यू अपने आप हो जाता है।","insight.pain1":"अब मीटिंग के लिए लैपटॉप बंद करने के बाद एक घंटे बाद यह एहसास नहीं होगा: \u201cAI जॉब स्टार्ट करना भूल गया।\u201d","insight.pain2":"अब सोने से पहले यह सोचने की ज़रूरत नहीं: \u201cकौन सा मुश्किल टास्क 10 घंटे के लिए असाइन करूं।\u201d","insight.punchline":"काम पहले से हो चुका है।",
 "demo.label":"Demo","demo.title":'फर्क देखें।<br><span class="gradient-text">साइड बाय साइड।</span>',"demo.desc":"स्टैंडर्ड AI आपके कोडबेस को इग्नोर करता है। SIMY इनहेरिट करता है। आउटपुट की तुलना करें।",
 "demo.standardLabel":"स्टैंडर्ड AI","demo.simyLabel":"SIMY",
@@ -2442,7 +2640,7 @@ hi: {
 "security.tag2":"एक्सेस कंट्रोल","security.card2Title":"कम्युनिकेशन-बेस्ड एक्सेस","security.card2Desc":"एक्सेस मूल Slack चैनल या Gmail थ्रेड (To/CC) के प्रतिभागियों तक सख्ती से सीमित है।",
 "security.tag3":"डेटा पॉलिसी","security.card3Title":"ज़ीरो ट्रेनिंग गारंटी","security.card3Desc":"आपका प्रोप्राइटरी डेटा और कोड कभी ग्लोबल मॉडल ट्रेनिंग के लिए उपयोग नहीं किया जाता।",
 "faq.label":"अक्सर पूछे जाने वाले सवाल","faq.title":'आम सवाल।<br><span class="gradient-text">स्पष्ट जवाब।</span>',
-"faq.q1":"SIMY कौन सी प्रोग्रामिंग भाषाएं सपोर्ट करता है?","faq.a1":"SIMY पॉलीग्लॉट डिज़ाइन है। TypeScript, JavaScript, Python, Go, Java, Kotlin, Rust और अधिक को सपोर्ट करता है।",
+"faq.q1":"SIMY कौन सी प्रोग्रामिंग भाषाएं सपोर्ट करता है?","faq.a1":"SIMY पॉलीग्लॉट कोडबेस को सपोर्ट करता है और TypeScript, JavaScript, Python, Go, Java, Kotlin, Rust सहित कई भाषाओं में काम करता है। यह मोनोरेपो, माइक्रोसर्विसेज़ और मोनोलिथ जैसी विभिन्न आर्किटेक्चर में भी अनुकूलित होता है।",
 "faq.q2":"SIMY CI/CD के साथ कैसे इंटीग्रेट होता है?","faq.a2":"SIMY सीधे GitHub Actions, GitLab CI और अन्य पाइपलाइन के साथ इंटीग्रेट होता है।",
 "faq.q3":"पायलट प्रोग्राम की कीमत क्या है?","faq.a3":"पायलट पार्टनर्स को शुरू करने के लिए $5 SIMY क्रेडिट मिलते हैं। उसके बाद प्रति टास्क ~$1-2 यूसेज-बेस्ड प्राइसिंग।",
 "story.label":"हमारी कहानी","story.title":'Bridging the Gap<br><span class="gradient-text">Between Meetings and Code.</span>',
@@ -2454,14 +2652,14 @@ hi: {
 },
 es: {
 "nav.evidence":"Evidencia","nav.cta":"Reserve your Slot","nav.howItWorks":"C\u00F3mo Funciona","nav.security":"Seguridad","nav.faq":"FAQ",
-"hero.eyebrow":"No Prompts Needed",
-"hero.title":'<span class="br">Capture the Conversation.</span><span class="br"><span class="gradient-text">Ship the code.</span></span>',
-"hero.subHeadline":"No prompts needed. Just record your conversation — SIMY understands the context and <em>auto-generates code, reviews, and pull requests</em>.",
+"hero.eyebrow":"Capture the Conversation",
+"hero.title":'<span class="br">Meetings End.</span><span class="br"><span class="gradient-text">Code Ships.</span></span>',
+"hero.subHeadline":"No meeting notes. No task management. No prompts. Just record — SIMY <em>auto-generates code, reviews, and pull requests</em>.",
 
 "hero.ctaPrimary":"Reserve your Slot","hero.ctaSecondary":"See How It Works",
 "hero.statLabel":"Code review pass rate — from meeting recording alone","hero.statSub":"No prompts. No spec misreads. Just record and ship.",
 "prImpact.label":"Real Impact","prImpact.title":'Pull Requests per Engineer, per Day.<br><span class="gradient-text">17.7× More Output.</span>',"prImpact.before":"Before SIMY","prImpact.after":"With SIMY","prImpact.unit":"PRs / engineer / day","prImpact.context":"Measured across the SIMY engineering team. Same engineers, same codebase — just SIMY.",
-"social.label":"Confianza de equipos de ingenier\u00EDa que entregan sin retrabajo",
+"social.label":"Respaldado por inversores que creen en la ingenier\u00EDa sin retrabajo",
 "social.quote1":"\u201cCon SIMY, el primer output generado pas\u00F3 nuestra revisi\u00F3n de c\u00F3digo sin un solo comentario. Sin problemas de nomenclatura, sin violaciones de capas, sin malinterpretaci\u00F3n de specs. Eliminamos el retrabajo de nuestro flujo.\u201d",
 "social.role1":"CTO, Specialist Doctors Inc.",
 "social.quote2":"\u201cOur PM explains a feature in a Zoom call, and by the time the meeting ends, SIMY already has a pull request ready. No spec documents, no back-and-forth. The code matches exactly what was discussed.\u201d",
@@ -2497,13 +2695,14 @@ es: {
 "cta.scarcity":"&#9889; 10,000 Socios Fundadores","cta.title":'Start Recording.<br><span class="gradient-text">Start Shipping.</span>',"cta.desc":"Just record your meetings. SIMY handles the code, the review, and the pull request. Founding partners get full access.",
 "cta.credits":"Cr\u00E9ditos SIMY","cta.setupVal":"10K","cta.setup":"Usuarios M\u00E1x.","cta.onboarding":"Onboarding","cta.slots":"Acceso anticipado &mdash; Define lo que viene",
 "cta.reserveBtn":"Reserve your Slot","cta.seeResults":"See Results First",
-"pilot.badge":"Inscripciones Abiertas","pilot.title":"Programa Piloto","pilot.desc":"Define el futuro del desarrollo de software. 10,000 socios fundadores redefinir\u00E1n c\u00F3mo los equipos entregan c\u00F3digo.","pilot.credit":"$5 Cr\u00E9ditos SIMY","pilot.creditSub":"Empieza a construir desde el d\u00EDa uno","pilot.users":"10,000 Fundadores","pilot.usersSub":"Construye el producto con nosotros","pilot.onboarding":"Onboarding Dedicado","pilot.onboardingSub":"Configuraci\u00F3n 1:1 con nuestro equipo","pilot.support":"Soporte Prioritario","pilot.supportSub":"Canal Slack directo con SLA","pilot.ctaBtn":"Convi\u00E9rtete en Socio Fundador",
+"pilot.badge":"Inscripciones Abiertas","pilot.title":"Programa Piloto","pilot.desc":"Instala la app y participa en el sorteo. 10,000 socios fundadores ser\u00E1n seleccionados para definir el futuro del desarrollo de software.","pilot.credit":"$5 Cr\u00E9ditos SIMY","pilot.creditSub":"Empieza a construir desde el d\u00EDa uno","pilot.users":"10,000 Fundadores","pilot.usersSub":"Construye el producto con nosotros","pilot.onboarding":"Onboarding Dedicado","pilot.onboardingSub":"Configuraci\u00F3n 1:1 con nuestro equipo","pilot.support":"Soporte Prioritario","pilot.supportSub":"Canal Slack directo con SLA","pilot.ctaBtn":"Convi\u00E9rtete en Socio Fundador","pilot.lotteryNote":"Selecci\u00F3n por sorteo tras instalar la app. Los ganadores ser\u00E1n notificados exclusivamente dentro de la app.",
 "footer.tagline":"Record. Ship. Done.","footer.philosophy":"Philosophy: <code>Meeting + Codebase = One Shot</code>","footer.privacy":"Pol\u00EDtica de Privacidad","footer.terms":"T\u00E9rminos de Servicio",
 "appStore.label":"Descargar en el",
 "hiw.label":"Cómo Funciona","hiw.title":'How It Works:<br><span class="gradient-text">3 Steps to Zero Rework.</span>',"hiw.desc":"From meeting recording to merged pull request — no prompts, no manual specs, no rework.",
 "hiw.step1Title":"Capture Your Conversations","hiw.step1Desc":"Connect Zoom, Teams, Slack, or Gmail. SIMY automatically captures specs, requirements, and decisions from meetings, chats, and emails.",
 "hiw.step2Title":"Autonomous Execution","hiw.step2Desc":"SIMY manages development tasks as an Action list. It codes, tests, and reviews on behalf of your engineers — autonomously.",
 "hiw.step3Title":"Delivery","hiw.step3Desc":"Review-ready code, automated code reviews, and pull requests — delivered to your GitHub. Ready to merge.",
+"aiflow.label":"Flujo AI","aiflow.title":'De la Reuni\u00F3n a la Implementaci\u00F3n.<br><span class="gradient-text">AI se Encarga del Resto.</span>',"aiflow.desc":"Tu reuni\u00F3n termina. El AI de SIMY extrae autom\u00E1ticamente decisiones, descompone tareas y prepara todo \u2014 para que los humanos se concentren en la implementaci\u00F3n.","aiflow.meeting":"Reuni\u00F3n / Conversaci\u00F3n","aiflow.aiAuto":"AI Procesa Autom\u00E1ticamente","aiflow.cap1Title":"Extracci\u00F3n de Decisiones","aiflow.cap1Sub":"Identifica decisiones clave de las conversaciones","aiflow.cap2Title":"Descomposici\u00F3n de Tareas","aiflow.cap2Sub":"Divide en tareas ejecutables","aiflow.cap3Title":"Asignaci\u00F3n de Prioridad","aiflow.cap3Sub":"Clasifica tareas por urgencia e impacto","aiflow.cap4Title":"An\u00E1lisis de Dependencias","aiflow.cap4Sub":"Mapea relaciones y orden de tareas","aiflow.cap5Title":"Almacenamiento de Conocimiento","aiflow.cap5Sub":"Preserva el contexto para referencia futura","aiflow.cap6Title":"Verificaci\u00F3n de Arquitectura","aiflow.cap6Sub":"Verifica l\u00EDmites arquitect\u00F3nicos antes del PR","aiflow.human":"Humanos se Enfocan en Implementar",
 "insight.headline":'Cierra tu laptop.<br><span class="gradient-text">El código sigue entregándose.</span>',"insight.body":"Los agentes en la nube de SIMY no se detienen cuando tú lo haces. Cada decisión importante de tu reunión se convierte automáticamente en una Action — y con un toque en \u201cAsk AI Agent,\u201d la codificación, las pruebas y la revisión ocurren sin ti.","insight.pain1":"Ya no cerrarás tu laptop para una reunión y una hora después te darás cuenta: \u201cOlvidé iniciar el trabajo de IA.\u201d","insight.pain2":"Ya no necesitas planificar \u201cqué tarea difícil asignar antes de dormir para que procese 10 horas.\u201d","insight.punchline":"El trabajo ya está hecho.",
 "demo.label":"Demo","demo.title":'Mira la Diferencia.<br><span class="gradient-text">Lado a Lado.</span>',"demo.desc":"La IA estándar ignora tu código. SIMY lo hereda. Compara la salida.",
 "demo.standardLabel":"IA Estándar","demo.simyLabel":"SIMY",
@@ -2519,7 +2718,7 @@ es: {
 "security.tag2":"Control de Acceso","security.card2Title":"Acceso Basado en Comunicación","security.card2Desc":"El acceso se restringe estrictamente a usuarios del canal Slack o hilo Gmail original (Para/CC).",
 "security.tag3":"Política de Datos","security.card3Title":"Garantía Zero Training","security.card3Desc":"Tus datos y código propietario nunca se usan para entrenar modelos globales. Tu propiedad intelectual es tuya.",
 "faq.label":"Preguntas Frecuentes","faq.title":'Preguntas Comunes.<br><span class="gradient-text">Respuestas Claras.</span>',
-"faq.q1":"¿Qué lenguajes de programación soporta SIMY?","faq.a1":"SIMY es políglota por diseño. Soporta TypeScript, JavaScript, Python, Go, Java, Kotlin, Rust y más.",
+"faq.q1":"¿Qué lenguajes de programación soporta SIMY?","faq.a1":"SIMY soporta bases de código políglotas y funciona con una amplia gama de lenguajes como TypeScript, JavaScript, Python, Go, Java, Kotlin y Rust. También se adapta a diversas arquitecturas como monorepos, microservicios y monolitos.",
 "faq.q2":"¿Cómo se integra SIMY con CI/CD?","faq.a2":"SIMY se integra directamente con GitHub Actions, GitLab CI y otros pipelines.",
 "faq.q3":"¿Cuánto cuesta el programa piloto?","faq.a3":"Los socios piloto reciben $5 en créditos SIMY. Después, precios basados en uso ~$1-2 por tarea.",
 "story.label":"Nuestra Historia","story.title":'Bridging the Gap<br><span class="gradient-text">Between Meetings and Code.</span>',
@@ -2531,14 +2730,14 @@ es: {
 },
 ar: {
 "nav.evidence":"\u0627\u0644\u0623\u062F\u0644\u0629","nav.cta":"Reserve your Slot","nav.howItWorks":"\u0643\u064A\u0641 \u064A\u0639\u0645\u0644","nav.security":"\u0627\u0644\u0623\u0645\u0627\u0646","nav.faq":"\u0623\u0633\u0626\u0644\u0629 \u0634\u0627\u0626\u0639\u0629",
-"hero.eyebrow":"No Prompts Needed",
-"hero.title":'<span class="br">Capture the Conversation.</span><span class="br"><span class="gradient-text">Ship the code.</span></span>',
-"hero.subHeadline":"No prompts needed. Just record your conversation — SIMY understands the context and <em>auto-generates code, reviews, and pull requests</em>.",
+"hero.eyebrow":"Capture the Conversation",
+"hero.title":'<span class="br">Meetings End.</span><span class="br"><span class="gradient-text">Code Ships.</span></span>',
+"hero.subHeadline":"No meeting notes. No task management. No prompts. Just record — SIMY <em>auto-generates code, reviews, and pull requests</em>.",
 
 "hero.ctaPrimary":"Reserve your Slot","hero.ctaSecondary":"See How It Works",
 "hero.statLabel":"Code review pass rate — from meeting recording alone","hero.statSub":"No prompts. No spec misreads. Just record and ship.",
 "prImpact.label":"Real Impact","prImpact.title":'Pull Requests per Engineer, per Day.<br><span class="gradient-text">17.7× More Output.</span>',"prImpact.before":"Before SIMY","prImpact.after":"With SIMY","prImpact.unit":"PRs / engineer / day","prImpact.context":"Measured across the SIMY engineering team. Same engineers, same codebase — just SIMY.",
-"social.label":"\u0645\u0648\u062B\u0648\u0642 \u0628\u0647 \u0645\u0646 \u0641\u0631\u0642 \u0647\u0646\u062F\u0633\u064A\u0629 \u062A\u0633\u0644\u0645 \u0628\u062F\u0648\u0646 \u0625\u0639\u0627\u062F\u0629 \u0639\u0645\u0644",
+"social.label":"\u0645\u062F\u0639\u0648\u0645 \u0645\u0646 \u0645\u0633\u062A\u062B\u0645\u0631\u064A\u0646 \u064A\u0624\u0645\u0646\u0648\u0646 \u0628\u0627\u0644\u0647\u0646\u062F\u0633\u0629 \u0628\u062F\u0648\u0646 \u0625\u0639\u0627\u062F\u0629 \u0639\u0645\u0644",
 "social.quote1":"\u201C\u0645\u0639 SIMY\u060C \u0627\u062C\u062A\u0627\u0632 \u0623\u0648\u0644 \u0645\u062E\u0631\u062C \u062A\u0645 \u0625\u0646\u0634\u0627\u0624\u0647 \u0645\u0631\u0627\u062C\u0639\u0629 \u0627\u0644\u0643\u0648\u062F \u0628\u062F\u0648\u0646 \u062A\u0639\u0644\u064A\u0642 \u0648\u0627\u062D\u062F. \u0644\u0627 \u0645\u0634\u0627\u0643\u0644 \u062A\u0633\u0645\u064A\u0629\u060C \u0644\u0627 \u0627\u0646\u062A\u0647\u0627\u0643\u0627\u062A \u0637\u0628\u0642\u0627\u062A\u060C \u0644\u0627 \u0633\u0648\u0621 \u0642\u0631\u0627\u0621\u0629 \u0645\u0648\u0627\u0635\u0641\u0627\u062A. \u0623\u0632\u0644\u0646\u0627 \u0625\u0639\u0627\u062F\u0629 \u0627\u0644\u0639\u0645\u0644 \u0645\u0646 \u0633\u064A\u0631 \u0639\u0645\u0644\u0646\u0627.\u201D",
 "social.role1":"CTO\u060C Specialist Doctors Inc.",
 "social.quote2":"\u201cOur PM explains a feature in a Zoom call, and by the time the meeting ends, SIMY already has a pull request ready. No spec documents, no back-and-forth. The code matches exactly what was discussed.\u201d",
@@ -2574,13 +2773,14 @@ ar: {
 "cta.scarcity":"&#9889; 10,000 \u0634\u0631\u064A\u0643 \u0645\u0624\u0633\u0633","cta.title":'Start Recording.<br><span class="gradient-text">Start Shipping.</span>',"cta.desc":"Just record your meetings. SIMY handles the code, the review, and the pull request. Founding partners get full access.",
 "cta.credits":"\u0631\u0635\u064A\u062F SIMY","cta.setupVal":"10K","cta.setup":"\u0623\u0642\u0635\u0649 \u0645\u0633\u062A\u062E\u062F\u0645\u064A\u0646","cta.onboarding":"\u0627\u0644\u062A\u0623\u0647\u064A\u0644","cta.slots":"\u0648\u0635\u0648\u0644 \u0645\u0628\u0643\u0631 &mdash; \u0627\u0635\u0646\u0639 \u0627\u0644\u0645\u0633\u062A\u0642\u0628\u0644",
 "cta.reserveBtn":"Reserve your Slot","cta.seeResults":"See Results First",
-"pilot.badge":"\u0627\u0644\u062A\u0642\u062F\u064A\u0645 \u0645\u0641\u062A\u0648\u062D","pilot.title":"\u0627\u0644\u0628\u0631\u0646\u0627\u0645\u062C \u0627\u0644\u062A\u062C\u0631\u064A\u0628\u064A","pilot.desc":"\u0627\u0635\u0646\u0639 \u0645\u0633\u062A\u0642\u0628\u0644 \u062A\u0637\u0648\u064A\u0631 \u0627\u0644\u0628\u0631\u0645\u062C\u064A\u0627\u062A. 10,000 \u0634\u0631\u064A\u0643 \u0645\u0624\u0633\u0633 \u0633\u064A\u0639\u064A\u062F\u0648\u0646 \u062A\u0639\u0631\u064A\u0641 \u0637\u0631\u064A\u0642\u0629 \u0634\u062D\u0646 \u0627\u0644\u0643\u0648\u062F.","pilot.credit":"$5 \u0631\u0635\u064A\u062F SIMY","pilot.creditSub":"\u0627\u0628\u062F\u0623 \u0627\u0644\u0628\u0646\u0627\u0621 \u0645\u0646 \u0627\u0644\u064A\u0648\u0645 \u0627\u0644\u0623\u0648\u0644","pilot.users":"10,000 \u0645\u0624\u0633\u0633","pilot.usersSub":"\u0627\u0635\u0646\u0639 \u0627\u0644\u0645\u0646\u062A\u062C \u0645\u0639\u0646\u0627","pilot.onboarding":"\u062A\u0623\u0647\u064A\u0644 \u0645\u062E\u0635\u0635","pilot.onboardingSub":"\u0625\u0639\u062F\u0627\u062F 1:1 \u0645\u0639 \u0641\u0631\u064A\u0642\u0646\u0627","pilot.support":"\u062F\u0639\u0645 \u0630\u0648 \u0623\u0648\u0644\u0648\u064A\u0629","pilot.supportSub":"\u0642\u0646\u0627\u0629 Slack \u0645\u0628\u0627\u0634\u0631\u0629","pilot.ctaBtn":"\u0643\u0646 \u0634\u0631\u064A\u0643\u0627\u064B \u0645\u0624\u0633\u0633\u0627\u064B",
+"pilot.badge":"\u0627\u0644\u062A\u0642\u062F\u064A\u0645 \u0645\u0641\u062A\u0648\u062D","pilot.title":"\u0627\u0644\u0628\u0631\u0646\u0627\u0645\u062C \u0627\u0644\u062A\u062C\u0631\u064A\u0628\u064A","pilot.desc":"\u062B\u0628\u0651\u062A \u0627\u0644\u062A\u0637\u0628\u064A\u0642 \u0648\u0627\u062F\u062E\u0644 \u0627\u0644\u0642\u0631\u0639\u0629. \u0633\u064A\u062A\u0645 \u0627\u062E\u062A\u064A\u0627\u0631 10,000 \u0634\u0631\u064A\u0643 \u0645\u0624\u0633\u0633 \u0644\u062A\u0634\u0643\u064A\u0644 \u0645\u0633\u062A\u0642\u0628\u0644 \u062A\u0637\u0648\u064A\u0631 \u0627\u0644\u0628\u0631\u0645\u062C\u064A\u0627\u062A.","pilot.credit":"$5 \u0631\u0635\u064A\u062F SIMY","pilot.creditSub":"\u0627\u0628\u062F\u0623 \u0627\u0644\u0628\u0646\u0627\u0621 \u0645\u0646 \u0627\u0644\u064A\u0648\u0645 \u0627\u0644\u0623\u0648\u0644","pilot.users":"10,000 \u0645\u0624\u0633\u0633","pilot.usersSub":"\u0627\u0635\u0646\u0639 \u0627\u0644\u0645\u0646\u062A\u062C \u0645\u0639\u0646\u0627","pilot.onboarding":"\u062A\u0623\u0647\u064A\u0644 \u0645\u062E\u0635\u0635","pilot.onboardingSub":"\u0625\u0639\u062F\u0627\u062F 1:1 \u0645\u0639 \u0641\u0631\u064A\u0642\u0646\u0627","pilot.support":"\u062F\u0639\u0645 \u0630\u0648 \u0623\u0648\u0644\u0648\u064A\u0629","pilot.supportSub":"\u0642\u0646\u0627\u0629 Slack \u0645\u0628\u0627\u0634\u0631\u0629","pilot.ctaBtn":"\u0643\u0646 \u0634\u0631\u064A\u0643\u0627\u064B \u0645\u0624\u0633\u0633\u0627\u064B","pilot.lotteryNote":"\u064A\u062A\u0645 \u0627\u0644\u0627\u062E\u062A\u064A\u0627\u0631 \u0628\u0627\u0644\u0642\u0631\u0639\u0629 \u0628\u0639\u062F \u062A\u062B\u0628\u064A\u062A \u0627\u0644\u062A\u0637\u0628\u064A\u0642. \u0633\u064A\u062A\u0645 \u0625\u062E\u0637\u0627\u0631 \u0627\u0644\u0641\u0627\u0626\u0632\u064A\u0646 \u062D\u0635\u0631\u064A\u0627\u064B \u062F\u0627\u062E\u0644 \u0627\u0644\u062A\u0637\u0628\u064A\u0642.",
 "footer.tagline":"Record. Ship. Done.","footer.philosophy":"Philosophy: <code>Meeting + Codebase = One Shot</code>","footer.privacy":"\u0633\u064A\u0627\u0633\u0629 \u0627\u0644\u062E\u0635\u0648\u0635\u064A\u0629","footer.terms":"\u0634\u0631\u0648\u0637 \u0627\u0644\u062E\u062F\u0645\u0629",
 "appStore.label":"\u062A\u0646\u0632\u064A\u0644 \u0645\u0646",
 "hiw.label":"كيف يعمل","hiw.title":'How It Works:<br><span class="gradient-text">3 Steps to Zero Rework.</span>',"hiw.desc":"From meeting recording to merged pull request — no prompts, no manual specs, no rework.",
 "hiw.step1Title":"Capture Your Conversations","hiw.step1Desc":"Connect Zoom, Teams, Slack, or Gmail. SIMY automatically captures specs, requirements, and decisions from meetings, chats, and emails.",
 "hiw.step2Title":"Autonomous Execution","hiw.step2Desc":"SIMY manages development tasks as an Action list. It codes, tests, and reviews on behalf of your engineers — autonomously.",
 "hiw.step3Title":"Delivery","hiw.step3Desc":"Review-ready code, automated code reviews, and pull requests — delivered to your GitHub. Ready to merge.",
+"aiflow.label":"\u062A\u062F\u0641\u0642 AI","aiflow.title":'\u0645\u0646 \u0627\u0644\u0627\u062C\u062A\u0645\u0627\u0639 \u0625\u0644\u0649 \u0627\u0644\u062A\u0646\u0641\u064A\u0630.<br><span class="gradient-text">AI \u064A\u062A\u0648\u0644\u0649 \u0627\u0644\u0628\u0627\u0642\u064A.</span>',"aiflow.desc":"\u064A\u0646\u062A\u0647\u064A \u0627\u062C\u062A\u0645\u0627\u0639\u0643. AI \u0645\u0646 SIMY \u064A\u0633\u062A\u062E\u0631\u062C \u0627\u0644\u0642\u0631\u0627\u0631\u0627\u062A \u062A\u0644\u0642\u0627\u0626\u064A\u0627\u064B\u060C \u064A\u0641\u0643\u0643 \u0627\u0644\u0645\u0647\u0627\u0645\u060C \u0648\u064A\u062C\u0647\u0632 \u0643\u0644 \u0634\u064A\u0621 \u2014 \u0644\u064A\u0631\u0643\u0632 \u0627\u0644\u0628\u0634\u0631 \u0639\u0644\u0649 \u0627\u0644\u062A\u0646\u0641\u064A\u0630.","aiflow.meeting":"\u0627\u062C\u062A\u0645\u0627\u0639 / \u0645\u062D\u0627\u062F\u062B\u0629","aiflow.aiAuto":"AI \u064A\u0639\u0627\u0644\u062C \u062A\u0644\u0642\u0627\u0626\u064A\u0627\u064B","aiflow.cap1Title":"\u0627\u0633\u062A\u062E\u0631\u0627\u062C \u0627\u0644\u0642\u0631\u0627\u0631\u0627\u062A","aiflow.cap1Sub":"\u062A\u062D\u062F\u064A\u062F \u0627\u0644\u0642\u0631\u0627\u0631\u0627\u062A \u0627\u0644\u0631\u0626\u064A\u0633\u064A\u0629 \u0645\u0646 \u0627\u0644\u0645\u062D\u0627\u062F\u062B\u0627\u062A","aiflow.cap2Title":"\u062A\u0641\u0643\u064A\u0643 \u0627\u0644\u0645\u0647\u0627\u0645","aiflow.cap2Sub":"\u062A\u0642\u0633\u064A\u0645 \u0625\u0644\u0649 \u0645\u0647\u0627\u0645 \u0642\u0627\u0628\u0644\u0629 \u0644\u0644\u062A\u0646\u0641\u064A\u0630","aiflow.cap3Title":"\u062A\u0639\u064A\u064A\u0646 \u0627\u0644\u0623\u0648\u0644\u0648\u064A\u0629","aiflow.cap3Sub":"\u062A\u0631\u062A\u064A\u0628 \u0627\u0644\u0645\u0647\u0627\u0645 \u062D\u0633\u0628 \u0627\u0644\u0625\u0644\u062D\u0627\u062D \u0648\u0627\u0644\u062A\u0623\u062B\u064A\u0631","aiflow.cap4Title":"\u062A\u062D\u0644\u064A\u0644 \u0627\u0644\u062A\u0628\u0639\u064A\u0627\u062A","aiflow.cap4Sub":"\u0631\u0633\u0645 \u062E\u0631\u064A\u0637\u0629 \u0639\u0644\u0627\u0642\u0627\u062A \u0648\u062A\u0631\u062A\u064A\u0628 \u0627\u0644\u0645\u0647\u0627\u0645","aiflow.cap5Title":"\u062A\u062E\u0632\u064A\u0646 \u0627\u0644\u0645\u0639\u0631\u0641\u0629","aiflow.cap5Sub":"\u062D\u0641\u0638 \u0627\u0644\u0633\u064A\u0627\u0642 \u0644\u0644\u0631\u062C\u0648\u0639 \u0627\u0644\u0645\u0633\u062A\u0642\u0628\u0644\u064A","aiflow.cap6Title":"\u0627\u0644\u062A\u062D\u0642\u0642 \u0645\u0646 \u0627\u0644\u0647\u0646\u062F\u0633\u0629 \u0627\u0644\u0645\u0639\u0645\u0627\u0631\u064A\u0629","aiflow.cap6Sub":"\u0627\u0644\u062A\u062D\u0642\u0642 \u0645\u0646 \u062D\u062F\u0648\u062F \u0627\u0644\u0647\u0646\u062F\u0633\u0629 \u0642\u0628\u0644 PR","aiflow.human":"\u0627\u0644\u0628\u0634\u0631 \u064A\u0631\u0643\u0632\u0648\u0646 \u0639\u0644\u0649 \u0627\u0644\u062A\u0646\u0641\u064A\u0630",
 "insight.headline":'أغلق حاسوبك المحمول.<br><span class="gradient-text">الكود يستمر في الشحن.</span>',"insight.body":"وكلاء SIMY السحابيون لا يتوقفون عندما تتوقف أنت. كل قرار مهم من اجتماعك يتحول تلقائياً إلى Action — وبنقرة واحدة على \u201cAsk AI Agent\u201d، يتم البرمجة والاختبار والمراجعة بدونك.","insight.pain1":"لن تغلق حاسوبك للاجتماع ثم تدرك بعد ساعة: \u201cنسيت تشغيل مهمة الذكاء الاصطناعي.\u201d","insight.pain2":"لن تحتاج للتخطيط قبل النوم: \u201cأي مهمة صعبة أكلف بها لتعمل 10 ساعات.\u201d","insight.punchline":"العمل انتهى بالفعل.",
 "demo.label":"Demo","demo.title":'شاهد الفرق.<br><span class="gradient-text">جنباً إلى جنب.</span>',"demo.desc":"الذكاء الاصطناعي العادي يتجاهل قاعدة الكود. SIMY يرثها. قارن المخرجات.",
 "demo.standardLabel":"ذكاء اصطناعي عادي","demo.simyLabel":"SIMY",
@@ -2596,7 +2796,7 @@ ar: {
 "security.tag2":"التحكم في الوصول","security.card2Title":"وصول قائم على التواصل","security.card2Desc":"الوصول مقيد بشكل صارم بالمشاركين في قناة Slack الأصلية أو سلسلة Gmail (إلى/نسخة).",
 "security.tag3":"سياسة البيانات","security.card3Title":"ضمان عدم التدريب","security.card3Desc":"لا تُستخدم بياناتك وكودك الخاص أبداً لتدريب النماذج العالمية. ملكيتك الفكرية تبقى لك.",
 "faq.label":"الأسئلة الشائعة","faq.title":'أسئلة شائعة.<br><span class="gradient-text">إجابات واضحة.</span>',
-"faq.q1":"ما لغات البرمجة التي يدعمها SIMY؟","faq.a1":"SIMY متعدد اللغات بالتصميم. يدعم TypeScript وJavaScript وPython وGo وJava وKotlin وRust والمزيد.",
+"faq.q1":"ما لغات البرمجة التي يدعمها SIMY؟","faq.a1":"يدعم SIMY قواعد الكود متعددة اللغات ويعمل مع مجموعة واسعة من اللغات بما في ذلك TypeScript وJavaScript وPython وGo وJava وKotlin وRust. كما يتكيف مع بنيات مختلفة مثل monorepo والخدمات المصغرة والتطبيقات المتكاملة.",
 "faq.q2":"كيف يتكامل SIMY مع CI/CD؟","faq.a2":"يتكامل SIMY مباشرة مع GitHub Actions وGitLab CI وخطوط الأنابيب الأخرى.",
 "faq.q3":"ما تكلفة البرنامج التجريبي؟","faq.a3":"يحصل الشركاء التجريبيون على رصيد SIMY بقيمة $5. بعد ذلك، تسعير حسب الاستخدام ~$1-2 لكل مهمة.",
 "story.label":"قصتنا","story.title":'Bridging the Gap<br><span class="gradient-text">Between Meetings and Code.</span>',
@@ -2624,7 +2824,7 @@ function setLanguage(lang) {
     if (dict[key] !== undefined) el.innerHTML = dict[key];
   });
   // Update page title
-  const titles = {en:'SIMY — Capture the Conversation. Ship the code.',ja:'SIMY — 会話をキャプチャ。コードを出荷。',zh:'SIMY — Capture the Conversation. Ship the code.',hi:'SIMY — Capture the Conversation. Ship the code.',es:'SIMY — Capture the Conversation. Ship the code.',ar:'SIMY — Capture the Conversation. Ship the code.'};
+  const titles = {en:'SIMY — Meetings End. Code Ships.',ja:'SIMY — ミーティング終了。コード完成。',zh:'SIMY — Meetings End. Code Ships.',hi:'SIMY — Meetings End. Code Ships.',es:'SIMY — Meetings End. Code Ships.',ar:'SIMY — Meetings End. Code Ships.'};
   if (titles[lang]) document.title = titles[lang];
 }
 const savedLang = localStorage.getItem('simy-lang');
