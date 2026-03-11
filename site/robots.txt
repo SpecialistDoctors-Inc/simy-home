@@ -1,0 +1,10 @@
+# robots.txt for SIMY Landing Page
+
+User-agent: *
+Allow: /
+
+# Block development/config files
+Disallow: /.claude/
+
+# Sitemap location
+Sitemap: https://simy.one/sitemap.xml

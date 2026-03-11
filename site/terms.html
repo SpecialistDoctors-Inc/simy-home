@@ -2,12 +2,21 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="google-site-verification" content="1n6_tVJZRZlQax8luEg5VsuG7gg-kCEam5VFiWIJs3U">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Terms of Use — SIMY</title>
-<meta name="description" content="SIMY Terms of Use. Read about the terms and conditions governing your use of the SIMY service.">
-<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
-<link rel="apple-touch-icon" sizes="180x180" href="favicon-180.png">
+<title>Terms of Use — SIMY by AwakApp Inc.</title>
+<meta name="description" content="SIMY Terms of Use. Terms and conditions governing your use of the SIMY AI code generation service by AwakApp Inc.">
+<link rel="canonical" href="https://simy.one/terms.html">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://simy.one/terms.html">
+<meta property="og:title" content="Terms of Use — SIMY">
+<meta property="og:description" content="Terms and conditions for using the SIMY service.">
+<meta property="og:site_name" content="SIMY">
+<meta name="twitter:card" content="summary">
+<meta name="robots" content="noindex, follow">
+<meta name="theme-color" content="#0a0a1a">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -71,11 +80,22 @@ nav {
   font-size: 0.5rem; font-weight: 500; letter-spacing: 0.08em;
   color: var(--gray); text-transform: uppercase;
 }
-.nav-back {
-  color: var(--gray); text-decoration: none; font-size: 0.85rem;
-  font-weight: 500; transition: color 0.2s;
-}
-.nav-back:hover { color: var(--mint); }
+.nav-links{display:flex;gap:28px;align-items:center}
+.nav-links a{color:var(--gray);text-decoration:none;font-size:0.85rem;font-weight:500;transition:color 0.2s}
+.nav-links a:hover{color:var(--white)}
+.mobile-menu-btn{display:none;background:none;border:none;color:var(--white);cursor:pointer;padding:4px}
+.lang-select{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:var(--white);font-size:0.8rem;font-weight:500;padding:6px 10px;border-radius:6px;cursor:pointer;font-family:'Inter',sans-serif;outline:none;transition:border-color 0.2s}
+.lang-select:hover,.lang-select:focus{border-color:rgba(126,237,198,0.3)}
+.lang-select option{background:var(--deep-navy);color:var(--white)}
+.nav-cta{padding:9px 22px;border-radius:8px;background:var(--accent-gradient);color:var(--deep-navy) !important;font-weight:700 !important;font-size:.85rem !important;transition:all .2s}
+.nav-cta:hover{opacity:.92;transform:translateY(-1px)}
+.footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
+.footer-col{display:flex;flex-direction:column;gap:10px}
+.footer-col-title{font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--white);margin-bottom:4px}
+.footer-col a{color:var(--gray);text-decoration:none;font-size:0.85rem;transition:color 0.2s}
+.footer-col a:hover{color:var(--mint)}
+.footer-bottom{padding-top:24px;border-top:1px solid rgba(255,255,255,0.04);font-size:0.75rem;color:var(--gray);text-align:center}
+@media(max-width:768px){.nav-links{display:none;position:fixed;top:56px;right:0;left:0;background:rgba(10,10,26,0.97);flex-direction:column;padding:24px;gap:16px;z-index:999;backdrop-filter:blur(20px)}.nav-links.active{display:flex}.mobile-menu-btn{display:block}.footer-grid{grid-template-columns:1fr 1fr;gap:24px}.footer-brand{grid-column:1/-1;text-align:center}}
 
 /* Content */
 .container { max-width: 1140px; margin: 0 auto; padding: 0 clamp(24px, 4vw, 60px); }
@@ -254,19 +274,47 @@ footer {
   .footer-inner { flex-direction: column; text-align: center; }
 }
 </style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SBLYYNMSJW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-SBLYYNMSJW');
+</script>
 </head>
 <body>
 
 <nav>
   <div class="nav-inner">
-    <a href="simy-hp.html" class="nav-logo">
+    <a href="index.html" class="nav-logo">
       <div class="nav-logo-icon"><img src="simy-icon.png" alt="SIMY icon"></div>
       <div class="nav-logo-text">
         <span class="nav-brand">SIMY</span>
         <span class="nav-tagline">Voice to Code, One Shot</span>
       </div>
     </a>
-    <a href="simy-hp.html" class="nav-back">&larr; Back to Home</a>
+    <div class="nav-links" id="navLinks">
+      <a href="how-it-works.html" data-i18n="nav.howItWorks">How It Works</a>
+      <a href="pricing.html" data-i18n="nav.pricing">Pricing</a>
+      <a href="compare.html" data-i18n="nav.compare">Compare</a>
+      <a href="about.html" data-i18n="nav.about">About</a>
+      <a href="contact.html" data-i18n="nav.contact">Contact</a>
+      <select class="lang-select" id="langSelect" onchange="setLanguage(this.value, true)">
+        <option value="en">EN</option>
+        <option value="ja">日本語</option>
+        <option value="zh">中文</option>
+        <option value="hi">हिन्दी</option>
+        <option value="es">Español</option>
+        <option value="ar">العربية</option>
+      </select>
+      <a href="https://apps.apple.com/jp/app/simy/id6745385262" class="nav-cta" target="_blank" rel="noopener" data-i18n="nav.cta">Reserve your Slot</a>
+    </div>
+    <button class="mobile-menu-btn" onclick="document.getElementById('navLinks').classList.toggle('active')" aria-label="Toggle menu">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
   </div>
 </nav>
 
@@ -340,7 +388,7 @@ footer {
       </div>
 
       <h2>8. Paid Services</h2>
-      <p>Fees are non-refundable. Subscriptions auto-renew unless cancelled via account settings or by emailing <a href="mailto:support@simy.one">support@simy.one</a>.</p>
+      <p>Fees are non-refundable. Subscriptions auto-renew unless cancelled via account settings or by emailing <a class="eml" data-u="support" data-d="simy.one" style="color:var(--mint);text-decoration:none"></a>.</p>
 
       <h2>9. Third-Party Integrations</h2>
       <p>We integrate with GitHub, Slack, Zoom, etc. We are not responsible for the privacy practices or availability of these third-party platforms.</p>
@@ -384,8 +432,8 @@ footer {
 
       <h2>16. Contact Information</h2>
       <p>AwakApp Inc.<br>
-      Privacy: <a href="mailto:privacy@simy.one">privacy@simy.one</a><br>
-      Support: <a href="mailto:support@simy.one">support@simy.one</a></p>
+      Privacy: <a class="eml" data-u="privacy" data-d="simy.one" style="color:var(--mint);text-decoration:none"></a><br>
+      Support: <a class="eml" data-u="support" data-d="simy.one" style="color:var(--mint);text-decoration:none"></a></p>
 
       <h2>17. Acknowledgment</h2>
       <div class="important-note">
@@ -407,16 +455,79 @@ footer {
 
 <footer>
   <div class="container">
-    <div class="footer-inner">
-      <div class="footer-tagline">Record. Ship. Done.</div>
-      <div class="footer-right">
-        <a href="simy-hp.html">Home</a>
-        <span class="footer-sep">|</span>
-        <span>&copy; 2026 SIMY. All rights reserved.</span>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-tagline" data-i18n="footer.tagline">Record. Ship. Done.</div>
       </div>
+      <div class="footer-col">
+        <div class="footer-col-title" data-i18n="footer.product">Product</div>
+        <a href="how-it-works.html" data-i18n="footer.howItWorks">How It Works</a>
+        <a href="pricing.html" data-i18n="footer.pricing">Pricing</a>
+        <a href="compare.html" data-i18n="footer.compare">Compare</a>
+        <a href="integrations.html" data-i18n="footer.integrations">Integrations</a>
+        <a href="security.html" data-i18n="footer.security">Security</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title" data-i18n="footer.company">Company</div>
+        <a href="about.html" data-i18n="footer.about">About</a>
+        <a href="careers.html" data-i18n="footer.careers">Careers</a>
+        <a href="press.html" data-i18n="footer.press">Press</a>
+        <a href="contact.html" data-i18n="footer.contact">Contact</a>
+        <a href="status.html" data-i18n="footer.status">Status</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title" data-i18n="footer.legal">Legal</div>
+        <a href="privacy.html" data-i18n="footer.privacy">Privacy Policy</a>
+        <a href="terms.html" data-i18n="footer.terms">Terms of Service</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 SIMY by AwakApp Inc. All rights reserved.</span>
     </div>
   </div>
 </footer>
 
+<script>
+// i18n for subpages (nav + footer)
+const T = {
+en: {"nav.howItWorks":"How It Works","nav.pricing":"Pricing","nav.compare":"Compare","nav.about":"About","nav.contact":"Contact","nav.cta":"Reserve your Slot","footer.tagline":"Record. Ship. Done.","footer.product":"Product","footer.howItWorks":"How It Works","footer.pricing":"Pricing","footer.compare":"Compare","footer.integrations":"Integrations","footer.security":"Security","footer.company":"Company","footer.about":"About","footer.careers":"Careers","footer.press":"Press","footer.contact":"Contact","footer.status":"Status","footer.legal":"Legal","footer.privacy":"Privacy Policy","footer.terms":"Terms of Service"},
+ja: {"nav.howItWorks":"仕組み","nav.pricing":"料金","nav.compare":"比較","nav.about":"会社概要","nav.contact":"お問い合わせ","nav.cta":"今すぐ予約","footer.tagline":"録音。出荷。完了。","footer.product":"プロダクト","footer.howItWorks":"仕組み","footer.pricing":"料金","footer.compare":"比較","footer.integrations":"連携","footer.security":"セキュリティ","footer.company":"企業情報","footer.about":"会社概要","footer.careers":"採用","footer.press":"プレス","footer.contact":"お問い合わせ","footer.status":"ステータス","footer.legal":"法務","footer.privacy":"プライバシーポリシー","footer.terms":"利用規約"},
+zh: {"nav.howItWorks":"工作原理","nav.pricing":"定价","nav.compare":"对比","nav.about":"关于","nav.contact":"联系","nav.cta":"预约名额","footer.tagline":"录制。交付。完成。","footer.product":"产品","footer.howItWorks":"工作原理","footer.pricing":"定价","footer.compare":"对比","footer.integrations":"集成","footer.security":"安全","footer.company":"公司","footer.about":"关于","footer.careers":"招聘","footer.press":"媒体","footer.contact":"联系","footer.status":"状态","footer.legal":"法律","footer.privacy":"隐私政策","footer.terms":"服务条款"},
+hi: {"nav.howItWorks":"कैसे काम करता है","nav.pricing":"मूल्य","nav.compare":"तुलना","nav.about":"हमारे बारे में","nav.contact":"संपर्क","nav.cta":"अपनी जगह आरक्षित करें","footer.tagline":"रिकॉर्ड। शिप। हो गया।","footer.product":"उत्पाद","footer.howItWorks":"कैसे काम करता है","footer.pricing":"मूल्य","footer.compare":"तुलना","footer.integrations":"एकीकरण","footer.security":"सुरक्षा","footer.company":"कंपनी","footer.about":"हमारे बारे में","footer.careers":"करियर","footer.press":"प्रेस","footer.contact":"संपर्क","footer.status":"स्थिति","footer.legal":"कानूनी","footer.privacy":"गोपनीयता नीति","footer.terms":"सेवा की शर्तें"},
+es: {"nav.howItWorks":"Cómo Funciona","nav.pricing":"Precios","nav.compare":"Comparar","nav.about":"Nosotros","nav.contact":"Contacto","nav.cta":"Reserva tu Lugar","footer.tagline":"Graba. Envía. Listo.","footer.product":"Producto","footer.howItWorks":"Cómo Funciona","footer.pricing":"Precios","footer.compare":"Comparar","footer.integrations":"Integraciones","footer.security":"Seguridad","footer.company":"Empresa","footer.about":"Nosotros","footer.careers":"Empleo","footer.press":"Prensa","footer.contact":"Contacto","footer.status":"Estado","footer.legal":"Legal","footer.privacy":"Política de Privacidad","footer.terms":"Términos de Servicio"},
+ar: {"nav.howItWorks":"كيف يعمل","nav.pricing":"الأسعار","nav.compare":"مقارنة","nav.about":"عن الشركة","nav.contact":"اتصل بنا","nav.cta":"احجز مكانك","footer.tagline":"سجّل. أرسل. انتهى.","footer.product":"المنتج","footer.howItWorks":"كيف يعمل","footer.pricing":"الأسعار","footer.compare":"مقارنة","footer.integrations":"التكامل","footer.security":"الأمان","footer.company":"الشركة","footer.about":"عن الشركة","footer.careers":"الوظائف","footer.press":"الصحافة","footer.contact":"اتصل بنا","footer.status":"الحالة","footer.legal":"قانوني","footer.privacy":"سياسة الخصوصية","footer.terms":"شروط الخدمة"}
+};
+function setLanguage(lang, manual) {
+  document.documentElement.lang = lang;
+  document.body.classList.toggle('rtl', lang === 'ar');
+  document.getElementById('langSelect').value = lang;
+  localStorage.setItem('simy-lang', lang);
+  if (manual) localStorage.setItem('simy-lang-manual', '1');
+  const dict = T[lang];
+  if (!dict) return;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (dict[key] !== undefined) el.textContent = dict[key];
+  });
+}
+function detectBrowserLanguage() {
+  const supportedLangs = Object.keys(T);
+  const browserLangs = navigator.languages || [navigator.language || 'en'];
+  for (const bl of browserLangs) {
+    const lower = bl.toLowerCase();
+    const exact = supportedLangs.find(s => s === lower);
+    if (exact) return exact;
+    const prefix = lower.split('-')[0];
+    const prefixMatch = supportedLangs.find(s => s === prefix);
+    if (prefixMatch) return prefixMatch;
+  }
+  return 'en';
+}
+const wasManual = localStorage.getItem('simy-lang-manual');
+const savedLang = localStorage.getItem('simy-lang');
+if (wasManual && savedLang && T[savedLang]) { setLanguage(savedLang); }
+else { setLanguage(detectBrowserLanguage()); }
+document.querySelectorAll('a.eml').forEach(function(el){var e=el.dataset.u+String.fromCharCode(64)+el.dataset.d;el.href='m'+'ailt'+'o:'+e;el.textContent=e;});
+</script>
 </body>
 </html>
