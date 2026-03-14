@@ -181,6 +181,7 @@ nav.scrolled { padding: 12px 0; background: rgba(10, 10, 26, 0.92); }
 .hero h1 {
   font-size: clamp(2.6rem, 5.5vw, 4.8rem); font-weight: 900;
   line-height: 1.06; letter-spacing: -0.04em; margin-bottom: 24px;
+  word-break: keep-all; overflow-wrap: break-word;
 }
 .hero h1 .br { display: block; }
 .hero .sub-headline {
@@ -569,7 +570,7 @@ section { position: relative; overflow: hidden; }
 .section-title {
   font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 800;
   line-height: 1.12; letter-spacing: -0.03em; margin-bottom: 16px;
-  max-width: 640px;
+  max-width: 640px; word-break: keep-all; overflow-wrap: break-word;
 }
 .section-desc {
   font-size: 1rem; color: var(--gray-light); max-width: 560px;
@@ -2739,7 +2740,7 @@ ja: {
 "hero.flow1":"録音","hero.flow2":"理解","hero.flow3":"コード","hero.flow4":"PR",
 "hero.ctaPrimary":"今すぐ予約","hero.ctaSecondary":"仕組みを見る",
 "hero.statLabel":"会議の録音だけでコードレビュー通過率","hero.statSub":"プロンプト不要。仕様の誤読なし。録音して出荷するだけ。",
-"prImpact.label":"実績","prImpact.title":'1日あたりのPR数、1人あたり。<br><span class="gradient-text">17.7倍のアウトプット。</span>',"prImpact.before":"SIMY導入前","prImpact.after":"SIMY導入後","prImpact.unit":"PR数 / エンジニア / 日","prImpact.context":"SIMYエンジニアチームでの実測値。同じエンジニア、同じコードベース — SIMYだけが違い。",
+"prImpact.label":"実績","prImpact.title":'1日あたりのPR数、<br>1人あたり。<span class="gradient-text">17.7倍のアウトプット。</span>',"prImpact.before":"SIMY導入前","prImpact.after":"SIMY導入後","prImpact.unit":"PR数 / エンジニア / 日","prImpact.context":"SIMYエンジニアチームでの実測値。同じエンジニア、同じコードベース — SIMYだけが違い。",
 "social.label":"リワークゼロのエンジニアリングを信じる投資家が支援",
 "social.quote1":"「SIMYの初回生成物が、一つのコメントもなくコードレビューを通過しました。命名の問題なし、レイヤー違反なし、仕様の誤読なし。リワークがワークフローから消えました。」",
 "social.role1":"CTO, Specialist Doctors Inc.",
@@ -2778,7 +2779,7 @@ ja: {
 "case.metric":"指標","case.before":'従来 <span class="badge-old">前</span>',"case.after":'SIMY <span class="badge-new">後</span>',
 "case.messages":"メッセージ","case.onePrompt":"1回の録音","case.resumes":"再開","case.manualFixes":"手動修正","case.cost":"コスト","case.duration":"所要時間","case.hours":"数時間",
 "case.efficiencyGain":"効率向上","case.testPassRate":"テスト合格率",
-"security.label":"セキュリティ & プライバシー","security.title":'エンタープライズグレードの信頼。<br><span class="gradient-text">設計から。</span>',"security.desc":"コードとコミュニケーションデータは最高レベルの保護に値します。SIMYは初日からエンタープライズセキュリティを組み込んでいます。",
+"security.label":"セキュリティ & プライバシー","security.title":'エンタープライズグレードの<br>信頼。<span class="gradient-text">設計から。</span>',"security.desc":"コードとコミュニケーションデータは最高レベルの保護に値します。SIMYは初日からエンタープライズセキュリティを組み込んでいます。",
 "security.tag1":"インフラ","security.card1Title":"物理データベース分離","security.card1Desc":"各企業に専用の分離されたデータベースインスタンスを提供。テナント間のデータ漏洩ゼロ—御社のコードが他社のインフラに触れることはありません。",
 "security.tag2":"アクセス制御","security.card2Title":"コミュニケーションベースのアクセス","security.card2Desc":"アクセスは、元のSlackチャンネルまたはGmailスレッド（To/CC）の参加者に厳密に制限。許可のない目から会話を守ります。",
 "security.tag3":"データポリシー","security.card3Title":"ゼロトレーニング保証","security.card3Desc":"エンタープライズプランでは、御社の独自データとコードはグローバルモデルのトレーニングに一切使用されません。知的財産は御社のものです。",
@@ -2822,7 +2823,7 @@ zh: {
 
 "hero.ctaPrimary":"预约名额","hero.ctaSecondary":"了解工作原理",
 "hero.statLabel":"代码审查通过率 — 仅从会议录音","hero.statSub":"无需提示词。无需规格误读。只需录制并交付。",
-"prImpact.label":"实际影响","prImpact.title":'每位工程师每天的Pull Requests。<br><span class="gradient-text">产出提升17.7倍。</span>',"prImpact.before":"使用SIMY之前","prImpact.after":"使用SIMY之后","prImpact.unit":"PRs / 工程师 / 天","prImpact.context":"在SIMY工程团队中测量。相同的工程师，相同的代码库 — 只是加了SIMY。",
+"prImpact.label":"实际影响","prImpact.title":'每位工程师每天的<br>Pull Requests。<span class="gradient-text">产出提升17.7倍。</span>',"prImpact.before":"使用SIMY之前","prImpact.after":"使用SIMY之后","prImpact.unit":"PRs / 工程师 / 天","prImpact.context":"在SIMY工程团队中测量。相同的工程师，相同的代码库 — 只是加了SIMY。",
 "social.label":"\u76F8\u4FE1\u96F6\u8FD4\u5DE5\u5DE5\u7A0B\u7684\u6295\u8D44\u8005\u652F\u6301",
 "social.quote1":"\u201CSIMY\u7684\u9996\u6B21\u751F\u6210\u4EA7\u51FA\u76F4\u63A5\u901A\u8FC7\u4E86\u6211\u4EEC\u7684\u4EE3\u7801\u5BA1\u67E5\uFF0C\u6CA1\u6709\u4E00\u6761\u8BC4\u8BBA\u3002\u6CA1\u6709\u547D\u540D\u95EE\u9898\uFF0C\u6CA1\u6709\u5206\u5C42\u8FDD\u89C4\uFF0C\u6CA1\u6709\u9700\u6C42\u8BEF\u8BFB\u3002\u8FD4\u5DE5\u4ECE\u6211\u4EEC\u7684\u5DE5\u4F5C\u6D41\u4E2D\u6D88\u5931\u4E86\u3002\u201D",
 "social.role1":"CTO\uFF0CSpecialist Doctors Inc.",
