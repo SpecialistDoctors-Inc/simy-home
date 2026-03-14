@@ -1725,7 +1725,7 @@ body.rtl .case-summary-item { text-align: center; }
       </select>
       <a href="https://apps.apple.com/jp/app/simy/id6745385262" class="nav-cta" target="_blank" rel="noopener" data-i18n="nav.cta">Reserve your Slot</a>
     </div>
-    <button class="mobile-menu-btn" onclick="document.getElementById('navLinks').classList.toggle('active')" aria-label="Toggle menu">
+    <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Toggle menu">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
         <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
       </svg>
@@ -2633,6 +2633,29 @@ window.addEventListener('scroll', () => {
   }
 });
 
+// Mobile menu: toggle, close on outside tap, auto-close after 5s
+let mobileMenuTimer = null;
+function closeMobileMenu() {
+  document.getElementById('navLinks').classList.remove('active');
+  if (mobileMenuTimer) { clearTimeout(mobileMenuTimer); mobileMenuTimer = null; }
+}
+function toggleMobileMenu() {
+  const nav = document.getElementById('navLinks');
+  const isOpen = nav.classList.toggle('active');
+  if (mobileMenuTimer) { clearTimeout(mobileMenuTimer); mobileMenuTimer = null; }
+  if (isOpen) {
+    mobileMenuTimer = setTimeout(closeMobileMenu, 5000);
+  }
+}
+document.addEventListener('click', function(e) {
+  const nav = document.getElementById('navLinks');
+  if (!nav.classList.contains('active')) return;
+  const menuBtn = document.querySelector('.mobile-menu-btn');
+  if (!nav.contains(e.target) && !menuBtn.contains(e.target)) {
+    closeMobileMenu();
+  }
+});
+
 // Smooth scroll (only for real anchor links like #section-id)
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   const href = a.getAttribute('href');
@@ -2641,8 +2664,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     e.preventDefault();
     const t = document.querySelector(this.getAttribute('href'));
     if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    // Close mobile nav
-    document.getElementById('navLinks').classList.remove('active');
+    closeMobileMenu();
   });
 });
 
