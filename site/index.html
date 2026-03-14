@@ -67,7 +67,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-#page-wrap { overflow-x: hidden; width: 100%; position: relative; }
+#page-wrap { width: 100%; position: relative; }
 
 /* ===== UTILITIES ===== */
 .container { max-width: 1140px; margin: 0 auto; padding: 0 clamp(24px, 4vw, 60px); }
@@ -1698,7 +1698,7 @@ body.rtl .case-summary-item { text-align: center; }
 <!-- Navigation -->
 <nav id="navbar">
   <div class="nav-inner">
-    <a href="#" class="nav-logo">
+    <a href="/" class="nav-logo">
       <div class="nav-logo-icon">
         <img src="simy-icon.png" alt="SIMY - AI Code Generation from Meetings" width="40" height="40" />
       </div>
@@ -1708,7 +1708,7 @@ body.rtl .case-summary-item { text-align: center; }
       </div>
     </a>
     <div class="nav-links" id="navLinks">
-      <a href="index.html" data-i18n="nav.top">Top</a>
+      <a href="/" data-i18n="nav.top">Top</a>
       <a href="how-it-works.html" data-i18n="nav.howItWorks">How It Works</a>
       <a href="pricing.html" data-i18n="nav.pricing">Pricing</a>
       <a href="compare.html" data-i18n="nav.compare">Compare</a>
@@ -2610,6 +2610,14 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
 document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+// Fallback: if observer hasn't fired after 500ms, force-show all above-fold elements
+setTimeout(() => {
+  document.querySelectorAll('.fade-in').forEach(el => {
+    if (!el.classList.contains('visible') && el.getBoundingClientRect().top < window.innerHeight) {
+      el.classList.add('visible');
+    }
+  });
+}, 500);
 
 // Navbar scroll
 const navbar = document.getElementById('navbar');
@@ -2624,8 +2632,10 @@ window.addEventListener('scroll', () => {
   }
 });
 
-// Smooth scroll
+// Smooth scroll (only for real anchor links like #section-id)
 document.querySelectorAll('a[href^="#"]').forEach(a => {
+  const href = a.getAttribute('href');
+  if (!href || href === '#' || href.length < 2) return;
   a.addEventListener('click', function(e) {
     e.preventDefault();
     const t = document.querySelector(this.getAttribute('href'));
@@ -2857,7 +2867,7 @@ zh: {
 "appStore.label":"\u4ECEApp Store\u4E0B\u8F7D",
 "hiw.label":"工作原理","hiw.title":'工作原理：<br><span class="gradient-text">三步实现零返工。</span>',"hiw.desc":"从会议录音到合并的拉取请求 — 无需提示词，无需手动规格，无需返工。",
 "hiw.step1Title":"捕捉您的对话","hiw.step1Desc":"连接Zoom、Teams、Slack或Gmail。SIMY自动从会议、聊天和邮件中捕捉规格、需求和决策。",
-"hiw.step2Title":"自主执行","hiw.step2Desc":"每个任务都附带从对话中提取的Done State（完成状态）——定义"完成"的含义。SIMY自主编码、测试，并对照团队的实际期望进行验证。",
+"hiw.step2Title":"自主执行","hiw.step2Desc":"每个任务都附带从对话中提取的Done State（完成状态）——定义\u201C完成\u201D的含义。SIMY自主编码、测试，并对照团队的实际期望进行验证。",
 "hiw.step3Title":"交付","hiw.step3Desc":"审查就绪的代码、自动代码审查和拉取请求 — 交付到您的GitHub。准备合并。",
 "aiflow.label":"AI\u6D41\u7A0B","aiflow.title":'\u4ECE\u4F1A\u8BAE\u5230\u5B9E\u73B0\u3002<br><span class="gradient-text">AI\u5904\u7406\u5176\u4F59\u3002</span>',"aiflow.desc":"\u4F1A\u8BAE\u7ED3\u675F\u540E\uFF0CSIMY\u7684AI\u81EA\u52A8\u63D0\u53D6\u51B3\u7B56\u3001\u5206\u89E3\u4EFB\u52A1\u3001\u51C6\u5907\u4E00\u5207 \u2014 \u8BA9\u4EBA\u7C7B\u4E13\u6CE8\u4E8E\u5B9E\u73B0\u3002","aiflow.meeting":"\u4F1A\u8BAE / \u5BF9\u8BDD","aiflow.aiAuto":"AI\u81EA\u52A8\u5904\u7406","aiflow.cap1Title":"\u51B3\u7B56\u63D0\u53D6","aiflow.cap1Sub":"\u4ECE\u5BF9\u8BDD\u4E2D\u8BC6\u522B\u5173\u952E\u51B3\u7B56","aiflow.cap2Title":"\u4EFB\u52A1\u5206\u89E3","aiflow.cap2Sub":"\u5206\u89E3\u4E3A\u53EF\u6267\u884C\u4EFB\u52A1","aiflow.cap3Title":"\u4F18\u5148\u7EA7\u5206\u914D","aiflow.cap3Sub":"\u6309\u7D27\u6025\u6027\u548C\u5F71\u54CD\u529B\u6392\u5E8F","aiflow.cap4Title":"\u4F9D\u8D56\u5173\u7CFB\u5206\u6790","aiflow.cap4Sub":"\u6620\u5C04\u4EFB\u52A1\u5173\u7CFB\u548C\u987A\u5E8F","aiflow.cap5Title":"\u77E5\u8BC6\u5B58\u50A8","aiflow.cap5Sub":"\u4FDD\u5B58\u4E0A\u4E0B\u6587\u4EE5\u4F9B\u672A\u6765\u53C2\u8003","aiflow.cap6Title":"\u67B6\u6784\u9A8C\u8BC1","aiflow.cap6Sub":"PR\u521B\u5EFA\u524D\u9A8C\u8BC1\u67B6\u6784\u8FB9\u754C","aiflow.human":"\u4EBA\u7C7B\u4E13\u6CE8\u4E8E\u5B9E\u73B0",
 "insight.headline":'合上笔记本电脑。<br><span class="gradient-text">代码继续交付。</span>',"insight.body":"SIMY的云端代理不会因为你停下而停下。会议中的每个重要决策都会自动转化为Action——只需点击「Ask AI Agent」，编码、测试和审查就会自动完成。","insight.pain1":"再也不会合上笔记本参加会议后，一小时后才想起：「忘了启动AI任务了。」","insight.pain2":"再也不需要睡前规划「让AI处理哪个难题跑10个小时」。","insight.punchline":"工作已经完成了。",
