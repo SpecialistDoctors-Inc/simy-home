@@ -560,7 +560,7 @@ nav.scrolled { padding: 12px 0; background: rgba(10, 10, 26, 0.92); }
 
 /* ===== SECTION COMMON ===== */
 section { position: relative; overflow: hidden; }
-.section-inner { padding: var(--section-padding); }
+.section-inner { padding-top: clamp(80px, 10vw, 140px); padding-bottom: clamp(80px, 10vw, 140px); }
 .section-label {
   display: inline-flex; align-items: center; gap: 8px;
   font-size: 0.7rem; font-weight: 700; color: var(--mint);
@@ -1313,7 +1313,7 @@ footer {
   .trust-badges { gap: 16px; }
   .trust-badge { font-size: 0.72rem; }
   .problem-card, .solution-card, .security-card, .step-card { padding: 28px; }
-  .section-inner { padding: clamp(60px, 8vw, 100px) 0; }
+  .section-inner { padding-top: clamp(60px, 8vw, 100px); padding-bottom: clamp(60px, 8vw, 100px); }
 }
 /* ===== RTL (Arabic) ===== */
 body.rtl .container,
