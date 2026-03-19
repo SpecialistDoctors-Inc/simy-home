@@ -168,7 +168,7 @@ footer{padding:48px 0 36px;border-top:1px solid rgba(255,255,255,0.04)}
         <option value="es">Español</option>
         <option value="ar">العربية</option>
       </select>
-      <a href="https://apps.apple.com/jp/app/simy/id6745385262" class="nav-cta" target="_blank" rel="noopener" data-i18n="nav.cta">Reserve your Slot</a>
+      <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" class="nav-cta" target="_blank" rel="noopener" data-i18n="nav.cta">Reserve your Slot</a>
     </div>
     <button class="mobile-menu-btn" onclick="document.getElementById('navLinks').classList.toggle('active')" aria-label="Toggle menu">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
@@ -312,6 +312,11 @@ function setLanguage(lang, manual) {
     const key = el.getAttribute('data-i18n');
     if (dict[key] !== undefined) el.textContent = dict[key];
   });
+  // Update App Store URLs based on language
+  const appStoreUrl = lang === 'ja'
+    ? 'https://apps.apple.com/jp/app/simy-meetings-end-code-ships/id6745385262'
+    : 'https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262';
+  document.querySelectorAll('a[href*="apps.apple.com"]').forEach(el => { el.href = appStoreUrl; });
 }
 function detectBrowserLanguage() {
   const supportedLangs = Object.keys(T);

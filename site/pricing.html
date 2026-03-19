@@ -207,7 +207,7 @@ footer{padding:48px 0 36px;border-top:1px solid rgba(255,255,255,0.04)}
         <option value="es">Español</option>
         <option value="ar">العربية</option>
       </select>
-      <a href="https://apps.apple.com/jp/app/simy/id6745385262" class="nav-cta" target="_blank" rel="noopener" data-i18n="nav.cta">Reserve your Slot</a>
+      <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" class="nav-cta" target="_blank" rel="noopener" data-i18n="nav.cta">Reserve your Slot</a>
     </div>
     <button class="mobile-menu-btn" onclick="document.getElementById('navLinks').classList.toggle('active')" aria-label="Toggle menu">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
@@ -231,7 +231,7 @@ footer{padding:48px 0 36px;border-top:1px solid rgba(255,255,255,0.04)}
       <div class="plan-tokens">4M tokens</div>
       <div class="plan-yen">&yen;160</div>
       <div class="plan-desc" data-i18n="pricing.desc1">Try SIMY with a quick task or code review.</div>
-      <a href="https://apps.apple.com/jp/app/simy/id6745385262" class="plan-cta secondary" target="_blank" rel="noopener" data-i18n="pricing.buyNow">Buy Now</a>
+      <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" class="plan-cta secondary" target="_blank" rel="noopener" data-i18n="pricing.buyNow">Buy Now</a>
     </div>
 
     <!-- $5 -->
@@ -241,7 +241,7 @@ footer{padding:48px 0 36px;border-top:1px solid rgba(255,255,255,0.04)}
       <div class="plan-tokens">20M tokens</div>
       <div class="plan-yen">&yen;800</div>
       <div class="plan-desc" data-i18n="pricing.desc2">Great for individual developers and small tasks.</div>
-      <a href="https://apps.apple.com/jp/app/simy/id6745385262" class="plan-cta secondary" target="_blank" rel="noopener" data-i18n="pricing.buyNow">Buy Now</a>
+      <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" class="plan-cta secondary" target="_blank" rel="noopener" data-i18n="pricing.buyNow">Buy Now</a>
     </div>
 
     <!-- $10 — Most Popular -->
@@ -251,7 +251,7 @@ footer{padding:48px 0 36px;border-top:1px solid rgba(255,255,255,0.04)}
       <div class="plan-tokens">40M tokens</div>
       <div class="plan-yen">&yen;1,600</div>
       <div class="plan-desc" data-i18n="pricing.desc3">Perfect balance of value and capacity for regular use.</div>
-      <a href="https://apps.apple.com/jp/app/simy/id6745385262" class="plan-cta primary" target="_blank" rel="noopener" data-i18n="pricing.buyNow">Buy Now</a>
+      <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" class="plan-cta primary" target="_blank" rel="noopener" data-i18n="pricing.buyNow">Buy Now</a>
     </div>
 
     <!-- $50 -->
@@ -261,7 +261,7 @@ footer{padding:48px 0 36px;border-top:1px solid rgba(255,255,255,0.04)}
       <div class="plan-tokens">200M tokens</div>
       <div class="plan-yen">&yen;8,000</div>
       <div class="plan-desc" data-i18n="pricing.desc4">For teams and heavy workloads. Best value per token.</div>
-      <a href="https://apps.apple.com/jp/app/simy/id6745385262" class="plan-cta secondary" target="_blank" rel="noopener" data-i18n="pricing.buyNow">Buy Now</a>
+      <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" class="plan-cta secondary" target="_blank" rel="noopener" data-i18n="pricing.buyNow">Buy Now</a>
     </div>
 
     <!-- $100 -->
@@ -271,7 +271,7 @@ footer{padding:48px 0 36px;border-top:1px solid rgba(255,255,255,0.04)}
       <div class="plan-tokens">400M tokens</div>
       <div class="plan-yen">&yen;16,000</div>
       <div class="plan-desc" data-i18n="pricing.desc5">Maximum capacity for enterprise-scale projects.</div>
-      <a href="https://apps.apple.com/jp/app/simy/id6745385262" class="plan-cta secondary" target="_blank" rel="noopener" data-i18n="pricing.buyNow">Buy Now</a>
+      <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" class="plan-cta secondary" target="_blank" rel="noopener" data-i18n="pricing.buyNow">Buy Now</a>
     </div>
   </div>
 
@@ -401,6 +401,11 @@ function setLanguage(lang, manual) {
     if (dict[key] !== undefined) el.textContent = dict[key];
   });
   document.querySelectorAll('.plan-yen').forEach(el => el.style.display = lang === 'ja' ? '' : 'none');
+  // Update App Store URLs based on language
+  const appStoreUrl = lang === 'ja'
+    ? 'https://apps.apple.com/jp/app/simy-meetings-end-code-ships/id6745385262'
+    : 'https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262';
+  document.querySelectorAll('a[href*="apps.apple.com"]').forEach(el => { el.href = appStoreUrl; });
 }
 function detectBrowserLanguage() {
   const supportedLangs = Object.keys(T);
