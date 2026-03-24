@@ -1582,6 +1582,47 @@ body.rtl .case-summary-item { text-align: center; }
   .ai-native-cols { flex-direction: column; }
   .ai-native-card { padding: 24px; }
 }
+
+/* ── G2 Personalization ── */
+.g2-banner {
+  display: none;
+  background: linear-gradient(90deg, #ff492c 0%, #ff6f47 100%);
+  color: #fff;
+  text-align: center;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10001;
+  animation: g2SlideDown .4s ease-out;
+}
+.g2-banner.visible { display: block; }
+.g2-banner a { color: #fff; text-decoration: underline; margin-left: 8px; }
+.g2-banner .g2-banner-close {
+  position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+  background: none; border: none; color: #fff; font-size: 18px; cursor: pointer; opacity: .8;
+}
+.g2-banner .g2-banner-close:hover { opacity: 1; }
+@keyframes g2SlideDown { from { transform: translateY(-100%); } to { transform: translateY(0); } }
+body.g2-banner-active #navbar { top: 38px; }
+
+.g2-badge-row {
+  display: none;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+.g2-badge-row.visible { display: flex; }
+.g2-badge-row img { height: 48px; width: auto; }
+
+.pilot-highlight .pilot-benefit-item:nth-child(1) {
+  border-color: #ff492c;
+  box-shadow: 0 0 20px rgba(255, 73, 44, .15);
+}
 </style>
 <!-- JSON-LD Structured Data -->
 <script type="application/ld+json">
@@ -1696,6 +1737,12 @@ body.rtl .case-summary-item { text-align: center; }
 <body>
 <div id="page-wrap">
 
+<!-- G2 Personalization Banner -->
+<div id="g2Banner" class="g2-banner" role="banner">
+  <span id="g2BannerText">⭐ G2での高評価ありがとうございます！限定オファーをご確認ください</span>
+  <button class="g2-banner-close" onclick="document.getElementById('g2Banner').classList.remove('visible');document.body.classList.remove('g2-banner-active');" aria-label="Close">&times;</button>
+</div>
+
 <!-- Navigation -->
 <nav id="navbar">
   <div class="nav-inner">
@@ -1761,8 +1808,13 @@ body.rtl .case-summary-item { text-align: center; }
       </a>
       <a href="#how-it-works" class="btn-secondary" data-i18n="hero.ctaSecondary">See How It Works</a>
     </div>
-    <div class="fade-in fd4" style="margin-top: 24px;">
+    <div class="fade-in fd4" style="margin-top: 24px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
       <a href="https://www.saashub.com/simy?utm_source=badge&amp;utm_campaign=badge&amp;utm_content=simy&amp;badge_variant=color&amp;badge_kind=approved" target="_blank" rel="noopener noreferrer"><img src="https://cdn-b.saashub.com/img/badges/approved-color.png?v=1" alt="SIMY.one badge" style="max-width: 150px;"/></a>
+      <div id="g2BadgeHero" class="g2-badge-row">
+        <a href="https://www.g2.com/products/simy/reviews" target="_blank" rel="noopener noreferrer">
+          <img src="https://www.g2.com/products/simy/widgets/stars?color=white&type=read" alt="SIMY G2 Reviews" />
+        </a>
+      </div>
     </div>
   </div>
 </section>
@@ -2178,7 +2230,7 @@ body.rtl .case-summary-item { text-align: center; }
   <div class="container section-inner">
     <div class="section-label fade-in" data-i18n="aiNative.label">AI-Native Organization</div>
     <h2 class="section-title fade-in" data-i18n-html="aiNative.title">From Execution to Judgment.<br><span class="gradient-text">The AI-Native Shift.</span></h2>
-    <p class="section-desc fade-in" data-i18n="aiNative.desc">90% of engineering time goes to execution. 10% of decisions drive 90% of outcomes. SIMY automates the former and augments the latter.</p>
+    <p class="section-desc fade-in" data-i18n="aiNative.desc">SIMY proposes a new operating model for software teams. In every engineering role, roughly 90% of time has been spent on execution tasks — interpreting requirements, writing boilerplate, filing status updates — while the remaining 10% of decisions drive 90% of product outcomes. SIMY automates the former and augments the latter: the right column of the table below is not work that humans do alone, but work that humans do with AI as a thinking partner, leveraging the platform's organizational context to make sharper, faster, better-informed decisions.</p>
     <div class="ai-native-grid">
       <div class="ai-native-card fade-in">
         <div class="ai-native-role">
@@ -2188,11 +2240,11 @@ body.rtl .case-summary-item { text-align: center; }
         <div class="ai-native-cols">
           <div class="ai-native-col delegated">
             <div class="ai-native-col-label" data-i18n="aiNative.delegated">Delegated to AI</div>
-            <p data-i18n="aiNative.role1Del">Requirements interpretation, code generation, test creation, PR submission, review-cycle rework</p>
+            <p data-i18n="aiNative.role1Del">Requirements interpretation, prompt writing, code generation, test creation, PR submission, review-cycle rework</p>
           </div>
           <div class="ai-native-col augmented">
-            <div class="ai-native-col-label" data-i18n="aiNative.augmented">Execute with AI</div>
-            <p data-i18n="aiNative.role1Aug">Architecture decisions, system design trade-offs, novel problem solving, DX strategy</p>
+            <div class="ai-native-col-label" data-i18n="aiNative.augmented">Execute with AI as a Thinking Partner</div>
+            <p data-i18n="aiNative.role1Aug">Architecture decisions, system design trade-offs, novel problem solving, developer experience strategy</p>
           </div>
         </div>
       </div>
@@ -2204,11 +2256,11 @@ body.rtl .case-summary-item { text-align: center; }
         <div class="ai-native-cols">
           <div class="ai-native-col delegated">
             <div class="ai-native-col-label" data-i18n="aiNative.delegated">Delegated to AI</div>
-            <p data-i18n="aiNative.role2Del">Action item extraction, task decomposition, prioritization, progress tracking, status reporting</p>
+            <p data-i18n="aiNative.role2Del">Action item extraction from meetings, task decomposition, prioritization, progress tracking, status reporting</p>
           </div>
           <div class="ai-native-col augmented">
-            <div class="ai-native-col-label" data-i18n="aiNative.augmented">Execute with AI</div>
-            <p data-i18n="aiNative.role2Aug">Customer problem discovery, product vision & strategy, go/no-go decisions, cross-team alignment</p>
+            <div class="ai-native-col-label" data-i18n="aiNative.augmented">Execute with AI as a Thinking Partner</div>
+            <p data-i18n="aiNative.role2Aug">Customer problem discovery, product vision and strategy, go/no-go decisions, cross-team alignment</p>
           </div>
         </div>
       </div>
@@ -2220,11 +2272,11 @@ body.rtl .case-summary-item { text-align: center; }
         <div class="ai-native-cols">
           <div class="ai-native-col delegated">
             <div class="ai-native-col-label" data-i18n="aiNative.delegated">Delegated to AI</div>
-            <p data-i18n="aiNative.role3Del">Test case generation, acceptance criteria docs, regression testing, bug reproduction steps</p>
+            <p data-i18n="aiNative.role3Del">Test case generation, acceptance criteria documentation, regression test execution, bug reproduction steps</p>
           </div>
           <div class="ai-native-col augmented">
-            <div class="ai-native-col-label" data-i18n="aiNative.augmented">Execute with AI</div>
-            <p data-i18n="aiNative.role3Aug">Exploratory edge-case discovery, UX quality evaluation, release risk assessment, quality culture</p>
+            <div class="ai-native-col-label" data-i18n="aiNative.augmented">Execute with AI as a Thinking Partner</div>
+            <p data-i18n="aiNative.role3Aug">Exploratory edge-case discovery, user experience quality evaluation, release risk assessment, quality culture</p>
           </div>
         </div>
       </div>
@@ -2236,15 +2288,16 @@ body.rtl .case-summary-item { text-align: center; }
         <div class="ai-native-cols">
           <div class="ai-native-col delegated">
             <div class="ai-native-col-label" data-i18n="aiNative.delegated">Delegated to AI</div>
-            <p data-i18n="aiNative.role4Del">Tech evaluation docs, codebase spec analysis, dependency mapping, migration planning</p>
+            <p data-i18n="aiNative.role4Del">Technology evaluation docs, codebase specification analysis, dependency mapping, migration planning</p>
           </div>
           <div class="ai-native-col augmented">
-            <div class="ai-native-col-label" data-i18n="aiNative.augmented">Execute with AI</div>
-            <p data-i18n="aiNative.role4Aug">Scalability & resilience design, security architecture, technical roadmap, build-vs-buy decisions</p>
+            <div class="ai-native-col-label" data-i18n="aiNative.augmented">Execute with AI as a Thinking Partner</div>
+            <p data-i18n="aiNative.role4Aug">Scalability and resilience design, security architecture, technical roadmap, build-vs-buy decisions</p>
           </div>
         </div>
       </div>
     </div>
+    <p class="section-footnote fade-in" style="margin-top: 2rem; font-style: italic; opacity: 0.8;" data-i18n="aiNative.footnote"><em>This is not a forecast — it is the operating model SIMY enables today. The shift from execution to judgment defines the AI-native engineering organization.</em></p>
   </div>
 </section>
 
@@ -3221,6 +3274,64 @@ if (wasManual && savedLang && T[savedLang]) {
 } else {
   setLanguage(detectBrowserLanguage());
 }
+
+// ── G2 Referral Personalization ──
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  var utmSource = params.get('utm_source');
+  var utmContent = params.get('utm_content');
+  var utmCampaign = params.get('utm_campaign');
+
+  // Save to sessionStorage if G2 referral
+  if (utmSource === 'g2.com') {
+    sessionStorage.setItem('simy-g2-referral', 'true');
+    if (utmContent) sessionStorage.setItem('simy-g2-content', utmContent);
+    if (utmCampaign) sessionStorage.setItem('simy-g2-campaign', utmCampaign);
+  }
+
+  // Read from sessionStorage (persists across page navigation)
+  var isG2 = sessionStorage.getItem('simy-g2-referral') === 'true';
+  var g2Content = sessionStorage.getItem('simy-g2-content') || '';
+
+  if (!isG2) return;
+
+  // 1. Show G2 notification banner
+  var banner = document.getElementById('g2Banner');
+  if (banner) {
+    banner.classList.add('visible');
+    document.body.classList.add('g2-banner-active');
+  }
+
+  // 2. Show G2 badge in hero
+  var g2Badge = document.getElementById('g2BadgeHero');
+  if (g2Badge) g2Badge.classList.add('visible');
+
+  // 3. Change CTA button text for G2 users
+  var ctaSpans = document.querySelectorAll('[data-i18n="hero.ctaPrimary"]');
+  ctaSpans.forEach(function(span) {
+    span.textContent = 'G2ユーザー限定：無料トライアルを開始';
+    span.removeAttribute('data-i18n');
+  });
+  var pilotCtaSpans = document.querySelectorAll('[data-i18n="pilot.ctaBtn"]');
+  pilotCtaSpans.forEach(function(span) {
+    span.textContent = 'G2ユーザー限定：無料トライアルを開始';
+    span.removeAttribute('data-i18n');
+  });
+
+  // 4. If utm_content is pricing-related, highlight pilot section
+  if (g2Content.indexOf('pricing') !== -1) {
+    var pilotCard = document.querySelector('.pilot-card');
+    if (pilotCard) {
+      pilotCard.style.borderColor = '#ff492c';
+      pilotCard.style.boxShadow = '0 0 30px rgba(255,73,44,.2)';
+    }
+    var creditVal = document.querySelector('[data-i18n="pilot.credit"]');
+    if (creditVal) {
+      creditVal.innerHTML = '🔥 $5 SIMY Credits';
+      creditVal.style.color = '#ff492c';
+    }
+  }
+})();
 </script>
 </body>
 </html>
