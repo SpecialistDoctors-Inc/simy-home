@@ -57,12 +57,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:18px 0;background:r
 .page-hero .pr-meta{color:var(--gray);font-size:0.85rem;margin-top:8px}
 .page-hero .pr-subtitle{color:var(--gray-light);font-size:1rem;max-width:780px;margin:16px auto 0;line-height:1.7}
 
-/* Language toggle */
-.lang-toggle{display:flex;justify-content:center;gap:8px;margin:24px 0 40px}
-.lang-toggle button{padding:8px 20px;border-radius:8px;border:1px solid rgba(126,237,198,0.2);background:transparent;color:var(--gray-light);cursor:pointer;font-size:0.85rem;font-family:'Inter',sans-serif;font-weight:600;transition:all 0.2s}
-.lang-toggle button.active{background:rgba(126,237,198,0.1);border-color:var(--mint);color:var(--mint)}
-.lang-toggle button:hover{border-color:var(--mint);color:var(--white)}
-
 /* Article */
 .pr-article{max-width:780px;margin:0 auto;padding-bottom:80px}
 .pr-article[data-lang="ja"]{display:none}
@@ -163,11 +157,6 @@ footer{padding:48px 0 36px;border-top:1px solid rgba(255,255,255,0.04)}
     <h1 id="prTitle">SIMY Launches Platform for Building AI-Native Engineering Organizations</h1>
     <p class="pr-subtitle" id="prSubtitle">Autonomous code generation from workplace conversations shifts every engineering role from execution to decision-making &mdash; delivering 17.7x more pull requests per engineer with 86.7% first-shot accuracy</p>
     <p class="pr-meta" id="prDate">San Francisco, CA &mdash; March 2026</p>
-  </div>
-
-  <div class="lang-toggle">
-    <button class="active" onclick="switchPrLang('en')">English</button>
-    <button onclick="switchPrLang('ja')">日本語</button>
   </div>
 
   <!-- ===== ENGLISH VERSION ===== -->
