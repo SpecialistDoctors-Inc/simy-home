@@ -1,0 +1,784 @@
+/* MyPage Layout */
+.mypage-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 16px 10px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+}
+
+.mypage-header {
+    margin-bottom: 20px;
+}
+
+.mypage-header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.mypage-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.user-info {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 2px;
+}
+
+/* Card Base Styles */
+.monthly-limit-card,
+.usage-display-card,
+.payment-method-card,
+.service-status-card,
+.next-steps {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e5e5e5;
+}
+
+.promo-banner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    background: #EFF8FF;
+    border-radius: 12px;
+    padding: 16px 16px;
+    margin-bottom: 12px;
+    border: 1px solid #e5e5e5;
+}
+
+.promo-text {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.message-text {
+    font-size: 14px;
+}
+
+.btn {
+    display: block;
+    padding: 6px 20px 8px;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 14px;
+    text-decoration: none;
+    transition: background-color 0.2s;
+    cursor: pointer;
+    box-sizing: border-box;
+    border: 2px solid #246EAD;
+}
+
+.launch-simy-btn {
+    background-color: #246EAD;
+    color: #fff;
+    margin: 0 0 0 auto;
+}
+
+.launch-simy-btn:hover {
+    background-color: #1769c7;
+}
+
+.next-steps {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.next-steps-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 16px 0;
+}
+
+.step-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.step-number {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #D6D6D6;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 700;
+    flex-shrink: 0;
+    padding-bottom: 2px;
+}
+
+.step-number.active {
+    background: #246EAD;
+    color: #ffffff;
+}
+
+.step-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.step-label {
+    font-size: 14px;
+    color: #333;
+    margin: 0;
+}
+
+.step-action-btn {
+    background: #ffffff;
+    color: #246FAD;
+    border: 2px solid #246FAD;
+}
+
+.step-action-btn:hover {
+    background: #246FAD;
+    color: #ffffff;
+}
+
+.step-icon {
+    font-size: 16px;
+    margin-left: auto;
+}
+
+.step-divider {
+    width: 2px;
+    height: 40px;
+    background: #222;
+    margin-left: 13px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+/* Service Status Card */
+.service-status-card .status-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.service-status-card .status-title {
+    margin-bottom: 16px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.service-status-card .status-description {
+    font-size: 14px;
+    color: #666;
+}
+
+.service-status-card .toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 54px;
+    height: 28px;
+    cursor: pointer;
+}
+
+.service-status-card .toggle-switch.disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.service-status-card .toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.service-status-card .toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 34px;
+}
+
+.service-status-card .toggle-slider.active {
+    background-color: #4CAF50;
+}
+
+.service-status-card .toggle-slider.disabled {
+    cursor: not-allowed;
+}
+
+.service-status-card .toggle-slider::before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+}
+
+.service-status-card .toggle-slider.active::before {
+    transform: translateX(26px);
+}
+
+/* Monthly Limit Card */
+.card-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0 0 8px 0;
+}
+
+.card-description {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+.limit-display {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.limit-amount {
+    font-size: 36px;
+    font-weight: 700;
+}
+
+.limit-note {
+    font-size: 16px;
+    color: #999;
+    text-align: right;
+    line-height: 1.4;
+}
+
+/* Slider */
+.slider-container {
+    margin-bottom: 16px;
+}
+
+.slider {
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background: linear-gradient(to right, #246FAC 0%, #246FAC var(--slider-progress, 20%), #e5e5e5 var(--slider-progress, 20%), #e5e5e5 100%);
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #246FAC;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.slider::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #246FAC;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.slider.locked {
+    background: linear-gradient(to right, #999 0%, #999 var(--slider-progress, 20%), #e5e5e5 var(--slider-progress, 20%), #e5e5e5 100%);
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.slider.locked::-webkit-slider-thumb {
+    background: #999;
+    cursor: not-allowed;
+}
+
+.slider.locked::-moz-range-thumb {
+    background: #999;
+    cursor: not-allowed;
+}
+
+.slider-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+    font-size: 16px;
+    color: #666;
+}
+
+/* Preset Buttons */
+.preset-buttons {
+    flex-wrap: wrap;
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.preset-btn {
+    flex: 1;
+    border: 2px solid #e5e5e5;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #666;
+    font-size: 16px;
+}
+
+.preset-btn:hover:not(.locked) {
+    border-color: #246FAC;
+    background: #246FAC;
+    color: #ffffff;
+}
+
+.preset-btn.active {
+    border-color: #246FAC;
+    background: #246FAC;
+    color: #ffffff;
+}
+
+.preset-btn.locked {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+/* Safety Lock */
+.safety-lock-container {
+    margin-bottom: 16px;
+}
+
+.safety-lock-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 1.4;
+}
+
+.safety-lock-label input[type="checkbox"] {
+    margin-top: 2px;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    accent-color: #246FAC;
+}
+
+.safety-lock-text {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.warning-text {
+    font-size: 14px;
+    color: #666;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Usage Display Card */
+.effective-date {
+    display: flex;
+    justify-content: space-between;
+}
+
+.effective-date .label {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.effective-date .date {
+    font-size: 16px;
+}
+
+.usage-stats {
+    margin-bottom: 16px;
+}
+
+.usage-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.usage-label {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.usage-percentage {
+    font-size: 16px;
+    color: #666;
+}
+
+.usage-amount {
+    font-size: 16px;
+    font-weight: 600;
+    margin-left: auto;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: #e5e5e5;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: #1a3a52;
+    transition: width 0.3s ease;
+}
+
+.remaining-amount {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+}
+
+.remaining-label {
+    font-size: 16px;
+}
+
+.remaining-value {
+    font-size: 16px;
+}
+
+/* Payment Method Card */
+.payment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.payment-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.payment-logo {
+    height: 32px;
+}
+
+.stripe-logo {
+    height: 100%;
+    width: auto;
+}
+
+.payment-info {
+    padding: 12px;
+    background: #f5f5f5;
+    border-radius: 6px;
+    margin-bottom: 16px;
+}
+
+.payment-card-details {
+    font-size: 14px;
+    color: #666;
+}
+
+.payment-actions {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+}
+
+.manage-payment-btn {
+    background: #246FAC;
+    color: #ffffff;
+    border: 2px solid #246FAC;
+}
+
+.free-trial-link {
+    font-size: 14px;
+    color: #666;
+    text-decoration: none;
+}
+
+.free-trial-link:hover {
+    text-decoration: underline;
+}
+
+/* Loading State */
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Error States */
+.error-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+    font-size: 16px;
+    color: #666;
+}
+
+.error-container {
+    flex-direction: column;
+    gap: 16px;
+}
+
+.login-btn {
+    padding: 12px 24px;
+    background: #246FAC;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.login-btn:hover {
+    background: #0052CC;
+}
+
+/* Logout button */
+.logout-btn {
+    background: #f7f7f7;
+    color: #333;
+    border: 1px solid #e0e0e0;
+    margin: 16px auto;
+}
+
+.logout-btn:hover {
+    background: #eeeeee;
+}
+
+/* Login Page Styles */
+.login-loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: url('/img/background.png') center center / cover no-repeat;
+}
+
+.login-welcome-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    padding: 60px 60px;
+    min-height: 100vh;
+    background: url('/img/background.png') center center / cover no-repeat;
+    box-sizing: border-box;
+}
+
+.login-card {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+    max-width: 420px;
+    width: 100%;
+    justify-self: end;
+    margin-right: 80px;
+}
+
+.login-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.login-page-logo-link {
+    display: inline-block;
+}
+
+.login-page-logo {
+    height: 56px;
+    width: auto;
+}
+
+.login-no-account-link {
+    color: #6366F1;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.login-no-account-link:hover {
+    text-decoration: underline;
+}
+
+.login-welcome-subheading {
+    font-weight: 600;
+    font-size: 18px;
+    margin: 0 0 16px 0;
+    color: #1a1a1a;
+    line-height: 1.2;
+}
+
+.login-welcome-heading {
+    font-size: 40px;
+    font-weight: 700;
+    margin: 0 0 40px 0;
+    color: #1a1a1a;
+    line-height: 1.2;
+}
+
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .login-welcome-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        padding: 60px 40px;
+    }
+    
+    .login-card {
+        justify-self: center;
+        max-width: 500px;
+        margin-right: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .login-welcome-container {
+        padding: 40px 20px;
+    }
+    
+    .login-card {
+        padding: 32px 24px;
+        border-radius: 16px;
+    }
+    
+    .login-welcome-heading {
+        font-size: 32px;
+        margin-bottom: 20px;
+    }
+}
+
+/* Token Usage Stats */
+.usage-section-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: #333;
+}
+
+.token-usage-loading {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 0;
+}
+
+.token-usage-loading-text {
+    font-size: 14px;
+    color: #666;
+}
+
+.token-usage-error {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 12px 16px;
+    background: #fff5f5;
+    border: 1px solid #fed7d7;
+    border-radius: 8px;
+    color: #c53030;
+}
+
+.token-usage-error-icon {
+    font-size: 16px;
+    flex-shrink: 0;
+}
+
+.token-usage-error-text {
+    font-size: 14px;
+}
+
+.token-usage-empty {
+    padding: 24px 0;
+    text-align: center;
+}
+
+.token-usage-empty-text {
+    font-size: 14px;
+    color: #999;
+}
+
+.token-usage-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.token-usage-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.token-usage-item--full {
+    grid-column: 1 / -1;
+}
+
+.token-usage-label {
+    font-size: 12px;
+    color: #666;
+    font-weight: 500;
+}
+
+.token-usage-value {
+    font-size: 20px;
+    font-weight: 700;
+    color: #333;
+}
+
+.token-usage-total {
+    color: #667eea;
+}
