@@ -3,4 +3,3 @@ domain_name               = "dev.simy.one"
 subject_alternative_names = []
 route53_zone_id           = "Z0008232OGBGLDBHC41G"
 environment               = "dev"
-deploy_branch             = "dev"

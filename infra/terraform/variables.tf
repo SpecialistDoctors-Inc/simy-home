@@ -38,9 +38,3 @@ variable "environment" {
   type        = string
   default     = "prod"
 }
-
-variable "deploy_branch" {
-  description = "Git branch allowed to assume the GitHub Actions deploy role for this environment"
-  type        = string
-  default     = "main"
-}
