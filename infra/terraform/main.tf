@@ -172,16 +172,38 @@ resource "aws_cloudfront_distribution" "site" {
 }
 
 # -----------------------------------------------------------------------------
-# CloudFront Function (/test/* -> / redirect)
+# CloudFront Function (viewer-request: optional basic auth + /test/* redirect)
 # -----------------------------------------------------------------------------
+
+locals {
+  basic_auth_enabled = var.basic_auth_username != "" && var.basic_auth_password != ""
+  basic_auth_token   = local.basic_auth_enabled ? base64encode("${var.basic_auth_username}:${var.basic_auth_password}") : ""
+}
 
 resource "aws_cloudfront_function" "redirect" {
   name    = "simy-site-${var.environment}-redirect"
   runtime = "cloudfront-js-2.0"
   publish = true
   code    = <<-EOF
+    var BASIC_AUTH_ENABLED = ${local.basic_auth_enabled ? "true" : "false"};
+    var EXPECTED_AUTH = 'Basic ${local.basic_auth_token}';
+
     function handler(event) {
       var request = event.request;
+
+      if (BASIC_AUTH_ENABLED) {
+        var headers = request.headers;
+        if (!headers.authorization || headers.authorization.value !== EXPECTED_AUTH) {
+          return {
+            statusCode: 401,
+            statusDescription: 'Unauthorized',
+            headers: {
+              'www-authenticate': { value: 'Basic realm="dev"' }
+            }
+          };
+        }
+      }
+
       var uri = request.uri;
       if (uri === '/test' || uri === '/test/' || uri.startsWith('/test/')) {
         return {

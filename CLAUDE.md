@@ -56,10 +56,10 @@ terraform plan -var-file="environments/dev.tfvars"
 
 ## Environments
 
-| Env  | Domain        | Branch | S3 bucket         |
-| ---- | ------------- | ------ | ----------------- |
-| prod | simy.one      | main   | simy-site-prod    |
-| dev  | dev.simy.one  | dev    | simy-site-dev     |
+| Env  | Domain        | Branch | S3 bucket         | Auth                          |
+| ---- | ------------- | ------ | ----------------- | ----------------------------- |
+| prod | simy.one      | main   | simy-site-prod    | none (public)                 |
+| dev  | dev.simy.one  | dev    | simy-site-dev     | Basic auth `simy-dev`/`simy-dev` |
 
 ## Deployment
 

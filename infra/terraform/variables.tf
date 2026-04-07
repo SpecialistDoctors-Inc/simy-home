@@ -38,3 +38,16 @@ variable "environment" {
   type        = string
   default     = "prod"
 }
+
+variable "basic_auth_username" {
+  description = "Basic auth username (empty disables basic auth)"
+  type        = string
+  default     = ""
+}
+
+variable "basic_auth_password" {
+  description = "Basic auth password (empty disables basic auth)"
+  type        = string
+  default     = ""
+  sensitive   = true
+}
