@@ -19,7 +19,8 @@ simy-home/
 │       ├── main.tf
 │       ├── outputs.tf
 │       └── environments/
-│           └── prod.tfvars
+│           ├── prod.tfvars
+│           └── dev.tfvars
 ├── .github/workflows/
 │   └── deploy-site.yml            ← Static site deploy (S3 sync + CF invalidation)
 └── CLAUDE.md
@@ -39,12 +40,31 @@ No build commands. The site is static HTML/CSS/images.
 
 ### Terraform
 
+Each environment uses a separate Terraform workspace / state.
+
 ```bash
 cd infra/terraform
+
+# prod (simy.one)
 terraform init
 terraform plan -var-file="environments/prod.tfvars"
+
+# dev (dev.simy.one)
+terraform init
+terraform plan -var-file="environments/dev.tfvars"
 ```
+
+## Environments
+
+| Env  | Domain        | Branch | S3 bucket         |
+| ---- | ------------- | ------ | ----------------- |
+| prod | simy.one      | main   | simy-site-prod    |
+| dev  | dev.simy.one  | dev    | simy-site-dev     |
 
 ## Deployment
 
-Push changes to `site/` on `main` branch triggers automatic deployment via GitHub Actions.
+- Push to `site/` on `main` → deploys to **prod** (simy.one)
+- Push to `site/` on `dev` → deploys to **dev** (dev.simy.one)
+- Manual: `gh workflow run deploy-site.yml -r <branch> -f environment=<prod|dev>`
+
+GitHub Actions uses environment-scoped secrets (`AWS_SITE_DEPLOY_ROLE_ARN`, `AWS_REGION`, `SITE_S3_BUCKET`, `SITE_CF_DISTRIBUTION_ID`) configured per GitHub Environment (`prod`, `dev`).

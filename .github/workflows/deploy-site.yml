@@ -4,9 +4,19 @@ on:
   push:
     branches:
       - main
+      - dev
     paths:
       - 'site/**'
   workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Target environment'
+        required: true
+        default: 'prod'
+        type: choice
+        options:
+          - prod
+          - dev
 
 permissions:
   id-token: write
@@ -15,6 +25,7 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment: ${{ github.event_name == 'workflow_dispatch' && inputs.environment || (github.ref == 'refs/heads/main' && 'prod' || 'dev') }}
 
     steps:
       - name: Checkout

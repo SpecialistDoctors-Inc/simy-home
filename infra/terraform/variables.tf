@@ -34,7 +34,13 @@ variable "github_oidc_provider_arn" {
 }
 
 variable "environment" {
-  description = "Deployment environment (prod)"
+  description = "Deployment environment (prod, dev)"
   type        = string
   default     = "prod"
+}
+
+variable "deploy_branch" {
+  description = "Git branch allowed to assume the GitHub Actions deploy role for this environment"
+  type        = string
+  default     = "main"
 }
