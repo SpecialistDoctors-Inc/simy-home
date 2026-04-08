@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="google-site-verification" content="1n6_tVJZRZlQax8luEg5VsuG7gg-kCEam5VFiWIJs3U">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Usage Statistics — SIMY</title>
+<meta name="description" content="View your SIMY token usage statistics including request count, prompt tokens, completion tokens, and total tokens consumed.">
+<link rel="canonical" href="https://simy.one/usage-statistics.html">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://simy.one/usage-statistics.html">
+<meta property="og:title" content="Usage Statistics — SIMY">
+<meta property="og:description" content="View your SIMY token usage statistics.">
+<meta property="og:site_name" content="SIMY">
+<meta property="og:image" content="https://simy.one/ogp.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Usage Statistics — SIMY">
+<meta name="twitter:description" content="View your SIMY token usage statistics.">
+<meta name="twitter:image" content="https://simy.one/ogp.png">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0a0a1a">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--deep-navy:#0a0a1a;--navy:#0e0e24;--mint:#7EEDC6;--mint-dim:rgba(126,237,198,0.08);--sky:#4A9FE8;--white:#f0f0f8;--gray:#7a7a9e;--gray-light:#b0b0cc;--accent-gradient:linear-gradient(135deg,#7EEDC6 0%,#4A9FE8 100%)}
+html{font-size:16px}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--deep-navy);color:var(--white);line-height:1.6;-webkit-font-smoothing:antialiased}
+a:focus-visible{outline:2px solid var(--mint);outline-offset:3px;border-radius:4px}
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:18px 0;background:rgba(10,10,26,0.92);backdrop-filter:blur(24px) saturate(1.2);-webkit-backdrop-filter:blur(24px) saturate(1.2);border-bottom:1px solid rgba(126,237,198,0.04)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1140px;margin:0 auto;padding:0 clamp(24px,4vw,60px)}
+.nav-logo{display:flex;align-items:center;gap:6px;text-decoration:none;color:var(--white)}
+.nav-logo-icon{width:40px;height:40px;border-radius:10px;overflow:hidden;flex-shrink:0}
+.nav-logo-icon img{width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block}
+.nav-logo-text{display:flex;flex-direction:column;line-height:1.1}
+.nav-logo-text .nav-brand{font-weight:800;font-size:1.25rem;letter-spacing:0.04em}
+.nav-logo-text .nav-tagline{font-size:0.5rem;font-weight:500;letter-spacing:0.08em;color:var(--gray);text-transform:uppercase}
+.nav-links{display:flex;gap:28px;align-items:center}
+.nav-links a{color:var(--gray);text-decoration:none;font-size:0.85rem;font-weight:500;transition:color 0.2s}
+.nav-links a:hover{color:var(--white)}
+.mobile-menu-btn{display:none;background:none;border:none;color:var(--white);cursor:pointer;padding:4px}
+.lang-select{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:var(--white);font-size:0.8rem;font-weight:500;padding:6px 10px;border-radius:6px;cursor:pointer;font-family:'Inter',sans-serif;outline:none;transition:border-color 0.2s}
+.lang-select:hover,.lang-select:focus{border-color:rgba(126,237,198,0.3)}
+.lang-select option{background:var(--deep-navy);color:var(--white)}
+.nav-cta{padding:9px 22px;border-radius:8px;background:var(--accent-gradient);color:var(--deep-navy) !important;font-weight:700 !important;font-size:.85rem !important;transition:all .2s}
+.nav-cta:hover{opacity:.92;transform:translateY(-1px)}
+.footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
+.footer-col{display:flex;flex-direction:column;gap:10px}
+.footer-col-title{font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--white);margin-bottom:4px}
+.footer-col a{color:var(--gray);text-decoration:none;font-size:0.85rem;transition:color 0.2s}
+.footer-col a:hover{color:var(--mint)}
+.footer-bottom{padding-top:24px;border-top:1px solid rgba(255,255,255,0.04);font-size:0.75rem;color:var(--gray);text-align:center}
+@media(max-width:768px){.nav-links{display:none;position:fixed;top:56px;right:0;left:0;background:rgba(10,10,26,0.97);flex-direction:column;padding:24px;gap:16px;z-index:999;backdrop-filter:blur(20px)}.nav-links.active{display:flex}.mobile-menu-btn{display:block}.footer-grid{grid-template-columns:1fr 1fr;gap:24px}.footer-brand{grid-column:1/-1;text-align:center}}
+.container{max-width:1140px;margin:0 auto;padding:0 clamp(24px,4vw,60px)}
+.page-hero{padding:140px 0 40px;text-align:center}
+.page-hero h1{font-size:clamp(2rem,5vw,3rem);font-weight:900;letter-spacing:-0.03em;margin-bottom:16px;background:var(--accent-gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.page-hero p{font-size:1.05rem;color:var(--gray-light);max-width:560px;margin:0 auto}
+
+/* Usage statistics layout */
+.usage-content{max-width:860px;margin:0 auto;padding-bottom:80px}
+
+/* Metrics grid */
+.metrics-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:40px}
+.metric-card{background:rgba(14,14,36,0.8);border:1px solid rgba(126,237,198,0.12);border-radius:14px;padding:24px 20px;text-align:center;transition:border-color 0.2s}
+.metric-card:hover{border-color:rgba(126,237,198,0.25)}
+.metric-label{font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray);margin-bottom:10px}
+.metric-value{font-size:1.9rem;font-weight:800;letter-spacing:-0.03em;background:var(--accent-gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.1}
+.metric-value.plain{background:none;-webkit-text-fill-color:var(--white);color:var(--white)}
+
+/* Last updated bar */
+.last-updated-bar{background:rgba(14,14,36,0.8);border:1px solid rgba(126,237,198,0.12);border-radius:10px;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;font-size:0.83rem;margin-bottom:32px;flex-wrap:wrap;gap:10px}
+.last-updated-bar .lbl{color:var(--gray);font-weight:600;text-transform:uppercase;letter-spacing:0.06em;font-size:0.72rem}
+.last-updated-bar .val{color:var(--gray-light)}
+
+/* Loading state */
+.state-loading{text-align:center;padding:80px 0}
+.spinner{display:inline-block;width:40px;height:40px;border:3px solid rgba(126,237,198,0.15);border-top-color:var(--mint);border-radius:50%;animation:spin 0.8s linear infinite;margin-bottom:16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.state-loading p{color:var(--gray);font-size:0.95rem}
+
+/* Empty state */
+.state-empty{text-align:center;padding:80px 0}
+.state-empty-icon{font-size:3rem;margin-bottom:16px;opacity:0.4}
+.state-empty h2{font-size:1.3rem;font-weight:700;margin-bottom:8px}
+.state-empty p{color:var(--gray-light);font-size:0.9rem;max-width:400px;margin:0 auto}
+
+/* Error state */
+.state-error{background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.2);border-radius:14px;padding:32px 24px;text-align:center;margin-bottom:24px}
+.state-error-icon{font-size:2rem;margin-bottom:12px}
+.state-error h2{font-size:1.1rem;font-weight:700;margin-bottom:6px;color:#fca5a5}
+.state-error p{color:var(--gray-light);font-size:0.88rem;margin-bottom:20px}
+.btn-retry{display:inline-flex;align-items:center;gap:8px;padding:10px 24px;border-radius:8px;background:var(--accent-gradient);color:var(--deep-navy);font-weight:700;font-size:0.85rem;border:none;cursor:pointer;transition:opacity 0.2s}
+.btn-retry:hover{opacity:0.88}
+
+/* Section heading */
+.section-heading{font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--gray);margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,0.05)}
+
+/* Breakdown table */
+.breakdown-table{width:100%;border-collapse:collapse;font-size:0.9rem}
+.breakdown-table th{text-align:left;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray);padding:10px 16px;border-bottom:1px solid rgba(255,255,255,0.06)}
+.breakdown-table td{padding:14px 16px;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--gray-light)}
+.breakdown-table td.metric-name{color:var(--white);font-weight:600}
+.breakdown-table td.metric-num{font-variant-numeric:tabular-nums;font-weight:700;color:var(--white)}
+.breakdown-table tr:last-child td{border-bottom:none}
+.breakdown-table tr.total-row td{border-top:1px solid rgba(126,237,198,0.12);background:rgba(126,237,198,0.03);color:var(--mint) !important;font-weight:800}
+
+footer{padding:48px 0 36px;border-top:1px solid rgba(255,255,255,0.04)}
+.footer-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px}
+.footer-tagline{font-size:1rem;font-weight:700;letter-spacing:-0.02em}
+.footer-right{display:flex;align-items:center;gap:20px;font-size:0.75rem;color:var(--gray)}
+.footer-right a{color:var(--gray);text-decoration:none;transition:color 0.2s}
+.footer-right a:hover{color:var(--mint)}
+.footer-sep{opacity:0.3}
+@media(max-width:768px){.footer-inner{flex-direction:column;text-align:center}.metrics-grid{grid-template-columns:1fr 1fr}}
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SBLYYNMSJW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-SBLYYNMSJW');
+</script>
+</head>
+<body>
+
+<nav><div class="nav-inner"><a href="index.html" class="nav-logo"><div class="nav-logo-icon"><img src="simy-icon.png" alt="SIMY icon"></div><div class="nav-logo-text"><span class="nav-brand">SIMY</span><span class="nav-tagline">Voice to Code, One Shot</span></div></a><div class="nav-links" id="navLinks">
+      <a href="index.html" data-i18n="nav.top">Top</a>
+      <a href="how-it-works.html" data-i18n="nav.howItWorks">How It Works</a>
+      <a href="pricing.html" data-i18n="nav.pricing">Pricing</a>
+      <a href="compare.html" data-i18n="nav.compare">Compare</a>
+      <a href="about.html" data-i18n="nav.about">About</a>
+      <a href="contact.html" data-i18n="nav.contact">Contact</a>
+      <a href="press-release.html" data-i18n="nav.news">News</a>
+      <select class="lang-select" id="langSelect" onchange="setLanguage(this.value, true)">
+        <option value="en">EN</option>
+        <option value="ja">日本語</option>
+        <option value="zh">中文</option>
+        <option value="hi">हिन्दी</option>
+        <option value="es">Español</option>
+        <option value="ar">العربية</option>
+      </select>
+      <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" class="nav-cta" target="_blank" rel="noopener" data-i18n="nav.cta">Reserve your Slot</a>
+    </div>
+    <button class="mobile-menu-btn" onclick="document.getElementById('navLinks').classList.toggle('active')" aria-label="Toggle menu">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="page-hero">
+    <h1 data-i18n="us.h1">Usage Statistics</h1>
+    <p data-i18n="us.subtitle">Aggregated token consumption from the SIMY LLM pipeline</p>
+  </div>
+
+  <div class="usage-content">
+
+    <!-- Loading state -->
+    <div id="stateLoading" class="state-loading" aria-live="polite">
+      <div class="spinner" role="status" aria-label="Loading"></div>
+      <p data-i18n="us.loading">Loading usage data…</p>
+    </div>
+
+    <!-- Error state -->
+    <div id="stateError" class="state-error" style="display:none" aria-live="assertive">
+      <div class="state-error-icon">⚠</div>
+      <h2 data-i18n="us.errTitle">Failed to load usage data</h2>
+      <p id="errorMsg" data-i18n="us.errMsg">Unable to retrieve token usage metrics. Please try again.</p>
+      <button class="btn-retry" onclick="loadUsageStats()" data-i18n="us.retry">Retry</button>
+    </div>
+
+    <!-- Empty state -->
+    <div id="stateEmpty" class="state-empty" style="display:none" aria-live="polite">
+      <div class="state-empty-icon">📊</div>
+      <h2 data-i18n="us.emptyTitle">No usage data yet</h2>
+      <p data-i18n="us.emptyMsg">Token usage will appear here once the SIMY pipeline has processed requests.</p>
+    </div>
+
+    <!-- Data state -->
+    <div id="stateData" style="display:none">
+
+      <div class="last-updated-bar">
+        <span class="lbl" data-i18n="us.lastUpdated">Last request</span>
+        <span class="val" id="latestTimestamp">—</span>
+      </div>
+
+      <div class="section-heading" data-i18n="us.summaryHeading">Summary</div>
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-label" data-i18n="us.requests">Requests</div>
+          <div class="metric-value" id="metricRequests">—</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label" data-i18n="us.promptTokens">Prompt Tokens</div>
+          <div class="metric-value" id="metricPrompt">—</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label" data-i18n="us.completionTokens">Completion Tokens</div>
+          <div class="metric-value" id="metricCompletion">—</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label" data-i18n="us.totalTokens">Total Tokens</div>
+          <div class="metric-value" id="metricTotal">—</div>
+        </div>
+      </div>
+
+      <div class="section-heading" data-i18n="us.breakdownHeading">Token Breakdown</div>
+      <table class="breakdown-table" aria-label="Token usage breakdown">
+        <thead>
+          <tr>
+            <th data-i18n="us.tblMetric">Metric</th>
+            <th data-i18n="us.tblValue">Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="metric-name" data-i18n="us.requests">Requests</td>
+            <td class="metric-num" id="tblRequests">—</td>
+          </tr>
+          <tr>
+            <td class="metric-name" data-i18n="us.promptTokens">Prompt Tokens</td>
+            <td class="metric-num" id="tblPrompt">—</td>
+          </tr>
+          <tr>
+            <td class="metric-name" data-i18n="us.completionTokens">Completion Tokens</td>
+            <td class="metric-num" id="tblCompletion">—</td>
+          </tr>
+          <tr class="total-row">
+            <td class="metric-name" data-i18n="us.totalTokens">Total Tokens</td>
+            <td class="metric-num" id="tblTotal">—</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-tagline" data-i18n="footer.tagline">Record. Ship. Done.</div>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title" data-i18n="footer.product">Product</div>
+        <a href="how-it-works.html" data-i18n="footer.howItWorks">How It Works</a>
+        <a href="pricing.html" data-i18n="footer.pricing">Pricing</a>
+        <a href="compare.html" data-i18n="footer.compare">Compare</a>
+        <a href="integrations.html" data-i18n="footer.integrations">Integrations</a>
+        <a href="security.html" data-i18n="footer.security">Security</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title" data-i18n="footer.company">Company</div>
+        <a href="about.html" data-i18n="footer.about">About</a>
+        <a href="careers.html" data-i18n="footer.careers">Careers</a>
+        <a href="press.html" data-i18n="footer.press">Press</a>
+        <a href="contact.html" data-i18n="footer.contact">Contact</a>
+        <a href="status.html" data-i18n="footer.status">Status</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title" data-i18n="footer.legal">Legal</div>
+        <a href="privacy.html" data-i18n="footer.privacy">Privacy Policy</a>
+        <a href="terms.html" data-i18n="footer.terms">Terms of Service</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 SIMY by AwakApp Inc. All rights reserved.</span>
+    </div>
+  </div>
+</footer>
+
+<div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:rgba(14,14,36,0.98);border-top:1px solid rgba(126,237,198,0.15);padding:16px 24px;backdrop-filter:blur(20px)"><div style="max-width:1140px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap"><p style="color:#b0b0cc;font-size:0.85rem;margin:0;flex:1;min-width:200px">We use cookies to improve your experience. See our <a href="privacy.html" style="color:#7EEDC6">Privacy Policy</a>.</p><div style="display:flex;gap:10px"><button onclick="setCookieConsent(false)" style="padding:8px 20px;border-radius:6px;border:1px solid rgba(126,237,198,0.3);background:transparent;color:#b0b0cc;cursor:pointer;font-size:0.85rem">Decline</button><button onclick="setCookieConsent(true)" style="padding:8px 20px;border-radius:6px;border:none;background:linear-gradient(135deg,#7EEDC6,#4A9FE8);color:#0a0a1a;font-weight:700;cursor:pointer;font-size:0.85rem">Accept</button></div></div></div>
+<script>function setCookieConsent(v){localStorage.setItem('simy-cookies',v?'1':'0');document.getElementById('cookieBanner').style.display='none'}if(!localStorage.getItem('simy-cookies'))document.getElementById('cookieBanner').style.display='block'</script>
+
+<script>
+/*
+ * Backend requirement: Supabase RPC function `get_token_usage_stats`
+ *
+ * CREATE OR REPLACE FUNCTION get_token_usage_stats()
+ * RETURNS json
+ * LANGUAGE sql
+ * SECURITY DEFINER
+ * AS $$
+ *   SELECT json_build_object(
+ *     'request_count',      COUNT(*),
+ *     'prompt_tokens',      COALESCE(SUM(prompt_tokens), 0),
+ *     'completion_tokens',  COALESCE(SUM(completion_tokens), 0),
+ *     'total_tokens',       COALESCE(SUM(total_tokens), 0),
+ *     'latest_timestamp',   MAX(created_at)
+ *   )
+ *   FROM llm_token_usage;
+ * $$;
+ *
+ * Expected JSON response:
+ * {
+ *   "request_count":     number,
+ *   "prompt_tokens":     number,
+ *   "completion_tokens": number,
+ *   "total_tokens":      number,
+ *   "latest_timestamp":  string | null  (ISO 8601 UTC)
+ * }
+ *
+ * Configure USAGE_STATS_API_URL and USAGE_STATS_API_KEY below
+ * before deploying to production.
+ */
+
+// --- Configuration (replace with actual Supabase project values) ---
+var USAGE_STATS_API_URL = (window.SIMY_USAGE_API_URL || '');
+var USAGE_STATS_API_KEY = (window.SIMY_USAGE_API_KEY || '');
+// ------------------------------------------------------------------
+
+function fmtNumber(n) {
+  if (n === null || n === undefined) return '—';
+  return Number(n).toLocaleString('en-US');
+}
+
+function fmtTimestamp(ts) {
+  if (!ts) return '—';
+  try {
+    var d = new Date(ts);
+    return d.toLocaleString('en-US', {
+      year: 'numeric', month: 'short', day: 'numeric',
+      hour: '2-digit', minute: '2-digit', timeZoneName: 'short'
+    });
+  } catch (e) {
+    return ts;
+  }
+}
+
+function showState(name) {
+  ['stateLoading','stateError','stateEmpty','stateData'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) el.style.display = (id === name) ? '' : 'none';
+  });
+}
+
+function renderMetrics(data) {
+  var requestCount    = data.request_count;
+  var promptTokens    = data.prompt_tokens;
+  var completionTokens = data.completion_tokens;
+  var totalTokens     = data.total_tokens;
+  var latestTs        = data.latest_timestamp;
+
+  // Cards
+  document.getElementById('metricRequests').textContent   = fmtNumber(requestCount);
+  document.getElementById('metricPrompt').textContent     = fmtNumber(promptTokens);
+  document.getElementById('metricCompletion').textContent = fmtNumber(completionTokens);
+  document.getElementById('metricTotal').textContent      = fmtNumber(totalTokens);
+
+  // Table
+  document.getElementById('tblRequests').textContent      = fmtNumber(requestCount);
+  document.getElementById('tblPrompt').textContent        = fmtNumber(promptTokens);
+  document.getElementById('tblCompletion').textContent    = fmtNumber(completionTokens);
+  document.getElementById('tblTotal').textContent         = fmtNumber(totalTokens);
+
+  // Timestamp
+  document.getElementById('latestTimestamp').textContent  = fmtTimestamp(latestTs);
+}
+
+function loadUsageStats() {
+  showState('stateLoading');
+
+  if (!USAGE_STATS_API_URL) {
+    showState('stateError');
+    document.getElementById('errorMsg').textContent =
+      'Usage statistics API URL is not configured. Set SIMY_USAGE_API_URL.';
+    return;
+  }
+
+  var headers = { 'Content-Type': 'application/json' };
+  if (USAGE_STATS_API_KEY) {
+    headers['apikey']        = USAGE_STATS_API_KEY;
+    headers['Authorization'] = 'Bearer ' + USAGE_STATS_API_KEY;
+  }
+
+  fetch(USAGE_STATS_API_URL, { method: 'POST', headers: headers })
+    .then(function(res) {
+      if (!res.ok) {
+        return res.text().then(function(body) {
+          throw new Error('HTTP ' + res.status + ': ' + body.slice(0, 200));
+        });
+      }
+      return res.json();
+    })
+    .then(function(data) {
+      // Supabase RPC returns the function result directly.
+      // If data is an array (edge case), take first element.
+      var row = Array.isArray(data) ? data[0] : data;
+
+      var isEmpty = !row ||
+        (Number(row.request_count) === 0 && !row.latest_timestamp);
+
+      if (isEmpty) {
+        showState('stateEmpty');
+      } else {
+        renderMetrics(row);
+        showState('stateData');
+      }
+    })
+    .catch(function(err) {
+      showState('stateError');
+      document.getElementById('errorMsg').textContent =
+        err && err.message ? err.message : 'An unexpected error occurred.';
+    });
+}
+
+// Kick off on page load
+loadUsageStats();
+</script>
+
+<script>
+// i18n for subpages (nav + footer + page-specific keys)
+const T = {
+en: {
+  "nav.top":"Top","nav.howItWorks":"How It Works","nav.pricing":"Pricing","nav.compare":"Compare","nav.about":"About","nav.contact":"Contact","nav.news":"News","nav.cta":"Reserve your Slot",
+  "footer.tagline":"Record. Ship. Done.","footer.product":"Product","footer.howItWorks":"How It Works","footer.pricing":"Pricing","footer.compare":"Compare","footer.integrations":"Integrations","footer.security":"Security","footer.company":"Company","footer.about":"About","footer.careers":"Careers","footer.press":"Press","footer.contact":"Contact","footer.status":"Status","footer.legal":"Legal","footer.privacy":"Privacy Policy","footer.terms":"Terms of Service",
+  "us.h1":"Usage Statistics","us.subtitle":"Aggregated token consumption from the SIMY LLM pipeline",
+  "us.loading":"Loading usage data…",
+  "us.errTitle":"Failed to load usage data","us.errMsg":"Unable to retrieve token usage metrics. Please try again.","us.retry":"Retry",
+  "us.emptyTitle":"No usage data yet","us.emptyMsg":"Token usage will appear here once the SIMY pipeline has processed requests.",
+  "us.lastUpdated":"Last request",
+  "us.summaryHeading":"Summary","us.breakdownHeading":"Token Breakdown",
+  "us.requests":"Requests","us.promptTokens":"Prompt Tokens","us.completionTokens":"Completion Tokens","us.totalTokens":"Total Tokens",
+  "us.tblMetric":"Metric","us.tblValue":"Value"
+},
+ja: {
+  "nav.top":"トップ","nav.howItWorks":"仕組み","nav.pricing":"料金","nav.compare":"比較","nav.about":"会社概要","nav.contact":"お問い合わせ","nav.news":"ニュース","nav.cta":"今すぐ予約",
+  "footer.tagline":"録音。出荷。完了。","footer.product":"プロダクト","footer.howItWorks":"仕組み","footer.pricing":"料金","footer.compare":"比較","footer.integrations":"連携","footer.security":"セキュリティ","footer.company":"企業情報","footer.about":"会社概要","footer.careers":"採用","footer.press":"プレス","footer.contact":"お問い合わせ","footer.status":"ステータス","footer.legal":"法務","footer.privacy":"プライバシーポリシー","footer.terms":"利用規約",
+  "us.h1":"利用統計","us.subtitle":"SIMYのLLMパイプラインにおけるトークン消費量の集計",
+  "us.loading":"利用データを読み込み中…",
+  "us.errTitle":"利用データの取得に失敗しました","us.errMsg":"トークン使用量の取得中にエラーが発生しました。再度お試しください。","us.retry":"再試行",
+  "us.emptyTitle":"利用データがありません","us.emptyMsg":"SIMYパイプラインがリクエストを処理するとトークン使用量がここに表示されます。",
+  "us.lastUpdated":"最終リクエスト",
+  "us.summaryHeading":"サマリー","us.breakdownHeading":"トークン内訳",
+  "us.requests":"リクエスト数","us.promptTokens":"プロンプトトークン","us.completionTokens":"コンプリーショントークン","us.totalTokens":"合計トークン",
+  "us.tblMetric":"指標","us.tblValue":"値"
+},
+zh: {
+  "nav.top":"首页","nav.howItWorks":"工作原理","nav.pricing":"定价","nav.compare":"对比","nav.about":"关于","nav.contact":"联系","nav.news":"新闻","nav.cta":"预约名额",
+  "footer.tagline":"录制。交付。完成。","footer.product":"产品","footer.howItWorks":"工作原理","footer.pricing":"定价","footer.compare":"对比","footer.integrations":"集成","footer.security":"安全","footer.company":"公司","footer.about":"关于","footer.careers":"招聘","footer.press":"媒体","footer.contact":"联系","footer.status":"状态","footer.legal":"法律","footer.privacy":"隐私政策","footer.terms":"服务条款",
+  "us.h1":"使用统计","us.subtitle":"SIMY LLM 管道的令牌消耗汇总",
+  "us.loading":"正在加载使用数据…",
+  "us.errTitle":"加载使用数据失败","us.errMsg":"无法获取令牌使用指标，请重试。","us.retry":"重试",
+  "us.emptyTitle":"暂无使用数据","us.emptyMsg":"SIMY 管道处理请求后，令牌使用情况将显示在此处。",
+  "us.lastUpdated":"最近请求",
+  "us.summaryHeading":"汇总","us.breakdownHeading":"令牌明细",
+  "us.requests":"请求数","us.promptTokens":"提示令牌","us.completionTokens":"完成令牌","us.totalTokens":"总令牌",
+  "us.tblMetric":"指标","us.tblValue":"值"
+},
+hi: {
+  "nav.top":"होम","nav.howItWorks":"कैसे काम करता है","nav.pricing":"मूल्य","nav.compare":"तुलना","nav.about":"हमारे बारे में","nav.contact":"संपर्क","nav.news":"समाचार","nav.cta":"अपनी जगह आरक्षित करें",
+  "footer.tagline":"रिकॉर्ड। शिप। हो गया।","footer.product":"उत्पाद","footer.howItWorks":"कैसे काम करता है","footer.pricing":"मूल्य","footer.compare":"तुलना","footer.integrations":"एकीकरण","footer.security":"सुरक्षा","footer.company":"कंपनी","footer.about":"हमारे बारे में","footer.careers":"करियर","footer.press":"प्रेस","footer.contact":"संपर्क","footer.status":"स्थिति","footer.legal":"कानूनी","footer.privacy":"गोपनीयता नीति","footer.terms":"सेवा की शर्तें",
+  "us.h1":"उपयोग आँकड़े","us.subtitle":"SIMY LLM पाइपलाइन से एकत्रित टोकन खपत",
+  "us.loading":"उपयोग डेटा लोड हो रहा है…",
+  "us.errTitle":"उपयोग डेटा लोड करने में विफल","us.errMsg":"टोकन उपयोग मेट्रिक्स प्राप्त करने में असमर्थ। कृपया पुनः प्रयास करें।","us.retry":"पुनः प्रयास",
+  "us.emptyTitle":"अभी तक कोई उपयोग डेटा नहीं","us.emptyMsg":"SIMY पाइपलाइन द्वारा अनुरोध संसाधित करने के बाद यहाँ टोकन उपयोग दिखाई देगा।",
+  "us.lastUpdated":"अंतिम अनुरोध",
+  "us.summaryHeading":"सारांश","us.breakdownHeading":"टोकन विवरण",
+  "us.requests":"अनुरोध","us.promptTokens":"प्रॉम्प्ट टोकन","us.completionTokens":"कम्पलीशन टोकन","us.totalTokens":"कुल टोकन",
+  "us.tblMetric":"मेट्रिक","us.tblValue":"मान"
+},
+es: {
+  "nav.top":"Inicio","nav.howItWorks":"Cómo Funciona","nav.pricing":"Precios","nav.compare":"Comparar","nav.about":"Nosotros","nav.contact":"Contacto","nav.news":"Noticias","nav.cta":"Reserva tu Lugar",
+  "footer.tagline":"Graba. Envía. Listo.","footer.product":"Producto","footer.howItWorks":"Cómo Funciona","footer.pricing":"Precios","footer.compare":"Comparar","footer.integrations":"Integraciones","footer.security":"Seguridad","footer.company":"Empresa","footer.about":"Nosotros","footer.careers":"Empleo","footer.press":"Prensa","footer.contact":"Contacto","footer.status":"Estado","footer.legal":"Legal","footer.privacy":"Política de Privacidad","footer.terms":"Términos de Servicio",
+  "us.h1":"Estadísticas de Uso","us.subtitle":"Consumo de tokens del pipeline LLM de SIMY",
+  "us.loading":"Cargando datos de uso…",
+  "us.errTitle":"Error al cargar datos de uso","us.errMsg":"No se pudieron obtener las métricas de uso de tokens. Inténtalo de nuevo.","us.retry":"Reintentar",
+  "us.emptyTitle":"Sin datos de uso aún","us.emptyMsg":"El uso de tokens aparecerá aquí una vez que el pipeline de SIMY haya procesado solicitudes.",
+  "us.lastUpdated":"Última solicitud",
+  "us.summaryHeading":"Resumen","us.breakdownHeading":"Desglose de Tokens",
+  "us.requests":"Solicitudes","us.promptTokens":"Tokens de Prompt","us.completionTokens":"Tokens de Completado","us.totalTokens":"Total de Tokens",
+  "us.tblMetric":"Métrica","us.tblValue":"Valor"
+},
+ar: {
+  "nav.top":"الرئيسية","nav.howItWorks":"كيف يعمل","nav.pricing":"الأسعار","nav.compare":"مقارنة","nav.about":"عن الشركة","nav.contact":"اتصل بنا","nav.news":"أخبار","nav.cta":"احجز مكانك",
+  "footer.tagline":"سجّل. أرسل. انتهى.","footer.product":"المنتج","footer.howItWorks":"كيف يعمل","footer.pricing":"الأسعار","footer.compare":"مقارنة","footer.integrations":"التكامل","footer.security":"الأمان","footer.company":"الشركة","footer.about":"عن الشركة","footer.careers":"الوظائف","footer.press":"الصحافة","footer.contact":"اتصل بنا","footer.status":"الحالة","footer.legal":"قانوني","footer.privacy":"سياسة الخصوصية","footer.terms":"شروط الخدمة",
+  "us.h1":"إحصائيات الاستخدام","us.subtitle":"إجمالي استهلاك الرموز من خط أنابيب SIMY للذكاء الاصطناعي",
+  "us.loading":"جاري تحميل بيانات الاستخدام…",
+  "us.errTitle":"فشل تحميل بيانات الاستخدام","us.errMsg":"تعذّر استرداد مقاييس استخدام الرموز. يرجى المحاولة مرة أخرى.","us.retry":"إعادة المحاولة",
+  "us.emptyTitle":"لا توجد بيانات استخدام بعد","us.emptyMsg":"سيظهر استخدام الرموز هنا بمجرد معالجة طلبات خط أنابيب SIMY.",
+  "us.lastUpdated":"آخر طلب",
+  "us.summaryHeading":"الملخص","us.breakdownHeading":"تفصيل الرموز",
+  "us.requests":"الطلبات","us.promptTokens":"رموز المطالبة","us.completionTokens":"رموز الإكمال","us.totalTokens":"إجمالي الرموز",
+  "us.tblMetric":"المقياس","us.tblValue":"القيمة"
+}
+};
+function setLanguage(lang, manual) {
+  document.documentElement.lang = lang;
+  document.body.classList.toggle('rtl', lang === 'ar');
+  document.getElementById('langSelect').value = lang;
+  localStorage.setItem('simy-lang', lang);
+  if (manual) localStorage.setItem('simy-lang-manual', '1');
+  const dict = T[lang];
+  if (!dict) return;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (dict[key] !== undefined) el.textContent = dict[key];
+  });
+  // Update App Store URLs based on language
+  const appStoreUrl = lang === 'ja'
+    ? 'https://apps.apple.com/jp/app/simy-meetings-end-code-ships/id6745385262'
+    : 'https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262';
+  document.querySelectorAll('a[href*="apps.apple.com"]').forEach(el => { el.href = appStoreUrl; });
+}
+function detectBrowserLanguage() {
+  const supportedLangs = Object.keys(T);
+  const browserLangs = navigator.languages || [navigator.language || 'en'];
+  for (const bl of browserLangs) {
+    const lower = bl.toLowerCase();
+    const exact = supportedLangs.find(s => s === lower);
+    if (exact) return exact;
+    const prefix = lower.split('-')[0];
+    const prefixMatch = supportedLangs.find(s => s === prefix);
+    if (prefixMatch) return prefixMatch;
+  }
+  return 'en';
+}
+const wasManual = localStorage.getItem('simy-lang-manual');
+const savedLang = localStorage.getItem('simy-lang');
+if (wasManual && savedLang && T[savedLang]) { setLanguage(savedLang); }
+else { setLanguage(detectBrowserLanguage()); }
+</script>
+</body>
+</html>
