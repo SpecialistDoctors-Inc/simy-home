@@ -113,10 +113,10 @@ nav.scrolled {
 .nav-cta:hover{opacity:.92;transform:translateY(-1px)}
 .footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
 .footer-col{display:flex;flex-direction:column;gap:10px}
-.footer-col-title{font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--foreground);margin-bottom:4px}
-.footer-col a{color:var(--muted-fg);text-decoration:none;font-size:0.85rem;transition:color 0.2s}
-.footer-col a:hover{color:var(--primary)}
-.footer-bottom{padding-top:24px;border-top:1px solid rgba(0,0,0,0.06);font-size:0.75rem;color:var(--muted-fg);text-align:center}
+.footer-col-title{font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#6a6a66;margin-bottom:4px}
+.footer-col a{color:#9a9a96;text-decoration:none;font-size:0.85rem;transition:color 0.2s}
+.footer-col a:hover{color:#f5f5f0}
+.footer-bottom{padding-top:24px;border-top:1px solid #1a1a1a;font-size:0.75rem;color:#3a3a36;text-align:center}
 @media(max-width:768px){.nav-links{display:none;position:fixed;top:56px;right:0;left:0;background:rgba(249,249,246,0.97);flex-direction:column;padding:24px;gap:16px;z-index:999;backdrop-filter:blur(20px)}
   .nav-right { display: none; }
   .mobile-menu-btn { display: block; }.nav-links.active{display:flex}.mobile-menu-btn{display:block}.footer-grid{grid-template-columns:1fr 1fr;gap:24px}.footer-brand{grid-column:1/-1;text-align:center}}
@@ -137,7 +137,7 @@ nav.scrolled {
 .contact-card a:hover{opacity:0.8}
 .response-note{margin-top:32px;padding:16px 20px;background:var(--primary-dim);border-left:3px solid var(--primary);border-radius:0 8px 8px 0;font-size:0.85rem;color:var(--muted-fg-light)}
 
-footer{padding:48px 0 36px;border-top:1px solid rgba(0,0,0,0.06)}
+footer{padding:48px 0 36px;border-top:none;background:#0a0a0a;color:#f5f5f0}
 .footer-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px}
 .footer-tagline{font-size:1rem;font-weight:700;letter-spacing:-0.02em}
 .footer-right{display:flex;align-items:center;gap:20px;font-size:0.75rem;color:var(--muted-fg)}
@@ -183,15 +183,15 @@ if(localStorage.getItem('simy-cookies')==='1') loadGA();
       <span class="nav-version">v3.0</span>
     </a>
     <div class="nav-links" id="navLinks">
-      <a href="/">Home</a>
-      <a href="/pricing.html">Pricing</a>
-      <a href="/compare.html">Compare</a>
-      <a href="/about.html">About</a>
-      <a href="/press-release.html">News</a>
+      <a href="/" data-i18n="nav.home">Home</a>
+      <a href="/pricing.html" data-i18n="nav.pricing">Pricing</a>
+      <a href="/compare.html" data-i18n="nav.compare">Compare</a>
+      <a href="/about.html" data-i18n="nav.about">About</a>
+      <a href="/press-release.html" data-i18n="nav.news">News</a>
     </div>
     <div class="nav-right">
-      <a href="#" class="nav-signin">Sign in</a>
-      <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" class="btn-primary" target="_blank" rel="noopener">Request Access</a>
+      <a href="#" class="nav-signin" data-i18n="nav.signin">Sign in</a>
+      <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" class="btn-primary" target="_blank" rel="noopener" data-i18n="nav.cta">Request Access</a>
     </div>
     <button class="mobile-menu-btn" onclick="document.getElementById('navLinks').classList.toggle('active')" aria-label="Toggle menu">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
@@ -237,29 +237,28 @@ if(localStorage.getItem('simy-cookies')==='1') loadGA();
         <div class="footer-tagline" data-i18n="footer.tagline">Record. Ship. Done.</div>
         <div class="footer-badges" style="display:flex;gap:12px;align-items:center;margin-top:12px">
           <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" target="_blank" rel="noopener"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83" alt="Download on the App Store" style="height:36px"></a>
-          <a href="https://www.saashub.com/simy?utm_source=badge" target="_blank" rel="noopener"><img src="https://www.saashub.com/assets/badges/approved-619b455b5eec0842a85e5b498bf3e67c40e3e3fe2974892d26431de65adbc06e.svg" alt="Approved on SaaSHub" style="height:36px"></a>
         </div>
       </div>
       <div class="footer-col">
         <div class="footer-col-title" data-i18n="footer.product">Product</div>
-        <a href="how-it-works.html" data-i18n="footer.howItWorks">How It Works</a>
-        <a href="pricing.html" data-i18n="footer.pricing">Pricing</a>
-        <a href="compare.html" data-i18n="footer.compare">Compare</a>
-        <a href="integrations.html" data-i18n="footer.integrations">Integrations</a>
-        <a href="security.html" data-i18n="footer.security">Security</a>
+        <a href="/how-it-works.html" data-i18n="footer.product.how">How It Works</a>
+        <a href="/pricing.html" data-i18n="footer.product.pricing">Pricing</a>
+        <a href="/compare.html" data-i18n="footer.product.compare">Compare</a>
+        <a href="/integrations.html" data-i18n="footer.product.integrations">Integrations</a>
+        <a href="/security.html" data-i18n="footer.product.security">Security</a>
       </div>
       <div class="footer-col">
         <div class="footer-col-title" data-i18n="footer.company">Company</div>
-        <a href="about.html" data-i18n="footer.about">About</a>
-        <a href="careers.html" data-i18n="footer.careers">Careers</a>
-        <a href="press.html" data-i18n="footer.press">Press</a>
-        <a href="contact.html" data-i18n="footer.contact">Contact</a>
-        <a href="status.html" data-i18n="footer.status">Status</a>
+        <a href="/about.html" data-i18n="footer.company.about">About</a>
+        <a href="/careers.html" data-i18n="footer.company.careers">Careers</a>
+        <a href="/press.html" data-i18n="footer.company.press">Press</a>
+        <a href="/contact.html" data-i18n="footer.company.contact">Contact</a>
+        <a href="/status.html" data-i18n="footer.company.status">Status</a>
       </div>
       <div class="footer-col">
         <div class="footer-col-title" data-i18n="footer.legal">Legal</div>
-        <a href="privacy.html" data-i18n="footer.privacy">Privacy Policy</a>
-        <a href="terms.html" data-i18n="footer.terms">Terms of Service</a>
+        <a href="/privacy.html" data-i18n="footer.legal.privacy">Privacy Policy</a>
+        <a href="/terms.html" data-i18n="footer.legal.terms">Terms of Service</a>
       </div>
     </div>
     <div class="footer-bottom">
@@ -270,10 +269,10 @@ if(localStorage.getItem('simy-cookies')==='1') loadGA();
 
 <div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:rgba(249,249,246,0.98);border-top:1px solid rgba(0,0,0,0.06);padding:16px 24px;backdrop-filter:blur(20px)">
   <div style="max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap">
-    <p style="color:#7a7a78;font-size:0.85rem;margin:0;flex:1;min-width:200px">We use cookies to improve your experience. See our <a href="privacy.html" style="color:#0057ff">Privacy Policy</a>.</p>
+    <p style="color:#7a7a78;font-size:0.85rem;margin:0;flex:1;min-width:200px"><span data-i18n="cookie.text">We use cookies to improve your experience. See our </span><a href="/privacy.html" style="color:#0057ff" data-i18n="cookie.link">Privacy Policy</a>.</p>
     <div style="display:flex;gap:10px">
-      <button onclick="setCookieConsent(false)" style="padding:8px 20px;border-radius:6px;border:1px solid rgba(0,0,0,0.15);background:transparent;color:#7a7a78;cursor:pointer;font-size:0.85rem">Decline</button>
-      <button onclick="setCookieConsent(true)" style="padding:8px 20px;border-radius:6px;border:none;background:linear-gradient(135deg,#0057ff,#3378ff);color:#fff;font-weight:700;cursor:pointer;font-size:0.85rem">Accept</button>
+      <button onclick="setCookieConsent(false)" style="padding:8px 20px;border-radius:6px;border:1px solid rgba(0,0,0,0.15);background:transparent;color:#7a7a78;cursor:pointer;font-size:0.85rem" data-i18n="cookie.decline">Decline</button>
+      <button onclick="setCookieConsent(true)" style="padding:8px 20px;border-radius:6px;border:none;background:linear-gradient(135deg,#0057ff,#3378ff);color:#fff;font-weight:700;cursor:pointer;font-size:0.85rem" data-i18n="cookie.accept">Accept</button>
     </div>
   </div>
 </div>

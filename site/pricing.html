@@ -431,15 +431,16 @@ nav.scrolled {
 /* Footer */
 footer {
   padding: 48px 0 36px;
-  border-top: 1px solid var(--border);
-  background: var(--bg);
+  border-top: none;
+  background: #0a0a0a;
+  color: #f5f5f0;
 }
 .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
 .footer-col { display: flex; flex-direction: column; gap: 10px; }
-.footer-col-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--foreground); margin-bottom: 4px; }
-.footer-col a { color: var(--muted-fg); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
-.footer-col a:hover { color: var(--primary); }
-.footer-bottom { padding-top: 24px; border-top: 1px solid var(--border); font-size: 0.75rem; color: var(--muted-fg); text-align: center; }
+.footer-col-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #6a6a66; margin-bottom: 4px; }
+.footer-col a { color: #9a9a96; text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+.footer-col a:hover { color: #f5f5f0; }
+.footer-bottom { padding-top: 24px; border-top: 1px solid #1a1a1a; font-size: 0.75rem; color: #3a3a36; text-align: center; }
 
 /* Responsive */
 @media (max-width: 900px) {
@@ -569,15 +570,15 @@ if(localStorage.getItem('simy-cookies')==='1') loadGA();
 
 <div class="container">
   <div class="pricing-hero">
-    <h1>Simple, transparent pricing.</h1>
-    <p>Seat-based plans with SIMY token allocation. Scale as your team grows.</p>
+    <h1 data-i18n="pricing.title">Simple, transparent pricing.</h1>
+    <p data-i18n="pricing.subtitle">Seat-based plans with SIMY token allocation. Scale as your team grows.</p>
   </div>
 
   <div class="billing-toggle">
     <div class="toggle-wrapper">
-      <button class="toggle-btn active" id="toggleMonthly" onclick="setBilling('monthly')">Monthly</button>
+      <button class="toggle-btn active" id="toggleMonthly" onclick="setBilling('monthly')" data-i18n="pricing.monthly">Monthly</button>
       <button class="toggle-btn" id="toggleAnnual" onclick="setBilling('annual')">
-        <span class="toggle-annual-label">Annual <span class="save-badge">&middot; Save 17%</span></span>
+        <span class="toggle-annual-label"><span data-i18n="pricing.annual">Annual</span> <span class="save-badge" data-i18n="pricing.annual.save">&middot; Save 17%</span></span>
       </button>
     </div>
   </div>
@@ -585,104 +586,104 @@ if(localStorage.getItem('simy-cookies')==='1') loadGA();
   <div class="pricing-grid">
     <!-- Starter -->
     <div class="pricing-card">
-      <div class="plan-name">Starter</div>
-      <div class="plan-subtitle">For individuals getting started</div>
+      <div class="plan-name" data-i18n="pricing.starter">Starter</div>
+      <div class="plan-subtitle" data-i18n="pricing.starter.sub">For individuals getting started</div>
       <div class="price-row">
         <span class="price-amount" data-monthly="$20" data-annual="$17">$20</span>
-        <span class="price-period">/ seat / mo</span>
+        <span class="price-period" data-i18n="pricing.seat">/ seat / mo</span>
       </div>
-      <div class="token-amount">80M SIMY tokens / month</div>
-      <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" class="plan-cta dark" target="_blank" rel="noopener">Get started</a>
+      <div class="token-amount" data-i18n="pricing.f.starter.1">80M SIMY tokens / month</div>
+      <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" class="plan-cta dark" target="_blank" rel="noopener" data-i18n="pricing.cta">Get started</a>
       <ul class="feature-list">
-        <li>80,000,000 SIMY tokens / month</li>
-        <li>Up to 5 connected channels</li>
-        <li>Action Database (up to 1,000 tasks)</li>
-        <li>Standard AI agent execution</li>
-        <li>Email &amp; Slack delivery</li>
-        <li>Early access to beta features</li>
-        <li>20 concurrent tasks</li>
-        <li>20 scheduled tasks</li>
+        <li data-i18n="pricing.f.starter.2">80,000,000 SIMY tokens / month</li>
+        <li data-i18n="pricing.f.starter.3">Up to 5 connected channels</li>
+        <li data-i18n="pricing.f.starter.4">Action Database (up to 1,000 tasks)</li>
+        <li data-i18n="pricing.f.starter.5">Standard AI agent execution</li>
+        <li data-i18n="pricing.f.starter.6">Email &amp; Slack delivery</li>
+        <li data-i18n="pricing.f.starter.7">Early access to beta features</li>
+        <li data-i18n="pricing.f.starter.8">20 concurrent tasks</li>
+        <li data-i18n="pricing.f.starter.9">20 scheduled tasks</li>
       </ul>
     </div>
 
     <!-- Pro (Most Popular) -->
     <div class="pricing-card featured">
-      <div class="popular-badge">Most Popular</div>
-      <div class="plan-name">Pro</div>
-      <div class="plan-subtitle">For professionals and growing teams</div>
+      <div class="popular-badge" data-i18n="pricing.popular">Most Popular</div>
+      <div class="plan-name" data-i18n="pricing.pro">Pro</div>
+      <div class="plan-subtitle" data-i18n="pricing.pro.sub">For professionals and growing teams</div>
       <div class="price-row">
         <span class="price-amount" data-monthly="$40" data-annual="$33">$40</span>
-        <span class="price-period">/ seat / mo</span>
+        <span class="price-period" data-i18n="pricing.seat">/ seat / mo</span>
       </div>
-      <div class="token-amount">160M SIMY tokens / month</div>
-      <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" class="plan-cta blue" target="_blank" rel="noopener">Get started</a>
+      <div class="token-amount" data-i18n="pricing.f.pro.1">160M SIMY tokens / month</div>
+      <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" class="plan-cta blue" target="_blank" rel="noopener" data-i18n="pricing.cta">Get started</a>
       <ul class="feature-list">
-        <li>160,000,000 SIMY tokens / month</li>
-        <li>Unlimited connected channels</li>
-        <li>Action Database (unlimited tasks)</li>
-        <li>Priority AI agent execution</li>
-        <li>All delivery integrations</li>
-        <li>HVP Dashboard</li>
-        <li>Early access to beta features</li>
-        <li>50 concurrent tasks</li>
-        <li>50 scheduled tasks</li>
+        <li data-i18n="pricing.f.pro.2">160,000,000 SIMY tokens / month</li>
+        <li data-i18n="pricing.f.pro.3">Unlimited connected channels</li>
+        <li data-i18n="pricing.f.pro.4">Action Database (unlimited tasks)</li>
+        <li data-i18n="pricing.f.pro.5">Priority AI agent execution</li>
+        <li data-i18n="pricing.f.pro.6">All delivery integrations</li>
+        <li data-i18n="pricing.f.pro.7">HVP Dashboard</li>
+        <li data-i18n="pricing.f.pro.8">Early access to beta features</li>
+        <li data-i18n="pricing.f.pro.9">50 concurrent tasks</li>
+        <li data-i18n="pricing.f.pro.10">50 scheduled tasks</li>
       </ul>
     </div>
 
     <!-- Scale -->
     <div class="pricing-card">
-      <div class="plan-name">Scale</div>
-      <div class="plan-subtitle">For high-output teams</div>
+      <div class="plan-name" data-i18n="pricing.scale">Scale</div>
+      <div class="plan-subtitle" data-i18n="pricing.scale.sub">For high-output teams</div>
       <div class="price-row">
         <span class="price-amount" data-monthly="$100" data-annual="$83">$100</span>
-        <span class="price-period">/ seat / mo</span>
+        <span class="price-period" data-i18n="pricing.seat">/ seat / mo</span>
       </div>
-      <div class="token-amount">400M SIMY tokens / month</div>
-      <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" class="plan-cta dark" target="_blank" rel="noopener">Get started</a>
+      <div class="token-amount" data-i18n="pricing.f.scale.1">400M SIMY tokens / month</div>
+      <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" class="plan-cta dark" target="_blank" rel="noopener" data-i18n="pricing.cta">Get started</a>
       <ul class="feature-list">
-        <li>400,000,000 SIMY tokens / month</li>
-        <li>Unlimited connected channels</li>
-        <li>Action Database (unlimited tasks)</li>
-        <li>Priority AI agent execution</li>
-        <li>All delivery integrations</li>
-        <li>HVP Dashboard + Digital Twin</li>
-        <li>Advanced analytics</li>
-        <li>100 concurrent tasks</li>
-        <li>100 scheduled tasks</li>
+        <li data-i18n="pricing.f.scale.2">400,000,000 SIMY tokens / month</li>
+        <li data-i18n="pricing.f.scale.3">Unlimited connected channels</li>
+        <li data-i18n="pricing.f.scale.4">Action Database (unlimited tasks)</li>
+        <li data-i18n="pricing.f.scale.5">Priority AI agent execution</li>
+        <li data-i18n="pricing.f.scale.6">All delivery integrations</li>
+        <li data-i18n="pricing.f.scale.7">HVP Dashboard + Digital Twin</li>
+        <li data-i18n="pricing.f.scale.8">Advanced analytics</li>
+        <li data-i18n="pricing.f.scale.9">100 concurrent tasks</li>
+        <li data-i18n="pricing.f.scale.10">100 scheduled tasks</li>
       </ul>
     </div>
   </div>
 
   <!-- Enterprise -->
   <div class="enterprise-section">
-    <h2>Enterprise</h2>
-    <p>Custom token allocation, dedicated support, SSO, and SLA guarantees.<br>Built for organizations that need full control.</p>
-    <a class="enterprise-cta eml-href" data-u="sales" data-d="simy.one">Contact Sales</a>
+    <h2 data-i18n="pricing.enterprise">Enterprise</h2>
+    <p data-i18n-html="pricing.enterprise.desc">Custom token allocation, dedicated support, SSO, and SLA guarantees.<br>Built for organizations that need full control.</p>
+    <a class="enterprise-cta eml-href" data-u="sales" data-d="simy.one" data-i18n="pricing.enterprise.cta">Contact Sales</a>
   </div>
 
   <!-- FAQ -->
   <div class="faq-section">
-    <h2>Frequently Asked Questions</h2>
+    <h2 data-i18n="pricing.faq.title">Frequently Asked Questions</h2>
     <div class="faq-grid">
       <div class="faq-item">
-        <h3>What are SIMY tokens?</h3>
-        <p>Tokens are the currency used by SIMY's AI engine. Each code generation task, review, and pull request consumes tokens based on complexity. Your plan includes a monthly token allocation that resets each billing cycle.</p>
+        <h3 data-i18n="pricing.faq.q1">What are SIMY tokens?</h3>
+        <p data-i18n="pricing.faq.a1">Tokens are the currency used by SIMY's AI engine. Each code generation task, review, and pull request consumes tokens based on complexity. Your plan includes a monthly token allocation that resets each billing cycle.</p>
       </div>
       <div class="faq-item">
-        <h3>Can I switch plans anytime?</h3>
-        <p>Yes. Upgrade or downgrade at any time. When upgrading, you'll receive the additional tokens immediately. When downgrading, the change takes effect at the start of your next billing cycle.</p>
+        <h3 data-i18n="pricing.faq.q2">Can I switch plans anytime?</h3>
+        <p data-i18n="pricing.faq.a2">Yes. Upgrade or downgrade at any time. When upgrading, you'll receive the additional tokens immediately. When downgrading, the change takes effect at the start of your next billing cycle.</p>
       </div>
       <div class="faq-item">
-        <h3>What happens if I run out of tokens?</h3>
-        <p>If you exhaust your monthly allocation, you can purchase additional token packs or upgrade your plan. Your existing work and data remain fully accessible.</p>
+        <h3 data-i18n="pricing.faq.q3">What happens if I run out of tokens?</h3>
+        <p data-i18n="pricing.faq.a3">If you exhaust your monthly allocation, you can purchase additional token packs or upgrade your plan. Your existing work and data remain fully accessible.</p>
       </div>
       <div class="faq-item">
-        <h3>Do unused tokens roll over?</h3>
-        <p>Monthly token allocations reset each billing cycle and do not roll over. For maximum flexibility, consider the Scale plan or contact us about Enterprise options.</p>
+        <h3 data-i18n="pricing.faq.q4">Do unused tokens roll over?</h3>
+        <p data-i18n="pricing.faq.a4">Monthly token allocations reset each billing cycle and do not roll over. For maximum flexibility, consider the Scale plan or contact us about Enterprise options.</p>
       </div>
       <div class="faq-item">
-        <h3>Is annual billing available?</h3>
-        <p>Yes. Choose annual billing to save 17% compared to monthly pricing. Annual plans are billed upfront for the full year.</p>
+        <h3 data-i18n="pricing.faq.q5">Is annual billing available?</h3>
+        <p data-i18n="pricing.faq.a5">Yes. Choose annual billing to save 17% compared to monthly pricing. Annual plans are billed upfront for the full year.</p>
       </div>
     </div>
   </div>
@@ -695,7 +696,6 @@ if(localStorage.getItem('simy-cookies')==='1') loadGA();
         <div style="font-size:1rem;font-weight:700;margin-bottom:6px;letter-spacing:-0.02em">Record. Ship. Done.</div>
         <div style="display:flex;gap:12px;align-items:center;margin-top:12px">
           <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" target="_blank" rel="noopener"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83" alt="Download on the App Store" style="height:36px"></a>
-          <a href="https://www.saashub.com/simy?utm_source=badge" target="_blank" rel="noopener"><img src="https://www.saashub.com/assets/badges/approved-619b455b5eec0842a85e5b498bf3e67c40e3e3fe2974892d26431de65adbc06e.svg" alt="Approved on SaaSHub" style="height:36px"></a>
         </div>
       </div>
       <div class="footer-col">
