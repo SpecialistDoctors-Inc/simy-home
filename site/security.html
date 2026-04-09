@@ -29,7 +29,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#f9f9f6;--card:#ffffff;--primary:#5B5FC7;--primary-light:#7B7FD7;--primary-dim:rgba(91,95,199,0.08);--foreground:#141414;--muted-fg:#7a7a78;--muted-fg-light:#9a9a98;--border:#ddddd9;--accent-gradient:linear-gradient(135deg,#5B5FC7 0%,#7B7FD7 100%)}
+:root{--bg:#f9f9f6;--card:#ffffff;--primary:#0057ff;--primary-light:#3378ff;--primary-hover:#0047dd;--primary-dim:rgba(0,87,255,0.08);--foreground:#141414;--muted-fg:#7a7a78;--muted-fg-light:#9a9a98;--border:#ddddd9;--accent-gradient:linear-gradient(135deg,#0057ff 0%,#3378ff 100%)}
 html{font-size:16px}
 body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--foreground);line-height:1.6;-webkit-font-smoothing:antialiased}
 a:focus-visible{outline:2px solid var(--primary);outline-offset:3px;border-radius:4px}
@@ -107,7 +107,7 @@ nav.scrolled {
 .btn-primary:hover { background-color: #0047dd; border-color: #0047dd; }
 .mobile-menu-btn { display: none; background: none; border: none; color: #0a0a0a; cursor: pointer; padding: 8px; }
 .lang-select{background:rgba(0,0,0,0.04);border:1px solid rgba(0,0,0,0.1);color:var(--foreground);font-size:0.8rem;font-weight:500;padding:6px 10px;border-radius:6px;cursor:pointer;font-family:'Inter',sans-serif;outline:none;transition:border-color 0.2s}
-.lang-select:hover,.lang-select:focus{border-color:rgba(91,95,199,0.3)}
+.lang-select:hover,.lang-select:focus{border-color:rgba(0,87,255,0.3)}
 .lang-select option{background:var(--bg);color:var(--foreground)}
 .nav-cta{padding:9px 22px;border-radius:8px;background:var(--accent-gradient);color:#fff !important;font-weight:700 !important;font-size:.85rem !important;transition:all .2s}
 .nav-cta:hover{opacity:.92;transform:translateY(-1px)}
@@ -139,7 +139,7 @@ nav.scrolled {
 .compliance-table th{color:var(--muted-fg);font-weight:600;font-size:0.8rem;text-transform:uppercase;letter-spacing:0.05em}
 .compliance-table td{color:var(--muted-fg-light)}
 .badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:0.75rem;font-weight:600}
-.badge.planned{background:rgba(91,95,199,0.12);color:var(--primary-light)}
+.badge.planned{background:rgba(0,87,255,0.12);color:var(--primary-light)}
 .badge.active{background:rgba(0,0,0,0.08);color:var(--primary)}
 
 .important-note{background:var(--primary-dim);border-left:3px solid var(--primary);padding:16px 20px;border-radius:0 8px 8px 0;margin:20px 0}
@@ -243,7 +243,7 @@ if(localStorage.getItem('simy-cookies')==='1') loadGA();
 
     <h2 data-i18n="sec.dataH2">Data Handling by Plan</h2>
     <div class="important-note">
-      <p data-i18n-html="sec.dataNote"><strong>Enterprise data is never used for AI training.</strong> Standard and Pro plan data may be used to improve our models. See our <a href="privacy.html" style="color:#5B5FC7">Privacy Policy</a> for full details.</p>
+      <p data-i18n-html="sec.dataNote"><strong>Enterprise data is never used for AI training.</strong> Standard and Pro plan data may be used to improve our models. See our <a href="privacy.html" style="color:#0057ff">Privacy Policy</a> for full details.</p>
     </div>
     <table class="compliance-table">
       <thead>
@@ -278,7 +278,7 @@ if(localStorage.getItem('simy-cookies')==='1') loadGA();
     <p data-i18n="sec.discP">We take security vulnerabilities seriously. If you discover a security issue, please report it responsibly.</p>
     <div class="report-block">
       <h3 data-i18n="sec.reportH3">Report a Vulnerability</h3>
-      <p data-i18n-html="sec.reportP">Email <a class="eml" data-u="security" data-d="simy.one" style="color:#5B5FC7;text-decoration:none"></a> with details of the vulnerability. We aim to acknowledge reports within 24 hours and provide a resolution timeline within 72 hours.</p>
+      <p data-i18n-html="sec.reportP">Email <a class="eml" data-u="security" data-d="simy.one" style="color:#0057ff;text-decoration:none"></a> with details of the vulnerability. We aim to acknowledge reports within 24 hours and provide a resolution timeline within 72 hours.</p>
     </div>
   </div>
 </div>
@@ -323,10 +323,10 @@ if(localStorage.getItem('simy-cookies')==='1') loadGA();
 
 <div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:rgba(249,249,246,0.98);border-top:1px solid rgba(0,0,0,0.06);padding:16px 24px;backdrop-filter:blur(20px)">
   <div style="max-width:1140px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap">
-    <p style="color:#7a7a78;font-size:0.85rem;margin:0;flex:1;min-width:200px">We use cookies to improve your experience. See our <a href="privacy.html" style="color:#5B5FC7">Privacy Policy</a>.</p>
+    <p style="color:#7a7a78;font-size:0.85rem;margin:0;flex:1;min-width:200px">We use cookies to improve your experience. See our <a href="privacy.html" style="color:#0057ff">Privacy Policy</a>.</p>
     <div style="display:flex;gap:10px">
       <button onclick="setCookieConsent(false)" style="padding:8px 20px;border-radius:6px;border:1px solid rgba(0,0,0,0.15);background:transparent;color:#7a7a78;cursor:pointer;font-size:0.85rem">Decline</button>
-      <button onclick="setCookieConsent(true)" style="padding:8px 20px;border-radius:6px;border:none;background:linear-gradient(135deg,#5B5FC7,#7B7FD7);color:#fff;font-weight:700;cursor:pointer;font-size:0.85rem">Accept</button>
+      <button onclick="setCookieConsent(true)" style="padding:8px 20px;border-radius:6px;border:none;background:linear-gradient(135deg,#0057ff,#3378ff);color:#fff;font-weight:700;cursor:pointer;font-size:0.85rem">Accept</button>
     </div>
   </div>
 </div>
@@ -385,5 +385,6 @@ if (wasManual && savedLang && T[savedLang]) { setLanguage(savedLang); }
 else { setLanguage(detectBrowserLanguage()); }
 _deml();
 </script>
+<script src="/i18n.js"></script>
 </body>
 </html>

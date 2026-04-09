@@ -29,7 +29,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#f9f9f6;--card:#ffffff;--primary:#5B5FC7;--primary-light:#7B7FD7;--primary-dim:rgba(91,95,199,0.08);--foreground:#141414;--muted-fg:#7a7a78;--muted-fg-light:#9a9a98;--border:#ddddd9;--accent-gradient:linear-gradient(135deg,#5B5FC7 0%,#7B7FD7 100%)}
+:root{--bg:#f9f9f6;--card:#ffffff;--primary:#0057ff;--primary-light:#3378ff;--primary-hover:#0047dd;--primary-dim:rgba(0,87,255,0.08);--foreground:#141414;--muted-fg:#7a7a78;--muted-fg-light:#9a9a98;--border:#ddddd9;--accent-gradient:linear-gradient(135deg,#0057ff 0%,#3378ff 100%)}
 html{font-size:16px}body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--foreground);line-height:1.6;-webkit-font-smoothing:antialiased}
 a:focus-visible{outline:2px solid var(--primary);outline-offset:3px;border-radius:4px}
 /* Navigation — pixel-matched to React SPA */
@@ -106,7 +106,7 @@ nav.scrolled {
 .btn-primary:hover { background-color: #0047dd; border-color: #0047dd; }
 .mobile-menu-btn { display: none; background: none; border: none; color: #0a0a0a; cursor: pointer; padding: 8px; }
 .lang-select{background:rgba(0,0,0,0.04);border:1px solid rgba(0,0,0,0.1);color:var(--foreground);font-size:0.8rem;font-weight:500;padding:6px 10px;border-radius:6px;cursor:pointer;font-family:'Inter',sans-serif;outline:none;transition:border-color 0.2s}
-.lang-select:hover,.lang-select:focus{border-color:rgba(91,95,199,0.3)}
+.lang-select:hover,.lang-select:focus{border-color:rgba(0,87,255,0.3)}
 .lang-select option{background:var(--bg);color:var(--foreground)}
 .nav-cta{padding:9px 22px;border-radius:8px;background:var(--accent-gradient);color:#fff !important;font-weight:700 !important;font-size:.85rem !important;transition:all .2s}
 .nav-cta:hover{opacity:.92;transform:translateY(-1px)}
@@ -123,7 +123,7 @@ nav.scrolled {
 .pr-article[data-lang="ja"]{display:none}
 .pr-article h2{font-size:1.3rem;font-weight:800;margin:40px 0 16px;letter-spacing:-0.02em;color:var(--foreground)}
 .pr-article p{color:var(--muted-fg-light);font-size:0.95rem;line-height:1.85;margin-bottom:16px}
-.pr-article .highlight-box{padding:24px 28px;background:rgba(0,0,0,0.03);border:1px solid rgba(91,95,199,0.08);border-radius:12px;margin:28px 0}
+.pr-article .highlight-box{padding:24px 28px;background:rgba(0,0,0,0.03);border:1px solid rgba(0,87,255,0.08);border-radius:12px;margin:28px 0}
 .pr-article .highlight-box p{margin-bottom:0}
 
 /* Role Table */
@@ -163,8 +163,23 @@ footer{padding:48px 0 36px;border-top:1px solid rgba(0,0,0,0.06)}
   "@type": "NewsArticle",
   "headline": "SIMY Launches Platform for Building AI-Native Engineering Organizations",
   "datePublished": "2026-03-01",
-  "author": {"@type": "Organization", "name": "AwakApp Inc."},
-  "publisher": {"@type": "Organization", "name": "AwakApp Inc.", "url": "https://simy.one"}
+  "dateModified": "2026-04-09",
+  "description": "Autonomous code generation from workplace conversations shifts every engineering role from execution to decision-making.",
+  "image": "https://simy.one/ogp.png",
+  "author": {"@type": "Organization", "name": "AwakApp Inc.", "url": "https://simy.one"},
+  "publisher": {
+    "@type": "Organization",
+    "name": "AwakApp Inc.",
+    "url": "https://simy.one",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://simy.one/simy-icon.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://simy.one/press-release.html"
+  }
 }
 </script>
 <script type="application/ld+json">
@@ -278,7 +293,7 @@ if(localStorage.getItem('simy-cookies')==='1') loadGA();
     <p>SIMY is currently accepting participants for its pilot program. Pilot partners receive initial credits to evaluate the platform, with usage-based pricing thereafter. The platform supports integration with Slack, Microsoft Teams, Gmail, Zoom, and GitHub.</p>
 
     <h2>About SIMY</h2>
-    <p>SIMY is a developer productivity company building AI infrastructure that bridges the gap between team communication and software delivery. The company's platform captures workplace conversations, maintains a structured knowledge base of engineering decisions, and autonomously generates production-ready code. For more information, visit <a href="https://simy.one" style="color:#5B5FC7;text-decoration:none">simy.one</a>.</p>
+    <p>SIMY is a developer productivity company building AI infrastructure that bridges the gap between team communication and software delivery. The company's platform captures workplace conversations, maintains a structured knowledge base of engineering decisions, and autonomously generates production-ready code. For more information, visit <a href="https://simy.one" style="color:#0057ff;text-decoration:none">simy.one</a>.</p>
 
     <div class="pr-contact">
       <h3>Media Contact</h3>
@@ -335,7 +350,7 @@ if(localStorage.getItem('simy-cookies')==='1') loadGA();
     <p>SIMYは現在、パイロットプログラムへの参加企業を募集している。パイロットパートナーには初期クレジットが付与され、その後は従量課金制となる。対応プラットフォームはSlack、Microsoft Teams、Gmail、Zoom、GitHub。</p>
 
     <h2>SIMYについて</h2>
-    <p>SIMYは、チームのコミュニケーションとソフトウェアデリバリーの乖離を埋めるAIインフラを構築する開発者生産性向上企業である。同社のプラットフォームは、職場の会話を取得し、エンジニアリング上の意思決定を構造化されたナレッジベースとして維持し、実用水準のコードを自律的に生成する。詳細は<a href="https://simy.one" style="color:#5B5FC7;text-decoration:none">simy.one</a>を参照。</p>
+    <p>SIMYは、チームのコミュニケーションとソフトウェアデリバリーの乖離を埋めるAIインフラを構築する開発者生産性向上企業である。同社のプラットフォームは、職場の会話を取得し、エンジニアリング上の意思決定を構造化されたナレッジベースとして維持し、実用水準のコードを自律的に生成する。詳細は<a href="https://simy.one" style="color:#0057ff;text-decoration:none">simy.one</a>を参照。</p>
 
     <div class="pr-contact">
       <h3>報道関係のお問い合わせ</h3>
@@ -384,7 +399,7 @@ if(localStorage.getItem('simy-cookies')==='1') loadGA();
   </div>
 </footer>
 
-<div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:rgba(249,249,246,0.98);border-top:1px solid rgba(0,0,0,0.06);padding:16px 24px;backdrop-filter:blur(20px)"><div style="max-width:1140px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap"><p style="color:#7a7a78;font-size:0.85rem;margin:0;flex:1;min-width:200px">We use cookies to improve your experience. See our <a href="privacy.html" style="color:#5B5FC7">Privacy Policy</a>.</p><div style="display:flex;gap:10px"><button onclick="setCookieConsent(false)" style="padding:8px 20px;border-radius:6px;border:1px solid rgba(0,0,0,0.15);background:transparent;color:#7a7a78;cursor:pointer;font-size:0.85rem">Decline</button><button onclick="setCookieConsent(true)" style="padding:8px 20px;border-radius:6px;border:none;background:linear-gradient(135deg,#5B5FC7,#7B7FD7);color:#fff;font-weight:700;cursor:pointer;font-size:0.85rem">Accept</button></div></div></div>
+<div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:rgba(249,249,246,0.98);border-top:1px solid rgba(0,0,0,0.06);padding:16px 24px;backdrop-filter:blur(20px)"><div style="max-width:1140px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap"><p style="color:#7a7a78;font-size:0.85rem;margin:0;flex:1;min-width:200px">We use cookies to improve your experience. See our <a href="privacy.html" style="color:#0057ff">Privacy Policy</a>.</p><div style="display:flex;gap:10px"><button onclick="setCookieConsent(false)" style="padding:8px 20px;border-radius:6px;border:1px solid rgba(0,0,0,0.15);background:transparent;color:#7a7a78;cursor:pointer;font-size:0.85rem">Decline</button><button onclick="setCookieConsent(true)" style="padding:8px 20px;border-radius:6px;border:none;background:linear-gradient(135deg,#0057ff,#3378ff);color:#fff;font-weight:700;cursor:pointer;font-size:0.85rem">Accept</button></div></div></div>
 <script>function setCookieConsent(v){localStorage.setItem('simy-cookies',v?'1':'0');document.getElementById('cookieBanner').style.display='none';if(v)loadGA();}if(!localStorage.getItem('simy-cookies'))document.getElementById('cookieBanner').style.display='block';</script>
 
 <script>
@@ -460,5 +475,6 @@ var savedLang = localStorage.getItem('simy-lang');
 if (wasManual && savedLang && T[savedLang]) { setLanguage(savedLang); }
 else { setLanguage(detectBrowserLanguage()); }
 </script>
+<script src="/i18n.js"></script>
 </body>
 </html>
