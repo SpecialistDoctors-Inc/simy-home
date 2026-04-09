@@ -35,6 +35,8 @@
     <link rel="stylesheet" crossorigin href="/assets/index-BwUIJj-q.css">
   </head>
   <body>
+    <!-- Redirect /index.html to / so wouter home route matches -->
+    <script>if(location.pathname==='/index.html')location.replace('/');</script>
     <!-- Force full navigation for static subpages (bypass wouter client-side routing) -->
     <script>
     document.addEventListener('click', function(e) {
