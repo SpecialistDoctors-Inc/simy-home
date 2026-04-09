@@ -105,8 +105,11 @@
 
   /* ── Language switcher ─────────────────────────────────────── */
   function buildSwitcher() {
-    // Insert after nav-right or at end of nav-inner
-    var navInner = document.querySelector('.nav-inner');
+    // Already injected (e.g. React re-render) — skip
+    if (document.getElementById('langBtn')) return;
+
+    // Find nav container: static pages use .nav-inner, React SPA uses nav > .container
+    var navInner = document.querySelector('.nav-inner') || document.querySelector('nav > .container');
     if (!navInner) return;
 
     var wrapper = document.createElement('div');
@@ -123,7 +126,7 @@
       '<div class="lang-dropdown" id="langDropdown"></div>';
 
     // Insert before mobile menu button or at end
-    var mobileBtn = navInner.querySelector('.mobile-menu-btn');
+    var mobileBtn = navInner.querySelector('.mobile-menu-btn') || navInner.querySelector('button[aria-label="Menu"]');
     if (mobileBtn) {
       navInner.insertBefore(wrapper, mobileBtn);
     } else {
@@ -183,6 +186,25 @@
   function init() {
     injectCSS();
     buildSwitcher();
+
+    // For React SPA: nav may not exist yet. Watch for it.
+    if (!document.getElementById('langBtn')) {
+      var observer = new MutationObserver(function () {
+        if (document.querySelector('nav > .container') && !document.getElementById('langBtn')) {
+          buildSwitcher();
+          // Set display name from cached/loaded dict
+          var lang = detect();
+          load(lang, function (dict) {
+            var display = document.getElementById('langDisplay');
+            if (display) display.textContent = (dict._meta || {}).name || 'English';
+          });
+        }
+      });
+      observer.observe(document.body || document.documentElement, { childList: true, subtree: true });
+      // Stop observing after 10s to avoid leaks
+      setTimeout(function () { observer.disconnect(); }, 10000);
+    }
+
     var lang = detect();
     if (lang !== DEFAULT) {
       load(lang, apply);
