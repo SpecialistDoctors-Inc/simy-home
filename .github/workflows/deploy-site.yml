@@ -51,6 +51,30 @@ jobs:
             --exclude "*.html" \
             --cache-control "public, max-age=86400"
 
+      - name: Update CloudFront Function
+        if: github.ref == 'refs/heads/main' || (github.event_name == 'workflow_dispatch' && inputs.environment == 'prod')
+        run: |
+          FUNC_NAME="simy-site-prod-redirect"
+          FUNC_CODE_FILE="infra/cloudfront-functions/redirect-prod.js"
+
+          # Get current ETag
+          ETAG=$(aws cloudfront describe-function --name "$FUNC_NAME" --query 'ETag' --output text)
+
+          # Update function code
+          UPDATE_ETAG=$(aws cloudfront update-function \
+            --name "$FUNC_NAME" \
+            --function-config '{"Comment":"URL normalization + redirects","Runtime":"cloudfront-js-2.0"}' \
+            --function-code "fileb://${FUNC_CODE_FILE}" \
+            --if-match "$ETAG" \
+            --query 'ETag' --output text)
+
+          # Publish function to LIVE stage
+          aws cloudfront publish-function \
+            --name "$FUNC_NAME" \
+            --if-match "$UPDATE_ETAG"
+
+          echo "CloudFront Function '$FUNC_NAME' updated and published."
+
       - name: Invalidate CloudFront cache
         run: |
           aws cloudfront create-invalidation \

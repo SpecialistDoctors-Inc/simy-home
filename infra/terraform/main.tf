@@ -367,6 +367,17 @@ resource "aws_iam_policy" "github_actions_site_deploy" {
           "cloudfront:ListInvalidations"
         ]
         Resource = aws_cloudfront_distribution.site.arn
+      },
+      {
+        Sid    = "CloudFrontFunctionManagement"
+        Effect = "Allow"
+        Action = [
+          "cloudfront:DescribeFunction",
+          "cloudfront:GetFunction",
+          "cloudfront:UpdateFunction",
+          "cloudfront:PublishFunction"
+        ]
+        Resource = "arn:aws:cloudfront::${data.aws_caller_identity.current.account_id}:function/simy-site-${var.environment}-redirect"
       }
     ]
   })
