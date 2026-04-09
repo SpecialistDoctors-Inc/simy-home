@@ -212,6 +212,17 @@ resource "aws_cloudfront_function" "redirect" {
           headers: { location: { value: '/' } }
         };
       }
+
+      // Resolve directory-style URLs to index.html
+      // e.g. /compare -> /compare/index.html
+      if (uri !== '/' && !uri.includes('.')) {
+        if (uri.endsWith('/')) {
+          request.uri = uri + 'index.html';
+        } else {
+          request.uri = uri + '/index.html';
+        }
+      }
+
       return request;
     }
   EOF
