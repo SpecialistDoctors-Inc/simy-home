@@ -24,78 +24,241 @@
 <meta name="theme-color" content="#f9f9f6">
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="favicon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#f9f9f6;--card:#ffffff;--primary:#5B5FC7;--primary-light:#7B7FD7;--primary-dim:rgba(91,95,199,0.08);--foreground:#141414;--muted-fg:#7a7a78;--muted-fg-light:#9a9a98;--border:#ddddd9;--accent-gradient:linear-gradient(135deg,#5B5FC7 0%,#7B7FD7 100%)}
-html{font-size:16px}
-body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--foreground);line-height:1.6;-webkit-font-smoothing:antialiased}
-a:focus-visible{outline:2px solid var(--primary);outline-offset:3px;border-radius:4px}
-nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:18px 0;background:rgba(249,249,246,0.92);backdrop-filter:blur(24px) saturate(1.2);-webkit-backdrop-filter:blur(24px) saturate(1.2);border-bottom:1px solid rgba(0,0,0,0.06)}
-.nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1140px;margin:0 auto;padding:0 clamp(24px,4vw,60px)}
-.nav-logo{display:flex;align-items:center;gap:6px;text-decoration:none;color:var(--foreground)}
-.nav-logo-icon{width:40px;height:40px;border-radius:10px;overflow:hidden;flex-shrink:0}
-.nav-logo-icon img{width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block}
-.nav-logo-text{display:flex;flex-direction:column;line-height:1.1}
-.nav-logo-text .nav-brand{font-weight:800;font-size:1.25rem;letter-spacing:0.04em}
-.nav-logo-text .nav-tagline{font-size:0.5rem;font-weight:500;letter-spacing:0.08em;color:var(--muted-fg);text-transform:uppercase}
+@font-face {
+  font-family: 'Geist';
+  src: url('https://d2xsxph8kpxj0f.cloudfront.net/310519663370063462/ThMFZacjNcqAVYF3jmcy3R/Geist-Variable_20a6b454.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
 
-.nav-links{display:flex;gap:28px;align-items:center}
-.nav-links a{color:var(--muted-fg);text-decoration:none;font-size:0.85rem;font-weight:500;transition:color 0.2s}
-.nav-links a:hover{color:var(--foreground)}
-.mobile-menu-btn{display:none;background:none;border:none;color:var(--foreground);cursor:pointer;padding:4px}
-.lang-select{background:rgba(0,0,0,0.04);border:1px solid rgba(0,0,0,0.1);color:var(--foreground);font-size:0.8rem;font-weight:500;padding:6px 10px;border-radius:6px;cursor:pointer;font-family:'Inter',sans-serif;outline:none;transition:border-color 0.2s}
-.lang-select:hover,.lang-select:focus{border-color:rgba(91,95,199,0.3)}
-.lang-select option{background:var(--bg);color:var(--foreground)}
-.nav-cta{padding:9px 22px;border-radius:8px;background:var(--accent-gradient);color:#fff !important;font-weight:700 !important;font-size:.85rem !important;transition:all .2s}
-.nav-cta:hover{opacity:.92;transform:translateY(-1px)}
-.footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
-.footer-col{display:flex;flex-direction:column;gap:10px}
-.footer-col-title{font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--foreground);margin-bottom:4px}
-.footer-col a{color:var(--muted-fg);text-decoration:none;font-size:0.85rem;transition:color 0.2s}
-.footer-col a:hover{color:var(--primary)}
-.footer-bottom{padding-top:24px;border-top:1px solid rgba(0,0,0,0.06);font-size:0.75rem;color:var(--muted-fg);text-align:center}
-@media(max-width:768px){.nav-links{display:none;position:fixed;top:56px;right:0;left:0;background:rgba(249,249,246,0.97);flex-direction:column;padding:24px;gap:16px;z-index:999;backdrop-filter:blur(20px)}.nav-links.active{display:flex}.mobile-menu-btn{display:block}.footer-grid{grid-template-columns:1fr 1fr;gap:24px}.footer-brand{grid-column:1/-1;text-align:center}}
-.container{max-width:1140px;margin:0 auto;padding:0 clamp(24px,4vw,60px)}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-.page-hero{padding:140px 0 60px;text-align:center}
-.page-hero h1{font-size:clamp(2rem,5vw,3rem);font-weight:900;letter-spacing:-0.03em;margin-bottom:16px;background:var(--accent-gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.page-hero p{color:var(--muted-fg);font-size:1.1rem;max-width:640px;margin:0 auto}
+:root {
+  --bg: #f9f9f6;
+  --card: #ffffff;
+  --primary: #0057FF;
+  --primary-hover: #0047dd;
+  --primary-dim: rgba(0, 87, 255, 0.08);
+  --foreground: #141414;
+  --muted-fg: #7a7a78;
+  --muted-fg-light: #9a9a98;
+  --border: #ddddd9;
+}
 
-.about-section{padding-bottom:60px}
-.about-section h2{font-size:1.6rem;font-weight:800;letter-spacing:-0.02em;margin-bottom:20px}
-.about-section p{color:var(--muted-fg-light);font-size:0.95rem;line-height:1.75;margin-bottom:16px;max-width:720px}
+html { font-size: 16px; }
 
-.mission-block{background:var(--card);border:1px solid rgba(0,0,0,0.06);border-radius:16px;padding:40px;margin-bottom:60px;text-align:center}
-.mission-block .quote{font-size:1.4rem;font-weight:700;line-height:1.4;margin-bottom:12px;background:var(--accent-gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.mission-block p{color:var(--muted-fg-light);font-size:0.95rem;max-width:560px;margin:0 auto}
+body {
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--foreground);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
-.values-grid{display:grid;grid-template-columns:1fr;gap:24px;margin-bottom:80px}
-.value-card{padding:28px 24px;background:var(--card);border:1px solid rgba(0,0,0,0.06);border-radius:14px;transition:border-color 0.3s}
-.value-card:hover{border-color:rgba(91,95,199,0.15)}
-.value-icon{font-size:1.8rem;margin-bottom:12px}
-.value-card h3{font-size:1.05rem;font-weight:700;margin-bottom:8px}
-.value-card p{font-size:0.85rem;color:var(--muted-fg-light);line-height:1.6}
-.value-card p+p{margin-top:12px}
+a:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; border-radius: 4px; }
 
-.company-info{padding:40px 0 80px;border-top:1px solid rgba(0,0,0,0.06)}
-.company-info h2{font-size:1.6rem;font-weight:800;margin-bottom:24px}
-.info-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
-.info-item{padding:20px 24px;background:rgba(91,95,199,0.03);border:1px solid rgba(0,0,0,0.04);border-radius:12px}
-.info-item h3{font-size:0.85rem;color:var(--muted-fg);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px}
-.info-item p{font-size:1rem;font-weight:600}
-.info-item a{color:var(--primary);text-decoration:none}
+/* Navigation */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  padding: 16px 0;
+  background: rgba(249, 249, 246, 0.92);
+  backdrop-filter: blur(24px) saturate(1.2);
+  -webkit-backdrop-filter: blur(24px) saturate(1.2);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+.nav-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  max-width: 1140px; margin: 0 auto; padding: 0 clamp(24px, 4vw, 60px);
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 10px;
+  text-decoration: none; color: var(--foreground);
+}
+.nav-logo-s { flex-shrink: 0; }
+.nav-brand { font-weight: 700; font-size: 1.15rem; letter-spacing: 0.02em; }
+.nav-version {
+  font-size: 0.65rem; font-weight: 500; letter-spacing: 0.04em;
+  color: var(--muted-fg); background: rgba(0,0,0,0.04);
+  padding: 2px 6px; border-radius: 4px; margin-left: -4px;
+}
+.nav-links { display: flex; gap: 28px; align-items: center; }
+.nav-links a {
+  color: var(--muted-fg); text-decoration: none;
+  font-size: 0.875rem; font-weight: 500; transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--foreground); }
+.nav-right { display: flex; align-items: center; gap: 16px; }
+.nav-signin {
+  color: var(--muted-fg); text-decoration: none;
+  font-size: 0.875rem; font-weight: 500; transition: color 0.2s;
+}
+.nav-signin:hover { color: var(--foreground); }
+.btn-primary {
+  background-color: var(--primary); color: #fff;
+  font-family: 'Geist', sans-serif; letter-spacing: 0.01em;
+  border: 1px solid var(--primary); padding: 0.625rem 1.25rem;
+  font-size: 0.875rem; font-weight: 500; border-radius: 8px;
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  text-decoration: none; transition: background-color 0.2s;
+  cursor: pointer;
+}
+.btn-primary:hover { background-color: var(--primary-hover); border-color: var(--primary-hover); }
+.mobile-menu-btn { display: none; background: none; border: none; color: var(--foreground); cursor: pointer; padding: 4px; }
 
-footer{padding:48px 0 36px;border-top:1px solid rgba(0,0,0,0.06)}
-.footer-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px}
-.footer-tagline{font-size:1rem;font-weight:700;letter-spacing:-0.02em}
-.footer-right{display:flex;align-items:center;gap:20px;font-size:0.75rem;color:var(--muted-fg)}
-.footer-right a{color:var(--muted-fg);text-decoration:none;transition:color 0.2s}
-.footer-right a:hover{color:var(--primary)}
-.footer-sep{opacity:0.3}
-@media(max-width:768px){.info-grid{grid-template-columns:1fr}.footer-inner{flex-direction:column;text-align:center}}
+/* Footer */
+.footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+.footer-col { display: flex; flex-direction: column; gap: 10px; }
+.footer-col-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--foreground); margin-bottom: 4px; }
+.footer-col a { color: var(--muted-fg); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+.footer-col a:hover { color: var(--primary); }
+.footer-bottom { padding-top: 24px; border-top: 1px solid rgba(0,0,0,0.06); font-size: 0.75rem; color: var(--muted-fg); text-align: center; }
+footer { padding: 48px 0 36px; border-top: 1px solid rgba(0,0,0,0.06); }
+
+/* Content */
+.container { max-width: 1140px; margin: 0 auto; padding: 0 clamp(24px, 4vw, 60px); }
+
+.page-hero {
+  padding-top: 140px;
+  padding-bottom: 48px;
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.page-hero h1 {
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin-bottom: 16px;
+  color: var(--primary);
+}
+
+.page-hero p {
+  font-size: 1.1rem;
+  color: var(--muted-fg);
+  line-height: 1.6;
+}
+
+.mission-block {
+  background: var(--card);
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 16px;
+  padding: 40px;
+  margin-bottom: 60px;
+  text-align: center;
+}
+.mission-block .quote {
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1.4;
+  margin-bottom: 12px;
+  color: var(--primary);
+}
+.mission-block p {
+  color: var(--muted-fg-light);
+  font-size: 0.95rem;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.about-section { padding-bottom: 60px; }
+.about-section h2 {
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 20px;
+}
+.about-section p {
+  color: var(--muted-fg-light);
+  font-size: 0.95rem;
+  line-height: 1.75;
+  margin-bottom: 16px;
+  max-width: 720px;
+}
+
+.values-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin-bottom: 80px;
+}
+.value-card {
+  padding: 28px 24px;
+  background: var(--card);
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 14px;
+  transition: border-color 0.3s;
+}
+.value-card:hover { border-color: rgba(0, 87, 255, 0.15); }
+.value-icon {
+  width: 44px; height: 44px;
+  margin-bottom: 12px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--primary-dim);
+  border-radius: 10px;
+}
+.value-icon svg {
+  width: 22px; height: 22px;
+  fill: none; stroke: var(--primary);
+  stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
+}
+.value-card h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.value-card p {
+  font-size: 0.85rem;
+  color: var(--muted-fg-light);
+  line-height: 1.6;
+}
+.value-card p + p { margin-top: 12px; }
+
+.company-info {
+  padding: 40px 0 80px;
+  border-top: 1px solid rgba(0,0,0,0.06);
+}
+.company-info h2 {
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin-bottom: 24px;
+}
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+.info-item {
+  padding: 20px 24px;
+  background: rgba(0, 87, 255, 0.03);
+  border: 1px solid rgba(0,0,0,0.04);
+  border-radius: 12px;
+}
+.info-item h3 {
+  font-size: 0.85rem;
+  color: var(--muted-fg);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 6px;
+}
+.info-item p { font-size: 1rem; font-weight: 600; }
+.info-item a { color: var(--primary); text-decoration: none; }
+
+@media (max-width: 768px) {
+  .nav-links { display: none; position: fixed; top: 56px; right: 0; left: 0; background: rgba(249,249,246,0.97); flex-direction: column; padding: 24px; gap: 16px; z-index: 999; backdrop-filter: blur(20px); }
+  .nav-links.active { display: flex; }
+  .nav-right { display: none; }
+  .mobile-menu-btn { display: block; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
+  .footer-brand { grid-column: 1 / -1; text-align: center; }
+  .page-hero { padding-top: 100px; }
+  .page-hero h1 { font-size: 1.8rem; }
+  .info-grid { grid-template-columns: 1fr; }
+}
 </style>
 <script type="application/ld+json">
 {
@@ -141,30 +304,23 @@ footer{padding:48px 0 36px;border-top:1px solid rgba(0,0,0,0.06)}
 
 <nav>
   <div class="nav-inner">
-    <a href="index.html" class="nav-logo">
-      <div class="nav-logo-icon"><img src="simy-icon.png" alt="SIMY icon"></div>
-      <div class="nav-logo-text">
-        <span class="nav-brand">SIMY</span>
-        <span class="nav-tagline">Voice to Code, One Shot</span>
-      </div>
+    <a href="/" class="nav-logo">
+      <svg class="nav-logo-s" width="32" height="32" viewBox="0 0 32 32" fill="none">
+        <rect width="32" height="32" rx="8" fill="#0057FF"/>
+        <path d="M21.5 11.5c-.5-2-2.5-3.5-5.5-3.5-3.5 0-5.5 1.8-5.5 4.2 0 2.8 2.5 3.8 5.2 4.5 2 .5 3.3 1 3.3 2.3 0 1.5-1.5 2.5-3.5 2.5-2.2 0-3.8-1-4.2-3" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
+      </svg>
+      <span class="nav-brand">SIMY</span>
+      <span class="nav-version">v3.0</span>
     </a>
     <div class="nav-links" id="navLinks">
-      <a href="index.html" data-i18n="nav.top">Top</a>
-      <a href="how-it-works.html" data-i18n="nav.howItWorks">How It Works</a>
-      <a href="pricing.html" data-i18n="nav.pricing">Pricing</a>
-      <a href="compare.html" data-i18n="nav.compare">Compare</a>
-      <a href="about.html" data-i18n="nav.about">About</a>
-      <a href="contact.html" data-i18n="nav.contact">Contact</a>
-      <a href="press-release.html" data-i18n="nav.news">News</a>
-      <select class="lang-select" id="langSelect" onchange="setLanguage(this.value, true)">
-        <option value="en">EN</option>
-        <option value="ja">日本語</option>
-        <option value="zh">中文</option>
-        <option value="hi">हिन्दी</option>
-        <option value="es">Español</option>
-        <option value="ar">العربية</option>
-      </select>
-      <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" class="nav-cta" target="_blank" rel="noopener" data-i18n="nav.cta">Reserve your Slot</a>
+      <a href="/">Home</a>
+      <a href="/pricing.html">Pricing</a>
+      <a href="/compare.html">Compare</a>
+      <a href="/about.html">About</a>
+    </div>
+    <div class="nav-right">
+      <a href="#" class="nav-signin">Sign in</a>
+      <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" class="btn-primary" target="_blank" rel="noopener">Request Access</a>
     </div>
     <button class="mobile-menu-btn" onclick="document.getElementById('navLinks').classList.toggle('active')" aria-label="Toggle menu">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
@@ -176,72 +332,78 @@ footer{padding:48px 0 36px;border-top:1px solid rgba(0,0,0,0.06)}
 
 <div class="container">
   <div class="page-hero">
-    <h1 data-i18n="about.h1">About SIMY</h1>
-    <p data-i18n="about.heroP">We believe the best code starts with great conversations — and that no one should have to manually translate specs, break down tasks, and convert them into code after those conversations.</p>
+    <h1>About SIMY</h1>
+    <p>We believe the best code starts with great conversations — and that no one should have to manually translate specs, break down tasks, and convert them into code after those conversations.</p>
   </div>
 
   <div class="mission-block">
-    <div class="quote" data-i18n="about.quote">"What's decided in a meeting should ship immediately."</div>
-    <p data-i18n="about.quoteP">That's the future SIMY is building.</p>
+    <div class="quote">"What's decided in a meeting should ship immediately."</div>
+    <p>That's the future SIMY is building.</p>
   </div>
 
   <div class="about-section">
-    <h2 data-i18n="about.problemH2">The Challenge</h2>
-    <p data-i18n="about.problemP1">Engineering teams spend a significant amount of time in meetings — architecture alignment, design reviews, bug triage. Important decisions are made there. But the moment a meeting ends, a different process begins.</p>
-    <p data-i18n="about.problemP2">Someone interprets the content, organizes it, creates tasks, and converts it into code. This "translation layer" doesn't just slow things down — it degrades the purity of the original decisions.</p>
-    <p data-i18n="about.problemP3">People don't understand the same conversation the same way. Even when something is decided in a meeting, if someone's interpretation gets inserted along the way, the direction gradually drifts from the original intent.</p>
-    <p data-i18n="about.problemP4">Furthermore, for humans, the mode of grasping essence through conversation and the mode of writing code, operating systems, and implementing precisely are fundamentally different. The latter carries high cognitive load and often comes with stress. What people should truly focus on is the top 10% of critical decisions that generate 90% of the results.</p>
+    <h2>The Challenge</h2>
+    <p>Engineering teams spend a significant amount of time in meetings — architecture alignment, design reviews, bug triage. Important decisions are made there. But the moment a meeting ends, a different process begins.</p>
+    <p>Someone interprets the content, organizes it, creates tasks, and converts it into code. This "translation layer" doesn't just slow things down — it degrades the purity of the original decisions.</p>
+    <p>People don't understand the same conversation the same way. Even when something is decided in a meeting, if someone's interpretation gets inserted along the way, the direction gradually drifts from the original intent.</p>
+    <p>Furthermore, for humans, the mode of grasping essence through conversation and the mode of writing code, operating systems, and implementing precisely are fundamentally different. The latter carries high cognitive load and often comes with stress. What people should truly focus on is the top 10% of critical decisions that generate 90% of the results.</p>
   </div>
 
   <div class="about-section">
-    <h2 data-i18n="about.solutionH2">Our Solution</h2>
-    <p data-i18n="about.solutionP1">SIMY understands your team's natural conversations and transforms them directly into production-ready code, reviews, and pull requests. No prompts needed. No post-meeting rework. The moment a meeting decides what to build, that decision starts moving toward shipping.</p>
-    <p data-i18n="about.solutionP2">SIMY removes the translation layer that existed between conversation and implementation. As a result, teams can focus not on "explaining" or "translating," but on "making truly important decisions."</p>
-    <p data-i18n="about.solutionP3">By making conversation the interface, SIMY preserves the purity of decisions and connects them directly to delivery. It transforms every meeting from a mere discussion into a starting point for shipping.</p>
+    <h2>Our Solution</h2>
+    <p>SIMY understands your team's natural conversations and transforms them directly into production-ready code, reviews, and pull requests. No prompts needed. No post-meeting rework. The moment a meeting decides what to build, that decision starts moving toward shipping.</p>
+    <p>SIMY removes the translation layer that existed between conversation and implementation. As a result, teams can focus not on "explaining" or "translating," but on "making truly important decisions."</p>
+    <p>By making conversation the interface, SIMY preserves the purity of decisions and connects them directly to delivery. It transforms every meeting from a mere discussion into a starting point for shipping.</p>
   </div>
 
   <div class="about-section">
-    <h2 data-i18n="about.valuesH2">Our Values</h2>
+    <h2>Our Values</h2>
   </div>
   <div class="values-grid">
     <div class="value-card">
-      <div class="value-icon">&#9889;</div>
-      <h3 data-i18n="about.val1H3">A. Decisions Ship Immediately</h3>
-      <p data-i18n="about.val1P">When a meeting decides what to build, code ships immediately. SIMY's goal is to bring the time between decision and implementation as close to zero as possible.</p>
-      <p data-i18n="about.val1P2">Humans should focus on the top 10% of critical matters that generate 90% of the results. Task translation, bridging to implementation, and operational overhead should be handled by the system wherever possible. Success is measured not by how much you wrote, but by how quickly and correctly you shipped.</p>
+      <div class="value-icon">
+        <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      </div>
+      <h3>A. Decisions Ship Immediately</h3>
+      <p>When a meeting decides what to build, code ships immediately. SIMY's goal is to bring the time between decision and implementation as close to zero as possible.</p>
+      <p>Humans should focus on the top 10% of critical matters that generate 90% of the results. Task translation, bridging to implementation, and operational overhead should be handled by the system wherever possible. Success is measured not by how much you wrote, but by how quickly and correctly you shipped.</p>
     </div>
     <div class="value-card">
-      <div class="value-icon">&#127919;</div>
-      <h3 data-i18n="about.val2H3">B. High-Purity User Focus</h3>
-      <p data-i18n="about.val2P">People may look at the same thing, but they don't understand it the same way. That's why when someone interprets, summarizes, and outputs what was decided in a meeting, intent gradually drifts.</p>
-      <p data-i18n="about.val2P2">SIMY minimizes that drift by generating output directly from conversation. It preserves the background, context, and nuance of decisions as much as possible, shaping what users truly need with high purity.</p>
+      <div class="value-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+      </div>
+      <h3>B. High-Purity User Focus</h3>
+      <p>People may look at the same thing, but they don't understand it the same way. That's why when someone interprets, summarizes, and outputs what was decided in a meeting, intent gradually drifts.</p>
+      <p>SIMY minimizes that drift by generating output directly from conversation. It preserves the background, context, and nuance of decisions as much as possible, shaping what users truly need with high purity.</p>
     </div>
     <div class="value-card">
-      <div class="value-icon">&#128172;</div>
-      <h3 data-i18n="about.val3H3">C. The Best Code Starts with Great Conversations</h3>
-      <p data-i18n="about.val3P">When humans think deeply and make good decisions, much of it happens in conversation. On the other hand, writing code, operating systems, and controlling things precisely requires a different kind of focus and load.</p>
-      <p data-i18n="about.val3P2">We want to eliminate the very state where people must constantly switch between these two modes. Toward a world where code naturally emerges from great conversations. Humans think, dialogue, and decide. SIMY connects that to reliable shipping.</p>
+      <div class="value-icon">
+        <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      </div>
+      <h3>C. The Best Code Starts with Great Conversations</h3>
+      <p>When humans think deeply and make good decisions, much of it happens in conversation. On the other hand, writing code, operating systems, and controlling things precisely requires a different kind of focus and load.</p>
+      <p>We want to eliminate the very state where people must constantly switch between these two modes. Toward a world where code naturally emerges from great conversations. Humans think, dialogue, and decide. SIMY connects that to reliable shipping.</p>
     </div>
   </div>
 
   <div class="company-info">
-    <h2 data-i18n="about.companyH2">Company</h2>
+    <h2>Company</h2>
     <div class="info-grid">
       <div class="info-item">
-        <h3 data-i18n="about.infoLegal">Legal Name</h3>
-        <p data-i18n="about.infoLegalV">AwakApp Inc.</p>
+        <h3>Legal Name</h3>
+        <p>AwakApp Inc.</p>
       </div>
       <div class="info-item">
-        <h3 data-i18n="about.infoInc">Incorporated</h3>
-        <p data-i18n="about.infoIncV">State of California, USA</p>
+        <h3>Incorporated</h3>
+        <p>State of California, USA</p>
       </div>
       <div class="info-item">
-        <h3 data-i18n="about.infoHQ">Headquarters</h3>
-        <p data-i18n="about.infoHQV">San Francisco, California</p>
+        <h3>Headquarters</h3>
+        <p>San Francisco, California</p>
       </div>
       <div class="info-item">
-        <h3 data-i18n="about.infoContact">Contact</h3>
-        <p><a class="eml" data-u="info" data-d="simy.one" style="color:#5B5FC7;text-decoration:none"></a></p>
+        <h3>Contact</h3>
+        <p><a class="eml" data-u="info" data-d="simy.one" style="color:var(--primary);text-decoration:none"></a></p>
       </div>
     </div>
   </div>
@@ -251,32 +413,32 @@ footer{padding:48px 0 36px;border-top:1px solid rgba(0,0,0,0.06)}
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
-        <div class="footer-tagline" data-i18n="footer.tagline">Record. Ship. Done.</div>
-        <div class="footer-badges" style="display:flex;gap:12px;align-items:center;margin-top:12px">
+        <div class="footer-tagline" style="font-size:1rem;font-weight:700;margin-bottom:6px;letter-spacing:-0.02em">Record. Ship. Done.</div>
+        <div style="display:flex;gap:12px;align-items:center;margin-top:12px">
           <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" target="_blank" rel="noopener"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83" alt="Download on the App Store" style="height:36px"></a>
           <a href="https://www.saashub.com/simy?utm_source=badge" target="_blank" rel="noopener"><img src="https://www.saashub.com/assets/badges/approved-619b455b5eec0842a85e5b498bf3e67c40e3e3fe2974892d26431de65adbc06e.svg" alt="Approved on SaaSHub" style="height:36px"></a>
         </div>
       </div>
       <div class="footer-col">
-        <div class="footer-col-title" data-i18n="footer.product">Product</div>
-        <a href="how-it-works.html" data-i18n="footer.howItWorks">How It Works</a>
-        <a href="pricing.html" data-i18n="footer.pricing">Pricing</a>
-        <a href="compare.html" data-i18n="footer.compare">Compare</a>
-        <a href="integrations.html" data-i18n="footer.integrations">Integrations</a>
-        <a href="security.html" data-i18n="footer.security">Security</a>
+        <div class="footer-col-title">Product</div>
+        <a href="/how-it-works.html">How It Works</a>
+        <a href="/pricing.html">Pricing</a>
+        <a href="/compare.html">Compare</a>
+        <a href="/integrations.html">Integrations</a>
+        <a href="/security.html">Security</a>
       </div>
       <div class="footer-col">
-        <div class="footer-col-title" data-i18n="footer.company">Company</div>
-        <a href="about.html" data-i18n="footer.about">About</a>
-        <a href="careers.html" data-i18n="footer.careers">Careers</a>
-        <a href="press.html" data-i18n="footer.press">Press</a>
-        <a href="contact.html" data-i18n="footer.contact">Contact</a>
-        <a href="status.html" data-i18n="footer.status">Status</a>
+        <div class="footer-col-title">Company</div>
+        <a href="/about.html">About</a>
+        <a href="/careers.html">Careers</a>
+        <a href="/press.html">Press</a>
+        <a href="/contact.html">Contact</a>
+        <a href="/status.html">Status</a>
       </div>
       <div class="footer-col">
-        <div class="footer-col-title" data-i18n="footer.legal">Legal</div>
-        <a href="privacy.html" data-i18n="footer.privacy">Privacy Policy</a>
-        <a href="terms.html" data-i18n="footer.terms">Terms of Service</a>
+        <div class="footer-col-title">Legal</div>
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/terms.html">Terms of Service</a>
       </div>
     </div>
     <div class="footer-bottom">
@@ -285,62 +447,10 @@ footer{padding:48px 0 36px;border-top:1px solid rgba(0,0,0,0.06)}
   </div>
 </footer>
 
-<div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:rgba(249,249,246,0.98);border-top:1px solid rgba(0,0,0,0.06);padding:16px 24px;backdrop-filter:blur(20px)">
-  <div style="max-width:1140px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap">
-    <p style="color:#7a7a78;font-size:0.85rem;margin:0;flex:1;min-width:200px">We use cookies to improve your experience. See our <a href="privacy.html" style="color:#5B5FC7">Privacy Policy</a>.</p>
-    <div style="display:flex;gap:10px">
-      <button onclick="setCookieConsent(false)" style="padding:8px 20px;border-radius:6px;border:1px solid rgba(0,0,0,0.15);background:transparent;color:#7a7a78;cursor:pointer;font-size:0.85rem">Decline</button>
-      <button onclick="setCookieConsent(true)" style="padding:8px 20px;border-radius:6px;border:none;background:linear-gradient(135deg,#5B5FC7,#7B7FD7);color:#fff;font-weight:700;cursor:pointer;font-size:0.85rem">Accept</button>
-    </div>
-  </div>
-</div>
+<div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:rgba(249,249,246,0.98);border-top:1px solid rgba(0,0,0,0.06);padding:16px 24px;backdrop-filter:blur(20px)"><div style="max-width:1140px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap"><p style="color:#7a7a78;font-size:0.85rem;margin:0;flex:1;min-width:200px">We use cookies to improve your experience. See our <a href="/privacy.html" style="color:#0057FF">Privacy Policy</a>.</p><div style="display:flex;gap:10px"><button onclick="setCookieConsent(false)" style="padding:8px 20px;border-radius:6px;border:1px solid rgba(0,0,0,0.15);background:transparent;color:#7a7a78;cursor:pointer;font-size:0.85rem;font-family:'Geist',sans-serif">Decline</button><button onclick="setCookieConsent(true)" style="padding:8px 20px;border-radius:6px;border:none;background:#0057FF;color:#fff;font-weight:700;cursor:pointer;font-size:0.85rem;font-family:'Geist',sans-serif">Accept</button></div></div></div>
 <script>function setCookieConsent(v){localStorage.setItem('simy-cookies',v?'1':'0');document.getElementById('cookieBanner').style.display='none'}if(!localStorage.getItem('simy-cookies'))document.getElementById('cookieBanner').style.display='block'</script>
 
 <script>
-// i18n for subpages (nav + footer)
-const T = {
-en: {"nav.top":"Top","nav.howItWorks":"How It Works","nav.pricing":"Pricing","nav.compare":"Compare","nav.about":"About","nav.contact":"Contact","nav.news":"News","nav.cta":"Reserve your Slot","footer.tagline":"Record. Ship. Done.","footer.product":"Product","footer.howItWorks":"How It Works","footer.pricing":"Pricing","footer.compare":"Compare","footer.integrations":"Integrations","footer.security":"Security","footer.company":"Company","footer.about":"About","footer.careers":"Careers","footer.press":"Press","footer.contact":"Contact","footer.status":"Status","footer.legal":"Legal","footer.privacy":"Privacy Policy","footer.terms":"Terms of Service","about.h1":"About SIMY","about.heroP":"We believe the best code starts with great conversations — and that no one should have to manually translate specs, break down tasks, and convert them into code after those conversations.","about.quote":"\u201CWhat\u2019s decided in a meeting should ship immediately.\u201D","about.quoteP":"That\u2019s the future SIMY is building.","about.problemH2":"The Challenge","about.problemP1":"Engineering teams spend a significant amount of time in meetings — architecture alignment, design reviews, bug triage. Important decisions are made there. But the moment a meeting ends, a different process begins.","about.problemP2":"Someone interprets the content, organizes it, creates tasks, and converts it into code. This \u201Ctranslation layer\u201D doesn\u2019t just slow things down — it degrades the purity of the original decisions.","about.problemP3":"People don\u2019t understand the same conversation the same way. Even when something is decided in a meeting, if someone\u2019s interpretation gets inserted along the way, the direction gradually drifts from the original intent.","about.problemP4":"Furthermore, for humans, the mode of grasping essence through conversation and the mode of writing code, operating systems, and implementing precisely are fundamentally different. The latter carries high cognitive load and often comes with stress. What people should truly focus on is the top 10% of critical decisions that generate 90% of the results.","about.solutionH2":"Our Solution","about.solutionP1":"SIMY understands your team\u2019s natural conversations and transforms them directly into production-ready code, reviews, and pull requests. No prompts needed. No post-meeting rework. The moment a meeting decides what to build, that decision starts moving toward shipping.","about.solutionP2":"SIMY removes the translation layer that existed between conversation and implementation. As a result, teams can focus not on \u201Cexplaining\u201D or \u201Ctranslating,\u201D but on \u201Cmaking truly important decisions.\u201D","about.solutionP3":"By making conversation the interface, SIMY preserves the purity of decisions and connects them directly to delivery. It transforms every meeting from a mere discussion into a starting point for shipping.","about.valuesH2":"Our Values","about.val1H3":"A. Decisions Ship Immediately","about.val1P":"When a meeting decides what to build, code ships immediately. SIMY\u2019s goal is to bring the time between decision and implementation as close to zero as possible.","about.val1P2":"Humans should focus on the top 10% of critical matters that generate 90% of the results. Task translation, bridging to implementation, and operational overhead should be handled by the system wherever possible. Success is measured not by how much you wrote, but by how quickly and correctly you shipped.","about.val2H3":"B. High-Purity User Focus","about.val2P":"People may look at the same thing, but they don\u2019t understand it the same way. That\u2019s why when someone interprets, summarizes, and outputs what was decided in a meeting, intent gradually drifts.","about.val2P2":"SIMY minimizes that drift by generating output directly from conversation. It preserves the background, context, and nuance of decisions as much as possible, shaping what users truly need with high purity.","about.val3H3":"C. The Best Code Starts with Great Conversations","about.val3P":"When humans think deeply and make good decisions, much of it happens in conversation. On the other hand, writing code, operating systems, and controlling things precisely requires a different kind of focus and load.","about.val3P2":"We want to eliminate the very state where people must constantly switch between these two modes. Toward a world where code naturally emerges from great conversations. Humans think, dialogue, and decide. SIMY connects that to reliable shipping.","about.companyH2":"Company","about.infoLegal":"Legal Name","about.infoLegalV":"AwakApp Inc.","about.infoInc":"Incorporated","about.infoIncV":"State of California, USA","about.infoHQ":"Headquarters","about.infoHQV":"San Francisco, California","about.infoContact":"Contact"},
-ja: {"nav.top":"トップ","nav.howItWorks":"仕組み","nav.pricing":"料金","nav.compare":"比較","nav.about":"会社概要","nav.contact":"お問い合わせ","nav.news":"ニュース","nav.cta":"今すぐ予約","footer.tagline":"録音。出荷。完了。","footer.product":"プロダクト","footer.howItWorks":"仕組み","footer.pricing":"料金","footer.compare":"比較","footer.integrations":"連携","footer.security":"セキュリティ","footer.company":"企業情報","footer.about":"会社概要","footer.careers":"採用","footer.press":"プレス","footer.contact":"お問い合わせ","footer.status":"ステータス","footer.legal":"法務","footer.privacy":"プライバシーポリシー","footer.terms":"利用規約","about.h1":"SIMYについて","about.heroP":"私たちは、最高のコードは素晴らしい会話から始まると信じています。そして、その会話のあとに人が苦労して仕様を翻訳し、タスクを分解し、コードに落とし込む必要はないと考えています。","about.quote":"「会議で決まったことは、即座に出荷されるべきだ。」","about.quoteP":"それが、SIMYが実現しようとしている未来です。","about.problemH2":"課題","about.problemP1":"エンジニアリングチームは多くの時間を会議に使っています。アーキテクチャの調整、設計レビュー、バグのトリアージ。そこで重要な意思決定は行われます。しかし、会議が終わった瞬間から、別の工程が始まります。","about.problemP2":"誰かが内容を解釈し、整理し、タスク化し、コードに変換する。この\u201C変換レイヤー\u201Dの存在が、スピードを落とすだけでなく、意思決定の純度まで下げてしまいます。","about.problemP3":"人は同じ会話を聞いていても、同じようには理解しません。会議で決まったことも、途中で誰かの解釈を挟めば、少しずつ当初の方向からズレていきます。","about.problemP4":"さらに、人間にとって会話を通じて本質を捉えるモードとコードを書き、システムを操作し、正確に実装するモードは別のものです。後者は認知負荷が高く、しばしばストレスを伴います。本来、人が集中すべきなのは、成果の90%を生む上位10%の重要な判断です。","about.solutionH2":"ソリューション","about.solutionP1":"SIMYは、チームの自然な会話を理解し、そのまま本番対応のコード、レビュー、プルリクエストへと変換します。プロンプトは不要。会議後のやり直しも不要。会議で何をやるかが決まった瞬間、その決定がそのまま出荷に向かって進み始めます。","about.solutionP2":"SIMYは、会話と実装のあいだに存在していた変換レイヤーを取り除きます。その結果、チームは\u201C説明すること\u201Dや\u201C翻訳すること\u201Dではなく、\u201C本当に重要な判断をすること\u201Dに集中できます。","about.solutionP3":"会話をインターフェースにすることで、SIMYは意思決定の純度を保ったまま、決定をそのまま納品へつなげます。すべての会議を、単なる議論の場ではなく、出荷の起点に変えます。","about.valuesH2":"私たちの価値観","about.val1H3":"A. 決定は即座に出荷","about.val1P":"会議でやることが決まったら、すぐにコードを出荷する。SIMYが目指すのは、意思決定と実装のあいだの時間を限りなくゼロに近づけることです。","about.val1P2":"人間は、成果の90%を生む上位10%の重要事項に集中するべきです。タスクの翻訳、実装への橋渡し、オペレーションの負荷は、可能な限りシステムが引き受ける。成功は、書いた量ではなく、どれだけ早く正しく出荷できたかで測られます。","about.val2H3":"B. 純度の高いユーザー志向","about.val2P":"人は同じものを見ているようで、同じようには理解していません。だからこそ、会議で決まったことを誰かが解釈し、要約し、アウトプットする工程を挟むと、意図は少しずつズレていきます。","about.val2P2":"SIMYは、会話から直接アウトプットを生成することで、そのズレを最小化します。意思決定の背景、文脈、温度感をできるだけそのまま保ち、ユーザーにとって本当に必要なものを高い純度で形にします。","about.val3H3":"C. 最高のコードは素晴らしい会話から始まる","about.val3P":"人間が深く考え、良い判断をするとき、その多くは会話の中で起きています。一方で、コードを書き、システムを操作し、正確に制御しようとする行為は、別の種類の集中と負荷を必要とします。","about.val3P2":"私たちは、この2つのモードを人が何度も行き来しなければならない状態そのものをなくしたいと考えています。素晴らしい会話から自然にコードが生まれる世界へ。人間は考え、対話し、決める。SIMYはそれを、確かな出荷へとつなげます。","about.companyH2":"会社情報","about.infoLegal":"法人名","about.infoLegalV":"AwakApp Inc.","about.infoInc":"設立","about.infoIncV":"米国カリフォルニア州","about.infoHQ":"本社","about.infoHQV":"サンフランシスコ、カリフォルニア","about.infoContact":"連絡先"},
-zh: {"nav.top":"首页","nav.howItWorks":"工作原理","nav.pricing":"定价","nav.compare":"对比","nav.about":"关于","nav.contact":"联系","nav.news":"新闻","nav.cta":"预约名额","footer.tagline":"录制。交付。完成。","footer.product":"产品","footer.howItWorks":"工作原理","footer.pricing":"定价","footer.compare":"对比","footer.integrations":"集成","footer.security":"安全","footer.company":"公司","footer.about":"关于","footer.careers":"招聘","footer.press":"媒体","footer.contact":"联系","footer.status":"状态","footer.legal":"法律","footer.privacy":"隐私政策","footer.terms":"服务条款","about.h1":"关于SIMY","about.heroP":"我们相信最好的代码始于伟大的对话——对话结束后，不应该需要人工翻译规格、分解任务并转化为代码。","about.quote":"\u201C会议中决定的事情应该立即交付。\u201D","about.quoteP":"这就是SIMY正在构建的未来。","about.problemH2":"挑战","about.problemP1":"工程团队花费大量时间在会议上——架构对齐、设计评审、Bug分类。重要决策在那里做出。但会议结束的那一刻，另一个流程开始了。","about.problemP2":"有人解读内容、整理、创建任务、转化为代码。这个\u201C转化层\u201D不仅拖慢速度，还降低了原始决策的纯度。","about.problemP3":"人们听到同样的对话，却不会以同样的方式理解。即使在会议上做出了决定，如果中间插入了某人的解读，方向会逐渐偏离最初的意图。","about.problemP4":"此外，对人类而言，通过对话把握本质的模式与编写代码、操作系统、精确实现的模式是完全不同的。后者认知负荷高，常伴随压力。人真正应该集中精力的是产生90%成果的那10%关键决策。","about.solutionH2":"解决方案","about.solutionP1":"SIMY理解团队的自然对话，并直接将其转化为生产就绪的代码、评审和拉取请求。无需提示词。无需会后返工。会议决定做什么的那一刻，决策就开始向交付推进。","about.solutionP2":"SIMY移除了存在于对话和实现之间的转化层。结果，团队可以专注于\u201C做出真正重要的决策\u201D，而非\u201C解释\u201D或\u201C翻译\u201D。","about.solutionP3":"通过将对话作为接口，SIMY保持决策的纯度，将决策直接连接到交付。将每次会议从单纯的讨论场所变为交付的起点。","about.valuesH2":"我们的价值观","about.val1H3":"A. 决策立即交付","about.val1P":"会议决定做什么，就立即交付代码。SIMY的目标是将决策与实现之间的时间无限接近零。","about.val1P2":"人类应该专注于产生90%成果的那10%关键事项。任务翻译、实现桥接、运营负担应尽可能由系统承担。成功不是用写了多少来衡量，而是用多快多正确地交付来衡量。","about.val2H3":"B. 高纯度用户导向","about.val2P":"人们看似看到同样的东西，却不会以同样的方式理解。正因如此，当有人解读、总结并输出会议决定时，意图会逐渐偏移。","about.val2P2":"SIMY通过直接从对话生成输出来最小化这种偏移。尽可能保留决策的背景、语境和温度感，以高纯度塑造用户真正需要的东西。","about.val3H3":"C. 最好的代码始于伟大的对话","about.val3P":"当人类深入思考、做出好的判断时，大多发生在对话中。另一方面，编写代码、操作系统、精确控制需要不同类型的专注和负荷。","about.val3P2":"我们希望消除人必须在这两种模式之间反复切换的状态本身。走向一个代码从伟大对话中自然产生的世界。人类思考、对话、决策。SIMY将其连接到可靠的交付。","about.companyH2":"公司信息","about.infoLegal":"法律名称","about.infoLegalV":"AwakApp Inc.","about.infoInc":"注册地","about.infoIncV":"美国加利福尼亚州","about.infoHQ":"总部","about.infoHQV":"旧金山，加利福尼亚","about.infoContact":"联系方式"},
-hi: {"nav.top":"होम","nav.howItWorks":"कैसे काम करता है","nav.pricing":"मूल्य","nav.compare":"तुलना","nav.about":"हमारे बारे में","nav.contact":"संपर्क","nav.news":"समाचार","nav.cta":"अपनी जगह आरक्षित करें","footer.tagline":"रिकॉर्ड। शिप। हो गया।","footer.product":"उत्पाद","footer.howItWorks":"कैसे काम करता है","footer.pricing":"मूल्य","footer.compare":"तुलना","footer.integrations":"एकीकरण","footer.security":"सुरक्षा","footer.company":"कंपनी","footer.about":"हमारे बारे में","footer.careers":"करियर","footer.press":"प्रेस","footer.contact":"संपर्क","footer.status":"स्थिति","footer.legal":"कानूनी","footer.privacy":"गोपनीयता नीति","footer.terms":"सेवा की शर्तें","about.h1":"SIMY के बारे में","about.heroP":"हम मानते हैं कि सबसे अच्छा कोड बेहतरीन बातचीत से शुरू होता है \u2014 और उस बातचीत के बाद किसी को स्पेक्स ट्रांसलेट करने, टास्क तोड़ने और कोड में बदलने की ज़रूरत नहीं होनी चाहिए।","about.quote":"\u201Cमीटिंग में जो तय हो, वो तुरंत शिप होना चाहिए।\u201D","about.quoteP":"यही वह भविष्य है जो SIMY बना रहा है।","about.problemH2":"चुनौती","about.problemP1":"इंजीनियरिंग टीमें काफी समय मीटिंग्स में बिताती हैं \u2014 आर्किटेक्चर अलाइनमेंट, डिज़ाइन रिव्यू, बग ट्राइएज। वहां महत्वपूर्ण निर्णय लिए जाते हैं। लेकिन मीटिंग खत्म होते ही, एक अलग प्रक्रिया शुरू होती है।","about.problemP2":"कोई सामग्री की व्याख्या करता है, उसे व्यवस्थित करता है, टास्क बनाता है, और कोड में बदलता है। यह \u201Cट्रांसलेशन लेयर\u201D सिर्फ गति नहीं घटाती \u2014 यह मूल निर्णयों की शुद्धता भी कम करती है।","about.problemP3":"लोग एक ही बातचीत को एक जैसे नहीं समझते। मीटिंग में कुछ तय होने पर भी, अगर बीच में किसी की व्याख्या आ जाए, तो दिशा धीरे-धीरे मूल इरादे से भटक जाती है।","about.problemP4":"इसके अलावा, इंसानों के लिए बातचीत से सार समझने का मोड और कोड लिखने, सिस्टम चलाने, सटीक कार्यान्वयन का मोड अलग-अलग हैं। बाद वाला उच्च संज्ञानात्मक भार वहन करता है। लोगों को वास्तव में उन शीर्ष 10% महत्वपूर्ण निर्णयों पर ध्यान केंद्रित करना चाहिए जो 90% परिणाम उत्पन्न करते हैं।","about.solutionH2":"समाधान","about.solutionP1":"SIMY आपकी टीम की स्वाभाविक बातचीत को समझता है और उन्हें सीधे प्रोडक्शन-रेडी कोड, रिव्यू और पुल रिक्वेस्ट में बदलता है। कोई प्रॉम्प्ट नहीं। मीटिंग के बाद कोई रीवर्क नहीं। जिस पल मीटिंग तय करती है कि क्या बनाना है, वह निर्णय शिपिंग की ओर बढ़ने लगता है।","about.solutionP2":"SIMY बातचीत और कार्यान्वयन के बीच मौजूद ट्रांसलेशन लेयर को हटा देता है। नतीजतन, टीमें \u201Cसमझाने\u201D या \u201Cअनुवाद करने\u201D की बजाय \u201Cवास्तव में महत्वपूर्ण निर्णय लेने\u201D पर ध्यान केंद्रित कर सकती हैं।","about.solutionP3":"बातचीत को इंटरफ़ेस बनाकर, SIMY निर्णयों की शुद्धता बनाए रखता है और उन्हें सीधे डिलीवरी से जोड़ता है। हर मीटिंग को केवल चर्चा की जगह से शिपिंग के शुरुआती बिंदु में बदलता है।","about.valuesH2":"हमारे मूल्य","about.val1H3":"A. निर्णय तुरंत शिप होते हैं","about.val1P":"जब मीटिंग तय करे कि क्या बनाना है, कोड तुरंत शिप होता है। SIMY का लक्ष्य निर्णय और कार्यान्वयन के बीच का समय शून्य के करीब लाना है।","about.val1P2":"इंसानों को 90% परिणाम देने वाले शीर्ष 10% महत्वपूर्ण मामलों पर ध्यान केंद्रित करना चाहिए। टास्क ट्रांसलेशन, कार्यान्वयन तक पहुंचाना, और ऑपरेशनल भार यथासंभव सिस्टम को संभालना चाहिए। सफलता इससे नहीं मापी जाती कि आपने कितना लिखा, बल्कि कितनी जल्दी और सही शिप किया।","about.val2H3":"B. उच्च-शुद्धता उपयोगकर्ता फोकस","about.val2P":"लोग एक ही चीज़ देख रहे होते हैं, लेकिन एक जैसे नहीं समझते। इसीलिए जब कोई मीटिंग में तय हुई बात की व्याख्या, सारांश और आउटपुट करता है, तो इरादा धीरे-धीरे भटकता है।","about.val2P2":"SIMY बातचीत से सीधे आउटपुट जनरेट करके इस भटकाव को कम करता है। निर्णयों की पृष्ठभूमि, संदर्भ और बारीकियों को यथासंभव बनाए रखता है, उपयोगकर्ताओं को वास्तव में जो चाहिए उसे उच्च शुद्धता से आकार देता है।","about.val3H3":"C. सबसे अच्छा कोड बेहतरीन बातचीत से शुरू होता है","about.val3P":"जब इंसान गहराई से सोचते हैं और अच्छे निर्णय लेते हैं, तो इसका अधिकांश हिस्सा बातचीत में होता है। दूसरी ओर, कोड लिखना, सिस्टम चलाना और चीज़ों को सटीक रूप से नियंत्रित करना एक अलग तरह के फोकस और भार की मांग करता है।","about.val3P2":"हम उस स्थिति को ही समाप्त करना चाहते हैं जहां लोगों को इन दो मोड्स के बीच लगातार स्विच करना पड़ता है। एक ऐसी दुनिया की ओर जहां बेहतरीन बातचीत से स्वाभाविक रूप से कोड उत्पन्न होता है। इंसान सोचते हैं, संवाद करते हैं, निर्णय लेते हैं। SIMY उसे विश्वसनीय शिपिंग से जोड़ता है।","about.companyH2":"कंपनी","about.infoLegal":"कानूनी नाम","about.infoLegalV":"AwakApp Inc.","about.infoInc":"निगमित","about.infoIncV":"कैलिफ़ोर्निया राज्य, अमेरिका","about.infoHQ":"मुख्यालय","about.infoHQV":"सैन फ्रांसिस्को, कैलिफ़ोर्निया","about.infoContact":"संपर्क"},
-es: {"nav.top":"Inicio","nav.howItWorks":"Cómo Funciona","nav.pricing":"Precios","nav.compare":"Comparar","nav.about":"Nosotros","nav.contact":"Contacto","nav.news":"Noticias","nav.cta":"Reserva tu Lugar","footer.tagline":"Graba. Envía. Listo.","footer.product":"Producto","footer.howItWorks":"Cómo Funciona","footer.pricing":"Precios","footer.compare":"Comparar","footer.integrations":"Integraciones","footer.security":"Seguridad","footer.company":"Empresa","footer.about":"Nosotros","footer.careers":"Empleo","footer.press":"Prensa","footer.contact":"Contacto","footer.status":"Estado","footer.legal":"Legal","footer.privacy":"Política de Privacidad","footer.terms":"Términos de Servicio","about.h1":"Acerca de SIMY","about.heroP":"Creemos que el mejor código comienza con grandes conversaciones \u2014 y que después de esas conversaciones, nadie debería tener que traducir especificaciones, desglosar tareas y convertirlas en código manualmente.","about.quote":"\u201CLo que se decide en una reunión debería enviarse de inmediato.\u201D","about.quoteP":"Ese es el futuro que SIMY está construyendo.","about.problemH2":"El Desafío","about.problemP1":"Los equipos de ingeniería dedican mucho tiempo a reuniones \u2014 alineación de arquitectura, revisiones de diseño, clasificación de bugs. Allí se toman decisiones importantes. Pero en el momento en que termina una reunión, comienza un proceso diferente.","about.problemP2":"Alguien interpreta el contenido, lo organiza, crea tareas y lo convierte en código. Esta \u201Ccapa de traducción\u201D no solo ralentiza las cosas \u2014 degrada la pureza de las decisiones originales.","about.problemP3":"Las personas no entienden la misma conversación de la misma manera. Incluso cuando algo se decide en una reunión, si la interpretación de alguien se inserta en el camino, la dirección se desvía gradualmente de la intención original.","about.problemP4":"Además, para los humanos, el modo de captar la esencia a través de la conversación y el modo de escribir código, operar sistemas e implementar con precisión son fundamentalmente diferentes. El segundo conlleva alta carga cognitiva y a menudo estrés. Lo que las personas deberían enfocar es el 10% superior de decisiones críticas que generan el 90% de los resultados.","about.solutionH2":"Nuestra Solución","about.solutionP1":"SIMY entiende las conversaciones naturales de tu equipo y las transforma directamente en código listo para producción, revisiones y pull requests. Sin prompts necesarios. Sin retrabajo post-reunión. En el momento en que una reunión decide qué construir, esa decisión comienza a avanzar hacia el envío.","about.solutionP2":"SIMY elimina la capa de traducción que existía entre la conversación y la implementación. Como resultado, los equipos pueden enfocarse no en \u201Cexplicar\u201D o \u201Ctraducir\u201D, sino en \u201Ctomar decisiones verdaderamente importantes.\u201D","about.solutionP3":"Al hacer de la conversación la interfaz, SIMY preserva la pureza de las decisiones y las conecta directamente con la entrega. Transforma cada reunión de una mera discusión en un punto de partida para el envío.","about.valuesH2":"Nuestros Valores","about.val1H3":"A. Las Decisiones se Envían de Inmediato","about.val1P":"Cuando una reunión decide qué construir, el código se envía de inmediato. El objetivo de SIMY es acercar a cero el tiempo entre decisión e implementación.","about.val1P2":"Los humanos deberían enfocarse en el 10% superior de asuntos críticos que generan el 90% de los resultados. La traducción de tareas, el puente hacia la implementación y la carga operativa deberían ser manejados por el sistema siempre que sea posible. El éxito no se mide por cuánto escribiste, sino por cuán rápido y correctamente enviaste.","about.val2H3":"B. Enfoque de Usuario de Alta Pureza","about.val2P":"Las personas pueden mirar lo mismo, pero no lo entienden de la misma manera. Por eso, cuando alguien interpreta, resume y produce lo decidido en una reunión, la intención se desvía gradualmente.","about.val2P2":"SIMY minimiza esa desviación generando output directamente de la conversación. Preserva el trasfondo, contexto y matices de las decisiones tanto como sea posible, dando forma a lo que los usuarios realmente necesitan con alta pureza.","about.val3H3":"C. El Mejor Código Comienza con Grandes Conversaciones","about.val3P":"Cuando los humanos piensan profundamente y toman buenas decisiones, mucho de ello sucede en la conversación. Por otro lado, escribir código, operar sistemas y controlar cosas con precisión requiere un tipo diferente de enfoque y carga.","about.val3P2":"Queremos eliminar el estado mismo donde las personas deben alternar constantemente entre estos dos modos. Hacia un mundo donde el código emerge naturalmente de grandes conversaciones. Los humanos piensan, dialogan y deciden. SIMY conecta eso con un envío confiable.","about.companyH2":"Empresa","about.infoLegal":"Razón Social","about.infoLegalV":"AwakApp Inc.","about.infoInc":"Constituida","about.infoIncV":"Estado de California, EE.UU.","about.infoHQ":"Sede Central","about.infoHQV":"San Francisco, California","about.infoContact":"Contacto"},
-ar: {"nav.top":"الرئيسية","nav.howItWorks":"كيف يعمل","nav.pricing":"الأسعار","nav.compare":"مقارنة","nav.about":"عن الشركة","nav.contact":"اتصل بنا","nav.news":"أخبار","nav.cta":"احجز مكانك","footer.tagline":"سجّل. أرسل. انتهى.","footer.product":"المنتج","footer.howItWorks":"كيف يعمل","footer.pricing":"الأسعار","footer.compare":"مقارنة","footer.integrations":"التكامل","footer.security":"الأمان","footer.company":"الشركة","footer.about":"عن الشركة","footer.careers":"الوظائف","footer.press":"الصحافة","footer.contact":"اتصل بنا","footer.status":"الحالة","footer.legal":"قانوني","footer.privacy":"سياسة الخصوصية","footer.terms":"شروط الخدمة","about.h1":"عن SIMY","about.heroP":"نؤمن بأن أفضل الأكواد تبدأ بمحادثات رائعة \u2014 وأنه لا ينبغي لأحد أن يترجم المواصفات يدوياً ويفكك المهام ويحولها إلى كود بعد تلك المحادثات.","about.quote":"\u201Cما يُقرر في الاجتماع يجب أن يُشحن فوراً.\u201D","about.quoteP":"هذا هو المستقبل الذي يبنيه SIMY.","about.problemH2":"التحدي","about.problemP1":"تقضي فرق الهندسة وقتاً كبيراً في الاجتماعات \u2014 مواءمة البنية، مراجعة التصاميم، تصنيف الأخطاء. هناك تُتخذ القرارات المهمة. لكن لحظة انتهاء الاجتماع، تبدأ عملية مختلفة.","about.problemP2":"شخص ما يفسر المحتوى وينظمه وينشئ المهام ويحوله إلى كود. هذه \u201Cطبقة الترجمة\u201D لا تبطئ الأمور فحسب \u2014 بل تُضعف نقاء القرارات الأصلية.","about.problemP3":"الناس لا يفهمون نفس المحادثة بنفس الطريقة. حتى عندما يُقرر شيء في اجتماع، إذا تدخل تفسير شخص ما في الطريق، يبتعد الاتجاه تدريجياً عن النية الأصلية.","about.problemP4":"علاوة على ذلك، بالنسبة للبشر، نمط استيعاب الجوهر من خلال المحادثة ونمط كتابة الكود وتشغيل الأنظمة والتنفيذ بدقة مختلفان جوهرياً. الأخير يحمل عبئاً معرفياً عالياً وغالباً يصاحبه توتر. ما يجب أن يركز عليه الناس حقاً هو أهم 10% من القرارات الحاسمة التي تولد 90% من النتائج.","about.solutionH2":"حلنا","about.solutionP1":"SIMY يفهم محادثات فريقك الطبيعية ويحولها مباشرة إلى كود جاهز للإنتاج ومراجعات وطلبات سحب. لا حاجة لأوامر. لا إعادة عمل بعد الاجتماع. لحظة أن يقرر الاجتماع ماذا يُبنى، يبدأ ذلك القرار بالتحرك نحو الشحن.","about.solutionP2":"SIMY يزيل طبقة الترجمة التي كانت موجودة بين المحادثة والتنفيذ. نتيجة لذلك، يمكن للفرق التركيز ليس على \u201Cالشرح\u201D أو \u201Cالترجمة\u201D بل على \u201Caتخاذ قرارات مهمة حقاً.\u201D","about.solutionP3":"بجعل المحادثة هي الواجهة، يحافظ SIMY على نقاء القرارات ويربطها مباشرة بالتسليم. يحول كل اجتماع من مجرد نقاش إلى نقطة انطلاق للشحن.","about.valuesH2":"قيمنا","about.val1H3":"أ. القرارات تُشحن فوراً","about.val1P":"عندما يقرر اجتماع ماذا يُبنى، يُشحن الكود فوراً. هدف SIMY هو تقريب الوقت بين القرار والتنفيذ إلى الصفر.","about.val1P2":"يجب أن يركز البشر على أهم 10% من الأمور الحاسمة التي تولد 90% من النتائج. ترجمة المهام، والربط بالتنفيذ، والعبء التشغيلي يجب أن يتولاه النظام قدر الإمكان. النجاح لا يُقاس بكم كتبت، بل بمدى سرعة وصحة ما شحنت.","about.val2H3":"ب. تركيز عالي النقاء على المستخدم","about.val2P":"قد ينظر الناس لنفس الشيء، لكنهم لا يفهمونه بنفس الطريقة. لهذا السبب عندما يفسر شخص ما ويلخص وينتج ما تقرر في اجتماع، تنحرف النية تدريجياً.","about.val2P2":"SIMY يقلل هذا الانحراف بتوليد المخرجات مباشرة من المحادثة. يحافظ على خلفية القرارات وسياقها وفروقها الدقيقة قدر الإمكان، ليشكل ما يحتاجه المستخدمون حقاً بنقاء عالٍ.","about.val3H3":"ج. أفضل الأكواد تبدأ بمحادثات رائعة","about.val3P":"عندما يفكر البشر بعمق ويتخذون قرارات جيدة، يحدث معظم ذلك في المحادثة. من ناحية أخرى، كتابة الكود وتشغيل الأنظمة والتحكم الدقيق يتطلب نوعاً مختلفاً من التركيز والعبء.","about.val3P2":"نريد إزالة الحالة ذاتها التي يضطر فيها الناس للتبديل المستمر بين هذين النمطين. نحو عالم يولد فيه الكود طبيعياً من محادثات رائعة. البشر يفكرون ويتحاورون ويقررون. SIMY يربط ذلك بشحن موثوق.","about.companyH2":"الشركة","about.infoLegal":"الاسم القانوني","about.infoLegalV":"AwakApp Inc.","about.infoInc":"التأسيس","about.infoIncV":"ولاية كاليفورنيا، الولايات المتحدة","about.infoHQ":"المقر الرئيسي","about.infoHQV":"سان فرانسيسكو، كاليفورنيا","about.infoContact":"التواصل"}
-};
-function setLanguage(lang, manual) {
-  document.documentElement.lang = lang;
-  document.body.classList.toggle('rtl', lang === 'ar');
-  document.getElementById('langSelect').value = lang;
-  localStorage.setItem('simy-lang', lang);
-  if (manual) localStorage.setItem('simy-lang-manual', '1');
-  const dict = T[lang];
-  if (!dict) return;
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.getAttribute('data-i18n');
-    if (dict[key] !== undefined) el.textContent = dict[key];
-  });
-  // Update App Store URLs based on language
-  const appStoreUrl = lang === 'ja'
-    ? 'https://apps.apple.com/jp/app/simy-meetings-end-code-ships/id6745385262'
-    : 'https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262';
-  document.querySelectorAll('a[href*="apps.apple.com"]').forEach(el => { el.href = appStoreUrl; });
-}
-function detectBrowserLanguage() {
-  const supportedLangs = Object.keys(T);
-  const browserLangs = navigator.languages || [navigator.language || 'en'];
-  for (const bl of browserLangs) {
-    const lower = bl.toLowerCase();
-    const exact = supportedLangs.find(s => s === lower);
-    if (exact) return exact;
-    const prefix = lower.split('-')[0];
-    const prefixMatch = supportedLangs.find(s => s === prefix);
-    if (prefixMatch) return prefixMatch;
-  }
-  return 'en';
-}
-const wasManual = localStorage.getItem('simy-lang-manual');
-const savedLang = localStorage.getItem('simy-lang');
-if (wasManual && savedLang && T[savedLang]) { setLanguage(savedLang); }
-else { setLanguage(detectBrowserLanguage()); }
 document.querySelectorAll('a.eml').forEach(function(el){var e=el.dataset.u+String.fromCharCode(64)+el.dataset.d;el.href='m'+'ailt'+'o:'+e;el.textContent=e;});
 </script>
 </body>
