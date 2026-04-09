@@ -110,8 +110,9 @@
       }
     </style>
     <style>
-      /* Hide React SPA's built-in nav — replaced by static nav below */
+      /* Hide React SPA's built-in nav and footer — replaced by static versions below */
       #root > div > nav { display: none !important; }
+      #root footer { display: none !important; }
       /* Static nav — identical to all other pages */
       .static-nav {
         position: fixed; top: 0; left: 0; right: 0; z-index: 50;
@@ -185,11 +186,28 @@
       }
       .static-nav .btn-primary:hover { background-color: #0047dd; border-color: #0047dd; }
       .mobile-menu-btn { display: none; background: none; border: none; color: #0a0a0a; cursor: pointer; padding: 8px; }
+      /* Static footer — identical to all other pages */
+      .static-footer {
+        padding: 48px 0 36px;
+        border-top: 1px solid #e0e0dc;
+        background: #fafaf8;
+        font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+      }
+      .static-footer .container { max-width: 1280px; margin: 0 auto; padding: 0 4rem; }
+      .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+      .footer-col { display: flex; flex-direction: column; gap: 10px; }
+      .footer-col-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #0a0a0a; margin-bottom: 4px; }
+      .footer-col a { color: #5a5a56; text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+      .footer-col a:hover { color: #0057ff; }
+      .footer-bottom { padding-top: 24px; border-top: 1px solid #e0e0dc; font-size: 0.75rem; color: #5a5a56; text-align: center; }
       @media (max-width: 768px) {
         .nav-links { display: none; }
         .nav-right { display: none; }
         .mobile-menu-btn { display: block; }
         .nav-inner { padding: 0 1.5rem; }
+        .static-footer .container { padding: 0 1.5rem; }
+        .footer-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
+        .footer-brand { grid-column: 1 / -1; text-align: center; }
       }
     </style>
     <script type="module" crossorigin src="/assets/index-DnVveaIK.js"></script>
@@ -252,6 +270,46 @@
     </script>
 
     <div id="root"></div>
+
+    <!-- Static footer — same code as all other pages -->
+    <footer class="static-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <div style="font-size:1rem;font-weight:700;margin-bottom:6px;letter-spacing:-0.02em" data-i18n="footer.tagline">Record. Ship. Done.</div>
+            <div style="display:flex;gap:12px;align-items:center;margin-top:12px">
+              <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" target="_blank" rel="noopener"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83" alt="Download on the App Store" style="height:36px"></a>
+              <a href="https://www.saashub.com/simy?utm_source=badge" target="_blank" rel="noopener"><img src="https://www.saashub.com/assets/badges/approved-619b455b5eec0842a85e5b498bf3e67c40e3e3fe2974892d26431de65adbc06e.svg" alt="Approved on SaaSHub" style="height:36px"></a>
+            </div>
+          </div>
+          <div class="footer-col">
+            <div class="footer-col-title" data-i18n="footer.product">Product</div>
+            <a href="/how-it-works.html" data-i18n="footer.product.how">How It Works</a>
+            <a href="/pricing.html" data-i18n="footer.product.pricing">Pricing</a>
+            <a href="/compare.html" data-i18n="footer.product.compare">Compare</a>
+            <a href="/integrations.html" data-i18n="footer.product.integrations">Integrations</a>
+            <a href="/security.html" data-i18n="footer.product.security">Security</a>
+          </div>
+          <div class="footer-col">
+            <div class="footer-col-title" data-i18n="footer.company">Company</div>
+            <a href="/about.html" data-i18n="footer.company.about">About</a>
+            <a href="/careers.html" data-i18n="footer.company.careers">Careers</a>
+            <a href="/press.html" data-i18n="footer.company.press">Press</a>
+            <a href="/contact.html" data-i18n="footer.company.contact">Contact</a>
+            <a href="/status.html" data-i18n="footer.company.status">Status</a>
+          </div>
+          <div class="footer-col">
+            <div class="footer-col-title" data-i18n="footer.legal">Legal</div>
+            <a href="/privacy.html" data-i18n="footer.legal.privacy">Privacy Policy</a>
+            <a href="/terms.html" data-i18n="footer.legal.terms">Terms of Service</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span data-i18n="footer.copy">&copy; 2026 SIMY by AwakApp Inc. All rights reserved.</span>
+        </div>
+      </div>
+    </footer>
+
     <script src="/i18n.js"></script>
     <script
       defer
