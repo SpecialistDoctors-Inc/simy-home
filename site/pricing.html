@@ -71,18 +71,18 @@ body {
 
 a:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; border-radius: 4px; }
 
-/* Navigation — matches React SPA (max-width:1440px, padding:4rem) */
+/* Navigation — unified with about.html */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
   padding: 16px 0;
-  background: rgba(250, 250, 248, 0.92);
+  background: rgba(249, 249, 246, 0.92);
   backdrop-filter: blur(24px) saturate(1.2);
   -webkit-backdrop-filter: blur(24px) saturate(1.2);
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 }
 .nav-inner {
   display: flex; align-items: center; justify-content: space-between;
-  max-width: 1440px; margin: 0 auto; padding: 0 4rem;
+  max-width: 1140px; margin: 0 auto; padding: 0 clamp(24px, 4vw, 60px);
 }
 .nav-logo {
   display: flex; align-items: center; gap: 10px;
@@ -91,38 +91,27 @@ nav {
 .nav-logo-s { flex-shrink: 0; }
 .nav-brand { font-weight: 700; font-size: 1.15rem; letter-spacing: 0.02em; }
 .nav-version {
-  font-family: var(--font-mono);
-  font-size: 0.7rem; font-weight: 500; letter-spacing: 0.04em;
-  color: var(--muted-fg); background: rgba(0,0,0,0.05);
-  padding: 2px 8px; border-radius: 4px; margin-left: -4px;
+  font-size: 0.65rem; font-weight: 500; letter-spacing: 0.04em;
+  color: var(--muted-fg); background: rgba(0,0,0,0.04);
+  padding: 2px 6px; border-radius: 4px; margin-left: -4px;
 }
-.nav-links { display: flex; gap: 32px; align-items: center; }
+.nav-links { display: flex; gap: 28px; align-items: center; }
 .nav-links a {
   color: var(--muted-fg); text-decoration: none;
-  font-size: 0.8125rem; font-weight: 400; letter-spacing: 0.01em;
-  transition: color 0.18s;
-  position: relative;
-}
-.nav-links a::after {
-  content: ''; position: absolute; bottom: -2px; left: 0;
-  width: 0; height: 1px; background-color: var(--primary);
-  transition: width 0.25s;
+  font-size: 0.875rem; font-weight: 500; transition: color 0.2s;
 }
 .nav-links a:hover { color: var(--foreground); }
-.nav-links a:hover::after { width: 100%; }
-.nav-links a.active { color: var(--foreground); }
-.nav-links a.active::after { width: 100%; }
 .nav-right { display: flex; align-items: center; gap: 16px; }
 .nav-signin {
   color: var(--muted-fg); text-decoration: none;
-  font-size: 0.8125rem; font-weight: 400; transition: color 0.18s;
+  font-size: 0.875rem; font-weight: 500; transition: color 0.2s;
 }
 .nav-signin:hover { color: var(--foreground); }
 .btn-primary {
   background-color: var(--primary); color: #fff;
-  font-family: var(--font-sans); letter-spacing: 0.01em;
+  font-family: 'Geist', sans-serif; letter-spacing: 0.01em;
   border: 1px solid var(--primary); padding: 0.625rem 1.25rem;
-  font-size: 0.8125rem; font-weight: 500; border-radius: 8px;
+  font-size: 0.875rem; font-weight: 500; border-radius: 8px;
   display: inline-flex; align-items: center; gap: 0.5rem;
   text-decoration: none; transition: background-color 0.2s;
   cursor: pointer;
@@ -195,7 +184,7 @@ nav {
 }
 
 /* Pricing Grid */
-.container { max-width: 1440px; margin: 0 auto; padding: 0 4rem; }
+.container { max-width: 1140px; margin: 0 auto; padding: 0 clamp(24px, 4vw, 60px); }
 
 .pricing-grid {
   display: grid;
@@ -434,9 +423,7 @@ footer {
   .pricing-card.featured { border-radius: 16px; }
 }
 @media (max-width: 768px) {
-  .nav-inner { padding: 0 clamp(20px, 4vw, 4rem); }
-  .container { padding: 0 clamp(20px, 4vw, 4rem); }
-  .nav-links { display: none; position: fixed; top: 56px; right: 0; left: 0; background: rgba(250,250,248,0.97); flex-direction: column; padding: 24px; gap: 16px; z-index: 999; backdrop-filter: blur(20px); }
+  .nav-links { display: none; position: fixed; top: 56px; right: 0; left: 0; background: rgba(249,249,246,0.97); flex-direction: column; padding: 24px; gap: 16px; z-index: 999; backdrop-filter: blur(20px); }
   .nav-links.active { display: flex; }
   .nav-right { display: none; }
   .mobile-menu-btn { display: block; }
@@ -485,9 +472,10 @@ if(localStorage.getItem('simy-cookies')==='1') loadGA();
     </a>
     <div class="nav-links" id="navLinks">
       <a href="/">Home</a>
-      <a href="/pricing.html" class="active">Pricing</a>
+      <a href="/pricing.html">Pricing</a>
       <a href="/compare.html">Compare</a>
       <a href="/about.html">About</a>
+      <a href="/press-release.html">News</a>
     </div>
     <div class="nav-right">
       <a href="#" class="nav-signin">Sign in</a>
@@ -661,7 +649,7 @@ if(localStorage.getItem('simy-cookies')==='1') loadGA();
 </footer>
 
 <!-- Cookie Consent -->
-<div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:rgba(250,250,248,0.98);border-top:1px solid rgba(0,0,0,0.06);padding:16px 24px;backdrop-filter:blur(20px)"><div style="max-width:1440px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap"><p style="color:#6b6b6b;font-size:0.85rem;margin:0;flex:1;min-width:200px">We use cookies to improve your experience. See our <a href="/privacy.html" style="color:#0057FF">Privacy Policy</a>.</p><div style="display:flex;gap:10px"><button onclick="setCookieConsent(false)" style="padding:8px 20px;border-radius:6px;border:1px solid rgba(0,0,0,0.15);background:transparent;color:#6b6b6b;cursor:pointer;font-size:0.85rem;font-family:'Geist',sans-serif">Decline</button><button onclick="setCookieConsent(true)" style="padding:8px 20px;border-radius:6px;border:none;background:#0057FF;color:#fff;font-weight:700;cursor:pointer;font-size:0.85rem;font-family:'Geist',sans-serif">Accept</button></div></div></div>
+<div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:rgba(250,250,248,0.98);border-top:1px solid rgba(0,0,0,0.06);padding:16px 24px;backdrop-filter:blur(20px)"><div style="max-width:1140px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap"><p style="color:#6b6b6b;font-size:0.85rem;margin:0;flex:1;min-width:200px">We use cookies to improve your experience. See our <a href="/privacy.html" style="color:#0057FF">Privacy Policy</a>.</p><div style="display:flex;gap:10px"><button onclick="setCookieConsent(false)" style="padding:8px 20px;border-radius:6px;border:1px solid rgba(0,0,0,0.15);background:transparent;color:#6b6b6b;cursor:pointer;font-size:0.85rem;font-family:'Geist',sans-serif">Decline</button><button onclick="setCookieConsent(true)" style="padding:8px 20px;border-radius:6px;border:none;background:#0057FF;color:#fff;font-weight:700;cursor:pointer;font-size:0.85rem;font-family:'Geist',sans-serif">Accept</button></div></div></div>
 <script>function setCookieConsent(v){localStorage.setItem('simy-cookies',v?'1':'0');document.getElementById('cookieBanner').style.display='none';if(v)loadGA();}if(!localStorage.getItem('simy-cookies'))document.getElementById('cookieBanner').style.display='block';</script>
 
 <script>
