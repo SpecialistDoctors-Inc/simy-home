@@ -97,13 +97,21 @@ footer{padding:48px 0 36px;border-top:1px solid rgba(0,0,0,0.06)}
   ]
 }
 </script>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-SBLYYNMSJW"></script>
+<!-- Google tag (gtag.js) – loaded only after cookie consent -->
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-SBLYYNMSJW');
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+function loadGA(){
+  if(document.getElementById('ga-script'))return;
+  var s=document.createElement('script');
+  s.id='ga-script';
+  s.async=true;
+  s.src='https://www.googletagmanager.com/gtag/js?id=G-SBLYYNMSJW';
+  document.head.appendChild(s);
+  gtag('js',new Date());
+  gtag('config','G-SBLYYNMSJW');
+}
+if(localStorage.getItem('simy-cookies')==='1') loadGA();
 </script>
 </head>
 <body>
@@ -243,7 +251,7 @@ footer{padding:48px 0 36px;border-top:1px solid rgba(0,0,0,0.06)}
 </footer>
 
 <div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:rgba(249,249,246,0.98);border-top:1px solid rgba(0,0,0,0.06);padding:16px 24px;backdrop-filter:blur(20px)"><div style="max-width:1140px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap"><p style="color:#7a7a78;font-size:0.85rem;margin:0;flex:1;min-width:200px">We use cookies to improve your experience. See our <a href="privacy.html" style="color:#5B5FC7">Privacy Policy</a>.</p><div style="display:flex;gap:10px"><button onclick="setCookieConsent(false)" style="padding:8px 20px;border-radius:6px;border:1px solid rgba(0,0,0,0.15);background:transparent;color:#7a7a78;cursor:pointer;font-size:0.85rem">Decline</button><button onclick="setCookieConsent(true)" style="padding:8px 20px;border-radius:6px;border:none;background:linear-gradient(135deg,#5B5FC7,#7B7FD7);color:#fff;font-weight:700;cursor:pointer;font-size:0.85rem">Accept</button></div></div></div>
-<script>function setCookieConsent(v){localStorage.setItem('simy-cookies',v?'1':'0');document.getElementById('cookieBanner').style.display='none'}if(!localStorage.getItem('simy-cookies'))document.getElementById('cookieBanner').style.display='block'</script>
+<script>function setCookieConsent(v){localStorage.setItem('simy-cookies',v?'1':'0');document.getElementById('cookieBanner').style.display='none';if(v)loadGA();}if(!localStorage.getItem('simy-cookies'))document.getElementById('cookieBanner').style.display='block';</script>
 <script>
 // i18n for subpages (nav + footer)
 const T = {
