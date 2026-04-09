@@ -1,6 +1,9 @@
 {
-  "_meta": { "code": "en", "name": "English", "dir": "ltr" },
-
+  "_meta": {
+    "code": "en",
+    "name": "English",
+    "dir": "ltr"
+  },
   "nav.home": "Home",
   "nav.pricing": "Pricing",
   "nav.compare": "Compare",
@@ -8,7 +11,6 @@
   "nav.news": "News",
   "nav.signin": "Sign in",
   "nav.cta": "Request Access",
-
   "footer.tagline": "Record. Ship. Done.",
   "footer.product": "Product",
   "footer.product.how": "How It Works",
@@ -25,18 +27,16 @@
   "footer.legal": "Legal",
   "footer.legal.privacy": "Privacy Policy",
   "footer.legal.terms": "Terms of Service",
-  "footer.copy": "\u00a9 2026 SIMY by AwakApp Inc. All rights reserved.",
-
+  "footer.copy": "© 2026 SIMY by AwakApp Inc. All rights reserved.",
   "cookie.text": "We use cookies to improve your experience. See our",
   "cookie.link": "Privacy Policy",
   "cookie.decline": "Decline",
   "cookie.accept": "Accept",
-
   "pricing.title": "Simple, transparent pricing.",
   "pricing.subtitle": "Seat-based plans with SIMY token allocation. Scale as your team grows.",
   "pricing.monthly": "Monthly",
   "pricing.annual": "Annual",
-  "pricing.save": "\u00b7 Save 17%",
+  "pricing.save": "· Save 17%",
   "pricing.starter": "Starter",
   "pricing.starter.sub": "For individuals getting started",
   "pricing.pro": "Pro",
@@ -45,18 +45,11 @@
   "pricing.scale.sub": "For high-output teams",
   "pricing.seat": "/ seat / mo",
   "pricing.tokens_month": "SIMY tokens / month",
-  "pricing.tokens_day": "tokens / day",
   "pricing.cta": "Get started",
   "pricing.popular": "Most Popular",
   "pricing.enterprise": "Enterprise",
   "pricing.enterprise.desc": "Custom token allocation, dedicated support, SSO, and SLA guarantees.<br>Built for organizations that need full control.",
   "pricing.enterprise.cta": "Contact Sales",
-  "pricing.estimator.title": "Estimate your daily usage",
-  "pricing.estimator.sub": "Drag the slider to see which plan fits your team's daily token consumption.",
-  "pricing.estimator.label": "Daily usage",
-  "pricing.estimator.perday": "tokens/day",
-  "pricing.estimator.bestfit": "Best fit",
-  "pricing.estimator.day": "/day",
   "pricing.faq.title": "Frequently Asked Questions",
   "pricing.faq.q1": "What are SIMY tokens?",
   "pricing.faq.a1": "Tokens are the currency used by SIMY's AI engine. Each code generation task, review, and pull request consumes tokens based on complexity. Your plan includes a monthly token allocation that resets each billing cycle.",
@@ -68,7 +61,6 @@
   "pricing.faq.a4": "Monthly token allocations reset each billing cycle and do not roll over. For maximum flexibility, consider the Scale plan or contact us about Enterprise options.",
   "pricing.faq.q5": "Is annual billing available?",
   "pricing.faq.a5": "Yes. Choose annual billing to save 17% compared to monthly pricing. Annual plans are billed upfront for the full year.",
-
   "pricing.f.starter.1": "80,000,000 SIMY tokens / month",
   "pricing.f.starter.2": "Up to 5 connected channels",
   "pricing.f.starter.3": "Action Database (up to 1,000 tasks)",
