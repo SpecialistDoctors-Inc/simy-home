@@ -53,6 +53,7 @@ jobs:
 
       - name: Update CloudFront Function
         if: github.ref == 'refs/heads/main' || (github.event_name == 'workflow_dispatch' && inputs.environment == 'prod')
+        continue-on-error: true
         run: |
           FUNC_NAME="simy-site-prod-redirect"
           FUNC_CODE_FILE="infra/cloudfront-functions/redirect-prod.js"
