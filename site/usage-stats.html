@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="google-site-verification" content="1n6_tVJZRZlQax8luEg5VsuG7gg-kCEam5VFiWIJs3U">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Usage Statistics — SIMY</title>
+<meta name="description" content="View your SIMY token usage statistics including request count, prompt tokens, and completion tokens.">
+<link rel="canonical" href="https://simy.one/usage-stats.html">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://simy.one/usage-stats.html">
+<meta property="og:title" content="Usage Statistics — SIMY">
+<meta property="og:description" content="View your SIMY token usage statistics.">
+<meta property="og:site_name" content="SIMY">
+<meta property="og:image" content="https://simy.one/ogp.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Usage Statistics — SIMY">
+<meta name="twitter:description" content="View your SIMY token usage statistics.">
+<meta name="twitter:image" content="https://simy.one/ogp.png">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0a0a1a">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --deep-navy:#0a0a1a;
+  --navy:#0e0e24;
+  --navy-light:#131338;
+  --slate:#2a2a5c;
+  --mint:#7EEDC6;
+  --mint-dim:rgba(126,237,198,0.08);
+  --mint-glow:rgba(126,237,198,0.15);
+  --sky:#4A9FE8;
+  --sky-dim:rgba(74,159,232,0.08);
+  --red:#ff6b6b;
+  --red-dim:rgba(255,107,107,0.08);
+  --white:#f0f0f8;
+  --gray:#7a7a9e;
+  --gray-light:#b0b0cc;
+  --accent-gradient:linear-gradient(135deg,#7EEDC6 0%,#4A9FE8 100%)
+}
+html{font-size:16px}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--deep-navy);color:var(--white);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a:focus-visible{outline:2px solid var(--mint);outline-offset:3px;border-radius:4px}
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:18px 0;background:rgba(10,10,26,0.92);backdrop-filter:blur(24px) saturate(1.2);-webkit-backdrop-filter:blur(24px) saturate(1.2);border-bottom:1px solid rgba(126,237,198,0.04)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1140px;margin:0 auto;padding:0 clamp(24px,4vw,60px)}
+.nav-logo{display:flex;align-items:center;gap:6px;text-decoration:none;color:var(--white)}
+.nav-logo-icon{width:40px;height:40px;border-radius:10px;overflow:hidden;flex-shrink:0}
+.nav-logo-icon img{width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block}
+.nav-logo-text{display:flex;flex-direction:column;line-height:1.1}
+.nav-logo-text .nav-brand{font-weight:800;font-size:1.25rem;letter-spacing:0.04em}
+.nav-logo-text .nav-tagline{font-size:0.5rem;font-weight:500;letter-spacing:0.08em;color:var(--gray);text-transform:uppercase}
+.nav-links{display:flex;gap:28px;align-items:center}
+.nav-links a{color:var(--gray);text-decoration:none;font-size:0.85rem;font-weight:500;transition:color 0.2s}
+.nav-links a:hover{color:var(--white)}
+.mobile-menu-btn{display:none;background:none;border:none;color:var(--white);cursor:pointer;padding:4px}
+.lang-select{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:var(--white);font-size:0.8rem;font-weight:500;padding:6px 10px;border-radius:6px;cursor:pointer;font-family:'Inter',sans-serif;outline:none;transition:border-color 0.2s}
+.lang-select:hover,.lang-select:focus{border-color:rgba(126,237,198,0.3)}
+.lang-select option{background:var(--deep-navy);color:var(--white)}
+.nav-cta{padding:9px 22px;border-radius:8px;background:var(--accent-gradient);color:var(--deep-navy) !important;font-weight:700 !important;font-size:.85rem !important;transition:all .2s}
+.nav-cta:hover{opacity:.92;transform:translateY(-1px)}
+.container{max-width:1140px;margin:0 auto;padding:0 clamp(24px,4vw,60px)}
+
+.page-hero{padding:140px 0 40px;text-align:center}
+.page-hero h1{font-size:clamp(2rem,5vw,3rem);font-weight:900;letter-spacing:-0.03em;margin-bottom:16px;background:var(--accent-gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.page-hero p{color:var(--gray-light);font-size:1.05rem;max-width:560px;margin:0 auto}
+
+/* ===== USAGE STATS CONTENT ===== */
+.usage-section{padding:40px 0 80px}
+.usage-inner{max-width:860px;margin:0 auto}
+
+/* Loading state */
+.usage-loading{text-align:center;padding:80px 24px}
+.spinner{display:inline-block;width:40px;height:40px;border:3px solid rgba(126,237,198,0.15);border-top-color:var(--mint);border-radius:50%;animation:spin 0.8s linear infinite;margin-bottom:20px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.usage-loading p{color:var(--gray-light);font-size:0.95rem}
+
+/* Error state */
+.usage-error{text-align:center;padding:60px 24px;background:var(--red-dim);border:1px solid rgba(255,107,107,0.2);border-radius:16px}
+.usage-error .error-icon{font-size:2.5rem;margin-bottom:16px}
+.usage-error h2{font-size:1.2rem;font-weight:700;color:var(--red);margin-bottom:8px}
+.usage-error p{color:var(--gray-light);font-size:0.9rem;margin-bottom:24px}
+.retry-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 24px;border-radius:8px;background:transparent;border:1px solid rgba(255,107,107,0.4);color:var(--red);font-size:0.85rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.2s}
+.retry-btn:hover{background:var(--red-dim);border-color:rgba(255,107,107,0.6)}
+
+/* Empty state */
+.usage-empty{text-align:center;padding:80px 24px;background:var(--mint-dim);border:1px solid rgba(126,237,198,0.1);border-radius:16px}
+.usage-empty .empty-icon{font-size:3rem;margin-bottom:16px}
+.usage-empty h2{font-size:1.2rem;font-weight:700;margin-bottom:8px}
+.usage-empty p{color:var(--gray-light);font-size:0.9rem;max-width:400px;margin:0 auto}
+
+/* Data state — metric cards */
+.metrics-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-bottom:32px}
+@media(min-width:640px){.metrics-grid{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:480px){.metrics-grid{grid-template-columns:1fr}}
+
+.metric-card{background:var(--navy);border:1px solid rgba(126,237,198,0.08);border-radius:16px;padding:24px 20px;display:flex;flex-direction:column;gap:6px;transition:border-color 0.3s,transform 0.3s,box-shadow 0.3s}
+.metric-card:hover{border-color:rgba(126,237,198,0.25);transform:translateY(-4px);box-shadow:0 8px 32px rgba(126,237,198,0.08)}
+.metric-label{font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray)}
+.metric-value{font-family:'JetBrains Mono',monospace;font-size:1.6rem;font-weight:700;color:var(--white);letter-spacing:-0.02em;line-height:1.1}
+.metric-value.gradient{background:var(--accent-gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.metric-sub{font-size:0.75rem;color:var(--gray);margin-top:2px}
+
+.totals-card{background:linear-gradient(135deg,rgba(126,237,198,0.08) 0%,rgba(74,159,232,0.08) 100%);border:1px solid rgba(126,237,198,0.2);border-radius:16px;padding:28px 24px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:20px}
+.totals-left h2{font-size:1rem;font-weight:700;margin-bottom:4px;color:var(--white)}
+.totals-left p{font-size:0.8rem;color:var(--gray-light)}
+.totals-value{font-family:'JetBrains Mono',monospace;font-size:2.4rem;font-weight:700;background:var(--accent-gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-0.03em;white-space:nowrap}
+
+.last-updated{text-align:right;font-size:0.78rem;color:var(--gray);margin-bottom:32px}
+.last-updated time{color:var(--gray-light);font-family:'JetBrains Mono',monospace}
+
+.latest-activity{background:var(--navy);border:1px solid rgba(126,237,198,0.06);border-radius:14px;padding:20px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.latest-activity .la-label{font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray)}
+.latest-activity .la-value{font-family:'JetBrains Mono',monospace;font-size:0.9rem;color:var(--mint)}
+
+/* Footer */
+.footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
+.footer-col{display:flex;flex-direction:column;gap:10px}
+.footer-col-title{font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--white);margin-bottom:4px}
+.footer-col a{color:var(--gray);text-decoration:none;font-size:0.85rem;transition:color 0.2s}
+.footer-col a:hover{color:var(--mint)}
+.footer-bottom{padding-top:24px;border-top:1px solid rgba(255,255,255,0.04);font-size:0.75rem;color:var(--gray);text-align:center}
+footer{padding:48px 0 36px;border-top:1px solid rgba(255,255,255,0.04)}
+.footer-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px}
+.footer-tagline{font-size:1rem;font-weight:700;letter-spacing:-0.02em}
+.footer-right{display:flex;align-items:center;gap:20px;font-size:0.75rem;color:var(--gray)}
+.footer-right a{color:var(--gray);text-decoration:none;transition:color 0.2s}
+.footer-right a:hover{color:var(--mint)}
+.footer-sep{opacity:0.3}
+
+@media(max-width:768px){
+  .nav-links{display:none;position:fixed;top:56px;right:0;left:0;background:rgba(10,10,26,0.97);flex-direction:column;padding:24px;gap:16px;z-index:999;backdrop-filter:blur(20px)}
+  .nav-links.active{display:flex}
+  .mobile-menu-btn{display:block}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:24px}
+  .footer-brand{grid-column:1/-1;text-align:center}
+  .totals-card{flex-direction:column;text-align:center}
+  .last-updated{text-align:center}
+}
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SBLYYNMSJW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-SBLYYNMSJW');
+</script>
+</head>
+<body>
+
+<nav><div class="nav-inner">
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-icon"><img src="simy-icon.png" alt="SIMY icon"></div>
+    <div class="nav-logo-text"><span class="nav-brand">SIMY</span><span class="nav-tagline">Voice to Code, One Shot</span></div>
+  </a>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html" data-i18n="nav.top">Top</a>
+    <a href="how-it-works.html" data-i18n="nav.howItWorks">How It Works</a>
+    <a href="pricing.html" data-i18n="nav.pricing">Pricing</a>
+    <a href="compare.html" data-i18n="nav.compare">Compare</a>
+    <a href="about.html" data-i18n="nav.about">About</a>
+    <a href="contact.html" data-i18n="nav.contact">Contact</a>
+    <a href="press-release.html" data-i18n="nav.news">News</a>
+    <select class="lang-select" id="langSelect" onchange="setLanguage(this.value, true)">
+      <option value="en">EN</option>
+      <option value="ja">日本語</option>
+      <option value="zh">中文</option>
+      <option value="hi">हिन्दी</option>
+      <option value="es">Español</option>
+      <option value="ar">العربية</option>
+    </select>
+    <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" class="nav-cta" target="_blank" rel="noopener" data-i18n="nav.cta">Reserve your Slot</a>
+  </div>
+  <button class="mobile-menu-btn" onclick="document.getElementById('navLinks').classList.toggle('active')" aria-label="Toggle menu">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+    </svg>
+  </button>
+</div></nav>
+
+<div class="container">
+  <div class="page-hero">
+    <h1 data-i18n="us.h1">Usage Statistics</h1>
+    <p data-i18n="us.sub">Real-time token consumption metrics from the SIMY AI engine.</p>
+  </div>
+
+  <div class="usage-section">
+    <div class="usage-inner" id="usageInner">
+
+      <!-- Loading state (shown by default until fetch resolves) -->
+      <div id="stateLoading" class="usage-loading" role="status" aria-live="polite">
+        <div class="spinner" aria-hidden="true"></div>
+        <p data-i18n="us.loading">Loading usage data…</p>
+      </div>
+
+      <!-- Error state (hidden by default) -->
+      <div id="stateError" class="usage-error" role="alert" aria-live="assertive" style="display:none">
+        <div class="error-icon" aria-hidden="true">⚠️</div>
+        <h2 data-i18n="us.errTitle">Unable to load usage data</h2>
+        <p id="errorMessage" data-i18n="us.errMsg">Could not connect to the usage statistics service. Please try again.</p>
+        <button class="retry-btn" id="retryBtn" onclick="loadUsageStats()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+          <span data-i18n="us.retry">Retry</span>
+        </button>
+      </div>
+
+      <!-- Empty state (hidden by default) -->
+      <div id="stateEmpty" class="usage-empty" role="status" aria-live="polite" style="display:none">
+        <div class="empty-icon" aria-hidden="true">📊</div>
+        <h2 data-i18n="us.emptyTitle">No usage data yet</h2>
+        <p data-i18n="us.emptyMsg">Token usage metrics will appear here once your first AI task has been processed.</p>
+      </div>
+
+      <!-- Data state (hidden by default) -->
+      <div id="stateData" style="display:none" aria-live="polite">
+        <div class="totals-card">
+          <div class="totals-left">
+            <h2 data-i18n="us.totalTokens">Total Tokens Consumed</h2>
+            <p data-i18n="us.totalTokensSub">Prompt + completion tokens across all requests</p>
+          </div>
+          <div class="totals-value" id="metricTotalTokens">—</div>
+        </div>
+
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <span class="metric-label" data-i18n="us.requests">Requests</span>
+            <span class="metric-value gradient" id="metricRequestCount">—</span>
+            <span class="metric-sub" data-i18n="us.requestsSub">Total API calls</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-label" data-i18n="us.promptTokens">Prompt Tokens</span>
+            <span class="metric-value" id="metricPromptTokens">—</span>
+            <span class="metric-sub" data-i18n="us.promptTokensSub">Input to AI model</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-label" data-i18n="us.completionTokens">Completion Tokens</span>
+            <span class="metric-value" id="metricCompletionTokens">—</span>
+            <span class="metric-sub" data-i18n="us.completionTokensSub">Output from AI model</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-label" data-i18n="us.avgPerReq">Avg Tokens / Request</span>
+            <span class="metric-value" id="metricAvgTokens">—</span>
+            <span class="metric-sub" data-i18n="us.avgPerReqSub">Total ÷ requests</span>
+          </div>
+        </div>
+
+        <div class="last-updated">
+          <span data-i18n="us.lastUpdated">Last activity: </span>
+          <time id="metricLatestAt">—</time>
+        </div>
+
+        <div class="latest-activity" aria-label="Latest usage timestamp">
+          <span class="la-label" data-i18n="us.latestTs">Latest usage timestamp</span>
+          <span class="la-value" id="metricLatestAtMono">—</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-tagline" data-i18n="footer.tagline">Record. Ship. Done.</div>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title" data-i18n="footer.product">Product</div>
+        <a href="how-it-works.html" data-i18n="footer.howItWorks">How It Works</a>
+        <a href="pricing.html" data-i18n="footer.pricing">Pricing</a>
+        <a href="compare.html" data-i18n="footer.compare">Compare</a>
+        <a href="integrations.html" data-i18n="footer.integrations">Integrations</a>
+        <a href="security.html" data-i18n="footer.security">Security</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title" data-i18n="footer.company">Company</div>
+        <a href="about.html" data-i18n="footer.about">About</a>
+        <a href="careers.html" data-i18n="footer.careers">Careers</a>
+        <a href="press.html" data-i18n="footer.press">Press</a>
+        <a href="contact.html" data-i18n="footer.contact">Contact</a>
+        <a href="status.html" data-i18n="footer.status">Status</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title" data-i18n="footer.legal">Legal</div>
+        <a href="privacy.html" data-i18n="footer.privacy">Privacy Policy</a>
+        <a href="terms.html" data-i18n="footer.terms">Terms of Service</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 SIMY by AwakApp Inc. All rights reserved.</span>
+    </div>
+  </div>
+</footer>
+
+<div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:rgba(14,14,36,0.98);border-top:1px solid rgba(126,237,198,0.15);padding:16px 24px;backdrop-filter:blur(20px)"><div style="max-width:1140px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap"><p style="color:#b0b0cc;font-size:0.85rem;margin:0;flex:1;min-width:200px">We use cookies to improve your experience. See our <a href="privacy.html" style="color:#7EEDC6">Privacy Policy</a>.</p><div style="display:flex;gap:10px"><button onclick="setCookieConsent(false)" style="padding:8px 20px;border-radius:6px;border:1px solid rgba(126,237,198,0.3);background:transparent;color:#b0b0cc;cursor:pointer;font-size:0.85rem">Decline</button><button onclick="setCookieConsent(true)" style="padding:8px 20px;border-radius:6px;border:none;background:linear-gradient(135deg,#7EEDC6,#4A9FE8);color:#0a0a1a;font-weight:700;cursor:pointer;font-size:0.85rem">Accept</button></div></div></div>
+<script>function setCookieConsent(v){localStorage.setItem('simy-cookies',v?'1':'0');document.getElementById('cookieBanner').style.display='none'}if(!localStorage.getItem('simy-cookies'))document.getElementById('cookieBanner').style.display='block'</script>
+
+<script>
+// ─── i18n ────────────────────────────────────────────────────────────────────
+const T = {
+  en: {
+    "nav.top":"Top","nav.howItWorks":"How It Works","nav.pricing":"Pricing","nav.compare":"Compare","nav.about":"About","nav.contact":"Contact","nav.news":"News","nav.cta":"Reserve your Slot",
+    "footer.tagline":"Record. Ship. Done.","footer.product":"Product","footer.howItWorks":"How It Works","footer.pricing":"Pricing","footer.compare":"Compare","footer.integrations":"Integrations","footer.security":"Security","footer.company":"Company","footer.about":"About","footer.careers":"Careers","footer.press":"Press","footer.contact":"Contact","footer.status":"Status","footer.legal":"Legal","footer.privacy":"Privacy Policy","footer.terms":"Terms of Service",
+    "us.h1":"Usage Statistics","us.sub":"Real-time token consumption metrics from the SIMY AI engine.",
+    "us.loading":"Loading usage data…","us.errTitle":"Unable to load usage data","us.errMsg":"Could not connect to the usage statistics service. Please try again.","us.retry":"Retry",
+    "us.emptyTitle":"No usage data yet","us.emptyMsg":"Token usage metrics will appear here once your first AI task has been processed.",
+    "us.totalTokens":"Total Tokens Consumed","us.totalTokensSub":"Prompt + completion tokens across all requests",
+    "us.requests":"Requests","us.requestsSub":"Total API calls",
+    "us.promptTokens":"Prompt Tokens","us.promptTokensSub":"Input to AI model",
+    "us.completionTokens":"Completion Tokens","us.completionTokensSub":"Output from AI model",
+    "us.avgPerReq":"Avg Tokens / Request","us.avgPerReqSub":"Total ÷ requests",
+    "us.lastUpdated":"Last activity: ","us.latestTs":"Latest usage timestamp"
+  },
+  ja: {
+    "nav.top":"トップ","nav.howItWorks":"仕組み","nav.pricing":"料金","nav.compare":"比較","nav.about":"会社概要","nav.contact":"お問い合わせ","nav.news":"ニュース","nav.cta":"今すぐ予約",
+    "footer.tagline":"録音。出荷。完了。","footer.product":"プロダクト","footer.howItWorks":"仕組み","footer.pricing":"料金","footer.compare":"比較","footer.integrations":"連携","footer.security":"セキュリティ","footer.company":"企業情報","footer.about":"会社概要","footer.careers":"採用","footer.press":"プレス","footer.contact":"お問い合わせ","footer.status":"ステータス","footer.legal":"法務","footer.privacy":"プライバシーポリシー","footer.terms":"利用規約",
+    "us.h1":"使用統計","us.sub":"SIMYのAIエンジンによるリアルタイムのトークン消費メトリクス。",
+    "us.loading":"使用データを読み込み中…","us.errTitle":"使用データを読み込めません","us.errMsg":"使用統計サービスに接続できませんでした。再試行してください。","us.retry":"再試行",
+    "us.emptyTitle":"使用データがありません","us.emptyMsg":"最初のAIタスクが処理されると、トークン使用状況がここに表示されます。",
+    "us.totalTokens":"合計消費トークン","us.totalTokensSub":"全リクエストのプロンプト＋コンプリーション",
+    "us.requests":"リクエスト数","us.requestsSub":"API呼び出し合計",
+    "us.promptTokens":"プロンプトトークン","us.promptTokensSub":"AIモデルへの入力",
+    "us.completionTokens":"コンプリーショントークン","us.completionTokensSub":"AIモデルからの出力",
+    "us.avgPerReq":"平均トークン/リクエスト","us.avgPerReqSub":"合計÷リクエスト数",
+    "us.lastUpdated":"最終アクティビティ：","us.latestTs":"最新使用タイムスタンプ"
+  },
+  zh: {
+    "nav.top":"首页","nav.howItWorks":"工作原理","nav.pricing":"定价","nav.compare":"对比","nav.about":"关于","nav.contact":"联系","nav.news":"新闻","nav.cta":"预约名额",
+    "footer.tagline":"录制。交付。完成。","footer.product":"产品","footer.howItWorks":"工作原理","footer.pricing":"定价","footer.compare":"对比","footer.integrations":"集成","footer.security":"安全","footer.company":"公司","footer.about":"关于","footer.careers":"招聘","footer.press":"媒体","footer.contact":"联系","footer.status":"状态","footer.legal":"法律","footer.privacy":"隐私政策","footer.terms":"服务条款",
+    "us.h1":"使用统计","us.sub":"来自SIMY AI引擎的实时令牌消耗指标。",
+    "us.loading":"正在加载使用数据…","us.errTitle":"无法加载使用数据","us.errMsg":"无法连接到使用统计服务，请重试。","us.retry":"重试",
+    "us.emptyTitle":"暂无使用数据","us.emptyMsg":"第一个AI任务处理完成后，令牌使用指标将显示在这里。",
+    "us.totalTokens":"总消耗令牌","us.totalTokensSub":"所有请求的提示词+补全令牌",
+    "us.requests":"请求数","us.requestsSub":"API调用总数",
+    "us.promptTokens":"提示词令牌","us.promptTokensSub":"AI模型输入",
+    "us.completionTokens":"补全令牌","us.completionTokensSub":"AI模型输出",
+    "us.avgPerReq":"平均令牌/请求","us.avgPerReqSub":"总计÷请求数",
+    "us.lastUpdated":"最近活动：","us.latestTs":"最新使用时间戳"
+  },
+  hi: {
+    "nav.top":"होम","nav.howItWorks":"कैसे काम करता है","nav.pricing":"मूल्य","nav.compare":"तुलना","nav.about":"हमारे बारे में","nav.contact":"संपर्क","nav.news":"समाचार","nav.cta":"अपनी जगह आरक्षित करें",
+    "footer.tagline":"रिकॉर्ड। शिप। हो गया।","footer.product":"उत्पाद","footer.howItWorks":"कैसे काम करता है","footer.pricing":"मूल्य","footer.compare":"तुलना","footer.integrations":"एकीकरण","footer.security":"सुरक्षा","footer.company":"कंपनी","footer.about":"हमारे बारे में","footer.careers":"करियर","footer.press":"प्रेस","footer.contact":"संपर्क","footer.status":"स्थिति","footer.legal":"कानूनी","footer.privacy":"गोपनीयता नीति","footer.terms":"सेवा की शर्तें",
+    "us.h1":"उपयोग आँकड़े","us.sub":"SIMY AI इंजन से रियल-टाइम टोकन उपयोग मेट्रिक्स।",
+    "us.loading":"उपयोग डेटा लोड हो रहा है…","us.errTitle":"उपयोग डेटा लोड करने में असमर्थ","us.errMsg":"उपयोग सांख्यिकी सेवा से कनेक्ट नहीं हो सका। कृपया पुनः प्रयास करें।","us.retry":"पुनः प्रयास",
+    "us.emptyTitle":"अभी कोई उपयोग डेटा नहीं","us.emptyMsg":"आपका पहला AI कार्य संसाधित होने के बाद टोकन उपयोग यहाँ दिखाई देगा।",
+    "us.totalTokens":"कुल टोकन उपयोग","us.totalTokensSub":"सभी अनुरोधों में प्रॉम्प्ट + कम्पलीशन",
+    "us.requests":"अनुरोध","us.requestsSub":"कुल API कॉल",
+    "us.promptTokens":"प्रॉम्प्ट टोकन","us.promptTokensSub":"AI मॉडल को इनपुट",
+    "us.completionTokens":"कम्पलीशन टोकन","us.completionTokensSub":"AI मॉडल से आउटपुट",
+    "us.avgPerReq":"औसत टोकन/अनुरोध","us.avgPerReqSub":"कुल ÷ अनुरोध",
+    "us.lastUpdated":"अंतिम गतिविधि: ","us.latestTs":"नवीनतम उपयोग टाइमस्टैम्प"
+  },
+  es: {
+    "nav.top":"Inicio","nav.howItWorks":"Cómo Funciona","nav.pricing":"Precios","nav.compare":"Comparar","nav.about":"Nosotros","nav.contact":"Contacto","nav.news":"Noticias","nav.cta":"Reserva tu Lugar",
+    "footer.tagline":"Graba. Envía. Listo.","footer.product":"Producto","footer.howItWorks":"Cómo Funciona","footer.pricing":"Precios","footer.compare":"Comparar","footer.integrations":"Integraciones","footer.security":"Seguridad","footer.company":"Empresa","footer.about":"Nosotros","footer.careers":"Empleo","footer.press":"Prensa","footer.contact":"Contacto","footer.status":"Estado","footer.legal":"Legal","footer.privacy":"Política de Privacidad","footer.terms":"Términos de Servicio",
+    "us.h1":"Estadísticas de Uso","us.sub":"Métricas de consumo de tokens en tiempo real del motor SIMY AI.",
+    "us.loading":"Cargando datos de uso…","us.errTitle":"No se pueden cargar los datos","us.errMsg":"No se pudo conectar al servicio de estadísticas. Inténtalo de nuevo.","us.retry":"Reintentar",
+    "us.emptyTitle":"Sin datos de uso aún","us.emptyMsg":"Las métricas de tokens aparecerán aquí una vez procesada tu primera tarea.",
+    "us.totalTokens":"Tokens Totales Consumidos","us.totalTokensSub":"Prompt + completions en todas las solicitudes",
+    "us.requests":"Solicitudes","us.requestsSub":"Total de llamadas a la API",
+    "us.promptTokens":"Tokens de Prompt","us.promptTokensSub":"Entrada al modelo AI",
+    "us.completionTokens":"Tokens de Completion","us.completionTokensSub":"Salida del modelo AI",
+    "us.avgPerReq":"Tokens Promedio / Solicitud","us.avgPerReqSub":"Total ÷ solicitudes",
+    "us.lastUpdated":"Última actividad: ","us.latestTs":"Último timestamp de uso"
+  },
+  ar: {
+    "nav.top":"الرئيسية","nav.howItWorks":"كيف يعمل","nav.pricing":"الأسعار","nav.compare":"مقارنة","nav.about":"عن الشركة","nav.contact":"اتصل بنا","nav.news":"أخبار","nav.cta":"احجز مكانك",
+    "footer.tagline":"سجّل. أرسل. انتهى.","footer.product":"المنتج","footer.howItWorks":"كيف يعمل","footer.pricing":"الأسعار","footer.compare":"مقارنة","footer.integrations":"التكامل","footer.security":"الأمان","footer.company":"الشركة","footer.about":"عن الشركة","footer.careers":"الوظائف","footer.press":"الصحافة","footer.contact":"اتصل بنا","footer.status":"الحالة","footer.legal":"قانوني","footer.privacy":"سياسة الخصوصية","footer.terms":"شروط الخدمة",
+    "us.h1":"إحصائيات الاستخدام","us.sub":"مقاييس استهلاك الرموز في الوقت الفعلي من محرك SIMY AI.",
+    "us.loading":"جارٍ تحميل بيانات الاستخدام…","us.errTitle":"تعذّر تحميل بيانات الاستخدام","us.errMsg":"تعذّر الاتصال بخدمة الإحصائيات. يرجى المحاولة مجدداً.","us.retry":"إعادة المحاولة",
+    "us.emptyTitle":"لا توجد بيانات استخدام بعد","us.emptyMsg":"ستظهر مقاييس استهلاك الرموز هنا بعد معالجة أول مهمة ذكاء اصطناعي.",
+    "us.totalTokens":"إجمالي الرموز المستهلكة","us.totalTokensSub":"رموز الطلب + الإكمال عبر جميع الطلبات",
+    "us.requests":"الطلبات","us.requestsSub":"إجمالي استدعاءات API",
+    "us.promptTokens":"رموز الطلب","us.promptTokensSub":"مدخلات نموذج الذكاء الاصطناعي",
+    "us.completionTokens":"رموز الإكمال","us.completionTokensSub":"مخرجات نموذج الذكاء الاصطناعي",
+    "us.avgPerReq":"متوسط الرموز / طلب","us.avgPerReqSub":"الإجمالي ÷ الطلبات",
+    "us.lastUpdated":"آخر نشاط: ","us.latestTs":"أحدث طابع زمني للاستخدام"
+  }
+};
+function setLanguage(lang, manual) {
+  document.documentElement.lang = lang;
+  document.body.classList.toggle('rtl', lang === 'ar');
+  document.getElementById('langSelect').value = lang;
+  localStorage.setItem('simy-lang', lang);
+  if (manual) localStorage.setItem('simy-lang-manual', '1');
+  const dict = T[lang];
+  if (!dict) return;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (dict[key] !== undefined) el.textContent = dict[key];
+  });
+}
+(function() {
+  const stored = localStorage.getItem('simy-lang');
+  const manual = localStorage.getItem('simy-lang-manual');
+  if (stored && manual) { setLanguage(stored, false); return; }
+  const browserLang = navigator.language ? navigator.language.split('-')[0] : 'en';
+  const supported = ['en','ja','zh','hi','es','ar'];
+  setLanguage(supported.includes(browserLang) ? browserLang : 'en', false);
+})();
+
+// ─── Usage Statistics fetch ───────────────────────────────────────────────────
+
+/**
+ * Expected API response from GET /api/usage/stats:
+ * {
+ *   "request_count":   number,   // total number of LLM API calls
+ *   "prompt_tokens":   number,   // sum of prompt_tokens from llm_token_usage
+ *   "completion_tokens": number, // sum of completion_tokens from llm_token_usage
+ *   "total_tokens":    number,   // sum of total_tokens (or prompt + completion)
+ *   "latest_usage_at": string    // ISO 8601 timestamp of most recent row
+ * }
+ * When no rows exist the endpoint should return:
+ * { "request_count": 0, "prompt_tokens": 0, "completion_tokens": 0,
+ *   "total_tokens": 0, "latest_usage_at": null }
+ */
+var USAGE_API_URL = '/api/usage/stats';
+
+function showState(name) {
+  ['Loading','Error','Empty','Data'].forEach(function(s) {
+    var el = document.getElementById('state' + s);
+    if (el) el.style.display = (s === name) ? '' : 'none';
+  });
+}
+
+function formatNumber(n) {
+  if (n === null || n === undefined) return '—';
+  return n.toLocaleString('en-US');
+}
+
+function formatTimestamp(iso) {
+  if (!iso) return '—';
+  var d = new Date(iso);
+  if (isNaN(d.getTime())) return iso;
+  return d.toLocaleString('en-US', {
+    year: 'numeric', month: 'short', day: 'numeric',
+    hour: '2-digit', minute: '2-digit', second: '2-digit',
+    timeZoneName: 'short'
+  });
+}
+
+function renderData(data) {
+  var requestCount   = typeof data.request_count   === 'number' ? data.request_count   : 0;
+  var promptTokens   = typeof data.prompt_tokens   === 'number' ? data.prompt_tokens   : 0;
+  var completionTokens = typeof data.completion_tokens === 'number' ? data.completion_tokens : 0;
+  var totalTokens    = typeof data.total_tokens    === 'number' ? data.total_tokens    : (promptTokens + completionTokens);
+  var latestAt       = data.latest_usage_at || null;
+
+  if (requestCount === 0 && totalTokens === 0) {
+    showState('Empty');
+    return;
+  }
+
+  var avgTokens = requestCount > 0 ? Math.round(totalTokens / requestCount) : 0;
+  var tsFormatted = formatTimestamp(latestAt);
+
+  document.getElementById('metricTotalTokens').textContent    = formatNumber(totalTokens);
+  document.getElementById('metricRequestCount').textContent   = formatNumber(requestCount);
+  document.getElementById('metricPromptTokens').textContent   = formatNumber(promptTokens);
+  document.getElementById('metricCompletionTokens').textContent = formatNumber(completionTokens);
+  document.getElementById('metricAvgTokens').textContent      = formatNumber(avgTokens);
+
+  var latestAtEl     = document.getElementById('metricLatestAt');
+  var latestAtMonoEl = document.getElementById('metricLatestAtMono');
+  latestAtEl.textContent     = tsFormatted;
+  latestAtMonoEl.textContent = latestAt || '—';
+  if (latestAt) {
+    latestAtEl.setAttribute('datetime', latestAt);
+    latestAtMonoEl.setAttribute('datetime', latestAt);
+  }
+
+  showState('Data');
+}
+
+function loadUsageStats() {
+  showState('Loading');
+
+  fetch(USAGE_API_URL, {
+    method: 'GET',
+    headers: { 'Accept': 'application/json' },
+    credentials: 'same-origin'
+  })
+  .then(function(response) {
+    if (!response.ok) {
+      return response.text().then(function(body) {
+        throw new Error('HTTP ' + response.status + ': ' + (body || response.statusText));
+      });
+    }
+    return response.json();
+  })
+  .then(function(data) {
+    renderData(data);
+  })
+  .catch(function(err) {
+    console.error('[usage-stats] fetch failed:', err);
+    var msgEl = document.getElementById('errorMessage');
+    if (msgEl && err && err.message) {
+      var lang = document.documentElement.lang || 'en';
+      var base = (T[lang] && T[lang]['us.errMsg']) || T.en['us.errMsg'];
+      msgEl.textContent = base + (err.message ? ' (' + err.message + ')' : '');
+    }
+    showState('Error');
+  });
+}
+
+// Kick off fetch on page load
+loadUsageStats();
+</script>
+
+</body>
+</html>
