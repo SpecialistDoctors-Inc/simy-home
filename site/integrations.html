@@ -21,7 +21,7 @@
 <meta name="twitter:description" content="Connect GitHub, Slack, Zoom, and more.">
 <meta name="twitter:image" content="https://simy.one/ogp.png">
 <meta name="robots" content="index, follow">
-<meta name="theme-color" content="#0a0a1a">
+<meta name="theme-color" content="#f9f9f6">
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,61 +29,61 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-:root{--deep-navy:#0a0a1a;--navy:#0e0e24;--mint:#7EEDC6;--mint-dim:rgba(126,237,198,0.08);--sky:#4A9FE8;--white:#f0f0f8;--gray:#7a7a9e;--gray-light:#b0b0cc;--accent-gradient:linear-gradient(135deg,#7EEDC6 0%,#4A9FE8 100%)}
-html{font-size:16px}body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--deep-navy);color:var(--white);line-height:1.6;-webkit-font-smoothing:antialiased}
-a:focus-visible{outline:2px solid var(--mint);outline-offset:3px;border-radius:4px}
-nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:18px 0;background:rgba(10,10,26,0.92);backdrop-filter:blur(24px) saturate(1.2);-webkit-backdrop-filter:blur(24px) saturate(1.2);border-bottom:1px solid rgba(126,237,198,0.04)}
+:root{--bg:#f9f9f6;--card:#ffffff;--primary:#5B5FC7;--primary-light:#7B7FD7;--primary-dim:rgba(91,95,199,0.08);--foreground:#141414;--muted-fg:#7a7a78;--muted-fg-light:#9a9a98;--border:#ddddd9;--accent-gradient:linear-gradient(135deg,#5B5FC7 0%,#7B7FD7 100%)}
+html{font-size:16px}body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--foreground);line-height:1.6;-webkit-font-smoothing:antialiased}
+a:focus-visible{outline:2px solid var(--primary);outline-offset:3px;border-radius:4px}
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:18px 0;background:rgba(249,249,246,0.92);backdrop-filter:blur(24px) saturate(1.2);-webkit-backdrop-filter:blur(24px) saturate(1.2);border-bottom:1px solid rgba(0,0,0,0.06)}
 .nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1140px;margin:0 auto;padding:0 clamp(24px,4vw,60px)}
-.nav-logo{display:flex;align-items:center;gap:6px;text-decoration:none;color:var(--white)}
+.nav-logo{display:flex;align-items:center;gap:6px;text-decoration:none;color:var(--foreground)}
 .nav-logo-icon{width:40px;height:40px;border-radius:10px;overflow:hidden;flex-shrink:0}
 .nav-logo-icon img{width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block}
 .nav-logo-text{display:flex;flex-direction:column;line-height:1.1}
 .nav-logo-text .nav-brand{font-weight:800;font-size:1.25rem;letter-spacing:0.04em}
-.nav-logo-text .nav-tagline{font-size:0.5rem;font-weight:500;letter-spacing:0.08em;color:var(--gray);text-transform:uppercase}
+.nav-logo-text .nav-tagline{font-size:0.5rem;font-weight:500;letter-spacing:0.08em;color:var(--muted-fg);text-transform:uppercase}
 
 .nav-links{display:flex;gap:28px;align-items:center}
-.nav-links a{color:var(--gray);text-decoration:none;font-size:0.85rem;font-weight:500;transition:color 0.2s}
-.nav-links a:hover{color:var(--white)}
-.mobile-menu-btn{display:none;background:none;border:none;color:var(--white);cursor:pointer;padding:4px}
-.lang-select{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:var(--white);font-size:0.8rem;font-weight:500;padding:6px 10px;border-radius:6px;cursor:pointer;font-family:'Inter',sans-serif;outline:none;transition:border-color 0.2s}
-.lang-select:hover,.lang-select:focus{border-color:rgba(126,237,198,0.3)}
-.lang-select option{background:var(--deep-navy);color:var(--white)}
-.nav-cta{padding:9px 22px;border-radius:8px;background:var(--accent-gradient);color:var(--deep-navy) !important;font-weight:700 !important;font-size:.85rem !important;transition:all .2s}
+.nav-links a{color:var(--muted-fg);text-decoration:none;font-size:0.85rem;font-weight:500;transition:color 0.2s}
+.nav-links a:hover{color:var(--foreground)}
+.mobile-menu-btn{display:none;background:none;border:none;color:var(--foreground);cursor:pointer;padding:4px}
+.lang-select{background:rgba(0,0,0,0.04);border:1px solid rgba(0,0,0,0.1);color:var(--foreground);font-size:0.8rem;font-weight:500;padding:6px 10px;border-radius:6px;cursor:pointer;font-family:'Inter',sans-serif;outline:none;transition:border-color 0.2s}
+.lang-select:hover,.lang-select:focus{border-color:rgba(91,95,199,0.3)}
+.lang-select option{background:var(--bg);color:var(--foreground)}
+.nav-cta{padding:9px 22px;border-radius:8px;background:var(--accent-gradient);color:#fff !important;font-weight:700 !important;font-size:.85rem !important;transition:all .2s}
 .nav-cta:hover{opacity:.92;transform:translateY(-1px)}
 .footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
 .footer-col{display:flex;flex-direction:column;gap:10px}
-.footer-col-title{font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--white);margin-bottom:4px}
-.footer-col a{color:var(--gray);text-decoration:none;font-size:0.85rem;transition:color 0.2s}
-.footer-col a:hover{color:var(--mint)}
-.footer-bottom{padding-top:24px;border-top:1px solid rgba(255,255,255,0.04);font-size:0.75rem;color:var(--gray);text-align:center}
-@media(max-width:768px){.nav-links{display:none;position:fixed;top:56px;right:0;left:0;background:rgba(10,10,26,0.97);flex-direction:column;padding:24px;gap:16px;z-index:999;backdrop-filter:blur(20px)}.nav-links.active{display:flex}.mobile-menu-btn{display:block}.footer-grid{grid-template-columns:1fr 1fr;gap:24px}.footer-brand{grid-column:1/-1;text-align:center}}
+.footer-col-title{font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--foreground);margin-bottom:4px}
+.footer-col a{color:var(--muted-fg);text-decoration:none;font-size:0.85rem;transition:color 0.2s}
+.footer-col a:hover{color:var(--primary)}
+.footer-bottom{padding-top:24px;border-top:1px solid rgba(0,0,0,0.06);font-size:0.75rem;color:var(--muted-fg);text-align:center}
+@media(max-width:768px){.nav-links{display:none;position:fixed;top:56px;right:0;left:0;background:rgba(249,249,246,0.97);flex-direction:column;padding:24px;gap:16px;z-index:999;backdrop-filter:blur(20px)}.nav-links.active{display:flex}.mobile-menu-btn{display:block}.footer-grid{grid-template-columns:1fr 1fr;gap:24px}.footer-brand{grid-column:1/-1;text-align:center}}
 .container{max-width:1140px;margin:0 auto;padding:0 clamp(24px,4vw,60px)}
 .page-hero{padding:140px 0 60px;text-align:center}
 .page-hero h1{font-size:clamp(2rem,5vw,3rem);font-weight:900;letter-spacing:-0.03em;margin-bottom:16px;background:var(--accent-gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.page-hero p{color:var(--gray-light);font-size:1.1rem;max-width:600px;margin:0 auto}
+.page-hero p{color:var(--muted-fg);font-size:1.1rem;max-width:600px;margin:0 auto}
 
 .int-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;padding-bottom:60px}
-.int-card{padding:32px 28px;background:var(--navy);border:1px solid rgba(126,237,198,0.08);border-radius:16px;transition:border-color 0.3s}
-.int-card:hover{border-color:rgba(126,237,198,0.2)}
+.int-card{padding:32px 28px;background:var(--card);border:1px solid rgba(0,0,0,0.06);border-radius:16px;transition:border-color 0.3s}
+.int-card:hover{border-color:rgba(91,95,199,0.15)}
 .int-card .int-icon{font-size:2.2rem;margin-bottom:16px}
 .int-card h2{font-size:1.2rem;font-weight:800;margin-bottom:8px}
-.int-card p{font-size:0.9rem;color:var(--gray-light);line-height:1.7;margin-bottom:16px}
+.int-card p{font-size:0.9rem;color:var(--muted-fg-light);line-height:1.7;margin-bottom:16px}
 .int-features{list-style:none}
-.int-features li{padding:6px 0 6px 20px;position:relative;font-size:0.85rem;color:var(--gray-light)}
-.int-features li::before{content:'✓';position:absolute;left:0;color:var(--mint);font-weight:700}
+.int-features li{padding:6px 0 6px 20px;position:relative;font-size:0.85rem;color:var(--muted-fg-light)}
+.int-features li::before{content:'✓';position:absolute;left:0;color:var(--primary);font-weight:700}
 
-.coming-soon{padding:40px 0 80px;text-align:center;border-top:1px solid rgba(255,255,255,0.06)}
+.coming-soon{padding:40px 0 80px;text-align:center;border-top:1px solid rgba(0,0,0,0.06)}
 .coming-soon h2{font-size:1.4rem;font-weight:800;margin-bottom:16px}
-.coming-soon p{color:var(--gray-light);font-size:0.95rem;margin-bottom:24px}
+.coming-soon p{color:var(--muted-fg-light);font-size:0.95rem;margin-bottom:24px}
 .coming-tags{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.coming-tag{padding:8px 20px;border-radius:8px;border:1px solid rgba(126,237,198,0.15);font-size:0.85rem;color:var(--gray-light)}
+.coming-tag{padding:8px 20px;border-radius:8px;border:1px solid rgba(0,0,0,0.08);font-size:0.85rem;color:var(--muted-fg-light)}
 
-footer{padding:48px 0 36px;border-top:1px solid rgba(255,255,255,0.04)}
+footer{padding:48px 0 36px;border-top:1px solid rgba(0,0,0,0.06)}
 .footer-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px}
 .footer-tagline{font-size:1rem;font-weight:700;letter-spacing:-0.02em}
-.footer-right{display:flex;align-items:center;gap:20px;font-size:0.75rem;color:var(--gray)}
-.footer-right a{color:var(--gray);text-decoration:none;transition:color 0.2s}
-.footer-right a:hover{color:var(--mint)}
+.footer-right{display:flex;align-items:center;gap:20px;font-size:0.75rem;color:var(--muted-fg)}
+.footer-right a{color:var(--muted-fg);text-decoration:none;transition:color 0.2s}
+.footer-right a:hover{color:var(--primary)}
 .footer-sep{opacity:0.3}
 @media(max-width:768px){.int-grid{grid-template-columns:1fr}.footer-inner{flex-direction:column;text-align:center}}
 </style>
@@ -242,7 +242,7 @@ footer{padding:48px 0 36px;border-top:1px solid rgba(255,255,255,0.04)}
   </div>
 </footer>
 
-<div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:rgba(14,14,36,0.98);border-top:1px solid rgba(126,237,198,0.15);padding:16px 24px;backdrop-filter:blur(20px)"><div style="max-width:1140px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap"><p style="color:#b0b0cc;font-size:0.85rem;margin:0;flex:1;min-width:200px">We use cookies to improve your experience. See our <a href="privacy.html" style="color:#7EEDC6">Privacy Policy</a>.</p><div style="display:flex;gap:10px"><button onclick="setCookieConsent(false)" style="padding:8px 20px;border-radius:6px;border:1px solid rgba(126,237,198,0.3);background:transparent;color:#b0b0cc;cursor:pointer;font-size:0.85rem">Decline</button><button onclick="setCookieConsent(true)" style="padding:8px 20px;border-radius:6px;border:none;background:linear-gradient(135deg,#7EEDC6,#4A9FE8);color:#0a0a1a;font-weight:700;cursor:pointer;font-size:0.85rem">Accept</button></div></div></div>
+<div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:rgba(249,249,246,0.98);border-top:1px solid rgba(0,0,0,0.06);padding:16px 24px;backdrop-filter:blur(20px)"><div style="max-width:1140px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap"><p style="color:#7a7a78;font-size:0.85rem;margin:0;flex:1;min-width:200px">We use cookies to improve your experience. See our <a href="privacy.html" style="color:#5B5FC7">Privacy Policy</a>.</p><div style="display:flex;gap:10px"><button onclick="setCookieConsent(false)" style="padding:8px 20px;border-radius:6px;border:1px solid rgba(0,0,0,0.15);background:transparent;color:#7a7a78;cursor:pointer;font-size:0.85rem">Decline</button><button onclick="setCookieConsent(true)" style="padding:8px 20px;border-radius:6px;border:none;background:linear-gradient(135deg,#5B5FC7,#7B7FD7);color:#fff;font-weight:700;cursor:pointer;font-size:0.85rem">Accept</button></div></div></div>
 <script>function setCookieConsent(v){localStorage.setItem('simy-cookies',v?'1':'0');document.getElementById('cookieBanner').style.display='none'}if(!localStorage.getItem('simy-cookies'))document.getElementById('cookieBanner').style.display='block'</script>
 <script>
 // i18n for subpages (nav + footer)
