@@ -507,9 +507,67 @@
         if (node.nodeValue !== next) node.nodeValue = next;
       }
       ROOT_NODE_MAP._list = alive;
+      // Inject the Product Dashboard visual above the "What is SIMY" section.
+      // Idempotent and guarded by ROOT_APPLYING so the observer ignores it.
+      injectDashboardVisual(root);
     } finally {
       ROOT_APPLYING = false;
     }
+  }
+
+  /* ── Home #root bridge: inject a Product Dashboard visual above
+        the "03 / What is SIMY" section. Idempotent — safe to call on
+        every applyRoot() pass. ─────────────────────────────────── */
+  function injectDashboardVisual(root) {
+    if (!root) return;
+    if (document.getElementById('simy-dashboard-visual')) return;
+    if (!ROOT_NODE_MAP || !ROOT_NODE_MAP._list) return;
+
+    var anchor = null;
+    var list = ROOT_NODE_MAP._list;
+    for (var i = 0; i < list.length; i++) {
+      var node = list[i];
+      if (!node || !node.isConnected) continue;
+      var orig = ROOT_NODE_MAP.get(node);
+      if (orig && orig.indexOf('03 / What is SIMY') === 0) {
+        anchor = node;
+        break;
+      }
+    }
+    if (!anchor) return;
+
+    // Walk up to the nearest <section> ancestor — that's the What is SIMY block.
+    var section = anchor.parentNode;
+    while (section && section !== root && section.tagName !== 'SECTION') {
+      section = section.parentNode;
+    }
+    if (!section || section === root || !section.parentNode) return;
+
+    var fig = document.createElement('figure');
+    fig.id = 'simy-dashboard-visual';
+    fig.className = 'simy-dashboard-visual';
+    fig.innerHTML =
+      '<img src="/assets/hero-dashboard-yoshi.png" ' +
+      'alt="SIMY Product Dashboard — Yoshi Tamura, Principal PM" ' +
+      'loading="lazy" decoding="async" />';
+    section.parentNode.insertBefore(fig, section);
+  }
+
+  /* ── Home #root bridge: inject the dashboard visual's CSS once. ── */
+  function injectDashboardVisualStyles() {
+    if (document.getElementById('simy-dashboard-visual-styles')) return;
+    var style = document.createElement('style');
+    style.id = 'simy-dashboard-visual-styles';
+    style.textContent =
+      '.simy-dashboard-visual{margin:48px auto 72px;max-width:1180px;' +
+      'padding:0 24px;}' +
+      '.simy-dashboard-visual img{display:block;width:100%;height:auto;' +
+      'border-radius:20px;box-shadow:0 40px 120px -40px rgba(12,12,28,0.4),' +
+      '0 2px 8px rgba(0,0,0,0.06);}' +
+      '@media (max-width:768px){' +
+      '.simy-dashboard-visual{margin:32px auto 56px;padding:0 16px;}' +
+      '.simy-dashboard-visual img{border-radius:14px;}}';
+    document.head.appendChild(style);
   }
 
   /* ── Home #root bridge: MutationObserver re-applies on React renders ── */
@@ -536,6 +594,7 @@
   function initHomeDomBridge() {
     // Only run on pages that have a React SPA root (#root)
     if (!document.getElementById('root')) return;
+    injectDashboardVisualStyles();
     loadHomeDom(CURRENT_LANG, function () {
       applyRoot(CURRENT_LANG);
       setupRootObserver();
