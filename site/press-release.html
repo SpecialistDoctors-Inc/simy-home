@@ -209,67 +209,109 @@ function loadGA(){
 }
 if(localStorage.getItem('simy-cookies')==='1') loadGA();
 </script>
+    <style>
+      /* Hide React SPA's built-in nav and footer */
+      #root > div > nav { display: none !important; }
+      #root footer { display: none !important; }
+      /* Override React container to match static pages */
+      #root .container {
+        max-width: 1280px !important;
+        padding-left: 4rem !important;
+        padding-right: 4rem !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
+    </style>
+    <script type="module" crossorigin src="/assets/index-DnVveaIK.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-BwUIJj-q.css">
 </head>
 <body>
+    <!-- Force full navigation for static subpages -->
+    <script>
+    document.addEventListener('click', function(e) {
+      var a = e.target.closest('a');
+      if (!a) return;
+      var pages = ['/careers.html','/status.html','/privacy.html','/terms.html',
+                   '/how-it-works.html','/integrations.html','/security.html','/press-release.html'];
+      try {
+        var p = new URL(a.href, location.origin).pathname;
+        if (pages.indexOf(p) !== -1) {
+          e.preventDefault();
+          e.stopPropagation();
+          window.location.href = a.href;
+        }
+      } catch(err) {}
+    }, true);
+    </script>
+    <!-- Static nav — same code as all other pages -->
+    <nav class="static-nav" id="staticNav">
+      <div class="nav-inner">
+        <a href="/" class="nav-logo">
+          <div class="nav-logo-s">S</div>
+          <span class="nav-brand">SIMY</span>
+          <span class="nav-version">v3.0</span>
+        </a>
+        <div class="nav-links" id="navLinks">
+          <a href="/" data-i18n="nav.home">Home</a>
+          <a href="/pricing.html" data-i18n="nav.pricing">Pricing</a>
+          <a href="/compare.html" data-i18n="nav.compare">Compare</a>
+          <a href="/about.html" data-i18n="nav.about">About</a>
+          <a href="/press-release.html" data-i18n="nav.news">News</a>
+        </div>
+        <div class="nav-right">
+          <a href="#" class="nav-signin" data-i18n="nav.signin">Sign in</a>
+          <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" class="btn-primary" target="_blank" rel="noopener" data-i18n="nav.cta">Request Access</a>
+        </div>
+        <button class="mobile-menu-btn" onclick="document.getElementById('navLinks').classList.toggle('active')" aria-label="Toggle menu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+      </div>
+    </nav>
+    <script>
+    window.addEventListener('scroll', function() {
+      var nav = document.getElementById('staticNav');
+      if (window.scrollY > 10) { nav.classList.add('scrolled'); }
+      else { nav.classList.remove('scrolled'); }
+    });
+    </script>
+    <div id="root" style="display:none!important"></div>
 
-<nav>
-  <div class="nav-inner">
-    <a href="/" class="nav-logo">
-      <div class="nav-logo-s">S</div>
-      <span class="nav-brand">SIMY</span>
-      <span class="nav-version">v3.0</span>
-    </a>
-    <div class="nav-links" id="navLinks">
-      <a href="/" data-i18n="nav.home">Home</a>
-      <a href="/pricing.html" data-i18n="nav.pricing">Pricing</a>
-      <a href="/compare.html" data-i18n="nav.compare">Compare</a>
-      <a href="/about.html" data-i18n="nav.about">About</a>
-      <a href="/press-release.html" data-i18n="nav.news">News</a>
-    </div>
-    <div class="nav-right">
-      <a href="#" class="nav-signin" data-i18n="nav.signin">Sign in</a>
-      <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" class="btn-primary" target="_blank" rel="noopener" data-i18n="nav.cta">Request Access</a>
-    </div>
-    <button class="mobile-menu-btn" onclick="document.getElementById('navLinks').classList.toggle('active')" aria-label="Toggle menu">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-        <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
-      </svg>
-    </button>
-  </div>
-</nav>
+    <!-- Static page content -->
 
 <div class="container">
   <div class="page-hero">
-    <p class="pr-meta" data-i18n-html="pr.meta">PRESS RELEASE &middot; FOR IMMEDIATE RELEASE</p>
-    <h1 id="prTitle" data-i18n="pr.title">SIMY Launches Platform for Building AI-Native Engineering Organizations</h1>
-    <p class="pr-subtitle" id="prSubtitle" data-i18n-html="pr.subtitle">Autonomous code generation from workplace conversations shifts every engineering role from execution to decision-making &mdash; delivering 17.7x more pull requests per engineer with 86.7% first-shot accuracy</p>
-    <p class="pr-meta" id="prDate" data-i18n-html="pr.date">San Francisco, CA &mdash; March 2026</p>
+    <p class="pr-meta">PRESS RELEASE &middot; FOR IMMEDIATE RELEASE</p>
+    <h1 id="prTitle">SIMY Launches Platform for Building AI-Native Engineering Organizations</h1>
+    <p class="pr-subtitle" id="prSubtitle">Autonomous code generation from workplace conversations shifts every engineering role from execution to decision-making &mdash; delivering 17.7x more pull requests per engineer with 86.7% first-shot accuracy</p>
+    <p class="pr-meta" id="prDate">San Francisco, CA &mdash; March 2026</p>
   </div>
 
   <!-- ===== ENGLISH VERSION ===== -->
   <article class="pr-article" id="prEn" data-lang="en">
-    <p data-i18n-html="pr.p1">SIMY, a developer productivity company, today announced the launch of its AI-powered software development platform that autonomously generates production-ready code directly from workplace conversations. The system captures discussions across Slack, Microsoft Teams, Gmail, and Zoom, automatically creating and maintaining a structured database of engineering tasks. Generated code is submitted as pull requests to the team's GitHub repository &mdash; eliminating the gap between what teams decide in meetings and what gets built.</p>
+    <p>SIMY, a developer productivity company, today announced the launch of its AI-powered software development platform that autonomously generates production-ready code directly from workplace conversations. The system captures discussions across Slack, Microsoft Teams, Gmail, and Zoom, automatically creating and maintaining a structured database of engineering tasks. Generated code is submitted as pull requests to the team's GitHub repository &mdash; eliminating the gap between what teams decide in meetings and what gets built.</p>
 
-    <h2 data-i18n="pr.h2.1">The Conversation-to-Code Pipeline</h2>
-    <p data-i18n-html="pr.p2">At the core of SIMY is a proprietary conversation-capture engine. Teams choose which channels to connect &mdash; specific Slack channels, Teams groups, Gmail threads, or Zoom meeting recordings &mdash; and the engine indexes only those opted-in sources. Unlike conventional AI coding assistants that require engineers to write detailed prompts, SIMY extracts requirements, specifications, and technical decisions directly from the natural flow of team discussions.</p>
-    <p data-i18n-html="pr.p3">The captured data feeds into what the company calls its Action Database &mdash; a continuously updated repository of engineering tasks, each enriched with full conversational context: who requested the feature, what constraints were discussed, which architectural decisions were made, and why specific trade-offs were chosen.</p>
-    <p data-i18n-html="pr.p4">Each action also carries a clearly defined Done State &mdash; a conversation-derived specification of what "complete" looks like for that particular task. SIMY extracts acceptance conditions directly from team discussions, including expected behavior, edge cases, performance thresholds, and integration points. This enables the AI to verify its own output against the team's actual expectations before submitting a pull request.</p>
-    <p data-i18n-html="pr.p5">Together, the contextual layer and the Done State definition ensure that generated code reflects not just what needs to be built but why and when it is done &mdash; preserving institutional knowledge that is typically lost between meetings and implementation, and dramatically reducing review cycles and rework.</p>
+    <h2>The Conversation-to-Code Pipeline</h2>
+    <p>At the core of SIMY is a proprietary conversation-capture engine. Teams choose which channels to connect &mdash; specific Slack channels, Teams groups, Gmail threads, or Zoom meeting recordings &mdash; and the engine indexes only those opted-in sources. Unlike conventional AI coding assistants that require engineers to write detailed prompts, SIMY extracts requirements, specifications, and technical decisions directly from the natural flow of team discussions.</p>
+    <p>The captured data feeds into what the company calls its Action Database &mdash; a continuously updated repository of engineering tasks, each enriched with full conversational context: who requested the feature, what constraints were discussed, which architectural decisions were made, and why specific trade-offs were chosen.</p>
+    <p>Each action also carries a clearly defined Done State &mdash; a conversation-derived specification of what "complete" looks like for that particular task. SIMY extracts acceptance conditions directly from team discussions, including expected behavior, edge cases, performance thresholds, and integration points. This enables the AI to verify its own output against the team's actual expectations before submitting a pull request.</p>
+    <p>Together, the contextual layer and the Done State definition ensure that generated code reflects not just what needs to be built but why and when it is done &mdash; preserving institutional knowledge that is typically lost between meetings and implementation, and dramatically reducing review cycles and rework.</p>
 
-    <h2 data-i18n="pr.h2.2">Measured Performance</h2>
+    <h2>Measured Performance</h2>
     <div class="highlight-box">
-      <p data-i18n-html="pr.p6">In internal benchmarks conducted across 30 production engineering tasks on a single mid-size codebase (Python/TypeScript, ~50k lines) &mdash; including database migrations, full-stack feature development, and API integrations &mdash; SIMY achieved an <strong>86.7% first-shot success rate</strong>, completing tasks autonomously without human intervention. The remaining 13.3% required one round of human feedback before passing review. The platform delivered a <strong>96.3% reduction</strong> in the number of messages typically required to complete engineering tasks, and engineers using SIMY produced <strong>17.7 times more pull requests per day</strong> compared to their baseline output on the same codebase.</p>
+      <p>In internal benchmarks conducted across 30 production engineering tasks on a single mid-size codebase (Python/TypeScript, ~50k lines) &mdash; including database migrations, full-stack feature development, and API integrations &mdash; SIMY achieved an <strong>86.7% first-shot success rate</strong>, completing tasks autonomously without human intervention. The remaining 13.3% required one round of human feedback before passing review. The platform delivered a <strong>96.3% reduction</strong> in the number of messages typically required to complete engineering tasks, and engineers using SIMY produced <strong>17.7 times more pull requests per day</strong> compared to their baseline output on the same codebase.</p>
     </div>
-    <p data-i18n="pr.p7">The average cost per autonomous task execution was $1.95, compared to an estimated $50 or more per hour for a software engineer performing the equivalent work manually.</p>
+    <p>The average cost per autonomous task execution was $1.95, compared to an estimated $50 or more per hour for a software engineer performing the equivalent work manually.</p>
 
-    <h2 data-i18n="pr.h2.3">How the System Works</h2>
-    <p data-i18n-html="pr.p8">SIMY operates in three stages. First, the platform connects to a team's existing communication infrastructure and automatically captures specifications, requirements, and decisions from ongoing conversations. Second, the AI engine processes captured data, decomposing discussions into discrete, actionable engineering tasks while preserving dependencies and priority assignments. Third, cloud-based AI agents autonomously write code, execute tests, and submit pull requests to the team's GitHub repository &mdash; ready for human review and merge.</p>
-    <p data-i18n-html="pr.p9">The platform also includes a Digital Twin feature &mdash; an AI agent that can answer questions about project progress, team priorities, and the rationale behind specific engineering decisions, drawing on the full history of captured conversations.</p>
+    <h2>How the System Works</h2>
+    <p>SIMY operates in three stages. First, the platform connects to a team's existing communication infrastructure and automatically captures specifications, requirements, and decisions from ongoing conversations. Second, the AI engine processes captured data, decomposing discussions into discrete, actionable engineering tasks while preserving dependencies and priority assignments. Third, cloud-based AI agents autonomously write code, execute tests, and submit pull requests to the team's GitHub repository &mdash; ready for human review and merge.</p>
+    <p>The platform also includes a Digital Twin feature &mdash; an AI agent that can answer questions about project progress, team priorities, and the rationale behind specific engineering decisions, drawing on the full history of captured conversations.</p>
 
-    <h2 data-i18n="pr.h2.4">How SIMY Differs from Existing AI Coding Tools</h2>
-    <p data-i18n-html="pr.p10">AI coding assistants such as GitHub Copilot, OpenAI Codex, and Claude Code have significantly accelerated individual developer productivity. However, these tools share a common architectural assumption: the engineer is the interface. A team discusses what to build, an engineer interprets that discussion, and then the engineer translates their interpretation into a prompt. The AI generates code based on that prompt alone. This workflow introduces variability at two critical points &mdash; the engineer's comprehension of the team's intent and their ability to express it as a precise instruction.</p>
-    <p data-i18n-html="pr.p11">SIMY removes this translation burden from engineers. Because the platform captures the original conversations directly, the AI receives the raw context &mdash; the full thread of discussion, the trade-offs debated, the edge cases flagged &mdash; and works from that primary source rather than a second-hand summary. Engineers no longer need to spend time re-encoding what the team already discussed into a prompt; they can focus on the architectural and design decisions where their expertise matters most.</p>
-    <p data-i18n-html="pr.p12">The platform goes further than literal transcription. SIMY's AI engine analyzes the organizational context surrounding each conversation &mdash; what problem the team is ultimately trying to solve, who the end users and personas of the system are, and what business objectives are at stake. Based on this analysis, the AI drafts a refined specification for the team to review before writing any code: surfacing ambiguities for resolution, inferring likely requirements from established patterns, and flagging where the implementation may diverge from the product's broader purpose. The team retains full approval authority over what gets built &mdash; but the specification they approve is sharper than what any individual could draft alone.</p>
+    <h2>How SIMY Differs from Existing AI Coding Tools</h2>
+    <p>AI coding assistants such as GitHub Copilot, OpenAI Codex, and Claude Code have significantly accelerated individual developer productivity. However, these tools share a common architectural assumption: the engineer is the interface. A team discusses what to build, an engineer interprets that discussion, and then the engineer translates their interpretation into a prompt. The AI generates code based on that prompt alone. This workflow introduces variability at two critical points &mdash; the engineer's comprehension of the team's intent and their ability to express it as a precise instruction.</p>
+    <p>SIMY removes this translation burden from engineers. Because the platform captures the original conversations directly, the AI receives the raw context &mdash; the full thread of discussion, the trade-offs debated, the edge cases flagged &mdash; and works from that primary source rather than a second-hand summary. Engineers no longer need to spend time re-encoding what the team already discussed into a prompt; they can focus on the architectural and design decisions where their expertise matters most.</p>
+    <p>The platform goes further than literal transcription. SIMY's AI engine analyzes the organizational context surrounding each conversation &mdash; what problem the team is ultimately trying to solve, who the end users and personas of the system are, and what business objectives are at stake. Based on this analysis, the AI drafts a refined specification for the team to review before writing any code: surfacing ambiguities for resolution, inferring likely requirements from established patterns, and flagging where the implementation may diverge from the product's broader purpose. The team retains full approval authority over what gets built &mdash; but the specification they approve is sharper than what any individual could draft alone.</p>
 
     <h2>The AI-Native Engineering Organization</h2>
     <p>SIMY proposes a new operating model for software teams. In every engineering role, roughly 90% of time has been spent on execution tasks &mdash; interpreting requirements, writing boilerplate, filing status updates &mdash; while the remaining 10% of decisions drive 90% of product outcomes. SIMY automates the former and augments the latter: the right column of the table below is not work that humans do alone, but work that humans do with AI as a thinking partner, leveraging the platform's organizational context to make sharper, faster, better-informed decisions.</p>
@@ -361,42 +403,43 @@ if(localStorage.getItem('simy-cookies')==='1') loadGA();
   </article>
 </div>
 
-<footer>
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <div class="footer-tagline" data-i18n="footer.tagline">Record. Ship. Done.</div>
-        <div class="footer-badges" style="display:flex;gap:12px;align-items:center;margin-top:12px">
-          <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" target="_blank" rel="noopener"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83" alt="Download on the App Store" style="height:36px"></a>
+    <!-- Static footer — same code as all other pages -->
+    <footer class="static-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <div style="font-size:1rem;font-weight:700;margin-bottom:6px;letter-spacing:-0.02em" data-i18n="footer.tagline">Record. Ship. Done.</div>
+            <div style="display:flex;gap:12px;align-items:center;margin-top:12px">
+              <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" target="_blank" rel="noopener"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83" alt="Download on the App Store" style="height:36px"></a>
+            </div>
+          </div>
+          <div class="footer-col">
+            <div class="footer-col-title" data-i18n="footer.product">Product</div>
+            <a href="/how-it-works.html" data-i18n="footer.product.how">How It Works</a>
+            <a href="/pricing.html" data-i18n="footer.product.pricing">Pricing</a>
+            <a href="/compare.html" data-i18n="footer.product.compare">Compare</a>
+            <a href="/integrations.html" data-i18n="footer.product.integrations">Integrations</a>
+            <a href="/security.html" data-i18n="footer.product.security">Security</a>
+          </div>
+          <div class="footer-col">
+            <div class="footer-col-title" data-i18n="footer.company">Company</div>
+            <a href="/about.html" data-i18n="footer.company.about">About</a>
+            <a href="/careers.html" data-i18n="footer.company.careers">Careers</a>
+            <a href="/press.html" data-i18n="footer.company.press">Press</a>
+            <a href="/contact.html" data-i18n="footer.company.contact">Contact</a>
+            <a href="/status.html" data-i18n="footer.company.status">Status</a>
+          </div>
+          <div class="footer-col">
+            <div class="footer-col-title" data-i18n="footer.legal">Legal</div>
+            <a href="/privacy.html" data-i18n="footer.legal.privacy">Privacy Policy</a>
+            <a href="/terms.html" data-i18n="footer.legal.terms">Terms of Service</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span data-i18n="footer.copy">&copy; 2026 SIMY by AwakApp Inc. All rights reserved.</span>
         </div>
       </div>
-      <div class="footer-col">
-        <div class="footer-col-title" data-i18n="footer.product">Product</div>
-        <a href="/how-it-works.html" data-i18n="footer.product.how">How It Works</a>
-        <a href="/pricing.html" data-i18n="footer.product.pricing">Pricing</a>
-        <a href="/compare.html" data-i18n="footer.product.compare">Compare</a>
-        <a href="/integrations.html" data-i18n="footer.product.integrations">Integrations</a>
-        <a href="/security.html" data-i18n="footer.product.security">Security</a>
-      </div>
-      <div class="footer-col">
-        <div class="footer-col-title" data-i18n="footer.company">Company</div>
-        <a href="/about.html" data-i18n="footer.company.about">About</a>
-        <a href="/careers.html" data-i18n="footer.company.careers">Careers</a>
-        <a href="/press.html" data-i18n="footer.company.press">Press</a>
-        <a href="/contact.html" data-i18n="footer.company.contact">Contact</a>
-        <a href="/status.html" data-i18n="footer.company.status">Status</a>
-      </div>
-      <div class="footer-col">
-        <div class="footer-col-title" data-i18n="footer.legal">Legal</div>
-        <a href="/privacy.html" data-i18n="footer.legal.privacy">Privacy Policy</a>
-        <a href="/terms.html" data-i18n="footer.legal.terms">Terms of Service</a>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <span data-i18n="footer.copy">&copy; 2026 SIMY by AwakApp Inc. All rights reserved.</span>
-    </div>
-  </div>
-</footer>
+    </footer>
 
 <div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:rgba(249,249,246,0.98);border-top:1px solid rgba(0,0,0,0.06);padding:16px 24px;backdrop-filter:blur(20px)"><div style="max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap"><p style="color:#7a7a78;font-size:0.85rem;margin:0;flex:1;min-width:200px"><span data-i18n="cookie.text">We use cookies to improve your experience. See our </span><a href="/privacy.html" style="color:#0057ff" data-i18n="cookie.link">Privacy Policy</a>.</p><div style="display:flex;gap:10px"><button onclick="setCookieConsent(false)" style="padding:8px 20px;border-radius:6px;border:1px solid rgba(0,0,0,0.15);background:transparent;color:#7a7a78;cursor:pointer;font-size:0.85rem" data-i18n="cookie.decline">Decline</button><button onclick="setCookieConsent(true)" style="padding:8px 20px;border-radius:6px;border:none;background:linear-gradient(135deg,#0057ff,#3378ff);color:#fff;font-weight:700;cursor:pointer;font-size:0.85rem" data-i18n="cookie.accept">Accept</button></div></div></div>
 <script>function setCookieConsent(v){localStorage.setItem('simy-cookies',v?'1':'0');document.getElementById('cookieBanner').style.display='none';if(v)loadGA();}if(!localStorage.getItem('simy-cookies'))document.getElementById('cookieBanner').style.display='block';</script>

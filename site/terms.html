@@ -330,34 +330,76 @@ function loadGA(){
 }
 if(localStorage.getItem('simy-cookies')==='1') loadGA();
 </script>
+    <style>
+      /* Hide React SPA's built-in nav and footer */
+      #root > div > nav { display: none !important; }
+      #root footer { display: none !important; }
+      /* Override React container to match static pages */
+      #root .container {
+        max-width: 1280px !important;
+        padding-left: 4rem !important;
+        padding-right: 4rem !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
+    </style>
+    <script type="module" crossorigin src="/assets/index-DnVveaIK.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-BwUIJj-q.css">
 </head>
 <body>
+    <!-- Force full navigation for static subpages -->
+    <script>
+    document.addEventListener('click', function(e) {
+      var a = e.target.closest('a');
+      if (!a) return;
+      var pages = ['/careers.html','/status.html','/privacy.html','/terms.html',
+                   '/how-it-works.html','/integrations.html','/security.html','/press-release.html'];
+      try {
+        var p = new URL(a.href, location.origin).pathname;
+        if (pages.indexOf(p) !== -1) {
+          e.preventDefault();
+          e.stopPropagation();
+          window.location.href = a.href;
+        }
+      } catch(err) {}
+    }, true);
+    </script>
+    <!-- Static nav — same code as all other pages -->
+    <nav class="static-nav" id="staticNav">
+      <div class="nav-inner">
+        <a href="/" class="nav-logo">
+          <div class="nav-logo-s">S</div>
+          <span class="nav-brand">SIMY</span>
+          <span class="nav-version">v3.0</span>
+        </a>
+        <div class="nav-links" id="navLinks">
+          <a href="/" data-i18n="nav.home">Home</a>
+          <a href="/pricing.html" data-i18n="nav.pricing">Pricing</a>
+          <a href="/compare.html" data-i18n="nav.compare">Compare</a>
+          <a href="/about.html" data-i18n="nav.about">About</a>
+          <a href="/press-release.html" data-i18n="nav.news">News</a>
+        </div>
+        <div class="nav-right">
+          <a href="#" class="nav-signin" data-i18n="nav.signin">Sign in</a>
+          <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" class="btn-primary" target="_blank" rel="noopener" data-i18n="nav.cta">Request Access</a>
+        </div>
+        <button class="mobile-menu-btn" onclick="document.getElementById('navLinks').classList.toggle('active')" aria-label="Toggle menu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+      </div>
+    </nav>
+    <script>
+    window.addEventListener('scroll', function() {
+      var nav = document.getElementById('staticNav');
+      if (window.scrollY > 10) { nav.classList.add('scrolled'); }
+      else { nav.classList.remove('scrolled'); }
+    });
+    </script>
+    <div id="root" style="display:none!important"></div>
 
-<nav>
-  <div class="nav-inner">
-    <a href="/" class="nav-logo">
-      <div class="nav-logo-s">S</div>
-      <span class="nav-brand">SIMY</span>
-      <span class="nav-version">v3.0</span>
-    </a>
-    <div class="nav-links" id="navLinks">
-      <a href="/" data-i18n="nav.home">Home</a>
-      <a href="/pricing.html" data-i18n="nav.pricing">Pricing</a>
-      <a href="/compare.html" data-i18n="nav.compare">Compare</a>
-      <a href="/about.html" data-i18n="nav.about">About</a>
-      <a href="/press-release.html" data-i18n="nav.news">News</a>
-    </div>
-    <div class="nav-right">
-      <a href="#" class="nav-signin" data-i18n="nav.signin">Sign in</a>
-      <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" class="btn-primary" target="_blank" rel="noopener" data-i18n="nav.cta">Request Access</a>
-    </div>
-    <button class="mobile-menu-btn" onclick="document.getElementById('navLinks').classList.toggle('active')" aria-label="Toggle menu">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-        <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
-      </svg>
-    </button>
-  </div>
-</nav>
+    <!-- Static page content -->
 
 <div class="container">
   <div class="terms-content">
@@ -494,42 +536,43 @@ if(localStorage.getItem('simy-cookies')==='1') loadGA();
   </div>
 </div>
 
-<footer>
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <div class="footer-tagline" data-i18n="footer.tagline" style="font-size:1rem;font-weight:700;margin-bottom:6px;letter-spacing:-0.02em">Record. Ship. Done.</div>
-        <div style="display:flex;gap:12px;align-items:center;margin-top:12px">
-          <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" target="_blank" rel="noopener"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83" alt="Download on the App Store" style="height:36px"></a>
+    <!-- Static footer — same code as all other pages -->
+    <footer class="static-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <div style="font-size:1rem;font-weight:700;margin-bottom:6px;letter-spacing:-0.02em" data-i18n="footer.tagline">Record. Ship. Done.</div>
+            <div style="display:flex;gap:12px;align-items:center;margin-top:12px">
+              <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" target="_blank" rel="noopener"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83" alt="Download on the App Store" style="height:36px"></a>
+            </div>
+          </div>
+          <div class="footer-col">
+            <div class="footer-col-title" data-i18n="footer.product">Product</div>
+            <a href="/how-it-works.html" data-i18n="footer.product.how">How It Works</a>
+            <a href="/pricing.html" data-i18n="footer.product.pricing">Pricing</a>
+            <a href="/compare.html" data-i18n="footer.product.compare">Compare</a>
+            <a href="/integrations.html" data-i18n="footer.product.integrations">Integrations</a>
+            <a href="/security.html" data-i18n="footer.product.security">Security</a>
+          </div>
+          <div class="footer-col">
+            <div class="footer-col-title" data-i18n="footer.company">Company</div>
+            <a href="/about.html" data-i18n="footer.company.about">About</a>
+            <a href="/careers.html" data-i18n="footer.company.careers">Careers</a>
+            <a href="/press.html" data-i18n="footer.company.press">Press</a>
+            <a href="/contact.html" data-i18n="footer.company.contact">Contact</a>
+            <a href="/status.html" data-i18n="footer.company.status">Status</a>
+          </div>
+          <div class="footer-col">
+            <div class="footer-col-title" data-i18n="footer.legal">Legal</div>
+            <a href="/privacy.html" data-i18n="footer.legal.privacy">Privacy Policy</a>
+            <a href="/terms.html" data-i18n="footer.legal.terms">Terms of Service</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span data-i18n="footer.copy">&copy; 2026 SIMY by AwakApp Inc. All rights reserved.</span>
         </div>
       </div>
-      <div class="footer-col">
-        <div class="footer-col-title" data-i18n="footer.product">Product</div>
-        <a href="/how-it-works.html" data-i18n="footer.product.how">How It Works</a>
-        <a href="/pricing.html" data-i18n="footer.product.pricing">Pricing</a>
-        <a href="/compare.html" data-i18n="footer.product.compare">Compare</a>
-        <a href="/integrations.html" data-i18n="footer.product.integrations">Integrations</a>
-        <a href="/security.html" data-i18n="footer.product.security">Security</a>
-      </div>
-      <div class="footer-col">
-        <div class="footer-col-title" data-i18n="footer.company">Company</div>
-        <a href="/about.html" data-i18n="footer.company.about">About</a>
-        <a href="/careers.html" data-i18n="footer.company.careers">Careers</a>
-        <a href="/press.html" data-i18n="footer.company.press">Press</a>
-        <a href="/contact.html" data-i18n="footer.company.contact">Contact</a>
-        <a href="/status.html" data-i18n="footer.company.status">Status</a>
-      </div>
-      <div class="footer-col">
-        <div class="footer-col-title" data-i18n="footer.legal">Legal</div>
-        <a href="/privacy.html" data-i18n="footer.legal.privacy">Privacy Policy</a>
-        <a href="/terms.html" data-i18n="footer.legal.terms">Terms of Service</a>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <span data-i18n="footer.copy">&copy; 2026 SIMY by AwakApp Inc. All rights reserved.</span>
-    </div>
-  </div>
-</footer>
+    </footer>
 
 <div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:rgba(249,249,246,0.98);border-top:1px solid rgba(0,0,0,0.06);padding:16px 24px;backdrop-filter:blur(20px)"><div style="max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap"><p style="color:#7a7a78;font-size:0.85rem;margin:0;flex:1;min-width:200px"><span data-i18n="cookie.text">We use cookies to improve your experience. See our</span> <a href="/privacy.html" style="color:#0057FF" data-i18n="cookie.link">Privacy Policy</a>.</p><div style="display:flex;gap:10px"><button onclick="setCookieConsent(false)" style="padding:8px 20px;border-radius:6px;border:1px solid rgba(0,0,0,0.15);background:transparent;color:#7a7a78;cursor:pointer;font-size:0.85rem;font-family:'Geist',sans-serif" data-i18n="cookie.decline">Decline</button><button onclick="setCookieConsent(true)" style="padding:8px 20px;border-radius:6px;border:none;background:#0057FF;color:#fff;font-weight:700;cursor:pointer;font-size:0.85rem;font-family:'Geist',sans-serif" data-i18n="cookie.accept">Accept</button></div></div></div>
 <script>function setCookieConsent(v){localStorage.setItem('simy-cookies',v?'1':'0');document.getElementById('cookieBanner').style.display='none';if(v)loadGA();}if(!localStorage.getItem('simy-cookies'))document.getElementById('cookieBanner').style.display='block';</script>
