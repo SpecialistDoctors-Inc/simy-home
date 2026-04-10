@@ -429,6 +429,24 @@
     if (display && meta.name) {
       display.textContent = meta.name;
     }
+
+    // Press release: swap to the polished hand-written JA article when lang=ja,
+    // otherwise show the canonical EN article (which /i18n.js translates via data-i18n
+    // for all other supported languages).
+    var prEn = document.getElementById('prEn');
+    var prJa = document.getElementById('prJa');
+    if (prEn && prJa) {
+      var isJa = meta.code === 'ja';
+      prEn.style.display = isJa ? 'none' : 'block';
+      prJa.style.display = isJa ? 'block' : 'none';
+    }
+
+    // Apple App Store: use the JP storefront for Japanese, US storefront otherwise.
+    var appStoreUrl = meta.code === 'ja'
+      ? 'https://apps.apple.com/jp/app/simy-meetings-end-code-ships/id6745385262'
+      : 'https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262';
+    var appLinks = document.querySelectorAll('a[href*="apps.apple.com"]');
+    for (var m = 0; m < appLinks.length; m++) { appLinks[m].href = appStoreUrl; }
   }
 
   /* ── Language names for switcher ───────────────────────────── */

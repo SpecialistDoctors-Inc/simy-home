@@ -441,78 +441,9 @@ if(localStorage.getItem('simy-cookies')==='1') loadGA();
 <script>function setCookieConsent(v){localStorage.setItem('simy-cookies',v?'1':'0');document.getElementById('cookieBanner').style.display='none';if(v)loadGA();}if(!localStorage.getItem('simy-cookies'))document.getElementById('cookieBanner').style.display='block';</script>
 
 <script>
-// Press Release language switcher
-function switchPrLang(lang) {
-  document.getElementById('prEn').style.display = lang === 'en' ? 'block' : 'none';
-  document.getElementById('prJa').style.display = lang === 'ja' ? 'block' : 'none';
-  document.querySelectorAll('.lang-toggle button').forEach(function(btn) {
-    btn.classList.toggle('active', btn.textContent.trim() === (lang === 'en' ? 'English' : '日本語'));
-  });
-  // Update hero
-  if (lang === 'ja') {
-    document.getElementById('prTitle').textContent = 'SIMY、「AIネイティブなエンジニアリング組織」を実現するプラットフォームを提供開始';
-    document.getElementById('prSubtitle').textContent = '社内会話からの実用コード自律生成により、エンジニアリングの全役割を「実行」から「意思決定」へ転換――プルリクエスト数17.7倍、初回成功率86.7％を実証';
-    document.getElementById('prDate').innerHTML = 'サンフランシスコ、カリフォルニア州 &mdash; 2026年3月';
-  } else {
-    document.getElementById('prTitle').textContent = 'SIMY Launches Platform for Building AI-Native Engineering Organizations';
-    document.getElementById('prSubtitle').innerHTML = 'Autonomous code generation from workplace conversations shifts every engineering role from execution to decision-making &mdash; delivering 17.7x more pull requests per engineer with 86.7% first-shot accuracy';
-    document.getElementById('prDate').innerHTML = 'San Francisco, CA &mdash; March 2026';
-  }
-}
-
-// i18n for nav + footer
-const T = {
-en: {"nav.top":"Top","nav.howItWorks":"How It Works","nav.pricing":"Pricing","nav.compare":"Compare","nav.about":"About","nav.contact":"Contact","nav.news":"News","nav.cta":"Reserve your Slot","footer.tagline":"Record. Ship. Done.","footer.product":"Product","footer.howItWorks":"How It Works","footer.pricing":"Pricing","footer.compare":"Compare","footer.integrations":"Integrations","footer.security":"Security","footer.company":"Company","footer.about":"About","footer.careers":"Careers","footer.press":"Press","footer.contact":"Contact","footer.status":"Status","footer.legal":"Legal","footer.privacy":"Privacy Policy","footer.terms":"Terms of Service"},
-ja: {"nav.top":"トップ","nav.howItWorks":"仕組み","nav.pricing":"料金","nav.compare":"比較","nav.about":"会社概要","nav.contact":"お問い合わせ","nav.news":"ニュース","nav.cta":"今すぐ予約","footer.tagline":"録音。出荷。完了。","footer.product":"プロダクト","footer.howItWorks":"仕組み","footer.pricing":"料金","footer.compare":"比較","footer.integrations":"連携","footer.security":"セキュリティ","footer.company":"企業情報","footer.about":"会社概要","footer.careers":"採用","footer.press":"プレス","footer.contact":"お問い合わせ","footer.status":"ステータス","footer.legal":"法務","footer.privacy":"プライバシーポリシー","footer.terms":"利用規約"},
-zh: {"nav.top":"首页","nav.howItWorks":"工作原理","nav.pricing":"定价","nav.compare":"对比","nav.about":"关于","nav.contact":"联系","nav.news":"新闻","nav.cta":"预约名额","footer.tagline":"录制。交付。完成。","footer.product":"产品","footer.howItWorks":"工作原理","footer.pricing":"定价","footer.compare":"对比","footer.integrations":"集成","footer.security":"安全","footer.company":"公司","footer.about":"关于","footer.careers":"招聘","footer.press":"媒体","footer.contact":"联系","footer.status":"状态","footer.legal":"法律","footer.privacy":"隐私政策","footer.terms":"服务条款"},
-hi: {"nav.top":"होम","nav.howItWorks":"कैसे काम करता है","nav.pricing":"मूल्य","nav.compare":"तुलना","nav.about":"हमारे बारे में","nav.contact":"संपर्क","nav.news":"समाचार","nav.cta":"अपनी जगह आरक्षित करें","footer.tagline":"रिकॉर्ड। शिप। हो गया।","footer.product":"उत्पाद","footer.howItWorks":"कैसे काम करता है","footer.pricing":"मूल्य","footer.compare":"तुलना","footer.integrations":"एकीकरण","footer.security":"सुरक्षा","footer.company":"कंपनी","footer.about":"हमारे बारे में","footer.careers":"करियर","footer.press":"प्रेस","footer.contact":"संपर्क","footer.status":"स्थिति","footer.legal":"कानूनी","footer.privacy":"गोपनीयता नीति","footer.terms":"सेवा की शर्तें"},
-es: {"nav.top":"Inicio","nav.howItWorks":"Cómo Funciona","nav.pricing":"Precios","nav.compare":"Comparar","nav.about":"Nosotros","nav.contact":"Contacto","nav.news":"Noticias","nav.cta":"Reserva tu Lugar","footer.tagline":"Graba. Envía. Listo.","footer.product":"Producto","footer.howItWorks":"Cómo Funciona","footer.pricing":"Precios","footer.compare":"Comparar","footer.integrations":"Integraciones","footer.security":"Seguridad","footer.company":"Empresa","footer.about":"Nosotros","footer.careers":"Empleo","footer.press":"Prensa","footer.contact":"Contacto","footer.status":"Estado","footer.legal":"Legal","footer.privacy":"Política de Privacidad","footer.terms":"Términos de Servicio"},
-ar: {"nav.top":"الرئيسية","nav.howItWorks":"كيف يعمل","nav.pricing":"الأسعار","nav.compare":"مقارنة","nav.about":"عن الشركة","nav.contact":"اتصل بنا","nav.news":"أخبار","nav.cta":"احجز مكانك","footer.tagline":"سجّل. أرسل. انتهى.","footer.product":"المنتج","footer.howItWorks":"كيف يعمل","footer.pricing":"الأسعار","footer.compare":"مقارنة","footer.integrations":"التكامل","footer.security":"الأمان","footer.company":"الشركة","footer.about":"عن الشركة","footer.careers":"الوظائف","footer.press":"الصحافة","footer.contact":"اتصل بنا","footer.status":"الحالة","footer.legal":"قانوني","footer.privacy":"سياسة الخصوصية","footer.terms":"شروط الخدمة"}
-};
-function setLanguage(lang, manual) {
-  document.documentElement.lang = lang;
-  document.body.classList.toggle('rtl', lang === 'ar');
-  var langSelectEl = document.getElementById('langSelect');
-  if (langSelectEl) langSelectEl.value = lang;
-  localStorage.setItem('simy-lang', lang);
-  if (manual) localStorage.setItem('simy-lang-manual', '1');
-  var dict = T[lang];
-  if (!dict) return;
-  document.querySelectorAll('[data-i18n]').forEach(function(el) {
-    var key = el.getAttribute('data-i18n');
-    if (dict[key] !== undefined) el.textContent = dict[key];
-  });
-  document.querySelectorAll('[data-i18n-html]').forEach(function(el) {
-    var key = el.getAttribute('data-i18n-html');
-    if (dict[key] !== undefined) el.innerHTML = dict[key];
-  });
-  _deml();
-  var appStoreUrl = lang === 'ja'
-    ? 'https://apps.apple.com/jp/app/simy-meetings-end-code-ships/id6745385262'
-    : 'https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262';
-  document.querySelectorAll('a[href*="apps.apple.com"]').forEach(function(el) { el.href = appStoreUrl; });
-  // Auto-switch press release language for ja
-  if (lang === 'ja') switchPrLang('ja');
-  else switchPrLang('en');
-}
+// Obfuscated email decoder — invoked by /i18n.js via window.simyDecodeEmails
 function _deml(){document.querySelectorAll('a.eml').forEach(function(el){var e=el.dataset.u+String.fromCharCode(64)+el.dataset.d;el.href='m'+'ailt'+'o:'+e;el.textContent=e;});}
-function detectBrowserLanguage() {
-  var supportedLangs = Object.keys(T);
-  var browserLangs = navigator.languages || [navigator.language || 'en'];
-  for (var i = 0; i < browserLangs.length; i++) {
-    var lower = browserLangs[i].toLowerCase();
-    var exact = supportedLangs.find(function(s) { return s === lower; });
-    if (exact) return exact;
-    var prefix = lower.split('-')[0];
-    var prefixMatch = supportedLangs.find(function(s) { return s === prefix; });
-    if (prefixMatch) return prefixMatch;
-  }
-  return 'en';
-}
-var wasManual = localStorage.getItem('simy-lang-manual');
-var savedLang = localStorage.getItem('simy-lang');
-if (wasManual && savedLang && T[savedLang]) { setLanguage(savedLang); }
-else { setLanguage(detectBrowserLanguage()); }
+_deml();
 </script>
 <script src="/i18n.js"></script>
 </body>
