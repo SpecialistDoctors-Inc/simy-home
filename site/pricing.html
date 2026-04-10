@@ -480,15 +480,15 @@
     <!-- Static pricing content -->
     <main>
       <div class="p-hero">
-        <h1>Simple, transparent pricing.</h1>
-        <p>Seat-based plans with SIMY token allocation. Scale as your team grows.</p>
+        <h1 data-i18n="pricing.title">Simple, transparent pricing.</h1>
+        <p data-i18n="pricing.subtitle">Seat-based plans with SIMY token allocation. Scale as your team grows.</p>
       </div>
 
       <div class="billing-toggle">
         <div class="toggle-wrapper">
-          <button class="toggle-btn" data-billing="monthly" onclick="setBilling('monthly')">Monthly</button>
+          <button class="toggle-btn" data-billing="monthly" onclick="setBilling('monthly')" data-i18n="pricing.monthly">Monthly</button>
           <button class="toggle-btn active" data-billing="annual" onclick="setBilling('annual')">
-            <span style="display:flex;align-items:center;gap:8px">Annual <span style="font-size:0.7rem;letter-spacing:0.04em">&middot; SAVE 17%</span></span>
+            <span style="display:flex;align-items:center;gap:8px"><span data-i18n="pricing.annual">Annual</span> <span style="font-size:0.7rem;letter-spacing:0.04em" data-i18n="pricing.annual.save">&middot; Save 17%</span></span>
           </button>
         </div>
       </div>
@@ -498,16 +498,16 @@
 
           <!-- Starter -->
           <div class="pricing-card" data-plan="starter">
-            <div class="plan-name">Starter</div>
-            <div class="plan-subtitle">For individuals getting started</div>
+            <div class="plan-name" data-i18n="pricing.starter">Starter</div>
+            <div class="plan-subtitle" data-i18n="pricing.starter.sub">For individuals getting started</div>
             <div class="price-row">
               <span class="price-amount" id="price-starter">$17</span>
-              <span class="price-unit">/ seat / mo</span>
+              <span class="price-unit" data-i18n="pricing.seat">/ seat / mo</span>
             </div>
 
             <div class="token-dropdown-wrap">
               <button class="token-dropdown-btn" onclick="toggleDropdown(this)">
-                <span class="token-dropdown-label">80M SIMY tokens / month</span>
+                <span class="token-dropdown-label" data-i18n="pricing.tokens_month">80M SIMY tokens / month</span>
                 <svg class="token-dropdown-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6l4 4 4-4"/></svg>
               </button>
               <div class="token-dropdown-list" data-plan="starter">
@@ -520,39 +520,39 @@
               </div>
             </div>
 
-            <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" class="plan-cta" target="_blank" rel="noopener">Get started</a>
+            <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" class="plan-cta" target="_blank" rel="noopener" data-i18n="pricing.cta">Get started</a>
 
             <ul class="feature-list">
-              <li><span id="feat-tokens-starter">80,000,000 SIMY tokens / month</span></li>
-              <li>Up to 5 connected channels</li>
-              <li>Action Database (up to 1,000 tasks)</li>
-              <li>Standard AI agent execution</li>
-              <li>Email &amp; Slack delivery</li>
-              <li>Early access to beta features</li>
+              <li><span id="feat-tokens-starter" data-i18n="pricing.f.starter.1">80,000,000 SIMY tokens / month</span></li>
+              <li data-i18n="pricing.f.starter.2">Up to 5 connected channels</li>
+              <li data-i18n="pricing.f.starter.3">Action Database (up to 1,000 tasks)</li>
+              <li data-i18n="pricing.f.starter.4">Standard AI agent execution</li>
+              <li data-i18n="pricing.f.starter.5">Email &amp; Slack delivery</li>
+              <li data-i18n="pricing.f.starter.6">Early access to beta features</li>
             </ul>
             <div class="task-row">
               <svg class="task-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 12.5a5.5 5.5 0 110-11 5.5 5.5 0 010 11zM8 4v4l3 1.5-.5 1L7 9V4h1z"/></svg>
-              20 concurrent tasks
+              <span data-i18n="pricing.f.starter.7">20 concurrent tasks</span>
             </div>
             <div class="task-row" style="border-top:none;margin-top:8px;padding-top:0">
               <svg class="task-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M12.5 2H11V1h-1v1H6V1H5v1H3.5A1.5 1.5 0 002 3.5v9A1.5 1.5 0 003.5 14h9a1.5 1.5 0 001.5-1.5v-9A1.5 1.5 0 0012.5 2zm0 10.5h-9V6h9v6.5z"/></svg>
-              20 scheduled tasks
+              <span data-i18n="pricing.f.starter.8">20 scheduled tasks</span>
             </div>
           </div>
 
           <!-- Pro (featured) -->
           <div class="pricing-card featured" data-plan="pro">
-            <div class="popular-badge">MOST POPULAR</div>
-            <div class="plan-name">Pro</div>
-            <div class="plan-subtitle">For professionals and growing teams</div>
+            <div class="popular-badge" data-i18n="pricing.popular">Most Popular</div>
+            <div class="plan-name" data-i18n="pricing.pro">Pro</div>
+            <div class="plan-subtitle" data-i18n="pricing.pro.sub">For professionals and growing teams</div>
             <div class="price-row">
               <span class="price-amount" id="price-pro">$33</span>
-              <span class="price-unit">/ seat / mo</span>
+              <span class="price-unit" data-i18n="pricing.seat">/ seat / mo</span>
             </div>
 
             <div class="token-dropdown-wrap">
               <button class="token-dropdown-btn" onclick="toggleDropdown(this)">
-                <span class="token-dropdown-label">160M SIMY tokens / month</span>
+                <span class="token-dropdown-label" data-i18n="pricing.tokens_month">160M SIMY tokens / month</span>
                 <svg class="token-dropdown-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6l4 4 4-4"/></svg>
               </button>
               <div class="token-dropdown-list" data-plan="pro">
@@ -566,39 +566,39 @@
               </div>
             </div>
 
-            <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" class="plan-cta" target="_blank" rel="noopener">Get started</a>
+            <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" class="plan-cta" target="_blank" rel="noopener" data-i18n="pricing.cta">Get started</a>
 
             <ul class="feature-list">
-              <li><span id="feat-tokens-pro">160,000,000 SIMY tokens / month</span></li>
-              <li>Unlimited connected channels</li>
-              <li>Action Database (unlimited tasks)</li>
-              <li>Priority AI agent execution</li>
-              <li>All delivery integrations</li>
-              <li>HVP Dashboard</li>
-              <li>Early access to beta features</li>
+              <li><span id="feat-tokens-pro" data-i18n="pricing.f.pro.1">160,000,000 SIMY tokens / month</span></li>
+              <li data-i18n="pricing.f.pro.2">Unlimited connected channels</li>
+              <li data-i18n="pricing.f.pro.3">Action Database (unlimited tasks)</li>
+              <li data-i18n="pricing.f.pro.4">Priority AI agent execution</li>
+              <li data-i18n="pricing.f.pro.5">All delivery integrations</li>
+              <li data-i18n="pricing.f.pro.6">HVP Dashboard</li>
+              <li data-i18n="pricing.f.pro.7">Early access to beta features</li>
             </ul>
             <div class="task-row">
               <svg class="task-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 12.5a5.5 5.5 0 110-11 5.5 5.5 0 010 11zM8 4v4l3 1.5-.5 1L7 9V4h1z"/></svg>
-              50 concurrent tasks
+              <span data-i18n="pricing.f.pro.8">50 concurrent tasks</span>
             </div>
             <div class="task-row" style="border-top:none;margin-top:8px;padding-top:0">
               <svg class="task-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M12.5 2H11V1h-1v1H6V1H5v1H3.5A1.5 1.5 0 002 3.5v9A1.5 1.5 0 003.5 14h9a1.5 1.5 0 001.5-1.5v-9A1.5 1.5 0 0012.5 2zm0 10.5h-9V6h9v6.5z"/></svg>
-              50 scheduled tasks
+              <span data-i18n="pricing.f.pro.9">50 scheduled tasks</span>
             </div>
           </div>
 
           <!-- Scale -->
           <div class="pricing-card" data-plan="scale">
-            <div class="plan-name">Scale</div>
-            <div class="plan-subtitle">For high-output teams</div>
+            <div class="plan-name" data-i18n="pricing.scale">Scale</div>
+            <div class="plan-subtitle" data-i18n="pricing.scale.sub">For high-output teams</div>
             <div class="price-row">
               <span class="price-amount" id="price-scale">$83</span>
-              <span class="price-unit">/ seat / mo</span>
+              <span class="price-unit" data-i18n="pricing.seat">/ seat / mo</span>
             </div>
 
             <div class="token-dropdown-wrap">
               <button class="token-dropdown-btn" onclick="toggleDropdown(this)">
-                <span class="token-dropdown-label">400M SIMY tokens / month</span>
+                <span class="token-dropdown-label" data-i18n="pricing.tokens_month">400M SIMY tokens / month</span>
                 <svg class="token-dropdown-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6l4 4 4-4"/></svg>
               </button>
               <div class="token-dropdown-list" data-plan="scale">
@@ -612,24 +612,24 @@
               </div>
             </div>
 
-            <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" class="plan-cta" target="_blank" rel="noopener">Get started</a>
+            <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" class="plan-cta" target="_blank" rel="noopener" data-i18n="pricing.cta">Get started</a>
 
             <ul class="feature-list">
-              <li><span id="feat-tokens-scale">400,000,000 SIMY tokens / month</span></li>
-              <li>Unlimited connected channels</li>
-              <li>Action Database (unlimited tasks)</li>
-              <li>Priority AI agent execution</li>
-              <li>All delivery integrations</li>
-              <li>HVP Dashboard + Digital Twin</li>
-              <li>Advanced analytics</li>
+              <li><span id="feat-tokens-scale" data-i18n="pricing.f.scale.1">400,000,000 SIMY tokens / month</span></li>
+              <li data-i18n="pricing.f.scale.2">Unlimited connected channels</li>
+              <li data-i18n="pricing.f.scale.3">Action Database (unlimited tasks)</li>
+              <li data-i18n="pricing.f.scale.4">Priority AI agent execution</li>
+              <li data-i18n="pricing.f.scale.5">All delivery integrations</li>
+              <li data-i18n="pricing.f.scale.6">HVP Dashboard + Digital Twin</li>
+              <li data-i18n="pricing.f.scale.7">Advanced analytics</li>
             </ul>
             <div class="task-row">
               <svg class="task-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 12.5a5.5 5.5 0 110-11 5.5 5.5 0 010 11zM8 4v4l3 1.5-.5 1L7 9V4h1z"/></svg>
-              100 concurrent tasks
+              <span data-i18n="pricing.f.scale.8">100 concurrent tasks</span>
             </div>
             <div class="task-row" style="border-top:none;margin-top:8px;padding-top:0">
               <svg class="task-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M12.5 2H11V1h-1v1H6V1H5v1H3.5A1.5 1.5 0 002 3.5v9A1.5 1.5 0 003.5 14h9a1.5 1.5 0 001.5-1.5v-9A1.5 1.5 0 0012.5 2zm0 10.5h-9V6h9v6.5z"/></svg>
-              100 scheduled tasks
+              <span data-i18n="pricing.f.scale.9">100 scheduled tasks</span>
             </div>
           </div>
 
@@ -637,15 +637,15 @@
 
         <!-- Enterprise -->
         <div class="enterprise-section">
-          <h2>SIMY for Teams &amp; Enterprise</h2>
-          <p>Custom token volumes, SSO, dedicated support, and SLA. For organisations of any size.</p>
-          <a href="/contact.html" class="enterprise-cta">Contact Sales</a>
+          <h2 data-i18n="pricing.enterprise">Enterprise</h2>
+          <p data-i18n-html="pricing.enterprise.desc">Custom token allocation, dedicated support, SSO, and SLA guarantees.<br>Built for organizations that need full control.</p>
+          <a href="/contact.html" class="enterprise-cta" data-i18n="pricing.enterprise.cta">Contact Sales</a>
         </div>
 
         <!-- Security note -->
         <div class="security-note">
-          <h3>Security &amp; Privacy</h3>
-          <p>Physical database isolation, end-to-end encryption, and zero-training guarantee on Enterprise plans.</p>
+          <h3 data-i18n="pricing.secH">Security &amp; Privacy</h3>
+          <p data-i18n="pricing.secP">Physical database isolation, end-to-end encryption, and zero-training guarantee on Enterprise plans.</p>
         </div>
       </div>
     </main>
