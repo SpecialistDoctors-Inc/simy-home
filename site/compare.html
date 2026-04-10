@@ -224,6 +224,132 @@
         .footer-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
         .footer-brand { grid-column: 1 / -1; text-align: center; }
       }
+
+      /* ── Compare page static content ───────────────────────── */
+      .cmp-page { background-color: #FAFAF8; min-height: 100vh; }
+      .cmp-page .container { max-width: 1280px; margin: 0 auto; padding: 0 4rem; }
+      .cmp-hero { padding-top: 120px; padding-bottom: 80px; }
+      .cmp-hero .label {
+        font-family: 'Geist Mono', 'Courier New', monospace;
+        font-size: 13px; font-weight: 400; letter-spacing: 0.08em;
+        text-transform: uppercase; color: #0057FF; margin-bottom: 1.5rem;
+      }
+      .cmp-hero h1 {
+        font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+        font-size: clamp(48px, 7vw, 88px); font-weight: 800;
+        letter-spacing: -0.04em; line-height: 1.05; color: #0A0A0A;
+        max-width: 800px; margin-bottom: 1.5rem;
+      }
+      .cmp-hero h1 .blue { color: #0057FF; }
+      .cmp-hero .sub {
+        font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+        font-size: 18px; font-weight: 300; line-height: 1.75;
+        color: #5A5A56; max-width: 560px; letter-spacing: -0.005em;
+      }
+      .cmp-table-sec { padding: 60px 0 100px; }
+      .cmp-table-sec .intro {
+        font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+        font-size: 15px; font-weight: 300; line-height: 1.75;
+        color: #5A5A56; max-width: 600px; margin-bottom: 3rem;
+        letter-spacing: -0.005em;
+      }
+      .cmp-table-wrap { overflow-x: auto; }
+      .cmp-table { width: 100%; border-collapse: collapse; min-width: 860px; }
+      .cmp-table thead tr { border-bottom: 2px solid #0A0A0A; }
+      .cmp-table th {
+        font-family: 'Geist Mono', 'Courier New', monospace;
+        font-size: 13px; font-weight: 400; letter-spacing: 0.08em;
+        text-transform: uppercase; color: #9A9A96;
+        padding: 1rem 0.75rem; text-align: center;
+      }
+      .cmp-table th.feat { text-align: left; width: 28%; padding: 1rem 0; }
+      .cmp-table th.simy-col { color: #0057FF; background-color: rgba(0,87,255,0.04); padding: 1.1rem 0.75rem; }
+      .cmp-table tbody tr { border-bottom: 1px solid #E0E0DC; }
+      .cmp-table td {
+        font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+        font-size: 15px; font-weight: 300; line-height: 1.75;
+        color: #5A5A56; padding: 1.1rem 0.75rem; text-align: center;
+        letter-spacing: -0.005em;
+      }
+      .cmp-table td.feat { text-align: left; padding: 1.1rem 0; font-weight: 400; color: #5A5A56; }
+      .cmp-table td.simy-col { background-color: rgba(0,87,255,0.04); padding: 1.1rem 0.75rem; }
+      .cmp-check { color: #0057FF; font-family: 'Geist Mono', monospace; font-size: 16px; }
+      .cmp-x { color: #C0C0BC; font-size: 16px; }
+      .cmp-partial { color: #F59E0B; font-size: 14px; }
+
+      .cmp-diff-sec { background-color: #0A0A0A; padding: 100px 0; }
+      .cmp-diff-sec .label {
+        font-family: 'Geist Mono', 'Courier New', monospace;
+        font-size: 13px; font-weight: 400; letter-spacing: 0.08em;
+        text-transform: uppercase; color: #6A6A66; margin-bottom: 1rem;
+      }
+      .cmp-diff-sec h2 {
+        font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+        font-size: clamp(32px, 4vw, 52px); font-weight: 700;
+        letter-spacing: -0.04em; line-height: 1.1; color: #F5F5F0;
+        margin-bottom: 3rem; max-width: 700px;
+      }
+      .cmp-diff-grid {
+        display: grid; grid-template-columns: repeat(3, 1fr);
+        gap: 1px; background-color: #1A1A1A;
+      }
+      .cmp-diff-card { background-color: #0A0A0A; padding: 2.5rem; }
+      .cmp-diff-card.highlight { background-color: #0057FF; }
+      .cmp-diff-card h3 {
+        font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+        font-size: 20px; font-weight: 700; letter-spacing: -0.04em;
+        line-height: 1.2; color: #F5F5F0; margin-bottom: 1rem;
+      }
+      .cmp-diff-card p {
+        font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+        font-size: 14px; font-weight: 300; line-height: 1.75;
+        color: #6A6A66; letter-spacing: -0.005em;
+      }
+      .cmp-diff-card.highlight p { color: rgba(255,255,255,0.8); }
+
+      .cmp-cta-sec { padding: 100px 0; background-color: #FAFAF8; }
+      .cmp-cta-sec .row {
+        display: flex; justify-content: space-between; gap: 2rem;
+        align-items: center; flex-wrap: wrap;
+      }
+      .cmp-cta-sec h2 {
+        font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+        font-size: clamp(28px, 4vw, 48px); font-weight: 800;
+        letter-spacing: -0.04em; line-height: 1.05; color: #0A0A0A;
+        margin-bottom: 0.75rem;
+      }
+      .cmp-cta-sec p {
+        font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+        font-size: 16px; font-weight: 300; line-height: 1.75;
+        color: #5A5A56; letter-spacing: -0.005em;
+      }
+      .cmp-cta-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+      .cmp-btn-primary {
+        background-color: #0057FF; color: #fff;
+        font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+        border: 1px solid #0057FF; padding: 0.75rem 1.5rem;
+        font-size: 0.875rem; font-weight: 500;
+        text-decoration: none; transition: background-color 0.18s;
+        display: inline-flex; align-items: center; gap: 0.5rem;
+      }
+      .cmp-btn-primary:hover { background-color: #0047dd; }
+      .cmp-btn-secondary {
+        background-color: transparent; color: #0A0A0A;
+        font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+        border: 1px solid #0A0A0A; padding: 0.75rem 1.5rem;
+        font-size: 0.875rem; font-weight: 500;
+        text-decoration: none; transition: all 0.18s;
+      }
+      .cmp-btn-secondary:hover { background-color: #0A0A0A; color: #fff; }
+
+      @media (max-width: 768px) {
+        .cmp-page .container { padding: 0 1.5rem; }
+        .cmp-hero { padding-top: 100px; padding-bottom: 40px; }
+        .cmp-table-sec { padding: 40px 0 60px; }
+        .cmp-diff-sec { padding: 60px 0; }
+        .cmp-diff-grid { grid-template-columns: 1fr; }
+        .cmp-cta-sec { padding: 60px 0; }
+      }
     </style>
     <script type="module" crossorigin src="/assets/index-DnVveaIK.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-BwUIJj-q.css">
@@ -283,7 +409,188 @@
     });
     </script>
 
-    <div id="root"></div>
+    <div id="root" style="display:none!important"></div>
+
+    <!-- ── Static compare content ─────────────────────────────── -->
+    <div class="cmp-page">
+      <section class="cmp-hero">
+        <div class="container">
+          <p class="label" data-i18n="cmpx.label">COMPARE</p>
+          <h1><span class="blue">SIMY</span> <span data-i18n="cmpx.vs">vs.</span><br><span data-i18n="cmpx.alternatives">the alternatives.</span></h1>
+          <p class="sub" data-i18n="cmpx.heroSub">SIMY doesn't replace your existing tools — it eliminates the gap between decisions and execution that all other tools leave open.</p>
+        </div>
+      </section>
+
+      <section class="cmp-table-sec">
+        <div class="container">
+          <p class="intro" data-i18n="cmpx.intro">SIMY vs. enterprise knowledge and workflow tools. Unlike search-based or chat-based tools, SIMY executes autonomously — no prompts, no manual follow-through.</p>
+          <div class="cmp-table-wrap">
+            <table class="cmp-table">
+              <thead>
+                <tr>
+                  <th class="feat" data-i18n="cmpx.thFeature">FEATURE</th>
+                  <th class="simy-col">SIMY</th>
+                  <th data-i18n="cmpx.thGlean">GLEAN</th>
+                  <th data-i18n="cmpx.thVertex">VERTEX AI SEARCH</th>
+                  <th data-i18n="cmpx.thCowork">CLOUD COWORK</th>
+                  <th data-i18n="cmpx.thCopilot">MICROSOFT COPILOT</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="feat" data-i18n="cmpx.f01">Input method</td>
+                  <td class="simy-col" data-i18n="cmpx.vConvAuto">Conversations (auto)</td>
+                  <td data-i18n="cmpx.vSearchQ">Search queries</td>
+                  <td data-i18n="cmpx.vSearchQ2">Search queries</td>
+                  <td data-i18n="cmpx.vChatP">Chat prompts</td>
+                  <td data-i18n="cmpx.vChatP2">Chat prompts</td>
+                </tr>
+                <tr>
+                  <td class="feat" data-i18n="cmpx.f02">Prompts required</td>
+                  <td class="simy-col" data-i18n="cmpx.vNone">None</td>
+                  <td data-i18n="cmpx.vYes1">Yes</td>
+                  <td data-i18n="cmpx.vYes2">Yes</td>
+                  <td data-i18n="cmpx.vYes3">Yes</td>
+                  <td data-i18n="cmpx.vYes4">Yes</td>
+                </tr>
+                <tr>
+                  <td class="feat" data-i18n="cmpx.f03">Autonomous task execution</td>
+                  <td class="simy-col"><span class="cmp-check">+</span></td>
+                  <td><span class="cmp-x">×</span></td>
+                  <td><span class="cmp-x">×</span></td>
+                  <td><span class="cmp-x">×</span></td>
+                  <td><span class="cmp-x">×</span></td>
+                </tr>
+                <tr>
+                  <td class="feat" data-i18n="cmpx.f04">Meeting → action extraction</td>
+                  <td class="simy-col"><span class="cmp-check">+</span></td>
+                  <td><span class="cmp-x">×</span></td>
+                  <td><span class="cmp-x">×</span></td>
+                  <td><span class="cmp-partial" data-i18n="cmpx.vLimited1">Limited</span></td>
+                  <td><span class="cmp-partial" data-i18n="cmpx.vLimited2">Limited</span></td>
+                </tr>
+                <tr>
+                  <td class="feat" data-i18n="cmpx.f05">Cross-app workflow automation</td>
+                  <td class="simy-col"><span class="cmp-check">+</span></td>
+                  <td><span class="cmp-x">×</span></td>
+                  <td><span class="cmp-x">×</span></td>
+                  <td><span class="cmp-partial" data-i18n="cmpx.vPartial1">Partial</span></td>
+                  <td><span class="cmp-partial" data-i18n="cmpx.vPartial2">Partial</span></td>
+                </tr>
+                <tr>
+                  <td class="feat" data-i18n="cmpx.f06">Action Database (persistent context)</td>
+                  <td class="simy-col"><span class="cmp-check">+</span></td>
+                  <td><span class="cmp-x">×</span></td>
+                  <td><span class="cmp-x">×</span></td>
+                  <td><span class="cmp-x">×</span></td>
+                  <td><span class="cmp-x">×</span></td>
+                </tr>
+                <tr>
+                  <td class="feat" data-i18n="cmpx.f07">Done State tracking</td>
+                  <td class="simy-col"><span class="cmp-check">+</span></td>
+                  <td><span class="cmp-x">×</span></td>
+                  <td><span class="cmp-x">×</span></td>
+                  <td><span class="cmp-x">×</span></td>
+                  <td><span class="cmp-x">×</span></td>
+                </tr>
+                <tr>
+                  <td class="feat" data-i18n="cmpx.f08">HVP (Human Value Point) system</td>
+                  <td class="simy-col"><span class="cmp-check">+</span></td>
+                  <td><span class="cmp-x">×</span></td>
+                  <td><span class="cmp-x">×</span></td>
+                  <td><span class="cmp-x">×</span></td>
+                  <td><span class="cmp-x">×</span></td>
+                </tr>
+                <tr>
+                  <td class="feat" data-i18n="cmpx.f09">Digital Twin (project Q&amp;A)</td>
+                  <td class="simy-col"><span class="cmp-check">+</span></td>
+                  <td><span class="cmp-partial" data-i18n="cmpx.vPartial3">Partial</span></td>
+                  <td><span class="cmp-x">×</span></td>
+                  <td><span class="cmp-x">×</span></td>
+                  <td><span class="cmp-x">×</span></td>
+                </tr>
+                <tr>
+                  <td class="feat" data-i18n="cmpx.f10">Enterprise data isolation</td>
+                  <td class="simy-col"><span class="cmp-check">+</span></td>
+                  <td><span class="cmp-partial" data-i18n="cmpx.vLimited3">Limited</span></td>
+                  <td><span class="cmp-check">+</span></td>
+                  <td><span class="cmp-x">×</span></td>
+                  <td><span class="cmp-partial" data-i18n="cmpx.vLimited4">Limited</span></td>
+                </tr>
+                <tr>
+                  <td class="feat" data-i18n="cmpx.f11">Zero-training guarantee</td>
+                  <td class="simy-col"><span class="cmp-check">+</span></td>
+                  <td><span class="cmp-x">×</span></td>
+                  <td><span class="cmp-x">×</span></td>
+                  <td><span class="cmp-x">×</span></td>
+                  <td><span class="cmp-x">×</span></td>
+                </tr>
+                <tr>
+                  <td class="feat" data-i18n="cmpx.f12">Slack / Teams integration</td>
+                  <td class="simy-col"><span class="cmp-check">+</span></td>
+                  <td><span class="cmp-check">+</span></td>
+                  <td><span class="cmp-x">×</span></td>
+                  <td><span class="cmp-check">+</span></td>
+                  <td><span class="cmp-check">+</span></td>
+                </tr>
+                <tr>
+                  <td class="feat" data-i18n="cmpx.f13">GitHub integration</td>
+                  <td class="simy-col"><span class="cmp-check">+</span></td>
+                  <td><span class="cmp-x">×</span></td>
+                  <td><span class="cmp-x">×</span></td>
+                  <td><span class="cmp-x">×</span></td>
+                  <td><span class="cmp-check">+</span></td>
+                </tr>
+                <tr>
+                  <td class="feat" data-i18n="cmpx.f14">Usage-based pricing</td>
+                  <td class="simy-col"><span class="cmp-check">+</span></td>
+                  <td><span class="cmp-x">×</span></td>
+                  <td><span class="cmp-check">+</span></td>
+                  <td><span class="cmp-x">×</span></td>
+                  <td><span class="cmp-x">×</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="cmp-diff-sec">
+        <div class="container">
+          <p class="label" data-i18n="cmpx.diffLabel">THE FUNDAMENTAL DIFFERENCE</p>
+          <h2 data-i18n-html="cmpx.diffH2">Other tools assist humans.<br>SIMY executes for them.</h2>
+          <div class="cmp-diff-grid">
+            <div class="cmp-diff-card">
+              <h3 data-i18n="cmpx.card1H">Search &amp; Retrieve</h3>
+              <p data-i18n="cmpx.card1P">Glean, Vertex AI Search — find information faster. Still requires a human to act on it.</p>
+            </div>
+            <div class="cmp-diff-card">
+              <h3 data-i18n="cmpx.card2H">Assist &amp; Suggest</h3>
+              <p data-i18n="cmpx.card2P">Microsoft Copilot, Cloud Cowork — accelerate individual work. Still requires a human to prompt and direct.</p>
+            </div>
+            <div class="cmp-diff-card highlight">
+              <h3 data-i18n="cmpx.card3H">Execute Autonomously</h3>
+              <p data-i18n="cmpx.card3P">SIMY — captures decisions from conversations, executes tasks without prompts, delivers results. The human reviews and approves.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="cmp-cta-sec">
+        <div class="container">
+          <div class="row">
+            <div>
+              <h2 data-i18n="cmpx.ctaH">Try SIMY alongside your current tools.</h2>
+              <p data-i18n="cmpx.ctaP">Measure the impact. No prompts. No setup friction.</p>
+            </div>
+            <div class="cmp-cta-btns">
+              <a href="/contact.html" class="cmp-btn-primary" data-i18n="cmpx.ctaBtn1">Request a Demo →</a>
+              <a href="/pricing.html" class="cmp-btn-secondary" data-i18n="cmpx.ctaBtn2">View Pricing</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
 
     <!-- Static footer — same code as all other pages -->
     <footer class="static-footer">
