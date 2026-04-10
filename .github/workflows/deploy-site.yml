@@ -48,6 +48,7 @@ jobs:
       - name: Sync static assets (long cache)
         run: |
           aws s3 sync site/ s3://${{ secrets.SITE_S3_BUCKET }}/ \
+            --delete \
             --exclude "*.html" \
             --cache-control "public, max-age=86400"
 
