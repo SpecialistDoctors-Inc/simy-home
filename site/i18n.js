@@ -86,9 +86,13 @@
       if (resolved) return resolved;
     }
 
-    // 2. Saved preference
+    // 2. Saved preference — check BOTH keys. The React bundle on /
+    //    uses 'simy-language' for its internal LanguageContext, while
+    //    the static pages use 'simy-lang'. Either key is authoritative.
     var saved = localStorage.getItem('simy-lang');
     if (saved && SUPPORTED.indexOf(saved) !== -1) return saved;
+    var savedReact = localStorage.getItem('simy-language');
+    if (savedReact && SUPPORTED.indexOf(savedReact) !== -1) return savedReact;
 
     // 3. Browser / OS language
     var langs = navigator.languages || [navigator.language || navigator.userLanguage || ''];
@@ -713,8 +717,53 @@
   /* ── Public: switch language ────────────────────────────────── */
   function setLang(lang) {
     if (SUPPORTED.indexOf(lang) === -1) lang = DEFAULT;
+    // Mirror to BOTH keys so the React bundle's LanguageContext and
+    // i18n.js stay in lockstep — whichever side reads localStorage
+    // on next mount/reload gets the same answer.
     localStorage.setItem('simy-lang', lang);
+    try { localStorage.setItem('simy-language', lang); } catch (e) {}
     load(lang, apply);
+  }
+
+  /* ── Cross-component sync: watch for external writes to either
+     language key (e.g. the React bundle's own setter) and re-apply
+     the bridge whenever they diverge from CURRENT_LANG. Covers:
+       (a) cross-tab storage events  (b) same-tab setItem via polling */
+  function installLangKeySync() {
+    function handleKey(newVal) {
+      if (!newVal || SUPPORTED.indexOf(newVal) === -1) return;
+      if (newVal === CURRENT_LANG) return;
+      setLang(newVal);
+    }
+    window.addEventListener('storage', function (ev) {
+      if (!ev) return;
+      if (ev.key === 'simy-lang' || ev.key === 'simy-language') {
+        handleKey(ev.newValue);
+      }
+    });
+    // Same-tab writes don't fire `storage`. Poll at 400ms and detect
+    // a change in EITHER key against the previously-seen values — this
+    // way we notice simy-language being updated independently of
+    // simy-lang (e.g. by the React bundle's own setter).
+    var prevA = localStorage.getItem('simy-lang');
+    var prevB = localStorage.getItem('simy-language');
+    setInterval(function () {
+      var a = localStorage.getItem('simy-lang');
+      var b = localStorage.getItem('simy-language');
+      var changed = null;
+      if (a !== prevA && a && SUPPORTED.indexOf(a) !== -1) changed = a;
+      else if (b !== prevB && b && SUPPORTED.indexOf(b) !== -1) changed = b;
+      prevA = a;
+      prevB = b;
+      if (changed) { handleKey(changed); return; }
+      // Also mirror on steady state: if one key is set and the other
+      // isn't, copy across so the React bundle's next read agrees.
+      if (a && !b && SUPPORTED.indexOf(a) !== -1) {
+        try { localStorage.setItem('simy-language', a); prevB = a; } catch (e) {}
+      } else if (b && !a && SUPPORTED.indexOf(b) !== -1) {
+        try { localStorage.setItem('simy-lang', b); prevA = b; } catch (e) {}
+      }
+    }, 400);
   }
 
   /* ── Inject minimal CSS for switcher ────────────────────────── */
@@ -802,6 +851,25 @@
     // dictionary and installs a MutationObserver that re-applies the
     // current language on every React render.
     initHomeDomBridge();
+
+    // Keep simy-lang / simy-language in sync across i18n.js and the
+    // React bundle. Without this, changing language via one side can
+    // leave the other stuck on the old value after a reload.
+    installLangKeySync();
+
+    // Mirror the detected language to 'simy-language' on first load
+    // so the React bundle's useState(() => localStorage.getItem(...))
+    // picks it up on a subsequent reload.
+    if (lang && SUPPORTED.indexOf(lang) !== -1) {
+      try {
+        if (localStorage.getItem('simy-language') !== lang) {
+          localStorage.setItem('simy-language', lang);
+        }
+        if (localStorage.getItem('simy-lang') !== lang) {
+          localStorage.setItem('simy-lang', lang);
+        }
+      } catch (e) {}
+    }
   }
 
   // Run on DOMContentLoaded
