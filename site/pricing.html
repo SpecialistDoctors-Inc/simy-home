@@ -486,8 +486,8 @@
 
       <div class="billing-toggle">
         <div class="toggle-wrapper">
-          <button class="toggle-btn active" data-billing="monthly" onclick="setBilling('monthly')">Monthly</button>
-          <button class="toggle-btn" data-billing="annual" onclick="setBilling('annual')">
+          <button class="toggle-btn" data-billing="monthly" onclick="setBilling('monthly')">Monthly</button>
+          <button class="toggle-btn active" data-billing="annual" onclick="setBilling('annual')">
             <span style="display:flex;align-items:center;gap:8px">Annual <span style="font-size:0.7rem;letter-spacing:0.04em">&middot; SAVE 17%</span></span>
           </button>
         </div>
@@ -501,7 +501,7 @@
             <div class="plan-name">Starter</div>
             <div class="plan-subtitle">For individuals getting started</div>
             <div class="price-row">
-              <span class="price-amount" id="price-starter">$20</span>
+              <span class="price-amount" id="price-starter">$17</span>
               <span class="price-unit">/ seat / mo</span>
             </div>
 
@@ -546,7 +546,7 @@
             <div class="plan-name">Pro</div>
             <div class="plan-subtitle">For professionals and growing teams</div>
             <div class="price-row">
-              <span class="price-amount" id="price-pro">$40</span>
+              <span class="price-amount" id="price-pro">$33</span>
               <span class="price-unit">/ seat / mo</span>
             </div>
 
@@ -592,7 +592,7 @@
             <div class="plan-name">Scale</div>
             <div class="plan-subtitle">For high-output teams</div>
             <div class="price-row">
-              <span class="price-amount" id="price-scale">$100</span>
+              <span class="price-amount" id="price-scale">$83</span>
               <span class="price-unit">/ seat / mo</span>
             </div>
 
@@ -652,7 +652,7 @@
 
     <!-- Pricing dropdown logic -->
     <script>
-    var currentBilling = 'monthly';
+    var currentBilling = 'annual';
 
     function setBilling(type) {
       currentBilling = type;
