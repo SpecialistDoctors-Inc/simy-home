@@ -468,6 +468,18 @@
       if (!trimmed) continue;
       // Skip pure numeric / symbolic content — never worth translating
       if (/^[\s\d.,:%×·$/()\-+]*$/.test(trimmed)) continue;
+      // Skip nodes inside any element marked data-simy-no-translate —
+      // e.g. the Screen Studio block, which owns its own text updates.
+      var p = n.parentNode;
+      var skip = false;
+      while (p && p !== root) {
+        if (p.nodeType === 1 && p.hasAttribute && p.hasAttribute('data-simy-no-translate')) {
+          skip = true;
+          break;
+        }
+        p = p.parentNode;
+      }
+      if (skip) continue;
       ROOT_NODE_MAP.set(n, trimmed);
       ROOT_NODE_MAP._list.push(n);
     }
@@ -507,20 +519,21 @@
         if (node.nodeValue !== next) node.nodeValue = next;
       }
       ROOT_NODE_MAP._list = alive;
-      // Inject the Product Dashboard visual above the "What is SIMY" section.
+      // Inject the Screen Studio animated demo above the "What is SIMY" section.
       // Idempotent and guarded by ROOT_APPLYING so the observer ignores it.
-      injectDashboardVisual(root);
+      injectScreenStudio(root);
     } finally {
       ROOT_APPLYING = false;
     }
   }
 
-  /* ── Home #root bridge: inject a Product Dashboard visual above
-        the "03 / What is SIMY" section. Idempotent — safe to call on
-        every applyRoot() pass. ─────────────────────────────────── */
-  function injectDashboardVisual(root) {
+  /* ── Home #root bridge: inject the Screen Studio animated demo
+        above the "03 / What is SIMY" section. Idempotent — safe to
+        call on every applyRoot() pass. Auto-removes the older static
+        dashboard <figure> from PR #27 if it is still present. ───── */
+  function injectScreenStudio(root) {
     if (!root) return;
-    if (document.getElementById('simy-dashboard-visual')) return;
+    if (document.getElementById('simy-screen-studio')) return;
     if (!ROOT_NODE_MAP || !ROOT_NODE_MAP._list) return;
 
     var anchor = null;
@@ -543,30 +556,270 @@
     }
     if (!section || section === root || !section.parentNode) return;
 
-    var fig = document.createElement('figure');
-    fig.id = 'simy-dashboard-visual';
-    fig.className = 'simy-dashboard-visual';
-    fig.innerHTML =
-      '<img src="/assets/hero-dashboard-yoshi.png" ' +
-      'alt="SIMY Product Dashboard — Yoshi Tamura, Principal PM" ' +
-      'loading="lazy" decoding="async" />';
-    section.parentNode.insertBefore(fig, section);
+    // If a previous static figure exists from the earlier iteration, remove it.
+    var oldFig = document.getElementById('simy-dashboard-visual');
+    if (oldFig && oldFig.parentNode) oldFig.parentNode.removeChild(oldFig);
+
+    var wrap = document.createElement('section');
+    wrap.id = 'simy-screen-studio';
+    wrap.className = 'simy-ss-section';
+    // Tell captureRootOriginals to skip all text nodes inside the demo so
+    // the MutationObserver/bridge can't clobber our caption/tick/button text.
+    wrap.setAttribute('data-simy-no-translate', '1');
+    wrap.innerHTML = [
+      '<div class="simy-ss-container">',
+        '<div class="simy-ss-eyebrow">',
+          '<span class="simy-ss-eyebrow-dot"></span>',
+          'WATCH SIMY IN 12 SECONDS',
+        '</div>',
+        '<h2 class="simy-ss-title">From meeting to shipped PR.</h2>',
+        '<p class="simy-ss-kicker">Four scenes, one unbroken take through the real SIMY desktop app.</p>',
+        '<div class="simy-ss-wrap">',
+          '<div class="simy-ss-browser">',
+            '<div class="simy-ss-chrome">',
+              '<div class="simy-ss-dots">',
+                '<span class="simy-ss-dot" style="background:#ff5f57"></span>',
+                '<span class="simy-ss-dot" style="background:#febc2e"></span>',
+                '<span class="simy-ss-dot" style="background:#28c840"></span>',
+              '</div>',
+              '<div class="simy-ss-addr">',
+                '<span class="simy-ss-addr-inner">',
+                  '<span>\u{1F512}</span>',
+                  '<span>app.simy.one / home</span>',
+                '</span>',
+              '</div>',
+              '<span class="simy-ss-rec">',
+                '<span class="simy-ss-rec-dot"></span>',
+                'REC \u00b7 LIVE',
+              '</span>',
+            '</div>',
+            '<div class="simy-ss-viewport">',
+              '<div class="simy-ss-slide" data-simy-slide></div>',
+              '<div class="simy-ss-cursor" data-simy-cursor>',
+                '<svg width="22" height="22" viewBox="0 0 22 22" fill="none">',
+                  '<path d="M3 2 L3 18 L7.5 14 L10.5 20 L13 19 L10 13 L16 13 Z" fill="#fff" stroke="#0a0a0c" stroke-width="1.2" stroke-linejoin="round"/>',
+                '</svg>',
+              '</div>',
+              '<div class="simy-ss-ripple" data-simy-ripple></div>',
+            '</div>',
+          '</div>',
+          '<div class="simy-ss-rail"><div class="simy-ss-rail-fill" data-simy-rail></div></div>',
+          '<div class="simy-ss-ticks" data-simy-ticks>',
+            '<button class="simy-ss-tick" data-simy-idx="0" type="button">01 \u00b7 Twin</button>',
+            '<button class="simy-ss-tick" data-simy-idx="1" type="button">02 \u00b7 Meeting</button>',
+            '<button class="simy-ss-tick" data-simy-idx="2" type="button">03 \u00b7 Actions</button>',
+            '<button class="simy-ss-tick" data-simy-idx="3" type="button">04 \u00b7 Dashboard</button>',
+          '</div>',
+          '<div class="simy-ss-caption">',
+            '<div class="simy-ss-caption-main" data-simy-cap-main></div>',
+            '<div class="simy-ss-caption-sub" data-simy-cap-sub></div>',
+          '</div>',
+          '<div class="simy-ss-controls">',
+            '<button type="button" class="simy-ss-btn" data-simy-pause>Pause</button>',
+            '<button type="button" class="simy-ss-btn" data-simy-replay>Replay</button>',
+          '</div>',
+        '</div>',
+      '</div>'
+    ].join('');
+
+    section.parentNode.insertBefore(wrap, section);
+    initScreenStudioAnimation(wrap);
   }
 
-  /* ── Home #root bridge: inject the dashboard visual's CSS once. ── */
-  function injectDashboardVisualStyles() {
-    if (document.getElementById('simy-dashboard-visual-styles')) return;
+  /* ── Screen Studio animation driver: scene cycling, cursor glide,
+        click ripple, progress rail, ticks, caption, pause/replay. ── */
+  function initScreenStudioAnimation(wrap) {
+    var SCENES = [
+      { img: '/assets/demo-shots/01-twin.png',      from: [8, 82],  to: [38, 56],
+        main: '"Hi Tetsuo." \u2014 the Twin opens with a suggested question.',
+        sub:  'Morning check-in with the Digital Twin. It already knows what\'s due today.' },
+      { img: '/assets/demo-shots/02-meetings.png',  from: [94, 12], to: [62, 44],
+        main: 'Q2 Strategy meeting ends \u2014 every "Must Decide" captured.',
+        sub:  'AI briefing, open issues, and owner assignments \u2014 no manual notes.' },
+      { img: '/assets/demo-shots/03-actions.png',   from: [92, 86], to: [36, 42],
+        main: 'A PR is already drafted from the meeting.',
+        sub:  'My Actions turns the decision into a ready-to-review ticket.' },
+      { img: '/assets/demo-shots/04-dashboard.png', from: [6, 14],  to: [48, 48],
+        main: 'Growth Dashboard: North Star 1,247 (+12.4%) \u00b7 Retention 71%.',
+        sub:  'The outcome lands on the dashboard \u2014 roadmap ready before standup.' }
+    ];
+    var HOLD_MS  = 3000;
+    var FADE_MS  = 500;
+    var TOTAL_MS = HOLD_MS + FADE_MS;
+    var TICK_MS  = 50;
+
+    // Preload all scene images so the first cycle never pops.
+    for (var pi = 0; pi < SCENES.length; pi++) {
+      var im = new Image();
+      im.src = SCENES[pi].img;
+    }
+
+    var slide    = wrap.querySelector('[data-simy-slide]');
+    var cursor   = wrap.querySelector('[data-simy-cursor]');
+    var ripple   = wrap.querySelector('[data-simy-ripple]');
+    var rail     = wrap.querySelector('[data-simy-rail]');
+    var capMain  = wrap.querySelector('[data-simy-cap-main]');
+    var capSub   = wrap.querySelector('[data-simy-cap-sub]');
+    var ticks    = wrap.querySelectorAll('[data-simy-ticks] .simy-ss-tick');
+    var pauseBtn = wrap.querySelector('[data-simy-pause]');
+    var replayBtn= wrap.querySelector('[data-simy-replay]');
+
+    var index    = 0;
+    var elapsed  = 0;
+    var paused   = false;
+    var lastTick = null;
+    var interval = null;
+    var rippleTimer = null;
+    var cursorOutTimer = null;
+    var reduced  = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+    function setRail(frac) {
+      var pct = (index + frac) / SCENES.length;
+      rail.style.transform = 'scaleX(' + pct + ')';
+    }
+
+    function renderScene(i) {
+      var s = SCENES[i];
+
+      // Slide crossfade: flash opacity 0 → 1 on next frame
+      slide.style.transition = 'none';
+      slide.style.opacity = '0';
+      void slide.offsetHeight;
+      slide.style.backgroundImage = 'url(' + s.img + ')';
+      slide.style.transition = 'opacity 0.5s ease';
+      slide.style.opacity = '1';
+
+      // Caption
+      capMain.textContent = s.main;
+      capSub.textContent = s.sub;
+
+      // Tick highlight
+      for (var t = 0; t < ticks.length; t++) {
+        ticks[t].setAttribute('data-active', t === i ? 'true' : 'false');
+      }
+
+      // Cursor: jump to 'from' then glide to 'to' over ~1.3s
+      cursor.style.transition = 'none';
+      cursor.style.left = s.from[0] + '%';
+      cursor.style.top  = s.from[1] + '%';
+      cursor.style.opacity = '0';
+      void cursor.offsetHeight;
+      cursor.style.transition = 'left 1.3s cubic-bezier(.4,0,.2,1), top 1.3s cubic-bezier(.4,0,.2,1), opacity 0.3s linear';
+      cursor.style.left = s.to[0] + '%';
+      cursor.style.top  = s.to[1] + '%';
+      cursor.style.opacity = '1';
+
+      // Ripple: fire once cursor arrives at target
+      ripple.style.left = s.to[0] + '%';
+      ripple.style.top  = s.to[1] + '%';
+      ripple.classList.remove('simy-ss-ripple-play');
+      void ripple.offsetHeight;
+      if (rippleTimer) clearTimeout(rippleTimer);
+      rippleTimer = setTimeout(function () {
+        if (!wrap.isConnected) return;
+        ripple.classList.add('simy-ss-ripple-play');
+      }, 1300);
+
+      // Fade cursor out just before the scene cuts
+      if (cursorOutTimer) clearTimeout(cursorOutTimer);
+      cursorOutTimer = setTimeout(function () {
+        if (!wrap.isConnected) return;
+        cursor.style.opacity = '0';
+      }, HOLD_MS - 200);
+    }
+
+    function jumpTo(i) {
+      index = ((i % SCENES.length) + SCENES.length) % SCENES.length;
+      elapsed = 0;
+      lastTick = null;
+      setRail(0);
+      renderScene(index);
+    }
+
+    function loop() {
+      if (!wrap.isConnected) {
+        if (interval) { clearInterval(interval); interval = null; }
+        return;
+      }
+      if (paused || reduced) { lastTick = null; return; }
+      var now = (window.performance && performance.now) ? performance.now() : Date.now();
+      var dt  = (lastTick == null) ? 0 : (now - lastTick);
+      lastTick = now;
+      elapsed += dt;
+      var frac = Math.min(elapsed / TOTAL_MS, 1);
+      setRail(frac);
+      if (elapsed >= TOTAL_MS) {
+        elapsed = 0;
+        index = (index + 1) % SCENES.length;
+        renderScene(index);
+      }
+    }
+
+    for (var k = 0; k < ticks.length; k++) {
+      (function (btn, idx) {
+        btn.addEventListener('click', function () { jumpTo(idx); });
+      })(ticks[k], k);
+    }
+    pauseBtn.addEventListener('click', function () {
+      paused = !paused;
+      pauseBtn.textContent = paused ? 'Play' : 'Pause';
+      lastTick = null;
+    });
+    replayBtn.addEventListener('click', function () {
+      jumpTo(0);
+    });
+
+    renderScene(0);
+    setRail(0);
+    interval = setInterval(loop, TICK_MS);
+  }
+
+  /* ── Screen Studio: inject its scoped CSS once at bridge init. ── */
+  function injectScreenStudioStyles() {
+    if (document.getElementById('simy-screen-studio-styles')) return;
     var style = document.createElement('style');
-    style.id = 'simy-dashboard-visual-styles';
-    style.textContent =
-      '.simy-dashboard-visual{margin:48px auto 72px;max-width:1180px;' +
-      'padding:0 24px;}' +
-      '.simy-dashboard-visual img{display:block;width:100%;height:auto;' +
-      'border-radius:20px;box-shadow:0 40px 120px -40px rgba(12,12,28,0.4),' +
-      '0 2px 8px rgba(0,0,0,0.06);}' +
-      '@media (max-width:768px){' +
-      '.simy-dashboard-visual{margin:32px auto 56px;padding:0 16px;}' +
-      '.simy-dashboard-visual img{border-radius:14px;}}';
+    style.id = 'simy-screen-studio-styles';
+    style.textContent = [
+      '.simy-ss-section{margin:64px auto 80px;padding:0 24px;}',
+      '.simy-ss-container{max-width:1180px;margin:0 auto;}',
+      '.simy-ss-eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:"Geist Mono",ui-monospace,monospace;font-size:11px;text-transform:uppercase;letter-spacing:.18em;color:#6b6b68;margin-bottom:12px;}',
+      '.simy-ss-eyebrow-dot{width:6px;height:6px;border-radius:999px;background:#1d4ed8;display:inline-block;}',
+      '.simy-ss-title{font-size:clamp(28px,4vw,48px);font-weight:600;letter-spacing:-.02em;margin:0 0 10px;line-height:1.1;}',
+      '.simy-ss-kicker{font-size:16px;color:#6b6b68;max-width:560px;margin:0 0 28px;line-height:1.5;}',
+      '.simy-ss-wrap{background:radial-gradient(ellipse at top,rgba(210,220,255,.55) 0%,transparent 60%),linear-gradient(180deg,#f2f3ff 0%,#f9f9f6 100%);border-radius:28px;padding:28px;box-shadow:inset 0 1px 0 rgba(0,0,0,.04),0 40px 80px -40px rgba(20,20,40,.25);}',
+      '.simy-ss-browser{background:#111113;border-radius:18px;overflow:hidden;box-shadow:0 30px 80px -30px rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.06);}',
+      '.simy-ss-chrome{display:flex;align-items:center;gap:12px;padding:10px 14px;background:linear-gradient(180deg,#1a1a1d 0%,#111113 100%);border-bottom:1px solid rgba(255,255,255,.05);}',
+      '.simy-ss-dots{display:flex;gap:6px;}',
+      '.simy-ss-dot{width:11px;height:11px;border-radius:999px;display:inline-block;}',
+      '.simy-ss-addr{flex:1;display:flex;align-items:center;justify-content:center;}',
+      '.simy-ss-addr-inner{background:rgba(255,255,255,.07);color:rgba(255,255,255,.72);font-size:12px;padding:5px 12px;border-radius:999px;font-family:"Geist Mono",ui-monospace,monospace;display:inline-flex;align-items:center;gap:6px;}',
+      '.simy-ss-rec{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:#ff4d4d;font-family:"Geist Mono",ui-monospace,monospace;letter-spacing:.04em;}',
+      '.simy-ss-rec-dot{width:8px;height:8px;border-radius:999px;background:#ff4d4d;animation:simy-ss-pulse 1.6s ease-out infinite;}',
+      '@keyframes simy-ss-pulse{0%{box-shadow:0 0 0 0 rgba(255,77,77,.6);}70%{box-shadow:0 0 0 10px rgba(255,77,77,0);}100%{box-shadow:0 0 0 0 rgba(255,77,77,0);}}',
+      '.simy-ss-viewport{position:relative;aspect-ratio:16/10;background:#0a0a0c;overflow:hidden;}',
+      '.simy-ss-slide{position:absolute;inset:0;background-size:cover;background-position:center top;opacity:1;}',
+      '.simy-ss-cursor{position:absolute;width:22px;height:22px;pointer-events:none;filter:drop-shadow(0 2px 4px rgba(0,0,0,.35));z-index:20;opacity:0;transform:translate(-4px,-4px);}',
+      '.simy-ss-ripple{position:absolute;width:44px;height:44px;border-radius:999px;border:2px solid #8b9cff;transform:translate(-50%,-50%) scale(0);opacity:0;pointer-events:none;z-index:19;}',
+      '.simy-ss-ripple.simy-ss-ripple-play{animation:simy-ss-ripple-kf 1.2s ease-out 0s 1;}',
+      '@keyframes simy-ss-ripple-kf{0%{transform:translate(-50%,-50%) scale(0);opacity:0;}15%{transform:translate(-50%,-50%) scale(.2);opacity:.9;}100%{transform:translate(-50%,-50%) scale(2.6);opacity:0;}}',
+      '.simy-ss-rail{margin-top:18px;height:4px;background:rgba(0,0,0,.08);border-radius:999px;overflow:hidden;}',
+      '.simy-ss-rail-fill{height:100%;width:100%;background:linear-gradient(90deg,#1d4ed8 0%,#7c3aed 100%);transform:scaleX(0);transform-origin:left center;transition:transform .05s linear;}',
+      '.simy-ss-ticks{margin-top:14px;display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}',
+      '.simy-ss-tick{text-align:left;font-family:"Geist Mono",ui-monospace,monospace;font-size:11px;color:#6b6b68;padding:8px 12px;border-radius:10px;border:1px solid rgba(0,0,0,.06);background:rgba(255,255,255,.6);transition:all .25s ease;cursor:pointer;}',
+      '.simy-ss-tick[data-active="true"]{color:#0a0a0a;background:#fff;border-color:#1d4ed8;box-shadow:0 0 0 3px rgba(29,78,216,.25);}',
+      '.simy-ss-caption{margin-top:18px;padding:16px 20px;background:#0a0a0c;color:#f9f9f6;border-radius:14px;min-height:64px;}',
+      '.simy-ss-caption-main{font-size:16px;font-weight:600;line-height:1.4;}',
+      '.simy-ss-caption-sub{font-size:13px;color:rgba(255,255,255,.6);line-height:1.5;margin-top:4px;}',
+      '.simy-ss-controls{margin-top:14px;display:flex;gap:10px;justify-content:flex-end;}',
+      '.simy-ss-btn{font-family:"Geist Mono",ui-monospace,monospace;font-size:11px;padding:6px 12px;border-radius:999px;border:1px solid rgba(0,0,0,.1);background:#fff;color:#0a0a0a;cursor:pointer;transition:all .15s ease;}',
+      '.simy-ss-btn:hover{border-color:#1d4ed8;color:#1d4ed8;}',
+      '@media (max-width:768px){',
+        '.simy-ss-section{padding:0 16px;margin:40px auto 56px;}',
+        '.simy-ss-wrap{padding:16px;border-radius:20px;}',
+        '.simy-ss-ticks{grid-template-columns:repeat(2,1fr);}',
+        '.simy-ss-title{font-size:28px;}',
+      '}'
+    ].join('');
     document.head.appendChild(style);
   }
 
@@ -594,7 +847,7 @@
   function initHomeDomBridge() {
     // Only run on pages that have a React SPA root (#root)
     if (!document.getElementById('root')) return;
-    injectDashboardVisualStyles();
+    injectScreenStudioStyles();
     loadHomeDom(CURRENT_LANG, function () {
       applyRoot(CURRENT_LANG);
       setupRootObserver();
