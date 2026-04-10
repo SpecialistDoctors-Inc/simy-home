@@ -1146,23 +1146,58 @@ window.addEventListener('scroll', function() {
   else { nav.classList.remove('scrolled'); }
 });
 
-/* Drag-to-scroll for usecase carousel */
+/* Usecase carousel: auto-scroll + drag + pause on hover/touch */
 (function() {
   var el = document.getElementById('usecaseGrid');
   if (!el) return;
+  var speed = 0.5; /* px per frame */
+  var paused = false;
+  var rafId;
+
+  function step() {
+    if (!paused) {
+      el.scrollLeft += speed;
+      /* Loop: when reaching the end, jump back to start */
+      if (el.scrollLeft >= el.scrollWidth - el.offsetWidth - 1) {
+        el.scrollLeft = 0;
+      }
+    }
+    rafId = requestAnimationFrame(step);
+  }
+  rafId = requestAnimationFrame(step);
+
+  /* Pause on hover */
+  el.addEventListener('mouseenter', function() { paused = true; });
+  el.addEventListener('mouseleave', function() { paused = true; setTimeout(function(){ paused = false; }, 1000); });
+
+  /* Pause on touch */
+  el.addEventListener('touchstart', function() { paused = true; }, {passive: true});
+  el.addEventListener('touchend', function() { setTimeout(function(){ paused = false; }, 2000); });
+
+  /* Drag-to-scroll */
   var isDown = false, startX, scrollL;
   el.addEventListener('mousedown', function(e) {
-    isDown = true; el.style.cursor = 'grabbing';
+    isDown = true; paused = true; el.style.cursor = 'grabbing';
     startX = e.pageX - el.offsetLeft;
     scrollL = el.scrollLeft;
   });
-  el.addEventListener('mouseleave', function() { isDown = false; el.style.cursor = 'grab'; });
-  el.addEventListener('mouseup', function() { isDown = false; el.style.cursor = 'grab'; });
+  el.addEventListener('mouseup', function() {
+    isDown = false; el.style.cursor = 'grab';
+    setTimeout(function(){ paused = false; }, 1500);
+  });
   el.addEventListener('mousemove', function(e) {
     if (!isDown) return;
     e.preventDefault();
     var x = e.pageX - el.offsetLeft;
     el.scrollLeft = scrollL - (x - startX);
+  });
+
+  /* Pause when nav buttons clicked */
+  document.querySelectorAll('.usecase-nav button').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      paused = true;
+      setTimeout(function(){ paused = false; }, 2000);
+    });
   });
 })();
 </script>
