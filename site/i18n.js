@@ -19,6 +19,21 @@
   ];
   var DEFAULT = 'en';
   var CACHE = {};
+  var CURRENT_LANG = DEFAULT;
+
+  /* ── Home (/) React SPA translation bridge ──
+     The home page (/) is served by a compiled React bundle whose source is
+     no longer available, so we can't add t() calls or rebuild it. Instead,
+     we walk the #root DOM after React mounts, capture each text node's
+     original (English) content, and replace it with the target language
+     from /lang/home-dom.json. A MutationObserver re-applies translations
+     on every React re-render so the translation always wins. On all other
+     pages #root is absent, so this bridge is a no-op. */
+  var HOME_DOM_CACHE = {};     // { [lang]: { [enSource]: translated } }
+  var ROOT_NODE_MAP = null;    // WeakMap<Text, string> — trimmed English source per text node
+  var ROOT_OBSERVER = null;
+  var ROOT_DEBOUNCE = null;
+  var ROOT_APPLYING = false;   // guard against observer self-triggering
 
   /* ── Map browser locale to our supported codes ────────────── */
   var LOCALE_MAP = {
@@ -71,9 +86,13 @@
       if (resolved) return resolved;
     }
 
-    // 2. Saved preference
+    // 2. Saved preference — check BOTH keys. The React bundle on /
+    //    uses 'simy-language' for its internal LanguageContext, while
+    //    the static pages use 'simy-lang'. Either key is authoritative.
     var saved = localStorage.getItem('simy-lang');
     if (saved && SUPPORTED.indexOf(saved) !== -1) return saved;
+    var savedReact = localStorage.getItem('simy-language');
+    if (savedReact && SUPPORTED.indexOf(savedReact) !== -1) return savedReact;
 
     // 3. Browser / OS language
     var langs = navigator.languages || [navigator.language || navigator.userLanguage || ''];
@@ -411,6 +430,129 @@
     }
   }
 
+  /* ── Home #root bridge: load per-language dictionary ─────────── */
+  function loadHomeDom(lang, cb) {
+    if (HOME_DOM_CACHE[lang]) return cb(HOME_DOM_CACHE[lang]);
+    // English is identity — nothing to load
+    if (lang === DEFAULT) {
+      HOME_DOM_CACHE[lang] = {};
+      return cb(HOME_DOM_CACHE[lang]);
+    }
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', '/lang/home-dom/' + lang + '.json', true);
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          try { HOME_DOM_CACHE[lang] = JSON.parse(xhr.responseText); }
+          catch (e) { HOME_DOM_CACHE[lang] = {}; }
+        } else { HOME_DOM_CACHE[lang] = {}; }
+        cb(HOME_DOM_CACHE[lang]);
+      }
+    };
+    xhr.send();
+  }
+
+  /* ── Home #root bridge: walk text nodes, capture originals ─── */
+  function captureRootOriginals(root) {
+    if (!ROOT_NODE_MAP) ROOT_NODE_MAP = new WeakMap();
+    // Track captured nodes so subsequent walks only pick up newly-added ones.
+    // WeakMap has no size, so we also keep a parallel Set of nodes for iteration.
+    if (!ROOT_NODE_MAP._list) ROOT_NODE_MAP._list = [];
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
+    var n;
+    while ((n = walker.nextNode())) {
+      if (ROOT_NODE_MAP.has(n)) continue;
+      var raw = n.nodeValue;
+      if (!raw) continue;
+      var trimmed = raw.replace(/\s+/g, ' ').trim();
+      if (!trimmed) continue;
+      // Skip pure numeric / symbolic content — never worth translating
+      if (/^[\s\d.,:%×·$/()\-+]*$/.test(trimmed)) continue;
+      ROOT_NODE_MAP.set(n, trimmed);
+      ROOT_NODE_MAP._list.push(n);
+    }
+  }
+
+  /* ── Home #root bridge: apply current language to all text nodes ── */
+  function applyRoot(langCode) {
+    var root = document.getElementById('root');
+    if (!root) return;
+    captureRootOriginals(root);
+    if (!ROOT_NODE_MAP || !ROOT_NODE_MAP._list) return;
+    // Ensure the language dict is loaded — lazy-load on demand if not.
+    if (!HOME_DOM_CACHE[langCode] && langCode !== DEFAULT) {
+      loadHomeDom(langCode, function () { applyRoot(langCode); });
+      return;
+    }
+    var dict = HOME_DOM_CACHE[langCode] || {};
+    ROOT_APPLYING = true;
+    try {
+      var list = ROOT_NODE_MAP._list;
+      // Compact dead nodes occasionally
+      var alive = [];
+      for (var i = 0; i < list.length; i++) {
+        var node = list[i];
+        if (!node || !node.isConnected) continue;
+        alive.push(node);
+        var orig = ROOT_NODE_MAP.get(node);
+        if (!orig) continue;
+        var translated = dict[orig];
+        var target = (translated !== undefined && translated !== null && translated !== '')
+          ? translated
+          : orig; // EN or missing key → restore original
+        var raw = node.nodeValue || '';
+        var mLead = raw.match(/^\s*/);
+        var mTail = raw.match(/\s*$/);
+        var next = (mLead ? mLead[0] : '') + target + (mTail ? mTail[0] : '');
+        if (node.nodeValue !== next) node.nodeValue = next;
+      }
+      ROOT_NODE_MAP._list = alive;
+    } finally {
+      ROOT_APPLYING = false;
+    }
+  }
+
+  /* ── Home #root bridge: MutationObserver re-applies on React renders ── */
+  function setupRootObserver() {
+    if (ROOT_OBSERVER) return;
+    var root = document.getElementById('root');
+    if (!root) return;
+    ROOT_OBSERVER = new MutationObserver(function (mutations) {
+      if (ROOT_APPLYING) return;
+      // If every mutation is just a characterData change caused by us, skip
+      if (ROOT_DEBOUNCE) clearTimeout(ROOT_DEBOUNCE);
+      ROOT_DEBOUNCE = setTimeout(function () {
+        applyRoot(CURRENT_LANG);
+      }, 30);
+    });
+    ROOT_OBSERVER.observe(root, {
+      childList: true,
+      subtree: true,
+      characterData: true
+    });
+  }
+
+  /* ── Home #root bridge: one-time kickoff from init ──────────── */
+  function initHomeDomBridge() {
+    // Only run on pages that have a React SPA root (#root)
+    if (!document.getElementById('root')) return;
+    loadHomeDom(CURRENT_LANG, function () {
+      applyRoot(CURRENT_LANG);
+      setupRootObserver();
+      // React may still be mounting. Poll for ~6s to catch late renders.
+      var tries = 0;
+      var poll = setInterval(function () {
+        tries++;
+        var r = document.getElementById('root');
+        if (r && r.childNodes && r.childNodes.length > 0) {
+          applyRoot(CURRENT_LANG);
+          setupRootObserver();
+        }
+        if (tries > 60) clearInterval(poll); // stop after ~6s
+      }, 100);
+    });
+  }
+
   /* ── Apply translations to DOM ─────────────────────────────── */
   function apply(dict) {
     var meta = dict._meta || {};
@@ -419,6 +561,10 @@
     // BEFORE any translation has been applied. Subsequent apply() calls
     // use these as a fallback for missing keys.
     captureOriginals();
+
+    // Track the current language so the Home #root bridge and its
+    // MutationObserver know what language to (re-)apply on React renders.
+    CURRENT_LANG = meta.code || DEFAULT;
 
     // Set html lang & dir
     document.documentElement.lang = meta.code || DEFAULT;
@@ -484,6 +630,12 @@
       : 'https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262';
     var appLinks = document.querySelectorAll('a[href*="apps.apple.com"]');
     for (var m = 0; m < appLinks.length; m++) { appLinks[m].href = appStoreUrl; }
+
+    // Home (/) React SPA: re-apply #root translations on every apply() —
+    // this handles both initial load and user-initiated language switches.
+    if (document.getElementById('root')) {
+      applyRoot(CURRENT_LANG);
+    }
   }
 
   /* ── Language names for switcher ───────────────────────────── */
@@ -565,11 +717,56 @@
   /* ── Public: switch language ────────────────────────────────── */
   function setLang(lang) {
     if (SUPPORTED.indexOf(lang) === -1) lang = DEFAULT;
+    // Mirror to BOTH keys so the React bundle's LanguageContext and
+    // i18n.js stay in lockstep — whichever side reads localStorage
+    // on next mount/reload gets the same answer.
     localStorage.setItem('simy-lang', lang);
+    try { localStorage.setItem('simy-language', lang); } catch (e) {}
     load(lang, apply);
     try {
       window.dispatchEvent(new CustomEvent('simy-lang-changed', { detail: lang }));
     } catch (e) { /* ignore */ }
+  }
+
+  /* ── Cross-component sync: watch for external writes to either
+     language key (e.g. the React bundle's own setter) and re-apply
+     the bridge whenever they diverge from CURRENT_LANG. Covers:
+       (a) cross-tab storage events  (b) same-tab setItem via polling */
+  function installLangKeySync() {
+    function handleKey(newVal) {
+      if (!newVal || SUPPORTED.indexOf(newVal) === -1) return;
+      if (newVal === CURRENT_LANG) return;
+      setLang(newVal);
+    }
+    window.addEventListener('storage', function (ev) {
+      if (!ev) return;
+      if (ev.key === 'simy-lang' || ev.key === 'simy-language') {
+        handleKey(ev.newValue);
+      }
+    });
+    // Same-tab writes don't fire `storage`. Poll at 400ms and detect
+    // a change in EITHER key against the previously-seen values — this
+    // way we notice simy-language being updated independently of
+    // simy-lang (e.g. by the React bundle's own setter).
+    var prevA = localStorage.getItem('simy-lang');
+    var prevB = localStorage.getItem('simy-language');
+    setInterval(function () {
+      var a = localStorage.getItem('simy-lang');
+      var b = localStorage.getItem('simy-language');
+      var changed = null;
+      if (a !== prevA && a && SUPPORTED.indexOf(a) !== -1) changed = a;
+      else if (b !== prevB && b && SUPPORTED.indexOf(b) !== -1) changed = b;
+      prevA = a;
+      prevB = b;
+      if (changed) { handleKey(changed); return; }
+      // Also mirror on steady state: if one key is set and the other
+      // isn't, copy across so the React bundle's next read agrees.
+      if (a && !b && SUPPORTED.indexOf(a) !== -1) {
+        try { localStorage.setItem('simy-language', a); prevB = a; } catch (e) {}
+      } else if (b && !a && SUPPORTED.indexOf(b) !== -1) {
+        try { localStorage.setItem('simy-lang', b); prevA = b; } catch (e) {}
+      }
+    }, 400);
   }
 
   /* ── Inject minimal CSS for switcher ────────────────────────── */
@@ -641,6 +838,7 @@
     }
 
     var lang = detect();
+    CURRENT_LANG = lang;
     if (lang !== DEFAULT) {
       load(lang, apply);
     } else {
@@ -649,6 +847,31 @@
         var display = document.getElementById('langDisplay');
         if (display) display.textContent = (dict._meta || {}).name || 'English';
       });
+    }
+
+    // Kick off the Home (/) React SPA translation bridge — no-op on pages
+    // that don't have a #root (all static pages). Loads the home-dom
+    // dictionary and installs a MutationObserver that re-applies the
+    // current language on every React render.
+    initHomeDomBridge();
+
+    // Keep simy-lang / simy-language in sync across i18n.js and the
+    // React bundle. Without this, changing language via one side can
+    // leave the other stuck on the old value after a reload.
+    installLangKeySync();
+
+    // Mirror the detected language to 'simy-language' on first load
+    // so the React bundle's useState(() => localStorage.getItem(...))
+    // picks it up on a subsequent reload.
+    if (lang && SUPPORTED.indexOf(lang) !== -1) {
+      try {
+        if (localStorage.getItem('simy-language') !== lang) {
+          localStorage.setItem('simy-language', lang);
+        }
+        if (localStorage.getItem('simy-lang') !== lang) {
+          localStorage.setItem('simy-lang', lang);
+        }
+      } catch (e) {}
     }
   }
 
