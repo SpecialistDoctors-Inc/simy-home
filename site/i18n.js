@@ -567,6 +567,9 @@
     if (SUPPORTED.indexOf(lang) === -1) lang = DEFAULT;
     localStorage.setItem('simy-lang', lang);
     load(lang, apply);
+    try {
+      window.dispatchEvent(new CustomEvent('simy-lang-changed', { detail: lang }));
+    } catch (e) { /* ignore */ }
   }
 
   /* ── Inject minimal CSS for switcher ────────────────────────── */
