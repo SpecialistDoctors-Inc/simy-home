@@ -255,16 +255,63 @@ footer { padding: 48px 0 36px; border-top: none; background: #0a0a0a; color: #f5
 .usecase-grid::-webkit-scrollbar { display: none; }
 .usecase-grid { -ms-overflow-style: none; scrollbar-width: none; }
 .usecase-card {
-  flex: 0 0 340px;
+  flex: 0 0 320px;
   min-width: 300px;
-  background: var(--card);
-  border: 1px solid rgba(0,0,0,0.06);
-  border-radius: 14px;
-  padding: 28px 24px;
-  transition: border-color 0.3s;
+  background: #eeeee9;
+  border: none;
+  border-radius: 16px;
+  overflow: hidden;
   scroll-snap-align: start;
+  transition: transform 0.2s;
 }
-.usecase-card:hover { border-color: rgba(0, 87, 255, 0.15); }
+.usecase-card:hover { transform: translateY(-2px); }
+.usecase-photo {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  filter: grayscale(100%);
+  display: block;
+}
+.usecase-body { padding: 24px; }
+.usecase-role {
+  font-size: 1.1rem; font-weight: 700;
+  margin-bottom: 4px;
+}
+.usecase-company {
+  font-family: var(--font-mono);
+  font-size: 0.7rem; font-weight: 500;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--muted-fg);
+  margin-bottom: 20px;
+}
+.usecase-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem; font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--muted-fg-light);
+  margin-bottom: 8px;
+}
+.usecase-label.with-simy { color: var(--primary); }
+.usecase-before {
+  font-size: 0.85rem; color: var(--muted-fg);
+  line-height: 1.55;
+  margin-bottom: 20px;
+}
+.usecase-after-wrap {
+  border-left: 3px solid var(--primary);
+  padding-left: 14px;
+  margin-bottom: 20px;
+}
+.usecase-after {
+  font-size: 0.85rem; color: var(--foreground);
+  font-weight: 500; line-height: 1.55;
+}
+.usecase-result {
+  font-family: var(--font-mono);
+  font-size: 0.8rem; color: var(--primary);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
 .usecase-nav {
   display: flex;
   justify-content: flex-end;
@@ -284,30 +331,6 @@ footer { padding: 48px 0 36px; border-top: none; background: #0a0a0a; color: #f5
 .usecase-nav button:hover {
   border-color: var(--primary);
   color: var(--primary);
-}
-.usecase-role {
-  font-size: 0.95rem; font-weight: 700;
-  margin-bottom: 4px;
-}
-.usecase-company {
-  font-size: 0.75rem; color: var(--muted-fg-light);
-  margin-bottom: 16px;
-}
-.usecase-before {
-  font-size: 0.85rem; color: var(--muted-fg);
-  line-height: 1.55;
-  margin-bottom: 12px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid rgba(0,0,0,0.04);
-}
-.usecase-after {
-  font-size: 0.85rem; color: var(--foreground);
-  font-weight: 500; line-height: 1.55;
-  margin-bottom: 8px;
-}
-.usecase-result {
-  font-size: 0.8rem; color: var(--primary);
-  font-weight: 600;
 }
 
 /* Demo Section */
@@ -711,68 +734,121 @@ if(localStorage.getItem('simy-cookies')==='1') loadGA();
 
     <div class="usecase-scroll-wrap">
     <div class="usecase-grid" id="usecaseGrid">
+
       <div class="usecase-card">
-        <div class="usecase-role">Marketing Lead</div>
-        <div class="usecase-company">150-person tech company</div>
-        <div class="usecase-before">Campaign briefs sit in Notion for a week before anyone acts on them.</div>
-        <div class="usecase-after">Strategy call ends. SIMY writes copy, schedules posts, and drafts the performance report.</div>
-        <div class="usecase-result">Campaign live within 24 hours.</div>
+        <img class="usecase-photo" src="https://d2xsxph8kpxj0f.cloudfront.net/310519663370063462/ThMFZacjNcqAVYF3jmcy3R/pasted_file_iOHiwu_ChatGPTImage2025%E5%B9%B411%E6%9C%8816%E6%97%A516_24_39_2b9bd74d.png" alt="Head of Marketing" style="object-position:center 13px">
+        <div class="usecase-body">
+          <div class="usecase-role">Head of Marketing</div>
+          <div class="usecase-company">Consumer Brand</div>
+          <div class="usecase-label">Today</div>
+          <div class="usecase-before">Campaign briefs sit in Notion for a week before anyone acts on them.</div>
+          <div class="usecase-label with-simy">With SIMY, You</div>
+          <div class="usecase-after-wrap"><div class="usecase-after">Strategy call ends. SIMY writes copy, schedules posts, and drafts the performance report.</div></div>
+          <div class="usecase-result">Result: Campaign live within 24 hours.</div>
+        </div>
+      </div>
+
+      <div class="usecase-card">
+        <img class="usecase-photo" src="https://d2xsxph8kpxj0f.cloudfront.net/310519663370063462/ThMFZacjNcqAVYF3jmcy3R/correct_casual_portrait_36671232.png" alt="Sales Director" style="object-position:center -26px">
+        <div class="usecase-body">
+          <div class="usecase-role">Sales Director</div>
+          <div class="usecase-company">Enterprise Software</div>
+          <div class="usecase-label">Today</div>
+          <div class="usecase-before">After every client call, reps spend an hour updating CRM and writing follow-up emails.</div>
+          <div class="usecase-label with-simy">With SIMY, You</div>
+          <div class="usecase-after-wrap"><div class="usecase-after">Call ends. SIMY updates Salesforce, drafts the follow-up, and flags next steps.</div></div>
+          <div class="usecase-result">Result: Reps focus on selling. Not admin.</div>
+        </div>
+      </div>
+
+      <div class="usecase-card">
+        <img class="usecase-photo" src="https://d2xsxph8kpxj0f.cloudfront.net/310519663370063462/ThMFZacjNcqAVYF3jmcy3R/pasted_file_ewyeUl_ChatGPTImage2025%E5%B9%B411%E6%9C%8816%E6%97%A516_18_34_078a0a39.png" alt="CFO" style="object-position:center 10px">
+        <div class="usecase-body">
+          <div class="usecase-role">CFO</div>
+          <div class="usecase-company">Manufacturing Firm</div>
+          <div class="usecase-label">Today</div>
+          <div class="usecase-before">Monthly close takes 3 days of manual data extraction and formatting.</div>
+          <div class="usecase-label with-simy">With SIMY, You</div>
+          <div class="usecase-after-wrap"><div class="usecase-after">SIMY pulls data, formats the P&amp;L, and flags anomalies — before the analyst opens their laptop.</div></div>
+          <div class="usecase-result">Result: Close in hours. Anomalies caught early.</div>
+        </div>
+      </div>
+
+      <div class="usecase-card">
+        <img class="usecase-photo" src="https://d2xsxph8kpxj0f.cloudfront.net/310519663370063462/ThMFZacjNcqAVYF3jmcy3R/pasted_file_iQKftb_ChatGPTImage2025%E5%B9%B411%E6%9C%8816%E6%97%A516_30_29_7270f1cd.png" alt="Product Manager" style="object-position:center 10px">
+        <div class="usecase-body">
+          <div class="usecase-role">Product Manager</div>
+          <div class="usecase-company">150-Person Tech Company</div>
+          <div class="usecase-label">Today</div>
+          <div class="usecase-before">After every planning session, someone spends hours turning discussion into a structured roadmap.</div>
+          <div class="usecase-label with-simy">With SIMY, You</div>
+          <div class="usecase-after-wrap"><div class="usecase-after">Meeting ends. SIMY generates a structured roadmap, assigns owners, and sends summaries automatically.</div></div>
+          <div class="usecase-result">Result: Roadmap ready before the next standup.</div>
+        </div>
+      </div>
+
+      <div class="usecase-card">
+        <img class="usecase-photo" src="https://d2xsxph8kpxj0f.cloudfront.net/310519663370063462/ThMFZacjNcqAVYF3jmcy3R/correct_south_asian_female_2b601475.png" alt="HR Director" style="object-position:center -24px">
+        <div class="usecase-body">
+          <div class="usecase-role">HR Director</div>
+          <div class="usecase-company">Healthcare System</div>
+          <div class="usecase-label">Today</div>
+          <div class="usecase-before">Onboarding new hires takes 2 weeks of back-and-forth emails.</div>
+          <div class="usecase-label with-simy">With SIMY, You</div>
+          <div class="usecase-after-wrap"><div class="usecase-after">SIMY sends welcome sequences, schedules training, and answers FAQs automatically.</div></div>
+          <div class="usecase-result">Result: New hire ready on day one.</div>
+        </div>
+      </div>
+
+      <div class="usecase-card">
+        <img class="usecase-photo" src="https://d2xsxph8kpxj0f.cloudfront.net/310519663370063462/ThMFZacjNcqAVYF3jmcy3R/pasted_file_lkRyUj_ChatGPTImage2025%E5%B9%B411%E6%9C%8816%E6%97%A517_04_58_4078180f.png" alt="CEO / Founder" style="object-position:center -2px">
+        <div class="usecase-body">
+          <div class="usecase-role">CEO / Founder</div>
+          <div class="usecase-company">Series B SaaS</div>
+          <div class="usecase-label">Today</div>
+          <div class="usecase-before">Every Monday, 2 hrs reviewing last week's decisions.</div>
+          <div class="usecase-label with-simy">With SIMY, You</div>
+          <div class="usecase-after-wrap"><div class="usecase-after">SIMY extracts every decision and sends action items before the meeting ends.</div></div>
+          <div class="usecase-result">Result: Board report drafted. Automatically.</div>
+        </div>
+      </div>
+
+      <div class="usecase-card">
+        <img class="usecase-photo" src="https://d2xsxph8kpxj0f.cloudfront.net/310519663370063462/ThMFZacjNcqAVYF3jmcy3R/pasted_file_LhoRUK_ChatGPTImage2025%E5%B9%B411%E6%9C%8816%E6%97%A516_37_38_74580a55.png" alt="Operations Manager" style="object-position:center 11px">
+        <div class="usecase-body">
+          <div class="usecase-role">Operations Manager</div>
+          <div class="usecase-company">Logistics Company</div>
+          <div class="usecase-label">Today</div>
+          <div class="usecase-before">Shift handover notes get lost. Issues repeat every week.</div>
+          <div class="usecase-label with-simy">With SIMY, You</div>
+          <div class="usecase-after-wrap"><div class="usecase-after">Every handover call is captured. SIMY logs issues, assigns follow-ups, and tracks resolution.</div></div>
+          <div class="usecase-result">Result: Zero repeated incidents. Full audit trail.</div>
+        </div>
+      </div>
+
+      <div class="usecase-card">
+        <img class="usecase-photo" src="https://d2xsxph8kpxj0f.cloudfront.net/310519663370063462/ThMFZacjNcqAVYF3jmcy3R/correct_suit_male_838b8dae.png" alt="General Counsel" style="object-position:center -16px">
+        <div class="usecase-body">
+          <div class="usecase-role">General Counsel</div>
+          <div class="usecase-company">Financial Services Firm</div>
+          <div class="usecase-label">Today</div>
+          <div class="usecase-before">Contract review takes 3 days per agreement. Risk items buried in 80-page docs.</div>
+          <div class="usecase-label with-simy">With SIMY, You</div>
+          <div class="usecase-after-wrap"><div class="usecase-after">SIMY reviews contracts, flags risk clauses, and generates a summary in minutes.</div></div>
+          <div class="usecase-result">Result: Legal review in hours, not days.</div>
+        </div>
       </div>
       <div class="usecase-card">
-        <div class="usecase-role">Sales Manager</div>
-        <div class="usecase-company"></div>
-        <div class="usecase-before">After every client call, reps spend an hour updating CRM and writing follow-up emails.</div>
-        <div class="usecase-after">Call ends. SIMY updates Salesforce, drafts the follow-up, and flags next steps.</div>
-        <div class="usecase-result">Reps focus on selling. Not admin.</div>
-      </div>
-      <div class="usecase-card">
-        <div class="usecase-role">CFO / Finance</div>
-        <div class="usecase-company"></div>
-        <div class="usecase-before">Monthly close takes 3 days of manual data extraction and formatting.</div>
-        <div class="usecase-after">SIMY pulls data, formats the P&amp;L, and flags anomalies — before the analyst opens their laptop.</div>
-        <div class="usecase-result">Close in hours. Anomalies caught early.</div>
-      </div>
-      <div class="usecase-card">
-        <div class="usecase-role">Product Manager</div>
-        <div class="usecase-company"></div>
-        <div class="usecase-before">After every planning session, someone spends hours turning discussion into a structured roadmap.</div>
-        <div class="usecase-after">Meeting ends. SIMY generates a structured roadmap, assigns owners, and sends summaries automatically.</div>
-        <div class="usecase-result">Roadmap ready before the next standup.</div>
-      </div>
-      <div class="usecase-card">
-        <div class="usecase-role">HR Director</div>
-        <div class="usecase-company"></div>
-        <div class="usecase-before">Onboarding new hires takes 2 weeks of back-and-forth emails.</div>
-        <div class="usecase-after">SIMY sends welcome sequences, schedules training, and answers FAQs automatically.</div>
-        <div class="usecase-result">New hire ready on day one.</div>
-      </div>
-      <div class="usecase-card">
-        <div class="usecase-role">Board Secretary</div>
-        <div class="usecase-company"></div>
-        <div class="usecase-before">Every Monday, 2 hrs reviewing last week's decisions.</div>
-        <div class="usecase-after">SIMY extracts every decision and sends action items before the meeting ends.</div>
-        <div class="usecase-result">Board report drafted. Automatically.</div>
-      </div>
-      <div class="usecase-card">
-        <div class="usecase-role">Operations Director</div>
-        <div class="usecase-company"></div>
-        <div class="usecase-before">Shift handover notes get lost. Issues repeat every week.</div>
-        <div class="usecase-after">Every handover call is captured. SIMY logs issues, assigns follow-ups, and tracks resolution.</div>
-        <div class="usecase-result">Zero repeated incidents. Full audit trail.</div>
-      </div>
-      <div class="usecase-card">
-        <div class="usecase-role">General Counsel</div>
-        <div class="usecase-company">Financial services firm</div>
-        <div class="usecase-before">Contract review takes 3 days per agreement. Risk items buried in 80-page docs.</div>
-        <div class="usecase-after">SIMY reviews contracts, flags risk clauses, and generates a summary in minutes.</div>
-        <div class="usecase-result">Legal review in hours, not days.</div>
-      </div>
-      <div class="usecase-card">
-        <div class="usecase-role">Field Service Manager</div>
-        <div class="usecase-company">Industrial equipment company</div>
-        <div class="usecase-before">Job reports are written by hand after every site visit. Delays in billing and follow-up.</div>
-        <div class="usecase-after">SIMY captures the debrief call, generates the job report, and triggers the invoice automatically.</div>
-        <div class="usecase-result">Reports filed. Billing started. Before the van leaves the site.</div>
+        <img class="usecase-photo" src="https://d2xsxph8kpxj0f.cloudfront.net/310519663370063462/ThMFZacjNcqAVYF3jmcy3R/mechanic_worker_d056a746.png" alt="Field Service Manager" style="object-position:center 5px">
+        <div class="usecase-body">
+          <div class="usecase-role">Field Service Manager</div>
+          <div class="usecase-company">Industrial Equipment Company</div>
+          <div class="usecase-label">Today</div>
+          <div class="usecase-before">Job reports are written by hand after every site visit. Delays in billing and follow-up.</div>
+          <div class="usecase-label with-simy">With SIMY, You</div>
+          <div class="usecase-after-wrap"><div class="usecase-after">SIMY captures the debrief call, generates the job report, and triggers the invoice automatically.</div></div>
+          <div class="usecase-result">Result: Reports filed. Billing started. Before the van leaves the site.</div>
+        </div>
       </div>
     </div>
     </div><!-- /usecase-scroll-wrap -->
