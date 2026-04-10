@@ -386,9 +386,39 @@
     if (data.kw) setMetaTag('keywords', data.kw);
   }
 
+  /* ── Capture original (English) DOM content on first apply ──
+     Used as a fallback when the target language dict is missing a key
+     (e.g. because the browser has a stale cached JSON from before a
+     translation update, or because the key genuinely isn't translated
+     yet). Without this, missing keys leave whatever text the cell
+     previously held — causing "sticky" Japanese ghosts when switching
+     from ja to another language. */
+  var ORIG_CAPTURED = false;
+  function captureOriginals() {
+    if (ORIG_CAPTURED) return;
+    ORIG_CAPTURED = true;
+    var els = document.querySelectorAll('[data-i18n]');
+    for (var i = 0; i < els.length; i++) {
+      els[i].setAttribute('data-i18n-orig', els[i].textContent);
+    }
+    var htmlEls = document.querySelectorAll('[data-i18n-html]');
+    for (var j = 0; j < htmlEls.length; j++) {
+      htmlEls[j].setAttribute('data-i18n-orig-html', htmlEls[j].innerHTML);
+    }
+    var phEls = document.querySelectorAll('[data-i18n-placeholder]');
+    for (var k = 0; k < phEls.length; k++) {
+      phEls[k].setAttribute('data-i18n-orig-placeholder', phEls[k].getAttribute('placeholder') || '');
+    }
+  }
+
   /* ── Apply translations to DOM ─────────────────────────────── */
   function apply(dict) {
     var meta = dict._meta || {};
+
+    // Capture baseline English text from the static HTML on first run,
+    // BEFORE any translation has been applied. Subsequent apply() calls
+    // use these as a fallback for missing keys.
+    captureOriginals();
 
     // Set html lang & dir
     document.documentElement.lang = meta.code || DEFAULT;
@@ -397,12 +427,15 @@
     // Inject localized SEO (title, description, keywords, OG, Twitter)
     applySEO(meta.code || DEFAULT);
 
-    // Text-only replacements
+    // Text-only replacements — fall back to captured original if dict
+    // lacks the key so we never leave a stale translation behind.
     var els = document.querySelectorAll('[data-i18n]');
     for (var i = 0; i < els.length; i++) {
       var key = els[i].getAttribute('data-i18n');
-      if (dict[key] !== undefined) {
-        els[i].textContent = dict[key];
+      var val = dict[key];
+      if (val === undefined) val = els[i].getAttribute('data-i18n-orig');
+      if (val !== undefined && val !== null) {
+        els[i].textContent = val;
       }
     }
 
@@ -410,8 +443,10 @@
     var htmlEls = document.querySelectorAll('[data-i18n-html]');
     for (var j = 0; j < htmlEls.length; j++) {
       var hkey = htmlEls[j].getAttribute('data-i18n-html');
-      if (dict[hkey] !== undefined) {
-        htmlEls[j].innerHTML = dict[hkey];
+      var hval = dict[hkey];
+      if (hval === undefined) hval = htmlEls[j].getAttribute('data-i18n-orig-html');
+      if (hval !== undefined && hval !== null) {
+        htmlEls[j].innerHTML = hval;
       }
     }
 
@@ -419,8 +454,10 @@
     var attrEls = document.querySelectorAll('[data-i18n-placeholder]');
     for (var k = 0; k < attrEls.length; k++) {
       var pkey = attrEls[k].getAttribute('data-i18n-placeholder');
-      if (dict[pkey] !== undefined) {
-        attrEls[k].setAttribute('placeholder', dict[pkey]);
+      var pval = dict[pkey];
+      if (pval === undefined) pval = attrEls[k].getAttribute('data-i18n-orig-placeholder');
+      if (pval !== undefined && pval !== null) {
+        attrEls[k].setAttribute('placeholder', pval);
       }
     }
 

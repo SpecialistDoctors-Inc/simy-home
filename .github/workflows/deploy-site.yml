@@ -45,11 +45,24 @@ jobs:
             --include "*.html" \
             --cache-control "public, max-age=300"
 
+      - name: Sync i18n runtime + translation JSON (short cache)
+        # i18n.js and /lang/*.json change frequently and must not be
+        # pinned to a 24h browser cache — otherwise users see stale
+        # translations or missing keys after we push updates.
+        run: |
+          aws s3 cp site/i18n.js s3://${{ secrets.SITE_S3_BUCKET }}/i18n.js \
+            --cache-control "public, max-age=300"
+          aws s3 sync site/lang/ s3://${{ secrets.SITE_S3_BUCKET }}/lang/ \
+            --delete \
+            --cache-control "public, max-age=300"
+
       - name: Sync static assets (long cache)
         run: |
           aws s3 sync site/ s3://${{ secrets.SITE_S3_BUCKET }}/ \
             --delete \
             --exclude "*.html" \
+            --exclude "i18n.js" \
+            --exclude "lang/*" \
             --cache-control "public, max-age=86400"
 
       - name: Update CloudFront Function
