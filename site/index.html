@@ -243,7 +243,7 @@ footer { padding: 48px 0 36px; border-top: none; background: #0a0a0a; color: #f5
   gap: 20px;
   overflow-x: auto;
   overflow-y: hidden;
-  scroll-snap-type: x mandatory;
+  /* scroll-snap disabled — conflicts with auto-scroll */
   -webkit-overflow-scrolling: touch;
   padding-bottom: 16px;
   cursor: grab;
@@ -260,7 +260,6 @@ footer { padding: 48px 0 36px; border-top: none; background: #0a0a0a; color: #f5
   border: none;
   border-radius: 16px;
   overflow: hidden;
-  scroll-snap-align: start;
   transition: transform 0.2s;
 }
 .usecase-card:hover { transform: translateY(-2px); }
@@ -1150,25 +1149,19 @@ window.addEventListener('scroll', function() {
 (function() {
   var el = document.getElementById('usecaseGrid');
   if (!el) return;
-  var speed = 0.5; /* px per frame */
   var paused = false;
-  var rafId;
 
-  function step() {
-    if (!paused) {
-      el.scrollLeft += speed;
-      /* Loop: when reaching the end, jump back to start */
-      if (el.scrollLeft >= el.scrollWidth - el.offsetWidth - 1) {
-        el.scrollLeft = 0;
-      }
+  setInterval(function() {
+    if (paused) return;
+    el.scrollLeft += 1;
+    if (el.scrollLeft >= el.scrollWidth - el.offsetWidth - 1) {
+      el.scrollLeft = 0;
     }
-    rafId = requestAnimationFrame(step);
-  }
-  rafId = requestAnimationFrame(step);
+  }, 30);
 
-  /* Pause on hover */
+  /* Pause on hover, resume on leave */
   el.addEventListener('mouseenter', function() { paused = true; });
-  el.addEventListener('mouseleave', function() { paused = true; setTimeout(function(){ paused = false; }, 1000); });
+  el.addEventListener('mouseleave', function() { setTimeout(function(){ paused = false; }, 800); });
 
   /* Pause on touch */
   el.addEventListener('touchstart', function() { paused = true; }, {passive: true});
@@ -1188,8 +1181,7 @@ window.addEventListener('scroll', function() {
   el.addEventListener('mousemove', function(e) {
     if (!isDown) return;
     e.preventDefault();
-    var x = e.pageX - el.offsetLeft;
-    el.scrollLeft = scrollL - (x - startX);
+    el.scrollLeft = scrollL - (e.pageX - el.offsetLeft - startX);
   });
 
   /* Pause when nav buttons clicked */
