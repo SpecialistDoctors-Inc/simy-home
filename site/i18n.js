@@ -723,9 +723,6 @@
     localStorage.setItem('simy-lang', lang);
     try { localStorage.setItem('simy-language', lang); } catch (e) {}
     load(lang, apply);
-    try {
-      window.dispatchEvent(new CustomEvent('simy-lang-changed', { detail: lang }));
-    } catch (e) { /* ignore */ }
   }
 
   /* ── Cross-component sync: watch for external writes to either
