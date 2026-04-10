@@ -225,6 +225,198 @@
         .footer-brand { grid-column: 1 / -1; text-align: center; }
       }
     </style>
+    <style>
+      /* Hide React 404 for this static page */
+      #root { display: none !important; }
+
+      *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+      :root {
+        --bg: #fafaf8; --bg-alt: #f2f2ef; --card: #ffffff; --card-dark: #141414;
+        --primary: #0057ff; --primary-hover: #0047dd;
+        --foreground: #0a0a0a; --muted-fg: #5a5a56; --muted-fg-light: #9a9a96;
+        --border: #e0e0dc; --border-strong: #c8c8c4;
+        --font-sans: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+        --font-mono: 'Geist Mono', 'Courier New', monospace;
+      }
+      html { font-size: 16px; }
+      body {
+        font-family: var(--font-sans); background: var(--bg); color: var(--foreground);
+        line-height: 1.6; -webkit-font-smoothing: antialiased;
+      }
+      .p-container { max-width: 1280px; margin: 0 auto; padding: 0 4rem; }
+
+      /* Hero */
+      .p-hero { padding: 140px 0 48px; text-align: center; max-width: 800px; margin: 0 auto; }
+      .p-hero h1 {
+        font-size: clamp(2.5rem, 5.5vw, 3.5rem); font-weight: 800;
+        letter-spacing: -0.04em; line-height: 1.1; margin-bottom: 16px;
+      }
+      .p-hero p { font-size: 1.1rem; color: var(--muted-fg); }
+
+      /* Billing toggle */
+      .billing-toggle { display: flex; justify-content: center; margin: 40px 0 56px; }
+      .toggle-wrapper {
+        display: flex; background: #f5f5f5; border-radius: 10px; padding: 4px;
+      }
+      .toggle-btn {
+        padding: 10px 24px; border: none; font-family: var(--font-sans);
+        font-size: 0.8rem; font-weight: 600; letter-spacing: 0.06em;
+        text-transform: uppercase; cursor: pointer; transition: all 0.2s;
+        background: transparent; color: var(--muted-fg); border-radius: 8px;
+      }
+      .toggle-btn.active {
+        background: var(--foreground); color: #fff;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+      }
+      .toggle-btn:not(.active):hover { color: var(--foreground); }
+
+      /* Pricing grid */
+      .pricing-grid {
+        display: grid; grid-template-columns: repeat(3, 1fr);
+        gap: 0; align-items: start;
+      }
+      .pricing-card {
+        padding: 40px 36px; border: 1px solid var(--border); background: var(--card);
+      }
+      .pricing-card:first-child { border-radius: 16px 0 0 16px; border-right: none; }
+      .pricing-card:last-child { border-radius: 0 16px 16px 0; border-left: none; }
+      .pricing-card.featured {
+        background: var(--card-dark); color: #fff; border-radius: 16px;
+        border: 2px solid var(--card-dark); position: relative; z-index: 1;
+        padding: 40px 36px 48px;
+      }
+      .popular-badge {
+        display: inline-block; font-family: var(--font-mono);
+        font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em;
+        text-transform: uppercase; color: var(--primary);
+        background: rgba(0,87,255,0.12); padding: 4px 12px;
+        border-radius: 4px; margin-bottom: 16px;
+      }
+      .plan-name { font-size: 1.25rem; font-weight: 700; margin-bottom: 4px; }
+      .plan-subtitle { font-size: 0.875rem; color: var(--muted-fg); margin-bottom: 24px; }
+      .pricing-card.featured .plan-subtitle { color: #999; }
+      .price-row { display: flex; align-items: baseline; gap: 4px; margin-bottom: 6px; }
+      .price-amount {
+        font-size: 3.2rem; font-weight: 800; letter-spacing: -0.04em; line-height: 1;
+      }
+      .price-unit { font-size: 0.875rem; color: var(--muted-fg); }
+      .pricing-card.featured .price-unit { color: #999; }
+
+      /* Token dropdown */
+      .token-dropdown-wrap { position: relative; margin: 16px 0 24px; }
+      .token-dropdown-btn {
+        width: 100%; display: flex; align-items: center; justify-content: space-between;
+        padding: 12px 16px; border: 1px solid var(--border); border-radius: 10px;
+        background: var(--bg); cursor: pointer; font-family: var(--font-mono);
+        font-size: 0.9rem; font-weight: 500; color: var(--foreground);
+        transition: border-color 0.2s;
+      }
+      .token-dropdown-btn:hover { border-color: var(--border-strong); }
+      .token-dropdown-btn.open { border-color: var(--primary); border-radius: 10px 10px 0 0; }
+      .pricing-card.featured .token-dropdown-btn {
+        background: #1a1a1a; border-color: #333; color: #fff;
+      }
+      .pricing-card.featured .token-dropdown-btn:hover { border-color: #555; }
+      .pricing-card.featured .token-dropdown-btn.open { border-color: var(--primary); }
+      .token-dropdown-chevron {
+        width: 16px; height: 16px; transition: transform 0.2s;
+      }
+      .token-dropdown-btn.open .token-dropdown-chevron { transform: rotate(180deg); }
+      .token-dropdown-list {
+        display: none; position: absolute; top: 100%; left: 0; right: 0;
+        background: #fff; border: 1px solid var(--primary); border-top: none;
+        border-radius: 0 0 10px 10px; z-index: 10; max-height: 280px;
+        overflow-y: auto; box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+      }
+      .token-dropdown-list.open { display: block; }
+      .pricing-card.featured .token-dropdown-list {
+        background: #1a1a1a; border-color: var(--primary);
+      }
+      .token-dropdown-item {
+        padding: 12px 16px; cursor: pointer; font-family: var(--font-mono);
+        font-size: 0.85rem; display: flex; justify-content: space-between;
+        align-items: center; transition: background 0.15s; color: var(--foreground);
+      }
+      .token-dropdown-item:hover { background: #f0f0ed; }
+      .pricing-card.featured .token-dropdown-item { color: #fff; }
+      .pricing-card.featured .token-dropdown-item:hover { background: #222; }
+      .token-dropdown-item.active { color: var(--primary); font-weight: 600; }
+      .token-dropdown-item .current-label {
+        font-size: 0.7rem; color: var(--muted-fg-light); font-weight: 400;
+        font-family: var(--font-sans);
+      }
+
+      /* CTA button */
+      .plan-cta {
+        display: block; width: 100%; padding: 14px; text-align: center;
+        font-family: var(--font-sans); font-size: 0.9rem; font-weight: 600;
+        text-decoration: none; border-radius: 10px; transition: all 0.2s;
+        border: none; cursor: pointer; margin-bottom: 32px;
+      }
+      .pricing-card .plan-cta {
+        background: var(--foreground); color: #fff;
+      }
+      .pricing-card .plan-cta:hover { background: #222; }
+      .pricing-card.featured .plan-cta {
+        background: var(--primary); color: #fff;
+      }
+      .pricing-card.featured .plan-cta:hover { background: var(--primary-hover); }
+
+      /* Feature list */
+      .feature-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+      .feature-list li {
+        font-size: 0.875rem; display: flex; align-items: flex-start; gap: 10px;
+        color: var(--foreground);
+      }
+      .pricing-card.featured .feature-list li { color: #ccc; }
+      .feature-list li::before {
+        content: '+'; color: var(--primary); font-weight: 700; font-size: 0.9rem;
+        flex-shrink: 0; line-height: 1.4;
+      }
+
+      /* Concurrent / scheduled tasks */
+      .task-row {
+        display: flex; align-items: center; gap: 8px;
+        margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border);
+        font-size: 0.8rem; color: var(--muted-fg);
+      }
+      .pricing-card.featured .task-row { border-top-color: #333; color: #999; }
+      .task-icon { width: 16px; height: 16px; opacity: 0.5; }
+
+      /* Enterprise section */
+      .enterprise-section {
+        margin-top: 80px; padding: 48px; background: var(--bg-alt);
+        border-radius: 16px; text-align: center;
+      }
+      .enterprise-section h2 {
+        font-size: 1.5rem; font-weight: 700; margin-bottom: 12px;
+      }
+      .enterprise-section p {
+        font-size: 1rem; color: var(--muted-fg); margin-bottom: 24px; max-width: 600px; margin-left: auto; margin-right: auto;
+      }
+      .enterprise-cta {
+        display: inline-flex; align-items: center; gap: 8px;
+        padding: 12px 32px; background: var(--foreground); color: #fff;
+        text-decoration: none; border-radius: 10px; font-weight: 600;
+        font-size: 0.9rem; transition: background 0.2s;
+      }
+      .enterprise-cta:hover { background: #222; }
+
+      /* Security note */
+      .security-note {
+        margin-top: 48px; margin-bottom: 80px; text-align: center;
+      }
+      .security-note h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; }
+      .security-note p { font-size: 0.9rem; color: var(--muted-fg); }
+
+      @media (max-width: 900px) {
+        .pricing-grid { grid-template-columns: 1fr; gap: 16px; max-width: 480px; margin: 0 auto; }
+        .pricing-card, .pricing-card:first-child, .pricing-card:last-child { border-radius: 16px; border: 1px solid var(--border); }
+        .pricing-card.featured { border: 2px solid var(--card-dark); }
+        .p-container { padding: 0 1.5rem; }
+        .enterprise-section { padding: 32px 24px; }
+      }
+    </style>
     <script type="module" crossorigin src="/assets/index-DnVveaIK.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-BwUIJj-q.css">
   </head>
@@ -284,6 +476,249 @@
     </script>
 
     <div id="root"></div>
+
+    <!-- Static pricing content -->
+    <main>
+      <div class="p-hero">
+        <h1>Simple, transparent pricing.</h1>
+        <p>Seat-based plans with SIMY token allocation. Scale as your team grows.</p>
+      </div>
+
+      <div class="billing-toggle">
+        <div class="toggle-wrapper">
+          <button class="toggle-btn active" data-billing="monthly" onclick="setBilling('monthly')">Monthly</button>
+          <button class="toggle-btn" data-billing="annual" onclick="setBilling('annual')">
+            <span style="display:flex;align-items:center;gap:8px">Annual <span style="font-size:0.7rem;letter-spacing:0.04em">&middot; SAVE 17%</span></span>
+          </button>
+        </div>
+      </div>
+
+      <div class="p-container">
+        <div class="pricing-grid">
+
+          <!-- Starter -->
+          <div class="pricing-card" data-plan="starter">
+            <div class="plan-name">Starter</div>
+            <div class="plan-subtitle">For individuals getting started</div>
+            <div class="price-row">
+              <span class="price-amount" id="price-starter">$20</span>
+              <span class="price-unit">/ seat / mo</span>
+            </div>
+
+            <div class="token-dropdown-wrap">
+              <button class="token-dropdown-btn" onclick="toggleDropdown(this)">
+                <span class="token-dropdown-label">80M SIMY tokens / month</span>
+                <svg class="token-dropdown-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6l4 4 4-4"/></svg>
+              </button>
+              <div class="token-dropdown-list" data-plan="starter">
+                <div class="token-dropdown-item active" data-tokens="80" data-price-m="20" data-price-a="17" onclick="selectToken(this)">
+                  <span>80M tokens / month</span><span class="current-label">Current</span>
+                </div>
+                <div class="token-dropdown-item" data-tokens="120" data-price-m="28" data-price-a="23" onclick="selectToken(this)">120M tokens / month</div>
+                <div class="token-dropdown-item" data-tokens="160" data-price-m="35" data-price-a="29" onclick="selectToken(this)">160M tokens / month</div>
+                <div class="token-dropdown-item" data-tokens="240" data-price-m="50" data-price-a="42" onclick="selectToken(this)">240M tokens / month</div>
+              </div>
+            </div>
+
+            <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" class="plan-cta" target="_blank" rel="noopener">Get started</a>
+
+            <ul class="feature-list">
+              <li><span id="feat-tokens-starter">80,000,000 SIMY tokens / month</span></li>
+              <li>Up to 5 connected channels</li>
+              <li>Action Database (up to 1,000 tasks)</li>
+              <li>Standard AI agent execution</li>
+              <li>Email &amp; Slack delivery</li>
+              <li>Early access to beta features</li>
+            </ul>
+            <div class="task-row">
+              <svg class="task-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 12.5a5.5 5.5 0 110-11 5.5 5.5 0 010 11zM8 4v4l3 1.5-.5 1L7 9V4h1z"/></svg>
+              20 concurrent tasks
+            </div>
+            <div class="task-row" style="border-top:none;margin-top:8px;padding-top:0">
+              <svg class="task-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M12.5 2H11V1h-1v1H6V1H5v1H3.5A1.5 1.5 0 002 3.5v9A1.5 1.5 0 003.5 14h9a1.5 1.5 0 001.5-1.5v-9A1.5 1.5 0 0012.5 2zm0 10.5h-9V6h9v6.5z"/></svg>
+              20 scheduled tasks
+            </div>
+          </div>
+
+          <!-- Pro (featured) -->
+          <div class="pricing-card featured" data-plan="pro">
+            <div class="popular-badge">MOST POPULAR</div>
+            <div class="plan-name">Pro</div>
+            <div class="plan-subtitle">For professionals and growing teams</div>
+            <div class="price-row">
+              <span class="price-amount" id="price-pro">$40</span>
+              <span class="price-unit">/ seat / mo</span>
+            </div>
+
+            <div class="token-dropdown-wrap">
+              <button class="token-dropdown-btn" onclick="toggleDropdown(this)">
+                <span class="token-dropdown-label">160M SIMY tokens / month</span>
+                <svg class="token-dropdown-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6l4 4 4-4"/></svg>
+              </button>
+              <div class="token-dropdown-list" data-plan="pro">
+                <div class="token-dropdown-item active" data-tokens="160" data-price-m="40" data-price-a="33" onclick="selectToken(this)">
+                  <span>160M tokens / month</span><span class="current-label">Current</span>
+                </div>
+                <div class="token-dropdown-item" data-tokens="240" data-price-m="55" data-price-a="46" onclick="selectToken(this)">240M tokens / month</div>
+                <div class="token-dropdown-item" data-tokens="320" data-price-m="70" data-price-a="58" onclick="selectToken(this)">320M tokens / month</div>
+                <div class="token-dropdown-item" data-tokens="480" data-price-m="95" data-price-a="79" onclick="selectToken(this)">480M tokens / month</div>
+                <div class="token-dropdown-item" data-tokens="640" data-price-m="120" data-price-a="100" onclick="selectToken(this)">640M tokens / month</div>
+              </div>
+            </div>
+
+            <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" class="plan-cta" target="_blank" rel="noopener">Get started</a>
+
+            <ul class="feature-list">
+              <li><span id="feat-tokens-pro">160,000,000 SIMY tokens / month</span></li>
+              <li>Unlimited connected channels</li>
+              <li>Action Database (unlimited tasks)</li>
+              <li>Priority AI agent execution</li>
+              <li>All delivery integrations</li>
+              <li>HVP Dashboard</li>
+              <li>Early access to beta features</li>
+            </ul>
+            <div class="task-row">
+              <svg class="task-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 12.5a5.5 5.5 0 110-11 5.5 5.5 0 010 11zM8 4v4l3 1.5-.5 1L7 9V4h1z"/></svg>
+              50 concurrent tasks
+            </div>
+            <div class="task-row" style="border-top:none;margin-top:8px;padding-top:0">
+              <svg class="task-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M12.5 2H11V1h-1v1H6V1H5v1H3.5A1.5 1.5 0 002 3.5v9A1.5 1.5 0 003.5 14h9a1.5 1.5 0 001.5-1.5v-9A1.5 1.5 0 0012.5 2zm0 10.5h-9V6h9v6.5z"/></svg>
+              50 scheduled tasks
+            </div>
+          </div>
+
+          <!-- Scale -->
+          <div class="pricing-card" data-plan="scale">
+            <div class="plan-name">Scale</div>
+            <div class="plan-subtitle">For high-output teams</div>
+            <div class="price-row">
+              <span class="price-amount" id="price-scale">$100</span>
+              <span class="price-unit">/ seat / mo</span>
+            </div>
+
+            <div class="token-dropdown-wrap">
+              <button class="token-dropdown-btn" onclick="toggleDropdown(this)">
+                <span class="token-dropdown-label">400M SIMY tokens / month</span>
+                <svg class="token-dropdown-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6l4 4 4-4"/></svg>
+              </button>
+              <div class="token-dropdown-list" data-plan="scale">
+                <div class="token-dropdown-item active" data-tokens="400" data-price-m="100" data-price-a="83" onclick="selectToken(this)">
+                  <span>400M tokens / month</span><span class="current-label">Current</span>
+                </div>
+                <div class="token-dropdown-item" data-tokens="600" data-price-m="140" data-price-a="116" onclick="selectToken(this)">600M tokens / month</div>
+                <div class="token-dropdown-item" data-tokens="800" data-price-m="180" data-price-a="149" onclick="selectToken(this)">800M tokens / month</div>
+                <div class="token-dropdown-item" data-tokens="1200" data-price-m="250" data-price-a="208" onclick="selectToken(this)">1,200M tokens / month</div>
+                <div class="token-dropdown-item" data-tokens="2000" data-price-m="380" data-price-a="315" onclick="selectToken(this)">2,000M tokens / month</div>
+              </div>
+            </div>
+
+            <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" class="plan-cta" target="_blank" rel="noopener">Get started</a>
+
+            <ul class="feature-list">
+              <li><span id="feat-tokens-scale">400,000,000 SIMY tokens / month</span></li>
+              <li>Unlimited connected channels</li>
+              <li>Action Database (unlimited tasks)</li>
+              <li>Priority AI agent execution</li>
+              <li>All delivery integrations</li>
+              <li>HVP Dashboard + Digital Twin</li>
+              <li>Advanced analytics</li>
+            </ul>
+            <div class="task-row">
+              <svg class="task-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 12.5a5.5 5.5 0 110-11 5.5 5.5 0 010 11zM8 4v4l3 1.5-.5 1L7 9V4h1z"/></svg>
+              100 concurrent tasks
+            </div>
+            <div class="task-row" style="border-top:none;margin-top:8px;padding-top:0">
+              <svg class="task-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M12.5 2H11V1h-1v1H6V1H5v1H3.5A1.5 1.5 0 002 3.5v9A1.5 1.5 0 003.5 14h9a1.5 1.5 0 001.5-1.5v-9A1.5 1.5 0 0012.5 2zm0 10.5h-9V6h9v6.5z"/></svg>
+              100 scheduled tasks
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Enterprise -->
+        <div class="enterprise-section">
+          <h2>SIMY for Teams &amp; Enterprise</h2>
+          <p>Custom token volumes, SSO, dedicated support, and SLA. For organisations of any size.</p>
+          <a href="/contact.html" class="enterprise-cta">Contact Sales</a>
+        </div>
+
+        <!-- Security note -->
+        <div class="security-note">
+          <h3>Security &amp; Privacy</h3>
+          <p>Physical database isolation, end-to-end encryption, and zero-training guarantee on Enterprise plans.</p>
+        </div>
+      </div>
+    </main>
+
+    <!-- Pricing dropdown logic -->
+    <script>
+    var currentBilling = 'monthly';
+
+    function setBilling(type) {
+      currentBilling = type;
+      document.querySelectorAll('.toggle-btn').forEach(function(btn) {
+        btn.classList.toggle('active', btn.getAttribute('data-billing') === type);
+      });
+      // Update all prices to match current selection
+      document.querySelectorAll('.pricing-card').forEach(function(card) {
+        var activeItem = card.querySelector('.token-dropdown-item.active');
+        if (activeItem) updatePrice(card, activeItem);
+      });
+    }
+
+    function toggleDropdown(btn) {
+      var list = btn.nextElementSibling;
+      var wasOpen = btn.classList.contains('open');
+      // Close all dropdowns first
+      document.querySelectorAll('.token-dropdown-btn').forEach(function(b) { b.classList.remove('open'); });
+      document.querySelectorAll('.token-dropdown-list').forEach(function(l) { l.classList.remove('open'); });
+      if (!wasOpen) {
+        btn.classList.add('open');
+        list.classList.add('open');
+      }
+    }
+
+    function selectToken(item) {
+      var list = item.closest('.token-dropdown-list');
+      var card = item.closest('.pricing-card');
+      // Update active state
+      list.querySelectorAll('.token-dropdown-item').forEach(function(el) {
+        el.classList.remove('active');
+        var lbl = el.querySelector('.current-label');
+        if (lbl) lbl.remove();
+      });
+      item.classList.add('active');
+      // Close dropdown
+      var btn = list.previousElementSibling;
+      btn.classList.remove('open');
+      list.classList.remove('open');
+      // Update label
+      var tokens = item.getAttribute('data-tokens');
+      btn.querySelector('.token-dropdown-label').textContent = tokens + 'M SIMY tokens / month';
+      // Update price & features
+      updatePrice(card, item);
+    }
+
+    function updatePrice(card, item) {
+      var tokens = parseInt(item.getAttribute('data-tokens'));
+      var priceM = parseInt(item.getAttribute('data-price-m'));
+      var priceA = parseInt(item.getAttribute('data-price-a'));
+      var price = currentBilling === 'monthly' ? priceM : priceA;
+      var plan = card.getAttribute('data-plan');
+      document.getElementById('price-' + plan).textContent = '$' + price;
+      // Update feature list token count
+      var featEl = document.getElementById('feat-tokens-' + plan);
+      if (featEl) featEl.textContent = (tokens * 1000000).toLocaleString() + ' SIMY tokens / month';
+    }
+
+    // Close dropdown on outside click
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.token-dropdown-wrap')) {
+        document.querySelectorAll('.token-dropdown-btn').forEach(function(b) { b.classList.remove('open'); });
+        document.querySelectorAll('.token-dropdown-list').forEach(function(l) { l.classList.remove('open'); });
+      }
+    });
+    </script>
 
     <!-- Static footer — same code as all other pages -->
     <footer class="static-footer">
