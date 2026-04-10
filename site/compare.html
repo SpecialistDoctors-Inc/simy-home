@@ -3,8 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-    <title>Competitive Landscape — SIMY stands alone in its own category</title>
-    <meta name="description" content="Compare SIMY with AI Search, PC Agents, and Coding AI. SIMY stands alone as Action Intelligence — building automations itself with zero prompting." />
+    <title>Compare SIMY vs Copilot, Cursor, Devin &amp; Claude Code</title>
+    <meta name="description" content="SIMY vs GitHub Copilot, Cursor, Devin, and Claude Code. Autonomous AI that generates code from meetings — no prompting, no IDE extension required." />
+    <meta name="keywords" content="SIMY vs Copilot, SIMY vs GitHub Copilot, SIMY vs Cursor, SIMY vs Devin, SIMY vs Claude Code, SIMY vs Replit Agent, SIMY vs Windsurf, AI coding tool comparison, best AI code generator, AI pair programmer comparison, autonomous AI engineer comparison, GitHub Copilot alternative, Cursor alternative, Devin alternative, Claude Code alternative, GitHub Copilot 比較, Cursor 比較, Devin 比較, Claude Code 比較, AI コーディングツール 比較, AI 開発ツール 比較, 生成AI エンジニア 比較, AI コード生成 ツール 比較" />
     <link rel="canonical" href="https://simy.one/compare.html">
     <meta name="robots" content="index, follow">
     <meta property="og:type" content="website">
@@ -254,28 +255,37 @@
         letter-spacing: -0.005em;
       }
       .cmp-table-wrap { overflow-x: auto; }
-      .cmp-table { width: 100%; border-collapse: collapse; min-width: 860px; }
+      .cmp-table { width: 100%; border-collapse: collapse; min-width: 960px; }
       .cmp-table thead tr { border-bottom: 2px solid #0A0A0A; }
       .cmp-table th {
         font-family: 'Geist Mono', 'Courier New', monospace;
         font-size: 13px; font-weight: 400; letter-spacing: 0.08em;
         text-transform: uppercase; color: #9A9A96;
-        padding: 1rem 0.75rem; text-align: center;
+        padding: 1.1rem 0.9rem; text-align: center; vertical-align: top;
       }
-      .cmp-table th.feat { text-align: left; width: 28%; padding: 1rem 0; }
-      .cmp-table th.simy-col { color: #0057FF; background-color: rgba(0,87,255,0.04); padding: 1.1rem 0.75rem; }
+      .cmp-table th.feat { text-align: left; width: 18%; padding: 1.1rem 0; }
+      .cmp-table th.simy-col { color: #0057FF; background-color: rgba(0,87,255,0.04); padding: 1.1rem 0.9rem; }
+      .cmp-table th .eg {
+        display: block; font-size: 11px; letter-spacing: 0.05em;
+        color: #B8B8B3; text-transform: none; margin-top: 0.25rem;
+        font-weight: 400;
+      }
       .cmp-table tbody tr { border-bottom: 1px solid #E0E0DC; }
       .cmp-table td {
         font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
-        font-size: 15px; font-weight: 300; line-height: 1.75;
-        color: #5A5A56; padding: 1.1rem 0.75rem; text-align: center;
-        letter-spacing: -0.005em;
+        font-size: 15px; font-weight: 300; line-height: 1.55;
+        color: #5A5A56; padding: 1.4rem 0.9rem; text-align: center;
+        letter-spacing: -0.005em; vertical-align: middle;
       }
-      .cmp-table td.feat { text-align: left; padding: 1.1rem 0; font-weight: 400; color: #5A5A56; }
-      .cmp-table td.simy-col { background-color: rgba(0,87,255,0.04); padding: 1.1rem 0.75rem; }
-      .cmp-check { color: #0057FF; font-family: 'Geist Mono', monospace; font-size: 16px; }
-      .cmp-x { color: #C0C0BC; font-size: 16px; }
-      .cmp-partial { color: #F59E0B; font-size: 14px; }
+      .cmp-table td.feat {
+        text-align: left; padding: 1.4rem 0;
+        font-weight: 500; color: #0A0A0A; font-size: 14px;
+      }
+      .cmp-table td.simy-col {
+        background-color: rgba(0,87,255,0.04);
+        padding: 1.4rem 0.9rem;
+        font-weight: 500; color: #0A0A0A;
+      }
 
       .cmp-diff-sec { background-color: #0A0A0A; padding: 100px 0; }
       .cmp-diff-sec .label {
@@ -423,131 +433,87 @@
 
       <section class="cmp-table-sec">
         <div class="container">
-          <p class="intro" data-i18n="cmpx.intro">SIMY vs. enterprise knowledge and workflow tools. Unlike search-based or chat-based tools, SIMY executes autonomously — no prompts, no manual follow-through.</p>
+          <p class="intro" data-i18n="cmpx.intro">SIMY vs. the four categories of AI tools enterprises actually use today. Unlike search, PC agents, coding AI, or team chat — SIMY builds the automations itself, with zero prompting.</p>
           <div class="cmp-table-wrap">
             <table class="cmp-table">
               <thead>
                 <tr>
-                  <th class="feat" data-i18n="cmpx.thFeature">FEATURE</th>
+                  <th class="feat" data-i18n="cmpx.thCategory">CATEGORY</th>
                   <th class="simy-col">SIMY</th>
-                  <th data-i18n="cmpx.thGlean">GLEAN</th>
-                  <th data-i18n="cmpx.thVertex">VERTEX AI SEARCH</th>
-                  <th data-i18n="cmpx.thCowork">CLOUD COWORK</th>
-                  <th data-i18n="cmpx.thCopilot">MICROSOFT COPILOT</th>
+                  <th>
+                    <span data-i18n="cmpx.thAiSearch">AI SEARCH</span>
+                    <span class="eg" data-i18n="cmpx.thAiSearchEg">e.g., Glean</span>
+                  </th>
+                  <th>
+                    <span data-i18n="cmpx.thPcAgents">PC AGENTS</span>
+                    <span class="eg" data-i18n="cmpx.thPcAgentsEg">e.g., OpenClaw</span>
+                  </th>
+                  <th>
+                    <span data-i18n="cmpx.thCodingAi">CODING AI</span>
+                    <span class="eg" data-i18n="cmpx.thCodingAiEg">e.g., Claude Code</span>
+                  </th>
+                  <th>
+                    <span data-i18n="cmpx.thCowork">CLAUDE COWORK</span>
+                    <span class="eg" data-i18n="cmpx.thCoworkEg">e.g., team chat</span>
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td class="feat" data-i18n="cmpx.f01">Input method</td>
-                  <td class="simy-col" data-i18n="cmpx.vConvAuto">Conversations (auto)</td>
-                  <td data-i18n="cmpx.vSearchQ">Search queries</td>
-                  <td data-i18n="cmpx.vSearchQ2">Search queries</td>
-                  <td data-i18n="cmpx.vChatP">Chat prompts</td>
-                  <td data-i18n="cmpx.vChatP2">Chat prompts</td>
+                  <td class="feat" data-i18n="cmpx.c1">Core action</td>
+                  <td class="simy-col" data-i18n="cmpx.c1Simy">Builds automations itself</td>
+                  <td data-i18n="cmpx.c1Ai">Finds information</td>
+                  <td data-i18n="cmpx.c1Pc">Clicks &amp; types locally</td>
+                  <td data-i18n="cmpx.c1Code">Writes code</td>
+                  <td data-i18n="cmpx.c1Cow">Group chat with Claude</td>
                 </tr>
                 <tr>
-                  <td class="feat" data-i18n="cmpx.f02">Prompts required</td>
-                  <td class="simy-col" data-i18n="cmpx.vNone">None</td>
-                  <td data-i18n="cmpx.vYes1">Yes</td>
-                  <td data-i18n="cmpx.vYes2">Yes</td>
-                  <td data-i18n="cmpx.vYes3">Yes</td>
-                  <td data-i18n="cmpx.vYes4">Yes</td>
+                  <td class="feat" data-i18n="cmpx.c2">Missing workflows?</td>
+                  <td class="simy-col" data-i18n="cmpx.c2Simy">Builds missing tool dynamically</td>
+                  <td data-i18n="cmpx.c2Ai">N/A (search only)</td>
+                  <td data-i18n="cmpx.c2Pc">Stops — needs setup</td>
+                  <td data-i18n="cmpx.c2Code">Waits for human prompt</td>
+                  <td data-i18n="cmpx.c2Cow">Waits for team prompt</td>
                 </tr>
                 <tr>
-                  <td class="feat" data-i18n="cmpx.f03">Autonomous task execution</td>
-                  <td class="simy-col"><span class="cmp-check">+</span></td>
-                  <td><span class="cmp-x">×</span></td>
-                  <td><span class="cmp-x">×</span></td>
-                  <td><span class="cmp-x">×</span></td>
-                  <td><span class="cmp-x">×</span></td>
+                  <td class="feat" data-i18n="cmpx.c3">User effort</td>
+                  <td class="simy-col" data-i18n="cmpx.c3Simy">Zero prompting</td>
+                  <td data-i18n="cmpx.c3Ai">Needs queries</td>
+                  <td data-i18n="cmpx.c3Pc">Needs instructions</td>
+                  <td data-i18n="cmpx.c3Code">Complex prompting</td>
+                  <td data-i18n="cmpx.c3Cow">Ongoing chat</td>
                 </tr>
                 <tr>
-                  <td class="feat" data-i18n="cmpx.f04">Meeting → action extraction</td>
-                  <td class="simy-col"><span class="cmp-check">+</span></td>
-                  <td><span class="cmp-x">×</span></td>
-                  <td><span class="cmp-x">×</span></td>
-                  <td><span class="cmp-partial" data-i18n="cmpx.vLimited1">Limited</span></td>
-                  <td><span class="cmp-partial" data-i18n="cmpx.vLimited2">Limited</span></td>
+                  <td class="feat" data-i18n="cmpx.c4">How work starts</td>
+                  <td class="simy-col" data-i18n="cmpx.c4Simy">Auto from conversations</td>
+                  <td data-i18n="cmpx.c4Ai">User search</td>
+                  <td data-i18n="cmpx.c4Pc">Manual instruction</td>
+                  <td data-i18n="cmpx.c4Code">Developer prompt</td>
+                  <td data-i18n="cmpx.c4Cow">Team message</td>
                 </tr>
                 <tr>
-                  <td class="feat" data-i18n="cmpx.f05">Cross-app workflow automation</td>
-                  <td class="simy-col"><span class="cmp-check">+</span></td>
-                  <td><span class="cmp-x">×</span></td>
-                  <td><span class="cmp-x">×</span></td>
-                  <td><span class="cmp-partial" data-i18n="cmpx.vPartial1">Partial</span></td>
-                  <td><span class="cmp-partial" data-i18n="cmpx.vPartial2">Partial</span></td>
+                  <td class="feat" data-i18n="cmpx.c5">Context &amp; memory</td>
+                  <td class="simy-col" data-i18n="cmpx.c5Simy">Persistent org context</td>
+                  <td data-i18n="cmpx.c5Ai">Indexed documents</td>
+                  <td data-i18n="cmpx.c5Pc">Session only</td>
+                  <td data-i18n="cmpx.c5Code">Conversation only</td>
+                  <td data-i18n="cmpx.c5Cow">Shared thread</td>
                 </tr>
                 <tr>
-                  <td class="feat" data-i18n="cmpx.f06">Action Database (persistent context)</td>
-                  <td class="simy-col"><span class="cmp-check">+</span></td>
-                  <td><span class="cmp-x">×</span></td>
-                  <td><span class="cmp-x">×</span></td>
-                  <td><span class="cmp-x">×</span></td>
-                  <td><span class="cmp-x">×</span></td>
+                  <td class="feat" data-i18n="cmpx.c6">Growth model</td>
+                  <td class="simy-col" data-i18n="cmpx.c6Simy">Self-expanding</td>
+                  <td data-i18n="cmpx.c6Ai">Data-dependent</td>
+                  <td data-i18n="cmpx.c6Pc">Prompt-dependent</td>
+                  <td data-i18n="cmpx.c6Code">Engineer-dependent</td>
+                  <td data-i18n="cmpx.c6Cow">Team-dependent</td>
                 </tr>
                 <tr>
-                  <td class="feat" data-i18n="cmpx.f07">Done State tracking</td>
-                  <td class="simy-col"><span class="cmp-check">+</span></td>
-                  <td><span class="cmp-x">×</span></td>
-                  <td><span class="cmp-x">×</span></td>
-                  <td><span class="cmp-x">×</span></td>
-                  <td><span class="cmp-x">×</span></td>
-                </tr>
-                <tr>
-                  <td class="feat" data-i18n="cmpx.f08">HVP (Human Value Point) system</td>
-                  <td class="simy-col"><span class="cmp-check">+</span></td>
-                  <td><span class="cmp-x">×</span></td>
-                  <td><span class="cmp-x">×</span></td>
-                  <td><span class="cmp-x">×</span></td>
-                  <td><span class="cmp-x">×</span></td>
-                </tr>
-                <tr>
-                  <td class="feat" data-i18n="cmpx.f09">Digital Twin (project Q&amp;A)</td>
-                  <td class="simy-col"><span class="cmp-check">+</span></td>
-                  <td><span class="cmp-partial" data-i18n="cmpx.vPartial3">Partial</span></td>
-                  <td><span class="cmp-x">×</span></td>
-                  <td><span class="cmp-x">×</span></td>
-                  <td><span class="cmp-x">×</span></td>
-                </tr>
-                <tr>
-                  <td class="feat" data-i18n="cmpx.f10">Enterprise data isolation</td>
-                  <td class="simy-col"><span class="cmp-check">+</span></td>
-                  <td><span class="cmp-partial" data-i18n="cmpx.vLimited3">Limited</span></td>
-                  <td><span class="cmp-check">+</span></td>
-                  <td><span class="cmp-x">×</span></td>
-                  <td><span class="cmp-partial" data-i18n="cmpx.vLimited4">Limited</span></td>
-                </tr>
-                <tr>
-                  <td class="feat" data-i18n="cmpx.f11">Zero-training guarantee</td>
-                  <td class="simy-col"><span class="cmp-check">+</span></td>
-                  <td><span class="cmp-x">×</span></td>
-                  <td><span class="cmp-x">×</span></td>
-                  <td><span class="cmp-x">×</span></td>
-                  <td><span class="cmp-x">×</span></td>
-                </tr>
-                <tr>
-                  <td class="feat" data-i18n="cmpx.f12">Slack / Teams integration</td>
-                  <td class="simy-col"><span class="cmp-check">+</span></td>
-                  <td><span class="cmp-check">+</span></td>
-                  <td><span class="cmp-x">×</span></td>
-                  <td><span class="cmp-check">+</span></td>
-                  <td><span class="cmp-check">+</span></td>
-                </tr>
-                <tr>
-                  <td class="feat" data-i18n="cmpx.f13">GitHub integration</td>
-                  <td class="simy-col"><span class="cmp-check">+</span></td>
-                  <td><span class="cmp-x">×</span></td>
-                  <td><span class="cmp-x">×</span></td>
-                  <td><span class="cmp-x">×</span></td>
-                  <td><span class="cmp-check">+</span></td>
-                </tr>
-                <tr>
-                  <td class="feat" data-i18n="cmpx.f14">Usage-based pricing</td>
-                  <td class="simy-col"><span class="cmp-check">+</span></td>
-                  <td><span class="cmp-x">×</span></td>
-                  <td><span class="cmp-check">+</span></td>
-                  <td><span class="cmp-x">×</span></td>
-                  <td><span class="cmp-x">×</span></td>
+                  <td class="feat" data-i18n="cmpx.c7">Target users</td>
+                  <td class="simy-col" data-i18n="cmpx.c7Simy">All business pros</td>
+                  <td data-i18n="cmpx.c7Ai">All employees</td>
+                  <td data-i18n="cmpx.c7Pc">Tech-savvy users</td>
+                  <td data-i18n="cmpx.c7Code">Engineers only</td>
+                  <td data-i18n="cmpx.c7Cow">Collaborative teams</td>
                 </tr>
               </tbody>
             </table>
@@ -561,16 +527,16 @@
           <h2 data-i18n-html="cmpx.diffH2">Other tools assist humans.<br>SIMY executes for them.</h2>
           <div class="cmp-diff-grid">
             <div class="cmp-diff-card">
-              <h3 data-i18n="cmpx.card1H">Search &amp; Retrieve</h3>
-              <p data-i18n="cmpx.card1P">Glean, Vertex AI Search — find information faster. Still requires a human to act on it.</p>
+              <h3 data-i18n="cmpx.card1H">Find &amp; Retrieve</h3>
+              <p data-i18n="cmpx.card1P">AI Search (Glean) — finds information faster. A human still has to read it and decide what to do.</p>
             </div>
             <div class="cmp-diff-card">
-              <h3 data-i18n="cmpx.card2H">Assist &amp; Suggest</h3>
-              <p data-i18n="cmpx.card2P">Microsoft Copilot, Cloud Cowork — accelerate individual work. Still requires a human to prompt and direct.</p>
+              <h3 data-i18n="cmpx.card2H">Assist &amp; Accelerate</h3>
+              <p data-i18n="cmpx.card2P">PC Agents, Coding AI, Claude Cowork — accelerate individual or team tasks. A human still has to prompt, instruct, and guide every step.</p>
             </div>
             <div class="cmp-diff-card highlight">
-              <h3 data-i18n="cmpx.card3H">Execute Autonomously</h3>
-              <p data-i18n="cmpx.card3P">SIMY — captures decisions from conversations, executes tasks without prompts, delivers results. The human reviews and approves.</p>
+              <h3 data-i18n="cmpx.card3H">Build &amp; Execute</h3>
+              <p data-i18n="cmpx.card3P">SIMY — captures decisions from conversations, builds the missing automations itself, and delivers finished results. Humans just review and approve.</p>
             </div>
           </div>
         </div>
