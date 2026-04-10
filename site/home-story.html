@@ -1,0 +1,826 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+  <title>SIMY — Yoshi's Story · From Roadmap Review to Next Action</title>
+  <meta name="description" content="Meet Yoshi Tamura, Principal PM at CoreWeave leading CKS & Compute Abstractions. See how SIMY turns his roadmap review into drafted actions before he closes his laptop." />
+  <link rel="canonical" href="https://simy.one/home-story.html">
+  <meta name="robots" content="index, follow">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://simy.one/home-story.html">
+  <meta property="og:title" content="Yoshi's Story — SIMY">
+  <meta property="og:description" content="One PM, one CKS roadmap review, one digital twin that already knows what's next.">
+  <meta property="og:site_name" content="SIMY">
+  <meta property="og:image" content="https://simy.one/ogp.png">
+  <meta name="theme-color" content="#f9f9f6">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <style>
+    @font-face {
+      font-family: 'Geist';
+      src: url('https://d2xsxph8kpxj0f.cloudfront.net/310519663370063462/ThMFZacjNcqAVYF3jmcy3R/Geist-Variable_20a6b454.woff2') format('woff2');
+      font-weight: 100 900; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Geist Mono';
+      src: url('https://d2xsxph8kpxj0f.cloudfront.net/310519663370063462/ThMFZacjNcqAVYF3jmcy3R/GeistMono-Variable_ff5577e3.woff2') format('woff2');
+      font-weight: 100 900; font-style: normal; font-display: swap;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #f9f9f6;
+      --card: #ffffff;
+      --fg: #0a0a0a;
+      --fg-muted: #5a5a56;
+      --fg-dim: #9a9a96;
+      --primary: #0057ff;
+      --primary-dim: rgba(0, 87, 255, 0.08);
+      --border: #e4e4e0;
+    }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body {
+      font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg); color: var(--fg);
+      line-height: 1.6; -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── Nav (shared with site) ────────────────────────────── */
+    nav.static-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+      transition: all 0.3s;
+      background: rgba(250,250,248,0.9);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid transparent;
+    }
+    nav.static-nav.scrolled {
+      background: rgba(250,250,248,0.97);
+      border-bottom-color: #e0e0dc;
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      max-width: 1280px; margin: 0 auto; padding: 0 4rem; height: 60px;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; }
+    .nav-logo-s {
+      width: 24px; height: 24px;
+      display: flex; align-items: center; justify-content: center;
+      background-color: var(--primary); color: #fff;
+      font-family: 'Geist Mono', monospace;
+      font-size: 13px; font-weight: 500;
+    }
+    .nav-brand { font-size: 14px; font-weight: 700; letter-spacing: 0.06em; }
+    .nav-version {
+      font-family: 'Geist Mono', monospace;
+      font-size: 13px; color: var(--primary); letter-spacing: 0.06em;
+    }
+    .nav-links { display: flex; gap: 32px; align-items: center; }
+    .nav-links a {
+      color: var(--fg-muted); font-size: 0.8125rem;
+      letter-spacing: 0.01em; transition: color 0.18s; position: relative;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -2px; left: 0;
+      width: 0; height: 1px; background: var(--primary); transition: width 0.25s;
+    }
+    .nav-links a:hover { color: var(--fg); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-right { display: flex; align-items: center; gap: 20px; }
+    .nav-signin { color: var(--fg-muted); font-size: 0.8125rem; }
+    .nav-signin:hover { color: var(--fg); }
+    .btn-primary {
+      background: var(--primary); color: #fff;
+      border: 1px solid var(--primary);
+      padding: 0.5rem 1.25rem; font-size: 0.8125rem; font-weight: 500;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      transition: background-color 0.18s; cursor: pointer;
+    }
+    .btn-primary:hover { background: #0047dd; }
+    .mobile-menu-btn { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+
+    /* ── Layout ─────────────────────────────────────────────── */
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 4rem; }
+    main { padding-top: 60px; }
+
+    .section-label {
+      display: inline-block;
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.72rem; font-weight: 500;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--primary);
+      padding: 6px 12px;
+      border: 1px solid rgba(0,87,255,0.25);
+      background: rgba(0,87,255,0.04);
+      border-radius: 999px;
+      margin-bottom: 24px;
+    }
+
+    /* ── Hero ───────────────────────────────────────────────── */
+    .hero {
+      padding: 120px 0 80px;
+      display: grid; grid-template-columns: 1.3fr 1fr; gap: 80px; align-items: center;
+    }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.72rem; letter-spacing: 0.14em;
+      color: var(--fg-muted); text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .hero-tag .dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: #ff4a2f;
+      animation: pulse 1.8s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.35; transform: scale(0.75); }
+    }
+    .hero h1 {
+      font-size: clamp(36px, 4.8vw, 68px);
+      font-weight: 800; letter-spacing: -0.035em;
+      line-height: 1.02; margin-bottom: 28px;
+    }
+    .hero h1 .accent { color: var(--primary); font-style: italic; font-weight: 700; }
+    .hero p.lead {
+      font-size: 1.18rem; color: var(--fg-muted);
+      max-width: 540px; line-height: 1.55;
+      margin-bottom: 32px;
+    }
+    .hero-cta { display: flex; gap: 14px; align-items: center; }
+    .hero-cta .btn-primary { padding: 0.85rem 1.6rem; font-size: 0.9rem; }
+    .hero-cta .btn-ghost {
+      padding: 0.85rem 1.4rem; font-size: 0.9rem;
+      border: 1px solid var(--border); color: var(--fg-muted);
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      transition: all 0.18s;
+    }
+    .hero-cta .btn-ghost:hover { border-color: var(--fg); color: var(--fg); }
+
+    .hero-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 36px 32px;
+      box-shadow: 0 24px 60px -20px rgba(0,30,120,0.12);
+      position: relative; overflow: hidden;
+    }
+    .hero-card::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(120% 80% at 80% 0%, rgba(0,87,255,0.08), transparent 60%);
+      pointer-events: none;
+    }
+    .hero-card-top {
+      display: flex; align-items: center; gap: 14px; margin-bottom: 22px;
+      position: relative;
+    }
+    .avatar {
+      width: 62px; height: 62px; border-radius: 50%;
+      background: linear-gradient(135deg, #d8e4ff, #b6c7ff);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Geist', sans-serif; font-weight: 700; font-size: 22px;
+      color: #0038a8; flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(0,87,255,0.18);
+    }
+    .name { font-size: 1.05rem; font-weight: 700; }
+    .title-line { font-size: 0.82rem; color: var(--fg-muted); margin-top: 2px; }
+    .hero-quote {
+      font-size: 1.08rem; line-height: 1.55; color: var(--fg);
+      font-style: italic; position: relative; padding-left: 18px;
+      border-left: 2px solid var(--primary);
+    }
+    .hero-meta {
+      margin-top: 22px; padding-top: 22px;
+      border-top: 1px solid var(--border);
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+      font-family: 'Geist Mono', monospace; font-size: 0.72rem;
+      letter-spacing: 0.1em; color: var(--fg-dim); text-transform: uppercase;
+    }
+    .hero-meta b { color: var(--fg); font-weight: 600; display: block; font-size: 0.85rem; letter-spacing: -0.01em; text-transform: none; font-family: 'Geist', sans-serif; }
+
+    /* ── 01 / Who Uses SIMY ─────────────────────────────────── */
+    .who { padding: 40px 0 100px; }
+    .who h2 {
+      font-size: clamp(32px, 3.6vw, 52px); font-weight: 800;
+      letter-spacing: -0.028em; line-height: 1.08;
+      max-width: 760px; margin-bottom: 18px;
+    }
+    .who h2 .accent { color: var(--primary); }
+    .who p.kicker {
+      font-size: 1.05rem; color: var(--fg-muted);
+      max-width: 620px; margin-bottom: 56px;
+    }
+    .story-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+    }
+    .story-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px 28px;
+      position: relative;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .story-card:hover { transform: translateY(-3px); box-shadow: 0 18px 40px -18px rgba(0,30,120,0.14); }
+    .story-card .tag {
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--fg-dim); margin-bottom: 14px; display: block;
+    }
+    .story-card.after .tag { color: var(--primary); }
+    .story-card h3 {
+      font-size: 1.1rem; font-weight: 700; margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+    .story-card p { font-size: 0.95rem; color: var(--fg-muted); line-height: 1.6; }
+    .story-card.outcome {
+      background: #0a0a0a; color: #f5f5f0; border-color: #0a0a0a;
+    }
+    .story-card.outcome .tag { color: #6a6a66; }
+    .story-card.outcome h3 { color: #fff; }
+    .story-card.outcome p { color: #c8c8c4; }
+
+    /* ── 02 / Demo ──────────────────────────────────────────── */
+    .demo {
+      padding: 40px 0 120px;
+      border-top: 1px solid var(--border);
+    }
+    .demo-head { margin-bottom: 48px; }
+    .demo h2 {
+      font-size: clamp(32px, 3.6vw, 52px); font-weight: 800;
+      letter-spacing: -0.028em; line-height: 1.08;
+      max-width: 760px; margin-bottom: 18px;
+    }
+    .demo h2 .accent { color: var(--primary); }
+    .demo p.kicker {
+      font-size: 1.05rem; color: var(--fg-muted);
+      max-width: 620px;
+    }
+    .demo-stage {
+      position: relative;
+      background: #0a0a0a;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 32px 80px -30px rgba(0,20,80,0.5);
+    }
+    .stage-chrome {
+      display: flex; align-items: center; gap: 8px;
+      padding: 14px 20px; border-bottom: 1px solid #1f1f1d;
+      background: #111;
+    }
+    .stage-chrome .dotc { width: 11px; height: 11px; border-radius: 50%; }
+    .stage-chrome .d1 { background: #ff5f56; }
+    .stage-chrome .d2 { background: #ffbd2e; }
+    .stage-chrome .d3 { background: #27c93f; }
+    .stage-chrome .addr {
+      margin-left: 16px; font-family: 'Geist Mono', monospace;
+      font-size: 12px; color: #7a7a76;
+    }
+    .stage-chrome .rec {
+      margin-left: auto; display: inline-flex; align-items: center; gap: 6px;
+      font-family: 'Geist Mono', monospace; font-size: 11px;
+      color: #ff4a2f; letter-spacing: 0.1em;
+    }
+    .stage-chrome .rec::before {
+      content: ''; width: 7px; height: 7px; border-radius: 50%;
+      background: #ff4a2f; animation: pulse 1.5s infinite;
+    }
+
+    .stage {
+      position: relative;
+      height: 440px;
+      background:
+        radial-gradient(60% 50% at 50% 40%, rgba(0,87,255,0.12), transparent 70%),
+        #0a0a0a;
+      overflow: hidden;
+    }
+
+    /* 4-node flow layout — each node shows a real product screenshot */
+    .node {
+      position: absolute;
+      background: #15151a;
+      border: 1px solid #28282e;
+      border-radius: 12px;
+      padding: 8px 8px 10px;
+      width: 220px;
+      box-shadow: 0 10px 30px -10px rgba(0,0,0,0.6);
+      transition: all 0.35s ease;
+    }
+    .node .shot {
+      display: block; width: 100%; height: 130px;
+      object-fit: cover; object-position: top left;
+      border-radius: 6px;
+      background: #0a0a0a;
+      border: 1px solid #1e1e22;
+    }
+    .node .node-label {
+      font-family: 'Geist Mono', monospace;
+      font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+      color: #6a6a70; margin: 10px 4px 4px; display: block;
+    }
+    .node .node-title {
+      font-size: 0.82rem; font-weight: 600; color: #f5f5f0;
+      letter-spacing: -0.01em; padding: 0 4px;
+    }
+
+    /* Node positions — evenly spaced across the stage */
+    .node-1 { left: 2.5%;  top: 50%; transform: translateY(-50%); }
+    .node-2 { left: 27%;   top: 50%; transform: translateY(-50%); }
+    .node-3 { left: 51.5%; top: 50%; transform: translateY(-50%); }
+    .node-4 { left: 76%;   top: 50%; transform: translateY(-50%); }
+
+    /* Active state animation — timed cycles */
+    @keyframes nodeActive {
+      0%, 100% { border-color: #28282e; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.6); }
+      15%, 40% {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(0,87,255,0.15), 0 20px 50px -10px rgba(0,87,255,0.5);
+      }
+    }
+    @keyframes nodeActiveT {
+      0%, 100% {
+        border-color: #28282e;
+        box-shadow: 0 10px 30px -10px rgba(0,0,0,0.6);
+        transform: translateY(-50%) scale(1);
+      }
+      15%, 40% {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(0,87,255,0.18), 0 20px 50px -10px rgba(0,87,255,0.5);
+        transform: translateY(-50%) scale(1.035);
+      }
+    }
+    .node-1 { animation: nodeActiveT 12s ease-in-out infinite; animation-delay: 0s; }
+    .node-2 { animation: nodeActiveT 12s ease-in-out infinite; animation-delay: 3s; }
+    .node-3 { animation: nodeActiveT 12s ease-in-out infinite; animation-delay: 6s; }
+    .node-4 { animation: nodeActiveT 12s ease-in-out infinite; animation-delay: 9s; }
+
+    /* Arrows — SVG overlay */
+    .arrows {
+      position: absolute; inset: 0;
+      pointer-events: none;
+    }
+    .arrows svg { width: 100%; height: 100%; display: block; }
+    .arrow-path {
+      fill: none;
+      stroke: url(#arrowGrad);
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-dasharray: 6 6;
+      opacity: 0.25;
+    }
+    .arrow-head { fill: var(--primary); opacity: 0; }
+
+    /* Moving dot travelling along the arrow path */
+    .pulse-dot {
+      fill: #fff;
+      filter: drop-shadow(0 0 6px rgba(0,87,255,0.9));
+    }
+
+    /* Arrow activation */
+    @keyframes arrowActive {
+      0%, 100%  { opacity: 0.25; }
+      10%, 28%  { opacity: 1; }
+    }
+    @keyframes headActive {
+      0%, 100% { opacity: 0; transform: scale(0.7); }
+      14%, 28% { opacity: 1; transform: scale(1); }
+    }
+    .a1 { animation: arrowActive 12s linear infinite; animation-delay: 1.5s; }
+    .a2 { animation: arrowActive 12s linear infinite; animation-delay: 4.5s; }
+    .a3 { animation: arrowActive 12s linear infinite; animation-delay: 7.5s; }
+    .h1 { animation: headActive 12s linear infinite; animation-delay: 1.5s; transform-origin: center; transform-box: fill-box; }
+    .h2 { animation: headActive 12s linear infinite; animation-delay: 4.5s; transform-origin: center; transform-box: fill-box; }
+    .h3 { animation: headActive 12s linear infinite; animation-delay: 7.5s; transform-origin: center; transform-box: fill-box; }
+
+    /* Dot travelling along each arrow */
+    @keyframes dotTravel1 {
+      0%, 100% { opacity: 0; offset-distance: 0%; }
+      12%      { opacity: 1; offset-distance: 0%; }
+      26%      { opacity: 1; offset-distance: 100%; }
+      27%      { opacity: 0; offset-distance: 100%; }
+    }
+    @keyframes dotTravel2 {
+      0%, 100% { opacity: 0; offset-distance: 0%; }
+      37%      { opacity: 1; offset-distance: 0%; }
+      51%      { opacity: 1; offset-distance: 100%; }
+      52%      { opacity: 0; offset-distance: 100%; }
+    }
+    @keyframes dotTravel3 {
+      0%, 100% { opacity: 0; offset-distance: 0%; }
+      62%      { opacity: 1; offset-distance: 0%; }
+      76%      { opacity: 1; offset-distance: 100%; }
+      77%      { opacity: 0; offset-distance: 100%; }
+    }
+    .dot-1 {
+      offset-path: path('M 195 220 C 260 220, 280 220, 345 220');
+      animation: dotTravel1 12s linear infinite;
+    }
+    .dot-2 {
+      offset-path: path('M 495 220 C 560 220, 580 220, 645 220');
+      animation: dotTravel2 12s linear infinite;
+    }
+    .dot-3 {
+      offset-path: path('M 795 220 C 860 220, 880 220, 945 220');
+      animation: dotTravel3 12s linear infinite;
+    }
+
+    /* Caption bar (telop) ─ bottom of screen inside stage */
+    .telop {
+      position: absolute; left: 0; right: 0; bottom: 0;
+      padding: 22px 28px;
+      background: linear-gradient(180deg, rgba(10,10,10,0) 0%, rgba(10,10,10,0.9) 40%, #060606 100%);
+      border-top: 1px solid #1a1a1a;
+      color: #f5f5f0;
+      min-height: 104px;
+      display: flex; align-items: center; gap: 22px;
+    }
+    .telop .time {
+      font-family: 'Geist Mono', monospace;
+      font-size: 11px;
+      color: var(--primary);
+      letter-spacing: 0.14em;
+      border: 1px solid rgba(0,87,255,0.4);
+      background: rgba(0,87,255,0.07);
+      padding: 6px 10px;
+      border-radius: 6px;
+      flex-shrink: 0;
+    }
+    .telop .caption-wrap {
+      position: relative; flex: 1; height: 48px;
+    }
+    .caption {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; justify-content: center;
+      opacity: 0; transform: translateY(8px);
+    }
+    .caption .main {
+      font-size: 1.02rem; font-weight: 600;
+      letter-spacing: -0.01em; color: #fff;
+      margin-bottom: 3px;
+    }
+    .caption .sub {
+      font-size: 0.82rem; color: #8c8c90;
+    }
+    @keyframes telopShow {
+      0%, 100% { opacity: 0; transform: translateY(8px); }
+      5%, 22%  { opacity: 1; transform: translateY(0); }
+      27%      { opacity: 0; transform: translateY(-6px); }
+    }
+    .c1 { animation: telopShow 12s ease-in-out infinite; animation-delay: 0s; }
+    .c2 { animation: telopShow 12s ease-in-out infinite; animation-delay: 3s; }
+    .c3 { animation: telopShow 12s ease-in-out infinite; animation-delay: 6s; }
+    .c4 { animation: telopShow 12s ease-in-out infinite; animation-delay: 9s; }
+
+    /* ── CTA ────────────────────────────────────────────────── */
+    .cta-block {
+      padding: 100px 0 120px;
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+    .cta-block h2 {
+      font-size: clamp(28px, 3.2vw, 44px);
+      font-weight: 800; letter-spacing: -0.028em;
+      margin-bottom: 14px;
+    }
+    .cta-block h2 .accent { color: var(--primary); }
+    .cta-block p {
+      color: var(--fg-muted); font-size: 1.05rem;
+      max-width: 540px; margin: 0 auto 32px;
+    }
+    .cta-block .btn-primary { padding: 1rem 2rem; font-size: 0.95rem; }
+
+    /* ── Footer ─────────────────────────────────────────────── */
+    footer.static-footer {
+      padding: 48px 0 36px;
+      background: #0a0a0a; color: #f5f5f0;
+    }
+    footer .container { max-width: 1280px; margin: 0 auto; padding: 0 4rem; }
+    .footer-grid {
+      display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 40px; margin-bottom: 40px;
+    }
+    .footer-col { display: flex; flex-direction: column; gap: 10px; }
+    .footer-col-title {
+      font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: #6a6a66; margin-bottom: 4px;
+    }
+    .footer-col a { color: #9a9a96; font-size: 0.85rem; transition: color 0.2s; }
+    .footer-col a:hover { color: #f5f5f0; }
+    .footer-bottom {
+      padding-top: 24px; border-top: 1px solid #1a1a1a;
+      font-size: 0.75rem; color: #3a3a36; text-align: center;
+    }
+
+    /* ── Responsive ─────────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .hero { grid-template-columns: 1fr; gap: 48px; padding: 110px 0 60px; }
+      .story-grid { grid-template-columns: 1fr; }
+      .stage { height: 640px; }
+      .node { min-width: 220px; }
+      .node-1 { left: 50%; top: 20px;  transform: translateX(-50%); }
+      .node-2 { left: 50%; top: 140px; transform: translateX(-50%); }
+      .node-3 { left: 50%; top: 260px; transform: translateX(-50%); }
+      .node-4 { left: 50%; top: 380px; transform: translateX(-50%); }
+      @keyframes nodeActiveT {
+        0%, 100% { border-color: #28282e; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.6); transform: translateX(-50%) scale(1); }
+        15%, 40% { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(0,87,255,0.18), 0 20px 50px -10px rgba(0,87,255,0.5); transform: translateX(-50%) scale(1.035); }
+      }
+      .dot-1, .dot-2, .dot-3 { display: none; }
+      .arrow-path, .arrow-head { display: none; }
+      /* Vertical arrows between stacked nodes */
+      .arrows::before,
+      .arrows::after {
+        content: ''; position: absolute; left: 50%;
+        width: 2px; height: 20px;
+        background: linear-gradient(180deg, rgba(0,87,255,0.9), rgba(0,87,255,0.2));
+        transform: translateX(-50%);
+      }
+    }
+    @media (max-width: 768px) {
+      .nav-links, .nav-right { display: none; }
+      .mobile-menu-btn { display: block; }
+      .nav-inner { padding: 0 1.5rem; }
+      .container { padding: 0 1.5rem; }
+      footer .container { padding: 0 1.5rem; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
+      .telop {
+        flex-direction: column; align-items: flex-start;
+        gap: 10px; padding: 16px 18px;
+        min-height: 128px;
+      }
+      .telop .caption-wrap { width: 100%; height: 68px; }
+      .caption .main { font-size: 0.92rem; }
+      .caption .sub { font-size: 0.76rem; }
+      .stage { height: 700px; }
+      .node-1 { top: 18px;  }
+      .node-2 { top: 138px; }
+      .node-3 { top: 258px; }
+      .node-4 { top: 378px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav class="static-nav" id="staticNav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">
+        <div class="nav-logo-s">S</div>
+        <span class="nav-brand">SIMY</span>
+        <span class="nav-version">v3.0</span>
+      </a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/pricing.html">Pricing</a>
+        <a href="/compare.html">Compare</a>
+        <a href="/about.html">About</a>
+        <a href="/press-release.html">News</a>
+      </div>
+      <div class="nav-right">
+        <a href="#" class="nav-signin">Sign in</a>
+        <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" class="btn-primary" target="_blank" rel="noopener">Request Access</a>
+      </div>
+      <button class="mobile-menu-btn" aria-label="Toggle menu">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
+  <script>
+    window.addEventListener('scroll', function(){
+      var n = document.getElementById('staticNav');
+      if (window.scrollY > 10) n.classList.add('scrolled'); else n.classList.remove('scrolled');
+    });
+  </script>
+
+  <main>
+    <!-- ── Hero ────────────────────────────────────────────── -->
+    <section class="container hero">
+      <div>
+        <div class="hero-tag"><span class="dot"></span>Home · Real User Story</div>
+        <h1>
+          I'm Yoshi. I lead CKS<br/>
+          at CoreWeave.<br/>
+          <span class="accent">SIMY is my second brain.</span>
+        </h1>
+        <p class="lead">
+          Before SIMY, every roadmap review ended the same way — I'd close the laptop with a head full of decisions and spend the night turning them into PRDs, owners, and dates. Now the meeting ends, and SIMY has already drafted my next five actions.
+        </p>
+        <div class="hero-cta">
+          <a href="#demo" class="btn-primary">
+            Watch Yoshi's flow
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="5 12 19 12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <a href="/how-it-works.html" class="btn-ghost">How SIMY works</a>
+        </div>
+      </div>
+
+      <div class="hero-card">
+        <div class="hero-card-top">
+          <div class="avatar" style="background:linear-gradient(135deg,#cfefff,#9ed7ff);color:#034c7a;">YT</div>
+          <div>
+            <div class="name">Yoshi Tamura</div>
+            <div class="title-line">Principal PM · CoreWeave — CKS &amp; Compute Abstractions</div>
+          </div>
+        </div>
+        <div class="hero-quote">
+          "My roadmap review used to be the start of a long night.<br/>
+          Now it's the moment SIMY tells me what to do next."
+        </div>
+        <div class="hero-meta">
+          <div><b>1 platform</b>CKS + Compute Abstractions</div>
+          <div><b>~8 meetings/wk</b>Roadmap, customer, exec reviews</div>
+          <div><b>Night work → 0</b>Post-meeting PRD writing</div>
+          <div><b>Next morning</b>Actions waiting, ranked</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 01 / Who Uses SIMY ─────────────────────────────── -->
+    <section class="container who">
+      <span class="section-label">01 / Who Uses SIMY</span>
+      <h2>
+        If you are this person,<br/>
+        <span class="accent">let's build this together.</span>
+      </h2>
+      <p class="kicker">
+        Yoshi is a Principal Product Manager at CoreWeave, leading CKS and Compute Abstractions. His week is roadmap reviews, customer escalations, and exec readouts — and the night shift of turning every discussion into PRDs, tickets, and decisions before standup.
+      </p>
+
+      <div class="story-grid">
+        <div class="story-card before">
+          <span class="tag">Before SIMY</span>
+          <h3>Roadmap review ends. Night shift begins.</h3>
+          <p>After the CKS roadmap review, Yoshi would spend the evening rebuilding the conversation: what got decided, which migration date stuck, who owns the PRD. Half the "must decide" items would slip to next week.</p>
+        </div>
+        <div class="story-card after">
+          <span class="tag">With SIMY</span>
+          <h3>Meeting ends. Actions are waiting.</h3>
+          <p>SIMY listens through the review, captures every "must decide" item, drafts the five actions Yoshi needs to take next, and updates the CKS growth dashboard — before he's left the room.</p>
+        </div>
+        <div class="story-card outcome">
+          <span class="tag">The outcome</span>
+          <h3>Digital Twin answers<br/>"what should I do next?"</h3>
+          <p>By the time Yoshi opens SIMY the next morning, the actions are ranked, the metrics are updated, and his Digital Twin already knows which action moves CKS adoption the most. No more night shift.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 02 / Demo ──────────────────────────────────────── -->
+    <section class="container demo" id="demo">
+      <div class="demo-head">
+        <span class="section-label">02 / Demo</span>
+        <h2>
+          Yoshi's CKS roadmap review,<br/>
+          <span class="accent">played back in 12 seconds.</span>
+        </h2>
+        <p class="kicker">
+          Four real SIMY screens, in the exact order Yoshi moves through them on a Tuesday afternoon. Arrows show how each screen feeds the next — captions sync with each stage.
+        </p>
+      </div>
+
+      <div class="demo-stage">
+        <!-- Chrome bar -->
+        <div class="stage-chrome">
+          <div class="dotc d1"></div><div class="dotc d2"></div><div class="dotc d3"></div>
+          <div class="addr">coreweave.simy.one / live · yoshi-cks-roadmap</div>
+          <div class="rec">REC · LIVE</div>
+        </div>
+
+        <!-- Animated stage — real SIMY PC UI screenshots -->
+        <div class="stage">
+          <!-- Node 1: Meetings — CKS Roadmap Review -->
+          <div class="node node-1">
+            <img class="shot" src="/assets/demo-shots/02-meetings.png" alt="SIMY Meetings — CKS Roadmap Review Q2 2026" loading="lazy">
+            <span class="node-label">Step 1 · Meeting</span>
+            <div class="node-title">CKS Roadmap Review</div>
+          </div>
+
+          <!-- Node 2: My Actions — drafted items -->
+          <div class="node node-2">
+            <img class="shot" src="/assets/demo-shots/03-actions.png" alt="SIMY My Actions — drafted CKS items" loading="lazy">
+            <span class="node-label">Step 2 · Actions</span>
+            <div class="node-title">5 actions drafted</div>
+          </div>
+
+          <!-- Node 3: Growth Dashboard — metrics updated -->
+          <div class="node node-3">
+            <img class="shot" src="/assets/demo-shots/04-dashboard.png" alt="SIMY Growth Dashboard — CKS adoption metrics" loading="lazy">
+            <span class="node-label">Step 3 · Metrics</span>
+            <div class="node-title">CKS Adoption +3pt</div>
+          </div>
+
+          <!-- Node 4: Digital Twin — answers what next -->
+          <div class="node node-4">
+            <img class="shot" src="/assets/demo-shots/01-twin.png" alt="SIMY Digital Twin — Hi Yoshi" loading="lazy">
+            <span class="node-label">Step 4 · Twin</span>
+            <div class="node-title">"What should I do next?"</div>
+          </div>
+
+          <!-- Arrows SVG -->
+          <div class="arrows">
+            <svg viewBox="0 0 1140 440" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="arrowGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%"   stop-color="#0057ff" stop-opacity="0.2"/>
+                  <stop offset="50%"  stop-color="#4d8bff" stop-opacity="1"/>
+                  <stop offset="100%" stop-color="#0057ff" stop-opacity="0.2"/>
+                </linearGradient>
+              </defs>
+
+              <!-- Arrow 1: Node1 → Node2 -->
+              <path class="arrow-path a1" d="M 195 220 C 260 220, 280 220, 345 220"/>
+              <polygon class="arrow-head h1" points="340,214 352,220 340,226"/>
+
+              <!-- Arrow 2: Node2 → Node3 -->
+              <path class="arrow-path a2" d="M 495 220 C 560 220, 580 220, 645 220"/>
+              <polygon class="arrow-head h2" points="640,214 652,220 640,226"/>
+
+              <!-- Arrow 3: Node3 → Node4 -->
+              <path class="arrow-path a3" d="M 795 220 C 860 220, 880 220, 945 220"/>
+              <polygon class="arrow-head h3" points="940,214 952,220 940,226"/>
+
+              <!-- Travelling dots -->
+              <circle class="pulse-dot dot-1" r="4"/>
+              <circle class="pulse-dot dot-2" r="4"/>
+              <circle class="pulse-dot dot-3" r="4"/>
+            </svg>
+          </div>
+
+          <!-- Telop (caption bar at the bottom of the screen) -->
+          <div class="telop">
+            <div class="time">00:00 → 00:12</div>
+            <div class="caption-wrap">
+              <div class="caption c1">
+                <div class="main">CKS Roadmap Review ends — SIMY captured every "must decide" item.</div>
+                <div class="sub">AI briefing, decisions, and open issues from past meetings, all in the Meetings view.</div>
+              </div>
+              <div class="caption c2">
+                <div class="main">5 actions drafted — PRD, migration GA date, Q2 feature set.</div>
+                <div class="sub">Every decision becomes an owned action in Yoshi's My Actions list.</div>
+              </div>
+              <div class="caption c3">
+                <div class="main">Growth Dashboard updates. CKS Adoption +3pt, churn flagged.</div>
+                <div class="sub">SIMY pushes the review's outcomes straight into the CKS & Compute Abstractions dashboard.</div>
+              </div>
+              <div class="caption c4">
+                <div class="main">Yoshi asks his Digital Twin: "What should I do next?"</div>
+                <div class="sub">The Twin already knows — it sat through the meeting and read the metrics.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── CTA ────────────────────────────────────────────── -->
+    <section class="container cta-block">
+      <h2>If you're Yoshi — or someone running a platform like his —<br/><span class="accent">let's build this together.</span></h2>
+      <p>SIMY is in pilot with a small number of product leaders at infrastructure and platform companies. Join us and shape the twin alongside your own roadmap.</p>
+      <a href="/contact.html" class="btn-primary">Request pilot access
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="5 12 19 12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="static-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div style="font-size:1rem;font-weight:700;margin-bottom:6px;letter-spacing:-0.02em">Record. Ship. Done.</div>
+          <div style="display:flex;gap:12px;align-items:center;margin-top:12px">
+            <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" target="_blank" rel="noopener"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83" alt="Download on the App Store" style="height:36px"></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Product</div>
+          <a href="/how-it-works.html">How It Works</a>
+          <a href="/pricing.html">Pricing</a>
+          <a href="/compare.html">Compare</a>
+          <a href="/integrations.html">Integrations</a>
+          <a href="/security.html">Security</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Company</div>
+          <a href="/about.html">About</a>
+          <a href="/careers.html">Careers</a>
+          <a href="/press.html">Press</a>
+          <a href="/contact.html">Contact</a>
+          <a href="/status.html">Status</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Legal</div>
+          <a href="/privacy.html">Privacy Policy</a>
+          <a href="/terms.html">Terms of Service</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 SIMY by AwakApp Inc. All rights reserved.</span>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
