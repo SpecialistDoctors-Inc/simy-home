@@ -1,6 +1,6 @@
 /**
  * SIMY i18n — Lightweight client-side internationalisation
- * Supports: en, ja, es, fr, zh, ar (RTL)
+ * Supports 18 languages including RTL (Arabic)
  *
  * Usage: Add data-i18n="key" to any element.
  *        For innerHTML (HTML allowed), use data-i18n-html="key".
@@ -13,16 +13,63 @@
 (function () {
   'use strict';
 
-  var SUPPORTED = ['en', 'ja', 'es', 'fr', 'zh', 'ar'];
+  var SUPPORTED = [
+    'en', 'ja', 'zh-Hans', 'zh-Hant', 'fr', 'de', 'es', 'ar',
+    'it', 'hi', 'te', 'kn', 'ko', 'vi', 'th', 'id', 'ru', 'pt-BR'
+  ];
   var DEFAULT = 'en';
   var CACHE = {};
+
+  /* ── Map browser locale to our supported codes ────────────── */
+  var LOCALE_MAP = {
+    'en': 'en',
+    'ja': 'ja',
+    'zh': 'zh-Hans',
+    'zh-cn': 'zh-Hans',
+    'zh-hans': 'zh-Hans',
+    'zh-sg': 'zh-Hans',
+    'zh-tw': 'zh-Hant',
+    'zh-hant': 'zh-Hant',
+    'zh-hk': 'zh-Hant',
+    'zh-mo': 'zh-Hant',
+    'fr': 'fr',
+    'de': 'de',
+    'es': 'es',
+    'ar': 'ar',
+    'it': 'it',
+    'hi': 'hi',
+    'te': 'te',
+    'kn': 'kn',
+    'ko': 'ko',
+    'vi': 'vi',
+    'th': 'th',
+    'id': 'id',
+    'ru': 'ru',
+    'pt': 'pt-BR',
+    'pt-br': 'pt-BR'
+  };
+
+  /* ── Resolve a browser locale string to supported code ────── */
+  function resolve(locale) {
+    var lc = locale.toLowerCase();
+    // Exact match first (e.g. zh-tw, pt-br)
+    if (LOCALE_MAP[lc]) return LOCALE_MAP[lc];
+    // Try base language (e.g. "de-AT" → "de")
+    var base = lc.split('-')[0];
+    if (LOCALE_MAP[base]) return LOCALE_MAP[base];
+    return null;
+  }
 
   /* ── Detect preferred language ─────────────────────────────── */
   function detect() {
     // 1. Query param  ?lang=ja
     var params = new URLSearchParams(location.search);
     var qLang = params.get('lang');
-    if (qLang && SUPPORTED.indexOf(qLang) !== -1) return qLang;
+    if (qLang) {
+      var resolved = resolve(qLang);
+      if (!resolved && SUPPORTED.indexOf(qLang) !== -1) resolved = qLang;
+      if (resolved) return resolved;
+    }
 
     // 2. Saved preference
     var saved = localStorage.getItem('simy-lang');
@@ -31,8 +78,8 @@
     // 3. Browser / OS language
     var langs = navigator.languages || [navigator.language || navigator.userLanguage || ''];
     for (var i = 0; i < langs.length; i++) {
-      var code = langs[i].toLowerCase().split('-')[0];
-      if (SUPPORTED.indexOf(code) !== -1) return code;
+      var match = resolve(langs[i]);
+      if (match) return match;
     }
 
     return DEFAULT;
@@ -103,6 +150,28 @@
     }
   }
 
+  /* ── Language names for switcher ───────────────────────────── */
+  var LANG_NAMES = {
+    'en':      'English',
+    'ja':      '日本語',
+    'zh-Hans': '简体中文',
+    'zh-Hant': '繁體中文',
+    'fr':      'Français',
+    'de':      'Deutsch',
+    'es':      'Español',
+    'ar':      'العربية',
+    'it':      'Italiano',
+    'hi':      'हिन्दी',
+    'te':      'తెలుగు',
+    'kn':      'ಕನ್ನಡ',
+    'ko':      '한국어',
+    'vi':      'Tiếng Việt',
+    'th':      'ไทย',
+    'id':      'Indonesia',
+    'ru':      'Русский',
+    'pt-BR':   'Português'
+  };
+
   /* ── Language switcher ─────────────────────────────────────── */
   function buildSwitcher() {
     // Already injected (e.g. React re-render) — skip
@@ -134,12 +203,11 @@
     }
 
     var dropdown = document.getElementById('langDropdown');
-    var names = { en: 'English', ja: '\u65e5\u672c\u8a9e', es: 'Espa\u00f1ol', fr: 'Fran\u00e7ais', zh: '\u4e2d\u6587', ar: '\u0627\u0644\u0639\u0631\u0628\u064a\u0629' };
 
     SUPPORTED.forEach(function (code) {
       var opt = document.createElement('button');
       opt.className = 'lang-option';
-      opt.textContent = names[code];
+      opt.textContent = LANG_NAMES[code] || code;
       opt.setAttribute('data-lang', code);
       opt.onclick = function () {
         setLang(code);
@@ -173,18 +241,46 @@
       '.lang-btn{display:flex;align-items:center;gap:6px;background:none;border:none;color:#5a5a56;cursor:pointer;font-family:inherit;font-size:0.75rem;font-weight:400;padding:4px 8px;border-radius:6px;transition:background 0.15s}' +
       '.lang-btn:hover{background:rgba(0,0,0,0.04)}' +
       '.lang-btn svg{opacity:0.6}' +
-      '.lang-dropdown{display:none;position:absolute;top:100%;right:0;margin-top:8px;background:#fff;border:1px solid #e0e0dc;border-radius:10px;box-shadow:0 8px 32px rgba(0,0,0,0.08);padding:6px;min-width:140px;z-index:100}' +
-      '.lang-dropdown.open{display:block}' +
-      '.lang-option{display:block;width:100%;text-align:left;background:none;border:none;padding:8px 14px;font-size:0.8rem;color:#333;cursor:pointer;border-radius:6px;font-family:inherit;transition:background 0.12s}' +
+      '.lang-dropdown{display:none;position:absolute;top:100%;right:0;margin-top:8px;background:#fff;border:1px solid #e0e0dc;border-radius:10px;box-shadow:0 8px 32px rgba(0,0,0,0.08);padding:6px;min-width:160px;z-index:100;max-height:400px;overflow-y:auto}' +
+      '.lang-dropdown.open{display:grid;grid-template-columns:1fr 1fr;gap:2px}' +
+      '.lang-option{display:block;width:100%;text-align:left;background:none;border:none;padding:8px 12px;font-size:0.78rem;color:#333;cursor:pointer;border-radius:6px;font-family:inherit;transition:background 0.12s;white-space:nowrap}' +
       '.lang-option:hover{background:#f5f5f3}' +
+      '[dir="rtl"] .lang-switcher{margin-left:0;margin-right:8px}' +
       '[dir="rtl"] .lang-dropdown{right:auto;left:0}' +
       '[dir="rtl"] .lang-option{text-align:right}';
     document.head.appendChild(style);
   }
 
+  /* ── Inject hreflang links for SEO ───────────────────────────── */
+  function injectHreflang() {
+    // Map our codes to BCP-47 hreflang values
+    var hreflangMap = {
+      'en': 'en', 'ja': 'ja', 'zh-Hans': 'zh-Hans', 'zh-Hant': 'zh-Hant',
+      'fr': 'fr', 'de': 'de', 'es': 'es', 'ar': 'ar', 'it': 'it',
+      'hi': 'hi', 'te': 'te', 'kn': 'kn', 'ko': 'ko', 'vi': 'vi',
+      'th': 'th', 'id': 'id', 'ru': 'ru', 'pt-BR': 'pt-BR'
+    };
+    var base = location.origin + location.pathname;
+    // x-default (no lang param)
+    var xdef = document.createElement('link');
+    xdef.rel = 'alternate';
+    xdef.hreflang = 'x-default';
+    xdef.href = base;
+    document.head.appendChild(xdef);
+    // Each language
+    SUPPORTED.forEach(function (code) {
+      var link = document.createElement('link');
+      link.rel = 'alternate';
+      link.hreflang = hreflangMap[code] || code;
+      link.href = base + '?lang=' + code;
+      document.head.appendChild(link);
+    });
+  }
+
   /* ── Init ───────────────────────────────────────────────────── */
   function init() {
     injectCSS();
+    injectHreflang();
     buildSwitcher();
 
     // For React SPA: nav may not exist yet. Watch for it.
