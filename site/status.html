@@ -331,25 +331,25 @@ if(localStorage.getItem('simy-cookies')==='1') loadGA();
 
 <div class="container">
   <div class="page-hero">
-    <h1>System Status</h1>
+    <h1 data-i18n="status.h1">System Status</h1>
   </div>
 
   <div class="status-banner">
     <span class="status-dot"></span>
-    <span>All Systems Operational</span>
+    <span data-i18n="status.allOp">All Systems Operational</span>
   </div>
 
   <div class="status-content">
-    <div class="service-item"><span class="service-name">SIMY Platform</span><span class="service-status"><span class="dot"></span>Operational</span></div>
-    <div class="service-item"><span class="service-name">API</span><span class="service-status"><span class="dot"></span>Operational</span></div>
-    <div class="service-item"><span class="service-name">Meeting Recording</span><span class="service-status"><span class="dot"></span>Operational</span></div>
-    <div class="service-item"><span class="service-name">Code Generation Engine</span><span class="service-status"><span class="dot"></span>Operational</span></div>
-    <div class="service-item"><span class="service-name">GitHub Integration</span><span class="service-status"><span class="dot"></span>Operational</span></div>
-    <div class="service-item"><span class="service-name">Slack Integration</span><span class="service-status"><span class="dot"></span>Operational</span></div>
-    <div class="service-item"><span class="service-name">Zoom Integration</span><span class="service-status"><span class="dot"></span>Operational</span></div>
+    <div class="service-item"><span class="service-name" data-i18n="status.svc.platform">SIMY Platform</span><span class="service-status"><span class="dot"></span><span data-i18n="status.operational">Operational</span></span></div>
+    <div class="service-item"><span class="service-name" data-i18n="status.svc.api">API</span><span class="service-status"><span class="dot"></span><span data-i18n="status.operational">Operational</span></span></div>
+    <div class="service-item"><span class="service-name" data-i18n="status.svc.recording">Meeting Recording</span><span class="service-status"><span class="dot"></span><span data-i18n="status.operational">Operational</span></span></div>
+    <div class="service-item"><span class="service-name" data-i18n="status.svc.codegen">Code Generation Engine</span><span class="service-status"><span class="dot"></span><span data-i18n="status.operational">Operational</span></span></div>
+    <div class="service-item"><span class="service-name" data-i18n="status.svc.github">GitHub Integration</span><span class="service-status"><span class="dot"></span><span data-i18n="status.operational">Operational</span></span></div>
+    <div class="service-item"><span class="service-name" data-i18n="status.svc.slack">Slack Integration</span><span class="service-status"><span class="dot"></span><span data-i18n="status.operational">Operational</span></span></div>
+    <div class="service-item"><span class="service-name" data-i18n="status.svc.zoom">Zoom Integration</span><span class="service-status"><span class="dot"></span><span data-i18n="status.operational">Operational</span></span></div>
 
     <div class="uptime-note">
-      <p>Issues? Contact us at <a class="eml" data-u="tech" data-d="simy.one" style="color:var(--primary);text-decoration:none"></a></p>
+      <p data-i18n-html="status.issuesP">Issues? Contact us at <a class="eml" data-u="tech" data-d="simy.one" style="color:var(--primary);text-decoration:none"></a></p>
       <!-- TODO: Replace with actual status monitoring service (e.g., Statuspage.io, Instatus, Betteruptime) -->
     </div>
   </div>
