@@ -237,20 +237,54 @@ footer { padding: 48px 0 36px; border-top: none; background: #0a0a0a; color: #f5
   margin-bottom: 48px;
 }
 
-/* Use Case Cards */
-.usecase-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+/* Use Case Cards — horizontal scroll carousel */
+.usecase-scroll-wrap {
+  margin: 0 -4rem; /* bleed out of container to full width */
+  padding: 0 4rem;
+  overflow: hidden;
 }
+.usecase-grid {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 16px;
+  scroll-behavior: smooth;
+}
+.usecase-grid::-webkit-scrollbar { display: none; }
+.usecase-grid { -ms-overflow-style: none; scrollbar-width: none; }
 .usecase-card {
+  flex: 0 0 340px;
+  min-width: 300px;
   background: var(--card);
   border: 1px solid rgba(0,0,0,0.06);
   border-radius: 14px;
   padding: 28px 24px;
   transition: border-color 0.3s;
+  scroll-snap-align: start;
 }
 .usecase-card:hover { border-color: rgba(0, 87, 255, 0.15); }
+.usecase-nav {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 20px;
+}
+.usecase-nav button {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--card);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+  color: var(--foreground);
+}
+.usecase-nav button:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
 .usecase-role {
   font-size: 0.95rem; font-weight: 700;
   margin-bottom: 4px;
@@ -523,7 +557,7 @@ footer { padding: 48px 0 36px; border-top: none; background: #0a0a0a; color: #f5
 
 /* Responsive */
 @media (max-width: 1024px) {
-  .usecase-grid { grid-template-columns: repeat(2, 1fr); }
+  .usecase-card { flex: 0 0 300px; min-width: 280px; }
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
   .integrations-grid { grid-template-columns: repeat(2, 1fr); }
   .security-grid { grid-template-columns: repeat(2, 1fr); }
@@ -539,7 +573,8 @@ footer { padding: 48px 0 36px; border-top: none; background: #0a0a0a; color: #f5
   .hero { padding-top: 100px; padding-bottom: 48px; }
   .hero h1 { font-size: 2.8rem; }
   .section { padding: 56px 0; }
-  .usecase-grid { grid-template-columns: 1fr; }
+  .usecase-scroll-wrap { margin: 0 -1.5rem; padding: 0 1.5rem; }
+  .usecase-card { flex: 0 0 280px; min-width: 260px; }
   .stats-grid { grid-template-columns: 1fr 1fr; }
   .integrations-grid { grid-template-columns: 1fr; }
   .security-grid { grid-template-columns: 1fr; }
@@ -674,7 +709,8 @@ if(localStorage.getItem('simy-cookies')==='1') loadGA();
     <h2>If you are this person,<br><span class="text-primary">let's build this together.</span></h2>
     <p class="section-intro">These are the outcomes we're working toward — not promises, but a shared vision. Some are live today. Others are in development. Join us to shape what comes next.</p>
 
-    <div class="usecase-grid">
+    <div class="usecase-scroll-wrap">
+    <div class="usecase-grid" id="usecaseGrid">
       <div class="usecase-card">
         <div class="usecase-role">Marketing Lead</div>
         <div class="usecase-company">150-person tech company</div>
@@ -738,6 +774,15 @@ if(localStorage.getItem('simy-cookies')==='1') loadGA();
         <div class="usecase-after">SIMY captures the debrief call, generates the job report, and triggers the invoice automatically.</div>
         <div class="usecase-result">Reports filed. Billing started. Before the van leaves the site.</div>
       </div>
+    </div>
+    </div><!-- /usecase-scroll-wrap -->
+    <div class="usecase-nav">
+      <button onclick="document.getElementById('usecaseGrid').scrollBy({left:-360,behavior:'smooth'})" aria-label="Previous">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <button onclick="document.getElementById('usecaseGrid').scrollBy({left:360,behavior:'smooth'})" aria-label="Next">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 6 15 12 9 18"/></svg>
+      </button>
     </div>
   </div>
 
