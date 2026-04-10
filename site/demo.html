@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-  <title>SIMY — Yoshi's Story · From Roadmap Review to Next Action</title>
-  <meta name="description" content="Meet Yoshi Tamura, Principal PM at CoreWeave leading CKS & Compute Abstractions. See how SIMY turns his roadmap review into drafted actions before he closes his laptop." />
+  <title>SIMY Demo — The Product Manager at a 150-person tech company</title>
+  <meta name="description" content="See SIMY in action through the eyes of the Product Manager from our Home page. Meeting → actions → dashboard → digital twin, played back like Screen Studio." />
   <link rel="canonical" href="https://simy.one/demo.html">
   <meta name="robots" content="index, follow">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://simy.one/demo.html">
-  <meta property="og:title" content="Yoshi's Story — SIMY">
-  <meta property="og:description" content="One PM, one CKS roadmap review, one digital twin that already knows what's next.">
+  <meta property="og:title" content="SIMY Demo — The Product Manager's story">
+  <meta property="og:description" content="One PM, one planning meeting, one automated roadmap — played back in 12 seconds.">
   <meta property="og:site_name" content="SIMY">
   <meta property="og:image" content="https://simy.one/ogp.png">
   <meta name="theme-color" content="#f9f9f6">
@@ -240,7 +240,7 @@
     .story-card.outcome h3 { color: #fff; }
     .story-card.outcome p { color: #c8c8c4; }
 
-    /* ── 02 / Demo ──────────────────────────────────────────── */
+    /* ── 02 / Demo · Screen Studio-style ───────────────────── */
     .demo {
       padding: 40px 0 120px;
       border-top: 1px solid var(--border);
@@ -256,220 +256,320 @@
       font-size: 1.05rem; color: var(--fg-muted);
       max-width: 620px;
     }
-    .demo-stage {
+
+    /* Screen Studio-style gradient stage */
+    .ss-wrap {
       position: relative;
-      background: #0a0a0a;
-      border-radius: 20px;
+      border-radius: 24px;
+      padding: 64px 56px 56px;
       overflow: hidden;
-      box-shadow: 0 32px 80px -30px rgba(0,20,80,0.5);
+      background:
+        radial-gradient(90% 60% at 20% 10%, #bfd4ff 0%, transparent 55%),
+        radial-gradient(80% 60% at 85% 20%, #ffd9ea 0%, transparent 55%),
+        radial-gradient(60% 60% at 50% 95%, #c6e4ff 0%, transparent 55%),
+        linear-gradient(135deg, #eef2ff 0%, #fef0f7 50%, #e6f1ff 100%);
+      box-shadow: 0 32px 80px -30px rgba(20,30,90,0.18);
     }
-    .stage-chrome {
+    .ss-wrap::before {
+      /* soft blurred light blob for depth */
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(40% 40% at 30% 40%, rgba(255,255,255,0.5), transparent 70%);
+      pointer-events: none;
+    }
+    .ss-wrap::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(35% 35% at 75% 70%, rgba(255,255,255,0.35), transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Browser window (device frame) */
+    .ss-browser {
+      position: relative;
+      width: 100%;
+      max-width: 980px;
+      margin: 0 auto;
+      background: #0d0e12;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow:
+        0 2px 0 rgba(255,255,255,0.1) inset,
+        0 40px 100px -20px rgba(20,30,80,0.45),
+        0 20px 40px -12px rgba(10,15,50,0.35);
+      transform: translateZ(0);
+    }
+    .ss-chrome {
       display: flex; align-items: center; gap: 8px;
-      padding: 14px 20px; border-bottom: 1px solid #1f1f1d;
-      background: #111;
+      padding: 12px 16px;
+      background: #15161b;
+      border-bottom: 1px solid #23242a;
     }
-    .stage-chrome .dotc { width: 11px; height: 11px; border-radius: 50%; }
-    .stage-chrome .d1 { background: #ff5f56; }
-    .stage-chrome .d2 { background: #ffbd2e; }
-    .stage-chrome .d3 { background: #27c93f; }
-    .stage-chrome .addr {
-      margin-left: 16px; font-family: 'Geist Mono', monospace;
-      font-size: 12px; color: #7a7a76;
+    .ss-chrome .c-dot { width: 11px; height: 11px; border-radius: 50%; display: inline-block; }
+    .ss-chrome .c1 { background: #ff5f56; }
+    .ss-chrome .c2 { background: #ffbd2e; }
+    .ss-chrome .c3 { background: #27c93f; }
+    .ss-chrome .c-addr {
+      flex: 1;
+      margin: 0 14px;
+      background: #1d1f26;
+      color: #aab0c0;
+      font-family: 'Geist Mono', monospace;
+      font-size: 12px;
+      padding: 6px 14px;
+      border-radius: 7px;
+      text-align: center;
+      border: 1px solid #262832;
     }
-    .stage-chrome .rec {
-      margin-left: auto; display: inline-flex; align-items: center; gap: 6px;
-      font-family: 'Geist Mono', monospace; font-size: 11px;
-      color: #ff4a2f; letter-spacing: 0.1em;
+    .ss-chrome .c-addr .lock {
+      color: #6f7891;
+      margin-right: 6px;
     }
-    .stage-chrome .rec::before {
+    .ss-chrome .c-rec {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: 'Geist Mono', monospace;
+      font-size: 10px; letter-spacing: 0.14em;
+      color: #ff4a2f;
+    }
+    .ss-chrome .c-rec::before {
       content: ''; width: 7px; height: 7px; border-radius: 50%;
       background: #ff4a2f; animation: pulse 1.5s infinite;
     }
 
-    .stage {
+    /* Viewport holds 4 overlayed slides */
+    .ss-viewport {
       position: relative;
-      height: 440px;
-      background:
-        radial-gradient(60% 50% at 50% 40%, rgba(0,87,255,0.12), transparent 70%),
-        #0a0a0a;
+      aspect-ratio: 16 / 10;
+      background: #f3f4f7;
       overflow: hidden;
     }
-
-    /* 4-node flow layout — each node shows a real product screenshot */
-    .node {
-      position: absolute;
-      background: #15151a;
-      border: 1px solid #28282e;
-      border-radius: 12px;
-      padding: 8px 8px 10px;
-      width: 220px;
-      box-shadow: 0 10px 30px -10px rgba(0,0,0,0.6);
-      transition: all 0.35s ease;
-    }
-    .node .shot {
-      display: block; width: 100%; height: 130px;
-      object-fit: cover; object-position: top left;
-      border-radius: 6px;
-      background: #0a0a0a;
-      border: 1px solid #1e1e22;
-    }
-    .node .node-label {
-      font-family: 'Geist Mono', monospace;
-      font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
-      color: #6a6a70; margin: 10px 4px 4px; display: block;
-    }
-    .node .node-title {
-      font-size: 0.82rem; font-weight: 600; color: #f5f5f0;
-      letter-spacing: -0.01em; padding: 0 4px;
-    }
-
-    /* Node positions — evenly spaced across the stage */
-    .node-1 { left: 2.5%;  top: 50%; transform: translateY(-50%); }
-    .node-2 { left: 27%;   top: 50%; transform: translateY(-50%); }
-    .node-3 { left: 51.5%; top: 50%; transform: translateY(-50%); }
-    .node-4 { left: 76%;   top: 50%; transform: translateY(-50%); }
-
-    /* Active state animation — timed cycles */
-    @keyframes nodeActive {
-      0%, 100% { border-color: #28282e; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.6); }
-      15%, 40% {
-        border-color: var(--primary);
-        box-shadow: 0 0 0 3px rgba(0,87,255,0.15), 0 20px 50px -10px rgba(0,87,255,0.5);
-      }
-    }
-    @keyframes nodeActiveT {
-      0%, 100% {
-        border-color: #28282e;
-        box-shadow: 0 10px 30px -10px rgba(0,0,0,0.6);
-        transform: translateY(-50%) scale(1);
-      }
-      15%, 40% {
-        border-color: var(--primary);
-        box-shadow: 0 0 0 3px rgba(0,87,255,0.18), 0 20px 50px -10px rgba(0,87,255,0.5);
-        transform: translateY(-50%) scale(1.035);
-      }
-    }
-    .node-1 { animation: nodeActiveT 12s ease-in-out infinite; animation-delay: 0s; }
-    .node-2 { animation: nodeActiveT 12s ease-in-out infinite; animation-delay: 3s; }
-    .node-3 { animation: nodeActiveT 12s ease-in-out infinite; animation-delay: 6s; }
-    .node-4 { animation: nodeActiveT 12s ease-in-out infinite; animation-delay: 9s; }
-
-    /* Arrows — SVG overlay */
-    .arrows {
+    .ss-slide {
       position: absolute; inset: 0;
+      opacity: 0;
+      transform: scale(1.05);
+      transform-origin: center center;
+      will-change: opacity, transform;
+    }
+    .ss-slide img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top left;
+    }
+
+    /* 12s loop, 4 × 3s scenes. Each slide fades in, holds, fades out.
+       slideShow window: opacity 0→1 from 1%–7%, hold 7%–22%, fade 22%–26%. */
+    @keyframes ssSlide {
+      0%   { opacity: 0; transform: scale(1.05); }
+      1%   { opacity: 0; transform: scale(1.05); }
+      6%   { opacity: 1; transform: scale(1.02); }
+      20%  { opacity: 1; transform: scale(1.00); }
+      25%  { opacity: 0; transform: scale(0.97); }
+      100% { opacity: 0; transform: scale(1.05); }
+    }
+    .ss-slide.s1 { animation: ssSlide 12s ease-in-out infinite; animation-delay: 0s; }
+    .ss-slide.s2 { animation: ssSlide 12s ease-in-out infinite; animation-delay: 3s; }
+    .ss-slide.s3 { animation: ssSlide 12s ease-in-out infinite; animation-delay: 6s; }
+    .ss-slide.s4 { animation: ssSlide 12s ease-in-out infinite; animation-delay: 9s; }
+
+    /* Cursor — one pointer per slide, animated during the slide's visible window */
+    .ss-cursor {
+      position: absolute;
+      width: 24px; height: 24px;
       pointer-events: none;
+      z-index: 3;
+      filter: drop-shadow(0 4px 10px rgba(10,20,60,0.4));
+      opacity: 0;
     }
-    .arrows svg { width: 100%; height: 100%; display: block; }
-    .arrow-path {
-      fill: none;
-      stroke: url(#arrowGrad);
-      stroke-width: 2.5;
-      stroke-linecap: round;
-      stroke-dasharray: 6 6;
-      opacity: 0.25;
-    }
-    .arrow-head { fill: var(--primary); opacity: 0; }
-
-    /* Moving dot travelling along the arrow path */
-    .pulse-dot {
-      fill: #fff;
-      filter: drop-shadow(0 0 6px rgba(0,87,255,0.9));
-    }
-
-    /* Arrow activation */
-    @keyframes arrowActive {
-      0%, 100%  { opacity: 0.25; }
-      10%, 28%  { opacity: 1; }
-    }
-    @keyframes headActive {
-      0%, 100% { opacity: 0; transform: scale(0.7); }
-      14%, 28% { opacity: 1; transform: scale(1); }
-    }
-    .a1 { animation: arrowActive 12s linear infinite; animation-delay: 1.5s; }
-    .a2 { animation: arrowActive 12s linear infinite; animation-delay: 4.5s; }
-    .a3 { animation: arrowActive 12s linear infinite; animation-delay: 7.5s; }
-    .h1 { animation: headActive 12s linear infinite; animation-delay: 1.5s; transform-origin: center; transform-box: fill-box; }
-    .h2 { animation: headActive 12s linear infinite; animation-delay: 4.5s; transform-origin: center; transform-box: fill-box; }
-    .h3 { animation: headActive 12s linear infinite; animation-delay: 7.5s; transform-origin: center; transform-box: fill-box; }
-
-    /* Dot travelling along each arrow */
-    @keyframes dotTravel1 {
-      0%, 100% { opacity: 0; offset-distance: 0%; }
-      12%      { opacity: 1; offset-distance: 0%; }
-      26%      { opacity: 1; offset-distance: 100%; }
-      27%      { opacity: 0; offset-distance: 100%; }
-    }
-    @keyframes dotTravel2 {
-      0%, 100% { opacity: 0; offset-distance: 0%; }
-      37%      { opacity: 1; offset-distance: 0%; }
-      51%      { opacity: 1; offset-distance: 100%; }
-      52%      { opacity: 0; offset-distance: 100%; }
-    }
-    @keyframes dotTravel3 {
-      0%, 100% { opacity: 0; offset-distance: 0%; }
-      62%      { opacity: 1; offset-distance: 0%; }
-      76%      { opacity: 1; offset-distance: 100%; }
-      77%      { opacity: 0; offset-distance: 100%; }
-    }
-    .dot-1 {
-      offset-path: path('M 195 220 C 260 220, 280 220, 345 220');
-      animation: dotTravel1 12s linear infinite;
-    }
-    .dot-2 {
-      offset-path: path('M 495 220 C 560 220, 580 220, 645 220');
-      animation: dotTravel2 12s linear infinite;
-    }
-    .dot-3 {
-      offset-path: path('M 795 220 C 860 220, 880 220, 945 220');
-      animation: dotTravel3 12s linear infinite;
+    .ss-cursor svg { width: 100%; height: 100%; display: block; }
+    /* Click ripple sits at cursor tip */
+    .ss-cursor::after {
+      content: '';
+      position: absolute;
+      left: 2px; top: 2px;
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: rgba(0,87,255,0.35);
+      border: 2px solid rgba(0,87,255,0.85);
+      transform: scale(0);
+      opacity: 0;
     }
 
-    /* Caption bar (telop) ─ bottom of screen inside stage */
-    .telop {
-      position: absolute; left: 0; right: 0; bottom: 0;
+    /* Cursor 1 — scene 1 (0–3s): enters bottom-left, glides to a suggested-question card */
+    @keyframes ssCursor1 {
+      0%   { left: 8%;  top: 82%; opacity: 0; }
+      1%   { opacity: 1; }
+      6%   { left: 36%; top: 58%; opacity: 1; }
+      8%   { left: 36%; top: 58%; opacity: 1; }
+      25%  { opacity: 0; }
+      100% { opacity: 0; }
+    }
+    @keyframes ssClick1 {
+      0%, 6%, 100% { transform: scale(0); opacity: 0; }
+      7%          { transform: scale(0.2); opacity: 0.9; }
+      12%         { transform: scale(2.6); opacity: 0; }
+    }
+    .s1 .ss-cursor { animation: ssCursor1 12s linear infinite; animation-delay: 0s; }
+    .s1 .ss-cursor::after { animation: ssClick1 12s linear infinite; animation-delay: 0s; }
+
+    /* Cursor 2 — scene 2 (3–6s): enters top-right, glides to Must Decide card */
+    @keyframes ssCursor2 {
+      0%, 24% { opacity: 0; left: 94%; top: 12%; }
+      25%     { opacity: 1; }
+      32%     { left: 62%; top: 42%; opacity: 1; }
+      34%     { left: 62%; top: 42%; opacity: 1; }
+      49%     { opacity: 0; }
+      100%    { opacity: 0; }
+    }
+    @keyframes ssClick2 {
+      0%, 32%, 100% { transform: scale(0); opacity: 0; }
+      33%          { transform: scale(0.2); opacity: 0.9; }
+      38%          { transform: scale(2.6); opacity: 0; }
+    }
+    .s2 .ss-cursor { animation: ssCursor2 12s linear infinite; }
+    .s2 .ss-cursor::after { animation: ssClick2 12s linear infinite; }
+
+    /* Cursor 3 — scene 3 (6–9s): enters bottom-right, glides to an action item */
+    @keyframes ssCursor3 {
+      0%, 49% { opacity: 0; left: 92%; top: 86%; }
+      50%     { opacity: 1; }
+      57%     { left: 36%; top: 42%; opacity: 1; }
+      59%     { left: 36%; top: 42%; opacity: 1; }
+      74%     { opacity: 0; }
+      100%    { opacity: 0; }
+    }
+    @keyframes ssClick3 {
+      0%, 57%, 100% { transform: scale(0); opacity: 0; }
+      58%          { transform: scale(0.2); opacity: 0.9; }
+      63%          { transform: scale(2.6); opacity: 0; }
+    }
+    .s3 .ss-cursor { animation: ssCursor3 12s linear infinite; }
+    .s3 .ss-cursor::after { animation: ssClick3 12s linear infinite; }
+
+    /* Cursor 4 — scene 4 (9–12s): enters from top-left, glides to Retention widget */
+    @keyframes ssCursor4 {
+      0%, 74% { opacity: 0; left: 6%; top: 14%; }
+      75%     { opacity: 1; }
+      82%     { left: 44%; top: 46%; opacity: 1; }
+      84%     { left: 44%; top: 46%; opacity: 1; }
+      99%     { opacity: 0; }
+      100%    { opacity: 0; }
+    }
+    @keyframes ssClick4 {
+      0%, 82%, 100% { transform: scale(0); opacity: 0; }
+      83%          { transform: scale(0.2); opacity: 0.9; }
+      88%          { transform: scale(2.6); opacity: 0; }
+    }
+    .s4 .ss-cursor { animation: ssCursor4 12s linear infinite; }
+    .s4 .ss-cursor::after { animation: ssClick4 12s linear infinite; }
+
+    /* Progress rail under the browser */
+    .ss-progress {
+      position: relative;
+      height: 4px;
+      margin: 24px auto 0;
+      max-width: 980px;
+      background: rgba(10,20,60,0.08);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .ss-progress::before {
+      content: '';
+      position: absolute; top: 0; left: 0;
+      height: 100%;
+      width: 25%;
+      background: linear-gradient(90deg, #0057ff, #4d8bff);
+      border-radius: 4px;
+      animation: ssProgress 12s linear infinite;
+    }
+    @keyframes ssProgress {
+      0%   { left: 0%;   }
+      100% { left: 75%;  }
+    }
+    .ss-scene-ticks {
+      display: flex; justify-content: space-between;
+      margin: 14px auto 0; max-width: 980px;
+      font-family: 'Geist Mono', monospace;
+      font-size: 10px; letter-spacing: 0.12em;
+      color: #6a7392; text-transform: uppercase;
+    }
+    .ss-scene-ticks span {
+      flex: 1; text-align: center;
+      padding: 6px 4px;
+      border-top: 1px solid rgba(10,20,60,0.1);
+      transition: color 0.3s;
+    }
+    .ss-scene-ticks span.t1 { animation: tickActive 12s linear infinite; animation-delay: 0s; }
+    .ss-scene-ticks span.t2 { animation: tickActive 12s linear infinite; animation-delay: 3s; }
+    .ss-scene-ticks span.t3 { animation: tickActive 12s linear infinite; animation-delay: 6s; }
+    .ss-scene-ticks span.t4 { animation: tickActive 12s linear infinite; animation-delay: 9s; }
+    @keyframes tickActive {
+      0%, 100% { color: #6a7392; }
+      3%, 22%  { color: #0057ff; }
+    }
+
+    /* Caption bar (telop) — beneath the browser, Screen Studio-style */
+    .ss-caption {
+      position: relative;
+      max-width: 980px;
+      margin: 28px auto 0;
       padding: 22px 28px;
-      background: linear-gradient(180deg, rgba(10,10,10,0) 0%, rgba(10,10,10,0.9) 40%, #060606 100%);
-      border-top: 1px solid #1a1a1a;
-      color: #f5f5f0;
-      min-height: 104px;
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(10,20,60,0.08);
+      border-radius: 14px;
+      box-shadow: 0 16px 40px -16px rgba(20,30,80,0.18);
+      min-height: 96px;
       display: flex; align-items: center; gap: 22px;
     }
-    .telop .time {
+    .ss-caption .cap-time {
       font-family: 'Geist Mono', monospace;
       font-size: 11px;
       color: var(--primary);
       letter-spacing: 0.14em;
-      border: 1px solid rgba(0,87,255,0.4);
-      background: rgba(0,87,255,0.07);
+      border: 1px solid rgba(0,87,255,0.3);
+      background: rgba(0,87,255,0.06);
       padding: 6px 10px;
       border-radius: 6px;
       flex-shrink: 0;
     }
-    .telop .caption-wrap {
-      position: relative; flex: 1; height: 48px;
+    .ss-caption .cap-body {
+      position: relative; flex: 1; height: 52px;
     }
-    .caption {
+    .ss-caption .cap {
       position: absolute; inset: 0;
       display: flex; flex-direction: column; justify-content: center;
       opacity: 0; transform: translateY(8px);
     }
-    .caption .main {
+    .ss-caption .cap .main {
       font-size: 1.02rem; font-weight: 600;
-      letter-spacing: -0.01em; color: #fff;
+      letter-spacing: -0.01em; color: #0a0a0a;
       margin-bottom: 3px;
     }
-    .caption .sub {
-      font-size: 0.82rem; color: #8c8c90;
+    .ss-caption .cap .sub {
+      font-size: 0.82rem; color: #5a5a56;
     }
-    @keyframes telopShow {
+    @keyframes ssCaption {
       0%, 100% { opacity: 0; transform: translateY(8px); }
       5%, 22%  { opacity: 1; transform: translateY(0); }
       27%      { opacity: 0; transform: translateY(-6px); }
     }
-    .c1 { animation: telopShow 12s ease-in-out infinite; animation-delay: 0s; }
-    .c2 { animation: telopShow 12s ease-in-out infinite; animation-delay: 3s; }
-    .c3 { animation: telopShow 12s ease-in-out infinite; animation-delay: 6s; }
-    .c4 { animation: telopShow 12s ease-in-out infinite; animation-delay: 9s; }
+    .ss-caption .cap.k1 { animation: ssCaption 12s ease-in-out infinite; animation-delay: 0s; }
+    .ss-caption .cap.k2 { animation: ssCaption 12s ease-in-out infinite; animation-delay: 3s; }
+    .ss-caption .cap.k3 { animation: ssCaption 12s ease-in-out infinite; animation-delay: 6s; }
+    .ss-caption .cap.k4 { animation: ssCaption 12s ease-in-out infinite; animation-delay: 9s; }
+
+    /* Reduce motion */
+    @media (prefers-reduced-motion: reduce) {
+      .ss-slide, .ss-cursor, .ss-cursor::after,
+      .ss-progress::before, .ss-scene-ticks span, .ss-caption .cap {
+        animation: none !important;
+      }
+      .ss-slide.s1 { opacity: 1; transform: none; }
+      .ss-caption .cap.k1 { opacity: 1; transform: none; }
+    }
 
     /* ── CTA ────────────────────────────────────────────────── */
     .cta-block {
@@ -515,26 +615,11 @@
     @media (max-width: 1024px) {
       .hero { grid-template-columns: 1fr; gap: 48px; padding: 110px 0 60px; }
       .story-grid { grid-template-columns: 1fr; }
-      .stage { height: 640px; }
-      .node { min-width: 220px; }
-      .node-1 { left: 50%; top: 20px;  transform: translateX(-50%); }
-      .node-2 { left: 50%; top: 140px; transform: translateX(-50%); }
-      .node-3 { left: 50%; top: 260px; transform: translateX(-50%); }
-      .node-4 { left: 50%; top: 380px; transform: translateX(-50%); }
-      @keyframes nodeActiveT {
-        0%, 100% { border-color: #28282e; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.6); transform: translateX(-50%) scale(1); }
-        15%, 40% { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(0,87,255,0.18), 0 20px 50px -10px rgba(0,87,255,0.5); transform: translateX(-50%) scale(1.035); }
-      }
-      .dot-1, .dot-2, .dot-3 { display: none; }
-      .arrow-path, .arrow-head { display: none; }
-      /* Vertical arrows between stacked nodes */
-      .arrows::before,
-      .arrows::after {
-        content: ''; position: absolute; left: 50%;
-        width: 2px; height: 20px;
-        background: linear-gradient(180deg, rgba(0,87,255,0.9), rgba(0,87,255,0.2));
-        transform: translateX(-50%);
-      }
+      .ss-wrap { padding: 40px 28px 36px; border-radius: 20px; }
+      .ss-browser { max-width: 100%; }
+      .ss-caption { padding: 18px 20px; gap: 16px; }
+      .ss-caption .cap .main { font-size: 0.96rem; }
+      .ss-caption .cap .sub  { font-size: 0.78rem; }
     }
     @media (max-width: 768px) {
       .nav-links, .nav-right { display: none; }
@@ -543,19 +628,21 @@
       .container { padding: 0 1.5rem; }
       footer .container { padding: 0 1.5rem; }
       .footer-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
-      .telop {
+
+      .ss-wrap { padding: 28px 16px 24px; border-radius: 16px; }
+      .ss-chrome { padding: 10px 12px; }
+      .ss-chrome .c-addr { font-size: 10px; padding: 5px 10px; margin: 0 8px; }
+      .ss-chrome .c-rec  { font-size: 9px; }
+      .ss-caption {
         flex-direction: column; align-items: flex-start;
-        gap: 10px; padding: 16px 18px;
+        gap: 10px; padding: 14px 16px;
         min-height: 128px;
       }
-      .telop .caption-wrap { width: 100%; height: 68px; }
-      .caption .main { font-size: 0.92rem; }
-      .caption .sub { font-size: 0.76rem; }
-      .stage { height: 700px; }
-      .node-1 { top: 18px;  }
-      .node-2 { top: 138px; }
-      .node-3 { top: 258px; }
-      .node-4 { top: 378px; }
+      .ss-caption .cap-body { width: 100%; height: 68px; }
+      .ss-caption .cap .main { font-size: 0.9rem; }
+      .ss-caption .cap .sub  { font-size: 0.76rem; }
+      .ss-scene-ticks { font-size: 9px; }
+      .ss-scene-ticks span { padding: 6px 2px; }
     }
   </style>
 </head>
@@ -600,16 +687,17 @@
       <div>
         <div class="hero-tag"><span class="dot"></span>Home · Real User Story</div>
         <h1>
-          I'm Yoshi. I lead CKS<br/>
-          at CoreWeave.<br/>
-          <span class="accent">SIMY is my second brain.</span>
+          The Product Manager<br/>
+          at a 150-person<br/>
+          tech company.<br/>
+          <span class="accent">This is her SIMY.</span>
         </h1>
         <p class="lead">
-          Before SIMY, every roadmap review ended the same way — I'd close the laptop with a head full of decisions and spend the night turning them into PRDs, owners, and dates. Now the meeting ends, and SIMY has already drafted my next five actions.
+          She's persona #4 on the Home page — the PM whose planning sessions used to end with hours of manual roadmap wrangling. Press play and watch what her SIMY looks like on a normal Tuesday: one meeting, one dashboard, one digital twin.
         </p>
         <div class="hero-cta">
           <a href="#demo" class="btn-primary">
-            Watch Yoshi's flow
+            Play the demo
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="5 12 19 12"/><polyline points="12 5 19 12 12 19"/></svg>
           </a>
           <a href="/how-it-works.html" class="btn-ghost">How SIMY works</a>
@@ -618,21 +706,21 @@
 
       <div class="hero-card">
         <div class="hero-card-top">
-          <div class="avatar" style="background:linear-gradient(135deg,#cfefff,#9ed7ff);color:#034c7a;">YT</div>
+          <div class="avatar">PM</div>
           <div>
-            <div class="name">Yoshi Tamura</div>
-            <div class="title-line">Principal PM · CoreWeave — CKS &amp; Compute Abstractions</div>
+            <div class="name">The Product Manager</div>
+            <div class="title-line">150-person tech company · Persona 04</div>
           </div>
         </div>
         <div class="hero-quote">
-          "My roadmap review used to be the start of a long night.<br/>
-          Now it's the moment SIMY tells me what to do next."
+          "Our planning meeting used to be the start of my real work.<br/>
+          Now it's the end of it."
         </div>
         <div class="hero-meta">
-          <div><b>1 platform</b>CKS + Compute Abstractions</div>
-          <div><b>~8 meetings/wk</b>Roadmap, customer, exec reviews</div>
-          <div><b>Night work → 0</b>Post-meeting PRD writing</div>
-          <div><b>Next morning</b>Actions waiting, ranked</div>
+          <div><b>Before SIMY</b>Hours spent turning discussion into tickets</div>
+          <div><b>With SIMY</b>Structured roadmap, owners, estimates — auto</div>
+          <div><b>Before standup</b>Roadmap is already shared</div>
+          <div><b>Home page</b>Persona 04 / role-based</div>
         </div>
       </div>
     </section>
@@ -645,24 +733,24 @@
         <span class="accent">let's build this together.</span>
       </h2>
       <p class="kicker">
-        Yoshi is a Principal Product Manager at CoreWeave, leading CKS and Compute Abstractions. His week is roadmap reviews, customer escalations, and exec readouts — and the night shift of turning every discussion into PRDs, tickets, and decisions before standup.
+        Taken verbatim from the SIMY Home page — persona 04 of 9. The Product Manager at a 150-person tech company. No name, just the role and the story.
       </p>
 
       <div class="story-grid">
         <div class="story-card before">
           <span class="tag">Before SIMY</span>
-          <h3>Roadmap review ends. Night shift begins.</h3>
-          <p>After the CKS roadmap review, Yoshi would spend the evening rebuilding the conversation: what got decided, which migration date stuck, who owns the PRD. Half the "must decide" items would slip to next week.</p>
+          <h3>Planning ends. Real work begins.</h3>
+          <p>After every planning session, someone spends hours turning discussion into a structured roadmap. Decisions get lost. Owners get fuzzy. The doc lands in Notion by Thursday.</p>
         </div>
         <div class="story-card after">
           <span class="tag">With SIMY</span>
-          <h3>Meeting ends. Actions are waiting.</h3>
-          <p>SIMY listens through the review, captures every "must decide" item, drafts the five actions Yoshi needs to take next, and updates the CKS growth dashboard — before he's left the room.</p>
+          <h3>Meeting ends. Roadmap ships.</h3>
+          <p>SIMY generates a structured roadmap, assigns owners, and sends summaries automatically. Every decision is captured the moment it's made — no cleanup required.</p>
         </div>
         <div class="story-card outcome">
           <span class="tag">The outcome</span>
-          <h3>Digital Twin answers<br/>"what should I do next?"</h3>
-          <p>By the time Yoshi opens SIMY the next morning, the actions are ranked, the metrics are updated, and his Digital Twin already knows which action moves CKS adoption the most. No more night shift.</p>
+          <h3>Roadmap ready<br/>before the next standup.</h3>
+          <p>Her squads show up to standup with a shared, written plan — not a half-remembered meeting. Mondays are now about questions, not note-taking.</p>
         </div>
       </div>
     </section>
@@ -672,102 +760,88 @@
       <div class="demo-head">
         <span class="section-label">02 / Demo</span>
         <h2>
-          Yoshi's CKS roadmap review,<br/>
+          Her Tuesday afternoon,<br/>
           <span class="accent">played back in 12 seconds.</span>
         </h2>
         <p class="kicker">
-          Four real SIMY screens, in the exact order Yoshi moves through them on a Tuesday afternoon. Arrows show how each screen feeds the next — captions sync with each stage.
+          A single unbroken take through the real SIMY desktop app. Four scenes — Meeting, Actions, Dashboard, Twin — with the cursor moving the way she moves it. No edits, no fake UI.
         </p>
       </div>
 
-      <div class="demo-stage">
-        <!-- Chrome bar -->
-        <div class="stage-chrome">
-          <div class="dotc d1"></div><div class="dotc d2"></div><div class="dotc d3"></div>
-          <div class="addr">coreweave.simy.one / live · yoshi-cks-roadmap</div>
-          <div class="rec">REC · LIVE</div>
+      <!-- Screen Studio–style single-frame demo -->
+      <div class="ss-wrap">
+        <div class="ss-browser">
+          <div class="ss-chrome">
+            <span class="c-dot c1"></span>
+            <span class="c-dot c2"></span>
+            <span class="c-dot c3"></span>
+            <div class="c-addr"><span class="lock">&#128274;</span>app.simy.one &nbsp;/&nbsp; product-manager</div>
+            <div class="c-rec">REC &middot; LIVE</div>
+          </div>
+
+          <div class="ss-viewport">
+            <!-- Scene 1 — Digital Twin (landing) -->
+            <div class="ss-slide s1">
+              <img src="/assets/demo-shots/01-twin.png" alt="SIMY Digital Twin — conversational start" loading="lazy">
+              <div class="ss-cursor" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="#0a0a0a" stroke="#ffffff" stroke-width="1.2"><path d="M3 2 L3 20 L8 15 L11 22 L14 21 L11 14 L18 14 Z"/></svg>
+              </div>
+            </div>
+
+            <!-- Scene 2 — Meetings (Q2 Strategy) -->
+            <div class="ss-slide s2">
+              <img src="/assets/demo-shots/02-meetings.png" alt="SIMY Meetings — Q2 Strategy, Must Decide list" loading="lazy">
+              <div class="ss-cursor" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="#0a0a0a" stroke="#ffffff" stroke-width="1.2"><path d="M3 2 L3 20 L8 15 L11 22 L14 21 L11 14 L18 14 Z"/></svg>
+              </div>
+            </div>
+
+            <!-- Scene 3 — My Actions (PR drafted) -->
+            <div class="ss-slide s3">
+              <img src="/assets/demo-shots/03-actions.png" alt="SIMY My Actions — PR drafted from the meeting" loading="lazy">
+              <div class="ss-cursor" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="#0a0a0a" stroke="#ffffff" stroke-width="1.2"><path d="M3 2 L3 20 L8 15 L11 22 L14 21 L11 14 L18 14 Z"/></svg>
+              </div>
+            </div>
+
+            <!-- Scene 4 — Growth Dashboard (North Star) -->
+            <div class="ss-slide s4">
+              <img src="/assets/demo-shots/04-dashboard.png" alt="SIMY Growth Dashboard — North Star &amp; Retention" loading="lazy">
+              <div class="ss-cursor" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="#0a0a0a" stroke="#ffffff" stroke-width="1.2"><path d="M3 2 L3 20 L8 15 L11 22 L14 21 L11 14 L18 14 Z"/></svg>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <!-- Animated stage — real SIMY PC UI screenshots -->
-        <div class="stage">
-          <!-- Node 1: Meetings — CKS Roadmap Review -->
-          <div class="node node-1">
-            <img class="shot" src="/assets/demo-shots/02-meetings.png" alt="SIMY Meetings — CKS Roadmap Review Q2 2026" loading="lazy">
-            <span class="node-label">Step 1 · Meeting</span>
-            <div class="node-title">CKS Roadmap Review</div>
-          </div>
+        <!-- Progress rail and scene ticks -->
+        <div class="ss-progress" aria-hidden="true"></div>
+        <div class="ss-scene-ticks" aria-hidden="true">
+          <span class="t1">01 &middot; Twin</span>
+          <span class="t2">02 &middot; Meeting</span>
+          <span class="t3">03 &middot; Actions</span>
+          <span class="t4">04 &middot; Dashboard</span>
+        </div>
 
-          <!-- Node 2: My Actions — drafted items -->
-          <div class="node node-2">
-            <img class="shot" src="/assets/demo-shots/03-actions.png" alt="SIMY My Actions — drafted CKS items" loading="lazy">
-            <span class="node-label">Step 2 · Actions</span>
-            <div class="node-title">5 actions drafted</div>
-          </div>
-
-          <!-- Node 3: Growth Dashboard — metrics updated -->
-          <div class="node node-3">
-            <img class="shot" src="/assets/demo-shots/04-dashboard.png" alt="SIMY Growth Dashboard — CKS adoption metrics" loading="lazy">
-            <span class="node-label">Step 3 · Metrics</span>
-            <div class="node-title">CKS Adoption +3pt</div>
-          </div>
-
-          <!-- Node 4: Digital Twin — answers what next -->
-          <div class="node node-4">
-            <img class="shot" src="/assets/demo-shots/01-twin.png" alt="SIMY Digital Twin — Hi Yoshi" loading="lazy">
-            <span class="node-label">Step 4 · Twin</span>
-            <div class="node-title">"What should I do next?"</div>
-          </div>
-
-          <!-- Arrows SVG -->
-          <div class="arrows">
-            <svg viewBox="0 0 1140 440" preserveAspectRatio="none">
-              <defs>
-                <linearGradient id="arrowGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%"   stop-color="#0057ff" stop-opacity="0.2"/>
-                  <stop offset="50%"  stop-color="#4d8bff" stop-opacity="1"/>
-                  <stop offset="100%" stop-color="#0057ff" stop-opacity="0.2"/>
-                </linearGradient>
-              </defs>
-
-              <!-- Arrow 1: Node1 → Node2 -->
-              <path class="arrow-path a1" d="M 195 220 C 260 220, 280 220, 345 220"/>
-              <polygon class="arrow-head h1" points="340,214 352,220 340,226"/>
-
-              <!-- Arrow 2: Node2 → Node3 -->
-              <path class="arrow-path a2" d="M 495 220 C 560 220, 580 220, 645 220"/>
-              <polygon class="arrow-head h2" points="640,214 652,220 640,226"/>
-
-              <!-- Arrow 3: Node3 → Node4 -->
-              <path class="arrow-path a3" d="M 795 220 C 860 220, 880 220, 945 220"/>
-              <polygon class="arrow-head h3" points="940,214 952,220 940,226"/>
-
-              <!-- Travelling dots -->
-              <circle class="pulse-dot dot-1" r="4"/>
-              <circle class="pulse-dot dot-2" r="4"/>
-              <circle class="pulse-dot dot-3" r="4"/>
-            </svg>
-          </div>
-
-          <!-- Telop (caption bar at the bottom of the screen) -->
-          <div class="telop">
-            <div class="time">00:00 → 00:12</div>
-            <div class="caption-wrap">
-              <div class="caption c1">
-                <div class="main">CKS Roadmap Review ends — SIMY captured every "must decide" item.</div>
-                <div class="sub">AI briefing, decisions, and open issues from past meetings, all in the Meetings view.</div>
-              </div>
-              <div class="caption c2">
-                <div class="main">5 actions drafted — PRD, migration GA date, Q2 feature set.</div>
-                <div class="sub">Every decision becomes an owned action in Yoshi's My Actions list.</div>
-              </div>
-              <div class="caption c3">
-                <div class="main">Growth Dashboard updates. CKS Adoption +3pt, churn flagged.</div>
-                <div class="sub">SIMY pushes the review's outcomes straight into the CKS & Compute Abstractions dashboard.</div>
-              </div>
-              <div class="caption c4">
-                <div class="main">Yoshi asks his Digital Twin: "What should I do next?"</div>
-                <div class="sub">The Twin already knows — it sat through the meeting and read the metrics.</div>
-              </div>
+        <!-- Caption bar (telop) -->
+        <div class="ss-caption">
+          <div class="cap-time">00:00 &rarr; 00:12</div>
+          <div class="cap-body">
+            <div class="cap k1">
+              <div class="main">"Hi Tetsuo." — the Twin opens with a suggested question.</div>
+              <div class="sub">Scene 01. Morning check-in with the Digital Twin. It already knows what's due today.</div>
+            </div>
+            <div class="cap k2">
+              <div class="main">Q2 Strategy meeting ends — every "Must Decide" captured.</div>
+              <div class="sub">Scene 02. AI briefing, open issues, and owner assignments — no manual notes.</div>
+            </div>
+            <div class="cap k3">
+              <div class="main">A PR is already drafted: "Update homepage design to a whiter aesthetic."</div>
+              <div class="sub">Scene 03. My Actions turns the decision into a ready-to-review ticket.</div>
+            </div>
+            <div class="cap k4">
+              <div class="main">Growth Dashboard: North Star 1,247 (+12.4%) &middot; Retention 71%.</div>
+              <div class="sub">Scene 04. The outcome lands on her dashboard — roadmap ready before standup.</div>
             </div>
           </div>
         </div>
@@ -776,8 +850,8 @@
 
     <!-- ── CTA ────────────────────────────────────────────── -->
     <section class="container cta-block">
-      <h2>If you're Yoshi — or someone running a platform like his —<br/><span class="accent">let's build this together.</span></h2>
-      <p>SIMY is in pilot with a small number of product leaders at infrastructure and platform companies. Join us and shape the twin alongside your own roadmap.</p>
+      <h2>If you're the Product Manager — or any of the other 8 personas on our Home page —<br/><span class="accent">let's build this together.</span></h2>
+      <p>SIMY is in pilot with a small number of teams. Join us and shape your SIMY alongside your own roadmap.</p>
       <a href="/contact.html" class="btn-primary">Request pilot access
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="5 12 19 12"/><polyline points="12 5 19 12 12 19"/></svg>
       </a>
