@@ -1,372 +1,332 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="google-site-verification" content="1n6_tVJZRZlQax8luEg5VsuG7gg-kCEam5VFiWIJs3U">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Competitive Landscape — SIMY stands alone in its own category</title>
-<meta name="description" content="Compare SIMY with AI Search, PC Agents, and Coding AI. SIMY stands alone as Action Intelligence — building automations itself with zero prompting.">
-<link rel="canonical" href="https://simy.one/compare.html">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://simy.one/compare.html">
-<meta property="og:title" content="Competitive Landscape — SIMY stands alone in its own category">
-<meta property="og:description" content="Compare SIMY with AI Search, PC Agents, and Coding AI.">
-<meta property="og:site_name" content="SIMY">
-<meta property="og:image" content="https://simy.one/ogp.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:locale" content="en_US">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Competitive Landscape — SIMY stands alone in its own category">
-<meta name="twitter:description" content="Compare SIMY with AI Search, PC Agents, and Coding AI.">
-<meta name="twitter:image" content="https://simy.one/ogp.png">
-<meta name="robots" content="index, follow">
-<meta name="theme-color" content="#f9f9f6">
-<link rel="icon" type="image/png" href="favicon.png">
-<link rel="apple-touch-icon" href="favicon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<style>
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#f9f9f6;--card:#ffffff;--primary:#0057ff;--primary-light:#3378ff;--primary-hover:#0047dd;--primary-dim:rgba(0,87,255,0.08);--foreground:#141414;--muted-fg:#7a7a78;--muted-fg-light:#9a9a98;--border:#ddddd9;--accent-gradient:linear-gradient(135deg,#0057ff 0%,#3378ff 100%)}
-html{font-size:16px}
-body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--foreground);line-height:1.6;-webkit-font-smoothing:antialiased}
-a:focus-visible{outline:2px solid var(--primary);outline-offset:3px;border-radius:4px}
-/* Navigation — pixel-matched to React SPA */
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 50;
-  transition: all 0.3s;
-  background: rgba(250, 250, 248, 0.9);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid transparent;
-}
-nav.scrolled {
-  background: rgba(250, 250, 248, 0.97);
-  border-bottom-color: #e0e0dc;
-}
-.nav-inner {
-  display: flex; align-items: center; justify-content: space-between;
-  max-width: 1280px; margin: 0 auto; padding: 0 4rem;
-  height: 60px;
-}
-.nav-logo {
-  display: flex; align-items: center; gap: 10px;
-  text-decoration: none; color: #0a0a0a;
-}
-.nav-logo-s {
-  width: 24px; height: 24px;
-  display: flex; align-items: center; justify-content: center;
-  background-color: #0057ff; color: #fff;
-  font-family: 'Geist Mono', monospace;
-  font-size: 13px; font-weight: 500;
-}
-.nav-brand {
-  font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
-  font-size: 14px; font-weight: 700; letter-spacing: 0.06em;
-  color: #0a0a0a;
-}
-.nav-version {
-  font-family: 'Geist Mono', monospace;
-  font-size: 13px; font-weight: 400; letter-spacing: 0.06em;
-  color: #0057ff;
-}
-.nav-links { display: flex; gap: 32px; align-items: center; }
-.nav-links a {
-  color: #5a5a56; text-decoration: none;
-  font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
-  font-size: 0.8125rem; font-weight: 400; letter-spacing: 0.01em;
-  transition: color 0.18s; position: relative;
-}
-.nav-links a::after {
-  content: ''; position: absolute; bottom: -2px; left: 0;
-  width: 0; height: 1px; background-color: #0057ff;
-  transition: width 0.25s;
-}
-.nav-links a:hover { color: #0a0a0a; }
-.nav-links a:hover::after { width: 100%; }
-.nav-right { display: flex; align-items: center; gap: 20px; }
-.nav-signin {
-  color: #5a5a56; text-decoration: none;
-  font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
-  font-size: 0.8125rem; font-weight: 400; letter-spacing: 0.01em;
-  transition: color 0.18s;
-}
-.nav-signin:hover { color: #0a0a0a; }
-.btn-primary {
-  background-color: #0057ff; color: #fff;
-  font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
-  letter-spacing: 0.01em;
-  border: 1px solid #0057ff; padding: 0.5rem 1.25rem;
-  font-size: 0.8125rem; font-weight: 500; 
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  text-decoration: none; transition: background-color 0.18s;
-  cursor: pointer;
-}
-.btn-primary:hover { background-color: #0047dd; border-color: #0047dd; }
-.mobile-menu-btn { display: none; background: none; border: none; color: #0a0a0a; cursor: pointer; padding: 8px; }
-.lang-select{background:rgba(0,0,0,0.04);border:1px solid rgba(0,0,0,0.1);color:var(--foreground);font-size:0.8rem;font-weight:500;padding:6px 10px;border-radius:6px;cursor:pointer;font-family:'Inter',sans-serif;outline:none;transition:border-color 0.2s}
-.lang-select:hover,.lang-select:focus{border-color:rgba(0,87,255,0.3)}
-.lang-select option{background:var(--bg);color:var(--foreground)}
-.nav-cta{padding:9px 22px;border-radius:8px;background:var(--accent-gradient);color:#fff !important;font-weight:700 !important;font-size:.85rem !important;transition:all .2s}
-.nav-cta:hover{opacity:.92;transform:translateY(-1px)}
-.footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
-.footer-col{display:flex;flex-direction:column;gap:10px}
-.footer-col-title{font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#6a6a66;margin-bottom:4px}
-.footer-col a{color:#9a9a96;text-decoration:none;font-size:0.85rem;transition:color 0.2s}
-.footer-col a:hover{color:#f5f5f0}
-.footer-bottom{padding-top:24px;border-top:1px solid #1a1a1a;font-size:0.75rem;color:#3a3a36;text-align:center}
-@media(max-width:768px){.nav-links{display:none;position:fixed;top:56px;right:0;left:0;background:rgba(249,249,246,0.97);flex-direction:column;padding:24px;gap:16px;z-index:999;backdrop-filter:blur(20px)}
-  .nav-right { display: none; }
-  .mobile-menu-btn { display: block; }.nav-links.active{display:flex}.mobile-menu-btn{display:block}.footer-grid{grid-template-columns:1fr 1fr;gap:24px}.footer-brand{grid-column:1/-1;text-align:center}}
-.container{max-width:1280px;margin:0 auto;padding:0 4rem}
-.page-hero{padding:140px 0 60px;text-align:center}
-.page-hero h1{font-size:clamp(2rem,5vw,2.8rem);font-weight:900;letter-spacing:-0.03em;margin-bottom:16px;background:var(--accent-gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.page-hero p{color:var(--muted-fg);font-size:1.1rem;max-width:640px;margin:0 auto}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+    <title>Competitive Landscape — SIMY stands alone in its own category</title>
+    <meta name="description" content="Compare SIMY with AI Search, PC Agents, and Coding AI. SIMY stands alone as Action Intelligence — building automations itself with zero prompting." />
+    <link rel="canonical" href="https://simy.one/compare.html">
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://simy.one/compare.html">
+    <meta property="og:title" content="Competitive Landscape — SIMY">
+    <meta property="og:description" content="Compare SIMY with AI Search, PC Agents, and Coding AI.">
+    <meta property="og:site_name" content="SIMY">
+    <meta property="og:image" content="https://simy.one/ogp.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="en_US">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Competitive Landscape — SIMY">
+    <meta name="twitter:description" content="Compare SIMY with AI Search, PC Agents, and Coding AI.">
+    <meta name="twitter:image" content="https://simy.one/ogp.png">
+    <meta name="theme-color" content="#f9f9f6">
+    <!-- hreflang: Add when i18n is implemented
+    <link rel="alternate" hreflang="en" href="https://simy.one/">
+    <link rel="alternate" hreflang="ja" href="https://simy.one/ja/">
+    <link rel="alternate" hreflang="x-default" href="https://simy.one/">
+    -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "SIMY",
+      "url": "https://simy.one/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://simy.one/?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "AwakApp Inc.",
+      "url": "https://simy.one/",
+      "logo": "https://simy.one/simy-icon.png",
+      "brand": { "@type": "Brand", "name": "SIMY" },
+      "foundingDate": "2024",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "San Francisco",
+        "addressRegion": "CA",
+        "addressCountry": "US"
+      },
+      "contactPoint": [
+        { "@type": "ContactPoint", "email": "sales@simy.one", "contactType": "sales" },
+        { "@type": "ContactPoint", "email": "tech@simy.one", "contactType": "technical support" }
+      ],
+      "sameAs": []
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "SIMY",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Web, iOS",
+      "description": "AI-powered Action Intelligence platform that generates code from workplace conversations.",
+      "url": "https://simy.one/",
+      "offers": {
+        "@type": "AggregateOffer",
+        "priceCurrency": "USD",
+        "lowPrice": "20",
+        "highPrice": "100",
+        "offerCount": "3"
+      },
+      "creator": {
+        "@type": "Organization",
+        "name": "AwakApp Inc."
+      }
+    }
+    </script>
 
-.landscape-card{background:#eef1f6;border-radius:20px;padding:clamp(32px,5vw,56px);margin-bottom:40px;overflow-x:auto}
-.landscape-card h2{font-size:clamp(1.4rem,3.5vw,2rem);font-weight:800;color:#1a1a2e;margin-bottom:4px;letter-spacing:-0.02em}
-.landscape-card .subtitle{font-size:clamp(1.1rem,2.5vw,1.5rem);font-weight:700;color:#0057ff;margin-bottom:clamp(24px,4vw,40px)}
-.compare-table{width:100%;border-collapse:collapse;min-width:760px}
-.compare-table th,.compare-table td{padding:18px 20px;text-align:left;font-size:0.9rem;border-bottom:1px solid rgba(0,0,0,0.06)}
-.compare-table thead th{color:#6b7280;font-weight:700;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;padding-bottom:14px}
-.compare-table thead th.highlight{color:#fff;background:#0057ff;border-radius:12px 12px 0 0;text-align:center;font-size:0.95rem;letter-spacing:0.02em;text-transform:none;padding:16px 20px}
-.compare-table td{color:#4b5563;vertical-align:top}
-.compare-table td.highlight{color:#1a1a2e;font-weight:700;background:rgba(0,87,255,0.07);text-align:left}
-.compare-table .feature-name{font-weight:700;color:#1a1a2e}
-.compare-table tbody tr:last-child td{border-bottom:none}
-.compare-table tbody tr:last-child td.highlight{border-radius:0 0 0 0}
+    <!--
+      Typography System — Söhne-equivalent via Geist (Vercel / Klim-inspired)
+      ─────────────────────────────────────────────────────────────────────────
+      Geist          → Söhne equivalent. Geometric grotesque, Futura lineage.
+                       Variable font: wght 100–900. Self-hosted via CDN.
+      Geist Mono     → Söhne Mono equivalent. Tabular, clean, technical.
+                       Variable font: wght 100–900. Self-hosted via CDN.
+      ─────────────────────────────────────────────────────────────────────────
+    -->
+    <style>
+      @font-face {
+        font-family: 'Geist';
+        src: url('https://d2xsxph8kpxj0f.cloudfront.net/310519663370063462/ThMFZacjNcqAVYF3jmcy3R/Geist-Variable_20a6b454.woff2') format('woff2');
+        font-weight: 100 900;
+        font-style: normal;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: 'Geist Mono';
+        src: url('https://d2xsxph8kpxj0f.cloudfront.net/310519663370063462/ThMFZacjNcqAVYF3jmcy3R/GeistMono-Variable_ff5577e3.woff2') format('woff2');
+        font-weight: 100 900;
+        font-style: normal;
+        font-display: swap;
+      }
+    </style>
+    <style>
+      /* Hide React SPA's built-in nav and footer — replaced by static versions below */
+      #root > div > nav { display: none !important; }
+      #root footer { display: none !important; }
+      /* Override React (Tailwind) container to match static pages: 1280px + 4rem padding */
+      #root .container {
+        max-width: 1280px !important;
+        padding-left: 4rem !important;
+        padding-right: 4rem !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
+      @media (max-width: 768px) {
+        #root .container {
+          padding-left: 1.5rem !important;
+          padding-right: 1.5rem !important;
+        }
+      }
+      /* Static nav — identical to all other pages */
+      .static-nav {
+        position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+        transition: all 0.3s;
+        background: rgba(250, 250, 248, 0.9);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border-bottom: 1px solid transparent;
+      }
+      .static-nav.scrolled {
+        background: rgba(250, 250, 248, 0.97);
+        border-bottom-color: #e0e0dc;
+      }
+      .nav-inner {
+        display: flex; align-items: center; justify-content: space-between;
+        max-width: 1280px; margin: 0 auto; padding: 0 4rem;
+        height: 60px;
+      }
+      .nav-logo {
+        display: flex; align-items: center; gap: 10px;
+        text-decoration: none; color: #0a0a0a;
+      }
+      .nav-logo-s {
+        width: 24px; height: 24px;
+        display: flex; align-items: center; justify-content: center;
+        background-color: #0057ff; color: #fff;
+        font-family: 'Geist Mono', monospace;
+        font-size: 13px; font-weight: 500;
+      }
+      .nav-brand {
+        font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+        font-size: 14px; font-weight: 700; letter-spacing: 0.06em;
+        color: #0a0a0a;
+      }
+      .nav-version {
+        font-family: 'Geist Mono', monospace;
+        font-size: 13px; font-weight: 400; letter-spacing: 0.06em;
+        color: #0057ff;
+      }
+      .nav-links { display: flex; gap: 32px; align-items: center; }
+      .nav-links a {
+        color: #5a5a56; text-decoration: none;
+        font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+        font-size: 0.8125rem; font-weight: 400; letter-spacing: 0.01em;
+        transition: color 0.18s; position: relative;
+      }
+      .nav-links a::after {
+        content: ''; position: absolute; bottom: -2px; left: 0;
+        width: 0; height: 1px; background-color: #0057ff;
+        transition: width 0.25s;
+      }
+      .nav-links a:hover { color: #0a0a0a; }
+      .nav-links a:hover::after { width: 100%; }
+      .nav-right { display: flex; align-items: center; gap: 20px; }
+      .nav-signin {
+        color: #5a5a56; text-decoration: none;
+        font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+        font-size: 0.8125rem; font-weight: 400; letter-spacing: 0.01em;
+        transition: color 0.18s;
+      }
+      .nav-signin:hover { color: #0a0a0a; }
+      .static-nav .btn-primary {
+        background-color: #0057ff; color: #fff;
+        font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+        letter-spacing: 0.01em;
+        border: 1px solid #0057ff; padding: 0.5rem 1.25rem;
+        font-size: 0.8125rem; font-weight: 500;
+        display: inline-flex; align-items: center; gap: 0.5rem;
+        text-decoration: none; transition: background-color 0.18s;
+        cursor: pointer;
+      }
+      .static-nav .btn-primary:hover { background-color: #0047dd; border-color: #0047dd; }
+      .mobile-menu-btn { display: none; background: none; border: none; color: #0a0a0a; cursor: pointer; padding: 8px; }
+      /* Static footer — identical to all other pages */
+      .static-footer {
+        padding: 48px 0 36px;
+        border-top: none;
+        background: #0a0a0a;
+        color: #f5f5f0;
+        font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+      }
+      .static-footer .container { max-width: 1280px; margin: 0 auto; padding: 0 4rem; }
+      .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+      .footer-col { display: flex; flex-direction: column; gap: 10px; }
+      .footer-col-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #6a6a66; margin-bottom: 4px; }
+      .footer-col a { color: #9a9a96; text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+      .footer-col a:hover { color: #f5f5f0; }
+      .footer-bottom { padding-top: 24px; border-top: 1px solid #1a1a1a; font-size: 0.75rem; color: #3a3a36; text-align: center; }
+      @media (max-width: 768px) {
+        .nav-links { display: none; }
+        .nav-right { display: none; }
+        .mobile-menu-btn { display: block; }
+        .nav-inner { padding: 0 1.5rem; }
+        .static-footer .container { padding: 0 1.5rem; }
+        .footer-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
+        .footer-brand { grid-column: 1 / -1; text-align: center; }
+      }
+    </style>
+    <script type="module" crossorigin src="/assets/index-DnVveaIK.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-BwUIJj-q.css">
+  </head>
+  <body>
+    <!-- Redirect /index.html to / so wouter home route matches -->
+    
+    <!-- Force full navigation for static subpages (bypass wouter client-side routing) -->
+    <script>
+    document.addEventListener('click', function(e) {
+      var a = e.target.closest('a');
+      if (!a) return;
+      var pages = ['/careers.html','/status.html','/privacy.html','/terms.html',
+                   '/how-it-works.html','/integrations.html','/security.html','/press-release.html'];
+      try {
+        var p = new URL(a.href, location.origin).pathname;
+        if (pages.indexOf(p) !== -1) {
+          e.preventDefault();
+          e.stopPropagation();
+          window.location.href = a.href;
+        }
+      } catch(err) {}
+    }, true);
+    </script>
 
-.diff-section{padding:40px 0 80px}
-.diff-section h2{font-size:1.6rem;font-weight:800;text-align:center;margin-bottom:40px}
-.diff-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-.diff-card{padding:28px 24px;background:var(--card);border:1px solid rgba(0,0,0,0.06);border-radius:14px;text-align:center}
-.diff-card .diff-icon{font-size:2rem;margin-bottom:12px}
-.diff-card h3{font-size:1.05rem;font-weight:700;margin-bottom:8px}
-.diff-card p{font-size:0.85rem;color:var(--muted-fg-light)}
+    <!-- Static nav — same code as all other pages -->
+    <nav class="static-nav" id="staticNav">
+      <div class="nav-inner">
+        <a href="/" class="nav-logo">
+          <div class="nav-logo-s">S</div>
+          <span class="nav-brand">SIMY</span>
+          <span class="nav-version">v3.0</span>
+        </a>
+        <div class="nav-links" id="navLinks">
+          <a href="/" data-i18n="nav.home">Home</a>
+          <a href="/pricing.html" data-i18n="nav.pricing">Pricing</a>
+          <a href="/compare.html" data-i18n="nav.compare">Compare</a>
+          <a href="/about.html" data-i18n="nav.about">About</a>
+          <a href="/press-release.html" data-i18n="nav.news">News</a>
+        </div>
+        <div class="nav-right">
+          <a href="#" class="nav-signin" data-i18n="nav.signin">Sign in</a>
+          <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" class="btn-primary" target="_blank" rel="noopener" data-i18n="nav.cta">Request Access</a>
+        </div>
+        <button class="mobile-menu-btn" onclick="document.getElementById('navLinks').classList.toggle('active')" aria-label="Toggle menu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+      </div>
+    </nav>
+    <script>
+    window.addEventListener('scroll', function() {
+      var nav = document.getElementById('staticNav');
+      if (window.scrollY > 10) { nav.classList.add('scrolled'); }
+      else { nav.classList.remove('scrolled'); }
+    });
+    </script>
 
-.cta-block{text-align:center;padding:60px 0 80px;border-top:1px solid rgba(0,0,0,0.06)}
-.cta-block h2{font-size:1.8rem;font-weight:800;margin-bottom:12px}
-.cta-block p{color:var(--muted-fg-light);margin-bottom:28px}
-.cta-btn{display:inline-block;padding:14px 36px;border-radius:10px;background:var(--accent-gradient);color:#fff;font-weight:700;text-decoration:none;transition:opacity 0.2s}
-.cta-btn:hover{opacity:0.9}
+    <div id="root"></div>
 
-footer{padding:48px 0 36px;border-top:none;background:#0a0a0a;color:#f5f5f0}
-.footer-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px}
-.footer-tagline{font-size:1rem;font-weight:700;letter-spacing:-0.02em}
-.footer-right{display:flex;align-items:center;gap:20px;font-size:0.75rem;color:var(--muted-fg)}
-.footer-right a{color:var(--muted-fg);text-decoration:none;transition:color 0.2s}
-.footer-right a:hover{color:var(--primary)}
-.footer-sep{opacity:0.3}
-@media(max-width:768px){.diff-grid{grid-template-columns:1fr}.footer-inner{flex-direction:column;text-align:center}}
-</style>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://simy.one/" },
-    { "@type": "ListItem", "position": 2, "name": "Compare" }
-  ]
-}
-</script>
-<!-- Google tag (gtag.js) – loaded only after cookie consent -->
-<script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-function loadGA(){
-  if(document.getElementById('ga-script'))return;
-  var s=document.createElement('script');
-  s.id='ga-script';
-  s.async=true;
-  s.src='https://www.googletagmanager.com/gtag/js?id=G-SBLYYNMSJW';
-  document.head.appendChild(s);
-  gtag('js',new Date());
-  gtag('config','G-SBLYYNMSJW');
-}
-if(localStorage.getItem('simy-cookies')==='1') loadGA();
-</script>
-</head>
-<body>
-
-<nav>
-  <div class="nav-inner">
-    <a href="/" class="nav-logo">
-      <div class="nav-logo-s">S</div>
-      <span class="nav-brand">SIMY</span>
-      <span class="nav-version">v3.0</span>
-    </a>
-    <div class="nav-links" id="navLinks">
-      <a href="/" data-i18n="nav.home">Home</a>
-      <a href="/pricing.html" data-i18n="nav.pricing">Pricing</a>
-      <a href="/compare.html" data-i18n="nav.compare">Compare</a>
-      <a href="/about.html" data-i18n="nav.about">About</a>
-      <a href="/press-release.html" data-i18n="nav.news">News</a>
-    </div>
-    <div class="nav-right">
-      <a href="#" class="nav-signin" data-i18n="nav.signin">Sign in</a>
-      <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" class="btn-primary" target="_blank" rel="noopener" data-i18n="nav.cta">Request Access</a>
-    </div>
-    <button class="mobile-menu-btn" onclick="document.getElementById('navLinks').classList.toggle('active')" aria-label="Toggle menu">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-        <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
-      </svg>
-    </button>
-  </div>
-</nav>
-
-<div class="container">
-  <div class="page-hero">
-    <h1 data-i18n="compare.h1">Competitive Landscape</h1>
-    <p data-i18n="compare.heroP">SIMY stands alone in its own category</p>
-  </div>
-
-  <div class="landscape-card">
-    <h2 data-i18n="compare.cardTitle">Competitive Landscape</h2>
-    <div class="subtitle" data-i18n="compare.cardSubtitle">SIMY stands alone in its own category</div>
-    <table class="compare-table">
-      <thead>
-        <tr>
-          <th data-i18n="cmp.thCategory">CATEGORY</th>
-          <th class="highlight" data-i18n="cmp.thSIMY">SIMY</th>
-          <th data-i18n="cmp.thAISearch">AI SEARCH<br><small style="font-weight:400;text-transform:none;letter-spacing:0">(E.G., GLEAN)</small></th>
-          <th data-i18n="cmp.thPCAgents">PC AGENTS<br><small style="font-weight:400;text-transform:none;letter-spacing:0">(E.G., OPENCLAW)</small></th>
-          <th data-i18n="cmp.thCodingAI">CODING AI<br><small style="font-weight:400;text-transform:none;letter-spacing:0">(E.G., CLAUDE CODE)</small></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="feature-name" data-i18n="cmp.fCoreAction">Core Action</td>
-          <td class="highlight" data-i18n="cmp.vBuildsAutomations">Builds Automations Itself</td>
-          <td data-i18n="cmp.vFindsInfo">Finds Information</td>
-          <td data-i18n="cmp.vLocalTasks">Does Local Tasks</td>
-          <td data-i18n="cmp.vWritesCode">Writes Code</td>
-        </tr>
-        <tr>
-          <td class="feature-name" data-i18n="cmp.fMissingWorkflows">Missing Workflows?</td>
-          <td class="highlight" data-i18n="cmp.vBuildsMissing">Builds the missing code/tool dynamically</td>
-          <td data-i18n="cmp.vSearchOnly">N/A (Search only)</td>
-          <td data-i18n="cmp.vNeedsSetup">Stops (Needs setup)</td>
-          <td data-i18n="cmp.vWaitsHuman">Waits for human prompt</td>
-        </tr>
-        <tr>
-          <td class="feature-name" data-i18n="cmp.fUserEffort">User Effort</td>
-          <td class="highlight" data-i18n="cmp.vZeroPrompting">Zero Prompting</td>
-          <td data-i18n="cmp.vNeedsQueries">Needs queries</td>
-          <td data-i18n="cmp.vNeedsInstructions">Needs instructions</td>
-          <td data-i18n="cmp.vComplexPrompting">Complex prompting</td>
-        </tr>
-        <tr>
-          <td class="feature-name" data-i18n="cmp.fGrowth">Growth</td>
-          <td class="highlight" data-i18n="cmp.vSelfExpanding">Self-Expanding</td>
-          <td data-i18n="cmp.vDataDependent">Data-dependent</td>
-          <td data-i18n="cmp.vPromptDependent">Prompt-dependent</td>
-          <td data-i18n="cmp.vEngineerDependent">Engineer-dependent</td>
-        </tr>
-        <tr>
-          <td class="feature-name" data-i18n="cmp.fTargetUsers">Target Users</td>
-          <td class="highlight" data-i18n="cmp.vAllBizPros">All Business Pros</td>
-          <td data-i18n="cmp.vAllEmployees">All Employees</td>
-          <td data-i18n="cmp.vTechSavvy">Tech-savvy users</td>
-          <td data-i18n="cmp.vEngineersOnly">Engineers Only</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="cta-block">
-    <h2 data-i18n="compare.ctaH">See the Difference</h2>
-    <p data-i18n="compare.ctaP">Try SIMY alongside your current tools and measure the impact.</p>
-    <a href="/contact.html" class="cta-btn" data-i18n="compare.ctaBtn">Request a Demo</a>
-  </div>
-</div>
-
-<footer>
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <div class="footer-tagline" data-i18n="footer.tagline">Record. Ship. Done.</div>
-        <div class="footer-badges" style="display:flex;gap:12px;align-items:center;margin-top:12px">
-          <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" target="_blank" rel="noopener"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83" alt="Download on the App Store" style="height:36px"></a>
+    <!-- Static footer — same code as all other pages -->
+    <footer class="static-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <div style="font-size:1rem;font-weight:700;margin-bottom:6px;letter-spacing:-0.02em" data-i18n="footer.tagline">Record. Ship. Done.</div>
+            <div style="display:flex;gap:12px;align-items:center;margin-top:12px">
+              <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" target="_blank" rel="noopener"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83" alt="Download on the App Store" style="height:36px"></a>
+            </div>
+          </div>
+          <div class="footer-col">
+            <div class="footer-col-title" data-i18n="footer.product">Product</div>
+            <a href="/how-it-works.html" data-i18n="footer.product.how">How It Works</a>
+            <a href="/pricing.html" data-i18n="footer.product.pricing">Pricing</a>
+            <a href="/compare.html" data-i18n="footer.product.compare">Compare</a>
+            <a href="/integrations.html" data-i18n="footer.product.integrations">Integrations</a>
+            <a href="/security.html" data-i18n="footer.product.security">Security</a>
+          </div>
+          <div class="footer-col">
+            <div class="footer-col-title" data-i18n="footer.company">Company</div>
+            <a href="/about.html" data-i18n="footer.company.about">About</a>
+            <a href="/careers.html" data-i18n="footer.company.careers">Careers</a>
+            <a href="/press.html" data-i18n="footer.company.press">Press</a>
+            <a href="/contact.html" data-i18n="footer.company.contact">Contact</a>
+            <a href="/status.html" data-i18n="footer.company.status">Status</a>
+          </div>
+          <div class="footer-col">
+            <div class="footer-col-title" data-i18n="footer.legal">Legal</div>
+            <a href="/privacy.html" data-i18n="footer.legal.privacy">Privacy Policy</a>
+            <a href="/terms.html" data-i18n="footer.legal.terms">Terms of Service</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span data-i18n="footer.copy">&copy; 2026 SIMY by AwakApp Inc. All rights reserved.</span>
         </div>
       </div>
-      <div class="footer-col">
-        <div class="footer-col-title" data-i18n="footer.product">Product</div>
-        <a href="/how-it-works.html" data-i18n="footer.product.how">How It Works</a>
-        <a href="/pricing.html" data-i18n="footer.product.pricing">Pricing</a>
-        <a href="/compare.html" data-i18n="footer.product.compare">Compare</a>
-        <a href="/integrations.html" data-i18n="footer.product.integrations">Integrations</a>
-        <a href="/security.html" data-i18n="footer.product.security">Security</a>
-      </div>
-      <div class="footer-col">
-        <div class="footer-col-title" data-i18n="footer.company">Company</div>
-        <a href="/about.html" data-i18n="footer.company.about">About</a>
-        <a href="/careers.html" data-i18n="footer.company.careers">Careers</a>
-        <a href="/press.html" data-i18n="footer.company.press">Press</a>
-        <a href="/contact.html" data-i18n="footer.company.contact">Contact</a>
-        <a href="/status.html" data-i18n="footer.company.status">Status</a>
-      </div>
-      <div class="footer-col">
-        <div class="footer-col-title" data-i18n="footer.legal">Legal</div>
-        <a href="/privacy.html" data-i18n="footer.legal.privacy">Privacy Policy</a>
-        <a href="/terms.html" data-i18n="footer.legal.terms">Terms of Service</a>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <span data-i18n="footer.copy">&copy; 2026 SIMY by AwakApp Inc. All rights reserved.</span>
-    </div>
-  </div>
-</footer>
+    </footer>
 
-<div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:rgba(249,249,246,0.98);border-top:1px solid rgba(0,0,0,0.06);padding:16px 24px;backdrop-filter:blur(20px)"><div style="max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap"><p style="color:#7a7a78;font-size:0.85rem;margin:0;flex:1;min-width:200px"><span data-i18n="cookie.text">We use cookies to improve your experience. See our </span><a href="/privacy.html" style="color:#0057ff" data-i18n="cookie.link">Privacy Policy</a>.</p><div style="display:flex;gap:10px"><button onclick="setCookieConsent(false)" style="padding:8px 20px;border-radius:6px;border:1px solid rgba(0,0,0,0.15);background:transparent;color:#7a7a78;cursor:pointer;font-size:0.85rem" data-i18n="cookie.decline">Decline</button><button onclick="setCookieConsent(true)" style="padding:8px 20px;border-radius:6px;border:none;background:linear-gradient(135deg,#0057ff,#3378ff);color:#fff;font-weight:700;cursor:pointer;font-size:0.85rem" data-i18n="cookie.accept">Accept</button></div></div></div>
-<script>function setCookieConsent(v){localStorage.setItem('simy-cookies',v?'1':'0');document.getElementById('cookieBanner').style.display='none';if(v)loadGA();}if(!localStorage.getItem('simy-cookies'))document.getElementById('cookieBanner').style.display='block';</script>
-<script>
-// i18n for subpages (nav + footer)
-const T = {
-en: {"nav.top":"Top","nav.howItWorks":"How It Works","nav.pricing":"Pricing","nav.compare":"Compare","nav.about":"About","nav.contact":"Contact","nav.news":"News","nav.cta":"Reserve your Slot","footer.tagline":"Record. Ship. Done.","footer.product":"Product","footer.howItWorks":"How It Works","footer.pricing":"Pricing","footer.compare":"Compare","footer.integrations":"Integrations","footer.security":"Security","footer.company":"Company","footer.about":"About","footer.careers":"Careers","footer.press":"Press","footer.contact":"Contact","footer.status":"Status","footer.legal":"Legal","footer.privacy":"Privacy Policy","footer.terms":"Terms of Service","compare.h1":"Competitive Landscape","compare.heroP":"SIMY stands alone in its own category","compare.cardTitle":"Competitive Landscape","compare.cardSubtitle":"SIMY stands alone in its own category","compare.ctaH":"See the Difference","compare.ctaP":"Try SIMY alongside your current tools and measure the impact.","compare.ctaBtn":"Request a Demo","cmp.thCategory":"CATEGORY","cmp.thAISearch":"AI SEARCH","cmp.thPCAgents":"PC AGENTS","cmp.thCodingAI":"CODING AI","cmp.fCoreAction":"Core Action","cmp.vBuildsAutomations":"Builds Automations Itself","cmp.vFindsInfo":"Finds Information","cmp.vLocalTasks":"Does Local Tasks","cmp.vWritesCode":"Writes Code","cmp.fMissingWorkflows":"Missing Workflows?","cmp.vBuildsMissing":"Builds the missing code/tool dynamically","cmp.vSearchOnly":"N/A (Search only)","cmp.vNeedsSetup":"Stops (Needs setup)","cmp.vWaitsHuman":"Waits for human prompt","cmp.fUserEffort":"User Effort","cmp.vZeroPrompting":"Zero Prompting","cmp.vNeedsQueries":"Needs queries","cmp.vNeedsInstructions":"Needs instructions","cmp.vComplexPrompting":"Complex prompting","cmp.fGrowth":"Growth","cmp.vSelfExpanding":"Self-Expanding","cmp.vDataDependent":"Data-dependent","cmp.vPromptDependent":"Prompt-dependent","cmp.vEngineerDependent":"Engineer-dependent","cmp.fTargetUsers":"Target Users","cmp.vAllBizPros":"All Business Pros","cmp.vAllEmployees":"All Employees","cmp.vTechSavvy":"Tech-savvy users","cmp.vEngineersOnly":"Engineers Only"},
-ja: {"nav.top":"トップ","nav.howItWorks":"仕組み","nav.pricing":"料金","nav.compare":"比較","nav.about":"会社概要","nav.contact":"お問い合わせ","nav.news":"ニュース","nav.cta":"今すぐ予約","footer.tagline":"録音。出荷。完了。","footer.product":"プロダクト","footer.howItWorks":"仕組み","footer.pricing":"料金","footer.compare":"比較","footer.integrations":"連携","footer.security":"セキュリティ","footer.company":"企業情報","footer.about":"会社概要","footer.careers":"採用","footer.press":"プレス","footer.contact":"お問い合わせ","footer.status":"ステータス","footer.legal":"法務","footer.privacy":"プライバシーポリシー","footer.terms":"利用規約","compare.h1":"競合比較","compare.heroP":"SIMYは独自のカテゴリに位置する","compare.cardTitle":"競合比較","compare.cardSubtitle":"SIMYは独自のカテゴリに位置する","compare.ctaH":"違いを体験","compare.ctaP":"SIMYを現在のツールと併用して、そのインパクトを測定してください。","compare.ctaBtn":"デモをリクエスト","cmp.thCategory":"カテゴリ","cmp.thAISearch":"AI検索","cmp.thPCAgents":"PCエージェント","cmp.thCodingAI":"コーディングAI","cmp.fCoreAction":"コアアクション","cmp.vBuildsAutomations":"自動化を自ら構築","cmp.vFindsInfo":"情報を検索","cmp.vLocalTasks":"ローカルタスクを実行","cmp.vWritesCode":"コードを記述","cmp.fMissingWorkflows":"ワークフローが無い場合","cmp.vBuildsMissing":"不足するコード/ツールを動的に構築","cmp.vSearchOnly":"N/A（検索のみ）","cmp.vNeedsSetup":"停止（セットアップが必要）","cmp.vWaitsHuman":"人間のプロンプトを待つ","cmp.fUserEffort":"ユーザー負荷","cmp.vZeroPrompting":"プロンプト不要","cmp.vNeedsQueries":"クエリが必要","cmp.vNeedsInstructions":"指示が必要","cmp.vComplexPrompting":"複雑なプロンプト","cmp.fGrowth":"成長性","cmp.vSelfExpanding":"自己拡張","cmp.vDataDependent":"データ依存","cmp.vPromptDependent":"プロンプト依存","cmp.vEngineerDependent":"エンジニア依存","cmp.fTargetUsers":"対象ユーザー","cmp.vAllBizPros":"すべてのビジネスプロフェッショナル","cmp.vAllEmployees":"全従業員","cmp.vTechSavvy":"テクノロジーに精通したユーザー","cmp.vEngineersOnly":"エンジニアのみ"},
-zh: {"nav.top":"首页","nav.howItWorks":"工作原理","nav.pricing":"定价","nav.compare":"对比","nav.about":"关于","nav.contact":"联系","nav.news":"新闻","nav.cta":"预约名额","footer.tagline":"录制。交付。完成。","footer.product":"产品","footer.howItWorks":"工作原理","footer.pricing":"定价","footer.compare":"对比","footer.integrations":"集成","footer.security":"安全","footer.company":"公司","footer.about":"关于","footer.careers":"招聘","footer.press":"媒体","footer.contact":"联系","footer.status":"状态","footer.legal":"法律","footer.privacy":"隐私政策","footer.terms":"服务条款","compare.h1":"竞争格局","compare.heroP":"SIMY独占一个全新品类","compare.cardTitle":"竞争格局","compare.cardSubtitle":"SIMY独占一个全新品类","compare.ctaH":"看看不同","compare.ctaP":"将SIMY与您当前的工具一起使用，衡量其影响。","compare.ctaBtn":"请求演示","cmp.thCategory":"类别","cmp.thAISearch":"AI搜索","cmp.thPCAgents":"PC代理","cmp.thCodingAI":"编程AI","cmp.fCoreAction":"核心操作","cmp.vBuildsAutomations":"自主构建自动化","cmp.vFindsInfo":"查找信息","cmp.vLocalTasks":"执行本地任务","cmp.vWritesCode":"编写代码","cmp.fMissingWorkflows":"缺少工作流？","cmp.vBuildsMissing":"动态构建缺失的代码/工具","cmp.vSearchOnly":"不适用（仅搜索）","cmp.vNeedsSetup":"停止（需要设置）","cmp.vWaitsHuman":"等待人类提示","cmp.fUserEffort":"用户负担","cmp.vZeroPrompting":"零提示","cmp.vNeedsQueries":"需要查询","cmp.vNeedsInstructions":"需要指令","cmp.vComplexPrompting":"复杂提示","cmp.fGrowth":"增长性","cmp.vSelfExpanding":"自我扩展","cmp.vDataDependent":"数据依赖","cmp.vPromptDependent":"提示依赖","cmp.vEngineerDependent":"工程师依赖","cmp.fTargetUsers":"目标用户","cmp.vAllBizPros":"所有商务人士","cmp.vAllEmployees":"全体员工","cmp.vTechSavvy":"技术型用户","cmp.vEngineersOnly":"仅工程师"},
-hi: {"nav.top":"होम","nav.howItWorks":"कैसे काम करता है","nav.pricing":"मूल्य","nav.compare":"तुलना","nav.about":"हमारे बारे में","nav.contact":"संपर्क","nav.news":"समाचार","nav.cta":"अपनी जगह आरक्षित करें","footer.tagline":"रिकॉर्ड। शिप। हो गया।","footer.product":"उत्पाद","footer.howItWorks":"कैसे काम करता है","footer.pricing":"मूल्य","footer.compare":"तुलना","footer.integrations":"एकीकरण","footer.security":"सुरक्षा","footer.company":"कंपनी","footer.about":"हमारे बारे में","footer.careers":"करियर","footer.press":"प्रेस","footer.contact":"संपर्क","footer.status":"स्थिति","footer.legal":"कानूनी","footer.privacy":"गोपनीयता नीति","footer.terms":"सेवा की शर्तें","compare.h1":"प्रतिस्पर्धी परिदृश्य","compare.heroP":"SIMY अपनी अनूठी श्रेणी में है","compare.cardTitle":"प्रतिस्पर्धी परिदृश्य","compare.cardSubtitle":"SIMY अपनी अनूठी श्रेणी में है","compare.ctaH":"अंतर देखें","compare.ctaP":"SIMY को अपने मौजूदा टूल्स के साथ आज़माएं और प्रभाव मापें।","compare.ctaBtn":"डेमो का अनुरोध करें","cmp.thCategory":"श्रेणी","cmp.thAISearch":"AI खोज","cmp.thPCAgents":"PC एजेंट","cmp.thCodingAI":"कोडिंग AI","cmp.fCoreAction":"कोर एक्शन","cmp.vBuildsAutomations":"स्वयं ऑटोमेशन बनाता है","cmp.vFindsInfo":"जानकारी खोजता है","cmp.vLocalTasks":"स्थानीय कार्य करता है","cmp.vWritesCode":"कोड लिखता है","cmp.fMissingWorkflows":"वर्कफ़्लो गायब?","cmp.vBuildsMissing":"गायब कोड/टूल को गतिशील रूप से बनाता है","cmp.vSearchOnly":"लागू नहीं (केवल खोज)","cmp.vNeedsSetup":"रुक जाता है (सेटअप चाहिए)","cmp.vWaitsHuman":"मानव प्रॉम्प्ट की प्रतीक्षा","cmp.fUserEffort":"उपयोगकर्ता प्रयास","cmp.vZeroPrompting":"शून्य प्रॉम्प्टिंग","cmp.vNeedsQueries":"क्वेरी चाहिए","cmp.vNeedsInstructions":"निर्देश चाहिए","cmp.vComplexPrompting":"जटिल प्रॉम्प्टिंग","cmp.fGrowth":"विकास","cmp.vSelfExpanding":"स्व-विस्तारित","cmp.vDataDependent":"डेटा-निर्भर","cmp.vPromptDependent":"प्रॉम्प्ट-निर्भर","cmp.vEngineerDependent":"इंजीनियर-निर्भर","cmp.fTargetUsers":"लक्षित उपयोगकर्ता","cmp.vAllBizPros":"सभी बिज़नेस प्रोफेशनल","cmp.vAllEmployees":"सभी कर्मचारी","cmp.vTechSavvy":"तकनीक-प्रेमी उपयोगकर्ता","cmp.vEngineersOnly":"केवल इंजीनियर"},
-es: {"nav.top":"Inicio","nav.howItWorks":"Cómo Funciona","nav.pricing":"Precios","nav.compare":"Comparar","nav.about":"Nosotros","nav.contact":"Contacto","nav.news":"Noticias","nav.cta":"Reserva tu Lugar","footer.tagline":"Graba. Envía. Listo.","footer.product":"Producto","footer.howItWorks":"Cómo Funciona","footer.pricing":"Precios","footer.compare":"Comparar","footer.integrations":"Integraciones","footer.security":"Seguridad","footer.company":"Empresa","footer.about":"Nosotros","footer.careers":"Empleo","footer.press":"Prensa","footer.contact":"Contacto","footer.status":"Estado","footer.legal":"Legal","footer.privacy":"Política de Privacidad","footer.terms":"Términos de Servicio","compare.h1":"Panorama Competitivo","compare.heroP":"SIMY es único en su propia categoría","compare.cardTitle":"Panorama Competitivo","compare.cardSubtitle":"SIMY es único en su propia categoría","compare.ctaH":"Ve la Diferencia","compare.ctaP":"Prueba SIMY junto con tus herramientas actuales y mide el impacto.","compare.ctaBtn":"Solicitar una Demo","cmp.thCategory":"CATEGORÍA","cmp.thAISearch":"BÚSQUEDA AI","cmp.thPCAgents":"AGENTES PC","cmp.thCodingAI":"AI DE CÓDIGO","cmp.fCoreAction":"Acción Principal","cmp.vBuildsAutomations":"Construye Automatizaciones","cmp.vFindsInfo":"Busca Información","cmp.vLocalTasks":"Tareas Locales","cmp.vWritesCode":"Escribe Código","cmp.fMissingWorkflows":"¿Flujos Faltantes?","cmp.vBuildsMissing":"Construye código/herramienta faltante dinámicamente","cmp.vSearchOnly":"N/A (Solo búsqueda)","cmp.vNeedsSetup":"Se detiene (Necesita configuración)","cmp.vWaitsHuman":"Espera prompt humano","cmp.fUserEffort":"Esfuerzo del Usuario","cmp.vZeroPrompting":"Cero Prompting","cmp.vNeedsQueries":"Necesita consultas","cmp.vNeedsInstructions":"Necesita instrucciones","cmp.vComplexPrompting":"Prompting complejo","cmp.fGrowth":"Crecimiento","cmp.vSelfExpanding":"Auto-expansivo","cmp.vDataDependent":"Dependiente de datos","cmp.vPromptDependent":"Dependiente de prompts","cmp.vEngineerDependent":"Dependiente de ingenieros","cmp.fTargetUsers":"Usuarios Objetivo","cmp.vAllBizPros":"Todos los Profesionales","cmp.vAllEmployees":"Todos los Empleados","cmp.vTechSavvy":"Usuarios técnicos","cmp.vEngineersOnly":"Solo Ingenieros"},
-ar: {"nav.top":"الرئيسية","nav.howItWorks":"كيف يعمل","nav.pricing":"الأسعار","nav.compare":"مقارنة","nav.about":"عن الشركة","nav.contact":"اتصل بنا","nav.news":"أخبار","nav.cta":"احجز مكانك","footer.tagline":"سجّل. أرسل. انتهى.","footer.product":"المنتج","footer.howItWorks":"كيف يعمل","footer.pricing":"الأسعار","footer.compare":"مقارنة","footer.integrations":"التكامل","footer.security":"الأمان","footer.company":"الشركة","footer.about":"عن الشركة","footer.careers":"الوظائف","footer.press":"الصحافة","footer.contact":"اتصل بنا","footer.status":"الحالة","footer.legal":"قانوني","footer.privacy":"سياسة الخصوصية","footer.terms":"شروط الخدمة","compare.h1":"المشهد التنافسي","compare.heroP":"SIMY في فئة خاصة به","compare.cardTitle":"المشهد التنافسي","compare.cardSubtitle":"SIMY في فئة خاصة به","compare.ctaH":"شاهد الفرق","compare.ctaP":"جرب SIMY إلى جانب أدواتك الحالية وقس التأثير.","compare.ctaBtn":"طلب عرض توضيحي","cmp.thCategory":"الفئة","cmp.thAISearch":"بحث AI","cmp.thPCAgents":"وكلاء PC","cmp.thCodingAI":"AI البرمجة","cmp.fCoreAction":"الإجراء الأساسي","cmp.vBuildsAutomations":"يبني الأتمتة بنفسه","cmp.vFindsInfo":"يجد المعلومات","cmp.vLocalTasks":"ينفذ المهام المحلية","cmp.vWritesCode":"يكتب الكود","cmp.fMissingWorkflows":"سير عمل مفقود؟","cmp.vBuildsMissing":"يبني الكود/الأداة المفقودة ديناميكياً","cmp.vSearchOnly":"لا ينطبق (بحث فقط)","cmp.vNeedsSetup":"يتوقف (يحتاج إعداد)","cmp.vWaitsHuman":"ينتظر أمر بشري","cmp.fUserEffort":"جهد المستخدم","cmp.vZeroPrompting":"بدون أوامر","cmp.vNeedsQueries":"يحتاج استعلامات","cmp.vNeedsInstructions":"يحتاج تعليمات","cmp.vComplexPrompting":"أوامر معقدة","cmp.fGrowth":"النمو","cmp.vSelfExpanding":"توسع ذاتي","cmp.vDataDependent":"يعتمد على البيانات","cmp.vPromptDependent":"يعتمد على الأوامر","cmp.vEngineerDependent":"يعتمد على المهندسين","cmp.fTargetUsers":"المستخدمون المستهدفون","cmp.vAllBizPros":"جميع المحترفين","cmp.vAllEmployees":"جميع الموظفين","cmp.vTechSavvy":"مستخدمون تقنيون","cmp.vEngineersOnly":"المهندسون فقط"}
-};
-function setLanguage(lang, manual) {
-  document.documentElement.lang = lang;
-  document.body.classList.toggle('rtl', lang === 'ar');
-  document.getElementById('langSelect').value = lang;
-  localStorage.setItem('simy-lang', lang);
-  if (manual) localStorage.setItem('simy-lang-manual', '1');
-  const dict = T[lang];
-  if (!dict) return;
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.getAttribute('data-i18n');
-    if (dict[key] !== undefined) el.textContent = dict[key];
-  });
-  // Update App Store URLs based on language
-  const appStoreUrl = lang === 'ja'
-    ? 'https://apps.apple.com/jp/app/simy-meetings-end-code-ships/id6745385262'
-    : 'https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262';
-  document.querySelectorAll('a[href*="apps.apple.com"]').forEach(el => { el.href = appStoreUrl; });
-}
-function detectBrowserLanguage() {
-  const supportedLangs = Object.keys(T);
-  const browserLangs = navigator.languages || [navigator.language || 'en'];
-  for (const bl of browserLangs) {
-    const lower = bl.toLowerCase();
-    const exact = supportedLangs.find(s => s === lower);
-    if (exact) return exact;
-    const prefix = lower.split('-')[0];
-    const prefixMatch = supportedLangs.find(s => s === prefix);
-    if (prefixMatch) return prefixMatch;
-  }
-  return 'en';
-}
-const wasManual = localStorage.getItem('simy-lang-manual');
-const savedLang = localStorage.getItem('simy-lang');
-if (wasManual && savedLang && T[savedLang]) { setLanguage(savedLang); }
-else { setLanguage(detectBrowserLanguage()); }
-</script>
-<script src="/i18n.js"></script>
-</body>
+    <script src="/i18n.js"></script>
+    <script
+      defer
+      src="%VITE_ANALYTICS_ENDPOINT%/umami"
+      data-website-id="%VITE_ANALYTICS_WEBSITE_ID%"></script>
+  </body>
 </html>
