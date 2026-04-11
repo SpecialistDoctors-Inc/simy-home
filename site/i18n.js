@@ -594,13 +594,11 @@
               '</span>',
             '</div>',
             '<div class="simy-ss-viewport">',
-              '<div class="simy-ss-slide" data-simy-slide></div>',
-              '<div class="simy-ss-cursor" data-simy-cursor>',
-                '<svg width="22" height="22" viewBox="0 0 22 22" fill="none">',
-                  '<path d="M3 2 L3 18 L7.5 14 L10.5 20 L13 19 L10 13 L16 13 Z" fill="#fff" stroke="#0a0a0c" stroke-width="1.2" stroke-linejoin="round"/>',
-                '</svg>',
-              '</div>',
-              '<div class="simy-ss-ripple" data-simy-ripple></div>',
+              '<video class="simy-ss-video" data-simy-video ',
+                'src="/assets/demo.mp4" ',
+                'poster="/assets/demo-shots/01-twin.png" ',
+                'autoplay muted loop playsinline preload="metadata" ',
+                'aria-label="SIMY click-through demo"></video>',
             '</div>',
           '</div>',
           '<div class="simy-ss-rail"><div class="simy-ss-rail-fill" data-simy-rail></div></div>',
@@ -626,152 +624,105 @@
     initScreenStudioAnimation(wrap);
   }
 
-  /* ── Screen Studio animation driver: scene cycling, cursor glide,
-        click ripple, progress rail, ticks, caption, pause/replay. ── */
+  /* ── Screen Studio driver: a single recorded <video> that walks through
+        Twin → Meetings → Actions → Dashboard as Alex clicks each sidebar
+        item. The caption, tick highlight, and progress rail are all driven
+        from the video's currentTime so they stay in lockstep even if the
+        user scrubs or the video loops. ─────────────────────────────── */
   function initScreenStudioAnimation(wrap) {
+    // Scene start offsets in the trimmed demo.mp4 (milliseconds). Must
+    // match the output of /tmp/simy-capture/record.mjs after ffmpeg trim.
     var SCENES = [
-      { img: '/assets/demo-shots/01-twin.png',      from: [8, 82],  to: [38, 56],
-        main: 'Alex opens the Twin before the planning session.',
+      { at: 0,     main: 'Alex opens the Twin before the planning session.',
         sub:  'Product Manager at a 150-person tech company. The Twin already knows what needs decisions today.' },
-      { img: '/assets/demo-shots/02-meetings.png',  from: [94, 12], to: [62, 44],
-        main: 'Planning session ends \u2014 every decision captured.',
+      { at: 4475,  main: 'Planning session ends \u2014 every decision captured.',
         sub:  'SIMY generates a structured roadmap, assigns owners, and sends summaries automatically.' },
-      { img: '/assets/demo-shots/03-actions.png',   from: [92, 86], to: [36, 42],
-        main: 'Roadmap items become assigned, ready-to-review tickets.',
+      { at: 8647,  main: 'Roadmap items become assigned, ready-to-review tickets.',
         sub:  'Hours of turning discussion into a roadmap \u2014 gone.' },
-      { img: '/assets/demo-shots/04-dashboard.png', from: [6, 14],  to: [48, 48],
-        main: 'Growth Dashboard: North Star 1,247 (+12.4%) \u00b7 Retention 71%.',
+      { at: 12813, main: 'Growth Dashboard: North Star 1,247 (+12.4%) \u00b7 Retention 71%.',
         sub:  'Roadmap ready before the next standup.' }
     ];
-    var HOLD_MS  = 3000;
-    var FADE_MS  = 500;
-    var TOTAL_MS = HOLD_MS + FADE_MS;
-    var TICK_MS  = 50;
 
-    // Preload all scene images so the first cycle never pops.
-    for (var pi = 0; pi < SCENES.length; pi++) {
-      var im = new Image();
-      im.src = SCENES[pi].img;
-    }
-
-    var slide    = wrap.querySelector('[data-simy-slide]');
-    var cursor   = wrap.querySelector('[data-simy-cursor]');
-    var ripple   = wrap.querySelector('[data-simy-ripple]');
+    var video    = wrap.querySelector('[data-simy-video]');
     var rail     = wrap.querySelector('[data-simy-rail]');
     var capMain  = wrap.querySelector('[data-simy-cap-main]');
     var capSub   = wrap.querySelector('[data-simy-cap-sub]');
     var ticks    = wrap.querySelectorAll('[data-simy-ticks] .simy-ss-tick');
     var pauseBtn = wrap.querySelector('[data-simy-pause]');
     var replayBtn= wrap.querySelector('[data-simy-replay]');
+    if (!video) return;
 
-    var index    = 0;
-    var elapsed  = 0;
-    var paused   = false;
-    var lastTick = null;
-    var interval = null;
-    var rippleTimer = null;
-    var cursorOutTimer = null;
-    var reduced  = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    var currentIndex = -1;
+    var reduced = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
 
-    function setRail(frac) {
-      var pct = (index + frac) / SCENES.length;
-      rail.style.transform = 'scaleX(' + pct + ')';
+    function sceneIndexForMs(ms) {
+      var i = 0;
+      for (var k = 0; k < SCENES.length; k++) {
+        if (ms + 40 >= SCENES[k].at) i = k;
+      }
+      return i;
     }
 
     function renderScene(i) {
+      if (i === currentIndex) return;
+      currentIndex = i;
       var s = SCENES[i];
-
-      // Slide crossfade: flash opacity 0 → 1 on next frame
-      slide.style.transition = 'none';
-      slide.style.opacity = '0';
-      void slide.offsetHeight;
-      slide.style.backgroundImage = 'url(' + s.img + ')';
-      slide.style.transition = 'opacity 0.5s ease';
-      slide.style.opacity = '1';
-
-      // Caption
       capMain.textContent = s.main;
-      capSub.textContent = s.sub;
-
-      // Tick highlight
+      capSub.textContent  = s.sub;
       for (var t = 0; t < ticks.length; t++) {
         ticks[t].setAttribute('data-active', t === i ? 'true' : 'false');
       }
-
-      // Cursor: jump to 'from' then glide to 'to' over ~1.3s
-      cursor.style.transition = 'none';
-      cursor.style.left = s.from[0] + '%';
-      cursor.style.top  = s.from[1] + '%';
-      cursor.style.opacity = '0';
-      void cursor.offsetHeight;
-      cursor.style.transition = 'left 1.3s cubic-bezier(.4,0,.2,1), top 1.3s cubic-bezier(.4,0,.2,1), opacity 0.3s linear';
-      cursor.style.left = s.to[0] + '%';
-      cursor.style.top  = s.to[1] + '%';
-      cursor.style.opacity = '1';
-
-      // Ripple: fire once cursor arrives at target
-      ripple.style.left = s.to[0] + '%';
-      ripple.style.top  = s.to[1] + '%';
-      ripple.classList.remove('simy-ss-ripple-play');
-      void ripple.offsetHeight;
-      if (rippleTimer) clearTimeout(rippleTimer);
-      rippleTimer = setTimeout(function () {
-        if (!wrap.isConnected) return;
-        ripple.classList.add('simy-ss-ripple-play');
-      }, 1300);
-
-      // Fade cursor out just before the scene cuts
-      if (cursorOutTimer) clearTimeout(cursorOutTimer);
-      cursorOutTimer = setTimeout(function () {
-        if (!wrap.isConnected) return;
-        cursor.style.opacity = '0';
-      }, HOLD_MS - 200);
     }
 
-    function jumpTo(i) {
-      index = ((i % SCENES.length) + SCENES.length) % SCENES.length;
-      elapsed = 0;
-      lastTick = null;
-      setRail(0);
-      renderScene(index);
+    function onTimeUpdate() {
+      if (!wrap.isConnected) return;
+      var ms  = (video.currentTime || 0) * 1000;
+      var dur = (video.duration && isFinite(video.duration)) ? video.duration : 16.4;
+      var idx = sceneIndexForMs(ms);
+      if (idx !== currentIndex) renderScene(idx);
+      rail.style.transform = 'scaleX(' + Math.min(1, (video.currentTime || 0) / dur) + ')';
     }
 
-    function loop() {
-      if (!wrap.isConnected) {
-        if (interval) { clearInterval(interval); interval = null; }
-        return;
-      }
-      if (paused || reduced) { lastTick = null; return; }
-      var now = (window.performance && performance.now) ? performance.now() : Date.now();
-      var dt  = (lastTick == null) ? 0 : (now - lastTick);
-      lastTick = now;
-      elapsed += dt;
-      var frac = Math.min(elapsed / TOTAL_MS, 1);
-      setRail(frac);
-      if (elapsed >= TOTAL_MS) {
-        elapsed = 0;
-        index = (index + 1) % SCENES.length;
-        renderScene(index);
+    function seekToScene(i) {
+      i = ((i % SCENES.length) + SCENES.length) % SCENES.length;
+      try { video.currentTime = (SCENES[i].at + 50) / 1000; } catch (e) {}
+      renderScene(i);
+      if (video.paused) {
+        video.play().catch(function () {});
       }
     }
 
+    // Wire up ticks (click to jump scene)
     for (var k = 0; k < ticks.length; k++) {
       (function (btn, idx) {
-        btn.addEventListener('click', function () { jumpTo(idx); });
+        btn.addEventListener('click', function () { seekToScene(idx); });
       })(ticks[k], k);
     }
-    pauseBtn.addEventListener('click', function () {
-      paused = !paused;
-      pauseBtn.textContent = paused ? 'Play' : 'Pause';
-      lastTick = null;
-    });
-    replayBtn.addEventListener('click', function () {
-      jumpTo(0);
-    });
 
+    pauseBtn.addEventListener('click', function () {
+      if (video.paused) {
+        video.play().catch(function () {});
+        pauseBtn.textContent = 'Pause';
+      } else {
+        video.pause();
+        pauseBtn.textContent = 'Play';
+      }
+    });
+    replayBtn.addEventListener('click', function () { seekToScene(0); });
+
+    video.addEventListener('timeupdate', onTimeUpdate);
+    video.addEventListener('loadedmetadata', onTimeUpdate);
+    video.addEventListener('seeked', onTimeUpdate);
+
+    // Respect prefers-reduced-motion: hold on the first scene.
+    if (reduced) {
+      try { video.pause(); } catch (e) {}
+      pauseBtn.textContent = 'Play';
+    }
+
+    // Initial state — prime caption + tick without waiting for timeupdate.
     renderScene(0);
-    setRail(0);
-    interval = setInterval(loop, TICK_MS);
+    rail.style.transform = 'scaleX(0)';
   }
 
   /* ── Screen Studio: inject its scoped CSS once at bridge init. ── */
@@ -797,11 +748,7 @@
       '.simy-ss-rec-dot{width:8px;height:8px;border-radius:999px;background:#ff4d4d;animation:simy-ss-pulse 1.6s ease-out infinite;}',
       '@keyframes simy-ss-pulse{0%{box-shadow:0 0 0 0 rgba(255,77,77,.6);}70%{box-shadow:0 0 0 10px rgba(255,77,77,0);}100%{box-shadow:0 0 0 0 rgba(255,77,77,0);}}',
       '.simy-ss-viewport{position:relative;aspect-ratio:16/10;background:#0a0a0c;overflow:hidden;}',
-      '.simy-ss-slide{position:absolute;inset:0;background-size:cover;background-position:center top;opacity:1;}',
-      '.simy-ss-cursor{position:absolute;width:22px;height:22px;pointer-events:none;filter:drop-shadow(0 2px 4px rgba(0,0,0,.35));z-index:20;opacity:0;transform:translate(-4px,-4px);}',
-      '.simy-ss-ripple{position:absolute;width:44px;height:44px;border-radius:999px;border:2px solid #8b9cff;transform:translate(-50%,-50%) scale(0);opacity:0;pointer-events:none;z-index:19;}',
-      '.simy-ss-ripple.simy-ss-ripple-play{animation:simy-ss-ripple-kf 1.2s ease-out 0s 1;}',
-      '@keyframes simy-ss-ripple-kf{0%{transform:translate(-50%,-50%) scale(0);opacity:0;}15%{transform:translate(-50%,-50%) scale(.2);opacity:.9;}100%{transform:translate(-50%,-50%) scale(2.6);opacity:0;}}',
+      '.simy-ss-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;background:#0a0a0c;display:block;}',
       '.simy-ss-rail{margin-top:18px;height:4px;background:rgba(0,0,0,.08);border-radius:999px;overflow:hidden;}',
       '.simy-ss-rail-fill{height:100%;width:100%;background:linear-gradient(90deg,#1d4ed8 0%,#7c3aed 100%);transform:scaleX(0);transform-origin:left center;transition:transform .05s linear;}',
       '.simy-ss-ticks{margin-top:14px;display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}',
