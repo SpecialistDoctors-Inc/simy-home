@@ -631,17 +631,17 @@
   function initScreenStudioAnimation(wrap) {
     var SCENES = [
       { img: '/assets/demo-shots/01-twin.png',      from: [8, 82],  to: [38, 56],
-        main: '"Hi Tetsuo." \u2014 the Twin opens with a suggested question.',
-        sub:  'Morning check-in with the Digital Twin. It already knows what\'s due today.' },
+        main: 'Alex opens the Twin before the planning session.',
+        sub:  'Product Manager at a 150-person tech company. The Twin already knows what needs decisions today.' },
       { img: '/assets/demo-shots/02-meetings.png',  from: [94, 12], to: [62, 44],
-        main: 'Q2 Strategy meeting ends \u2014 every "Must Decide" captured.',
-        sub:  'AI briefing, open issues, and owner assignments \u2014 no manual notes.' },
+        main: 'Planning session ends \u2014 every decision captured.',
+        sub:  'SIMY generates a structured roadmap, assigns owners, and sends summaries automatically.' },
       { img: '/assets/demo-shots/03-actions.png',   from: [92, 86], to: [36, 42],
-        main: 'A PR is already drafted from the meeting.',
-        sub:  'My Actions turns the decision into a ready-to-review ticket.' },
+        main: 'Roadmap items become assigned, ready-to-review tickets.',
+        sub:  'Hours of turning discussion into a roadmap \u2014 gone.' },
       { img: '/assets/demo-shots/04-dashboard.png', from: [6, 14],  to: [48, 48],
         main: 'Growth Dashboard: North Star 1,247 (+12.4%) \u00b7 Retention 71%.',
-        sub:  'The outcome lands on the dashboard \u2014 roadmap ready before standup.' }
+        sub:  'Roadmap ready before the next standup.' }
     ];
     var HOLD_MS  = 3000;
     var FADE_MS  = 500;
