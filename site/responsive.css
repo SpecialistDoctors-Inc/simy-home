@@ -41,6 +41,10 @@ p, li, a, h1, h2, h3, h4, h5, h6, span, div, td, th, dd, dt, blockquote {
   #root div[style*="display: flex"][style*="gap"] {
     flex-wrap: wrap;
   }
+  /* SPA pipeline section arrows: rotate right→down when cards stack */
+  #root div[data-loc="client/src/pages/Home.tsx:800"] svg.lucide-arrow-right {
+    transform: rotate(90deg);
+  }
 }
 
 /* ==========================================================================
