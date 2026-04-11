@@ -633,32 +633,69 @@
   function initScreenStudioAnimation(wrap) {
     // Scene start offsets in the trimmed demo.mp4 (milliseconds). Must
     // match the output of /tmp/simy-capture/record.mjs after ffmpeg trim.
-    // Screen-Studio-style camera work. Each scene has an `origin` (focal
-    // point as % of the viewport, where the action is) and a `peak` scale
-    // (how close we push in at the climax). Within each scene, the camera:
-    //   1. opens wide at scale 1.00
-    //   2. pushes in fast to `peak` with an ease-out curve (first ~35%)
-    //   3. holds at `peak` (next ~45%)
-    //   4. pulls back to ~1.03 with an ease-in curve (last ~20%)
-    // so every transition feels like "wide shot → close-up → release".
+    // Screen-Studio-style camera: the transform-origin continuously
+    // tracks the real cursor trajectory captured during the Playwright
+    // recording (see CURSOR keyframes below). The scale runs a
+    // push-in → hold → pull-out curve keyed to when the cursor is
+    // resting on content vs gliding to the next click.
     var SCENES = [
       { at: 0,
-        origin: '60% 42%', peak: 1.22,
+        peak: 1.16,
         main: 'Alex opens the Twin before the planning session.',
         sub:  'Product Manager at a 150-person tech company. The Twin already knows what needs decisions today.' },
-      { at: 4475,
-        origin: '56% 48%', peak: 1.20,
+      { at: 4384,
+        peak: 1.16,
         main: 'Planning session ends \u2014 every decision captured.',
         sub:  'SIMY generates a structured roadmap, assigns owners, and sends summaries automatically.' },
-      { at: 8647,
-        origin: '52% 44%', peak: 1.18,
+      { at: 8559,
+        peak: 1.16,
         main: 'Roadmap items become assigned, ready-to-review tickets.',
         sub:  'Hours of turning discussion into a roadmap \u2014 gone.' },
-      { at: 12813,
-        origin: '50% 32%', peak: 1.25,
+      { at: 12728,
+        peak: 1.20,
         main: 'Growth Dashboard: North Star 1,247 (+12.4%) \u00b7 Retention 71%.',
         sub:  'Roadmap ready before the next standup.' }
     ];
+
+    // Real cursor trajectory captured while recording demo.mp4.
+    // at = ms since the trimmed mp4 start; x/y = % of the viewport.
+    // Linear lerp between consecutive keyframes matches the 550ms CSS
+    // cursor transition closely enough for the viewer's eye.
+    var CURSOR = [
+      { at: 0,     x: 8.99,  y: 20.46 },
+      { at: 550,   x: 55.00, y: 45.00 },
+      { at: 3204,  x: 55.00, y: 45.00 },
+      { at: 3754,  x: 8.99,  y: 44.97 },
+      { at: 4384,  x: 8.99,  y: 44.97 },
+      { at: 4934,  x: 55.00, y: 40.00 },
+      { at: 7388,  x: 55.00, y: 40.00 },
+      { at: 7938,  x: 8.99,  y: 30.06 },
+      { at: 8559,  x: 8.99,  y: 30.06 },
+      { at: 9109,  x: 55.00, y: 40.00 },
+      { at: 11562, x: 55.00, y: 40.00 },
+      { at: 12112, x: 8.99,  y: 54.32 },
+      { at: 12728, x: 8.99,  y: 54.32 },
+      { at: 13278, x: 55.00, y: 40.00 },
+      { at: 13778, x: 55.00, y: 40.00 }
+    ];
+
+    function cursorAt(ms) {
+      if (ms <= CURSOR[0].at) return { x: CURSOR[0].x, y: CURSOR[0].y };
+      for (var ci = 1; ci < CURSOR.length; ci++) {
+        if (ms < CURSOR[ci].at) {
+          var pr = CURSOR[ci - 1];
+          var nx = CURSOR[ci];
+          var sp = nx.at - pr.at;
+          var p  = sp > 0 ? (ms - pr.at) / sp : 0;
+          return {
+            x: pr.x + (nx.x - pr.x) * p,
+            y: pr.y + (nx.y - pr.y) * p
+          };
+        }
+      }
+      var last = CURSOR[CURSOR.length - 1];
+      return { x: last.x, y: last.y };
+    }
 
     var video    = wrap.querySelector('[data-simy-video]');
     var subtitle = wrap.querySelector('[data-simy-subtitle]');
@@ -691,20 +728,22 @@
     // Ease-in quad: slow start, fast end — used for the pull-out.
     function easeInQuad(p)  { return p * p; }
 
-    // Compute (scale, origin) for a given local progress 0..1 within a
-    // scene. Creates a wide → push-in → hold → pull-out rhythm.
+    // Compute scale for a given local progress 0..1 within a scene.
+    // Aligned to cursor rhythm: the cursor glides from sidebar to
+    // content in the first ~13%, rests until ~72%, then glides back
+    // to the next sidebar click. Scale tracks: push-in during glide-in,
+    // hold during rest, pull-out during glide-out.
     function zoomForProgress(scene, local) {
-      var PUSH = 0.32;   // 0..PUSH  : push from 1.00 to peak (ease-out)
-      var HOLD = 0.78;   // PUSH..HOLD: hold at peak
-      var END  = 1.00;   // HOLD..END: pull back from peak to release scale
-      var RELEASE = 1.03;
+      var PUSH = 0.13;
+      var HOLD = 0.72;
+      var RELEASE = 1.00;
       var s;
       if (local <= PUSH) {
         s = 1.00 + (scene.peak - 1.00) * easeOutCubic(local / PUSH);
       } else if (local <= HOLD) {
         s = scene.peak;
       } else {
-        var p = (local - HOLD) / (END - HOLD);
+        var p = (local - HOLD) / (1 - HOLD);
         s = scene.peak + (RELEASE - scene.peak) * easeInQuad(p);
       }
       return s;
@@ -712,7 +751,7 @@
 
     function applyZoom() {
       if (reduced || !wrap.isConnected) return;
-      var durMs = ((video.duration && isFinite(video.duration)) ? video.duration : 16.4) * 1000;
+      var durMs = ((video.duration && isFinite(video.duration)) ? video.duration : 13.778) * 1000;
       var t     = (video.currentTime || 0) * 1000;
       var idx   = sceneIndexForMs(t);
       var scene = SCENES[idx];
@@ -721,7 +760,8 @@
       var span  = Math.max(1, end - start);
       var local = Math.max(0, Math.min(1, (t - start) / span));
       var scale = zoomForProgress(scene, local);
-      video.style.transformOrigin = scene.origin;
+      var cur   = cursorAt(t);
+      video.style.transformOrigin = cur.x.toFixed(2) + '% ' + cur.y.toFixed(2) + '%';
       video.style.transform = 'scale(' + scale.toFixed(4) + ')';
     }
 
@@ -732,7 +772,7 @@
       var t   = (video.currentTime || 0) * 1000;
       var idx = sceneIndexForMs(t);
       if (idx !== currentIndex) renderScene(idx);
-      var durMs = ((video.duration && isFinite(video.duration)) ? video.duration : 16.4) * 1000;
+      var durMs = ((video.duration && isFinite(video.duration)) ? video.duration : 13.778) * 1000;
       rail.style.transform = 'scaleX(' + Math.min(1, t / durMs) + ')';
       rafId = requestAnimationFrame(rafLoop);
     }
@@ -754,10 +794,11 @@
       for (var t = 0; t < ticks.length; t++) {
         ticks[t].setAttribute('data-active', t === i ? 'true' : 'false');
       }
-      // Jump the origin instantly on scene change; applyZoom() will then
-      // drive the scale smoothly from the rAF loop.
+      // applyZoom() drives origin + scale every frame from the rAF loop;
+      // for reduced-motion, freeze on the cursor's current position.
       if (reduced) {
-        video.style.transformOrigin = s.origin;
+        var cur = cursorAt(SCENES[i].at + 500);
+        video.style.transformOrigin = cur.x.toFixed(2) + '% ' + cur.y.toFixed(2) + '%';
         video.style.transform = 'scale(1)';
       }
     }
@@ -765,7 +806,7 @@
     function onTimeUpdate() {
       if (!wrap.isConnected) return;
       var ms  = (video.currentTime || 0) * 1000;
-      var dur = (video.duration && isFinite(video.duration)) ? video.duration : 16.4;
+      var dur = (video.duration && isFinite(video.duration)) ? video.duration : 13.778;
       var idx = sceneIndexForMs(ms);
       if (idx !== currentIndex) renderScene(idx);
       rail.style.transform = 'scaleX(' + Math.min(1, (video.currentTime || 0) / dur) + ')';
