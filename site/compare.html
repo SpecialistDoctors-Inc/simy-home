@@ -598,6 +598,35 @@
     </footer>
 
     <script src="/i18n.js"></script>
+    <script>
+      /* Mobile card-layout support: copy thead labels onto each tbody td
+         so responsive.css can render them via ::before on small screens.
+         Re-runs whenever i18n mutates header text. */
+      (function () {
+        var table = document.querySelector('.cmp-table');
+        if (!table) return;
+        function sync() {
+          var heads = table.querySelectorAll('thead th');
+          var labels = Array.prototype.map.call(heads, function (th) {
+            var txt = (th.innerText || th.textContent || '').trim();
+            // Strip "e.g., Glean" style hint that lives on a <span class="eg">
+            var eg = th.querySelector('.eg');
+            if (eg) txt = txt.replace(eg.innerText || '', '').trim();
+            return txt;
+          });
+          table.querySelectorAll('tbody tr').forEach(function (tr) {
+            Array.prototype.forEach.call(tr.children, function (td, i) {
+              if (labels[i]) td.setAttribute('data-col', labels[i]);
+            });
+          });
+        }
+        sync();
+        // Keep labels in sync across language switches
+        var obs = new MutationObserver(sync);
+        var thead = table.querySelector('thead');
+        if (thead) obs.observe(thead, { subtree: true, characterData: true, childList: true });
+      })();
+    </script>
     <script
       defer
       src="%VITE_ANALYTICS_ENDPOINT%/umami"
