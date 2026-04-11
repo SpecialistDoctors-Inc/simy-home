@@ -633,25 +633,29 @@
   function initScreenStudioAnimation(wrap) {
     // Scene start offsets in the trimmed demo.mp4 (milliseconds). Must
     // match the output of /tmp/simy-capture/record.mjs after ffmpeg trim.
-    // Each scene also carries a Screen-Studio-style zoom target: the
-    // transform-origin is the focal point (as % of the viewport), and
-    // the scale slowly grows from 1.0 to `scale` across the scene,
-    // creating a gentle "zoom into the action" effect.
+    // Screen-Studio-style camera work. Each scene has an `origin` (focal
+    // point as % of the viewport, where the action is) and a `peak` scale
+    // (how close we push in at the climax). Within each scene, the camera:
+    //   1. opens wide at scale 1.00
+    //   2. pushes in fast to `peak` with an ease-out curve (first ~35%)
+    //   3. holds at `peak` (next ~45%)
+    //   4. pulls back to ~1.03 with an ease-in curve (last ~20%)
+    // so every transition feels like "wide shot → close-up → release".
     var SCENES = [
       { at: 0,
-        origin: '22% 42%', scale: 1.09,
+        origin: '60% 42%', peak: 1.22,
         main: 'Alex opens the Twin before the planning session.',
         sub:  'Product Manager at a 150-person tech company. The Twin already knows what needs decisions today.' },
       { at: 4475,
-        origin: '58% 42%', scale: 1.10,
+        origin: '56% 48%', peak: 1.20,
         main: 'Planning session ends \u2014 every decision captured.',
         sub:  'SIMY generates a structured roadmap, assigns owners, and sends summaries automatically.' },
       { at: 8647,
-        origin: '56% 40%', scale: 1.08,
+        origin: '52% 44%', peak: 1.18,
         main: 'Roadmap items become assigned, ready-to-review tickets.',
         sub:  'Hours of turning discussion into a roadmap \u2014 gone.' },
       { at: 12813,
-        origin: '50% 34%', scale: 1.12,
+        origin: '50% 32%', peak: 1.25,
         main: 'Growth Dashboard: North Star 1,247 (+12.4%) \u00b7 Retention 71%.',
         sub:  'Roadmap ready before the next standup.' }
     ];
@@ -668,6 +672,7 @@
 
     var currentIndex = -1;
     var reduced = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    var rafId = 0;
 
     function sceneIndexForMs(ms) {
       var i = 0;
@@ -675,6 +680,61 @@
         if (ms + 40 >= SCENES[k].at) i = k;
       }
       return i;
+    }
+
+    function sceneEndMs(i, durMs) {
+      return i < SCENES.length - 1 ? SCENES[i + 1].at : durMs;
+    }
+
+    // Ease-out cubic: fast start, slow end — used for the push-in.
+    function easeOutCubic(p) { return 1 - Math.pow(1 - p, 3); }
+    // Ease-in quad: slow start, fast end — used for the pull-out.
+    function easeInQuad(p)  { return p * p; }
+
+    // Compute (scale, origin) for a given local progress 0..1 within a
+    // scene. Creates a wide → push-in → hold → pull-out rhythm.
+    function zoomForProgress(scene, local) {
+      var PUSH = 0.32;   // 0..PUSH  : push from 1.00 to peak (ease-out)
+      var HOLD = 0.78;   // PUSH..HOLD: hold at peak
+      var END  = 1.00;   // HOLD..END: pull back from peak to release scale
+      var RELEASE = 1.03;
+      var s;
+      if (local <= PUSH) {
+        s = 1.00 + (scene.peak - 1.00) * easeOutCubic(local / PUSH);
+      } else if (local <= HOLD) {
+        s = scene.peak;
+      } else {
+        var p = (local - HOLD) / (END - HOLD);
+        s = scene.peak + (RELEASE - scene.peak) * easeInQuad(p);
+      }
+      return s;
+    }
+
+    function applyZoom() {
+      if (reduced || !wrap.isConnected) return;
+      var durMs = ((video.duration && isFinite(video.duration)) ? video.duration : 16.4) * 1000;
+      var t     = (video.currentTime || 0) * 1000;
+      var idx   = sceneIndexForMs(t);
+      var scene = SCENES[idx];
+      var start = scene.at;
+      var end   = sceneEndMs(idx, durMs);
+      var span  = Math.max(1, end - start);
+      var local = Math.max(0, Math.min(1, (t - start) / span));
+      var scale = zoomForProgress(scene, local);
+      video.style.transformOrigin = scene.origin;
+      video.style.transform = 'scale(' + scale.toFixed(4) + ')';
+    }
+
+    function rafLoop() {
+      applyZoom();
+      // Also keep the scene/caption state in sync every frame — cheaper
+      // than relying on 'timeupdate' which only fires ~4x/s.
+      var t   = (video.currentTime || 0) * 1000;
+      var idx = sceneIndexForMs(t);
+      if (idx !== currentIndex) renderScene(idx);
+      var durMs = ((video.duration && isFinite(video.duration)) ? video.duration : 16.4) * 1000;
+      rail.style.transform = 'scaleX(' + Math.min(1, t / durMs) + ')';
+      rafId = requestAnimationFrame(rafLoop);
     }
 
     function renderScene(i) {
@@ -694,17 +754,9 @@
       for (var t = 0; t < ticks.length; t++) {
         ticks[t].setAttribute('data-active', t === i ? 'true' : 'false');
       }
-      // Screen-Studio-style slow zoom: reset instantly, then glide to
-      // the scene's target scale across the scene duration (~3.2s).
-      if (!reduced) {
-        video.style.transition = 'transform 0s';
-        video.style.transformOrigin = s.origin;
-        video.style.transform = 'scale(1)';
-        // eslint-disable-next-line no-void
-        void video.offsetWidth;
-        video.style.transition = 'transform 3.2s cubic-bezier(.22,.61,.36,1)';
-        video.style.transform = 'scale(' + s.scale + ')';
-      } else {
+      // Jump the origin instantly on scene change; applyZoom() will then
+      // drive the scale smoothly from the rAF loop.
+      if (reduced) {
         video.style.transformOrigin = s.origin;
         video.style.transform = 'scale(1)';
       }
@@ -717,6 +769,9 @@
       var idx = sceneIndexForMs(ms);
       if (idx !== currentIndex) renderScene(idx);
       rail.style.transform = 'scaleX(' + Math.min(1, (video.currentTime || 0) / dur) + ')';
+      // Force a zoom recalc on timeupdate too (covers the paused case
+      // where rAF might be throttled by the browser).
+      applyZoom();
     }
 
     function seekToScene(i) {
@@ -754,6 +809,10 @@
     if (reduced) {
       try { video.pause(); } catch (e) {}
       pauseBtn.textContent = 'Play';
+    } else {
+      // Start the rAF zoom driver. Reads video.currentTime every frame,
+      // so pause/seek/loop are all handled for free.
+      rafId = requestAnimationFrame(rafLoop);
     }
 
     // Initial state — prime caption + tick without waiting for timeupdate.
