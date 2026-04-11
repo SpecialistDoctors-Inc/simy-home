@@ -599,6 +599,7 @@
                 'poster="/assets/demo-shots/01-twin.png" ',
                 'autoplay muted loop playsinline preload="metadata" ',
                 'aria-label="SIMY click-through demo"></video>',
+              '<div class="simy-ss-subtitle" data-simy-subtitle></div>',
             '</div>',
           '</div>',
           '<div class="simy-ss-rail"><div class="simy-ss-rail-fill" data-simy-rail></div></div>',
@@ -632,18 +633,31 @@
   function initScreenStudioAnimation(wrap) {
     // Scene start offsets in the trimmed demo.mp4 (milliseconds). Must
     // match the output of /tmp/simy-capture/record.mjs after ffmpeg trim.
+    // Each scene also carries a Screen-Studio-style zoom target: the
+    // transform-origin is the focal point (as % of the viewport), and
+    // the scale slowly grows from 1.0 to `scale` across the scene,
+    // creating a gentle "zoom into the action" effect.
     var SCENES = [
-      { at: 0,     main: 'Alex opens the Twin before the planning session.',
+      { at: 0,
+        origin: '22% 42%', scale: 1.09,
+        main: 'Alex opens the Twin before the planning session.',
         sub:  'Product Manager at a 150-person tech company. The Twin already knows what needs decisions today.' },
-      { at: 4475,  main: 'Planning session ends \u2014 every decision captured.',
+      { at: 4475,
+        origin: '58% 42%', scale: 1.10,
+        main: 'Planning session ends \u2014 every decision captured.',
         sub:  'SIMY generates a structured roadmap, assigns owners, and sends summaries automatically.' },
-      { at: 8647,  main: 'Roadmap items become assigned, ready-to-review tickets.',
+      { at: 8647,
+        origin: '56% 40%', scale: 1.08,
+        main: 'Roadmap items become assigned, ready-to-review tickets.',
         sub:  'Hours of turning discussion into a roadmap \u2014 gone.' },
-      { at: 12813, main: 'Growth Dashboard: North Star 1,247 (+12.4%) \u00b7 Retention 71%.',
+      { at: 12813,
+        origin: '50% 34%', scale: 1.12,
+        main: 'Growth Dashboard: North Star 1,247 (+12.4%) \u00b7 Retention 71%.',
         sub:  'Roadmap ready before the next standup.' }
     ];
 
     var video    = wrap.querySelector('[data-simy-video]');
+    var subtitle = wrap.querySelector('[data-simy-subtitle]');
     var rail     = wrap.querySelector('[data-simy-rail]');
     var capMain  = wrap.querySelector('[data-simy-cap-main]');
     var capSub   = wrap.querySelector('[data-simy-cap-sub]');
@@ -669,8 +683,30 @@
       var s = SCENES[i];
       capMain.textContent = s.main;
       capSub.textContent  = s.sub;
+      if (subtitle) {
+        subtitle.textContent = s.main;
+        // Fade the subtitle out briefly, swap text, fade back in.
+        subtitle.classList.remove('is-visible');
+        // eslint-disable-next-line no-void
+        void subtitle.offsetWidth;
+        subtitle.classList.add('is-visible');
+      }
       for (var t = 0; t < ticks.length; t++) {
         ticks[t].setAttribute('data-active', t === i ? 'true' : 'false');
+      }
+      // Screen-Studio-style slow zoom: reset instantly, then glide to
+      // the scene's target scale across the scene duration (~3.2s).
+      if (!reduced) {
+        video.style.transition = 'transform 0s';
+        video.style.transformOrigin = s.origin;
+        video.style.transform = 'scale(1)';
+        // eslint-disable-next-line no-void
+        void video.offsetWidth;
+        video.style.transition = 'transform 3.2s cubic-bezier(.22,.61,.36,1)';
+        video.style.transform = 'scale(' + s.scale + ')';
+      } else {
+        video.style.transformOrigin = s.origin;
+        video.style.transform = 'scale(1)';
       }
     }
 
@@ -748,7 +784,10 @@
       '.simy-ss-rec-dot{width:8px;height:8px;border-radius:999px;background:#ff4d4d;animation:simy-ss-pulse 1.6s ease-out infinite;}',
       '@keyframes simy-ss-pulse{0%{box-shadow:0 0 0 0 rgba(255,77,77,.6);}70%{box-shadow:0 0 0 10px rgba(255,77,77,0);}100%{box-shadow:0 0 0 0 rgba(255,77,77,0);}}',
       '.simy-ss-viewport{position:relative;aspect-ratio:16/10;background:#0a0a0c;overflow:hidden;}',
-      '.simy-ss-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;background:#0a0a0c;display:block;}',
+      '.simy-ss-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;background:#0a0a0c;display:block;will-change:transform;transform-origin:50% 50%;transform:scale(1);}',
+      '.simy-ss-subtitle{position:absolute;left:50%;bottom:6%;transform:translateX(-50%);max-width:82%;padding:10px 18px;background:rgba(10,10,12,.78);color:#f9f9f6;font-family:"Geist",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:15px;font-weight:600;line-height:1.45;text-align:center;border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.08);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);pointer-events:none;z-index:4;opacity:0;transition:opacity .35s ease;text-wrap:balance;text-shadow:0 1px 2px rgba(0,0,0,.35);}',
+      '.simy-ss-subtitle.is-visible{opacity:1;}',
+      '@media (max-width:768px){.simy-ss-subtitle{font-size:12px;padding:7px 12px;bottom:5%;max-width:88%;}}',
       '.simy-ss-rail{margin-top:18px;height:4px;background:rgba(0,0,0,.08);border-radius:999px;overflow:hidden;}',
       '.simy-ss-rail-fill{height:100%;width:100%;background:linear-gradient(90deg,#1d4ed8 0%,#7c3aed 100%);transform:scaleX(0);transform-origin:left center;transition:transform .05s linear;}',
       '.simy-ss-ticks{margin-top:14px;display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}',
