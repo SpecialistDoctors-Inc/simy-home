@@ -572,7 +572,7 @@
           '<span class="simy-ss-eyebrow-dot"></span>',
           'WATCH SIMY IN 12 SECONDS',
         '</div>',
-        '<h2 class="simy-ss-title">From meeting to shipped PR.</h2>',
+        '<h2 class="simy-ss-title">From meeting to shipped AI executions.</h2>',
         '<p class="simy-ss-kicker">Four scenes, one unbroken take through the real SIMY desktop app.</p>',
         '<div class="simy-ss-wrap">',
           '<div class="simy-ss-browser">',
@@ -633,25 +633,21 @@
   function initScreenStudioAnimation(wrap) {
     // Scene start offsets in the trimmed demo.mp4 (milliseconds). Must
     // match the output of /tmp/simy-capture/record.mjs after ffmpeg trim.
-    // Each scene also carries a Screen-Studio-style zoom target: the
-    // transform-origin is the focal point (as % of the viewport), and
-    // the scale slowly grows from 1.0 to `scale` across the scene,
-    // creating a gentle "zoom into the action" effect.
+    // Scene timeline for captions + progress rail only. The cursor
+    // animation is baked into demo.mp4 (painted by the Playwright
+    // recorder), so we do not apply any CSS zoom or transform-origin
+    // tracking here — the viewer just watches the raw video.
     var SCENES = [
       { at: 0,
-        origin: '22% 42%', scale: 1.09,
         main: 'Alex opens the Twin before the planning session.',
         sub:  'Product Manager at a 150-person tech company. The Twin already knows what needs decisions today.' },
-      { at: 4475,
-        origin: '58% 42%', scale: 1.10,
+      { at: 4384,
         main: 'Planning session ends \u2014 every decision captured.',
         sub:  'SIMY generates a structured roadmap, assigns owners, and sends summaries automatically.' },
-      { at: 8647,
-        origin: '56% 40%', scale: 1.08,
+      { at: 8559,
         main: 'Roadmap items become assigned, ready-to-review tickets.',
         sub:  'Hours of turning discussion into a roadmap \u2014 gone.' },
-      { at: 12813,
-        origin: '50% 34%', scale: 1.12,
+      { at: 12728,
         main: 'Growth Dashboard: North Star 1,247 (+12.4%) \u00b7 Retention 71%.',
         sub:  'Roadmap ready before the next standup.' }
     ];
@@ -668,6 +664,7 @@
 
     var currentIndex = -1;
     var reduced = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    var rafId = 0;
 
     function sceneIndexForMs(ms) {
       var i = 0;
@@ -675,6 +672,22 @@
         if (ms + 40 >= SCENES[k].at) i = k;
       }
       return i;
+    }
+
+    // Drop any stale inline transforms left over from older builds.
+    video.style.transform = '';
+    video.style.transformOrigin = '';
+
+    function rafLoop() {
+      // Keep the scene/caption state and the progress rail in sync with
+      // video.currentTime. Cheaper than relying on 'timeupdate' which
+      // only fires ~4x/s.
+      var t   = (video.currentTime || 0) * 1000;
+      var idx = sceneIndexForMs(t);
+      if (idx !== currentIndex) renderScene(idx);
+      var durMs = ((video.duration && isFinite(video.duration)) ? video.duration : 13.778) * 1000;
+      rail.style.transform = 'scaleX(' + Math.min(1, t / durMs) + ')';
+      rafId = requestAnimationFrame(rafLoop);
     }
 
     function renderScene(i) {
@@ -694,26 +707,12 @@
       for (var t = 0; t < ticks.length; t++) {
         ticks[t].setAttribute('data-active', t === i ? 'true' : 'false');
       }
-      // Screen-Studio-style slow zoom: reset instantly, then glide to
-      // the scene's target scale across the scene duration (~3.2s).
-      if (!reduced) {
-        video.style.transition = 'transform 0s';
-        video.style.transformOrigin = s.origin;
-        video.style.transform = 'scale(1)';
-        // eslint-disable-next-line no-void
-        void video.offsetWidth;
-        video.style.transition = 'transform 3.2s cubic-bezier(.22,.61,.36,1)';
-        video.style.transform = 'scale(' + s.scale + ')';
-      } else {
-        video.style.transformOrigin = s.origin;
-        video.style.transform = 'scale(1)';
-      }
     }
 
     function onTimeUpdate() {
       if (!wrap.isConnected) return;
       var ms  = (video.currentTime || 0) * 1000;
-      var dur = (video.duration && isFinite(video.duration)) ? video.duration : 16.4;
+      var dur = (video.duration && isFinite(video.duration)) ? video.duration : 13.778;
       var idx = sceneIndexForMs(ms);
       if (idx !== currentIndex) renderScene(idx);
       rail.style.transform = 'scaleX(' + Math.min(1, (video.currentTime || 0) / dur) + ')';
@@ -754,6 +753,11 @@
     if (reduced) {
       try { video.pause(); } catch (e) {}
       pauseBtn.textContent = 'Play';
+    } else {
+      // Start the rAF loop. Reads video.currentTime every frame to keep
+      // the scene/caption and progress rail in sync with playback,
+      // pause/seek/loop all handled for free.
+      rafId = requestAnimationFrame(rafLoop);
     }
 
     // Initial state — prime caption + tick without waiting for timeupdate.
@@ -784,7 +788,7 @@
       '.simy-ss-rec-dot{width:8px;height:8px;border-radius:999px;background:#ff4d4d;animation:simy-ss-pulse 1.6s ease-out infinite;}',
       '@keyframes simy-ss-pulse{0%{box-shadow:0 0 0 0 rgba(255,77,77,.6);}70%{box-shadow:0 0 0 10px rgba(255,77,77,0);}100%{box-shadow:0 0 0 0 rgba(255,77,77,0);}}',
       '.simy-ss-viewport{position:relative;aspect-ratio:16/10;background:#0a0a0c;overflow:hidden;}',
-      '.simy-ss-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;background:#0a0a0c;display:block;will-change:transform;transform-origin:50% 50%;transform:scale(1);}',
+      '.simy-ss-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;background:#0a0a0c;display:block;}',
       '.simy-ss-subtitle{position:absolute;left:50%;bottom:6%;transform:translateX(-50%);max-width:82%;padding:10px 18px;background:rgba(10,10,12,.78);color:#f9f9f6;font-family:"Geist",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:15px;font-weight:600;line-height:1.45;text-align:center;border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.08);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);pointer-events:none;z-index:4;opacity:0;transition:opacity .35s ease;text-wrap:balance;text-shadow:0 1px 2px rgba(0,0,0,.35);}',
       '.simy-ss-subtitle.is-visible{opacity:1;}',
       '@media (max-width:768px){.simy-ss-subtitle{font-size:12px;padding:7px 12px;bottom:5%;max-width:88%;}}',
