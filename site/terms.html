@@ -12,8 +12,11 @@
 <meta property="og:title" content="Terms of Use — SIMY">
 <meta property="og:description" content="Terms and conditions for using the SIMY service.">
 <meta property="og:site_name" content="SIMY">
+<meta property="og:image" content="https://simy.one/ogp.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary">
-<meta name="robots" content="noindex, follow">
+<meta name="robots" content="index, follow">
 <meta name="theme-color" content="#f9f9f6">
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="favicon.png">
@@ -53,74 +56,101 @@ body {
 
 a:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; border-radius: 4px; }
 
-/* Navigation */
+/* Navigation — pixel-matched to React SPA */
 nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-  padding: 16px 0;
-  background: rgba(249, 249, 246, 0.92);
-  backdrop-filter: blur(24px) saturate(1.2);
-  -webkit-backdrop-filter: blur(24px) saturate(1.2);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+  transition: all 0.3s;
+  background: rgba(250, 250, 248, 0.9);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid transparent;
+}
+nav.scrolled {
+  background: rgba(250, 250, 248, 0.97);
+  border-bottom-color: #e0e0dc;
 }
 .nav-inner {
   display: flex; align-items: center; justify-content: space-between;
-  max-width: 1140px; margin: 0 auto; padding: 0 clamp(24px, 4vw, 60px);
+  max-width: 1280px; margin: 0 auto; padding: 0 4rem;
+  height: 60px;
 }
 .nav-logo {
   display: flex; align-items: center; gap: 10px;
-  text-decoration: none; color: var(--foreground);
+  text-decoration: none; color: #0a0a0a;
 }
-.nav-logo-s { flex-shrink: 0; }
-.nav-brand { font-weight: 700; font-size: 1.15rem; letter-spacing: 0.02em; }
+.nav-logo-s {
+  width: 24px; height: 24px;
+  display: flex; align-items: center; justify-content: center;
+  background-color: #0057ff; color: #fff;
+  font-family: 'Geist Mono', monospace;
+  font-size: 13px; font-weight: 500;
+}
+.nav-brand {
+  font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 14px; font-weight: 700; letter-spacing: 0.06em;
+  color: #0a0a0a;
+}
 .nav-version {
-  font-size: 0.65rem; font-weight: 500; letter-spacing: 0.04em;
-  color: var(--muted-fg); background: rgba(0,0,0,0.04);
-  padding: 2px 6px; border-radius: 4px; margin-left: -4px;
+  font-family: 'Geist Mono', monospace;
+  font-size: 13px; font-weight: 400; letter-spacing: 0.06em;
+  color: #0057ff;
 }
-.nav-links { display: flex; gap: 28px; align-items: center; }
+.nav-links { display: flex; gap: 32px; align-items: center; }
 .nav-links a {
-  color: var(--muted-fg); text-decoration: none;
-  font-size: 0.875rem; font-weight: 500; transition: color 0.2s;
+  color: #5a5a56; text-decoration: none;
+  font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.8125rem; font-weight: 400; letter-spacing: 0.01em;
+  transition: color 0.18s; position: relative;
 }
-.nav-links a:hover { color: var(--foreground); }
-.nav-right { display: flex; align-items: center; gap: 16px; }
+.nav-links a::after {
+  content: ''; position: absolute; bottom: -2px; left: 0;
+  width: 0; height: 1px; background-color: #0057ff;
+  transition: width 0.25s;
+}
+.nav-links a:hover { color: #0a0a0a; }
+.nav-links a:hover::after { width: 100%; }
+.nav-right { display: flex; align-items: center; gap: 20px; }
 .nav-signin {
-  color: var(--muted-fg); text-decoration: none;
-  font-size: 0.875rem; font-weight: 500; transition: color 0.2s;
+  color: #5a5a56; text-decoration: none;
+  font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.8125rem; font-weight: 400; letter-spacing: 0.01em;
+  transition: color 0.18s;
 }
-.nav-signin:hover { color: var(--foreground); }
+.nav-signin:hover { color: #0a0a0a; }
 .btn-primary {
-  background-color: var(--primary); color: #fff;
-  font-family: 'Geist', sans-serif; letter-spacing: 0.01em;
-  border: 1px solid var(--primary); padding: 0.625rem 1.25rem;
-  font-size: 0.875rem; font-weight: 500; border-radius: 8px;
+  background-color: #0057ff; color: #fff;
+  font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+  letter-spacing: 0.01em;
+  border: 1px solid #0057ff; padding: 0.5rem 1.25rem;
+  font-size: 0.8125rem; font-weight: 500; 
   display: inline-flex; align-items: center; gap: 0.5rem;
-  text-decoration: none; transition: background-color 0.2s;
+  text-decoration: none; transition: background-color 0.18s;
   cursor: pointer;
 }
-.btn-primary:hover { background-color: var(--primary-hover); border-color: var(--primary-hover); }
-.mobile-menu-btn { display: none; background: none; border: none; color: var(--foreground); cursor: pointer; padding: 4px; }
+.btn-primary:hover { background-color: #0047dd; border-color: #0047dd; }
+.mobile-menu-btn { display: none; background: none; border: none; color: #0a0a0a; cursor: pointer; padding: 8px; }
 
 /* Footer */
 .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
 .footer-col { display: flex; flex-direction: column; gap: 10px; }
-.footer-col-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--foreground); margin-bottom: 4px; }
-.footer-col a { color: var(--muted-fg); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
-.footer-col a:hover { color: var(--primary); }
-.footer-bottom { padding-top: 24px; border-top: 1px solid rgba(0,0,0,0.06); font-size: 0.75rem; color: var(--muted-fg); text-align: center; }
-footer { padding: 48px 0 36px; border-top: 1px solid rgba(0,0,0,0.06); }
+.footer-col-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #6a6a66; margin-bottom: 4px; }
+.footer-col a { color: #9a9a96; text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+.footer-col a:hover { color: #f5f5f0; }
+.footer-bottom { padding-top: 24px; border-top: 1px solid #1a1a1a; font-size: 0.75rem; color: #3a3a36; text-align: center; }
+footer { padding: 48px 0 36px; border-top: none; background: #0a0a0a; color: #f5f5f0; }
 
 @media (max-width: 768px) {
-  .nav-links { display: none; position: fixed; top: 56px; right: 0; left: 0; background: rgba(249,249,246,0.97); flex-direction: column; padding: 24px; gap: 16px; z-index: 999; backdrop-filter: blur(20px); }
+      .nav-inner { padding: 0 1.5rem; }
+  .nav-links { display: none; position: fixed; top: 60px; right: 0; left: 0; background: rgba(250,250,248,0.98); flex-direction: column; padding: 24px; gap: 20px; z-index: 49; border-top: 1px solid #e0e0dc; }
   .nav-links.active { display: flex; }
   .nav-right { display: none; }
-  .mobile-menu-btn { display: block; }
+  .mobile-menu-btn { display: flex; }
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
   .footer-brand { grid-column: 1 / -1; text-align: center; }
 }
 
 /* Content */
-.container { max-width: 1140px; margin: 0 auto; padding: 0 clamp(24px, 4vw, 60px); }
+.container { max-width: 1280px; margin: 0 auto; padding: 0 4rem; }
 
 .terms-content {
   max-width: 800px;
@@ -274,223 +304,282 @@ footer { padding: 48px 0 36px; border-top: 1px solid rgba(0,0,0,0.06); }
   .terms-body h2 { font-size: 1.15rem; margin-top: 36px; }
 }
 </style>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-SBLYYNMSJW"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-SBLYYNMSJW');
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://simy.one/" },
+    { "@type": "ListItem", "position": 2, "name": "Terms of Use" }
+  ]
+}
 </script>
+<!-- Google tag (gtag.js) – loaded only after cookie consent -->
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+function loadGA(){
+  if(document.getElementById('ga-script'))return;
+  var s=document.createElement('script');
+  s.id='ga-script';
+  s.async=true;
+  s.src='https://www.googletagmanager.com/gtag/js?id=G-SBLYYNMSJW';
+  document.head.appendChild(s);
+  gtag('js',new Date());
+  gtag('config','G-SBLYYNMSJW');
+}
+if(localStorage.getItem('simy-cookies')==='1') loadGA();
+</script>
+    <style>
+      /* Hide React SPA's built-in nav and footer */
+      #root > div > nav { display: none !important; }
+      #root footer { display: none !important; }
+      /* Override React container to match static pages */
+      #root .container {
+        max-width: 1280px !important;
+        padding-left: 4rem !important;
+        padding-right: 4rem !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
+    </style>
+    <script type="module" crossorigin src="/assets/index-DnVveaIK.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-BwUIJj-q.css">
 </head>
 <body>
+    <!-- Force full navigation for static subpages -->
+    <script>
+    document.addEventListener('click', function(e) {
+      var a = e.target.closest('a');
+      if (!a) return;
+      var pages = ['/careers.html','/status.html','/privacy.html','/terms.html',
+                   '/how-it-works.html','/integrations.html','/security.html','/press-release.html'];
+      try {
+        var p = new URL(a.href, location.origin).pathname;
+        if (pages.indexOf(p) !== -1) {
+          e.preventDefault();
+          e.stopPropagation();
+          window.location.href = a.href;
+        }
+      } catch(err) {}
+    }, true);
+    </script>
+    <!-- Static nav — same code as all other pages -->
+    <nav class="static-nav" id="staticNav">
+      <div class="nav-inner">
+        <a href="/" class="nav-logo">
+          <div class="nav-logo-s">S</div>
+          <span class="nav-brand">SIMY</span>
+          <span class="nav-version">v3.0</span>
+        </a>
+        <div class="nav-links" id="navLinks">
+          <a href="/" data-i18n="nav.home">Home</a>
+          <a href="/pricing.html" data-i18n="nav.pricing">Pricing</a>
+          <a href="/compare.html" data-i18n="nav.compare">Compare</a>
+          <a href="/about.html" data-i18n="nav.about">About</a>
+          <a href="/press-release.html" data-i18n="nav.news">News</a>
+        </div>
+        <div class="nav-right">
+          <a href="#" class="nav-signin" data-i18n="nav.signin">Sign in</a>
+          <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" class="btn-primary" target="_blank" rel="noopener" data-i18n="nav.cta">Request Access</a>
+        </div>
+        <button class="mobile-menu-btn" onclick="document.getElementById('navLinks').classList.toggle('active')" aria-label="Toggle menu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+      </div>
+    </nav>
+    <script>
+    window.addEventListener('scroll', function() {
+      var nav = document.getElementById('staticNav');
+      if (window.scrollY > 10) { nav.classList.add('scrolled'); }
+      else { nav.classList.remove('scrolled'); }
+    });
+    </script>
+    <div id="root" style="display:none!important"></div>
 
-<nav>
-  <div class="nav-inner">
-    <a href="/" class="nav-logo">
-      <svg class="nav-logo-s" width="32" height="32" viewBox="0 0 32 32" fill="none">
-        <rect width="32" height="32" rx="8" fill="#0057FF"/>
-        <path d="M21.5 11.5c-.5-2-2.5-3.5-5.5-3.5-3.5 0-5.5 1.8-5.5 4.2 0 2.8 2.5 3.8 5.2 4.5 2 .5 3.3 1 3.3 2.3 0 1.5-1.5 2.5-3.5 2.5-2.2 0-3.8-1-4.2-3" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
-      </svg>
-      <span class="nav-brand">SIMY</span>
-      <span class="nav-version">v3.0</span>
-    </a>
-    <div class="nav-links" id="navLinks">
-      <a href="/">Home</a>
-      <a href="/pricing.html">Pricing</a>
-      <a href="/compare">Compare</a>
-      <a href="/about.html">About</a>
-    </div>
-    <div class="nav-right">
-      <a href="#" class="nav-signin">Sign in</a>
-      <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" class="btn-primary" target="_blank" rel="noopener">Request Access</a>
-    </div>
-    <button class="mobile-menu-btn" onclick="document.getElementById('navLinks').classList.toggle('active')" aria-label="Toggle menu">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-        <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
-      </svg>
-    </button>
-  </div>
-</nav>
+    <!-- Static page content -->
 
 <div class="container">
   <div class="terms-content">
 
     <div class="terms-header">
-      <h1>Terms of Use</h1>
+      <h1 data-i18n="terms.title">Terms of Use</h1>
       <div class="terms-meta">
-        <span>Effective Date: February 28, 2026</span>
-        <span>Last Updated: February 28, 2026</span>
+        <span data-i18n="terms.effective">Effective Date: February 28, 2026</span>
+        <span data-i18n="terms.updated">Last Updated: February 28, 2026</span>
       </div>
     </div>
 
     <div class="terms-body">
 
-      <p>These Terms of Use ("Terms") govern your use of SIMY (the "Service"), operated by AwakApp Inc. ("Company," "we," "our," or "us"), a California corporation. By accessing or using the Service, you agree to be bound by these Terms.</p>
+      <p data-i18n="terms.intro">These Terms of Use ("Terms") govern your use of SIMY (the "Service"), operated by AwakApp Inc. ("Company," "we," "our," or "us"), a California corporation. By accessing or using the Service, you agree to be bound by these Terms.</p>
 
-      <h2>1. Scope and Agreement</h2>
-      <p>These Terms apply to all users. By using the Service, you confirm you have read, understood, and agreed to these Terms and our Privacy Policy. The Company has no obligation to monitor your compliance; you are solely responsible for your use.</p>
+      <h2 data-i18n="terms.h1">1. Scope and Agreement</h2>
+      <p data-i18n="terms.p1">These Terms apply to all users. By using the Service, you confirm you have read, understood, and agreed to these Terms and our Privacy Policy. The Company has no obligation to monitor your compliance; you are solely responsible for your use.</p>
 
-      <h2>2. Eligibility and Registration</h2>
-      <p>By using the Service, you represent that:</p>
+      <h2 data-i18n="terms.h2">2. Eligibility and Registration</h2>
+      <p data-i18n="terms.p2">By using the Service, you represent that:</p>
       <ul>
-        <li>You are at least 18 years of age.</li>
-        <li>You have the legal capacity to enter into binding contracts.</li>
-        <li>All registration information is accurate.</li>
+        <li data-i18n="terms.h2_li1">You are at least 18 years of age.</li>
+        <li data-i18n="terms.h2_li2">You have the legal capacity to enter into binding contracts.</li>
+        <li data-i18n="terms.h2_li3">All registration information is accurate.</li>
       </ul>
-      <p>Eligibility is determined by self-certification. The Company bears no liability for misrepresentation of age or identity.</p>
+      <p data-i18n="terms.p2_end">Eligibility is determined by self-certification. The Company bears no liability for misrepresentation of age or identity.</p>
 
-      <h2>3. Geographic Restrictions and Compliance</h2>
-      <p>You represent that you are not located in a U.S. sanctioned country (e.g., Cuba, Iran, North Korea, Syria) or on any restricted party list (OFAC SDN, etc.). You are solely responsible for compliance with local and international export control laws.</p>
+      <h2 data-i18n="terms.h3">3. Geographic Restrictions and Compliance</h2>
+      <p data-i18n="terms.p3">You represent that you are not located in a U.S. sanctioned country (e.g., Cuba, Iran, North Korea, Syria) or on any restricted party list (OFAC SDN, etc.). You are solely responsible for compliance with local and international export control laws.</p>
 
-      <h2>4. Description of the Service</h2>
-      <p>SIMY is an AI-powered engineering and productivity tool that processes conversations (voice/text) to generate code and manage development tasks. Features may change, be limited, or discontinued at any time without notice.</p>
+      <h2 data-i18n="terms.h4">4. Description of the Service</h2>
+      <p data-i18n="terms.p4">SIMY is an AI-powered engineering and productivity tool that processes conversations (voice/text) to generate code and manage development tasks. Features may change, be limited, or discontinued at any time without notice.</p>
 
-      <h2>5. User Responsibilities and Prohibited Data</h2>
+      <h2 data-i18n="terms.h5">5. User Responsibilities and Prohibited Data</h2>
 
-      <h3>5.1 General Responsibilities</h3>
-      <p>You are solely responsible for all content input and for verifying all AI-generated outputs before use.</p>
+      <h3 data-i18n="terms.h5_1">5.1 General Responsibilities</h3>
+      <p data-i18n="terms.p5_1">You are solely responsible for all content input and for verifying all AI-generated outputs before use.</p>
 
-      <h3>5.2 Prohibited Data</h3>
+      <h3 data-i18n="terms.h5_2">5.2 Prohibited Data</h3>
       <div class="important-note">
-        <p><strong>IMPORTANT:</strong> The Service is NOT currently certified for highly regulated data. You covenant that you will NOT input:</p>
+        <p data-i18n-html="terms.h5_2_note"><strong>IMPORTANT:</strong> The Service is NOT currently certified for highly regulated data. You covenant that you will NOT input:</p>
       </div>
       <ul>
-        <li>Protected Health Information (PHI) under HIPAA.</li>
-        <li>Payment Card Information (PCI) or financial credentials.</li>
-        <li>Government-classified information or ITAR-controlled technical data.</li>
-        <li>Passwords, API keys, or security tokens in a plain-text format.</li>
+        <li data-i18n="terms.h5_2_li1">Protected Health Information (PHI) under HIPAA.</li>
+        <li data-i18n="terms.h5_2_li2">Payment Card Information (PCI) or financial credentials.</li>
+        <li data-i18n="terms.h5_2_li3">Government-classified information or ITAR-controlled technical data.</li>
+        <li data-i18n="terms.h5_2_li4">Passwords, API keys, or security tokens in a plain-text format.</li>
       </ul>
 
-      <h3>5.3 Recording Consent</h3>
-      <p>You are solely responsible for obtaining all necessary consents from all parties before recording any conversation. You must comply with all applicable wiretapping and eavesdropping laws (e.g., "all-party consent" jurisdictions).</p>
+      <h3 data-i18n="terms.h5_3">5.3 Recording Consent</h3>
+      <p data-i18n="terms.p5_3">You are solely responsible for obtaining all necessary consents from all parties before recording any conversation. You must comply with all applicable wiretapping and eavesdropping laws (e.g., "all-party consent" jurisdictions).</p>
 
-      <h2>6. Intellectual Property and User Content License</h2>
-      <p>The Service and its original content are owned by the Company.</p>
+      <h2 data-i18n="terms.h6">6. Intellectual Property and User Content License</h2>
+      <p data-i18n="terms.p6">The Service and its original content are owned by the Company.</p>
 
-      <h3>6.1 License Grant and AI Training Policy</h3>
-      <p>You retain ownership of your "User Content." However, you grant the Company a license to use it to provide and improve the Service. AI training usage depends on your subscription plan:</p>
+      <h3 data-i18n="terms.h6_1">6.1 License Grant and AI Training Policy</h3>
+      <p data-i18n="terms.p6_1">You retain ownership of your "User Content." However, you grant the Company a license to use it to provide and improve the Service. AI training usage depends on your subscription plan:</p>
       <ul>
-        <li><strong>(a) Standard and Pro Plans (Individual):</strong> You agree that the Company may use your User Content to train, fine-tune, and improve our AI models and algorithms.</li>
-        <li><strong>(b) Enterprise and Business Plans:</strong> The Company will NOT use your User Content to train or improve our global AI models. Your data remains isolated to your organization's use and internal technical support.</li>
-        <li><strong>(c) Anonymized Data:</strong> We may use anonymized, aggregated data from all plans for analytical purposes.</li>
+        <li data-i18n-html="terms.h6_1_li1"><strong>(a) Standard and Pro Plans (Individual):</strong> You agree that the Company may use your User Content to train, fine-tune, and improve our AI models and algorithms.</li>
+        <li data-i18n-html="terms.h6_1_li2"><strong>(b) Enterprise and Business Plans:</strong> The Company will NOT use your User Content to train or improve our global AI models. Your data remains isolated to your organization's use and internal technical support.</li>
+        <li data-i18n-html="terms.h6_1_li3"><strong>(c) Anonymized Data:</strong> We may use anonymized, aggregated data from all plans for analytical purposes.</li>
       </ul>
 
-      <h2>7. AI Outputs and Disclaimers</h2>
-      <p>AI-generated code and suggestions ("AI Output") may be inaccurate, biased, or contain errors.</p>
+      <h2 data-i18n="terms.h7">7. AI Outputs and Disclaimers</h2>
+      <p data-i18n="terms.p7">AI-generated code and suggestions ("AI Output") may be inaccurate, biased, or contain errors.</p>
       <div class="important-note">
-        <p><strong>Human-in-the-Loop:</strong> You MUST review and test all AI Output. The Company is not liable for bugs, security vulnerabilities, or system failures caused by AI-generated code.</p>
+        <p data-i18n-html="terms.h7_note"><strong>Human-in-the-Loop:</strong> You MUST review and test all AI Output. The Company is not liable for bugs, security vulnerabilities, or system failures caused by AI-generated code.</p>
       </div>
 
-      <h2>8. Paid Services</h2>
-      <p>Fees are non-refundable. Subscriptions auto-renew unless cancelled via account settings or by emailing <a class="eml" data-u="tech" data-d="simy.one" style="color:var(--primary);text-decoration:none"></a>.</p>
+      <h2 data-i18n="terms.h8">8. Paid Services</h2>
+      <p data-i18n-html="terms.p8">Fees are non-refundable. Subscriptions auto-renew unless cancelled via account settings or by emailing <a class="eml" data-u="tech" data-d="simy.one" style="color:var(--primary);text-decoration:none"></a>.</p>
 
-      <h2>9. Third-Party Integrations</h2>
-      <p>We integrate with GitHub, Slack, Zoom, etc. We are not responsible for the privacy practices or availability of these third-party platforms.</p>
+      <h2 data-i18n="terms.h9">9. Third-Party Integrations</h2>
+      <p data-i18n="terms.p9">We integrate with GitHub, Slack, Zoom, etc. We are not responsible for the privacy practices or availability of these third-party platforms.</p>
 
-      <h2>10. Service Modifications and Termination</h2>
-      <p>We may terminate your access at any time for any reason, including suspected policy violations or security risks. Upon termination, the license grant for AI models (for non-enterprise users) survives.</p>
+      <h2 data-i18n="terms.h10">10. Service Modifications and Termination</h2>
+      <p data-i18n="terms.p10">We may terminate your access at any time for any reason, including suspected policy violations or security risks. Upon termination, the license grant for AI models (for non-enterprise users) survives.</p>
 
-      <h2>11. Disclaimers (Security &amp; Compliance)</h2>
+      <h2 data-i18n-html="terms.h11">11. Disclaimers (Security &amp; Compliance)</h2>
       <div class="disclaimer-block">
-        <p><strong>THE SERVICE IS PROVIDED "AS IS."</strong></p>
+        <p data-i18n-html="terms.h11_note"><strong>THE SERVICE IS PROVIDED "AS IS."</strong></p>
       </div>
       <ul>
-        <li><strong>No SOC2/HIPAA/PCI:</strong> You acknowledge that the Company has NOT yet obtained SOC2 Type II, HIPAA, or PCI DSS certifications.</li>
-        <li><strong>No Physical Isolation:</strong> Unless specifically agreed in a separate written Enterprise Agreement, the Service does not provide physical database isolation.</li>
-        <li><strong>Security Risk:</strong> While we use industry-standard encryption, we do not guarantee that the Service is immune to unauthorized access or data breaches.</li>
+        <li data-i18n-html="terms.h11_li1"><strong>No SOC2/HIPAA/PCI:</strong> You acknowledge that the Company has NOT yet obtained SOC2 Type II, HIPAA, or PCI DSS certifications.</li>
+        <li data-i18n-html="terms.h11_li2"><strong>No Physical Isolation:</strong> Unless specifically agreed in a separate written Enterprise Agreement, the Service does not provide physical database isolation.</li>
+        <li data-i18n-html="terms.h11_li3"><strong>Security Risk:</strong> While we use industry-standard encryption, we do not guarantee that the Service is immune to unauthorized access or data breaches.</li>
       </ul>
 
-      <h2>12. Limitation of Liability</h2>
+      <h2 data-i18n="terms.h12">12. Limitation of Liability</h2>
       <div class="disclaimer-block">
-        <p><strong>TO THE MAXIMUM EXTENT PERMITTED BY LAW:</strong></p>
+        <p data-i18n-html="terms.h12_note"><strong>TO THE MAXIMUM EXTENT PERMITTED BY LAW:</strong></p>
       </div>
       <ul>
-        <li>Our total liability is limited to 50% of the amount you paid us in the 12 months preceding the claim. If you paid $0, our liability is $0.</li>
-        <li>We are not liable for indirect, incidental, or consequential damages, including loss of profits, data, or business opportunities.</li>
+        <li data-i18n="terms.h12_li1">Our total liability is limited to 50% of the amount you paid us in the 12 months preceding the claim. If you paid $0, our liability is $0.</li>
+        <li data-i18n="terms.h12_li2">We are not liable for indirect, incidental, or consequential damages, including loss of profits, data, or business opportunities.</li>
       </ul>
 
-      <h2>13. Indemnification</h2>
-      <p>You agree to indemnify and hold the Company harmless from any claims arising from:</p>
+      <h2 data-i18n="terms.h13">13. Indemnification</h2>
+      <p data-i18n="terms.p13">You agree to indemnify and hold the Company harmless from any claims arising from:</p>
       <ul>
-        <li>(a) Your misuse of the Service;</li>
-        <li>(b) Your violation of these Terms;</li>
-        <li>(c) Your input of prohibited data (PHI, PCI, etc.); or</li>
-        <li>(d) Your failure to obtain recording consent.</li>
+        <li data-i18n="terms.h13_li1">(a) Your misuse of the Service;</li>
+        <li data-i18n="terms.h13_li2">(b) Your violation of these Terms;</li>
+        <li data-i18n="terms.h13_li3">(c) Your input of prohibited data (PHI, PCI, etc.); or</li>
+        <li data-i18n="terms.h13_li4">(d) Your failure to obtain recording consent.</li>
       </ul>
 
-      <h2>14. Governing Law and Dispute Resolution</h2>
-      <p>These Terms are governed by California law. Any disputes shall be resolved exclusively in the state or federal courts located in San Francisco County, California. You waive your right to a jury trial and class action.</p>
+      <h2 data-i18n="terms.h14">14. Governing Law and Dispute Resolution</h2>
+      <p data-i18n="terms.p14">These Terms are governed by California law. Any disputes shall be resolved exclusively in the state or federal courts located in San Francisco County, California. You waive your right to a jury trial and class action.</p>
 
-      <h2>15. Changes to Terms</h2>
-      <p>We may update these Terms at any time. Material changes will be notified 30 days in advance. Continued use constitutes acceptance of the new Terms.</p>
+      <h2 data-i18n="terms.h15">15. Changes to Terms</h2>
+      <p data-i18n="terms.p15">We may update these Terms at any time. Material changes will be notified 30 days in advance. Continued use constitutes acceptance of the new Terms.</p>
 
-      <h2>16. Contact Information</h2>
-      <p>AwakApp Inc.<br>
+      <h2 data-i18n="terms.h16">16. Contact Information</h2>
+      <p data-i18n-html="terms.p16">AwakApp Inc.<br>
       Privacy: <a class="eml" data-u="info" data-d="simy.one" style="color:var(--primary);text-decoration:none"></a><br>
       Support: <a class="eml" data-u="tech" data-d="simy.one" style="color:var(--primary);text-decoration:none"></a></p>
 
-      <h2>17. Acknowledgment</h2>
+      <h2 data-i18n="terms.h17">17. Acknowledgment</h2>
       <div class="important-note">
-        <p><strong>BY USING THE SERVICE, YOU ACKNOWLEDGE:</strong></p>
+        <p data-i18n-html="terms.h17_note"><strong>BY USING THE SERVICE, YOU ACKNOWLEDGE:</strong></p>
       </div>
       <ol>
-        <li>You are 18+ and not a sanctioned party.</li>
-        <li>Enterprise data is NOT used for AI training; Individual/Pro data IS used.</li>
-        <li>The Service is NOT SOC2/HIPAA compliant at this time.</li>
-        <li>You have obtained all necessary recording consents.</li>
-        <li>You accept the strictly limited liability of the Company.</li>
+        <li data-i18n="terms.h17_li1">You are 18+ and not a sanctioned party.</li>
+        <li data-i18n="terms.h17_li2">Enterprise data is NOT used for AI training; Individual/Pro data IS used.</li>
+        <li data-i18n="terms.h17_li3">The Service is NOT SOC2/HIPAA compliant at this time.</li>
+        <li data-i18n="terms.h17_li4">You have obtained all necessary recording consents.</li>
+        <li data-i18n="terms.h17_li5">You accept the strictly limited liability of the Company.</li>
       </ol>
 
-      <p style="margin-top: 32px; font-weight: 600; color: var(--foreground);">IF YOU DO NOT AGREE, DO NOT USE THE SERVICE.</p>
+      <p style="margin-top: 32px; font-weight: 600; color: var(--foreground);" data-i18n="terms.p_end">IF YOU DO NOT AGREE, DO NOT USE THE SERVICE.</p>
 
     </div>
   </div>
 </div>
 
-<footer>
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <div class="footer-tagline" style="font-size:1rem;font-weight:700;margin-bottom:6px;letter-spacing:-0.02em">Record. Ship. Done.</div>
-        <div style="display:flex;gap:12px;align-items:center;margin-top:12px">
-          <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" target="_blank" rel="noopener"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83" alt="Download on the App Store" style="height:36px"></a>
-          <a href="https://www.saashub.com/simy?utm_source=badge" target="_blank" rel="noopener"><img src="https://www.saashub.com/assets/badges/approved-619b455b5eec0842a85e5b498bf3e67c40e3e3fe2974892d26431de65adbc06e.svg" alt="Approved on SaaSHub" style="height:36px"></a>
+    <!-- Static footer — same code as all other pages -->
+    <footer class="static-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <div style="font-size:1rem;font-weight:700;margin-bottom:6px;letter-spacing:-0.02em" data-i18n="footer.tagline">Record. Ship. Done.</div>
+            <div style="display:flex;gap:12px;align-items:center;margin-top:12px">
+              <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" target="_blank" rel="noopener"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83" alt="Download on the App Store" style="height:36px"></a>
+            </div>
+          </div>
+          <div class="footer-col">
+            <div class="footer-col-title" data-i18n="footer.product">Product</div>
+            <a href="/how-it-works.html" data-i18n="footer.product.how">How It Works</a>
+            <a href="/pricing.html" data-i18n="footer.product.pricing">Pricing</a>
+            <a href="/compare.html" data-i18n="footer.product.compare">Compare</a>
+            <a href="/integrations.html" data-i18n="footer.product.integrations">Integrations</a>
+            <a href="/security.html" data-i18n="footer.product.security">Security</a>
+          </div>
+          <div class="footer-col">
+            <div class="footer-col-title" data-i18n="footer.company">Company</div>
+            <a href="/about.html" data-i18n="footer.company.about">About</a>
+            <a href="/careers.html" data-i18n="footer.company.careers">Careers</a>
+            <a href="/press.html" data-i18n="footer.company.press">Press</a>
+            <a href="/contact.html" data-i18n="footer.company.contact">Contact</a>
+            <a href="/status.html" data-i18n="footer.company.status">Status</a>
+          </div>
+          <div class="footer-col">
+            <div class="footer-col-title" data-i18n="footer.legal">Legal</div>
+            <a href="/privacy.html" data-i18n="footer.legal.privacy">Privacy Policy</a>
+            <a href="/terms.html" data-i18n="footer.legal.terms">Terms of Service</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span data-i18n="footer.copy">&copy; 2026 SIMY by AwakApp Inc. All rights reserved.</span>
         </div>
       </div>
-      <div class="footer-col">
-        <div class="footer-col-title">Product</div>
-        <a href="/how-it-works.html">How It Works</a>
-        <a href="/pricing.html">Pricing</a>
-        <a href="/compare">Compare</a>
-        <a href="/integrations.html">Integrations</a>
-        <a href="/security.html">Security</a>
-      </div>
-      <div class="footer-col">
-        <div class="footer-col-title">Company</div>
-        <a href="/about.html">About</a>
-        <a href="/careers.html">Careers</a>
-        <a href="/press.html">Press</a>
-        <a href="/contact.html">Contact</a>
-        <a href="/status.html">Status</a>
-      </div>
-      <div class="footer-col">
-        <div class="footer-col-title">Legal</div>
-        <a href="/privacy.html">Privacy Policy</a>
-        <a href="/terms.html">Terms of Service</a>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <span>&copy; 2026 SIMY by AwakApp Inc. All rights reserved.</span>
-    </div>
-  </div>
-</footer>
+    </footer>
 
-<div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:rgba(249,249,246,0.98);border-top:1px solid rgba(0,0,0,0.06);padding:16px 24px;backdrop-filter:blur(20px)"><div style="max-width:1140px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap"><p style="color:#7a7a78;font-size:0.85rem;margin:0;flex:1;min-width:200px">We use cookies to improve your experience. See our <a href="/privacy.html" style="color:#0057FF">Privacy Policy</a>.</p><div style="display:flex;gap:10px"><button onclick="setCookieConsent(false)" style="padding:8px 20px;border-radius:6px;border:1px solid rgba(0,0,0,0.15);background:transparent;color:#7a7a78;cursor:pointer;font-size:0.85rem;font-family:'Geist',sans-serif">Decline</button><button onclick="setCookieConsent(true)" style="padding:8px 20px;border-radius:6px;border:none;background:#0057FF;color:#fff;font-weight:700;cursor:pointer;font-size:0.85rem;font-family:'Geist',sans-serif">Accept</button></div></div></div>
-<script>function setCookieConsent(v){localStorage.setItem('simy-cookies',v?'1':'0');document.getElementById('cookieBanner').style.display='none'}if(!localStorage.getItem('simy-cookies'))document.getElementById('cookieBanner').style.display='block'</script>
+<div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:rgba(249,249,246,0.98);border-top:1px solid rgba(0,0,0,0.06);padding:16px 24px;backdrop-filter:blur(20px)"><div style="max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap"><p style="color:#7a7a78;font-size:0.85rem;margin:0;flex:1;min-width:200px"><span data-i18n="cookie.text">We use cookies to improve your experience. See our</span> <a href="/privacy.html" style="color:#0057FF" data-i18n="cookie.link">Privacy Policy</a>.</p><div style="display:flex;gap:10px"><button onclick="setCookieConsent(false)" style="padding:8px 20px;border-radius:6px;border:1px solid rgba(0,0,0,0.15);background:transparent;color:#7a7a78;cursor:pointer;font-size:0.85rem;font-family:'Geist',sans-serif" data-i18n="cookie.decline">Decline</button><button onclick="setCookieConsent(true)" style="padding:8px 20px;border-radius:6px;border:none;background:#0057FF;color:#fff;font-weight:700;cursor:pointer;font-size:0.85rem;font-family:'Geist',sans-serif" data-i18n="cookie.accept">Accept</button></div></div></div>
+<script>function setCookieConsent(v){localStorage.setItem('simy-cookies',v?'1':'0');document.getElementById('cookieBanner').style.display='none';if(v)loadGA();}if(!localStorage.getItem('simy-cookies'))document.getElementById('cookieBanner').style.display='block';</script>
 
 <script>
 document.querySelectorAll('a.eml').forEach(function(el){var e=el.dataset.u+String.fromCharCode(64)+el.dataset.d;el.href='m'+'ailt'+'o:'+e;el.textContent=e;});
 </script>
+<script src="/i18n.js"></script>
 </body>
 </html>

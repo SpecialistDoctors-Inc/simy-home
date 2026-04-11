@@ -205,22 +205,43 @@ resource "aws_cloudfront_function" "redirect" {
       }
 
       var uri = request.uri;
+      var host = request.headers.host ? request.headers.host.value : '';
+
       if (uri === '/test' || uri === '/test/' || uri.startsWith('/test/')) {
         return {
           statusCode: 301,
           statusDescription: 'Moved Permanently',
-          headers: { location: { value: '/' } }
+          headers: { location: { value: 'https://' + host + '/' } }
         };
       }
 
-      // Resolve directory-style URLs to index.html
-      // e.g. /compare -> /compare/index.html
+      // /index.html -> / redirect
+      if (uri === '/index.html') {
+        return {
+          statusCode: 301,
+          statusDescription: 'Moved Permanently',
+          headers: { location: { value: 'https://' + host + '/' } }
+        };
+      }
+
+      // Remove trailing slash (except root /)
+      // e.g. /about/ -> /about.html
+      if (uri !== '/' && uri.endsWith('/')) {
+        var trimmed = uri.slice(0, -1);
+        return {
+          statusCode: 301,
+          statusDescription: 'Moved Permanently',
+          headers: { location: { value: 'https://' + host + trimmed + '.html' } }
+        };
+      }
+
+      // /pricing, /compare, /about etc. -> redirect to .html
       if (uri !== '/' && !uri.includes('.')) {
-        if (uri.endsWith('/')) {
-          request.uri = uri + 'index.html';
-        } else {
-          request.uri = uri + '/index.html';
-        }
+        return {
+          statusCode: 301,
+          statusDescription: 'Moved Permanently',
+          headers: { location: { value: 'https://' + host + uri + '.html' } }
+        };
       }
 
       return request;
@@ -346,6 +367,17 @@ resource "aws_iam_policy" "github_actions_site_deploy" {
           "cloudfront:ListInvalidations"
         ]
         Resource = aws_cloudfront_distribution.site.arn
+      },
+      {
+        Sid    = "CloudFrontFunctionManagement"
+        Effect = "Allow"
+        Action = [
+          "cloudfront:DescribeFunction",
+          "cloudfront:GetFunction",
+          "cloudfront:UpdateFunction",
+          "cloudfront:PublishFunction"
+        ]
+        Resource = "arn:aws:cloudfront::${data.aws_caller_identity.current.account_id}:function/simy-site-${var.environment}-redirect"
       }
     ]
   })

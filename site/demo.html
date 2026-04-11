@@ -1,0 +1,900 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+  <title>SIMY Demo — The Product Manager at a 150-person tech company</title>
+  <meta name="description" content="See SIMY in action through the eyes of the Product Manager from our Home page. Meeting → actions → dashboard → digital twin, played back like Screen Studio." />
+  <link rel="canonical" href="https://simy.one/demo.html">
+  <meta name="robots" content="index, follow">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://simy.one/demo.html">
+  <meta property="og:title" content="SIMY Demo — The Product Manager's story">
+  <meta property="og:description" content="One PM, one planning meeting, one automated roadmap — played back in 12 seconds.">
+  <meta property="og:site_name" content="SIMY">
+  <meta property="og:image" content="https://simy.one/ogp.png">
+  <meta name="theme-color" content="#f9f9f6">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <style>
+    @font-face {
+      font-family: 'Geist';
+      src: url('https://d2xsxph8kpxj0f.cloudfront.net/310519663370063462/ThMFZacjNcqAVYF3jmcy3R/Geist-Variable_20a6b454.woff2') format('woff2');
+      font-weight: 100 900; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Geist Mono';
+      src: url('https://d2xsxph8kpxj0f.cloudfront.net/310519663370063462/ThMFZacjNcqAVYF3jmcy3R/GeistMono-Variable_ff5577e3.woff2') format('woff2');
+      font-weight: 100 900; font-style: normal; font-display: swap;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #f9f9f6;
+      --card: #ffffff;
+      --fg: #0a0a0a;
+      --fg-muted: #5a5a56;
+      --fg-dim: #9a9a96;
+      --primary: #0057ff;
+      --primary-dim: rgba(0, 87, 255, 0.08);
+      --border: #e4e4e0;
+    }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body {
+      font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg); color: var(--fg);
+      line-height: 1.6; -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── Nav (shared with site) ────────────────────────────── */
+    nav.static-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+      transition: all 0.3s;
+      background: rgba(250,250,248,0.9);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid transparent;
+    }
+    nav.static-nav.scrolled {
+      background: rgba(250,250,248,0.97);
+      border-bottom-color: #e0e0dc;
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      max-width: 1280px; margin: 0 auto; padding: 0 4rem; height: 60px;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; }
+    .nav-logo-s {
+      width: 24px; height: 24px;
+      display: flex; align-items: center; justify-content: center;
+      background-color: var(--primary); color: #fff;
+      font-family: 'Geist Mono', monospace;
+      font-size: 13px; font-weight: 500;
+    }
+    .nav-brand { font-size: 14px; font-weight: 700; letter-spacing: 0.06em; }
+    .nav-version {
+      font-family: 'Geist Mono', monospace;
+      font-size: 13px; color: var(--primary); letter-spacing: 0.06em;
+    }
+    .nav-links { display: flex; gap: 32px; align-items: center; }
+    .nav-links a {
+      color: var(--fg-muted); font-size: 0.8125rem;
+      letter-spacing: 0.01em; transition: color 0.18s; position: relative;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -2px; left: 0;
+      width: 0; height: 1px; background: var(--primary); transition: width 0.25s;
+    }
+    .nav-links a:hover { color: var(--fg); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-right { display: flex; align-items: center; gap: 20px; }
+    .nav-signin { color: var(--fg-muted); font-size: 0.8125rem; }
+    .nav-signin:hover { color: var(--fg); }
+    .btn-primary {
+      background: var(--primary); color: #fff;
+      border: 1px solid var(--primary);
+      padding: 0.5rem 1.25rem; font-size: 0.8125rem; font-weight: 500;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      transition: background-color 0.18s; cursor: pointer;
+    }
+    .btn-primary:hover { background: #0047dd; }
+    .mobile-menu-btn { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+
+    /* ── Layout ─────────────────────────────────────────────── */
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 4rem; }
+    main { padding-top: 60px; }
+
+    .section-label {
+      display: inline-block;
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.72rem; font-weight: 500;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--primary);
+      padding: 6px 12px;
+      border: 1px solid rgba(0,87,255,0.25);
+      background: rgba(0,87,255,0.04);
+      border-radius: 999px;
+      margin-bottom: 24px;
+    }
+
+    /* ── Hero ───────────────────────────────────────────────── */
+    .hero {
+      padding: 120px 0 80px;
+      display: grid; grid-template-columns: 1.3fr 1fr; gap: 80px; align-items: center;
+    }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.72rem; letter-spacing: 0.14em;
+      color: var(--fg-muted); text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .hero-tag .dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: #ff4a2f;
+      animation: pulse 1.8s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.35; transform: scale(0.75); }
+    }
+    .hero h1 {
+      font-size: clamp(36px, 4.8vw, 68px);
+      font-weight: 800; letter-spacing: -0.035em;
+      line-height: 1.02; margin-bottom: 28px;
+    }
+    .hero h1 .accent { color: var(--primary); font-style: italic; font-weight: 700; }
+    .hero p.lead {
+      font-size: 1.18rem; color: var(--fg-muted);
+      max-width: 540px; line-height: 1.55;
+      margin-bottom: 32px;
+    }
+    .hero-cta { display: flex; gap: 14px; align-items: center; }
+    .hero-cta .btn-primary { padding: 0.85rem 1.6rem; font-size: 0.9rem; }
+    .hero-cta .btn-ghost {
+      padding: 0.85rem 1.4rem; font-size: 0.9rem;
+      border: 1px solid var(--border); color: var(--fg-muted);
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      transition: all 0.18s;
+    }
+    .hero-cta .btn-ghost:hover { border-color: var(--fg); color: var(--fg); }
+
+    .hero-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 36px 32px;
+      box-shadow: 0 24px 60px -20px rgba(0,30,120,0.12);
+      position: relative; overflow: hidden;
+    }
+    .hero-card::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(120% 80% at 80% 0%, rgba(0,87,255,0.08), transparent 60%);
+      pointer-events: none;
+    }
+    .hero-card-top {
+      display: flex; align-items: center; gap: 14px; margin-bottom: 22px;
+      position: relative;
+    }
+    .avatar {
+      width: 62px; height: 62px; border-radius: 50%;
+      background: linear-gradient(135deg, #d8e4ff, #b6c7ff);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Geist', sans-serif; font-weight: 700; font-size: 22px;
+      color: #0038a8; flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(0,87,255,0.18);
+    }
+    .name { font-size: 1.05rem; font-weight: 700; }
+    .title-line { font-size: 0.82rem; color: var(--fg-muted); margin-top: 2px; }
+    .hero-quote {
+      font-size: 1.08rem; line-height: 1.55; color: var(--fg);
+      font-style: italic; position: relative; padding-left: 18px;
+      border-left: 2px solid var(--primary);
+    }
+    .hero-meta {
+      margin-top: 22px; padding-top: 22px;
+      border-top: 1px solid var(--border);
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+      font-family: 'Geist Mono', monospace; font-size: 0.72rem;
+      letter-spacing: 0.1em; color: var(--fg-dim); text-transform: uppercase;
+    }
+    .hero-meta b { color: var(--fg); font-weight: 600; display: block; font-size: 0.85rem; letter-spacing: -0.01em; text-transform: none; font-family: 'Geist', sans-serif; }
+
+    /* ── 01 / Who Uses SIMY ─────────────────────────────────── */
+    .who { padding: 40px 0 100px; }
+    .who h2 {
+      font-size: clamp(32px, 3.6vw, 52px); font-weight: 800;
+      letter-spacing: -0.028em; line-height: 1.08;
+      max-width: 760px; margin-bottom: 18px;
+    }
+    .who h2 .accent { color: var(--primary); }
+    .who p.kicker {
+      font-size: 1.05rem; color: var(--fg-muted);
+      max-width: 620px; margin-bottom: 56px;
+    }
+    .story-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+    }
+    .story-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px 28px;
+      position: relative;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .story-card:hover { transform: translateY(-3px); box-shadow: 0 18px 40px -18px rgba(0,30,120,0.14); }
+    .story-card .tag {
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--fg-dim); margin-bottom: 14px; display: block;
+    }
+    .story-card.after .tag { color: var(--primary); }
+    .story-card h3 {
+      font-size: 1.1rem; font-weight: 700; margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+    .story-card p { font-size: 0.95rem; color: var(--fg-muted); line-height: 1.6; }
+    .story-card.outcome {
+      background: #0a0a0a; color: #f5f5f0; border-color: #0a0a0a;
+    }
+    .story-card.outcome .tag { color: #6a6a66; }
+    .story-card.outcome h3 { color: #fff; }
+    .story-card.outcome p { color: #c8c8c4; }
+
+    /* ── 02 / Demo · Screen Studio-style ───────────────────── */
+    .demo {
+      padding: 40px 0 120px;
+      border-top: 1px solid var(--border);
+    }
+    .demo-head { margin-bottom: 48px; }
+    .demo h2 {
+      font-size: clamp(32px, 3.6vw, 52px); font-weight: 800;
+      letter-spacing: -0.028em; line-height: 1.08;
+      max-width: 760px; margin-bottom: 18px;
+    }
+    .demo h2 .accent { color: var(--primary); }
+    .demo p.kicker {
+      font-size: 1.05rem; color: var(--fg-muted);
+      max-width: 620px;
+    }
+
+    /* Screen Studio-style gradient stage */
+    .ss-wrap {
+      position: relative;
+      border-radius: 24px;
+      padding: 64px 56px 56px;
+      overflow: hidden;
+      background:
+        radial-gradient(90% 60% at 20% 10%, #bfd4ff 0%, transparent 55%),
+        radial-gradient(80% 60% at 85% 20%, #ffd9ea 0%, transparent 55%),
+        radial-gradient(60% 60% at 50% 95%, #c6e4ff 0%, transparent 55%),
+        linear-gradient(135deg, #eef2ff 0%, #fef0f7 50%, #e6f1ff 100%);
+      box-shadow: 0 32px 80px -30px rgba(20,30,90,0.18);
+    }
+    .ss-wrap::before {
+      /* soft blurred light blob for depth */
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(40% 40% at 30% 40%, rgba(255,255,255,0.5), transparent 70%);
+      pointer-events: none;
+    }
+    .ss-wrap::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(35% 35% at 75% 70%, rgba(255,255,255,0.35), transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Browser window (device frame) */
+    .ss-browser {
+      position: relative;
+      width: 100%;
+      max-width: 980px;
+      margin: 0 auto;
+      background: #0d0e12;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow:
+        0 2px 0 rgba(255,255,255,0.1) inset,
+        0 40px 100px -20px rgba(20,30,80,0.45),
+        0 20px 40px -12px rgba(10,15,50,0.35);
+      transform: translateZ(0);
+    }
+    .ss-chrome {
+      display: flex; align-items: center; gap: 8px;
+      padding: 12px 16px;
+      background: #15161b;
+      border-bottom: 1px solid #23242a;
+    }
+    .ss-chrome .c-dot { width: 11px; height: 11px; border-radius: 50%; display: inline-block; }
+    .ss-chrome .c1 { background: #ff5f56; }
+    .ss-chrome .c2 { background: #ffbd2e; }
+    .ss-chrome .c3 { background: #27c93f; }
+    .ss-chrome .c-addr {
+      flex: 1;
+      margin: 0 14px;
+      background: #1d1f26;
+      color: #aab0c0;
+      font-family: 'Geist Mono', monospace;
+      font-size: 12px;
+      padding: 6px 14px;
+      border-radius: 7px;
+      text-align: center;
+      border: 1px solid #262832;
+    }
+    .ss-chrome .c-addr .lock {
+      color: #6f7891;
+      margin-right: 6px;
+    }
+    .ss-chrome .c-rec {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: 'Geist Mono', monospace;
+      font-size: 10px; letter-spacing: 0.14em;
+      color: #ff4a2f;
+    }
+    .ss-chrome .c-rec::before {
+      content: ''; width: 7px; height: 7px; border-radius: 50%;
+      background: #ff4a2f; animation: pulse 1.5s infinite;
+    }
+
+    /* Viewport holds 4 overlayed slides */
+    .ss-viewport {
+      position: relative;
+      aspect-ratio: 16 / 10;
+      background: #f3f4f7;
+      overflow: hidden;
+    }
+    .ss-slide {
+      position: absolute; inset: 0;
+      opacity: 0;
+      transform: scale(1.05);
+      transform-origin: center center;
+      will-change: opacity, transform;
+    }
+    .ss-slide img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top left;
+    }
+
+    /* 12s loop, 4 × 3s scenes. Each slide fades in, holds, fades out.
+       slideShow window: opacity 0→1 from 1%–7%, hold 7%–22%, fade 22%–26%. */
+    @keyframes ssSlide {
+      0%   { opacity: 0; transform: scale(1.05); }
+      1%   { opacity: 0; transform: scale(1.05); }
+      6%   { opacity: 1; transform: scale(1.02); }
+      20%  { opacity: 1; transform: scale(1.00); }
+      25%  { opacity: 0; transform: scale(0.97); }
+      100% { opacity: 0; transform: scale(1.05); }
+    }
+    .ss-slide.s1 { animation: ssSlide 12s ease-in-out infinite; animation-delay: 0s; }
+    .ss-slide.s2 { animation: ssSlide 12s ease-in-out infinite; animation-delay: 3s; }
+    .ss-slide.s3 { animation: ssSlide 12s ease-in-out infinite; animation-delay: 6s; }
+    .ss-slide.s4 { animation: ssSlide 12s ease-in-out infinite; animation-delay: 9s; }
+
+    /* Cursor — one pointer per slide, animated during the slide's visible window */
+    .ss-cursor {
+      position: absolute;
+      width: 24px; height: 24px;
+      pointer-events: none;
+      z-index: 3;
+      filter: drop-shadow(0 4px 10px rgba(10,20,60,0.4));
+      opacity: 0;
+    }
+    .ss-cursor svg { width: 100%; height: 100%; display: block; }
+    /* Click ripple sits at cursor tip */
+    .ss-cursor::after {
+      content: '';
+      position: absolute;
+      left: 2px; top: 2px;
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: rgba(0,87,255,0.35);
+      border: 2px solid rgba(0,87,255,0.85);
+      transform: scale(0);
+      opacity: 0;
+    }
+
+    /* Cursor 1 — scene 1 (0–3s): enters bottom-left, glides to a suggested-question card */
+    @keyframes ssCursor1 {
+      0%   { left: 8%;  top: 82%; opacity: 0; }
+      1%   { opacity: 1; }
+      6%   { left: 36%; top: 58%; opacity: 1; }
+      8%   { left: 36%; top: 58%; opacity: 1; }
+      25%  { opacity: 0; }
+      100% { opacity: 0; }
+    }
+    @keyframes ssClick1 {
+      0%, 6%, 100% { transform: scale(0); opacity: 0; }
+      7%          { transform: scale(0.2); opacity: 0.9; }
+      12%         { transform: scale(2.6); opacity: 0; }
+    }
+    .s1 .ss-cursor { animation: ssCursor1 12s linear infinite; animation-delay: 0s; }
+    .s1 .ss-cursor::after { animation: ssClick1 12s linear infinite; animation-delay: 0s; }
+
+    /* Cursor 2 — scene 2 (3–6s): enters top-right, glides to Must Decide card */
+    @keyframes ssCursor2 {
+      0%, 24% { opacity: 0; left: 94%; top: 12%; }
+      25%     { opacity: 1; }
+      32%     { left: 62%; top: 42%; opacity: 1; }
+      34%     { left: 62%; top: 42%; opacity: 1; }
+      49%     { opacity: 0; }
+      100%    { opacity: 0; }
+    }
+    @keyframes ssClick2 {
+      0%, 32%, 100% { transform: scale(0); opacity: 0; }
+      33%          { transform: scale(0.2); opacity: 0.9; }
+      38%          { transform: scale(2.6); opacity: 0; }
+    }
+    .s2 .ss-cursor { animation: ssCursor2 12s linear infinite; }
+    .s2 .ss-cursor::after { animation: ssClick2 12s linear infinite; }
+
+    /* Cursor 3 — scene 3 (6–9s): enters bottom-right, glides to an action item */
+    @keyframes ssCursor3 {
+      0%, 49% { opacity: 0; left: 92%; top: 86%; }
+      50%     { opacity: 1; }
+      57%     { left: 36%; top: 42%; opacity: 1; }
+      59%     { left: 36%; top: 42%; opacity: 1; }
+      74%     { opacity: 0; }
+      100%    { opacity: 0; }
+    }
+    @keyframes ssClick3 {
+      0%, 57%, 100% { transform: scale(0); opacity: 0; }
+      58%          { transform: scale(0.2); opacity: 0.9; }
+      63%          { transform: scale(2.6); opacity: 0; }
+    }
+    .s3 .ss-cursor { animation: ssCursor3 12s linear infinite; }
+    .s3 .ss-cursor::after { animation: ssClick3 12s linear infinite; }
+
+    /* Cursor 4 — scene 4 (9–12s): enters from top-left, glides to Retention widget */
+    @keyframes ssCursor4 {
+      0%, 74% { opacity: 0; left: 6%; top: 14%; }
+      75%     { opacity: 1; }
+      82%     { left: 44%; top: 46%; opacity: 1; }
+      84%     { left: 44%; top: 46%; opacity: 1; }
+      99%     { opacity: 0; }
+      100%    { opacity: 0; }
+    }
+    @keyframes ssClick4 {
+      0%, 82%, 100% { transform: scale(0); opacity: 0; }
+      83%          { transform: scale(0.2); opacity: 0.9; }
+      88%          { transform: scale(2.6); opacity: 0; }
+    }
+    .s4 .ss-cursor { animation: ssCursor4 12s linear infinite; }
+    .s4 .ss-cursor::after { animation: ssClick4 12s linear infinite; }
+
+    /* Progress rail under the browser */
+    .ss-progress {
+      position: relative;
+      height: 4px;
+      margin: 24px auto 0;
+      max-width: 980px;
+      background: rgba(10,20,60,0.08);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .ss-progress::before {
+      content: '';
+      position: absolute; top: 0; left: 0;
+      height: 100%;
+      width: 25%;
+      background: linear-gradient(90deg, #0057ff, #4d8bff);
+      border-radius: 4px;
+      animation: ssProgress 12s linear infinite;
+    }
+    @keyframes ssProgress {
+      0%   { left: 0%;   }
+      100% { left: 75%;  }
+    }
+    .ss-scene-ticks {
+      display: flex; justify-content: space-between;
+      margin: 14px auto 0; max-width: 980px;
+      font-family: 'Geist Mono', monospace;
+      font-size: 10px; letter-spacing: 0.12em;
+      color: #6a7392; text-transform: uppercase;
+    }
+    .ss-scene-ticks span {
+      flex: 1; text-align: center;
+      padding: 6px 4px;
+      border-top: 1px solid rgba(10,20,60,0.1);
+      transition: color 0.3s;
+    }
+    .ss-scene-ticks span.t1 { animation: tickActive 12s linear infinite; animation-delay: 0s; }
+    .ss-scene-ticks span.t2 { animation: tickActive 12s linear infinite; animation-delay: 3s; }
+    .ss-scene-ticks span.t3 { animation: tickActive 12s linear infinite; animation-delay: 6s; }
+    .ss-scene-ticks span.t4 { animation: tickActive 12s linear infinite; animation-delay: 9s; }
+    @keyframes tickActive {
+      0%, 100% { color: #6a7392; }
+      3%, 22%  { color: #0057ff; }
+    }
+
+    /* Caption bar (telop) — beneath the browser, Screen Studio-style */
+    .ss-caption {
+      position: relative;
+      max-width: 980px;
+      margin: 28px auto 0;
+      padding: 22px 28px;
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(10,20,60,0.08);
+      border-radius: 14px;
+      box-shadow: 0 16px 40px -16px rgba(20,30,80,0.18);
+      min-height: 96px;
+      display: flex; align-items: center; gap: 22px;
+    }
+    .ss-caption .cap-time {
+      font-family: 'Geist Mono', monospace;
+      font-size: 11px;
+      color: var(--primary);
+      letter-spacing: 0.14em;
+      border: 1px solid rgba(0,87,255,0.3);
+      background: rgba(0,87,255,0.06);
+      padding: 6px 10px;
+      border-radius: 6px;
+      flex-shrink: 0;
+    }
+    .ss-caption .cap-body {
+      position: relative; flex: 1; height: 52px;
+    }
+    .ss-caption .cap {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; justify-content: center;
+      opacity: 0; transform: translateY(8px);
+    }
+    .ss-caption .cap .main {
+      font-size: 1.02rem; font-weight: 600;
+      letter-spacing: -0.01em; color: #0a0a0a;
+      margin-bottom: 3px;
+    }
+    .ss-caption .cap .sub {
+      font-size: 0.82rem; color: #5a5a56;
+    }
+    @keyframes ssCaption {
+      0%, 100% { opacity: 0; transform: translateY(8px); }
+      5%, 22%  { opacity: 1; transform: translateY(0); }
+      27%      { opacity: 0; transform: translateY(-6px); }
+    }
+    .ss-caption .cap.k1 { animation: ssCaption 12s ease-in-out infinite; animation-delay: 0s; }
+    .ss-caption .cap.k2 { animation: ssCaption 12s ease-in-out infinite; animation-delay: 3s; }
+    .ss-caption .cap.k3 { animation: ssCaption 12s ease-in-out infinite; animation-delay: 6s; }
+    .ss-caption .cap.k4 { animation: ssCaption 12s ease-in-out infinite; animation-delay: 9s; }
+
+    /* Reduce motion */
+    @media (prefers-reduced-motion: reduce) {
+      .ss-slide, .ss-cursor, .ss-cursor::after,
+      .ss-progress::before, .ss-scene-ticks span, .ss-caption .cap {
+        animation: none !important;
+      }
+      .ss-slide.s1 { opacity: 1; transform: none; }
+      .ss-caption .cap.k1 { opacity: 1; transform: none; }
+    }
+
+    /* ── CTA ────────────────────────────────────────────────── */
+    .cta-block {
+      padding: 100px 0 120px;
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+    .cta-block h2 {
+      font-size: clamp(28px, 3.2vw, 44px);
+      font-weight: 800; letter-spacing: -0.028em;
+      margin-bottom: 14px;
+    }
+    .cta-block h2 .accent { color: var(--primary); }
+    .cta-block p {
+      color: var(--fg-muted); font-size: 1.05rem;
+      max-width: 540px; margin: 0 auto 32px;
+    }
+    .cta-block .btn-primary { padding: 1rem 2rem; font-size: 0.95rem; }
+
+    /* ── Footer ─────────────────────────────────────────────── */
+    footer.static-footer {
+      padding: 48px 0 36px;
+      background: #0a0a0a; color: #f5f5f0;
+    }
+    footer .container { max-width: 1280px; margin: 0 auto; padding: 0 4rem; }
+    .footer-grid {
+      display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 40px; margin-bottom: 40px;
+    }
+    .footer-col { display: flex; flex-direction: column; gap: 10px; }
+    .footer-col-title {
+      font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: #6a6a66; margin-bottom: 4px;
+    }
+    .footer-col a { color: #9a9a96; font-size: 0.85rem; transition: color 0.2s; }
+    .footer-col a:hover { color: #f5f5f0; }
+    .footer-bottom {
+      padding-top: 24px; border-top: 1px solid #1a1a1a;
+      font-size: 0.75rem; color: #3a3a36; text-align: center;
+    }
+
+    /* ── Responsive ─────────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .hero { grid-template-columns: 1fr; gap: 48px; padding: 110px 0 60px; }
+      .story-grid { grid-template-columns: 1fr; }
+      .ss-wrap { padding: 40px 28px 36px; border-radius: 20px; }
+      .ss-browser { max-width: 100%; }
+      .ss-caption { padding: 18px 20px; gap: 16px; }
+      .ss-caption .cap .main { font-size: 0.96rem; }
+      .ss-caption .cap .sub  { font-size: 0.78rem; }
+    }
+    @media (max-width: 768px) {
+      .nav-links, .nav-right { display: none; }
+      .mobile-menu-btn { display: block; }
+      .nav-inner { padding: 0 1.5rem; }
+      .container { padding: 0 1.5rem; }
+      footer .container { padding: 0 1.5rem; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
+
+      .ss-wrap { padding: 28px 16px 24px; border-radius: 16px; }
+      .ss-chrome { padding: 10px 12px; }
+      .ss-chrome .c-addr { font-size: 10px; padding: 5px 10px; margin: 0 8px; }
+      .ss-chrome .c-rec  { font-size: 9px; }
+      .ss-caption {
+        flex-direction: column; align-items: flex-start;
+        gap: 10px; padding: 14px 16px;
+        min-height: 128px;
+      }
+      .ss-caption .cap-body { width: 100%; height: 68px; }
+      .ss-caption .cap .main { font-size: 0.9rem; }
+      .ss-caption .cap .sub  { font-size: 0.76rem; }
+      .ss-scene-ticks { font-size: 9px; }
+      .ss-scene-ticks span { padding: 6px 2px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav class="static-nav" id="staticNav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">
+        <div class="nav-logo-s">S</div>
+        <span class="nav-brand">SIMY</span>
+        <span class="nav-version">v3.0</span>
+      </a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/pricing.html">Pricing</a>
+        <a href="/compare.html">Compare</a>
+        <a href="/about.html">About</a>
+        <a href="/press-release.html">News</a>
+      </div>
+      <div class="nav-right">
+        <a href="#" class="nav-signin">Sign in</a>
+        <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" class="btn-primary" target="_blank" rel="noopener">Request Access</a>
+      </div>
+      <button class="mobile-menu-btn" aria-label="Toggle menu">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
+  <script>
+    window.addEventListener('scroll', function(){
+      var n = document.getElementById('staticNav');
+      if (window.scrollY > 10) n.classList.add('scrolled'); else n.classList.remove('scrolled');
+    });
+  </script>
+
+  <main>
+    <!-- ── Hero ────────────────────────────────────────────── -->
+    <section class="container hero">
+      <div>
+        <div class="hero-tag"><span class="dot"></span>Home · Real User Story</div>
+        <h1>
+          The Product Manager<br/>
+          at a 150-person<br/>
+          tech company.<br/>
+          <span class="accent">This is her SIMY.</span>
+        </h1>
+        <p class="lead">
+          She's persona #4 on the Home page — the PM whose planning sessions used to end with hours of manual roadmap wrangling. Press play and watch what her SIMY looks like on a normal Tuesday: one meeting, one dashboard, one digital twin.
+        </p>
+        <div class="hero-cta">
+          <a href="#demo" class="btn-primary">
+            Play the demo
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="5 12 19 12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <a href="/how-it-works.html" class="btn-ghost">How SIMY works</a>
+        </div>
+      </div>
+
+      <div class="hero-card">
+        <div class="hero-card-top">
+          <div class="avatar">PM</div>
+          <div>
+            <div class="name">The Product Manager</div>
+            <div class="title-line">150-person tech company · Persona 04</div>
+          </div>
+        </div>
+        <div class="hero-quote">
+          "Our planning meeting used to be the start of my real work.<br/>
+          Now it's the end of it."
+        </div>
+        <div class="hero-meta">
+          <div><b>Before SIMY</b>Hours spent turning discussion into tickets</div>
+          <div><b>With SIMY</b>Structured roadmap, owners, estimates — auto</div>
+          <div><b>Before standup</b>Roadmap is already shared</div>
+          <div><b>Home page</b>Persona 04 / role-based</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 01 / Who Uses SIMY ─────────────────────────────── -->
+    <section class="container who">
+      <span class="section-label">01 / Who Uses SIMY</span>
+      <h2>
+        If you are this person,<br/>
+        <span class="accent">let's build this together.</span>
+      </h2>
+      <p class="kicker">
+        Taken verbatim from the SIMY Home page — persona 04 of 9. The Product Manager at a 150-person tech company. No name, just the role and the story.
+      </p>
+
+      <div class="story-grid">
+        <div class="story-card before">
+          <span class="tag">Before SIMY</span>
+          <h3>Planning ends. Real work begins.</h3>
+          <p>After every planning session, someone spends hours turning discussion into a structured roadmap. Decisions get lost. Owners get fuzzy. The doc lands in Notion by Thursday.</p>
+        </div>
+        <div class="story-card after">
+          <span class="tag">With SIMY</span>
+          <h3>Meeting ends. Roadmap ships.</h3>
+          <p>SIMY generates a structured roadmap, assigns owners, and sends summaries automatically. Every decision is captured the moment it's made — no cleanup required.</p>
+        </div>
+        <div class="story-card outcome">
+          <span class="tag">The outcome</span>
+          <h3>Roadmap ready<br/>before the next standup.</h3>
+          <p>Her squads show up to standup with a shared, written plan — not a half-remembered meeting. Mondays are now about questions, not note-taking.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 02 / Demo ──────────────────────────────────────── -->
+    <section class="container demo" id="demo">
+      <div class="demo-head">
+        <span class="section-label">02 / Demo</span>
+        <h2>
+          Her Tuesday afternoon,<br/>
+          <span class="accent">played back in 12 seconds.</span>
+        </h2>
+        <p class="kicker">
+          A single unbroken take through the real SIMY desktop app. Four scenes — Meeting, Actions, Dashboard, Twin — with the cursor moving the way she moves it. No edits, no fake UI.
+        </p>
+      </div>
+
+      <!-- Screen Studio–style single-frame demo -->
+      <div class="ss-wrap">
+        <div class="ss-browser">
+          <div class="ss-chrome">
+            <span class="c-dot c1"></span>
+            <span class="c-dot c2"></span>
+            <span class="c-dot c3"></span>
+            <div class="c-addr"><span class="lock">&#128274;</span>app.simy.one &nbsp;/&nbsp; product-manager</div>
+            <div class="c-rec">REC &middot; LIVE</div>
+          </div>
+
+          <div class="ss-viewport">
+            <!-- Scene 1 — Digital Twin (landing) -->
+            <div class="ss-slide s1">
+              <img src="/assets/demo-shots/01-twin.png" alt="SIMY Digital Twin — conversational start" loading="lazy">
+              <div class="ss-cursor" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="#0a0a0a" stroke="#ffffff" stroke-width="1.2"><path d="M3 2 L3 20 L8 15 L11 22 L14 21 L11 14 L18 14 Z"/></svg>
+              </div>
+            </div>
+
+            <!-- Scene 2 — Meetings (Q2 Strategy) -->
+            <div class="ss-slide s2">
+              <img src="/assets/demo-shots/02-meetings.png" alt="SIMY Meetings — Q2 Strategy, Must Decide list" loading="lazy">
+              <div class="ss-cursor" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="#0a0a0a" stroke="#ffffff" stroke-width="1.2"><path d="M3 2 L3 20 L8 15 L11 22 L14 21 L11 14 L18 14 Z"/></svg>
+              </div>
+            </div>
+
+            <!-- Scene 3 — My Actions (PR drafted) -->
+            <div class="ss-slide s3">
+              <img src="/assets/demo-shots/03-actions.png" alt="SIMY My Actions — PR drafted from the meeting" loading="lazy">
+              <div class="ss-cursor" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="#0a0a0a" stroke="#ffffff" stroke-width="1.2"><path d="M3 2 L3 20 L8 15 L11 22 L14 21 L11 14 L18 14 Z"/></svg>
+              </div>
+            </div>
+
+            <!-- Scene 4 — Growth Dashboard (North Star) -->
+            <div class="ss-slide s4">
+              <img src="/assets/demo-shots/04-dashboard.png" alt="SIMY Growth Dashboard — North Star &amp; Retention" loading="lazy">
+              <div class="ss-cursor" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="#0a0a0a" stroke="#ffffff" stroke-width="1.2"><path d="M3 2 L3 20 L8 15 L11 22 L14 21 L11 14 L18 14 Z"/></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Progress rail and scene ticks -->
+        <div class="ss-progress" aria-hidden="true"></div>
+        <div class="ss-scene-ticks" aria-hidden="true">
+          <span class="t1">01 &middot; Twin</span>
+          <span class="t2">02 &middot; Meeting</span>
+          <span class="t3">03 &middot; Actions</span>
+          <span class="t4">04 &middot; Dashboard</span>
+        </div>
+
+        <!-- Caption bar (telop) -->
+        <div class="ss-caption">
+          <div class="cap-time">00:00 &rarr; 00:12</div>
+          <div class="cap-body">
+            <div class="cap k1">
+              <div class="main">"Hi Tetsuo." — the Twin opens with a suggested question.</div>
+              <div class="sub">Scene 01. Morning check-in with the Digital Twin. It already knows what's due today.</div>
+            </div>
+            <div class="cap k2">
+              <div class="main">Q2 Strategy meeting ends — every "Must Decide" captured.</div>
+              <div class="sub">Scene 02. AI briefing, open issues, and owner assignments — no manual notes.</div>
+            </div>
+            <div class="cap k3">
+              <div class="main">A PR is already drafted: "Update homepage design to a whiter aesthetic."</div>
+              <div class="sub">Scene 03. My Actions turns the decision into a ready-to-review ticket.</div>
+            </div>
+            <div class="cap k4">
+              <div class="main">Growth Dashboard: North Star 1,247 (+12.4%) &middot; Retention 71%.</div>
+              <div class="sub">Scene 04. The outcome lands on her dashboard — roadmap ready before standup.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── CTA ────────────────────────────────────────────── -->
+    <section class="container cta-block">
+      <h2>If you're the Product Manager — or any of the other 8 personas on our Home page —<br/><span class="accent">let's build this together.</span></h2>
+      <p>SIMY is in pilot with a small number of teams. Join us and shape your SIMY alongside your own roadmap.</p>
+      <a href="/contact.html" class="btn-primary">Request pilot access
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="5 12 19 12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="static-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div style="font-size:1rem;font-weight:700;margin-bottom:6px;letter-spacing:-0.02em">Record. Ship. Done.</div>
+          <div style="display:flex;gap:12px;align-items:center;margin-top:12px">
+            <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" target="_blank" rel="noopener"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83" alt="Download on the App Store" style="height:36px"></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Product</div>
+          <a href="/how-it-works.html">How It Works</a>
+          <a href="/pricing.html">Pricing</a>
+          <a href="/compare.html">Compare</a>
+          <a href="/integrations.html">Integrations</a>
+          <a href="/security.html">Security</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Company</div>
+          <a href="/about.html">About</a>
+          <a href="/careers.html">Careers</a>
+          <a href="/press.html">Press</a>
+          <a href="/contact.html">Contact</a>
+          <a href="/status.html">Status</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Legal</div>
+          <a href="/privacy.html">Privacy Policy</a>
+          <a href="/terms.html">Terms of Service</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 SIMY by AwakApp Inc. All rights reserved.</span>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -45,11 +45,50 @@ jobs:
             --include "*.html" \
             --cache-control "public, max-age=300"
 
+      - name: Sync i18n runtime + translation JSON (short cache)
+        # i18n.js and /lang/*.json change frequently and must not be
+        # pinned to a 24h browser cache — otherwise users see stale
+        # translations or missing keys after we push updates.
+        run: |
+          aws s3 cp site/i18n.js s3://${{ secrets.SITE_S3_BUCKET }}/i18n.js \
+            --cache-control "public, max-age=300"
+          aws s3 sync site/lang/ s3://${{ secrets.SITE_S3_BUCKET }}/lang/ \
+            --delete \
+            --cache-control "public, max-age=300"
+
       - name: Sync static assets (long cache)
         run: |
           aws s3 sync site/ s3://${{ secrets.SITE_S3_BUCKET }}/ \
+            --delete \
             --exclude "*.html" \
+            --exclude "i18n.js" \
+            --exclude "lang/*" \
             --cache-control "public, max-age=86400"
+
+      - name: Update CloudFront Function
+        if: github.ref == 'refs/heads/main' || (github.event_name == 'workflow_dispatch' && inputs.environment == 'prod')
+        continue-on-error: true
+        run: |
+          FUNC_NAME="simy-site-prod-redirect"
+          FUNC_CODE_FILE="infra/cloudfront-functions/redirect-prod.js"
+
+          # Get current ETag
+          ETAG=$(aws cloudfront describe-function --name "$FUNC_NAME" --query 'ETag' --output text)
+
+          # Update function code
+          UPDATE_ETAG=$(aws cloudfront update-function \
+            --name "$FUNC_NAME" \
+            --function-config '{"Comment":"URL normalization + redirects","Runtime":"cloudfront-js-2.0"}' \
+            --function-code "fileb://${FUNC_CODE_FILE}" \
+            --if-match "$ETAG" \
+            --query 'ETag' --output text)
+
+          # Publish function to LIVE stage
+          aws cloudfront publish-function \
+            --name "$FUNC_NAME" \
+            --if-match "$UPDATE_ETAG"
+
+          echo "CloudFront Function '$FUNC_NAME' updated and published."
 
       - name: Invalidate CloudFront cache
         run: |

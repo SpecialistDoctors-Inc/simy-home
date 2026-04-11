@@ -1,17 +1,7 @@
-# robots.txt for SIMY Landing Page
-
 User-agent: *
 Allow: /
 
-# Block development/config files
 Disallow: /.claude/
+Disallow: /compare/
 
-# Block non-existent Next.js paths
-Disallow: /_next/
-
-# Block trailing-slash duplicates of .html pages
-Disallow: /privacy.html/
-Disallow: /terms.html/
-
-# Sitemap location
 Sitemap: https://simy.one/sitemap.xml
