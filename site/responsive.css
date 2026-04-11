@@ -1,0 +1,221 @@
+/* ==========================================================================
+   SIMY — Shared Mobile Responsive Overrides
+   Loaded by every HTML page in /site. Targets ≤768px (primary: ~375px).
+   ========================================================================== */
+
+/* ---- Global safety net: prevent horizontal overflow everywhere ---- */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Media elements never blow out the layout */
+img, video, iframe, svg, canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Long words / URLs wrap instead of forcing horizontal scroll */
+p, li, a, h1, h2, h3, h4, h5, h6, span, div, td, th, dd, dt, blockquote {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Tables inside .*-table-wrap can still scroll horizontally — leave those alone */
+
+/* ---- React SPA (home) overrides: clip marquees, prevent overflow ---- */
+#root {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+/* ==========================================================================
+   Mobile breakpoint: ≤768px
+   ========================================================================== */
+@media (max-width: 768px) {
+  /* ---- Static nav (shared across pages) ---- */
+  .nav-inner { padding: 0 1.25rem !important; height: 56px !important; }
+  .nav-version { display: none !important; }
+  .nav-links { display: none !important; }
+  .nav-right { display: none !important; }
+  .mobile-menu-btn { display: flex !important; align-items: center; justify-content: center; }
+
+  /* Open mobile menu drawer */
+  .nav-links.active {
+    display: flex !important;
+    position: fixed;
+    top: 56px;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    background: #fafaf8;
+    border-bottom: 1px solid #e0e0dc;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    padding: 0.5rem 1.25rem 1rem;
+    gap: 0;
+    z-index: 49;
+    max-height: calc(100vh - 56px);
+    overflow-y: auto;
+  }
+  .nav-links.active a {
+    display: block !important;
+    padding: 0.85rem 0 !important;
+    font-size: 1rem !important;
+    border-bottom: 1px solid #ededea;
+    color: #0a0a0a;
+  }
+  .nav-links.active a:last-child { border-bottom: none; }
+
+  /* ---- Static footer ---- */
+  .static-footer { padding: 36px 0 28px !important; }
+  .static-footer .container { padding: 0 1.25rem !important; }
+  .static-footer .footer-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 28px 20px !important;
+    margin-bottom: 28px !important;
+  }
+  .static-footer .footer-brand {
+    grid-column: 1 / -1 !important;
+    text-align: center;
+  }
+  .static-footer .footer-col a { font-size: 0.9rem; }
+
+  /* ---- Shared container utilities across pages ---- */
+  .p-container,
+  .cmp-page .container,
+  .a-page .container,
+  .c-page .container,
+  .h-page .container,
+  .s-page .container,
+  .pr-page .container,
+  .pres-page .container,
+  .pl-page .container,
+  .st-page .container,
+  .ca-page .container,
+  .f-page .container,
+  .i-page .container,
+  .sec-page .container,
+  .d-page .container,
+  .container {
+    padding-left: 1.25rem !important;
+    padding-right: 1.25rem !important;
+  }
+
+  /* ---- Headings typically benefit from tighter clamps on mobile ---- */
+  h1 { word-break: break-word; }
+  h1, h2, h3 { line-height: 1.15; }
+
+  /* ---- Hero sections: add horizontal padding when they were edge-to-edge ---- */
+  .p-hero,
+  .cmp-hero,
+  .a-hero,
+  .c-hero,
+  .h-hero,
+  .s-hero,
+  .pr-hero,
+  .pres-hero,
+  .pl-hero,
+  .st-hero,
+  .ca-hero,
+  .f-hero,
+  .i-hero,
+  .sec-hero,
+  .d-hero {
+    padding-left: 1.25rem !important;
+    padding-right: 1.25rem !important;
+    padding-top: 104px !important;
+    padding-bottom: 48px !important;
+  }
+
+  /* ---- Tables that are not explicitly wrapped: allow horizontal scroll ---- */
+  main table:not([class*="wrap"]) {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* ---- Compare page table ---- */
+  .cmp-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .cmp-table { font-size: 13px; }
+
+  /* ---- Compare page diff grid ---- */
+  .cmp-diff-grid { grid-template-columns: 1fr !important; }
+  .cmp-diff-card { padding: 1.75rem 1.25rem !important; }
+  .cmp-diff-sec { padding: 60px 0 !important; }
+  .cmp-cta-sec { padding: 60px 0 !important; }
+  .cmp-cta-sec .row { flex-direction: column; align-items: flex-start !important; }
+  .cmp-table-sec { padding: 40px 0 60px !important; }
+
+  /* ---- About page ---- */
+  .a-hero h1,
+  .cmp-hero h1,
+  .c-hero h1,
+  .h-hero h1,
+  .s-hero h1,
+  .pr-hero h1,
+  .pres-hero h1,
+  .pl-hero h1,
+  .st-hero h1,
+  .ca-hero h1,
+  .sec-hero h1,
+  .i-hero h1 {
+    font-size: clamp(2rem, 9vw, 2.75rem) !important;
+    max-width: 100% !important;
+  }
+
+  /* ---- Generic multi-column grids to single column on mobile ---- */
+  .a-grid, .c-grid, .h-grid, .s-grid, .pr-grid, .pres-grid,
+  .pl-grid, .st-grid, .ca-grid, .f-grid, .i-grid, .sec-grid,
+  .features-grid, .cards-grid, .three-col, .two-col,
+  .a-values, .a-team, .c-contact-grid, .i-logo-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.25rem !important;
+  }
+
+  /* Pricing grid already has its own 900px breakpoint but reinforce */
+  .pricing-grid { grid-template-columns: 1fr !important; max-width: 100% !important; }
+  .pricing-card { padding: 28px 22px !important; }
+  .pricing-card.featured { padding: 28px 22px 36px !important; }
+  .price-amount { font-size: 2.6rem !important; }
+
+  /* Enterprise / CTA boxes */
+  .enterprise-section { padding: 32px 20px !important; margin-top: 48px !important; }
+
+  /* ---- Flex rows that need to stack ---- */
+  .row-stack-mobile,
+  .cmp-cta-sec .row,
+  .c-contact-grid,
+  .h-steps,
+  .footer-row {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+
+  /* ---- Large hero images: make them fluid ---- */
+  .hero-img, .cmp-hero-img, .a-hero-img, .h-hero-img { width: 100% !important; }
+
+  /* ---- Demo page (demo.html) ---- */
+  .demo-hero, .demo-section { padding-left: 1.25rem !important; padding-right: 1.25rem !important; }
+  .demo-hero h1 { font-size: clamp(2rem, 8vw, 2.75rem) !important; }
+
+  /* ---- Typography size step-down ---- */
+  body { font-size: 15px; }
+
+  /* ---- Buttons / CTAs: full-width stacks ---- */
+  .btn-row { flex-direction: column; align-items: stretch !important; gap: 12px !important; }
+  .btn-row > a, .btn-row > button { width: 100%; text-align: center; }
+
+  /* ---- Enterprise / info card wide sections ---- */
+  section { padding-left: 0; padding-right: 0; }
+}
+
+/* ==========================================================================
+   Small mobile (≤380px) — tighter tweaks for iPhone SE etc.
+   ========================================================================== */
+@media (max-width: 380px) {
+  .static-nav .nav-inner { padding: 0 1rem !important; }
+  .static-footer .container { padding: 0 1rem !important; }
+  .p-hero h1 { font-size: 1.85rem !important; }
+  .price-amount { font-size: 2.25rem !important; }
+}
