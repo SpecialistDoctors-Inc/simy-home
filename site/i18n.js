@@ -572,7 +572,7 @@
           '<span class="simy-ss-eyebrow-dot"></span>',
           'WATCH SIMY IN 12 SECONDS',
         '</div>',
-        '<h2 class="simy-ss-title">From meeting to shipped PR.</h2>',
+        '<h2 class="simy-ss-title">From meeting to shipped AI executions.</h2>',
         '<p class="simy-ss-kicker">Four scenes, one unbroken take through the real SIMY desktop app.</p>',
         '<div class="simy-ss-wrap">',
           '<div class="simy-ss-browser">',
