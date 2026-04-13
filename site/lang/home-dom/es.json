@@ -1,6 +1,8 @@
 {
-  "_meta": { "code": "es", "name": "Español" },
-
+  "_meta": {
+    "code": "es",
+    "name": "Español"
+  },
   "Home": "Inicio",
   "Pricing": "Precios",
   "Compare": "Comparar",
@@ -8,7 +10,6 @@
   "News": "Noticias",
   "Sign in": "Iniciar sesión",
   "Request Access": "Solicitar acceso",
-
   "AI EXECUTION": "EJECUCIÓN DE IA",
   "HUMAN JUDGMENT": "JUICIO HUMANO",
   "DONE STATE": "ESTADO COMPLETADO",
@@ -20,78 +21,60 @@
   "DIGITAL TWIN": "GEMELO DIGITAL",
   "AGENT REGISTRY": "REGISTRO DE AGENTES",
   "MEETINGS END. AI EXECUTION BEGINS.": "LAS REUNIONES TERMINAN. LA EJECUCIÓN DE IA COMIENZA.",
-
-  "Action Intelligence Platform": "Plataforma de Inteligencia de Acción",
-  "Meetings": "Las reuniones",
-  "end.": "terminan.",
-  "AI execution": "La ejecución de IA",
-  "begins.": "comienza.",
   "Once meetings end, AI execution begins automatically.": "En cuanto las reuniones terminan, la ejecución de IA comienza automáticamente.",
   "Reserve your Slot": "Reserva tu plaza",
   "Try Demo": "Probar demo",
-
   "01 / Who Uses SIMY": "01 / Quién usa SIMY",
   "If you are this person,": "Si eres esta persona,",
   "let's build this together.": "construyámoslo juntos.",
   "These are the outcomes we're working toward — not promises, but a shared vision. Some are live today. Others are in development. Join us to shape what comes next.": "Estos son los resultados a los que apuntamos: no son promesas, sino una visión compartida. Algunos ya están en marcha. Otros están en desarrollo. Únete a nosotros para dar forma a lo que viene.",
-
   "TODAY": "HOY",
   "WHERE WE'RE HEADING": "HACIA DÓNDE VAMOS",
-
   "Head of Marketing": "Responsable de marketing",
   "Consumer brand": "Marca de consumo",
   "Campaign briefs sit in Notion for a week before anyone acts on them.": "Los briefs de campaña se quedan una semana en Notion antes de que alguien actúe.",
   "Strategy call ends. SIMY writes copy, schedules posts, and drafts the performance report.": "Termina la reunión de estrategia. SIMY escribe los textos, programa las publicaciones y redacta el informe de rendimiento.",
   "Campaign live within 24 hours.": "Campaña en vivo en 24 horas.",
-
   "Sales Director": "Director de ventas",
   "Enterprise software": "Software empresarial",
   "After every client call, reps spend an hour updating CRM and writing follow-up emails.": "Después de cada llamada con el cliente, los representantes pasan una hora actualizando el CRM y escribiendo correos de seguimiento.",
   "Call ends. SIMY updates Salesforce, drafts the follow-up, and flags next steps.": "Termina la llamada. SIMY actualiza Salesforce, redacta el seguimiento y marca los próximos pasos.",
   "Reps focus on selling. Not admin.": "Los representantes se centran en vender. No en administrar.",
-
   "CFO": "CFO",
   "Manufacturing firm": "Empresa manufacturera",
   "Monthly close takes 3 days of manual data extraction and formatting.": "El cierre mensual requiere 3 días de extracción y formato manual de datos.",
   "SIMY pulls data, formats the P&L, and flags anomalies — before the analyst opens their laptop.": "SIMY extrae los datos, formatea el estado de resultados y marca anomalías, antes de que el analista abra su portátil.",
   "Close in hours. Anomalies caught early.": "Cierre en horas. Anomalías detectadas pronto.",
-
   "Product Manager": "Product Manager",
   "150-person tech company": "Empresa tecnológica de 150 personas",
   "After every planning session, someone spends hours turning discussion into a structured roadmap.": "Después de cada sesión de planificación, alguien pasa horas convirtiendo la discusión en una hoja de ruta estructurada.",
   "Meeting ends. SIMY generates a structured roadmap, assigns owners, and sends summaries automatically.": "Termina la reunión. SIMY genera una hoja de ruta estructurada, asigna responsables y envía resúmenes automáticamente.",
   "Roadmap ready before the next standup.": "Hoja de ruta lista antes del próximo standup.",
-
   "HR Director": "Directora de RR. HH.",
   "Healthcare system": "Sistema sanitario",
   "Onboarding new hires takes 2 weeks of back-and-forth emails.": "La incorporación de nuevos empleados lleva 2 semanas de correos de ida y vuelta.",
   "SIMY sends welcome sequences, schedules training, and answers FAQs automatically.": "SIMY envía secuencias de bienvenida, programa formaciones y responde preguntas frecuentes automáticamente.",
   "New hire ready on day one.": "Nuevo empleado operativo desde el primer día.",
-
   "CEO / Founder": "CEO / Fundador",
   "Series B SaaS": "SaaS de serie B",
   "Every Monday, 2 hrs reviewing last week's decisions.": "Cada lunes, 2 horas revisando las decisiones de la semana anterior.",
   "SIMY extracts every decision and sends action items before the meeting ends.": "SIMY extrae cada decisión y envía los elementos de acción antes de que termine la reunión.",
   "Board report drafted. Automatically.": "Informe para el consejo redactado. Automáticamente.",
-
   "Operations Manager": "Gerente de operaciones",
   "Logistics company": "Empresa de logística",
   "Shift handover notes get lost. Issues repeat every week.": "Las notas de traspaso de turno se pierden. Los problemas se repiten cada semana.",
   "Every handover call is captured. SIMY logs issues, assigns follow-ups, and tracks resolution.": "Cada reunión de traspaso queda registrada. SIMY anota los problemas, asigna seguimientos y rastrea la resolución.",
   "Zero repeated incidents. Full audit trail.": "Cero incidentes repetidos. Pista de auditoría completa.",
-
   "General Counsel": "Director jurídico",
   "Financial services firm": "Empresa de servicios financieros",
   "Contract review takes 3 days per agreement. Risk items buried in 80-page docs.": "La revisión de un contrato lleva 3 días. Los riesgos se esconden en documentos de 80 páginas.",
   "SIMY reviews contracts, flags risk clauses, and generates a summary in minutes.": "SIMY revisa contratos, señala cláusulas de riesgo y genera un resumen en minutos.",
   "Legal review in hours, not days.": "Revisión legal en horas, no en días.",
-
   "Field Service Manager": "Gerente de servicio de campo",
   "Industrial equipment company": "Empresa de equipos industriales",
   "Job reports are written by hand after every site visit. Delays in billing and follow-up.": "Los informes de trabajo se escriben a mano después de cada visita. Facturación y seguimiento retrasados.",
   "SIMY captures the debrief call, generates the job report, and triggers the invoice automatically.": "SIMY captura la reunión de debriefing, genera el informe de trabajo y activa la factura automáticamente.",
   "Reports filed. Billing started. Before the van leaves the site.": "Informes presentados. Facturación iniciada. Antes de que la furgoneta deje el sitio.",
-
   "03 / What is SIMY": "03 / Qué es SIMY",
   "Meetings end.": "Las reuniones terminan.",
   "AI execution begins.": "La ejecución de IA comienza.",
@@ -108,7 +91,6 @@
   "Decision Extraction": "Extracción de decisiones",
   "Task Decomposition": "Descomposición de tareas",
   "Agent Execution": "Ejecución por agentes",
-
   "04 / Integrations": "04 / Integraciones",
   "Connects to tools": "Se conecta a las herramientas",
   "your team already uses.": "que tu equipo ya usa.",
@@ -133,7 +115,6 @@
   "Drive export": "Exportación a Drive",
   "API compliant": "Compatible con API",
   "COMING SOON": "PRÓXIMAMENTE",
-
   "One-Shot Success Rate": "Tasa de éxito en un intento",
   "Code Review Pass Rate": "Tasa de aprobación en revisión de código",
   "Real-World Tasks Tested": "Tareas reales probadas",
@@ -146,7 +127,6 @@
   "Prompts required from engineers": "Prompts requeridos de los ingenieros",
   "1 round": "1 ronda",
   "Max feedback for remaining 13.3%": "Feedback máximo para el 13,3 % restante",
-
   "THE AI-NATIVE ENGINEERING ORGANIZATION": "LA ORGANIZACIÓN DE INGENIERÍA NATIVA DE IA",
   "ROLE": "ROL",
   "DELEGATED TO AI": "DELEGADO A LA IA",
@@ -164,7 +144,6 @@
   "Tech evaluation docs, dependency mapping, migration planning": "Documentos de evaluación tecnológica, mapeo de dependencias, planificación de migración",
   "Scalability design, security architecture, build-vs-buy": "Diseño de escalabilidad, arquitectura de seguridad, construir vs comprar",
   "Read Full Press Release": "Leer el comunicado de prensa completo",
-
   "06 / Security & Privacy": "06 / Seguridad y privacidad",
   "Enterprise-grade trust.": "Confianza de nivel empresarial.",
   "By design.": "Desde el diseño.",
@@ -178,7 +157,6 @@
   "Zero Training Guarantee": "Garantía de cero entrenamiento",
   "Enterprise data never trains global models.": "Los datos empresariales nunca entrenan modelos globales.",
   "End-to-End Encrypted": "Cifrado de extremo a extremo",
-
   "07 / Now Open": "07 / Inscripciones abiertas",
   "Create an account.": "Crea una cuenta.",
   "10,000 winners get early access.": "10 000 ganadores obtienen acceso anticipado.",
@@ -200,7 +178,6 @@
   "Slack channel with response SLA": "Canal de Slack con SLA de respuesta",
   "Create Free Account": "Crear cuenta gratuita",
   "Winners will be selected by lottery and notified within the app. No purchase necessary.": "Los ganadores se seleccionan por sorteo y se notifican dentro de la aplicación. No es necesaria ninguna compra.",
-
   "08 / FAQ": "08 / Preguntas frecuentes",
   "Common questions.": "Preguntas comunes.",
   "Clear answers.": "Respuestas claras.",
@@ -216,13 +193,11 @@
   "Every organisation gets a dedicated, isolated database instance. On the Enterprise plan, your proprietary data is never used for training global models. SIMY uses end-to-end encryption and physical database isolation.": "Cada organización obtiene una instancia de base de datos dedicada y aislada. En el plan Enterprise, tus datos propietarios nunca se usan para entrenar modelos globales. SIMY utiliza cifrado de extremo a extremo y aislamiento físico de bases de datos.",
   "How does the 10,000-winner lottery work?": "¿Cómo funciona el sorteo de 10 000 ganadores?",
   "Create a free account — no credit card required. Every account is automatically entered into the lottery. We'll select 10,000 Founding Partners who'll get $5 in SIMY credits, 1:1 onboarding, and direct priority support. Winners are notified exclusively within the app.": "Crea una cuenta gratuita: no se requiere tarjeta de crédito. Cada cuenta participa automáticamente en el sorteo. Seleccionaremos a 10 000 Founding Partners que recibirán 5 $ en créditos SIMY, onboarding 1:1 y soporte prioritario directo. Los ganadores se notifican exclusivamente dentro de la aplicación.",
-
   "Now Accepting Applications": "Aceptando solicitudes",
   "AI execution starts": "La ejecución de IA empieza",
   "the moment you join.": "en el momento en que te unes.",
   "Talk to Sales": "Hablar con ventas",
   "Enterprise plans available · No credit card required": "Planes Enterprise disponibles · Sin tarjeta de crédito",
-
   "AI execution begins the moment meetings end.": "La ejecución de IA comienza en el momento en que terminan las reuniones.",
   "by AwakApp Inc. · San Francisco": "por AwakApp Inc. · San Francisco",
   "PRODUCT": "PRODUCTO",
