@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
     <title>SIMY - Meeting Ends. Your Twin Starts Working.</title>
-    <meta name="description" content="Meeting ends. Your Twin starts working. SIMY turns meeting context into follow-ups, decks, research, analysis, updates, and next actions ready for your review." />
+    <meta name="description" content="Meeting ends. Your Twin starts working. SIMY moves follow-ups, decks, research, analysis, updates, and next actions forward so humans can return to judgment, relationships, responsibility, and purpose." />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
     <link rel="apple-touch-icon" href="/favicon-180.png">
     <link rel="canonical" href="https://simy.one/">
@@ -12,7 +12,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://simy.one/">
     <meta property="og:title" content="SIMY - Meeting Ends. Your Twin Starts Working.">
-    <meta property="og:description" content="SIMY turns meeting context into follow-ups, decks, research, analysis, updates, and next actions ready for your review.">
+    <meta property="og:description" content="SIMY moves the work after meetings forward so humans can return to judgment, relationships, responsibility, and purpose.">
     <meta property="og:site_name" content="SIMY">
     <meta property="og:image" content="https://simy.one/ogp.png">
     <meta property="og:image:width" content="1200">
@@ -20,7 +20,7 @@
     <meta property="og:locale" content="en_US">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="SIMY - Meeting Ends. Your Twin Starts Working.">
-    <meta name="twitter:description" content="The work after the meeting starts before you ask.">
+    <meta name="twitter:description" content="The work after the meeting moves forward. Humans return to the human move.">
     <meta name="twitter:image" content="https://simy.one/ogp.png">
     <meta name="theme-color" content="#f9f9f6">
     <script type="application/ld+json">
@@ -59,7 +59,7 @@
       "name": "SIMY",
       "applicationCategory": "BusinessApplication",
       "operatingSystem": "Web, iOS",
-      "description": "Digital Twin platform that turns meeting context into review-ready follow-ups, decks, research, analysis, updates, and next actions.",
+      "description": "AI Twin platform that moves follow-ups, decks, research, analysis, updates, and next actions after meetings so humans can focus on judgment, relationships, responsibility, and purpose.",
       "url": "https://simy.one/",
       "offers": {
         "@type": "AggregateOffer",
@@ -241,14 +241,14 @@
       }
       .hero {
         position: relative;
-        min-height: 600px;
+        min-height: 650px;
         display: flex;
-        align-items: flex-end;
-        padding: 104px 0 34px;
+        align-items: center;
+        padding: 118px 0 56px;
         overflow: hidden;
         background:
-          linear-gradient(90deg, rgba(8, 9, 12, 0.91) 0%, rgba(8, 9, 12, 0.70) 38%, rgba(8, 9, 12, 0.28) 68%, rgba(8, 9, 12, 0.08) 100%),
-          url('/assets/hero-dashboard-yoshi.png') center top / cover no-repeat;
+          linear-gradient(90deg, rgba(6, 7, 10, 0.92) 0%, rgba(6, 7, 10, 0.76) 38%, rgba(6, 7, 10, 0.30) 68%, rgba(6, 7, 10, 0.08) 100%),
+          url('/assets/hero-human-ambition.jpg') center center / cover no-repeat;
         color: #fff;
       }
       .hero::after {
@@ -264,10 +264,8 @@
       .hero-inner {
         position: relative;
         z-index: 1;
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) 300px;
-        gap: 28px;
-        align-items: end;
+        display: block;
+        width: 100%;
       }
       .eyebrow {
         display: inline-flex;
@@ -296,9 +294,9 @@
         text-wrap: pretty;
       }
       .hero h1 {
-        max-width: 800px;
+        max-width: 900px;
         margin: 0;
-        font-size: clamp(3.05rem, 4vw, 3.45rem);
+        font-size: clamp(3.3rem, 4.8vw, 4.7rem);
         font-weight: 760;
         letter-spacing: 0;
         line-height: 1.02;
@@ -336,50 +334,8 @@
         margin-top: 28px;
       }
       .hero-note {
+        max-width: 720px;
         margin-top: 14px;
-        color: rgba(255, 255, 255, 0.62);
-        font-size: 0.86rem;
-      }
-      .hero-panel {
-        width: 100%;
-        padding: 18px;
-        border: 1px solid rgba(255, 255, 255, 0.24);
-        border-radius: 8px;
-        background: rgba(8, 9, 12, 0.62);
-        box-shadow: 0 22px 60px rgba(0, 0, 0, 0.28);
-        backdrop-filter: blur(14px);
-        -webkit-backdrop-filter: blur(14px);
-      }
-      .panel-kicker {
-        margin-bottom: 14px;
-        color: rgba(255, 255, 255, 0.58);
-        font-family: 'Geist Mono', monospace;
-        font-size: 0.72rem;
-        text-transform: uppercase;
-      }
-      .panel-item {
-        display: grid;
-        grid-template-columns: 10px 1fr;
-        gap: 12px;
-        padding: 12px 0;
-        border-top: 1px solid rgba(255, 255, 255, 0.14);
-      }
-      .panel-item:first-of-type { border-top: 0; }
-      .panel-dot {
-        width: 10px;
-        height: 10px;
-        margin-top: 6px;
-        border-radius: 50%;
-        background: var(--blue);
-      }
-      .panel-dot.green { background: #22c55e; }
-      .panel-dot.amber { background: #f59e0b; }
-      .panel-title {
-        color: #fff;
-        font-weight: 700;
-      }
-      .panel-copy {
-        margin-top: 2px;
         color: rgba(255, 255, 255, 0.62);
         font-size: 0.86rem;
       }
@@ -685,12 +641,8 @@
         font-size: 0.86rem;
       }
       @media (max-width: 1180px) {
-        .hero-inner,
         .proof-grid {
           grid-template-columns: 1fr;
-        }
-        .hero-panel {
-          max-width: 520px;
         }
       }
       @media (max-width: 1080px) {
@@ -741,15 +693,15 @@
           padding: 0 1.25rem;
         }
         .hero {
-          min-height: 560px;
-          padding: 84px 0 24px;
+          min-height: 590px;
+          padding: 86px 0 28px;
           background:
-            linear-gradient(180deg, rgba(8, 9, 12, 0.88) 0%, rgba(8, 9, 12, 0.68) 54%, rgba(8, 9, 12, 0.40) 100%),
-            url('/assets/hero-dashboard-yoshi.png') center top / cover no-repeat;
+            linear-gradient(180deg, rgba(6, 7, 10, 0.88) 0%, rgba(6, 7, 10, 0.72) 50%, rgba(6, 7, 10, 0.48) 100%),
+            url('/assets/hero-human-ambition.jpg') 64% center / cover no-repeat;
         }
         .hero h1 {
-          max-width: 10.8em;
-          font-size: clamp(1.9rem, 9.6vw, 2.65rem);
+          max-width: 11.2em;
+          font-size: clamp(2.25rem, 10vw, 3.05rem);
           line-height: 1.06;
         }
         .hero-mobile-break {
@@ -761,9 +713,6 @@
         .hero-sub {
           font-size: 0.98rem;
           line-height: 1.55;
-        }
-        .hero-panel {
-          display: none;
         }
         .value-strip {
           padding: 38px 0 42px;
@@ -848,62 +797,38 @@
       <section class="hero">
         <div class="container hero-inner">
           <div>
-            <div class="eyebrow" data-i18n="home.eyebrow">The work after the meeting</div>
-            <h1 data-i18n-html="home.h1"><span class="hero-title-line">Meeting ends.</span><span class="hero-title-line"><span class="keep-together">Your Twin</span><span class="hero-mobile-break"></span> starts working.</span></h1>
-            <p class="hero-sub" data-i18n="home.sub">Follow-ups, decks, research, analysis, updates, and next actions. SIMY understands what just happened, what matters next, and moves the work forward before you reopen a tab.</p>
+            <div class="eyebrow" data-i18n="home.eyebrow">The moment after the meeting</div>
+            <h1 data-i18n-html="home.h1"><span class="hero-title-line">Meeting ends.</span><span class="hero-title-line">Your Twin starts<span class="hero-mobile-break"></span> working.</span></h1>
+            <p class="hero-sub" data-i18n="home.sub">The moment the meeting ends, SIMY carries the follow-ups, decks, research, analysis, updates, and next actions forward. You leave the screen and return to the human move: judgment, relationships, responsibility, and the positive influence only you can create.</p>
             <div class="hero-actions">
               <a class="btn-primary" href="https://app.simy.one/signup" data-i18n="home.cta.primary">Create your Twin</a>
               <a class="btn-secondary" href="#difference" data-i18n="home.cta.secondary">See what starts next</a>
             </div>
-            <div class="hero-note" data-i18n="home.hero.note">Your Twin prepares the work. You approve the moments that need human judgment.</div>
+            <div class="hero-note" data-i18n="home.hero.note">Your Twin handles the work after the meeting. You carry the purpose beyond it.</div>
           </div>
-          <aside class="hero-panel" aria-label="SIMY prepared work queue">
-            <div class="panel-kicker" data-i18n="home.hero.queue">Already in motion</div>
-            <div class="panel-item">
-              <span class="panel-dot green"></span>
-              <div>
-                <div class="panel-title" data-i18n="home.hero.item1.h">Follow-up drafted</div>
-                <div class="panel-copy" data-i18n="home.hero.item1.p">Context, tone, objections, and next step included.</div>
-              </div>
-            </div>
-            <div class="panel-item">
-              <span class="panel-dot"></span>
-              <div>
-                <div class="panel-title" data-i18n="home.hero.item2.h">Proposal story assembled</div>
-                <div class="panel-copy" data-i18n="home.hero.item2.p">Slides, risks, asks, and decision points ready.</div>
-              </div>
-            </div>
-            <div class="panel-item">
-              <span class="panel-dot amber"></span>
-              <div>
-                <div class="panel-title" data-i18n="home.hero.item3.h">Team update routed</div>
-                <div class="panel-copy" data-i18n="home.hero.item3.p">Each stakeholder gets the version they need.</div>
-              </div>
-            </div>
-          </aside>
         </div>
       </section>
 
       <section class="value-strip">
         <div class="container value-strip-inner">
           <div>
-            <p class="value-kicker" data-i18n="home.value.label">Time, returned</p>
-            <h2 data-i18n-html="home.value.h"><span class="copy-line">The meeting is over.</span><span class="copy-line">Your focus should move on.</span></h2>
+            <p class="value-kicker" data-i18n="home.value.label">The question after the promise</p>
+            <h2 data-i18n-html="home.value.h"><span class="copy-line">If your Twin starts working,</span><span class="copy-line">what is left for humans?</span></h2>
           </div>
-          <p data-i18n-html="home.value.p">SIMY carries the thread forward so your best hours stay with judgment, creativity, and relationships.</p>
+          <p data-i18n-html="home.value.p">That question matters. SIMY is not here to make people unnecessary. It is here to move the work after the meeting so people can return to the purpose, responsibility, relationships, and positive influence only humans can carry.</p>
         </div>
       </section>
 
       <section class="section" id="difference">
         <div class="container">
-          <p class="section-label" data-i18n="home.diff.label">Above the agents</p>
-          <h2 class="difference-title" data-i18n-html="home.diff.h"><span class="copy-line">An agent does a task.</span><span class="copy-line">Your Twin carries the thread.</span></h2>
-          <p class="section-lead" data-i18n="home.diff.p">SIMY remembers context across meetings, inboxes, documents, and priorities, then activates the right agents in sequence. It is not another chatbot to manage. It is work already prepared.</p>
+          <p class="section-label" data-i18n="home.diff.label">SIMY vision</p>
+          <h2 class="difference-title" data-i18n-html="home.diff.h"><span class="copy-line">A weapon for people with the ball.</span><span class="copy-line">A mirror for people ready to find theirs.</span></h2>
+          <p class="section-lead" data-i18n="home.diff.p">Meeting Ends is the experience. The vision is what comes after: AI should not take the ball from humans. It should help people find what is theirs to carry, sharpen the next play, and create better influence on the people around them.</p>
           <div class="twin-stack">
             <div class="concept-card primary">
               <h3 data-i18n="home.twin.h">Your Twin</h3>
-              <p data-i18n="home.twin.p">Holds context, chooses the next move, routes specialist agents, and returns drafts ready for approval.</p>
-              <div class="arrow-row" data-i18n="home.twin.flow">Meeting -> context -> agents -> review</div>
+              <p data-i18n="home.twin.p">Holds meeting context, chooses the next move, routes specialist agents, and returns the work that needs human judgment.</p>
+              <div class="arrow-row" data-i18n="home.twin.flow">Meeting ends -> Twin Work -> Human Move</div>
               <div class="agent-grid">
                 <div class="agent-chip" data-i18n="home.agent.email">Email agent</div>
                 <div class="agent-chip" data-i18n="home.agent.deck">Deck agent</div>
@@ -928,37 +853,37 @@
       <section class="section" id="work">
         <div class="container">
           <p class="section-label" data-i18n="home.work.label">What starts after the meeting</p>
-          <h2 data-i18n-html="home.work.h"><span class="copy-line">The follow-through begins</span><span class="copy-line">before your calendar moves on.</span></h2>
+          <h2 data-i18n-html="home.work.h"><span class="copy-line">The work begins.</span><span class="copy-line">The human moves forward.</span></h2>
           <div class="work-grid">
             <article class="work-card">
-              <strong data-i18n="home.work.sales.k">Sales</strong>
-              <h3 data-i18n-html="home.work.sales.h"><span class="copy-line">Reply while the</span><span class="copy-line">conversation is still warm.</span></h3>
-              <p data-i18n="home.work.sales.p">Customer emails, CRM updates, objections, risks, and next meeting agendas are prepared from the call.</p>
+              <strong data-i18n="home.work.sales.k">What happened</strong>
+              <h3 data-i18n-html="home.work.sales.h"><span class="copy-line">Capture the decisions,</span><span class="copy-line">asks, and promises.</span></h3>
+              <p data-i18n="home.work.sales.p">SIMY turns the conversation into working context before the thread goes cold.</p>
             </article>
             <article class="work-card">
-              <strong data-i18n="home.work.deck.k">Decks</strong>
-              <h3 data-i18n-html="home.work.deck.h"><span class="copy-line">Turn momentum</span><span class="copy-line">into a proposal.</span></h3>
-              <p data-i18n="home.work.deck.p">Your Twin shapes the story, slide structure, objections, and decision page before the thread goes cold.</p>
+              <strong data-i18n="home.work.deck.k">What mattered</strong>
+              <h3 data-i18n-html="home.work.deck.h"><span class="copy-line">Separate signal</span><span class="copy-line">from meeting noise.</span></h3>
+              <p data-i18n="home.work.deck.p">Decisions, risks, emotion, stakeholder needs, and hidden blockers are surfaced.</p>
             </article>
             <article class="work-card">
-              <strong data-i18n="home.work.analysis.k">Analysis</strong>
-              <h3 data-i18n-html="home.work.analysis.h"><span class="copy-line">Have a point of view</span><span class="copy-line">before the next decision.</span></h3>
-              <p data-i18n="home.work.analysis.p">SIMY researches the market, compares options, frames trade-offs, and prepares a recommendation to review.</p>
+              <strong data-i18n="home.work.analysis.k">Twin Work</strong>
+              <h3 data-i18n-html="home.work.analysis.h"><span class="copy-line">Move the preparation</span><span class="copy-line">without waiting.</span></h3>
+              <p data-i18n="home.work.analysis.p">Follow-ups, decks, research, analysis, updates, CRM, and stakeholder briefs move in the background.</p>
             </article>
             <article class="work-card">
-              <strong data-i18n="home.work.mail.k">Email</strong>
-              <h3 data-i18n-html="home.work.mail.h"><span class="copy-line">Open your inbox to drafts</span><span class="copy-line">that sound like you.</span></h3>
-              <p data-i18n="home.work.mail.p">Tone, history, urgency, and recipient context are already reflected when the draft appears.</p>
+              <strong data-i18n="home.work.mail.k">Human Move</strong>
+              <h3 data-i18n-html="home.work.mail.h"><span class="copy-line">Return for the</span><span class="copy-line">deciding 10 percent.</span></h3>
+              <p data-i18n="home.work.mail.p">You decide, meet, tell, believe, take responsibility, and make the move only a human can make.</p>
             </article>
             <article class="work-card">
-              <strong data-i18n="home.work.share.k">Sharing</strong>
-              <h3 data-i18n-html="home.work.share.h"><span class="copy-line">Send the right version</span><span class="copy-line">to every stakeholder.</span></h3>
-              <p data-i18n="home.work.share.p">Executives, customers, sales, product, and finance each get the summary, risks, or action list they need.</p>
+              <strong data-i18n="home.work.share.k">Positive Influence</strong>
+              <h3 data-i18n-html="home.work.share.h"><span class="copy-line">See who your action</span><span class="copy-line">can move forward.</span></h3>
+              <p data-i18n="home.work.share.p">Your Twin shows who you can help, encourage, unblock, align, or lead with the next human move.</p>
             </article>
             <article class="work-card">
-              <strong data-i18n="home.work.ops.k">Operations</strong>
-              <h3 data-i18n-html="home.work.ops.h"><span class="copy-line">Keep cross-tool work</span><span class="copy-line">moving in the background.</span></h3>
-              <p data-i18n="home.work.ops.p">Calendar, Slack, Gmail, docs, spreadsheets, and browser tasks move together instead of becoming another backlog.</p>
+              <strong data-i18n="home.work.ops.k">Purpose Loop</strong>
+              <h3 data-i18n-html="home.work.ops.h"><span class="copy-line">Use results to</span><span class="copy-line">clarify what you carry.</span></h3>
+              <p data-i18n="home.work.ops.p">Every response, win, miss, and follow-up becomes signal for where your purpose can create value.</p>
             </article>
           </div>
         </div>
@@ -967,32 +892,32 @@
       <section class="section" id="loop">
         <div class="container">
           <p class="section-label" data-i18n="home.loop.label">How it works</p>
-          <h2 data-i18n-html="home.loop.h"><span class="copy-line">SIMY turns meeting context</span><span class="copy-line">into review-ready work.</span></h2>
+          <h2 data-i18n-html="home.loop.h"><span class="copy-line">Meeting ends.</span><span class="copy-line">SIMY turns context into the next human move.</span></h2>
           <div class="loop">
             <div class="loop-step">
               <div class="loop-num">01</div>
-              <h3 data-i18n="home.loop.1.h">Capture</h3>
-              <p data-i18n="home.loop.1.p">Meetings, email, Slack, documents, and calendars become working context.</p>
+              <h3 data-i18n="home.loop.1.h">Meeting ends</h3>
+              <p data-i18n="home.loop.1.p">The conversation, commitments, risks, and next steps become living context.</p>
             </div>
             <div class="loop-step">
               <div class="loop-num">02</div>
-              <h3 data-i18n="home.loop.2.h">Read the room</h3>
-              <p data-i18n="home.loop.2.p">Decisions, promises, risks, owners, and next actions are extracted.</p>
+              <h3 data-i18n="home.loop.2.h">Read what mattered</h3>
+              <p data-i18n="home.loop.2.p">SIMY identifies the signal, stakeholder needs, risks, and where your action can move people forward.</p>
             </div>
             <div class="loop-step">
               <div class="loop-num">03</div>
-              <h3 data-i18n="home.loop.3.h">Orchestrate</h3>
+              <h3 data-i18n="home.loop.3.h">Orchestrate agents</h3>
               <p data-i18n="home.loop.3.p">The Twin selects the right agents and the order they should run.</p>
             </div>
             <div class="loop-step">
               <div class="loop-num">04</div>
-              <h3 data-i18n="home.loop.4.h">Prepare</h3>
-              <p data-i18n="home.loop.4.p">Drafts, decks, research, updates, and next actions are packaged.</p>
+              <h3 data-i18n="home.loop.4.h">Prepare Twin Work</h3>
+              <p data-i18n="home.loop.4.p">Drafts, decks, research, analysis, updates, and next actions are packaged.</p>
             </div>
             <div class="loop-step">
               <div class="loop-num">05</div>
-              <h3 data-i18n="home.loop.5.h">Hand back</h3>
-              <p data-i18n="home.loop.5.p">You approve, edit, or redirect before anything important leaves your hands.</p>
+              <h3 data-i18n="home.loop.5.h">Return Human Move</h3>
+              <p data-i18n="home.loop.5.p">You return for the judgment, relationship, courage, and responsibility that decide the outcome.</p>
             </div>
           </div>
         </div>
@@ -1001,7 +926,7 @@
       <section class="section">
         <div class="container">
           <p class="section-label" data-i18n="home.proof.label">Minutes after the meeting</p>
-          <h2 data-i18n="home.proof.h">The workday moves while you move on.</h2>
+          <h2 data-i18n="home.proof.h">The screen work continues without taking the human with it.</h2>
           <div class="proof-grid">
             <div class="proof-panel dark">
               <div class="timeline-row">
@@ -1014,36 +939,36 @@
               <div class="timeline-row">
                 <div class="time">0:02</div>
                 <div>
-                  <div class="timeline-title" data-i18n="home.proof.t2.h">Your Twin starts working</div>
-                  <div class="timeline-copy" data-i18n="home.proof.t2.p">Email, deck, research, and CRM agents move in parallel.</div>
+                  <div class="timeline-title" data-i18n="home.proof.t2.h">Twin Work starts</div>
+                  <div class="timeline-copy" data-i18n="home.proof.t2.p">Follow-up, deck, research, analysis, and sharing agents move in sequence.</div>
                 </div>
               </div>
               <div class="timeline-row">
                 <div class="time">0:08</div>
                 <div>
-                  <div class="timeline-title" data-i18n="home.proof.t3.h">Review stack is ready</div>
-                  <div class="timeline-copy" data-i18n="home.proof.t3.p">Follow-up, internal brief, and next actions wait for approval.</div>
+                  <div class="timeline-title" data-i18n="home.proof.t3.h">Human Move is clear</div>
+                  <div class="timeline-copy" data-i18n="home.proof.t3.p">You return to the decision, relationship, responsibility, and influence that matter.</div>
                 </div>
               </div>
             </div>
             <div class="proof-panel">
-              <p class="section-label" data-i18n="home.persona.label">Built for people carrying too much context</p>
+              <p class="section-label" data-i18n="home.persona.label">Built for people carrying too much context and too much responsibility</p>
               <div class="persona-grid">
                 <div class="persona-card">
                   <h3 data-i18n="home.persona.ceo.h">CEO / Founder</h3>
-                  <p data-i18n="home.persona.ceo.p">Investor follow-ups, board notes, hiring loops, customer promises.</p>
+                  <p data-i18n="home.persona.ceo.p">Investor conviction, customer promises, hiring bets, board-level judgment.</p>
                 </div>
                 <div class="persona-card">
                   <h3 data-i18n="home.persona.sales.h">Sales lead</h3>
-                  <p data-i18n="home.persona.sales.p">Follow-ups, deal risks, CRM hygiene, proposal momentum.</p>
+                  <p data-i18n="home.persona.sales.p">Trust, timing, objections, deal momentum, and the next human conversation.</p>
                 </div>
                 <div class="persona-card">
                   <h3 data-i18n="home.persona.consult.h">Consultant</h3>
-                  <p data-i18n="home.persona.consult.p">Research, synthesis, slides, client-ready point of view.</p>
+                  <p data-i18n="home.persona.consult.p">Client value, synthesis, point of view, risks, and the story that changes action.</p>
                 </div>
                 <div class="persona-card">
                   <h3 data-i18n="home.persona.ops.h">Operator</h3>
-                  <p data-i18n="home.persona.ops.p">Recurring follow-through across inbox, docs, Slack, calendar, and web apps.</p>
+                  <p data-i18n="home.persona.ops.p">Cross-functional ownership, blocked work, stakeholder alignment, and operational rhythm.</p>
                 </div>
               </div>
             </div>
@@ -1053,8 +978,8 @@
 
       <section class="final-cta">
         <div class="container">
-          <h2 data-i18n-html="home.final.h"><span class="copy-line">Let the meeting end.</span><span class="copy-line">Let the work continue.</span></h2>
-          <p data-i18n="home.final.p">Connect the tools you already use and create the Twin that keeps momentum moving after every conversation.</p>
+          <h2 data-i18n-html="home.final.h"><span class="copy-line">Meeting ends.</span><span class="copy-line">Your purpose moves forward.</span></h2>
+          <p data-i18n="home.final.p">Create the Twin that starts working the moment the meeting ends, and use the work it returns to carry what only you can carry.</p>
           <div class="final-actions">
             <a class="btn-primary" href="https://app.simy.one/signup" data-i18n="home.cta.primary">Create your Twin</a>
             <a class="btn-secondary" href="mailto:sales@simy.one" data-i18n="home.final.secondary">Talk to sales</a>
@@ -1068,7 +993,7 @@
         <div class="footer-grid">
           <div class="footer-brand">
             <div class="footer-brand-line" data-i18n-html="home.footer.tagline"><span class="footer-tagline-line">Meeting ends.</span><span class="footer-tagline-line">Your Twin starts working.</span></div>
-            <div class="footer-brand-copy" data-i18n="home.footer.copy">SIMY is the Digital Twin for the work that starts after meetings.</div>
+            <div class="footer-brand-copy" data-i18n="home.footer.copy">SIMY is the AI Twin for people with a ball to carry, and people ready to find theirs.</div>
           </div>
           <div class="footer-col">
             <div class="footer-col-title" data-i18n="footer.product">Product</div>
