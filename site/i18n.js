@@ -142,7 +142,7 @@
     "en": {
       kw: "Digital Twin, AI executive assistant, AI work assistant, AI agents, personal AI agent, meeting follow-up automation, proposal deck automation, sales follow-up AI, AI research assistant, AI email drafting, AI workflow automation, PC task automation, knowledge work automation",
       p: {
-        "index": { t: "SIMY - Your Digital Twin for Work", d: "Meeting ends. Your Twin starts working. SIMY prepares follow-up emails, proposal decks, research, analysis, next actions, and stakeholder updates." },
+        "index": { t: "SIMY - Meeting Ends. Your Twin Starts Working.", d: "Meeting ends. Your Twin starts working. SIMY turns meeting context into follow-ups, decks, research, analysis, updates, and next actions ready for your review." },
         "pricing": { t: "Pricing — SIMY | AI Code Generation Plans from $20/mo", d: "SIMY pricing for AI code generation from meetings. Starter $20, Pro $40, Scale $100/mo. A cheaper GitHub Copilot alternative." },
         "compare": { t: "Compare SIMY vs Copilot, Cursor, Devin & Claude Code", d: "SIMY vs GitHub Copilot, Cursor, Devin, and Claude Code. Autonomous AI that generates code from meetings — no prompting required." },
         "how-it-works": { t: "How SIMY Works — AI Code Generation from Meetings in 4 Steps", d: "See how SIMY turns meetings into shipped GitHub pull requests in 4 steps: record, AI processes, code generates, PR ships." },
@@ -155,7 +155,7 @@
     "ja": {
       kw: "Digital Twin, デジタルツイン, AI秘書, AIエージェント, パーソナルAI, 会議フォロー自動化, 営業フォローAI, 提案資料作成AI, パワーポイント自動作成, メール下書きAI, 調査AI, 戦略分析AI, PC作業自動化, ナレッジワーク自動化",
       p: {
-        "index": { t: "SIMY - あなたの仕事を先回りするDigital Twin", d: "会議が終わる。もう一人のあなたが動き出す。フォローアップメール、提案資料、調査、分析、次アクション、関係者共有までSIMYが先回りして準備します。" },
+        "index": { t: "SIMY - 会議が終わる。もう一人のあなたが動き出す。", d: "会議が終わる。もう一人のあなたが動き出す。SIMYがフォローアップ、提案資料、調査、分析、共有、次アクションを確認できる仕事へ変えます。" },
         "pricing": { t: "料金 — SIMY | AIコード生成プラン 月額20ドルから", d: "会議からコードを生成するSIMYの料金。Starter月額$20、Pro$40、Scale$100。GitHub Copilot・Cursorより安価なプラン。" },
         "compare": { t: "SIMY vs Copilot・Cursor・Devin・Claude Code 比較", d: "SIMYとGitHub Copilot、Cursor、Devin、Claude Codeを比較。会議から自動でコードを生成する自律型AIエンジニア。" },
         "how-it-works": { t: "使い方 — SIMY | 会議からコード生成 4ステップ", d: "SIMYが会議をGitHubプルリクエストに変える4ステップ：録画、AI処理、コード生成、PR作成。プロンプト不要。" },
