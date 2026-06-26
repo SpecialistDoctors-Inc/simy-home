@@ -265,8 +265,8 @@
         position: relative;
         z-index: 1;
         display: grid;
-        grid-template-columns: minmax(0, 1fr) 360px;
-        gap: 40px;
+        grid-template-columns: minmax(0, 1fr) 300px;
+        gap: 28px;
         align-items: end;
       }
       .eyebrow {
@@ -287,13 +287,30 @@
         background: #5ee0a8;
         border-radius: 999px;
       }
+      h1,
+      h2,
+      h3 {
+        text-wrap: balance;
+      }
+      p {
+        text-wrap: pretty;
+      }
       .hero h1 {
-        max-width: 760px;
+        max-width: 800px;
         margin: 0;
-        font-size: 3.55rem;
+        font-size: clamp(3.05rem, 4.3vw, 3.7rem);
         font-weight: 760;
         letter-spacing: 0;
         line-height: 1.02;
+      }
+      .hero-title-line {
+        display: block;
+      }
+      .hero-title-line + .hero-title-line {
+        margin-top: 0.04em;
+      }
+      .hero-mobile-break {
+        display: none;
       }
       .hero-sub {
         max-width: 690px;
@@ -656,7 +673,7 @@
         color: #8d8d88;
         font-size: 0.86rem;
       }
-      @media (max-width: 1080px) {
+      @media (max-width: 1180px) {
         .hero-inner,
         .proof-grid {
           grid-template-columns: 1fr;
@@ -664,6 +681,8 @@
         .hero-panel {
           max-width: 520px;
         }
+      }
+      @media (max-width: 1080px) {
         .loop,
         .persona-grid {
           grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -718,8 +737,12 @@
             url('/assets/hero-dashboard-yoshi.png') center top / cover no-repeat;
         }
         .hero h1 {
-          font-size: 2.32rem;
-          line-height: 1.05;
+          max-width: 10.8em;
+          font-size: clamp(1.9rem, 9.6vw, 2.65rem);
+          line-height: 1.06;
+        }
+        .hero-mobile-break {
+          display: block;
         }
         .hero-sub {
           font-size: 0.98rem;
@@ -809,7 +832,7 @@
         <div class="container hero-inner">
           <div>
             <div class="eyebrow" data-i18n="home.eyebrow">The work after the meeting</div>
-            <h1 data-i18n="home.h1">Meeting ends. Your Twin starts working.</h1>
+            <h1 data-i18n-html="home.h1"><span class="hero-title-line">Meeting ends.</span><span class="hero-title-line">Your Twin<span class="hero-mobile-break"></span> starts working.</span></h1>
             <p class="hero-sub" data-i18n="home.sub">Follow-ups, decks, research, analysis, updates, and next actions. SIMY understands what just happened, what matters next, and moves the work forward before you reopen a tab.</p>
             <div class="hero-actions">
               <a class="btn-primary" href="https://app.simy.one/signup" data-i18n="home.cta.primary">Create your Twin</a>
