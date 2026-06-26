@@ -18,6 +18,7 @@
     'it', 'hi', 'te', 'kn', 'ko', 'vi', 'th', 'id', 'ru', 'pt-BR'
   ];
   var DEFAULT = 'en';
+  var HOME_LOCALES = ['en', 'ja'];
   var CACHE = {};
   var CURRENT_LANG = DEFAULT;
 
@@ -75,6 +76,15 @@
     return null;
   }
 
+  function isIndexPage() {
+    return location.pathname === '/' || location.pathname === '' || location.pathname === '/index.html';
+  }
+
+  function safeLangForPage(lang) {
+    if (isIndexPage() && HOME_LOCALES.indexOf(lang) === -1) return DEFAULT;
+    return lang;
+  }
+
   /* ── Detect preferred language ─────────────────────────────── */
   function detect() {
     // 1. Query param  ?lang=ja
@@ -83,22 +93,22 @@
     if (qLang) {
       var resolved = resolve(qLang);
       if (!resolved && SUPPORTED.indexOf(qLang) !== -1) resolved = qLang;
-      if (resolved) return resolved;
+      if (resolved) return safeLangForPage(resolved);
     }
 
     // 2. Saved preference — check BOTH keys. The React bundle on /
     //    uses 'simy-language' for its internal LanguageContext, while
     //    the static pages use 'simy-lang'. Either key is authoritative.
     var saved = localStorage.getItem('simy-lang');
-    if (saved && SUPPORTED.indexOf(saved) !== -1) return saved;
+    if (saved && SUPPORTED.indexOf(saved) !== -1) return safeLangForPage(saved);
     var savedReact = localStorage.getItem('simy-language');
-    if (savedReact && SUPPORTED.indexOf(savedReact) !== -1) return savedReact;
+    if (savedReact && SUPPORTED.indexOf(savedReact) !== -1) return safeLangForPage(savedReact);
 
     // 3. Browser / OS language
     var langs = navigator.languages || [navigator.language || navigator.userLanguage || ''];
     for (var i = 0; i < langs.length; i++) {
       var match = resolve(langs[i]);
-      if (match) return match;
+      if (match) return safeLangForPage(match);
     }
 
     return DEFAULT;
@@ -130,9 +140,9 @@
   /* ── SEO data: keywords + per-page title/description per locale ── */
   var SEO = {
     "en": {
-      kw: "AI code generation, AI coding agent, problem-solving AI agent, AI that fixes bugs, AI agent for engineers, autonomous AI engineer, AI software engineer, meeting to code, voice to code, speech to code, AI pull request generator, AI pair programmer, meeting to PR, spec to code AI, sprint planning to code, GitHub Copilot alternative, Cursor alternative, Devin alternative, Claude Code alternative, Replit Agent alternative, AI SDLC automation",
+      kw: "Digital Twin, AI executive assistant, AI work assistant, AI agents, personal AI agent, meeting follow-up automation, proposal deck automation, sales follow-up AI, AI research assistant, AI email drafting, AI workflow automation, PC task automation, knowledge work automation",
       p: {
-        "index": { t: "SIMY — AI Code Generation from Meetings | Copilot Alternative", d: "Autonomous AI coding agent that turns meetings into shipped GitHub pull requests. A Copilot, Cursor, Devin, and Claude Code alternative." },
+        "index": { t: "SIMY - Your Digital Twin for Work", d: "The moment a meeting ends, your Digital Twin starts working. SIMY prepares follow-up emails, proposal decks, research, analysis, next actions, and stakeholder updates." },
         "pricing": { t: "Pricing — SIMY | AI Code Generation Plans from $20/mo", d: "SIMY pricing for AI code generation from meetings. Starter $20, Pro $40, Scale $100/mo. A cheaper GitHub Copilot alternative." },
         "compare": { t: "Compare SIMY vs Copilot, Cursor, Devin & Claude Code", d: "SIMY vs GitHub Copilot, Cursor, Devin, and Claude Code. Autonomous AI that generates code from meetings — no prompting required." },
         "how-it-works": { t: "How SIMY Works — AI Code Generation from Meetings in 4 Steps", d: "See how SIMY turns meetings into shipped GitHub pull requests in 4 steps: record, AI processes, code generates, PR ships." },
@@ -143,9 +153,9 @@
       }
     },
     "ja": {
-      kw: "AIコード生成, AIコーディングエージェント, 問題解決 AI エージェント, 課題解決 AI, バグ修正 AI, 自律型AIエンジニア, AIソフトウェアエンジニア, 会議からコード生成, 議事録からコード, 音声からコード, ミーティング コード化, AIプルリクエスト自動生成, AI PR 自動作成, 仕様書からコード AI, スプリント AI 開発, 会議 自動化 開発, AI ペアプログラミング, GitHub Copilot 代替, Cursor 代替, Devin 代替, Claude Code 代替, 開発自動化 AI, 開発効率化 AI",
+      kw: "Digital Twin, デジタルツイン, AI秘書, AIエージェント, パーソナルAI, 会議フォロー自動化, 営業フォローAI, 提案資料作成AI, パワーポイント自動作成, メール下書きAI, 調査AI, 戦略分析AI, PC作業自動化, ナレッジワーク自動化",
       p: {
-        "index": { t: "SIMY — 会議からコードを生成するAIエンジニア", d: "ミーティングの議論をGitHubプルリクエストに自動変換する自律型AIコーディングエージェント。GitHub Copilot・Cursor・Devin・Claude Codeの代替。" },
+        "index": { t: "SIMY - あなたの仕事を先回りするDigital Twin", d: "会議が終わった瞬間、もう一人のあなたが働き始める。フォローアップメール、提案資料、調査、分析、次アクション、関係者共有までSIMYが先回りして準備します。" },
         "pricing": { t: "料金 — SIMY | AIコード生成プラン 月額20ドルから", d: "会議からコードを生成するSIMYの料金。Starter月額$20、Pro$40、Scale$100。GitHub Copilot・Cursorより安価なプラン。" },
         "compare": { t: "SIMY vs Copilot・Cursor・Devin・Claude Code 比較", d: "SIMYとGitHub Copilot、Cursor、Devin、Claude Codeを比較。会議から自動でコードを生成する自律型AIエンジニア。" },
         "how-it-works": { t: "使い方 — SIMY | 会議からコード生成 4ステップ", d: "SIMYが会議をGitHubプルリクエストに変える4ステップ：録画、AI処理、コード生成、PR作成。プロンプト不要。" },
@@ -390,6 +400,9 @@
     if (!data) return;
     var key = pageKey();
     var page = data.p && data.p[key];
+    if (key === 'index' && lang !== 'en' && lang !== 'ja') {
+      page = SEO.en && SEO.en.p && SEO.en.p.index;
+    }
     if (page) {
       if (page.t) {
         document.title = page.t;
@@ -402,7 +415,10 @@
         setMetaTag('twitter:description', page.d);
       }
     }
-    if (data.kw) setMetaTag('keywords', data.kw);
+    var keywords = (key === 'index' && lang !== 'en' && lang !== 'ja' && SEO.en)
+      ? SEO.en.kw
+      : data.kw;
+    if (keywords) setMetaTag('keywords', keywords);
   }
 
   /* ── Capture original (English) DOM content on first apply ──
@@ -858,6 +874,10 @@
   /* ── Apply translations to DOM ─────────────────────────────── */
   function apply(dict) {
     var meta = dict._meta || {};
+    if (isIndexPage() && meta.code && HOME_LOCALES.indexOf(meta.code) === -1) {
+      load(DEFAULT, apply);
+      return;
+    }
 
     // Capture baseline English text from the static HTML on first run,
     // BEFORE any translation has been applied. Subsequent apply() calls
@@ -994,7 +1014,8 @@
 
     var dropdown = document.getElementById('langDropdown');
 
-    SUPPORTED.forEach(function (code) {
+    var switcherLocales = isIndexPage() ? HOME_LOCALES : SUPPORTED;
+    switcherLocales.forEach(function (code) {
       var opt = document.createElement('button');
       opt.className = 'lang-option';
       opt.textContent = LANG_NAMES[code] || code;
@@ -1019,6 +1040,7 @@
   /* ── Public: switch language ────────────────────────────────── */
   function setLang(lang) {
     if (SUPPORTED.indexOf(lang) === -1) lang = DEFAULT;
+    lang = safeLangForPage(lang);
     // Mirror to BOTH keys so the React bundle's LanguageContext and
     // i18n.js stay in lockstep — whichever side reads localStorage
     // on next mount/reload gets the same answer.
@@ -1102,8 +1124,10 @@
     xdef.hreflang = 'x-default';
     xdef.href = base;
     document.head.appendChild(xdef);
-    // Each language
-    SUPPORTED.forEach(function (code) {
+    // Each language. The redesigned top page currently has polished copy for
+    // English and Japanese; other pages can still expose the wider locale set.
+    var hreflangLocales = isIndexPage() ? HOME_LOCALES : SUPPORTED;
+    hreflangLocales.forEach(function (code) {
       var link = document.createElement('link');
       link.rel = 'alternate';
       link.hreflang = hreflangMap[code] || code;

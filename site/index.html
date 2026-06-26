@@ -3,40 +3,32 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-    <title>SIMY — Action Intelligence</title>
-    <meta name="description" content="Meetings End. Product Ships. Work goes to AI. People focus on questions. Execution is automated, measurable, and visible. SIMY is the Action Intelligence platform for modern teams." />
+    <title>SIMY - Your Digital Twin for Work</title>
+    <meta name="description" content="SIMY is your Digital Twin for work. It understands meetings, email, Slack, files, and priorities, then runs the right agents to draft follow-ups, decks, research, analysis, and next actions." />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+    <link rel="apple-touch-icon" href="/favicon-180.png">
     <link rel="canonical" href="https://simy.one/">
     <meta name="robots" content="index, follow">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://simy.one/">
-    <meta property="og:title" content="SIMY — Action Intelligence">
-    <meta property="og:description" content="Meetings end. Product ships. SIMY is the Action Intelligence platform that generates code from workplace conversations.">
+    <meta property="og:title" content="SIMY - Your Digital Twin for Work">
+    <meta property="og:description" content="The moment a meeting ends, your Digital Twin starts working. Follow-up emails, proposal decks, research, analysis, next actions, and stakeholder updates prepared before you ask.">
     <meta property="og:site_name" content="SIMY">
     <meta property="og:image" content="https://simy.one/ogp.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:locale" content="en_US">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="SIMY — Action Intelligence">
-    <meta name="twitter:description" content="AI-powered platform that generates code from workplace conversations.">
+    <meta name="twitter:title" content="SIMY - Your Digital Twin for Work">
+    <meta name="twitter:description" content="Your Digital Twin understands your context and runs the right agents to get PC work done ahead of you.">
     <meta name="twitter:image" content="https://simy.one/ogp.png">
     <meta name="theme-color" content="#f9f9f6">
-    <!-- hreflang: Add when i18n is implemented
-    <link rel="alternate" hreflang="en" href="https://simy.one/">
-    <link rel="alternate" hreflang="ja" href="https://simy.one/ja/">
-    <link rel="alternate" hreflang="x-default" href="https://simy.one/">
-    -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
       "name": "SIMY",
-      "url": "https://simy.one/",
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://simy.one/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
-      }
+      "url": "https://simy.one/"
     }
     </script>
     <script type="application/ld+json">
@@ -57,8 +49,7 @@
       "contactPoint": [
         { "@type": "ContactPoint", "email": "sales@simy.one", "contactType": "sales" },
         { "@type": "ContactPoint", "email": "tech@simy.one", "contactType": "technical support" }
-      ],
-      "sameAs": []
+      ]
     }
     </script>
     <script type="application/ld+json">
@@ -66,9 +57,9 @@
       "@context": "https://schema.org",
       "@type": "SoftwareApplication",
       "name": "SIMY",
-      "applicationCategory": "DeveloperApplication",
+      "applicationCategory": "BusinessApplication",
       "operatingSystem": "Web, iOS",
-      "description": "AI-powered Action Intelligence platform that generates code from workplace conversations.",
+      "description": "Digital Twin platform that understands work context and coordinates AI agents to complete knowledge work.",
       "url": "https://simy.one/",
       "offers": {
         "@type": "AggregateOffer",
@@ -83,16 +74,6 @@
       }
     }
     </script>
-
-    <!--
-      Typography System — Söhne-equivalent via Geist (Vercel / Klim-inspired)
-      ─────────────────────────────────────────────────────────────────────────
-      Geist          → Söhne equivalent. Geometric grotesque, Futura lineage.
-                       Variable font: wght 100–900. Self-hosted via CDN.
-      Geist Mono     → Söhne Mono equivalent. Tabular, clean, technical.
-                       Variable font: wght 100–900. Self-hosted via CDN.
-      ─────────────────────────────────────────────────────────────────────────
-    -->
     <style>
       @font-face {
         font-family: 'Geist';
@@ -108,136 +89,650 @@
         font-style: normal;
         font-display: swap;
       }
-    </style>
-    <style>
-      /* Hide React SPA's built-in nav and footer — replaced by static versions below */
-      #root > div > nav { display: none !important; }
-      #root footer { display: none !important; }
-      /* Static nav — identical to all other pages */
+      :root {
+        --bg: #f9f9f6;
+        --ink: #0a0a0a;
+        --muted: #5f625e;
+        --soft: #eeeee9;
+        --line: #deded7;
+        --blue: #0057ff;
+        --blue-dark: #003fb8;
+        --green: #047857;
+        --amber: #a45f00;
+        --red: #b42318;
+        --panel: #ffffff;
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        line-height: 1.5;
+      }
+      a { color: inherit; }
+      a:focus-visible,
+      button:focus-visible {
+        outline: 2px solid var(--blue);
+        outline-offset: 3px;
+      }
       .static-nav {
-        position: fixed; top: 0; left: 0; right: 0; z-index: 50;
-        transition: all 0.3s;
-        background: rgba(250, 250, 248, 0.9);
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 50;
+        background: rgba(250, 250, 248, 0.92);
+        border-bottom: 1px solid transparent;
         backdrop-filter: blur(16px);
         -webkit-backdrop-filter: blur(16px);
-        border-bottom: 1px solid transparent;
+        transition: border-color 0.2s, background 0.2s;
       }
       .static-nav.scrolled {
-        background: rgba(250, 250, 248, 0.97);
-        border-bottom-color: #e0e0dc;
+        background: rgba(250, 250, 248, 0.98);
+        border-bottom-color: var(--line);
       }
       .nav-inner {
-        display: flex; align-items: center; justify-content: space-between;
-        max-width: 1280px; margin: 0 auto; padding: 0 4rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-width: 1280px;
         height: 60px;
+        margin: 0 auto;
+        padding: 0 4rem;
       }
       .nav-logo {
-        display: flex; align-items: center; gap: 10px;
-        text-decoration: none; color: #0a0a0a;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--ink);
+        text-decoration: none;
       }
       .nav-logo-s {
-        width: 24px; height: 24px;
-        display: flex; align-items: center; justify-content: center;
-        background-color: #0057ff; color: #fff;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--blue);
+        color: #fff;
         font-family: 'Geist Mono', monospace;
-        font-size: 13px; font-weight: 500;
+        font-size: 13px;
+        font-weight: 600;
       }
       .nav-brand {
-        font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
-        font-size: 14px; font-weight: 700; letter-spacing: 0.06em;
-        color: #0a0a0a;
+        font-size: 14px;
+        font-weight: 750;
+        letter-spacing: 0;
       }
       .nav-version {
+        color: var(--blue);
         font-family: 'Geist Mono', monospace;
-        font-size: 13px; font-weight: 400; letter-spacing: 0.06em;
-        color: #0057ff;
+        font-size: 13px;
+        letter-spacing: 0;
       }
-      .nav-links { display: flex; gap: 32px; align-items: center; }
-      .nav-links a {
-        color: #5a5a56; text-decoration: none;
-        font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
-        font-size: 0.8125rem; font-weight: 400; letter-spacing: 0.01em;
-        transition: color 0.18s; position: relative;
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 30px;
       }
-      .nav-links a::after {
-        content: ''; position: absolute; bottom: -2px; left: 0;
-        width: 0; height: 1px; background-color: #0057ff;
-        transition: width 0.25s;
-      }
-      .nav-links a:hover { color: #0a0a0a; }
-      .nav-links a:hover::after { width: 100%; }
-      .nav-right { display: flex; align-items: center; gap: 20px; }
+      .nav-links a,
       .nav-signin {
-        color: #5a5a56; text-decoration: none;
-        font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
-        font-size: 0.8125rem; font-weight: 400; letter-spacing: 0.01em;
-        transition: color 0.18s;
+        color: var(--muted);
+        font-size: 0.8125rem;
+        text-decoration: none;
       }
-      .nav-signin:hover { color: #0a0a0a; }
+      .nav-links a:hover,
+      .nav-signin:hover { color: var(--ink); }
+      .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+      }
+      .btn-primary,
+      .btn-secondary,
       .static-nav .btn-primary {
-        background-color: #0057ff; color: #fff;
-        font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
-        letter-spacing: 0.01em;
-        border: 1px solid #0057ff; padding: 0.5rem 1.25rem;
-        font-size: 0.8125rem; font-weight: 500;
-        display: inline-flex; align-items: center; gap: 0.5rem;
-        text-decoration: none; transition: background-color 0.18s;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 42px;
+        padding: 0.72rem 1rem;
+        border: 1px solid var(--blue);
+        border-radius: 4px;
+        background: var(--blue);
+        color: #fff;
+        font-size: 0.9rem;
+        font-weight: 650;
+        text-decoration: none;
+        cursor: pointer;
+        transition: background 0.16s, border-color 0.16s, color 0.16s;
+      }
+      .btn-primary:hover,
+      .static-nav .btn-primary:hover {
+        background: var(--blue-dark);
+        border-color: var(--blue-dark);
+      }
+      .btn-secondary {
+        background: rgba(255, 255, 255, 0.86);
+        border-color: rgba(255, 255, 255, 0.86);
+        color: var(--ink);
+      }
+      .btn-secondary:hover {
+        background: #fff;
+        border-color: #fff;
+      }
+      .mobile-menu-btn {
+        display: none;
+        padding: 8px;
+        border: 0;
+        background: transparent;
+        color: var(--ink);
         cursor: pointer;
       }
-      .static-nav .btn-primary:hover { background-color: #0047dd; border-color: #0047dd; }
-      .mobile-menu-btn { display: none; background: none; border: none; color: #0a0a0a; cursor: pointer; padding: 8px; }
-      /* Static footer — identical to all other pages */
+      .page {
+        min-height: 100vh;
+      }
+      .container {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 0 4rem;
+      }
+      .hero {
+        position: relative;
+        min-height: 600px;
+        display: flex;
+        align-items: flex-end;
+        padding: 104px 0 34px;
+        overflow: hidden;
+        background:
+          linear-gradient(90deg, rgba(8, 9, 12, 0.91) 0%, rgba(8, 9, 12, 0.70) 38%, rgba(8, 9, 12, 0.28) 68%, rgba(8, 9, 12, 0.08) 100%),
+          url('/assets/hero-dashboard-yoshi.png') center top / cover no-repeat;
+        color: #fff;
+      }
+      .hero::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 120px;
+        background: linear-gradient(180deg, rgba(249, 249, 246, 0) 0%, var(--bg) 100%);
+        pointer-events: none;
+      }
+      .hero-inner {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 360px;
+        gap: 40px;
+        align-items: end;
+      }
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 14px;
+        color: rgba(255, 255, 255, 0.74);
+        font-family: 'Geist Mono', monospace;
+        font-size: 0.76rem;
+        letter-spacing: 0;
+        text-transform: uppercase;
+      }
+      .eyebrow::before {
+        content: '';
+        width: 8px;
+        height: 8px;
+        background: #5ee0a8;
+        border-radius: 999px;
+      }
+      .hero h1 {
+        max-width: 760px;
+        margin: 0;
+        font-size: 3.55rem;
+        font-weight: 760;
+        letter-spacing: 0;
+        line-height: 1.02;
+      }
+      .hero-sub {
+        max-width: 690px;
+        margin: 22px 0 0;
+        color: rgba(255, 255, 255, 0.82);
+        font-size: 1.08rem;
+        line-height: 1.58;
+      }
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 28px;
+      }
+      .hero-note {
+        margin-top: 14px;
+        color: rgba(255, 255, 255, 0.62);
+        font-size: 0.86rem;
+      }
+      .hero-panel {
+        width: 100%;
+        padding: 18px;
+        border: 1px solid rgba(255, 255, 255, 0.24);
+        border-radius: 8px;
+        background: rgba(8, 9, 12, 0.62);
+        box-shadow: 0 22px 60px rgba(0, 0, 0, 0.28);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+      }
+      .panel-kicker {
+        margin-bottom: 14px;
+        color: rgba(255, 255, 255, 0.58);
+        font-family: 'Geist Mono', monospace;
+        font-size: 0.72rem;
+        text-transform: uppercase;
+      }
+      .panel-item {
+        display: grid;
+        grid-template-columns: 10px 1fr;
+        gap: 12px;
+        padding: 12px 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.14);
+      }
+      .panel-item:first-of-type { border-top: 0; }
+      .panel-dot {
+        width: 10px;
+        height: 10px;
+        margin-top: 6px;
+        border-radius: 50%;
+        background: var(--blue);
+      }
+      .panel-dot.green { background: #22c55e; }
+      .panel-dot.amber { background: #f59e0b; }
+      .panel-title {
+        color: #fff;
+        font-weight: 700;
+      }
+      .panel-copy {
+        margin-top: 2px;
+        color: rgba(255, 255, 255, 0.62);
+        font-size: 0.86rem;
+      }
+      .section {
+        padding: 96px 0;
+      }
+      #difference {
+        padding-top: 56px;
+      }
+      .section + .section {
+        border-top: 1px solid var(--line);
+      }
+      .section-label {
+        margin: 0 0 14px;
+        color: var(--blue);
+        font-family: 'Geist Mono', monospace;
+        font-size: 0.76rem;
+        text-transform: uppercase;
+      }
+      .section h2 {
+        max-width: 820px;
+        margin: 0;
+        font-size: 3rem;
+        font-weight: 740;
+        letter-spacing: 0;
+        line-height: 1.08;
+      }
+      .section-lead {
+        max-width: 760px;
+        margin: 20px 0 0;
+        color: var(--muted);
+        font-size: 1.05rem;
+        line-height: 1.75;
+      }
+      .twin-stack {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: 20px;
+        margin-top: 40px;
+      }
+      .concept-card,
+      .work-card,
+      .persona-card,
+      .loop-step,
+      .proof-panel {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--panel);
+      }
+      .concept-card {
+        min-height: 300px;
+        padding: 28px;
+      }
+      .concept-card.primary {
+        background: #07101f;
+        color: #fff;
+        border-color: #07101f;
+      }
+      .concept-card h3 {
+        margin: 0;
+        font-size: 1.45rem;
+        letter-spacing: 0;
+      }
+      .concept-card p {
+        margin: 16px 0 0;
+        color: var(--muted);
+      }
+      .concept-card.primary p {
+        color: rgba(255, 255, 255, 0.72);
+      }
+      .agent-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        margin-top: 24px;
+      }
+      .agent-chip {
+        padding: 10px 12px;
+        border: 1px solid rgba(255, 255, 255, 0.17);
+        border-radius: 6px;
+        background: rgba(255, 255, 255, 0.07);
+        color: rgba(255, 255, 255, 0.88);
+        font-size: 0.86rem;
+      }
+      .agent-chip.light {
+        border-color: var(--line);
+        background: #f6f6f1;
+        color: var(--ink);
+      }
+      .arrow-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 24px;
+        color: rgba(255, 255, 255, 0.72);
+        font-family: 'Geist Mono', monospace;
+        font-size: 0.78rem;
+      }
+      .work-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+        margin-top: 40px;
+      }
+      .work-card {
+        padding: 24px;
+        min-height: 230px;
+      }
+      .work-card strong {
+        display: block;
+        color: var(--blue);
+        font-family: 'Geist Mono', monospace;
+        font-size: 0.78rem;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+      .work-card h3 {
+        margin: 18px 0 0;
+        font-size: 1.22rem;
+      }
+      .work-card p {
+        margin: 12px 0 0;
+        color: var(--muted);
+      }
+      .loop {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 10px;
+        margin-top: 40px;
+      }
+      .loop-step {
+        padding: 18px;
+      }
+      .loop-num {
+        color: var(--blue);
+        font-family: 'Geist Mono', monospace;
+        font-size: 0.75rem;
+      }
+      .loop-step h3 {
+        margin: 16px 0 0;
+        font-size: 1rem;
+      }
+      .loop-step p {
+        margin: 8px 0 0;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+      .proof-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+        gap: 20px;
+        margin-top: 40px;
+      }
+      .proof-panel {
+        padding: 26px;
+      }
+      .proof-panel.dark {
+        background: #0a0a0a;
+        color: #fff;
+        border-color: #0a0a0a;
+      }
+      .timeline-row {
+        display: grid;
+        grid-template-columns: 72px 1fr;
+        gap: 14px;
+        padding: 16px 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.16);
+      }
+      .timeline-row:first-child { border-top: 0; }
+      .time {
+        color: rgba(255, 255, 255, 0.52);
+        font-family: 'Geist Mono', monospace;
+        font-size: 0.8rem;
+      }
+      .timeline-title {
+        font-weight: 700;
+      }
+      .timeline-copy {
+        margin-top: 3px;
+        color: rgba(255, 255, 255, 0.62);
+        font-size: 0.9rem;
+      }
+      .persona-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 40px;
+      }
+      .persona-card {
+        padding: 20px;
+      }
+      .persona-card h3 {
+        margin: 0;
+        font-size: 1.05rem;
+      }
+      .persona-card p {
+        margin: 10px 0 0;
+        color: var(--muted);
+        font-size: 0.94rem;
+      }
+      .final-cta {
+        padding: 96px 0 112px;
+        background: #07101f;
+        color: #fff;
+      }
+      .final-cta h2 {
+        max-width: 760px;
+        margin: 0;
+        font-size: 3.25rem;
+        line-height: 1.08;
+        letter-spacing: 0;
+      }
+      .final-cta p {
+        max-width: 690px;
+        margin: 20px 0 0;
+        color: rgba(255, 255, 255, 0.72);
+        font-size: 1.05rem;
+      }
+      .final-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 30px;
+      }
       .static-footer {
         padding: 48px 0 36px;
-        border-top: none;
         background: #0a0a0a;
         color: #f5f5f0;
-        font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
       }
-      .static-footer .container { max-width: 1280px; margin: 0 auto; padding: 0 4rem; }
-      .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
-      .footer-col { display: flex; flex-direction: column; gap: 10px; }
-      .footer-col-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #6a6a66; margin-bottom: 4px; }
-      .footer-col a { color: #9a9a96; text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+      .static-footer .container { max-width: 1280px; }
+      .footer-grid {
+        display: grid;
+        grid-template-columns: 1.5fr 1fr 1fr 1fr;
+        gap: 40px;
+        margin-bottom: 40px;
+      }
+      .footer-col {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .footer-col-title {
+        margin-bottom: 4px;
+        color: #6a6a66;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+      .footer-col a {
+        color: #9a9a96;
+        font-size: 0.85rem;
+        text-decoration: none;
+      }
       .footer-col a:hover { color: #f5f5f0; }
-      .footer-bottom { padding-top: 24px; border-top: 1px solid #1a1a1a; font-size: 0.75rem; color: #3a3a36; text-align: center; }
+      .footer-bottom {
+        padding-top: 24px;
+        border-top: 1px solid #1a1a1a;
+        color: #5a5a56;
+        font-size: 0.75rem;
+        text-align: center;
+      }
+      .footer-brand-line {
+        margin-bottom: 6px;
+        font-size: 1rem;
+        font-weight: 700;
+      }
+      .footer-brand-copy {
+        max-width: 300px;
+        color: #8d8d88;
+        font-size: 0.86rem;
+      }
+      @media (max-width: 1080px) {
+        .hero-inner,
+        .proof-grid {
+          grid-template-columns: 1fr;
+        }
+        .hero-panel {
+          max-width: 520px;
+        }
+        .loop,
+        .persona-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
       @media (max-width: 768px) {
-        .nav-links { display: none; }
-        .nav-right { display: none; }
-        .mobile-menu-btn { display: block; }
-        .nav-inner { padding: 0 1.5rem; }
-        .static-footer .container { padding: 0 1.5rem; }
-        .footer-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
-        .footer-brand { grid-column: 1 / -1; text-align: center; }
+        .nav-inner {
+          height: 56px;
+          padding: 0 1.25rem;
+        }
+        .nav-version,
+        .nav-right {
+          display: none;
+        }
+        .nav-links {
+          display: none;
+        }
+        .nav-links.active {
+          display: flex;
+          position: fixed;
+          top: 56px;
+          left: 0;
+          right: 0;
+          flex-direction: column;
+          align-items: stretch;
+          gap: 0;
+          padding: 0.5rem 1.25rem 1rem;
+          background: #fafaf8;
+          border-bottom: 1px solid var(--line);
+          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        }
+        .nav-links.active a {
+          display: block;
+          padding: 0.85rem 0;
+          border-bottom: 1px solid #ededea;
+          color: var(--ink);
+          font-size: 1rem;
+        }
+        .mobile-menu-btn {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .container {
+          padding: 0 1.25rem;
+        }
+        .hero {
+          min-height: 560px;
+          padding: 84px 0 24px;
+          background:
+            linear-gradient(180deg, rgba(8, 9, 12, 0.88) 0%, rgba(8, 9, 12, 0.68) 54%, rgba(8, 9, 12, 0.40) 100%),
+            url('/assets/hero-dashboard-yoshi.png') center top / cover no-repeat;
+        }
+        .hero h1 {
+          font-size: 2.32rem;
+          line-height: 1.05;
+        }
+        .hero-sub {
+          font-size: 0.98rem;
+          line-height: 1.55;
+        }
+        .hero-panel {
+          display: none;
+        }
+        .section,
+        .final-cta {
+          padding: 68px 0;
+        }
+        #difference {
+          padding-top: 44px;
+        }
+        .section h2,
+        .final-cta h2 {
+          font-size: 2.2rem;
+        }
+        .twin-stack,
+        .work-grid,
+        .loop,
+        .persona-grid,
+        .footer-grid {
+          grid-template-columns: 1fr;
+        }
+        .concept-card,
+        .work-card,
+        .proof-panel {
+          padding: 22px;
+          min-height: auto;
+        }
+        .agent-grid {
+          grid-template-columns: 1fr;
+        }
+        .timeline-row {
+          grid-template-columns: 58px 1fr;
+        }
       }
     </style>
-    <script type="module" crossorigin src="/assets/index-DnVveaIK.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-BwUIJj-q.css">
     <link rel="stylesheet" href="/responsive.css">
   </head>
   <body>
-    <!-- Redirect /index.html to / so wouter home route matches -->
     <script>if(location.pathname==='/index.html')location.replace('/');</script>
-    <!-- Force full navigation for static subpages (bypass wouter client-side routing) -->
-    <script>
-    document.addEventListener('click', function(e) {
-      var a = e.target.closest('a');
-      if (!a) return;
-      var pages = ['/pricing.html','/compare.html','/about.html','/contact.html','/press.html',
-                   '/careers.html','/status.html','/privacy.html','/terms.html',
-                   '/how-it-works.html','/integrations.html','/security.html','/press-release.html'];
-      try {
-        var p = new URL(a.href, location.origin).pathname;
-        if (pages.indexOf(p) !== -1) {
-          e.preventDefault();
-          e.stopPropagation();
-          window.location.href = a.href;
-        }
-      } catch(err) {}
-    }, true);
-    </script>
 
-    <!-- Static nav — same code as all other pages -->
     <nav class="static-nav" id="staticNav">
       <div class="nav-inner">
         <a href="/" class="nav-logo">
@@ -247,14 +742,14 @@
         </a>
         <div class="nav-links" id="navLinks">
           <a href="/" data-i18n="nav.home">Home</a>
-          <a href="/pricing.html" data-i18n="nav.pricing">Pricing</a>
-          <a href="/compare.html" data-i18n="nav.compare">Compare</a>
-          <a href="/about.html" data-i18n="nav.about">About</a>
-          <a href="/press-release.html" data-i18n="nav.news">News</a>
+          <a href="#difference" data-i18n="nav.difference">Digital Twin</a>
+          <a href="#work" data-i18n="nav.work">Work handled</a>
+          <a href="#loop" data-i18n="nav.how">How it works</a>
+          <a href="mailto:sales@simy.one" data-i18n="footer.company.contact">Contact</a>
         </div>
         <div class="nav-right">
           <a href="https://app.simy.one/login" class="nav-signin" data-i18n="nav.signin">Sign in</a>
-          <a href="https://app.simy.one/signup" class="btn-primary" data-i18n="nav.cta">Start on Web</a>
+          <a href="https://app.simy.one/signup" class="btn-primary" data-i18n="home.cta.primary">Create your Digital Twin</a>
         </div>
         <button class="mobile-menu-btn" onclick="document.getElementById('navLinks').classList.toggle('active')" aria-label="Toggle menu">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
@@ -263,41 +758,234 @@
         </button>
       </div>
     </nav>
-    <script>
-    window.addEventListener('scroll', function() {
-      var nav = document.getElementById('staticNav');
-      if (window.scrollY > 10) { nav.classList.add('scrolled'); }
-      else { nav.classList.remove('scrolled'); }
-    });
-    </script>
 
-    <div id="root"></div>
+    <main class="page">
+      <section class="hero">
+        <div class="container hero-inner">
+          <div>
+            <div class="eyebrow" data-i18n="home.eyebrow">Digital Twin above your agents</div>
+            <h1 data-i18n="home.h1">The moment a meeting ends, another you starts working.</h1>
+            <p class="hero-sub" data-i18n="home.sub">Follow-up emails, proposal decks, research, analysis, next actions, and stakeholder updates. SIMY understands your context, decides what should happen next, and runs the right agents before you ask.</p>
+            <div class="hero-actions">
+              <a class="btn-primary" href="https://app.simy.one/signup" data-i18n="home.cta.primary">Create your Digital Twin</a>
+              <a class="btn-secondary" href="#difference" data-i18n="home.cta.secondary">See the difference</a>
+            </div>
+            <div class="hero-note" data-i18n="home.hero.note">Your Twin prepares the work. You review, approve, and keep the human judgment.</div>
+          </div>
+          <aside class="hero-panel" aria-label="SIMY prepared work queue">
+            <div class="panel-kicker" data-i18n="home.hero.queue">Prepared after the meeting</div>
+            <div class="panel-item">
+              <span class="panel-dot green"></span>
+              <div>
+                <div class="panel-title" data-i18n="home.hero.item1.h">Follow-up draft ready</div>
+                <div class="panel-copy" data-i18n="home.hero.item1.p">Tone matched to the last customer call.</div>
+              </div>
+            </div>
+            <div class="panel-item">
+              <span class="panel-dot"></span>
+              <div>
+                <div class="panel-title" data-i18n="home.hero.item2.h">Proposal deck updated</div>
+                <div class="panel-copy" data-i18n="home.hero.item2.p">New pricing slide, risks, and next-step page.</div>
+              </div>
+            </div>
+            <div class="panel-item">
+              <span class="panel-dot amber"></span>
+              <div>
+                <div class="panel-title" data-i18n="home.hero.item3.h">Internal update queued</div>
+                <div class="panel-copy" data-i18n="home.hero.item3.p">Sales, product, and finance get the right version.</div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
 
-    <!-- Static footer — same code as all other pages -->
+      <section class="section" id="difference">
+        <div class="container">
+          <p class="section-label" data-i18n="home.diff.label">Not one more agent</p>
+          <h2 data-i18n="home.diff.h">Your Digital Twin sits above agents and orchestrates the work.</h2>
+          <p class="section-lead" data-i18n="home.diff.p">Agents execute tasks when instructed. Your Digital Twin knows your meetings, customers, priorities, preferences, documents, and past decisions, then chooses which agents should run and what they should prepare.</p>
+          <div class="twin-stack">
+            <div class="concept-card primary">
+              <h3 data-i18n="home.twin.h">Digital Twin</h3>
+              <p data-i18n="home.twin.p">Understands context, decides the next move, delegates work, and returns a review-ready result. It behaves like another operational version of you.</p>
+              <div class="arrow-row" data-i18n="home.twin.flow">Context -> judgment -> orchestration -> approval</div>
+              <div class="agent-grid">
+                <div class="agent-chip" data-i18n="home.agent.email">Email agent</div>
+                <div class="agent-chip" data-i18n="home.agent.deck">Deck agent</div>
+                <div class="agent-chip" data-i18n="home.agent.research">Research agent</div>
+                <div class="agent-chip" data-i18n="home.agent.crm">CRM agent</div>
+              </div>
+            </div>
+            <div class="concept-card">
+              <h3 data-i18n="home.agent.h">Standalone agent</h3>
+              <p data-i18n="home.agent.p">Waits for an instruction, works on one task, and often needs you to provide the context again. Useful, but still managed by you.</p>
+              <div class="agent-grid">
+                <div class="agent-chip light" data-i18n="home.agent.wait1">Needs a prompt</div>
+                <div class="agent-chip light" data-i18n="home.agent.wait2">Needs context</div>
+                <div class="agent-chip light" data-i18n="home.agent.wait3">Needs sequencing</div>
+                <div class="agent-chip light" data-i18n="home.agent.wait4">Needs follow-up</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="work">
+        <div class="container">
+          <p class="section-label" data-i18n="home.work.label">PC work handled ahead of you</p>
+          <h2 data-i18n="home.work.h">The work that usually happens after the call starts automatically.</h2>
+          <div class="work-grid">
+            <article class="work-card">
+              <strong data-i18n="home.work.sales.k">Sales</strong>
+              <h3 data-i18n="home.work.sales.h">Follow up every customer without delay.</h3>
+              <p data-i18n="home.work.sales.p">SIMY drafts personalized follow-ups, updates CRM fields, flags risks, and prepares the next meeting agenda.</p>
+            </article>
+            <article class="work-card">
+              <strong data-i18n="home.work.deck.k">Decks</strong>
+              <h3 data-i18n="home.work.deck.h">Turn discussion into a proposal.</h3>
+              <p data-i18n="home.work.deck.p">Your Twin gathers context, chooses the right narrative, and prepares the PowerPoint structure and copy.</p>
+            </article>
+            <article class="work-card">
+              <strong data-i18n="home.work.analysis.k">Analysis</strong>
+              <h3 data-i18n="home.work.analysis.h">Get the strategy memo before the next meeting.</h3>
+              <p data-i18n="home.work.analysis.p">SIMY researches the market, compares options, summarizes trade-offs, and gives you a recommendation to review.</p>
+            </article>
+            <article class="work-card">
+              <strong data-i18n="home.work.mail.k">Email</strong>
+              <h3 data-i18n="home.work.mail.h">Draft the message you were about to write.</h3>
+              <p data-i18n="home.work.mail.p">It learns your tone, recipient history, and urgency so drafts are ready when you open your inbox.</p>
+            </article>
+            <article class="work-card">
+              <strong data-i18n="home.work.share.k">Sharing</strong>
+              <h3 data-i18n="home.work.share.h">Keep stakeholders aligned.</h3>
+              <p data-i18n="home.work.share.p">Different teams get different updates: executive summary, action list, customer note, or risk brief.</p>
+            </article>
+            <article class="work-card">
+              <strong data-i18n="home.work.ops.k">Operations</strong>
+              <h3 data-i18n="home.work.ops.h">Move tasks across your tools.</h3>
+              <p data-i18n="home.work.ops.p">Calendar, Slack, Gmail, docs, spreadsheets, and browser work can be coordinated from one Twin.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="loop">
+        <div class="container">
+          <p class="section-label" data-i18n="home.loop.label">How it works</p>
+          <h2 data-i18n="home.loop.h">You stay in judgment. SIMY handles the execution loop.</h2>
+          <div class="loop">
+            <div class="loop-step">
+              <div class="loop-num">01</div>
+              <h3 data-i18n="home.loop.1.h">Listen</h3>
+              <p data-i18n="home.loop.1.p">Meetings, email, Slack, docs, and calendar become context.</p>
+            </div>
+            <div class="loop-step">
+              <div class="loop-num">02</div>
+              <h3 data-i18n="home.loop.2.h">Understand</h3>
+              <p data-i18n="home.loop.2.p">SIMY identifies goals, people, constraints, and next actions.</p>
+            </div>
+            <div class="loop-step">
+              <div class="loop-num">03</div>
+              <h3 data-i18n="home.loop.3.h">Delegate</h3>
+              <p data-i18n="home.loop.3.p">The Twin assigns the right specialist agents to each task.</p>
+            </div>
+            <div class="loop-step">
+              <div class="loop-num">04</div>
+              <h3 data-i18n="home.loop.4.h">Prepare</h3>
+              <p data-i18n="home.loop.4.p">Drafts, decks, research, updates, and task changes are produced.</p>
+            </div>
+            <div class="loop-step">
+              <div class="loop-num">05</div>
+              <h3 data-i18n="home.loop.5.h">Ask</h3>
+              <p data-i18n="home.loop.5.p">You approve, edit, or redirect before anything important is sent.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <p class="section-label" data-i18n="home.proof.label">A normal workday, compressed</p>
+          <h2 data-i18n="home.proof.h">From meeting notes to finished drafts in minutes.</h2>
+          <div class="proof-grid">
+            <div class="proof-panel dark">
+              <div class="timeline-row">
+                <div class="time">3:04</div>
+                <div>
+                  <div class="timeline-title" data-i18n="home.proof.t1.h">Customer call ends</div>
+                  <div class="timeline-copy" data-i18n="home.proof.t1.p">Pricing concern, integration request, and legal review are captured.</div>
+                </div>
+              </div>
+              <div class="timeline-row">
+                <div class="time">3:06</div>
+                <div>
+                  <div class="timeline-title" data-i18n="home.proof.t2.h">Agents start in parallel</div>
+                  <div class="timeline-copy" data-i18n="home.proof.t2.p">Email, deck, CRM, and research agents each receive the right context.</div>
+                </div>
+              </div>
+              <div class="timeline-row">
+                <div class="time">3:11</div>
+                <div>
+                  <div class="timeline-title" data-i18n="home.proof.t3.h">Review bundle is ready</div>
+                  <div class="timeline-copy" data-i18n="home.proof.t3.p">You approve the follow-up, share the brief, and move on.</div>
+                </div>
+              </div>
+            </div>
+            <div class="proof-panel">
+              <p class="section-label" data-i18n="home.persona.label">Built for context-heavy operators</p>
+              <div class="persona-grid">
+                <div class="persona-card">
+                  <h3 data-i18n="home.persona.ceo.h">CEO / Founder</h3>
+                  <p data-i18n="home.persona.ceo.p">Board updates, investor follow-ups, hiring notes, customer asks.</p>
+                </div>
+                <div class="persona-card">
+                  <h3 data-i18n="home.persona.sales.h">Sales lead</h3>
+                  <p data-i18n="home.persona.sales.p">CRM hygiene, follow-up emails, deal risks, next-step decks.</p>
+                </div>
+                <div class="persona-card">
+                  <h3 data-i18n="home.persona.consult.h">Consultant</h3>
+                  <p data-i18n="home.persona.consult.p">Research, synthesis, slides, client-ready summaries.</p>
+                </div>
+                <div class="persona-card">
+                  <h3 data-i18n="home.persona.ops.h">Operator</h3>
+                  <p data-i18n="home.persona.ops.p">Recurring workflows across inbox, docs, Slack, calendar, and web apps.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="final-cta">
+        <div class="container">
+          <h2 data-i18n="home.final.h">Stop managing agents. Let your Digital Twin run them.</h2>
+          <p data-i18n="home.final.p">Create your SIMY workspace, connect the tools you already use, and let your Twin prepare the work that normally waits for you after every meeting.</p>
+          <div class="final-actions">
+            <a class="btn-primary" href="https://app.simy.one/signup" data-i18n="home.cta.primary">Create your Digital Twin</a>
+            <a class="btn-secondary" href="mailto:sales@simy.one" data-i18n="home.final.secondary">Talk to sales</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
     <footer class="static-footer">
       <div class="container">
         <div class="footer-grid">
           <div class="footer-brand">
-            <div style="font-size:1rem;font-weight:700;margin-bottom:6px;letter-spacing:-0.02em" data-i18n="footer.tagline">Record. Ship. Done.</div>
-            <div style="display:flex;gap:12px;align-items:center;margin-top:12px">
-              <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" target="_blank" rel="noopener" data-i18n="footer.companion">iPhone recording companion app</a><div style="font-size:0.75rem;color:#6a6a66;margin-top:4px" data-i18n="footer.billing">Plans and billing are managed on the web.</div>
-            </div>
+            <div class="footer-brand-line" data-i18n="home.footer.tagline">Another you, already working.</div>
+            <div class="footer-brand-copy" data-i18n="home.footer.copy">SIMY is a web-contracted SaaS. The iPhone app is a recording companion for teams that need it.</div>
           </div>
           <div class="footer-col">
             <div class="footer-col-title" data-i18n="footer.product">Product</div>
-            <a href="/how-it-works.html" data-i18n="footer.product.how">How It Works</a>
-            <a href="/pricing.html" data-i18n="footer.product.pricing">Pricing</a>
-            <a href="/compare.html" data-i18n="footer.product.compare">Compare</a>
-            <a href="/integrations.html" data-i18n="footer.product.integrations">Integrations</a>
-            <a href="/security.html" data-i18n="footer.product.security">Security</a>
+            <a href="#difference" data-i18n="footer.product.difference">Digital Twin</a>
+            <a href="#work" data-i18n="footer.product.work">Work handled</a>
+            <a href="#loop" data-i18n="footer.product.loop">Execution loop</a>
           </div>
           <div class="footer-col">
             <div class="footer-col-title" data-i18n="footer.company">Company</div>
-            <a href="/about.html" data-i18n="footer.company.about">About</a>
-            <a href="/careers.html" data-i18n="footer.company.careers">Careers</a>
-            <a href="/press.html" data-i18n="footer.company.press">Press</a>
-            <a href="/contact.html" data-i18n="footer.company.contact">Contact</a>
-            <a href="/status.html" data-i18n="footer.company.status">Status</a>
+            <a href="mailto:sales@simy.one" data-i18n="footer.company.contact">Contact</a>
+            <a href="https://app.simy.one/login" data-i18n="nav.signin">Sign in</a>
+            <a href="https://app.simy.one/signup" data-i18n="footer.company.signup">Create account</a>
           </div>
           <div class="footer-col">
             <div class="footer-col-title" data-i18n="footer.legal">Legal</div>
@@ -311,10 +999,14 @@
       </div>
     </footer>
 
+    <script>
+      window.addEventListener('scroll', function() {
+        var nav = document.getElementById('staticNav');
+        if (!nav) return;
+        if (window.scrollY > 10) { nav.classList.add('scrolled'); }
+        else { nav.classList.remove('scrolled'); }
+      });
+    </script>
     <script src="/i18n.js"></script>
-    <script
-      defer
-      src="%VITE_ANALYTICS_ENDPOINT%/umami"
-      data-website-id="%VITE_ANALYTICS_WEBSITE_ID%"></script>
   </body>
 </html>
