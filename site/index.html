@@ -356,6 +356,38 @@
         color: rgba(255, 255, 255, 0.62);
         font-size: 0.86rem;
       }
+      .value-strip {
+        padding: 42px 0 46px;
+        background: #fff;
+        border-bottom: 1px solid var(--line);
+      }
+      .value-strip-inner {
+        display: grid;
+        grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+        gap: 36px;
+        align-items: center;
+      }
+      .value-kicker {
+        margin: 0 0 12px;
+        color: var(--blue);
+        font-family: 'Geist Mono', monospace;
+        font-size: 0.76rem;
+        text-transform: uppercase;
+      }
+      .value-strip h2 {
+        margin: 0;
+        font-size: 2.35rem;
+        font-weight: 760;
+        line-height: 1.08;
+        letter-spacing: 0;
+      }
+      .value-strip p {
+        max-width: 520px;
+        margin: 0;
+        color: var(--muted);
+        font-size: 1.15rem;
+        line-height: 1.65;
+      }
       .section {
         padding: 96px 0;
       }
@@ -696,6 +728,19 @@
         .hero-panel {
           display: none;
         }
+        .value-strip {
+          padding: 38px 0 42px;
+        }
+        .value-strip-inner {
+          grid-template-columns: 1fr;
+          gap: 18px;
+        }
+        .value-strip h2 {
+          font-size: 2rem;
+        }
+        .value-strip p {
+          font-size: 1rem;
+        }
         .section,
         .final-cta {
           padding: 68px 0;
@@ -796,6 +841,16 @@
               </div>
             </div>
           </aside>
+        </div>
+      </section>
+
+      <section class="value-strip">
+        <div class="container value-strip-inner">
+          <div>
+            <p class="value-kicker" data-i18n="home.value.label">Value shift</p>
+            <h2 data-i18n="home.value.h">Are you still sitting at your computer doing the work?</h2>
+          </div>
+          <p data-i18n="home.value.p">Use that time for higher-value work.</p>
         </div>
       </section>
 
