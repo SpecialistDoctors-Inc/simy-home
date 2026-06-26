@@ -21,6 +21,10 @@ p, li, a, h1, h2, h3, h4, h5, h6, span, div, td, th, dd, dt, blockquote {
   overflow-wrap: break-word;
 }
 
+.mobile-only-nav-action {
+  display: none !important;
+}
+
 /* Tables inside .*-table-wrap can still scroll horizontally — leave those alone */
 
 /* ---- React SPA (home) overrides: clip marquees, prevent overflow ---- */
@@ -84,6 +88,20 @@ p, li, a, h1, h2, h3, h4, h5, h6, span, div, td, th, dd, dt, blockquote {
     color: #0a0a0a;
   }
   .nav-links.active a:last-child { border-bottom: none; }
+  .nav-links.active .mobile-only-nav-action { display: block !important; }
+  .nav-links.active .mobile-signup {
+    margin-top: 0.75rem;
+    padding: 0.85rem 1rem !important;
+    border-bottom: none !important;
+    border-radius: 12px;
+    background: #0a0a0a;
+    color: #fff;
+    text-align: center;
+  }
+  .nav-links.active .mobile-signin {
+    margin-top: 0.5rem;
+    border-top: 1px solid #ededea;
+  }
 
   /* ---- Static footer ---- */
   .static-footer { padding: 36px 0 28px !important; }

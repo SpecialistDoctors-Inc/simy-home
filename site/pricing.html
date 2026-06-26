@@ -459,8 +459,8 @@
           <a href="/press-release.html" data-i18n="nav.news">News</a>
         </div>
         <div class="nav-right">
-          <a href="#" class="nav-signin" data-i18n="nav.signin">Sign in</a>
-          <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" class="btn-primary" target="_blank" rel="noopener" data-i18n="nav.cta">Request Access</a>
+          <a href="https://app.simy.one/login" class="nav-signin" data-i18n="nav.signin">Sign in</a>
+          <a href="https://app.simy.one/signup" class="btn-primary" data-i18n="nav.cta">Start on Web</a>
         </div>
         <button class="mobile-menu-btn" onclick="document.getElementById('navLinks').classList.toggle('active')" aria-label="Toggle menu">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
@@ -484,12 +484,13 @@
       <div class="p-hero">
         <h1 data-i18n="pricing.title">Simple, transparent pricing.</h1>
         <p data-i18n="pricing.subtitle">Seat-based plans with SIMY token allocation. Scale as your team grows.</p>
+        <p data-i18n="pricing.webNote">Create your SIMY account on the web. Subscription checkout is securely handled by Stripe.</p>
       </div>
 
       <div class="billing-toggle">
         <div class="toggle-wrapper">
           <button class="toggle-btn" data-billing="monthly" onclick="setBilling('monthly')" data-i18n="pricing.monthly">Monthly</button>
-          <button class="toggle-btn active" data-billing="annual" onclick="setBilling('annual')">
+          <button class="toggle-btn active" data-billing="yearly" onclick="setBilling('yearly')">
             <span style="display:flex;align-items:center;gap:8px"><span data-i18n="pricing.annual">Annual</span> <span style="font-size:0.7rem;letter-spacing:0.04em" data-i18n="pricing.annual.save">&middot; Save 17%</span></span>
           </button>
         </div>
@@ -522,7 +523,7 @@
               </div>
             </div>
 
-            <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" class="plan-cta" target="_blank" rel="noopener" data-i18n="pricing.cta">Get started</a>
+            <a href="https://app.simy.one/signup?plan=starter&interval=yearly" class="plan-cta" data-i18n="pricing.cta">Choose plan</a>
 
             <ul class="feature-list">
               <li><span id="feat-tokens-starter" data-i18n="pricing.f.starter.1">80,000,000 SIMY tokens / month</span></li>
@@ -568,7 +569,7 @@
               </div>
             </div>
 
-            <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" class="plan-cta" target="_blank" rel="noopener" data-i18n="pricing.cta">Get started</a>
+            <a href="https://app.simy.one/signup?plan=pro&interval=yearly" class="plan-cta" data-i18n="pricing.cta">Choose plan</a>
 
             <ul class="feature-list">
               <li><span id="feat-tokens-pro" data-i18n="pricing.f.pro.1">160,000,000 SIMY tokens / month</span></li>
@@ -614,7 +615,7 @@
               </div>
             </div>
 
-            <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" class="plan-cta" target="_blank" rel="noopener" data-i18n="pricing.cta">Get started</a>
+            <a href="https://app.simy.one/signup?plan=scale&interval=yearly" class="plan-cta" data-i18n="pricing.cta">Choose plan</a>
 
             <ul class="feature-list">
               <li><span id="feat-tokens-scale" data-i18n="pricing.f.scale.1">400,000,000 SIMY tokens / month</span></li>
@@ -654,7 +655,7 @@
 
     <!-- Pricing dropdown logic -->
     <script>
-    var currentBilling = 'annual';
+    var currentBilling = 'yearly';
 
     function setBilling(type) {
       currentBilling = type;
@@ -708,6 +709,8 @@
       var price = currentBilling === 'monthly' ? priceM : priceA;
       var plan = card.getAttribute('data-plan');
       document.getElementById('price-' + plan).textContent = '$' + price;
+      var cta = card.querySelector('.plan-cta');
+      if (cta) cta.href = 'https://app.simy.one/signup?plan=' + plan + '&interval=' + currentBilling;
       // Update feature list token count
       var featEl = document.getElementById('feat-tokens-' + plan);
       if (featEl) featEl.textContent = (tokens * 1000000).toLocaleString() + ' SIMY tokens / month';
@@ -729,7 +732,7 @@
           <div class="footer-brand">
             <div style="font-size:1rem;font-weight:700;margin-bottom:6px;letter-spacing:-0.02em" data-i18n="footer.tagline">Record. Ship. Done.</div>
             <div style="display:flex;gap:12px;align-items:center;margin-top:12px">
-              <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" target="_blank" rel="noopener"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83" alt="Download on the App Store" style="height:36px"></a>
+              <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" target="_blank" rel="noopener" data-i18n="footer.companion">iPhone recording companion app</a><div style="font-size:0.75rem;color:#6a6a66;margin-top:4px" data-i18n="footer.billing">Plans and billing are managed on the web.</div>
             </div>
           </div>
           <div class="footer-col">
