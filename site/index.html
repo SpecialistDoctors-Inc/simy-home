@@ -298,7 +298,7 @@
       .hero h1 {
         max-width: 800px;
         margin: 0;
-        font-size: clamp(3.05rem, 4.3vw, 3.7rem);
+        font-size: clamp(3.05rem, 4vw, 3.45rem);
         font-weight: 760;
         letter-spacing: 0;
         line-height: 1.02;
@@ -309,7 +309,17 @@
       .hero-title-line + .hero-title-line {
         margin-top: 0.04em;
       }
+      .copy-line,
+      .footer-tagline-line {
+        display: block;
+      }
+      .keep-together {
+        white-space: nowrap;
+      }
       .hero-mobile-break {
+        display: none;
+      }
+      .mobile-copy-break {
         display: none;
       }
       .hero-sub {
@@ -586,7 +596,7 @@
       }
       .persona-grid {
         display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 14px;
         margin-top: 40px;
       }
@@ -596,6 +606,7 @@
       .persona-card h3 {
         margin: 0;
         font-size: 1.05rem;
+        white-space: nowrap;
       }
       .persona-card p {
         margin: 10px 0 0;
@@ -744,6 +755,9 @@
         .hero-mobile-break {
           display: block;
         }
+        .mobile-copy-break {
+          display: block;
+        }
         .hero-sub {
           font-size: 0.98rem;
           line-height: 1.55;
@@ -773,7 +787,10 @@
         }
         .section h2,
         .final-cta h2 {
-          font-size: 2.2rem;
+          font-size: 2rem;
+        }
+        .final-cta h2 .copy-line {
+          white-space: nowrap;
         }
         .twin-stack,
         .work-grid,
@@ -832,7 +849,7 @@
         <div class="container hero-inner">
           <div>
             <div class="eyebrow" data-i18n="home.eyebrow">The work after the meeting</div>
-            <h1 data-i18n-html="home.h1"><span class="hero-title-line">Meeting ends.</span><span class="hero-title-line">Your Twin<span class="hero-mobile-break"></span> starts working.</span></h1>
+            <h1 data-i18n-html="home.h1"><span class="hero-title-line">Meeting ends.</span><span class="hero-title-line"><span class="keep-together">Your Twin</span><span class="hero-mobile-break"></span> starts working.</span></h1>
             <p class="hero-sub" data-i18n="home.sub">Follow-ups, decks, research, analysis, updates, and next actions. SIMY understands what just happened, what matters next, and moves the work forward before you reopen a tab.</p>
             <div class="hero-actions">
               <a class="btn-primary" href="https://app.simy.one/signup" data-i18n="home.cta.primary">Create your Twin</a>
@@ -871,16 +888,16 @@
         <div class="container value-strip-inner">
           <div>
             <p class="value-kicker" data-i18n="home.value.label">Time, returned</p>
-            <h2 data-i18n="home.value.h">The meeting is over. Your focus should move on.</h2>
+            <h2 data-i18n-html="home.value.h"><span class="copy-line">The meeting is over.</span><span class="copy-line">Your focus should move on.</span></h2>
           </div>
-          <p data-i18n="home.value.p">SIMY carries the thread forward so your best hours stay with judgment, creativity, and relationships.</p>
+          <p data-i18n-html="home.value.p">SIMY carries the thread forward so your best hours stay with judgment, creativity, and relationships.</p>
         </div>
       </section>
 
       <section class="section" id="difference">
         <div class="container">
           <p class="section-label" data-i18n="home.diff.label">Above the agents</p>
-          <h2 data-i18n="home.diff.h">An agent does a task. Your Twin carries the thread.</h2>
+          <h2 data-i18n-html="home.diff.h"><span class="copy-line">An agent does a task.</span><span class="copy-line">Your Twin carries the thread.</span></h2>
           <p class="section-lead" data-i18n="home.diff.p">SIMY remembers context across meetings, inboxes, documents, and priorities, then activates the right agents in sequence. It is not another chatbot to manage. It is work already prepared.</p>
           <div class="twin-stack">
             <div class="concept-card primary">
@@ -911,36 +928,36 @@
       <section class="section" id="work">
         <div class="container">
           <p class="section-label" data-i18n="home.work.label">What starts after the meeting</p>
-          <h2 data-i18n="home.work.h">The follow-through begins before your calendar moves on.</h2>
+          <h2 data-i18n-html="home.work.h"><span class="copy-line">The follow-through begins</span><span class="copy-line">before your calendar moves on.</span></h2>
           <div class="work-grid">
             <article class="work-card">
               <strong data-i18n="home.work.sales.k">Sales</strong>
-              <h3 data-i18n="home.work.sales.h">Reply while the conversation is still warm.</h3>
+              <h3 data-i18n-html="home.work.sales.h"><span class="copy-line">Reply while the</span><span class="copy-line">conversation is still warm.</span></h3>
               <p data-i18n="home.work.sales.p">Customer emails, CRM updates, objections, risks, and next meeting agendas are prepared from the call.</p>
             </article>
             <article class="work-card">
               <strong data-i18n="home.work.deck.k">Decks</strong>
-              <h3 data-i18n="home.work.deck.h">Turn momentum into a proposal.</h3>
+              <h3 data-i18n-html="home.work.deck.h"><span class="copy-line">Turn momentum</span><span class="copy-line">into a proposal.</span></h3>
               <p data-i18n="home.work.deck.p">Your Twin shapes the story, slide structure, objections, and decision page before the thread goes cold.</p>
             </article>
             <article class="work-card">
               <strong data-i18n="home.work.analysis.k">Analysis</strong>
-              <h3 data-i18n="home.work.analysis.h">Have a point of view before the next decision.</h3>
+              <h3 data-i18n-html="home.work.analysis.h"><span class="copy-line">Have a point of view</span><span class="copy-line">before the next decision.</span></h3>
               <p data-i18n="home.work.analysis.p">SIMY researches the market, compares options, frames trade-offs, and prepares a recommendation to review.</p>
             </article>
             <article class="work-card">
               <strong data-i18n="home.work.mail.k">Email</strong>
-              <h3 data-i18n="home.work.mail.h">Open your inbox to drafts that sound like you.</h3>
+              <h3 data-i18n-html="home.work.mail.h"><span class="copy-line">Open your inbox to drafts</span><span class="copy-line">that sound like you.</span></h3>
               <p data-i18n="home.work.mail.p">Tone, history, urgency, and recipient context are already reflected when the draft appears.</p>
             </article>
             <article class="work-card">
               <strong data-i18n="home.work.share.k">Sharing</strong>
-              <h3 data-i18n="home.work.share.h">Send the right version to every stakeholder.</h3>
+              <h3 data-i18n-html="home.work.share.h"><span class="copy-line">Send the right version</span><span class="copy-line">to every stakeholder.</span></h3>
               <p data-i18n="home.work.share.p">Executives, customers, sales, product, and finance each get the summary, risks, or action list they need.</p>
             </article>
             <article class="work-card">
               <strong data-i18n="home.work.ops.k">Operations</strong>
-              <h3 data-i18n="home.work.ops.h">Keep cross-tool work moving in the background.</h3>
+              <h3 data-i18n-html="home.work.ops.h"><span class="copy-line">Keep cross-tool work</span><span class="copy-line">moving in the background.</span></h3>
               <p data-i18n="home.work.ops.p">Calendar, Slack, Gmail, docs, spreadsheets, and browser tasks move together instead of becoming another backlog.</p>
             </article>
           </div>
@@ -950,7 +967,7 @@
       <section class="section" id="loop">
         <div class="container">
           <p class="section-label" data-i18n="home.loop.label">How it works</p>
-          <h2 data-i18n="home.loop.h">SIMY turns meeting context into review-ready work.</h2>
+          <h2 data-i18n-html="home.loop.h"><span class="copy-line">SIMY turns meeting context</span><span class="copy-line">into review-ready work.</span></h2>
           <div class="loop">
             <div class="loop-step">
               <div class="loop-num">01</div>
@@ -1036,7 +1053,7 @@
 
       <section class="final-cta">
         <div class="container">
-          <h2 data-i18n="home.final.h">Let the meeting end. Let the work continue.</h2>
+          <h2 data-i18n-html="home.final.h"><span class="copy-line">Let the meeting end.</span><span class="copy-line">Let the work continue.</span></h2>
           <p data-i18n="home.final.p">Connect the tools you already use and create the Twin that keeps momentum moving after every conversation.</p>
           <div class="final-actions">
             <a class="btn-primary" href="https://app.simy.one/signup" data-i18n="home.cta.primary">Create your Twin</a>
@@ -1050,7 +1067,7 @@
       <div class="container">
         <div class="footer-grid">
           <div class="footer-brand">
-            <div class="footer-brand-line" data-i18n="home.footer.tagline">Meeting ends. Your Twin starts working.</div>
+            <div class="footer-brand-line" data-i18n-html="home.footer.tagline"><span class="footer-tagline-line">Meeting ends.</span><span class="footer-tagline-line">Your Twin starts working.</span></div>
             <div class="footer-brand-copy" data-i18n="home.footer.copy">SIMY is the Digital Twin for the work that starts after meetings.</div>
           </div>
           <div class="footer-col">
