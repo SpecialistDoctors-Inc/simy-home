@@ -1112,11 +1112,42 @@
     });
   }
 
+  /* ── Static mobile nav: keep signup reachable when .nav-right is hidden ── */
+  function enhanceStaticMobileNav() {
+    var navLinks = document.getElementById('navLinks');
+    var menuButton = document.querySelector('.mobile-menu-btn');
+    if (!navLinks || !menuButton || navLinks.querySelector('[data-mobile-signup-link]')) return;
+
+    var signin = document.querySelector('.nav-right .nav-signin');
+    var signup = document.querySelector('.nav-right .btn-primary');
+    if (signin) {
+      var signinLink = signin.cloneNode(true);
+      signinLink.className = 'mobile-only-nav-action mobile-signin';
+      signinLink.setAttribute('data-mobile-signin-link', 'true');
+      navLinks.appendChild(signinLink);
+    }
+    if (signup) {
+      var signupLink = signup.cloneNode(true);
+      signupLink.className = 'mobile-only-nav-action mobile-signup';
+      signupLink.setAttribute('data-mobile-signup-link', 'true');
+      navLinks.appendChild(signupLink);
+    }
+
+    menuButton.removeAttribute('onclick');
+    menuButton.setAttribute('aria-controls', 'navLinks');
+    menuButton.setAttribute('aria-expanded', 'false');
+    menuButton.addEventListener('click', function () {
+      var isOpen = navLinks.classList.toggle('active');
+      menuButton.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+  }
+
   /* ── Init ───────────────────────────────────────────────────── */
   function init() {
     injectCSS();
     injectHreflang();
     buildSwitcher();
+    enhanceStaticMobileNav();
 
     // For React SPA: nav may not exist yet. Watch for it.
     if (!document.getElementById('langBtn')) {
