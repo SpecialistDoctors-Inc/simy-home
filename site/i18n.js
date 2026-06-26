@@ -142,235 +142,235 @@
     "en": {
       kw: "Digital Twin, AI work assistant, AI agents, meeting follow-up automation, proposal deck automation, sales follow-up AI, AI research assistant, AI email drafting, PC task automation, knowledge work automation",
       p: {
-        "index": { t: "SIMY - Meeting Ends. Your Twin Starts Working.", d: "Meeting ends. Your Twin starts working. SIMY moves follow-ups, decks, research, analysis, updates, and next actions forward so humans can return to judgment, relationships, responsibility, and purpose." },
+        "index": { t: "SIMY - Meeting Ends. Your Twin Starts Working.", d: "Meeting ends. Your Twin starts working. SIMY moves follow-ups, decks, research, analysis, updates, and next actions forward while you step into the next conversation, customer, team, or idea." },
         "pricing": { t: "Pricing - SIMY | Create your Twin", d: "SIMY pricing for the work after meetings. Choose the Twin capacity your team needs for follow-ups, decks, research, analysis, updates, and next actions." },
         "compare": { t: "Compare SIMY - Agents do tasks. Your Twin carries the thread.", d: "Compare SIMY with agents, meeting recorders, search, and PC automation. SIMY starts when the meeting ends and carries the work forward." },
         "how-it-works": { t: "How SIMY Works - Your Twin after meetings", d: "See how SIMY turns meeting context into follow-ups, decks, research, analysis, updates, and next actions." },
         "contact": { t: "Contact - SIMY | Create your Twin", d: "Talk to SIMY about creating a Twin for post-meeting work, team follow-up, decks, research, and analysis." },
         "integrations": { t: "Integrations - SIMY | Work after meetings", d: "Connect SIMY with the channels that hold your meeting context and follow-up work." },
         "security": { t: "Security - SIMY | AI Twin for teams", d: "Security and privacy for teams using SIMY to move work after meetings." },
-        "about": { t: "About SIMY - Meeting ends. Your Twin starts working.", d: "SIMY helps people leave the screen and carry their purpose, relationships, responsibility, and positive influence forward." }
+        "about": { t: "About SIMY - Meeting ends. Your Twin starts working.", d: "SIMY moves the work after meetings so drafts, briefs, updates, and next actions are ready when you return." }
       }
     },
     "ja": {
       kw: "Digital Twin, デジタルツイン, AI秘書, AIエージェント, パーソナルAI, 会議フォロー自動化, 営業フォローAI, 提案資料作成AI, パワーポイント自動作成, メール下書きAI, 調査AI, 戦略分析AI, PC作業自動化, ナレッジワーク自動化",
       p: {
-        "index": { t: "SIMY - Meeting Ends. Your Twin Starts Working.", d: "会議が終わった瞬間、Twinがフォロー、資料、調査、分析、共有、次アクションを進めます。SIMYは人間を、志、関係性、責任、良い影響へ戻すAI Twinです。" },
+        "index": { t: "SIMY - Meeting Ends. Your Twin Starts Working.", d: "会議が終わった瞬間、Twinがフォロー、資料、調査、分析、共有、次アクションを進めます。次の会話、顧客、チーム、アイデアへ向かう時間をつくるAI Twinです。" },
         "pricing": { t: "料金 - SIMY | Twinを作成", d: "会議後の仕事を進めるSIMYの料金。フォロー、資料、調査、分析、共有、次アクションを進めるTwinの容量を選べます。" },
         "compare": { t: "SIMY比較 - エージェントはタスクをこなす。Twinは文脈を運ぶ。", d: "SIMYをエージェント、議事録ツール、検索、PC自動化と比較。会議が終わった瞬間にTwinが仕事を前へ進めます。" },
         "how-it-works": { t: "SIMYの仕組み - 会議後に動くTwin", d: "SIMYが会議の文脈をフォロー、資料、調査、分析、共有、次アクションへ変える流れを紹介します。" },
         "contact": { t: "お問い合わせ - SIMY | Twinを作成", d: "会議後の仕事を進めるTwin、チーム導入、営業フォロー、資料作成、調査、分析についてSIMYにご相談ください。" },
         "integrations": { t: "連携 - SIMY | 会議後の仕事を前へ", d: "会議の文脈とフォローアップが集まるチャンネルにSIMYをつなぎ、次の仕事を前へ進めます。" },
         "security": { t: "セキュリティ - SIMY | チームのAI Twin", d: "会議後の仕事をSIMYで進めるチームのためのセキュリティとプライバシー。" },
-        "about": { t: "SIMYについて - Meeting ends. Your Twin starts working.", d: "SIMYは、人がPCに張り付く時間を離れ、志、関係性、責任、良い影響へ戻るためのAI Twinです。" }
+        "about": { t: "SIMYについて - Meeting ends. Your Twin starts working.", d: "SIMYは、会議後の仕事を進め、下書き、ブリーフ、共有、次アクションとして返すAI Twinです。" }
       }
     },
     "zh-Hans": {
       kw: "Digital Twin, AI work assistant, AI agents, meeting follow-up automation, proposal deck automation, sales follow-up AI, AI research assistant, AI email drafting, PC task automation, knowledge work automation",
       p: {
-        "index": { t: "SIMY - Meeting Ends. Your Twin Starts Working.", d: "Meeting ends. Your Twin starts working. SIMY moves follow-ups, decks, research, analysis, updates, and next actions forward so humans can return to judgment, relationships, responsibility, and purpose." },
+        "index": { t: "SIMY - Meeting Ends. Your Twin Starts Working.", d: "Meeting ends. Your Twin starts working. SIMY moves follow-ups, decks, research, analysis, updates, and next actions forward while you step into the next conversation, customer, team, or idea." },
         "pricing": { t: "Pricing - SIMY | Create your Twin", d: "SIMY pricing for the work after meetings. Choose the Twin capacity your team needs for follow-ups, decks, research, analysis, updates, and next actions." },
         "compare": { t: "Compare SIMY - Agents do tasks. Your Twin carries the thread.", d: "Compare SIMY with agents, meeting recorders, search, and PC automation. SIMY starts when the meeting ends and carries the work forward." },
         "how-it-works": { t: "How SIMY Works - Your Twin after meetings", d: "See how SIMY turns meeting context into follow-ups, decks, research, analysis, updates, and next actions." },
         "contact": { t: "Contact - SIMY | Create your Twin", d: "Talk to SIMY about creating a Twin for post-meeting work, team follow-up, decks, research, and analysis." },
         "integrations": { t: "Integrations - SIMY | Work after meetings", d: "Connect SIMY with the channels that hold your meeting context and follow-up work." },
         "security": { t: "Security - SIMY | AI Twin for teams", d: "Security and privacy for teams using SIMY to move work after meetings." },
-        "about": { t: "About SIMY - Meeting ends. Your Twin starts working.", d: "SIMY helps people leave the screen and carry their purpose, relationships, responsibility, and positive influence forward." }
+        "about": { t: "About SIMY - Meeting ends. Your Twin starts working.", d: "SIMY moves the work after meetings so drafts, briefs, updates, and next actions are ready when you return." }
       }
     },
     "zh-Hant": {
       kw: "Digital Twin, AI work assistant, AI agents, meeting follow-up automation, proposal deck automation, sales follow-up AI, AI research assistant, AI email drafting, PC task automation, knowledge work automation",
       p: {
-        "index": { t: "SIMY - Meeting Ends. Your Twin Starts Working.", d: "Meeting ends. Your Twin starts working. SIMY moves follow-ups, decks, research, analysis, updates, and next actions forward so humans can return to judgment, relationships, responsibility, and purpose." },
+        "index": { t: "SIMY - Meeting Ends. Your Twin Starts Working.", d: "Meeting ends. Your Twin starts working. SIMY moves follow-ups, decks, research, analysis, updates, and next actions forward while you step into the next conversation, customer, team, or idea." },
         "pricing": { t: "Pricing - SIMY | Create your Twin", d: "SIMY pricing for the work after meetings. Choose the Twin capacity your team needs for follow-ups, decks, research, analysis, updates, and next actions." },
         "compare": { t: "Compare SIMY - Agents do tasks. Your Twin carries the thread.", d: "Compare SIMY with agents, meeting recorders, search, and PC automation. SIMY starts when the meeting ends and carries the work forward." },
         "how-it-works": { t: "How SIMY Works - Your Twin after meetings", d: "See how SIMY turns meeting context into follow-ups, decks, research, analysis, updates, and next actions." },
         "contact": { t: "Contact - SIMY | Create your Twin", d: "Talk to SIMY about creating a Twin for post-meeting work, team follow-up, decks, research, and analysis." },
         "integrations": { t: "Integrations - SIMY | Work after meetings", d: "Connect SIMY with the channels that hold your meeting context and follow-up work." },
         "security": { t: "Security - SIMY | AI Twin for teams", d: "Security and privacy for teams using SIMY to move work after meetings." },
-        "about": { t: "About SIMY - Meeting ends. Your Twin starts working.", d: "SIMY helps people leave the screen and carry their purpose, relationships, responsibility, and positive influence forward." }
+        "about": { t: "About SIMY - Meeting ends. Your Twin starts working.", d: "SIMY moves the work after meetings so drafts, briefs, updates, and next actions are ready when you return." }
       }
     },
     "fr": {
       kw: "Digital Twin, AI work assistant, AI agents, meeting follow-up automation, proposal deck automation, sales follow-up AI, AI research assistant, AI email drafting, PC task automation, knowledge work automation",
       p: {
-        "index": { t: "SIMY - Meeting Ends. Your Twin Starts Working.", d: "Meeting ends. Your Twin starts working. SIMY moves follow-ups, decks, research, analysis, updates, and next actions forward so humans can return to judgment, relationships, responsibility, and purpose." },
+        "index": { t: "SIMY - Meeting Ends. Your Twin Starts Working.", d: "Meeting ends. Your Twin starts working. SIMY moves follow-ups, decks, research, analysis, updates, and next actions forward while you step into the next conversation, customer, team, or idea." },
         "pricing": { t: "Pricing - SIMY | Create your Twin", d: "SIMY pricing for the work after meetings. Choose the Twin capacity your team needs for follow-ups, decks, research, analysis, updates, and next actions." },
         "compare": { t: "Compare SIMY - Agents do tasks. Your Twin carries the thread.", d: "Compare SIMY with agents, meeting recorders, search, and PC automation. SIMY starts when the meeting ends and carries the work forward." },
         "how-it-works": { t: "How SIMY Works - Your Twin after meetings", d: "See how SIMY turns meeting context into follow-ups, decks, research, analysis, updates, and next actions." },
         "contact": { t: "Contact - SIMY | Create your Twin", d: "Talk to SIMY about creating a Twin for post-meeting work, team follow-up, decks, research, and analysis." },
         "integrations": { t: "Integrations - SIMY | Work after meetings", d: "Connect SIMY with the channels that hold your meeting context and follow-up work." },
         "security": { t: "Security - SIMY | AI Twin for teams", d: "Security and privacy for teams using SIMY to move work after meetings." },
-        "about": { t: "About SIMY - Meeting ends. Your Twin starts working.", d: "SIMY helps people leave the screen and carry their purpose, relationships, responsibility, and positive influence forward." }
+        "about": { t: "About SIMY - Meeting ends. Your Twin starts working.", d: "SIMY moves the work after meetings so drafts, briefs, updates, and next actions are ready when you return." }
       }
     },
     "de": {
       kw: "Digital Twin, AI work assistant, AI agents, meeting follow-up automation, proposal deck automation, sales follow-up AI, AI research assistant, AI email drafting, PC task automation, knowledge work automation",
       p: {
-        "index": { t: "SIMY - Meeting Ends. Your Twin Starts Working.", d: "Meeting ends. Your Twin starts working. SIMY moves follow-ups, decks, research, analysis, updates, and next actions forward so humans can return to judgment, relationships, responsibility, and purpose." },
+        "index": { t: "SIMY - Meeting Ends. Your Twin Starts Working.", d: "Meeting ends. Your Twin starts working. SIMY moves follow-ups, decks, research, analysis, updates, and next actions forward while you step into the next conversation, customer, team, or idea." },
         "pricing": { t: "Pricing - SIMY | Create your Twin", d: "SIMY pricing for the work after meetings. Choose the Twin capacity your team needs for follow-ups, decks, research, analysis, updates, and next actions." },
         "compare": { t: "Compare SIMY - Agents do tasks. Your Twin carries the thread.", d: "Compare SIMY with agents, meeting recorders, search, and PC automation. SIMY starts when the meeting ends and carries the work forward." },
         "how-it-works": { t: "How SIMY Works - Your Twin after meetings", d: "See how SIMY turns meeting context into follow-ups, decks, research, analysis, updates, and next actions." },
         "contact": { t: "Contact - SIMY | Create your Twin", d: "Talk to SIMY about creating a Twin for post-meeting work, team follow-up, decks, research, and analysis." },
         "integrations": { t: "Integrations - SIMY | Work after meetings", d: "Connect SIMY with the channels that hold your meeting context and follow-up work." },
         "security": { t: "Security - SIMY | AI Twin for teams", d: "Security and privacy for teams using SIMY to move work after meetings." },
-        "about": { t: "About SIMY - Meeting ends. Your Twin starts working.", d: "SIMY helps people leave the screen and carry their purpose, relationships, responsibility, and positive influence forward." }
+        "about": { t: "About SIMY - Meeting ends. Your Twin starts working.", d: "SIMY moves the work after meetings so drafts, briefs, updates, and next actions are ready when you return." }
       }
     },
     "es": {
       kw: "Digital Twin, AI work assistant, AI agents, meeting follow-up automation, proposal deck automation, sales follow-up AI, AI research assistant, AI email drafting, PC task automation, knowledge work automation",
       p: {
-        "index": { t: "SIMY - Meeting Ends. Your Twin Starts Working.", d: "Meeting ends. Your Twin starts working. SIMY moves follow-ups, decks, research, analysis, updates, and next actions forward so humans can return to judgment, relationships, responsibility, and purpose." },
+        "index": { t: "SIMY - Meeting Ends. Your Twin Starts Working.", d: "Meeting ends. Your Twin starts working. SIMY moves follow-ups, decks, research, analysis, updates, and next actions forward while you step into the next conversation, customer, team, or idea." },
         "pricing": { t: "Pricing - SIMY | Create your Twin", d: "SIMY pricing for the work after meetings. Choose the Twin capacity your team needs for follow-ups, decks, research, analysis, updates, and next actions." },
         "compare": { t: "Compare SIMY - Agents do tasks. Your Twin carries the thread.", d: "Compare SIMY with agents, meeting recorders, search, and PC automation. SIMY starts when the meeting ends and carries the work forward." },
         "how-it-works": { t: "How SIMY Works - Your Twin after meetings", d: "See how SIMY turns meeting context into follow-ups, decks, research, analysis, updates, and next actions." },
         "contact": { t: "Contact - SIMY | Create your Twin", d: "Talk to SIMY about creating a Twin for post-meeting work, team follow-up, decks, research, and analysis." },
         "integrations": { t: "Integrations - SIMY | Work after meetings", d: "Connect SIMY with the channels that hold your meeting context and follow-up work." },
         "security": { t: "Security - SIMY | AI Twin for teams", d: "Security and privacy for teams using SIMY to move work after meetings." },
-        "about": { t: "About SIMY - Meeting ends. Your Twin starts working.", d: "SIMY helps people leave the screen and carry their purpose, relationships, responsibility, and positive influence forward." }
+        "about": { t: "About SIMY - Meeting ends. Your Twin starts working.", d: "SIMY moves the work after meetings so drafts, briefs, updates, and next actions are ready when you return." }
       }
     },
     "ar": {
       kw: "Digital Twin, AI work assistant, AI agents, meeting follow-up automation, proposal deck automation, sales follow-up AI, AI research assistant, AI email drafting, PC task automation, knowledge work automation",
       p: {
-        "index": { t: "SIMY - Meeting Ends. Your Twin Starts Working.", d: "Meeting ends. Your Twin starts working. SIMY moves follow-ups, decks, research, analysis, updates, and next actions forward so humans can return to judgment, relationships, responsibility, and purpose." },
+        "index": { t: "SIMY - Meeting Ends. Your Twin Starts Working.", d: "Meeting ends. Your Twin starts working. SIMY moves follow-ups, decks, research, analysis, updates, and next actions forward while you step into the next conversation, customer, team, or idea." },
         "pricing": { t: "Pricing - SIMY | Create your Twin", d: "SIMY pricing for the work after meetings. Choose the Twin capacity your team needs for follow-ups, decks, research, analysis, updates, and next actions." },
         "compare": { t: "Compare SIMY - Agents do tasks. Your Twin carries the thread.", d: "Compare SIMY with agents, meeting recorders, search, and PC automation. SIMY starts when the meeting ends and carries the work forward." },
         "how-it-works": { t: "How SIMY Works - Your Twin after meetings", d: "See how SIMY turns meeting context into follow-ups, decks, research, analysis, updates, and next actions." },
         "contact": { t: "Contact - SIMY | Create your Twin", d: "Talk to SIMY about creating a Twin for post-meeting work, team follow-up, decks, research, and analysis." },
         "integrations": { t: "Integrations - SIMY | Work after meetings", d: "Connect SIMY with the channels that hold your meeting context and follow-up work." },
         "security": { t: "Security - SIMY | AI Twin for teams", d: "Security and privacy for teams using SIMY to move work after meetings." },
-        "about": { t: "About SIMY - Meeting ends. Your Twin starts working.", d: "SIMY helps people leave the screen and carry their purpose, relationships, responsibility, and positive influence forward." }
+        "about": { t: "About SIMY - Meeting ends. Your Twin starts working.", d: "SIMY moves the work after meetings so drafts, briefs, updates, and next actions are ready when you return." }
       }
     },
     "it": {
       kw: "Digital Twin, AI work assistant, AI agents, meeting follow-up automation, proposal deck automation, sales follow-up AI, AI research assistant, AI email drafting, PC task automation, knowledge work automation",
       p: {
-        "index": { t: "SIMY - Meeting Ends. Your Twin Starts Working.", d: "Meeting ends. Your Twin starts working. SIMY moves follow-ups, decks, research, analysis, updates, and next actions forward so humans can return to judgment, relationships, responsibility, and purpose." },
+        "index": { t: "SIMY - Meeting Ends. Your Twin Starts Working.", d: "Meeting ends. Your Twin starts working. SIMY moves follow-ups, decks, research, analysis, updates, and next actions forward while you step into the next conversation, customer, team, or idea." },
         "pricing": { t: "Pricing - SIMY | Create your Twin", d: "SIMY pricing for the work after meetings. Choose the Twin capacity your team needs for follow-ups, decks, research, analysis, updates, and next actions." },
         "compare": { t: "Compare SIMY - Agents do tasks. Your Twin carries the thread.", d: "Compare SIMY with agents, meeting recorders, search, and PC automation. SIMY starts when the meeting ends and carries the work forward." },
         "how-it-works": { t: "How SIMY Works - Your Twin after meetings", d: "See how SIMY turns meeting context into follow-ups, decks, research, analysis, updates, and next actions." },
         "contact": { t: "Contact - SIMY | Create your Twin", d: "Talk to SIMY about creating a Twin for post-meeting work, team follow-up, decks, research, and analysis." },
         "integrations": { t: "Integrations - SIMY | Work after meetings", d: "Connect SIMY with the channels that hold your meeting context and follow-up work." },
         "security": { t: "Security - SIMY | AI Twin for teams", d: "Security and privacy for teams using SIMY to move work after meetings." },
-        "about": { t: "About SIMY - Meeting ends. Your Twin starts working.", d: "SIMY helps people leave the screen and carry their purpose, relationships, responsibility, and positive influence forward." }
+        "about": { t: "About SIMY - Meeting ends. Your Twin starts working.", d: "SIMY moves the work after meetings so drafts, briefs, updates, and next actions are ready when you return." }
       }
     },
     "hi": {
       kw: "Digital Twin, AI work assistant, AI agents, meeting follow-up automation, proposal deck automation, sales follow-up AI, AI research assistant, AI email drafting, PC task automation, knowledge work automation",
       p: {
-        "index": { t: "SIMY - Meeting Ends. Your Twin Starts Working.", d: "Meeting ends. Your Twin starts working. SIMY moves follow-ups, decks, research, analysis, updates, and next actions forward so humans can return to judgment, relationships, responsibility, and purpose." },
+        "index": { t: "SIMY - Meeting Ends. Your Twin Starts Working.", d: "Meeting ends. Your Twin starts working. SIMY moves follow-ups, decks, research, analysis, updates, and next actions forward while you step into the next conversation, customer, team, or idea." },
         "pricing": { t: "Pricing - SIMY | Create your Twin", d: "SIMY pricing for the work after meetings. Choose the Twin capacity your team needs for follow-ups, decks, research, analysis, updates, and next actions." },
         "compare": { t: "Compare SIMY - Agents do tasks. Your Twin carries the thread.", d: "Compare SIMY with agents, meeting recorders, search, and PC automation. SIMY starts when the meeting ends and carries the work forward." },
         "how-it-works": { t: "How SIMY Works - Your Twin after meetings", d: "See how SIMY turns meeting context into follow-ups, decks, research, analysis, updates, and next actions." },
         "contact": { t: "Contact - SIMY | Create your Twin", d: "Talk to SIMY about creating a Twin for post-meeting work, team follow-up, decks, research, and analysis." },
         "integrations": { t: "Integrations - SIMY | Work after meetings", d: "Connect SIMY with the channels that hold your meeting context and follow-up work." },
         "security": { t: "Security - SIMY | AI Twin for teams", d: "Security and privacy for teams using SIMY to move work after meetings." },
-        "about": { t: "About SIMY - Meeting ends. Your Twin starts working.", d: "SIMY helps people leave the screen and carry their purpose, relationships, responsibility, and positive influence forward." }
+        "about": { t: "About SIMY - Meeting ends. Your Twin starts working.", d: "SIMY moves the work after meetings so drafts, briefs, updates, and next actions are ready when you return." }
       }
     },
     "te": {
       kw: "Digital Twin, AI work assistant, AI agents, meeting follow-up automation, proposal deck automation, sales follow-up AI, AI research assistant, AI email drafting, PC task automation, knowledge work automation",
       p: {
-        "index": { t: "SIMY - Meeting Ends. Your Twin Starts Working.", d: "Meeting ends. Your Twin starts working. SIMY moves follow-ups, decks, research, analysis, updates, and next actions forward so humans can return to judgment, relationships, responsibility, and purpose." },
+        "index": { t: "SIMY - Meeting Ends. Your Twin Starts Working.", d: "Meeting ends. Your Twin starts working. SIMY moves follow-ups, decks, research, analysis, updates, and next actions forward while you step into the next conversation, customer, team, or idea." },
         "pricing": { t: "Pricing - SIMY | Create your Twin", d: "SIMY pricing for the work after meetings. Choose the Twin capacity your team needs for follow-ups, decks, research, analysis, updates, and next actions." },
         "compare": { t: "Compare SIMY - Agents do tasks. Your Twin carries the thread.", d: "Compare SIMY with agents, meeting recorders, search, and PC automation. SIMY starts when the meeting ends and carries the work forward." },
         "how-it-works": { t: "How SIMY Works - Your Twin after meetings", d: "See how SIMY turns meeting context into follow-ups, decks, research, analysis, updates, and next actions." },
         "contact": { t: "Contact - SIMY | Create your Twin", d: "Talk to SIMY about creating a Twin for post-meeting work, team follow-up, decks, research, and analysis." },
         "integrations": { t: "Integrations - SIMY | Work after meetings", d: "Connect SIMY with the channels that hold your meeting context and follow-up work." },
         "security": { t: "Security - SIMY | AI Twin for teams", d: "Security and privacy for teams using SIMY to move work after meetings." },
-        "about": { t: "About SIMY - Meeting ends. Your Twin starts working.", d: "SIMY helps people leave the screen and carry their purpose, relationships, responsibility, and positive influence forward." }
+        "about": { t: "About SIMY - Meeting ends. Your Twin starts working.", d: "SIMY moves the work after meetings so drafts, briefs, updates, and next actions are ready when you return." }
       }
     },
     "kn": {
       kw: "Digital Twin, AI work assistant, AI agents, meeting follow-up automation, proposal deck automation, sales follow-up AI, AI research assistant, AI email drafting, PC task automation, knowledge work automation",
       p: {
-        "index": { t: "SIMY - Meeting Ends. Your Twin Starts Working.", d: "Meeting ends. Your Twin starts working. SIMY moves follow-ups, decks, research, analysis, updates, and next actions forward so humans can return to judgment, relationships, responsibility, and purpose." },
+        "index": { t: "SIMY - Meeting Ends. Your Twin Starts Working.", d: "Meeting ends. Your Twin starts working. SIMY moves follow-ups, decks, research, analysis, updates, and next actions forward while you step into the next conversation, customer, team, or idea." },
         "pricing": { t: "Pricing - SIMY | Create your Twin", d: "SIMY pricing for the work after meetings. Choose the Twin capacity your team needs for follow-ups, decks, research, analysis, updates, and next actions." },
         "compare": { t: "Compare SIMY - Agents do tasks. Your Twin carries the thread.", d: "Compare SIMY with agents, meeting recorders, search, and PC automation. SIMY starts when the meeting ends and carries the work forward." },
         "how-it-works": { t: "How SIMY Works - Your Twin after meetings", d: "See how SIMY turns meeting context into follow-ups, decks, research, analysis, updates, and next actions." },
         "contact": { t: "Contact - SIMY | Create your Twin", d: "Talk to SIMY about creating a Twin for post-meeting work, team follow-up, decks, research, and analysis." },
         "integrations": { t: "Integrations - SIMY | Work after meetings", d: "Connect SIMY with the channels that hold your meeting context and follow-up work." },
         "security": { t: "Security - SIMY | AI Twin for teams", d: "Security and privacy for teams using SIMY to move work after meetings." },
-        "about": { t: "About SIMY - Meeting ends. Your Twin starts working.", d: "SIMY helps people leave the screen and carry their purpose, relationships, responsibility, and positive influence forward." }
+        "about": { t: "About SIMY - Meeting ends. Your Twin starts working.", d: "SIMY moves the work after meetings so drafts, briefs, updates, and next actions are ready when you return." }
       }
     },
     "ko": {
       kw: "Digital Twin, AI work assistant, AI agents, meeting follow-up automation, proposal deck automation, sales follow-up AI, AI research assistant, AI email drafting, PC task automation, knowledge work automation",
       p: {
-        "index": { t: "SIMY - Meeting Ends. Your Twin Starts Working.", d: "Meeting ends. Your Twin starts working. SIMY moves follow-ups, decks, research, analysis, updates, and next actions forward so humans can return to judgment, relationships, responsibility, and purpose." },
+        "index": { t: "SIMY - Meeting Ends. Your Twin Starts Working.", d: "Meeting ends. Your Twin starts working. SIMY moves follow-ups, decks, research, analysis, updates, and next actions forward while you step into the next conversation, customer, team, or idea." },
         "pricing": { t: "Pricing - SIMY | Create your Twin", d: "SIMY pricing for the work after meetings. Choose the Twin capacity your team needs for follow-ups, decks, research, analysis, updates, and next actions." },
         "compare": { t: "Compare SIMY - Agents do tasks. Your Twin carries the thread.", d: "Compare SIMY with agents, meeting recorders, search, and PC automation. SIMY starts when the meeting ends and carries the work forward." },
         "how-it-works": { t: "How SIMY Works - Your Twin after meetings", d: "See how SIMY turns meeting context into follow-ups, decks, research, analysis, updates, and next actions." },
         "contact": { t: "Contact - SIMY | Create your Twin", d: "Talk to SIMY about creating a Twin for post-meeting work, team follow-up, decks, research, and analysis." },
         "integrations": { t: "Integrations - SIMY | Work after meetings", d: "Connect SIMY with the channels that hold your meeting context and follow-up work." },
         "security": { t: "Security - SIMY | AI Twin for teams", d: "Security and privacy for teams using SIMY to move work after meetings." },
-        "about": { t: "About SIMY - Meeting ends. Your Twin starts working.", d: "SIMY helps people leave the screen and carry their purpose, relationships, responsibility, and positive influence forward." }
+        "about": { t: "About SIMY - Meeting ends. Your Twin starts working.", d: "SIMY moves the work after meetings so drafts, briefs, updates, and next actions are ready when you return." }
       }
     },
     "vi": {
       kw: "Digital Twin, AI work assistant, AI agents, meeting follow-up automation, proposal deck automation, sales follow-up AI, AI research assistant, AI email drafting, PC task automation, knowledge work automation",
       p: {
-        "index": { t: "SIMY - Meeting Ends. Your Twin Starts Working.", d: "Meeting ends. Your Twin starts working. SIMY moves follow-ups, decks, research, analysis, updates, and next actions forward so humans can return to judgment, relationships, responsibility, and purpose." },
+        "index": { t: "SIMY - Meeting Ends. Your Twin Starts Working.", d: "Meeting ends. Your Twin starts working. SIMY moves follow-ups, decks, research, analysis, updates, and next actions forward while you step into the next conversation, customer, team, or idea." },
         "pricing": { t: "Pricing - SIMY | Create your Twin", d: "SIMY pricing for the work after meetings. Choose the Twin capacity your team needs for follow-ups, decks, research, analysis, updates, and next actions." },
         "compare": { t: "Compare SIMY - Agents do tasks. Your Twin carries the thread.", d: "Compare SIMY with agents, meeting recorders, search, and PC automation. SIMY starts when the meeting ends and carries the work forward." },
         "how-it-works": { t: "How SIMY Works - Your Twin after meetings", d: "See how SIMY turns meeting context into follow-ups, decks, research, analysis, updates, and next actions." },
         "contact": { t: "Contact - SIMY | Create your Twin", d: "Talk to SIMY about creating a Twin for post-meeting work, team follow-up, decks, research, and analysis." },
         "integrations": { t: "Integrations - SIMY | Work after meetings", d: "Connect SIMY with the channels that hold your meeting context and follow-up work." },
         "security": { t: "Security - SIMY | AI Twin for teams", d: "Security and privacy for teams using SIMY to move work after meetings." },
-        "about": { t: "About SIMY - Meeting ends. Your Twin starts working.", d: "SIMY helps people leave the screen and carry their purpose, relationships, responsibility, and positive influence forward." }
+        "about": { t: "About SIMY - Meeting ends. Your Twin starts working.", d: "SIMY moves the work after meetings so drafts, briefs, updates, and next actions are ready when you return." }
       }
     },
     "th": {
       kw: "Digital Twin, AI work assistant, AI agents, meeting follow-up automation, proposal deck automation, sales follow-up AI, AI research assistant, AI email drafting, PC task automation, knowledge work automation",
       p: {
-        "index": { t: "SIMY - Meeting Ends. Your Twin Starts Working.", d: "Meeting ends. Your Twin starts working. SIMY moves follow-ups, decks, research, analysis, updates, and next actions forward so humans can return to judgment, relationships, responsibility, and purpose." },
+        "index": { t: "SIMY - Meeting Ends. Your Twin Starts Working.", d: "Meeting ends. Your Twin starts working. SIMY moves follow-ups, decks, research, analysis, updates, and next actions forward while you step into the next conversation, customer, team, or idea." },
         "pricing": { t: "Pricing - SIMY | Create your Twin", d: "SIMY pricing for the work after meetings. Choose the Twin capacity your team needs for follow-ups, decks, research, analysis, updates, and next actions." },
         "compare": { t: "Compare SIMY - Agents do tasks. Your Twin carries the thread.", d: "Compare SIMY with agents, meeting recorders, search, and PC automation. SIMY starts when the meeting ends and carries the work forward." },
         "how-it-works": { t: "How SIMY Works - Your Twin after meetings", d: "See how SIMY turns meeting context into follow-ups, decks, research, analysis, updates, and next actions." },
         "contact": { t: "Contact - SIMY | Create your Twin", d: "Talk to SIMY about creating a Twin for post-meeting work, team follow-up, decks, research, and analysis." },
         "integrations": { t: "Integrations - SIMY | Work after meetings", d: "Connect SIMY with the channels that hold your meeting context and follow-up work." },
         "security": { t: "Security - SIMY | AI Twin for teams", d: "Security and privacy for teams using SIMY to move work after meetings." },
-        "about": { t: "About SIMY - Meeting ends. Your Twin starts working.", d: "SIMY helps people leave the screen and carry their purpose, relationships, responsibility, and positive influence forward." }
+        "about": { t: "About SIMY - Meeting ends. Your Twin starts working.", d: "SIMY moves the work after meetings so drafts, briefs, updates, and next actions are ready when you return." }
       }
     },
     "id": {
       kw: "Digital Twin, AI work assistant, AI agents, meeting follow-up automation, proposal deck automation, sales follow-up AI, AI research assistant, AI email drafting, PC task automation, knowledge work automation",
       p: {
-        "index": { t: "SIMY - Meeting Ends. Your Twin Starts Working.", d: "Meeting ends. Your Twin starts working. SIMY moves follow-ups, decks, research, analysis, updates, and next actions forward so humans can return to judgment, relationships, responsibility, and purpose." },
+        "index": { t: "SIMY - Meeting Ends. Your Twin Starts Working.", d: "Meeting ends. Your Twin starts working. SIMY moves follow-ups, decks, research, analysis, updates, and next actions forward while you step into the next conversation, customer, team, or idea." },
         "pricing": { t: "Pricing - SIMY | Create your Twin", d: "SIMY pricing for the work after meetings. Choose the Twin capacity your team needs for follow-ups, decks, research, analysis, updates, and next actions." },
         "compare": { t: "Compare SIMY - Agents do tasks. Your Twin carries the thread.", d: "Compare SIMY with agents, meeting recorders, search, and PC automation. SIMY starts when the meeting ends and carries the work forward." },
         "how-it-works": { t: "How SIMY Works - Your Twin after meetings", d: "See how SIMY turns meeting context into follow-ups, decks, research, analysis, updates, and next actions." },
         "contact": { t: "Contact - SIMY | Create your Twin", d: "Talk to SIMY about creating a Twin for post-meeting work, team follow-up, decks, research, and analysis." },
         "integrations": { t: "Integrations - SIMY | Work after meetings", d: "Connect SIMY with the channels that hold your meeting context and follow-up work." },
         "security": { t: "Security - SIMY | AI Twin for teams", d: "Security and privacy for teams using SIMY to move work after meetings." },
-        "about": { t: "About SIMY - Meeting ends. Your Twin starts working.", d: "SIMY helps people leave the screen and carry their purpose, relationships, responsibility, and positive influence forward." }
+        "about": { t: "About SIMY - Meeting ends. Your Twin starts working.", d: "SIMY moves the work after meetings so drafts, briefs, updates, and next actions are ready when you return." }
       }
     },
     "ru": {
       kw: "Digital Twin, AI work assistant, AI agents, meeting follow-up automation, proposal deck automation, sales follow-up AI, AI research assistant, AI email drafting, PC task automation, knowledge work automation",
       p: {
-        "index": { t: "SIMY - Meeting Ends. Your Twin Starts Working.", d: "Meeting ends. Your Twin starts working. SIMY moves follow-ups, decks, research, analysis, updates, and next actions forward so humans can return to judgment, relationships, responsibility, and purpose." },
+        "index": { t: "SIMY - Meeting Ends. Your Twin Starts Working.", d: "Meeting ends. Your Twin starts working. SIMY moves follow-ups, decks, research, analysis, updates, and next actions forward while you step into the next conversation, customer, team, or idea." },
         "pricing": { t: "Pricing - SIMY | Create your Twin", d: "SIMY pricing for the work after meetings. Choose the Twin capacity your team needs for follow-ups, decks, research, analysis, updates, and next actions." },
         "compare": { t: "Compare SIMY - Agents do tasks. Your Twin carries the thread.", d: "Compare SIMY with agents, meeting recorders, search, and PC automation. SIMY starts when the meeting ends and carries the work forward." },
         "how-it-works": { t: "How SIMY Works - Your Twin after meetings", d: "See how SIMY turns meeting context into follow-ups, decks, research, analysis, updates, and next actions." },
         "contact": { t: "Contact - SIMY | Create your Twin", d: "Talk to SIMY about creating a Twin for post-meeting work, team follow-up, decks, research, and analysis." },
         "integrations": { t: "Integrations - SIMY | Work after meetings", d: "Connect SIMY with the channels that hold your meeting context and follow-up work." },
         "security": { t: "Security - SIMY | AI Twin for teams", d: "Security and privacy for teams using SIMY to move work after meetings." },
-        "about": { t: "About SIMY - Meeting ends. Your Twin starts working.", d: "SIMY helps people leave the screen and carry their purpose, relationships, responsibility, and positive influence forward." }
+        "about": { t: "About SIMY - Meeting ends. Your Twin starts working.", d: "SIMY moves the work after meetings so drafts, briefs, updates, and next actions are ready when you return." }
       }
     },
     "pt-BR": {
       kw: "Digital Twin, AI work assistant, AI agents, meeting follow-up automation, proposal deck automation, sales follow-up AI, AI research assistant, AI email drafting, PC task automation, knowledge work automation",
       p: {
-        "index": { t: "SIMY - Meeting Ends. Your Twin Starts Working.", d: "Meeting ends. Your Twin starts working. SIMY moves follow-ups, decks, research, analysis, updates, and next actions forward so humans can return to judgment, relationships, responsibility, and purpose." },
+        "index": { t: "SIMY - Meeting Ends. Your Twin Starts Working.", d: "Meeting ends. Your Twin starts working. SIMY moves follow-ups, decks, research, analysis, updates, and next actions forward while you step into the next conversation, customer, team, or idea." },
         "pricing": { t: "Pricing - SIMY | Create your Twin", d: "SIMY pricing for the work after meetings. Choose the Twin capacity your team needs for follow-ups, decks, research, analysis, updates, and next actions." },
         "compare": { t: "Compare SIMY - Agents do tasks. Your Twin carries the thread.", d: "Compare SIMY with agents, meeting recorders, search, and PC automation. SIMY starts when the meeting ends and carries the work forward." },
         "how-it-works": { t: "How SIMY Works - Your Twin after meetings", d: "See how SIMY turns meeting context into follow-ups, decks, research, analysis, updates, and next actions." },
         "contact": { t: "Contact - SIMY | Create your Twin", d: "Talk to SIMY about creating a Twin for post-meeting work, team follow-up, decks, research, and analysis." },
         "integrations": { t: "Integrations - SIMY | Work after meetings", d: "Connect SIMY with the channels that hold your meeting context and follow-up work." },
         "security": { t: "Security - SIMY | AI Twin for teams", d: "Security and privacy for teams using SIMY to move work after meetings." },
-        "about": { t: "About SIMY - Meeting ends. Your Twin starts working.", d: "SIMY helps people leave the screen and carry their purpose, relationships, responsibility, and positive influence forward." }
+        "about": { t: "About SIMY - Meeting ends. Your Twin starts working.", d: "SIMY moves the work after meetings so drafts, briefs, updates, and next actions are ready when you return." }
       }
     }
   };
