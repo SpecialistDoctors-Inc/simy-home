@@ -246,9 +246,7 @@
         align-items: center;
         padding: 118px 0 56px;
         overflow: hidden;
-        background:
-          linear-gradient(90deg, rgba(6, 7, 10, 0.94) 0%, rgba(6, 7, 10, 0.78) 39%, rgba(6, 7, 10, 0.36) 68%, rgba(6, 7, 10, 0.12) 100%),
-          url('/assets/hero-meeting-twin-work.jpg') center center / cover no-repeat;
+        background: #06070a;
         color: #fff;
       }
       .hero::after {
@@ -260,10 +258,50 @@
         height: 120px;
         background: linear-gradient(180deg, rgba(249, 249, 246, 0) 0%, var(--bg) 100%);
         pointer-events: none;
+        z-index: 1;
+      }
+      .hero-bg-stack,
+      .hero-scrim,
+      .hero-bg {
+        position: absolute;
+        inset: 0;
+      }
+      .hero-bg-stack {
+        z-index: 0;
+        overflow: hidden;
+        pointer-events: none;
+      }
+      .hero-scrim {
+        z-index: 1;
+        background:
+          linear-gradient(90deg, rgba(6, 7, 10, 0.94) 0%, rgba(6, 7, 10, 0.78) 39%, rgba(6, 7, 10, 0.36) 68%, rgba(6, 7, 10, 0.12) 100%),
+          linear-gradient(180deg, rgba(6, 7, 10, 0.08) 0%, rgba(6, 7, 10, 0.52) 100%);
+        pointer-events: none;
+      }
+      .hero-bg {
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        opacity: 0;
+        transform: scale(1.04);
+        animation: heroScene 40s ease-in-out infinite;
+        will-change: opacity, transform;
+      }
+      .hero-bg.meeting { background-image: url('/assets/hero-meeting-twin-work.jpg'); animation-delay: 0s; }
+      .hero-bg.running { background-image: url('/assets/hero-life-running.jpg'); animation-delay: 8s; }
+      .hero-bg.family { background-image: url('/assets/hero-life-family.jpg'); animation-delay: 16s; }
+      .hero-bg.dinner { background-image: url('/assets/hero-life-dinner.jpg'); animation-delay: 24s; }
+      .hero-bg.travel { background-image: url('/assets/hero-life-travel.jpg'); animation-delay: 32s; }
+      @keyframes heroScene {
+        0% { opacity: 0; transform: scale(1.04); }
+        5% { opacity: 1; transform: scale(1.035); }
+        18% { opacity: 1; transform: scale(1.075); }
+        24% { opacity: 0; transform: scale(1.09); }
+        100% { opacity: 0; transform: scale(1.09); }
       }
       .hero-inner {
         position: relative;
-        z-index: 1;
+        z-index: 2;
         display: block;
         width: 100%;
       }
@@ -351,34 +389,98 @@
         box-shadow: 0 28px 70px rgba(0, 0, 0, 0.34);
         -webkit-backdrop-filter: blur(18px);
         backdrop-filter: blur(18px);
+        animation: panelBreath 5.8s ease-in-out infinite;
+        overflow: hidden;
+      }
+      .hero-work-panel::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: -44%;
+        width: 34%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+        animation: panelScan 6.2s ease-in-out infinite;
+        pointer-events: none;
+      }
+      .hero-panel-head {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        margin-bottom: 14px;
       }
       .hero-panel-kicker {
-        margin: 0 0 14px;
+        margin: 0;
         color: rgba(255, 255, 255, 0.66);
         font-family: 'Geist Mono', monospace;
         font-size: 0.72rem;
         letter-spacing: 0;
         text-transform: uppercase;
       }
+      .hero-live-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 8px;
+        border: 1px solid rgba(94, 224, 168, 0.28);
+        border-radius: 999px;
+        color: rgba(255, 255, 255, 0.76);
+        font-family: 'Geist Mono', monospace;
+        font-size: 0.66rem;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .hero-live-badge::before {
+        content: '';
+        width: 7px;
+        height: 7px;
+        border-radius: 999px;
+        background: #5ee0a8;
+        box-shadow: 0 0 0 0 rgba(94, 224, 168, 0.5);
+        animation: livePulse 1.5s ease-out infinite;
+      }
       .hero-work-item {
+        --active: #5ee0a8;
+        position: relative;
+        z-index: 1;
         display: grid;
         grid-template-columns: 10px 1fr;
         gap: 14px;
         padding: 16px 0;
         border-top: 1px solid rgba(255, 255, 255, 0.16);
+        animation: itemFocus 9s ease-in-out infinite;
+        animation-delay: var(--delay, 0s);
+      }
+      .hero-work-item::after {
+        content: '';
+        position: absolute;
+        top: 12px;
+        bottom: 12px;
+        left: -24px;
+        width: 3px;
+        border-radius: 999px;
+        background: var(--active);
+        opacity: 0;
+        animation: railFocus 9s ease-in-out infinite;
+        animation-delay: var(--delay, 0s);
       }
       .hero-work-dot {
         width: 10px;
         height: 10px;
         margin-top: 7px;
         border-radius: 999px;
-        background: #5ee0a8;
+        background: var(--active);
+        animation: dotPulse 2.2s ease-in-out infinite;
+        animation-delay: var(--delay, 0s);
       }
       .hero-work-dot.blue {
-        background: var(--blue);
+        --active: var(--blue);
       }
       .hero-work-dot.amber {
-        background: #ffb020;
+        --active: #ffb020;
       }
       .hero-work-item h3 {
         margin: 0;
@@ -391,6 +493,54 @@
         color: rgba(255, 255, 255, 0.68);
         font-size: 0.88rem;
         line-height: 1.48;
+      }
+      .hero-work-progress {
+        position: relative;
+        height: 3px;
+        margin-top: 11px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.12);
+      }
+      .hero-work-progress span {
+        display: block;
+        width: 46%;
+        height: 100%;
+        border-radius: inherit;
+        background: linear-gradient(90deg, transparent, var(--active), transparent);
+        transform: translateX(-110%);
+        animation: progressRun 2.8s ease-in-out infinite;
+        animation-delay: var(--delay, 0s);
+      }
+      @keyframes panelBreath {
+        0%, 100% { transform: translateY(0); box-shadow: 0 28px 70px rgba(0, 0, 0, 0.34); }
+        50% { transform: translateY(-4px); box-shadow: 0 34px 86px rgba(0, 0, 0, 0.42); }
+      }
+      @keyframes panelScan {
+        0%, 48% { transform: translateX(0); opacity: 0; }
+        58% { opacity: 1; }
+        76%, 100% { transform: translateX(430%); opacity: 0; }
+      }
+      @keyframes livePulse {
+        0% { box-shadow: 0 0 0 0 rgba(94, 224, 168, 0.55); }
+        80%, 100% { box-shadow: 0 0 0 8px rgba(94, 224, 168, 0); }
+      }
+      @keyframes dotPulse {
+        0%, 100% { transform: scale(1); filter: brightness(1); }
+        50% { transform: scale(1.28); filter: brightness(1.25); }
+      }
+      @keyframes itemFocus {
+        0%, 100% { background: transparent; }
+        10%, 28% { background: rgba(255, 255, 255, 0.035); }
+      }
+      @keyframes railFocus {
+        0%, 100% { opacity: 0; }
+        10%, 28% { opacity: 1; }
+      }
+      @keyframes progressRun {
+        0% { transform: translateX(-112%); }
+        58% { transform: translateX(215%); }
+        100% { transform: translateX(215%); }
       }
       .value-strip {
         padding: 42px 0 46px;
@@ -748,9 +898,14 @@
         .hero {
           min-height: 590px;
           padding: 86px 0 28px;
+        }
+        .hero-scrim {
           background:
-            linear-gradient(180deg, rgba(6, 7, 10, 0.88) 0%, rgba(6, 7, 10, 0.72) 50%, rgba(6, 7, 10, 0.48) 100%),
-            url('/assets/hero-meeting-twin-work.jpg') 63% center / cover no-repeat;
+            linear-gradient(180deg, rgba(6, 7, 10, 0.9) 0%, rgba(6, 7, 10, 0.72) 48%, rgba(6, 7, 10, 0.48) 100%),
+            linear-gradient(90deg, rgba(6, 7, 10, 0.58) 0%, rgba(6, 7, 10, 0.16) 100%);
+        }
+        .hero-bg {
+          background-position: 63% center;
         }
         .hero h1 {
           max-width: 11.2em;
@@ -776,6 +931,7 @@
           width: auto;
           margin-top: 26px;
           padding: 18px 20px;
+          animation: none;
         }
         .hero-work-item {
           padding: 13px 0;
@@ -844,6 +1000,25 @@
           min-height: 760px;
         }
       }
+      @media (prefers-reduced-motion: reduce) {
+        .hero-bg,
+        .hero-work-panel,
+        .hero-work-panel::before,
+        .hero-live-badge::before,
+        .hero-work-item,
+        .hero-work-item::after,
+        .hero-work-dot,
+        .hero-work-progress span {
+          animation: none !important;
+        }
+        .hero-bg {
+          opacity: 0;
+          transform: none;
+        }
+        .hero-bg.meeting {
+          opacity: 1;
+        }
+      }
     </style>
     <link rel="stylesheet" href="/responsive.css">
   </head>
@@ -883,6 +1058,14 @@
 
     <main class="page">
       <section class="hero">
+        <div class="hero-bg-stack" aria-hidden="true">
+          <div class="hero-bg meeting"></div>
+          <div class="hero-bg running"></div>
+          <div class="hero-bg family"></div>
+          <div class="hero-bg dinner"></div>
+          <div class="hero-bg travel"></div>
+        </div>
+        <div class="hero-scrim" aria-hidden="true"></div>
         <div class="container hero-inner">
           <div class="hero-copy">
             <div class="eyebrow" data-i18n="home.eyebrow">The moment after the meeting</div>
@@ -895,26 +1078,32 @@
             <div class="hero-note" data-i18n="home.hero.note">Work that can happen on a computer keeps moving without keeping you there.</div>
           </div>
           <div class="hero-work-panel" aria-label="SIMY work in progress">
-            <p class="hero-panel-kicker" data-i18n="home.hero.queue">SIMY is already working</p>
-            <div class="hero-work-item">
+            <div class="hero-panel-head">
+              <p class="hero-panel-kicker" data-i18n="home.hero.queue">SIMY is already working</p>
+              <span class="hero-live-badge" data-i18n="home.hero.live">Live</span>
+            </div>
+            <div class="hero-work-item" style="--delay: 0s; --active: #5ee0a8;">
               <span class="hero-work-dot"></span>
               <div>
                 <h3 data-i18n="home.hero.item1.h">Follow-up drafted</h3>
                 <p data-i18n="home.hero.item1.p">Context, tone, and next steps are included.</p>
+                <div class="hero-work-progress"><span></span></div>
               </div>
             </div>
-            <div class="hero-work-item">
+            <div class="hero-work-item" style="--delay: 1.2s; --active: var(--blue);">
               <span class="hero-work-dot blue"></span>
               <div>
                 <h3 data-i18n="home.hero.item2.h">Proposal updated</h3>
                 <p data-i18n="home.hero.item2.p">Story, risks, and asks are ready.</p>
+                <div class="hero-work-progress"><span></span></div>
               </div>
             </div>
-            <div class="hero-work-item">
+            <div class="hero-work-item" style="--delay: 2.4s; --active: #ffb020;">
               <span class="hero-work-dot amber"></span>
               <div>
                 <h3 data-i18n="home.hero.item3.h">Next actions routed</h3>
                 <p data-i18n="home.hero.item3.p">Each stakeholder gets the version they need.</p>
+                <div class="hero-work-progress"><span></span></div>
               </div>
             </div>
           </div>
