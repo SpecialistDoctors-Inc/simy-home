@@ -799,6 +799,156 @@
         background: #fff;
         color: var(--ink);
       }
+      .handoff-workspace {
+        display: grid;
+        grid-template-columns: 0.78fr 1.22fr;
+        gap: 18px;
+      }
+      .handoff-panel {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+        overflow: hidden;
+      }
+      .handoff-panel.dark {
+        background: #07101f;
+        color: #fff;
+        border-color: #07101f;
+      }
+      .handoff-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 15px 18px;
+        border-bottom: 1px solid var(--line);
+      }
+      .handoff-panel.dark .handoff-top {
+        border-bottom-color: rgba(255, 255, 255, 0.12);
+      }
+      .handoff-title {
+        font-weight: 760;
+      }
+      .handoff-status {
+        color: var(--blue);
+        font-family: 'Geist Mono', monospace;
+        font-size: 0.66rem;
+        text-transform: uppercase;
+      }
+      .handoff-body {
+        padding: 18px;
+      }
+      .context-row {
+        padding: 13px 0;
+        border-top: 1px solid #ecece6;
+      }
+      .context-row:first-child {
+        border-top: 0;
+        padding-top: 0;
+      }
+      .context-row span {
+        display: block;
+        color: var(--muted);
+        font-size: 0.78rem;
+      }
+      .context-row strong {
+        display: block;
+        margin-top: 5px;
+        font-size: 1rem;
+        line-height: 1.45;
+      }
+      .draft-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      .draft-table tr {
+        border-top: 1px solid rgba(255, 255, 255, 0.12);
+      }
+      .draft-table tr:first-child {
+        border-top: 0;
+      }
+      .draft-table td {
+        padding: 15px 0;
+        vertical-align: top;
+      }
+      .draft-table td:first-child {
+        width: 132px;
+        color: rgba(255, 255, 255, 0.55);
+        font-family: 'Geist Mono', monospace;
+        font-size: 0.72rem;
+      }
+      .draft-table strong {
+        display: block;
+        color: #fff;
+        font-size: 1rem;
+      }
+      .draft-table p {
+        margin-top: 5px;
+        color: rgba(255, 255, 255, 0.62);
+        font-size: 0.86rem;
+        line-height: 1.45;
+      }
+      .deliverable-board {
+        margin-top: 34px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+        overflow: hidden;
+      }
+      .deliverable-row {
+        display: grid;
+        grid-template-columns: 170px 1fr 160px;
+        gap: 22px;
+        align-items: start;
+        padding: 22px 24px;
+        border-top: 1px solid var(--line);
+      }
+      .deliverable-row:first-child {
+        border-top: 0;
+      }
+      .deliverable-type {
+        font-weight: 760;
+      }
+      .deliverable-copy {
+        color: var(--muted);
+        line-height: 1.62;
+      }
+      .deliverable-copy strong {
+        color: var(--ink);
+      }
+      .deliverable-action {
+        justify-self: end;
+        min-width: 120px;
+        padding: 9px 12px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        color: var(--ink);
+        font-size: 0.8rem;
+        font-weight: 740;
+        text-align: center;
+      }
+      .assurance-line {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px 18px;
+        margin-top: 18px;
+        padding-top: 18px;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+      .assurance-line span {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .assurance-line span::before {
+        content: '';
+        width: 6px;
+        height: 6px;
+        border-radius: 999px;
+        background: var(--blue);
+      }
       .trust-strip {
         display: grid;
         grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1498,6 +1648,30 @@
           grid-template-columns: 1fr;
           gap: 14px;
         }
+        .handoff-workspace {
+          grid-template-columns: 1fr;
+          gap: 12px;
+        }
+        .draft-table td {
+          display: block;
+          width: auto;
+          padding: 10px 0 0;
+        }
+        .draft-table td:first-child {
+          width: auto;
+          padding-top: 14px;
+        }
+        .draft-table tr:first-child td:first-child {
+          padding-top: 0;
+        }
+        .deliverable-row {
+          grid-template-columns: 1fr;
+          gap: 10px;
+          padding: 18px;
+        }
+        .deliverable-action {
+          justify-self: stretch;
+        }
         .flow-arrow {
           width: 2px;
           height: 28px;
@@ -1758,54 +1932,53 @@
             <h2 data-i18n-html="home.value.h"><span class="copy-line">Before you reopen a tab,</span><span class="copy-line">the next move is already in motion.</span></h2>
             <p data-i18n-html="home.value.p">Email, deck, CRM, and internal update work comes back as reviewable drafts. Before you reopen a tab, you can choose the next move.</p>
           </div>
-          <div class="meeting-flow" aria-label="Meeting to approval flow">
-            <div class="flow-card">
-              <div class="flow-head">
-                <span data-i18n="home.flow.meeting">Meeting context</span>
-                <span class="flow-pill" data-i18n="home.flow.captured">Captured</span>
+          <div class="handoff-workspace" aria-label="Meeting to approval workspace">
+            <div class="handoff-panel">
+              <div class="handoff-top">
+                <span class="handoff-title" data-i18n="home.flow.meeting">Meeting context</span>
+                <span class="handoff-status" data-i18n="home.flow.captured">Captured</span>
               </div>
-              <div class="flow-body">
-                <div class="meeting-line">
+              <div class="handoff-body">
+                <div class="context-row">
                   <span data-i18n="home.flow.need.k">Need</span>
                   <strong data-i18n="home.flow.need.v">Cost range and rollout path by Friday</strong>
                 </div>
-                <div class="meeting-line">
+                <div class="context-row">
                   <span data-i18n="home.flow.concern.k">Concern</span>
                   <strong data-i18n="home.flow.concern.v">Customer is worried about operational load</strong>
                 </div>
-                <div class="meeting-line">
+                <div class="context-row">
                   <span data-i18n="home.flow.next.k">Next</span>
                   <strong data-i18n="home.flow.next.v">Send proposal, update CRM, brief the team</strong>
                 </div>
               </div>
             </div>
-            <div class="flow-arrow" aria-hidden="true"></div>
-            <div class="flow-card dark">
-              <div class="flow-head">
-                <span data-i18n="home.flow.ready">Approval queue</span>
-                <span class="flow-pill" data-i18n="home.flow.waiting">Waiting</span>
+            <div class="handoff-panel dark">
+              <div class="handoff-top">
+                <span class="handoff-title" data-i18n="home.flow.ready">Approval queue</span>
+                <span class="handoff-status" data-i18n="home.flow.waiting">Waiting</span>
               </div>
-              <div class="flow-body approval-grid">
-                <div class="approval-item">
-                  <span data-i18n="home.flow.mail.k">Draft</span>
-                  <strong data-i18n="home.flow.mail.v">Follow-up email</strong>
-                  <p data-i18n="home.flow.mail.p">Tone and next step included.</p>
-                </div>
-                <div class="approval-item">
-                  <span data-i18n="home.flow.deck.k">Deck</span>
-                  <strong data-i18n="home.flow.deck.v">Proposal outline</strong>
-                  <p data-i18n="home.flow.deck.p">Story, risk, and ask ready.</p>
-                </div>
-                <div class="approval-item">
-                  <span data-i18n="home.flow.crm.k">CRM</span>
-                  <strong data-i18n="home.flow.crm.v">Customer memo</strong>
-                  <p data-i18n="home.flow.crm.p">Heat, concern, owner, deadline.</p>
-                </div>
-                <div class="approval-item">
-                  <span data-i18n="home.flow.share.k">Share</span>
-                  <strong data-i18n="home.flow.share.v">Team update</strong>
-                  <p data-i18n="home.flow.share.p">Only the people who need it.</p>
-                </div>
+              <div class="handoff-body">
+                <table class="draft-table">
+                  <tbody>
+                    <tr>
+                      <td data-i18n="home.flow.mail.k">Draft</td>
+                      <td><strong data-i18n="home.flow.mail.v">Follow-up email</strong><p data-i18n="home.flow.mail.p">Tone and next step included.</p></td>
+                    </tr>
+                    <tr>
+                      <td data-i18n="home.flow.deck.k">Deck</td>
+                      <td><strong data-i18n="home.flow.deck.v">Proposal outline</strong><p data-i18n="home.flow.deck.p">Story, risk, and ask ready.</p></td>
+                    </tr>
+                    <tr>
+                      <td data-i18n="home.flow.crm.k">CRM</td>
+                      <td><strong data-i18n="home.flow.crm.v">Customer memo</strong><p data-i18n="home.flow.crm.p">Heat, concern, owner, deadline.</p></td>
+                    </tr>
+                    <tr>
+                      <td data-i18n="home.flow.share.k">Share</td>
+                      <td><strong data-i18n="home.flow.share.v">Team update</strong><p data-i18n="home.flow.share.p">Only the people who need it.</p></td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
@@ -1817,57 +1990,33 @@
           <p class="section-label" data-i18n="home.samples.label">What one meeting creates</p>
           <h2 data-i18n-html="home.samples.h"><span class="copy-line">When the meeting ends,</span><span class="copy-line">the work waits for your approval.</span></h2>
           <p class="section-lead" data-i18n="home.samples.p">Not another vague AI promise. SIMY returns usable drafts you can check, edit, and send.</p>
-          <div class="sample-grid">
-            <article class="sample-card">
-              <div>
-                <h3 data-i18n="home.samples.email.h">Follow-up email</h3>
-                <p data-i18n="home.samples.email.p">Tone, context, objections, and next step are already reflected.</p>
-              </div>
-              <div class="sample-output">
-                <strong data-i18n="home.samples.output">Sample output</strong>
-                <span data-i18n="home.samples.email.out">Thank you for today. I will send the cost range and rollout path by Friday, with two options for reducing operational load.</span>
-                <div class="sample-actions"><span class="sample-action" data-i18n="home.samples.approve">Approve</span><span class="sample-action light" data-i18n="home.samples.edit">Edit</span></div>
-              </div>
-            </article>
-            <article class="sample-card">
-              <div>
-                <h3 data-i18n="home.samples.deck.h">Proposal deck</h3>
-                <p data-i18n="home.samples.deck.p">A client-ready storyline starts from the conversation, not a blank slide.</p>
-              </div>
-              <div class="sample-output">
-                <strong data-i18n="home.samples.output">Sample output</strong>
-                <span data-i18n="home.samples.deck.out">1. Customer issue  2. Proposed path  3. Risks  4. Decision required  5. Next meeting agenda</span>
-                <div class="sample-actions"><span class="sample-action" data-i18n="home.samples.open">Open</span><span class="sample-action light" data-i18n="home.samples.edit">Edit</span></div>
-              </div>
-            </article>
-            <article class="sample-card">
-              <div>
-                <h3 data-i18n="home.samples.crm.h">CRM memo</h3>
-                <p data-i18n="home.samples.crm.p">The signal your team needs is captured before details fade.</p>
-              </div>
-              <div class="sample-output">
-                <strong data-i18n="home.samples.output">Sample output</strong>
-                <span data-i18n="home.samples.crm.out">Temperature: high. Concern: migration from current operation. Next action: rough estimate by Friday.</span>
-                <div class="sample-actions"><span class="sample-action" data-i18n="home.samples.save">Save</span><span class="sample-action light" data-i18n="home.samples.edit">Edit</span></div>
-              </div>
-            </article>
-            <article class="sample-card">
-              <div>
-                <h3 data-i18n="home.samples.team.h">Internal update</h3>
-                <p data-i18n="home.samples.team.p">Sales, CS, and leadership each get the version they need.</p>
-              </div>
-              <div class="sample-output">
-                <strong data-i18n="home.samples.output">Sample output</strong>
-                <span data-i18n="home.samples.team.out">Owner, deadline, customer concern, and required decision are routed to the right people.</span>
-                <div class="sample-actions"><span class="sample-action" data-i18n="home.samples.share">Share</span><span class="sample-action light" data-i18n="home.samples.edit">Edit</span></div>
-              </div>
-            </article>
+          <div class="deliverable-board">
+            <div class="deliverable-row">
+              <div class="deliverable-type" data-i18n="home.samples.email.h">Follow-up email</div>
+              <div class="deliverable-copy" data-i18n-html="home.samples.email.out"><strong>Thank you for today.</strong> I will send the cost range and rollout path by Friday, with two options for reducing operational load.</div>
+              <div class="deliverable-action" data-i18n="home.samples.approve">Approve</div>
+            </div>
+            <div class="deliverable-row">
+              <div class="deliverable-type" data-i18n="home.samples.deck.h">Proposal deck</div>
+              <div class="deliverable-copy" data-i18n-html="home.samples.deck.out"><strong>Outline:</strong> customer issue, proposed path, risks, decision required, next meeting agenda.</div>
+              <div class="deliverable-action" data-i18n="home.samples.open">Open</div>
+            </div>
+            <div class="deliverable-row">
+              <div class="deliverable-type" data-i18n="home.samples.crm.h">CRM memo</div>
+              <div class="deliverable-copy" data-i18n-html="home.samples.crm.out"><strong>Temperature: high.</strong> Concern: migration from current operation. Next action: rough estimate by Friday.</div>
+              <div class="deliverable-action" data-i18n="home.samples.save">Save</div>
+            </div>
+            <div class="deliverable-row">
+              <div class="deliverable-type" data-i18n="home.samples.team.h">Internal update</div>
+              <div class="deliverable-copy" data-i18n-html="home.samples.team.out"><strong>Route to sales, CS, and leadership.</strong> Owner, deadline, customer concern, and required decision are clear.</div>
+              <div class="deliverable-action" data-i18n="home.samples.share">Share</div>
+            </div>
           </div>
-          <div class="trust-strip" aria-label="Trust signals">
-            <div class="trust-item"><span data-i18n="home.trust.1.k">Connect</span><strong data-i18n="home.trust.1.v">Gmail, Calendar, Slack</strong></div>
-            <div class="trust-item"><span data-i18n="home.trust.2.k">Control</span><strong data-i18n="home.trust.2.v">Nothing is sent without approval</strong></div>
-            <div class="trust-item"><span data-i18n="home.trust.3.k">Review</span><strong data-i18n="home.trust.3.v">Drafts stay editable</strong></div>
-            <div class="trust-item"><span data-i18n="home.trust.4.k">Start</span><strong data-i18n="home.trust.4.v">Try it with one meeting</strong></div>
+          <div class="assurance-line" aria-label="Trust signals">
+            <span data-i18n="home.trust.1.v">Gmail, Calendar, Slack</span>
+            <span data-i18n="home.trust.2.v">Nothing is sent without approval</span>
+            <span data-i18n="home.trust.3.v">Drafts stay editable</span>
+            <span data-i18n="home.trust.4.v">Try it with one meeting</span>
           </div>
         </div>
       </section>
