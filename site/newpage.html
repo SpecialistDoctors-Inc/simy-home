@@ -608,6 +608,75 @@
         font-size: 1.05rem;
         line-height: 1.75;
       }
+      .sample-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 34px;
+      }
+      .sample-card {
+        display: flex;
+        min-height: 300px;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 22px;
+        padding: 22px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--panel);
+      }
+      .sample-card h3 {
+        margin: 0;
+        font-size: 1.08rem;
+        letter-spacing: 0;
+      }
+      .sample-card p {
+        margin: 10px 0 0;
+        color: var(--muted);
+        font-size: 0.92rem;
+        line-height: 1.55;
+      }
+      .sample-output {
+        padding-top: 18px;
+        border-top: 1px solid var(--line);
+        color: var(--ink);
+        font-size: 0.9rem;
+        line-height: 1.62;
+      }
+      .sample-output strong {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--blue);
+        font-family: 'Geist Mono', monospace;
+        font-size: 0.72rem;
+        text-transform: uppercase;
+      }
+      .trust-strip {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 10px;
+        margin-top: 14px;
+      }
+      .trust-item {
+        min-height: 76px;
+        padding: 16px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+      }
+      .trust-item span {
+        display: block;
+        color: var(--blue);
+        font-family: 'Geist Mono', monospace;
+        font-size: 0.68rem;
+        text-transform: uppercase;
+      }
+      .trust-item strong {
+        display: block;
+        margin-top: 8px;
+        font-size: 0.93rem;
+        line-height: 1.3;
+      }
       .twin-stack {
         display: grid;
         grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -672,35 +741,9 @@
         font-family: 'Geist Mono', monospace;
         font-size: 0.78rem;
       }
-      .work-grid {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 16px;
-        margin-top: 40px;
-      }
-      .work-card {
-        padding: 24px;
-        min-height: 230px;
-      }
-      .work-card strong {
-        display: block;
-        color: var(--blue);
-        font-family: 'Geist Mono', monospace;
-        font-size: 0.78rem;
-        font-weight: 700;
-        text-transform: uppercase;
-      }
-      .work-card h3 {
-        margin: 18px 0 0;
-        font-size: 1.22rem;
-      }
-      .work-card p {
-        margin: 12px 0 0;
-        color: var(--muted);
-      }
       .loop {
         display: grid;
-        grid-template-columns: repeat(5, minmax(0, 1fr));
+        grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 10px;
         margin-top: 40px;
       }
@@ -796,6 +839,17 @@
         margin-top: 10px;
         color: var(--muted);
         font-size: 0.9rem;
+      }
+      .pricing-business-note {
+        max-width: 760px;
+        margin-top: 14px;
+        padding: 14px 16px;
+        border: 1px solid rgba(0, 87, 255, 0.18);
+        border-radius: 8px;
+        background: rgba(0, 87, 255, 0.05);
+        color: var(--ink);
+        font-size: 0.95rem;
+        line-height: 1.55;
       }
       .billing-toggle {
         display: flex;
@@ -1319,6 +1373,8 @@
           white-space: normal;
         }
         .twin-stack,
+        .sample-grid,
+        .trust-strip,
         .work-grid,
         .loop,
         .persona-grid,
@@ -1447,7 +1503,7 @@
         <div class="nav-links" id="navLinks">
           <a href="/" data-i18n="nav.home">Home</a>
           <a href="#difference" data-i18n="nav.difference">Your Twin</a>
-          <a href="#work" data-i18n="nav.work">After meetings</a>
+          <a href="#samples" data-i18n="nav.work">After meetings</a>
           <a href="#loop" data-i18n="nav.how">How it works</a>
           <a href="/compare.html" data-i18n="nav.compare">Compare</a>
           <a href="/pricing.html" data-i18n="nav.pricing">Pricing</a>
@@ -1455,7 +1511,7 @@
         </div>
         <div class="nav-right">
           <a href="https://app.simy.one/login" class="nav-signin" data-i18n="nav.signin">Sign in</a>
-          <a href="https://app.simy.one/signup" class="btn-primary" data-i18n="home.cta.primary">Create your Twin</a>
+          <a href="https://app.simy.one/signup" class="btn-primary" data-i18n="home.cta.primary">Try one meeting</a>
         </div>
         <button class="mobile-menu-btn" onclick="document.getElementById('navLinks').classList.toggle('active')" aria-label="Toggle menu">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
@@ -1481,10 +1537,10 @@
             <h1 data-i18n-html="home.h1"><span class="hero-title-line">Meeting ends.</span><span class="hero-title-line">Your Twin starts</span><span class="hero-title-line">working.</span></h1>
             <p class="hero-sub" data-i18n="home.sub">The moment the meeting ends, SIMY starts the follow-ups, decks, research, analysis, updates, and next actions. The work keeps moving while you step into the next conversation, customer, team, or idea.</p>
             <div class="hero-actions">
-              <a class="btn-primary" href="https://app.simy.one/signup" data-i18n="home.cta.primary">Create your Twin</a>
-              <a class="btn-secondary" href="#difference" data-i18n="home.cta.secondary">See what starts next</a>
+              <a class="btn-primary" href="https://app.simy.one/signup" data-i18n="home.cta.primary">Try one meeting</a>
+              <a class="btn-secondary" href="#samples" data-i18n="home.cta.secondary">See samples</a>
             </div>
-            <div class="hero-note" data-i18n="home.hero.note">Work that can happen on a computer keeps moving without keeping you there.</div>
+            <div class="hero-note" data-i18n="home.hero.note">SIMY prepares the work. You approve before anything is sent or shared.</div>
           </div>
           <div class="hero-work-panel" aria-label="SIMY work in progress">
             <div class="hero-panel-head">
@@ -1529,72 +1585,89 @@
         </div>
       </section>
 
-      <section class="section" id="difference">
+      <section class="section" id="samples">
         <div class="container">
-          <p class="section-label" data-i18n="home.diff.label">A different answer</p>
-          <h2 class="difference-title" data-i18n-html="home.diff.h"><span class="copy-line">The computer does the computer work.</span><span class="copy-line">You move the business.</span></h2>
-          <p class="section-lead" data-i18n="home.diff.p">AI does not need to become another inbox. SIMY sits above agents, gives them context, and moves the work that normally pulls you back into tabs.</p>
-          <div class="twin-stack">
-            <div class="concept-card primary">
-              <h3 data-i18n="home.twin.h">Your Twin</h3>
-              <p data-i18n="home.twin.p">Keeps the meeting thread, chooses the next output, routes specialist agents, and returns a draft or decision point ready for review.</p>
-              <div class="arrow-row" data-i18n="home.twin.flow">Meeting ends -> Twin Work -> Your next move</div>
-              <div class="agent-grid">
-                <div class="agent-chip" data-i18n="home.agent.email">Email agent</div>
-                <div class="agent-chip" data-i18n="home.agent.deck">Deck agent</div>
-                <div class="agent-chip" data-i18n="home.agent.research">Research agent</div>
-                <div class="agent-chip" data-i18n="home.agent.crm">CRM agent</div>
+          <p class="section-label" data-i18n="home.samples.label">What one meeting creates</p>
+          <h2 data-i18n-html="home.samples.h"><span class="copy-line">When the meeting ends,</span><span class="copy-line">these are ready to review.</span></h2>
+          <p class="section-lead" data-i18n="home.samples.p">Not another vague AI promise. SIMY returns usable drafts you can check, edit, and send.</p>
+          <div class="sample-grid">
+            <article class="sample-card">
+              <div>
+                <h3 data-i18n="home.samples.email.h">Follow-up email</h3>
+                <p data-i18n="home.samples.email.p">Tone, context, objections, and next step are already reflected.</p>
               </div>
-            </div>
-            <div class="concept-card">
-              <h3 data-i18n="home.agent.h">Standalone agent</h3>
-              <p data-i18n="home.agent.p">Strong at one request, but still waits for your prompt, context, sequencing, and follow-through.</p>
-              <div class="agent-grid">
-                <div class="agent-chip light" data-i18n="home.agent.wait1">Needs a prompt</div>
-                <div class="agent-chip light" data-i18n="home.agent.wait2">Needs context</div>
-                <div class="agent-chip light" data-i18n="home.agent.wait3">Needs sequencing</div>
-                <div class="agent-chip light" data-i18n="home.agent.wait4">Needs follow-up</div>
+              <div class="sample-output">
+                <strong data-i18n="home.samples.output">Sample output</strong>
+                <span data-i18n="home.samples.email.out">Thank you for today. I will send the cost range and rollout path by Friday, with two options for reducing operational load.</span>
               </div>
-            </div>
+            </article>
+            <article class="sample-card">
+              <div>
+                <h3 data-i18n="home.samples.deck.h">Proposal deck</h3>
+                <p data-i18n="home.samples.deck.p">A client-ready storyline starts from the conversation, not a blank slide.</p>
+              </div>
+              <div class="sample-output">
+                <strong data-i18n="home.samples.output">Sample output</strong>
+                <span data-i18n="home.samples.deck.out">1. Customer issue  2. Proposed path  3. Risks  4. Decision required  5. Next meeting agenda</span>
+              </div>
+            </article>
+            <article class="sample-card">
+              <div>
+                <h3 data-i18n="home.samples.crm.h">CRM memo</h3>
+                <p data-i18n="home.samples.crm.p">The signal your team needs is captured before details fade.</p>
+              </div>
+              <div class="sample-output">
+                <strong data-i18n="home.samples.output">Sample output</strong>
+                <span data-i18n="home.samples.crm.out">Temperature: high. Concern: migration from current operation. Next action: rough estimate by Friday.</span>
+              </div>
+            </article>
+            <article class="sample-card">
+              <div>
+                <h3 data-i18n="home.samples.team.h">Internal update</h3>
+                <p data-i18n="home.samples.team.p">Sales, CS, and leadership each get the version they need.</p>
+              </div>
+              <div class="sample-output">
+                <strong data-i18n="home.samples.output">Sample output</strong>
+                <span data-i18n="home.samples.team.out">Owner, deadline, customer concern, and required decision are routed to the right people.</span>
+              </div>
+            </article>
+          </div>
+          <div class="trust-strip" aria-label="Trust signals">
+            <div class="trust-item"><span data-i18n="home.trust.1.k">Connect</span><strong data-i18n="home.trust.1.v">Gmail, Calendar, Slack</strong></div>
+            <div class="trust-item"><span data-i18n="home.trust.2.k">Control</span><strong data-i18n="home.trust.2.v">Nothing is sent without approval</strong></div>
+            <div class="trust-item"><span data-i18n="home.trust.3.k">Review</span><strong data-i18n="home.trust.3.v">Drafts stay editable</strong></div>
+            <div class="trust-item"><span data-i18n="home.trust.4.k">Start</span><strong data-i18n="home.trust.4.v">Try it with one meeting</strong></div>
           </div>
         </div>
       </section>
 
-      <section class="section" id="work">
+      <section class="section" id="difference">
         <div class="container">
-          <p class="section-label" data-i18n="home.work.label">What your Twin moves</p>
-          <h2 data-i18n-html="home.work.h"><span class="copy-line">The work keeps moving.</span><span class="copy-line">Your day opens up.</span></h2>
-          <div class="work-grid">
-            <article class="work-card">
-              <strong data-i18n="home.work.sales.k">What happened</strong>
-              <h3 data-i18n-html="home.work.sales.h"><span class="copy-line">Capture the decisions,</span><span class="copy-line">asks, and promises.</span></h3>
-              <p data-i18n="home.work.sales.p">SIMY turns the conversation into working context before the thread goes cold.</p>
-            </article>
-            <article class="work-card">
-              <strong data-i18n="home.work.deck.k">What mattered</strong>
-              <h3 data-i18n-html="home.work.deck.h"><span class="copy-line">Separate signal</span><span class="copy-line">from meeting noise.</span></h3>
-              <p data-i18n="home.work.deck.p">Decisions, risks, emotion, stakeholder needs, and hidden blockers are surfaced.</p>
-            </article>
-            <article class="work-card">
-              <strong data-i18n="home.work.analysis.k">Twin Work</strong>
-              <h3 data-i18n-html="home.work.analysis.h"><span class="copy-line">Move the preparation</span><span class="copy-line">without waiting.</span></h3>
-              <p data-i18n="home.work.analysis.p">Follow-ups, decks, research, analysis, updates, CRM, and stakeholder briefs move in the background.</p>
-            </article>
-            <article class="work-card">
-              <strong data-i18n="home.work.mail.k">Your next move</strong>
-              <h3 data-i18n-html="home.work.mail.h"><span class="copy-line">Review the 10 percent</span><span class="copy-line">that matters.</span></h3>
-              <p data-i18n="home.work.mail.p">Approve, adjust, call, negotiate, decide, or walk into the next conversation prepared.</p>
-            </article>
-            <article class="work-card">
-              <strong data-i18n="home.work.share.k">Relationship timing</strong>
-              <h3 data-i18n-html="home.work.share.h"><span class="copy-line">Know who needs</span><span class="copy-line">what next.</span></h3>
-              <p data-i18n="home.work.share.p">The next person, message, and moment are visible without rebuilding the context.</p>
-            </article>
-            <article class="work-card">
-              <strong data-i18n="home.work.ops.k">Operating rhythm</strong>
-              <h3 data-i18n-html="home.work.ops.h"><span class="copy-line">Turn follow-through</span><span class="copy-line">into a habit.</span></h3>
-              <p data-i18n="home.work.ops.p">Responses, misses, and next actions become a system your team can trust.</p>
-            </article>
+          <p class="section-label" data-i18n="home.diff.label">Why founders can trust it</p>
+          <h2 class="difference-title" data-i18n-html="home.diff.h"><span class="copy-line">SIMY moves the draft.</span><span class="copy-line">You keep the judgment.</span></h2>
+          <p class="section-lead" data-i18n="home.diff.p">SIMY is not a second inbox that creates more work. It prepares the next action from the meeting context, then waits for your review before anything leaves the company.</p>
+          <div class="twin-stack">
+            <div class="concept-card primary">
+              <h3 data-i18n="home.twin.h">SIMY prepares</h3>
+              <p data-i18n="home.twin.p">Follow-up emails, proposal outlines, CRM notes, stakeholder updates, and next actions are assembled from the meeting.</p>
+              <div class="arrow-row" data-i18n="home.twin.flow">Meeting ends -> Drafts ready -> You approve</div>
+              <div class="agent-grid">
+                <div class="agent-chip" data-i18n="home.agent.email">Email draft</div>
+                <div class="agent-chip" data-i18n="home.agent.deck">Deck outline</div>
+                <div class="agent-chip" data-i18n="home.agent.research">Research brief</div>
+                <div class="agent-chip" data-i18n="home.agent.crm">CRM memo</div>
+              </div>
+            </div>
+            <div class="concept-card">
+              <h3 data-i18n="home.agent.h">You decide</h3>
+              <p data-i18n="home.agent.p">Price, promise, relationship, and final wording stay with the human. SIMY does not send or share without approval.</p>
+              <div class="agent-grid">
+                <div class="agent-chip light" data-i18n="home.agent.wait1">Approve sending</div>
+                <div class="agent-chip light" data-i18n="home.agent.wait2">Edit wording</div>
+                <div class="agent-chip light" data-i18n="home.agent.wait3">Decide price</div>
+                <div class="agent-chip light" data-i18n="home.agent.wait4">Own the relationship</div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -1618,16 +1691,6 @@
               <div class="loop-num">03</div>
               <h3 data-i18n="home.loop.3.h">Orchestrate agents</h3>
               <p data-i18n="home.loop.3.p">The Twin selects the right agents and the order they should run.</p>
-            </div>
-            <div class="loop-step">
-              <div class="loop-num">04</div>
-              <h3 data-i18n="home.loop.4.h">Prepare Twin Work</h3>
-              <p data-i18n="home.loop.4.p">Drafts, decks, research, analysis, updates, and next actions are packaged.</p>
-            </div>
-            <div class="loop-step">
-              <div class="loop-num">05</div>
-              <h3 data-i18n="home.loop.5.h">Review what matters</h3>
-              <p data-i18n="home.loop.5.p">You come back to a draft, decision point, or next conversation with the context intact.</p>
             </div>
           </div>
         </div>
@@ -1694,6 +1757,7 @@
               <h2 data-i18n="pricing.title">Simple, transparent pricing.</h2>
               <p data-i18n="pricing.subtitle">Seat-based plans with SIMY token allocation. Scale as your team grows.</p>
               <div class="pricing-note" data-i18n="pricing.webNote">Create your SIMY account on the web. Subscription checkout is securely handled by Stripe.</div>
+              <div class="pricing-business-note" data-i18n="home.pricing.biz">Pro is the standard plan for teams that want meeting follow-up, customer updates, and internal handoffs to keep moving. Tokens are the usage meter; the job is simple: fewer dropped balls after meetings.</div>
             </div>
             <div class="billing-toggle" aria-label="Billing interval">
               <button class="toggle-btn" type="button" data-billing="monthly" onclick="setBilling('monthly')" data-i18n="pricing.monthly">Monthly</button>
@@ -1838,7 +1902,7 @@
           <h2 data-i18n-html="home.final.h"><span class="copy-line">Meeting ends.</span><span class="copy-line">Your next move is ready.</span></h2>
           <p data-i18n="home.final.p">Create the Twin that starts working the moment the meeting ends. Let the work come back as drafts, briefs, and next actions instead of another hour in tabs.</p>
           <div class="final-actions">
-            <a class="btn-primary" href="https://app.simy.one/signup" data-i18n="home.cta.primary">Create your Twin</a>
+            <a class="btn-primary" href="https://app.simy.one/signup" data-i18n="home.cta.primary">Try one meeting</a>
             <a class="btn-secondary" href="mailto:sales@simy.one" data-i18n="home.final.secondary">Talk to sales</a>
           </div>
         </div>
@@ -1855,7 +1919,7 @@
           <div class="footer-col">
             <div class="footer-col-title" data-i18n="footer.product">Product</div>
             <a href="#difference" data-i18n="footer.product.difference">Your Twin</a>
-            <a href="#work" data-i18n="footer.product.work">After meetings</a>
+            <a href="#samples" data-i18n="footer.product.work">After meetings</a>
             <a href="#loop" data-i18n="footer.product.loop">How it works</a>
             <a href="/compare.html" data-i18n="footer.product.compare">Compare</a>
             <a href="/pricing.html" data-i18n="footer.product.pricing">Pricing</a>
