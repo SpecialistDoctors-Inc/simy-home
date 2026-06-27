@@ -3,22 +3,97 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-    <title>Compare SIMY — Agents do tasks. Your Twin carries the thread.</title>
-    <meta name="description" content="Compare SIMY with agents, meeting recorders, search, and PC automation. SIMY starts when the meeting ends and carries follow-ups, decks, research, analysis, updates, and next actions forward." />
+    <title>Compare SIMY vs Copilot, Cursor, Devin &amp; Claude Code</title>
+    <meta name="description" content="SIMY vs GitHub Copilot, Cursor, Devin, and Claude Code. Autonomous AI that generates code from meetings — no prompting, no IDE extension required." />
+    <meta name="keywords" content="SIMY vs Copilot, SIMY vs GitHub Copilot, SIMY vs Cursor, SIMY vs Devin, SIMY vs Claude Code, SIMY vs Replit Agent, SIMY vs Windsurf, AI coding tool comparison, best AI code generator, AI pair programmer comparison, autonomous AI engineer comparison, GitHub Copilot alternative, Cursor alternative, Devin alternative, Claude Code alternative, GitHub Copilot 比較, Cursor 比較, Devin 比較, Claude Code 比較, AI コーディングツール 比較, AI 開発ツール 比較, 生成AI エンジニア 比較, AI コード生成 ツール 比較" />
     <link rel="canonical" href="https://simy.one/compare.html">
     <meta name="robots" content="index, follow">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://simy.one/compare.html">
-    <meta property="og:title" content="Compare SIMY — Your Twin carries the work after the meeting.">
-    <meta property="og:description" content="Agents do tasks. SIMY carries the thread after the meeting.">
+    <meta property="og:title" content="Competitive Landscape — SIMY">
+    <meta property="og:description" content="Compare SIMY with AI Search, PC Agents, and Coding AI.">
     <meta property="og:site_name" content="SIMY">
     <meta property="og:image" content="https://simy.one/ogp.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="en_US">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Compare SIMY — Your Twin carries the work after the meeting.">
-    <meta name="twitter:description" content="Agents do tasks. SIMY carries the thread after the meeting.">
+    <meta name="twitter:title" content="Competitive Landscape — SIMY">
+    <meta name="twitter:description" content="Compare SIMY with AI Search, PC Agents, and Coding AI.">
     <meta name="twitter:image" content="https://simy.one/ogp.png">
-    <meta name="theme-color" content="#fafaf8">
-    <link rel="icon" type="image/png" href="/favicon.png">
+    <meta name="theme-color" content="#f9f9f6">
+    <!-- hreflang: Add when i18n is implemented
+    <link rel="alternate" hreflang="en" href="https://simy.one/">
+    <link rel="alternate" hreflang="ja" href="https://simy.one/ja/">
+    <link rel="alternate" hreflang="x-default" href="https://simy.one/">
+    -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "SIMY",
+      "url": "https://simy.one/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://simy.one/?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "AwakApp Inc.",
+      "url": "https://simy.one/",
+      "logo": "https://simy.one/simy-icon.png",
+      "brand": { "@type": "Brand", "name": "SIMY" },
+      "foundingDate": "2024",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "San Francisco",
+        "addressRegion": "CA",
+        "addressCountry": "US"
+      },
+      "contactPoint": [
+        { "@type": "ContactPoint", "email": "sales@simy.one", "contactType": "sales" },
+        { "@type": "ContactPoint", "email": "tech@simy.one", "contactType": "technical support" }
+      ],
+      "sameAs": []
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "SIMY",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Web, iOS",
+      "description": "AI-powered Action Intelligence platform that generates code from workplace conversations.",
+      "url": "https://simy.one/",
+      "offers": {
+        "@type": "AggregateOffer",
+        "priceCurrency": "USD",
+        "lowPrice": "20",
+        "highPrice": "100",
+        "offerCount": "3"
+      },
+      "creator": {
+        "@type": "Organization",
+        "name": "AwakApp Inc."
+      }
+    }
+    </script>
+
+    <!--
+      Typography System — Söhne-equivalent via Geist (Vercel / Klim-inspired)
+      ─────────────────────────────────────────────────────────────────────────
+      Geist          → Söhne equivalent. Geometric grotesque, Futura lineage.
+                       Variable font: wght 100–900. Self-hosted via CDN.
+      Geist Mono     → Söhne Mono equivalent. Tabular, clean, technical.
+                       Variable font: wght 100–900. Self-hosted via CDN.
+      ─────────────────────────────────────────────────────────────────────────
+    -->
     <style>
       @font-face {
         font-family: 'Geist';
@@ -34,214 +109,284 @@
         font-style: normal;
         font-display: swap;
       }
-      :root {
-        --ink: #080808;
-        --muted: #5f5f5b;
-        --soft: #fafaf8;
-        --line: #dfdfda;
-        --blue: #0057ff;
+    </style>
+    <style>
+      /* Hide React SPA's built-in nav and footer — replaced by static versions below */
+      #root > div > nav { display: none !important; }
+      #root footer { display: none !important; }
+      /* Override React (Tailwind) container to match static pages: 1280px + 4rem padding */
+      #root .container {
+        max-width: 1280px !important;
+        padding-left: 4rem !important;
+        padding-right: 4rem !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
       }
-      * { box-sizing: border-box; }
-      body {
-        margin: 0;
-        background: var(--soft);
-        color: var(--ink);
-        font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
-        -webkit-font-smoothing: antialiased;
-      }
-      a { color: inherit; }
-      .container { max-width: 1280px; margin: 0 auto; padding: 0 4rem; }
-      .static-nav {
-        position: fixed;
-        inset: 0 0 auto;
-        z-index: 50;
-        background: rgba(250, 250, 248, 0.92);
-        border-bottom: 1px solid transparent;
-        backdrop-filter: blur(16px);
-      }
-      .static-nav.scrolled { border-bottom-color: var(--line); }
-      .nav-inner {
-        height: 60px;
-        max-width: 1280px;
-        margin: 0 auto;
-        padding: 0 4rem;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 2rem;
-      }
-      .nav-logo, .nav-links, .nav-right { display: flex; align-items: center; }
-      .nav-logo { gap: 10px; text-decoration: none; }
-      .nav-logo-s {
-        width: 24px;
-        height: 24px;
-        display: grid;
-        place-items: center;
-        background: var(--blue);
-        color: #fff;
-        font: 500 13px 'Geist Mono', monospace;
-      }
-      .nav-brand { font-size: 14px; font-weight: 760; letter-spacing: 0.06em; }
-      .nav-version { color: var(--blue); font: 400 13px 'Geist Mono', monospace; letter-spacing: 0.06em; }
-      .nav-links { gap: 28px; }
-      .nav-links a, .nav-signin {
-        color: #555551;
-        text-decoration: none;
-        font-size: 0.8125rem;
-        white-space: nowrap;
-      }
-      .nav-links a:hover, .nav-signin:hover { color: var(--ink); }
-      .nav-right { gap: 20px; }
-      .mobile-only-nav-action { display: none; }
-      .btn-primary, .btn-secondary {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 48px;
-        padding: 0 1.35rem;
-        border: 1px solid var(--ink);
-        text-decoration: none;
-        font-weight: 700;
-      }
-      .btn-primary { background: var(--blue); border-color: var(--blue); color: #fff; }
-      .btn-secondary { background: #fff; color: var(--ink); }
-      .static-nav .btn-primary { min-height: 44px; font-size: 0.875rem; }
-      .mobile-menu-btn { display: none; border: 0; background: none; color: var(--ink); padding: 8px; }
-      .hero {
-        padding: 148px 0 88px;
-        border-bottom: 1px solid var(--line);
-      }
-      .eyebrow, .section-label {
-        margin: 0 0 16px;
-        color: var(--blue);
-        font: 500 0.78rem 'Geist Mono', monospace;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-      }
-      .hero h1 {
-        max-width: 980px;
-        margin: 0;
-        font-size: 6.3rem;
-        line-height: 0.98;
-        letter-spacing: 0;
-      }
-      .line { display: block; }
-      .hero h1 .line { white-space: nowrap; }
-      .hero p {
-        max-width: 780px;
-        margin: 28px 0 0;
-        color: var(--muted);
-        font-size: 1.2rem;
-        line-height: 1.72;
-      }
-      .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 32px; }
-      .section { padding: 86px 0; border-bottom: 1px solid var(--line); }
-      .section h2 {
-        max-width: 920px;
-        margin: 0;
-        font-size: 4rem;
-        line-height: 1.06;
-        letter-spacing: 0;
-      }
-      .section-lead {
-        max-width: 760px;
-        margin: 22px 0 0;
-        color: var(--muted);
-        font-size: 1.08rem;
-        line-height: 1.72;
-      }
-      .compare-wrap { margin-top: 42px; overflow-x: auto; }
-      table {
-        width: 100%;
-        min-width: 900px;
-        border-collapse: collapse;
-        background: #fff;
-        border: 1px solid var(--line);
-      }
-      th, td {
-        padding: 1.3rem 1.1rem;
-        border-bottom: 1px solid var(--line);
-        border-right: 1px solid var(--line);
-        text-align: left;
-        vertical-align: top;
-        font-size: 0.96rem;
-        line-height: 1.52;
-      }
-      th {
-        color: #7a7a75;
-        font: 500 0.75rem 'Geist Mono', monospace;
-        letter-spacing: 0.07em;
-        text-transform: uppercase;
-      }
-      th:last-child, td:last-child { border-right: 0; }
-      tr:last-child td { border-bottom: 0; }
-      .simy-col { background: rgba(0, 87, 255, 0.055); color: var(--ink); font-weight: 700; }
-      .feature { font-weight: 760; color: var(--ink); }
-      .use-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 1px;
-        margin-top: 42px;
-        background: var(--line);
-        border: 1px solid var(--line);
-      }
-      .use-card { background: #fff; padding: 28px; min-height: 230px; }
-      .use-card strong { display: block; color: var(--blue); font: 600 0.72rem 'Geist Mono', monospace; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 18px; }
-      .use-card h3 { margin: 0; font-size: 1.25rem; line-height: 1.18; }
-      .use-card p { margin: 14px 0 0; color: var(--muted); line-height: 1.62; }
-      .dark { background: #080808; color: #fff; }
-      .dark .section-label { color: #62d6a2; }
-      .dark p { color: rgba(255,255,255,0.72); }
-      .dark .btn-secondary { background: transparent; color: #fff; border-color: rgba(255,255,255,0.45); }
-      .footer {
-        background: #080808;
-        color: #fff;
-        padding: 48px 0 34px;
-      }
-      .footer-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 40px; }
-      .footer-brand-line { font-size: 1.25rem; font-weight: 760; line-height: 1.2; }
-      .footer-brand-copy { margin-top: 12px; max-width: 330px; color: #989892; line-height: 1.55; }
-      .footer-col { display: flex; flex-direction: column; gap: 10px; }
-      .footer-col-title { color: #6f6f69; font: 700 0.72rem 'Geist Mono', monospace; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 4px; }
-      .footer-col a { color: #aaa9a3; text-decoration: none; font-size: 0.9rem; }
-      .footer-bottom { margin-top: 36px; padding-top: 24px; border-top: 1px solid #1d1d1d; color: #575752; font-size: 0.78rem; text-align: center; }
-      @media (max-width: 1100px) {
-        .hero h1 { font-size: 4.85rem; }
-        .section h2 { font-size: 3.1rem; }
-      }
-      @media (max-width: 920px) {
-        .container, .nav-inner { padding: 0 1.25rem; }
-        .nav-right { display: none; }
-        .nav-links { display: none; }
-        .nav-links.active {
-          display: flex;
-          position: fixed;
-          top: 56px;
-          left: 0;
-          right: 0;
-          flex-direction: column;
-          align-items: stretch;
-          gap: 0;
-          padding: 0.5rem 1.25rem 1rem;
-          background: #fafaf8;
-          border-bottom: 1px solid var(--line);
+      @media (max-width: 768px) {
+        #root .container {
+          padding-left: 1.5rem !important;
+          padding-right: 1.5rem !important;
         }
-        .nav-links.active a { padding: 0.85rem 0; border-bottom: 1px solid #ecece8; }
-        .nav-links.active .mobile-only-nav-action { display: block; }
-        .mobile-menu-btn { display: block; }
-        .hero { padding: 108px 0 58px; }
-        .hero h1 { font-size: 2.4rem; line-height: 1.04; }
-        .section h2 { font-size: 2.25rem; }
-        .hero p, .section-lead { font-size: 1rem; }
-        .section { padding: 62px 0; }
-        .use-grid, .footer-grid { grid-template-columns: 1fr; }
       }
-      @media (max-width: 360px) {
-        .hero h1 { font-size: 2.25rem; }
+      /* Static nav — identical to all other pages */
+      .static-nav {
+        position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+        transition: all 0.3s;
+        background: rgba(250, 250, 248, 0.9);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border-bottom: 1px solid transparent;
+      }
+      .static-nav.scrolled {
+        background: rgba(250, 250, 248, 0.97);
+        border-bottom-color: #e0e0dc;
+      }
+      .nav-inner {
+        display: flex; align-items: center; justify-content: space-between;
+        max-width: 1280px; margin: 0 auto; padding: 0 4rem;
+        height: 60px;
+      }
+      .nav-logo {
+        display: flex; align-items: center; gap: 10px;
+        text-decoration: none; color: #0a0a0a;
+      }
+      .nav-logo-s {
+        width: 24px; height: 24px;
+        display: flex; align-items: center; justify-content: center;
+        background-color: #0057ff; color: #fff;
+        font-family: 'Geist Mono', monospace;
+        font-size: 13px; font-weight: 500;
+      }
+      .nav-brand {
+        font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+        font-size: 14px; font-weight: 700; letter-spacing: 0.06em;
+        color: #0a0a0a;
+      }
+      .nav-version {
+        font-family: 'Geist Mono', monospace;
+        font-size: 13px; font-weight: 400; letter-spacing: 0.06em;
+        color: #0057ff;
+      }
+      .nav-links { display: flex; gap: 32px; align-items: center; }
+      .nav-links a {
+        color: #5a5a56; text-decoration: none;
+        font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+        font-size: 0.8125rem; font-weight: 400; letter-spacing: 0.01em;
+        transition: color 0.18s; position: relative;
+      }
+      .nav-links a::after {
+        content: ''; position: absolute; bottom: -2px; left: 0;
+        width: 0; height: 1px; background-color: #0057ff;
+        transition: width 0.25s;
+      }
+      .nav-links a:hover { color: #0a0a0a; }
+      .nav-links a:hover::after { width: 100%; }
+      .nav-right { display: flex; align-items: center; gap: 20px; }
+      .nav-signin {
+        color: #5a5a56; text-decoration: none;
+        font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+        font-size: 0.8125rem; font-weight: 400; letter-spacing: 0.01em;
+        transition: color 0.18s;
+      }
+      .nav-signin:hover { color: #0a0a0a; }
+      .static-nav .btn-primary {
+        background-color: #0057ff; color: #fff;
+        font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+        letter-spacing: 0.01em;
+        border: 1px solid #0057ff; padding: 0.5rem 1.25rem;
+        font-size: 0.8125rem; font-weight: 500;
+        display: inline-flex; align-items: center; gap: 0.5rem;
+        text-decoration: none; transition: background-color 0.18s;
+        cursor: pointer;
+      }
+      .static-nav .btn-primary:hover { background-color: #0047dd; border-color: #0047dd; }
+      .mobile-menu-btn { display: none; background: none; border: none; color: #0a0a0a; cursor: pointer; padding: 8px; }
+      /* Static footer — identical to all other pages */
+      .static-footer {
+        padding: 48px 0 36px;
+        border-top: none;
+        background: #0a0a0a;
+        color: #f5f5f0;
+        font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+      }
+      .static-footer .container { max-width: 1280px; margin: 0 auto; padding: 0 4rem; }
+      .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+      .footer-col { display: flex; flex-direction: column; gap: 10px; }
+      .footer-col-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #6a6a66; margin-bottom: 4px; }
+      .footer-col a { color: #9a9a96; text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+      .footer-col a:hover { color: #f5f5f0; }
+      .footer-bottom { padding-top: 24px; border-top: 1px solid #1a1a1a; font-size: 0.75rem; color: #3a3a36; text-align: center; }
+      @media (max-width: 768px) {
+        .nav-links { display: none; }
+        .nav-right { display: none; }
+        .mobile-menu-btn { display: block; }
+        .nav-inner { padding: 0 1.5rem; }
+        .static-footer .container { padding: 0 1.5rem; }
+        .footer-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
+        .footer-brand { grid-column: 1 / -1; text-align: center; }
+      }
+
+      /* ── Compare page static content ───────────────────────── */
+      .cmp-page { background-color: #FAFAF8; min-height: 100vh; }
+      .cmp-page .container { max-width: 1280px; margin: 0 auto; padding: 0 4rem; }
+      .cmp-hero { padding-top: 120px; padding-bottom: 80px; }
+      .cmp-hero .label {
+        font-family: 'Geist Mono', 'Courier New', monospace;
+        font-size: 13px; font-weight: 400; letter-spacing: 0.08em;
+        text-transform: uppercase; color: #0057FF; margin-bottom: 1.5rem;
+      }
+      .cmp-hero h1 {
+        font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+        font-size: clamp(48px, 7vw, 88px); font-weight: 800;
+        letter-spacing: -0.04em; line-height: 1.05; color: #0A0A0A;
+        max-width: 800px; margin-bottom: 1.5rem;
+      }
+      .cmp-hero h1 .blue { color: #0057FF; }
+      .cmp-hero .sub {
+        font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+        font-size: 18px; font-weight: 300; line-height: 1.75;
+        color: #5A5A56; max-width: 560px; letter-spacing: -0.005em;
+      }
+      .cmp-table-sec { padding: 60px 0 100px; }
+      .cmp-table-sec .intro {
+        font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+        font-size: 15px; font-weight: 300; line-height: 1.75;
+        color: #5A5A56; max-width: 600px; margin-bottom: 3rem;
+        letter-spacing: -0.005em;
+      }
+      .cmp-table-wrap { overflow-x: auto; }
+      .cmp-table { width: 100%; border-collapse: collapse; min-width: 960px; }
+      .cmp-table thead tr { border-bottom: 2px solid #0A0A0A; }
+      .cmp-table th {
+        font-family: 'Geist Mono', 'Courier New', monospace;
+        font-size: 13px; font-weight: 400; letter-spacing: 0.08em;
+        text-transform: uppercase; color: #9A9A96;
+        padding: 1.1rem 0.9rem; text-align: center; vertical-align: top;
+      }
+      .cmp-table th.feat { text-align: left; width: 18%; padding: 1.1rem 0; }
+      .cmp-table th.simy-col { color: #0057FF; background-color: rgba(0,87,255,0.04); padding: 1.1rem 0.9rem; }
+      .cmp-table th .eg {
+        display: block; font-size: 11px; letter-spacing: 0.05em;
+        color: #B8B8B3; text-transform: none; margin-top: 0.25rem;
+        font-weight: 400;
+      }
+      .cmp-table tbody tr { border-bottom: 1px solid #E0E0DC; }
+      .cmp-table td {
+        font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+        font-size: 15px; font-weight: 300; line-height: 1.55;
+        color: #5A5A56; padding: 1.4rem 0.9rem; text-align: center;
+        letter-spacing: -0.005em; vertical-align: middle;
+      }
+      .cmp-table td.feat {
+        text-align: left; padding: 1.4rem 0;
+        font-weight: 500; color: #0A0A0A; font-size: 14px;
+      }
+      .cmp-table td.simy-col {
+        background-color: rgba(0,87,255,0.04);
+        padding: 1.4rem 0.9rem;
+        font-weight: 500; color: #0A0A0A;
+      }
+
+      .cmp-diff-sec { background-color: #0A0A0A; padding: 100px 0; }
+      .cmp-diff-sec .label {
+        font-family: 'Geist Mono', 'Courier New', monospace;
+        font-size: 13px; font-weight: 400; letter-spacing: 0.08em;
+        text-transform: uppercase; color: #6A6A66; margin-bottom: 1rem;
+      }
+      .cmp-diff-sec h2 {
+        font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+        font-size: clamp(32px, 4vw, 52px); font-weight: 700;
+        letter-spacing: -0.04em; line-height: 1.1; color: #F5F5F0;
+        margin-bottom: 3rem; max-width: 700px;
+      }
+      .cmp-diff-grid {
+        display: grid; grid-template-columns: repeat(3, 1fr);
+        gap: 1px; background-color: #1A1A1A;
+      }
+      .cmp-diff-card { background-color: #0A0A0A; padding: 2.5rem; }
+      .cmp-diff-card.highlight { background-color: #0057FF; }
+      .cmp-diff-card h3 {
+        font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+        font-size: 20px; font-weight: 700; letter-spacing: -0.04em;
+        line-height: 1.2; color: #F5F5F0; margin-bottom: 1rem;
+      }
+      .cmp-diff-card p {
+        font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+        font-size: 14px; font-weight: 300; line-height: 1.75;
+        color: #6A6A66; letter-spacing: -0.005em;
+      }
+      .cmp-diff-card.highlight p { color: rgba(255,255,255,0.8); }
+
+      .cmp-cta-sec { padding: 100px 0; background-color: #FAFAF8; }
+      .cmp-cta-sec .row {
+        display: flex; justify-content: space-between; gap: 2rem;
+        align-items: center; flex-wrap: wrap;
+      }
+      .cmp-cta-sec h2 {
+        font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+        font-size: clamp(28px, 4vw, 48px); font-weight: 800;
+        letter-spacing: -0.04em; line-height: 1.05; color: #0A0A0A;
+        margin-bottom: 0.75rem;
+      }
+      .cmp-cta-sec p {
+        font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+        font-size: 16px; font-weight: 300; line-height: 1.75;
+        color: #5A5A56; letter-spacing: -0.005em;
+      }
+      .cmp-cta-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+      .cmp-btn-primary {
+        background-color: #0057FF; color: #fff;
+        font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+        border: 1px solid #0057FF; padding: 0.75rem 1.5rem;
+        font-size: 0.875rem; font-weight: 500;
+        text-decoration: none; transition: background-color 0.18s;
+        display: inline-flex; align-items: center; gap: 0.5rem;
+      }
+      .cmp-btn-primary:hover { background-color: #0047dd; }
+      .cmp-btn-secondary {
+        background-color: transparent; color: #0A0A0A;
+        font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+        border: 1px solid #0A0A0A; padding: 0.75rem 1.5rem;
+        font-size: 0.875rem; font-weight: 500;
+        text-decoration: none; transition: all 0.18s;
+      }
+      .cmp-btn-secondary:hover { background-color: #0A0A0A; color: #fff; }
+
+      @media (max-width: 768px) {
+        .cmp-page .container { padding: 0 1.5rem; }
+        .cmp-hero { padding-top: 100px; padding-bottom: 40px; }
+        .cmp-table-sec { padding: 40px 0 60px; }
+        .cmp-diff-sec { padding: 60px 0; }
+        .cmp-diff-grid { grid-template-columns: 1fr; }
+        .cmp-cta-sec { padding: 60px 0; }
       }
     </style>
+    <script type="module" crossorigin src="/assets/index-DnVveaIK.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-BwUIJj-q.css">
+    <link rel="stylesheet" href="/responsive.css">
   </head>
   <body>
+    <!-- Redirect /index.html to / so wouter home route matches -->
+
+    <!-- Force full navigation for static subpages (bypass wouter client-side routing) -->
+    <script>
+    document.addEventListener('click', function(e) {
+      var a = e.target.closest('a');
+      if (!a) return;
+      var pages = ['/careers.html','/status.html','/privacy.html','/terms.html',
+                   '/how-it-works.html','/integrations.html','/security.html','/press-release.html'];
+      try {
+        var p = new URL(a.href, location.origin).pathname;
+        if (pages.indexOf(p) !== -1) {
+          e.preventDefault();
+          e.stopPropagation();
+          window.location.href = a.href;
+        }
+      } catch(err) {}
+    }, true);
+    </script>
+
+    <!-- Static nav — same code as all other pages -->
     <nav class="static-nav" id="staticNav">
       <div class="nav-inner">
         <a href="/" class="nav-logo">
@@ -251,93 +396,125 @@
         </a>
         <div class="nav-links" id="navLinks">
           <a href="/" data-i18n="nav.home">Home</a>
-          <a href="/#difference" data-i18n="nav.difference">Your Twin</a>
-          <a href="/#work" data-i18n="nav.work">After meetings</a>
-          <a href="/#loop" data-i18n="nav.how">How it works</a>
-          <a href="/compare.html" data-i18n="nav.compare">Compare</a>
           <a href="/pricing.html" data-i18n="nav.pricing">Pricing</a>
-          <a href="mailto:sales@simy.one" data-i18n="footer.company.contact">Contact</a>
+          <a href="/compare.html" data-i18n="nav.compare">Compare</a>
+          <a href="/about.html" data-i18n="nav.about">About</a>
+          <a href="/press-release.html" data-i18n="nav.news">News</a>
         </div>
         <div class="nav-right">
           <a href="https://app.simy.one/login" class="nav-signin" data-i18n="nav.signin">Sign in</a>
-          <a href="https://app.simy.one/signup" class="btn-primary" data-i18n="home.cta.primary">Create your Twin</a>
+          <a href="https://app.simy.one/signup" class="btn-primary" data-i18n="nav.cta">Start on Web</a>
         </div>
-        <button class="mobile-menu-btn" aria-label="Toggle menu" aria-controls="navLinks" aria-expanded="false">
+        <button class="mobile-menu-btn" onclick="document.getElementById('navLinks').classList.toggle('active')" aria-label="Toggle menu">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
             <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
           </svg>
         </button>
       </div>
     </nav>
+    <script>
+    window.addEventListener('scroll', function() {
+      var nav = document.getElementById('staticNav');
+      if (window.scrollY > 10) { nav.classList.add('scrolled'); }
+      else { nav.classList.remove('scrolled'); }
+    });
+    </script>
 
-    <main>
-      <section class="hero">
+    <div id="root" style="display:none!important"></div>
+
+    <!-- ── Static compare content ─────────────────────────────── -->
+    <div class="cmp-page">
+      <section class="cmp-hero">
         <div class="container">
-          <p class="eyebrow">Compare</p>
-          <h1>
-            <span class="line">Agents do tasks.</span>
-            <span class="line">Your Twin carries</span>
-            <span class="line">the thread.</span>
-          </h1>
-          <p>Most AI waits for a prompt. SIMY starts when the meeting ends, carries the context forward, and prepares the follow-ups, decks, research, analysis, updates, and next actions that usually pull you back into tabs.</p>
-          <div class="hero-actions">
-            <a class="btn-primary" href="https://app.simy.one/signup" data-i18n="home.cta.primary">Create your Twin</a>
-            <a class="btn-secondary" href="/pricing.html" data-i18n="nav.pricing">Pricing</a>
-          </div>
+          <p class="label" data-i18n="cmpx.label">COMPARE</p>
+          <h1><span class="blue">SIMY</span> <span data-i18n="cmpx.vs">vs.</span><br><span data-i18n="cmpx.alternatives">the alternatives.</span></h1>
+          <p class="sub" data-i18n="cmpx.heroSub">SIMY doesn't replace your existing tools — it eliminates the gap between decisions and execution that all other tools leave open.</p>
         </div>
       </section>
 
-      <section class="section">
+      <section class="cmp-table-sec">
         <div class="container">
-          <p class="section-label">The real comparison</p>
-          <h2>Not which AI is smarter. Which one moves the work before you ask?</h2>
-          <p class="section-lead">Search, meeting recorders, chatbots, and PC agents can each help with a slice. SIMY is different because it carries the entire post-meeting thread: context, sequence, output, and the next action.</p>
-          <div class="compare-wrap">
-            <table>
+          <p class="intro" data-i18n="cmpx.intro">SIMY vs. the four categories of AI tools enterprises actually use today. Unlike search, PC agents, coding AI, or team chat — SIMY builds the automations itself, with zero prompting.</p>
+          <div class="cmp-table-wrap">
+            <table class="cmp-table">
               <thead>
                 <tr>
-                  <th>Capability</th>
-                  <th>Meeting recorder</th>
-                  <th>Standalone agent</th>
-                  <th>PC automation</th>
-                  <th class="simy-col">SIMY Twin</th>
+                  <th class="feat" data-i18n="cmpx.thCategory">CATEGORY</th>
+                  <th class="simy-col">SIMY</th>
+                  <th>
+                    <span data-i18n="cmpx.thAiSearch">AI SEARCH</span>
+                    <span class="eg" data-i18n="cmpx.thAiSearchEg">e.g., Glean</span>
+                  </th>
+                  <th>
+                    <span data-i18n="cmpx.thPcAgents">PC AGENTS</span>
+                    <span class="eg" data-i18n="cmpx.thPcAgentsEg">e.g., OpenClaw</span>
+                  </th>
+                  <th>
+                    <span data-i18n="cmpx.thCodingAi">CODING AI</span>
+                    <span class="eg" data-i18n="cmpx.thCodingAiEg">e.g., Claude Code</span>
+                  </th>
+                  <th>
+                    <span data-i18n="cmpx.thCowork">CLAUDE COWORK</span>
+                    <span class="eg" data-i18n="cmpx.thCoworkEg">e.g., team chat</span>
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td class="feature">How work starts</td>
-                  <td>Records and summarizes after you open it.</td>
-                  <td>Waits for a prompt and a clear task.</td>
-                  <td>Waits for step-by-step instruction.</td>
-                  <td class="simy-col">Starts from the meeting context the moment it ends.</td>
+                  <td class="feat" data-i18n="cmpx.c1">Core action</td>
+                  <td class="simy-col" data-i18n="cmpx.c1Simy">Builds automations itself</td>
+                  <td data-i18n="cmpx.c1Ai">Finds information</td>
+                  <td data-i18n="cmpx.c1Pc">Clicks &amp; types locally</td>
+                  <td data-i18n="cmpx.c1Code">Writes code</td>
+                  <td data-i18n="cmpx.c1Cow">Group chat with Claude</td>
                 </tr>
                 <tr>
-                  <td class="feature">Context carried forward</td>
-                  <td>Transcript and notes.</td>
-                  <td>Whatever you paste into the chat.</td>
-                  <td>Mostly local screen state.</td>
-                  <td class="simy-col">Decisions, promises, risks, people, tone, and next actions.</td>
+                  <td class="feat" data-i18n="cmpx.c2">Missing workflows?</td>
+                  <td class="simy-col" data-i18n="cmpx.c2Simy">Builds missing tool dynamically</td>
+                  <td data-i18n="cmpx.c2Ai">N/A (search only)</td>
+                  <td data-i18n="cmpx.c2Pc">Stops — needs setup</td>
+                  <td data-i18n="cmpx.c2Code">Waits for human prompt</td>
+                  <td data-i18n="cmpx.c2Cow">Waits for team prompt</td>
                 </tr>
                 <tr>
-                  <td class="feature">Work after the meeting</td>
-                  <td>You still turn notes into work.</td>
-                  <td>You orchestrate each follow-up.</td>
-                  <td>You supervise every local action.</td>
-                  <td class="simy-col">Follow-ups, decks, research, analysis, updates, and briefs move together.</td>
+                  <td class="feat" data-i18n="cmpx.c3">User effort</td>
+                  <td class="simy-col" data-i18n="cmpx.c3Simy">Zero prompting</td>
+                  <td data-i18n="cmpx.c3Ai">Needs queries</td>
+                  <td data-i18n="cmpx.c3Pc">Needs instructions</td>
+                  <td data-i18n="cmpx.c3Code">Complex prompting</td>
+                  <td data-i18n="cmpx.c3Cow">Ongoing chat</td>
                 </tr>
                 <tr>
-                  <td class="feature">Human role</td>
-                  <td>Reader and organizer.</td>
-                  <td>Prompt writer and manager.</td>
-                  <td>Operator and checker.</td>
-                  <td class="simy-col">Reviewer, decision maker, and relationship owner.</td>
+                  <td class="feat" data-i18n="cmpx.c4">How work starts</td>
+                  <td class="simy-col" data-i18n="cmpx.c4Simy">Auto from conversations</td>
+                  <td data-i18n="cmpx.c4Ai">User search</td>
+                  <td data-i18n="cmpx.c4Pc">Manual instruction</td>
+                  <td data-i18n="cmpx.c4Code">Developer prompt</td>
+                  <td data-i18n="cmpx.c4Cow">Team message</td>
                 </tr>
                 <tr>
-                  <td class="feature">Best for</td>
-                  <td>Remembering what happened.</td>
-                  <td>One-off tasks.</td>
-                  <td>Repeating local browser work.</td>
-                  <td class="simy-col">Moving the whole thread without rebuilding context.</td>
+                  <td class="feat" data-i18n="cmpx.c5">Context &amp; memory</td>
+                  <td class="simy-col" data-i18n="cmpx.c5Simy">Persistent org context</td>
+                  <td data-i18n="cmpx.c5Ai">Indexed documents</td>
+                  <td data-i18n="cmpx.c5Pc">Session only</td>
+                  <td data-i18n="cmpx.c5Code">Conversation only</td>
+                  <td data-i18n="cmpx.c5Cow">Shared thread</td>
+                </tr>
+                <tr>
+                  <td class="feat" data-i18n="cmpx.c6">Growth model</td>
+                  <td class="simy-col" data-i18n="cmpx.c6Simy">Self-expanding</td>
+                  <td data-i18n="cmpx.c6Ai">Data-dependent</td>
+                  <td data-i18n="cmpx.c6Pc">Prompt-dependent</td>
+                  <td data-i18n="cmpx.c6Code">Engineer-dependent</td>
+                  <td data-i18n="cmpx.c6Cow">Team-dependent</td>
+                </tr>
+                <tr>
+                  <td class="feat" data-i18n="cmpx.c7">Target users</td>
+                  <td class="simy-col" data-i18n="cmpx.c7Simy">All business pros</td>
+                  <td data-i18n="cmpx.c7Ai">All employees</td>
+                  <td data-i18n="cmpx.c7Pc">Tech-savvy users</td>
+                  <td data-i18n="cmpx.c7Code">Engineers only</td>
+                  <td data-i18n="cmpx.c7Cow">Collaborative teams</td>
                 </tr>
               </tbody>
             </table>
@@ -345,68 +522,68 @@
         </div>
       </section>
 
-      <section class="section">
+      <section class="cmp-diff-sec">
         <div class="container">
-          <p class="section-label">When each tool makes sense</p>
-          <h2>Use tools for tasks. Use your Twin when the outcome matters.</h2>
-          <div class="use-grid">
-            <article class="use-card">
-              <strong>Search</strong>
-              <h3>When you need facts.</h3>
-              <p>Search helps you find information. You still decide what matters and what happens next.</p>
-            </article>
-            <article class="use-card">
-              <strong>Agents</strong>
-              <h3>When you know the task.</h3>
-              <p>Agents are useful when you can describe exactly what to do and stay nearby to steer.</p>
-            </article>
-            <article class="use-card">
-              <strong>Automation</strong>
-              <h3>When the action is local.</h3>
-              <p>PC agents can click and type, but they do not carry the business relationship forward.</p>
-            </article>
-            <article class="use-card">
-              <strong>SIMY</strong>
-              <h3>When the meeting created follow-through.</h3>
-              <p>SIMY carries the post-meeting work so drafts, updates, and next actions are waiting when you return.</p>
-            </article>
+          <p class="label" data-i18n="cmpx.diffLabel">THE FUNDAMENTAL DIFFERENCE</p>
+          <h2 data-i18n-html="cmpx.diffH2">Other tools assist humans.<br>SIMY executes for them.</h2>
+          <div class="cmp-diff-grid">
+            <div class="cmp-diff-card">
+              <h3 data-i18n="cmpx.card1H">Find &amp; Retrieve</h3>
+              <p data-i18n="cmpx.card1P">AI Search (Glean) — finds information faster. A human still has to read it and decide what to do.</p>
+            </div>
+            <div class="cmp-diff-card">
+              <h3 data-i18n="cmpx.card2H">Assist &amp; Accelerate</h3>
+              <p data-i18n="cmpx.card2P">PC Agents, Coding AI, Claude Cowork — accelerate individual or team tasks. A human still has to prompt, instruct, and guide every step.</p>
+            </div>
+            <div class="cmp-diff-card highlight">
+              <h3 data-i18n="cmpx.card3H">Build &amp; Execute</h3>
+              <p data-i18n="cmpx.card3P">SIMY — captures decisions from conversations, builds the missing automations itself, and delivers finished results. Humans just review and approve.</p>
+            </div>
           </div>
         </div>
       </section>
 
-      <section class="section dark">
+      <section class="cmp-cta-sec">
         <div class="container">
-          <p class="section-label">The answer</p>
-          <h2>SIMY is not another place to sit inside the computer.</h2>
-          <p class="section-lead">It routes agents and prepares the work that usually keeps you in tabs: follow-ups, decks, research, analysis, updates, and next actions.</p>
-          <div class="hero-actions">
-            <a class="btn-primary" href="https://app.simy.one/signup" data-i18n="home.cta.primary">Create your Twin</a>
-            <a class="btn-secondary" href="mailto:sales@simy.one" data-i18n="home.final.secondary">Talk to sales</a>
+          <div class="row">
+            <div>
+              <h2 data-i18n="cmpx.ctaH">Try SIMY alongside your current tools.</h2>
+              <p data-i18n="cmpx.ctaP">Measure the impact. No prompts. No setup friction.</p>
+            </div>
+            <div class="cmp-cta-btns">
+              <a href="/contact.html" class="cmp-btn-primary" data-i18n="cmpx.ctaBtn1">Request a Demo →</a>
+              <a href="/pricing.html" class="cmp-btn-secondary" data-i18n="cmpx.ctaBtn2">View Pricing</a>
+            </div>
           </div>
         </div>
       </section>
-    </main>
+    </div>
 
-    <footer class="footer">
+    <!-- Static footer — same code as all other pages -->
+    <footer class="static-footer">
       <div class="container">
         <div class="footer-grid">
-          <div>
-            <div class="footer-brand-line"><span class="line">Meeting ends.</span><span class="line">Your Twin starts working.</span></div>
-            <div class="footer-brand-copy">SIMY is the AI Twin that carries the work after meetings.</div>
+          <div class="footer-brand">
+            <div style="font-size:1rem;font-weight:700;margin-bottom:6px;letter-spacing:-0.02em" data-i18n="footer.tagline">Record. Ship. Done.</div>
+            <div style="display:flex;gap:12px;align-items:center;margin-top:12px">
+              <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" target="_blank" rel="noopener" data-i18n="footer.companion">iPhone recording companion app</a><div style="font-size:0.75rem;color:#6a6a66;margin-top:4px" data-i18n="footer.billing">Plans and billing are managed on the web.</div>
+            </div>
           </div>
           <div class="footer-col">
             <div class="footer-col-title" data-i18n="footer.product">Product</div>
-            <a href="/#difference" data-i18n="footer.product.difference">Your Twin</a>
-            <a href="/#work" data-i18n="footer.product.work">After meetings</a>
-            <a href="/#loop" data-i18n="footer.product.loop">How it works</a>
-            <a href="/compare.html" data-i18n="footer.product.compare">Compare</a>
+            <a href="/how-it-works.html" data-i18n="footer.product.how">How It Works</a>
             <a href="/pricing.html" data-i18n="footer.product.pricing">Pricing</a>
+            <a href="/compare.html" data-i18n="footer.product.compare">Compare</a>
+            <a href="/integrations.html" data-i18n="footer.product.integrations">Integrations</a>
+            <a href="/security.html" data-i18n="footer.product.security">Security</a>
           </div>
           <div class="footer-col">
             <div class="footer-col-title" data-i18n="footer.company">Company</div>
-            <a href="mailto:sales@simy.one" data-i18n="footer.company.contact">Contact</a>
-            <a href="https://app.simy.one/login" data-i18n="nav.signin">Sign in</a>
-            <a href="https://app.simy.one/signup" data-i18n="footer.company.signup">Create account</a>
+            <a href="/about.html" data-i18n="footer.company.about">About</a>
+            <a href="/careers.html" data-i18n="footer.company.careers">Careers</a>
+            <a href="/press.html" data-i18n="footer.company.press">Press</a>
+            <a href="/contact.html" data-i18n="footer.company.contact">Contact</a>
+            <a href="/status.html" data-i18n="footer.company.status">Status</a>
           </div>
           <div class="footer-col">
             <div class="footer-col-title" data-i18n="footer.legal">Legal</div>
@@ -414,16 +591,45 @@
             <a href="/terms.html" data-i18n="footer.legal.terms">Terms of Service</a>
           </div>
         </div>
-        <div class="footer-bottom"><span data-i18n="footer.copy">&copy; 2026 SIMY by AwakApp Inc. All rights reserved.</span></div>
+        <div class="footer-bottom">
+          <span data-i18n="footer.copy">&copy; 2026 SIMY by AwakApp Inc. All rights reserved.</span>
+        </div>
       </div>
     </footer>
 
-    <script>
-      window.addEventListener('scroll', function () {
-        var nav = document.getElementById('staticNav');
-        if (nav) nav.classList.toggle('scrolled', window.scrollY > 10);
-      });
-    </script>
     <script src="/i18n.js"></script>
+    <script>
+      /* Mobile card-layout support: copy thead labels onto each tbody td
+         so responsive.css can render them via ::before on small screens.
+         Re-runs whenever i18n mutates header text. */
+      (function () {
+        var table = document.querySelector('.cmp-table');
+        if (!table) return;
+        function sync() {
+          var heads = table.querySelectorAll('thead th');
+          var labels = Array.prototype.map.call(heads, function (th) {
+            var txt = (th.innerText || th.textContent || '').trim();
+            // Strip "e.g., Glean" style hint that lives on a <span class="eg">
+            var eg = th.querySelector('.eg');
+            if (eg) txt = txt.replace(eg.innerText || '', '').trim();
+            return txt;
+          });
+          table.querySelectorAll('tbody tr').forEach(function (tr) {
+            Array.prototype.forEach.call(tr.children, function (td, i) {
+              if (labels[i]) td.setAttribute('data-col', labels[i]);
+            });
+          });
+        }
+        sync();
+        // Keep labels in sync across language switches
+        var obs = new MutationObserver(sync);
+        var thead = table.querySelector('thead');
+        if (thead) obs.observe(thead, { subtree: true, characterData: true, childList: true });
+      })();
+    </script>
+    <script
+      defer
+      src="%VITE_ANALYTICS_ENDPOINT%/umami"
+      data-website-id="%VITE_ANALYTICS_WEBSITE_ID%"></script>
   </body>
 </html>

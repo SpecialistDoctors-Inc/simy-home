@@ -224,6 +224,28 @@ resource "aws_cloudfront_function" "redirect" {
         };
       }
 
+      // Keep the alternate homepage preview under /newpage/.
+      if (uri === '/newpage') {
+        return {
+          statusCode: 301,
+          statusDescription: 'Moved Permanently',
+          headers: { location: { value: 'https://' + host + '/newpage/' } }
+        };
+      }
+
+      if (uri === '/newpage/index.html') {
+        return {
+          statusCode: 301,
+          statusDescription: 'Moved Permanently',
+          headers: { location: { value: 'https://' + host + '/newpage/' } }
+        };
+      }
+
+      if (uri === '/newpage/') {
+        request.uri = '/newpage/index.html';
+        return request;
+      }
+
       // Remove trailing slash (except root /)
       // e.g. /about/ -> /about.html
       if (uri !== '/' && uri.endsWith('/')) {
