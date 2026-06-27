@@ -546,15 +546,15 @@
         100% { transform: translateX(215%); }
       }
       .value-strip {
-        padding: 42px 0 46px;
+        padding: 54px 0 58px;
         background: #fff;
         border-bottom: 1px solid var(--line);
       }
       .value-strip-inner {
         display: grid;
-        grid-template-columns: 1fr;
-        gap: 20px;
-        align-items: start;
+        grid-template-columns: minmax(0, 0.86fr) minmax(420px, 1fr);
+        gap: 42px;
+        align-items: center;
       }
       .value-kicker {
         margin: 0 0 12px;
@@ -576,6 +576,123 @@
         color: var(--muted);
         font-size: 1.15rem;
         line-height: 1.65;
+      }
+      .meeting-flow {
+        display: grid;
+        grid-template-columns: 0.9fr 44px 1.18fr;
+        gap: 0;
+        align-items: center;
+      }
+      .flow-card {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+        box-shadow: 0 18px 46px rgba(0, 0, 0, 0.07);
+        overflow: hidden;
+      }
+      .flow-card.dark {
+        background: #07101f;
+        color: #fff;
+        border-color: #07101f;
+      }
+      .flow-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 13px 16px;
+        border-bottom: 1px solid var(--line);
+        font-size: 0.78rem;
+        font-weight: 740;
+      }
+      .flow-card.dark .flow-head {
+        border-bottom-color: rgba(255, 255, 255, 0.12);
+      }
+      .flow-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        color: var(--blue);
+        font-family: 'Geist Mono', monospace;
+        font-size: 0.68rem;
+        text-transform: uppercase;
+      }
+      .flow-pill::before {
+        content: '';
+        width: 7px;
+        height: 7px;
+        border-radius: 999px;
+        background: #5ee0a8;
+      }
+      .flow-body {
+        padding: 16px;
+      }
+      .meeting-line {
+        padding: 11px 0;
+        border-top: 1px solid #ecece6;
+      }
+      .meeting-line:first-child {
+        border-top: 0;
+        padding-top: 0;
+      }
+      .meeting-line span {
+        display: block;
+        color: var(--muted);
+        font-family: 'Geist Mono', monospace;
+        font-size: 0.66rem;
+        text-transform: uppercase;
+      }
+      .meeting-line strong {
+        display: block;
+        margin-top: 4px;
+        font-size: 0.88rem;
+        line-height: 1.4;
+      }
+      .flow-arrow {
+        position: relative;
+        height: 2px;
+        background: var(--blue);
+      }
+      .flow-arrow::after {
+        content: '';
+        position: absolute;
+        right: -1px;
+        top: 50%;
+        width: 10px;
+        height: 10px;
+        border-top: 2px solid var(--blue);
+        border-right: 2px solid var(--blue);
+        transform: translateY(-50%) rotate(45deg);
+      }
+      .approval-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+      .approval-item {
+        min-height: 94px;
+        padding: 13px;
+        border: 1px solid rgba(255, 255, 255, 0.13);
+        border-radius: 7px;
+        background: rgba(255, 255, 255, 0.055);
+      }
+      .approval-item span {
+        display: block;
+        color: #5ee0a8;
+        font-family: 'Geist Mono', monospace;
+        font-size: 0.62rem;
+        text-transform: uppercase;
+      }
+      .approval-item strong {
+        display: block;
+        margin-top: 7px;
+        font-size: 0.95rem;
+      }
+      .approval-item p {
+        margin-top: 6px;
+        color: rgba(255, 255, 255, 0.62);
+        font-size: 0.76rem;
+        line-height: 1.42;
       }
       .section {
         padding: 96px 0;
@@ -625,6 +742,15 @@
         border-radius: 8px;
         background: var(--panel);
       }
+      .sample-card::before {
+        content: '';
+        display: block;
+        width: 38px;
+        height: 5px;
+        margin-bottom: 2px;
+        border-radius: 999px;
+        background: var(--blue);
+      }
       .sample-card h3 {
         margin: 0;
         font-size: 1.08rem;
@@ -637,8 +763,10 @@
         line-height: 1.55;
       }
       .sample-output {
-        padding-top: 18px;
-        border-top: 1px solid var(--line);
+        padding: 14px;
+        border: 1px solid var(--line);
+        border-radius: 7px;
+        background: #fff;
         color: var(--ink);
         font-size: 0.9rem;
         line-height: 1.62;
@@ -650,6 +778,26 @@
         font-family: 'Geist Mono', monospace;
         font-size: 0.72rem;
         text-transform: uppercase;
+      }
+      .sample-actions {
+        display: flex;
+        gap: 8px;
+        margin-top: 12px;
+      }
+      .sample-action {
+        flex: 1;
+        padding: 8px 10px;
+        border-radius: 6px;
+        background: var(--ink);
+        color: #fff;
+        font-size: 0.72rem;
+        font-weight: 740;
+        text-align: center;
+      }
+      .sample-action.light {
+        border: 1px solid var(--line);
+        background: #fff;
+        color: var(--ink);
       }
       .trust-strip {
         display: grid;
@@ -1186,6 +1334,9 @@
         font-size: 0.86rem;
       }
       @media (max-width: 1180px) {
+        .value-strip-inner {
+          grid-template-columns: 1fr;
+        }
         .proof-grid {
           grid-template-columns: 1fr;
         }
@@ -1342,6 +1493,31 @@
         .value-strip-inner {
           grid-template-columns: 1fr;
           gap: 18px;
+        }
+        .meeting-flow {
+          grid-template-columns: 1fr;
+          gap: 14px;
+        }
+        .flow-arrow {
+          width: 2px;
+          height: 28px;
+          margin-left: 22px;
+        }
+        .flow-arrow::after {
+          right: auto;
+          left: 50%;
+          top: auto;
+          bottom: -1px;
+          transform: translateX(-50%) rotate(135deg);
+        }
+        .approval-grid {
+          grid-template-columns: 1fr;
+        }
+        .approval-item {
+          min-height: auto;
+        }
+        .approval-item p {
+          font-size: 0.76rem;
         }
         .value-strip h2 {
           font-size: clamp(1.5rem, 6.2vw, 1.78rem);
@@ -1580,8 +1756,59 @@
           <div>
             <p class="value-kicker" data-i18n="home.value.label">What starts next</p>
             <h2 data-i18n-html="home.value.h"><span class="copy-line">Before you reopen a tab,</span><span class="copy-line">the next move is already in motion.</span></h2>
+            <p data-i18n-html="home.value.p">Email, deck, CRM, and internal update work comes back as reviewable drafts. Before you reopen a tab, you can choose the next move.</p>
           </div>
-          <p data-i18n-html="home.value.p">Follow-up emails, proposal decks, research, analysis, stakeholder updates, and next actions are prepared from the meeting context. The browser does not have to be where your best hours disappear.</p>
+          <div class="meeting-flow" aria-label="Meeting to approval flow">
+            <div class="flow-card">
+              <div class="flow-head">
+                <span data-i18n="home.flow.meeting">Meeting context</span>
+                <span class="flow-pill" data-i18n="home.flow.captured">Captured</span>
+              </div>
+              <div class="flow-body">
+                <div class="meeting-line">
+                  <span data-i18n="home.flow.need.k">Need</span>
+                  <strong data-i18n="home.flow.need.v">Cost range and rollout path by Friday</strong>
+                </div>
+                <div class="meeting-line">
+                  <span data-i18n="home.flow.concern.k">Concern</span>
+                  <strong data-i18n="home.flow.concern.v">Customer is worried about operational load</strong>
+                </div>
+                <div class="meeting-line">
+                  <span data-i18n="home.flow.next.k">Next</span>
+                  <strong data-i18n="home.flow.next.v">Send proposal, update CRM, brief the team</strong>
+                </div>
+              </div>
+            </div>
+            <div class="flow-arrow" aria-hidden="true"></div>
+            <div class="flow-card dark">
+              <div class="flow-head">
+                <span data-i18n="home.flow.ready">Approval queue</span>
+                <span class="flow-pill" data-i18n="home.flow.waiting">Waiting</span>
+              </div>
+              <div class="flow-body approval-grid">
+                <div class="approval-item">
+                  <span data-i18n="home.flow.mail.k">Draft</span>
+                  <strong data-i18n="home.flow.mail.v">Follow-up email</strong>
+                  <p data-i18n="home.flow.mail.p">Tone and next step included.</p>
+                </div>
+                <div class="approval-item">
+                  <span data-i18n="home.flow.deck.k">Deck</span>
+                  <strong data-i18n="home.flow.deck.v">Proposal outline</strong>
+                  <p data-i18n="home.flow.deck.p">Story, risk, and ask ready.</p>
+                </div>
+                <div class="approval-item">
+                  <span data-i18n="home.flow.crm.k">CRM</span>
+                  <strong data-i18n="home.flow.crm.v">Customer memo</strong>
+                  <p data-i18n="home.flow.crm.p">Heat, concern, owner, deadline.</p>
+                </div>
+                <div class="approval-item">
+                  <span data-i18n="home.flow.share.k">Share</span>
+                  <strong data-i18n="home.flow.share.v">Team update</strong>
+                  <p data-i18n="home.flow.share.p">Only the people who need it.</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -1599,6 +1826,7 @@
               <div class="sample-output">
                 <strong data-i18n="home.samples.output">Sample output</strong>
                 <span data-i18n="home.samples.email.out">Thank you for today. I will send the cost range and rollout path by Friday, with two options for reducing operational load.</span>
+                <div class="sample-actions"><span class="sample-action" data-i18n="home.samples.approve">Approve</span><span class="sample-action light" data-i18n="home.samples.edit">Edit</span></div>
               </div>
             </article>
             <article class="sample-card">
@@ -1609,6 +1837,7 @@
               <div class="sample-output">
                 <strong data-i18n="home.samples.output">Sample output</strong>
                 <span data-i18n="home.samples.deck.out">1. Customer issue  2. Proposed path  3. Risks  4. Decision required  5. Next meeting agenda</span>
+                <div class="sample-actions"><span class="sample-action" data-i18n="home.samples.open">Open</span><span class="sample-action light" data-i18n="home.samples.edit">Edit</span></div>
               </div>
             </article>
             <article class="sample-card">
@@ -1619,6 +1848,7 @@
               <div class="sample-output">
                 <strong data-i18n="home.samples.output">Sample output</strong>
                 <span data-i18n="home.samples.crm.out">Temperature: high. Concern: migration from current operation. Next action: rough estimate by Friday.</span>
+                <div class="sample-actions"><span class="sample-action" data-i18n="home.samples.save">Save</span><span class="sample-action light" data-i18n="home.samples.edit">Edit</span></div>
               </div>
             </article>
             <article class="sample-card">
@@ -1629,6 +1859,7 @@
               <div class="sample-output">
                 <strong data-i18n="home.samples.output">Sample output</strong>
                 <span data-i18n="home.samples.team.out">Owner, deadline, customer concern, and required decision are routed to the right people.</span>
+                <div class="sample-actions"><span class="sample-action" data-i18n="home.samples.share">Share</span><span class="sample-action light" data-i18n="home.samples.edit">Edit</span></div>
               </div>
             </article>
           </div>
