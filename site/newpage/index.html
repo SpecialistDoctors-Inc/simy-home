@@ -241,14 +241,14 @@
       }
       .hero {
         position: relative;
-        min-height: 650px;
+        min-height: 700px;
         display: flex;
         align-items: center;
         padding: 118px 0 56px;
         overflow: hidden;
         background:
-          linear-gradient(90deg, rgba(6, 7, 10, 0.92) 0%, rgba(6, 7, 10, 0.76) 38%, rgba(6, 7, 10, 0.30) 68%, rgba(6, 7, 10, 0.08) 100%),
-          url('/assets/hero-team-purpose.jpg') center center / cover no-repeat;
+          linear-gradient(90deg, rgba(6, 7, 10, 0.94) 0%, rgba(6, 7, 10, 0.78) 39%, rgba(6, 7, 10, 0.36) 68%, rgba(6, 7, 10, 0.12) 100%),
+          url('/assets/hero-meeting-twin-work.jpg') center center / cover no-repeat;
         color: #fff;
       }
       .hero::after {
@@ -266,6 +266,9 @@
         z-index: 1;
         display: block;
         width: 100%;
+      }
+      .hero-copy {
+        max-width: 720px;
       }
       .eyebrow {
         display: inline-flex;
@@ -294,7 +297,7 @@
         text-wrap: pretty;
       }
       .hero h1 {
-        max-width: 900px;
+        max-width: 760px;
         margin: 0;
         font-size: clamp(3.3rem, 4.8vw, 4.7rem);
         font-weight: 760;
@@ -335,6 +338,59 @@
         margin-top: 14px;
         color: rgba(255, 255, 255, 0.62);
         font-size: 0.86rem;
+      }
+      .hero-work-panel {
+        position: absolute;
+        right: 4rem;
+        bottom: 18px;
+        width: min(360px, calc(100% - 2.5rem));
+        padding: 22px 24px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 8px;
+        background: rgba(8, 10, 14, 0.76);
+        box-shadow: 0 28px 70px rgba(0, 0, 0, 0.34);
+        -webkit-backdrop-filter: blur(18px);
+        backdrop-filter: blur(18px);
+      }
+      .hero-panel-kicker {
+        margin: 0 0 14px;
+        color: rgba(255, 255, 255, 0.66);
+        font-family: 'Geist Mono', monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0;
+        text-transform: uppercase;
+      }
+      .hero-work-item {
+        display: grid;
+        grid-template-columns: 10px 1fr;
+        gap: 14px;
+        padding: 16px 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.16);
+      }
+      .hero-work-dot {
+        width: 10px;
+        height: 10px;
+        margin-top: 7px;
+        border-radius: 999px;
+        background: #5ee0a8;
+      }
+      .hero-work-dot.blue {
+        background: var(--blue);
+      }
+      .hero-work-dot.amber {
+        background: #ffb020;
+      }
+      .hero-work-item h3 {
+        margin: 0;
+        color: #fff;
+        font-size: 1rem;
+        line-height: 1.24;
+      }
+      .hero-work-item p {
+        margin: 6px 0 0;
+        color: rgba(255, 255, 255, 0.68);
+        font-size: 0.88rem;
+        line-height: 1.48;
       }
       .value-strip {
         padding: 42px 0 46px;
@@ -694,12 +750,19 @@
           padding: 86px 0 28px;
           background:
             linear-gradient(180deg, rgba(6, 7, 10, 0.88) 0%, rgba(6, 7, 10, 0.72) 50%, rgba(6, 7, 10, 0.48) 100%),
-            url('/assets/hero-team-purpose.jpg') 64% center / cover no-repeat;
+            url('/assets/hero-meeting-twin-work.jpg') 63% center / cover no-repeat;
         }
         .hero h1 {
           max-width: 11.2em;
-          font-size: clamp(2.25rem, 10vw, 3.05rem);
+          font-size: clamp(2rem, 8.4vw, 2.55rem);
           line-height: 1.06;
+        }
+        .hero-copy,
+        .hero-sub,
+        .hero-note,
+        .hero-actions,
+        .hero-work-panel {
+          max-width: 330px;
         }
         .mobile-copy-break {
           display: block;
@@ -707,6 +770,27 @@
         .hero-sub {
           font-size: 0.98rem;
           line-height: 1.55;
+        }
+        .hero-work-panel {
+          position: static;
+          width: auto;
+          margin-top: 26px;
+          padding: 18px 20px;
+        }
+        .hero-work-item {
+          padding: 13px 0;
+        }
+        .hero-actions {
+          display: grid;
+          grid-template-columns: 1fr;
+          max-width: 330px;
+        }
+        .hero-actions a {
+          justify-content: center;
+          text-align: center;
+        }
+        .hero-note {
+          max-width: 100%;
         }
         .value-strip {
           padding: 38px 0 42px;
@@ -755,6 +839,11 @@
           grid-template-columns: 58px 1fr;
         }
       }
+      @media (max-width: 430px) {
+        .hero {
+          min-height: 760px;
+        }
+      }
     </style>
     <link rel="stylesheet" href="/responsive.css">
   </head>
@@ -795,7 +884,7 @@
     <main class="page">
       <section class="hero">
         <div class="container hero-inner">
-          <div>
+          <div class="hero-copy">
             <div class="eyebrow" data-i18n="home.eyebrow">The moment after the meeting</div>
             <h1 data-i18n-html="home.h1"><span class="hero-title-line">Meeting ends.</span><span class="hero-title-line">Your Twin starts</span><span class="hero-title-line">working.</span></h1>
             <p class="hero-sub" data-i18n="home.sub">The moment the meeting ends, SIMY starts the follow-ups, decks, research, analysis, updates, and next actions. The work keeps moving while you step into the next conversation, customer, team, or idea.</p>
@@ -804,6 +893,30 @@
               <a class="btn-secondary" href="#difference" data-i18n="home.cta.secondary">See what starts next</a>
             </div>
             <div class="hero-note" data-i18n="home.hero.note">Work that can happen on a computer keeps moving without keeping you there.</div>
+          </div>
+          <div class="hero-work-panel" aria-label="SIMY work in progress">
+            <p class="hero-panel-kicker" data-i18n="home.hero.queue">SIMY is already working</p>
+            <div class="hero-work-item">
+              <span class="hero-work-dot"></span>
+              <div>
+                <h3 data-i18n="home.hero.item1.h">Follow-up drafted</h3>
+                <p data-i18n="home.hero.item1.p">Context, tone, and next steps are included.</p>
+              </div>
+            </div>
+            <div class="hero-work-item">
+              <span class="hero-work-dot blue"></span>
+              <div>
+                <h3 data-i18n="home.hero.item2.h">Proposal updated</h3>
+                <p data-i18n="home.hero.item2.p">Story, risks, and asks are ready.</p>
+              </div>
+            </div>
+            <div class="hero-work-item">
+              <span class="hero-work-dot amber"></span>
+              <div>
+                <h3 data-i18n="home.hero.item3.h">Next actions routed</h3>
+                <p data-i18n="home.hero.item3.p">Each stakeholder gets the version they need.</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
