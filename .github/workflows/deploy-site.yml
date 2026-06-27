@@ -65,6 +65,21 @@ jobs:
             --exclude "lang/*" \
             --cache-control "public, max-age=86400"
 
+      - name: Publish directory-style HTML routes
+        run: |
+          aws s3api put-object \
+            --bucket "${{ secrets.SITE_S3_BUCKET }}" \
+            --key "newpage/" \
+            --body site/newpage/index.html \
+            --content-type "text/html" \
+            --cache-control "public, max-age=300"
+          aws s3api put-object \
+            --bucket "${{ secrets.SITE_S3_BUCKET }}" \
+            --key "newpage" \
+            --body site/newpage/index.html \
+            --content-type "text/html" \
+            --cache-control "public, max-age=300"
+
       - name: Update CloudFront Function
         if: github.ref == 'refs/heads/main' || (github.event_name == 'workflow_dispatch' && inputs.environment == 'prod')
         continue-on-error: true
