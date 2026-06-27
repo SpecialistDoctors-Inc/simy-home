@@ -775,6 +775,291 @@
         color: var(--muted);
         font-size: 0.94rem;
       }
+      .pricing-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 28px;
+        align-items: end;
+      }
+      .pricing-head-copy {
+        max-width: 720px;
+      }
+      .pricing-head-copy h2 {
+        max-width: 760px;
+      }
+      .pricing-head-copy p {
+        margin: 18px 0 0;
+        color: var(--muted);
+        font-size: 1.05rem;
+      }
+      .pricing-note {
+        margin-top: 10px;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+      .billing-toggle {
+        display: flex;
+        flex-shrink: 0;
+        padding: 4px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: #f1f1ec;
+      }
+      .toggle-btn {
+        min-width: 112px;
+        padding: 10px 14px;
+        border: 0;
+        border-radius: 8px;
+        background: transparent;
+        color: var(--muted);
+        font: inherit;
+        font-size: 0.82rem;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      .toggle-btn.active {
+        background: var(--ink);
+        color: #fff;
+      }
+      .pricing-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0;
+        margin-top: 34px;
+        align-items: start;
+      }
+      .pricing-card {
+        padding: 34px 30px;
+        border: 1px solid var(--line);
+        background: var(--panel);
+      }
+      .pricing-card:first-child {
+        border-right: 0;
+        border-radius: 8px 0 0 8px;
+      }
+      .pricing-card:last-child {
+        border-left: 0;
+        border-radius: 0 8px 8px 0;
+      }
+      .pricing-card.featured {
+        position: relative;
+        z-index: 1;
+        padding-bottom: 42px;
+        border: 2px solid #07101f;
+        border-radius: 8px;
+        background: #07101f;
+        color: #fff;
+      }
+      .popular-badge {
+        display: inline-block;
+        margin-bottom: 14px;
+        padding: 4px 10px;
+        border-radius: 5px;
+        background: rgba(0, 87, 255, 0.16);
+        color: #5d91ff;
+        font-family: 'Geist Mono', monospace;
+        font-size: 0.68rem;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+      .plan-name {
+        font-size: 1.2rem;
+        font-weight: 760;
+      }
+      .plan-subtitle {
+        min-height: 42px;
+        margin-top: 4px;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+      .pricing-card.featured .plan-subtitle {
+        color: rgba(255, 255, 255, 0.62);
+      }
+      .price-row {
+        display: flex;
+        align-items: baseline;
+        gap: 5px;
+        margin-top: 18px;
+      }
+      .price-amount {
+        font-size: 3rem;
+        font-weight: 800;
+        line-height: 1;
+      }
+      .price-unit {
+        color: var(--muted);
+        font-size: 0.85rem;
+      }
+      .pricing-card.featured .price-unit {
+        color: rgba(255, 255, 255, 0.58);
+      }
+      .token-dropdown-wrap {
+        position: relative;
+        margin: 18px 0 22px;
+      }
+      .token-dropdown-btn {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 12px 14px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #f7f7f3;
+        color: var(--ink);
+        font: inherit;
+        font-family: 'Geist Mono', monospace;
+        font-size: 0.82rem;
+        cursor: pointer;
+      }
+      .pricing-card.featured .token-dropdown-btn {
+        border-color: rgba(255, 255, 255, 0.18);
+        background: rgba(255, 255, 255, 0.06);
+        color: #fff;
+      }
+      .token-dropdown-chevron {
+        width: 16px;
+        height: 16px;
+        flex: 0 0 auto;
+        transition: transform 0.18s ease;
+      }
+      .token-dropdown-btn.open .token-dropdown-chevron {
+        transform: rotate(180deg);
+      }
+      .token-dropdown-list {
+        display: none;
+        position: absolute;
+        top: calc(100% - 1px);
+        left: 0;
+        right: 0;
+        z-index: 8;
+        max-height: 250px;
+        overflow-y: auto;
+        border: 1px solid var(--blue);
+        border-radius: 0 0 8px 8px;
+        background: #fff;
+        box-shadow: 0 14px 34px rgba(0, 0, 0, 0.1);
+      }
+      .token-dropdown-list.open {
+        display: block;
+      }
+      .pricing-card.featured .token-dropdown-list {
+        background: #121820;
+      }
+      .token-dropdown-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        padding: 11px 14px;
+        color: var(--ink);
+        font-family: 'Geist Mono', monospace;
+        font-size: 0.78rem;
+        cursor: pointer;
+      }
+      .token-dropdown-item:hover {
+        background: #f2f2ed;
+      }
+      .pricing-card.featured .token-dropdown-item {
+        color: #fff;
+      }
+      .pricing-card.featured .token-dropdown-item:hover {
+        background: rgba(255, 255, 255, 0.08);
+      }
+      .token-dropdown-item.active {
+        color: var(--blue);
+        font-weight: 700;
+      }
+      .current-label {
+        color: var(--muted);
+        font-family: 'Geist', sans-serif;
+        font-size: 0.7rem;
+        font-weight: 500;
+      }
+      .plan-cta {
+        display: block;
+        width: 100%;
+        padding: 13px 14px;
+        border-radius: 8px;
+        background: var(--ink);
+        color: #fff;
+        font-size: 0.92rem;
+        font-weight: 740;
+        text-align: center;
+        text-decoration: none;
+      }
+      .pricing-card.featured .plan-cta {
+        background: var(--blue);
+      }
+      .feature-list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin: 26px 0 0;
+        padding: 0;
+        list-style: none;
+      }
+      .feature-list li {
+        display: flex;
+        gap: 9px;
+        color: var(--ink);
+        font-size: 0.88rem;
+      }
+      .feature-list li::before {
+        content: '+';
+        color: var(--blue);
+        font-weight: 800;
+      }
+      .pricing-card.featured .feature-list li {
+        color: rgba(255, 255, 255, 0.76);
+      }
+      .task-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 18px;
+        padding-top: 14px;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 0.82rem;
+      }
+      .pricing-card.featured .task-row {
+        border-top-color: rgba(255, 255, 255, 0.14);
+        color: rgba(255, 255, 255, 0.58);
+      }
+      .task-icon {
+        width: 16px;
+        height: 16px;
+        opacity: 0.55;
+      }
+      .enterprise-section {
+        margin-top: 24px;
+        padding: 30px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+        text-align: center;
+      }
+      .enterprise-section h3 {
+        margin: 0;
+        font-size: 1.3rem;
+      }
+      .enterprise-section p {
+        max-width: 760px;
+        margin: 10px auto 0;
+        color: var(--muted);
+      }
+      .enterprise-cta {
+        display: inline-flex;
+        margin-top: 18px;
+        padding: 12px 18px;
+        border-radius: 8px;
+        background: var(--ink);
+        color: #fff;
+        font-weight: 740;
+        text-decoration: none;
+      }
       .final-cta {
         padding: 96px 0 112px;
         background: #07101f;
@@ -1037,8 +1322,36 @@
         .work-grid,
         .loop,
         .persona-grid,
+        .pricing-grid,
         .footer-grid {
           grid-template-columns: 1fr;
+        }
+        .pricing-head {
+          display: block;
+        }
+        .billing-toggle {
+          width: min(100%, 330px);
+          margin-top: 22px;
+        }
+        .toggle-btn {
+          flex: 1;
+          min-width: 0;
+        }
+        .pricing-grid {
+          gap: 16px;
+        }
+        .pricing-card,
+        .pricing-card:first-child,
+        .pricing-card:last-child,
+        .pricing-card.featured {
+          border: 1px solid var(--line);
+          border-radius: 8px;
+        }
+        .pricing-card.featured {
+          border-color: #07101f;
+        }
+        .plan-subtitle {
+          min-height: auto;
         }
         .concept-card,
         .work-card,
@@ -1373,6 +1686,153 @@
         </div>
       </section>
 
+      <section class="section" id="pricing">
+        <div class="container">
+          <div class="pricing-head">
+            <div class="pricing-head-copy">
+              <p class="section-label" data-i18n="nav.pricing">Pricing</p>
+              <h2 data-i18n="pricing.title">Simple, transparent pricing.</h2>
+              <p data-i18n="pricing.subtitle">Seat-based plans with SIMY token allocation. Scale as your team grows.</p>
+              <div class="pricing-note" data-i18n="pricing.webNote">Create your SIMY account on the web. Subscription checkout is securely handled by Stripe.</div>
+            </div>
+            <div class="billing-toggle" aria-label="Billing interval">
+              <button class="toggle-btn" type="button" data-billing="monthly" onclick="setBilling('monthly')" data-i18n="pricing.monthly">Monthly</button>
+              <button class="toggle-btn active" type="button" data-billing="yearly" onclick="setBilling('yearly')">
+                <span data-i18n="pricing.annual">Annual</span>
+                <span data-i18n="pricing.annual.save">· Save 17%</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="pricing-grid">
+            <div class="pricing-card" data-plan="starter">
+              <div class="plan-name" data-i18n="pricing.starter">Starter</div>
+              <div class="plan-subtitle" data-i18n="pricing.starter.sub">For individuals getting started</div>
+              <div class="price-row">
+                <span class="price-amount" id="price-starter">$17</span>
+                <span class="price-unit" data-i18n="pricing.seat">/ seat / mo</span>
+              </div>
+              <div class="token-dropdown-wrap">
+                <button class="token-dropdown-btn" type="button" onclick="toggleDropdown(this)">
+                  <span class="token-dropdown-label">80M SIMY tokens / month</span>
+                  <svg class="token-dropdown-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6l4 4 4-4"/></svg>
+                </button>
+                <div class="token-dropdown-list" data-plan="starter">
+                  <div class="token-dropdown-item active" data-tokens="80" data-price-m="20" data-price-a="17" onclick="selectToken(this)"><span>80M tokens / month</span><span class="current-label">Current</span></div>
+                  <div class="token-dropdown-item" data-tokens="120" data-price-m="28" data-price-a="23" onclick="selectToken(this)">120M tokens / month</div>
+                  <div class="token-dropdown-item" data-tokens="160" data-price-m="35" data-price-a="29" onclick="selectToken(this)">160M tokens / month</div>
+                  <div class="token-dropdown-item" data-tokens="240" data-price-m="50" data-price-a="42" onclick="selectToken(this)">240M tokens / month</div>
+                </div>
+              </div>
+              <a href="https://app.simy.one/signup?plan=starter&interval=yearly" class="plan-cta" data-i18n="pricing.cta">Choose plan</a>
+              <ul class="feature-list">
+                <li><span id="feat-tokens-starter" data-i18n="pricing.f.starter.1">80,000,000 SIMY tokens / month</span></li>
+                <li data-i18n="pricing.f.starter.2">Up to 5 connected channels</li>
+                <li data-i18n="pricing.f.starter.3">Action Database (up to 1,000 tasks)</li>
+                <li data-i18n="pricing.f.starter.4">Standard AI agent execution</li>
+                <li data-i18n="pricing.f.starter.5">Email &amp; Slack delivery</li>
+                <li data-i18n="pricing.f.starter.6">Early access to beta features</li>
+              </ul>
+              <div class="task-row">
+                <svg class="task-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 12.5a5.5 5.5 0 110-11 5.5 5.5 0 010 11zM8 4v4l3 1.5-.5 1L7 9V4h1z"/></svg>
+                <span data-i18n="pricing.f.starter.7">20 concurrent tasks</span>
+              </div>
+              <div class="task-row" style="border-top:none;margin-top:8px;padding-top:0">
+                <svg class="task-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M12.5 2H11V1h-1v1H6V1H5v1H3.5A1.5 1.5 0 002 3.5v9A1.5 1.5 0 003.5 14h9a1.5 1.5 0 001.5-1.5v-9A1.5 1.5 0 0012.5 2zm0 10.5h-9V6h9v6.5z"/></svg>
+                <span data-i18n="pricing.f.starter.8">20 scheduled tasks</span>
+              </div>
+            </div>
+
+            <div class="pricing-card featured" data-plan="pro">
+              <div class="popular-badge" data-i18n="pricing.popular">Most Popular</div>
+              <div class="plan-name" data-i18n="pricing.pro">Pro</div>
+              <div class="plan-subtitle" data-i18n="pricing.pro.sub">For professionals and growing teams</div>
+              <div class="price-row">
+                <span class="price-amount" id="price-pro">$33</span>
+                <span class="price-unit" data-i18n="pricing.seat">/ seat / mo</span>
+              </div>
+              <div class="token-dropdown-wrap">
+                <button class="token-dropdown-btn" type="button" onclick="toggleDropdown(this)">
+                  <span class="token-dropdown-label">160M SIMY tokens / month</span>
+                  <svg class="token-dropdown-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6l4 4 4-4"/></svg>
+                </button>
+                <div class="token-dropdown-list" data-plan="pro">
+                  <div class="token-dropdown-item active" data-tokens="160" data-price-m="40" data-price-a="33" onclick="selectToken(this)"><span>160M tokens / month</span><span class="current-label">Current</span></div>
+                  <div class="token-dropdown-item" data-tokens="240" data-price-m="55" data-price-a="46" onclick="selectToken(this)">240M tokens / month</div>
+                  <div class="token-dropdown-item" data-tokens="320" data-price-m="70" data-price-a="58" onclick="selectToken(this)">320M tokens / month</div>
+                  <div class="token-dropdown-item" data-tokens="480" data-price-m="95" data-price-a="79" onclick="selectToken(this)">480M tokens / month</div>
+                  <div class="token-dropdown-item" data-tokens="640" data-price-m="120" data-price-a="100" onclick="selectToken(this)">640M tokens / month</div>
+                </div>
+              </div>
+              <a href="https://app.simy.one/signup?plan=pro&interval=yearly" class="plan-cta" data-i18n="pricing.cta">Choose plan</a>
+              <ul class="feature-list">
+                <li><span id="feat-tokens-pro" data-i18n="pricing.f.pro.1">160,000,000 SIMY tokens / month</span></li>
+                <li data-i18n="pricing.f.pro.2">Unlimited connected channels</li>
+                <li data-i18n="pricing.f.pro.3">Action Database (unlimited tasks)</li>
+                <li data-i18n="pricing.f.pro.4">Priority AI agent execution</li>
+                <li data-i18n="pricing.f.pro.5">All delivery integrations</li>
+                <li data-i18n="pricing.f.pro.6">HVP Dashboard</li>
+                <li data-i18n="pricing.f.pro.7">Early access to beta features</li>
+              </ul>
+              <div class="task-row">
+                <svg class="task-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 12.5a5.5 5.5 0 110-11 5.5 5.5 0 010 11zM8 4v4l3 1.5-.5 1L7 9V4h1z"/></svg>
+                <span data-i18n="pricing.f.pro.8">50 concurrent tasks</span>
+              </div>
+              <div class="task-row" style="border-top:none;margin-top:8px;padding-top:0">
+                <svg class="task-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M12.5 2H11V1h-1v1H6V1H5v1H3.5A1.5 1.5 0 002 3.5v9A1.5 1.5 0 003.5 14h9a1.5 1.5 0 001.5-1.5v-9A1.5 1.5 0 0012.5 2zm0 10.5h-9V6h9v6.5z"/></svg>
+                <span data-i18n="pricing.f.pro.9">50 scheduled tasks</span>
+              </div>
+            </div>
+
+            <div class="pricing-card" data-plan="scale">
+              <div class="plan-name" data-i18n="pricing.scale">Scale</div>
+              <div class="plan-subtitle" data-i18n="pricing.scale.sub">For high-output teams</div>
+              <div class="price-row">
+                <span class="price-amount" id="price-scale">$83</span>
+                <span class="price-unit" data-i18n="pricing.seat">/ seat / mo</span>
+              </div>
+              <div class="token-dropdown-wrap">
+                <button class="token-dropdown-btn" type="button" onclick="toggleDropdown(this)">
+                  <span class="token-dropdown-label">400M SIMY tokens / month</span>
+                  <svg class="token-dropdown-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6l4 4 4-4"/></svg>
+                </button>
+                <div class="token-dropdown-list" data-plan="scale">
+                  <div class="token-dropdown-item active" data-tokens="400" data-price-m="100" data-price-a="83" onclick="selectToken(this)"><span>400M tokens / month</span><span class="current-label">Current</span></div>
+                  <div class="token-dropdown-item" data-tokens="600" data-price-m="140" data-price-a="116" onclick="selectToken(this)">600M tokens / month</div>
+                  <div class="token-dropdown-item" data-tokens="800" data-price-m="180" data-price-a="149" onclick="selectToken(this)">800M tokens / month</div>
+                  <div class="token-dropdown-item" data-tokens="1200" data-price-m="250" data-price-a="208" onclick="selectToken(this)">1,200M tokens / month</div>
+                  <div class="token-dropdown-item" data-tokens="2000" data-price-m="380" data-price-a="315" onclick="selectToken(this)">2,000M tokens / month</div>
+                </div>
+              </div>
+              <a href="https://app.simy.one/signup?plan=scale&interval=yearly" class="plan-cta" data-i18n="pricing.cta">Choose plan</a>
+              <ul class="feature-list">
+                <li><span id="feat-tokens-scale" data-i18n="pricing.f.scale.1">400,000,000 SIMY tokens / month</span></li>
+                <li data-i18n="pricing.f.scale.2">Unlimited connected channels</li>
+                <li data-i18n="pricing.f.scale.3">Action Database (unlimited tasks)</li>
+                <li data-i18n="pricing.f.scale.4">Priority AI agent execution</li>
+                <li data-i18n="pricing.f.scale.5">All delivery integrations</li>
+                <li data-i18n="pricing.f.scale.6">HVP Dashboard + Digital Twin</li>
+                <li data-i18n="pricing.f.scale.7">Advanced analytics</li>
+              </ul>
+              <div class="task-row">
+                <svg class="task-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 12.5a5.5 5.5 0 110-11 5.5 5.5 0 010 11zM8 4v4l3 1.5-.5 1L7 9V4h1z"/></svg>
+                <span data-i18n="pricing.f.scale.8">100 concurrent tasks</span>
+              </div>
+              <div class="task-row" style="border-top:none;margin-top:8px;padding-top:0">
+                <svg class="task-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M12.5 2H11V1h-1v1H6V1H5v1H3.5A1.5 1.5 0 002 3.5v9A1.5 1.5 0 003.5 14h9a1.5 1.5 0 001.5-1.5v-9A1.5 1.5 0 0012.5 2zm0 10.5h-9V6h9v6.5z"/></svg>
+                <span data-i18n="pricing.f.scale.9">100 scheduled tasks</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="enterprise-section">
+            <h3 data-i18n="pricing.enterprise">Enterprise</h3>
+            <p data-i18n-html="pricing.enterprise.desc">Custom token allocation, dedicated support, SSO, and SLA guarantees.<br>Built for organizations that need full control.</p>
+            <a href="mailto:sales@simy.one" class="enterprise-cta" data-i18n="pricing.enterprise.cta">Contact Sales</a>
+          </div>
+        </div>
+      </section>
+
       <section class="final-cta">
         <div class="container">
           <h2 data-i18n-html="home.final.h"><span class="copy-line">Meeting ends.</span><span class="copy-line">Your next move is ready.</span></h2>
@@ -1427,6 +1887,106 @@
       });
     </script>
     <script src="/i18n.js"></script>
+    <script>
+      var currentBilling = 'yearly';
+
+      function currentPricingLang() {
+        return document.documentElement.lang === 'ja' ? 'ja' : 'en';
+      }
+
+      function formatTokenLabel(tokens) {
+        var value = parseInt(tokens, 10);
+        if (currentPricingLang() === 'ja') return value + 'M SIMYトークン / 月';
+        return value.toLocaleString('en-US') + 'M SIMY tokens / month';
+      }
+
+      function formatFeatureTokens(tokens) {
+        var value = parseInt(tokens, 10) * 1000000;
+        if (currentPricingLang() === 'ja') return value.toLocaleString('ja-JP') + ' SIMYトークン / 月';
+        return value.toLocaleString('en-US') + ' SIMY tokens / month';
+      }
+
+      function syncTokenLabels() {
+        document.querySelectorAll('.pricing-card').forEach(function(card) {
+          var activeItem = card.querySelector('.token-dropdown-item.active');
+          var label = card.querySelector('.token-dropdown-label');
+          if (activeItem && label) label.textContent = formatTokenLabel(activeItem.getAttribute('data-tokens'));
+        });
+      }
+
+      function setBilling(type) {
+        currentBilling = type;
+        document.querySelectorAll('.toggle-btn').forEach(function(btn) {
+          btn.classList.toggle('active', btn.getAttribute('data-billing') === type);
+        });
+        document.querySelectorAll('.pricing-card').forEach(function(card) {
+          var activeItem = card.querySelector('.token-dropdown-item.active');
+          if (activeItem) updatePrice(card, activeItem);
+        });
+      }
+
+      function toggleDropdown(btn) {
+        var list = btn.nextElementSibling;
+        var wasOpen = btn.classList.contains('open');
+        document.querySelectorAll('.token-dropdown-btn').forEach(function(openBtn) {
+          openBtn.classList.remove('open');
+        });
+        document.querySelectorAll('.token-dropdown-list').forEach(function(openList) {
+          openList.classList.remove('open');
+        });
+        if (!wasOpen) {
+          btn.classList.add('open');
+          list.classList.add('open');
+        }
+      }
+
+      function selectToken(item) {
+        var list = item.closest('.token-dropdown-list');
+        var card = item.closest('.pricing-card');
+        list.querySelectorAll('.token-dropdown-item').forEach(function(option) {
+          option.classList.remove('active');
+          var current = option.querySelector('.current-label');
+          if (current) current.remove();
+        });
+        item.classList.add('active');
+        var currentLabel = document.createElement('span');
+        currentLabel.className = 'current-label';
+        currentLabel.textContent = 'Current';
+        if (!item.querySelector('.current-label')) item.appendChild(currentLabel);
+        var btn = list.previousElementSibling;
+        btn.classList.remove('open');
+        list.classList.remove('open');
+        btn.querySelector('.token-dropdown-label').textContent = formatTokenLabel(item.getAttribute('data-tokens'));
+        updatePrice(card, item);
+      }
+
+      function updatePrice(card, item) {
+        var tokens = parseInt(item.getAttribute('data-tokens'), 10);
+        var priceM = parseInt(item.getAttribute('data-price-m'), 10);
+        var priceA = parseInt(item.getAttribute('data-price-a'), 10);
+        var price = currentBilling === 'monthly' ? priceM : priceA;
+        var plan = card.getAttribute('data-plan');
+        var priceEl = document.getElementById('price-' + plan);
+        if (priceEl) priceEl.textContent = '$' + price;
+        var cta = card.querySelector('.plan-cta');
+        if (cta) cta.href = 'https://app.simy.one/signup?plan=' + plan + '&interval=' + currentBilling;
+        var featEl = document.getElementById('feat-tokens-' + plan);
+        if (featEl) featEl.textContent = formatFeatureTokens(tokens);
+      }
+
+      document.addEventListener('click', function(event) {
+        if (!event.target.closest('.token-dropdown-wrap')) {
+          document.querySelectorAll('.token-dropdown-btn').forEach(function(btn) { btn.classList.remove('open'); });
+          document.querySelectorAll('.token-dropdown-list').forEach(function(list) { list.classList.remove('open'); });
+        }
+      });
+
+      syncTokenLabels();
+      new MutationObserver(syncTokenLabels).observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['lang']
+      });
+    </script>
     <script>
       (function() {
         var taskSets = {
