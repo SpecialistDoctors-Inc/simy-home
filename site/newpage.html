@@ -494,6 +494,13 @@
         font-size: 0.88rem;
         line-height: 1.48;
       }
+      .hero-work-copy {
+        transition: opacity 0.22s ease, transform 0.22s ease;
+      }
+      .hero-work-copy.is-swapping {
+        opacity: 0;
+        transform: translateY(5px);
+      }
       .hero-work-progress {
         position: relative;
         height: 3px;
@@ -1011,6 +1018,9 @@
         .hero-work-progress span {
           animation: none !important;
         }
+        .hero-work-copy {
+          transition: none !important;
+        }
         .hero-bg {
           opacity: 0;
           transform: none;
@@ -1084,25 +1094,25 @@
             </div>
             <div class="hero-work-item" style="--delay: 0s; --active: #5ee0a8;">
               <span class="hero-work-dot"></span>
-              <div>
-                <h3 data-i18n="home.hero.item1.h">Follow-up drafted</h3>
-                <p data-i18n="home.hero.item1.p">Context, tone, and next steps are included.</p>
+              <div class="hero-work-copy" data-hero-work-copy>
+                <h3 data-hero-work-title>Follow-up drafted</h3>
+                <p data-hero-work-body>Context, tone, and next steps are included.</p>
                 <div class="hero-work-progress"><span></span></div>
               </div>
             </div>
             <div class="hero-work-item" style="--delay: 1.2s; --active: var(--blue);">
               <span class="hero-work-dot blue"></span>
-              <div>
-                <h3 data-i18n="home.hero.item2.h">Proposal updated</h3>
-                <p data-i18n="home.hero.item2.p">Story, risks, and asks are ready.</p>
+              <div class="hero-work-copy" data-hero-work-copy>
+                <h3 data-hero-work-title>Proposal updated</h3>
+                <p data-hero-work-body>Story, risks, and asks are ready.</p>
                 <div class="hero-work-progress"><span></span></div>
               </div>
             </div>
             <div class="hero-work-item" style="--delay: 2.4s; --active: #ffb020;">
               <span class="hero-work-dot amber"></span>
-              <div>
-                <h3 data-i18n="home.hero.item3.h">Next actions routed</h3>
-                <p data-i18n="home.hero.item3.p">Each stakeholder gets the version they need.</p>
+              <div class="hero-work-copy" data-hero-work-copy>
+                <h3 data-hero-work-title>Next actions routed</h3>
+                <p data-hero-work-body>Each stakeholder gets the version they need.</p>
                 <div class="hero-work-progress"><span></span></div>
               </div>
             </div>
@@ -1331,5 +1341,151 @@
       });
     </script>
     <script src="/i18n.js"></script>
+    <script>
+      (function() {
+        var taskSets = {
+          en: [
+            ['Follow-up drafted', 'Context, tone, and next steps are included.'],
+            ['Proposal updated', 'Story, risks, and asks are ready.'],
+            ['Next actions routed', 'Each stakeholder gets the version they need.'],
+            ['Customer objections summarized', 'Concerns, intent, and suggested replies are ready.'],
+            ['Meeting brief prepared', 'Decisions, open questions, and owners are captured.'],
+            ['Stakeholder update written', 'The right summary is shaped for each audience.'],
+            ['Research pulled together', 'Sources, signals, and implications are organized.'],
+            ['CRM notes updated', 'Deal context, next steps, and risks are logged.'],
+            ['Executive summary created', 'The signal is compressed into a clear brief.'],
+            ['Action owners assigned', 'Tasks are grouped by owner, timing, and urgency.'],
+            ['Risk memo drafted', 'Tradeoffs, blockers, and watch points are surfaced.'],
+            ['Board note assembled', 'Progress, asks, and decisions are made readable.'],
+            ['Sales email prepared', 'The message follows the meeting tone and intent.'],
+            ['Partner recap sent', 'Shared context is converted into a useful update.'],
+            ['Hiring feedback organized', 'Signals, concerns, and follow-ups are structured.'],
+            ['Investor reply drafted', 'Questions, metrics, and next steps are addressed.'],
+            ['Product insight extracted', 'Requests, friction, and opportunities are grouped.'],
+            ['Decision log updated', 'What changed and why is preserved for the team.'],
+            ['Agenda for next meeting built', 'Open loops become a focused next conversation.'],
+            ['Competitive notes synthesized', 'Market signals are turned into a sharp summary.'],
+            ['Customer success plan updated', 'Health, risks, and next value moments are mapped.'],
+            ['Internal memo prepared', 'The team gets the context without another meeting.'],
+            ['Data request queued', 'Needed numbers, sources, and owners are identified.'],
+            ['Legal points flagged', 'Review items and business context are separated.'],
+            ['Launch checklist refreshed', 'Dependencies, owners, and timing are aligned.'],
+            ['Budget notes organized', 'Numbers, assumptions, and decisions are clarified.'],
+            ['Workshop output synthesized', 'Ideas become themes, actions, and owners.'],
+            ['Renewal path mapped', 'Value proof, risks, and follow-up timing are ready.'],
+            ['Press angle drafted', 'The narrative, proof points, and audience are shaped.'],
+            ['Team handoff prepared', 'The next person gets the context they need.']
+          ],
+          ja: [
+            ['フォロー下書き完了', '文脈、温度感、次アクションまで反映。'],
+            ['提案資料を更新', 'ストーリー、リスク、依頼事項まで反映。'],
+            ['次アクションを共有', '相手ごとに必要な粒度で届ける。'],
+            ['顧客の懸念を整理', '反論、温度感、返答案までまとめる。'],
+            ['会議ブリーフを作成', '決定事項、未決事項、担当者を整理。'],
+            ['関係者向け更新を作成', '相手に合わせた要約へ整える。'],
+            ['調査結果を統合', '情報源、示唆、判断材料を整理。'],
+            ['CRMメモを更新', '商談文脈、次ステップ、リスクを記録。'],
+            ['エグゼクティブ要約を作成', '重要な論点だけを短くまとめる。'],
+            ['担当者を割り当て', '誰が、いつ、何をやるかを整理。'],
+            ['リスクメモを作成', '論点、障害、注意点を先に出す。'],
+            ['取締役会メモを準備', '進捗、依頼、判断事項を読みやすくする。'],
+            ['営業メールを準備', '会議の温度感に合わせて下書きする。'],
+            ['パートナー向け共有を作成', '共通理解を次の行動に変える。'],
+            ['採用フィードバックを整理', '評価、懸念、次確認を構造化。'],
+            ['投資家返信を下書き', '質問、数値、次ステップに答える。'],
+            ['プロダクト示唆を抽出', '要望、摩擦、機会を分類する。'],
+            ['意思決定ログを更新', '何をなぜ決めたかを残す。'],
+            ['次回アジェンダを作成', '未完了の論点を次の会話へつなぐ。'],
+            ['競合メモを要約', '市場シグナルを判断材料に変える。'],
+            ['CSプランを更新', '顧客状態、リスク、次の価値を整理。'],
+            ['社内メモを準備', '追加会議なしでチームに文脈を渡す。'],
+            ['データ依頼を整理', '必要な数値、情報源、担当者を明確にする。'],
+            ['法務論点を抽出', '確認事項と事業文脈を分けて整理。'],
+            ['ローンチリストを更新', '依存関係、担当、期限を揃える。'],
+            ['予算メモを整理', '数字、前提、判断事項を明確にする。'],
+            ['ワークショップ結果を統合', 'アイデアをテーマ、行動、担当に変える。'],
+            ['更新提案の道筋を整理', '価値証明、リスク、次接点を準備。'],
+            ['PR観点を下書き', '物語、根拠、届ける相手を整える。'],
+            ['チーム引き継ぎを準備', '次の人が動ける文脈を渡す。']
+          ]
+        };
+
+        function shuffle(items) {
+          var copy = items.slice();
+          for (var i = copy.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            var temp = copy[i];
+            copy[i] = copy[j];
+            copy[j] = temp;
+          }
+          return copy;
+        }
+
+        function startHeroWorkRotation() {
+          var rows = Array.prototype.slice.call(document.querySelectorAll('[data-hero-work-copy]'));
+          if (rows.length === 0) return;
+          var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          var currentLang = document.documentElement.lang === 'ja' ? 'ja' : 'en';
+          var queue = shuffle(taskSets[currentLang]);
+          var index = 0;
+          var rowIndex = 0;
+
+          function nextTask() {
+            if (index >= queue.length) {
+              queue = shuffle(taskSets[currentLang]);
+              index = 0;
+            }
+            return queue[index++];
+          }
+
+          function setRow(row, task) {
+            var title = row.querySelector('[data-hero-work-title]');
+            var body = row.querySelector('[data-hero-work-body]');
+            if (!title || !body) return;
+            title.textContent = task[0];
+            body.textContent = task[1];
+          }
+
+          function renderInitial() {
+            currentLang = document.documentElement.lang === 'ja' ? 'ja' : 'en';
+            queue = shuffle(taskSets[currentLang]);
+            index = 0;
+            rowIndex = 0;
+            rows.forEach(function(row) {
+              setRow(row, nextTask());
+            });
+          }
+
+          function rotateOne() {
+            var row = rows[rowIndex % rows.length];
+            var task = nextTask();
+            rowIndex += 1;
+            if (reduceMotion) {
+              setRow(row, task);
+              return;
+            }
+            row.classList.add('is-swapping');
+            window.setTimeout(function() {
+              setRow(row, task);
+              row.classList.remove('is-swapping');
+            }, 220);
+          }
+
+          renderInitial();
+          window.setInterval(rotateOne, 2400);
+
+          new MutationObserver(function() {
+            var nextLang = document.documentElement.lang === 'ja' ? 'ja' : 'en';
+            if (nextLang !== currentLang) renderInitial();
+          }).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', startHeroWorkRotation);
+        } else {
+          startHeroWorkRotation();
+        }
+      })();
+    </script>
   </body>
 </html>
