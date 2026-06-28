@@ -430,6 +430,7 @@
         font-size: 0.72rem;
         letter-spacing: 0;
         text-transform: none;
+        font-variant-numeric: tabular-nums;
       }
       .hero-live-badge {
         display: inline-flex;
@@ -1951,7 +1952,7 @@
           </div>
           <div class="hero-work-panel" aria-label="SIMY work in progress">
             <div class="hero-panel-head">
-              <p class="hero-panel-kicker" data-i18n="home.hero.queue">Your Digital Twin is already carrying it</p>
+              <p class="hero-panel-kicker" aria-label="Elapsed time on page"><span data-hero-clock>T+ 000,000 ms</span></p>
               <span class="hero-live-badge" data-i18n="home.hero.live">Live</span>
             </div>
             <div class="hero-work-viewport">
@@ -2588,6 +2589,21 @@
           return copy;
         }
 
+        function startHeroClock() {
+          var clock = document.querySelector('[data-hero-clock]');
+          if (!clock) return;
+          var startedAt = Date.now();
+          var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+          function render() {
+            var elapsed = Date.now() - startedAt;
+            clock.textContent = 'T+ ' + String(elapsed).padStart(9, '0') + ' ms';
+          }
+
+          render();
+          window.setInterval(render, reduceMotion ? 1000 : 37);
+        }
+
         function startHeroWorkRotation() {
           var viewport = document.querySelector('.hero-work-viewport');
           var list = document.querySelector('.hero-work-list');
@@ -2719,8 +2735,12 @@
         }
 
         if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', startHeroWorkRotation);
+          document.addEventListener('DOMContentLoaded', function() {
+            startHeroClock();
+            startHeroWorkRotation();
+          });
         } else {
+          startHeroClock();
           startHeroWorkRotation();
         }
       })();
