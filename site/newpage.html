@@ -464,6 +464,17 @@
         border-top: 1px solid rgba(255, 255, 255, 0.16);
         animation: itemFocus 9s ease-in-out infinite;
         animation-delay: var(--delay, 0s);
+        transition: transform 0.46s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.46s ease;
+      }
+      .hero-work-panel.is-flowing .hero-work-item {
+        transform: translateY(calc(-100% - 1px));
+      }
+      .hero-work-panel.is-flowing .hero-work-item.is-leaving {
+        opacity: 0;
+      }
+      .hero-work-item.is-entering {
+        animation: itemFocus 9s ease-in-out infinite, itemEnter 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+        animation-delay: var(--delay, 0s), 0s;
       }
       .hero-work-item::after {
         content: '';
@@ -550,6 +561,10 @@
       @keyframes itemFocus {
         0%, 100% { background: transparent; }
         10%, 28% { background: rgba(255, 255, 255, 0.035); }
+      }
+      @keyframes itemEnter {
+        0% { opacity: 0; transform: translateY(28px); }
+        100% { opacity: 1; transform: translateY(0); }
       }
       @keyframes railFocus {
         0%, 100% { opacity: 0; }
@@ -2605,13 +2620,16 @@
         }
 
         function startHeroWorkRotation() {
+          var panel = document.querySelector('.hero-work-panel');
+          var items = Array.prototype.slice.call(document.querySelectorAll('.hero-work-item'));
           var rows = Array.prototype.slice.call(document.querySelectorAll('[data-hero-work-copy]'));
-          if (rows.length === 0) return;
+          if (!panel || rows.length === 0 || items.length === 0) return;
           var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
           var currentLang = document.documentElement.lang === 'ja' ? 'ja' : 'en';
           var queue = shuffle(taskSets[currentLang]);
           var index = 0;
-          var rowIndex = 0;
+          var visibleTasks = [];
+          var isAnimating = false;
 
           function nextTask() {
             if (index >= queue.length) {
@@ -2633,29 +2651,49 @@
             currentLang = document.documentElement.lang === 'ja' ? 'ja' : 'en';
             queue = shuffle(taskSets[currentLang]);
             index = 0;
-            rowIndex = 0;
-            rows.forEach(function(row) {
-              setRow(row, nextTask());
+            visibleTasks = rows.map(function() {
+              return nextTask();
+            });
+            rows.forEach(function(row, i) {
+              setRow(row, visibleTasks[i]);
             });
           }
 
-          function rotateOne() {
-            var row = rows[rowIndex % rows.length];
+          function renderVisible() {
+            rows.forEach(function(row, i) {
+              setRow(row, visibleTasks[i]);
+            });
+          }
+
+          function rotateQueue() {
+            if (isAnimating) return;
+            isAnimating = true;
             var task = nextTask();
-            rowIndex += 1;
             if (reduceMotion) {
-              setRow(row, task);
+              visibleTasks.shift();
+              visibleTasks.push(task);
+              renderVisible();
+              isAnimating = false;
               return;
             }
-            row.classList.add('is-swapping');
+            items[0].classList.add('is-leaving');
+            panel.classList.add('is-flowing');
             window.setTimeout(function() {
-              setRow(row, task);
-              row.classList.remove('is-swapping');
-            }, 220);
+              visibleTasks.shift();
+              visibleTasks.push(task);
+              renderVisible();
+              panel.classList.remove('is-flowing');
+              items[0].classList.remove('is-leaving');
+              items[items.length - 1].classList.add('is-entering');
+              window.setTimeout(function() {
+                items[items.length - 1].classList.remove('is-entering');
+                isAnimating = false;
+              }, 430);
+            }, 460);
           }
 
           renderInitial();
-          window.setInterval(rotateOne, 2400);
+          window.setInterval(rotateQueue, 2600);
 
           new MutationObserver(function() {
             var nextLang = document.documentElement.lang === 'ja' ? 'ja' : 'en';
