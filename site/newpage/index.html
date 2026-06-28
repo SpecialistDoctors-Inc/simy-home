@@ -467,7 +467,7 @@
         transition: transform 0.46s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.46s ease;
       }
       .hero-work-panel.is-flowing .hero-work-item {
-        transform: translateY(calc(-100% - 1px));
+        transform: translateY(var(--queue-step, -100%));
       }
       .hero-work-panel.is-flowing .hero-work-item.is-leaving {
         opacity: 0;
@@ -2622,13 +2622,11 @@
         function startHeroWorkRotation() {
           var panel = document.querySelector('.hero-work-panel');
           var items = Array.prototype.slice.call(document.querySelectorAll('.hero-work-item'));
-          var rows = Array.prototype.slice.call(document.querySelectorAll('[data-hero-work-copy]'));
-          if (!panel || rows.length === 0 || items.length === 0) return;
+          if (!panel || items.length === 0) return;
           var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
           var currentLang = document.documentElement.lang === 'ja' ? 'ja' : 'en';
           var queue = shuffle(taskSets[currentLang]);
           var index = 0;
-          var visibleTasks = [];
           var isAnimating = false;
 
           function nextTask() {
@@ -2647,46 +2645,48 @@
             body.textContent = task[1];
           }
 
+          function getRows() {
+            return items.map(function(item) {
+              return item.querySelector('[data-hero-work-copy]');
+            }).filter(Boolean);
+          }
+
           function renderInitial() {
             currentLang = document.documentElement.lang === 'ja' ? 'ja' : 'en';
             queue = shuffle(taskSets[currentLang]);
             index = 0;
-            visibleTasks = rows.map(function() {
-              return nextTask();
-            });
-            rows.forEach(function(row, i) {
-              setRow(row, visibleTasks[i]);
+            getRows().forEach(function(row) {
+              setRow(row, nextTask());
             });
           }
 
-          function renderVisible() {
-            rows.forEach(function(row, i) {
-              setRow(row, visibleTasks[i]);
-            });
+          function rotateDomOrder(firstItem, task) {
+            var row = firstItem.querySelector('[data-hero-work-copy]');
+            panel.appendChild(firstItem);
+            items = Array.prototype.slice.call(document.querySelectorAll('.hero-work-item'));
+            if (row) setRow(row, task);
           }
 
           function rotateQueue() {
             if (isAnimating) return;
             isAnimating = true;
             var task = nextTask();
+            var firstItem = items[0];
             if (reduceMotion) {
-              visibleTasks.shift();
-              visibleTasks.push(task);
-              renderVisible();
+              rotateDomOrder(firstItem, task);
               isAnimating = false;
               return;
             }
-            items[0].classList.add('is-leaving');
+            panel.style.setProperty('--queue-step', '-' + firstItem.offsetHeight + 'px');
+            firstItem.classList.add('is-leaving');
             panel.classList.add('is-flowing');
             window.setTimeout(function() {
-              visibleTasks.shift();
-              visibleTasks.push(task);
-              renderVisible();
+              rotateDomOrder(firstItem, task);
               panel.classList.remove('is-flowing');
-              items[0].classList.remove('is-leaving');
-              items[items.length - 1].classList.add('is-entering');
+              firstItem.classList.remove('is-leaving');
+              firstItem.classList.add('is-entering');
               window.setTimeout(function() {
-                items[items.length - 1].classList.remove('is-entering');
+                firstItem.classList.remove('is-entering');
                 isAnimating = false;
               }, 430);
             }, 460);
