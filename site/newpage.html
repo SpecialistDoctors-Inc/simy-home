@@ -1073,6 +1073,102 @@
       .integration-list {
         padding: 10px 0;
       }
+      .integration-catalog {
+        padding: 18px 24px 14px;
+        border-bottom: 1px solid var(--line);
+        background: linear-gradient(180deg, #fff 0%, #fbfbf8 100%);
+      }
+      .integration-search {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        height: 38px;
+        padding: 0 12px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+        color: var(--muted);
+        font-size: 0.82rem;
+      }
+      .integration-search::before {
+        content: '';
+        width: 9px;
+        height: 9px;
+        border: 2px solid var(--muted);
+        border-radius: 999px;
+        box-shadow: 5px 5px 0 -3px var(--muted);
+        opacity: 0.7;
+      }
+      .integration-icons {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        margin-top: 12px;
+      }
+      .integration-icon {
+        display: grid;
+        grid-template-columns: 34px minmax(0, 1fr);
+        align-items: start;
+        gap: 10px;
+        min-height: 74px;
+        padding: 10px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+      }
+      .integration-mark {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 34px;
+        height: 34px;
+        border-radius: 8px;
+        color: #fff;
+        font-size: 0.72rem;
+        font-weight: 800;
+        letter-spacing: 0;
+      }
+      .integration-mark.slack { background: #4a154b; }
+      .integration-mark.gmail { background: #ea4335; }
+      .integration-mark.zoom { background: #0b5cff; }
+      .integration-mark.teams { background: #6264a7; }
+      .integration-mark.meet { background: #00ac47; }
+      .integration-mark.calendar { background: #1a73e8; }
+      .integration-mark.drive { background: #fbbc04; color: #1f1f1f; }
+      .integration-mark.github { background: #181717; }
+      .integration-name {
+        min-width: 0;
+        color: var(--ink);
+        font-size: 0.82rem;
+        font-weight: 720;
+        line-height: 1.2;
+        overflow-wrap: anywhere;
+      }
+      .integration-meta {
+        display: block;
+        margin-top: 4px;
+        color: var(--muted);
+        font-family: 'Geist Mono', monospace;
+        font-size: 0.62rem;
+        line-height: 1.25;
+        text-transform: uppercase;
+      }
+      .integration-pill-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-top: 12px;
+      }
+      .integration-pill {
+        padding: 5px 8px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: #fff;
+        color: var(--muted);
+        font-family: 'Geist Mono', monospace;
+        font-size: 0.62rem;
+        text-transform: uppercase;
+      }
       .integration-row {
         display: grid;
         grid-template-columns: 132px 1fr;
@@ -1949,6 +2045,12 @@
           gap: 8px;
           padding: 18px;
         }
+        .integration-catalog {
+          padding: 16px 18px 12px;
+        }
+        .integration-icons {
+          grid-template-columns: 1fr;
+        }
         .deliverable-action {
           justify-self: stretch;
         }
@@ -2233,7 +2335,7 @@
           </div>
           <div class="hero-work-panel" aria-label="SIMY work in progress">
             <div class="hero-panel-head">
-              <p class="hero-panel-kicker" aria-label="Local time with milliseconds"><span data-hero-clock>JST 00:00:00.000</span></p>
+              <p class="hero-panel-kicker" aria-label="Local date and time with milliseconds"><span data-hero-clock>JST 2026-06-28 00:00:00.000</span></p>
               <span class="hero-live-badge" data-i18n="home.hero.live">Live</span>
             </div>
             <div class="hero-work-viewport">
@@ -2364,6 +2466,73 @@
               <div class="deliverable-column-head">
                 <div class="deliverable-column-kicker" data-i18n="home.integrations.kicker">INTEGRATIONS</div>
                 <div class="deliverable-column-title" data-i18n="home.integrations.title">Where SIMY connects today</div>
+              </div>
+              <div class="integration-catalog" aria-label="Connected apps">
+                <div class="integration-search">Search connected work apps</div>
+                <div class="integration-icons">
+                  <div class="integration-icon">
+                    <span class="integration-mark slack" aria-hidden="true">S</span>
+                    <span>
+                      <span class="integration-name">Slack</span>
+                      <span class="integration-meta">Messages · Huddles</span>
+                    </span>
+                  </div>
+                  <div class="integration-icon">
+                    <span class="integration-mark gmail" aria-hidden="true">G</span>
+                    <span>
+                      <span class="integration-name">Gmail</span>
+                      <span class="integration-meta">Email · Follow-up</span>
+                    </span>
+                  </div>
+                  <div class="integration-icon">
+                    <span class="integration-mark zoom" aria-hidden="true">Z</span>
+                    <span>
+                      <span class="integration-name">Zoom</span>
+                      <span class="integration-meta">Meetings · Recording</span>
+                    </span>
+                  </div>
+                  <div class="integration-icon">
+                    <span class="integration-mark teams" aria-hidden="true">T</span>
+                    <span>
+                      <span class="integration-name">Microsoft Teams</span>
+                      <span class="integration-meta">Meetings · Chat</span>
+                    </span>
+                  </div>
+                  <div class="integration-icon">
+                    <span class="integration-mark meet" aria-hidden="true">M</span>
+                    <span>
+                      <span class="integration-name">Google Meet</span>
+                      <span class="integration-meta">Meetings · Context</span>
+                    </span>
+                  </div>
+                  <div class="integration-icon">
+                    <span class="integration-mark calendar" aria-hidden="true">31</span>
+                    <span>
+                      <span class="integration-name">Google Calendar</span>
+                      <span class="integration-meta">Schedule · Capture</span>
+                    </span>
+                  </div>
+                  <div class="integration-icon">
+                    <span class="integration-mark drive" aria-hidden="true">D</span>
+                    <span>
+                      <span class="integration-name">Google Drive</span>
+                      <span class="integration-meta">Docs · Output</span>
+                    </span>
+                  </div>
+                  <div class="integration-icon">
+                    <span class="integration-mark github" aria-hidden="true">GH</span>
+                    <span>
+                      <span class="integration-name">GitHub</span>
+                      <span class="integration-meta">Engineering · PRs</span>
+                    </span>
+                  </div>
+                </div>
+                <div class="integration-pill-row" aria-label="Integration categories">
+                  <span class="integration-pill">Meetings</span>
+                  <span class="integration-pill">Messages</span>
+                  <span class="integration-pill">Workspace</span>
+                  <span class="integration-pill">Development</span>
+                </div>
               </div>
               <div class="integration-list">
                 <div class="integration-row">
@@ -2800,7 +2969,8 @@
             in: { label: 'IST', timeZone: 'Asia/Kolkata' },
             eu: { label: 'CET', daylightLabel: 'CEST', timeZone: 'Europe/Berlin' }
           };
-          var formatters = {};
+          var dateFormatters = {};
+          var timeFormatters = {};
           var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
           function clockConfig() {
@@ -2814,9 +2984,21 @@
             return month >= 2 && month <= 9 ? config.daylightLabel : config.label;
           }
 
-          function formatterFor(timeZone) {
-            if (!formatters[timeZone]) {
-              formatters[timeZone] = new Intl.DateTimeFormat('en-US', {
+          function dateFormatterFor(timeZone) {
+            if (!dateFormatters[timeZone]) {
+              dateFormatters[timeZone] = new Intl.DateTimeFormat('en-CA', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                timeZone: timeZone
+              });
+            }
+            return dateFormatters[timeZone];
+          }
+
+          function timeFormatterFor(timeZone) {
+            if (!timeFormatters[timeZone]) {
+              timeFormatters[timeZone] = new Intl.DateTimeFormat('en-US', {
                 hour: '2-digit',
                 minute: '2-digit',
                 second: '2-digit',
@@ -2824,14 +3006,15 @@
                 timeZone: timeZone
               });
             }
-            return formatters[timeZone];
+            return timeFormatters[timeZone];
           }
 
           function render() {
             var now = new Date();
             var config = clockConfig();
-            var time = formatterFor(config.timeZone).format(now);
-            clock.textContent = clockLabel(config, now) + ' ' + time + '.' + String(now.getMilliseconds()).padStart(3, '0');
+            var date = dateFormatterFor(config.timeZone).format(now);
+            var time = timeFormatterFor(config.timeZone).format(now);
+            clock.textContent = clockLabel(config, now) + ' ' + date + ' ' + time + '.' + String(now.getMilliseconds()).padStart(3, '0');
           }
 
           render();

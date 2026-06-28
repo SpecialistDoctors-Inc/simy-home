@@ -1003,9 +1003,12 @@
       '</button>' +
       '<div class="lang-dropdown" id="langDropdown"></div>';
 
-    // Insert before mobile menu button or at end
+    // Keep language next to the region preview when the page has both controls.
+    var regionSwitcher = navInner.querySelector('.region-switcher');
     var mobileBtn = navInner.querySelector('.mobile-menu-btn') || navInner.querySelector('button[aria-label="Menu"]');
-    if (mobileBtn) {
+    if (regionSwitcher && regionSwitcher.parentNode === navInner) {
+      navInner.insertBefore(wrapper, regionSwitcher.nextSibling);
+    } else if (mobileBtn) {
       navInner.insertBefore(wrapper, mobileBtn);
     } else {
       navInner.appendChild(wrapper);
@@ -1100,6 +1103,7 @@
       '.lang-dropdown.open{display:grid;grid-template-columns:1fr 1fr;gap:2px}' +
       '.lang-option{display:block;width:100%;text-align:left;background:none;border:none;padding:8px 12px;font-size:0.78rem;color:#333;cursor:pointer;border-radius:6px;font-family:inherit;transition:background 0.12s;white-space:nowrap}' +
       '.lang-option:hover{background:#f5f5f3}' +
+      '@media(max-width:768px){.lang-switcher{margin-left:0}.lang-btn span{display:none}.lang-btn{min-height:32px;padding:4px 8px}.lang-dropdown{right:-44px}}' +
       '[dir="rtl"] .lang-switcher{margin-left:0;margin-right:8px}' +
       '[dir="rtl"] .lang-dropdown{right:auto;left:0}' +
       '[dir="rtl"] .lang-option{text-align:right}';
