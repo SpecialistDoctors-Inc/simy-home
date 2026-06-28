@@ -74,6 +74,33 @@
       }
     }
     </script>
+    <script>
+      (function() {
+        var euTimeZones = [
+          'Europe/Amsterdam', 'Europe/Andorra', 'Europe/Athens', 'Europe/Berlin',
+          'Europe/Brussels', 'Europe/Bucharest', 'Europe/Budapest', 'Europe/Copenhagen',
+          'Europe/Dublin', 'Europe/Helsinki', 'Europe/Lisbon', 'Europe/Ljubljana',
+          'Europe/Luxembourg', 'Europe/Madrid', 'Europe/Malta', 'Europe/Paris',
+          'Europe/Prague', 'Europe/Riga', 'Europe/Rome', 'Europe/Sofia',
+          'Europe/Stockholm', 'Europe/Tallinn', 'Europe/Vienna', 'Europe/Vilnius',
+          'Europe/Warsaw', 'Europe/Zagreb'
+        ];
+        var timeZone = '';
+        try { timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) {}
+        var language = (navigator.language || navigator.userLanguage || '').toLowerCase();
+        var region = 'global';
+        if (timeZone === 'Asia/Tokyo' || language.indexOf('ja') === 0) {
+          region = 'jp';
+        } else if (timeZone === 'Asia/Kolkata' || timeZone === 'Asia/Calcutta' || language.indexOf('hi') === 0 || language.indexOf('en-in') === 0) {
+          region = 'in';
+        } else if (timeZone.indexOf('America/') === 0 || language.indexOf('en-us') === 0) {
+          region = 'us';
+        } else if (euTimeZones.indexOf(timeZone) !== -1) {
+          region = 'eu';
+        }
+        document.documentElement.setAttribute('data-hero-region', region);
+      })();
+    </script>
     <style>
       @font-face {
         font-family: 'Geist';
@@ -284,6 +311,7 @@
         will-change: opacity, transform;
       }
       .hero-bg.meeting { background-image: url('/assets/hero-meeting-twin-work.jpg'); animation-delay: 0s; }
+      html[data-hero-region="jp"] .hero-bg.meeting { background-image: url('/assets/hero-meeting-twin-work-jp.png'); }
       .hero-bg.running { background-image: url('/assets/hero-life-running.jpg'); animation-delay: 8s; }
       .hero-bg.family { background-image: url('/assets/hero-life-family.jpg'); animation-delay: 16s; }
       .hero-bg.dinner { background-image: url('/assets/hero-life-dinner.jpg'); animation-delay: 24s; }
