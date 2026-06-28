@@ -510,6 +510,9 @@
       .hero-work-dot.amber {
         --active: #ffb020;
       }
+      .hero-work-dot.red {
+        --active: #e5484d;
+      }
       .hero-work-item h3 {
         margin: 0;
         color: #fff;
@@ -2595,6 +2598,14 @@
           var queue = shuffle(taskSets[currentLang]);
           var index = 0;
           var isAnimating = false;
+          var colorIndex = 0;
+          var queueColors = [
+            { value: 'var(--blue)', dotClass: 'blue' },
+            { value: '#ffb020', dotClass: 'amber' },
+            { value: 'var(--blue)', dotClass: 'blue' },
+            { value: '#ff7a1a', dotClass: 'amber' },
+            { value: '#e5484d', dotClass: 'red' }
+          ];
 
           function nextTask() {
             if (index >= queue.length) {
@@ -2610,6 +2621,20 @@
             if (!title || !body) return;
             title.textContent = task[0];
             body.textContent = task[1];
+          }
+
+          function applyItemColor(item, color) {
+            var dot = item.querySelector('.hero-work-dot');
+            item.style.setProperty('--active', color.value);
+            if (!dot) return;
+            dot.classList.remove('blue', 'amber', 'red');
+            if (color.dotClass) dot.classList.add(color.dotClass);
+          }
+
+          function nextColor() {
+            var color = queueColors[colorIndex % queueColors.length];
+            colorIndex += 1;
+            return color;
           }
 
           function getRows() {
@@ -2635,7 +2660,11 @@
             currentLang = document.documentElement.lang === 'ja' ? 'ja' : 'en';
             queue = shuffle(taskSets[currentLang]);
             index = 0;
+            colorIndex = 0;
             refreshItems();
+            items.forEach(function(item) {
+              applyItemColor(item, nextColor());
+            });
             getRows().forEach(function(row) {
               setRow(row, nextTask());
             });
@@ -2647,6 +2676,7 @@
             var nextItem = template.cloneNode(true);
             var row = nextItem.querySelector('[data-hero-work-copy]');
             if (row) setRow(row, task);
+            applyItemColor(nextItem, nextColor());
             list.appendChild(nextItem);
             refreshItems();
             return nextItem;
