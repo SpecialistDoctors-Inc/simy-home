@@ -12,7 +12,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://simy.one/newpage/">
     <meta property="og:title" content="SIMY - Meeting Ends. Your Twin Starts Working.">
-    <meta property="og:description" content="SIMY moves the work after meetings forward, so the next draft, deck, update, and action are ready when you return.">
+    <meta property="og:description" content="SIMY moves the work after meetings forward, so the next brief, deck, update, and action are ready when you return.">
     <meta property="og:site_name" content="SIMY">
     <meta property="og:image" content="https://simy.one/ogp.png">
     <meta property="og:image:width" content="1200">
@@ -59,7 +59,7 @@
       "name": "SIMY",
       "applicationCategory": "BusinessApplication",
       "operatingSystem": "Web, iOS",
-      "description": "AI Twin platform that moves follow-ups, decks, research, analysis, updates, and next actions after meetings so the next draft, deck, update, and action are ready when you return.",
+      "description": "AI Twin platform that moves follow-ups, decks, research, analysis, updates, and next actions after meetings so the next brief, deck, update, and action are ready when you return.",
       "url": "https://simy.one/",
       "offers": {
         "@type": "AggregateOffer",
@@ -693,36 +693,6 @@
         border-top: 2px solid var(--blue);
         border-right: 2px solid var(--blue);
         transform: translateY(-50%) rotate(45deg);
-      }
-      .approval-grid {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 10px;
-      }
-      .approval-item {
-        min-height: 94px;
-        padding: 13px;
-        border: 1px solid rgba(255, 255, 255, 0.13);
-        border-radius: 7px;
-        background: rgba(255, 255, 255, 0.055);
-      }
-      .approval-item span {
-        display: block;
-        color: #5ee0a8;
-        font-family: 'Geist Mono', monospace;
-        font-size: 0.62rem;
-        text-transform: uppercase;
-      }
-      .approval-item strong {
-        display: block;
-        margin-top: 7px;
-        font-size: 0.95rem;
-      }
-      .approval-item p {
-        margin-top: 6px;
-        color: rgba(255, 255, 255, 0.62);
-        font-size: 0.76rem;
-        line-height: 1.42;
       }
       .section {
         padding: 96px 0;
@@ -1765,15 +1735,6 @@
           bottom: -1px;
           transform: translateX(-50%) rotate(135deg);
         }
-        .approval-grid {
-          grid-template-columns: 1fr;
-        }
-        .approval-item {
-          min-height: auto;
-        }
-        .approval-item p {
-          font-size: 0.76rem;
-        }
         .value-strip h2 {
           font-size: clamp(1.5rem, 6.2vw, 1.78rem);
           line-height: 1.12;
@@ -1982,7 +1943,6 @@
               <a class="btn-primary" href="https://app.simy.one/signup" data-i18n="home.cta.primary">Try one meeting</a>
               <a class="btn-secondary" href="#samples" data-i18n="home.cta.secondary">See samples</a>
             </div>
-            <div class="hero-note" data-i18n="home.hero.note">SIMY prepares the work. You approve before anything is sent or shared.</div>
           </div>
           <div class="hero-work-panel" aria-label="SIMY work in progress">
             <div class="hero-panel-head">
@@ -1992,7 +1952,7 @@
             <div class="hero-work-item" style="--delay: 0s; --active: #5ee0a8;">
               <span class="hero-work-dot"></span>
               <div class="hero-work-copy" data-hero-work-copy>
-                <h3 data-hero-work-title>Twin drafted the follow-up</h3>
+                <h3 data-hero-work-title>Twin prepared the follow-up</h3>
                 <p data-hero-work-body>Your context, tone, and next step are reflected.</p>
                 <div class="hero-work-progress"><span></span></div>
               </div>
@@ -2022,9 +1982,9 @@
           <div>
             <p class="value-kicker" data-i18n="home.value.label">What starts next</p>
             <h2 data-i18n-html="home.value.h"><span class="copy-line">Before you reopen a tab,</span><span class="copy-line">the next move is already in motion.</span></h2>
-            <p data-i18n-html="home.value.p">Email, deck, CRM, and internal update work comes back as reviewable drafts. Before you reopen a tab, you can choose the next move.</p>
+            <p data-i18n-html="home.value.p">Email, deck, CRM, and internal updates move from meeting context into next actions. Before you reopen a tab, the work is already organized.</p>
           </div>
-          <div class="handoff-workspace" aria-label="Meeting to approval workspace">
+          <div class="handoff-workspace" aria-label="Meeting to next-action workspace">
             <div class="handoff-panel">
               <div class="handoff-top">
                 <span class="handoff-title" data-i18n="home.flow.meeting">Meeting context</span>
@@ -2047,14 +2007,14 @@
             </div>
             <div class="handoff-panel dark">
               <div class="handoff-top">
-                <span class="handoff-title" data-i18n="home.flow.ready">Approval queue</span>
-                <span class="handoff-status" data-i18n="home.flow.waiting">Waiting</span>
+                <span class="handoff-title" data-i18n="home.flow.ready">Work in motion</span>
+                <span class="handoff-status" data-i18n="home.flow.waiting">Moving</span>
               </div>
               <div class="handoff-body">
                 <table class="draft-table">
                   <tbody>
                     <tr>
-                      <td data-i18n="home.flow.mail.k">Draft</td>
+                      <td data-i18n="home.flow.mail.k">Email</td>
                       <td><strong data-i18n="home.flow.mail.v">Follow-up email</strong><p data-i18n="home.flow.mail.p">Tone and next step included.</p></td>
                     </tr>
                     <tr>
@@ -2080,13 +2040,13 @@
       <section class="section" id="samples">
         <div class="container">
           <p class="section-label" data-i18n="home.samples.label">What one meeting creates</p>
-          <h2 data-i18n-html="home.samples.h"><span class="copy-line">When the meeting ends,</span><span class="copy-line">the work waits for your approval.</span></h2>
-          <p class="section-lead" data-i18n="home.samples.p">Not another vague AI promise. SIMY returns usable drafts you can check, edit, and send.</p>
+          <h2 data-i18n-html="home.samples.h"><span class="copy-line">When the meeting ends,</span><span class="copy-line">the work has already moved.</span></h2>
+          <p class="section-lead" data-i18n="home.samples.p">Follow-up, proposal, CRM, and team updates are already shaped from the conversation.</p>
           <div class="deliverable-board">
             <div class="deliverable-row">
               <div class="deliverable-type" data-i18n="home.samples.email.h">Follow-up email</div>
               <div class="deliverable-copy" data-i18n-html="home.samples.email.out"><strong>Thank you for today.</strong> I will send the cost range and rollout path by Friday, with two options for reducing operational load.</div>
-              <div class="deliverable-action" data-i18n="home.samples.approve">Approve</div>
+              <div class="deliverable-action" data-i18n="home.samples.approve">Ready</div>
             </div>
             <div class="deliverable-row">
               <div class="deliverable-type" data-i18n="home.samples.deck.h">Proposal deck</div>
@@ -2106,8 +2066,8 @@
           </div>
           <div class="assurance-line" aria-label="Trust signals">
             <span data-i18n="home.trust.1.v">Gmail, Calendar, Slack</span>
-            <span data-i18n="home.trust.2.v">Nothing is sent without approval</span>
-            <span data-i18n="home.trust.3.v">Drafts stay editable</span>
+            <span data-i18n="home.trust.2.v">Context carried forward</span>
+            <span data-i18n="home.trust.3.v">Work stays editable</span>
             <span data-i18n="home.trust.4.v">Try it with one meeting</span>
           </div>
         </div>
@@ -2116,28 +2076,28 @@
       <section class="section" id="difference">
         <div class="container">
           <p class="section-label" data-i18n="home.diff.label">Why founders can trust it</p>
-          <h2 class="difference-title" data-i18n-html="home.diff.h"><span class="copy-line">SIMY moves the draft.</span><span class="copy-line">You keep the judgment.</span></h2>
-          <p class="section-lead" data-i18n="home.diff.p">SIMY is not a second inbox that creates more work. It prepares the next action from the meeting context, then waits for your review before anything leaves the company.</p>
+          <h2 class="difference-title" data-i18n-html="home.diff.h"><span class="copy-line">SIMY carries the work.</span><span class="copy-line">You carry the judgment.</span></h2>
+          <p class="section-lead" data-i18n="home.diff.p">SIMY is not a second inbox. It connects the meeting to the next move, so follow-up, materials, CRM, and internal alignment keep moving together.</p>
           <div class="twin-stack">
             <div class="concept-card primary">
               <h3 data-i18n="home.twin.h">SIMY prepares</h3>
               <p data-i18n="home.twin.p">Follow-up emails, proposal outlines, CRM notes, stakeholder updates, and next actions are assembled from the meeting.</p>
-              <div class="arrow-row" data-i18n="home.twin.flow">Meeting ends -> Drafts ready -> You approve</div>
+              <div class="arrow-row" data-i18n="home.twin.flow">Meeting ends -> Work moves -> Next action ready</div>
               <div class="agent-grid">
-                <div class="agent-chip" data-i18n="home.agent.email">Email draft</div>
+                <div class="agent-chip" data-i18n="home.agent.email">Follow-up email</div>
                 <div class="agent-chip" data-i18n="home.agent.deck">Deck outline</div>
                 <div class="agent-chip" data-i18n="home.agent.research">Research brief</div>
                 <div class="agent-chip" data-i18n="home.agent.crm">CRM memo</div>
               </div>
             </div>
             <div class="concept-card">
-              <h3 data-i18n="home.agent.h">You decide</h3>
-              <p data-i18n="home.agent.p">Price, promise, relationship, and final wording stay with the human. SIMY does not send or share without approval.</p>
+              <h3 data-i18n="home.agent.h">You lead</h3>
+              <p data-i18n="home.agent.p">Price, promise, relationship, and final wording stay with the human. SIMY clears the busywork around them.</p>
               <div class="agent-grid">
-                <div class="agent-chip light" data-i18n="home.agent.wait1">Approve sending</div>
-                <div class="agent-chip light" data-i18n="home.agent.wait2">Edit wording</div>
-                <div class="agent-chip light" data-i18n="home.agent.wait3">Decide price</div>
-                <div class="agent-chip light" data-i18n="home.agent.wait4">Own the relationship</div>
+                <div class="agent-chip light" data-i18n="home.agent.wait1">Choose the move</div>
+                <div class="agent-chip light" data-i18n="home.agent.wait2">Shape the words</div>
+                <div class="agent-chip light" data-i18n="home.agent.wait3">Set the price</div>
+                <div class="agent-chip light" data-i18n="home.agent.wait4">Lead the relationship</div>
               </div>
             </div>
           </div>
@@ -2226,7 +2186,7 @@
           <div class="life-copy">
             <p class="section-label" data-i18n="home.life.label">Beyond the screen</p>
             <h2 data-i18n-html="home.life.h"><span class="copy-line">Once the work is moving,</span><span class="copy-line">you do not have to stay at the screen.</span></h2>
-            <p data-i18n="home.life.p">SIMY is work software first. It drafts the follow-up, prepares the deck, updates the CRM, and routes the handoff. Only then does the bigger promise make sense: the time after meetings can return to customers, strategy, relationships, and a life outside the laptop.</p>
+            <p data-i18n="home.life.p">SIMY is work software first. It prepares the follow-up, shapes the deck, updates the CRM, and routes the handoff. Only then does the bigger promise make sense: the time after meetings can return to customers, strategy, relationships, and a life outside the laptop.</p>
           </div>
           <div class="life-scenes" aria-label="Life beyond the screen">
             <div class="life-scene running"></div>
@@ -2388,7 +2348,7 @@
       <section class="final-cta">
         <div class="container">
           <h2 data-i18n-html="home.final.h"><span class="copy-line">Meeting ends.</span><span class="copy-line">Your next move is ready.</span></h2>
-          <p data-i18n="home.final.p">Create the Twin that starts working the moment the meeting ends. Let the work come back as drafts, briefs, and next actions instead of another hour in tabs.</p>
+          <p data-i18n="home.final.p">Create the Twin that starts working the moment the meeting ends. Let the work move into briefs, updates, and next actions instead of another hour in tabs.</p>
           <div class="final-actions">
             <a class="btn-primary" href="https://app.simy.one/signup" data-i18n="home.cta.primary">Try one meeting</a>
             <a class="btn-secondary" href="mailto:sales@simy.one" data-i18n="home.final.secondary">Talk to sales</a>
@@ -2543,7 +2503,7 @@
       (function() {
         var taskSets = {
           en: [
-            ['Twin drafted the follow-up', 'Your context, tone, and next step are reflected.'],
+            ['Twin prepared the follow-up', 'Your context, tone, and next step are reflected.'],
             ['Twin updated the proposal', 'The story, risks, and asks are shaped for you.'],
             ['Twin routed next actions', 'Each stakeholder gets your context at the right depth.'],
             ['Twin summarized objections', 'Concerns, intent, and suggested replies are ready.'],
@@ -2553,12 +2513,12 @@
             ['Twin updated CRM', 'Deal context, next steps, and risks are logged.'],
             ['Twin made the executive brief', 'The signal is compressed into a clear note.'],
             ['Twin assigned action owners', 'Tasks are grouped by owner, timing, and urgency.'],
-            ['Twin drafted the risk memo', 'Tradeoffs, blockers, and watch points are surfaced.'],
+            ['Twin prepared the risk memo', 'Tradeoffs, blockers, and watch points are surfaced.'],
             ['Twin assembled the board note', 'Progress, asks, and decisions are made readable.'],
             ['Twin prepared the sales email', 'The message follows your meeting tone and intent.'],
             ['Twin wrote the partner recap', 'Shared context becomes a useful next action.'],
             ['Twin organized hiring feedback', 'Signals, concerns, and follow-ups are structured.'],
-            ['Twin drafted the investor reply', 'Questions, metrics, and next steps are addressed.'],
+            ['Twin prepared the investor reply', 'Questions, metrics, and next steps are addressed.'],
             ['Twin extracted product insight', 'Requests, friction, and opportunities are grouped.'],
             ['Twin updated the decision log', 'What changed and why is preserved for the team.'],
             ['Twin built the next agenda', 'Open loops become a focused next conversation.'],
@@ -2571,11 +2531,11 @@
             ['Twin organized budget notes', 'Numbers, assumptions, and decisions are clarified.'],
             ['Twin synthesized workshop output', 'Ideas become themes, actions, and owners.'],
             ['Twin mapped the renewal path', 'Value proof, risks, and follow-up timing are ready.'],
-            ['Twin drafted the press angle', 'The narrative, proof points, and audience are shaped.'],
+            ['Twin shaped the press angle', 'The narrative, proof points, and audience are shaped.'],
             ['Twin prepared the handoff', 'The next person gets the context they need.']
           ],
           ja: [
-            ['Twinがフォローを下書き', 'あなたの文脈、温度感、次アクションまで反映。'],
+            ['Twinがフォローを準備', 'あなたの文脈、温度感、次アクションまで反映。'],
             ['Twinが提案資料を更新', 'ストーリー、リスク、依頼事項まで整える。'],
             ['Twinが次アクションを共有', '相手ごとに、あなたの文脈を必要な粒度で届ける。'],
             ['Twinが顧客の懸念を整理', '反論、温度感、返答案までまとめる。'],
@@ -2587,10 +2547,10 @@
             ['Twinが担当者を割り当て', '誰が、いつ、何をやるかを整理。'],
             ['Twinがリスクメモを作成', '論点、障害、注意点を先に出す。'],
             ['Twinが取締役会メモを準備', '進捗、依頼、判断事項を読みやすくする。'],
-            ['Twinが営業メールを準備', 'あなたの会議の温度感に合わせて下書きする。'],
+            ['Twinが営業メールを準備', 'あなたの会議の温度感に合わせて整える。'],
             ['Twinがパートナー共有を作成', '共通理解を次の行動に変える。'],
             ['Twinが採用フィードバックを整理', '評価、懸念、次確認を構造化。'],
-            ['Twinが投資家返信を下書き', '質問、数値、次ステップに答える。'],
+            ['Twinが投資家返信を準備', '質問、数値、次ステップに答える。'],
             ['Twinがプロダクト示唆を抽出', '要望、摩擦、機会を分類する。'],
             ['Twinが意思決定ログを更新', '何をなぜ決めたかを残す。'],
             ['Twinが次回アジェンダを作成', '未完了の論点を次の会話へつなぐ。'],
@@ -2603,7 +2563,7 @@
             ['Twinが予算メモを整理', '数字、前提、判断事項を明確にする。'],
             ['Twinがワークショップ結果を統合', 'アイデアをテーマ、行動、担当に変える。'],
             ['Twinが更新提案の道筋を整理', '価値証明、リスク、次接点を準備。'],
-            ['Twinが広報観点を下書き', '物語、根拠、届ける相手を整える。'],
+            ['Twinが広報観点を整理', '物語、根拠、届ける相手を整える。'],
             ['Twinがチーム引き継ぎを準備', '次の人が動ける文脈を渡す。']
           ]
         };
