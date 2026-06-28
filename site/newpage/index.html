@@ -1444,28 +1444,47 @@
         line-height: 1.72;
       }
       .life-scenes {
-        display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 8px;
-        min-height: 360px;
-      }
-      .life-scene {
         position: relative;
+        min-height: 460px;
         overflow: hidden;
         border-radius: 8px;
+        background: #101010;
+      }
+      .life-scene {
+        position: absolute;
+        inset: 0;
         background-position: center;
         background-size: cover;
+        opacity: 0;
+        transform: scale(1.025);
+        animation: lifeSceneFade 24s ease-in-out infinite;
       }
       .life-scene::after {
         content: '';
         position: absolute;
         inset: 0;
-        background: linear-gradient(180deg, rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0.32));
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0.28));
       }
       .life-scene.running { background-image: url('/assets/hero-life-running.jpg'); }
-      .life-scene.family { background-image: url('/assets/hero-life-family.jpg'); }
-      .life-scene.dinner { background-image: url('/assets/hero-life-dinner.jpg'); }
-      .life-scene.travel { background-image: url('/assets/hero-life-travel.jpg'); }
+      .life-scene.family {
+        background-image: url('/assets/hero-life-family.jpg');
+        animation-delay: 6s;
+      }
+      .life-scene.dinner {
+        background-image: url('/assets/hero-life-dinner.jpg');
+        animation-delay: 12s;
+      }
+      .life-scene.travel {
+        background-image: url('/assets/hero-life-travel.jpg');
+        animation-delay: 18s;
+      }
+      @keyframes lifeSceneFade {
+        0% { opacity: 0; transform: scale(1.025); }
+        6% { opacity: 1; transform: scale(1); }
+        25% { opacity: 1; transform: scale(1); }
+        31% { opacity: 0; transform: scale(1.015); }
+        100% { opacity: 0; transform: scale(1.025); }
+      }
       .final-cta {
         padding: 96px 0 112px;
         background: #07101f;
@@ -1825,8 +1844,7 @@
           gap: 28px;
         }
         .life-scenes {
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-          min-height: 460px;
+          min-height: 420px;
         }
       }
       @media (max-width: 430px) {
@@ -1869,7 +1887,7 @@
           font-size: clamp(1.42rem, 6.7vw, 1.6rem);
         }
         .life-scenes {
-          min-height: 520px;
+          min-height: 360px;
         }
         .hero-work-copy {
           min-height: 68px;
@@ -1883,7 +1901,8 @@
         .hero-work-item,
         .hero-work-item::after,
         .hero-work-dot,
-        .hero-work-progress span {
+        .hero-work-progress span,
+        .life-scene {
           animation: none !important;
         }
         .hero-work-copy {
@@ -1894,6 +1913,13 @@
           transform: none;
         }
         .hero-bg.meeting {
+          opacity: 1;
+        }
+        .life-scene {
+          opacity: 0;
+          transform: none;
+        }
+        .life-scene.running {
           opacity: 1;
         }
       }
