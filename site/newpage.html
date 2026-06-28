@@ -85,10 +85,65 @@
           'Europe/Stockholm', 'Europe/Tallinn', 'Europe/Vienna', 'Europe/Vilnius',
           'Europe/Warsaw', 'Europe/Zagreb'
         ];
+        var regionLabels = {
+          us: 'United States',
+          jp: 'Japan',
+          in: 'India',
+          eu: 'Europe'
+        };
+        function isSupportedRegion(region) {
+          return Object.prototype.hasOwnProperty.call(regionLabels, region);
+        }
+        function setHeroRegion(region, persist) {
+          if (!isSupportedRegion(region)) region = 'us';
+          document.documentElement.setAttribute('data-hero-region', region);
+          if (persist) {
+            try { localStorage.setItem('simy-region', region); } catch (e) {}
+          }
+          return region;
+        }
+        function regionFromLang(lang) {
+          lang = (lang || '').toLowerCase();
+          if (lang.indexOf('ja') === 0) return 'jp';
+          if (lang.indexOf('hi') === 0 || lang.indexOf('kn') === 0 || lang.indexOf('en-in') === 0) return 'in';
+          if (lang.indexOf('de') === 0 || lang.indexOf('fr') === 0 || lang.indexOf('it') === 0 || lang.indexOf('es') === 0 || lang.indexOf('pt-br') === 0 || lang.indexOf('nl') === 0 || lang.indexOf('sv') === 0 || lang.indexOf('da') === 0 || lang.indexOf('fi') === 0 || lang.indexOf('pl') === 0 || lang.indexOf('cs') === 0 || lang.indexOf('hu') === 0 || lang.indexOf('ro') === 0 || lang.indexOf('el') === 0) return 'eu';
+          if (lang.indexOf('en') === 0) return 'us';
+          return '';
+        }
+        var params = new URLSearchParams(location.search);
+        var queryRegion = (params.get('region') || '').toLowerCase();
+        var queryLangRegion = regionFromLang(params.get('lang'));
+        var savedRegion = '';
+        var savedLangRegion = '';
+        try {
+          savedRegion = (localStorage.getItem('simy-region') || '').toLowerCase();
+          savedLangRegion = regionFromLang(localStorage.getItem('simy-lang') || localStorage.getItem('simy-language') || '');
+        } catch (e) {}
+        window.SIMY_REGION = {
+          labels: regionLabels,
+          set: setHeroRegion,
+          get: function() { return document.documentElement.getAttribute('data-hero-region') || 'us'; }
+        };
         var timeZone = '';
         try { timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) {}
         var language = (navigator.language || navigator.userLanguage || '').toLowerCase();
-        var region = 'global';
+        var region = '';
+        if (isSupportedRegion(queryRegion)) {
+          setHeroRegion(queryRegion, true);
+          return;
+        }
+        if (queryLangRegion) {
+          setHeroRegion(queryLangRegion, false);
+          return;
+        }
+        if (isSupportedRegion(savedRegion)) {
+          setHeroRegion(savedRegion, false);
+          return;
+        }
+        if (savedLangRegion) {
+          setHeroRegion(savedLangRegion, false);
+          return;
+        }
         if (timeZone === 'Asia/Tokyo' || language.indexOf('ja') === 0) {
           region = 'jp';
         } else if (timeZone === 'Asia/Kolkata' || timeZone === 'Asia/Calcutta' || language.indexOf('hi') === 0 || language.indexOf('en-in') === 0) {
@@ -98,7 +153,7 @@
         } else if (euTimeZones.indexOf(timeZone) !== -1) {
           region = 'eu';
         }
-        document.documentElement.setAttribute('data-hero-region', region);
+        setHeroRegion(region || 'us', false);
       })();
     </script>
     <style>
@@ -214,6 +269,64 @@
         align-items: center;
         gap: 18px;
       }
+      .region-switcher {
+        position: relative;
+        margin-left: 10px;
+      }
+      .region-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        min-height: 32px;
+        padding: 4px 9px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: #fff;
+        color: var(--muted);
+        font-family: inherit;
+        font-size: 0.72rem;
+        cursor: pointer;
+      }
+      .region-btn strong {
+        color: var(--ink);
+        font-family: 'Geist Mono', monospace;
+        font-size: 0.72rem;
+        text-transform: uppercase;
+      }
+      .region-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        z-index: 120;
+        min-width: 128px;
+        margin-top: 8px;
+        padding: 6px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: #fff;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+      }
+      .region-menu.open {
+        display: grid;
+        gap: 2px;
+      }
+      .region-menu button {
+        width: 100%;
+        padding: 8px 10px;
+        border: 0;
+        border-radius: 6px;
+        background: transparent;
+        color: var(--ink);
+        font-family: inherit;
+        font-size: 0.78rem;
+        text-align: left;
+        cursor: pointer;
+      }
+      .region-menu button:hover,
+      .region-menu button.active {
+        background: #f1f1ed;
+      }
       .btn-primary,
       .btn-secondary,
       .static-nav .btn-primary {
@@ -309,7 +422,10 @@
         transform: scale(1.04);
       }
       .hero-bg.meeting { background-image: url('/assets/hero-meeting-twin-work.jpg'); }
+      html[data-hero-region="us"] .hero-bg.meeting { background-image: url('/assets/hero-meeting-twin-work.jpg'); }
       html[data-hero-region="jp"] .hero-bg.meeting { background-image: url('/assets/hero-meeting-twin-work-jp.png'); }
+      html[data-hero-region="eu"] .hero-bg.meeting { background-image: url('/assets/hero-meeting-twin-work-eu.jpg'); }
+      html[data-hero-region="in"] .hero-bg.meeting { background-image: url('/assets/hero-meeting-twin-work-in.jpg'); }
       .hero-inner {
         position: relative;
         z-index: 2;
@@ -703,9 +819,6 @@
       .section {
         padding: 96px 0;
       }
-      #difference {
-        padding-top: 56px;
-      }
       .section + .section {
         border-top: 1px solid var(--line);
       }
@@ -920,6 +1033,67 @@
         line-height: 1.62;
       }
       .deliverable-copy strong {
+        color: var(--ink);
+      }
+      .deliverable-board.split {
+        display: grid;
+        grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+        gap: 16px;
+        border: 0;
+        background: transparent;
+      }
+      .deliverable-column {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+        overflow: hidden;
+      }
+      .deliverable-board.split .deliverable-row {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+      .deliverable-board.split .deliverable-action {
+        justify-self: start;
+      }
+      .deliverable-column-head {
+        padding: 20px 24px;
+        border-bottom: 1px solid var(--line);
+      }
+      .deliverable-column-kicker {
+        color: var(--blue);
+        font-family: 'Geist Mono', monospace;
+        font-size: 0.72rem;
+        text-transform: uppercase;
+      }
+      .deliverable-column-title {
+        margin-top: 8px;
+        font-size: 1.2rem;
+        font-weight: 780;
+      }
+      .integration-list {
+        padding: 10px 0;
+      }
+      .integration-row {
+        display: grid;
+        grid-template-columns: 132px 1fr;
+        gap: 18px;
+        padding: 18px 24px;
+        border-top: 1px solid var(--line);
+      }
+      .integration-row:first-child {
+        border-top: 0;
+      }
+      .integration-type {
+        color: var(--blue);
+        font-family: 'Geist Mono', monospace;
+        font-size: 0.72rem;
+        text-transform: uppercase;
+      }
+      .integration-copy {
+        color: var(--muted);
+        line-height: 1.55;
+      }
+      .integration-copy strong {
         color: var(--ink);
       }
       .deliverable-action {
@@ -1598,6 +1772,12 @@
         .nav-right {
           display: none;
         }
+        .region-switcher {
+          margin-left: auto;
+        }
+        .region-btn span {
+          display: none;
+        }
         .nav-links {
           display: none;
         }
@@ -1761,6 +1941,14 @@
           gap: 10px;
           padding: 18px;
         }
+        .deliverable-board.split {
+          grid-template-columns: 1fr;
+        }
+        .integration-row {
+          grid-template-columns: 1fr;
+          gap: 8px;
+          padding: 18px;
+        }
         .deliverable-action {
           justify-self: stretch;
         }
@@ -1788,9 +1976,6 @@
         .life-section,
         .final-cta {
           padding: 68px 0;
-        }
-        #difference {
-          padding-top: 44px;
         }
         .section h2,
         .life-copy h2,
@@ -1957,9 +2142,8 @@
         </a>
         <div class="nav-links" id="navLinks">
           <a href="/" data-i18n="nav.home">Home</a>
-          <a href="#difference" data-i18n="nav.difference">Your Twin</a>
           <a href="#samples" data-i18n="nav.work">After meetings</a>
-          <a href="#loop" data-i18n="nav.how">How it works</a>
+          <a href="#beyond-screen" data-i18n="home.life.label">Beyond the screen</a>
           <a href="/compare.html" data-i18n="nav.compare">Compare</a>
           <a href="/pricing.html" data-i18n="nav.pricing">Pricing</a>
           <a href="mailto:sales@simy.one" data-i18n="footer.company.contact">Contact</a>
@@ -1968,6 +2152,18 @@
           <a href="https://app.simy.one/login" class="nav-signin" data-i18n="nav.signin">Sign in</a>
           <a href="https://app.simy.one/signup" class="btn-primary" data-i18n="home.cta.primary">Try one meeting</a>
         </div>
+        <div class="region-switcher" aria-label="Preview region">
+          <button type="button" class="region-btn" data-region-btn>
+            <span>Region</span>
+            <strong data-region-display>US</strong>
+          </button>
+          <div class="region-menu" data-region-menu>
+            <button type="button" data-region-option="us">US</button>
+            <button type="button" data-region-option="jp">Japan</button>
+            <button type="button" data-region-option="in">India</button>
+            <button type="button" data-region-option="eu">EU</button>
+          </div>
+        </div>
         <button class="mobile-menu-btn" onclick="document.getElementById('navLinks').classList.toggle('active')" aria-label="Toggle menu">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
             <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
@@ -1975,6 +2171,49 @@
         </button>
       </div>
     </nav>
+    <script>
+      (function() {
+        function updateRegionControl(region) {
+          var display = document.querySelector('[data-region-display]');
+          var menu = document.querySelector('[data-region-menu]');
+          var label = { us: 'US', jp: 'JP', in: 'IN', eu: 'EU' }[region] || 'US';
+          if (display) display.textContent = label;
+          if (menu) {
+            menu.querySelectorAll('[data-region-option]').forEach(function(option) {
+              option.classList.toggle('active', option.getAttribute('data-region-option') === region);
+            });
+          }
+        }
+        function setPreviewRegion(region) {
+          if (!window.SIMY_REGION || !window.SIMY_REGION.set) return;
+          var next = window.SIMY_REGION.set(region, true);
+          var url = new URL(location.href);
+          url.searchParams.set('region', next);
+          history.replaceState(null, '', url.toString());
+          updateRegionControl(next);
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+          var btn = document.querySelector('[data-region-btn]');
+          var menu = document.querySelector('[data-region-menu]');
+          if (!btn || !menu) return;
+          updateRegionControl(window.SIMY_REGION && window.SIMY_REGION.get ? window.SIMY_REGION.get() : 'us');
+          btn.addEventListener('click', function(event) {
+            event.stopPropagation();
+            menu.classList.toggle('open');
+          });
+          menu.querySelectorAll('[data-region-option]').forEach(function(option) {
+            option.addEventListener('click', function(event) {
+              event.stopPropagation();
+              setPreviewRegion(option.getAttribute('data-region-option'));
+              menu.classList.remove('open');
+            });
+          });
+          document.addEventListener('click', function() {
+            menu.classList.remove('open');
+          });
+        });
+      })();
+    </script>
 
     <main class="page">
       <section class="hero">
@@ -1994,7 +2233,7 @@
           </div>
           <div class="hero-work-panel" aria-label="SIMY work in progress">
             <div class="hero-panel-head">
-              <p class="hero-panel-kicker" aria-label="Elapsed time on page"><span data-hero-clock>T+ 000000000 ms</span></p>
+              <p class="hero-panel-kicker" aria-label="Local time with milliseconds"><span data-hero-clock>JST 00:00:00.000</span></p>
               <span class="hero-live-badge" data-i18n="home.hero.live">Live</span>
             </div>
             <div class="hero-work-viewport">
@@ -2091,144 +2330,66 @@
 
       <section class="section" id="samples">
         <div class="container">
-          <p class="section-label" data-i18n="home.samples.label">What one meeting creates</p>
-          <h2 data-i18n-html="home.samples.h"><span class="copy-line">When the meeting ends,</span><span class="copy-line">the work has already moved.</span></h2>
-          <p class="section-lead" data-i18n="home.samples.p">Follow-up, proposal, CRM, and team updates are already shaped from the conversation.</p>
-          <div class="deliverable-board">
-            <div class="deliverable-row">
-              <div class="deliverable-type" data-i18n="home.samples.email.h">Follow-up email</div>
-              <div class="deliverable-copy" data-i18n-html="home.samples.email.out"><strong>Thank you for today.</strong> I will send the cost range and rollout path by Friday, with two options for reducing operational load.</div>
-              <div class="deliverable-action" data-i18n="home.samples.approve">Ready</div>
+          <p class="section-label" data-i18n="home.samples.label">After-meeting system</p>
+          <h2 data-i18n-html="home.samples.h"><span class="copy-line">When the meeting ends,</span><span class="copy-line">your Twin starts working.</span></h2>
+          <p class="section-lead" data-i18n="home.samples.p">The meeting context turns into work you can use, through the tools your team already works in.</p>
+          <div class="deliverable-board split">
+            <div class="deliverable-column">
+              <div class="deliverable-column-head">
+                <div class="deliverable-column-kicker" data-i18n="home.outputs.kicker">OUTPUT</div>
+                <div class="deliverable-column-title" data-i18n="home.outputs.title">What SIMY returns after one meeting</div>
+              </div>
+              <div class="deliverable-row">
+                <div class="deliverable-type" data-i18n="home.samples.email.h">Follow-up email</div>
+                <div class="deliverable-copy" data-i18n-html="home.samples.email.out"><strong>Thank you for today.</strong> Cost range, rollout path, objections, and the next step are already in draft.</div>
+                <div class="deliverable-action" data-i18n="home.samples.approve">Ready</div>
+              </div>
+              <div class="deliverable-row">
+                <div class="deliverable-type" data-i18n="home.samples.deck.h">Proposal / research</div>
+                <div class="deliverable-copy" data-i18n-html="home.samples.deck.out"><strong>Outline:</strong> customer issue, proposed path, risks, required decision, and next meeting agenda.</div>
+                <div class="deliverable-action" data-i18n="home.samples.open">Open</div>
+              </div>
+              <div class="deliverable-row">
+                <div class="deliverable-type" data-i18n="home.samples.crm.h">CRM / customer memo</div>
+                <div class="deliverable-copy" data-i18n-html="home.samples.crm.out"><strong>Temperature: high.</strong> Concern, owner, deadline, and next action stay with the customer context.</div>
+                <div class="deliverable-action" data-i18n="home.samples.save">Save</div>
+              </div>
+              <div class="deliverable-row">
+                <div class="deliverable-type" data-i18n="home.samples.team.h">Internal handoff</div>
+                <div class="deliverable-copy" data-i18n-html="home.samples.team.out"><strong>Route to sales, CS, and leadership.</strong> Each team gets the version they need.</div>
+                <div class="deliverable-action" data-i18n="home.samples.share">Share</div>
+              </div>
             </div>
-            <div class="deliverable-row">
-              <div class="deliverable-type" data-i18n="home.samples.deck.h">Proposal deck</div>
-              <div class="deliverable-copy" data-i18n-html="home.samples.deck.out"><strong>Outline:</strong> customer issue, proposed path, risks, decision required, next meeting agenda.</div>
-              <div class="deliverable-action" data-i18n="home.samples.open">Open</div>
-            </div>
-            <div class="deliverable-row">
-              <div class="deliverable-type" data-i18n="home.samples.crm.h">CRM memo</div>
-              <div class="deliverable-copy" data-i18n-html="home.samples.crm.out"><strong>Temperature: high.</strong> Concern: migration from current operation. Next action: rough estimate by Friday.</div>
-              <div class="deliverable-action" data-i18n="home.samples.save">Save</div>
-            </div>
-            <div class="deliverable-row">
-              <div class="deliverable-type" data-i18n="home.samples.team.h">Internal update</div>
-              <div class="deliverable-copy" data-i18n-html="home.samples.team.out"><strong>Route to sales, CS, and leadership.</strong> Owner, deadline, customer concern, and required decision are clear.</div>
-              <div class="deliverable-action" data-i18n="home.samples.share">Share</div>
+            <div class="deliverable-column">
+              <div class="deliverable-column-head">
+                <div class="deliverable-column-kicker" data-i18n="home.integrations.kicker">INTEGRATIONS</div>
+                <div class="deliverable-column-title" data-i18n="home.integrations.title">Where SIMY connects today</div>
+              </div>
+              <div class="integration-list">
+                <div class="integration-row">
+                  <div class="integration-type" data-i18n="home.integrations.meetings.k">Meetings</div>
+                  <div class="integration-copy" data-i18n-html="home.integrations.meetings.v"><strong>Zoom, Microsoft Teams, Google Meet, Slack huddles</strong><br>Recorded meetings become source context.</div>
+                </div>
+                <div class="integration-row">
+                  <div class="integration-type" data-i18n="home.integrations.messages.k">Messages</div>
+                  <div class="integration-copy" data-i18n-html="home.integrations.messages.v"><strong>Slack, Gmail</strong><br>Written context, replies, and follow-ups stay connected.</div>
+                </div>
+                <div class="integration-row">
+                  <div class="integration-type" data-i18n="home.integrations.workspace.k">Workspace</div>
+                  <div class="integration-copy" data-i18n-html="home.integrations.workspace.v"><strong>Google Calendar, Google Drive</strong><br>Calendar-based meeting capture and Drive export.</div>
+                </div>
+                <div class="integration-row">
+                  <div class="integration-type" data-i18n="home.integrations.dev.k">Development</div>
+                  <div class="integration-copy" data-i18n-html="home.integrations.dev.v"><strong>GitHub</strong><br>For teams that also want engineering work connected.</div>
+                </div>
+              </div>
             </div>
           </div>
           <div class="assurance-line" aria-label="Trust signals">
-            <span data-i18n="home.trust.1.v">Gmail, Calendar, Slack</span>
-            <span data-i18n="home.trust.2.v">Context carried forward</span>
-            <span data-i18n="home.trust.3.v">Work stays editable</span>
+            <span data-i18n="home.trust.1.v">Slack, Gmail, Zoom, Teams, Google Workspace, GitHub</span>
+            <span data-i18n="home.trust.2.v">Meeting and message context carried forward</span>
+            <span data-i18n="home.trust.3.v">Drafts stay editable</span>
             <span data-i18n="home.trust.4.v">Try it with one meeting</span>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" id="difference">
-        <div class="container">
-          <p class="section-label" data-i18n="home.diff.label">Why founders can trust it</p>
-          <h2 class="difference-title" data-i18n-html="home.diff.h"><span class="copy-line">SIMY carries the work.</span><span class="copy-line">You carry the judgment.</span></h2>
-          <p class="section-lead" data-i18n="home.diff.p">SIMY is not a second inbox. It connects the meeting to the next move, so follow-up, materials, CRM, and internal alignment keep moving together.</p>
-          <div class="twin-stack">
-            <div class="concept-card primary">
-              <h3 data-i18n="home.twin.h">SIMY prepares</h3>
-              <p data-i18n="home.twin.p">Follow-up emails, proposal outlines, CRM notes, stakeholder updates, and next actions are assembled from the meeting.</p>
-              <div class="arrow-row" data-i18n="home.twin.flow">Meeting ends -> Work moves -> Next action ready</div>
-              <div class="agent-grid">
-                <div class="agent-chip" data-i18n="home.agent.email">Follow-up email</div>
-                <div class="agent-chip" data-i18n="home.agent.deck">Deck outline</div>
-                <div class="agent-chip" data-i18n="home.agent.research">Research brief</div>
-                <div class="agent-chip" data-i18n="home.agent.crm">CRM memo</div>
-              </div>
-            </div>
-            <div class="concept-card">
-              <h3 data-i18n="home.agent.h">You lead</h3>
-              <p data-i18n="home.agent.p">Price, promise, relationship, and final wording stay with the human. SIMY clears the busywork around them.</p>
-              <div class="agent-grid">
-                <div class="agent-chip light" data-i18n="home.agent.wait1">Choose the move</div>
-                <div class="agent-chip light" data-i18n="home.agent.wait2">Shape the words</div>
-                <div class="agent-chip light" data-i18n="home.agent.wait3">Set the price</div>
-                <div class="agent-chip light" data-i18n="home.agent.wait4">Lead the relationship</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" id="loop">
-        <div class="container">
-          <p class="section-label" data-i18n="home.loop.label">How it works</p>
-          <h2 data-i18n-html="home.loop.h"><span class="copy-line">Meeting ends.</span><span class="copy-line">SIMY turns context into ready work.</span></h2>
-          <div class="loop">
-            <div class="loop-step">
-              <div class="loop-num">01</div>
-              <h3 data-i18n="home.loop.1.h">Meeting ends</h3>
-              <p data-i18n="home.loop.1.p">The conversation, commitments, risks, and next steps become living context.</p>
-            </div>
-            <div class="loop-step">
-              <div class="loop-num">02</div>
-              <h3 data-i18n="home.loop.2.h">Read what mattered</h3>
-              <p data-i18n="home.loop.2.p">SIMY identifies the decisions, stakeholder needs, risks, and output that should happen next.</p>
-            </div>
-            <div class="loop-step">
-              <div class="loop-num">03</div>
-              <h3 data-i18n="home.loop.3.h">Orchestrate agents</h3>
-              <p data-i18n="home.loop.3.p">The Twin selects the right agents and the order they should run.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section">
-        <div class="container">
-          <p class="section-label" data-i18n="home.proof.label">Use cases after the meeting</p>
-          <h2 data-i18n="home.proof.h">Sales, strategy, customers, and operations keep moving after every meeting.</h2>
-          <div class="proof-grid">
-            <div class="proof-panel dark">
-              <div class="timeline-row">
-                <div class="time">0:00</div>
-                <div>
-                  <div class="timeline-title" data-i18n="home.proof.t1.h">Meeting ends</div>
-                  <div class="timeline-copy" data-i18n="home.proof.t1.p">Decisions, asks, blockers, and promises are captured.</div>
-                </div>
-              </div>
-              <div class="timeline-row">
-                <div class="time">0:02</div>
-                <div>
-                  <div class="timeline-title" data-i18n="home.proof.t2.h">Twin Work starts</div>
-                  <div class="timeline-copy" data-i18n="home.proof.t2.p">Follow-up, deck, research, analysis, and sharing agents move in sequence.</div>
-                </div>
-              </div>
-              <div class="timeline-row">
-                <div class="time">0:08</div>
-                <div>
-                  <div class="timeline-title" data-i18n="home.proof.t3.h">Next move is ready</div>
-                  <div class="timeline-copy" data-i18n="home.proof.t3.p">The follow-up, decision point, or conversation is waiting with context intact.</div>
-                </div>
-              </div>
-            </div>
-            <div class="proof-panel">
-              <p class="section-label" data-i18n="home.persona.label">Examples beyond engineering</p>
-              <div class="persona-grid">
-                <div class="persona-card">
-                  <h3 data-i18n="home.persona.ceo.h">Executive meeting</h3>
-                  <p data-i18n="home.persona.ceo.p">Board notes, investor replies, decision logs, and stakeholder updates.</p>
-                </div>
-                <div class="persona-card">
-                  <h3 data-i18n="home.persona.sales.h">Sales meeting</h3>
-                  <p data-i18n="home.persona.sales.p">Follow-up emails, proposal decks, CRM notes, objections, and next steps.</p>
-                </div>
-                <div class="persona-card">
-                  <h3 data-i18n="home.persona.consult.h">Consulting meeting</h3>
-                  <p data-i18n="home.persona.consult.p">Issue trees, research briefs, client-ready slides, risks, and action plans.</p>
-                </div>
-                <div class="persona-card">
-                  <h3 data-i18n="home.persona.ops.h">Customer meeting</h3>
-                  <p data-i18n="home.persona.ops.p">Success plans, renewal paths, support context, owners, and internal handoffs.</p>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </section>
@@ -2418,9 +2579,8 @@
           </div>
           <div class="footer-col">
             <div class="footer-col-title" data-i18n="footer.product">Product</div>
-            <a href="#difference" data-i18n="footer.product.difference">Your Twin</a>
             <a href="#samples" data-i18n="footer.product.work">After meetings</a>
-            <a href="#loop" data-i18n="footer.product.loop">How it works</a>
+            <a href="#beyond-screen" data-i18n="home.life.label">Beyond the screen</a>
             <a href="/compare.html" data-i18n="footer.product.compare">Compare</a>
             <a href="/pricing.html" data-i18n="footer.product.pricing">Pricing</a>
           </div>
@@ -2634,12 +2794,44 @@
         function startHeroClock() {
           var clock = document.querySelector('[data-hero-clock]');
           if (!clock) return;
-          var startedAt = Date.now();
+          var clockRegions = {
+            us: { label: 'ET', timeZone: 'America/New_York' },
+            jp: { label: 'JST', timeZone: 'Asia/Tokyo' },
+            in: { label: 'IST', timeZone: 'Asia/Kolkata' },
+            eu: { label: 'CET', daylightLabel: 'CEST', timeZone: 'Europe/Berlin' }
+          };
+          var formatters = {};
           var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+          function clockConfig() {
+            var region = document.documentElement.getAttribute('data-hero-region') || 'us';
+            return clockRegions[region] || clockRegions.us;
+          }
+
+          function clockLabel(config, date) {
+            if (!config.daylightLabel) return config.label;
+            var month = date.getUTCMonth();
+            return month >= 2 && month <= 9 ? config.daylightLabel : config.label;
+          }
+
+          function formatterFor(timeZone) {
+            if (!formatters[timeZone]) {
+              formatters[timeZone] = new Intl.DateTimeFormat('en-US', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false,
+                timeZone: timeZone
+              });
+            }
+            return formatters[timeZone];
+          }
+
           function render() {
-            var elapsed = Date.now() - startedAt;
-            clock.textContent = 'T+ ' + String(elapsed).padStart(9, '0') + ' ms';
+            var now = new Date();
+            var config = clockConfig();
+            var time = formatterFor(config.timeZone).format(now);
+            clock.textContent = clockLabel(config, now) + ' ' + time + '.' + String(now.getMilliseconds()).padStart(3, '0');
           }
 
           render();
