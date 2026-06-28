@@ -453,6 +453,18 @@
         box-shadow: 0 0 0 0 rgba(94, 224, 168, 0.5);
         animation: livePulse 1.5s ease-out infinite;
       }
+      .hero-work-list {
+        position: relative;
+        z-index: 1;
+        transition: transform 0.58s cubic-bezier(0.22, 1, 0.36, 1);
+        will-change: transform;
+      }
+      .hero-work-list.is-flowing {
+        transform: translateY(var(--queue-step, -100%));
+      }
+      .hero-work-list.is-resetting {
+        transition: none;
+      }
       .hero-work-item {
         --active: #5ee0a8;
         position: relative;
@@ -464,17 +476,6 @@
         border-top: 1px solid rgba(255, 255, 255, 0.16);
         animation: itemFocus 9s ease-in-out infinite;
         animation-delay: var(--delay, 0s);
-        transition: transform 0.46s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.46s ease;
-      }
-      .hero-work-panel.is-flowing .hero-work-item {
-        transform: translateY(var(--queue-step, -100%));
-      }
-      .hero-work-panel.is-flowing .hero-work-item.is-leaving {
-        opacity: 0;
-      }
-      .hero-work-item.is-entering {
-        animation: itemFocus 9s ease-in-out infinite, itemEnter 0.42s cubic-bezier(0.22, 1, 0.36, 1);
-        animation-delay: var(--delay, 0s), 0s;
       }
       .hero-work-item::after {
         content: '';
@@ -561,10 +562,6 @@
       @keyframes itemFocus {
         0%, 100% { background: transparent; }
         10%, 28% { background: rgba(255, 255, 255, 0.035); }
-      }
-      @keyframes itemEnter {
-        0% { opacity: 0; transform: translateY(28px); }
-        100% { opacity: 1; transform: translateY(0); }
       }
       @keyframes railFocus {
         0%, 100% { opacity: 0; }
@@ -1949,28 +1946,30 @@
               <p class="hero-panel-kicker" data-i18n="home.hero.queue">Your Digital Twin is already carrying it</p>
               <span class="hero-live-badge" data-i18n="home.hero.live">Live</span>
             </div>
-            <div class="hero-work-item" style="--delay: 0s; --active: #5ee0a8;">
-              <span class="hero-work-dot"></span>
-              <div class="hero-work-copy" data-hero-work-copy>
-                <h3 data-hero-work-title>Twin prepared the follow-up</h3>
-                <p data-hero-work-body>Your context, tone, and next step are reflected.</p>
-                <div class="hero-work-progress"><span></span></div>
+            <div class="hero-work-list">
+              <div class="hero-work-item" style="--delay: 0s; --active: #5ee0a8;">
+                <span class="hero-work-dot"></span>
+                <div class="hero-work-copy" data-hero-work-copy>
+                  <h3 data-hero-work-title>Twin prepared the follow-up</h3>
+                  <p data-hero-work-body>Your context, tone, and next step are reflected.</p>
+                  <div class="hero-work-progress"><span></span></div>
+                </div>
               </div>
-            </div>
-            <div class="hero-work-item" style="--delay: 1.2s; --active: var(--blue);">
-              <span class="hero-work-dot blue"></span>
-              <div class="hero-work-copy" data-hero-work-copy>
-                <h3 data-hero-work-title>Twin updated the proposal</h3>
-                <p data-hero-work-body>The story, risks, and asks are shaped for you.</p>
-                <div class="hero-work-progress"><span></span></div>
+              <div class="hero-work-item" style="--delay: 1.2s; --active: var(--blue);">
+                <span class="hero-work-dot blue"></span>
+                <div class="hero-work-copy" data-hero-work-copy>
+                  <h3 data-hero-work-title>Twin updated the proposal</h3>
+                  <p data-hero-work-body>The story, risks, and asks are shaped for you.</p>
+                  <div class="hero-work-progress"><span></span></div>
+                </div>
               </div>
-            </div>
-            <div class="hero-work-item" style="--delay: 2.4s; --active: #ffb020;">
-              <span class="hero-work-dot amber"></span>
-              <div class="hero-work-copy" data-hero-work-copy>
-                <h3 data-hero-work-title>Twin routed the next actions</h3>
-                <p data-hero-work-body>Each stakeholder gets your context at the right depth.</p>
-                <div class="hero-work-progress"><span></span></div>
+              <div class="hero-work-item" style="--delay: 2.4s; --active: #ffb020;">
+                <span class="hero-work-dot amber"></span>
+                <div class="hero-work-copy" data-hero-work-copy>
+                  <h3 data-hero-work-title>Twin routed the next actions</h3>
+                  <p data-hero-work-body>Each stakeholder gets your context at the right depth.</p>
+                  <div class="hero-work-progress"><span></span></div>
+                </div>
               </div>
             </div>
           </div>
@@ -2580,9 +2579,9 @@
         }
 
         function startHeroWorkRotation() {
-          var panel = document.querySelector('.hero-work-panel');
-          var items = Array.prototype.slice.call(document.querySelectorAll('.hero-work-item'));
-          if (!panel || items.length === 0) return;
+          var list = document.querySelector('.hero-work-list');
+          var items = list ? Array.prototype.slice.call(list.querySelectorAll('.hero-work-item')) : [];
+          if (!list || items.length === 0) return;
           var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
           var currentLang = document.documentElement.lang === 'ja' ? 'ja' : 'en';
           var queue = shuffle(taskSets[currentLang]);
@@ -2611,20 +2610,38 @@
             }).filter(Boolean);
           }
 
+          function refreshItems() {
+            items = Array.prototype.slice.call(list.querySelectorAll('.hero-work-item'));
+          }
+
           function renderInitial() {
             currentLang = document.documentElement.lang === 'ja' ? 'ja' : 'en';
             queue = shuffle(taskSets[currentLang]);
             index = 0;
+            refreshItems();
             getRows().forEach(function(row) {
               setRow(row, nextTask());
             });
           }
 
-          function rotateDomOrder(firstItem, task) {
-            var row = firstItem.querySelector('[data-hero-work-copy]');
-            panel.appendChild(firstItem);
-            items = Array.prototype.slice.call(document.querySelectorAll('.hero-work-item'));
+          function appendNextItem(task) {
+            var template = items[items.length - 1] || items[0];
+            var nextItem = template.cloneNode(true);
+            var row = nextItem.querySelector('[data-hero-work-copy]');
             if (row) setRow(row, task);
+            list.appendChild(nextItem);
+            refreshItems();
+            return nextItem;
+          }
+
+          function finishQueueStep(firstItem) {
+            list.classList.add('is-resetting');
+            firstItem.remove();
+            list.classList.remove('is-flowing');
+            refreshItems();
+            void list.offsetHeight;
+            list.classList.remove('is-resetting');
+            isAnimating = false;
           }
 
           function rotateQueue() {
@@ -2632,24 +2649,18 @@
             isAnimating = true;
             var task = nextTask();
             var firstItem = items[0];
+            appendNextItem(task);
             if (reduceMotion) {
-              rotateDomOrder(firstItem, task);
-              isAnimating = false;
+              finishQueueStep(firstItem);
               return;
             }
-            panel.style.setProperty('--queue-step', '-' + firstItem.offsetHeight + 'px');
-            firstItem.classList.add('is-leaving');
-            panel.classList.add('is-flowing');
+            list.style.setProperty('--queue-step', '-' + firstItem.offsetHeight + 'px');
+            window.requestAnimationFrame(function() {
+              list.classList.add('is-flowing');
+            });
             window.setTimeout(function() {
-              rotateDomOrder(firstItem, task);
-              panel.classList.remove('is-flowing');
-              firstItem.classList.remove('is-leaving');
-              firstItem.classList.add('is-entering');
-              window.setTimeout(function() {
-                firstItem.classList.remove('is-entering');
-                isAnimating = false;
-              }, 430);
-            }, 460);
+              finishQueueStep(firstItem);
+            }, 620);
           }
 
           renderInitial();
