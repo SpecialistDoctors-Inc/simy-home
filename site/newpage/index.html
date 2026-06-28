@@ -305,24 +305,11 @@
         background-position: center center;
         background-repeat: no-repeat;
         background-size: cover;
-        opacity: 0;
+        opacity: 1;
         transform: scale(1.04);
-        animation: heroScene 40s ease-in-out infinite;
-        will-change: opacity, transform;
       }
-      .hero-bg.meeting { background-image: url('/assets/hero-meeting-twin-work.jpg'); animation-delay: 0s; }
+      .hero-bg.meeting { background-image: url('/assets/hero-meeting-twin-work.jpg'); }
       html[data-hero-region="jp"] .hero-bg.meeting { background-image: url('/assets/hero-meeting-twin-work-jp.png'); }
-      .hero-bg.running { background-image: url('/assets/hero-life-running.jpg'); animation-delay: 8s; }
-      .hero-bg.family { background-image: url('/assets/hero-life-family.jpg'); animation-delay: 16s; }
-      .hero-bg.dinner { background-image: url('/assets/hero-life-dinner.jpg'); animation-delay: 24s; }
-      .hero-bg.travel { background-image: url('/assets/hero-life-travel.jpg'); animation-delay: 32s; }
-      @keyframes heroScene {
-        0% { opacity: 0; transform: scale(1.04); }
-        5% { opacity: 1; transform: scale(1.035); }
-        18% { opacity: 1; transform: scale(1.075); }
-        24% { opacity: 0; transform: scale(1.09); }
-        100% { opacity: 0; transform: scale(1.09); }
-      }
       .hero-inner {
         position: relative;
         z-index: 2;
@@ -1440,6 +1427,54 @@
         font-weight: 740;
         text-decoration: none;
       }
+      .life-section {
+        padding: 96px 0;
+        border-top: 1px solid var(--line);
+        background: #fff;
+      }
+      .life-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
+        gap: 44px;
+        align-items: center;
+      }
+      .life-copy h2 {
+        max-width: 620px;
+        margin: 0;
+        font-size: 3rem;
+        line-height: 1.08;
+        letter-spacing: 0;
+      }
+      .life-copy p {
+        max-width: 590px;
+        margin: 20px 0 0;
+        color: var(--muted);
+        font-size: 1.05rem;
+        line-height: 1.72;
+      }
+      .life-scenes {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 8px;
+        min-height: 360px;
+      }
+      .life-scene {
+        position: relative;
+        overflow: hidden;
+        border-radius: 8px;
+        background-position: center;
+        background-size: cover;
+      }
+      .life-scene::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0.32));
+      }
+      .life-scene.running { background-image: url('/assets/hero-life-running.jpg'); }
+      .life-scene.family { background-image: url('/assets/hero-life-family.jpg'); }
+      .life-scene.dinner { background-image: url('/assets/hero-life-dinner.jpg'); }
+      .life-scene.travel { background-image: url('/assets/hero-life-travel.jpg'); }
       .final-cta {
         padding: 96px 0 112px;
         background: #07101f;
@@ -1516,6 +1551,9 @@
           grid-template-columns: 1fr;
         }
         .proof-grid {
+          grid-template-columns: 1fr;
+        }
+        .life-layout {
           grid-template-columns: 1fr;
         }
       }
@@ -1730,6 +1768,7 @@
           font-size: 1rem;
         }
         .section,
+        .life-section,
         .final-cta {
           padding: 68px 0;
         }
@@ -1737,6 +1776,7 @@
           padding-top: 44px;
         }
         .section h2,
+        .life-copy h2,
         .final-cta h2 {
           font-size: clamp(1.5rem, 6.2vw, 1.78rem);
           line-height: 1.12;
@@ -1799,6 +1839,13 @@
         .timeline-row {
           grid-template-columns: 58px 1fr;
         }
+        .life-layout {
+          gap: 28px;
+        }
+        .life-scenes {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          min-height: 460px;
+        }
       }
       @media (max-width: 430px) {
         .hero {
@@ -1817,6 +1864,8 @@
         .value-strip p,
         .section h2,
         .section-lead,
+        .life-copy h2,
+        .life-copy p,
         .final-cta h2,
         .final-cta p {
           width: calc(100vw - 2rem);
@@ -1832,9 +1881,13 @@
           padding: 14px 16px;
         }
         .value-strip h2,
+        .life-copy h2,
         .section h2,
         .final-cta h2 {
           font-size: clamp(1.42rem, 6.7vw, 1.6rem);
+        }
+        .life-scenes {
+          min-height: 520px;
         }
         .hero-work-copy {
           min-height: 68px;
@@ -1903,10 +1956,6 @@
       <section class="hero">
         <div class="hero-bg-stack" aria-hidden="true">
           <div class="hero-bg meeting"></div>
-          <div class="hero-bg running"></div>
-          <div class="hero-bg family"></div>
-          <div class="hero-bg dinner"></div>
-          <div class="hero-bg travel"></div>
         </div>
         <div class="hero-scrim" aria-hidden="true"></div>
         <div class="container hero-inner">
@@ -2153,6 +2202,22 @@
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="life-section" id="beyond-screen">
+        <div class="container life-layout">
+          <div class="life-copy">
+            <p class="section-label" data-i18n="home.life.label">Beyond the screen</p>
+            <h2 data-i18n-html="home.life.h"><span class="copy-line">Once the work is moving,</span><span class="copy-line">you do not have to stay at the screen.</span></h2>
+            <p data-i18n="home.life.p">SIMY is work software first. It drafts the follow-up, prepares the deck, updates the CRM, and routes the handoff. Only then does the bigger promise make sense: the time after meetings can return to customers, strategy, relationships, and a life outside the laptop.</p>
+          </div>
+          <div class="life-scenes" aria-label="Life beyond the screen">
+            <div class="life-scene running"></div>
+            <div class="life-scene family"></div>
+            <div class="life-scene dinner"></div>
+            <div class="life-scene travel"></div>
           </div>
         </div>
       </section>
