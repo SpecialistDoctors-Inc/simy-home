@@ -453,9 +453,14 @@
         box-shadow: 0 0 0 0 rgba(94, 224, 168, 0.5);
         animation: livePulse 1.5s ease-out infinite;
       }
-      .hero-work-list {
+      .hero-work-viewport {
         position: relative;
         z-index: 1;
+        overflow: hidden;
+        height: var(--queue-viewport-height, auto);
+      }
+      .hero-work-list {
+        position: relative;
         transition: transform 0.58s cubic-bezier(0.22, 1, 0.36, 1);
         will-change: transform;
       }
@@ -1946,29 +1951,31 @@
               <p class="hero-panel-kicker" data-i18n="home.hero.queue">Your Digital Twin is already carrying it</p>
               <span class="hero-live-badge" data-i18n="home.hero.live">Live</span>
             </div>
-            <div class="hero-work-list">
-              <div class="hero-work-item" style="--delay: 0s; --active: #5ee0a8;">
-                <span class="hero-work-dot"></span>
-                <div class="hero-work-copy" data-hero-work-copy>
-                  <h3 data-hero-work-title>Twin prepared the follow-up</h3>
-                  <p data-hero-work-body>Your context, tone, and next step are reflected.</p>
-                  <div class="hero-work-progress"><span></span></div>
+            <div class="hero-work-viewport">
+              <div class="hero-work-list">
+                <div class="hero-work-item" style="--delay: 0s; --active: #5ee0a8;">
+                  <span class="hero-work-dot"></span>
+                  <div class="hero-work-copy" data-hero-work-copy>
+                    <h3 data-hero-work-title>Twin prepared the follow-up</h3>
+                    <p data-hero-work-body>Your context, tone, and next step are reflected.</p>
+                    <div class="hero-work-progress"><span></span></div>
+                  </div>
                 </div>
-              </div>
-              <div class="hero-work-item" style="--delay: 1.2s; --active: var(--blue);">
-                <span class="hero-work-dot blue"></span>
-                <div class="hero-work-copy" data-hero-work-copy>
-                  <h3 data-hero-work-title>Twin updated the proposal</h3>
-                  <p data-hero-work-body>The story, risks, and asks are shaped for you.</p>
-                  <div class="hero-work-progress"><span></span></div>
+                <div class="hero-work-item" style="--delay: 1.2s; --active: var(--blue);">
+                  <span class="hero-work-dot blue"></span>
+                  <div class="hero-work-copy" data-hero-work-copy>
+                    <h3 data-hero-work-title>Twin updated the proposal</h3>
+                    <p data-hero-work-body>The story, risks, and asks are shaped for you.</p>
+                    <div class="hero-work-progress"><span></span></div>
+                  </div>
                 </div>
-              </div>
-              <div class="hero-work-item" style="--delay: 2.4s; --active: #ffb020;">
-                <span class="hero-work-dot amber"></span>
-                <div class="hero-work-copy" data-hero-work-copy>
-                  <h3 data-hero-work-title>Twin routed the next actions</h3>
-                  <p data-hero-work-body>Each stakeholder gets your context at the right depth.</p>
-                  <div class="hero-work-progress"><span></span></div>
+                <div class="hero-work-item" style="--delay: 2.4s; --active: #ffb020;">
+                  <span class="hero-work-dot amber"></span>
+                  <div class="hero-work-copy" data-hero-work-copy>
+                    <h3 data-hero-work-title>Twin routed the next actions</h3>
+                    <p data-hero-work-body>Each stakeholder gets your context at the right depth.</p>
+                    <div class="hero-work-progress"><span></span></div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -2579,9 +2586,10 @@
         }
 
         function startHeroWorkRotation() {
+          var viewport = document.querySelector('.hero-work-viewport');
           var list = document.querySelector('.hero-work-list');
           var items = list ? Array.prototype.slice.call(list.querySelectorAll('.hero-work-item')) : [];
-          if (!list || items.length === 0) return;
+          if (!viewport || !list || items.length === 0) return;
           var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
           var currentLang = document.documentElement.lang === 'ja' ? 'ja' : 'en';
           var queue = shuffle(taskSets[currentLang]);
@@ -2614,6 +2622,15 @@
             items = Array.prototype.slice.call(list.querySelectorAll('.hero-work-item'));
           }
 
+          function setViewportHeight() {
+            var visibleHeight = items.slice(0, 3).reduce(function(total, item) {
+              return total + item.offsetHeight;
+            }, 0);
+            if (visibleHeight > 0) {
+              viewport.style.setProperty('--queue-viewport-height', visibleHeight + 'px');
+            }
+          }
+
           function renderInitial() {
             currentLang = document.documentElement.lang === 'ja' ? 'ja' : 'en';
             queue = shuffle(taskSets[currentLang]);
@@ -2622,6 +2639,7 @@
             getRows().forEach(function(row) {
               setRow(row, nextTask());
             });
+            setViewportHeight();
           }
 
           function appendNextItem(task) {
@@ -2639,6 +2657,7 @@
             firstItem.remove();
             list.classList.remove('is-flowing');
             refreshItems();
+            setViewportHeight();
             void list.offsetHeight;
             list.classList.remove('is-resetting');
             isAnimating = false;
@@ -2664,6 +2683,10 @@
           }
 
           renderInitial();
+          window.addEventListener('resize', function() {
+            refreshItems();
+            setViewportHeight();
+          });
           window.setInterval(rotateQueue, 2600);
 
           new MutationObserver(function() {
