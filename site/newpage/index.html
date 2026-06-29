@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
     <title>SIMY - Meeting Ends. Your Twin Starts Working.</title>
-    <meta name="description" content="Meeting ends. Your Twin starts working. SIMY moves follow-ups, decks, research, analysis, updates, and next actions forward while you step into the next conversation, customer, team, or idea." />
+    <meta name="description" content="Meeting ends. Your Twin starts working. Your Twin moves follow-ups, decks, research, analysis, updates, and next actions forward while you step into the next conversation, customer, team, or idea." />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
     <link rel="apple-touch-icon" href="/favicon-180.png">
     <link rel="canonical" href="https://simy.one/newpage/">
@@ -12,7 +12,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://simy.one/newpage/">
     <meta property="og:title" content="SIMY - Meeting Ends. Your Twin Starts Working.">
-    <meta property="og:description" content="SIMY moves the work after meetings forward, so the next brief, deck, update, and action are ready when you return.">
+    <meta property="og:description" content="Your Twin moves the work after meetings forward, so the next brief, deck, update, and action are ready when you return.">
     <meta property="og:site_name" content="SIMY">
     <meta property="og:image" content="https://simy.one/ogp.png">
     <meta property="og:image:width" content="1200">
@@ -245,87 +245,17 @@
         font-weight: 750;
         letter-spacing: 0;
       }
-      .nav-version {
-        color: var(--blue);
-        font-family: 'Geist Mono', monospace;
-        font-size: 13px;
-        letter-spacing: 0;
-      }
-      .nav-links {
-        display: flex;
-        align-items: center;
-        gap: 30px;
-      }
-      .nav-links a,
       .nav-signin {
         color: var(--muted);
         font-size: 0.8125rem;
         text-decoration: none;
       }
-      .nav-links a:hover,
       .nav-signin:hover { color: var(--ink); }
       .nav-right {
         display: flex;
         align-items: center;
         gap: 18px;
-      }
-      .region-switcher {
-        position: relative;
-        margin-left: 10px;
-      }
-      .region-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        min-height: 32px;
-        padding: 4px 9px;
-        border: 1px solid var(--line);
-        border-radius: 6px;
-        background: #fff;
-        color: var(--muted);
-        font-family: inherit;
-        font-size: 0.72rem;
-        cursor: pointer;
-      }
-      .region-btn strong {
-        color: var(--ink);
-        font-family: 'Geist Mono', monospace;
-        font-size: 0.72rem;
-        text-transform: uppercase;
-      }
-      .region-menu {
-        display: none;
-        position: absolute;
-        top: 100%;
-        right: 0;
-        z-index: 120;
-        min-width: 128px;
-        margin-top: 8px;
-        padding: 6px;
-        border: 1px solid var(--line);
-        border-radius: 10px;
-        background: #fff;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-      }
-      .region-menu.open {
-        display: grid;
-        gap: 2px;
-      }
-      .region-menu button {
-        width: 100%;
-        padding: 8px 10px;
-        border: 0;
-        border-radius: 6px;
-        background: transparent;
-        color: var(--ink);
-        font-family: inherit;
-        font-size: 0.78rem;
-        text-align: left;
-        cursor: pointer;
-      }
-      .region-menu button:hover,
-      .region-menu button.active {
-        background: #f1f1ed;
+        margin-left: auto;
       }
       .btn-primary,
       .btn-secondary,
@@ -358,14 +288,6 @@
       .btn-secondary:hover {
         background: #fff;
         border-color: #fff;
-      }
-      .mobile-menu-btn {
-        display: none;
-        padding: 8px;
-        border: 0;
-        background: transparent;
-        color: var(--ink);
-        cursor: pointer;
       }
       .page {
         min-height: 100vh;
@@ -1829,44 +1751,11 @@
           height: 56px;
           padding: 0 1.25rem;
         }
-        .nav-version,
         .nav-right {
           display: none;
         }
-        .region-switcher {
+        .nav-inner > .lang-switcher {
           margin-left: auto;
-        }
-        .region-btn span {
-          display: none;
-        }
-        .nav-links {
-          display: none;
-        }
-        .nav-links.active {
-          display: flex;
-          position: fixed;
-          top: 56px;
-          left: 0;
-          right: 0;
-          flex-direction: column;
-          align-items: stretch;
-          gap: 0;
-          padding: 0.5rem 1.25rem 1rem;
-          background: #fafaf8;
-          border-bottom: 1px solid var(--line);
-          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-        }
-        .nav-links.active a {
-          display: block;
-          padding: 0.85rem 0;
-          border-bottom: 1px solid #ededea;
-          color: var(--ink);
-          font-size: 1rem;
-        }
-        .mobile-menu-btn {
-          display: flex;
-          align-items: center;
-          justify-content: center;
         }
         .container {
           padding: 0 1.25rem;
@@ -2187,82 +2076,13 @@
         <a href="/" class="nav-logo">
           <img class="nav-logo-s" src="/simy-icon-square.png" alt="" width="28" height="28">
           <span class="nav-brand">SIMY</span>
-          <span class="nav-version">v3.0</span>
         </a>
-        <div class="nav-links" id="navLinks">
-          <a href="/" data-i18n="nav.home">Home</a>
-          <a href="#samples" data-i18n="nav.work">After meetings</a>
-          <a href="#beyond-screen" data-i18n="home.life.label">Beyond the screen</a>
-          <a href="/compare.html" data-i18n="nav.compare">Compare</a>
-          <a href="/pricing.html" data-i18n="nav.pricing">Pricing</a>
-          <a href="mailto:sales@simy.one" data-i18n="footer.company.contact">Contact</a>
-        </div>
         <div class="nav-right">
           <a href="https://app.simy.one/login" class="nav-signin" data-i18n="nav.signin">Sign in</a>
           <a href="https://app.simy.one/signup?plan=pro&interval=yearly" class="btn-primary" data-i18n="home.cta.primary">Start with Pro</a>
         </div>
-        <div class="region-switcher" aria-label="Preview region">
-          <button type="button" class="region-btn" data-region-btn>
-            <span>Region</span>
-            <strong data-region-display>US</strong>
-          </button>
-          <div class="region-menu" data-region-menu>
-            <button type="button" data-region-option="us">US</button>
-            <button type="button" data-region-option="jp">Japan</button>
-            <button type="button" data-region-option="in">India</button>
-            <button type="button" data-region-option="eu">EU</button>
-          </div>
-        </div>
-        <button class="mobile-menu-btn" onclick="document.getElementById('navLinks').classList.toggle('active')" aria-label="Toggle menu">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-            <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
-          </svg>
-        </button>
       </div>
     </nav>
-    <script>
-      (function() {
-        function updateRegionControl(region) {
-          var display = document.querySelector('[data-region-display]');
-          var menu = document.querySelector('[data-region-menu]');
-          var label = { us: 'US', jp: 'JP', in: 'IN', eu: 'EU' }[region] || 'US';
-          if (display) display.textContent = label;
-          if (menu) {
-            menu.querySelectorAll('[data-region-option]').forEach(function(option) {
-              option.classList.toggle('active', option.getAttribute('data-region-option') === region);
-            });
-          }
-        }
-        function setPreviewRegion(region) {
-          if (!window.SIMY_REGION || !window.SIMY_REGION.set) return;
-          var next = window.SIMY_REGION.set(region, true);
-          var url = new URL(location.href);
-          url.searchParams.set('region', next);
-          history.replaceState(null, '', url.toString());
-          updateRegionControl(next);
-        }
-        document.addEventListener('DOMContentLoaded', function() {
-          var btn = document.querySelector('[data-region-btn]');
-          var menu = document.querySelector('[data-region-menu]');
-          if (!btn || !menu) return;
-          updateRegionControl(window.SIMY_REGION && window.SIMY_REGION.get ? window.SIMY_REGION.get() : 'us');
-          btn.addEventListener('click', function(event) {
-            event.stopPropagation();
-            menu.classList.toggle('open');
-          });
-          menu.querySelectorAll('[data-region-option]').forEach(function(option) {
-            option.addEventListener('click', function(event) {
-              event.stopPropagation();
-              setPreviewRegion(option.getAttribute('data-region-option'));
-              menu.classList.remove('open');
-            });
-          });
-          document.addEventListener('click', function() {
-            menu.classList.remove('open');
-          });
-        });
-      })();
-    </script>
 
     <main class="page">
       <section class="hero">
@@ -2274,10 +2094,10 @@
           <div class="hero-copy">
             <div class="eyebrow" data-i18n="home.eyebrow">The moment after the meeting</div>
             <h1 data-i18n-html="home.h1"><span class="hero-title-line">Meeting ends.</span><span class="hero-title-line">Your Twin starts</span><span class="hero-title-line">working.</span></h1>
-            <p class="hero-sub" data-i18n="home.sub">The moment the meeting ends, SIMY starts the follow-ups, decks, research, analysis, updates, and next actions. The work keeps moving while you step into the next conversation, customer, team, or idea.</p>
+            <p class="hero-sub" data-i18n="home.sub">The moment the meeting ends, your Twin starts the follow-ups, decks, research, analysis, updates, and next actions. The work keeps moving while you step into the next conversation, customer, team, or idea.</p>
             <div class="hero-actions">
               <a class="btn-primary" href="https://app.simy.one/signup?plan=pro&interval=yearly" data-i18n="home.cta.primary">Start with Pro</a>
-              <a class="btn-secondary" href="#samples" data-i18n="home.cta.secondary">See samples</a>
+              <a class="btn-secondary" href="#samples" data-i18n="home.cta.secondary">See after-meeting work</a>
             </div>
           </div>
           <div class="hero-work-panel" aria-label="SIMY work in progress">
@@ -2326,7 +2146,7 @@
             <div class="deliverable-column">
               <div class="deliverable-column-head">
                 <div class="deliverable-column-kicker" data-i18n="home.outputs.kicker">OUTPUT</div>
-                <div class="deliverable-column-title" data-i18n="home.outputs.title">What SIMY returns after one meeting</div>
+                <div class="deliverable-column-title" data-i18n="home.outputs.title">What your Twin returns after one meeting</div>
               </div>
               <div class="deliverable-row">
                 <div class="deliverable-type" data-i18n="home.samples.email.h">Follow-up email</div>
@@ -2454,8 +2274,8 @@
         <div class="container life-layout">
           <div class="life-copy">
             <p class="section-label" data-i18n="home.life.label">Beyond the screen</p>
-            <h2 data-i18n-html="home.life.h"><span class="copy-line">Once the work is moving,</span><span class="copy-line">you do not have to stay at the screen.</span></h2>
-            <p data-i18n="home.life.p">SIMY is work software first. It prepares the follow-up, shapes the deck, updates the CRM, and routes the handoff. Only then does the bigger promise make sense: the time after meetings can return to customers, strategy, relationships, and a life outside the laptop.</p>
+            <h2 data-i18n-html="home.life.h"><span class="copy-line">Once your Twin starts moving,</span><span class="copy-line">you do not have to stay at the screen.</span></h2>
+            <p data-i18n="home.life.p">SIMY is work software first. Your Twin prepares the follow-up, shapes the deck, updates the CRM, and routes the handoff. Only then does the bigger promise make sense: the time after meetings can return to customers, strategy, relationships, and a life outside the laptop.</p>
           </div>
           <div class="life-scenes" aria-label="Life beyond the screen">
             <div class="life-scene running"></div>
@@ -2617,7 +2437,7 @@
       <section class="final-cta">
         <div class="container">
           <h2 data-i18n-html="home.final.h"><span class="copy-line">Meeting ends.</span><span class="copy-line">Your next move is ready.</span></h2>
-          <p data-i18n="home.final.p">Create the Twin that starts working the moment the meeting ends. Let the work move into briefs, updates, and next actions instead of another hour in tabs.</p>
+          <p data-i18n="home.final.p">Create the Twin that starts working the moment the meeting ends. Let your Twin move the work into briefs, updates, and next actions instead of another hour in tabs.</p>
           <div class="final-actions">
             <a class="btn-primary" href="https://app.simy.one/signup?plan=pro&interval=yearly" data-i18n="home.cta.primary">Start with Pro</a>
             <a class="btn-secondary" href="mailto:sales@simy.one" data-i18n="home.final.secondary">Talk to sales</a>
@@ -2637,11 +2457,12 @@
             <div class="footer-col-title" data-i18n="footer.product">Product</div>
             <a href="#samples" data-i18n="footer.product.work">After meetings</a>
             <a href="#beyond-screen" data-i18n="home.life.label">Beyond the screen</a>
-            <a href="/compare.html" data-i18n="footer.product.compare">Compare</a>
+            <a href="/newpage/compare.html" data-i18n="footer.product.compare">Compare</a>
             <a href="/pricing.html" data-i18n="footer.product.pricing">Pricing</a>
           </div>
           <div class="footer-col">
             <div class="footer-col-title" data-i18n="footer.company">Company</div>
+            <a href="/newpage/press-release.html">Press release</a>
             <a href="mailto:sales@simy.one" data-i18n="footer.company.contact">Contact</a>
             <a href="https://app.simy.one/login" data-i18n="nav.signin">Sign in</a>
             <a href="https://app.simy.one/signup?plan=pro&interval=yearly" data-i18n="footer.company.signup">Create account</a>
