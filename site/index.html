@@ -91,15 +91,67 @@
           in: 'India',
           eu: 'Europe'
         };
+        var regionAssets = {
+          us: {
+            hero: '/assets/hero-meeting-twin-work.jpg',
+            life: {
+              running: '/assets/hero-life-running.jpg',
+              family: '/assets/hero-life-family.jpg',
+              dinner: '/assets/hero-life-dinner.jpg',
+              travel: '/assets/hero-life-travel.jpg'
+            }
+          },
+          jp: {
+            hero: '/assets/hero-meeting-twin-work-jp.png',
+            life: {
+              running: '/assets/hero-life-running-jp.jpg',
+              family: '/assets/hero-life-family-jp.jpg',
+              dinner: '/assets/hero-life-dinner-jp.jpg',
+              travel: '/assets/hero-life-travel-jp.jpg'
+            }
+          },
+          eu: {
+            hero: '/assets/hero-meeting-twin-work-eu.jpg',
+            life: {
+              running: '/assets/hero-life-running-eu.jpg',
+              family: '/assets/hero-life-family-eu.jpg',
+              dinner: '/assets/hero-life-dinner-eu.jpg',
+              travel: '/assets/hero-life-travel-eu.jpg'
+            }
+          },
+          in: {
+            hero: '/assets/hero-meeting-twin-work-in.jpg',
+            life: {
+              running: '/assets/hero-life-running-in.jpg',
+              family: '/assets/hero-life-family-in.jpg',
+              dinner: '/assets/hero-life-dinner-in.jpg',
+              travel: '/assets/hero-life-travel-in.jpg'
+            }
+          }
+        };
         function isSupportedRegion(region) {
           return Object.prototype.hasOwnProperty.call(regionLabels, region);
+        }
+        function setBackgroundImage(element, path) {
+          if (element && path) element.style.backgroundImage = 'url("' + path + '")';
+        }
+        function syncRegionImages(region) {
+          var assets = regionAssets[region] || regionAssets.us;
+          setBackgroundImage(document.querySelector('.hero-bg.meeting'), assets.hero);
+          Object.keys(assets.life).forEach(function(key) {
+            setBackgroundImage(document.querySelector('.life-scene.' + key), assets.life[key]);
+          });
         }
         function setHeroRegion(region, persist) {
           if (!isSupportedRegion(region)) region = 'us';
           document.documentElement.setAttribute('data-hero-region', region);
+          syncRegionImages(region);
           if (persist) {
             try { localStorage.setItem('simy-region', region); } catch (e) {}
           }
+          try {
+            window.dispatchEvent(new CustomEvent('simy:regionchange', { detail: { region: region } }));
+          } catch (e) {}
           return region;
         }
         function regionFromLang(lang) {
@@ -124,6 +176,7 @@
           set: setHeroRegion,
           get: function() { return document.documentElement.getAttribute('data-hero-region') || 'us'; }
         };
+        window.SIMYRegion = window.SIMY_REGION;
         var timeZone = '';
         try { timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) {}
         var language = (navigator.language || navigator.userLanguage || '').toLowerCase();

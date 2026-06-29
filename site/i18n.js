@@ -18,7 +18,7 @@
     'it', 'hi', 'te', 'kn', 'ko', 'vi', 'th', 'id', 'ru', 'pt-BR'
   ];
   var DEFAULT = 'en';
-  var TWIN_PAGE_LOCALES = ['en', 'ja'];
+  var TWIN_PAGE_LOCALES = SUPPORTED;
   var CACHE = {};
   var CURRENT_LANG = DEFAULT;
 
@@ -91,7 +91,7 @@
   }
 
   function safeLangForPage(lang) {
-    return isTwinPage() && TWIN_PAGE_LOCALES.indexOf(lang) === -1 ? DEFAULT : lang;
+    return pageLocales().indexOf(lang) === -1 ? DEFAULT : lang;
   }
 
   /* ── Detect preferred language ─────────────────────────────── */
@@ -1061,9 +1061,14 @@
       }
     }
 
+    function regionApi() {
+      return window.SIMYRegion || window.SIMY_REGION || null;
+    }
+
     function activeRegion() {
-      var fromPage = window.SIMYRegion && typeof window.SIMYRegion.get === 'function'
-        ? window.SIMYRegion.get()
+      var api = regionApi();
+      var fromPage = api && typeof api.get === 'function'
+        ? api.get()
         : '';
       return (fromPage || savedRegion() || 'us').toLowerCase();
     }
@@ -1090,8 +1095,9 @@
       item.addEventListener('click', function(event) {
         event.stopPropagation();
         var region = item.getAttribute('data-region-btn');
-        if (window.SIMYRegion && typeof window.SIMYRegion.set === 'function') {
-          window.SIMYRegion.set(region, true);
+        var api = regionApi();
+        if (api && typeof api.set === 'function') {
+          api.set(region, true);
         } else {
           try { localStorage.setItem('simy-region', region); } catch (e) {}
         }
