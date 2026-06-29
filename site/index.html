@@ -88,62 +88,65 @@
         var regionLabels = {
           us: 'United States',
           jp: 'Japan',
-          cn: 'Mainland China',
-          tw: 'Taiwan',
-          fr: 'France',
+          gb: 'United Kingdom',
           de: 'Germany',
-          es: 'Spain',
-          sa: 'Saudi Arabia',
-          it: 'Italy',
-          in: 'India - Hindi',
-          'in-te': 'India - Telugu',
-          'in-kn': 'India - Kannada',
+          fr: 'France',
+          ca: 'Canada',
+          in: 'India',
           kr: 'South Korea',
-          vn: 'Vietnam',
-          th: 'Thailand',
+          br: 'Brazil',
+          mx: 'Mexico',
           id: 'Indonesia',
-          ru: 'Russia',
-          br: 'Brazil'
+          vn: 'Vietnam',
+          es: 'Spain',
+          it: 'Italy',
+          sa: 'Saudi Arabia',
+          tw: 'Taiwan',
+          th: 'Thailand',
+          my: 'Malaysia',
+          ph: 'Philippines'
         };
         var regionLanguage = {
           us: 'en',
           jp: 'ja',
-          cn: 'zh-Hans',
-          tw: 'zh-Hant',
-          fr: 'fr',
+          gb: 'en',
           de: 'de',
-          es: 'es',
-          sa: 'ar',
-          it: 'it',
+          fr: 'fr',
+          ca: 'en',
           in: 'hi',
-          'in-te': 'te',
-          'in-kn': 'kn',
           kr: 'ko',
-          vn: 'vi',
-          th: 'th',
+          br: 'pt-BR',
+          mx: 'es',
           id: 'id',
-          ru: 'ru',
-          br: 'pt-BR'
+          vn: 'vi',
+          es: 'es',
+          it: 'it',
+          sa: 'ar',
+          tw: 'zh-Hant',
+          th: 'th',
+          my: 'en',
+          ph: 'en'
         };
         var regionAssetGroup = {
           us: 'us',
           jp: 'jp',
-          cn: 'jp',
-          tw: 'jp',
-          fr: 'eu',
+          gb: 'eu',
           de: 'eu',
-          es: 'eu',
-          sa: 'eu',
-          it: 'eu',
+          fr: 'eu',
+          ca: 'us',
           in: 'in',
-          'in-te': 'in',
-          'in-kn': 'in',
           kr: 'jp',
-          vn: 'jp',
-          th: 'jp',
+          br: 'us',
+          mx: 'us',
           id: 'jp',
-          ru: 'eu',
-          br: 'us'
+          vn: 'jp',
+          es: 'eu',
+          it: 'eu',
+          sa: 'eu',
+          tw: 'jp',
+          th: 'jp',
+          my: 'jp',
+          ph: 'jp'
         };
         var regionAssets = {
           us: {
@@ -216,21 +219,22 @@
           lang = (lang || '').toLowerCase();
           if (lang.indexOf('ja') === 0) return 'jp';
           if (lang.indexOf('zh-hant') === 0 || lang.indexOf('zh-tw') === 0 || lang.indexOf('zh-hk') === 0) return 'tw';
-          if (lang.indexOf('zh') === 0) return 'cn';
           if (lang.indexOf('fr') === 0) return 'fr';
           if (lang.indexOf('de') === 0) return 'de';
+          if (lang.indexOf('es-mx') === 0) return 'mx';
           if (lang.indexOf('es') === 0) return 'es';
           if (lang.indexOf('ar') === 0) return 'sa';
           if (lang.indexOf('it') === 0) return 'it';
-          if (lang.indexOf('te') === 0) return 'in-te';
-          if (lang.indexOf('kn') === 0) return 'in-kn';
-          if (lang.indexOf('hi') === 0 || lang.indexOf('en-in') === 0) return 'in';
+          if (lang.indexOf('hi') === 0 || lang.indexOf('te') === 0 || lang.indexOf('kn') === 0 || lang.indexOf('en-in') === 0) return 'in';
           if (lang.indexOf('ko') === 0) return 'kr';
           if (lang.indexOf('vi') === 0) return 'vn';
           if (lang.indexOf('th') === 0) return 'th';
           if (lang.indexOf('id') === 0) return 'id';
-          if (lang.indexOf('ru') === 0) return 'ru';
           if (lang.indexOf('pt') === 0) return 'br';
+          if (lang.indexOf('en-gb') === 0) return 'gb';
+          if (lang.indexOf('en-ca') === 0) return 'ca';
+          if (lang.indexOf('en-my') === 0) return 'my';
+          if (lang.indexOf('en-ph') === 0) return 'ph';
           if (lang.indexOf('en') === 0) return 'us';
           return '';
         }
@@ -273,16 +277,20 @@
         }
         if (timeZone === 'Asia/Tokyo' || language.indexOf('ja') === 0) {
           region = 'jp';
-        } else if (timeZone === 'Asia/Shanghai') {
-          region = 'cn';
         } else if (timeZone === 'Asia/Taipei') {
           region = 'tw';
+        } else if (timeZone === 'Europe/London') {
+          region = 'gb';
         } else if (timeZone === 'Europe/Paris') {
           region = 'fr';
         } else if (timeZone === 'Europe/Berlin') {
           region = 'de';
         } else if (timeZone === 'Europe/Madrid') {
           region = 'es';
+        } else if (timeZone === 'America/Toronto' || timeZone === 'America/Vancouver') {
+          region = 'ca';
+        } else if (timeZone === 'America/Mexico_City') {
+          region = 'mx';
         } else if (timeZone === 'Asia/Riyadh') {
           region = 'sa';
         } else if (timeZone === 'Europe/Rome') {
@@ -297,8 +305,10 @@
           region = 'th';
         } else if (timeZone === 'Asia/Jakarta') {
           region = 'id';
-        } else if (timeZone === 'Europe/Moscow') {
-          region = 'ru';
+        } else if (timeZone === 'Asia/Kuala_Lumpur') {
+          region = 'my';
+        } else if (timeZone === 'Asia/Manila') {
+          region = 'ph';
         } else if (timeZone === 'America/Sao_Paulo') {
           region = 'br';
         } else if (timeZone.indexOf('America/') === 0 || language.indexOf('en-us') === 0) {
@@ -2924,22 +2934,23 @@
           var clockRegions = {
             us: { label: 'ET', timeZone: 'America/New_York' },
             jp: { label: 'JST', timeZone: 'Asia/Tokyo' },
-            cn: { label: 'CST', timeZone: 'Asia/Shanghai' },
-            tw: { label: 'TST', timeZone: 'Asia/Taipei' },
-            fr: { label: 'CET', daylightLabel: 'CEST', timeZone: 'Europe/Paris' },
+            gb: { label: 'GMT', daylightLabel: 'BST', timeZone: 'Europe/London' },
             de: { label: 'CET', daylightLabel: 'CEST', timeZone: 'Europe/Berlin' },
-            es: { label: 'CET', daylightLabel: 'CEST', timeZone: 'Europe/Madrid' },
-            sa: { label: 'AST', timeZone: 'Asia/Riyadh' },
-            it: { label: 'CET', daylightLabel: 'CEST', timeZone: 'Europe/Rome' },
+            fr: { label: 'CET', daylightLabel: 'CEST', timeZone: 'Europe/Paris' },
+            ca: { label: 'ET', timeZone: 'America/Toronto' },
             in: { label: 'IST', timeZone: 'Asia/Kolkata' },
-            'in-te': { label: 'IST', timeZone: 'Asia/Kolkata' },
-            'in-kn': { label: 'IST', timeZone: 'Asia/Kolkata' },
             kr: { label: 'KST', timeZone: 'Asia/Seoul' },
-            vn: { label: 'ICT', timeZone: 'Asia/Ho_Chi_Minh' },
-            th: { label: 'ICT', timeZone: 'Asia/Bangkok' },
+            br: { label: 'BRT', timeZone: 'America/Sao_Paulo' },
+            mx: { label: 'CST', timeZone: 'America/Mexico_City' },
             id: { label: 'WIB', timeZone: 'Asia/Jakarta' },
-            ru: { label: 'MSK', timeZone: 'Europe/Moscow' },
-            br: { label: 'BRT', timeZone: 'America/Sao_Paulo' }
+            vn: { label: 'ICT', timeZone: 'Asia/Ho_Chi_Minh' },
+            es: { label: 'CET', daylightLabel: 'CEST', timeZone: 'Europe/Madrid' },
+            it: { label: 'CET', daylightLabel: 'CEST', timeZone: 'Europe/Rome' },
+            sa: { label: 'AST', timeZone: 'Asia/Riyadh' },
+            tw: { label: 'TST', timeZone: 'Asia/Taipei' },
+            th: { label: 'ICT', timeZone: 'Asia/Bangkok' },
+            my: { label: 'MYT', timeZone: 'Asia/Kuala_Lumpur' },
+            ph: { label: 'PHT', timeZone: 'Asia/Manila' }
           };
           var dateFormatters = {};
           var timeFormatters = {};

@@ -67,28 +67,29 @@
   var REGION_OPTIONS = [
     { code: 'us', label: 'United States', short: 'US', lang: 'en' },
     { code: 'jp', label: 'Japan', short: 'JP', lang: 'ja' },
-    { code: 'cn', label: 'Mainland China', short: 'CN', lang: 'zh-Hans' },
-    { code: 'tw', label: 'Taiwan', short: 'TW', lang: 'zh-Hant' },
-    { code: 'fr', label: 'France', short: 'FR', lang: 'fr' },
+    { code: 'gb', label: 'United Kingdom', short: 'UK', lang: 'en' },
     { code: 'de', label: 'Germany', short: 'DE', lang: 'de' },
-    { code: 'es', label: 'Spain', short: 'ES', lang: 'es' },
-    { code: 'sa', label: 'Saudi Arabia', short: 'SA', lang: 'ar' },
-    { code: 'it', label: 'Italy', short: 'IT', lang: 'it' },
-    { code: 'in', label: 'India - Hindi', short: 'IN', lang: 'hi' },
-    { code: 'in-te', label: 'India - Telugu', short: 'IN-TE', lang: 'te' },
-    { code: 'in-kn', label: 'India - Kannada', short: 'IN-KN', lang: 'kn' },
+    { code: 'fr', label: 'France', short: 'FR', lang: 'fr' },
+    { code: 'ca', label: 'Canada', short: 'CA', lang: 'en' },
+    { code: 'in', label: 'India', short: 'IN', lang: 'hi' },
     { code: 'kr', label: 'South Korea', short: 'KR', lang: 'ko' },
-    { code: 'vn', label: 'Vietnam', short: 'VN', lang: 'vi' },
-    { code: 'th', label: 'Thailand', short: 'TH', lang: 'th' },
+    { code: 'br', label: 'Brazil', short: 'BR', lang: 'pt-BR' },
+    { code: 'mx', label: 'Mexico', short: 'MX', lang: 'es' },
     { code: 'id', label: 'Indonesia', short: 'ID', lang: 'id' },
-    { code: 'ru', label: 'Russia', short: 'RU', lang: 'ru' },
-    { code: 'br', label: 'Brazil', short: 'BR', lang: 'pt-BR' }
+    { code: 'vn', label: 'Vietnam', short: 'VN', lang: 'vi' },
+    { code: 'es', label: 'Spain', short: 'ES', lang: 'es' },
+    { code: 'it', label: 'Italy', short: 'IT', lang: 'it' },
+    { code: 'sa', label: 'Saudi Arabia', short: 'SA', lang: 'ar' },
+    { code: 'tw', label: 'Taiwan', short: 'TW', lang: 'zh-Hant' },
+    { code: 'th', label: 'Thailand', short: 'TH', lang: 'th' },
+    { code: 'my', label: 'Malaysia', short: 'MY', lang: 'en' },
+    { code: 'ph', label: 'Philippines', short: 'PH', lang: 'en' }
   ];
   var REGION_BY_CODE = {};
   var REGION_BY_LANG = {};
   REGION_OPTIONS.forEach(function(region) {
     REGION_BY_CODE[region.code] = region;
-    REGION_BY_LANG[region.lang] = region;
+    if (!REGION_BY_LANG[region.lang]) REGION_BY_LANG[region.lang] = region;
   });
 
   /* ── Resolve a browser locale string to supported code ────── */
@@ -103,6 +104,16 @@
   }
 
   function regionFromLang(lang) {
+    var lc = (lang || '').toLowerCase();
+    if (lc.indexOf('en-gb') === 0) return 'gb';
+    if (lc.indexOf('en-ca') === 0) return 'ca';
+    if (lc.indexOf('en-my') === 0) return 'my';
+    if (lc.indexOf('en-ph') === 0) return 'ph';
+    if (lc.indexOf('en-in') === 0) return 'in';
+    if (lc.indexOf('es-mx') === 0) return 'mx';
+    if (lc.indexOf('zh') === 0) return 'tw';
+    if (lc.indexOf('hi') === 0 || lc.indexOf('te') === 0 || lc.indexOf('kn') === 0) return 'in';
+    if (lc.indexOf('en') === 0) return 'us';
     var resolved = resolve(lang || '') || lang;
     return (REGION_BY_LANG[resolved] || REGION_BY_LANG.en).code;
   }
@@ -110,19 +121,22 @@
   function regionFromTimezone(timeZone, language) {
     var langRegion = regionFromLang(language || '');
     if (timeZone === 'Asia/Tokyo') return 'jp';
-    if (timeZone === 'Asia/Shanghai') return 'cn';
     if (timeZone === 'Asia/Taipei') return 'tw';
+    if (timeZone === 'Europe/London') return 'gb';
     if (timeZone === 'Europe/Paris') return 'fr';
     if (timeZone === 'Europe/Berlin') return 'de';
     if (timeZone === 'Europe/Madrid') return 'es';
+    if (timeZone === 'America/Toronto' || timeZone === 'America/Vancouver') return 'ca';
+    if (timeZone === 'America/Mexico_City') return 'mx';
     if (timeZone === 'Asia/Riyadh') return 'sa';
     if (timeZone === 'Europe/Rome') return 'it';
-    if (timeZone === 'Asia/Kolkata' || timeZone === 'Asia/Calcutta') return langRegion === 'in-te' || langRegion === 'in-kn' ? langRegion : 'in';
+    if (timeZone === 'Asia/Kolkata' || timeZone === 'Asia/Calcutta') return 'in';
     if (timeZone === 'Asia/Seoul') return 'kr';
     if (timeZone === 'Asia/Ho_Chi_Minh') return 'vn';
     if (timeZone === 'Asia/Bangkok') return 'th';
     if (timeZone === 'Asia/Jakarta') return 'id';
-    if (timeZone === 'Europe/Moscow') return 'ru';
+    if (timeZone === 'Asia/Kuala_Lumpur') return 'my';
+    if (timeZone === 'Asia/Manila') return 'ph';
     if (timeZone === 'America/Sao_Paulo') return 'br';
     if (timeZone && timeZone.indexOf('America/') === 0) return 'us';
     return langRegion;
