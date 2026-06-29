@@ -697,38 +697,6 @@
         58% { transform: translateX(215%); }
         100% { transform: translateX(215%); }
       }
-      .value-strip {
-        padding: 54px 0 58px;
-        background: #fff;
-        border-bottom: 1px solid var(--line);
-      }
-      .value-strip-inner {
-        display: grid;
-        grid-template-columns: minmax(0, 0.86fr) minmax(420px, 1fr);
-        gap: 42px;
-        align-items: center;
-      }
-      .value-kicker {
-        margin: 0 0 12px;
-        color: var(--blue);
-        font-family: 'Geist Mono', monospace;
-        font-size: 0.76rem;
-        text-transform: uppercase;
-      }
-      .value-strip h2 {
-        margin: 0;
-        font-size: 2.35rem;
-        font-weight: 760;
-        line-height: 1.08;
-        letter-spacing: 0;
-      }
-      .value-strip p {
-        max-width: 760px;
-        margin: 0;
-        color: var(--muted);
-        font-size: 1.15rem;
-        line-height: 1.65;
-      }
       .meeting-flow {
         display: grid;
         grid-template-columns: 0.9fr 44px 1.18fr;
@@ -1843,9 +1811,6 @@
         font-size: 0.86rem;
       }
       @media (max-width: 1180px) {
-        .value-strip-inner {
-          grid-template-columns: 1fr;
-        }
         .proof-grid {
           grid-template-columns: 1fr;
         }
@@ -2005,13 +1970,6 @@
         .hero-note {
           max-width: 100%;
         }
-        .value-strip {
-          padding: 38px 0 42px;
-        }
-        .value-strip-inner {
-          grid-template-columns: 1fr;
-          gap: 18px;
-        }
         .meeting-flow {
           grid-template-columns: 1fr;
           gap: 14px;
@@ -2065,14 +2023,6 @@
           top: auto;
           bottom: -1px;
           transform: translateX(-50%) rotate(135deg);
-        }
-        .value-strip h2 {
-          font-size: clamp(1.5rem, 6.2vw, 1.78rem);
-          line-height: 1.12;
-          overflow-wrap: anywhere;
-        }
-        .value-strip p {
-          font-size: 1rem;
         }
         .section,
         .life-section,
@@ -2163,8 +2113,6 @@
         .hero-note,
         .hero-actions,
         .hero-work-panel,
-        .value-strip h2,
-        .value-strip p,
         .section h2,
         .section-lead,
         .life-copy h2,
@@ -2183,7 +2131,6 @@
         .hero-work-panel {
           padding: 14px 16px;
         }
-        .value-strip h2,
         .life-copy h2,
         .section h2,
         .final-cta h2 {
@@ -2244,7 +2191,6 @@
         </a>
         <div class="nav-links" id="navLinks">
           <a href="/" data-i18n="nav.home">Home</a>
-          <a href="#samples" data-i18n="nav.work">After meetings</a>
           <a href="#beyond-screen" data-i18n="home.life.label">Beyond the screen</a>
           <a href="/compare.html" data-i18n="nav.compare">Compare</a>
           <a href="/pricing.html" data-i18n="nav.pricing">Pricing</a>
@@ -2252,7 +2198,7 @@
         </div>
         <div class="nav-right">
           <a href="https://app.simy.one/login" class="nav-signin" data-i18n="nav.signin">Sign in</a>
-          <a href="https://app.simy.one/signup" class="btn-primary" data-i18n="home.cta.primary">Try one meeting</a>
+          <a href="https://app.simy.one/signup?plan=pro&interval=yearly" class="btn-primary" data-i18n="home.cta.primary">Start with Pro</a>
         </div>
         <div class="region-switcher" aria-label="Preview region">
           <button type="button" class="region-btn" data-region-btn>
@@ -2329,8 +2275,7 @@
             <h1 data-i18n-html="home.h1"><span class="hero-title-line">Meeting ends.</span><span class="hero-title-line">Your Twin starts</span><span class="hero-title-line">working.</span></h1>
             <p class="hero-sub" data-i18n="home.sub">The moment the meeting ends, SIMY starts the follow-ups, decks, research, analysis, updates, and next actions. The work keeps moving while you step into the next conversation, customer, team, or idea.</p>
             <div class="hero-actions">
-              <a class="btn-primary" href="https://app.simy.one/signup" data-i18n="home.cta.primary">Try one meeting</a>
-              <a class="btn-secondary" href="#samples" data-i18n="home.cta.secondary">See samples</a>
+              <a class="btn-primary" href="https://app.simy.one/signup?plan=pro&interval=yearly" data-i18n="home.cta.primary">Start with Pro</a>
             </div>
           </div>
           <div class="hero-work-panel" aria-label="SIMY work in progress">
@@ -2366,199 +2311,6 @@
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="value-strip">
-        <div class="container value-strip-inner">
-          <div>
-            <p class="value-kicker" data-i18n="home.value.label">What starts next</p>
-            <h2 data-i18n-html="home.value.h"><span class="copy-line">Before you reopen a tab,</span><span class="copy-line">the next move is already in motion.</span></h2>
-            <p data-i18n-html="home.value.p">Email, deck, CRM, and internal updates move from meeting context into next actions. Before you reopen a tab, the work is already organized.</p>
-          </div>
-          <div class="handoff-workspace" aria-label="Meeting to next-action workspace">
-            <div class="handoff-panel">
-              <div class="handoff-top">
-                <span class="handoff-title" data-i18n="home.flow.meeting">Meeting context</span>
-                <span class="handoff-status" data-i18n="home.flow.captured">Captured</span>
-              </div>
-              <div class="handoff-body">
-                <div class="context-row">
-                  <span data-i18n="home.flow.need.k">Need</span>
-                  <strong data-i18n="home.flow.need.v">Cost range and rollout path by Friday</strong>
-                </div>
-                <div class="context-row">
-                  <span data-i18n="home.flow.concern.k">Concern</span>
-                  <strong data-i18n="home.flow.concern.v">Customer is worried about operational load</strong>
-                </div>
-                <div class="context-row">
-                  <span data-i18n="home.flow.next.k">Next</span>
-                  <strong data-i18n="home.flow.next.v">Send proposal, update CRM, brief the team</strong>
-                </div>
-              </div>
-            </div>
-            <div class="handoff-panel dark">
-              <div class="handoff-top">
-                <span class="handoff-title" data-i18n="home.flow.ready">Work in motion</span>
-                <span class="handoff-status" data-i18n="home.flow.waiting">Moving</span>
-              </div>
-              <div class="handoff-body">
-                <table class="draft-table">
-                  <tbody>
-                    <tr>
-                      <td data-i18n="home.flow.mail.k">Email</td>
-                      <td><strong data-i18n="home.flow.mail.v">Follow-up email</strong><p data-i18n="home.flow.mail.p">Tone and next step included.</p></td>
-                    </tr>
-                    <tr>
-                      <td data-i18n="home.flow.deck.k">Deck</td>
-                      <td><strong data-i18n="home.flow.deck.v">Proposal outline</strong><p data-i18n="home.flow.deck.p">Story, risk, and ask ready.</p></td>
-                    </tr>
-                    <tr>
-                      <td data-i18n="home.flow.crm.k">CRM</td>
-                      <td><strong data-i18n="home.flow.crm.v">Customer memo</strong><p data-i18n="home.flow.crm.p">Heat, concern, owner, deadline.</p></td>
-                    </tr>
-                    <tr>
-                      <td data-i18n="home.flow.share.k">Share</td>
-                      <td><strong data-i18n="home.flow.share.v">Team update</strong><p data-i18n="home.flow.share.p">Only the people who need it.</p></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" id="samples">
-        <div class="container">
-          <p class="section-label" data-i18n="home.samples.label">After-meeting system</p>
-          <h2 data-i18n-html="home.samples.h"><span class="copy-line">When the meeting ends,</span><span class="copy-line">your Twin starts working.</span></h2>
-          <p class="section-lead" data-i18n="home.samples.p">The meeting context turns into work you can use, through the tools your team already works in.</p>
-          <div class="deliverable-board split">
-            <div class="deliverable-column">
-              <div class="deliverable-column-head">
-                <div class="deliverable-column-kicker" data-i18n="home.outputs.kicker">OUTPUT</div>
-                <div class="deliverable-column-title" data-i18n="home.outputs.title">What SIMY returns after one meeting</div>
-              </div>
-              <div class="deliverable-row">
-                <div class="deliverable-type" data-i18n="home.samples.email.h">Follow-up email</div>
-                <div class="deliverable-copy" data-i18n-html="home.samples.email.out"><strong>Thank you for today.</strong> Cost range, rollout path, objections, and the next step are already in draft.</div>
-                <div class="deliverable-action" data-i18n="home.samples.approve">Ready</div>
-              </div>
-              <div class="deliverable-row">
-                <div class="deliverable-type" data-i18n="home.samples.deck.h">Proposal / research</div>
-                <div class="deliverable-copy" data-i18n-html="home.samples.deck.out"><strong>Outline:</strong> customer issue, proposed path, risks, required decision, and next meeting agenda.</div>
-                <div class="deliverable-action" data-i18n="home.samples.open">Open</div>
-              </div>
-              <div class="deliverable-row">
-                <div class="deliverable-type" data-i18n="home.samples.crm.h">CRM / customer memo</div>
-                <div class="deliverable-copy" data-i18n-html="home.samples.crm.out"><strong>Temperature: high.</strong> Concern, owner, deadline, and next action stay with the customer context.</div>
-                <div class="deliverable-action" data-i18n="home.samples.save">Save</div>
-              </div>
-              <div class="deliverable-row">
-                <div class="deliverable-type" data-i18n="home.samples.team.h">Internal handoff</div>
-                <div class="deliverable-copy" data-i18n-html="home.samples.team.out"><strong>Route to sales, CS, and leadership.</strong> Each team gets the version they need.</div>
-                <div class="deliverable-action" data-i18n="home.samples.share">Share</div>
-              </div>
-            </div>
-            <div class="deliverable-column">
-              <div class="deliverable-column-head">
-                <div class="deliverable-column-kicker" data-i18n="home.integrations.kicker">INTEGRATIONS</div>
-                <div class="deliverable-column-title" data-i18n="home.integrations.title">Where SIMY connects today</div>
-              </div>
-              <div class="integration-catalog" aria-label="Connected apps">
-                <div class="integration-search">Search connected work apps</div>
-                <div class="integration-icons">
-                  <div class="integration-icon">
-                    <span class="integration-mark slack" aria-hidden="true">S</span>
-                    <span>
-                      <span class="integration-name">Slack</span>
-                      <span class="integration-meta">Messages · Huddles</span>
-                    </span>
-                  </div>
-                  <div class="integration-icon">
-                    <span class="integration-mark gmail" aria-hidden="true">G</span>
-                    <span>
-                      <span class="integration-name">Gmail</span>
-                      <span class="integration-meta">Email · Follow-up</span>
-                    </span>
-                  </div>
-                  <div class="integration-icon">
-                    <span class="integration-mark zoom" aria-hidden="true">Z</span>
-                    <span>
-                      <span class="integration-name">Zoom</span>
-                      <span class="integration-meta">Meetings · Recording</span>
-                    </span>
-                  </div>
-                  <div class="integration-icon">
-                    <span class="integration-mark teams" aria-hidden="true">T</span>
-                    <span>
-                      <span class="integration-name">Microsoft Teams</span>
-                      <span class="integration-meta">Meetings · Chat</span>
-                    </span>
-                  </div>
-                  <div class="integration-icon">
-                    <span class="integration-mark meet" aria-hidden="true">M</span>
-                    <span>
-                      <span class="integration-name">Google Meet</span>
-                      <span class="integration-meta">Meetings · Context</span>
-                    </span>
-                  </div>
-                  <div class="integration-icon">
-                    <span class="integration-mark calendar" aria-hidden="true">31</span>
-                    <span>
-                      <span class="integration-name">Google Calendar</span>
-                      <span class="integration-meta">Schedule · Capture</span>
-                    </span>
-                  </div>
-                  <div class="integration-icon">
-                    <span class="integration-mark drive" aria-hidden="true">D</span>
-                    <span>
-                      <span class="integration-name">Google Drive</span>
-                      <span class="integration-meta">Docs · Output</span>
-                    </span>
-                  </div>
-                  <div class="integration-icon">
-                    <span class="integration-mark github" aria-hidden="true">GH</span>
-                    <span>
-                      <span class="integration-name">GitHub</span>
-                      <span class="integration-meta">Engineering · PRs</span>
-                    </span>
-                  </div>
-                </div>
-                <div class="integration-pill-row" aria-label="Integration categories">
-                  <span class="integration-pill">Meetings</span>
-                  <span class="integration-pill">Messages</span>
-                  <span class="integration-pill">Workspace</span>
-                  <span class="integration-pill">Development</span>
-                </div>
-              </div>
-              <div class="integration-list">
-                <div class="integration-row">
-                  <div class="integration-type" data-i18n="home.integrations.meetings.k">Meetings</div>
-                  <div class="integration-copy" data-i18n-html="home.integrations.meetings.v"><strong>Zoom, Microsoft Teams, Google Meet, Slack huddles</strong><br>Recorded meetings become source context.</div>
-                </div>
-                <div class="integration-row">
-                  <div class="integration-type" data-i18n="home.integrations.messages.k">Messages</div>
-                  <div class="integration-copy" data-i18n-html="home.integrations.messages.v"><strong>Slack, Gmail</strong><br>Written context, replies, and follow-ups stay connected.</div>
-                </div>
-                <div class="integration-row">
-                  <div class="integration-type" data-i18n="home.integrations.workspace.k">Workspace</div>
-                  <div class="integration-copy" data-i18n-html="home.integrations.workspace.v"><strong>Google Calendar, Google Drive</strong><br>Calendar-based meeting capture and Drive export.</div>
-                </div>
-                <div class="integration-row">
-                  <div class="integration-type" data-i18n="home.integrations.dev.k">Development</div>
-                  <div class="integration-copy" data-i18n-html="home.integrations.dev.v"><strong>GitHub</strong><br>For teams that also want engineering work connected.</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="assurance-line" aria-label="Trust signals">
-            <span data-i18n="home.trust.1.v">Slack, Gmail, Zoom, Teams, Google Workspace, GitHub</span>
-            <span data-i18n="home.trust.2.v">Meeting and message context carried forward</span>
-            <span data-i18n="home.trust.3.v">Drafts stay editable</span>
-            <span data-i18n="home.trust.4.v">Try it with one meeting</span>
           </div>
         </div>
       </section>
@@ -2732,7 +2484,7 @@
           <h2 data-i18n-html="home.final.h"><span class="copy-line">Meeting ends.</span><span class="copy-line">Your next move is ready.</span></h2>
           <p data-i18n="home.final.p">Create the Twin that starts working the moment the meeting ends. Let the work move into briefs, updates, and next actions instead of another hour in tabs.</p>
           <div class="final-actions">
-            <a class="btn-primary" href="https://app.simy.one/signup" data-i18n="home.cta.primary">Try one meeting</a>
+            <a class="btn-primary" href="https://app.simy.one/signup?plan=pro&interval=yearly" data-i18n="home.cta.primary">Start with Pro</a>
             <a class="btn-secondary" href="mailto:sales@simy.one" data-i18n="home.final.secondary">Talk to sales</a>
           </div>
         </div>
@@ -2748,7 +2500,6 @@
           </div>
           <div class="footer-col">
             <div class="footer-col-title" data-i18n="footer.product">Product</div>
-            <a href="#samples" data-i18n="footer.product.work">After meetings</a>
             <a href="#beyond-screen" data-i18n="home.life.label">Beyond the screen</a>
             <a href="/compare.html" data-i18n="footer.product.compare">Compare</a>
             <a href="/pricing.html" data-i18n="footer.product.pricing">Pricing</a>
@@ -2757,7 +2508,7 @@
             <div class="footer-col-title" data-i18n="footer.company">Company</div>
             <a href="mailto:sales@simy.one" data-i18n="footer.company.contact">Contact</a>
             <a href="https://app.simy.one/login" data-i18n="nav.signin">Sign in</a>
-            <a href="https://app.simy.one/signup" data-i18n="footer.company.signup">Create account</a>
+            <a href="https://app.simy.one/signup?plan=pro&interval=yearly" data-i18n="footer.company.signup">Create account</a>
           </div>
           <div class="footer-col">
             <div class="footer-col-title" data-i18n="footer.legal">Legal</div>
