@@ -1,430 +1,117 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="google-site-verification" content="1n6_tVJZRZlQax8luEg5VsuG7gg-kCEam5VFiWIJs3U">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Press Release — SIMY Launches AI-Native Engineering Platform</title>
-<meta name="description" content="SIMY launches platform for building AI-native engineering organizations. Autonomous code generation from workplace conversations delivers 17.7x more pull requests per engineer with 86.7% first-shot accuracy.">
-<link rel="canonical" href="https://simy.one/press-release.html">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://simy.one/press-release.html">
-<meta property="og:title" content="SIMY Launches Platform for Building AI-Native Engineering Organizations">
-<meta property="og:description" content="Autonomous code generation from workplace conversations shifts every engineering role from execution to decision-making.">
-<meta property="og:site_name" content="SIMY">
-<meta property="og:image" content="https://simy.one/ogp.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:locale" content="en_US">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="SIMY Launches AI-Native Engineering Platform">
-<meta name="twitter:description" content="Autonomous code generation from workplace conversations delivers 17.7x more PRs per engineer.">
-<meta name="twitter:image" content="https://simy.one/ogp.png">
-<meta name="robots" content="index, follow">
-<meta name="theme-color" content="#f9f9f6">
-<link rel="icon" type="image/png" href="favicon.png">
-<link rel="apple-touch-icon" href="favicon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<style>
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#f9f9f6;--card:#ffffff;--primary:#0057ff;--primary-light:#3378ff;--primary-hover:#0047dd;--primary-dim:rgba(0,87,255,0.08);--foreground:#141414;--muted-fg:#7a7a78;--muted-fg-light:#9a9a98;--border:#ddddd9;--accent-gradient:linear-gradient(135deg,#0057ff 0%,#3378ff 100%)}
-html{font-size:16px}body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--foreground);line-height:1.6;-webkit-font-smoothing:antialiased}
-a:focus-visible{outline:2px solid var(--primary);outline-offset:3px;border-radius:4px}
-/* Navigation — pixel-matched to React SPA */
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 50;
-  transition: all 0.3s;
-  background: rgba(250, 250, 248, 0.9);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid transparent;
-}
-nav.scrolled {
-  background: rgba(250, 250, 248, 0.97);
-  border-bottom-color: #e0e0dc;
-}
-.nav-inner {
-  display: flex; align-items: center; justify-content: space-between;
-  max-width: 1280px; margin: 0 auto; padding: 0 4rem;
-  height: 60px;
-}
-.nav-logo {
-  display: flex; align-items: center; gap: 10px;
-  text-decoration: none; color: #0a0a0a;
-}
-.nav-logo-s {
-  width: 24px; height: 24px;
-  display: flex; align-items: center; justify-content: center;
-  background-color: #0057ff; color: #fff;
-  font-family: 'Geist Mono', monospace;
-  font-size: 13px; font-weight: 500;
-}
-.nav-brand {
-  font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
-  font-size: 14px; font-weight: 700; letter-spacing: 0.06em;
-  color: #0a0a0a;
-}
-.nav-version {
-  font-family: 'Geist Mono', monospace;
-  font-size: 13px; font-weight: 400; letter-spacing: 0.06em;
-  color: #0057ff;
-}
-.nav-links { display: flex; gap: 32px; align-items: center; }
-.nav-links a {
-  color: #5a5a56; text-decoration: none;
-  font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
-  font-size: 0.8125rem; font-weight: 400; letter-spacing: 0.01em;
-  transition: color 0.18s; position: relative;
-}
-.nav-links a::after {
-  content: ''; position: absolute; bottom: -2px; left: 0;
-  width: 0; height: 1px; background-color: #0057ff;
-  transition: width 0.25s;
-}
-.nav-links a:hover { color: #0a0a0a; }
-.nav-links a:hover::after { width: 100%; }
-.nav-right { display: flex; align-items: center; gap: 20px; }
-.nav-signin {
-  color: #5a5a56; text-decoration: none;
-  font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
-  font-size: 0.8125rem; font-weight: 400; letter-spacing: 0.01em;
-  transition: color 0.18s;
-}
-.nav-signin:hover { color: #0a0a0a; }
-.btn-primary {
-  background-color: #0057ff; color: #fff;
-  font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
-  letter-spacing: 0.01em;
-  border: 1px solid #0057ff; padding: 0.5rem 1.25rem;
-  font-size: 0.8125rem; font-weight: 500; 
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  text-decoration: none; transition: background-color 0.18s;
-  cursor: pointer;
-}
-.btn-primary:hover { background-color: #0047dd; border-color: #0047dd; }
-.mobile-menu-btn { display: none; background: none; border: none; color: #0a0a0a; cursor: pointer; padding: 8px; }
-.lang-select{background:rgba(0,0,0,0.04);border:1px solid rgba(0,0,0,0.1);color:var(--foreground);font-size:0.8rem;font-weight:500;padding:6px 10px;border-radius:6px;cursor:pointer;font-family:'Inter',sans-serif;outline:none;transition:border-color 0.2s}
-.lang-select:hover,.lang-select:focus{border-color:rgba(0,87,255,0.3)}
-.lang-select option{background:var(--bg);color:var(--foreground)}
-.nav-cta{padding:9px 22px;border-radius:8px;background:var(--accent-gradient);color:#fff !important;font-weight:700 !important;font-size:.85rem !important;transition:all .2s}
-.nav-cta:hover{opacity:.92;transform:translateY(-1px)}
-.container{max-width:1280px;margin:0 auto;padding:0 4rem}
-
-/* Hero */
-.page-hero{padding:140px 0 40px;text-align:center}
-.page-hero h1{font-size:clamp(1.6rem,4vw,2.4rem);font-weight:900;letter-spacing:-0.03em;margin-bottom:16px;background:var(--accent-gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.3}
-.page-hero .pr-meta{color:var(--muted-fg);font-size:0.85rem;margin-top:8px}
-.page-hero .pr-subtitle{color:var(--muted-fg-light);font-size:1rem;max-width:780px;margin:16px auto 0;line-height:1.7}
-
-/* Article */
-.pr-article{max-width:780px;margin:0 auto;padding-bottom:80px}
-.pr-article[data-lang="ja"]{display:none}
-.pr-article h2{font-size:1.3rem;font-weight:800;margin:40px 0 16px;letter-spacing:-0.02em;color:var(--foreground)}
-.pr-article p{color:var(--muted-fg-light);font-size:0.95rem;line-height:1.85;margin-bottom:16px}
-.pr-article .highlight-box{padding:24px 28px;background:rgba(0,0,0,0.03);border:1px solid rgba(0,87,255,0.08);border-radius:12px;margin:28px 0}
-.pr-article .highlight-box p{margin-bottom:0}
-
-/* Role Table */
-.role-table{width:100%;border-collapse:collapse;margin:24px 0 28px;font-size:0.88rem}
-.role-table th{background:rgba(0,0,0,0.06);color:var(--foreground);font-weight:700;text-align:left;padding:14px 16px;border-bottom:2px solid rgba(0,0,0,0.08)}
-.role-table td{padding:14px 16px;border-bottom:1px solid rgba(0,0,0,0.06);color:var(--muted-fg-light);vertical-align:top}
-.role-table td:first-child{color:var(--foreground);font-weight:700;white-space:nowrap}
-.role-table td:last-child{color:var(--primary);font-weight:600}
-.role-table tr:hover td{background:rgba(126,237,198,0.02)}
-@media(max-width:640px){.role-table{font-size:0.8rem}.role-table th,.role-table td{padding:10px 10px}}
-
-/* Divider */
-.pr-divider{text-align:center;color:var(--muted-fg);font-size:1.2rem;letter-spacing:0.3em;margin:40px 0;opacity:0.5}
-
-/* Contact box */
-.pr-contact{padding:24px 28px;background:var(--primary-dim);border-left:3px solid var(--primary);border-radius:0 8px 8px 0;margin-top:32px}
-.pr-contact h3{font-size:0.95rem;font-weight:700;margin-bottom:6px}
-.pr-contact p{font-size:0.9rem;color:var(--muted-fg-light);margin:0}
-.pr-contact a{color:var(--primary);text-decoration:none}
-
-/* Footer */
-.footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
-.footer-col{display:flex;flex-direction:column;gap:10px}
-.footer-col-title{font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#6a6a66;margin-bottom:4px}
-.footer-col a{color:#9a9a96;text-decoration:none;font-size:0.85rem;transition:color 0.2s}
-.footer-col a:hover{color:#f5f5f0}
-.footer-bottom{padding-top:24px;border-top:1px solid #1a1a1a;font-size:0.75rem;color:#3a3a36;text-align:center}
-footer{padding:48px 0 36px;border-top:none;background:#0a0a0a;color:#f5f5f0}
-
-@media(max-width:768px){.nav-links{display:none;position:fixed;top:56px;right:0;left:0;background:rgba(249,249,246,0.97);flex-direction:column;padding:24px;gap:16px;z-index:999;backdrop-filter:blur(20px)}
-  .nav-right { display: none; }
-  .mobile-menu-btn { display: block; }.nav-links.active{display:flex}.mobile-menu-btn{display:block}.footer-grid{grid-template-columns:1fr 1fr;gap:24px}.footer-brand{grid-column:1/-1;text-align:center}}
-</style>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "NewsArticle",
-  "headline": "SIMY Launches Platform for Building AI-Native Engineering Organizations",
-  "datePublished": "2026-03-01",
-  "dateModified": "2026-04-09",
-  "description": "Autonomous code generation from workplace conversations shifts every engineering role from execution to decision-making.",
-  "image": "https://simy.one/ogp.png",
-  "author": {"@type": "Organization", "name": "AwakApp Inc.", "url": "https://simy.one"},
-  "publisher": {
-    "@type": "Organization",
-    "name": "AwakApp Inc.",
-    "url": "https://simy.one",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://simy.one/simy-icon.png"
-    }
-  },
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "https://simy.one/press-release.html"
-  }
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://simy.one/" },
-    { "@type": "ListItem", "position": 2, "name": "Press", "item": "https://simy.one/press.html" },
-    { "@type": "ListItem", "position": 3, "name": "Press Release" }
-  ]
-}
-</script>
-<!-- Google tag (gtag.js) – loaded only after cookie consent -->
-<script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-function loadGA(){
-  if(document.getElementById('ga-script'))return;
-  var s=document.createElement('script');
-  s.id='ga-script';
-  s.async=true;
-  s.src='https://www.googletagmanager.com/gtag/js?id=G-SBLYYNMSJW';
-  document.head.appendChild(s);
-  gtag('js',new Date());
-  gtag('config','G-SBLYYNMSJW');
-}
-if(localStorage.getItem('simy-cookies')==='1') loadGA();
-</script>
-    <style>
-      /* Hide React SPA's built-in nav and footer */
-      #root > div > nav { display: none !important; }
-      #root footer { display: none !important; }
-      /* Override React container to match static pages */
-      #root .container {
-        max-width: 1280px !important;
-        padding-left: 4rem !important;
-        padding-right: 4rem !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
-      }
-    </style>
-    <script type="module" crossorigin src="/assets/index-DnVveaIK.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-BwUIJj-q.css">
-<link rel="stylesheet" href="/responsive.css">
-</head>
-<body>
-    <!-- Force full navigation for static subpages -->
-    <script>
-    document.addEventListener('click', function(e) {
-      var a = e.target.closest('a');
-      if (!a) return;
-      var pages = ['/careers.html','/status.html','/privacy.html','/terms.html',
-                   '/how-it-works.html','/integrations.html','/security.html','/press-release.html'];
-      try {
-        var p = new URL(a.href, location.origin).pathname;
-        if (pages.indexOf(p) !== -1) {
-          e.preventDefault();
-          e.stopPropagation();
-          window.location.href = a.href;
-        }
-      } catch(err) {}
-    }, true);
-    </script>
-    <!-- Static nav — same code as all other pages -->
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Press Release — SIMY Introduces Your AI Twin for the Work After Meetings</title>
+    <meta name="description" content="SIMY introduces your AI Twin for turning meeting context into follow-up, proposal, CRM, internal sharing, and next actions.">
+    <link rel="canonical" href="https://simy.one/press-release.html">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://simy.one/press-release.html">
+    <meta property="og:title" content="SIMY Introduces Your AI Twin for the Work After Meetings">
+    <meta property="og:description" content="Meeting ends. Your Twin starts working.">
+    <meta property="og:image" content="https://simy.one/ogp.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="stylesheet" href="/subpage.css">
+  </head>
+  <body>
     <nav class="static-nav" id="staticNav">
       <div class="nav-inner">
         <a href="/" class="nav-logo">
-          <div class="nav-logo-s">S</div>
+          <img class="nav-logo-s" src="/simy-icon-square.png" alt="" width="28" height="28">
           <span class="nav-brand">SIMY</span>
-          <span class="nav-version">v3.0</span>
         </a>
-        <div class="nav-links" id="navLinks">
-          <a href="/" data-i18n="nav.home">Home</a>
-          <a href="/pricing.html" data-i18n="nav.pricing">Pricing</a>
+        <div class="nav-links">
+          <a href="/#pricing" data-i18n="nav.pricing">Pricing</a>
           <a href="/compare.html" data-i18n="nav.compare">Compare</a>
-          <a href="/about.html" data-i18n="nav.about">About</a>
           <a href="/press-release.html" data-i18n="nav.news">News</a>
         </div>
         <div class="nav-right">
           <a href="https://app.simy.one/login" class="nav-signin" data-i18n="nav.signin">Sign in</a>
-          <a href="https://app.simy.one/signup" class="btn-primary" data-i18n="nav.cta">Start on Web</a>
+          <a href="https://app.simy.one/signup?plan=pro&interval=yearly" class="btn-primary" data-i18n="home.cta.primary">Start with Pro</a>
         </div>
-        <button class="mobile-menu-btn" onclick="document.getElementById('navLinks').classList.toggle('active')" aria-label="Toggle menu">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-            <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
-          </svg>
-        </button>
+        <div class="region-switcher">
+          <button class="region-btn" type="button" aria-haspopup="true" aria-expanded="false">
+            <span data-i18n="nav.region">Region</span>
+            <strong data-region-current>US</strong>
+          </button>
+          <div class="region-menu" role="menu" aria-label="Region">
+            <button type="button" data-region-btn="us" role="menuitem">US</button>
+            <button type="button" data-region-btn="jp" role="menuitem">JP</button>
+            <button type="button" data-region-btn="eu" role="menuitem">EU</button>
+            <button type="button" data-region-btn="in" role="menuitem">IN</button>
+          </div>
+        </div>
       </div>
     </nav>
-    <script>
-    window.addEventListener('scroll', function() {
-      var nav = document.getElementById('staticNav');
-      if (window.scrollY > 10) { nav.classList.add('scrolled'); }
-      else { nav.classList.remove('scrolled'); }
-    });
-    </script>
-    <div id="root" style="display:none!important"></div>
 
-    <!-- Static page content -->
+    <main>
+      <section class="page-hero">
+        <div class="container">
+          <p class="press-meta" data-i18n="newpress.meta">Press Release · For Immediate Release</p>
+          <h1 data-i18n="newpress.h1">SIMY introduces your AI Twin for the work after meetings.</h1>
+          <p class="hero-lead" data-i18n="newpress.lead">Meeting ends. Your Twin starts working. Your Twin turns meeting context into follow-up, proposal, CRM, internal sharing, and next actions before teams lose momentum.</p>
+          <p class="press-meta" data-i18n="newpress.location">San Francisco, CA · June 2026</p>
+        </div>
+      </section>
 
-<div class="container">
-  <div class="page-hero">
-    <p class="pr-meta" data-i18n-html="pr.meta">PRESS RELEASE &middot; FOR IMMEDIATE RELEASE</p>
-    <h1 id="prTitle" data-i18n="pr.title">SIMY Launches Platform for Building AI-Native Engineering Organizations</h1>
-    <p class="pr-subtitle" id="prSubtitle" data-i18n-html="pr.subtitle">Autonomous code generation from workplace conversations shifts every engineering role from execution to decision-making &mdash; delivering 17.7x more pull requests per engineer with 86.7% first-shot accuracy</p>
-    <p class="pr-meta" id="prDate" data-i18n-html="pr.date">San Francisco, CA &mdash; March 2026</p>
-  </div>
+      <article class="article">
+        <p data-i18n="newpress.p1">SIMY today introduced a new AI Twin experience designed for the work that begins the moment a meeting ends. Instead of leaving professionals to reopen tabs, reconstruct context, and manually draft every follow-up, your Twin carries the meeting thread forward across the tools teams already use.</p>
+        <p data-i18n="newpress.p2">The product focuses on the practical after-meeting workload: follow-up emails, proposal outlines, research briefs, CRM notes, internal handoffs, and next-action routing. SIMY reads the meeting context, preserves tone and intent, and turns it into work that can be reviewed, edited, and sent.</p>
 
-  <!-- ===== ENGLISH VERSION ===== -->
-  <article class="pr-article" id="prEn" data-lang="en">
-    <p data-i18n-html="pr.p1">SIMY, a developer productivity company, today announced the launch of its AI-powered software development platform that autonomously generates production-ready code directly from workplace conversations. The system captures discussions across Slack, Microsoft Teams, Gmail, and Zoom, automatically creating and maintaining a structured database of engineering tasks. Generated code is submitted as pull requests to the team's GitHub repository &mdash; eliminating the gap between what teams decide in meetings and what gets built.</p>
+        <h2 data-i18n="newpress.ai.h">AI has made work faster. It has not made people less busy.</h2>
+        <p data-i18n="newpress.ai.p1">As generative AI tools spread through the workplace, many teams now face a new kind of overload. There are more drafts to check, more summaries to reconcile, more tasks to route, and more tools asking for prompts. SIMY is built around a different premise: people should not become the final processing layer for every meeting.</p>
+        <p data-i18n="newpress.ai.p2">Your Twin starts from the original context of the meeting and moves the work forward. The human role becomes choosing the next move, exercising judgment, protecting relationships, and making decisions that require responsibility.</p>
 
-    <h2 data-i18n="pr.h2.1">The Conversation-to-Code Pipeline</h2>
-    <p data-i18n-html="pr.p2">At the core of SIMY is a proprietary conversation-capture engine. Teams choose which channels to connect &mdash; specific Slack channels, Teams groups, Gmail threads, or Zoom meeting recordings &mdash; and the engine indexes only those opted-in sources. Unlike conventional AI coding assistants that require engineers to write detailed prompts, SIMY extracts requirements, specifications, and technical decisions directly from the natural flow of team discussions.</p>
-    <p data-i18n-html="pr.p3">The captured data feeds into what the company calls its Action Database &mdash; a continuously updated repository of engineering tasks, each enriched with full conversational context: who requested the feature, what constraints were discussed, which architectural decisions were made, and why specific trade-offs were chosen.</p>
-    <p data-i18n-html="pr.p4">Each action also carries a clearly defined Done State &mdash; a conversation-derived specification of what "complete" looks like for that particular task. SIMY extracts acceptance conditions directly from team discussions, including expected behavior, edge cases, performance thresholds, and integration points. This enables the AI to verify its own output against the team's actual expectations before submitting a pull request.</p>
-    <p data-i18n-html="pr.p5">Together, the contextual layer and the Done State definition ensure that generated code reflects not just what needs to be built but why and when it is done &mdash; preserving institutional knowledge that is typically lost between meetings and implementation, and dramatically reducing review cycles and rework.</p>
+        <h2 data-i18n="newpress.returns.h">What your Twin returns after one meeting</h2>
+        <ul>
+          <li data-i18n="newpress.returns.1">Follow-up email drafts that include tone, objections, and next steps.</li>
+          <li data-i18n="newpress.returns.2">Proposal and research outlines shaped from the customer conversation.</li>
+          <li data-i18n="newpress.returns.3">CRM and customer notes with heat, concern, owner, and deadline.</li>
+          <li data-i18n="newpress.returns.4">Internal updates routed to sales, CS, leadership, and other stakeholders.</li>
+        </ul>
 
-    <h2 data-i18n="pr.h2.2">Measured Performance</h2>
-    <div class="highlight-box">
-      <p data-i18n-html="pr.p6">In internal benchmarks conducted across 30 production engineering tasks on a single mid-size codebase (Python/TypeScript, ~50k lines) &mdash; including database migrations, full-stack feature development, and API integrations &mdash; SIMY achieved an <strong>86.7% first-shot success rate</strong>, completing tasks autonomously without human intervention. The remaining 13.3% required one round of human feedback before passing review. The platform delivered a <strong>96.3% reduction</strong> in the number of messages typically required to complete engineering tasks, and engineers using SIMY produced <strong>17.7 times more pull requests per day</strong> compared to their baseline output on the same codebase.</p>
-    </div>
-    <p data-i18n="pr.p7">The average cost per autonomous task execution was $1.95, compared to an estimated $50 or more per hour for a software engineer performing the equivalent work manually.</p>
+        <h2 data-i18n="newpress.connect.h">Where SIMY connects</h2>
+        <p data-i18n="newpress.connect.p">Your Twin is designed to connect with the tools where work already happens, including Slack, Gmail, Zoom, Microsoft Teams, Google Meet, Google Calendar, Google Drive, and GitHub. The goal is not to replace those systems, but to carry context through them so the next action does not disappear after the call.</p>
 
-    <h2 data-i18n="pr.h2.3">How the System Works</h2>
-    <p data-i18n-html="pr.p8">SIMY operates in three stages. First, the platform connects to a team's existing communication infrastructure and automatically captures specifications, requirements, and decisions from ongoing conversations. Second, the AI engine processes captured data, decomposing discussions into discrete, actionable engineering tasks while preserving dependencies and priority assignments. Third, cloud-based AI agents autonomously write code, execute tests, and submit pull requests to the team's GitHub repository &mdash; ready for human review and merge.</p>
-    <p data-i18n-html="pr.p9">The platform also includes a Digital Twin feature &mdash; an AI agent that can answer questions about project progress, team priorities, and the rationale behind specific engineering decisions, drawing on the full history of captured conversations.</p>
+        <h2 data-i18n="newpress.agent.h">Beyond another AI agent</h2>
+        <p data-i18n="newpress.agent.p">Agents complete tasks. Your Twin sits above individual agents: it understands the thread of work, selects what should happen next, and coordinates outputs across tools. That difference matters most after meetings, where the challenge is rarely one isolated task. It is the continuity between decision, relationship, follow-up, and execution.</p>
 
-    <h2 data-i18n="pr.h2.4">How SIMY Differs from Existing AI Coding Tools</h2>
-    <p data-i18n-html="pr.p10">AI coding assistants such as GitHub Copilot, OpenAI Codex, and Claude Code have significantly accelerated individual developer productivity. However, these tools share a common architectural assumption: the engineer is the interface. A team discusses what to build, an engineer interprets that discussion, and then the engineer translates their interpretation into a prompt. The AI generates code based on that prompt alone. This workflow introduces variability at two critical points &mdash; the engineer's comprehension of the team's intent and their ability to express it as a precise instruction.</p>
-    <p data-i18n-html="pr.p11">SIMY removes this translation burden from engineers. Because the platform captures the original conversations directly, the AI receives the raw context &mdash; the full thread of discussion, the trade-offs debated, the edge cases flagged &mdash; and works from that primary source rather than a second-hand summary. Engineers no longer need to spend time re-encoding what the team already discussed into a prompt; they can focus on the architectural and design decisions where their expertise matters most.</p>
-    <p data-i18n-html="pr.p12">The platform goes further than literal transcription. SIMY's AI engine analyzes the organizational context surrounding each conversation &mdash; what problem the team is ultimately trying to solve, who the end users and personas of the system are, and what business objectives are at stake. Based on this analysis, the AI drafts a refined specification for the team to review before writing any code: surfacing ambiguities for resolution, inferring likely requirements from established patterns, and flagging where the implementation may diverge from the product's broader purpose. The team retains full approval authority over what gets built &mdash; but the specification they approve is sharper than what any individual could draft alone.</p>
+        <div class="card dark">
+          <div class="kicker" data-i18n="newpress.core.k">Core message</div>
+          <h3 data-i18n="newpress.core.h">Meeting ends. Your Twin starts working.</h3>
+          <p data-i18n="newpress.core.p">Your Twin is for people who want AI to return time, not create another queue of things to manage.</p>
+        </div>
 
-    <h2 data-i18n="pr.h2.5">The AI-Native Engineering Organization</h2>
-    <p data-i18n-html="pr.p13">SIMY proposes a new operating model for software teams. In every engineering role, roughly 90% of time has been spent on execution tasks &mdash; interpreting requirements, writing boilerplate, filing status updates &mdash; while the remaining 10% of decisions drive 90% of product outcomes. SIMY automates the former and augments the latter: the right column of the table below is not work that humans do alone, but work that humans do with AI as a thinking partner, leveraging the platform's organizational context to make sharper, faster, better-informed decisions.</p>
-    <table class="role-table">
-      <thead>
-        <tr><th data-i18n="pr.th.role">Role</th><th data-i18n="pr.th.delegated">Delegated to AI</th><th data-i18n="pr.th.execute">Execute with AI as a Thinking Partner</th></tr>
-      </thead>
-      <tbody>
-        <tr><td data-i18n="pr.td.swe">Software Engineer</td><td data-i18n="pr.td.sweDelegated">Requirements interpretation, prompt writing, code generation, test creation, PR submission, review-cycle rework</td><td data-i18n="pr.td.sweExecute">Architecture decisions, system design trade-offs, novel problem solving, developer experience strategy</td></tr>
-        <tr><td data-i18n="pr.td.pm">PM / Tech Lead</td><td data-i18n="pr.td.pmDelegated">Action item extraction from meetings, task decomposition, prioritization, progress tracking, status reporting</td><td data-i18n="pr.td.pmExecute">Customer problem discovery, product vision and strategy, go/no-go decisions, cross-team alignment</td></tr>
-        <tr><td data-i18n="pr.td.qa">QA Engineer</td><td data-i18n="pr.td.qaDelegated">Test case generation, acceptance criteria documentation, regression test execution, bug reproduction steps</td><td data-i18n="pr.td.qaExecute">Exploratory edge-case discovery, user experience quality evaluation, release risk assessment, quality culture</td></tr>
-        <tr><td data-i18n="pr.td.arch">Architect</td><td data-i18n="pr.td.archDelegated">Technology evaluation docs, codebase specification analysis, dependency mapping, migration planning</td><td data-i18n="pr.td.archExecute">Scalability and resilience design, security architecture, technical roadmap, build-vs-buy decisions</td></tr>
-      </tbody>
-    </table>
-    <p data-i18n-html="pr.p14"><em>This is not a forecast &mdash; it is the operating model SIMY enables today. The shift from execution to judgment defines the AI-native engineering organization.</em></p>
+        <h2 data-i18n="newpress.avail.h">Availability</h2>
+        <p data-i18n="newpress.avail.p">SIMY is available through web signup with seat-based plans and SIMY token allocation. Teams can begin with Pro and expand usage as meeting volume, connected tools, and after-meeting workflows grow.</p>
+        <p data-i18n-html="newpress.avail.contact">For more information, visit <a href="/">simy.one</a> or contact <a href="mailto:sales@simy.one">sales@simy.one</a>.</p>
 
-    <h2 data-i18n="pr.h2.6">Enterprise Security Architecture</h2>
-    <p data-i18n="pr.p15">Data collection is strictly opt-in: teams select exactly which channels, threads, and meeting recordings SIMY may access, and can revoke access or delete indexed data at any time. The platform employs physically isolated database instances for each customer, communication-based access controls that restrict data visibility to original conversation participants, end-to-end encryption, and a zero-training guarantee ensuring that customer code and communication data are never used to train external AI models.</p>
+        <h2 data-i18n="newpress.about.h">About SIMY</h2>
+        <p data-i18n="newpress.about.p">SIMY is building an AI Twin for modern knowledge work. Your Twin helps teams move from meeting context to follow-up, proposal, CRM, internal sharing, and next actions, so people can spend more time on customers, strategy, relationships, and the work only humans can carry.</p>
+      </article>
+    </main>
 
-    <h2 data-i18n="pr.h2.7">Availability</h2>
-    <p data-i18n="pr.p16">SIMY is currently accepting participants for its pilot program. Pilot partners receive initial credits to evaluate the platform, with usage-based pricing thereafter. The platform supports integration with Slack, Microsoft Teams, Gmail, Zoom, and GitHub.</p>
-
-    <h2 data-i18n="pr.aboutH">About SIMY</h2>
-    <p data-i18n-html="pr.aboutP">SIMY is a developer productivity company building AI infrastructure that bridges the gap between team communication and software delivery. The company's platform captures workplace conversations, maintains a structured knowledge base of engineering decisions, and autonomously generates production-ready code. For more information, visit <a href="https://simy.one" style="color:#0057ff;text-decoration:none">simy.one</a>.</p>
-
-    <div class="pr-contact">
-      <h3 data-i18n="pr.contactH">Media Contact</h3>
-      <p><a class="eml" data-u="press" data-d="simy.one"></a></p>
-    </div>
-  </article>
-
-  <!-- ===== JAPANESE VERSION ===== -->
-  <article class="pr-article" id="prJa" data-lang="ja">
-    <p>開発者生産性向上を手がけるSIMY（シミー）は本日、職場の会話から直接、実用水準のコードを自律的に生成するAIソフトウェア開発プラットフォームの提供を開始した。本システムは、Slack・Microsoft Teams・Gmail・Zoom上のやり取りを自動取得し、エンジニアリングタスクの構造化データベースを継続的に更新・維持する。生成されたコードはチームのGitHubリポジトリにプルリクエストとして提出され、「会議で決めたこと」と「実際に作られるもの」の乖離を解消する。</p>
-
-    <h2>会話取得エンジン：中核技術の強み</h2>
-    <p>SIMYの核となるのは、独自開発の会話取得エンジンである。チームが連携対象として選択したチャネル――特定のSlackチャネル、Teamsグループ、Gmailスレッド、Zoomの会議録画――のみをインデックス化する。従来のAIコーディング支援ツールがエンジニアに詳細なプロンプトの記述を求めるのとは異なり、SIMYはチームの自然な会話の流れから、要件・仕様・技術的意思決定を直接抽出する。</p>
-    <p>取得されたデータは、同社が「アクションデータベース」と呼ぶシステムに蓄積される。これは、エンジニアリングタスクの単なる一覧ではなく、各タスクに対して「誰がその機能を要望したのか」「どのような制約が議論されたのか」「なぜその設計判断が下されたのか」といった会話の文脈が全て紐付けられた構造化リポジトリである。</p>
-    <p>さらに、各アクションには明確に定義されたDone State（完了状態）が付与される。これは、当該タスクにおいて「完了」とは何を意味するのかを、会話から導出した仕様である。SIMYはチームの議論から受け入れ条件を直接抽出する――期待される動作、言及されたエッジケース、合意されたパフォーマンス閾値、指定された統合ポイントなどを網羅する。これにより、AIはプルリクエスト提出前に、チームの実際の期待と自らの出力を自律的に照合できる。</p>
-    <p>会話の文脈とDone Stateの組み合わせにより、AIは「何を作るか」だけでなく「なぜ作るのか」「いつ完了とするのか」を理解した上でコードを生成できる。会議と実装の間で失われがちな組織知が確実に保全され、レビューサイクルと手戻りが大幅に削減される。</p>
-
-    <h2>実証済みの成果指標</h2>
-    <div class="highlight-box">
-      <p>単一の中規模コードベース（Python/TypeScript、約5万行）上で、データベース移行、フルスタック機能開発、API統合を含む30件の実用エンジニアリングタスクを対象に社内検証を実施した。<strong>86.7％</strong>のタスクが人手を介さず一回で完了し、残りの13.3％は1回のフィードバックでレビューを通過した。従来のタスク完了に必要だったメッセージ数は<strong>96.3％削減</strong>され、同一のコードベース・同一のエンジニアにおいて、1日当たりのプルリクエスト生成数は<strong>17.7倍</strong>に増加した。</p>
-    </div>
-    <p>自律的なタスク実行1件当たりの平均コストは1.95ドルであり、ソフトウェアエンジニアが同等の作業を手動で行う場合の推定コスト（時給換算50ドル以上）と比較して大幅な削減となっている。</p>
-
-    <h2>システムの動作原理</h2>
-    <p>SIMYは3つのステージで動作する。第1段階では、チームの既存コミュニケーション基盤に接続し、進行中の会話から仕様・要件・意思決定を自動取得する。第2段階では、AIエンジンが取得データを処理し、依存関係と優先度を保持しながら、議論を個別の実行可能なタスクに分解する。第3段階では、クラウドベースのAIエージェントが自律的にコードを記述・テストを実行し、チームのGitHubリポジトリにプルリクエストを提出する。</p>
-    <p>また、「デジタルツイン」機能も搭載しており、蓄積された会話履歴を基に、プロジェクトの進捗状況、チームの優先事項、特定の設計判断の理由について対話形式で回答するAIエージェントが利用できる。</p>
-
-    <h2>既存AIコーディングツールとの違い</h2>
-    <p>GitHub Copilot、OpenAI Codex、Claude Codeといった既存のAIコーディング支援ツールは、個人の開発生産性を大幅に向上させてきた。しかし、これらのツールには共通の構造的前提がある――エンジニアがインターフェースであるという点だ。チームが「何を作るか」を話し合い、エンジニアがその議論を解釈し、その解釈に基づいてプロンプトを記述する。AIはそのプロンプトのみを入力としてコードを生成する。このワークフローは2つの段階で揺らぎを生む――エンジニアがチームの意図を理解する段階と、それを正確な指示として言語化する段階である。</p>
-    <p>SIMYはこの翻訳作業をエンジニアから取り除く。プラットフォームが元の会話を直接取得するため、AIは二次的な要約ではなく、一次情報――議論の全スレッド、検討されたトレードオフ、指摘されたエッジケース――をそのまま受け取り、それに基づいて動作する。エンジニアは、チームが既に議論した内容をプロンプトに再エンコードする時間から解放され、自らの専門性が最も活きるアーキテクチャや設計の判断に集中できるようになる。</p>
-    <p>さらに、SIMYは会話の字義通りの変換にとどまらない。AIエンジンは各会話を取り巻く組織的文脈を分析する――チームが最終的に解決すべき問題は何か、システムのエンドユーザーやペルソナは誰か、どのようなビジネス目標が関わっているのか。この分析に基づき、AIはコードを一行書く前に精緻化された仕様の草案をチームに提示する。曖昧な箇所を明示し、確立されたパターンから暗黙の要件を推論し、プロダクト全体の目的との整合性を確認する。最終的に何を実装するかの承認権限はチームが保持する――ただし、チームが承認する仕様は、個人が単独で作成できるものより精度が高い。</p>
-
-    <h2>AIネイティブなエンジニアリング組織の提案</h2>
-    <p>SIMYは、ソフトウェア開発チームの新しい運営モデルを提案する。あらゆるエンジニアリング職において、時間の約9割は実行系タスク――要件の解釈、定型コードの記述、ステータス報告の作成――に費やされてきた。一方で、プロダクトの成果の9割を左右するのは、残りの1割の意思決定である。SIMYは前者を自動化し、後者を拡張する。下表の右列は人間だけで行う作業ではなく、AIを思考パートナーとして活用し、プラットフォームが蓄積した組織の文脈を借りながら、より鋭く、より速く、より確かな判断を下す領域である。</p>
-    <table class="role-table">
-      <thead>
-        <tr><th>役割</th><th>AIに委譲する</th><th>AIの知恵を借りて実行する</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>開発エンジニア</td><td>要件の解釈とプロンプト記述、コード生成、テスト作成・実行、PR提出、レビュー指摘への対応・手戻り修正</td><td>アーキテクチャ判断、システム設計のトレードオフ検討、未知の問題への創造的解決、開発者体験の戦略策定</td></tr>
-        <tr><td>PM / テックリード</td><td>会議からのアクションアイテム抽出、タスク分解・優先順位付け、進捗トラッキング、ステータスレポート作成</td><td>顧客課題の本質的発見、プロダクトビジョンと戦略の策定、Go/No-Go判断、チーム間のアラインメント構築</td></tr>
-        <tr><td>QA / テスト担当</td><td>テストケース生成、受け入れ条件の文書化、回帰テスト実行、バグ再現手順の記述</td><td>探索的テストによるエッジケース発見、ユーザー体験品質の評価、リリースリスクの判断、品質文化の醸成</td></tr>
-        <tr><td>アーキテクト</td><td>技術選定ドキュメント作成、既存コードの仕様解析、依存関係マッピング、移行計画の文書化</td><td>スケーラビリティとレジリエンスの設計、セキュリティアーキテクチャ、技術ロードマップ策定、Build vs Buy判断</td></tr>
-      </tbody>
-    </table>
-    <p><em>これは将来の予測ではなく、SIMYが今日実現する運営モデルである。実行から判断へのシフトが、AIネイティブなエンジニアリング組織を定義する。</em></p>
-
-    <h2>エンタープライズ水準のセキュリティ</h2>
-    <p>データ取得は完全にオプトイン方式である。チームがSIMYにアクセスを許可するチャネル、スレッド、会議録画を選択し、アクセス権の取り消しやインデックス済みデータの削除はいつでも可能である。さらに、顧客ごとに物理的に分離されたデータベースインスタンス、元の会話参加者に限定したアクセス制御、エンドツーエンドの暗号化、そして顧客のコードやコミュニケーションデータを外部AIモデルの訓練に一切使用しないことを保証するゼロトレーニングポリシーを採用している。</p>
-
-    <h2>提供状況</h2>
-    <p>SIMYは現在、パイロットプログラムへの参加企業を募集している。パイロットパートナーには初期クレジットが付与され、その後は従量課金制となる。対応プラットフォームはSlack、Microsoft Teams、Gmail、Zoom、GitHub。</p>
-
-    <h2>SIMYについて</h2>
-    <p>SIMYは、チームのコミュニケーションとソフトウェアデリバリーの乖離を埋めるAIインフラを構築する開発者生産性向上企業である。同社のプラットフォームは、職場の会話を取得し、エンジニアリング上の意思決定を構造化されたナレッジベースとして維持し、実用水準のコードを自律的に生成する。詳細は<a href="https://simy.one" style="color:#0057ff;text-decoration:none">simy.one</a>を参照。</p>
-
-    <div class="pr-contact">
-      <h3>報道関係のお問い合わせ</h3>
-      <p><a class="eml" data-u="press" data-d="simy.one"></a></p>
-    </div>
-  </article>
-</div>
-
-    <!-- Static footer — same code as all other pages -->
     <footer class="static-footer">
       <div class="container">
         <div class="footer-grid">
-          <div class="footer-brand">
-            <div style="font-size:1rem;font-weight:700;margin-bottom:6px;letter-spacing:-0.02em" data-i18n="footer.tagline">Record. Ship. Done.</div>
-            <div style="display:flex;gap:12px;align-items:center;margin-top:12px">
-              <a href="https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262" target="_blank" rel="noopener" data-i18n="footer.companion">iPhone recording companion app</a><div style="font-size:0.75rem;color:#6a6a66;margin-top:4px" data-i18n="footer.billing">Plans and billing are managed on the web.</div>
-            </div>
+          <div>
+            <div class="footer-brand-line" data-i18n-html="home.footer.tagline">Meeting ends.<br>Your Twin starts working.</div>
+            <div class="footer-brand-copy" data-i18n="home.footer.copy">Your Twin carries the work after meetings.</div>
           </div>
           <div class="footer-col">
             <div class="footer-col-title" data-i18n="footer.product">Product</div>
-            <a href="/how-it-works.html" data-i18n="footer.product.how">How It Works</a>
-            <a href="/pricing.html" data-i18n="footer.product.pricing">Pricing</a>
+            <a href="/#samples" data-i18n="footer.product.work">After meetings</a>
+            <a href="/#beyond-screen" data-i18n="home.life.label">Beyond the screen</a>
             <a href="/compare.html" data-i18n="footer.product.compare">Compare</a>
-            <a href="/integrations.html" data-i18n="footer.product.integrations">Integrations</a>
-            <a href="/security.html" data-i18n="footer.product.security">Security</a>
+            <a href="/#pricing" data-i18n="footer.product.pricing">Pricing</a>
           </div>
           <div class="footer-col">
             <div class="footer-col-title" data-i18n="footer.company">Company</div>
-            <a href="/about.html" data-i18n="footer.company.about">About</a>
-            <a href="/careers.html" data-i18n="footer.company.careers">Careers</a>
-            <a href="/press.html" data-i18n="footer.company.press">Press</a>
-            <a href="/contact.html" data-i18n="footer.company.contact">Contact</a>
-            <a href="/status.html" data-i18n="footer.company.status">Status</a>
+            <a href="/press-release.html" data-i18n="nav.news">Press release</a>
+            <a href="mailto:sales@simy.one" data-i18n="footer.contact">Contact</a>
+            <a href="https://app.simy.one/login" data-i18n="nav.signin">Sign in</a>
           </div>
           <div class="footer-col">
             <div class="footer-col-title" data-i18n="footer.legal">Legal</div>
@@ -432,20 +119,9 @@ if(localStorage.getItem('simy-cookies')==='1') loadGA();
             <a href="/terms.html" data-i18n="footer.legal.terms">Terms of Service</a>
           </div>
         </div>
-        <div class="footer-bottom">
-          <span data-i18n="footer.copy">&copy; 2026 SIMY by AwakApp Inc. All rights reserved.</span>
-        </div>
+        <div class="footer-bottom" data-i18n="footer.copy">&copy; 2026 SIMY by AwakApp Inc. All rights reserved.</div>
       </div>
     </footer>
-
-<div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:rgba(249,249,246,0.98);border-top:1px solid rgba(0,0,0,0.06);padding:16px 24px;backdrop-filter:blur(20px)"><div style="max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap"><p style="color:#7a7a78;font-size:0.85rem;margin:0;flex:1;min-width:200px"><span data-i18n="cookie.text">We use cookies to improve your experience. See our </span><a href="/privacy.html" style="color:#0057ff" data-i18n="cookie.link">Privacy Policy</a>.</p><div style="display:flex;gap:10px"><button onclick="setCookieConsent(false)" style="padding:8px 20px;border-radius:6px;border:1px solid rgba(0,0,0,0.15);background:transparent;color:#7a7a78;cursor:pointer;font-size:0.85rem" data-i18n="cookie.decline">Decline</button><button onclick="setCookieConsent(true)" style="padding:8px 20px;border-radius:6px;border:none;background:linear-gradient(135deg,#0057ff,#3378ff);color:#fff;font-weight:700;cursor:pointer;font-size:0.85rem" data-i18n="cookie.accept">Accept</button></div></div></div>
-<script>function setCookieConsent(v){localStorage.setItem('simy-cookies',v?'1':'0');document.getElementById('cookieBanner').style.display='none';if(v)loadGA();}if(!localStorage.getItem('simy-cookies'))document.getElementById('cookieBanner').style.display='block';</script>
-
-<script>
-// Obfuscated email decoder — invoked by /i18n.js via window.simyDecodeEmails
-function _deml(){document.querySelectorAll('a.eml').forEach(function(el){var e=el.dataset.u+String.fromCharCode(64)+el.dataset.d;el.href='m'+'ailt'+'o:'+e;el.textContent=e;});}
-_deml();
-</script>
-<script src="/i18n.js"></script>
-</body>
+    <script src="/i18n.js"></script>
+  </body>
 </html>

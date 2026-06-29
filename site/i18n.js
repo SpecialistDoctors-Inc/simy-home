@@ -77,10 +77,13 @@
   }
 
   function isTwinPage() {
-    return location.pathname === '/newpage' ||
-      location.pathname === '/newpage/' ||
-      location.pathname === '/newpage.html' ||
-      location.pathname === '/newpage/index.html';
+    var p = location.pathname;
+    return p === '/' ||
+      p === '/index.html' ||
+      p === '/compare.html' ||
+      p === '/press-release.html' ||
+      p === '/privacy.html' ||
+      p === '/terms.html';
   }
 
   function pageLocales() {
@@ -148,10 +151,12 @@
     "en": {
       kw: "AI code generation, AI coding agent, problem-solving AI agent, AI that fixes bugs, AI agent for engineers, autonomous AI engineer, AI software engineer, meeting to code, voice to code, speech to code, AI pull request generator, AI pair programmer, meeting to PR, spec to code AI, sprint planning to code, GitHub Copilot alternative, Cursor alternative, Devin alternative, Claude Code alternative, Replit Agent alternative, AI SDLC automation",
       p: {
-        "index": { t: "SIMY — AI Code Generation from Meetings | Copilot Alternative", d: "Autonomous AI coding agent that turns meetings into shipped GitHub pull requests. A Copilot, Cursor, Devin, and Claude Code alternative." },
-        "newpage": { t: "SIMY - Meeting Ends. Your Twin Starts Working.", d: "Meeting ends. Your Twin starts working. SIMY moves follow-ups, decks, research, analysis, updates, and next actions forward while you step into the next conversation, customer, team, or idea." },
+        "index": { t: "SIMY - Meeting Ends. Your Twin Starts Working.", d: "Meeting ends. Your Twin starts working. Your Twin moves follow-ups, decks, research, analysis, updates, and next actions forward while you step into the next conversation, customer, team, or idea." },
         "pricing": { t: "Pricing — SIMY | AI Code Generation Plans from $20/mo", d: "SIMY pricing for AI code generation from meetings. Starter $20, Pro $40, Scale $100/mo. A cheaper GitHub Copilot alternative." },
-        "compare": { t: "Compare SIMY vs Copilot, Cursor, Devin & Claude Code", d: "SIMY vs GitHub Copilot, Cursor, Devin, and Claude Code. Autonomous AI that generates code from meetings — no prompting required." },
+        "compare": { t: "Compare SIMY — Your Twin for the Work After Meetings", d: "An agent does a task. Your Twin carries the thread from meetings into follow-up, decks, CRM, internal sharing, and next actions." },
+        "press-release": { t: "News — SIMY Introduces Your AI Twin for the Work After Meetings", d: "Meeting ends. Your Twin starts working. SIMY introduces an AI Twin that turns meeting context into follow-up, proposals, CRM, internal sharing, and next actions." },
+        "privacy": { t: "Privacy Policy — SIMY by AwakApp Inc.", d: "SIMY Privacy Policy. Learn how AwakApp Inc. collects, uses, discloses, and protects your personal information when using SIMY." },
+        "terms": { t: "Terms of Use — SIMY by AwakApp Inc.", d: "SIMY Terms of Use. Terms and conditions governing your use of SIMY by AwakApp Inc." },
         "how-it-works": { t: "How SIMY Works — AI Code Generation from Meetings in 4 Steps", d: "See how SIMY turns meetings into shipped GitHub pull requests in 4 steps: record, AI processes, code generates, PR ships." },
         "contact": { t: "Request a Demo — SIMY | AI Code Generation Platform", d: "Request a SIMY demo. AI code generation from meetings — book a demo, start a free trial, or ask about Enterprise plans." },
         "integrations": { t: "Integrations — SIMY | GitHub, Slack, Zoom, Google Workspace", d: "Connect SIMY with GitHub, Slack, Zoom, and Google Workspace. Ship code from meetings — no IDE extension required." },
@@ -162,10 +167,12 @@
     "ja": {
       kw: "AIコード生成, AIコーディングエージェント, 問題解決 AI エージェント, 課題解決 AI, バグ修正 AI, 自律型AIエンジニア, AIソフトウェアエンジニア, 会議からコード生成, 議事録からコード, 音声からコード, ミーティング コード化, AIプルリクエスト自動生成, AI PR 自動作成, 仕様書からコード AI, スプリント AI 開発, 会議 自動化 開発, AI ペアプログラミング, GitHub Copilot 代替, Cursor 代替, Devin 代替, Claude Code 代替, 開発自動化 AI, 開発効率化 AI",
       p: {
-        "index": { t: "SIMY — 会議からコードを生成するAIエンジニア", d: "ミーティングの議論をGitHubプルリクエストに自動変換する自律型AIコーディングエージェント。GitHub Copilot・Cursor・Devin・Claude Codeの代替。" },
-        "newpage": { t: "SIMY - Meeting Ends. Your Twin Starts Working.", d: "会議が終わった瞬間、Twinがフォロー、資料、調査、分析、共有、次アクションを進めます。次の会話、顧客、チーム、アイデアへ向かう時間をつくるAI Twinです。" },
+        "index": { t: "SIMY - Meeting Ends. Your Twin Starts Working.", d: "会議が終わった瞬間、あなたのTwinがフォロー、資料、調査、分析、共有、次アクションを進めます。次の会話、顧客、チーム、アイデアへ向かう時間をつくるAI Twinです。" },
         "pricing": { t: "料金 — SIMY | AIコード生成プラン 月額20ドルから", d: "会議からコードを生成するSIMYの料金。Starter月額$20、Pro$40、Scale$100。GitHub Copilot・Cursorより安価なプラン。" },
-        "compare": { t: "SIMY vs Copilot・Cursor・Devin・Claude Code 比較", d: "SIMYとGitHub Copilot、Cursor、Devin、Claude Codeを比較。会議から自動でコードを生成する自律型AIエンジニア。" },
+        "compare": { t: "SIMY比較 — 会議後の仕事を引き継ぐYour Twin", d: "エージェントは作業をする。Twinは文脈を引き継ぐ。会議からフォロー、資料、CRM、社内共有、次アクションへ進めます。" },
+        "press-release": { t: "ニュース — SIMY、会議後の仕事を進めるAI Twinを発表", d: "Meeting ends. Your Twin starts working. SIMYは会議の文脈をフォロー、提案、CRM、社内共有、次アクションへ変えるAI Twinを発表しました。" },
+        "privacy": { t: "プライバシーポリシー — SIMY by AwakApp Inc.", d: "SIMYのプライバシーポリシー。AwakApp Inc.が個人情報をどのように収集、利用、開示、保護するかを説明します。" },
+        "terms": { t: "利用規約 — SIMY by AwakApp Inc.", d: "SIMYの利用規約。AwakApp Inc.が提供するSIMYの利用条件を説明します。" },
         "how-it-works": { t: "使い方 — SIMY | 会議からコード生成 4ステップ", d: "SIMYが会議をGitHubプルリクエストに変える4ステップ：録画、AI処理、コード生成、PR作成。プロンプト不要。" },
         "contact": { t: "デモ申込 — SIMY | AIコード生成プラットフォーム", d: "SIMYのデモをリクエスト。会議からコードを生成するAI — デモ予約、無料トライアル、エンタープライズ相談。" },
         "integrations": { t: "連携サービス — SIMY | GitHub・Slack・Zoom・Google Workspace", d: "GitHub、Slack、Zoom、Google WorkspaceとSIMYを連携。IDE拡張不要で会議からコードを出荷。" },
@@ -386,7 +393,6 @@
   function pageKey() {
     var p = location.pathname;
     if (p === '/' || p === '') return 'index';
-    if (p === '/newpage' || p === '/newpage/' || p === '/newpage.html' || p === '/newpage/index.html') return 'newpage';
     var m = p.match(/\/([^/]+?)(?:\.html)?$/);
     return m ? m[1] : 'index';
   }
@@ -1181,7 +1187,7 @@
       'hi': 'hi', 'te': 'te', 'kn': 'kn', 'ko': 'ko', 'vi': 'vi',
       'th': 'th', 'id': 'id', 'ru': 'ru', 'pt-BR': 'pt-BR'
     };
-    var base = isTwinPage() ? location.origin + '/newpage/' : location.origin + location.pathname;
+    var base = location.origin + (location.pathname === '/index.html' ? '/' : location.pathname);
     // x-default (no lang param)
     var xdef = document.createElement('link');
     xdef.rel = 'alternate';
