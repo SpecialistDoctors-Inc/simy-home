@@ -64,6 +64,32 @@
     'pt': 'pt-BR',
     'pt-br': 'pt-BR'
   };
+  var REGION_OPTIONS = [
+    { code: 'us', label: 'United States', short: 'US', lang: 'en' },
+    { code: 'jp', label: 'Japan', short: 'JP', lang: 'ja' },
+    { code: 'cn', label: 'Mainland China', short: 'CN', lang: 'zh-Hans' },
+    { code: 'tw', label: 'Taiwan', short: 'TW', lang: 'zh-Hant' },
+    { code: 'fr', label: 'France', short: 'FR', lang: 'fr' },
+    { code: 'de', label: 'Germany', short: 'DE', lang: 'de' },
+    { code: 'es', label: 'Spain', short: 'ES', lang: 'es' },
+    { code: 'sa', label: 'Saudi Arabia', short: 'SA', lang: 'ar' },
+    { code: 'it', label: 'Italy', short: 'IT', lang: 'it' },
+    { code: 'in', label: 'India - Hindi', short: 'IN', lang: 'hi' },
+    { code: 'in-te', label: 'India - Telugu', short: 'IN-TE', lang: 'te' },
+    { code: 'in-kn', label: 'India - Kannada', short: 'IN-KN', lang: 'kn' },
+    { code: 'kr', label: 'South Korea', short: 'KR', lang: 'ko' },
+    { code: 'vn', label: 'Vietnam', short: 'VN', lang: 'vi' },
+    { code: 'th', label: 'Thailand', short: 'TH', lang: 'th' },
+    { code: 'id', label: 'Indonesia', short: 'ID', lang: 'id' },
+    { code: 'ru', label: 'Russia', short: 'RU', lang: 'ru' },
+    { code: 'br', label: 'Brazil', short: 'BR', lang: 'pt-BR' }
+  ];
+  var REGION_BY_CODE = {};
+  var REGION_BY_LANG = {};
+  REGION_OPTIONS.forEach(function(region) {
+    REGION_BY_CODE[region.code] = region;
+    REGION_BY_LANG[region.lang] = region;
+  });
 
   /* ── Resolve a browser locale string to supported code ────── */
   function resolve(locale) {
@@ -74,6 +100,37 @@
     var base = lc.split('-')[0];
     if (LOCALE_MAP[base]) return LOCALE_MAP[base];
     return null;
+  }
+
+  function regionFromLang(lang) {
+    var resolved = resolve(lang || '') || lang;
+    return (REGION_BY_LANG[resolved] || REGION_BY_LANG.en).code;
+  }
+
+  function regionFromTimezone(timeZone, language) {
+    var langRegion = regionFromLang(language || '');
+    if (timeZone === 'Asia/Tokyo') return 'jp';
+    if (timeZone === 'Asia/Shanghai') return 'cn';
+    if (timeZone === 'Asia/Taipei') return 'tw';
+    if (timeZone === 'Europe/Paris') return 'fr';
+    if (timeZone === 'Europe/Berlin') return 'de';
+    if (timeZone === 'Europe/Madrid') return 'es';
+    if (timeZone === 'Asia/Riyadh') return 'sa';
+    if (timeZone === 'Europe/Rome') return 'it';
+    if (timeZone === 'Asia/Kolkata' || timeZone === 'Asia/Calcutta') return langRegion === 'in-te' || langRegion === 'in-kn' ? langRegion : 'in';
+    if (timeZone === 'Asia/Seoul') return 'kr';
+    if (timeZone === 'Asia/Ho_Chi_Minh') return 'vn';
+    if (timeZone === 'Asia/Bangkok') return 'th';
+    if (timeZone === 'Asia/Jakarta') return 'id';
+    if (timeZone === 'Europe/Moscow') return 'ru';
+    if (timeZone === 'America/Sao_Paulo') return 'br';
+    if (timeZone && timeZone.indexOf('America/') === 0) return 'us';
+    return langRegion;
+  }
+
+  function supportedRegion(region) {
+    region = (region || '').toLowerCase();
+    return REGION_BY_CODE[region] ? region : '';
   }
 
   function isTwinPage() {
@@ -96,16 +153,24 @@
 
   /* ── Detect preferred language ─────────────────────────────── */
   function detect() {
-    // 1. Query param  ?lang=ja
     var params = new URLSearchParams(location.search);
+
+    // 1. Query param ?region=fr should land on that region and its
+    // native language unless ?lang= is explicitly provided.
+    var qRegion = supportedRegion(params.get('region'));
     var qLang = params.get('lang');
     if (qLang) {
       var resolved = resolve(qLang);
       if (!resolved && SUPPORTED.indexOf(qLang) !== -1) resolved = qLang;
       if (resolved) return safeLangForPage(resolved);
     }
+    if (qRegion) return safeLangForPage(REGION_BY_CODE[qRegion].lang);
 
-    // 2. Saved preference — check BOTH keys. The React bundle on /
+    // 2. Saved region preference.
+    var savedRegion = supportedRegion(localStorage.getItem('simy-region'));
+    if (savedRegion) return safeLangForPage(REGION_BY_CODE[savedRegion].lang);
+
+    // 3. Saved preference — check BOTH keys. The React bundle on /
     //    uses 'simy-language' for its internal LanguageContext, while
     //    the static pages use 'simy-lang'. Either key is authoritative.
     var saved = localStorage.getItem('simy-lang');
@@ -113,8 +178,15 @@
     var savedReact = localStorage.getItem('simy-language');
     if (savedReact && SUPPORTED.indexOf(savedReact) !== -1) return safeLangForPage(savedReact);
 
-    // 3. Browser / OS language
+    // 4. Browser / OS country signal through timezone.
     var langs = navigator.languages || [navigator.language || navigator.userLanguage || ''];
+    try {
+      var timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+      var tzRegion = supportedRegion(regionFromTimezone(timeZone, langs[0] || ''));
+      if (tzRegion) return safeLangForPage(REGION_BY_CODE[tzRegion].lang);
+    } catch (e) {}
+
+    // 5. Browser / OS language
     for (var i = 0; i < langs.length; i++) {
       var match = resolve(langs[i]);
       if (match) return safeLangForPage(match);
@@ -1009,11 +1081,11 @@
       '</button>' +
       '<div class="lang-dropdown" id="langDropdown"></div>';
 
-    // Keep language next to the region preview when the page has both controls.
+    // Keep language immediately to the left of the region selector.
     var regionSwitcher = navInner.querySelector('.region-switcher');
     var mobileBtn = navInner.querySelector('.mobile-menu-btn') || navInner.querySelector('button[aria-label="Menu"]');
     if (regionSwitcher && regionSwitcher.parentNode === navInner) {
-      navInner.insertBefore(wrapper, regionSwitcher.nextSibling);
+      navInner.insertBefore(wrapper, regionSwitcher);
     } else if (mobileBtn) {
       navInner.insertBefore(wrapper, mobileBtn);
     } else {
@@ -1053,6 +1125,16 @@
     var current = switcher.querySelector('[data-region-current]');
     if (!button || !menu || !current) return;
 
+    menu.innerHTML = '';
+    REGION_OPTIONS.forEach(function(region) {
+      var item = document.createElement('button');
+      item.type = 'button';
+      item.setAttribute('data-region-btn', region.code);
+      item.setAttribute('role', 'menuitem');
+      item.innerHTML = '<strong>' + region.short + '</strong><span>' + region.label + '</span>';
+      menu.appendChild(item);
+    });
+
     function savedRegion() {
       try {
         return (localStorage.getItem('simy-region') || '').toLowerCase();
@@ -1067,14 +1149,18 @@
 
     function activeRegion() {
       var api = regionApi();
+      var params = new URLSearchParams(location.search);
+      var queryRegion = supportedRegion(params.get('region'));
       var fromPage = api && typeof api.get === 'function'
         ? api.get()
         : '';
-      return (fromPage || savedRegion() || 'us').toLowerCase();
+      return supportedRegion(queryRegion || fromPage || savedRegion() || regionFromLang(detect())) || 'us';
     }
 
     function paint(region) {
-      current.textContent = region.toUpperCase();
+      var meta = REGION_BY_CODE[region] || REGION_BY_CODE.us;
+      current.textContent = meta.short;
+      button.setAttribute('aria-label', 'Region: ' + meta.label);
       menu.querySelectorAll('[data-region-btn]').forEach(function(item) {
         item.classList.toggle('active', item.getAttribute('data-region-btn') === region);
       });
@@ -1091,29 +1177,49 @@
       button.setAttribute('aria-expanded', open ? 'true' : 'false');
     });
 
+    function setRegion(region, persist, syncLanguage) {
+      region = supportedRegion(region) || 'us';
+      var api = regionApi();
+      if (api && typeof api.set === 'function') {
+        api.set(region, persist);
+      } else if (persist) {
+        try { localStorage.setItem('simy-region', region); } catch (e) {}
+      }
+      if (persist) {
+        try { localStorage.setItem('simy-region', region); } catch (e) {}
+      }
+      try {
+        window.dispatchEvent(new CustomEvent('simy:regionchange', { detail: { region: region } }));
+      } catch (e) {}
+      paint(region);
+      if (syncLanguage !== false) {
+        var targetLang = REGION_BY_CODE[region].lang;
+        if (targetLang && targetLang !== CURRENT_LANG) setLang(targetLang, { skipRegionSync: true });
+      }
+      return region;
+    }
+
     menu.querySelectorAll('[data-region-btn]').forEach(function(item) {
       item.addEventListener('click', function(event) {
         event.stopPropagation();
-        var region = item.getAttribute('data-region-btn');
-        var api = regionApi();
-        if (api && typeof api.set === 'function') {
-          api.set(region, true);
-        } else {
-          try { localStorage.setItem('simy-region', region); } catch (e) {}
-        }
-        paint(region);
+        setRegion(item.getAttribute('data-region-btn'), true, true);
         close();
       });
+    });
+
+    window.addEventListener('simy:regionchange', function(event) {
+      if (event && event.detail && event.detail.region) paint(supportedRegion(event.detail.region) || 'us');
     });
 
     document.addEventListener('click', close);
 
     switcher.setAttribute('data-bound', 'true');
-    paint(activeRegion());
+    setRegion(activeRegion(), false, true);
   }
 
   /* ── Public: switch language ────────────────────────────────── */
-  function setLang(lang) {
+  function setLang(lang, options) {
+    options = options || {};
     if (SUPPORTED.indexOf(lang) === -1) lang = DEFAULT;
     lang = safeLangForPage(lang);
     // Mirror to BOTH keys so the React bundle's LanguageContext and
@@ -1121,6 +1227,15 @@
     // on next mount/reload gets the same answer.
     localStorage.setItem('simy-lang', lang);
     try { localStorage.setItem('simy-language', lang); } catch (e) {}
+    if (!options.skipRegionSync) {
+      var region = regionFromLang(lang);
+      var api = window.SIMYRegion || window.SIMY_REGION || null;
+      if (api && typeof api.set === 'function') api.set(region, true);
+      try { localStorage.setItem('simy-region', region); } catch (e) {}
+      try {
+        window.dispatchEvent(new CustomEvent('simy:regionchange', { detail: { region: region } }));
+      } catch (e) {}
+    }
     load(lang, apply);
   }
 
@@ -1177,6 +1292,10 @@
       '.lang-dropdown.open{display:grid;grid-template-columns:1fr 1fr;gap:2px}' +
       '.lang-option{display:block;width:100%;text-align:left;background:none;border:none;padding:8px 12px;font-size:0.78rem;color:#333;cursor:pointer;border-radius:6px;font-family:inherit;transition:background 0.12s;white-space:nowrap}' +
       '.lang-option:hover{background:#f5f5f3}' +
+      '.region-menu{min-width:220px;max-height:420px;overflow-y:auto}' +
+      '.region-menu button{display:grid;grid-template-columns:48px 1fr;align-items:center;gap:8px}' +
+      '.region-menu button strong{font-family:Geist Mono,monospace;font-size:.72rem;text-transform:uppercase}' +
+      '.region-menu button span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#666}' +
       '@media(max-width:768px){.lang-switcher{margin-left:0}.lang-btn span{display:none}.lang-btn{min-height:32px;padding:4px 8px}.lang-dropdown{right:-44px}}' +
       '[dir="rtl"] .lang-switcher{margin-left:0;margin-right:8px}' +
       '[dir="rtl"] .lang-dropdown{right:auto;left:0}' +

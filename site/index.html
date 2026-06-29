@@ -88,8 +88,62 @@
         var regionLabels = {
           us: 'United States',
           jp: 'Japan',
-          in: 'India',
-          eu: 'Europe'
+          cn: 'Mainland China',
+          tw: 'Taiwan',
+          fr: 'France',
+          de: 'Germany',
+          es: 'Spain',
+          sa: 'Saudi Arabia',
+          it: 'Italy',
+          in: 'India - Hindi',
+          'in-te': 'India - Telugu',
+          'in-kn': 'India - Kannada',
+          kr: 'South Korea',
+          vn: 'Vietnam',
+          th: 'Thailand',
+          id: 'Indonesia',
+          ru: 'Russia',
+          br: 'Brazil'
+        };
+        var regionLanguage = {
+          us: 'en',
+          jp: 'ja',
+          cn: 'zh-Hans',
+          tw: 'zh-Hant',
+          fr: 'fr',
+          de: 'de',
+          es: 'es',
+          sa: 'ar',
+          it: 'it',
+          in: 'hi',
+          'in-te': 'te',
+          'in-kn': 'kn',
+          kr: 'ko',
+          vn: 'vi',
+          th: 'th',
+          id: 'id',
+          ru: 'ru',
+          br: 'pt-BR'
+        };
+        var regionAssetGroup = {
+          us: 'us',
+          jp: 'jp',
+          cn: 'jp',
+          tw: 'jp',
+          fr: 'eu',
+          de: 'eu',
+          es: 'eu',
+          sa: 'eu',
+          it: 'eu',
+          in: 'in',
+          'in-te': 'in',
+          'in-kn': 'in',
+          kr: 'jp',
+          vn: 'jp',
+          th: 'jp',
+          id: 'jp',
+          ru: 'eu',
+          br: 'us'
         };
         var regionAssets = {
           us: {
@@ -132,11 +186,14 @@
         function isSupportedRegion(region) {
           return Object.prototype.hasOwnProperty.call(regionLabels, region);
         }
+        function assetGroupFor(region) {
+          return regionAssetGroup[region] || 'us';
+        }
         function setBackgroundImage(element, path) {
           if (element && path) element.style.backgroundImage = 'url("' + path + '")';
         }
         function syncRegionImages(region) {
-          var assets = regionAssets[region] || regionAssets.us;
+          var assets = regionAssets[assetGroupFor(region)] || regionAssets.us;
           setBackgroundImage(document.querySelector('.hero-bg.meeting'), assets.hero);
           Object.keys(assets.life).forEach(function(key) {
             setBackgroundImage(document.querySelector('.life-scene.' + key), assets.life[key]);
@@ -145,6 +202,7 @@
         function setHeroRegion(region, persist) {
           if (!isSupportedRegion(region)) region = 'us';
           document.documentElement.setAttribute('data-hero-region', region);
+          document.documentElement.setAttribute('data-hero-asset-region', assetGroupFor(region));
           syncRegionImages(region);
           if (persist) {
             try { localStorage.setItem('simy-region', region); } catch (e) {}
@@ -157,8 +215,22 @@
         function regionFromLang(lang) {
           lang = (lang || '').toLowerCase();
           if (lang.indexOf('ja') === 0) return 'jp';
-          if (lang.indexOf('hi') === 0 || lang.indexOf('kn') === 0 || lang.indexOf('en-in') === 0) return 'in';
-          if (lang.indexOf('de') === 0 || lang.indexOf('fr') === 0 || lang.indexOf('it') === 0 || lang.indexOf('es') === 0 || lang.indexOf('pt-br') === 0 || lang.indexOf('nl') === 0 || lang.indexOf('sv') === 0 || lang.indexOf('da') === 0 || lang.indexOf('fi') === 0 || lang.indexOf('pl') === 0 || lang.indexOf('cs') === 0 || lang.indexOf('hu') === 0 || lang.indexOf('ro') === 0 || lang.indexOf('el') === 0) return 'eu';
+          if (lang.indexOf('zh-hant') === 0 || lang.indexOf('zh-tw') === 0 || lang.indexOf('zh-hk') === 0) return 'tw';
+          if (lang.indexOf('zh') === 0) return 'cn';
+          if (lang.indexOf('fr') === 0) return 'fr';
+          if (lang.indexOf('de') === 0) return 'de';
+          if (lang.indexOf('es') === 0) return 'es';
+          if (lang.indexOf('ar') === 0) return 'sa';
+          if (lang.indexOf('it') === 0) return 'it';
+          if (lang.indexOf('te') === 0) return 'in-te';
+          if (lang.indexOf('kn') === 0) return 'in-kn';
+          if (lang.indexOf('hi') === 0 || lang.indexOf('en-in') === 0) return 'in';
+          if (lang.indexOf('ko') === 0) return 'kr';
+          if (lang.indexOf('vi') === 0) return 'vn';
+          if (lang.indexOf('th') === 0) return 'th';
+          if (lang.indexOf('id') === 0) return 'id';
+          if (lang.indexOf('ru') === 0) return 'ru';
+          if (lang.indexOf('pt') === 0) return 'br';
           if (lang.indexOf('en') === 0) return 'us';
           return '';
         }
@@ -173,6 +245,8 @@
         } catch (e) {}
         window.SIMY_REGION = {
           labels: regionLabels,
+          languages: regionLanguage,
+          assetGroups: regionAssetGroup,
           set: setHeroRegion,
           get: function() { return document.documentElement.getAttribute('data-hero-region') || 'us'; }
         };
@@ -199,12 +273,38 @@
         }
         if (timeZone === 'Asia/Tokyo' || language.indexOf('ja') === 0) {
           region = 'jp';
+        } else if (timeZone === 'Asia/Shanghai') {
+          region = 'cn';
+        } else if (timeZone === 'Asia/Taipei') {
+          region = 'tw';
+        } else if (timeZone === 'Europe/Paris') {
+          region = 'fr';
+        } else if (timeZone === 'Europe/Berlin') {
+          region = 'de';
+        } else if (timeZone === 'Europe/Madrid') {
+          region = 'es';
+        } else if (timeZone === 'Asia/Riyadh') {
+          region = 'sa';
+        } else if (timeZone === 'Europe/Rome') {
+          region = 'it';
         } else if (timeZone === 'Asia/Kolkata' || timeZone === 'Asia/Calcutta' || language.indexOf('hi') === 0 || language.indexOf('en-in') === 0) {
           region = 'in';
+        } else if (timeZone === 'Asia/Seoul') {
+          region = 'kr';
+        } else if (timeZone === 'Asia/Ho_Chi_Minh') {
+          region = 'vn';
+        } else if (timeZone === 'Asia/Bangkok') {
+          region = 'th';
+        } else if (timeZone === 'Asia/Jakarta') {
+          region = 'id';
+        } else if (timeZone === 'Europe/Moscow') {
+          region = 'ru';
+        } else if (timeZone === 'America/Sao_Paulo') {
+          region = 'br';
         } else if (timeZone.indexOf('America/') === 0 || language.indexOf('en-us') === 0) {
           region = 'us';
         } else if (euTimeZones.indexOf(timeZone) !== -1) {
-          region = 'eu';
+          region = regionFromLang(language) || 'fr';
         }
         setHeroRegion(region || 'us', false);
       })();
@@ -348,7 +448,9 @@
         top: 100%;
         right: 0;
         z-index: 120;
-        min-width: 128px;
+        min-width: 220px;
+        max-height: 420px;
+        overflow-y: auto;
         margin-top: 8px;
         padding: 6px;
         border: 1px solid var(--line);
@@ -361,6 +463,10 @@
         gap: 2px;
       }
       .region-menu button {
+        display: grid;
+        grid-template-columns: 48px 1fr;
+        align-items: center;
+        gap: 8px;
         width: 100%;
         padding: 8px 10px;
         border: 0;
@@ -371,6 +477,17 @@
         font-size: 0.78rem;
         text-align: left;
         cursor: pointer;
+      }
+      .region-menu button strong {
+        font-family: 'Geist Mono', monospace;
+        font-size: 0.72rem;
+        text-transform: uppercase;
+      }
+      .region-menu button span {
+        overflow: hidden;
+        color: var(--muted);
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
       .region-menu button:hover,
       .region-menu button.active {
@@ -463,10 +580,10 @@
         transform: scale(1.04);
       }
       .hero-bg.meeting { background-image: url('/assets/hero-meeting-twin-work.jpg'); }
-      html[data-hero-region="us"] .hero-bg.meeting { background-image: url('/assets/hero-meeting-twin-work.jpg'); }
-      html[data-hero-region="jp"] .hero-bg.meeting { background-image: url('/assets/hero-meeting-twin-work-jp.png'); }
-      html[data-hero-region="eu"] .hero-bg.meeting { background-image: url('/assets/hero-meeting-twin-work-eu.jpg'); }
-      html[data-hero-region="in"] .hero-bg.meeting { background-image: url('/assets/hero-meeting-twin-work-in.jpg'); }
+      html[data-hero-asset-region="us"] .hero-bg.meeting { background-image: url('/assets/hero-meeting-twin-work.jpg'); }
+      html[data-hero-asset-region="jp"] .hero-bg.meeting { background-image: url('/assets/hero-meeting-twin-work-jp.png'); }
+      html[data-hero-asset-region="eu"] .hero-bg.meeting { background-image: url('/assets/hero-meeting-twin-work-eu.jpg'); }
+      html[data-hero-asset-region="in"] .hero-bg.meeting { background-image: url('/assets/hero-meeting-twin-work-in.jpg'); }
       .hero-inner {
         position: relative;
         z-index: 2;
@@ -1757,22 +1874,22 @@
         background-image: url('/assets/hero-life-travel.jpg');
         animation-delay: 18s;
       }
-      html[data-hero-region="us"] .life-scene.running { background-image: url('/assets/hero-life-running.jpg'); }
-      html[data-hero-region="us"] .life-scene.family { background-image: url('/assets/hero-life-family.jpg'); }
-      html[data-hero-region="us"] .life-scene.dinner { background-image: url('/assets/hero-life-dinner.jpg'); }
-      html[data-hero-region="us"] .life-scene.travel { background-image: url('/assets/hero-life-travel.jpg'); }
-      html[data-hero-region="jp"] .life-scene.running { background-image: url('/assets/hero-life-running-jp.jpg'); }
-      html[data-hero-region="jp"] .life-scene.family { background-image: url('/assets/hero-life-family-jp.jpg'); }
-      html[data-hero-region="jp"] .life-scene.dinner { background-image: url('/assets/hero-life-dinner-jp.jpg'); }
-      html[data-hero-region="jp"] .life-scene.travel { background-image: url('/assets/hero-life-travel-jp.jpg'); }
-      html[data-hero-region="eu"] .life-scene.running { background-image: url('/assets/hero-life-running-eu.jpg'); }
-      html[data-hero-region="eu"] .life-scene.family { background-image: url('/assets/hero-life-family-eu.jpg'); }
-      html[data-hero-region="eu"] .life-scene.dinner { background-image: url('/assets/hero-life-dinner-eu.jpg'); }
-      html[data-hero-region="eu"] .life-scene.travel { background-image: url('/assets/hero-life-travel-eu.jpg'); }
-      html[data-hero-region="in"] .life-scene.running { background-image: url('/assets/hero-life-running-in.jpg'); }
-      html[data-hero-region="in"] .life-scene.family { background-image: url('/assets/hero-life-family-in.jpg'); }
-      html[data-hero-region="in"] .life-scene.dinner { background-image: url('/assets/hero-life-dinner-in.jpg'); }
-      html[data-hero-region="in"] .life-scene.travel { background-image: url('/assets/hero-life-travel-in.jpg'); }
+      html[data-hero-asset-region="us"] .life-scene.running { background-image: url('/assets/hero-life-running.jpg'); }
+      html[data-hero-asset-region="us"] .life-scene.family { background-image: url('/assets/hero-life-family.jpg'); }
+      html[data-hero-asset-region="us"] .life-scene.dinner { background-image: url('/assets/hero-life-dinner.jpg'); }
+      html[data-hero-asset-region="us"] .life-scene.travel { background-image: url('/assets/hero-life-travel.jpg'); }
+      html[data-hero-asset-region="jp"] .life-scene.running { background-image: url('/assets/hero-life-running-jp.jpg'); }
+      html[data-hero-asset-region="jp"] .life-scene.family { background-image: url('/assets/hero-life-family-jp.jpg'); }
+      html[data-hero-asset-region="jp"] .life-scene.dinner { background-image: url('/assets/hero-life-dinner-jp.jpg'); }
+      html[data-hero-asset-region="jp"] .life-scene.travel { background-image: url('/assets/hero-life-travel-jp.jpg'); }
+      html[data-hero-asset-region="eu"] .life-scene.running { background-image: url('/assets/hero-life-running-eu.jpg'); }
+      html[data-hero-asset-region="eu"] .life-scene.family { background-image: url('/assets/hero-life-family-eu.jpg'); }
+      html[data-hero-asset-region="eu"] .life-scene.dinner { background-image: url('/assets/hero-life-dinner-eu.jpg'); }
+      html[data-hero-asset-region="eu"] .life-scene.travel { background-image: url('/assets/hero-life-travel-eu.jpg'); }
+      html[data-hero-asset-region="in"] .life-scene.running { background-image: url('/assets/hero-life-running-in.jpg'); }
+      html[data-hero-asset-region="in"] .life-scene.family { background-image: url('/assets/hero-life-family-in.jpg'); }
+      html[data-hero-asset-region="in"] .life-scene.dinner { background-image: url('/assets/hero-life-dinner-in.jpg'); }
+      html[data-hero-asset-region="in"] .life-scene.travel { background-image: url('/assets/hero-life-travel-in.jpg'); }
       @keyframes lifeSceneFade {
         0% { opacity: 0; transform: scale(1.025); }
         6% { opacity: 1; transform: scale(1); }
@@ -2212,12 +2329,7 @@
             <span data-i18n="nav.region">Region</span>
             <strong data-region-current>US</strong>
           </button>
-          <div class="region-menu" role="menu" aria-label="Region">
-            <button type="button" data-region-btn="us" role="menuitem">US</button>
-            <button type="button" data-region-btn="jp" role="menuitem">JP</button>
-            <button type="button" data-region-btn="eu" role="menuitem">EU</button>
-            <button type="button" data-region-btn="in" role="menuitem">IN</button>
-          </div>
+          <div class="region-menu" role="menu" aria-label="Region"></div>
         </div>
       </div>
     </nav>
@@ -2812,8 +2924,22 @@
           var clockRegions = {
             us: { label: 'ET', timeZone: 'America/New_York' },
             jp: { label: 'JST', timeZone: 'Asia/Tokyo' },
+            cn: { label: 'CST', timeZone: 'Asia/Shanghai' },
+            tw: { label: 'TST', timeZone: 'Asia/Taipei' },
+            fr: { label: 'CET', daylightLabel: 'CEST', timeZone: 'Europe/Paris' },
+            de: { label: 'CET', daylightLabel: 'CEST', timeZone: 'Europe/Berlin' },
+            es: { label: 'CET', daylightLabel: 'CEST', timeZone: 'Europe/Madrid' },
+            sa: { label: 'AST', timeZone: 'Asia/Riyadh' },
+            it: { label: 'CET', daylightLabel: 'CEST', timeZone: 'Europe/Rome' },
             in: { label: 'IST', timeZone: 'Asia/Kolkata' },
-            eu: { label: 'CET', daylightLabel: 'CEST', timeZone: 'Europe/Berlin' }
+            'in-te': { label: 'IST', timeZone: 'Asia/Kolkata' },
+            'in-kn': { label: 'IST', timeZone: 'Asia/Kolkata' },
+            kr: { label: 'KST', timeZone: 'Asia/Seoul' },
+            vn: { label: 'ICT', timeZone: 'Asia/Ho_Chi_Minh' },
+            th: { label: 'ICT', timeZone: 'Asia/Bangkok' },
+            id: { label: 'WIB', timeZone: 'Asia/Jakarta' },
+            ru: { label: 'MSK', timeZone: 'Europe/Moscow' },
+            br: { label: 'BRT', timeZone: 'America/Sao_Paulo' }
           };
           var dateFormatters = {};
           var timeFormatters = {};
