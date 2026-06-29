@@ -65,11 +65,19 @@ a { color: inherit; }
 }
 .nav-logo-s { width: 28px; height: 28px; border-radius: 7px; }
 .nav-brand { font-size: 14px; font-weight: 760; letter-spacing: 0.06em; }
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  margin-left: 28px;
+}
+.nav-links a,
 .nav-signin {
   color: var(--muted);
   font-size: 0.8125rem;
   text-decoration: none;
 }
+.nav-links a:hover,
 .nav-signin:hover { color: var(--ink); }
 .nav-right {
   display: flex;
@@ -77,6 +85,59 @@ a { color: inherit; }
   gap: 16px;
   margin-left: auto;
 }
+.region-switcher {
+  position: relative;
+  margin-left: 8px;
+}
+.region-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  padding: 4px 9px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--muted);
+  font-family: inherit;
+  font-size: 0.72rem;
+  cursor: pointer;
+}
+.region-btn strong {
+  color: var(--ink);
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+}
+.region-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 120;
+  min-width: 128px;
+  margin-top: 8px;
+  padding: 6px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+}
+.region-menu.open { display: grid; gap: 2px; }
+.region-menu button {
+  width: 100%;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 0.78rem;
+  text-align: left;
+  cursor: pointer;
+}
+.region-menu button:hover,
+.region-menu button.active { background: var(--soft); }
 .btn-primary,
 .btn-secondary {
   display: inline-flex;
@@ -303,6 +364,7 @@ td strong { color: var(--ink); }
   .nav-inner,
   .article { padding-left: 1.25rem; padding-right: 1.25rem; }
   .nav-inner { height: 56px; }
+  .nav-links { display: none; }
   .nav-right { display: none; }
   .nav-inner > .lang-switcher { margin-left: auto; }
   .page-hero { padding: 106px 0 52px; }

@@ -1038,6 +1038,68 @@
     });
   }
 
+  function bindRegionSwitcher() {
+    var switcher = document.querySelector('.region-switcher');
+    if (!switcher || switcher.getAttribute('data-bound') === 'true') return;
+
+    var button = switcher.querySelector('.region-btn');
+    var menu = switcher.querySelector('.region-menu');
+    var current = switcher.querySelector('[data-region-current]');
+    if (!button || !menu || !current) return;
+
+    function savedRegion() {
+      try {
+        return (localStorage.getItem('simy-region') || '').toLowerCase();
+      } catch (e) {
+        return '';
+      }
+    }
+
+    function activeRegion() {
+      var fromPage = window.SIMYRegion && typeof window.SIMYRegion.get === 'function'
+        ? window.SIMYRegion.get()
+        : '';
+      return (fromPage || savedRegion() || 'us').toLowerCase();
+    }
+
+    function paint(region) {
+      current.textContent = region.toUpperCase();
+      menu.querySelectorAll('[data-region-btn]').forEach(function(item) {
+        item.classList.toggle('active', item.getAttribute('data-region-btn') === region);
+      });
+    }
+
+    function close() {
+      menu.classList.remove('open');
+      button.setAttribute('aria-expanded', 'false');
+    }
+
+    button.addEventListener('click', function(event) {
+      event.stopPropagation();
+      var open = menu.classList.toggle('open');
+      button.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+
+    menu.querySelectorAll('[data-region-btn]').forEach(function(item) {
+      item.addEventListener('click', function(event) {
+        event.stopPropagation();
+        var region = item.getAttribute('data-region-btn');
+        if (window.SIMYRegion && typeof window.SIMYRegion.set === 'function') {
+          window.SIMYRegion.set(region, true);
+        } else {
+          try { localStorage.setItem('simy-region', region); } catch (e) {}
+        }
+        paint(region);
+        close();
+      });
+    });
+
+    document.addEventListener('click', close);
+
+    switcher.setAttribute('data-bound', 'true');
+    paint(activeRegion());
+  }
+
   /* ── Public: switch language ────────────────────────────────── */
   function setLang(lang) {
     if (SUPPORTED.indexOf(lang) === -1) lang = DEFAULT;
@@ -1171,6 +1233,7 @@
     injectCSS();
     injectHreflang();
     buildSwitcher();
+    bindRegionSwitcher();
     enhanceStaticMobileNav();
 
     // For React SPA: nav may not exist yet. Watch for it.
@@ -1178,6 +1241,7 @@
       var observer = new MutationObserver(function () {
         if (document.querySelector('nav > .container') && !document.getElementById('langBtn')) {
           buildSwitcher();
+          bindRegionSwitcher();
           // Set display name from cached/loaded dict
           var lang = detect();
           load(lang, function (dict) {

@@ -22,9 +22,26 @@
           <img class="nav-logo-s" src="/simy-icon-square.png" alt="" width="28" height="28">
           <span class="nav-brand">SIMY</span>
         </a>
+        <div class="nav-links">
+          <a href="/newpage/#pricing" data-i18n="nav.pricing">Pricing</a>
+          <a href="/newpage/compare.html" data-i18n="nav.compare">Compare</a>
+          <a href="/newpage/press-release.html" data-i18n="nav.news">News</a>
+        </div>
         <div class="nav-right">
           <a href="https://app.simy.one/login" class="nav-signin" data-i18n="nav.signin">Sign in</a>
           <a href="https://app.simy.one/signup?plan=pro&interval=yearly" class="btn-primary" data-i18n="home.cta.primary">Start with Pro</a>
+        </div>
+        <div class="region-switcher">
+          <button class="region-btn" type="button" aria-haspopup="true" aria-expanded="false">
+            <span>Region</span>
+            <strong data-region-current>US</strong>
+          </button>
+          <div class="region-menu" role="menu" aria-label="Region">
+            <button type="button" data-region-btn="us" role="menuitem">US</button>
+            <button type="button" data-region-btn="jp" role="menuitem">JP</button>
+            <button type="button" data-region-btn="eu" role="menuitem">EU</button>
+            <button type="button" data-region-btn="in" role="menuitem">IN</button>
+          </div>
         </div>
       </div>
     </nav>

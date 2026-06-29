@@ -245,17 +245,83 @@
         font-weight: 750;
         letter-spacing: 0;
       }
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 26px;
+        margin-left: 28px;
+      }
+      .nav-links a,
       .nav-signin {
         color: var(--muted);
         font-size: 0.8125rem;
         text-decoration: none;
       }
+      .nav-links a:hover,
       .nav-signin:hover { color: var(--ink); }
       .nav-right {
         display: flex;
         align-items: center;
         gap: 18px;
         margin-left: auto;
+      }
+      .region-switcher {
+        position: relative;
+        margin-left: 8px;
+      }
+      .region-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        min-height: 32px;
+        padding: 4px 9px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: #fff;
+        color: var(--muted);
+        font-family: inherit;
+        font-size: 0.72rem;
+        cursor: pointer;
+      }
+      .region-btn strong {
+        color: var(--ink);
+        font-family: 'Geist Mono', monospace;
+        font-size: 0.72rem;
+        text-transform: uppercase;
+      }
+      .region-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        z-index: 120;
+        min-width: 128px;
+        margin-top: 8px;
+        padding: 6px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: #fff;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+      }
+      .region-menu.open {
+        display: grid;
+        gap: 2px;
+      }
+      .region-menu button {
+        width: 100%;
+        padding: 8px 10px;
+        border: 0;
+        border-radius: 6px;
+        background: transparent;
+        color: var(--ink);
+        font-family: inherit;
+        font-size: 0.78rem;
+        text-align: left;
+        cursor: pointer;
+      }
+      .region-menu button:hover,
+      .region-menu button.active {
+        background: var(--soft);
       }
       .btn-primary,
       .btn-secondary,
@@ -1751,6 +1817,9 @@
           height: 56px;
           padding: 0 1.25rem;
         }
+        .nav-links {
+          display: none;
+        }
         .nav-right {
           display: none;
         }
@@ -2077,9 +2146,26 @@
           <img class="nav-logo-s" src="/simy-icon-square.png" alt="" width="28" height="28">
           <span class="nav-brand">SIMY</span>
         </a>
+        <div class="nav-links">
+          <a href="#pricing" data-i18n="nav.pricing">Pricing</a>
+          <a href="/newpage/compare.html" data-i18n="nav.compare">Compare</a>
+          <a href="/newpage/press-release.html" data-i18n="nav.news">News</a>
+        </div>
         <div class="nav-right">
           <a href="https://app.simy.one/login" class="nav-signin" data-i18n="nav.signin">Sign in</a>
           <a href="https://app.simy.one/signup?plan=pro&interval=yearly" class="btn-primary" data-i18n="home.cta.primary">Start with Pro</a>
+        </div>
+        <div class="region-switcher">
+          <button class="region-btn" type="button" aria-haspopup="true" aria-expanded="false">
+            <span>Region</span>
+            <strong data-region-current>US</strong>
+          </button>
+          <div class="region-menu" role="menu" aria-label="Region">
+            <button type="button" data-region-btn="us" role="menuitem">US</button>
+            <button type="button" data-region-btn="jp" role="menuitem">JP</button>
+            <button type="button" data-region-btn="eu" role="menuitem">EU</button>
+            <button type="button" data-region-btn="in" role="menuitem">IN</button>
+          </div>
         </div>
       </div>
     </nav>
