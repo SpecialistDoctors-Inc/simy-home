@@ -455,6 +455,13 @@
         color: var(--ink);
         text-decoration: none;
       }
+      .nav-brand-lockup {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        line-height: 1;
+        white-space: nowrap;
+      }
       .nav-logo-s {
         width: 28px;
         height: 28px;
@@ -465,6 +472,13 @@
       .nav-brand {
         font-size: 14px;
         font-weight: 750;
+        letter-spacing: 0;
+      }
+      .nav-brand-sub {
+        margin-top: 3px;
+        color: var(--muted);
+        font-size: 10px;
+        font-weight: 650;
         letter-spacing: 0;
       }
       .nav-links {
@@ -2474,7 +2488,10 @@
       <div class="nav-inner">
         <a href="/" class="nav-logo">
           <img class="nav-logo-s" src="/simy-icon-square.png" alt="" width="28" height="28">
-          <span class="nav-brand">SIMY</span>
+          <span class="nav-brand-lockup">
+            <span class="nav-brand">SIMY</span>
+            <span class="nav-brand-sub">Your AI Twin</span>
+          </span>
         </a>
         <div class="nav-links">
           <a href="#pricing" data-i18n="nav.pricing">Pricing</a>
