@@ -233,7 +233,7 @@
           var lifeAssets = lifeAssetsFor(country);
           return [
             regionHeroAssets[country] || regionAssets.us.hero,
-            lifeAssets.running,
+            regionHeroAssets[country] || regionAssets.us.hero,
             lifeAssets.family,
             lifeAssets.dinner,
             lifeAssets.travel
@@ -1100,6 +1100,22 @@
         min-height: inherit;
         object-fit: cover;
         background: #111;
+      }
+      .experience-card:nth-child(2) img {
+        transform: scale(1.16);
+        transform-origin: 94% 44%;
+      }
+      .experience-card:nth-child(3) img {
+        transform: scale(1.18);
+        transform-origin: 74% 28%;
+      }
+      .experience-card:nth-child(4) img {
+        transform: scale(1.14);
+        transform-origin: 38% 72%;
+      }
+      .experience-card:nth-child(5) img {
+        transform: scale(1.2);
+        transform-origin: 82% 72%;
       }
       .experience-body {
         position: absolute;
@@ -2580,7 +2596,7 @@
               </div>
             </article>
             <article class="experience-card">
-              <img data-experience-image src="/assets/life-country/us/running.jpg" alt="" loading="lazy" decoding="async">
+              <img data-experience-image src="/assets/hero-meeting-twin-work-us.jpg" alt="" loading="lazy" decoding="async">
               <div class="experience-body">
                 <div class="experience-num">02</div>
                 <h3 data-i18n="home.experience.2.h">The next move is clear.</h3>
