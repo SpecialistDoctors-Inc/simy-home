@@ -2500,7 +2500,7 @@
         </div>
         <div class="nav-right">
           <a href="https://app.simy.one/login" class="nav-signin" data-i18n="nav.signin">Sign in</a>
-          <a href="https://app.simy.one/signup?plan=pro&interval=yearly" class="btn-primary" data-i18n="home.cta.primary">Start with Pro</a>
+          <a href="https://app.simy.one/?plan=pro&interval=yearly" class="btn-primary" data-i18n="home.cta.primary">Start with Pro</a>
         </div>
         <div class="region-switcher">
           <button class="region-btn" type="button" aria-haspopup="true" aria-expanded="false">
@@ -2524,7 +2524,7 @@
             <h1 data-i18n-html="home.h1"><span class="hero-title-line">Meeting ends.</span><span class="hero-title-line">Your Twin starts</span><span class="hero-title-line">working.</span></h1>
             <p class="hero-sub" data-i18n="home.sub">The moment the meeting ends, your Twin starts the follow-ups, decks, research, analysis, updates, and next actions. The work keeps moving while you step into the next conversation, customer, team, or idea.</p>
             <div class="hero-actions">
-              <a class="btn-primary" href="https://app.simy.one/signup?plan=pro&interval=yearly" data-i18n="home.cta.primary">Start with Pro</a>
+              <a class="btn-primary" href="https://app.simy.one/?plan=pro&interval=yearly" data-i18n="home.cta.primary">Start with Pro</a>
               <a class="btn-secondary" href="#samples" data-i18n="home.cta.secondary">See after-meeting work</a>
             </div>
           </div>
@@ -2871,7 +2871,7 @@
                   <div class="token-dropdown-item" data-tokens="240" data-price-m="50" data-price-a="40" onclick="selectToken(this)">240M tokens / month</div>
                 </div>
               </div>
-              <a href="https://app.simy.one/signup?plan=starter&interval=yearly" class="plan-cta" data-i18n="pricing.cta">Choose plan</a>
+              <a href="https://app.simy.one/?plan=starter&interval=yearly" class="plan-cta" data-i18n="pricing.cta">Choose plan</a>
               <ul class="feature-list">
                 <li><span id="feat-tokens-starter" data-i18n="pricing.f.starter.1">80,000,000 SIMY tokens / month</span></li>
                 <li data-i18n="pricing.f.starter.2">Up to 5 connected channels</li>
@@ -2911,7 +2911,7 @@
                   <div class="token-dropdown-item" data-tokens="640" data-price-m="120" data-price-a="96" onclick="selectToken(this)">640M tokens / month</div>
                 </div>
               </div>
-              <a href="https://app.simy.one/signup?plan=pro&interval=yearly" class="plan-cta" data-i18n="pricing.cta">Choose plan</a>
+              <a href="https://app.simy.one/?plan=pro&interval=yearly" class="plan-cta" data-i18n="pricing.cta">Choose plan</a>
               <ul class="feature-list">
                 <li><span id="feat-tokens-pro" data-i18n="pricing.f.pro.1">160,000,000 SIMY tokens / month</span></li>
                 <li data-i18n="pricing.f.pro.2">Unlimited connected channels</li>
@@ -2951,7 +2951,7 @@
                   <div class="token-dropdown-item" data-tokens="2000" data-price-m="380" data-price-a="304" onclick="selectToken(this)">2,000M tokens / month</div>
                 </div>
               </div>
-              <a href="https://app.simy.one/signup?plan=scale&interval=yearly" class="plan-cta" data-i18n="pricing.cta">Choose plan</a>
+              <a href="https://app.simy.one/?plan=scale&interval=yearly" class="plan-cta" data-i18n="pricing.cta">Choose plan</a>
               <ul class="feature-list">
                 <li><span id="feat-tokens-scale" data-i18n="pricing.f.scale.1">400,000,000 SIMY tokens / month</span></li>
                 <li data-i18n="pricing.f.scale.2">Unlimited connected channels</li>
@@ -2985,7 +2985,7 @@
           <h2 data-i18n-html="home.final.h"><span class="copy-line">Meeting ends.</span><span class="copy-line">Your next move is ready.</span></h2>
           <p data-i18n="home.final.p">Create the Twin that starts working the moment the meeting ends. Let your Twin move the work into briefs, updates, and next actions instead of another hour in tabs.</p>
           <div class="final-actions">
-            <a class="btn-primary" href="https://app.simy.one/signup?plan=pro&interval=yearly" data-i18n="home.cta.primary">Start with Pro</a>
+            <a class="btn-primary" href="https://app.simy.one/?plan=pro&interval=yearly" data-i18n="home.cta.primary">Start with Pro</a>
             <a class="btn-secondary" href="mailto:sales@simy.one" data-i18n="home.final.secondary">Talk to sales</a>
           </div>
         </div>
@@ -3011,7 +3011,7 @@
             <a href="/press-release.html">Press release</a>
             <a href="mailto:sales@simy.one" data-i18n="footer.company.contact">Contact</a>
             <a href="https://app.simy.one/login" data-i18n="nav.signin">Sign in</a>
-            <a href="https://app.simy.one/signup?plan=pro&interval=yearly" data-i18n="footer.company.signup">Create account</a>
+            <a href="https://app.simy.one/?plan=pro&interval=yearly" data-i18n="footer.company.signup">Create account</a>
           </div>
           <div class="footer-col">
             <div class="footer-col-title" data-i18n="footer.legal">Legal</div>
@@ -3116,7 +3116,7 @@
         var priceEl = document.getElementById('price-' + plan);
         if (priceEl) priceEl.textContent = '$' + (Number.isInteger(price) ? price : price.toFixed(2));
         var cta = card.querySelector('.plan-cta');
-        if (cta) cta.href = 'https://app.simy.one/signup?plan=' + plan + '&interval=' + currentBilling;
+        if (cta) cta.href = 'https://app.simy.one/?plan=' + plan + '&interval=' + currentBilling;
         var featEl = document.getElementById('feat-tokens-' + plan);
         if (featEl) featEl.textContent = formatFeatureTokens(tokens);
       }
