@@ -148,27 +148,6 @@
           my: 'jp',
           ph: 'jp'
         };
-        var countryAssetRegions = {
-          us: true,
-          jp: true,
-          gb: true,
-          de: true,
-          fr: true,
-          ca: true,
-          in: true,
-          kr: true,
-          br: true,
-          mx: true,
-          id: true,
-          vn: true,
-          es: true,
-          it: true,
-          sa: true,
-          tw: true,
-          th: true,
-          my: true,
-          ph: true
-        };
         var regionAssets = {
           us: {
             hero: '/assets/hero-meeting-twin-work.jpg',
@@ -207,13 +186,36 @@
             }
           }
         };
-        var experienceAssetNames = [
-          '01-pc-work-forward-country.jpg',
-          '02-next-move-country.jpg',
-          '03-work-keeps-moving-country.jpg',
-          '04-people-worth-meeting-country.jpg',
-          '05-risk-backup-plan-country.jpg'
-        ];
+        var regionExperienceAssets = {
+          us: [
+            '/assets/experience/us-varied/01-pc-work-forward-v2.jpg',
+            '/assets/experience/us-varied/02-next-move-train-v2.jpg',
+            '/assets/experience/us-varied/03-work-keeps-moving-cafe-v2.jpg',
+            '/assets/experience/us-varied/04-people-worth-meeting-event-v2.jpg',
+            '/assets/experience/us-varied/05-risk-backup-plan-v2.jpg'
+          ],
+          jp: [
+            '/assets/experience/jp/01-pc-work-forward-v1.jpg',
+            '/assets/experience/jp/02-next-move-train-v1.jpg',
+            '/assets/experience/jp/03-work-keeps-moving-cafe-v1.jpg',
+            '/assets/experience/jp/04-people-worth-meeting-event-v1.jpg',
+            '/assets/experience/jp/05-risk-backup-plan-v1.jpg'
+          ],
+          eu: [
+            '/assets/experience/eu/01-pc-work-forward-v1.jpg',
+            '/assets/experience/eu/02-next-move-train-v1.jpg',
+            '/assets/experience/eu/03-work-keeps-moving-cafe-v1.jpg',
+            '/assets/experience/eu/04-people-worth-meeting-event-v1.jpg',
+            '/assets/experience/eu/05-risk-backup-plan-v1.jpg'
+          ],
+          in: [
+            '/assets/experience/in/01-pc-work-forward-v1.jpg',
+            '/assets/experience/in/02-next-move-train-v1.jpg',
+            '/assets/experience/in/03-work-keeps-moving-cafe-v1.jpg',
+            '/assets/experience/in/04-people-worth-meeting-event-v1.jpg',
+            '/assets/experience/in/05-risk-backup-plan-v1.jpg'
+          ]
+        };
         var lifeAssetNames = {
           running: 'running.jpg',
           family: 'family.jpg',
@@ -247,17 +249,8 @@
         function assetGroupFor(region) {
           return regionAssetGroup[region] || 'us';
         }
-        function countryAssetRegionFor(region) {
-          return countryAssetRegions[region] ? region : 'us';
-        }
-        function experienceAssetsFor(region) {
-          var country = countryAssetRegionFor(region);
-          return experienceAssetNames.map(function(name) {
-            return '/assets/experience-country/' + country + '/' + name;
-          });
-        }
         function lifeAssetsFor(region) {
-          var country = countryAssetRegionFor(region);
+          var country = isSupportedRegion(region) ? region : 'us';
           return {
             running: '/assets/life-country/' + country + '/' + lifeAssetNames.running,
             family: '/assets/life-country/' + country + '/' + lifeAssetNames.family,
@@ -271,7 +264,7 @@
         function syncRegionImages(region) {
           var assetGroup = assetGroupFor(region);
           var assets = regionAssets[assetGroup] || regionAssets.us;
-          var experienceAssets = experienceAssetsFor(region);
+          var experienceAssets = regionExperienceAssets[assetGroup] || regionExperienceAssets.us;
           var lifeAssets = lifeAssetsFor(region);
           setBackgroundImage(document.querySelector('.hero-bg.meeting'), regionHeroAssets[region] || assets.hero);
           Object.keys(lifeAssets).forEach(function(key) {
@@ -2598,7 +2591,7 @@
           <p class="section-lead" data-i18n="home.samples.p">The meeting context turns into work you can use, through the tools your team already works in.</p>
           <div class="experience-grid" aria-label="SIMY user experiences">
             <article class="experience-card featured">
-              <img data-experience-image src="/assets/experience-country/us/01-pc-work-forward-country.jpg" alt="" loading="lazy" decoding="async">
+              <img data-experience-image src="/assets/experience/us-varied/01-pc-work-forward-v2.jpg" alt="" loading="lazy" decoding="async">
               <div class="experience-body">
                 <div class="experience-num">01</div>
                 <h3 data-i18n="home.experience.1.h">Work moves without waiting for you.</h3>
@@ -2606,7 +2599,7 @@
               </div>
             </article>
             <article class="experience-card">
-              <img data-experience-image src="/assets/experience-country/us/02-next-move-country.jpg" alt="" loading="lazy" decoding="async">
+              <img data-experience-image src="/assets/experience/us-varied/02-next-move-train-v2.jpg" alt="" loading="lazy" decoding="async">
               <div class="experience-body">
                 <div class="experience-num">02</div>
                 <h3 data-i18n="home.experience.2.h">The next move is clear.</h3>
@@ -2614,7 +2607,7 @@
               </div>
             </article>
             <article class="experience-card">
-              <img data-experience-image src="/assets/experience-country/us/03-work-keeps-moving-country.jpg" alt="" loading="lazy" decoding="async">
+              <img data-experience-image src="/assets/experience/us-varied/03-work-keeps-moving-cafe-v2.jpg" alt="" loading="lazy" decoding="async">
               <div class="experience-body">
                 <div class="experience-num">03</div>
                 <h3 data-i18n="home.experience.3.h">Step away. Stay in motion.</h3>
@@ -2622,7 +2615,7 @@
               </div>
             </article>
             <article class="experience-card">
-              <img data-experience-image src="/assets/experience-country/us/04-people-worth-meeting-country.jpg" alt="" loading="lazy" decoding="async">
+              <img data-experience-image src="/assets/experience/us-varied/04-people-worth-meeting-event-v2.jpg" alt="" loading="lazy" decoding="async">
               <div class="experience-body">
                 <div class="experience-num">04</div>
                 <h3 data-i18n="home.experience.4.h">Meet the people who matter.</h3>
@@ -2630,7 +2623,7 @@
               </div>
             </article>
             <article class="experience-card">
-              <img data-experience-image src="/assets/experience-country/us/05-risk-backup-plan-country.jpg" alt="" loading="lazy" decoding="async">
+              <img data-experience-image src="/assets/experience/us-varied/05-risk-backup-plan-v2.jpg" alt="" loading="lazy" decoding="async">
               <div class="experience-body">
                 <div class="experience-num">05</div>
                 <h3 data-i18n="home.experience.5.h">Backup plan ready.</h3>
