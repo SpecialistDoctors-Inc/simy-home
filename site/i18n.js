@@ -169,6 +169,8 @@
     var params = new URLSearchParams(location.search);
     var queryRegion = supportedRegion(params.get('region'));
     if (queryRegion) return queryRegion;
+    var queryLangRegion = supportedRegion(regionFromLang(params.get('lang')));
+    if (queryLangRegion) return queryLangRegion;
     var api = window.SIMYRegion || window.SIMY_REGION || null;
     if (api && typeof api.get === 'function') {
       var apiRegion = supportedRegion(api.get());

@@ -402,11 +402,11 @@
         function regionFromLang(lang) {
           lang = (lang || '').toLowerCase();
           if (lang.indexOf('ja') === 0) return 'jp';
-          if (lang.indexOf('zh-hant') === 0 || lang.indexOf('zh-tw') === 0 || lang.indexOf('zh-hk') === 0) return 'tw';
+          if (lang.indexOf('zh-hant') === 0 || lang.indexOf('zh-hans') === 0 || lang.indexOf('zh-tw') === 0 || lang.indexOf('zh-hk') === 0 || lang.indexOf('zh-cn') === 0 || lang.indexOf('zh-sg') === 0 || lang.indexOf('zh') === 0) return 'tw';
           if (lang.indexOf('fr') === 0) return 'fr';
           if (lang.indexOf('de') === 0) return 'de';
-          if (lang.indexOf('es-mx') === 0) return 'mx';
-          if (lang.indexOf('es') === 0) return 'es';
+          if (lang.indexOf('es-es') === 0) return 'es';
+          if (lang.indexOf('es') === 0) return 'mx';
           if (lang.indexOf('ar') === 0) return 'sa';
           if (lang.indexOf('it') === 0) return 'it';
           if (lang.indexOf('hi') === 0 || lang.indexOf('te') === 0 || lang.indexOf('kn') === 0 || lang.indexOf('en-in') === 0) return 'in';
@@ -414,6 +414,7 @@
           if (lang.indexOf('vi') === 0) return 'vn';
           if (lang.indexOf('th') === 0) return 'th';
           if (lang.indexOf('id') === 0) return 'id';
+          if (lang.indexOf('ru') === 0) return 'us';
           if (lang.indexOf('pt') === 0) return 'br';
           if (lang.indexOf('en-gb') === 0) return 'gb';
           if (lang.indexOf('en-ca') === 0) return 'ca';
