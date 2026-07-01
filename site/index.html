@@ -186,41 +186,11 @@
             }
           }
         };
-        var lifeAssetNames = {
-          running: 'running.jpg',
-          family: 'family.jpg',
-          dinner: 'dinner.jpg',
-          travel: 'travel.jpg'
-        };
-        var regionExperienceAssets = {
-          us: [
-            '/assets/experience/us-varied/01-pc-work-forward-v2.jpg',
-            '/assets/experience/us-varied/02-next-move-train-v2.jpg',
-            '/assets/experience/us-varied/03-work-keeps-moving-cafe-v2.jpg',
-            '/assets/experience/us-varied/04-people-worth-meeting-event-v2.jpg',
-            '/assets/experience/us-varied/05-risk-backup-plan-v2.jpg'
-          ],
-          jp: [
-            '/assets/experience/jp/01-pc-work-forward-v1.jpg',
-            '/assets/experience/jp/02-next-move-train-v1.jpg',
-            '/assets/experience/jp/03-work-keeps-moving-cafe-v1.jpg',
-            '/assets/experience/jp/04-people-worth-meeting-event-v1.jpg',
-            '/assets/experience/jp/05-risk-backup-plan-v1.jpg'
-          ],
-          eu: [
-            '/assets/experience/eu/01-pc-work-forward-v1.jpg',
-            '/assets/experience/eu/02-next-move-train-v1.jpg',
-            '/assets/experience/eu/03-work-keeps-moving-cafe-v1.jpg',
-            '/assets/experience/eu/04-people-worth-meeting-event-v1.jpg',
-            '/assets/experience/eu/05-risk-backup-plan-v1.jpg'
-          ],
-          in: [
-            '/assets/experience/in/01-pc-work-forward-v1.jpg',
-            '/assets/experience/in/02-next-move-train-v1.jpg',
-            '/assets/experience/in/03-work-keeps-moving-cafe-v1.jpg',
-            '/assets/experience/in/04-people-worth-meeting-event-v1.jpg',
-            '/assets/experience/in/05-risk-backup-plan-v1.jpg'
-          ]
+        var experienceLocalAssetNames = {
+          nextMove: '02-next-move.jpg',
+          awayWork: '03-away-work.jpg',
+          meetPeople: '04-meet-people.jpg',
+          backupPlan: '05-backup-plan.jpg'
         };
         var regionHeroAssets = {
           us: '/assets/hero-meeting-twin-work-us.jpg',
@@ -243,6 +213,141 @@
           my: '/assets/hero-meeting-twin-work-my.jpg',
           ph: '/assets/hero-meeting-twin-work-ph.jpg'
         };
+        var regionExperienceAssets = {
+          us: [
+            '/assets/hero-meeting-twin-work-us.jpg',
+            '/assets/experience-local/us/02-next-move.jpg',
+            '/assets/experience-local/us/03-away-work.jpg',
+            '/assets/experience-local/us/04-meet-people.jpg',
+            '/assets/experience-local/us/05-backup-plan.jpg'
+          ],
+          jp: [
+            '/assets/hero-meeting-twin-work-jp-country.jpg',
+            '/assets/experience-local/jp/02-next-move.jpg',
+            '/assets/experience-local/jp/03-away-work.jpg',
+            '/assets/experience-local/jp/04-meet-people.jpg',
+            '/assets/experience-local/jp/05-backup-plan.jpg'
+          ],
+          gb: [
+            '/assets/hero-meeting-twin-work-gb.jpg',
+            '/assets/experience-local/gb/02-next-move.jpg',
+            '/assets/experience-local/gb/03-away-work.jpg',
+            '/assets/experience-local/gb/04-meet-people.jpg',
+            '/assets/experience-local/gb/05-backup-plan.jpg'
+          ],
+          de: [
+            '/assets/hero-meeting-twin-work-de.jpg',
+            '/assets/experience-local/de/02-next-move.jpg',
+            '/assets/experience-local/de/03-away-work.jpg',
+            '/assets/experience-local/de/04-meet-people.jpg',
+            '/assets/experience-local/de/05-backup-plan.jpg'
+          ],
+          fr: [
+            '/assets/hero-meeting-twin-work-fr.jpg',
+            '/assets/experience-local/fr/02-next-move.jpg',
+            '/assets/experience-local/fr/03-away-work.jpg',
+            '/assets/experience-local/fr/04-meet-people.jpg',
+            '/assets/experience-local/fr/05-backup-plan.jpg'
+          ],
+          ca: [
+            '/assets/hero-meeting-twin-work-ca.jpg',
+            '/assets/experience-local/ca/02-next-move.jpg',
+            '/assets/experience-local/ca/03-away-work.jpg',
+            '/assets/experience-local/ca/04-meet-people.jpg',
+            '/assets/experience-local/ca/05-backup-plan.jpg'
+          ],
+          in: [
+            '/assets/hero-meeting-twin-work-in-country.jpg',
+            '/assets/experience-local/in/02-next-move.jpg',
+            '/assets/experience-local/in/03-away-work.jpg',
+            '/assets/experience-local/in/04-meet-people.jpg',
+            '/assets/experience-local/in/05-backup-plan.jpg'
+          ],
+          kr: [
+            '/assets/hero-meeting-twin-work-kr.jpg',
+            '/assets/experience-local/kr/02-next-move.jpg',
+            '/assets/experience-local/kr/03-away-work.jpg',
+            '/assets/experience-local/kr/04-meet-people.jpg',
+            '/assets/experience-local/kr/05-backup-plan.jpg'
+          ],
+          br: [
+            '/assets/hero-meeting-twin-work-br.jpg',
+            '/assets/experience-local/br/02-next-move.jpg',
+            '/assets/experience-local/br/03-away-work.jpg',
+            '/assets/experience-local/br/04-meet-people.jpg',
+            '/assets/experience-local/br/05-backup-plan.jpg'
+          ],
+          mx: [
+            '/assets/hero-meeting-twin-work-mx.jpg',
+            '/assets/experience-local/mx/02-next-move.jpg',
+            '/assets/experience-local/mx/03-away-work.jpg',
+            '/assets/experience-local/mx/04-meet-people.jpg',
+            '/assets/experience-local/mx/05-backup-plan.jpg'
+          ],
+          id: [
+            '/assets/hero-meeting-twin-work-id.jpg',
+            '/assets/experience-local/id/02-next-move.jpg',
+            '/assets/experience-local/id/03-away-work.jpg',
+            '/assets/experience-local/id/04-meet-people.jpg',
+            '/assets/experience-local/id/05-backup-plan.jpg'
+          ],
+          vn: [
+            '/assets/hero-meeting-twin-work-vn.jpg',
+            '/assets/experience-local/vn/02-next-move.jpg',
+            '/assets/experience-local/vn/03-away-work.jpg',
+            '/assets/experience-local/vn/04-meet-people.jpg',
+            '/assets/experience-local/vn/05-backup-plan.jpg'
+          ],
+          es: [
+            '/assets/hero-meeting-twin-work-es.jpg',
+            '/assets/experience-local/es/02-next-move.jpg',
+            '/assets/experience-local/es/03-away-work.jpg',
+            '/assets/experience-local/es/04-meet-people.jpg',
+            '/assets/experience-local/es/05-backup-plan.jpg'
+          ],
+          it: [
+            '/assets/hero-meeting-twin-work-it.jpg',
+            '/assets/experience-local/it/02-next-move.jpg',
+            '/assets/experience-local/it/03-away-work.jpg',
+            '/assets/experience-local/it/04-meet-people.jpg',
+            '/assets/experience-local/it/05-backup-plan.jpg'
+          ],
+          sa: [
+            '/assets/hero-meeting-twin-work-sa.jpg',
+            '/assets/experience-local/sa/02-next-move.jpg',
+            '/assets/experience-local/sa/03-away-work.jpg',
+            '/assets/experience-local/sa/04-meet-people.jpg',
+            '/assets/experience-local/sa/05-backup-plan.jpg'
+          ],
+          tw: [
+            '/assets/hero-meeting-twin-work-tw.jpg',
+            '/assets/experience-local/tw/02-next-move.jpg',
+            '/assets/experience-local/tw/03-away-work.jpg',
+            '/assets/experience-local/tw/04-meet-people.jpg',
+            '/assets/experience-local/tw/05-backup-plan.jpg'
+          ],
+          th: [
+            '/assets/hero-meeting-twin-work-th.jpg',
+            '/assets/experience-local/th/02-next-move.jpg',
+            '/assets/experience-local/th/03-away-work.jpg',
+            '/assets/experience-local/th/04-meet-people.jpg',
+            '/assets/experience-local/th/05-backup-plan.jpg'
+          ],
+          my: [
+            '/assets/hero-meeting-twin-work-my.jpg',
+            '/assets/experience-local/my/02-next-move.jpg',
+            '/assets/experience-local/my/03-away-work.jpg',
+            '/assets/experience-local/my/04-meet-people.jpg',
+            '/assets/experience-local/my/05-backup-plan.jpg'
+          ],
+          ph: [
+            '/assets/hero-meeting-twin-work-ph.jpg',
+            '/assets/experience-local/ph/02-next-move.jpg',
+            '/assets/experience-local/ph/03-away-work.jpg',
+            '/assets/experience-local/ph/04-meet-people.jpg',
+            '/assets/experience-local/ph/05-backup-plan.jpg'
+          ]
+        };
         function isSupportedRegion(region) {
           return Object.prototype.hasOwnProperty.call(regionLabels, region);
         }
@@ -252,22 +357,15 @@
         function lifeAssetsFor(region) {
           var country = isSupportedRegion(region) ? region : 'us';
           return {
-            running: '/assets/life-country/' + country + '/' + lifeAssetNames.running,
-            family: '/assets/life-country/' + country + '/' + lifeAssetNames.family,
-            dinner: '/assets/life-country/' + country + '/' + lifeAssetNames.dinner,
-            travel: '/assets/life-country/' + country + '/' + lifeAssetNames.travel
+            running: '/assets/experience-local/' + country + '/' + experienceLocalAssetNames.nextMove,
+            family: '/assets/experience-local/' + country + '/' + experienceLocalAssetNames.awayWork,
+            dinner: '/assets/experience-local/' + country + '/' + experienceLocalAssetNames.meetPeople,
+            travel: '/assets/experience-local/' + country + '/' + experienceLocalAssetNames.backupPlan
           };
         }
         function experienceAssetsFor(region) {
           var country = isSupportedRegion(region) ? region : 'us';
-          var groupAssets = regionExperienceAssets[assetGroupFor(country)] || regionExperienceAssets.us;
-          return [
-            regionHeroAssets[country] || regionAssets.us.hero,
-            groupAssets[1],
-            groupAssets[2],
-            groupAssets[3],
-            groupAssets[4]
-          ];
+          return regionExperienceAssets[country] || regionExperienceAssets.us;
         }
         function setBackgroundImage(element, path) {
           if (element && path) element.style.backgroundImage = 'url("' + path + '")';
@@ -2615,7 +2713,7 @@
               </div>
             </article>
             <article class="experience-card">
-              <img data-experience-image src="/assets/experience/us-varied/02-next-move-train-v2.jpg" alt="" loading="lazy" decoding="async">
+              <img data-experience-image src="/assets/experience-local/us/02-next-move.jpg" alt="" loading="lazy" decoding="async">
               <div class="experience-body">
                 <div class="experience-num">02</div>
                 <h3 data-i18n="home.experience.2.h">The next move is clear.</h3>
@@ -2623,7 +2721,7 @@
               </div>
             </article>
             <article class="experience-card">
-              <img data-experience-image src="/assets/experience/us-varied/03-work-keeps-moving-cafe-v2.jpg" alt="" loading="lazy" decoding="async">
+              <img data-experience-image src="/assets/experience-local/us/03-away-work.jpg" alt="" loading="lazy" decoding="async">
               <div class="experience-body">
                 <div class="experience-num">03</div>
                 <h3 data-i18n="home.experience.3.h">Step away. Stay in motion.</h3>
@@ -2631,7 +2729,7 @@
               </div>
             </article>
             <article class="experience-card">
-              <img data-experience-image src="/assets/experience/us-varied/04-people-worth-meeting-event-v2.jpg" alt="" loading="lazy" decoding="async">
+              <img data-experience-image src="/assets/experience-local/us/04-meet-people.jpg" alt="" loading="lazy" decoding="async">
               <div class="experience-body">
                 <div class="experience-num">04</div>
                 <h3 data-i18n="home.experience.4.h">Meet the people who matter.</h3>
@@ -2639,7 +2737,7 @@
               </div>
             </article>
             <article class="experience-card">
-              <img data-experience-image src="/assets/experience/us-varied/05-risk-backup-plan-v2.jpg" alt="" loading="lazy" decoding="async">
+              <img data-experience-image src="/assets/experience-local/us/05-backup-plan.jpg" alt="" loading="lazy" decoding="async">
               <div class="experience-body">
                 <div class="experience-num">05</div>
                 <h3 data-i18n="home.experience.5.h">Backup plan ready.</h3>
