@@ -3186,6 +3186,14 @@
         return value.toLocaleString('en-US') + ' SIMY tokens / month';
       }
 
+      function signupUrl(plan, interval) {
+        var url = 'https://app.simy.one/signup?plan=' + encodeURIComponent(plan) + '&interval=' + encodeURIComponent(interval);
+        if (window.simyI18n && typeof window.simyI18n.decorateAppUrl === 'function') {
+          return window.simyI18n.decorateAppUrl(url);
+        }
+        return url;
+      }
+
       function syncTokenLabels() {
         document.querySelectorAll('.pricing-card').forEach(function(card) {
           var activeItem = card.querySelector('.token-dropdown-item.active');
@@ -3249,7 +3257,7 @@
         var priceEl = document.getElementById('price-' + plan);
         if (priceEl) priceEl.textContent = '$' + (Number.isInteger(price) ? price : price.toFixed(2));
         var cta = card.querySelector('.plan-cta');
-        if (cta) cta.href = 'https://app.simy.one/signup?plan=' + plan + '&interval=' + currentBilling;
+        if (cta) cta.href = signupUrl(plan, currentBilling);
         var featEl = document.getElementById('feat-tokens-' + plan);
         if (featEl) featEl.textContent = formatFeatureTokens(tokens);
       }

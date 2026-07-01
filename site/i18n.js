@@ -165,6 +165,46 @@
     return pageLocales().indexOf(lang) === -1 ? DEFAULT : lang;
   }
 
+  function currentRegionForApp() {
+    var params = new URLSearchParams(location.search);
+    var queryRegion = supportedRegion(params.get('region'));
+    if (queryRegion) return queryRegion;
+    var api = window.SIMYRegion || window.SIMY_REGION || null;
+    if (api && typeof api.get === 'function') {
+      var apiRegion = supportedRegion(api.get());
+      if (apiRegion) return apiRegion;
+    }
+    try {
+      var savedRegion = supportedRegion(localStorage.getItem('simy-region'));
+      if (savedRegion) return savedRegion;
+    } catch (e) {}
+    return supportedRegion(regionFromLang(CURRENT_LANG || detect())) || 'us';
+  }
+
+  function decorateAppUrl(href) {
+    try {
+      var url = new URL(href, location.href);
+      if (url.hostname !== 'app.simy.one') return href;
+      var lang = CURRENT_LANG || document.documentElement.lang || detect();
+      var region = currentRegionForApp();
+      url.searchParams.set('lang', lang);
+      url.searchParams.set('locale', lang);
+      url.searchParams.set('region', region);
+      return url.toString();
+    } catch (e) {
+      return href;
+    }
+  }
+
+  function decorateAppLinks(root) {
+    var scope = root && root.querySelectorAll ? root : document;
+    var links = scope.querySelectorAll('a[href*="app.simy.one"]');
+    for (var i = 0; i < links.length; i++) {
+      var href = links[i].getAttribute('href');
+      if (href) links[i].setAttribute('href', decorateAppUrl(href));
+    }
+  }
+
   /* ── Detect preferred language ─────────────────────────────── */
   function detect() {
     var params = new URLSearchParams(location.search);
@@ -1043,6 +1083,7 @@
       : 'https://apps.apple.com/us/app/simy-meetings-end-code-ships/id6745385262';
     var appLinks = document.querySelectorAll('a[href*="apps.apple.com"]');
     for (var m = 0; m < appLinks.length; m++) { appLinks[m].href = appStoreUrl; }
+    decorateAppLinks();
 
     // Home (/) React SPA: re-apply #root translations on every apply() —
     // this handles both initial load and user-initiated language switches.
@@ -1206,6 +1247,7 @@
         window.dispatchEvent(new CustomEvent('simy:regionchange', { detail: { region: region } }));
       } catch (e) {}
       paint(region);
+      decorateAppLinks();
       if (syncLanguage !== false) {
         var targetLang = REGION_BY_CODE[region].lang;
         if (targetLang && targetLang !== CURRENT_LANG) setLang(targetLang, { skipRegionSync: true });
@@ -1249,6 +1291,7 @@
       try {
         window.dispatchEvent(new CustomEvent('simy:regionchange', { detail: { region: region } }));
       } catch (e) {}
+      decorateAppLinks();
     }
     load(lang, apply);
   }
@@ -1363,6 +1406,7 @@
       signupLink.setAttribute('data-mobile-signup-link', 'true');
       navLinks.appendChild(signupLink);
     }
+    decorateAppLinks(navLinks);
 
     menuButton.removeAttribute('onclick');
     menuButton.setAttribute('aria-controls', 'navLinks');
@@ -1409,6 +1453,7 @@
       load(DEFAULT, function (dict) {
         var display = document.getElementById('langDisplay');
         if (display) display.textContent = (dict._meta || {}).name || 'English';
+        decorateAppLinks();
       });
     }
 
@@ -1446,5 +1491,10 @@
   }
 
   // Expose global
-  window.simyI18n = { setLang: setLang, detect: detect };
+  window.simyI18n = {
+    setLang: setLang,
+    detect: detect,
+    decorateAppUrl: decorateAppUrl,
+    decorateAppLinks: decorateAppLinks
+  };
 })();
