@@ -1016,6 +1016,67 @@
         font-size: 1.05rem;
         line-height: 1.75;
       }
+      .experience-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 38px;
+      }
+      .experience-card {
+        position: relative;
+        min-height: 330px;
+        overflow: hidden;
+        border-radius: 8px;
+        background: #050505;
+        color: #fff;
+      }
+      .experience-card.featured {
+        grid-column: span 2;
+        min-height: 430px;
+      }
+      .experience-card::after {
+        position: absolute;
+        inset: 0;
+        content: "";
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0.06) 0%, rgba(0, 0, 0, 0.14) 42%, rgba(0, 0, 0, 0.74) 100%);
+        pointer-events: none;
+      }
+      .experience-card img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        min-height: inherit;
+        object-fit: cover;
+        background: #111;
+      }
+      .experience-body {
+        position: absolute;
+        inset: auto 0 0;
+        z-index: 1;
+        padding: 24px;
+      }
+      .experience-num {
+        color: rgba(255, 255, 255, 0.78);
+        font-family: 'Geist Mono', monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+      .experience-card h3 {
+        max-width: 560px;
+        margin: 12px 0 0;
+        font-size: 1.55rem;
+        line-height: 1.05;
+        letter-spacing: 0;
+        text-transform: uppercase;
+      }
+      .experience-card p {
+        max-width: 560px;
+        margin: 10px 0 0;
+        color: rgba(255, 255, 255, 0.82);
+        font-size: 0.92rem;
+        line-height: 1.55;
+      }
       .sample-grid {
         display: grid;
         grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -2014,6 +2075,9 @@
         .proof-grid {
           grid-template-columns: 1fr;
         }
+        .experience-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
         .life-layout {
           grid-template-columns: 1fr;
         }
@@ -2144,6 +2208,23 @@
           grid-template-columns: 1fr;
           gap: 14px;
         }
+        .experience-grid {
+          grid-template-columns: 1fr;
+          gap: 12px;
+        }
+        .experience-card.featured {
+          grid-column: auto;
+          min-height: 330px;
+        }
+        .experience-body {
+          padding: 16px;
+        }
+        .experience-card h3 {
+          font-size: 1.24rem;
+        }
+        .experience-card p {
+          font-size: 0.86rem;
+        }
         .handoff-workspace {
           grid-template-columns: 1fr;
           gap: 12px;
@@ -2207,7 +2288,7 @@
           overflow-wrap: anywhere;
         }
         .copy-line {
-          display: inline;
+          display: block;
           overflow-wrap: anywhere;
           word-break: normal;
         }
@@ -2434,6 +2515,48 @@
           <p class="section-label" data-i18n="home.samples.label">After-meeting system</p>
           <h2 data-i18n-html="home.samples.h"><span class="copy-line">When the meeting ends,</span><span class="copy-line">your Twin starts working.</span></h2>
           <p class="section-lead" data-i18n="home.samples.p">The meeting context turns into work you can use, through the tools your team already works in.</p>
+          <div class="experience-grid" aria-label="SIMY user experiences">
+            <article class="experience-card featured">
+              <img src="/assets/experience/us-varied/01-pc-work-forward-v2.jpg" alt="" loading="lazy" decoding="async">
+              <div class="experience-body">
+                <div class="experience-num">01</div>
+                <h3 data-i18n="home.experience.1.h">Work moves without waiting for you.</h3>
+                <p data-i18n="home.experience.1.p">Follow-up, materials, CRM, and handoffs keep moving after the meeting.</p>
+              </div>
+            </article>
+            <article class="experience-card">
+              <img src="/assets/experience/us-varied/02-next-move-train-v2.jpg" alt="" loading="lazy" decoding="async">
+              <div class="experience-body">
+                <div class="experience-num">02</div>
+                <h3 data-i18n="home.experience.2.h">The next move is clear.</h3>
+                <p data-i18n="home.experience.2.p">Your Twin turns scattered context into the action that moves the outcome.</p>
+              </div>
+            </article>
+            <article class="experience-card">
+              <img src="/assets/experience/us-varied/03-work-keeps-moving-cafe-v2.jpg" alt="" loading="lazy" decoding="async">
+              <div class="experience-body">
+                <div class="experience-num">03</div>
+                <h3 data-i18n="home.experience.3.h">Step away. Stay in motion.</h3>
+                <p data-i18n="home.experience.3.p">PC-bound work keeps progressing while you return to people, customers, and life.</p>
+              </div>
+            </article>
+            <article class="experience-card">
+              <img src="/assets/experience/us-varied/04-people-worth-meeting-event-v2.jpg" alt="" loading="lazy" decoding="async">
+              <div class="experience-body">
+                <div class="experience-num">04</div>
+                <h3 data-i18n="home.experience.4.h">Meet the people who matter.</h3>
+                <p data-i18n="home.experience.4.p">Signals from LinkedIn, X, news, and company movement reveal the right introductions.</p>
+              </div>
+            </article>
+            <article class="experience-card">
+              <img src="/assets/experience/us-varied/05-risk-backup-plan-v2.jpg" alt="" loading="lazy" decoding="async">
+              <div class="experience-body">
+                <div class="experience-num">05</div>
+                <h3 data-i18n="home.experience.5.h">Backup plan ready.</h3>
+                <p data-i18n="home.experience.5.p">SIMY spots yellow lights early and prepares the next-best path.</p>
+              </div>
+            </article>
+          </div>
           <div class="deliverable-board split">
             <div class="deliverable-column">
               <div class="deliverable-column-head">
