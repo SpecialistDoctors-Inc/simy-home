@@ -59,7 +59,7 @@
       "name": "SIMY",
       "applicationCategory": "BusinessApplication",
       "operatingSystem": "Web, iOS",
-      "description": "AI Twin platform that moves follow-ups, decks, research, analysis, updates, and next actions after meetings so the next brief, deck, update, and action are ready when you return.",
+      "description": "Inteligence Twin platform that moves follow-ups, decks, research, analysis, updates, and next actions after meetings so the next brief, deck, update, and action are ready when you return.",
       "url": "https://simy.one/",
       "offers": {
         "@type": "AggregateOffer",
@@ -392,7 +392,10 @@
           document.documentElement.setAttribute('data-hero-asset-region', assetGroupFor(region));
           syncRegionImages(region);
           if (persist) {
-            try { localStorage.setItem('simy-region', region); } catch (e) {}
+            try {
+              localStorage.setItem('simy-region', region);
+              localStorage.setItem('simy-region-source', 'manual');
+            } catch (e) {}
           }
           try {
             window.dispatchEvent(new CustomEvent('simy:regionchange', { detail: { region: region } }));
@@ -430,7 +433,9 @@
         var savedLangRegion = '';
         try {
           savedRegion = (localStorage.getItem('simy-region') || '').toLowerCase();
-          savedLangRegion = regionFromLang(localStorage.getItem('simy-lang') || localStorage.getItem('simy-language') || '');
+          savedLangRegion = localStorage.getItem('simy-lang-source') === 'manual'
+            ? regionFromLang(localStorage.getItem('simy-lang') || localStorage.getItem('simy-language') || '')
+            : '';
         } catch (e) {}
         window.SIMY_REGION = {
           labels: regionLabels,
@@ -447,15 +452,17 @@
         try { timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) {}
         var language = (navigator.language || navigator.userLanguage || '').toLowerCase();
         var region = '';
-        if (isSupportedRegion(queryRegion)) {
-          setHeroRegion(queryRegion, true);
-          return;
-        }
         if (queryLangRegion) {
           setHeroRegion(queryLangRegion, false);
           return;
         }
-        if (isSupportedRegion(savedRegion)) {
+        if (isSupportedRegion(queryRegion)) {
+          setHeroRegion(queryRegion, true);
+          return;
+        }
+        var savedRegionSource = '';
+        try { savedRegionSource = localStorage.getItem('simy-region-source') || ''; } catch (e) {}
+        if (savedRegionSource === 'manual' && isSupportedRegion(savedRegion)) {
           setHeroRegion(savedRegion, false);
           return;
         }
@@ -2624,7 +2631,7 @@
           <img class="nav-logo-s" src="/simy-icon-square.png" alt="" width="28" height="28">
           <span class="nav-brand-lockup">
             <span class="nav-brand">SIMY</span>
-            <span class="nav-brand-sub">Your AI Twin</span>
+            <span class="nav-brand-sub">Your Inteligence Twin</span>
           </span>
         </a>
         <div class="nav-links">
@@ -3131,7 +3138,7 @@
         <div class="footer-grid">
           <div class="footer-brand">
             <div class="footer-brand-line" data-i18n-html="home.footer.tagline"><span class="footer-tagline-line">Meeting ends.</span><span class="footer-tagline-line">Your Twin starts working.</span></div>
-            <div class="footer-brand-copy" data-i18n="home.footer.copy">SIMY is the AI Twin that carries the work after meetings.</div>
+            <div class="footer-brand-copy" data-i18n="home.footer.copy">SIMY is the Inteligence Twin that carries the work after meetings.</div>
           </div>
           <div class="footer-col">
             <div class="footer-col-title" data-i18n="footer.product">Product</div>

@@ -167,17 +167,20 @@
 
   function currentRegionForApp() {
     var params = new URLSearchParams(location.search);
-    var queryRegion = supportedRegion(params.get('region'));
-    if (queryRegion) return queryRegion;
     var queryLangRegion = supportedRegion(regionFromLang(params.get('lang')));
     if (queryLangRegion) return queryLangRegion;
+    var queryRegion = supportedRegion(params.get('region'));
+    if (queryRegion) return queryRegion;
     var api = window.SIMYRegion || window.SIMY_REGION || null;
     if (api && typeof api.get === 'function') {
       var apiRegion = supportedRegion(api.get());
       if (apiRegion) return apiRegion;
     }
     try {
-      var savedRegion = supportedRegion(localStorage.getItem('simy-region'));
+      var savedRegionSource = localStorage.getItem('simy-region-source');
+      var savedRegion = savedRegionSource === 'manual'
+        ? supportedRegion(localStorage.getItem('simy-region'))
+        : '';
       if (savedRegion) return savedRegion;
     } catch (e) {}
     return supportedRegion(regionFromLang(CURRENT_LANG || detect())) || 'us';
@@ -255,16 +258,21 @@
     }
     if (qRegion) return safeLangForPage(REGION_BY_CODE[qRegion].lang);
 
-    // 2. Saved region preference.
-    var savedRegion = supportedRegion(localStorage.getItem('simy-region'));
+    // 2. Explicitly selected saved region preference. Older auto-detected
+    //    saved regions do not override the current visitor's country signal.
+    var savedRegionSource = localStorage.getItem('simy-region-source');
+    var savedRegion = savedRegionSource === 'manual'
+      ? supportedRegion(localStorage.getItem('simy-region'))
+      : '';
     if (savedRegion) return safeLangForPage(REGION_BY_CODE[savedRegion].lang);
 
     // 3. Saved preference — check BOTH keys. The React bundle on /
     //    uses 'simy-language' for its internal LanguageContext, while
     //    the static pages use 'simy-lang'. Either key is authoritative.
-    var saved = localStorage.getItem('simy-lang');
+    var savedLangSource = localStorage.getItem('simy-lang-source');
+    var saved = savedLangSource === 'manual' ? localStorage.getItem('simy-lang') : null;
     if (saved && SUPPORTED.indexOf(saved) !== -1) return safeLangForPage(saved);
-    var savedReact = localStorage.getItem('simy-language');
+    var savedReact = savedLangSource === 'manual' ? localStorage.getItem('simy-language') : null;
     if (savedReact && SUPPORTED.indexOf(savedReact) !== -1) return safeLangForPage(savedReact);
 
     // 4. Browser / OS country signal through timezone.
@@ -315,7 +323,7 @@
         "index": { t: "SIMY - Meeting Ends. Your Twin Starts Working.", d: "Meeting ends. Your Twin starts working. SIMY moves follow-ups, proposals, CRM notes, team updates, and next actions forward after meetings." },
         "pricing": { t: "Pricing — SIMY | AI Code Generation Plans from $20/mo", d: "SIMY pricing for AI code generation from meetings. Starter $20, Pro $40, Scale $100/mo. A cheaper GitHub Copilot alternative." },
         "compare": { t: "Compare SIMY — Your Twin for the Work After Meetings", d: "An agent does a task. Your Twin carries the thread from meetings into follow-up, decks, CRM, internal sharing, and next actions." },
-        "press-release": { t: "News — SIMY Introduces Your AI Twin for the Work After Meetings", d: "Meeting ends. Your Twin starts working. SIMY introduces an AI Twin that turns meeting context into follow-up, proposals, CRM, internal sharing, and next actions." },
+        "press-release": { t: "News — SIMY Introduces Your Inteligence Twin for the Work After Meetings", d: "Meeting ends. Your Twin starts working. SIMY introduces an Inteligence Twin that turns meeting context into follow-up, proposals, CRM, internal sharing, and next actions." },
         "privacy": { t: "Privacy Policy — SIMY by AwakApp Inc.", d: "SIMY Privacy Policy. Learn how AwakApp Inc. collects, uses, discloses, and protects your personal information when using SIMY." },
         "terms": { t: "Terms of Use — SIMY by AwakApp Inc.", d: "SIMY Terms of Use. Terms and conditions governing your use of SIMY by AwakApp Inc." },
         "how-it-works": { t: "How SIMY Works — AI Code Generation from Meetings in 4 Steps", d: "See how SIMY turns meetings into shipped GitHub pull requests in 4 steps: record, AI processes, code generates, PR ships." },
@@ -331,7 +339,7 @@
         "index": { t: "SIMY - 会議が終わる。Twinが動き出す。", d: "会議が終わった瞬間、SIMYがフォロー、提案、CRMメモ、チーム共有、次アクションを進めます。" },
         "pricing": { t: "料金 — SIMY | AIコード生成プラン 月額20ドルから", d: "会議からコードを生成するSIMYの料金。Starter月額$20、Pro$40、Scale$100。GitHub Copilot・Cursorより安価なプラン。" },
         "compare": { t: "SIMY比較 — 会議後の仕事を引き継ぐYour Twin", d: "エージェントは作業をする。Twinは文脈を引き継ぐ。会議からフォロー、資料、CRM、社内共有、次アクションへ進めます。" },
-        "press-release": { t: "ニュース — SIMY、会議後の仕事を進めるAI Twinを発表", d: "Meeting ends. Your Twin starts working. SIMYは会議の文脈をフォロー、提案、CRM、社内共有、次アクションへ変えるAI Twinを発表しました。" },
+        "press-release": { t: "ニュース — SIMY、会議後の仕事を進めるInteligence Twinを発表", d: "Meeting ends. Your Twin starts working. SIMYは会議の文脈をフォロー、提案、CRM、社内共有、次アクションへ変えるInteligence Twinを発表しました。" },
         "privacy": { t: "プライバシーポリシー — SIMY by AwakApp Inc.", d: "SIMYのプライバシーポリシー。AwakApp Inc.が個人情報をどのように収集、利用、開示、保護するかを説明します。" },
         "terms": { t: "利用規約 — SIMY by AwakApp Inc.", d: "SIMYの利用規約。AwakApp Inc.が提供するSIMYの利用条件を説明します。" },
         "how-it-works": { t: "使い方 — SIMY | 会議からコード生成 4ステップ", d: "SIMYが会議をGitHubプルリクエストに変える4ステップ：録画、AI処理、コード生成、PR作成。プロンプト不要。" },
@@ -1227,6 +1235,7 @@
 
     function savedRegion() {
       try {
+        if (localStorage.getItem('simy-region-source') !== 'manual') return '';
         return (localStorage.getItem('simy-region') || '').toLowerCase();
       } catch (e) {
         return '';
@@ -1240,11 +1249,14 @@
     function activeRegion() {
       var api = regionApi();
       var params = new URLSearchParams(location.search);
+      var queryLangRegion = supportedRegion(regionFromLang(params.get('lang')));
+      if (queryLangRegion) return queryLangRegion;
       var queryRegion = supportedRegion(params.get('region'));
+      if (queryRegion) return queryRegion;
       var fromPage = api && typeof api.get === 'function'
         ? api.get()
         : '';
-      return supportedRegion(queryRegion || fromPage || savedRegion() || regionFromLang(detect())) || 'us';
+      return supportedRegion(fromPage || savedRegion() || regionFromLang(detect())) || 'us';
     }
 
     function paint(region) {
@@ -1273,10 +1285,16 @@
       if (api && typeof api.set === 'function') {
         api.set(region, persist);
       } else if (persist) {
-        try { localStorage.setItem('simy-region', region); } catch (e) {}
+        try {
+          localStorage.setItem('simy-region', region);
+          localStorage.setItem('simy-region-source', 'manual');
+        } catch (e) {}
       }
       if (persist) {
-        try { localStorage.setItem('simy-region', region); } catch (e) {}
+        try {
+          localStorage.setItem('simy-region', region);
+          localStorage.setItem('simy-region-source', 'manual');
+        } catch (e) {}
       }
       try {
         window.dispatchEvent(new CustomEvent('simy:regionchange', { detail: { region: region } }));
@@ -1317,12 +1335,18 @@
     // i18n.js stay in lockstep — whichever side reads localStorage
     // on next mount/reload gets the same answer.
     localStorage.setItem('simy-lang', lang);
-    try { localStorage.setItem('simy-language', lang); } catch (e) {}
+    try {
+      localStorage.setItem('simy-language', lang);
+      localStorage.setItem('simy-lang-source', 'manual');
+    } catch (e) {}
     if (!options.skipRegionSync) {
       var region = regionFromLang(lang);
       var api = window.SIMYRegion || window.SIMY_REGION || null;
       if (api && typeof api.set === 'function') api.set(region, true);
-      try { localStorage.setItem('simy-region', region); } catch (e) {}
+      try {
+        localStorage.setItem('simy-region', region);
+        localStorage.setItem('simy-region-source', 'manual');
+      } catch (e) {}
       try {
         window.dispatchEvent(new CustomEvent('simy:regionchange', { detail: { region: region } }));
       } catch (e) {}
