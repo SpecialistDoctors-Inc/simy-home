@@ -198,12 +198,45 @@
     }
   }
 
+  function isLegalPath(pathname) {
+    return pathname === '/privacy.html' ||
+      pathname === '/terms.html' ||
+      pathname === '/privacy' ||
+      pathname === '/terms';
+  }
+
+  function decorateSiteUrl(href) {
+    try {
+      if (!href || href.charAt(0) === '#' || href.indexOf('mailto:') === 0 || href.indexOf('tel:') === 0) {
+        return href;
+      }
+      var url = new URL(href, location.href);
+      var currentHost = location.hostname;
+      if (url.hostname && url.hostname !== currentHost && url.hostname !== 'simy.one' && url.hostname !== 'www.simy.one') {
+        return href;
+      }
+      if (isLegalPath(url.pathname)) return href;
+      var lang = CURRENT_LANG || document.documentElement.lang || detect();
+      var region = currentRegionForApp();
+      url.searchParams.set('lang', lang);
+      url.searchParams.set('locale', lang);
+      url.searchParams.set('region', region);
+      return url.pathname + url.search + url.hash;
+    } catch (e) {
+      return href;
+    }
+  }
+
   function decorateAppLinks(root) {
     var scope = root && root.querySelectorAll ? root : document;
-    var links = scope.querySelectorAll('a[href*="app.simy.one"]');
+    var links = scope.querySelectorAll('a[href]');
     for (var i = 0; i < links.length; i++) {
       var href = links[i].getAttribute('href');
-      if (href) links[i].setAttribute('href', decorateAppUrl(href));
+      if (!href) continue;
+      var nextHref = href.indexOf('app.simy.one') !== -1
+        ? decorateAppUrl(href)
+        : decorateSiteUrl(href);
+      links[i].setAttribute('href', nextHref);
     }
   }
 

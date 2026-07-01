@@ -7,7 +7,15 @@
     <link rel="canonical" href="https://simy.one/press-release.html">
     <meta http-equiv="refresh" content="0; url=/press-release.html">
     <title>SIMY News</title>
-    <script>location.replace('/press-release.html');</script>
+    <script>
+      var target = new URL('/press-release.html', location.href);
+      var params = new URLSearchParams(location.search);
+      ['lang', 'locale', 'region'].forEach(function (key) {
+        var value = params.get(key);
+        if (value) target.searchParams.set(key, value);
+      });
+      location.replace(target.pathname + target.search + target.hash);
+    </script>
   </head>
   <body>
     <a href="/press-release.html">Go to SIMY news</a>

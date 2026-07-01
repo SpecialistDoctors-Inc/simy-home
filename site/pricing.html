@@ -7,7 +7,15 @@
     <link rel="canonical" href="https://simy.one/#pricing">
     <meta http-equiv="refresh" content="0; url=/#pricing">
     <title>SIMY Pricing</title>
-    <script>location.replace('/#pricing');</script>
+    <script>
+      var target = new URL('/#pricing', location.href);
+      var params = new URLSearchParams(location.search);
+      ['lang', 'locale', 'region'].forEach(function (key) {
+        var value = params.get(key);
+        if (value) target.searchParams.set(key, value);
+      });
+      location.replace(target.pathname + target.search + target.hash);
+    </script>
   </head>
   <body>
     <a href="/#pricing">Go to SIMY pricing</a>
