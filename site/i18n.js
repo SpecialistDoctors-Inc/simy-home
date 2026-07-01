@@ -312,7 +312,7 @@
     "en": {
       kw: "AI code generation, AI coding agent, problem-solving AI agent, AI that fixes bugs, AI agent for engineers, autonomous AI engineer, AI software engineer, meeting to code, voice to code, speech to code, AI pull request generator, AI pair programmer, meeting to PR, spec to code AI, sprint planning to code, GitHub Copilot alternative, Cursor alternative, Devin alternative, Claude Code alternative, Replit Agent alternative, AI SDLC automation",
       p: {
-        "index": { t: "SIMY - Meeting Ends. Your Twin Starts Working.", d: "Meeting ends. Your Twin starts working. Your Twin moves follow-ups, decks, research, analysis, updates, and next actions forward while you step into the next conversation, customer, team, or idea." },
+        "index": { t: "SIMY - Meeting Ends. Your Twin Starts Working.", d: "Meeting ends. Your Twin starts working. SIMY moves follow-ups, proposals, CRM notes, team updates, and next actions forward after meetings." },
         "pricing": { t: "Pricing — SIMY | AI Code Generation Plans from $20/mo", d: "SIMY pricing for AI code generation from meetings. Starter $20, Pro $40, Scale $100/mo. A cheaper GitHub Copilot alternative." },
         "compare": { t: "Compare SIMY — Your Twin for the Work After Meetings", d: "An agent does a task. Your Twin carries the thread from meetings into follow-up, decks, CRM, internal sharing, and next actions." },
         "press-release": { t: "News — SIMY Introduces Your AI Twin for the Work After Meetings", d: "Meeting ends. Your Twin starts working. SIMY introduces an AI Twin that turns meeting context into follow-up, proposals, CRM, internal sharing, and next actions." },
@@ -328,7 +328,7 @@
     "ja": {
       kw: "AIコード生成, AIコーディングエージェント, 問題解決 AI エージェント, 課題解決 AI, バグ修正 AI, 自律型AIエンジニア, AIソフトウェアエンジニア, 会議からコード生成, 議事録からコード, 音声からコード, ミーティング コード化, AIプルリクエスト自動生成, AI PR 自動作成, 仕様書からコード AI, スプリント AI 開発, 会議 自動化 開発, AI ペアプログラミング, GitHub Copilot 代替, Cursor 代替, Devin 代替, Claude Code 代替, 開発自動化 AI, 開発効率化 AI",
       p: {
-        "index": { t: "SIMY - Meeting Ends. Your Twin Starts Working.", d: "会議が終わった瞬間、あなたのTwinがフォロー、資料、調査、分析、共有、次アクションを進めます。次の会話、顧客、チーム、アイデアへ向かう時間をつくるAI Twinです。" },
+        "index": { t: "SIMY - 会議が終わる。Twinが動き出す。", d: "会議が終わった瞬間、SIMYがフォロー、提案、CRMメモ、チーム共有、次アクションを進めます。" },
         "pricing": { t: "料金 — SIMY | AIコード生成プラン 月額20ドルから", d: "会議からコードを生成するSIMYの料金。Starter月額$20、Pro$40、Scale$100。GitHub Copilot・Cursorより安価なプラン。" },
         "compare": { t: "SIMY比較 — 会議後の仕事を引き継ぐYour Twin", d: "エージェントは作業をする。Twinは文脈を引き継ぐ。会議からフォロー、資料、CRM、社内共有、次アクションへ進めます。" },
         "press-release": { t: "ニュース — SIMY、会議後の仕事を進めるAI Twinを発表", d: "Meeting ends. Your Twin starts working. SIMYは会議の文脈をフォロー、提案、CRM、社内共有、次アクションへ変えるAI Twinを発表しました。" },
@@ -344,7 +344,7 @@
     "zh-Hans": {
       kw: "AI代码生成, AI编程代理, 问题解决AI代理, 修复bug的AI, 自主AI工程师, AI软件工程师, 会议转代码, 语音转代码, AI拉取请求生成, AI结对编程, GitHub Copilot替代, Cursor替代, Devin替代, Claude Code替代, AI开发自动化, AI编码助手",
       p: {
-        "index": { t: "SIMY — 从会议生成代码的AI编程代理", d: "自主AI编程代理，将会议讨论转化为GitHub拉取请求。GitHub Copilot、Cursor、Devin、Claude Code的替代方案。" },
+        "index": { t: "SIMY — 会议结束，你的 Twin 开始工作", d: "会议一结束，SIMY 就把跟进、提案、CRM 备忘、团队更新和下一步持续向前推进。" },
         "pricing": { t: "价格 — SIMY | AI代码生成套餐 每月20美元起", d: "SIMY从会议生成代码的定价。Starter每月$20，Pro$40，Scale$100。比GitHub Copilot更便宜。" },
         "compare": { t: "SIMY vs Copilot、Cursor、Devin、Claude Code 对比", d: "SIMY对比GitHub Copilot、Cursor、Devin、Claude Code。从会议自动生成代码的自主AI工程师。" },
         "how-it-works": { t: "工作原理 — SIMY | 4步从会议生成代码", d: "了解SIMY如何通过4步将会议转化为GitHub拉取请求：录制、AI处理、代码生成、PR发布。" },
@@ -357,7 +357,7 @@
     "zh-Hant": {
       kw: "AI程式碼生成, AI編程代理, 問題解決AI代理, 修復bug的AI, 自主AI工程師, AI軟體工程師, 會議轉程式碼, 語音轉程式碼, AI拉取請求生成, AI結對編程, GitHub Copilot替代, Cursor替代, Devin替代, Claude Code替代",
       p: {
-        "index": { t: "SIMY — 從會議生成程式碼的AI編程代理", d: "自主AI編程代理，將會議討論轉化為GitHub拉取請求。GitHub Copilot、Cursor、Devin、Claude Code的替代方案。" },
+        "index": { t: "SIMY — 會議結束，你的 Twin 開始工作", d: "會議一結束，SIMY 就把跟進、提案、CRM 備忘、團隊更新與下一步持續向前推進。" },
         "pricing": { t: "價格 — SIMY | AI程式碼生成方案 每月20美元起", d: "SIMY從會議生成程式碼的定價。Starter每月$20，Pro$40，Scale$100。比GitHub Copilot更便宜。" },
         "compare": { t: "SIMY vs Copilot、Cursor、Devin、Claude Code 比較", d: "SIMY對比GitHub Copilot、Cursor、Devin、Claude Code。從會議自動生成程式碼的自主AI工程師。" },
         "how-it-works": { t: "使用方式 — SIMY | 4步從會議生成程式碼", d: "了解SIMY如何透過4步將會議轉化為GitHub拉取請求：錄製、AI處理、程式碼生成、PR發布。" },
