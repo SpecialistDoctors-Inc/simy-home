@@ -3171,20 +3171,39 @@
     <script>
       var currentBilling = 'yearly';
 
-      function currentPricingLang() {
-        return document.documentElement.lang === 'ja' ? 'ja' : 'en';
+      var pricingDynamicCopy = {
+        ar: { tokensShort: 'مليون رمز SIMY / شهر', tokensFull: 'رمز SIMY / شهر', current: 'الحالي' },
+        de: { tokensShort: 'M SIMY-Token / Monat', tokensFull: 'SIMY-Token / Monat', current: 'Aktuell' },
+        en: { tokensShort: 'M SIMY tokens / month', tokensFull: 'SIMY tokens / month', current: 'Current' },
+        es: { tokensShort: 'M tokens SIMY / mes', tokensFull: 'tokens SIMY / mes', current: 'Actual' },
+        fr: { tokensShort: 'M jetons SIMY / mois', tokensFull: 'jetons SIMY / mois', current: 'Actuel' },
+        hi: { tokensShort: 'M SIMY टोकन / माह', tokensFull: 'SIMY टोकन / माह', current: 'वर्तमान' },
+        id: { tokensShort: 'M token SIMY / bulan', tokensFull: 'token SIMY / bulan', current: 'Saat ini' },
+        it: { tokensShort: 'M token SIMY / mese', tokensFull: 'token SIMY / mese', current: 'Attuale' },
+        ja: { tokensShort: 'M SIMYトークン / 月', tokensFull: 'SIMYトークン / 月', current: '現在' },
+        kn: { tokensShort: 'M SIMY ಟೋಕನ್ / ತಿಂಗಳು', tokensFull: 'SIMY ಟೋಕನ್ / ತಿಂಗಳು', current: 'ಪ್ರಸ್ತುತ' },
+        ko: { tokensShort: 'M SIMY 토큰 / 월', tokensFull: 'SIMY 토큰 / 월', current: '현재' },
+        'pt-BR': { tokensShort: 'M tokens SIMY / mês', tokensFull: 'tokens SIMY / mês', current: 'Atual' },
+        ru: { tokensShort: 'M токенов SIMY / месяц', tokensFull: 'токенов SIMY / месяц', current: 'Текущий' },
+        te: { tokensShort: 'M SIMY టోకెన్లు / నెల', tokensFull: 'SIMY టోకెన్లు / నెల', current: 'ప్రస్తుత' },
+        th: { tokensShort: 'M โทเคน SIMY / เดือน', tokensFull: 'โทเคน SIMY / เดือน', current: 'ปัจจุบัน' },
+        vi: { tokensShort: 'M token SIMY / tháng', tokensFull: 'token SIMY / tháng', current: 'Hiện tại' },
+        'zh-Hans': { tokensShort: 'M SIMY 令牌 / 月', tokensFull: 'SIMY 令牌 / 月', current: '当前' },
+        'zh-Hant': { tokensShort: 'M SIMY 令牌 / 月', tokensFull: 'SIMY 令牌 / 月', current: '目前' }
+      };
+
+      function currentPricingCopy() {
+        return pricingDynamicCopy[document.documentElement.lang] || pricingDynamicCopy.en;
       }
 
       function formatTokenLabel(tokens) {
         var value = parseInt(tokens, 10);
-        if (currentPricingLang() === 'ja') return value + 'M SIMYトークン / 月';
-        return value.toLocaleString('en-US') + 'M SIMY tokens / month';
+        return value.toLocaleString(document.documentElement.lang || 'en') + currentPricingCopy().tokensShort;
       }
 
       function formatFeatureTokens(tokens) {
         var value = parseInt(tokens, 10) * 1000000;
-        if (currentPricingLang() === 'ja') return value.toLocaleString('ja-JP') + ' SIMYトークン / 月';
-        return value.toLocaleString('en-US') + ' SIMY tokens / month';
+        return value.toLocaleString(document.documentElement.lang || 'en') + ' ' + currentPricingCopy().tokensFull;
       }
 
       function signupUrl(plan, interval) {
@@ -3240,7 +3259,7 @@
         item.classList.add('active');
         var currentLabel = document.createElement('span');
         currentLabel.className = 'current-label';
-        currentLabel.textContent = 'Current';
+        currentLabel.textContent = currentPricingCopy().current;
         if (!item.querySelector('.current-label')) item.appendChild(currentLabel);
         var btn = list.previousElementSibling;
         btn.classList.remove('open');
