@@ -243,6 +243,24 @@
     }
   }
 
+  function installAppLinkClickDecorator() {
+    if (document.documentElement.getAttribute('data-simy-app-link-click-bound') === 'true') return;
+    document.documentElement.setAttribute('data-simy-app-link-click-bound', 'true');
+    document.addEventListener('click', function (event) {
+      var target = event.target;
+      while (target && target !== document && (!target.tagName || target.tagName.toLowerCase() !== 'a')) {
+        target = target.parentNode;
+      }
+      if (!target || target === document || !target.getAttribute) return;
+      var href = target.getAttribute('href');
+      if (!href) return;
+      var nextHref = href.indexOf('app.simy.one') !== -1
+        ? decorateAppUrl(href)
+        : decorateSiteUrl(href);
+      if (nextHref && nextHref !== href) target.setAttribute('href', nextHref);
+    }, true);
+  }
+
   /* ── Detect preferred language ─────────────────────────────── */
   function detect() {
     var params = new URLSearchParams(location.search);
@@ -1018,6 +1036,7 @@
       if (ROOT_DEBOUNCE) clearTimeout(ROOT_DEBOUNCE);
       ROOT_DEBOUNCE = setTimeout(function () {
         applyRoot(CURRENT_LANG);
+        decorateAppLinks(root);
       }, 30);
     });
     ROOT_OBSERVER.observe(root, {
@@ -1483,6 +1502,7 @@
     buildSwitcher();
     bindRegionSwitcher();
     enhanceStaticMobileNav();
+    installAppLinkClickDecorator();
 
     // For React SPA: nav may not exist yet. Watch for it.
     if (!document.getElementById('langBtn')) {
@@ -1490,6 +1510,7 @@
         if (document.querySelector('nav > .container') && !document.getElementById('langBtn')) {
           buildSwitcher();
           bindRegionSwitcher();
+          decorateAppLinks();
           // Set display name from cached/loaded dict
           var lang = detect();
           load(lang, function (dict) {
