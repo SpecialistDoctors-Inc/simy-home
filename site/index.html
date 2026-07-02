@@ -355,13 +355,9 @@
           return regionAssetGroup[region] || 'us';
         }
         function lifeAssetsFor(region) {
-          var country = isSupportedRegion(region) ? region : 'us';
-          return {
-            running: '/assets/experience-local/' + country + '/' + experienceLocalAssetNames.nextMove,
-            family: '/assets/experience-local/' + country + '/' + experienceLocalAssetNames.awayWork,
-            dinner: '/assets/experience-local/' + country + '/' + experienceLocalAssetNames.meetPeople,
-            travel: '/assets/experience-local/' + country + '/' + experienceLocalAssetNames.backupPlan
-          };
+          var assetGroup = assetGroupFor(region);
+          var assets = regionAssets[assetGroup] || regionAssets.us;
+          return assets.life || regionAssets.us.life;
         }
         function experienceAssetsFor(region) {
           var country = isSupportedRegion(region) ? region : 'us';
@@ -2960,9 +2956,9 @@
       <section class="life-section" id="beyond-screen">
         <div class="container life-layout">
           <div class="life-copy">
-            <p class="section-label" data-i18n="home.life.label">Beyond the screen</p>
-            <h2 data-i18n-html="home.life.h"><span class="copy-line">Once your Twin starts moving,</span><span class="copy-line">you do not have to stay at the screen.</span></h2>
-            <p data-i18n="home.life.p">SIMY is work software first. Your Twin prepares the follow-up, shapes the deck, updates the CRM, and routes the handoff. Only then does the bigger promise make sense: the time after meetings can return to customers, strategy, relationships, and a life outside the laptop.</p>
+            <p class="section-label" data-i18n="home.life.label">Back to life outside the laptop</p>
+            <h2 data-i18n-html="home.life.h"><span class="copy-line">Let your Twin keep work moving,</span><span class="copy-line">then return to family, a run, and the road.</span></h2>
+            <p data-i18n="home.life.p">Your Twin keeps follow-ups, decks, CRM, and handoffs moving after meetings. SIMY is not asking you to stay at the screen; it gives time back for family, training, dinner, travel, and the life waiting outside the laptop.</p>
           </div>
           <div class="life-scenes" aria-label="Life beyond the screen">
             <div class="life-scene running"></div>
