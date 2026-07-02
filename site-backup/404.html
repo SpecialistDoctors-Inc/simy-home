@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="google-site-verification" content="1n6_tVJZRZlQax8luEg5VsuG7gg-kCEam5VFiWIJs3U">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page Not Found — SIMY</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" href="favicon.png">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #0a0a1a; color: #f0f0f8;
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  text-align: center; padding: 40px;
+}
+.container { max-width: 480px; }
+.code {
+  font-size: clamp(4rem, 12vw, 8rem); font-weight: 900;
+  background: linear-gradient(135deg, #7EEDC6, #4A9FE8);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  line-height: 1; margin-bottom: 16px;
+}
+h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 12px; }
+p { color: #7a7a9e; margin-bottom: 32px; line-height: 1.6; }
+a {
+  display: inline-block; padding: 12px 28px; border-radius: 8px;
+  background: linear-gradient(135deg, #7EEDC6, #4A9FE8);
+  color: #0a0a1a; font-weight: 700; text-decoration: none;
+  transition: opacity 0.2s;
+}
+a:hover { opacity: 0.9; }
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SBLYYNMSJW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-SBLYYNMSJW');
+</script>
+</head>
+<body>
+<div class="container">
+  <div class="code">404</div>
+  <h1 data-i18n="e404.h1">Page Not Found</h1>
+  <p data-i18n="e404.p">The page you're looking for doesn't exist or has been moved.</p>
+  <a href="index.html" data-i18n="e404.back">Back to SIMY</a>
+</div>
+<script>
+// i18n for subpages (nav + footer)
+const T = {
+en: {"e404.h1":"Page Not Found","e404.p":"The page you're looking for doesn't exist or has been moved.","e404.back":"Back to SIMY"},
+ja: {"e404.h1":"ページが見つかりません","e404.p":"お探しのページは存在しないか、移動されました。","e404.back":"SIMYに戻る"},
+zh: {"e404.h1":"页面未找到","e404.p":"您查找的页面不存在或已移动。","e404.back":"返回SIMY"},
+hi: {"e404.h1":"पेज नहीं मिला","e404.p":"आप जो पेज ढूंढ रहे हैं वह मौजूद नहीं है या स्थानांतरित कर दिया गया है।","e404.back":"SIMY पर वापस जाएं"},
+es: {"e404.h1":"Página No Encontrada","e404.p":"La página que buscas no existe o ha sido movida.","e404.back":"Volver a SIMY"},
+ar: {"e404.h1":"الصفحة غير موجودة","e404.p":"الصفحة التي تبحث عنها غير موجودة أو تم نقلها.","e404.back":"العودة إلى SIMY"}
+};
+function setLanguage(lang, manual) {
+  document.documentElement.lang = lang;
+  document.body.classList.toggle('rtl', lang === 'ar');
+  var ls = document.getElementById('langSelect');
+  if (ls) ls.value = lang;
+  localStorage.setItem('simy-lang', lang);
+  if (manual) localStorage.setItem('simy-lang-manual', '1');
+  const dict = T[lang];
+  if (!dict) return;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (dict[key] !== undefined) el.textContent = dict[key];
+  });
+}
+function detectBrowserLanguage() {
+  const supportedLangs = Object.keys(T);
+  const browserLangs = navigator.languages || [navigator.language || 'en'];
+  for (const bl of browserLangs) {
+    const lower = bl.toLowerCase();
+    const exact = supportedLangs.find(s => s === lower);
+    if (exact) return exact;
+    const prefix = lower.split('-')[0];
+    const prefixMatch = supportedLangs.find(s => s === prefix);
+    if (prefixMatch) return prefixMatch;
+  }
+  return 'en';
+}
+const wasManual = localStorage.getItem('simy-lang-manual');
+const savedLang = localStorage.getItem('simy-lang');
+if (wasManual && savedLang && T[savedLang]) { setLanguage(savedLang); }
+else { setLanguage(detectBrowserLanguage()); }
+</script>
+</body>
+</html>

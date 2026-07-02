@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "site",
+      "runtimeExecutable": "/bin/zsh",
+      "runtimeArgs": ["-c", "export PATH=/opt/homebrew/bin:$PATH && npx http-server site -p 8080 -c-1"],
+      "port": 8080
+    },
+    {
+      "name": "pc-ui",
+      "runtimeExecutable": "/bin/zsh",
+      "runtimeArgs": ["-c", "export PATH=/opt/homebrew/bin:$PATH && cd /tmp/simy-pc-ui && pnpm dev"],
+      "port": 3000
+    }
+  ]
+}
