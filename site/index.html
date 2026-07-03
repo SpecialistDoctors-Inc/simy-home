@@ -243,12 +243,24 @@
           'my',
           'ph'
         ];
+        var personaOutputTypes = [
+          'sales',
+          'exec',
+          'talent',
+          'services',
+          'product',
+          'support',
+          'legal',
+          'investment',
+          'advisor',
+          'care'
+        ];
         var personaCustomAssets = {};
         personaAssetRegions.forEach(function(region) {
-          personaCustomAssets[region] = {
-            sales: '/assets/persona/persona-sales-' + region + '.jpg',
-            exec: '/assets/persona/persona-exec-' + region + '.jpg'
-          };
+          personaCustomAssets[region] = {};
+          personaOutputTypes.forEach(function(type) {
+            personaCustomAssets[region][type] = '/assets/persona/persona-' + type + '-' + region + '.jpg';
+          });
         });
         var regionExperienceAssets = {
           us: [
@@ -1544,10 +1556,120 @@
         font-weight: 780;
       }
       .persona-output-board {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        display: flex;
         gap: 16px;
         margin-top: 14px;
+        padding: 2px 4px 18px;
+        overflow-x: auto;
+        overscroll-behavior-x: contain;
+        scroll-padding: 4px;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-color: var(--line) transparent;
+      }
+      .persona-output-board::-webkit-scrollbar {
+        height: 8px;
+      }
+      .persona-output-board::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .persona-output-board::-webkit-scrollbar-thumb {
+        border-radius: 999px;
+        background: var(--line);
+      }
+      .persona-carousel-bar {
+        position: sticky;
+        top: 74px;
+        z-index: 5;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-top: 12px;
+        padding: 10px 0;
+        background: rgba(250, 250, 248, 0.94);
+        backdrop-filter: blur(10px);
+      }
+      .persona-carousel-status {
+        color: var(--muted);
+        font-family: 'Geist Mono', monospace;
+        font-size: 0.76rem;
+      }
+      .persona-carousel-nav {
+        position: sticky;
+        top: 134px;
+        z-index: 5;
+        display: flex;
+        gap: 8px;
+        margin-top: 0;
+        padding: 2px 2px 10px;
+        background: rgba(250, 250, 248, 0.94);
+        backdrop-filter: blur(10px);
+        overflow-x: auto;
+        overscroll-behavior-x: contain;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+      }
+      .persona-carousel-nav::-webkit-scrollbar {
+        display: none;
+      }
+      .persona-carousel-tab {
+        flex: 0 0 auto;
+        max-width: 220px;
+        overflow: hidden;
+        padding: 8px 12px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: #fff;
+        color: var(--muted);
+        cursor: pointer;
+        font-family: 'Geist Mono', monospace;
+        font-size: 0.68rem;
+        font-weight: 700;
+        text-overflow: ellipsis;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .persona-carousel-tab.is-active {
+        border-color: var(--blue);
+        background: #eef4ff;
+        color: var(--blue);
+      }
+      .persona-carousel-edge-controls {
+        position: sticky;
+        top: calc(50vh - 34px);
+        z-index: 7;
+        display: flex;
+        justify-content: space-between;
+        height: 0;
+        margin: -2px 24px 0;
+        pointer-events: none;
+      }
+      .persona-carousel-edge-btn {
+        display: inline-grid;
+        width: 54px;
+        height: 68px;
+        place-items: center;
+        border: 1px solid rgba(0, 87, 255, 0.28);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.96);
+        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.14);
+        color: var(--blue);
+        cursor: pointer;
+        font-size: 2rem;
+        font-weight: 800;
+        line-height: 1;
+        pointer-events: auto;
+      }
+      .persona-carousel-edge-btn:first-child {
+        transform: none;
+      }
+      .persona-carousel-edge-btn:last-child {
+        transform: none;
+      }
+      .persona-carousel-edge-btn:disabled {
+        opacity: 0.22;
+        cursor: default;
       }
       .persona-output-intro {
         margin-top: 34px;
@@ -1557,12 +1679,14 @@
       }
       .persona-output-card {
         display: flex;
+        flex: 0 0 min(86vw, 560px);
         min-height: 520px;
         flex-direction: column;
         border: 1px solid var(--line);
         border-radius: 8px;
         background: #fff;
         overflow: hidden;
+        scroll-snap-align: start;
       }
       .persona-output-head {
         padding: 24px;
@@ -1582,6 +1706,7 @@
         line-height: 1.22;
       }
       .persona-output-image {
+        display: block;
         width: 100%;
         aspect-ratio: 16 / 7;
         border-bottom: 1px solid var(--line);
@@ -1593,6 +1718,11 @@
       }
       .persona-output-image.exec {
         object-position: 64% center;
+      }
+      @media (min-width: 760px) {
+        .persona-output-card {
+          flex-basis: calc((100% - 16px) / 2);
+        }
       }
       .persona-output-body {
         display: flex;
@@ -2414,8 +2544,8 @@
         }
         .hero-scrim {
           background:
-            linear-gradient(180deg, rgba(6, 7, 10, 0.9) 0%, rgba(6, 7, 10, 0.72) 48%, rgba(6, 7, 10, 0.48) 100%),
-            linear-gradient(90deg, rgba(6, 7, 10, 0.58) 0%, rgba(6, 7, 10, 0.16) 100%);
+            linear-gradient(180deg, rgba(6, 7, 10, 0.78) 0%, rgba(6, 7, 10, 0.56) 46%, rgba(6, 7, 10, 0.28) 100%),
+            linear-gradient(90deg, rgba(6, 7, 10, 0.48) 0%, rgba(6, 7, 10, 0.06) 100%);
         }
         .hero-bg {
           background-position: 63% center;
@@ -2549,10 +2679,29 @@
           grid-template-columns: 1fr;
         }
         .persona-output-board {
-          grid-template-columns: 1fr;
+          gap: 12px;
+          margin-right: -18px;
+          padding-right: 18px;
         }
         .persona-output-card {
+          flex-basis: min(88vw, 420px);
           min-height: auto;
+        }
+        .persona-carousel-edge-controls {
+          top: calc(50vh - 29px);
+          margin-right: 12px;
+          margin-left: 12px;
+        }
+        .persona-carousel-edge-btn {
+          width: 44px;
+          height: 58px;
+          font-size: 1.65rem;
+        }
+        .persona-carousel-edge-btn:first-child {
+          transform: none;
+        }
+        .persona-carousel-edge-btn:last-child {
+          transform: none;
         }
         .persona-output-list li {
           grid-template-columns: 1fr;
@@ -2868,6 +3017,14 @@
             <div class="deliverable-column-kicker" data-i18n="home.outputs.kicker">OUTPUT</div>
             <div class="deliverable-column-title" data-i18n="home.outputs.title">Who uses SIMY, in what moment, and what moves next</div>
           </div>
+          <div class="persona-carousel-bar" aria-label="Persona carousel controls">
+            <div class="persona-carousel-status" data-persona-carousel-status>01 / 10</div>
+          </div>
+          <div class="persona-carousel-nav" data-persona-carousel-nav aria-label="Persona navigation"></div>
+          <div class="persona-carousel-edge-controls" aria-label="Persona side controls">
+            <button class="persona-carousel-edge-btn" type="button" data-persona-carousel="prev" aria-label="Previous persona">‹</button>
+            <button class="persona-carousel-edge-btn" type="button" data-persona-carousel="next" aria-label="Next persona">›</button>
+          </div>
           <div class="persona-output-board" aria-label="Persona use cases">
             <article class="persona-output-card">
               <div class="persona-output-head">
@@ -2909,6 +3066,174 @@
                   <li><strong data-i18n="home.output.exec.item4.k">Share</strong><span data-i18n="home.output.exec.item4.v">Prepares the short update for executives, team leads, and people who must execute.</span></li>
                 </ul>
                 <div class="persona-output-action" data-i18n="home.output.exec.action">Decisions, asks, risks, and shares become executable work.</div>
+              </div>
+            </article>
+            <article class="persona-output-card">
+              <div class="persona-output-head">
+                <div class="persona-output-kicker" data-i18n="home.output.talent.kicker">TALENT ACQUISITION / HR</div>
+                <div class="persona-output-title" data-i18n="home.output.talent.title">Move candidate experience and hiring decisions forward the moment the interview ends.</div>
+              </div>
+              <img class="persona-output-image talent" data-persona-image="talent" src="/assets/persona/persona-talent-jp.jpg" alt="" loading="lazy" decoding="async">
+              <div class="persona-output-body">
+                <div class="persona-scene">
+                  <strong data-i18n="home.output.scene">Scene</strong>
+                  <span data-i18n="home.output.talent.scene">After candidate screens, hiring manager alignment, final interviews, or offer discussions, speed determines candidate trust.</span>
+                </div>
+                <p data-i18n="home.output.talent.p">SIMY prepares candidate follow-up, interview notes, evaluation sharing, next scheduling, hiring-manager summaries, and offer decision context.</p>
+                <ul class="persona-output-list">
+                  <li><strong data-i18n="home.output.talent.item1.k">Candidate follow-up</strong><span data-i18n="home.output.talent.item1.v">Drafts the reply while motivation, concerns, and next steps are still clear.</span></li>
+                  <li><strong data-i18n="home.output.talent.item2.k">Interview notes</strong><span data-i18n="home.output.talent.item2.v">Keeps strengths, concerns, compensation signals, and role-fit evidence together.</span></li>
+                  <li><strong data-i18n="home.output.talent.item3.k">Hiring share</strong><span data-i18n="home.output.talent.item3.v">Gives hiring managers a concise summary, risks, and open questions.</span></li>
+                  <li><strong data-i18n="home.output.talent.item4.k">Offer decision</strong><span data-i18n="home.output.talent.item4.v">Organizes decision material before strong candidates lose momentum.</span></li>
+                </ul>
+                <div class="persona-output-action" data-i18n="home.output.talent.action">Candidate experience, evaluation, scheduling, and offer judgment keep moving.</div>
+              </div>
+            </article>
+            <article class="persona-output-card">
+              <div class="persona-output-head">
+                <div class="persona-output-kicker" data-i18n="home.output.services.kicker">CONSULTANTS / AGENCIES / SERVICES</div>
+                <div class="persona-output-title" data-i18n="home.output.services.title">Turn client meetings into proposals, execution, and next actions immediately.</div>
+              </div>
+              <img class="persona-output-image services" data-persona-image="services" src="/assets/persona/persona-services-jp.jpg" alt="" loading="lazy" decoding="async">
+              <div class="persona-output-body">
+                <div class="persona-scene">
+                  <strong data-i18n="home.output.scene">Scene</strong>
+                  <span data-i18n="home.output.services.scene">After client check-ins, proposal meetings, requirement interviews, reviews, or escalation calls, trust depends on fast follow-through.</span>
+                </div>
+                <p data-i18n="home.output.services.p">SIMY turns client context into summaries, next proposals, work instructions, issue notes, risks, scope changes, estimates, and internal briefs.</p>
+                <ul class="persona-output-list">
+                  <li><strong data-i18n="home.output.services.item1.k">Client summary</strong><span data-i18n="home.output.services.item1.v">Captures decisions, concerns, requested changes, and next agenda.</span></li>
+                  <li><strong data-i18n="home.output.services.item2.k">Proposal path</strong><span data-i18n="home.output.services.item2.v">Starts the next proposal from issues, value, scope, risks, and timeline.</span></li>
+                  <li><strong data-i18n="home.output.services.item3.k">Work instructions</strong><span data-i18n="home.output.services.item3.v">Turns discussion into owner-ready tasks for delivery teams.</span></li>
+                  <li><strong data-i18n="home.output.services.item4.k">Internal brief</strong><span data-i18n="home.output.services.item4.v">Shares context before client trust and retainer momentum cool.</span></li>
+                </ul>
+                <div class="persona-output-action" data-i18n="home.output.services.action">Client summary, proposal, scope, risk, and delivery tasks are ready.</div>
+              </div>
+            </article>
+            <article class="persona-output-card">
+              <div class="persona-output-head">
+                <div class="persona-output-kicker" data-i18n="home.output.product.kicker">PRODUCT / UX RESEARCH</div>
+                <div class="persona-output-title" data-i18n="home.output.product.title">Turn customer voice into product decisions before insights scatter.</div>
+              </div>
+              <img class="persona-output-image product" data-persona-image="product" src="/assets/persona/persona-product-jp.jpg" alt="" loading="lazy" decoding="async">
+              <div class="persona-output-body">
+                <div class="persona-scene">
+                  <strong data-i18n="home.output.scene">Scene</strong>
+                  <span data-i18n="home.output.product.scene">After customer interviews, user tests, sales ride-alongs, spec reviews, or sprint planning discussions.</span>
+                </div>
+                <p data-i18n="home.output.product.p">SIMY organizes customer problems, requests, objections, priority signals, specification notes, development tasks, and stakeholder updates.</p>
+                <ul class="persona-output-list">
+                  <li><strong data-i18n="home.output.product.item1.k">Insights</strong><span data-i18n="home.output.product.item1.v">Separates pain, desired outcomes, quotes, and recurring patterns.</span></li>
+                  <li><strong data-i18n="home.output.product.item2.k">Requirements</strong><span data-i18n="home.output.product.item2.v">Turns research signals into product questions, priorities, and spec notes.</span></li>
+                  <li><strong data-i18n="home.output.product.item3.k">Dev tasks</strong><span data-i18n="home.output.product.item3.v">Prepares owner-ready work for Jira, GitHub, Linear, or planning.</span></li>
+                  <li><strong data-i18n="home.output.product.item4.k">Team share</strong><span data-i18n="home.output.product.item4.v">Keeps sales, design, engineering, and leadership aligned on the signal.</span></li>
+                </ul>
+                <div class="persona-output-action" data-i18n="home.output.product.action">Customer voice becomes product judgment, requirements, and team action.</div>
+              </div>
+            </article>
+            <article class="persona-output-card">
+              <div class="persona-output-head">
+                <div class="persona-output-kicker" data-i18n="home.output.support.kicker">CUSTOMER / TECHNICAL SUPPORT / TAM</div>
+                <div class="persona-output-title" data-i18n="home.output.support.title">Deliver the next move while customer temperature is still high.</div>
+              </div>
+              <img class="persona-output-image support" data-persona-image="support" src="/assets/persona/persona-support-jp.jpg" alt="" loading="lazy" decoding="async">
+              <div class="persona-output-body">
+                <div class="persona-scene">
+                  <strong data-i18n="home.output.scene">Scene</strong>
+                  <span data-i18n="home.output.support.scene">After incidents, important customer inquiries, escalations, onboarding calls, or technical consultations.</span>
+                </div>
+                <p data-i18n="home.output.support.p">SIMY prepares customer replies, internal escalation, reproduction conditions, impact scope, owners, deadlines, and next status updates.</p>
+                <ul class="persona-output-list">
+                  <li><strong data-i18n="home.output.support.item1.k">Customer reply</strong><span data-i18n="home.output.support.item1.v">Drafts a clear response with status, next step, and timing.</span></li>
+                  <li><strong data-i18n="home.output.support.item2.k">Escalation</strong><span data-i18n="home.output.support.item2.v">Packages severity, customer impact, reproduction details, and owner.</span></li>
+                  <li><strong data-i18n="home.output.support.item3.k">Product share</strong><span data-i18n="home.output.support.item3.v">Hands engineering and product the context they need to move.</span></li>
+                  <li><strong data-i18n="home.output.support.item4.k">Next update</strong><span data-i18n="home.output.support.item4.v">Keeps the next reporting deadline visible before frustration grows.</span></li>
+                </ul>
+                <div class="persona-output-action" data-i18n="home.output.support.action">Reply, escalation, owner, deadline, and next report are aligned.</div>
+              </div>
+            </article>
+            <article class="persona-output-card">
+              <div class="persona-output-head">
+                <div class="persona-output-kicker" data-i18n="home.output.legal.kicker">LEGAL / CONTRACTS / BIZOPS</div>
+                <div class="persona-output-title" data-i18n="home.output.legal.title">Turn contract discussions into risk control and next actions.</div>
+              </div>
+              <img class="persona-output-image legal" data-persona-image="legal" src="/assets/persona/persona-legal-jp.jpg" alt="" loading="lazy" decoding="async">
+              <div class="persona-output-body">
+                <div class="persona-scene">
+                  <strong data-i18n="home.output.scene">Scene</strong>
+                  <span data-i18n="home.output.legal.scene">After contract reviews, NDA negotiations, commercial term adjustments, approval meetings, or vendor negotiations.</span>
+                </div>
+                <p data-i18n="home.output.legal.p">SIMY organizes negotiation points, risks, counterparty positions, revision policy, approval requests, replies, and internal judgment logs.</p>
+                <ul class="persona-output-list">
+                  <li><strong data-i18n="home.output.legal.item1.k">Issues</strong><span data-i18n="home.output.legal.item1.v">Captures clauses, objections, positions, and unresolved points.</span></li>
+                  <li><strong data-i18n="home.output.legal.item2.k">Risk memo</strong><span data-i18n="home.output.legal.item2.v">Separates business risk, legal risk, deadlines, and approval needs.</span></li>
+                  <li><strong data-i18n="home.output.legal.item3.k">Revision path</strong><span data-i18n="home.output.legal.item3.v">Turns discussion into redline direction and internal decision material.</span></li>
+                  <li><strong data-i18n="home.output.legal.item4.k">Next reply</strong><span data-i18n="home.output.legal.item4.v">Prepares the response without losing the negotiation thread.</span></li>
+                </ul>
+                <div class="persona-output-action" data-i18n="home.output.legal.action">Contract issues become risk notes, approvals, revisions, and replies.</div>
+              </div>
+            </article>
+            <article class="persona-output-card">
+              <div class="persona-output-head">
+                <div class="persona-output-kicker" data-i18n="home.output.investment.kicker">FUNDS / VC / INVESTMENT</div>
+                <div class="persona-output-title" data-i18n="home.output.investment.title">Turn investment meetings into decision material, DD, and partner sharing.</div>
+              </div>
+              <img class="persona-output-image investment" data-persona-image="investment" src="/assets/persona/persona-investment-jp.jpg" alt="" loading="lazy" decoding="async">
+              <div class="persona-output-body">
+                <div class="persona-scene">
+                  <strong data-i18n="home.output.scene">Scene</strong>
+                  <span data-i18n="home.output.investment.scene">After founder meetings, investment interviews, follow-up calls, or partner discussions with dense judgment signals.</span>
+                </div>
+                <p data-i18n="home.output.investment.p">SIMY prepares investment memos, key issues, DD items, additional questions, partner updates, and next judgment material.</p>
+                <ul class="persona-output-list">
+                  <li><strong data-i18n="home.output.investment.item1.k">Investment memo</strong><span data-i18n="home.output.investment.item1.v">Captures thesis, traction, team signal, concerns, and open questions.</span></li>
+                  <li><strong data-i18n="home.output.investment.item2.k">DD list</strong><span data-i18n="home.output.investment.item2.v">Turns uncertainty into diligence items, owners, and evidence needed.</span></li>
+                  <li><strong data-i18n="home.output.investment.item3.k">Partner share</strong><span data-i18n="home.output.investment.item3.v">Prepares the concise version partners can judge quickly.</span></li>
+                  <li><strong data-i18n="home.output.investment.item4.k">Next call</strong><span data-i18n="home.output.investment.item4.v">Keeps follow-up questions and decision gates moving.</span></li>
+                </ul>
+                <div class="persona-output-action" data-i18n="home.output.investment.action">Meeting signal becomes memo, DD, partner context, and next decision.</div>
+              </div>
+            </article>
+            <article class="persona-output-card">
+              <div class="persona-output-head">
+                <div class="persona-output-kicker" data-i18n="home.output.advisor.kicker">REAL ESTATE / INSURANCE / FINANCE</div>
+                <div class="persona-output-title" data-i18n="home.output.advisor.title">Never lose the proposal, confirmation, or next step after a customer meeting.</div>
+              </div>
+              <img class="persona-output-image advisor" data-persona-image="advisor" src="/assets/persona/persona-advisor-jp.jpg" alt="" loading="lazy" decoding="async">
+              <div class="persona-output-body">
+                <div class="persona-scene">
+                  <strong data-i18n="home.output.scene">Scene</strong>
+                  <span data-i18n="home.output.advisor.scene">After property, insurance, financial planning, or advisory meetings where follow-up directly affects conversion.</span>
+                </div>
+                <p data-i18n="home.output.advisor.p">SIMY organizes customer situation, concerns, conditions, required documents, next proposal, confirmations, deadlines, and next contact.</p>
+                <ul class="persona-output-list">
+                  <li><strong data-i18n="home.output.advisor.item1.k">Customer context</strong><span data-i18n="home.output.advisor.item1.v">Keeps needs, constraints, family or business context, and decision criteria together.</span></li>
+                  <li><strong data-i18n="home.output.advisor.item2.k">Proposal</strong><span data-i18n="home.output.advisor.item2.v">Starts the next proposal from conditions, concerns, and fit.</span></li>
+                  <li><strong data-i18n="home.output.advisor.item3.k">Documents</strong><span data-i18n="home.output.advisor.item3.v">Lists required documents, confirmations, owners, and deadlines.</span></li>
+                  <li><strong data-i18n="home.output.advisor.item4.k">Next contact</strong><span data-i18n="home.output.advisor.item4.v">Makes the follow-up visible before buying intent fades.</span></li>
+                </ul>
+                <div class="persona-output-action" data-i18n="home.output.advisor.action">Customer meeting context becomes proposal, confirmation, and next step.</div>
+              </div>
+            </article>
+            <article class="persona-output-card">
+              <div class="persona-output-head">
+                <div class="persona-output-kicker" data-i18n="home.output.care.kicker">HEALTHCARE / CARE / EDUCATION SUPPORT</div>
+                <div class="persona-output-title" data-i18n="home.output.care.title">Connect important conversations to records, sharing, and next support.</div>
+              </div>
+              <img class="persona-output-image care" data-persona-image="care" src="/assets/persona/persona-care-jp.jpg" alt="" loading="lazy" decoding="async">
+              <div class="persona-output-body">
+                <div class="persona-scene">
+                  <strong data-i18n="home.output.scene">Scene</strong>
+                  <span data-i18n="home.output.care.scene">After care, education, or support conversations where records, coordination, and next response matter.</span>
+                </div>
+                <p data-i18n="home.output.care.p">SIMY helps prepare records, handoff notes, next support, stakeholder coordination, and next-session context with Enterprise-grade controls.</p>
+                <ul class="persona-output-list">
+                  <li><strong data-i18n="home.output.care.item1.k">Record</strong><span data-i18n="home.output.care.item1.v">Captures the important dialogue without relying on memory.</span></li>
+                  <li><strong data-i18n="home.output.care.item2.k">Share</strong><span data-i18n="home.output.care.item2.v">Prepares the right handoff for the people involved in support.</span></li>
+                  <li><strong data-i18n="home.output.care.item3.k">Next support</strong><span data-i18n="home.output.care.item3.v">Keeps next response, timing, and owner visible.</span></li>
+                  <li><strong data-i18n="home.output.care.item4.k">Privacy control</strong><span data-i18n="home.output.care.item4.v">Positions sensitive conversations for controlled, Enterprise use.</span></li>
+                </ul>
+                <div class="persona-output-action" data-i18n="home.output.care.action">Important dialogue becomes record, coordination, and next support.</div>
               </div>
             </article>
           </div>
@@ -3772,14 +4097,112 @@
           }).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
         }
 
+        function initPersonaCarousel() {
+          var track = document.querySelector('.persona-output-board');
+          if (!track) return;
+          var prevButtons = Array.prototype.slice.call(document.querySelectorAll('[data-persona-carousel="prev"]'));
+          var nextButtons = Array.prototype.slice.call(document.querySelectorAll('[data-persona-carousel="next"]'));
+          var status = document.querySelector('[data-persona-carousel-status]');
+          var nav = document.querySelector('[data-persona-carousel-nav]');
+          var cards = Array.prototype.slice.call(track.querySelectorAll('.persona-output-card'));
+          if (!prevButtons.length || !nextButtons.length || cards.length < 2) return;
+          var tabs = [];
+
+          function cardStep() {
+            var first = cards[0];
+            if (!first) return track.clientWidth;
+            var styles = window.getComputedStyle(track);
+            var gap = parseFloat(styles.columnGap || styles.gap || '0') || 0;
+            return first.getBoundingClientRect().width + gap;
+          }
+
+          function currentIndex() {
+            var step = cardStep();
+            if (!step) return 0;
+            return Math.max(0, Math.min(cards.length - 1, Math.round(track.scrollLeft / step)));
+          }
+
+          function updateControls() {
+            var maxScroll = Math.max(0, track.scrollWidth - track.clientWidth - 2);
+            var index = currentIndex();
+            prevButtons.forEach(function(button) { button.disabled = track.scrollLeft <= 2; });
+            nextButtons.forEach(function(button) { button.disabled = track.scrollLeft >= maxScroll; });
+            if (status) {
+              status.textContent = String(index + 1).padStart(2, '0') + ' / ' + String(cards.length).padStart(2, '0');
+            }
+            tabs.forEach(function(tab, i) {
+              var active = i === index;
+              tab.classList.toggle('is-active', active);
+              tab.setAttribute('aria-selected', active ? 'true' : 'false');
+              if (active) {
+                tab.scrollIntoView({ inline: 'nearest', block: 'nearest' });
+              }
+            });
+          }
+
+          function move(direction) {
+            track.scrollBy({
+              left: cardStep() * direction,
+              behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
+            });
+          }
+
+          function goTo(index) {
+            var target = cards[index];
+            if (!target) return;
+            track.scrollTo({
+              left: target.offsetLeft - track.offsetLeft,
+              behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
+            });
+          }
+
+          function cardLabel(card, index) {
+            var kicker = card.querySelector('.persona-output-kicker');
+            var text = kicker ? kicker.textContent.trim() : '';
+            return text || ('Persona ' + (index + 1));
+          }
+
+          function buildNav() {
+            if (!nav) return;
+            nav.textContent = '';
+            tabs = cards.map(function(card, index) {
+              var tab = document.createElement('button');
+              tab.type = 'button';
+              tab.className = 'persona-carousel-tab';
+              tab.textContent = cardLabel(card, index);
+              tab.setAttribute('aria-selected', 'false');
+              tab.addEventListener('click', function() { goTo(index); });
+              nav.appendChild(tab);
+              return tab;
+            });
+          }
+
+          prevButtons.forEach(function(button) {
+            button.addEventListener('click', function() { move(-1); });
+          });
+          nextButtons.forEach(function(button) {
+            button.addEventListener('click', function() { move(1); });
+          });
+          track.addEventListener('scroll', updateControls, { passive: true });
+          window.addEventListener('resize', updateControls);
+          buildNav();
+          new MutationObserver(function() {
+            buildNav();
+            updateControls();
+          }).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
+          updateControls();
+        }
+
         if (document.readyState === 'loading') {
           document.addEventListener('DOMContentLoaded', function() {
             if (window.syncSIMYRegionImages) window.syncSIMYRegionImages();
+            initPersonaCarousel();
             startHeroClock();
             startHeroWorkRotation();
           });
         } else {
           if (window.syncSIMYRegionImages) window.syncSIMYRegionImages();
+          initPersonaCarousel();
           startHeroClock();
           startHeroWorkRotation();
         }
