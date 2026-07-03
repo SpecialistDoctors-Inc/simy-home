@@ -182,6 +182,8 @@
       var tzRegion = supportedRegion(regionFromTimezone(timeZone, langs[0] || ''));
       if (tzRegion) return tzRegion;
     } catch (e2) {}
+    var currentLangRegion = supportedRegion(regionFromLang(CURRENT_LANG || ''));
+    if (currentLangRegion) return currentLangRegion;
     try {
       var savedRegionSource = localStorage.getItem('simy-region-source');
       var savedRegion = savedRegionSource === 'manual'
@@ -249,6 +251,24 @@
     }
   }
 
+  function syncRegionToCurrentLanguage() {
+    var params = new URLSearchParams(location.search);
+    if (supportedRegion(params.get('region'))) return;
+    var region = supportedRegion(regionFromLang(CURRENT_LANG || ''));
+    if (!region) return;
+    var api = window.SIMYRegion || window.SIMY_REGION || null;
+    if (api && typeof api.get === 'function' && typeof api.set === 'function') {
+      var current = supportedRegion(api.get());
+      if (current !== region) api.set(region, false);
+    }
+    try {
+      window.dispatchEvent(new CustomEvent('simy:regionchange', { detail: { region: region } }));
+    } catch (e) {}
+    decorateAppLinks();
+    setTimeout(function () { decorateAppLinks(); }, 0);
+    setTimeout(function () { decorateAppLinks(); }, 500);
+  }
+
   function installAppLinkClickDecorator() {
     if (document.documentElement.getAttribute('data-simy-app-link-click-bound') === 'true') return;
     document.documentElement.setAttribute('data-simy-app-link-click-bound', 'true');
@@ -293,15 +313,7 @@
       if (tzRegion) return safeLangForPage(REGION_BY_CODE[tzRegion].lang);
     } catch (e) {}
 
-    // 3. Explicitly selected saved region preference. Use it only when the
-    //    browser does not expose a usable current country signal.
-    var savedRegionSource = localStorage.getItem('simy-region-source');
-    var savedRegion = savedRegionSource === 'manual'
-      ? supportedRegion(localStorage.getItem('simy-region'))
-      : '';
-    if (savedRegion) return safeLangForPage(REGION_BY_CODE[savedRegion].lang);
-
-    // 4. Saved preference — check BOTH keys. The React bundle on /
+    // 3. Saved language preference — check BOTH keys. The React bundle on /
     //    uses 'simy-language' for its internal LanguageContext, while
     //    the static pages use 'simy-lang'. Either key is authoritative.
     var savedLangSource = localStorage.getItem('simy-lang-source');
@@ -309,6 +321,14 @@
     if (saved && SUPPORTED.indexOf(saved) !== -1) return safeLangForPage(saved);
     var savedReact = savedLangSource === 'manual' ? localStorage.getItem('simy-language') : null;
     if (savedReact && SUPPORTED.indexOf(savedReact) !== -1) return safeLangForPage(savedReact);
+
+    // 4. Explicitly selected saved region preference. Use it only when the
+    //    browser does not expose a usable current country/language signal.
+    var savedRegionSource = localStorage.getItem('simy-region-source');
+    var savedRegion = savedRegionSource === 'manual'
+      ? supportedRegion(localStorage.getItem('simy-region'))
+      : '';
+    if (savedRegion) return safeLangForPage(REGION_BY_CODE[savedRegion].lang);
 
     // 5. Browser / OS language
     for (var i = 0; i < langs.length; i++) {
@@ -1093,6 +1113,7 @@
     // Set html lang & dir
     document.documentElement.lang = meta.code || DEFAULT;
     document.documentElement.dir = meta.dir || 'ltr';
+    syncRegionToCurrentLanguage();
 
     // Inject localized SEO (title, description, keywords, OG, Twitter)
     applySEO(meta.code || DEFAULT);

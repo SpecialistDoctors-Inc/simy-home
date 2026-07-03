@@ -500,12 +500,12 @@
         if (!region) {
           var savedRegionSource = '';
           try { savedRegionSource = localStorage.getItem('simy-region-source') || ''; } catch (e) {}
-          if (savedRegionSource === 'manual' && isSupportedRegion(savedRegion)) {
-            setHeroRegion(savedRegion, false);
-            return;
-          }
           if (savedLangRegion) {
             setHeroRegion(savedLangRegion, false);
+            return;
+          }
+          if (savedRegionSource === 'manual' && isSupportedRegion(savedRegion)) {
+            setHeroRegion(savedRegion, false);
             return;
           }
         }
@@ -3172,7 +3172,53 @@
         else { nav.classList.remove('scrolled'); }
       });
     </script>
-    <script src="/i18n.js?v=20260702-localization"></script>
+    <script src="/i18n.js?v=20260703-region"></script>
+    <script>
+      (function() {
+        var regionLanguage = {
+          us: 'en',
+          jp: 'ja',
+          gb: 'en',
+          de: 'de',
+          fr: 'fr',
+          ca: 'en',
+          in: 'hi',
+          kr: 'ko',
+          br: 'pt-BR',
+          mx: 'es',
+          id: 'id',
+          vn: 'vi',
+          es: 'es',
+          it: 'it',
+          sa: 'ar',
+          tw: 'zh-Hant',
+          th: 'th',
+          my: 'en',
+          ph: 'en'
+        };
+
+        function syncAppLinksToHeroRegion() {
+          var region = document.documentElement.getAttribute('data-hero-region') || '';
+          if (!regionLanguage[region]) return;
+          var lang = document.documentElement.lang || regionLanguage[region] || 'en';
+          document.querySelectorAll('a[href*="app.simy.one"]').forEach(function(link) {
+            try {
+              var url = new URL(link.getAttribute('href'), location.href);
+              url.searchParams.set('lang', lang);
+              url.searchParams.set('locale', lang);
+              url.searchParams.set('region', region);
+              link.setAttribute('href', url.toString());
+            } catch (e) {}
+          });
+        }
+
+        window.addEventListener('simy:regionchange', syncAppLinksToHeroRegion);
+        document.addEventListener('DOMContentLoaded', syncAppLinksToHeroRegion);
+        setTimeout(syncAppLinksToHeroRegion, 0);
+        setTimeout(syncAppLinksToHeroRegion, 500);
+        setTimeout(syncAppLinksToHeroRegion, 1500);
+      })();
+    </script>
     <script>
       var currentBilling = 'yearly';
 
