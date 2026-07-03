@@ -448,22 +448,12 @@
         try { timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) {}
         var language = (navigator.language || navigator.userLanguage || '').toLowerCase();
         var region = '';
-        if (queryLangRegion) {
-          setHeroRegion(queryLangRegion, false);
-          return;
-        }
         if (isSupportedRegion(queryRegion)) {
           setHeroRegion(queryRegion, true);
           return;
         }
-        var savedRegionSource = '';
-        try { savedRegionSource = localStorage.getItem('simy-region-source') || ''; } catch (e) {}
-        if (savedRegionSource === 'manual' && isSupportedRegion(savedRegion)) {
-          setHeroRegion(savedRegion, false);
-          return;
-        }
-        if (savedLangRegion) {
-          setHeroRegion(savedLangRegion, false);
+        if (queryLangRegion) {
+          setHeroRegion(queryLangRegion, false);
           return;
         }
         if (timeZone === 'Asia/Tokyo' || language.indexOf('ja') === 0) {
@@ -506,6 +496,18 @@
           region = 'us';
         } else if (euTimeZones.indexOf(timeZone) !== -1) {
           region = regionFromLang(language) || 'fr';
+        }
+        if (!region) {
+          var savedRegionSource = '';
+          try { savedRegionSource = localStorage.getItem('simy-region-source') || ''; } catch (e) {}
+          if (savedRegionSource === 'manual' && isSupportedRegion(savedRegion)) {
+            setHeroRegion(savedRegion, false);
+            return;
+          }
+          if (savedLangRegion) {
+            setHeroRegion(savedLangRegion, false);
+            return;
+          }
         }
         setHeroRegion(region || 'us', false);
       })();

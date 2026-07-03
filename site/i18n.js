@@ -167,15 +167,21 @@
 
   function currentRegionForApp() {
     var params = new URLSearchParams(location.search);
-    var queryLangRegion = supportedRegion(regionFromLang(params.get('lang')));
-    if (queryLangRegion) return queryLangRegion;
     var queryRegion = supportedRegion(params.get('region'));
     if (queryRegion) return queryRegion;
+    var queryLangRegion = supportedRegion(regionFromLang(params.get('lang')));
+    if (queryLangRegion) return queryLangRegion;
     var api = window.SIMYRegion || window.SIMY_REGION || null;
     if (api && typeof api.get === 'function') {
       var apiRegion = supportedRegion(api.get());
       if (apiRegion) return apiRegion;
     }
+    try {
+      var langs = navigator.languages || [navigator.language || navigator.userLanguage || ''];
+      var timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+      var tzRegion = supportedRegion(regionFromTimezone(timeZone, langs[0] || ''));
+      if (tzRegion) return tzRegion;
+    } catch (e2) {}
     try {
       var savedRegionSource = localStorage.getItem('simy-region-source');
       var savedRegion = savedRegionSource === 'manual'
@@ -276,15 +282,26 @@
     }
     if (qRegion) return safeLangForPage(REGION_BY_CODE[qRegion].lang);
 
-    // 2. Explicitly selected saved region preference. Older auto-detected
-    //    saved regions do not override the current visitor's country signal.
+    // 2. Browser / OS country signal through timezone. This must beat
+    //    localStorage so a visitor landing in Japan gets JP and a visitor
+    //    landing in the US gets US, even if a previous session saved another
+    //    region.
+    var langs = navigator.languages || [navigator.language || navigator.userLanguage || ''];
+    try {
+      var timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+      var tzRegion = supportedRegion(regionFromTimezone(timeZone, langs[0] || ''));
+      if (tzRegion) return safeLangForPage(REGION_BY_CODE[tzRegion].lang);
+    } catch (e) {}
+
+    // 3. Explicitly selected saved region preference. Use it only when the
+    //    browser does not expose a usable current country signal.
     var savedRegionSource = localStorage.getItem('simy-region-source');
     var savedRegion = savedRegionSource === 'manual'
       ? supportedRegion(localStorage.getItem('simy-region'))
       : '';
     if (savedRegion) return safeLangForPage(REGION_BY_CODE[savedRegion].lang);
 
-    // 3. Saved preference — check BOTH keys. The React bundle on /
+    // 4. Saved preference — check BOTH keys. The React bundle on /
     //    uses 'simy-language' for its internal LanguageContext, while
     //    the static pages use 'simy-lang'. Either key is authoritative.
     var savedLangSource = localStorage.getItem('simy-lang-source');
@@ -292,14 +309,6 @@
     if (saved && SUPPORTED.indexOf(saved) !== -1) return safeLangForPage(saved);
     var savedReact = savedLangSource === 'manual' ? localStorage.getItem('simy-language') : null;
     if (savedReact && SUPPORTED.indexOf(savedReact) !== -1) return safeLangForPage(savedReact);
-
-    // 4. Browser / OS country signal through timezone.
-    var langs = navigator.languages || [navigator.language || navigator.userLanguage || ''];
-    try {
-      var timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
-      var tzRegion = supportedRegion(regionFromTimezone(timeZone, langs[0] || ''));
-      if (tzRegion) return safeLangForPage(REGION_BY_CODE[tzRegion].lang);
-    } catch (e) {}
 
     // 5. Browser / OS language
     for (var i = 0; i < langs.length; i++) {
@@ -1268,14 +1277,14 @@
     function activeRegion() {
       var api = regionApi();
       var params = new URLSearchParams(location.search);
-      var queryLangRegion = supportedRegion(regionFromLang(params.get('lang')));
-      if (queryLangRegion) return queryLangRegion;
       var queryRegion = supportedRegion(params.get('region'));
       if (queryRegion) return queryRegion;
+      var queryLangRegion = supportedRegion(regionFromLang(params.get('lang')));
+      if (queryLangRegion) return queryLangRegion;
       var fromPage = api && typeof api.get === 'function'
         ? api.get()
         : '';
-      return supportedRegion(fromPage || savedRegion() || regionFromLang(detect())) || 'us';
+      return supportedRegion(fromPage || regionFromLang(detect()) || savedRegion()) || 'us';
     }
 
     function paint(region) {
