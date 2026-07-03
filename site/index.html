@@ -213,12 +213,34 @@
           my: '/assets/hero-meeting-twin-work-my.jpg',
           ph: '/assets/hero-meeting-twin-work-ph.jpg'
         };
-        var personaCustomAssets = {
-          jp: {
-            sales: '/assets/persona/persona-sales-jp.jpg',
-            exec: '/assets/persona/persona-exec-jp.jpg'
-          }
-        };
+        var personaAssetRegions = [
+          'us',
+          'jp',
+          'gb',
+          'de',
+          'fr',
+          'ca',
+          'in',
+          'kr',
+          'br',
+          'mx',
+          'id',
+          'vn',
+          'es',
+          'it',
+          'sa',
+          'tw',
+          'th',
+          'my',
+          'ph'
+        ];
+        var personaCustomAssets = {};
+        personaAssetRegions.forEach(function(region) {
+          personaCustomAssets[region] = {
+            sales: '/assets/persona/persona-sales-' + region + '.jpg',
+            exec: '/assets/persona/persona-exec-' + region + '.jpg'
+          };
+        });
         var regionExperienceAssets = {
           us: [
             '/assets/hero-meeting-twin-work-us.jpg',
@@ -370,14 +392,8 @@
           return regionExperienceAssets[country] || regionExperienceAssets.us;
         }
         function personaAssetsFor(region) {
-          var assetGroup = assetGroupFor(region);
-          var assets = regionAssets[assetGroup] || regionAssets.us;
-          var experienceAssets = experienceAssetsFor(region);
-          if (personaCustomAssets[region]) return personaCustomAssets[region];
-          return {
-            sales: experienceAssets[1] || regionExperienceAssets.us[1],
-            exec: regionHeroAssets[region] || assets.hero || regionHeroAssets.us
-          };
+          var country = isSupportedRegion(region) ? region : 'us';
+          return personaCustomAssets[country] || personaCustomAssets.us;
         }
         function setBackgroundImage(element, path) {
           if (element && path) element.style.backgroundImage = 'url("' + path + '")';
@@ -1642,32 +1658,10 @@
         padding: 18px 24px 14px;
         background: linear-gradient(180deg, #fff 0%, #fbfbf8 100%);
       }
-      .integration-search {
-        display: flex;
-        align-items: center;
-        gap: 9px;
-        height: 38px;
-        padding: 0 12px;
-        border: 1px solid var(--line);
-        border-radius: 8px;
-        background: #fff;
-        color: var(--muted);
-        font-size: 0.82rem;
-      }
-      .integration-search::before {
-        content: '';
-        width: 9px;
-        height: 9px;
-        border: 2px solid var(--muted);
-        border-radius: 999px;
-        box-shadow: 5px 5px 0 -3px var(--muted);
-        opacity: 0.7;
-      }
       .integration-icons {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 10px;
-        margin-top: 12px;
       }
       .integration-icon {
         display: grid;
@@ -2912,7 +2906,6 @@
                 <div class="deliverable-column-title" data-i18n="home.integrations.title">Where SIMY connects today</div>
               </div>
               <div class="integration-catalog" aria-label="Connected apps">
-                <div class="integration-search" data-i18n="home.integrations.search">Search connected work apps</div>
                 <div class="integration-icons">
                   <div class="integration-icon">
                     <span class="integration-mark slack" aria-hidden="true">
