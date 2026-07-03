@@ -1636,14 +1636,22 @@
         color: var(--blue);
       }
       .persona-carousel-edge-controls {
-        position: sticky;
-        top: calc(50vh - 34px);
+        position: fixed;
+        top: 50vh;
+        left: var(--persona-edge-left, 24px);
+        right: var(--persona-edge-right, 24px);
         z-index: 7;
         display: flex;
+        align-items: center;
         justify-content: space-between;
-        height: 0;
-        margin: -2px 24px 0;
+        height: 68px;
+        transform: translateY(-50%);
+        opacity: 0;
         pointer-events: none;
+        transition: opacity 0.16s ease;
+      }
+      .persona-carousel-edge-controls.is-visible {
+        opacity: 1;
       }
       .persona-carousel-edge-btn {
         display: inline-grid;
@@ -1659,6 +1667,9 @@
         font-size: 2rem;
         font-weight: 800;
         line-height: 1;
+        pointer-events: none;
+      }
+      .persona-carousel-edge-controls.is-visible .persona-carousel-edge-btn {
         pointer-events: auto;
       }
       .persona-carousel-edge-btn:first-child {
@@ -2688,9 +2699,8 @@
           min-height: auto;
         }
         .persona-carousel-edge-controls {
-          top: calc(50vh - 29px);
-          margin-right: 12px;
-          margin-left: 12px;
+          top: 50vh;
+          height: 58px;
         }
         .persona-carousel-edge-btn {
           width: 44px;
@@ -4104,6 +4114,7 @@
           var nextButtons = Array.prototype.slice.call(document.querySelectorAll('[data-persona-carousel="next"]'));
           var status = document.querySelector('[data-persona-carousel-status]');
           var nav = document.querySelector('[data-persona-carousel-nav]');
+          var edgeControls = document.querySelector('.persona-carousel-edge-controls');
           var cards = Array.prototype.slice.call(track.querySelectorAll('.persona-output-card'));
           if (!prevButtons.length || !nextButtons.length || cards.length < 2) return;
           var tabs = [];
@@ -4125,6 +4136,14 @@
           function updateControls() {
             var maxScroll = Math.max(0, track.scrollWidth - track.clientWidth - 2);
             var index = currentIndex();
+            if (edgeControls) {
+              var rect = track.getBoundingClientRect();
+              var inset = window.innerWidth < 760 ? 12 : 24;
+              var visible = rect.top < window.innerHeight && rect.bottom > 0;
+              edgeControls.style.setProperty('--persona-edge-left', Math.max(12, rect.left + inset) + 'px');
+              edgeControls.style.setProperty('--persona-edge-right', Math.max(12, window.innerWidth - rect.right + inset) + 'px');
+              edgeControls.classList.toggle('is-visible', visible);
+            }
             prevButtons.forEach(function(button) { button.disabled = track.scrollLeft <= 2; });
             nextButtons.forEach(function(button) { button.disabled = track.scrollLeft >= maxScroll; });
             if (status) {
@@ -4184,6 +4203,7 @@
             button.addEventListener('click', function() { move(1); });
           });
           track.addEventListener('scroll', updateControls, { passive: true });
+          window.addEventListener('scroll', updateControls, { passive: true });
           window.addEventListener('resize', updateControls);
           buildNav();
           new MutationObserver(function() {
