@@ -138,7 +138,7 @@
           kr: 'jp',
           br: 'us',
           mx: 'us',
-          id: 'jp',
+          id: 'id',
           vn: 'jp',
           es: 'eu',
           it: 'eu',
@@ -183,6 +183,15 @@
               family: '/assets/hero-life-family-in.jpg',
               dinner: '/assets/hero-life-dinner-in.jpg',
               travel: '/assets/hero-life-travel-in.jpg'
+            }
+          },
+          id: {
+            hero: '/assets/hero-meeting-twin-work-id.jpg',
+            life: {
+              running: '/assets/hero-life-running-id.jpg',
+              family: '/assets/hero-life-family-id.jpg',
+              dinner: '/assets/hero-life-dinner-id.jpg',
+              travel: '/assets/hero-life-travel-id.jpg'
             }
           }
         };
@@ -2279,6 +2288,10 @@
       html[data-hero-asset-region="in"] .life-scene.family { background-image: url('/assets/hero-life-family-in.jpg'); }
       html[data-hero-asset-region="in"] .life-scene.dinner { background-image: url('/assets/hero-life-dinner-in.jpg'); }
       html[data-hero-asset-region="in"] .life-scene.travel { background-image: url('/assets/hero-life-travel-in.jpg'); }
+      html[data-hero-asset-region="id"] .life-scene.running { background-image: url('/assets/hero-life-running-id.jpg'); }
+      html[data-hero-asset-region="id"] .life-scene.family { background-image: url('/assets/hero-life-family-id.jpg'); }
+      html[data-hero-asset-region="id"] .life-scene.dinner { background-image: url('/assets/hero-life-dinner-id.jpg'); }
+      html[data-hero-asset-region="id"] .life-scene.travel { background-image: url('/assets/hero-life-travel-id.jpg'); }
       @keyframes lifeSceneFade {
         0% { opacity: 0; transform: scale(1.025); }
         6% { opacity: 1; transform: scale(1); }
