@@ -213,6 +213,12 @@
           my: '/assets/hero-meeting-twin-work-my.jpg',
           ph: '/assets/hero-meeting-twin-work-ph.jpg'
         };
+        var personaCustomAssets = {
+          jp: {
+            sales: '/assets/persona/persona-sales-jp.jpg',
+            exec: '/assets/persona/persona-exec-jp.jpg'
+          }
+        };
         var regionExperienceAssets = {
           us: [
             '/assets/hero-meeting-twin-work-us.jpg',
@@ -363,6 +369,16 @@
           var country = isSupportedRegion(region) ? region : 'us';
           return regionExperienceAssets[country] || regionExperienceAssets.us;
         }
+        function personaAssetsFor(region) {
+          var assetGroup = assetGroupFor(region);
+          var assets = regionAssets[assetGroup] || regionAssets.us;
+          var experienceAssets = experienceAssetsFor(region);
+          if (personaCustomAssets[region]) return personaCustomAssets[region];
+          return {
+            sales: experienceAssets[1] || regionExperienceAssets.us[1],
+            exec: regionHeroAssets[region] || assets.hero || regionHeroAssets.us
+          };
+        }
         function setBackgroundImage(element, path) {
           if (element && path) element.style.backgroundImage = 'url("' + path + '")';
         }
@@ -377,6 +393,14 @@
           });
           document.querySelectorAll('[data-experience-image]').forEach(function(img, index) {
             var nextSrc = experienceAssets[index];
+            if (nextSrc && img.getAttribute('src') !== nextSrc) {
+              img.setAttribute('src', nextSrc);
+            }
+          });
+          var personaAssets = personaAssetsFor(region);
+          document.querySelectorAll('[data-persona-image]').forEach(function(img) {
+            var key = img.getAttribute('data-persona-image');
+            var nextSrc = personaAssets[key];
             if (nextSrc && img.getAttribute('src') !== nextSrc) {
               img.setAttribute('src', nextSrc);
             }
@@ -1543,7 +1567,7 @@
         object-position: 52% center;
       }
       .persona-output-image.exec {
-        object-position: 50% center;
+        object-position: 64% center;
       }
       .persona-output-body {
         display: flex;
@@ -2843,7 +2867,7 @@
                 <div class="persona-output-kicker" data-i18n="home.output.sales.kicker">B2B SALES / CS</div>
                 <div class="persona-output-title" data-i18n="home.output.sales.title">Turn a sales or customer meeting into follow-through before the signal fades.</div>
               </div>
-              <img class="persona-output-image sales" src="/assets/experience-local/jp/02-next-move.jpg" alt="" loading="lazy" decoding="async">
+              <img class="persona-output-image sales" data-persona-image="sales" src="/assets/persona/persona-sales-jp.jpg" alt="" loading="lazy" decoding="async">
               <div class="persona-output-body">
                 <div class="persona-scene">
                   <strong data-i18n="home.output.scene">Scene</strong>
@@ -2864,7 +2888,7 @@
                 <div class="persona-output-kicker" data-i18n="home.output.exec.kicker">EXECUTIVES / BUSINESS LEADERS</div>
                 <div class="persona-output-title" data-i18n="home.output.exec.title">Turn important meetings into decisions, asks, risk handling, and execution.</div>
               </div>
-              <img class="persona-output-image exec" src="/assets/experience-local/jp/05-backup-plan.jpg" alt="" loading="lazy" decoding="async">
+              <img class="persona-output-image exec" data-persona-image="exec" src="/assets/persona/persona-exec-jp.jpg" alt="" loading="lazy" decoding="async">
               <div class="persona-output-body">
                 <div class="persona-scene">
                   <strong data-i18n="home.output.scene">Scene</strong>
