@@ -54,12 +54,39 @@ function regionFromCountry(country) {
   return map[c] || '';
 }
 
+function regionFromAcceptLanguage(acceptLanguage) {
+  var raw = (acceptLanguage || '').toLowerCase();
+  if (!raw) return '';
+  var first = raw.split(',')[0].split(';')[0].trim();
+  if (first.indexOf('ja') === 0) return 'jp';
+  if (first.indexOf('en-us') === 0 || first.indexOf('en') === 0) return 'us';
+  if (first.indexOf('en-gb') === 0) return 'gb';
+  if (first.indexOf('en-ca') === 0) return 'ca';
+  if (first.indexOf('en-in') === 0) return 'in';
+  if (first.indexOf('fr') === 0) return 'fr';
+  if (first.indexOf('de') === 0) return 'de';
+  if (first.indexOf('es-es') === 0) return 'es';
+  if (first.indexOf('es') === 0) return 'mx';
+  if (first.indexOf('it') === 0) return 'it';
+  if (first.indexOf('ko') === 0) return 'kr';
+  if (first.indexOf('pt') === 0) return 'br';
+  if (first.indexOf('zh') === 0) return 'tw';
+  if (first.indexOf('hi') === 0) return 'in';
+  if (first.indexOf('ar') === 0) return 'sa';
+  if (first.indexOf('vi') === 0) return 'vn';
+  if (first.indexOf('th') === 0) return 'th';
+  if (first.indexOf('id') === 0) return 'id';
+  return '';
+}
+
 function maybeRedirectWithViewerRegion(request, host, uri) {
   if (queryHas(request, 'region') || queryHas(request, 'lang')) return null;
   if (!(uri === '/' || uri === '/index.html' || uri === '/compare.html' || uri === '/press-release.html' || uri === '/privacy.html' || uri === '/terms.html')) return null;
 
   var countryHeader = request.headers['cloudfront-viewer-country'];
+  var languageHeader = request.headers['accept-language'];
   var region = countryHeader ? regionFromCountry(countryHeader.value) : '';
+  if (!region && languageHeader) region = regionFromAcceptLanguage(languageHeader.value);
   if (!region) return null;
 
   var normalizedUri = uri === '/index.html' ? '/' : uri;
