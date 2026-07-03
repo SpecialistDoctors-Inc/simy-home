@@ -1494,12 +1494,128 @@
         font-size: 1.2rem;
         font-weight: 780;
       }
-      .integration-list {
-        padding: 10px 0;
+      .persona-output-board {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+        margin-top: 14px;
+      }
+      .persona-output-intro {
+        margin-top: 34px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+      }
+      .persona-output-card {
+        display: flex;
+        min-height: 520px;
+        flex-direction: column;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+        overflow: hidden;
+      }
+      .persona-output-head {
+        padding: 24px;
+        border-bottom: 1px solid var(--line);
+      }
+      .persona-output-kicker {
+        color: var(--blue);
+        font-family: 'Geist Mono', monospace;
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+      .persona-output-title {
+        margin-top: 10px;
+        font-size: 1.32rem;
+        font-weight: 780;
+        line-height: 1.22;
+      }
+      .persona-output-image {
+        width: 100%;
+        aspect-ratio: 16 / 7;
+        border-bottom: 1px solid var(--line);
+        object-fit: cover;
+        filter: grayscale(1) contrast(1.08);
+      }
+      .persona-output-image.sales {
+        object-position: 52% center;
+      }
+      .persona-output-image.exec {
+        object-position: 50% center;
+      }
+      .persona-output-body {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        gap: 18px;
+        padding: 24px;
+      }
+      .persona-scene {
+        padding: 14px 16px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #f8f8f4;
+        color: var(--ink);
+        font-size: 0.94rem;
+        line-height: 1.56;
+      }
+      .persona-scene strong {
+        display: block;
+        margin-bottom: 5px;
+        color: var(--blue);
+        font-family: 'Geist Mono', monospace;
+        font-size: 0.72rem;
+        text-transform: uppercase;
+      }
+      .persona-output-body p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.98rem;
+        line-height: 1.65;
+      }
+      .persona-output-list {
+        display: grid;
+        gap: 10px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      .persona-output-list li {
+        display: grid;
+        grid-template-columns: 112px 1fr;
+        gap: 12px;
+        padding: 12px 0;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 0.92rem;
+        line-height: 1.5;
+      }
+      .persona-output-list li:first-child {
+        border-top: 0;
+      }
+      .persona-output-list strong {
+        color: var(--ink);
+      }
+      .persona-output-action {
+        margin-top: auto;
+        padding: 12px 14px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        color: var(--ink);
+        font-weight: 740;
+        text-align: center;
+      }
+      .integration-section {
+        margin-top: 18px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+        overflow: hidden;
       }
       .integration-catalog {
         padding: 18px 24px 14px;
-        border-bottom: 1px solid var(--line);
         background: linear-gradient(180deg, #fff 0%, #fbfbf8 100%);
       }
       .integration-search {
@@ -1572,45 +1688,6 @@
         font-size: 0.62rem;
         line-height: 1.25;
         text-transform: uppercase;
-      }
-      .integration-pill-row {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 6px;
-        margin-top: 12px;
-      }
-      .integration-pill {
-        padding: 5px 8px;
-        border: 1px solid var(--line);
-        border-radius: 999px;
-        background: #fff;
-        color: var(--muted);
-        font-family: 'Geist Mono', monospace;
-        font-size: 0.62rem;
-        text-transform: uppercase;
-      }
-      .integration-row {
-        display: grid;
-        grid-template-columns: 132px 1fr;
-        gap: 18px;
-        padding: 18px 24px;
-        border-top: 1px solid var(--line);
-      }
-      .integration-row:first-child {
-        border-top: 0;
-      }
-      .integration-type {
-        color: var(--blue);
-        font-family: 'Geist Mono', monospace;
-        font-size: 0.72rem;
-        text-transform: uppercase;
-      }
-      .integration-copy {
-        color: var(--muted);
-        line-height: 1.55;
-      }
-      .integration-copy strong {
-        color: var(--ink);
       }
       .deliverable-action {
         justify-self: end;
@@ -2440,10 +2517,15 @@
         .deliverable-board.split {
           grid-template-columns: 1fr;
         }
-        .integration-row {
+        .persona-output-board {
           grid-template-columns: 1fr;
-          gap: 8px;
-          padding: 18px;
+        }
+        .persona-output-card {
+          min-height: auto;
+        }
+        .persona-output-list li {
+          grid-template-columns: 1fr;
+          gap: 4px;
         }
         .integration-catalog {
           padding: 16px 18px 12px;
@@ -2708,7 +2790,7 @@
         <div class="container">
           <p class="section-label" data-i18n="home.samples.label">The after-meeting gap</p>
           <h2 data-i18n-html="home.samples.h"><span class="copy-line">The problem is not the meeting.</span><span class="copy-line">It is the silence after it.</span></h2>
-          <p class="section-lead" data-i18n="home.samples.p">SIMY turns the context from high-stakes conversations into usable work inside the tools your team already uses.</p>
+          <p class="section-lead" data-i18n="home.samples.p">SIMY turns the context from high-stakes conversations into concrete follow-through for the people who own the next move.</p>
           <div class="experience-grid" aria-label="SIMY user experiences">
             <article class="experience-card featured">
               <img data-experience-image src="/assets/hero-meeting-twin-work-us.jpg" alt="" loading="lazy" decoding="async">
@@ -2751,34 +2833,56 @@
               </div>
             </article>
           </div>
-          <div class="deliverable-board split">
-            <div class="deliverable-column">
-              <div class="deliverable-column-head">
-                <div class="deliverable-column-kicker" data-i18n="home.outputs.kicker">OUTPUT</div>
-                <div class="deliverable-column-title" data-i18n="home.outputs.title">What stops falling through the cracks</div>
+          <div class="deliverable-column-head persona-output-intro">
+            <div class="deliverable-column-kicker" data-i18n="home.outputs.kicker">OUTPUT</div>
+            <div class="deliverable-column-title" data-i18n="home.outputs.title">Who uses SIMY, in what moment, and what moves next</div>
+          </div>
+          <div class="persona-output-board" aria-label="Persona use cases">
+            <article class="persona-output-card">
+              <div class="persona-output-head">
+                <div class="persona-output-kicker" data-i18n="home.output.sales.kicker">B2B SALES / CS</div>
+                <div class="persona-output-title" data-i18n="home.output.sales.title">Turn a sales or customer meeting into follow-through before the signal fades.</div>
               </div>
-              <div class="deliverable-row">
-                <div class="deliverable-type" data-i18n="home.samples.email.h">Follow-up email</div>
-                <div class="deliverable-copy" data-i18n-html="home.samples.email.out"><strong>Sent while the deal is warm.</strong> Cost range, rollout path, objections, and the next step are already in draft.</div>
-                <div class="deliverable-action" data-i18n="home.samples.approve">Ready</div>
+              <img class="persona-output-image sales" src="/assets/experience-local/jp/02-next-move.jpg" alt="" loading="lazy" decoding="async">
+              <div class="persona-output-body">
+                <div class="persona-scene">
+                  <strong data-i18n="home.output.scene">Scene</strong>
+                  <span data-i18n="home.output.sales.scene">Right after a discovery call, renewal meeting, or customer escalation, the team needs to respond while the deal or relationship is still warm.</span>
+                </div>
+                <p data-i18n="home.output.sales.p">SIMY prepares the follow-up, customer note, internal update, and next proposal path from the actual conversation.</p>
+                <ul class="persona-output-list">
+                  <li><strong data-i18n="home.output.sales.item1.k">Follow-up</strong><span data-i18n="home.output.sales.item1.v">Drafts the email with customer concerns, promised answers, and the next meeting agenda.</span></li>
+                  <li><strong data-i18n="home.output.sales.item2.k">Customer note</strong><span data-i18n="home.output.sales.item2.v">Keeps pain points, decision criteria, stakeholders, urgency, and next steps together.</span></li>
+                  <li><strong data-i18n="home.output.sales.item3.k">Internal share</strong><span data-i18n="home.output.sales.item3.v">Gives sales, CS, product, and leadership the version each person needs.</span></li>
+                  <li><strong data-i18n="home.output.sales.item4.k">Next proposal</strong><span data-i18n="home.output.sales.item4.v">Starts the proposal outline from the customer issue, proof needed, risks, and timeline.</span></li>
+                </ul>
+                <div class="persona-output-action" data-i18n="home.output.sales.action">Follow-up, customer note, internal share, and proposal are ready to review.</div>
               </div>
-              <div class="deliverable-row">
-                <div class="deliverable-type" data-i18n="home.samples.deck.h">Proposal / research</div>
-                <div class="deliverable-copy" data-i18n-html="home.samples.deck.out"><strong>Outline:</strong> customer issue, proposed path, proof needed, risks, and next meeting agenda.</div>
-                <div class="deliverable-action" data-i18n="home.samples.open">Open</div>
+            </article>
+            <article class="persona-output-card">
+              <div class="persona-output-head">
+                <div class="persona-output-kicker" data-i18n="home.output.exec.kicker">EXECUTIVES / BUSINESS LEADERS</div>
+                <div class="persona-output-title" data-i18n="home.output.exec.title">Turn important meetings into decisions, asks, risk handling, and execution.</div>
               </div>
-              <div class="deliverable-row">
-                <div class="deliverable-type" data-i18n="home.samples.crm.h">Customer notes</div>
-                <div class="deliverable-copy" data-i18n-html="home.samples.crm.out"><strong>Temperature: high.</strong> Concern, owner, deadline, and next action stay with the customer context.</div>
-                <div class="deliverable-action" data-i18n="home.samples.save">Save</div>
+              <img class="persona-output-image exec" src="/assets/experience-local/jp/05-backup-plan.jpg" alt="" loading="lazy" decoding="async">
+              <div class="persona-output-body">
+                <div class="persona-scene">
+                  <strong data-i18n="home.output.scene">Scene</strong>
+                  <span data-i18n="home.output.exec.scene">After a management meeting, investor conversation, or business review, decisions and requests need to reach the right people without relying on memory.</span>
+                </div>
+                <p data-i18n="home.output.exec.p">SIMY captures what was decided, what is still risky, who owns the next move, and what must be shared.</p>
+                <ul class="persona-output-list">
+                  <li><strong data-i18n="home.output.exec.item1.k">Decision</strong><span data-i18n="home.output.exec.item1.v">Records the decision, background, trade-off, and what would change the decision later.</span></li>
+                  <li><strong data-i18n="home.output.exec.item2.k">Request</strong><span data-i18n="home.output.exec.item2.v">Turns asks into owner, deadline, expected output, and dependency.</span></li>
+                  <li><strong data-i18n="home.output.exec.item3.k">Risk</strong><span data-i18n="home.output.exec.item3.v">Separates open risks, blockers, unresolved questions, and follow-up checks.</span></li>
+                  <li><strong data-i18n="home.output.exec.item4.k">Share</strong><span data-i18n="home.output.exec.item4.v">Prepares the short update for executives, team leads, and people who must execute.</span></li>
+                </ul>
+                <div class="persona-output-action" data-i18n="home.output.exec.action">Decisions, asks, risks, and shares become executable work.</div>
               </div>
-              <div class="deliverable-row">
-                <div class="deliverable-type" data-i18n="home.samples.team.h">Team update</div>
-                <div class="deliverable-copy" data-i18n-html="home.samples.team.out"><strong>Share with sales, support, leadership, and the people doing the work.</strong> Each team gets the version they need.</div>
-                <div class="deliverable-action" data-i18n="home.samples.share">Share</div>
-              </div>
-            </div>
-            <div class="deliverable-column">
+            </article>
+          </div>
+
+          <div class="integration-section" aria-label="Connected services">
               <div class="deliverable-column-head">
                 <div class="deliverable-column-kicker" data-i18n="home.integrations.kicker">INTEGRATIONS</div>
                 <div class="deliverable-column-title" data-i18n="home.integrations.title">Where SIMY connects today</div>
@@ -2918,34 +3022,8 @@
                     </span>
                   </div>
                 </div>
-                <div class="integration-pill-row" aria-label="Integration categories">
-                  <span class="integration-pill" data-i18n="home.integrations.meetings.k">Meetings</span>
-                  <span class="integration-pill" data-i18n="home.integrations.messages.k">Messages</span>
-                  <span class="integration-pill" data-i18n="home.integrations.workspace.k">Workspace</span>
-                  <span class="integration-pill" data-i18n="home.integrations.storage.k">Storage</span>
-                  <span class="integration-pill" data-i18n="home.integrations.dev.k">Development</span>
-                </div>
-              </div>
-              <div class="integration-list">
-                <div class="integration-row">
-                  <div class="integration-type" data-i18n="home.integrations.meetings.k">Meetings</div>
-                  <div class="integration-copy" data-i18n-html="home.integrations.meetings.v"><strong>Zoom, Microsoft Teams, Google Meet, Slack huddles</strong><br>Recorded meetings become source context.</div>
-                </div>
-                <div class="integration-row">
-                  <div class="integration-type" data-i18n="home.integrations.messages.k">Messages</div>
-                  <div class="integration-copy" data-i18n-html="home.integrations.messages.v"><strong>Slack, Gmail</strong><br>Written context, replies, and follow-ups stay connected.</div>
-                </div>
-                <div class="integration-row">
-                  <div class="integration-type" data-i18n="home.integrations.workspace.k">Workspace</div>
-                  <div class="integration-copy" data-i18n-html="home.integrations.workspace.v"><strong>Google Calendar, Google Drive, Box</strong><br>Calendar-based meeting capture, Drive and Box output.</div>
-                </div>
-                <div class="integration-row">
-                  <div class="integration-type" data-i18n="home.integrations.dev.k">Development</div>
-                  <div class="integration-copy" data-i18n-html="home.integrations.dev.v"><strong>GitHub</strong><br>For teams that also want engineering work connected.</div>
-                </div>
               </div>
             </div>
-          </div>
           <div class="assurance-line" aria-label="Trust signals">
             <span data-i18n="home.trust.1.v">Slack, Gmail, Zoom, Teams, Google Workspace, Box, GitHub</span>
             <span data-i18n="home.trust.2.v">Meeting and message context carried forward</span>
