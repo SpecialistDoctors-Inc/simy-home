@@ -344,7 +344,7 @@
     if (CACHE[lang]) return cb(CACHE[lang]);
 
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', '/lang/' + lang + '.json', true);
+    xhr.open('GET', 'lang/' + lang + '.json', true);
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) {
         if (xhr.status === 200) {
@@ -680,7 +680,7 @@
       return cb(HOME_DOM_CACHE[lang]);
     }
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', '/lang/home-dom/' + lang + '.json', true);
+    xhr.open('GET', 'lang/home-dom/' + lang + '.json', true);
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) {
         if (xhr.status === 200) {
@@ -836,8 +836,8 @@
             '</div>',
             '<div class="simy-ss-viewport">',
               '<video class="simy-ss-video" data-simy-video ',
-                'src="/assets/demo.mp4" ',
-                'poster="/assets/demo-shots/01-twin.png" ',
+                'src="assets/demo.mp4" ',
+                'poster="assets/demo-shots/01-twin.png" ',
                 'autoplay muted loop playsinline preload="metadata" ',
                 'aria-label="SIMY click-through demo"></video>',
               '<div class="simy-ss-subtitle" data-simy-subtitle></div>',
