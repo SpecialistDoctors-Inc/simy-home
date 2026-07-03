@@ -336,9 +336,9 @@
   /* ── SEO data: keywords + per-page title/description per locale ── */
   var SEO = {
     "en": {
-      kw: "AI code generation, AI coding agent, problem-solving AI agent, AI that fixes bugs, AI agent for engineers, autonomous AI engineer, AI software engineer, meeting to code, voice to code, speech to code, AI pull request generator, AI pair programmer, meeting to PR, spec to code AI, sprint planning to code, GitHub Copilot alternative, Cursor alternative, Devin alternative, Claude Code alternative, Replit Agent alternative, AI SDLC automation",
+      kw: "after meeting follow-up, AI meeting follow-up, CRM update automation, sales follow-up automation, customer meeting follow-up, investor meeting follow-up, internal handoff automation, proposal automation, meeting action items, meeting to CRM, meeting to proposal, AI meeting assistant, Inteligence Twin, AI code generation, meeting to code, AI pull request generator",
       p: {
-        "index": { t: "SIMY - Meeting Ends. Your Twin Starts Working.", d: "Meeting ends. Your Twin starts working. SIMY moves follow-ups, proposals, CRM notes, team updates, and next actions forward after meetings." },
+        "index": { t: "SIMY - The Work After Important Meetings Moves Itself", d: "After sales calls, customer meetings, investor conversations, and internal decisions, SIMY moves follow-up, CRM updates, proposals, internal sharing, and next actions before deals, trust, and speed are lost." },
         "pricing": { t: "Pricing — SIMY | AI Code Generation Plans from $20/mo", d: "SIMY pricing for AI code generation from meetings. Starter $20, Pro $40, Scale $100/mo. A cheaper GitHub Copilot alternative." },
         "compare": { t: "Compare SIMY — Your Twin for the Work After Meetings", d: "An agent does a task. Your Twin carries the thread from meetings into follow-up, decks, CRM, internal sharing, and next actions." },
         "press-release": { t: "News — SIMY Introduces Your Inteligence Twin for the Work After Meetings", d: "Meeting ends. Your Twin starts working. SIMY introduces an Inteligence Twin that turns meeting context into follow-up, proposals, CRM, internal sharing, and next actions." },
@@ -352,9 +352,9 @@
       }
     },
     "ja": {
-      kw: "AIコード生成, AIコーディングエージェント, 問題解決 AI エージェント, 課題解決 AI, バグ修正 AI, 自律型AIエンジニア, AIソフトウェアエンジニア, 会議からコード生成, 議事録からコード, 音声からコード, ミーティング コード化, AIプルリクエスト自動生成, AI PR 自動作成, 仕様書からコード AI, スプリント AI 開発, 会議 自動化 開発, AI ペアプログラミング, GitHub Copilot 代替, Cursor 代替, Devin 代替, Claude Code 代替, 開発自動化 AI, 開発効率化 AI",
+      kw: "会議後 フォローアップ, 商談 フォローアップ 自動化, CRM更新 自動化, 顧客会議 フォロー, 投資家面談 フォロー, 社内共有 自動化, 提案書 自動化, 会議 アクションアイテム, 会議からCRM, 会議から提案書, AI会議アシスタント, Inteligence Twin, AIコード生成, 会議からコード生成, AIプルリクエスト自動生成",
       p: {
-        "index": { t: "SIMY - 会議が終わる。Twinが動き出す。", d: "会議が終わった瞬間、SIMYがフォロー、提案、CRMメモ、チーム共有、次アクションを進めます。" },
+        "index": { t: "SIMY - 重要な会議のあと、仕事を止めない", d: "商談、顧客会議、投資家面談、社内意思決定のあと、SIMYがフォロー、CRM更新、提案書、社内共有、次アクションを進めます。" },
         "pricing": { t: "料金 — SIMY | AIコード生成プラン 月額20ドルから", d: "会議からコードを生成するSIMYの料金。Starter月額$20、Pro$40、Scale$100。GitHub Copilot・Cursorより安価なプラン。" },
         "compare": { t: "SIMY比較 — 会議後の仕事を引き継ぐYour Twin", d: "エージェントは作業をする。Twinは文脈を引き継ぐ。会議からフォロー、資料、CRM、社内共有、次アクションへ進めます。" },
         "press-release": { t: "ニュース — SIMY、会議後の仕事を進めるInteligence Twinを発表", d: "Meeting ends. Your Twin starts working. SIMYは会議の文脈をフォロー、提案、CRM、社内共有、次アクションへ変えるInteligence Twinを発表しました。" },
@@ -368,9 +368,9 @@
       }
     },
     "zh-Hans": {
-      kw: "AI代码生成, AI编程代理, 问题解决AI代理, 修复bug的AI, 自主AI工程师, AI软件工程师, 会议转代码, 语音转代码, AI拉取请求生成, AI结对编程, GitHub Copilot替代, Cursor替代, Devin替代, Claude Code替代, AI开发自动化, AI编码助手",
+      kw: "after meeting follow-up, AI meeting follow-up, CRM update automation, sales follow-up automation, customer meeting follow-up, investor meeting follow-up, internal handoff automation, proposal automation, meeting action items, meeting to CRM, meeting to proposal, AI meeting assistant, Inteligence Twin, AI code generation, meeting to code, AI pull request generator",
       p: {
-        "index": { t: "SIMY — 会议结束，你的 Twin 开始工作", d: "会议一结束，SIMY 就把跟进、提案、CRM 备忘、团队更新和下一步持续向前推进。" },
+        "index": { t: "SIMY - The Work After Important Meetings Moves Itself", d: "After sales calls, customer meetings, investor conversations, and internal decisions, SIMY moves follow-up, CRM updates, proposals, internal sharing, and next actions before deals, trust, and speed are lost." },
         "pricing": { t: "价格 — SIMY | AI代码生成套餐 每月20美元起", d: "SIMY从会议生成代码的定价。Starter每月$20，Pro$40，Scale$100。比GitHub Copilot更便宜。" },
         "compare": { t: "SIMY vs Copilot、Cursor、Devin、Claude Code 对比", d: "SIMY对比GitHub Copilot、Cursor、Devin、Claude Code。从会议自动生成代码的自主AI工程师。" },
         "how-it-works": { t: "工作原理 — SIMY | 4步从会议生成代码", d: "了解SIMY如何通过4步将会议转化为GitHub拉取请求：录制、AI处理、代码生成、PR发布。" },
@@ -381,9 +381,9 @@
       }
     },
     "zh-Hant": {
-      kw: "AI程式碼生成, AI編程代理, 問題解決AI代理, 修復bug的AI, 自主AI工程師, AI軟體工程師, 會議轉程式碼, 語音轉程式碼, AI拉取請求生成, AI結對編程, GitHub Copilot替代, Cursor替代, Devin替代, Claude Code替代",
+      kw: "after meeting follow-up, AI meeting follow-up, CRM update automation, sales follow-up automation, customer meeting follow-up, investor meeting follow-up, internal handoff automation, proposal automation, meeting action items, meeting to CRM, meeting to proposal, AI meeting assistant, Inteligence Twin, AI code generation, meeting to code, AI pull request generator",
       p: {
-        "index": { t: "SIMY — 會議結束，你的 Twin 開始工作", d: "會議一結束，SIMY 就把跟進、提案、CRM 備忘、團隊更新與下一步持續向前推進。" },
+        "index": { t: "SIMY - The Work After Important Meetings Moves Itself", d: "After sales calls, customer meetings, investor conversations, and internal decisions, SIMY moves follow-up, CRM updates, proposals, internal sharing, and next actions before deals, trust, and speed are lost." },
         "pricing": { t: "價格 — SIMY | AI程式碼生成方案 每月20美元起", d: "SIMY從會議生成程式碼的定價。Starter每月$20，Pro$40，Scale$100。比GitHub Copilot更便宜。" },
         "compare": { t: "SIMY vs Copilot、Cursor、Devin、Claude Code 比較", d: "SIMY對比GitHub Copilot、Cursor、Devin、Claude Code。從會議自動生成程式碼的自主AI工程師。" },
         "how-it-works": { t: "使用方式 — SIMY | 4步從會議生成程式碼", d: "了解SIMY如何透過4步將會議轉化為GitHub拉取請求：錄製、AI處理、程式碼生成、PR發布。" },
@@ -394,9 +394,9 @@
       }
     },
     "fr": {
-      kw: "génération de code IA, agent de codage IA, agent IA résolution de problèmes, IA qui corrige les bugs, ingénieur IA autonome, ingénieur logiciel IA, réunion vers code, voix vers code, alternative GitHub Copilot, alternative Cursor, alternative Devin, alternative Claude Code",
+      kw: "after meeting follow-up, AI meeting follow-up, CRM update automation, sales follow-up automation, customer meeting follow-up, investor meeting follow-up, internal handoff automation, proposal automation, meeting action items, meeting to CRM, meeting to proposal, AI meeting assistant, Inteligence Twin, AI code generation, meeting to code, AI pull request generator",
       p: {
-        "index": { t: "SIMY — IA qui génère du code depuis vos réunions", d: "Agent de codage IA autonome qui transforme les réunions en pull requests GitHub. Alternative à Copilot, Cursor, Devin et Claude Code." },
+        "index": { t: "SIMY - The Work After Important Meetings Moves Itself", d: "After sales calls, customer meetings, investor conversations, and internal decisions, SIMY moves follow-up, CRM updates, proposals, internal sharing, and next actions before deals, trust, and speed are lost." },
         "pricing": { t: "Tarifs — SIMY | Génération de code IA dès 20 $/mois", d: "Tarifs SIMY pour la génération de code depuis les réunions. Starter 20$, Pro 40$, Scale 100$/mois." },
         "compare": { t: "SIMY vs Copilot, Cursor, Devin et Claude Code", d: "SIMY vs GitHub Copilot, Cursor, Devin et Claude Code. IA autonome qui génère du code depuis les réunions." },
         "how-it-works": { t: "Fonctionnement — SIMY | De la réunion au code en 4 étapes", d: "Découvrez comment SIMY transforme les réunions en pull requests GitHub en 4 étapes." },
@@ -407,9 +407,9 @@
       }
     },
     "de": {
-      kw: "KI-Codegenerierung, KI-Coding-Agent, KI-Agent zur Problemlösung, KI die Bugs behebt, autonomer KI-Ingenieur, KI-Softwareentwickler, Meeting zu Code, Sprache zu Code, GitHub Copilot Alternative, Cursor Alternative, Devin Alternative, Claude Code Alternative",
+      kw: "after meeting follow-up, AI meeting follow-up, CRM update automation, sales follow-up automation, customer meeting follow-up, investor meeting follow-up, internal handoff automation, proposal automation, meeting action items, meeting to CRM, meeting to proposal, AI meeting assistant, Inteligence Twin, AI code generation, meeting to code, AI pull request generator",
       p: {
-        "index": { t: "SIMY — KI generiert Code aus Ihren Meetings", d: "Autonomer KI-Coding-Agent, der Meetings in GitHub Pull Requests verwandelt. Alternative zu Copilot, Cursor, Devin und Claude Code." },
+        "index": { t: "SIMY - The Work After Important Meetings Moves Itself", d: "After sales calls, customer meetings, investor conversations, and internal decisions, SIMY moves follow-up, CRM updates, proposals, internal sharing, and next actions before deals, trust, and speed are lost." },
         "pricing": { t: "Preise — SIMY | KI-Codegenerierung ab 20 $/Monat", d: "SIMY-Preise für KI-Codegenerierung aus Meetings. Starter 20$, Pro 40$, Scale 100$/Monat." },
         "compare": { t: "SIMY vs Copilot, Cursor, Devin & Claude Code", d: "SIMY vs GitHub Copilot, Cursor, Devin und Claude Code. Autonome KI, die Code aus Meetings generiert." },
         "how-it-works": { t: "Funktionsweise — SIMY | Vom Meeting zum Code in 4 Schritten", d: "So verwandelt SIMY Meetings in 4 Schritten in GitHub Pull Requests." },
@@ -420,9 +420,9 @@
       }
     },
     "es": {
-      kw: "generación de código con IA, agente de codificación IA, agente IA resolución de problemas, IA que arregla bugs, ingeniero IA autónomo, ingeniero de software IA, de reunión a código, de voz a código, alternativa GitHub Copilot, alternativa Cursor, alternativa Devin, alternativa Claude Code",
+      kw: "after meeting follow-up, AI meeting follow-up, CRM update automation, sales follow-up automation, customer meeting follow-up, investor meeting follow-up, internal handoff automation, proposal automation, meeting action items, meeting to CRM, meeting to proposal, AI meeting assistant, Inteligence Twin, AI code generation, meeting to code, AI pull request generator",
       p: {
-        "index": { t: "SIMY — IA que genera código desde tus reuniones", d: "Agente de codificación IA autónomo que convierte reuniones en pull requests de GitHub. Alternativa a Copilot, Cursor, Devin y Claude Code." },
+        "index": { t: "SIMY - The Work After Important Meetings Moves Itself", d: "After sales calls, customer meetings, investor conversations, and internal decisions, SIMY moves follow-up, CRM updates, proposals, internal sharing, and next actions before deals, trust, and speed are lost." },
         "pricing": { t: "Precios — SIMY | Generación de código IA desde 20 $/mes", d: "Precios de SIMY para generación de código desde reuniones. Starter 20$, Pro 40$, Scale 100$/mes." },
         "compare": { t: "SIMY vs Copilot, Cursor, Devin y Claude Code", d: "SIMY vs GitHub Copilot, Cursor, Devin y Claude Code. IA autónoma que genera código desde reuniones." },
         "how-it-works": { t: "Cómo funciona — SIMY | De la reunión al código en 4 pasos", d: "Descubre cómo SIMY convierte reuniones en pull requests de GitHub en 4 pasos." },
@@ -433,9 +433,9 @@
       }
     },
     "ar": {
-      kw: "توليد الكود بالذكاء الاصطناعي, وكيل برمجة بالذكاء الاصطناعي, وكيل ذكاء اصطناعي لحل المشكلات, مهندس ذكاء اصطناعي ذاتي, مهندس برمجيات بالذكاء الاصطناعي, من الاجتماع إلى الكود, من الصوت إلى الكود, بديل GitHub Copilot, بديل Cursor, بديل Devin, بديل Claude Code",
+      kw: "after meeting follow-up, AI meeting follow-up, CRM update automation, sales follow-up automation, customer meeting follow-up, investor meeting follow-up, internal handoff automation, proposal automation, meeting action items, meeting to CRM, meeting to proposal, AI meeting assistant, Inteligence Twin, AI code generation, meeting to code, AI pull request generator",
       p: {
-        "index": { t: "SIMY — ذكاء اصطناعي يولد الكود من اجتماعاتك", d: "وكيل برمجة بالذكاء الاصطناعي يحول الاجتماعات إلى طلبات سحب على GitHub. بديل لـ Copilot و Cursor و Devin و Claude Code." },
+        "index": { t: "SIMY - The Work After Important Meetings Moves Itself", d: "After sales calls, customer meetings, investor conversations, and internal decisions, SIMY moves follow-up, CRM updates, proposals, internal sharing, and next actions before deals, trust, and speed are lost." },
         "pricing": { t: "الأسعار — SIMY | توليد الكود من 20$ شهريًا", d: "أسعار SIMY لتوليد الكود من الاجتماعات." },
         "compare": { t: "مقارنة SIMY مع Copilot و Cursor و Devin و Claude Code", d: "SIMY مقابل GitHub Copilot و Cursor و Devin و Claude Code." },
         "how-it-works": { t: "كيف يعمل SIMY — من الاجتماع إلى الكود في 4 خطوات", d: "شاهد كيف يحول SIMY الاجتماعات إلى طلبات سحب GitHub في 4 خطوات." },
@@ -446,9 +446,9 @@
       }
     },
     "it": {
-      kw: "generazione di codice IA, agente di codifica IA, agente IA risoluzione problemi, IA che corregge bug, ingegnere IA autonomo, ingegnere software IA, da riunione a codice, da voce a codice, alternativa GitHub Copilot, alternativa Cursor, alternativa Devin, alternativa Claude Code",
+      kw: "after meeting follow-up, AI meeting follow-up, CRM update automation, sales follow-up automation, customer meeting follow-up, investor meeting follow-up, internal handoff automation, proposal automation, meeting action items, meeting to CRM, meeting to proposal, AI meeting assistant, Inteligence Twin, AI code generation, meeting to code, AI pull request generator",
       p: {
-        "index": { t: "SIMY — IA che genera codice dalle tue riunioni", d: "Agente di codifica IA autonomo che trasforma le riunioni in pull request GitHub. Alternativa a Copilot, Cursor, Devin e Claude Code." },
+        "index": { t: "SIMY - The Work After Important Meetings Moves Itself", d: "After sales calls, customer meetings, investor conversations, and internal decisions, SIMY moves follow-up, CRM updates, proposals, internal sharing, and next actions before deals, trust, and speed are lost." },
         "pricing": { t: "Prezzi — SIMY | Generazione codice IA da 20 $/mese", d: "Prezzi SIMY per la generazione di codice dalle riunioni." },
         "compare": { t: "SIMY vs Copilot, Cursor, Devin e Claude Code", d: "SIMY vs GitHub Copilot, Cursor, Devin e Claude Code." },
         "how-it-works": { t: "Come funziona — SIMY | Dalla riunione al codice in 4 passaggi", d: "Scopri come SIMY trasforma le riunioni in pull request GitHub in 4 passaggi." },
@@ -459,9 +459,9 @@
       }
     },
     "hi": {
-      kw: "AI कोड जनरेशन, AI कोडिंग एजेंट, समस्या समाधान AI एजेंट, बग ठीक करने वाला AI, स्वायत्त AI इंजीनियर, AI सॉफ्टवेयर इंजीनियर, मीटिंग से कोड, आवाज से कोड, GitHub Copilot विकल्प, Cursor विकल्प, Devin विकल्प, Claude Code विकल्प",
+      kw: "after meeting follow-up, AI meeting follow-up, CRM update automation, sales follow-up automation, customer meeting follow-up, investor meeting follow-up, internal handoff automation, proposal automation, meeting action items, meeting to CRM, meeting to proposal, AI meeting assistant, Inteligence Twin, AI code generation, meeting to code, AI pull request generator",
       p: {
-        "index": { t: "SIMY — मीटिंग से कोड जनरेट करने वाला AI", d: "स्वायत्त AI कोडिंग एजेंट जो मीटिंग को GitHub पुल रिक्वेस्ट में बदलता है। Copilot, Cursor, Devin और Claude Code का विकल्प।" },
+        "index": { t: "SIMY - The Work After Important Meetings Moves Itself", d: "After sales calls, customer meetings, investor conversations, and internal decisions, SIMY moves follow-up, CRM updates, proposals, internal sharing, and next actions before deals, trust, and speed are lost." },
         "pricing": { t: "मूल्य — SIMY | AI कोड जनरेशन $20/माह से", d: "मीटिंग से कोड जनरेट करने के लिए SIMY की कीमत।" },
         "compare": { t: "SIMY vs Copilot, Cursor, Devin, Claude Code तुलना", d: "SIMY बनाम GitHub Copilot, Cursor, Devin और Claude Code।" },
         "how-it-works": { t: "यह कैसे काम करता है — SIMY | 4 चरणों में मीटिंग से कोड", d: "देखें कि SIMY 4 चरणों में मीटिंग को GitHub पुल रिक्वेस्ट में कैसे बदलता है।" },
@@ -472,9 +472,9 @@
       }
     },
     "te": {
-      kw: "AI కోడ్ జనరేషన్, AI కోడింగ్ ఏజెంట్, సమస్య పరిష్కార AI ఏజెంట్, స్వయంప్రతిపత్తి AI ఇంజనీర్, AI సాఫ్ట్‌వేర్ ఇంజనీర్, మీటింగ్ నుండి కోడ్, వాయిస్ నుండి కోడ్, GitHub Copilot ప్రత్యామ్నాయం, Cursor ప్రత్యామ్నాయం, Devin ప్రత్యామ్నాయం, Claude Code ప్రత్యామ్నాయం",
+      kw: "after meeting follow-up, AI meeting follow-up, CRM update automation, sales follow-up automation, customer meeting follow-up, investor meeting follow-up, internal handoff automation, proposal automation, meeting action items, meeting to CRM, meeting to proposal, AI meeting assistant, Inteligence Twin, AI code generation, meeting to code, AI pull request generator",
       p: {
-        "index": { t: "SIMY — మీటింగ్‌ల నుండి కోడ్ ఉత్పత్తి చేసే AI", d: "మీటింగ్‌లను GitHub పుల్ రిక్వెస్ట్‌లుగా మార్చే స్వయంప్రతిపత్తి AI కోడింగ్ ఏజెంట్." },
+        "index": { t: "SIMY - The Work After Important Meetings Moves Itself", d: "After sales calls, customer meetings, investor conversations, and internal decisions, SIMY moves follow-up, CRM updates, proposals, internal sharing, and next actions before deals, trust, and speed are lost." },
         "pricing": { t: "ధర — SIMY | AI కోడ్ జనరేషన్ $20/నెలకు", d: "మీటింగ్‌ల నుండి కోడ్ కోసం SIMY ధర." },
         "compare": { t: "SIMY vs Copilot, Cursor, Devin, Claude Code పోలిక", d: "SIMY vs GitHub Copilot, Cursor, Devin, Claude Code." },
         "how-it-works": { t: "ఎలా పనిచేస్తుంది — SIMY | 4 దశల్లో", d: "SIMY మీటింగ్‌లను 4 దశల్లో GitHub పుల్ రిక్వెస్ట్‌లుగా మారుస్తుంది." },
@@ -485,9 +485,9 @@
       }
     },
     "kn": {
-      kw: "AI ಕೋಡ್ ಜನರೇಶನ್, AI ಕೋಡಿಂಗ್ ಏಜೆಂಟ್, ಸಮಸ್ಯೆ ಪರಿಹಾರ AI ಏಜೆಂಟ್, ಸ್ವಾಯತ್ತ AI ಇಂಜಿನಿಯರ್, AI ಸಾಫ್ಟ್‌ವೇರ್ ಎಂಜಿನಿಯರ್, ಮೀಟಿಂಗ್‌ನಿಂದ ಕೋಡ್, ಧ್ವನಿಯಿಂದ ಕೋಡ್, GitHub Copilot ಪರ್ಯಾಯ, Cursor ಪರ್ಯಾಯ, Devin ಪರ್ಯಾಯ, Claude Code ಪರ್ಯಾಯ",
+      kw: "after meeting follow-up, AI meeting follow-up, CRM update automation, sales follow-up automation, customer meeting follow-up, investor meeting follow-up, internal handoff automation, proposal automation, meeting action items, meeting to CRM, meeting to proposal, AI meeting assistant, Inteligence Twin, AI code generation, meeting to code, AI pull request generator",
       p: {
-        "index": { t: "SIMY — ಮೀಟಿಂಗ್‌ಗಳಿಂದ ಕೋಡ್ ರಚಿಸುವ AI", d: "ಮೀಟಿಂಗ್‌ಗಳನ್ನು GitHub ಪುಲ್ ರಿಕ್ವೆಸ್ಟ್‌ಗಳಾಗಿ ಪರಿವರ್ತಿಸುವ ಸ್ವಾಯತ್ತ AI ಕೋಡಿಂಗ್ ಏಜೆಂಟ್." },
+        "index": { t: "SIMY - The Work After Important Meetings Moves Itself", d: "After sales calls, customer meetings, investor conversations, and internal decisions, SIMY moves follow-up, CRM updates, proposals, internal sharing, and next actions before deals, trust, and speed are lost." },
         "pricing": { t: "ಬೆಲೆ — SIMY | AI ಕೋಡ್ ರಚನೆ $20/ತಿಂಗಳಿಂದ", d: "ಮೀಟಿಂಗ್‌ಗಳಿಂದ ಕೋಡ್ ರಚನೆಗೆ SIMY ಬೆಲೆ." },
         "compare": { t: "SIMY vs Copilot, Cursor, Devin, Claude Code", d: "SIMY vs GitHub Copilot, Cursor, Devin, Claude Code." },
         "how-it-works": { t: "ಹೇಗೆ ಕಾರ್ಯನಿರ್ವಹಿಸುತ್ತದೆ — SIMY", d: "SIMY ಮೀಟಿಂಗ್‌ಗಳನ್ನು 4 ಹಂತಗಳಲ್ಲಿ GitHub ಪುಲ್ ರಿಕ್ವೆಸ್ಟ್‌ಗಳಾಗಿ ಮಾರ್ಪಡಿಸುತ್ತದೆ." },
@@ -498,9 +498,9 @@
       }
     },
     "ko": {
-      kw: "AI 코드 생성, AI 코딩 에이전트, 문제 해결 AI 에이전트, 버그 수정 AI, 자율 AI 엔지니어, AI 소프트웨어 엔지니어, 회의에서 코드로, 음성에서 코드로, GitHub Copilot 대안, Cursor 대안, Devin 대안, Claude Code 대안",
+      kw: "after meeting follow-up, AI meeting follow-up, CRM update automation, sales follow-up automation, customer meeting follow-up, investor meeting follow-up, internal handoff automation, proposal automation, meeting action items, meeting to CRM, meeting to proposal, AI meeting assistant, Inteligence Twin, AI code generation, meeting to code, AI pull request generator",
       p: {
-        "index": { t: "SIMY — 회의에서 코드를 생성하는 AI 엔지니어", d: "회의를 GitHub 풀 리퀘스트로 변환하는 자율 AI 코딩 에이전트. Copilot, Cursor, Devin, Claude Code의 대안." },
+        "index": { t: "SIMY - The Work After Important Meetings Moves Itself", d: "After sales calls, customer meetings, investor conversations, and internal decisions, SIMY moves follow-up, CRM updates, proposals, internal sharing, and next actions before deals, trust, and speed are lost." },
         "pricing": { t: "요금 — SIMY | AI 코드 생성 플랜 월 $20부터", d: "회의에서 코드를 생성하는 SIMY 요금." },
         "compare": { t: "SIMY vs Copilot, Cursor, Devin, Claude Code 비교", d: "SIMY와 GitHub Copilot, Cursor, Devin, Claude Code 비교." },
         "how-it-works": { t: "사용 방법 — SIMY | 4단계로 회의에서 코드", d: "SIMY가 4단계로 회의를 GitHub 풀 리퀘스트로 변환합니다." },
@@ -511,9 +511,9 @@
       }
     },
     "vi": {
-      kw: "tạo mã AI, tác nhân lập trình AI, tác nhân AI giải quyết vấn đề, kỹ sư AI tự động, kỹ sư phần mềm AI, từ cuộc họp sang mã, từ giọng nói sang mã, thay thế GitHub Copilot, thay thế Cursor, thay thế Devin, thay thế Claude Code",
+      kw: "after meeting follow-up, AI meeting follow-up, CRM update automation, sales follow-up automation, customer meeting follow-up, investor meeting follow-up, internal handoff automation, proposal automation, meeting action items, meeting to CRM, meeting to proposal, AI meeting assistant, Inteligence Twin, AI code generation, meeting to code, AI pull request generator",
       p: {
-        "index": { t: "SIMY — AI tạo mã từ các cuộc họp của bạn", d: "Tác nhân lập trình AI tự động biến cuộc họp thành pull request GitHub. Thay thế cho Copilot, Cursor, Devin và Claude Code." },
+        "index": { t: "SIMY - The Work After Important Meetings Moves Itself", d: "After sales calls, customer meetings, investor conversations, and internal decisions, SIMY moves follow-up, CRM updates, proposals, internal sharing, and next actions before deals, trust, and speed are lost." },
         "pricing": { t: "Giá — SIMY | Gói tạo mã AI từ 20$/tháng", d: "Giá SIMY để tạo mã từ cuộc họp." },
         "compare": { t: "So sánh SIMY vs Copilot, Cursor, Devin, Claude Code", d: "SIMY so với GitHub Copilot, Cursor, Devin, Claude Code." },
         "how-it-works": { t: "Cách hoạt động — SIMY | Từ cuộc họp đến mã trong 4 bước", d: "Xem SIMY biến cuộc họp thành pull request GitHub trong 4 bước." },
@@ -524,9 +524,9 @@
       }
     },
     "th": {
-      kw: "การสร้างโค้ด AI, เอเจนต์เขียนโค้ด AI, เอเจนต์ AI แก้ปัญหา, วิศวกร AI อัตโนมัติ, วิศวกรซอฟต์แวร์ AI, จากการประชุมเป็นโค้ด, จากเสียงเป็นโค้ด, ทางเลือก GitHub Copilot, ทางเลือก Cursor, ทางเลือก Devin, ทางเลือก Claude Code",
+      kw: "after meeting follow-up, AI meeting follow-up, CRM update automation, sales follow-up automation, customer meeting follow-up, investor meeting follow-up, internal handoff automation, proposal automation, meeting action items, meeting to CRM, meeting to proposal, AI meeting assistant, Inteligence Twin, AI code generation, meeting to code, AI pull request generator",
       p: {
-        "index": { t: "SIMY — AI ที่สร้างโค้ดจากการประชุมของคุณ", d: "เอเจนต์เขียนโค้ด AI อัตโนมัติที่เปลี่ยนการประชุมเป็น pull request บน GitHub ทางเลือกแทน Copilot, Cursor, Devin, Claude Code" },
+        "index": { t: "SIMY - The Work After Important Meetings Moves Itself", d: "After sales calls, customer meetings, investor conversations, and internal decisions, SIMY moves follow-up, CRM updates, proposals, internal sharing, and next actions before deals, trust, and speed are lost." },
         "pricing": { t: "ราคา — SIMY | แผนสร้างโค้ด AI เริ่มต้น $20/เดือน", d: "ราคา SIMY สำหรับการสร้างโค้ดจากการประชุม" },
         "compare": { t: "เปรียบเทียบ SIMY vs Copilot, Cursor, Devin, Claude Code", d: "SIMY เทียบกับ GitHub Copilot, Cursor, Devin, Claude Code" },
         "how-it-works": { t: "วิธีการทำงาน — SIMY | 4 ขั้นตอน", d: "ดูว่า SIMY เปลี่ยนการประชุมเป็น pull request GitHub ใน 4 ขั้นตอนอย่างไร" },
@@ -537,9 +537,9 @@
       }
     },
     "id": {
-      kw: "pembuatan kode AI, agen coding AI, agen AI pemecah masalah, insinyur AI otonom, insinyur perangkat lunak AI, dari rapat ke kode, dari suara ke kode, alternatif GitHub Copilot, alternatif Cursor, alternatif Devin, alternatif Claude Code",
+      kw: "after meeting follow-up, AI meeting follow-up, CRM update automation, sales follow-up automation, customer meeting follow-up, investor meeting follow-up, internal handoff automation, proposal automation, meeting action items, meeting to CRM, meeting to proposal, AI meeting assistant, Inteligence Twin, AI code generation, meeting to code, AI pull request generator",
       p: {
-        "index": { t: "SIMY — AI yang membuat kode dari rapat Anda", d: "Agen coding AI otonom yang mengubah rapat menjadi pull request GitHub. Alternatif untuk Copilot, Cursor, Devin, Claude Code." },
+        "index": { t: "SIMY - The Work After Important Meetings Moves Itself", d: "After sales calls, customer meetings, investor conversations, and internal decisions, SIMY moves follow-up, CRM updates, proposals, internal sharing, and next actions before deals, trust, and speed are lost." },
         "pricing": { t: "Harga — SIMY | Paket pembuatan kode AI mulai $20/bulan", d: "Harga SIMY untuk pembuatan kode dari rapat." },
         "compare": { t: "Perbandingan SIMY vs Copilot, Cursor, Devin, Claude Code", d: "SIMY vs GitHub Copilot, Cursor, Devin, Claude Code." },
         "how-it-works": { t: "Cara kerja — SIMY | Dari rapat ke kode dalam 4 langkah", d: "Lihat bagaimana SIMY mengubah rapat menjadi pull request GitHub dalam 4 langkah." },
@@ -550,9 +550,9 @@
       }
     },
     "ru": {
-      kw: "ИИ генерация кода, ИИ агент программирования, ИИ агент решения задач, автономный ИИ инженер, ИИ инженер-программист, от встречи к коду, от голоса к коду, альтернатива GitHub Copilot, альтернатива Cursor, альтернатива Devin, альтернатива Claude Code",
+      kw: "after meeting follow-up, AI meeting follow-up, CRM update automation, sales follow-up automation, customer meeting follow-up, investor meeting follow-up, internal handoff automation, proposal automation, meeting action items, meeting to CRM, meeting to proposal, AI meeting assistant, Inteligence Twin, AI code generation, meeting to code, AI pull request generator",
       p: {
-        "index": { t: "SIMY — ИИ генерирует код из ваших встреч", d: "Автономный ИИ-агент программирования, превращающий встречи в GitHub pull request. Альтернатива Copilot, Cursor, Devin, Claude Code." },
+        "index": { t: "SIMY - The Work After Important Meetings Moves Itself", d: "After sales calls, customer meetings, investor conversations, and internal decisions, SIMY moves follow-up, CRM updates, proposals, internal sharing, and next actions before deals, trust, and speed are lost." },
         "pricing": { t: "Цены — SIMY | Планы генерации кода ИИ от $20/мес", d: "Цены SIMY на генерацию кода из встреч." },
         "compare": { t: "SIMY vs Copilot, Cursor, Devin, Claude Code сравнение", d: "SIMY против GitHub Copilot, Cursor, Devin, Claude Code." },
         "how-it-works": { t: "Как работает SIMY — от встречи к коду за 4 шага", d: "Узнайте, как SIMY превращает встречи в GitHub pull request за 4 шага." },
@@ -563,9 +563,9 @@
       }
     },
     "pt-BR": {
-      kw: "geração de código com IA, agente de codificação IA, agente IA de resolução de problemas, engenheiro IA autônomo, engenheiro de software IA, de reunião para código, de voz para código, alternativa ao GitHub Copilot, alternativa ao Cursor, alternativa ao Devin, alternativa ao Claude Code",
+      kw: "after meeting follow-up, AI meeting follow-up, CRM update automation, sales follow-up automation, customer meeting follow-up, investor meeting follow-up, internal handoff automation, proposal automation, meeting action items, meeting to CRM, meeting to proposal, AI meeting assistant, Inteligence Twin, AI code generation, meeting to code, AI pull request generator",
       p: {
-        "index": { t: "SIMY — IA que gera código a partir de reuniões", d: "Agente de codificação IA autônomo que transforma reuniões em pull requests do GitHub. Alternativa ao Copilot, Cursor, Devin e Claude Code." },
+        "index": { t: "SIMY - The Work After Important Meetings Moves Itself", d: "After sales calls, customer meetings, investor conversations, and internal decisions, SIMY moves follow-up, CRM updates, proposals, internal sharing, and next actions before deals, trust, and speed are lost." },
         "pricing": { t: "Preços — SIMY | Geração de código IA a partir de $20/mês", d: "Preços SIMY para geração de código de reuniões." },
         "compare": { t: "Compare SIMY vs Copilot, Cursor, Devin e Claude Code", d: "SIMY vs GitHub Copilot, Cursor, Devin e Claude Code." },
         "how-it-works": { t: "Como funciona — SIMY | Da reunião ao código em 4 passos", d: "Veja como o SIMY transforma reuniões em pull requests do GitHub em 4 passos." },
