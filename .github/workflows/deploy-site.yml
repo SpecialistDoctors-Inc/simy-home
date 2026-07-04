@@ -74,7 +74,11 @@ jobs:
           FUNC_CODE_FILE="infra/cloudfront-functions/redirect-prod.js"
 
           # Get current ETag
-          ETAG=$(aws cloudfront get-function --name "$FUNC_NAME" --query 'ETag' --output text)
+          ETAG=$(aws cloudfront get-function \
+            --name "$FUNC_NAME" \
+            --query 'ETag' \
+            --output text \
+            /tmp/current-function-code.js)
 
           # Update function code
           UPDATE_ETAG=$(aws cloudfront update-function \
