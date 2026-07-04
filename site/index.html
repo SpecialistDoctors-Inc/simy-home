@@ -3601,6 +3601,45 @@
     </script>
 <script>
       (function() {
+        var languageOptions = [
+          { code: 'en', label: 'English', region: 'us' },
+          { code: 'ja', label: '日本語', region: 'jp' },
+          { code: 'fr', label: 'Français', region: 'fr' },
+          { code: 'de', label: 'Deutsch', region: 'de' },
+          { code: 'es', label: 'Español', region: 'es' },
+          { code: 'it', label: 'Italiano', region: 'it' },
+          { code: 'ko', label: '한국어', region: 'kr' },
+          { code: 'zh-Hant', label: '繁體中文', region: 'tw' },
+          { code: 'pt-BR', label: 'Português', region: 'br' },
+          { code: 'id', label: 'Indonesia', region: 'id' },
+          { code: 'vi', label: 'Tiếng Việt', region: 'vn' },
+          { code: 'th', label: 'ไทย', region: 'th' },
+          { code: 'hi', label: 'हिन्दी', region: 'in' },
+          { code: 'ar', label: 'العربية', region: 'sa' }
+        ];
+
+        var regionOptions = [
+          { code: 'us', short: 'US', label: 'United States', lang: 'en' },
+          { code: 'jp', short: 'JP', label: 'Japan', lang: 'ja' },
+          { code: 'gb', short: 'GB', label: 'United Kingdom', lang: 'en' },
+          { code: 'de', short: 'DE', label: 'Germany', lang: 'de' },
+          { code: 'fr', short: 'FR', label: 'France', lang: 'fr' },
+          { code: 'ca', short: 'CA', label: 'Canada', lang: 'en' },
+          { code: 'in', short: 'IN', label: 'India', lang: 'hi' },
+          { code: 'kr', short: 'KR', label: 'South Korea', lang: 'ko' },
+          { code: 'br', short: 'BR', label: 'Brazil', lang: 'pt-BR' },
+          { code: 'mx', short: 'MX', label: 'Mexico', lang: 'es' },
+          { code: 'id', short: 'ID', label: 'Indonesia', lang: 'id' },
+          { code: 'vn', short: 'VN', label: 'Vietnam', lang: 'vi' },
+          { code: 'es', short: 'ES', label: 'Spain', lang: 'es' },
+          { code: 'it', short: 'IT', label: 'Italy', lang: 'it' },
+          { code: 'sa', short: 'SA', label: 'Saudi Arabia', lang: 'ar' },
+          { code: 'tw', short: 'TW', label: 'Taiwan', lang: 'zh-Hant' },
+          { code: 'th', short: 'TH', label: 'Thailand', lang: 'th' },
+          { code: 'my', short: 'MY', label: 'Malaysia', lang: 'en' },
+          { code: 'ph', short: 'PH', label: 'Philippines', lang: 'en' }
+        ];
+
         var regionLanguage = {
           us: 'en',
           jp: 'ja',
@@ -3622,6 +3661,211 @@
           my: 'en',
           ph: 'en'
         };
+        var languageRegion = {};
+        var regionByCode = {};
+        languageOptions.forEach(function(option) { languageRegion[option.code] = option.region; });
+        regionOptions.forEach(function(option) { regionByCode[option.code] = option; });
+
+        function injectLocaleSwitcherCSS() {
+          if (document.getElementById('simy-locale-switcher-css')) return;
+          var style = document.createElement('style');
+          style.id = 'simy-locale-switcher-css';
+          style.textContent =
+            '.lang-switcher{position:relative;margin-left:8px}' +
+            '.lang-btn{display:flex;align-items:center;gap:6px;background:none;border:none;color:#5a5a56;cursor:pointer;font-family:inherit;font-size:0.75rem;font-weight:600;padding:7px 9px;border-radius:8px;transition:background 0.15s}' +
+            '.lang-btn:hover{background:rgba(0,0,0,0.04);color:#111}' +
+            '.lang-btn svg{opacity:.64;flex:0 0 auto}' +
+            '.lang-dropdown{display:none;position:absolute;top:100%;right:0;margin-top:8px;background:#fff;border:1px solid #e0e0dc;border-radius:10px;box-shadow:0 8px 32px rgba(0,0,0,0.08);padding:6px;min-width:220px;z-index:120;grid-template-columns:1fr 1fr;gap:2px}' +
+            '.lang-dropdown.open{display:grid}' +
+            '.lang-option{display:block;width:100%;text-align:left;background:none;border:none;padding:8px 10px;font-size:.78rem;color:#333;cursor:pointer;border-radius:6px;font-family:inherit;white-space:nowrap}' +
+            '.lang-option:hover,.lang-option.active{background:#f5f5f3;color:#111}' +
+            '@media(max-width:768px){.lang-switcher{margin-left:0}.lang-btn span{display:none}.lang-btn{min-height:32px;padding:4px 8px}.lang-dropdown{right:-44px;min-width:190px}}';
+          document.head.appendChild(style);
+        }
+
+        function supportedRegion(region) {
+          region = (region || '').toLowerCase();
+          return regionByCode[region] ? region : '';
+        }
+
+        function supportedLanguage(lang) {
+          lang = lang || '';
+          for (var i = 0; i < languageOptions.length; i += 1) {
+            if (languageOptions[i].code === lang) return lang;
+          }
+          return '';
+        }
+
+        function setStored(key, value) {
+          try { localStorage.setItem(key, value); } catch (e) {}
+        }
+
+        function getStored(key) {
+          try { return localStorage.getItem(key) || ''; } catch (e) { return ''; }
+        }
+
+        function getQueryValue(key) {
+          try { return new URLSearchParams(location.search).get(key) || ''; } catch (e) { return ''; }
+        }
+
+        function currentLanguageForRegion(region) {
+          return regionLanguage[region] || 'en';
+        }
+
+        function updateLanguageDisplay(lang) {
+          var display = document.getElementById('langDisplay');
+          var selected = languageOptions.find(function(option) { return option.code === lang; }) || languageOptions[0];
+          if (display) display.textContent = selected.label;
+          document.querySelectorAll('[data-lang-option]').forEach(function(item) {
+            item.classList.toggle('active', item.getAttribute('data-lang-option') === lang);
+          });
+        }
+
+        function updateRegionDisplay(region) {
+          var meta = regionByCode[region] || regionByCode.us;
+          var current = document.querySelector('[data-region-current]');
+          var button = document.querySelector('.region-btn');
+          if (current) current.textContent = meta.short;
+          if (button) button.setAttribute('aria-label', 'Region: ' + meta.label);
+          document.querySelectorAll('[data-region-btn]').forEach(function(item) {
+            item.classList.toggle('active', item.getAttribute('data-region-btn') === region);
+          });
+        }
+
+        function setLanguage(lang, persist, syncRegion) {
+          lang = supportedLanguage(lang) || 'ja';
+          document.documentElement.lang = lang;
+          updateLanguageDisplay(lang);
+          if (persist) {
+            setStored('simy-lang', lang);
+            setStored('simy-language', lang);
+            setStored('simy-lang-source', 'manual');
+          }
+          if (syncRegion !== false) {
+            var region = supportedRegion(languageRegion[lang]);
+            if (region) setRegion(region, persist, false);
+          }
+          try { window.dispatchEvent(new CustomEvent('simy:languagechange', { detail: { lang: lang } })); } catch (e) {}
+          syncAppLinksToHeroRegion();
+          return lang;
+        }
+
+        function setRegion(region, persist, syncLanguage) {
+          region = supportedRegion(region) || 'jp';
+          if (window.SIMY_REGION && typeof window.SIMY_REGION.set === 'function') {
+            window.SIMY_REGION.set(region, persist);
+          } else {
+            document.documentElement.setAttribute('data-hero-region', region);
+          }
+          updateRegionDisplay(region);
+          if (persist) {
+            setStored('simy-region', region);
+            setStored('simy-region-source', 'manual');
+          }
+          if (syncLanguage !== false) {
+            setLanguage(currentLanguageForRegion(region), persist, false);
+          }
+          syncAppLinksToHeroRegion();
+          return region;
+        }
+
+        function initialLanguage() {
+          return supportedLanguage(getQueryValue('lang')) ||
+            supportedLanguage(getStored('simy-lang-source') === 'manual' ? getStored('simy-lang') : '') ||
+            supportedLanguage(getStored('simy-language-source') === 'manual' ? getStored('simy-language') : '') ||
+            supportedLanguage(document.documentElement.lang) ||
+            'ja';
+        }
+
+        function initialRegion(lang) {
+          return supportedRegion(getQueryValue('region')) ||
+            supportedRegion(getStored('simy-region-source') === 'manual' ? getStored('simy-region') : '') ||
+            supportedRegion(document.documentElement.getAttribute('data-hero-region')) ||
+            supportedRegion(languageRegion[lang]) ||
+            'jp';
+        }
+
+        function closeLocaleMenus() {
+          var languageMenu = document.getElementById('langDropdown');
+          var regionMenu = document.querySelector('.region-menu');
+          var regionButton = document.querySelector('.region-btn');
+          if (languageMenu) languageMenu.classList.remove('open');
+          if (regionMenu) regionMenu.classList.remove('open');
+          if (regionButton) regionButton.setAttribute('aria-expanded', 'false');
+        }
+
+        function buildLanguageSwitcher() {
+          if (document.getElementById('langBtn')) return;
+          var navInner = document.querySelector('.nav-inner');
+          if (!navInner) return;
+          var wrapper = document.createElement('div');
+          wrapper.className = 'lang-switcher';
+          wrapper.innerHTML =
+            '<button class="lang-btn" id="langBtn" aria-label="Change language" type="button">' +
+              '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+                '<circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>' +
+              '</svg>' +
+              '<span id="langDisplay">日本語</span>' +
+            '</button>' +
+            '<div class="lang-dropdown" id="langDropdown"></div>';
+          var regionSwitcher = navInner.querySelector('.region-switcher');
+          if (regionSwitcher && regionSwitcher.parentNode === navInner) {
+            navInner.insertBefore(wrapper, regionSwitcher);
+          } else {
+            navInner.appendChild(wrapper);
+          }
+          var dropdown = document.getElementById('langDropdown');
+          languageOptions.forEach(function(option) {
+            var item = document.createElement('button');
+            item.type = 'button';
+            item.className = 'lang-option';
+            item.textContent = option.label;
+            item.setAttribute('data-lang-option', option.code);
+            item.addEventListener('click', function(event) {
+              event.stopPropagation();
+              setLanguage(option.code, true, true);
+              closeLocaleMenus();
+            });
+            dropdown.appendChild(item);
+          });
+          document.getElementById('langBtn').addEventListener('click', function(event) {
+            event.stopPropagation();
+            var regionMenu = document.querySelector('.region-menu');
+            if (regionMenu) regionMenu.classList.remove('open');
+            dropdown.classList.toggle('open');
+          });
+        }
+
+        function bindRegionSwitcher() {
+          var switcher = document.querySelector('.region-switcher');
+          if (!switcher || switcher.getAttribute('data-bound') === 'true') return;
+          var button = switcher.querySelector('.region-btn');
+          var menu = switcher.querySelector('.region-menu');
+          if (!button || !menu) return;
+          menu.innerHTML = '';
+          regionOptions.forEach(function(option) {
+            var item = document.createElement('button');
+            item.type = 'button';
+            item.setAttribute('role', 'menuitem');
+            item.setAttribute('data-region-btn', option.code);
+            item.innerHTML = '<strong>' + option.short + '</strong><span>' + option.label + '</span>';
+            item.addEventListener('click', function(event) {
+              event.stopPropagation();
+              setRegion(option.code, true, true);
+              closeLocaleMenus();
+            });
+            menu.appendChild(item);
+          });
+          button.addEventListener('click', function(event) {
+            event.stopPropagation();
+            var languageMenu = document.getElementById('langDropdown');
+            if (languageMenu) languageMenu.classList.remove('open');
+            var open = !menu.classList.contains('open');
+            menu.classList.toggle('open', open);
+            button.setAttribute('aria-expanded', open ? 'true' : 'false');
+          });
+          switcher.setAttribute('data-bound', 'true');
+        }
 
         function syncAppLinksToHeroRegion() {
           var region = document.documentElement.getAttribute('data-hero-region') || '';
@@ -3639,7 +3883,16 @@
         }
 
         window.addEventListener('simy:regionchange', syncAppLinksToHeroRegion);
-        document.addEventListener('DOMContentLoaded', syncAppLinksToHeroRegion);
+        document.addEventListener('click', closeLocaleMenus);
+        document.addEventListener('DOMContentLoaded', function() {
+          injectLocaleSwitcherCSS();
+          buildLanguageSwitcher();
+          bindRegionSwitcher();
+          var lang = initialLanguage();
+          setLanguage(lang, false, false);
+          setRegion(initialRegion(lang), false, false);
+          syncAppLinksToHeroRegion();
+        });
         setTimeout(syncAppLinksToHeroRegion, 0);
         setTimeout(syncAppLinksToHeroRegion, 500);
         setTimeout(syncAppLinksToHeroRegion, 1500);
