@@ -67,6 +67,12 @@ jobs:
             --exclude "lang/*" \
             --cache-control "public, max-age=86400"
 
+      - name: Publish old homepage slash URL
+        run: |
+          aws s3 cp site/old.html s3://${{ secrets.SITE_S3_BUCKET }}/old/ \
+            --content-type "text/html; charset=utf-8" \
+            --cache-control "public, max-age=300"
+
       - name: Update CloudFront Function
         if: github.ref == 'refs/heads/main' || (github.event_name == 'workflow_dispatch' && inputs.environment == 'prod')
         continue-on-error: true
