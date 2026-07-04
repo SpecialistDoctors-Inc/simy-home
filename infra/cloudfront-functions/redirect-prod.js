@@ -1,7 +1,5 @@
 var BASIC_AUTH_ENABLED = false;
 var EXPECTED_AUTH = 'Basic ';
-var OLD_BASIC_AUTH_ENABLED = true;
-var OLD_EXPECTED_AUTH = 'Basic dGV0c3VvQHNpbXkub25lOm1qNHgzM2Rk';
 
 function queryHas(request, key) {
   return request.querystring && request.querystring[key];
@@ -111,19 +109,6 @@ function handler(event) {
         statusDescription: 'Unauthorized',
         headers: {
           'www-authenticate': { value: 'Basic realm="dev"' }
-        }
-      };
-    }
-  }
-
-  if (OLD_BASIC_AUTH_ENABLED && (uri === '/old' || uri === '/old/' || uri.startsWith('/old/'))) {
-    var oldHeaders = request.headers;
-    if (!oldHeaders.authorization || oldHeaders.authorization.value !== OLD_EXPECTED_AUTH) {
-      return {
-        statusCode: 401,
-        statusDescription: 'Unauthorized',
-        headers: {
-          'www-authenticate': { value: 'Basic realm="SIMY old"' }
         }
       };
     }

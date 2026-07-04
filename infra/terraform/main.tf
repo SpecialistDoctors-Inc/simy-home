@@ -187,8 +187,6 @@ resource "aws_cloudfront_function" "redirect" {
   code    = <<-EOF
     var BASIC_AUTH_ENABLED = ${local.basic_auth_enabled ? "true" : "false"};
     var EXPECTED_AUTH = 'Basic ${local.basic_auth_token}';
-    var OLD_BASIC_AUTH_ENABLED = true;
-    var OLD_EXPECTED_AUTH = 'Basic dGV0c3VvQHNpbXkub25lOm1qNHgzM2Rk';
 
     function queryHas(request, key) {
       return request.querystring && request.querystring[key];
@@ -298,19 +296,6 @@ resource "aws_cloudfront_function" "redirect" {
             statusDescription: 'Unauthorized',
             headers: {
               'www-authenticate': { value: 'Basic realm="dev"' }
-            }
-          };
-        }
-      }
-
-      if (OLD_BASIC_AUTH_ENABLED && (uri === '/old' || uri === '/old/' || uri.startsWith('/old/'))) {
-        var oldHeaders = request.headers;
-        if (!oldHeaders.authorization || oldHeaders.authorization.value !== OLD_EXPECTED_AUTH) {
-          return {
-            statusCode: 401,
-            statusDescription: 'Unauthorized',
-            headers: {
-              'www-authenticate': { value: 'Basic realm="SIMY old"' }
             }
           };
         }
