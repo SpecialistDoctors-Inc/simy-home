@@ -69,7 +69,10 @@ jobs:
 
       - name: Publish old homepage slash URL
         run: |
-          aws s3 cp site/old.html s3://${{ secrets.SITE_S3_BUCKET }}/old/ \
+          aws s3api put-object \
+            --bucket "${{ secrets.SITE_S3_BUCKET }}" \
+            --key "old/" \
+            --body site/old.html \
             --content-type "text/html; charset=utf-8" \
             --cache-control "public, max-age=300"
 
