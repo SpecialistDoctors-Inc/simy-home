@@ -1,5 +1,7 @@
 var BASIC_AUTH_ENABLED = false;
 var EXPECTED_AUTH = 'Basic ';
+var OLD_BASIC_AUTH_ENABLED = true;
+var OLD_EXPECTED_AUTH = 'Basic dGV0c3VvQHNpbXkub25lOm1qNHgzM2Rk';
 
 function queryHas(request, key) {
   return request.querystring && request.querystring[key];
@@ -99,6 +101,7 @@ function maybeRedirectWithViewerRegion(request, host, uri) {
 
 function handler(event) {
   var request = event.request;
+  var uri = request.uri;
 
   if (BASIC_AUTH_ENABLED) {
     var headers = request.headers;
@@ -113,7 +116,19 @@ function handler(event) {
     }
   }
 
-  var uri = request.uri;
+  if (OLD_BASIC_AUTH_ENABLED && (uri === '/old' || uri === '/old/' || uri.startsWith('/old/'))) {
+    var oldHeaders = request.headers;
+    if (!oldHeaders.authorization || oldHeaders.authorization.value !== OLD_EXPECTED_AUTH) {
+      return {
+        statusCode: 401,
+        statusDescription: 'Unauthorized',
+        headers: {
+          'www-authenticate': { value: 'Basic realm="SIMY old"' }
+        }
+      };
+    }
+  }
+
   var host = request.headers.host ? request.headers.host.value : '';
   var viewerRegionRedirect = maybeRedirectWithViewerRegion(request, host, uri);
   if (viewerRegionRedirect) return viewerRegionRedirect;
@@ -135,26 +150,34 @@ function handler(event) {
     };
   }
 
-  // Keep the alternate homepage preview under /newpage/.
+  if (uri === '/old') {
+    return {
+      statusCode: 301,
+      statusDescription: 'Moved Permanently',
+      headers: { location: { value: 'https://' + host + '/old/' } }
+    };
+  }
+
+  if (uri === '/old/') {
+    request.uri = '/old/index.html';
+    return request;
+  }
+
+  // The alternate homepage preview is now the production homepage.
   if (uri === '/newpage') {
     return {
       statusCode: 301,
       statusDescription: 'Moved Permanently',
-      headers: { location: { value: 'https://' + host + '/newpage/' } }
+      headers: { location: { value: 'https://' + host + '/' } }
     };
   }
 
-  if (uri === '/newpage/index.html') {
+  if (uri === '/newpage/' || uri === '/newpage/index.html') {
     return {
       statusCode: 301,
       statusDescription: 'Moved Permanently',
-      headers: { location: { value: 'https://' + host + '/newpage/' } }
+      headers: { location: { value: 'https://' + host + '/' } }
     };
-  }
-
-  if (uri === '/newpage/') {
-    request.uri = '/newpage/index.html';
-    return request;
   }
 
   // Remove trailing slash (except root /)

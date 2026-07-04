@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="google-site-verification" content="1n6_tVJZRZlQax8luEg5VsuG7gg-kCEam5VFiWIJs3U">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page Not Found — SIMY</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/png" href="favicon.png">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #0a0a1a; color: #f0f0f8;
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  text-align: center; padding: 40px;
+}
+.container { max-width: 480px; }
+.code {
+  font-size: clamp(4rem, 12vw, 8rem); font-weight: 900;
+  background: linear-gradient(135deg, #7EEDC6, #4A9FE8);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  line-height: 1; margin-bottom: 16px;
+}
+h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 12px; }
+p { color: #7a7a9e; margin-bottom: 32px; line-height: 1.6; }
+a {
+  display: inline-block; padding: 12px 28px; 
+  background: linear-gradient(135deg, #7EEDC6, #4A9FE8);
+  color: #0a0a1a; font-weight: 700; text-decoration: none;
+  transition: opacity 0.2s;
+}
+a:hover { opacity: 0.9; }
+</style>
+<!-- Google tag (gtag.js) - loaded only after cookie consent -->
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+function loadGA(){
+  if(document.getElementById('ga-script'))return;
+  var s=document.createElement('script');
+  s.id='ga-script';s.async=true;
+  s.src='https://www.googletagmanager.com/gtag/js?id=G-SBLYYNMSJW';
+  document.head.appendChild(s);
+  gtag('js',new Date());gtag('config','G-SBLYYNMSJW');
+}
+if(localStorage.getItem('simy-cookies')==='1') loadGA();
+</script>
+<link rel="stylesheet" href="/responsive.css">
+</head>
+<body>
+<div class="container">
+  <div class="code">404</div>
+  <h1 data-i18n="e404.h1">Page Not Found</h1>
+  <p data-i18n="e404.p">The page you're looking for doesn't exist or has been moved.</p>
+  <a href="index.html" data-i18n="e404.back">Back to SIMY</a>
+</div>
+
+<!-- Cookie Consent -->
+<div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:rgba(250,250,248,0.98);border-top:1px solid rgba(0,0,0,0.06);padding:16px 24px;backdrop-filter:blur(20px)"><div style="max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap"><p style="color:#6b6b6b;font-size:0.85rem;margin:0;flex:1;min-width:200px">We use cookies to improve your experience. See our <a href="/privacy.html" style="color:#0057FF">Privacy Policy</a>.</p><div style="display:flex;gap:10px"><button onclick="setCookieConsent(false)" style="padding:8px 20px;border-radius:6px;border:1px solid rgba(0,0,0,0.15);background:transparent;color:#6b6b6b;cursor:pointer;font-size:0.85rem;font-family:'Geist',sans-serif">Decline</button><button onclick="setCookieConsent(true)" style="padding:8px 20px;border-radius:6px;border:none;background:#0057FF;color:#fff;font-weight:700;cursor:pointer;font-size:0.85rem;font-family:'Geist',sans-serif">Accept</button></div></div></div>
+<script>function setCookieConsent(v){localStorage.setItem('simy-cookies',v?'1':'0');document.getElementById('cookieBanner').style.display='none';if(v)loadGA();}if(!localStorage.getItem('simy-cookies'))document.getElementById('cookieBanner').style.display='block';</script>
+<script src="/i18n.js"></script>
+</body>
+</html>
