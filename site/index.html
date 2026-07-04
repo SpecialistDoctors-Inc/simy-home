@@ -3863,7 +3863,7 @@
             ['Twin 已準備簡報', '決策、未解問題與負責人已記錄。'],
             ['Twin 已撰寫更新', '依不同對象整理出合適摘要。'],
             ['Twin 已彙整研究', '來源、訊號與影響已整理。'],
-            ['Twin 已保存客户记录', '客户背景、下一步与风险已记录。'],
+            ['Twin 已保存客戶紀錄', '客戶背景、下一步與風險已記錄。'],
             ['Twin 已製作主管摘要', '重點訊號已壓縮成清楚筆記。'],
             ['Twin 抓到負責人缺口', '可能沒人負責的任務已有處理路徑。', 'rescue'],
             ['Twin 已準備風險備忘', '取捨、阻礙與觀察點已浮現。', 'watch'],
@@ -3886,6 +3886,38 @@
             ['Twin 已規劃續約路徑', '價值證明、風險與跟進時機已準備。', 'watch'],
             ['Twin 已塑造公關角度', '敘事、證據點與受眾已整理。'],
             ['Twin 已準備交接', '下一個人會拿到需要的脈絡。']
+          ],
+          'zh-Hans': [
+            ['Twin 已准备跟进', '你的上下文、语气与下一步都已反映。'],
+            ['Twin 已更新提案', '故事线、风险与请求事项已整理好。'],
+            ['Twin 已分派下一步', '每位利益相关者都收到合适深度的上下文。'],
+            ['Twin 提前抓到风险', '可能卡住的问题已提前转成下一步。', 'rescue'],
+            ['Twin 已准备简报', '决策、未解问题与负责人已记录。'],
+            ['Twin 已撰写更新', '依不同对象整理出合适摘要。'],
+            ['Twin 已汇整研究', '来源、信号与影响已整理。'],
+            ['Twin 已保存客户记录', '客户背景、下一步与风险已记录。'],
+            ['Twin 已制作高管摘要', '重点信号已压缩成清楚笔记。'],
+            ['Twin 抓到负责人缺口', '可能没人负责的任务已有处理路径。', 'rescue'],
+            ['Twin 已准备风险备忘', '取舍、阻碍与观察点已浮现。', 'watch'],
+            ['Twin 已整理董事会备忘', '进度、请求与决策变得易读。'],
+            ['Twin 已准备销售邮件', '信息符合你的会议语气与意图。'],
+            ['Twin 已撰写伙伴摘要', '共享上下文变成可执行的下一步。'],
+            ['Twin 已整理招聘反馈', '信号、疑虑与跟进已结构化。', 'watch'],
+            ['Twin 已准备投资人回复', '问题、指标与下一步都已回应。'],
+            ['Twin 已提取产品洞察', '需求、摩擦与机会已分组。'],
+            ['Twin 已更新决策记录', '改了什么、为什么改，都被保留下来。'],
+            ['Twin 已建立下次议程', '未闭合事项变成聚焦的下一场对话。'],
+            ['Twin 已综合竞品笔记', '市场信号变成更清楚的摘要。'],
+            ['Twin 已更新成功计划', '健康度、风险与下一个价值时刻已映射。', 'watch'],
+            ['Twin 已准备内部备忘', '团队不必再开一次会也能取得上下文。'],
+            ['Twin 补上缺漏数据请求', '差点忘记索取的数字已排入队列。', 'rescue'],
+            ['Twin 已标示法务要点', '审查事项与商业上下文已分开整理。', 'watch'],
+            ['Twin 已刷新发布清单', '依赖、负责人与时间点已对齐。'],
+            ['Twin 已整理预算笔记', '数字、假设与决策已厘清。'],
+            ['Twin 已综合工作坊输出', '想法变成主题、行动与负责人。'],
+            ['Twin 已规划续约路径', '价值证明、风险与跟进时机已准备。', 'watch'],
+            ['Twin 已塑造公关角度', '叙事、证据点与受众已整理。'],
+            ['Twin 已准备交接', '下一个人会拿到需要的上下文。']
           ]
         };
 
@@ -3982,7 +4014,12 @@
           var items = list ? Array.prototype.slice.call(list.querySelectorAll('.hero-work-item')) : [];
           if (!viewport || !list || items.length === 0) return;
           var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-          var currentLang = taskSets[document.documentElement.lang] ? document.documentElement.lang : (document.documentElement.lang === 'ja' ? 'ja' : 'en');
+          function taskLang() {
+            var lang = document.documentElement.lang;
+            return taskSets[lang] ? lang : 'en';
+          }
+
+          var currentLang = taskLang();
           var queue = shuffle(taskSets[currentLang]);
           var index = 0;
           var isAnimating = false;
@@ -4040,7 +4077,7 @@
           }
 
           function renderInitial() {
-            currentLang = taskSets[document.documentElement.lang] ? document.documentElement.lang : (document.documentElement.lang === 'ja' ? 'ja' : 'en');
+            currentLang = taskLang();
             queue = shuffle(taskSets[currentLang]);
             index = 0;
             refreshItems();
@@ -4101,7 +4138,7 @@
           window.setInterval(rotateQueue, 2600);
 
           new MutationObserver(function() {
-            var nextLang = document.documentElement.lang === 'ja' ? 'ja' : 'en';
+            var nextLang = taskLang();
             if (nextLang !== currentLang) renderInitial();
           }).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
         }

@@ -290,6 +290,7 @@
   /* ── Detect preferred language ─────────────────────────────── */
   function detect() {
     var params = new URLSearchParams(location.search);
+    var langs = navigator.languages || [navigator.language || navigator.userLanguage || ''];
 
     // 1. Query param ?region=fr should land on that region and its
     // native language unless ?lang= is explicitly provided.
@@ -302,18 +303,25 @@
     }
     if (qRegion) return safeLangForPage(REGION_BY_CODE[qRegion].lang);
 
-    // 2. Browser / OS country signal through timezone. This must beat
+    // 2. Chinese script is a language choice, not just a region choice.
+    //    Without this guard, zh-CN / zh-SG browsers can be routed through
+    //    the generic "zh → Taiwan" region fallback and land on Traditional.
+    var primaryResolved = resolve(langs[0] || '');
+    if (primaryResolved === 'zh-Hans' || primaryResolved === 'zh-Hant') {
+      return safeLangForPage(primaryResolved);
+    }
+
+    // 3. Browser / OS country signal through timezone. This must beat
     //    localStorage so a visitor landing in Japan gets JP and a visitor
     //    landing in the US gets US, even if a previous session saved another
     //    region.
-    var langs = navigator.languages || [navigator.language || navigator.userLanguage || ''];
     try {
       var timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
       var tzRegion = supportedRegion(regionFromTimezone(timeZone, langs[0] || ''));
       if (tzRegion) return safeLangForPage(REGION_BY_CODE[tzRegion].lang);
     } catch (e) {}
 
-    // 3. Saved language preference — check BOTH keys. The React bundle on /
+    // 4. Saved language preference — check BOTH keys. The React bundle on /
     //    uses 'simy-language' for its internal LanguageContext, while
     //    the static pages use 'simy-lang'. Either key is authoritative.
     var savedLangSource = localStorage.getItem('simy-lang-source');
@@ -322,7 +330,7 @@
     var savedReact = savedLangSource === 'manual' ? localStorage.getItem('simy-language') : null;
     if (savedReact && SUPPORTED.indexOf(savedReact) !== -1) return safeLangForPage(savedReact);
 
-    // 4. Explicitly selected saved region preference. Use it only when the
+    // 5. Explicitly selected saved region preference. Use it only when the
     //    browser does not expose a usable current country/language signal.
     var savedRegionSource = localStorage.getItem('simy-region-source');
     var savedRegion = savedRegionSource === 'manual'
@@ -330,7 +338,7 @@
       : '';
     if (savedRegion) return safeLangForPage(REGION_BY_CODE[savedRegion].lang);
 
-    // 5. Browser / OS language
+    // 6. Browser / OS language
     for (var i = 0; i < langs.length; i++) {
       var match = resolve(langs[i]);
       if (match) return safeLangForPage(match);
