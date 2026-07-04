@@ -69,13 +69,12 @@ jobs:
 
       - name: Update CloudFront Function
         if: github.ref == 'refs/heads/main' || (github.event_name == 'workflow_dispatch' && inputs.environment == 'prod')
-        continue-on-error: true
         run: |
           FUNC_NAME="simy-site-prod-redirect"
           FUNC_CODE_FILE="infra/cloudfront-functions/redirect-prod.js"
 
           # Get current ETag
-          ETAG=$(aws cloudfront describe-function --name "$FUNC_NAME" --query 'ETag' --output text)
+          ETAG=$(aws cloudfront get-function --name "$FUNC_NAME" --query 'ETag' --output text)
 
           # Update function code
           UPDATE_ETAG=$(aws cloudfront update-function \
