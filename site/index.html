@@ -1821,6 +1821,41 @@
         font-size: 1.2rem;
         font-weight: 780;
       }
+      .persona-showcase-section {
+        position: relative;
+        margin-top: 76px;
+        padding-top: 34px;
+        border-top: 1px solid rgba(0, 87, 255, 0.18);
+      }
+      .persona-section-marker {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 18px;
+      }
+      .persona-section-marker::after {
+        content: '';
+        flex: 1 1 auto;
+        height: 1px;
+        background: linear-gradient(90deg, rgba(0, 87, 255, 0.32), rgba(0, 87, 255, 0));
+      }
+      .persona-section-kicker {
+        display: block;
+        color: var(--blue);
+        font-family: 'Geist Mono', monospace;
+        font-size: 0.72rem;
+        font-weight: 760;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+      }
+      .persona-section-title {
+        display: block;
+        margin-top: 4px;
+        font-size: 1.05rem;
+        font-weight: 780;
+        line-height: 1.35;
+      }
       .persona-output-board {
         display: flex;
         gap: 16px;
@@ -1949,7 +1984,7 @@
         cursor: default;
       }
       .persona-output-intro {
-        margin-top: 34px;
+        margin-top: 0;
         border: 1px solid var(--line);
         border-radius: 8px;
         background: #fff;
@@ -3034,6 +3069,19 @@
           margin-right: -18px;
           padding-right: 18px;
         }
+        .persona-showcase-section {
+          margin-top: 54px;
+          padding-top: 26px;
+        }
+        .persona-section-marker {
+          align-items: flex-start;
+        }
+        .persona-section-marker::after {
+          margin-top: 12px;
+        }
+        .persona-section-title {
+          font-size: 0.98rem;
+        }
         .persona-output-card {
           flex-basis: min(88vw, 420px);
           min-height: auto;
@@ -3477,6 +3525,13 @@
 </div>
 </div>
 </div>
+<div class="persona-showcase-section">
+<div class="persona-section-marker" aria-label="具体的な場面">
+<span>
+<span class="persona-section-kicker">USE CASES</span>
+<span class="persona-section-title">具体的な場面で、どう動くか。</span>
+</span>
+</div>
 <div class="deliverable-column-head persona-output-intro">
 <div class="deliverable-column-kicker">HOW SIMY RUNS</div>
 <div class="deliverable-column-title">会議後の未処理、報告、緊急対応、教育、手順書が止まらない</div>
@@ -3847,6 +3902,7 @@
 <span>優先順位とリソース調整を判断材料にする</span>
 <span>e-mailの緊急対応を下書きする</span>
 <span>手順書、報告、タスク割当を確認待ちにする</span>
+</div>
 </div>
 </div>
 </section>
