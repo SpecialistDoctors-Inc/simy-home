@@ -1340,6 +1340,261 @@
         font-size: 0.92rem;
         line-height: 1.55;
       }
+      .product-ui-showcase {
+        display: grid;
+        gap: 18px;
+        margin-top: 34px;
+        padding: 18px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+      }
+      .product-ui-copy {
+        display: grid;
+        grid-template-columns: minmax(0, 1.12fr) minmax(280px, 0.88fr);
+        align-items: end;
+        gap: 22px;
+        padding: 22px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #f8f8f4;
+      }
+      .product-ui-kicker,
+      .ui-window-kicker,
+      .ui-mini-label {
+        color: var(--blue);
+        font-family: 'Geist Mono', monospace;
+        font-size: 0.72rem;
+        font-weight: 760;
+        text-transform: uppercase;
+      }
+      .product-ui-copy h3 {
+        margin: 8px 0 0;
+        font-size: 1.38rem;
+        line-height: 1.18;
+        letter-spacing: 0;
+      }
+      .product-ui-copy p {
+        margin: 14px 0 0;
+        color: var(--muted);
+        font-size: 0.96rem;
+        line-height: 1.72;
+      }
+      .ui-proof-list {
+        display: grid;
+        gap: 10px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      .ui-proof-list li {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--ink);
+        font-size: 0.9rem;
+        font-weight: 720;
+      }
+      .ui-proof-list li::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        flex: 0 0 auto;
+        border-radius: 999px;
+        background: var(--blue);
+      }
+      .ui-stage {
+        display: grid;
+        grid-template-columns: minmax(0, 1.26fr) minmax(300px, 0.74fr);
+        gap: 14px;
+        min-width: 0;
+      }
+      .ui-stack {
+        display: grid;
+        gap: 14px;
+        min-width: 0;
+      }
+      .ui-window {
+        min-width: 0;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+        box-shadow: 0 14px 36px rgba(0, 0, 0, 0.06);
+      }
+      .ui-window-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        padding: 14px 16px;
+        border-bottom: 1px solid var(--line);
+      }
+      .ui-window-title {
+        margin-top: 4px;
+        font-size: 0.98rem;
+        font-weight: 780;
+      }
+      .ui-status {
+        flex: 0 0 auto;
+        padding: 5px 9px;
+        border-radius: 999px;
+        background: #eaf3ff;
+        color: var(--blue);
+        font-size: 0.72rem;
+        font-weight: 760;
+      }
+      .ui-app-shell {
+        display: grid;
+        grid-template-columns: 82px minmax(0, 1fr);
+        min-height: 352px;
+      }
+      .ui-side {
+        display: flex;
+        flex-direction: column;
+        gap: 9px;
+        padding: 14px 10px;
+        border-right: 1px solid var(--line);
+        background: #f6f6f3;
+      }
+      .ui-side-logo {
+        width: 24px;
+        height: 24px;
+        border-radius: 7px;
+        background: linear-gradient(135deg, #63e3d4, #56a8ff);
+      }
+      .ui-side-item {
+        height: 9px;
+        border-radius: 999px;
+        background: #d8d8d3;
+      }
+      .ui-side-item.active {
+        background: var(--blue);
+      }
+      .ui-main {
+        min-width: 0;
+        padding: 16px;
+      }
+      .ui-toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 12px;
+      }
+      .ui-chip {
+        padding: 6px 9px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: #fff;
+        color: var(--muted);
+        font-size: 0.72rem;
+        font-weight: 700;
+      }
+      .ui-chip.active {
+        border-color: var(--blue);
+        background: #eef4ff;
+        color: var(--blue);
+      }
+      .ui-action-list {
+        display: grid;
+        gap: 10px;
+      }
+      .ui-action-card {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 10px;
+        padding: 12px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+      }
+      .ui-action-card.ai {
+        background: #fbfbf8;
+      }
+      .ui-action-title {
+        font-size: 0.88rem;
+        font-weight: 780;
+        line-height: 1.35;
+      }
+      .ui-action-meta {
+        margin-top: 4px;
+        color: var(--muted);
+        font-size: 0.72rem;
+        line-height: 1.4;
+      }
+      .ui-tag {
+        align-self: start;
+        padding: 4px 7px;
+        border-radius: 999px;
+        background: #fff4e8;
+        color: #d85b15;
+        font-size: 0.68rem;
+        font-weight: 760;
+        white-space: nowrap;
+      }
+      .ui-tag.blue {
+        background: #eaf3ff;
+        color: var(--blue);
+      }
+      .ui-mini-body {
+        padding: 16px;
+      }
+      .ui-meeting-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+      .ui-mini-card {
+        min-height: 74px;
+        padding: 12px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fbfbf8;
+      }
+      .ui-mini-title {
+        margin-top: 6px;
+        font-size: 0.82rem;
+        font-weight: 760;
+        line-height: 1.35;
+      }
+      .ui-flow {
+        position: relative;
+        display: grid;
+        gap: 10px;
+        padding-left: 18px;
+      }
+      .ui-flow::before {
+        position: absolute;
+        top: 10px;
+        bottom: 10px;
+        left: 5px;
+        width: 2px;
+        border-radius: 999px;
+        background: #b8cdfd;
+        content: "";
+      }
+      .ui-flow-step {
+        position: relative;
+        padding: 10px 12px;
+        border: 1px solid #bfd4ff;
+        border-radius: 8px;
+        background: #f7faff;
+        color: var(--ink);
+        font-size: 0.82rem;
+        font-weight: 740;
+        line-height: 1.38;
+      }
+      .ui-flow-step::before {
+        position: absolute;
+        top: 14px;
+        left: -18px;
+        width: 10px;
+        height: 10px;
+        border: 2px solid #fff;
+        border-radius: 999px;
+        background: var(--blue);
+        content: "";
+      }
       .sample-grid {
         display: grid;
         grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -2561,6 +2816,13 @@
         .experience-grid {
           grid-template-columns: repeat(2, minmax(0, 1fr));
         }
+        .product-ui-showcase,
+        .ui-stage {
+          grid-template-columns: 1fr;
+        }
+        .product-ui-copy {
+          min-height: auto;
+        }
         .life-layout {
           grid-template-columns: 1fr;
         }
@@ -2712,6 +2974,36 @@
         }
         .experience-card p {
           font-size: 0.86rem;
+        }
+        .product-ui-showcase {
+          gap: 12px;
+          padding: 12px;
+        }
+        .product-ui-copy {
+          grid-template-columns: 1fr;
+          padding: 16px;
+        }
+        .product-ui-copy h3 {
+          font-size: 1.28rem;
+        }
+        .ui-app-shell {
+          grid-template-columns: 52px minmax(0, 1fr);
+        }
+        .ui-side {
+          padding: 12px 8px;
+        }
+        .ui-main,
+        .ui-mini-body {
+          padding: 12px;
+        }
+        .ui-meeting-grid {
+          grid-template-columns: 1fr;
+        }
+        .ui-action-card {
+          grid-template-columns: 1fr;
+        }
+        .ui-tag {
+          justify-self: start;
         }
         .handoff-workspace {
           grid-template-columns: 1fr;
@@ -3078,6 +3370,112 @@
 <p>CEO向け週次レポート、CFO向け月次レポート、部門横断会議、タスク割当を準備します。</p>
 </div>
 </article>
+</div>
+<div aria-label="SIMY product interface preview" class="product-ui-showcase">
+<div class="product-ui-copy">
+<div>
+<div class="product-ui-kicker">Product UI</div>
+<h3>SIMYでは、増えた管理業務が画面上で分かれ、準備され、実行待ちになります。</h3>
+<p>Action分類、ミーティング準備、パイプライン作成、ネットワークフォローを、一覧・カード・ワークフローで確認できます。人は最後の判断、承認、相手への対応に集中します。</p>
+</div>
+<ul class="ui-proof-list">
+<li>今日見る仕事とAIが進める仕事を分ける</li>
+<li>会議前に決めることとアジェンダを用意する</li>
+<li>目的から手順と確認ポイントを作る</li>
+</ul>
+</div>
+<div class="ui-stage">
+<article class="ui-window">
+<div class="ui-window-head">
+<div>
+<div class="ui-window-kicker">Action Categories</div>
+<div class="ui-window-title">仕事を、人が見るものとSIMYが進めるものに分ける</div>
+</div>
+<span class="ui-status">5件</span>
+</div>
+<div class="ui-app-shell">
+<div aria-hidden="true" class="ui-side">
+<span class="ui-side-logo"></span>
+<span class="ui-side-item active"></span>
+<span class="ui-side-item"></span>
+<span class="ui-side-item"></span>
+<span class="ui-side-item active"></span>
+<span class="ui-side-item"></span>
+</div>
+<div class="ui-main">
+<div class="ui-toolbar">
+<span class="ui-chip active">すべて</span>
+<span class="ui-chip">P1 決定的</span>
+<span class="ui-chip">P2 状況形成</span>
+<span class="ui-chip">AI 自動処理</span>
+</div>
+<div class="ui-action-list">
+<div class="ui-action-card">
+<div>
+<div class="ui-action-title">週次会議の論点を整理し、参加者へ確認事項を出す</div>
+<div class="ui-action-meta">自分: 最終判断、論点の確定</div>
+</div>
+<span class="ui-tag">判断</span>
+</div>
+<div class="ui-action-card ai">
+<div>
+<div class="ui-action-title">未返信メールを特定し、e-mail返信案を作る</div>
+<div class="ui-action-meta">SIMY: 文脈整理、返信下書き、優先順位づけ</div>
+</div>
+<span class="ui-tag blue">実行中</span>
+</div>
+<div class="ui-action-card ai">
+<div>
+<div class="ui-action-title">月次レポート用に進捗・KPI・リスクをまとめる</div>
+<div class="ui-action-meta">SIMY: 材料収集、構成案、ドラフト作成</div>
+</div>
+<span class="ui-tag blue">実行中</span>
+</div>
+</div>
+</div>
+</div>
+</article>
+<div class="ui-stack">
+<article class="ui-window">
+<div class="ui-window-head">
+<div>
+<div class="ui-window-kicker">Meeting</div>
+<div class="ui-window-title">会議前に、目的と決めることを用意する</div>
+</div>
+<span class="ui-status">予定</span>
+</div>
+<div class="ui-mini-body">
+<div class="ui-meeting-grid">
+<div class="ui-mini-card">
+<div class="ui-mini-label">決定事項</div>
+<div class="ui-mini-title">今日決めるべきことを3つに絞る</div>
+</div>
+<div class="ui-mini-card">
+<div class="ui-mini-label">アジェンダ</div>
+<div class="ui-mini-title">議論順と確認ポイントを出す</div>
+</div>
+</div>
+</div>
+</article>
+<article class="ui-window">
+<div class="ui-window-head">
+<div>
+<div class="ui-window-kicker">Pipeline</div>
+<div class="ui-window-title">目的から、手順と確認ポイントを作る</div>
+</div>
+<span class="ui-status">6 steps</span>
+</div>
+<div class="ui-mini-body">
+<div class="ui-flow">
+<div class="ui-flow-step">目的とスコープを定義</div>
+<div class="ui-flow-step">必要な材料を抽出</div>
+<div class="ui-flow-step">人が確認する点を設定</div>
+<div class="ui-flow-step">返信・報告・資料を下書き</div>
+</div>
+</div>
+</article>
+</div>
+</div>
 </div>
 <div class="deliverable-column-head persona-output-intro">
 <div class="deliverable-column-kicker">HOW SIMY RUNS</div>
