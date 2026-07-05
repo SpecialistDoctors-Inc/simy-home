@@ -3422,10 +3422,10 @@
 <div class="pricing-head">
 <div class="pricing-head-copy">
 <p class="section-label">START WITH ONE FLOW</p>
-<h2>まずは、増えた仕事をSIMYに任せてみる。</h2>
-<p>未返信メールの処理、会議準備、月次報告、顧客フォロー、資料作成のどれか一つから始められます。人が足りなくても、判断前の準備をSIMYに流せます。</p>
+<h2>まずは、いま特定の人に積まれている管理業務から。</h2>
+<p>週次会議、進捗確認、緊急対応、月次報告、OJT、手順書作成。SIMYは、属人的に積まれている管理業務を、人が判断する仕事とAIが準備する仕事に分けて動かします。</p>
 <div class="pricing-note">アカウント作成とサブスクリプション決済はWebで行えます。決済はStripeで安全に処理されます。</div>
-<div class="pricing-business-note">Proは、会議準備、報告、フォロー、資料作成を人の手元に積まず、判断が必要な仕事とSIMYに任せる仕事に分けたいチーム向けです。専用制御や学習利用不可のデータが必要な場合は、営業までご相談ください。</div>
+<div class="pricing-business-note">Proは、会議運営、進捗確認、緊急対応、教育、報告、手順書作成を人の手元に積まず、判断が必要な仕事とSIMYが準備する仕事に分けたいチーム向けです。専用制御や学習利用不可のデータが必要な場合は、営業までご相談ください。</div>
 </div>
 <div aria-label="Billing interval" class="billing-toggle">
 <button class="toggle-btn" data-billing="monthly" onclick="setBilling('monthly')" type="button">月払い</button>
@@ -4038,24 +4038,22 @@
       (function() {
         var taskSets = {
           en: [
-            ['Meeting follow-up organized', 'Owner, deadline, context, and expected output are ready.'],
-            ['Report draft in progress', 'Progress, risks, and next steps are being prepared.'],
-            ['Waiting for human review', 'A human review is required before the external update moves.'],
-            ['Urgent issue organized', 'Impact, stakeholders, urgency, and next message are mapped.', 'watch'],
-            ['Handoff notes ready', 'The next owner receives context, decisions, and open risks.'],
-            ['Training material drafted', 'Process steps, exceptions, and FAQs are structured.'],
-            ['Compliance review prepared', 'Evidence, controls, and reviewers are separated.', 'watch'],
-            ['Blocked work surfaced', 'What is waiting and who can unblock it are shown.', 'rescue']
+            ['Weekly meeting points organized', 'Agenda, decisions, owners, and follow-ups are ready.'],
+            ['Department priorities updated', 'Budget, resources, urgency, and trade-offs are being sorted.'],
+            ['Complaint reply drafted', 'Context, impact, tone, and next message are prepared.', 'watch'],
+            ['OJT steps drafted', 'Procedure, examples, exceptions, and FAQs are structured.'],
+            ['Monthly report in progress', 'Progress, risks, KPIs, and next moves are being drafted.'],
+            ['Urgent stakeholders mapped', 'Who is affected, who decides, and who responds are clear.', 'watch'],
+            ['Same-day tasks extracted', 'Today’s time-sensitive work is separated from the backlog.', 'rescue']
           ],
           ja: [
-            ['会議後の仕事を整理', '担当、期限、文脈、期待アウトプットを整理しました。'],
-            ['報告書を下書き中', '進捗、リスク、次の打ち手を準備しています。'],
-            ['送信前の確認待ち', '外部共有前に人の確認が必要です。'],
-            ['緊急対応を整理', '影響範囲、関係者、緊急度、次の連絡を整理しました。', 'watch'],
-            ['引き継ぎメモを準備', '次の担当者に必要な文脈、決定、未解決リスクをまとめました。'],
-            ['研修資料を下書き', '手順、例外、FAQを構造化しています。'],
-            ['監査確認を準備', '証跡、統制、確認者を分けました。', 'watch'],
-            ['止まっている仕事を検知', '何が止まっていて誰が解除できるかを表示しました。', 'rescue']
+            ['週次会議の論点を整理', 'アジェンダ、決定事項、担当、次アクションを準備しています。'],
+            ['部門の優先順位を更新', '予算、リソース、緊急度、判断材料を整理しています。'],
+            ['クレーム対応の返信案を作成', '経緯、影響範囲、温度感、次の連絡を準備しています。', 'watch'],
+            ['OJT用の手順を下書き', '手順、例外、よくある質問、確認ポイントを構造化しています。'],
+            ['月次レポートを作成中', '進捗、KPI、リスク、次の打ち手をまとめています。'],
+            ['緊急案件の関係者を整理', '影響を受ける人、判断者、連絡先を整理しています。', 'watch'],
+            ['今日中処理のタスクを抽出', '期限が近い案件を通常業務から切り出しています。', 'rescue']
           ]
         };
 
