@@ -43,8 +43,10 @@
       "foundingDate": "2024",
       "address": {
         "@type": "PostalAddress",
-        "addressLocality": "San Francisco",
+        "streetAddress": "1440 Broadway Suite #200-1024",
+        "addressLocality": "Oakland",
         "addressRegion": "CA",
+        "postalCode": "94612",
         "addressCountry": "US"
       },
       "contactPoint": [
@@ -2513,6 +2515,37 @@
         color: #8d8d88;
         font-size: 0.86rem;
       }
+      .company-profile {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+        padding: 24px 0;
+        border-top: 1px solid #1a1a1a;
+      }
+      .company-profile-card {
+        padding: 18px;
+        border: 1px solid #1a1a1a;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.03);
+      }
+      .company-profile-name {
+        color: #f5f5f0;
+        font-size: 0.96rem;
+        font-weight: 760;
+      }
+      .company-profile-address {
+        margin-top: 10px;
+        color: #9a9a96;
+        font-size: 0.84rem;
+        line-height: 1.7;
+      }
+      .company-profile-address a {
+        color: #9a9a96;
+        text-decoration: none;
+      }
+      .company-profile-address a:hover {
+        color: #f5f5f0;
+      }
       @media (max-width: 1180px) {
         .proof-grid {
           grid-template-columns: 1fr;
@@ -2766,7 +2799,8 @@
         .loop,
         .persona-grid,
         .pricing-grid,
-        .footer-grid {
+        .footer-grid,
+        .company-profile {
           grid-template-columns: 1fr;
         }
         .pricing-head {
@@ -3593,6 +3627,25 @@
 <div class="footer-col-title">Legal</div>
 <a href="privacy.html">プライバシーポリシー</a>
 <a href="terms.html">利用規約</a>
+</div>
+</div>
+<div aria-label="Company profile" class="company-profile">
+<div class="company-profile-card">
+<div class="company-profile-name">AwakApp Inc.</div>
+<div class="company-profile-address">
+1440 Broadway Suite #200-1024<br/>
+Oakland, CA 94612<br/>
+<a href="https://www.awak.app/" rel="noopener" target="_blank">www.awak.app</a>
+</div>
+</div>
+<div class="company-profile-card">
+<div class="company-profile-name">AwakApp JAPAN合同会社</div>
+<div class="company-profile-address">
+〒105-6923<br/>
+東京都港区虎ノ門4-1-1<br/>
+神谷町トラストタワー 23階<br/>
+<a href="https://www.simy.one/" rel="noopener" target="_blank">www.simy.one</a>
+</div>
 </div>
 </div>
 <div class="footer-bottom">
