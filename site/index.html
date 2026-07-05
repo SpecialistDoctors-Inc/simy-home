@@ -1295,6 +1295,7 @@
         height: 100%;
         min-height: inherit;
         object-fit: cover;
+        object-position: var(--experience-focus, center);
         background: #111;
         filter: brightness(1.12) saturate(1.04);
       }
@@ -1637,7 +1638,7 @@
       }
       .persona-carousel-edge-controls {
         position: fixed;
-        top: 50vh;
+        top: var(--persona-edge-top, 50vh);
         left: var(--persona-edge-left, 24px);
         right: var(--persona-edge-right, 24px);
         z-index: 7;
@@ -2977,52 +2978,60 @@
 <div class="container">
 <p class="section-label">人が足りない。仕事は増える。</p>
 <h2><span class="copy-line">増えた仕事を、</span><span class="copy-line">人が抱える前にSIMYが仕分けする。</span></h2>
-<p class="section-lead">会議、メール、フォロー、報告、判断準備は、放っておくと全部「できる人」の未処理になります。SIMYは、今日見るべき仕事、AIに任せる準備、会議前の整理、送る文面、提出できる成果物に分けて進めます。</p>
+<p class="section-lead">会議、管理、教育、報告、緊急対応は、放っておくと全部「できる人」の未処理になります。SIMYは、部門を止めないために積まれている管理業務を、人が判断する仕事とAIが先に進める仕事に分けて動かします。</p>
 <div aria-label="SIMY user experiences" class="experience-grid">
-<article class="experience-card featured">
-<img alt="" data-experience-image="" decoding="async" loading="lazy" src="assets/hero-meeting-twin-work-us.jpg"/>
+<article class="experience-card">
+<img alt="" decoding="async" loading="lazy" src="assets/management-work/meeting-progress.jpg" style="--experience-focus: 52% center;"/>
 <div class="experience-body">
 <div class="experience-num">01</div>
-<h3>今日見る仕事と、AIに任せる仕事に分ける。</h3>
-<p>未返信、報告、調査、資料化を、人が決めるものとSIMYが先に進めるものに分けます。</p>
+<h3>会議運営・進捗確認</h3>
+<p>週次ミーティング、部門取りまとめ、チーム進捗確認、部下/同僚への指示をSIMYが準備します。</p>
 </div>
 </article>
 <article class="experience-card">
-<img alt="" data-experience-image="" decoding="async" loading="lazy" src="assets/experience-local/us/02-next-move.jpg"/>
+<img alt="" decoding="async" loading="lazy" src="assets/management-work/planning-resources.jpg" style="--experience-focus: 56% center;"/>
 <div class="experience-body">
 <div class="experience-num">02</div>
-<h3>会議前に、決めることとアジェンダを用意する。</h3>
-<p>目的、論点、参加者、過去の議論、会議後の宿題を整理します。</p>
+<h3>計画・優先順位・リソース調整</h3>
+<p>予算管理、長期計画、優先順位づけ、採用しない前提での調整を整理します。</p>
 </div>
 </article>
 <article class="experience-card">
-<img alt="" data-experience-image="" decoding="async" loading="lazy" src="assets/experience-local/us/03-away-work.jpg"/>
+<img alt="" decoding="async" loading="lazy" src="assets/management-work/customer-urgent.jpg" style="--experience-focus: 72% center;"/>
 <div class="experience-body">
 <div class="experience-num">03</div>
-<h3>目的から、実行手順と確認ポイントを作る。</h3>
-<p>「月次報告を作る」「返信漏れに返す」などの目的から、必要な工程を並べます。</p>
+<h3>顧客・緊急対応</h3>
+<p>クレーム対応、緊急案件、顧客からの直接連絡、難しい問い合わせの受け皿を支えます。</p>
 </div>
 </article>
 <article class="experience-card">
-<img alt="" data-experience-image="" decoding="async" loading="lazy" src="assets/experience-local/us/04-meet-people.jpg"/>
+<img alt="" decoding="async" loading="lazy" src="assets/management-work/training-knowledge.jpg" style="--experience-focus: 50% center;"/>
 <div class="experience-body">
 <div class="experience-num">04</div>
-<h3>次に連絡すべき相手と文面を出す。</h3>
-<p>会うべき人、理由、次フォロー、送る文面まで準備します。</p>
+<h3>教育・ナレッジ共有</h3>
+<p>新人説明、OJT、質問対応、チーム内共有、失敗時のフォローをSIMYが下支えします。</p>
 </div>
 </article>
 <article class="experience-card">
-<img alt="" data-experience-image="" decoding="async" loading="lazy" src="assets/experience-local/us/05-backup-plan.jpg"/>
+<img alt="" decoding="async" loading="lazy" src="assets/management-work/manual-handoff-faq.jpg" style="--experience-focus: 58% center;"/>
 <div class="experience-body">
 <div class="experience-num">05</div>
-<h3>返信、議事録、報告、資料を下書きする。</h3>
-<p>作業をゼロから始めず、人が確認して直せる形で出します。</p>
+<h3>手順書・引き継ぎ・FAQ</h3>
+<p>スクショ付き手順書、業務マニュアル、FAQ、引き継ぎ資料、ナレッジベースを作ります。</p>
+</div>
+</article>
+<article class="experience-card">
+<img alt="" decoding="async" loading="lazy" src="assets/management-work/executive-reporting.jpg" style="--experience-focus: 54% center;"/>
+<div class="experience-body">
+<div class="experience-num">06</div>
+<h3>報告・会議体・タスク割当</h3>
+<p>CEO向け週次レポート、CFO向け月次レポート、部門横断会議、タスク割当を準備します。</p>
 </div>
 </article>
 </div>
 <div class="deliverable-column-head persona-output-intro">
 <div class="deliverable-column-kicker">HOW SIMY RUNS</div>
-<div class="deliverable-column-title">未返信、会議、報告、フォロー、資料化をSIMYが先に進める</div>
+<div class="deliverable-column-title">会議、計画、緊急対応、教育、手順書、報告をSIMYが先に進める</div>
 </div>
 <div aria-label="Persona carousel controls" class="persona-carousel-bar">
 <div class="persona-carousel-status" data-persona-carousel-status="">01 / 10</div>
@@ -3386,10 +3395,10 @@
 </div>
 </div>
 <div aria-label="Trust signals" class="assurance-line">
-<span>未処理を、人とAIの仕事に分ける</span>
-<span>会議前に、目的と論点を用意する</span>
-<span>目的から、実行手順を作る</span>
-<span>次のフォロー文まで準備する</span>
+<span>会議運営と進捗確認を準備する</span>
+<span>優先順位とリソース調整を整理する</span>
+<span>緊急対応と問い合わせを受け止める</span>
+<span>手順書、報告、タスク割当を下書きする</span>
 </div>
 </div>
 </section>
@@ -4301,6 +4310,13 @@
             var rect = track.getBoundingClientRect();
             var inset = window.innerWidth < 760 ? 12 : 24;
             edgeCanShow = rect.top < window.innerHeight && rect.bottom > 0;
+            var visibleTop = Math.max(0, rect.top);
+            var visibleBottom = Math.min(window.innerHeight, rect.bottom);
+            var visibleCenter = visibleTop + ((visibleBottom - visibleTop) / 2);
+            var minTop = window.innerWidth < 760 ? 88 : 120;
+            var maxTop = window.innerHeight - (window.innerWidth < 760 ? 88 : 120);
+            var controlTop = Math.max(minTop, Math.min(maxTop, visibleCenter));
+            edgeControls.style.setProperty('--persona-edge-top', controlTop + 'px');
             edgeControls.style.setProperty('--persona-edge-left', Math.max(12, rect.left + inset) + 'px');
             edgeControls.style.setProperty('--persona-edge-right', Math.max(12, window.innerWidth - rect.right + inset) + 'px');
             if (!edgeCanShow) edgeControls.classList.remove('is-visible');
