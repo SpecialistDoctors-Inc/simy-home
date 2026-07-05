@@ -1289,7 +1289,7 @@
         position: absolute;
         inset: 0;
         content: "";
-        background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.06) 48%, rgba(0, 0, 0, 0.58) 100%);
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0) 28%, rgba(0, 0, 0, 0.18) 56%, rgba(0, 0, 0, 0.66) 100%);
         pointer-events: none;
       }
       .experience-card img {
@@ -1300,7 +1300,7 @@
         object-fit: cover;
         object-position: var(--experience-focus, center);
         background: #111;
-        filter: brightness(1.12) saturate(1.04);
+        filter: brightness(1.04) saturate(1.08);
       }
       .experience-card.featured img {
         object-position: 64% center;
@@ -1309,23 +1309,29 @@
         position: absolute;
         inset: auto 0 0;
         z-index: 1;
-        padding: 24px;
-        text-shadow: 0 2px 18px rgba(0, 0, 0, 0.56);
+        padding: 26px 28px 28px;
+        text-shadow: 0 2px 16px rgba(0, 0, 0, 0.48);
       }
       .experience-num {
-        color: rgba(255, 255, 255, 0.78);
+        display: inline-grid;
+        width: 42px;
+        height: 42px;
+        place-items: center;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.96);
+        color: #161616;
         font-family: 'Geist Mono', monospace;
-        font-size: 0.72rem;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
+        font-size: 0.9rem;
+        font-weight: 800;
+        letter-spacing: 0;
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
       }
       .experience-card h3 {
         max-width: 560px;
-        margin: 12px 0 0;
+        margin: 14px 0 0;
         font-size: 1.55rem;
         line-height: 1.05;
         letter-spacing: 0;
-        text-transform: uppercase;
       }
       .experience-card p {
         max-width: 560px;
@@ -2696,6 +2702,11 @@
         .experience-body {
           padding: 16px;
         }
+        .experience-num {
+          width: 38px;
+          height: 38px;
+          font-size: 0.84rem;
+        }
         .experience-card h3 {
           font-size: 1.24rem;
         }
@@ -3020,7 +3031,7 @@
 <p class="section-lead">会議、管理、教育、報告、緊急対応は、放っておくと全部「できる人」の未処理になります。SIMYは、部門を止めないために積まれている管理業務を、人が判断する仕事とAIが先に進める仕事に分けて動かします。</p>
 <div aria-label="SIMY user experiences" class="experience-grid">
 <article class="experience-card">
-<img alt="" decoding="async" loading="lazy" src="assets/management-work/meeting-progress.jpg" style="--experience-focus: 52% center;"/>
+<img alt="" decoding="async" loading="lazy" src="assets/management-work/meeting-progress-warm.jpg" style="--experience-focus: 52% center;"/>
 <div class="experience-body">
 <div class="experience-num">01</div>
 <h3>会議運営・進捗確認</h3>
@@ -3028,7 +3039,7 @@
 </div>
 </article>
 <article class="experience-card">
-<img alt="" decoding="async" loading="lazy" src="assets/management-work/planning-resources.jpg" style="--experience-focus: 56% center;"/>
+<img alt="" decoding="async" loading="lazy" src="assets/management-work/planning-resources-warm.jpg" style="--experience-focus: 56% center;"/>
 <div class="experience-body">
 <div class="experience-num">02</div>
 <h3>計画・優先順位・リソース調整</h3>
@@ -3036,7 +3047,7 @@
 </div>
 </article>
 <article class="experience-card">
-<img alt="" decoding="async" loading="lazy" src="assets/management-work/customer-urgent.jpg" style="--experience-focus: 72% center;"/>
+<img alt="" decoding="async" loading="lazy" src="assets/management-work/customer-urgent-warm.jpg" style="--experience-focus: 72% center;"/>
 <div class="experience-body">
 <div class="experience-num">03</div>
 <h3>顧客・緊急対応</h3>
@@ -3044,7 +3055,7 @@
 </div>
 </article>
 <article class="experience-card">
-<img alt="" decoding="async" loading="lazy" src="assets/management-work/training-knowledge.jpg" style="--experience-focus: 50% center;"/>
+<img alt="" decoding="async" loading="lazy" src="assets/management-work/training-knowledge-warm.jpg" style="--experience-focus: 50% center;"/>
 <div class="experience-body">
 <div class="experience-num">04</div>
 <h3>教育・ナレッジ共有</h3>
@@ -3052,7 +3063,7 @@
 </div>
 </article>
 <article class="experience-card">
-<img alt="" decoding="async" loading="lazy" src="assets/management-work/manual-handoff-faq.jpg" style="--experience-focus: 58% center;"/>
+<img alt="" decoding="async" loading="lazy" src="assets/management-work/manual-handoff-faq-warm.jpg" style="--experience-focus: 58% center;"/>
 <div class="experience-body">
 <div class="experience-num">05</div>
 <h3>手順書・引き継ぎ・FAQ</h3>
@@ -3060,7 +3071,7 @@
 </div>
 </article>
 <article class="experience-card">
-<img alt="" decoding="async" loading="lazy" src="assets/management-work/executive-reporting.jpg" style="--experience-focus: 54% center;"/>
+<img alt="" decoding="async" loading="lazy" src="assets/management-work/executive-reporting-warm.jpg" style="--experience-focus: 54% center;"/>
 <div class="experience-body">
 <div class="experience-num">06</div>
 <h3>報告・会議体・タスク割当</h3>
