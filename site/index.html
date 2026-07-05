@@ -810,6 +810,7 @@
         min-height: 100vh;
       }
       .container {
+        position: relative;
         max-width: 1180px;
         margin: 0 auto;
         padding: 0 4rem;
@@ -1639,10 +1640,10 @@
         color: var(--blue);
       }
       .persona-carousel-edge-controls {
-        position: fixed;
-        top: var(--persona-edge-top, 50vh);
-        left: var(--persona-edge-left, 24px);
-        right: var(--persona-edge-right, 24px);
+        position: absolute;
+        top: var(--persona-edge-top, 50%);
+        left: 20px;
+        right: 20px;
         z-index: 7;
         display: flex;
         align-items: center;
@@ -4359,17 +4360,9 @@ Oakland, CA 94612<br/>
           function updateEdgeControls(index) {
             if (!edgeControls) return;
             var rect = track.getBoundingClientRect();
-            var inset = window.innerWidth < 760 ? 12 : 24;
             edgeCanShow = rect.top < window.innerHeight && rect.bottom > 0;
-            var visibleTop = Math.max(0, rect.top);
-            var visibleBottom = Math.min(window.innerHeight, rect.bottom);
-            var visibleCenter = visibleTop + ((visibleBottom - visibleTop) / 2);
-            var minTop = window.innerWidth < 760 ? 88 : 120;
-            var maxTop = window.innerHeight - (window.innerWidth < 760 ? 88 : 120);
-            var controlTop = Math.max(minTop, Math.min(maxTop, visibleCenter));
+            var controlTop = track.offsetTop + (track.offsetHeight / 2);
             edgeControls.style.setProperty('--persona-edge-top', controlTop + 'px');
-            edgeControls.style.setProperty('--persona-edge-left', Math.max(12, rect.left + inset) + 'px');
-            edgeControls.style.setProperty('--persona-edge-right', Math.max(12, window.innerWidth - rect.right + inset) + 'px');
             if (!edgeCanShow) edgeControls.classList.remove('is-visible');
           }
 
