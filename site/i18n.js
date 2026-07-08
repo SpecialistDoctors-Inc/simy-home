@@ -194,10 +194,23 @@
     return supportedRegion(regionFromLang(CURRENT_LANG || detect())) || 'us';
   }
 
+  function currentAppHostname() {
+    var host = location.hostname;
+    if (host === 'dev.simy.one' || host === 'localhost' || host === '127.0.0.1') {
+      return 'app-dev.simy.one';
+    }
+    return 'app.simy.one';
+  }
+
+  function isAppHostname(hostname) {
+    return hostname === 'app.simy.one' || hostname === 'app-dev.simy.one';
+  }
+
   function decorateAppUrl(href) {
     try {
       var url = new URL(href, location.href);
-      if (url.hostname !== 'app.simy.one') return href;
+      if (!isAppHostname(url.hostname)) return href;
+      url.hostname = currentAppHostname();
       var lang = CURRENT_LANG || document.documentElement.lang || detect();
       var region = currentRegionForApp();
       url.searchParams.set('lang', lang);
@@ -244,7 +257,7 @@
     for (var i = 0; i < links.length; i++) {
       var href = links[i].getAttribute('href');
       if (!href) continue;
-      var nextHref = href.indexOf('app.simy.one') !== -1
+      var nextHref = href.indexOf('app.simy.one') !== -1 || href.indexOf('app-dev.simy.one') !== -1
         ? decorateAppUrl(href)
         : decorateSiteUrl(href);
       links[i].setAttribute('href', nextHref);
@@ -280,7 +293,7 @@
       if (!target || target === document || !target.getAttribute) return;
       var href = target.getAttribute('href');
       if (!href) return;
-      var nextHref = href.indexOf('app.simy.one') !== -1
+      var nextHref = href.indexOf('app.simy.one') !== -1 || href.indexOf('app-dev.simy.one') !== -1
         ? decorateAppUrl(href)
         : decorateSiteUrl(href);
       if (nextHref && nextHref !== href) target.setAttribute('href', nextHref);
