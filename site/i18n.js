@@ -447,7 +447,7 @@
         "index": { t: "SIMY - 重要な会議のあと、仕事を止めない", d: "お客さまとの打ち合わせ、投資家との面談、社内の意思決定のあと、SIMYがフォロー、顧客メモ、提案、チーム共有、次にやることを進めます。" },
         "pricing": { t: "料金 — SIMY | AIコード生成プラン 月額20ドルから", d: "会議からコードを生成するSIMYの料金。Starter月額$20、Pro$40、Scale$100。GitHub Copilot・Cursorより安価なプラン。" },
         "compare": { t: "SIMY比較 — 会議後の仕事を引き継ぐYour Twin", d: "エージェントは作業をする。Twinは文脈を引き継ぐ。会議からフォロー、資料、顧客メモ、チーム共有、次にやることへ進めます。" },
-        "press-release": { t: "ニュース — SIMY、会議後の仕事を進めるInteligence Twinを発表", d: "Meeting ends. Your Twin starts working. SIMYは会議の文脈をフォロー、提案、顧客メモ、チーム共有、次にやることへ変えるInteligence Twinを発表しました。" },
+        "press-release": { t: "ニュース — SIMY、会議後の仕事を進めるInteligence Twinを発表", d: "会議は終了します。あなたのTwinが仕事を始めます。SIMYは会議の文脈をフォロー、提案、顧客メモ、チーム共有、次にやることへ変えるInteligence Twinを発表しました。" },
         "privacy": { t: "プライバシーポリシー — SIMY by AwakApp Inc.", d: "SIMYのプライバシーポリシー。AwakApp Inc.が個人情報をどのように収集、利用、開示、保護するかを説明します。" },
         "terms": { t: "利用規約 — SIMY by AwakApp Inc.", d: "SIMYの利用規約。AwakApp Inc.が提供するSIMYの利用条件を説明します。" },
         "how-it-works": { t: "使い方 — SIMY | 会議からコード生成 4ステップ", d: "SIMYが会議をGitHubプルリクエストに変える4ステップ：録画、AI処理、コード生成、PR作成。プロンプト不要。" },
@@ -668,6 +668,8 @@
   };
 
   function pageKey() {
+    var explicitPage = document.querySelector('meta[name="simy-page"]');
+    if (explicitPage && explicitPage.content) return explicitPage.content;
     var p = location.pathname;
     if (p === '/' || p === '') return 'index';
     if (p === '/compare/' || /\/compare\/index\.html$/.test(p)) return 'compare';
@@ -688,6 +690,10 @@
     el.setAttribute('content', content);
   }
 
+  function stripSeoHtml(value) {
+    return (value || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+  }
+
   function applySEO(lang) {
     var data = SEO[lang];
     if (!data) return;
@@ -706,6 +712,40 @@
       }
     }
     if (data.kw) setMetaTag('keywords', data.kw);
+  }
+
+  function applyDictionarySEO(dict, langCode) {
+    if (!dict) return;
+    if (langCode === DEFAULT) return;
+    var key = pageKey();
+    var title = '';
+    var desc = '';
+    if (key === 'index') {
+      title = stripSeoHtml(dict['home.h1']);
+      desc = stripSeoHtml(dict['home.final.p']);
+    } else if (key === 'press-release' || key === 'press') {
+      title = stripSeoHtml(dict['newpress.h1']);
+      desc = stripSeoHtml(dict['newpress.lead']);
+    } else if (key === 'privacy') {
+      title = stripSeoHtml(dict['privacy.title']);
+      desc = stripSeoHtml(dict['privacy.intro']);
+    } else if (key === 'terms') {
+      title = stripSeoHtml(dict['terms.title']);
+      desc = stripSeoHtml(dict['terms.intro']);
+    } else if (key === '404' || key === 'error') {
+      title = stripSeoHtml(dict['e404.h1']);
+      desc = stripSeoHtml(dict['e404.p']);
+    }
+    if (title) {
+      document.title = title + ' — SIMY';
+      setMetaTag('og:title', document.title, 'property');
+      setMetaTag('twitter:title', document.title);
+    }
+    if (desc) {
+      setMetaTag('description', desc);
+      setMetaTag('og:description', desc, 'property');
+      setMetaTag('twitter:description', desc);
+    }
   }
 
   /* ── Capture original (English) DOM content on first apply ──
@@ -1312,6 +1352,7 @@
 
     // Inject localized SEO (title, description, keywords, OG, Twitter)
     applySEO(meta.code || DEFAULT);
+    applyDictionarySEO(dict, meta.code || DEFAULT);
 
     // Text-only replacements — fall back to captured original if dict
     // lacks the key so we never leave a stale translation behind.

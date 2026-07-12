@@ -913,7 +913,8 @@ window.SIMY_I18N_BUNDLE = {
     "newpress.avail.p": "يتوفر SIMY من خلال الاشتراك عبر الويب مع الخطط القائمة على المقاعد وتخصيص رمز SIMY. يمكن للفرق البدء بـ Pro وتوسيع الاستخدام مع نمو حجم الاجتماع والأدوات المتصلة وسير العمل بعد الاجتماع.",
     "newpress.about.h": "حول سيمي",
     "newpress.about.p": "تقوم SIMY ببناء Inteligence Twin للعمل المعرفي الحديث. يساعد Twinك الفرق على الانتقال من سياق الاجتماع إلى المتابعة، والاقتراح، وملاحظات العملاء، وتحديثات الفريق، والخطوات التالية، حتى يتمكن الأشخاص من قضاء المزيد من الوقت في التعامل مع العملاء، والاستراتيجية، والعلاقات، والعمل الذي لا يمكن إلا للبشر القيام به.",
-    "newpress.avail.contact": "لمزيد من المعلومات، تفضل بزيارة <a href=\"/\">simy.one</a> أو اتصل بـ <a href=\"mailto:sales@simy.one\">sales@simy.one</a>."
+    "newpress.avail.contact": "لمزيد من المعلومات، تفضل بزيارة <a href=\"/\">simy.one</a> أو اتصل بـ <a href=\"mailto:sales@simy.one\">sales@simy.one</a>.",
+    "newcompare.quote": "ينتهي الاجتماع. ويبدأ Twin العمل."
   },
   "de": {
     "_meta": {
@@ -1461,7 +1462,7 @@ window.SIMY_I18N_BUNDLE = {
     "terms.h6_1_li3": "<strong>(c) Anonymisierte Daten:</strong> Wir können anonymisierte, aggregierte Daten aus allen Plänen für Analysezwecke verwenden.",
     "terms.h7": "7. KI-Ausgaben und Haftungsausschlüsse",
     "terms.p7": "KI-generierter Code und Vorschläge („KI-Ausgabe“) können ungenau oder voreingenommen sein oder Fehler enthalten.",
-    "terms.h7_note": "<strong>Human-in-the-Loop:</strong> Sie MÜSSEN alle KI-Ausgaben überprüfen und testen. Das Unternehmen haftet nicht für Fehler, Sicherheitslücken oder Systemausfälle, die durch KI-generierten Code verursacht werden.",
+    "terms.h7_note": "<strong>Mensch in der Schleife:</strong> Sie MÜSSEN alle KI-Ausgaben überprüfen und testen. Das Unternehmen haftet nicht für Fehler, Sicherheitslücken oder Systemausfälle, die durch KI-generierten Code verursacht werden.",
     "terms.h8": "8. Kostenpflichtige Dienste",
     "terms.p8": "Gebühren sind nicht erstattungsfähig. Abonnements verlängern sich automatisch, sofern sie nicht über die Kontoeinstellungen oder per E-Mail an tech@simy.one gekündigt werden.",
     "terms.h9": "9. Integrationen von Drittanbietern",
@@ -1829,7 +1830,8 @@ window.SIMY_I18N_BUNDLE = {
     "newpress.avail.p": "SIMY ist über die Web-Anmeldung mit platzbasierten Plänen und SIMY-Token-Zuteilung verfügbar. Teams können mit Pro beginnen und die Nutzung erweitern, wenn das Besprechungsvolumen, die verbundenen Tools und die Arbeitsabläufe nach der Besprechung zunehmen.",
     "newpress.about.h": "Über SIMY",
     "newpress.about.p": "SIMY baut einen Inteligence Twin für moderne Wissensarbeit. Ihr Zwilling hilft Teams dabei, vom Besprechungskontext zur Nachbereitung, zu Vorschlägen, Kundennotizen, Teamaktualisierungen und nächsten Schritten überzugehen, sodass die Mitarbeiter mehr Zeit für Kunden, Strategie, Beziehungen und die Arbeit haben, die nur Menschen leisten können.",
-    "newpress.avail.contact": "Für weitere Informationen besuchen Sie <a href=\"/\">simy.one</a> oder kontaktieren Sie <a href=\"mailto:sales@simy.one\">sales@simy.one</a>."
+    "newpress.avail.contact": "Für weitere Informationen besuchen Sie <a href=\"/\">simy.one</a> oder kontaktieren Sie <a href=\"mailto:sales@simy.one\">sales@simy.one</a>.",
+    "newcompare.quote": "Das Meeting endet. Ihr Twin beginnt zu arbeiten."
   },
   "en": {
     "_meta": {
@@ -2800,7 +2802,8 @@ window.SIMY_I18N_BUNDLE = {
     "home.output.care.item3.v": "Keeps next response, timing, and owner visible.",
     "home.output.care.item4.k": "Privacy control",
     "home.output.care.item4.v": "Positions sensitive conversations for controlled, Enterprise use.",
-    "home.output.care.action": "Important dialogue becomes record, coordination, and next support."
+    "home.output.care.action": "Important dialogue becomes record, coordination, and next support.",
+    "newcompare.quote": "Meeting ends. Your Twin starts working."
   },
   "es": {
     "_meta": {
@@ -3348,7 +3351,7 @@ window.SIMY_I18N_BUNDLE = {
     "terms.h6_1_li3": "<strong>(c) Datos anonimizados:</strong> Podemos utilizar datos agregados y anonimizados de todos los planes con fines analíticos.",
     "terms.h7": "7. Resultados de IA y exenciones de responsabilidad",
     "terms.p7": "El código y las sugerencias generados por IA (\"Salida de IA\") pueden ser inexactos, estar sesgados o contener errores.",
-    "terms.h7_note": "<strong>Human-in-the-Loop:</strong> DEBE revisar y probar toda la salida de IA. La Compañía no es responsable de errores, vulnerabilidades de seguridad o fallas del sistema causadas por código generado por IA.",
+    "terms.h7_note": "<strong>Supervisión humana:</strong> DEBE revisar y probar toda la salida de IA. La Compañía no es responsable de errores, vulnerabilidades de seguridad o fallas del sistema causadas por código generado por IA.",
     "terms.h8": "8. Servicios pagos",
     "terms.p8": "Las tarifas no son reembolsables. Las suscripciones se renuevan automáticamente a menos que se cancelen mediante la configuración de la cuenta o enviando un correo electrónico a tech@simy.one.",
     "terms.h9": "9. Integraciones de terceros",
@@ -3716,7 +3719,8 @@ window.SIMY_I18N_BUNDLE = {
     "newpress.avail.p": "SIMY está disponible a través del registro web con planes basados en asientos y asignación de tokens SIMY. Los equipos pueden comenzar con Pro y ampliar su uso a medida que crezca el volumen de reuniones, las herramientas conectadas y los flujos de trabajo posteriores a las reuniones.",
     "newpress.about.h": "Acerca de SIMY",
     "newpress.about.p": "SIMY está construyendo un Inteligence Twin para el trabajo del conocimiento moderno. Your Twin ayuda a los equipos a pasar del contexto de la reunión al seguimiento, la propuesta, las notas de los clientes, las actualizaciones del equipo y los próximos pasos, para que las personas puedan dedicar más tiempo a los clientes, la estrategia, las relaciones y el trabajo que solo los humanos pueden realizar.",
-    "newpress.avail.contact": "Para obtener más información, visite <a href=\"/\">simy.one</a> o comuníquese con <a href=\"mailto:sales@simy.one\">sales@simy.one</a>."
+    "newpress.avail.contact": "Para obtener más información, visite <a href=\"/\">simy.one</a> o comuníquese con <a href=\"mailto:sales@simy.one\">sales@simy.one</a>.",
+    "newcompare.quote": "La reunión termina. Tu Twin empieza a trabajar."
   },
   "fr": {
     "_meta": {
@@ -4264,7 +4268,7 @@ window.SIMY_I18N_BUNDLE = {
     "terms.h6_1_li3": "<strong>(c) Données anonymisées :</strong> Nous pouvons utiliser des données anonymisées et agrégées de tous les plans à des fins d'analyse.",
     "terms.h7": "7. Résultats de l'IA et clauses de non-responsabilité",
     "terms.p7": "Le code et les suggestions générés par l'IA (« AI Output ») peuvent être inexacts, biaisés ou contenir des erreurs.",
-    "terms.h7_note": "<strong>Human-in-the-Loop :</strong> Vous DEVEZ examiner et tester toutes les sorties de l'IA. La Société n'est pas responsable des bogues, des vulnérabilités de sécurité ou des pannes du système causées par le code généré par l'IA.",
+    "terms.h7_note": "<strong>Humain dans la boucle:</strong> Vous DEVEZ examiner et tester toutes les sorties de l'IA. La Société n'est pas responsable des bogues, des vulnérabilités de sécurité ou des pannes du système causées par le code généré par l'IA.",
     "terms.h8": "8. Services payants",
     "terms.p8": "Les frais ne sont pas remboursables. Les abonnements se renouvellent automatiquement sauf annulation via les paramètres du compte ou en envoyant un e-mail à tech@simy.one.",
     "terms.h9": "9. Intégrations tierces",
@@ -4632,7 +4636,8 @@ window.SIMY_I18N_BUNDLE = {
     "newpress.avail.p": "SIMY est disponible via une inscription Web avec des forfaits basés sur les sièges et l'attribution de jetons SIMY. Les équipes peuvent commencer avec Pro et étendre leur utilisation à mesure que le volume des réunions, les outils connectés et les flux de travail après la réunion augmentent.",
     "newpress.about.h": "À propos de SIMY",
     "newpress.about.p": "SIMY construit un Inteligence Twin pour le travail de connaissances moderne. Votre Twin aide les équipes à passer du contexte de la réunion au suivi, à la proposition, aux notes clients, aux mises à jour de l'équipe et aux prochaines étapes, afin que les gens puissent consacrer plus de temps aux clients, à la stratégie, aux relations et au travail que seuls les humains peuvent effectuer.",
-    "newpress.avail.contact": "Pour plus d'informations, visitez <a href=\"/\">simy.one</a> ou contactez <a href=\"mailto:sales@simy.one\">sales@simy.one</a>."
+    "newpress.avail.contact": "Pour plus d'informations, visitez <a href=\"/\">simy.one</a> ou contactez <a href=\"mailto:sales@simy.one\">sales@simy.one</a>.",
+    "newcompare.quote": "La réunion se termine. Votre Twin se met au travail."
   },
   "hi": {
     "_meta": {
@@ -5180,7 +5185,7 @@ window.SIMY_I18N_BUNDLE = {
     "terms.h6_1_li3": "<strong>(सी) अज्ञात डेटा:</strong> हम विश्लेषणात्मक उद्देश्यों के लिए सभी योजनाओं से अज्ञात, एकत्रित डेटा का उपयोग कर सकते हैं।",
     "terms.h7": "7. एआई आउटपुट और अस्वीकरण",
     "terms.p7": "एआई-जनरेटेड कोड और सुझाव (\"एआई आउटपुट\") गलत, पक्षपाती या त्रुटिपूर्ण हो सकते हैं।",
-    "terms.h7_note": "<strong>ह्यूमन-इन-द-लूप:</strong> आपको सभी एआई आउटपुट की समीक्षा और परीक्षण करना होगा। कंपनी एआई-जनरेटेड कोड के कारण होने वाले बग, सुरक्षा कमजोरियों या सिस्टम विफलताओं के लिए उत्तरदायी नहीं है।",
+    "terms.h7_note": "<strong>मानवीय समीक्षा:</strong> आपको सभी एआई आउटपुट की समीक्षा और परीक्षण करना होगा। कंपनी एआई-जनरेटेड कोड के कारण होने वाले बग, सुरक्षा कमजोरियों या सिस्टम विफलताओं के लिए उत्तरदायी नहीं है।",
     "terms.h8": "8. सशुल्क सेवाएँ",
     "terms.p8": "फीस वापसी योग्य नहीं है. सदस्यता स्वतः नवीनीकृत हो जाती है जब तक कि खाता सेटिंग्स के माध्यम से या tech@simy.one पर ईमेल करके रद्द न की जाए।",
     "terms.h9": "9. तृतीय-पक्ष एकीकरण",
@@ -5548,7 +5553,8 @@ window.SIMY_I18N_BUNDLE = {
     "newpress.avail.p": "SIMY सीट-आधारित योजनाओं और SIMY टोकन आवंटन के साथ वेब साइनअप के माध्यम से उपलब्ध है। टीमें प्रो के साथ शुरुआत कर सकती हैं और मीटिंग वॉल्यूम, कनेक्टेड टूल और मीटिंग के बाद वर्कफ़्लो बढ़ने पर उपयोग बढ़ा सकती हैं।",
     "newpress.about.h": "सिमी के बारे में",
     "newpress.about.p": "SIMY आधुनिक ज्ञान कार्य के लिए इंटेलिजेंस ट्विन का निर्माण कर रहा है। आपका ट्विन टीमों को बैठक के संदर्भ से लेकर फॉलो-अप, प्रस्ताव, ग्राहक नोट्स, टीम अपडेट और अगले चरणों तक जाने में मदद करता है, ताकि लोग ग्राहकों, रणनीति, रिश्तों और उस काम पर अधिक समय व्यतीत कर सकें जो केवल मनुष्य ही कर सकते हैं।",
-    "newpress.avail.contact": "अधिक जानकारी के लिए, <a href='/'>simy.one</a> पर जाएँ या <a href='mailto:sales@simy.one'>sales@simy.one</a> से संपर्क करें।"
+    "newpress.avail.contact": "अधिक जानकारी के लिए, <a href='/'>simy.one</a> पर जाएँ या <a href='mailto:sales@simy.one'>sales@simy.one</a> से संपर्क करें।",
+    "newcompare.quote": "मीटिंग खत्म होती है। आपका Twin काम शुरू करता है।"
   },
   "id": {
     "_meta": {
@@ -6096,7 +6102,7 @@ window.SIMY_I18N_BUNDLE = {
     "terms.h6_1_li3": "<strong>(c) Data Anonim:</strong> Kami dapat menggunakan data gabungan yang dianonimkan dari semua rencana untuk tujuan analitis.",
     "terms.h7": "7. Keluaran dan Penafian AI",
     "terms.p7": "Kode dan saran yang dihasilkan AI (\"Output AI\") mungkin tidak akurat, bias, atau mengandung kesalahan.",
-    "terms.h7_note": "<strong>Human-in-the-Loop:</strong> Anda HARUS meninjau dan menguji semua Output AI. Perusahaan tidak bertanggung jawab atas bug, kerentanan keamanan, atau kegagalan sistem yang disebabkan oleh kode yang dihasilkan AI.",
+    "terms.h7_note": "<strong>Manusia dalam proses:</strong> Anda HARUS meninjau dan menguji semua Output AI. Perusahaan tidak bertanggung jawab atas bug, kerentanan keamanan, atau kegagalan sistem yang disebabkan oleh kode yang dihasilkan AI.",
     "terms.h8": "8. Layanan Berbayar",
     "terms.p8": "Biaya tidak dapat dikembalikan. Langganan diperpanjang secara otomatis kecuali dibatalkan melalui pengaturan akun atau dengan mengirim email ke tech@simy.one.",
     "terms.h9": "9. Integrasi Pihak Ketiga",
@@ -6464,7 +6470,8 @@ window.SIMY_I18N_BUNDLE = {
     "newpress.avail.p": "SIMY tersedia melalui pendaftaran web dengan paket berbasis kursi dan alokasi token SIMY. Tim dapat memulai dengan Pro dan memperluas penggunaan seiring dengan bertambahnya volume rapat, alat yang terhubung, dan alur kerja setelah rapat.",
     "newpress.about.h": "Tentang SIMY",
     "newpress.about.p": "SIMY sedang membangun Inteligence Twin untuk pekerjaan pengetahuan modern. Kembar Anda membantu tim beralih dari konteks rapat ke tindak lanjut, proposal, catatan pelanggan, pembaruan tim, dan langkah selanjutnya, sehingga orang dapat menghabiskan lebih banyak waktu untuk menangani pelanggan, strategi, hubungan, dan pekerjaan yang hanya dapat dilakukan oleh manusia.",
-    "newpress.avail.contact": "Untuk informasi lebih lanjut, kunjungi <a href=\"/\">simy.one</a> atau hubungi <a href=\"mailto:sales@simy.one\">sales@simy.one</a>."
+    "newpress.avail.contact": "Untuk informasi lebih lanjut, kunjungi <a href=\"/\">simy.one</a> atau hubungi <a href=\"mailto:sales@simy.one\">sales@simy.one</a>.",
+    "newcompare.quote": "Rapat selesai. Twin Anda mulai bekerja."
   },
   "it": {
     "_meta": {
@@ -7012,7 +7019,7 @@ window.SIMY_I18N_BUNDLE = {
     "terms.h6_1_li3": "<strong>(c) Dati anonimizzati:</strong> potremmo utilizzare dati anonimi e aggregati provenienti da tutti i piani per scopi analitici.",
     "terms.h7": "7. Risultati dell'intelligenza artificiale e dichiarazioni di non responsabilità",
     "terms.p7": "Il codice e i suggerimenti generati dall'intelligenza artificiale (\"Output AI\") potrebbero essere imprecisi, distorti o contenere errori.",
-    "terms.h7_note": "<strong>Human-in-the-Loop:</strong> DEVI rivedere e testare tutti gli output dell'intelligenza artificiale. La Società non è responsabile per bug, vulnerabilità della sicurezza o errori di sistema causati dal codice generato dall'intelligenza artificiale.",
+    "terms.h7_note": "<strong>Supervisione umana:</strong> DEVI rivedere e testare tutti gli output dell'intelligenza artificiale. La Società non è responsabile per bug, vulnerabilità della sicurezza o errori di sistema causati dal codice generato dall'intelligenza artificiale.",
     "terms.h8": "8. Servizi a pagamento",
     "terms.p8": "Le tariffe non sono rimborsabili. Gli abbonamenti si rinnovano automaticamente a meno che non vengano annullati tramite le impostazioni dell'account o inviando un'e-mail a tech@simy.one.",
     "terms.h9": "9. Integrazioni di terze parti",
@@ -7380,7 +7387,8 @@ window.SIMY_I18N_BUNDLE = {
     "newpress.avail.p": "SIMY è disponibile tramite registrazione web con piani basati sul posto e allocazione di token SIMY. I team possono iniziare con Pro ed espandere l'utilizzo man mano che aumentano il volume delle riunioni, gli strumenti connessi e i flussi di lavoro post-riunione.",
     "newpress.about.h": "A proposito di SIMY",
     "newpress.about.p": "SIMY sta costruendo un Inteligence Twin per il moderno lavoro basato sulla conoscenza. Your Twin aiuta i team a passare dal contesto della riunione al follow-up, alla proposta, alle note dei clienti, agli aggiornamenti del team e ai passaggi successivi, in modo che le persone possano dedicare più tempo ai clienti, alla strategia, alle relazioni e al lavoro che solo gli esseri umani possono svolgere.",
-    "newpress.avail.contact": "Per ulteriori informazioni, visita <a href=\"/\">simy.one</a> o contatta <a href=\"mailto:sales@simy.one\">sales@simy.one</a>."
+    "newpress.avail.contact": "Per ulteriori informazioni, visita <a href=\"/\">simy.one</a> o contatta <a href=\"mailto:sales@simy.one\">sales@simy.one</a>.",
+    "newcompare.quote": "La riunione finisce. Il tuo Twin inizia a lavorare."
   },
   "ja": {
     "_meta": {
@@ -7939,7 +7947,7 @@ window.SIMY_I18N_BUNDLE = {
     "terms.h6_1_li3": "<strong>(c) 匿名化データ:</strong> 当社はすべてのプランの匿名化・集計データを分析目的で使用することがあります。",
     "terms.h7": "7. AI 出力および免責事項",
     "terms.p7": "AI 生成のコードおよび提案(以下「AI 出力」)は、不正確、偏向、または誤りを含む可能性があります。",
-    "terms.h7_note": "<strong>Human-in-the-Loop:</strong> お客様はすべての AI 出力をレビューおよびテストしなければなりません。当社は AI 生成コードに起因するバグ、セキュリティ脆弱性、またはシステム障害について責任を負いません。",
+    "terms.h7_note": "<strong>人間による確認:</strong> お客様はすべての AI 出力をレビューおよびテストしなければなりません。当社は AI 生成コードに起因するバグ、セキュリティ脆弱性、またはシステム障害について責任を負いません。",
     "terms.h8": "8. 有料サービス",
     "terms.p8": "料金は返金不可です。サブスクリプションは、アカウント設定から解約されるか、tech@simy.one にメールで連絡しない限り自動更新されます。",
     "terms.h9": "9. 第三者との連携",
@@ -8215,7 +8223,7 @@ window.SIMY_I18N_BUNDLE = {
     "newcompare.bottom.p": "約束はシンプルです。会議後の抜け漏れを減らし、文脈の説明し直しを減らし、顧客、戦略、関係性、人間にしかできない判断のための時間を増やします。",
     "newpress.meta": "プレスリリース · 即時公開",
     "newpress.h1": "SIMY、会議後の仕事を進めるInteligence Twinを発表。",
-    "newpress.lead": "Meeting ends. Your Twin starts working. あなたのTwinは、会議の文脈をフォロー、提案、顧客メモ、チーム共有、次にやることへ変え、チームの熱量が落ちる前に仕事を前へ進めます。",
+    "newpress.lead": "会議は終了します。あなたのTwinが仕事を始めます。あなたのTwinは、会議の文脈をフォロー、提案、顧客メモ、チーム共有、次にやることへ変え、チームの熱量が落ちる前に仕事を前へ進めます。",
     "newpress.location": "San Francisco, CA · 2026年6月",
     "newpress.p1": "SIMYは本日、会議が終わった瞬間から始まる仕事のための、新しいInteligence Twin体験を発表しました。タブを開き直し、文脈を思い出し、毎回フォローを手作業で書く代わりに、あなたのTwinが会議の流れを、チームがすでに使っているツールの中で引き継ぎます。",
     "newpress.p2": "対象となるのは、会議後に必ず発生する実務です。フォローアップメール、提案骨子、調査ブリーフ、顧客メモ、チーム引き継ぎ、次にやることの整理。SIMYは会議の文脈を読み、温度感と意図を保ったまま、確認・編集・送信できる仕事へ変えます。",
@@ -8351,7 +8359,8 @@ window.SIMY_I18N_BUNDLE = {
     "home.output.care.item3.v": "次の対応、タイミング、担当者を見える化する。",
     "home.output.care.item4.k": "プライバシー管理",
     "home.output.care.item4.v": "機微な対話は、管理されたEnterprise利用として位置づける。",
-    "home.output.care.action": "重要な対話が、記録、連携、次回支援へつながる。"
+    "home.output.care.action": "重要な対話が、記録、連携、次回支援へつながる。",
+    "newcompare.quote": "会議は終了します。ツインが仕事を始めます。"
   },
   "kn": {
     "_meta": {
@@ -8899,7 +8908,7 @@ window.SIMY_I18N_BUNDLE = {
     "terms.h6_1_li3": "<strong>(c) ಅನಾಮಧೇಯ ಡೇಟಾ:</strong> ನಾವು ವಿಶ್ಲೇಷಣಾತ್ಮಕ ಉದ್ದೇಶಗಳಿಗಾಗಿ ಎಲ್ಲಾ ಯೋಜನೆಗಳಿಂದ ಅನಾಮಧೇಯಗೊಳಿಸಿದ, ಒಟ್ಟುಗೂಡಿದ ಡೇಟಾವನ್ನು ಬಳಸಬಹುದು.",
     "terms.h7": "7. AI ಔಟ್‌ಪುಟ್‌ಗಳು ಮತ್ತು ಹಕ್ಕು ನಿರಾಕರಣೆಗಳು",
     "terms.p7": "AI-ರಚಿಸಿದ ಕೋಡ್ ಮತ್ತು ಸಲಹೆಗಳು (\"AI ಔಟ್‌ಪುಟ್\") ತಪ್ಪಾಗಿರಬಹುದು, ಪಕ್ಷಪಾತ ಅಥವಾ ದೋಷಗಳನ್ನು ಹೊಂದಿರಬಹುದು.",
-    "terms.h7_note": "<strong>ಹ್ಯೂಮನ್-ಇನ್-ದ-ಲೂಪ್:</strong> ನೀವು ಎಲ್ಲಾ AI ಔಟ್‌ಪುಟ್ ಅನ್ನು ಪರಿಶೀಲಿಸಬೇಕು ಮತ್ತು ಪರೀಕ್ಷಿಸಬೇಕು. AI- ರಚಿತವಾದ ಕೋಡ್‌ನಿಂದ ಉಂಟಾದ ದೋಷಗಳು, ಭದ್ರತಾ ದೋಷಗಳು ಅಥವಾ ಸಿಸ್ಟಮ್ ವೈಫಲ್ಯಗಳಿಗೆ ಕಂಪನಿಯು ಜವಾಬ್ದಾರನಾಗಿರುವುದಿಲ್ಲ.",
+    "terms.h7_note": "<strong>ಮಾನವ ಮೇಲ್ವಿಚಾರಣೆ:</strong> ನೀವು ಎಲ್ಲಾ AI ಔಟ್‌ಪುಟ್ ಅನ್ನು ಪರಿಶೀಲಿಸಬೇಕು ಮತ್ತು ಪರೀಕ್ಷಿಸಬೇಕು. AI- ರಚಿತವಾದ ಕೋಡ್‌ನಿಂದ ಉಂಟಾದ ದೋಷಗಳು, ಭದ್ರತಾ ದೋಷಗಳು ಅಥವಾ ಸಿಸ್ಟಮ್ ವೈಫಲ್ಯಗಳಿಗೆ ಕಂಪನಿಯು ಜವಾಬ್ದಾರನಾಗಿರುವುದಿಲ್ಲ.",
     "terms.h8": "8. ಪಾವತಿಸಿದ ಸೇವೆಗಳು",
     "terms.p8": "ಶುಲ್ಕವನ್ನು ಮರುಪಾವತಿಸಲಾಗುವುದಿಲ್ಲ. ಖಾತೆ ಸೆಟ್ಟಿಂಗ್‌ಗಳ ಮೂಲಕ ಅಥವಾ tech@simy.one ಇಮೇಲ್ ಮೂಲಕ ರದ್ದುಗೊಳಿಸದ ಹೊರತು ಚಂದಾದಾರಿಕೆಗಳು ಸ್ವಯಂ-ನವೀಕರಣಗೊಳ್ಳುತ್ತವೆ.",
     "terms.h9": "9. ಥರ್ಡ್-ಪಾರ್ಟಿ ಇಂಟಿಗ್ರೇಷನ್ಸ್",
@@ -9267,7 +9276,8 @@ window.SIMY_I18N_BUNDLE = {
     "newpress.avail.p": "ಸೀಟ್-ಆಧಾರಿತ ಯೋಜನೆಗಳು ಮತ್ತು SIMY ಟೋಕನ್ ಹಂಚಿಕೆಯೊಂದಿಗೆ ವೆಬ್ ಸೈನ್ ಅಪ್ ಮೂಲಕ SIMY ಲಭ್ಯವಿದೆ. ಸಭೆಯ ಪರಿಮಾಣ, ಸಂಪರ್ಕಿತ ಪರಿಕರಗಳು ಮತ್ತು ಸಭೆಯ ನಂತರದ ಕೆಲಸದ ಹರಿವುಗಳು ಬೆಳೆದಂತೆ ತಂಡಗಳು ಪ್ರೋ ಮತ್ತು ಬಳಕೆಯನ್ನು ವಿಸ್ತರಿಸಬಹುದು.",
     "newpress.about.h": "SIMY ಕುರಿತು",
     "newpress.about.p": "SIMY ಆಧುನಿಕ ಜ್ಞಾನದ ಕೆಲಸಕ್ಕಾಗಿ ಇಂಟೆಲಿಜೆನ್ಸ್ ಟ್ವಿನ್ ಅನ್ನು ನಿರ್ಮಿಸುತ್ತಿದೆ. ನಿಮ್ಮ ಟ್ವಿನ್ ತಂಡಗಳು ಸಭೆಯ ಸಂದರ್ಭದಿಂದ ಅನುಸರಣೆ, ಪ್ರಸ್ತಾವನೆ, ಗ್ರಾಹಕರ ಟಿಪ್ಪಣಿಗಳು, ತಂಡದ ನವೀಕರಣಗಳು ಮತ್ತು ಮುಂದಿನ ಹಂತಗಳಿಗೆ ಹೋಗಲು ಸಹಾಯ ಮಾಡುತ್ತದೆ, ಆದ್ದರಿಂದ ಜನರು ಗ್ರಾಹಕರು, ಕಾರ್ಯತಂತ್ರ, ಸಂಬಂಧಗಳು ಮತ್ತು ಮಾನವರು ಮಾತ್ರ ಸಾಗಿಸಬಹುದಾದ ಕೆಲಸದ ಮೇಲೆ ಹೆಚ್ಚಿನ ಸಮಯವನ್ನು ಕಳೆಯಬಹುದು.",
-    "newpress.avail.contact": "ಹೆಚ್ಚಿನ ಮಾಹಿತಿಗಾಗಿ, <a href=\"/\">simy.one</a> ಗೆ ಭೇಟಿ ನೀಡಿ ಅಥವಾ <a href=\"mailto:sales@simy.one\">sales@simy.one</a> ಅನ್ನು ಸಂಪರ್ಕಿಸಿ."
+    "newpress.avail.contact": "ಹೆಚ್ಚಿನ ಮಾಹಿತಿಗಾಗಿ, <a href=\"/\">simy.one</a> ಗೆ ಭೇಟಿ ನೀಡಿ ಅಥವಾ <a href=\"mailto:sales@simy.one\">sales@simy.one</a> ಅನ್ನು ಸಂಪರ್ಕಿಸಿ.",
+    "newcompare.quote": "ಮೀಟಿಂಗ್ ಮುಗಿಯುತ್ತದೆ. ನಿಮ್ಮ Twin ಕೆಲಸ ಆರಂಭಿಸುತ್ತದೆ."
   },
   "ko": {
     "_meta": {
@@ -9815,7 +9825,7 @@ window.SIMY_I18N_BUNDLE = {
     "terms.h6_1_li3": "<strong>(c) 익명 데이터:</strong> 당사는 분석 목적으로 모든 계획에서 익명으로 집계된 데이터를 사용할 수 있습니다.",
     "terms.h7": "7. AI 출력 및 면책조항",
     "terms.p7": "AI 생성 코드 및 제안(\"AI 출력\")은 부정확하거나 편향되거나 오류를 포함할 수 있습니다.",
-    "terms.h7_note": "<strong>Human-in-the-Loop:</strong> 모든 AI 출력을 검토하고 테스트해야 합니다. 회사는 AI 생성 코드로 인해 발생한 버그, 보안 취약점, 시스템 장애에 대해 책임을 지지 않습니다.",
+    "terms.h7_note": "<strong>사람의 검토:</strong> 모든 AI 출력을 검토하고 테스트해야 합니다. 회사는 AI 생성 코드로 인해 발생한 버그, 보안 취약점, 시스템 장애에 대해 책임을 지지 않습니다.",
     "terms.h8": "8. 유료 서비스",
     "terms.p8": "수수료는 환불되지 않습니다. 계정 설정을 통해 취소하거나 tech@simy.one으로 이메일을 보내지 않는 한 구독은 자동으로 갱신됩니다.",
     "terms.h9": "9. 타사 통합",
@@ -10183,7 +10193,8 @@ window.SIMY_I18N_BUNDLE = {
     "newpress.avail.p": "SIMY는 좌석 기반 요금제 및 SIMY 토큰 할당을 통해 웹 가입을 통해 사용할 수 있습니다. 팀은 Pro로 시작하여 회의 규모, 연결된 도구 및 회의 후 워크플로가 증가함에 따라 사용량을 확장할 수 있습니다.",
     "newpress.about.h": "SIMY 소개",
     "newpress.about.p": "SIMY는 현대 지식 작업을 위한 Inteligence Twin을 구축하고 있습니다. 귀하의 Twin은 팀이 회의 상황에서 후속 조치, 제안, 고객 메모, 팀 업데이트 및 다음 단계로 이동하는 데 도움이 되므로 사람들은 고객, 전략, 관계 및 인간만이 수행할 수 있는 작업에 더 많은 시간을 보낼 수 있습니다.",
-    "newpress.avail.contact": "자세한 내용을 알아보려면 <a href=\"/\">simy.one</a>을 방문하거나 <a href=\"mailto:sales@simy.one\">sales@simy.one</a>으로 문의하세요."
+    "newpress.avail.contact": "자세한 내용을 알아보려면 <a href=\"/\">simy.one</a>을 방문하거나 <a href=\"mailto:sales@simy.one\">sales@simy.one</a>으로 문의하세요.",
+    "newcompare.quote": "회의가 끝납니다. Twin이 일을 시작합니다."
   },
   "pt-BR": {
     "_meta": {
@@ -10731,7 +10742,7 @@ window.SIMY_I18N_BUNDLE = {
     "terms.h6_1_li3": "<strong>(c) Dados Anonimizados:</strong> Podemos usar dados agregados e anonimizados de todos os planos para fins analíticos.",
     "terms.h7": "7. Resultados e isenções de responsabilidade de IA",
     "terms.p7": "O código e as sugestões gerados por IA (\"Saída de IA\") podem ser imprecisos, tendenciosos ou conter erros.",
-    "terms.h7_note": "<strong>Human-in-the-Loop:</strong> você DEVE revisar e testar todos os resultados da IA. A Empresa não se responsabiliza por bugs, vulnerabilidades de segurança ou falhas de sistema causadas por código gerado por IA.",
+    "terms.h7_note": "<strong>Humano no processo:</strong> você DEVE revisar e testar todos os resultados da IA. A Empresa não se responsabiliza por bugs, vulnerabilidades de segurança ou falhas de sistema causadas por código gerado por IA.",
     "terms.h8": "8. Serviços Pagos",
     "terms.p8": "As taxas não são reembolsáveis. As assinaturas são renovadas automaticamente, a menos que sejam canceladas por meio das configurações da conta ou enviando um e-mail para tech@simy.one.",
     "terms.h9": "9. Integrações de terceiros",
@@ -11099,7 +11110,8 @@ window.SIMY_I18N_BUNDLE = {
     "newpress.avail.p": "SIMY está disponível por meio de inscrição na web com planos baseados em assentos e alocação de token SIMY. As equipes podem começar com o Pro e expandir o uso à medida que o volume de reuniões, as ferramentas conectadas e os fluxos de trabalho pós-reunião aumentam.",
     "newpress.about.h": "Sobre SIMY",
     "newpress.about.p": "SIMY está construindo um Inteligence Twin para o trabalho do conhecimento moderno. Seu Twin ajuda as equipes a passar do contexto da reunião para o acompanhamento, proposta, notas do cliente, atualizações da equipe e próximas etapas, para que as pessoas possam dedicar mais tempo aos clientes, à estratégia, aos relacionamentos e ao trabalho que só os humanos podem realizar.",
-    "newpress.avail.contact": "Para obter mais informações, visite <a href=\"/\">simy.one</a> ou entre em contato com <a href=\"mailto:sales@simy.one\">sales@simy.one</a>."
+    "newpress.avail.contact": "Para obter mais informações, visite <a href=\"/\">simy.one</a> ou entre em contato com <a href=\"mailto:sales@simy.one\">sales@simy.one</a>.",
+    "newcompare.quote": "A reunião termina. Seu Twin começa a trabalhar."
   },
   "ru": {
     "_meta": {
@@ -12015,7 +12027,8 @@ window.SIMY_I18N_BUNDLE = {
     "newpress.avail.p": "SIMY доступен через веб-регистрацию с планами на основе рабочих мест и распределением токенов SIMY. Команды могут начать с версии Pro и расширять использование по мере увеличения объема собраний, подключенных инструментов и рабочих процессов после собраний.",
     "newpress.about.h": "О СИМИ",
     "newpress.about.p": "SIMY создает Intelligence Twin для современной научной работы. Ваш Twin помогает командам перейти от контекста встречи к последующим действиям, предложениям, заметкам для клиентов, обновлениям команды и следующим шагам, чтобы люди могли уделять больше времени клиентам, стратегии, отношениям и работе, которую могут выполнять только люди.",
-    "newpress.avail.contact": "Для получения дополнительной информации посетите <a href=\"/\">simy.one</a> или свяжитесь с <a href=\"mailto:sales@simy.one\">sales@simy.one</a>."
+    "newpress.avail.contact": "Для получения дополнительной информации посетите <a href=\"/\">simy.one</a> или свяжитесь с <a href=\"mailto:sales@simy.one\">sales@simy.one</a>.",
+    "newcompare.quote": "Встреча заканчивается. Ваш Twin начинает работать."
   },
   "te": {
     "_meta": {
@@ -12563,7 +12576,7 @@ window.SIMY_I18N_BUNDLE = {
     "terms.h6_1_li3": "<strong>(c) అనామక డేటా:</strong> మేము విశ్లేషణాత్మక ప్రయోజనాల కోసం అన్ని ప్లాన్‌ల నుండి అనామక, సమగ్ర డేటాను ఉపయోగించవచ్చు.",
     "terms.h7": "7. AI అవుట్‌పుట్‌లు మరియు నిరాకరణలు",
     "terms.p7": "AI- రూపొందించిన కోడ్ మరియు సూచనలు (\"AI అవుట్‌పుట్\") సరికానివి, పక్షపాతంతో లేదా లోపాలను కలిగి ఉండవచ్చు.",
-    "terms.h7_note": "<strong>హ్యూమన్-ఇన్-ది-లూప్:</strong> మీరు అన్ని AI అవుట్‌పుట్‌లను సమీక్షించి, పరీక్షించాలి. AI రూపొందించిన కోడ్ వల్ల బగ్‌లు, భద్రతా లోపాలు లేదా సిస్టమ్ వైఫల్యాలకు కంపెనీ బాధ్యత వహించదు.",
+    "terms.h7_note": "<strong>మానవ పర్యవేక్షణ:</strong> మీరు అన్ని AI అవుట్‌పుట్‌లను సమీక్షించి, పరీక్షించాలి. AI రూపొందించిన కోడ్ వల్ల బగ్‌లు, భద్రతా లోపాలు లేదా సిస్టమ్ వైఫల్యాలకు కంపెనీ బాధ్యత వహించదు.",
     "terms.h8": "8. చెల్లింపు సేవలు",
     "terms.p8": "ఫీజులు తిరిగి చెల్లించబడవు. ఖాతా సెట్టింగ్‌ల ద్వారా లేదా tech@simy.oneకి ఇమెయిల్ చేయడం ద్వారా రద్దు చేయకపోతే సభ్యత్వాలు స్వయంచాలకంగా పునరుద్ధరించబడతాయి.",
     "terms.h9": "9. థర్డ్-పార్టీ ఇంటిగ్రేషన్స్",
@@ -12931,7 +12944,8 @@ window.SIMY_I18N_BUNDLE = {
     "newpress.avail.p": "SIMY సీట్ ఆధారిత ప్లాన్‌లు మరియు SIMY టోకెన్ కేటాయింపుతో వెబ్ సైన్అప్ ద్వారా అందుబాటులో ఉంటుంది. మీటింగ్ వాల్యూమ్, కనెక్ట్ చేయబడిన టూల్స్ మరియు మీటింగ్ తర్వాత వర్క్‌ఫ్లోలు పెరిగే కొద్దీ బృందాలు ప్రోతో ప్రారంభించవచ్చు మరియు వినియోగాన్ని విస్తరించవచ్చు.",
     "newpress.about.h": "SIMY గురించి",
     "newpress.about.p": "SIMY ఆధునిక విజ్ఞాన పని కోసం ఇంటెలిజెన్స్ ట్విన్‌ను నిర్మిస్తోంది. మీ ట్విన్ బృందాలు సమావేశ సందర్భం నుండి ఫాలో-అప్, ప్రతిపాదన, కస్టమర్ నోట్‌లు, టీమ్ అప్‌డేట్‌లు మరియు తదుపరి దశలకు వెళ్లడంలో సహాయపడతాయి, తద్వారా వ్యక్తులు కస్టమర్‌లు, వ్యూహం, సంబంధాలు మరియు మానవులు మాత్రమే నిర్వహించగలిగే పనిపై ఎక్కువ సమయాన్ని వెచ్చించగలరు.",
-    "newpress.avail.contact": "మరింత సమాచారం కోసం, <a href=\"/\">simy.one</a>ని సందర్శించండి లేదా <a href=\"mailto:sales@simy.one\">sales@simy.one</a>ని సంప్రదించండి."
+    "newpress.avail.contact": "మరింత సమాచారం కోసం, <a href=\"/\">simy.one</a>ని సందర్శించండి లేదా <a href=\"mailto:sales@simy.one\">sales@simy.one</a>ని సంప్రదించండి.",
+    "newcompare.quote": "మీటింగ్ ముగుస్తుంది. మీ Twin పని ప్రారంభిస్తుంది."
   },
   "th": {
     "_meta": {
@@ -13479,7 +13493,7 @@ window.SIMY_I18N_BUNDLE = {
     "terms.h6_1_li3": "<strong>(c) ข้อมูลที่ไม่ระบุชื่อ:</strong> เราอาจใช้ข้อมูลรวมที่ไม่ระบุชื่อจากแผนทั้งหมดเพื่อวัตถุประสงค์ในการวิเคราะห์",
     "terms.h7": "7. เอาต์พุต AI และข้อจำกัดความรับผิดชอบ",
     "terms.p7": "โค้ดและคำแนะนำที่สร้างโดย AI (\"เอาต์พุต AI\") อาจไม่ถูกต้อง มีอคติ หรือมีข้อผิดพลาด",
-    "terms.h7_note": "<strong>Human-in-the-Loop:</strong> คุณต้องตรวจสอบและทดสอบเอาท์พุต AI ทั้งหมด บริษัทจะไม่รับผิดชอบต่อข้อบกพร่อง ช่องโหว่ด้านความปลอดภัย หรือความล้มเหลวของระบบที่เกิดจากรหัสที่สร้างโดย AI",
+    "terms.h7_note": "<strong>มนุษย์อยู่ในกระบวนการ:</strong> คุณต้องตรวจสอบและทดสอบเอาท์พุต AI ทั้งหมด บริษัทจะไม่รับผิดชอบต่อข้อบกพร่อง ช่องโหว่ด้านความปลอดภัย หรือความล้มเหลวของระบบที่เกิดจากรหัสที่สร้างโดย AI",
     "terms.h8": "8. บริการชำระเงิน",
     "terms.p8": "ค่าธรรมเนียมไม่สามารถขอคืนได้ การสมัครสมาชิกต่ออายุอัตโนมัติเว้นแต่จะยกเลิกผ่านการตั้งค่าบัญชีหรือส่งอีเมลไปที่ tech@simy.one",
     "terms.h9": "9. การบูรณาการโดยบุคคลที่สาม",
@@ -13847,7 +13861,8 @@ window.SIMY_I18N_BUNDLE = {
     "newpress.avail.p": "SIMY มีให้บริการผ่านการลงทะเบียนผ่านเว็บพร้อมแผนตามที่นั่งและการจัดสรรโทเค็น SIMY ทีมสามารถเริ่มต้นด้วย Pro และขยายการใช้งานตามปริมาณการประชุม เครื่องมือที่เชื่อมต่อ และเวิร์กโฟลว์หลังการประชุมเติบโตขึ้น",
     "newpress.about.h": "เกี่ยวกับ SIMY",
     "newpress.about.p": "SIMY กำลังสร้าง Inteligence Twin สำหรับงานความรู้สมัยใหม่ Twin ของคุณช่วยให้ทีมย้ายจากบริบทการประชุมไปสู่การติดตามผล ข้อเสนอ บันทึกของลูกค้า การอัปเดตทีม และขั้นตอนถัดไป เพื่อให้ผู้คนใช้เวลากับลูกค้า กลยุทธ์ ความสัมพันธ์ และงานที่มนุษย์เท่านั้นที่สามารถทำได้มากขึ้น",
-    "newpress.avail.contact": "สำหรับข้อมูลเพิ่มเติม โปรดไปที่ <a href=\"/\">simy.one</a> หรือติดต่อ <a href=\"mailto:sales@simy.one\">sales@simy.one</a>"
+    "newpress.avail.contact": "สำหรับข้อมูลเพิ่มเติม โปรดไปที่ <a href=\"/\">simy.one</a> หรือติดต่อ <a href=\"mailto:sales@simy.one\">sales@simy.one</a>",
+    "newcompare.quote": "ประชุมจบ Twin ของคุณเริ่มทำงาน"
   },
   "vi": {
     "_meta": {
@@ -14763,7 +14778,8 @@ window.SIMY_I18N_BUNDLE = {
     "newpress.avail.p": "SIMY có sẵn thông qua đăng ký web với các gói dựa trên chỗ ngồi và phân bổ mã thông báo SIMY. Các nhóm có thể bắt đầu với Pro và mở rộng mức sử dụng khi khối lượng cuộc họp, các công cụ được kết nối và quy trình làm việc sau cuộc họp tăng lên.",
     "newpress.about.h": "Giới thiệu về SIMY",
     "newpress.about.p": "SIMY đang xây dựng Inteligence Twin cho công việc tri thức hiện đại. Twin của bạn giúp các nhóm chuyển từ bối cảnh cuộc họp sang theo dõi, đề xuất, ghi chú của khách hàng, cập nhật nhóm và các bước tiếp theo để mọi người có thể dành nhiều thời gian hơn cho khách hàng, chiến lược, mối quan hệ và công việc mà chỉ con người mới có thể đảm nhiệm.",
-    "newpress.avail.contact": "Để biết thêm thông tin, hãy truy cập <a href=\"/\">simy.one</a> hoặc liên hệ <a href=\"mailto:sale@simy.one\">sale@simy.one</a>."
+    "newpress.avail.contact": "Để biết thêm thông tin, hãy truy cập <a href=\"/\">simy.one</a> hoặc liên hệ <a href=\"mailto:sales@simy.one\">sales@simy.one</a>.",
+    "newcompare.quote": "Cuộc họp kết thúc. Twin của bạn bắt đầu làm việc."
   },
   "zh-Hans": {
     "_meta": {
@@ -15311,7 +15327,7 @@ window.SIMY_I18N_BUNDLE = {
     "terms.h6_1_li3": "<strong>(c) 匿名数据：</strong>我们可能会使用所有计划中的匿名汇总数据进行分析。",
     "terms.h7": "7. AI 输出和免责声明",
     "terms.p7": "AI 生成的代码和建议（“AI 输出”）可能不准确、有偏见或包含错误。",
-    "terms.h7_note": "<strong>人在环</strong>：您必须审查并测试所有 AI 输出。公司对人工智能生成的代码引起的错误、安全漏洞或系统故障不承担任何责任。",
+    "terms.h7_note": "<strong>人在环:</strong> 您必须审查并测试所有 AI 输出。公司对人工智能生成的代码引起的错误、安全漏洞或系统故障不承担任何责任。",
     "terms.h8": "8. 付费服务",
     "terms.p8": "费用不予退还。订阅会自动续订，除非通过帐户设置或发送电子邮件至 tech@simy.one 取消。",
     "terms.h9": "9. 第三方集成",
@@ -15679,7 +15695,8 @@ window.SIMY_I18N_BUNDLE = {
     "newpress.avail.p": "SIMY 可通过网络注册使用基于席位的计划和 SIMY 代币分配。团队可以从 Pro 开始，并随着会议量、连接工具和会后工作流程的增长而扩大使用范围。",
     "newpress.about.h": "关于SIMY",
     "newpress.about.p": "SIMY 正在为现代知识工作构建智能双胞胎。你的双胞胎可以帮助团队从会议背景转向后续行动、提案、客户注释、团队更新和后续步骤，这样人们就可以将更多时间花在客户、战略、关系和只有人类才能承担的工作上。",
-    "newpress.avail.contact": "有关更多信息，请访问 <a href=\"/\">simy.one</a> 或联系 <a href=\"mailto:sales@simy.one\">sales@simy.one</a>。"
+    "newpress.avail.contact": "有关更多信息，请访问 <a href=\"/\">simy.one</a> 或联系 <a href=\"mailto:sales@simy.one\">sales@simy.one</a>。",
+    "newcompare.quote": "会议结束。你的 Twin 开始工作。"
   },
   "zh-Hant": {
     "_meta": {
@@ -16227,7 +16244,7 @@ window.SIMY_I18N_BUNDLE = {
     "terms.h6_1_li3": "<strong>(c) 匿名資料：</strong>我們可能會使用所有計劃中的匿名匯總資料進行分析。",
     "terms.h7": "7. AI 輸出與免責聲明",
     "terms.p7": "AI 產生的程式碼和建議（「AI 輸出」）可能不準確、有偏見或包含錯誤。",
-    "terms.h7_note": "<strong>人在環</strong>：您必須審查並測試所有 AI 輸出。本公司對人工智慧產生的程式碼所造成的錯誤、安全漏洞或系統故障不承擔任何責任。",
+    "terms.h7_note": "<strong>人在環:</strong> 您必須審查並測試所有 AI 輸出。本公司對人工智慧產生的程式碼所造成的錯誤、安全漏洞或系統故障不承擔任何責任。",
     "terms.h8": "8. 付費服務",
     "terms.p8": "費用不退還。訂閱會自動續訂，除非透過帳戶設定或發送電子郵件至 tech@simy.one 取消。",
     "terms.h9": "9. 第三方集成",
@@ -16595,6 +16612,7 @@ window.SIMY_I18N_BUNDLE = {
     "newpress.avail.p": "SIMY 可透過網路註冊使用基於席位的計劃和 SIMY 代幣分配。團隊可以從 Pro 開始，並隨著會議量、連接工具和會後工作流程的成長而擴大使用範圍。",
     "newpress.about.h": "關於SIMY",
     "newpress.about.p": "SIMY 正在為現代知識工作建立智慧雙胞胎。你的雙胞胎可以幫助團隊從會議背景轉向後續行動、提案、客戶註釋、團隊更新和後續步驟，讓人們可以將更多時間花在客戶、策略、關係和只有人類才能承擔的工作上。",
-    "newpress.avail.contact": "有關更多信息，請訪問 <a href=\"/\">simy.one</a> 或聯繫 <a href=\"mailto:sales@simy.one\">sales@simy.one</a>。"
+    "newpress.avail.contact": "有關更多信息，請訪問 <a href=\"/\">simy.one</a> 或聯繫 <a href=\"mailto:sales@simy.one\">sales@simy.one</a>。",
+    "newcompare.quote": "會議結束。你的 Twin 開始工作。"
   }
 };
