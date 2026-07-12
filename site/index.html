@@ -1495,6 +1495,74 @@
         border-color: rgba(255, 255, 255, 0.34);
         background: rgba(255, 255, 255, 0.12);
       }
+      .simy-feature-section {
+        margin-top: 34px;
+        padding: 0;
+      }
+      .feature-carousel {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 34px;
+      }
+      .simy-feature-card {
+        display: flex;
+        min-height: 420px;
+        flex-direction: column;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+        overflow: hidden;
+        scroll-snap-align: start;
+      }
+      .simy-feature-image {
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
+        background: #111;
+      }
+      .simy-feature-body {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        padding: 22px;
+      }
+      .simy-feature-num {
+        color: var(--muted);
+        font-family: 'Geist Mono', monospace;
+        font-size: 0.74rem;
+        font-weight: 760;
+        text-transform: uppercase;
+      }
+      .simy-feature-card h3 {
+        margin: 10px 0 0;
+        color: var(--ink);
+        font-size: 1.28rem;
+        font-weight: 780;
+        line-height: 1.18;
+        letter-spacing: 0;
+      }
+      .simy-feature-card p {
+        margin: 12px 0 0;
+        color: var(--muted);
+        font-size: 0.94rem;
+        line-height: 1.65;
+      }
+      .feature-carousel-dots {
+        display: none;
+        gap: 7px;
+        justify-content: center;
+        margin-top: 16px;
+      }
+      .feature-carousel-dots span {
+        width: 7px;
+        height: 7px;
+        border-radius: 999px;
+        background: #cfd6e5;
+      }
+      .feature-carousel-dots span:first-child {
+        background: var(--blue);
+      }
       .product-ui-showcase {
         display: grid;
         gap: 18px;
@@ -3216,6 +3284,33 @@
           grid-template-columns: 1fr;
           gap: 14px;
         }
+        .feature-carousel {
+          display: flex;
+          gap: 14px;
+          margin-right: -18px;
+          padding: 2px 18px 12px 2px;
+          overflow-x: auto;
+          overscroll-behavior-x: contain;
+          scroll-padding: 2px;
+          scroll-snap-type: x mandatory;
+          scrollbar-width: none;
+          -webkit-overflow-scrolling: touch;
+        }
+        .feature-carousel::-webkit-scrollbar {
+          display: none;
+        }
+        .simy-feature-card {
+          flex: 0 0 min(84vw, 360px);
+          min-height: auto;
+        }
+        .simy-feature-section h2,
+        .simy-feature-section .section-lead {
+          width: auto;
+          max-width: 100%;
+        }
+        .feature-carousel-dots {
+          display: flex;
+        }
         .experience-grid {
           grid-template-columns: 1fr;
           gap: 12px;
@@ -3546,6 +3641,7 @@
 </a>
 <div class="nav-links">
 <a href="#samples">できること</a>
+<a href="#features">特徴</a>
 <a href="#how-it-works">使い方</a>
 <a href="#pricing">料金</a>
 </div>
@@ -3726,6 +3822,38 @@
 </div>
 <div class="reality-close"><strong>3つ以上当てはまるなら、問題は個人の生産性ではありません。</strong> 仕事が、特定の人に流れ込む構造です。Twinは、その管理業務を人に積まれる前に動かし、判断が必要なところだけを人に戻します。</div>
 </div>
+<section class="simy-feature-section" id="features">
+<p class="section-label">SIMYの特徴</p>
+<h2><span class="copy-line">AIオーケストレーションで、</span><span class="copy-line">次の行動まで導く。</span></h2>
+<p class="section-lead">SIMYは、分散した情報・人・企業・会議・案件を読み解き、目的達成や受注につながるアクションへ変換します。</p>
+<div aria-label="SIMY feature carousel" class="feature-carousel">
+<article class="simy-feature-card">
+<img alt="" class="simy-feature-image" decoding="async" loading="lazy" src="assets/management-work/planning-resources.jpg"/>
+<div class="simy-feature-body">
+<div class="simy-feature-num">特徴 1</div>
+<h3>AIオーケストレーション</h3>
+<p>バラバラの情報・人・企業・会議・案件を一つの文脈にまとめ、受注や目的達成につながる次の行動へ変換します。</p>
+</div>
+</article>
+<article class="simy-feature-card">
+<img alt="" class="simy-feature-image" decoding="async" loading="lazy" src="assets/management-work/meeting-progress.jpg"/>
+<div class="simy-feature-body">
+<div class="simy-feature-num">特徴 2</div>
+<h3>コンテキスト・インテリジェンス</h3>
+<p>外部状況と各プロジェクトの目的・納期から、いますぐ動くべきことと会議で絞る論点を明確にします。</p>
+</div>
+</article>
+<article class="simy-feature-card">
+<img alt="" class="simy-feature-image" decoding="async" loading="lazy" src="assets/management-work/training-knowledge.jpg"/>
+<div class="simy-feature-body">
+<div class="simy-feature-num">特徴 3</div>
+<h3>アクション空間</h3>
+<p>独自プロンプトにより、広いアクション空間から成果に近い候補を絞り込み、実行しやすい一手にします。</p>
+</div>
+</article>
+</div>
+<div aria-hidden="true" class="feature-carousel-dots"><span></span><span></span><span></span></div>
+</section>
 <div aria-label="SIMY product interface preview" class="product-ui-showcase" id="how-it-works">
 <div class="product-ui-copy">
 <div>
@@ -4460,12 +4588,16 @@ SIMYは、サイトの表示、地域・言語設定の保存、利用状況の�
           { code: 'es', label: 'Español', region: 'es' },
           { code: 'it', label: 'Italiano', region: 'it' },
           { code: 'ko', label: '한국어', region: 'kr' },
+          { code: 'zh-Hans', label: '简体中文', region: 'tw' },
           { code: 'zh-Hant', label: '繁體中文', region: 'tw' },
           { code: 'pt-BR', label: 'Português', region: 'br' },
           { code: 'id', label: 'Indonesia', region: 'id' },
           { code: 'vi', label: 'Tiếng Việt', region: 'vn' },
           { code: 'th', label: 'ไทย', region: 'th' },
           { code: 'hi', label: 'हिन्दी', region: 'in' },
+          { code: 'te', label: 'తెలుగు', region: 'in' },
+          { code: 'kn', label: 'ಕನ್ನಡ', region: 'in' },
+          { code: 'ru', label: 'Русский', region: 'us' },
           { code: 'ar', label: 'العربية', region: 'sa' }
         ];
 
@@ -4586,6 +4718,7 @@ SIMYは、サイトの表示、地域・言語設定の保存、利用状況の�
         function setLanguage(lang, persist, syncRegion) {
           lang = supportedLanguage(lang) || 'ja';
           document.documentElement.lang = lang;
+          document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
           updateLanguageDisplay(lang);
           if (persist) {
             setStored('simy-lang', lang);
@@ -5312,6 +5445,167 @@ SIMYは、サイトの表示、地域・言語設定の保存、利用状況の�
           initRealityToggle();
           startHeroClock();
           startHeroWorkRotation();
+        }
+      })();
+    </script>
+<script>
+      (function() {
+        var supported = ['en','ja','zh-Hans','zh-Hant','fr','de','es','ar','it','hi','te','kn','ko','vi','th','id','ru','pt-BR'];
+        var cache = {};
+        var nodeMap = new WeakMap();
+        var nodeList = [];
+        var headOriginals = null;
+        var applying = false;
+        var applyTimer = null;
+
+        function skipNode(node) {
+          var p = node.parentNode;
+          while (p && p !== document.body) {
+            if (p.nodeType !== 1) {
+              p = p.parentNode;
+              continue;
+            }
+            var tag = (p.tagName || '').toLowerCase();
+            if (tag === 'script' || tag === 'style' || tag === 'noscript' || tag === 'svg') return true;
+            if (p.hasAttribute && (
+              p.hasAttribute('data-simy-no-translate') ||
+              p.hasAttribute('data-lang-option') ||
+              p.hasAttribute('data-region-btn')
+            )) return true;
+            if (p.classList && (
+              p.classList.contains('lang-switcher') ||
+              p.classList.contains('region-switcher') ||
+              p.classList.contains('mobile-menu-btn')
+            )) return true;
+            p = p.parentNode;
+          }
+          return false;
+        }
+
+        function capture() {
+          if (!document.body) return;
+          var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null);
+          var node;
+          while ((node = walker.nextNode())) {
+            if (nodeMap.has(node)) continue;
+            var raw = node.nodeValue || '';
+            var trimmed = raw.replace(/\s+/g, ' ').trim();
+            if (!trimmed) continue;
+            if (/^[\s\d.,:%×·$/()\-+]*$/.test(trimmed)) continue;
+            if (skipNode(node)) continue;
+            nodeMap.set(node, trimmed);
+            nodeList.push(node);
+          }
+        }
+
+        function load(lang, cb) {
+          if (cache[lang]) {
+            cb(cache[lang]);
+            return;
+          }
+          var xhr = new XMLHttpRequest();
+          xhr.open('GET', '/lang/home-dom/' + lang + '.json?v=20260711-static-home-2', true);
+          xhr.onreadystatechange = function() {
+            if (xhr.readyState !== 4) return;
+            if (xhr.status === 200) {
+              try { cache[lang] = JSON.parse(xhr.responseText); }
+              catch (e) { cache[lang] = {}; }
+            } else {
+              cache[lang] = {};
+            }
+            cb(cache[lang]);
+          };
+          xhr.send();
+        }
+
+        function captureHead() {
+          if (headOriginals) return;
+          headOriginals = {
+            title: document.title || '',
+            description: (document.querySelector('meta[name="description"]') || {}).content || '',
+            ogTitle: (document.querySelector('meta[property="og:title"]') || {}).content || '',
+            ogDescription: (document.querySelector('meta[property="og:description"]') || {}).content || '',
+            twitterTitle: (document.querySelector('meta[name="twitter:title"]') || {}).content || '',
+            twitterDescription: (document.querySelector('meta[name="twitter:description"]') || {}).content || ''
+          };
+        }
+
+        function setMeta(selector, value) {
+          var el = document.querySelector(selector);
+          if (el && value) el.setAttribute('content', value);
+        }
+
+        function applyHead(dict) {
+          captureHead();
+          if (!headOriginals) return;
+          if (dict[headOriginals.title]) document.title = dict[headOriginals.title];
+          setMeta('meta[name="description"]', dict[headOriginals.description]);
+          setMeta('meta[property="og:title"]', dict[headOriginals.ogTitle]);
+          setMeta('meta[property="og:description"]', dict[headOriginals.ogDescription]);
+          setMeta('meta[name="twitter:title"]', dict[headOriginals.twitterTitle]);
+          setMeta('meta[name="twitter:description"]', dict[headOriginals.twitterDescription]);
+        }
+
+        function apply(lang) {
+          lang = supported.indexOf(lang) === -1 ? 'ja' : lang;
+          capture();
+          load(lang, function(dict) {
+            applying = true;
+            applyHead(dict);
+            var alive = [];
+            for (var i = 0; i < nodeList.length; i += 1) {
+              var node = nodeList[i];
+              if (!node || !node.isConnected) continue;
+              alive.push(node);
+              var original = nodeMap.get(node);
+              if (!original) continue;
+              var translated = dict[original];
+              var target = translated === undefined || translated === null || translated === '' ? original : translated;
+              var raw = node.nodeValue || '';
+              var lead = (raw.match(/^\s*/) || [''])[0];
+              var tail = (raw.match(/\s*$/) || [''])[0];
+              var next = lead + target + tail;
+              if (node.nodeValue !== next) node.nodeValue = next;
+            }
+            nodeList = alive;
+            applying = false;
+          });
+        }
+
+        function scheduleApply(lang) {
+          if (applying) return;
+          clearTimeout(applyTimer);
+          applyTimer = setTimeout(function() {
+            apply(lang || currentLang());
+          }, 40);
+        }
+
+        function currentLang() {
+          try {
+            var q = new URLSearchParams(location.search).get('lang');
+            if (supported.indexOf(q) !== -1) return q;
+          } catch (e) {}
+          return document.documentElement.lang || 'ja';
+        }
+
+        function boot() {
+          apply(currentLang());
+        }
+
+        window.addEventListener('simy:languagechange', function(event) {
+          var lang = event && event.detail && event.detail.lang;
+          apply(lang || currentLang());
+        });
+        if (window.MutationObserver) {
+          new MutationObserver(function() {
+            scheduleApply(currentLang());
+          }).observe(document.body || document.documentElement, { childList: true, subtree: true, characterData: true });
+        }
+        window.SIMYHomeDomBridge = { apply: apply };
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', boot);
+        } else {
+          boot();
         }
       })();
     </script>
