@@ -21,7 +21,7 @@
   var TWIN_PAGE_LOCALES = SUPPORTED;
   var CACHE = {};
   var CURRENT_LANG = DEFAULT;
-  var I18N_VERSION = '20260711-i18n-keys-6';
+  var I18N_VERSION = '20260712-i18n-keys-7';
   var BUNDLE_LOADING = {};
 
   /* ── Home (/) React SPA translation bridge ──
