@@ -21,6 +21,8 @@
   var TWIN_PAGE_LOCALES = SUPPORTED;
   var CACHE = {};
   var CURRENT_LANG = DEFAULT;
+  var I18N_VERSION = '20260711-i18n-keys-6';
+  var BUNDLE_LOADING = {};
 
   /* ── Home (/) React SPA translation bridge ──
      The home page (/) is served by a compiled React bundle whose source is
@@ -37,6 +39,46 @@
   var ROOT_OBSERVER = null;
   var ROOT_DEBOUNCE = null;
   var ROOT_APPLYING = false;   // guard against observer self-triggering
+
+  function scriptBaseUrl() {
+    var scripts = document.getElementsByTagName('script');
+    for (var i = scripts.length - 1; i >= 0; i--) {
+      var src = scripts[i].getAttribute('src') || '';
+      if (src.indexOf('i18n.js') !== -1) {
+        return new URL(src, location.href).href.replace(/[^/]*$/, '');
+      }
+    }
+    return new URL('.', location.href).href;
+  }
+
+  function resourceUrl(relativePath) {
+    if (location.protocol === 'file:') {
+      return scriptBaseUrl() + relativePath;
+    }
+    return '/' + relativePath;
+  }
+
+  function loadBundle(globalName, relativePath, cb) {
+    if (window[globalName]) return cb(true);
+    if (BUNDLE_LOADING[globalName]) {
+      BUNDLE_LOADING[globalName].push(cb);
+      return;
+    }
+    BUNDLE_LOADING[globalName] = [cb];
+    var script = document.createElement('script');
+    script.src = resourceUrl(relativePath + '?v=' + I18N_VERSION);
+    script.onload = function () {
+      var callbacks = BUNDLE_LOADING[globalName] || [];
+      delete BUNDLE_LOADING[globalName];
+      for (var i = 0; i < callbacks.length; i++) callbacks[i](!!window[globalName]);
+    };
+    script.onerror = function () {
+      var callbacks = BUNDLE_LOADING[globalName] || [];
+      delete BUNDLE_LOADING[globalName];
+      for (var i = 0; i < callbacks.length; i++) callbacks[i](false);
+    };
+    (document.head || document.documentElement).appendChild(script);
+  }
 
   /* ── Map browser locale to our supported codes ────────────── */
   var LOCALE_MAP = {
@@ -353,8 +395,17 @@
   function load(lang, cb) {
     if (CACHE[lang]) return cb(CACHE[lang]);
 
+    if (location.protocol === 'file:') {
+      loadBundle('SIMY_I18N_BUNDLE', 'lang/i18n-bundle.js', function (ok) {
+        var bundle = ok ? window.SIMY_I18N_BUNDLE : null;
+        CACHE[lang] = (bundle && bundle[lang]) || {};
+        cb(CACHE[lang]);
+      });
+      return;
+    }
+
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', '/lang/' + lang + '.json?v=20260711-i18n-keys-5', true);
+    xhr.open('GET', resourceUrl('lang/' + lang + '.json?v=' + I18N_VERSION), true);
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) {
         if (xhr.status === 200) {
@@ -619,7 +670,7 @@
   function pageKey() {
     var p = location.pathname;
     if (p === '/' || p === '') return 'index';
-    if (p === '/compare/' || p === '/compare/index.html') return 'compare';
+    if (p === '/compare/' || /\/compare\/index\.html$/.test(p)) return 'compare';
     var m = p.match(/\/([^/]+?)(?:\.html)?$/);
     return m ? m[1] : 'index';
   }
@@ -685,8 +736,18 @@
   /* ── Home #root bridge: load per-language dictionary ─────────── */
   function loadHomeDom(lang, cb) {
     if (HOME_DOM_CACHE[lang]) return cb(HOME_DOM_CACHE[lang]);
+
+    if (location.protocol === 'file:') {
+      loadBundle('SIMY_HOME_DOM_BUNDLE', 'lang/home-dom-bundle.js', function (ok) {
+        var bundle = ok ? window.SIMY_HOME_DOM_BUNDLE : null;
+        HOME_DOM_CACHE[lang] = (bundle && bundle[lang]) || {};
+        cb(HOME_DOM_CACHE[lang]);
+      });
+      return;
+    }
+
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', '/lang/home-dom/' + lang + '.json?v=20260711-i18n-keys-5', true);
+    xhr.open('GET', resourceUrl('lang/home-dom/' + lang + '.json?v=' + I18N_VERSION), true);
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) {
         if (xhr.status === 200) {
