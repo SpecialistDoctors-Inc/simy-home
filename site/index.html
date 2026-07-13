@@ -3266,22 +3266,17 @@
           gap: 14px;
         }
         .feature-carousel {
-          display: flex;
+          display: grid;
+          grid-template-columns: 1fr;
           gap: 14px;
-          margin-right: -18px;
-          padding: 2px 18px 12px 2px;
-          overflow-x: auto;
-          overscroll-behavior-x: contain;
-          scroll-padding: 2px;
-          scroll-snap-type: x mandatory;
-          scrollbar-width: none;
-          -webkit-overflow-scrolling: touch;
+          margin-right: 0;
+          padding: 0;
+          overflow-x: visible;
         }
         .feature-carousel::-webkit-scrollbar {
           display: none;
         }
         .simy-feature-card {
-          flex: 0 0 min(84vw, 360px);
           min-height: auto;
         }
         .simy-feature-section h2,
@@ -3290,7 +3285,7 @@
           max-width: 100%;
         }
         .feature-carousel-dots {
-          display: flex;
+          display: none;
         }
         .experience-grid {
           grid-template-columns: 1fr;
