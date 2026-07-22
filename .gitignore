@@ -13,3 +13,8 @@
 
 # Logs
 *.log
+
+# Local browser test dependencies and reports
+node_modules/
+playwright-report/
+test-results/
