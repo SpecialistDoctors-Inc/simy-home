@@ -3,6 +3,7 @@ import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 
 const html = await readFile(new URL('../site/index.html', import.meta.url), 'utf8');
+const runtimeConfig = await readFile(new URL('../site/runtime-config.js', import.meta.url), 'utf8');
 
 const plans = [
   { name: 'starter', tokens: 80_000_000 },
@@ -49,6 +50,14 @@ test('dynamic signup URL uses the absolute monthly_tokens contract', () => {
   assert.match(html, /function signupUrl\(plan, interval, monthlyTokens\)/);
   assert.match(html, /'&monthly_tokens=' \+ encodeURIComponent\(monthlyTokens\)/);
   assert.match(html, /signupUrl\(plan, currentBilling, tokens \* 1000000\)/);
+});
+
+test('Sandbox runtime config can override the SIMY app origin without changing production defaults', () => {
+  assert.match(html, /<script src="runtime-config\.js"><\/script>/);
+  assert.match(html, /function configuredAppOrigin\(\)/);
+  assert.match(html, /url\.protocol = target\.protocol/);
+  assert.match(html, /url\.host = target\.host/);
+  assert.match(runtimeConfig, /window\.SIMY_APP_ORIGIN = window\.SIMY_APP_ORIGIN \|\| '';/);
 });
 
 test('Trial offer opens above the subscription plan grid and defaults to no renewal', () => {

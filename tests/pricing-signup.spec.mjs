@@ -168,6 +168,30 @@ test('Trial offer opens above the plan grid and defaults to no renewal', async (
   await expect(dialog).not.toBeVisible();
 });
 
+test('Sandbox runtime config sends the Trial offer to the simy-web Sandbox URL', async ({ page }) => {
+  await page.addInitScript(() => {
+    window.SIMY_APP_ORIGIN = 'https://port-3000.sandbox.example.test';
+  });
+  await page.goto('/?lang=ja&region=jp');
+  const consent = page.locator('#cookieConsentOk');
+  if (await consent.isVisible()) await consent.click();
+
+  await page.locator('#starter-trial-entry').click();
+  const cta = page.locator('#starter-trial-cta');
+  const signup = signupParams(await cta.getAttribute('href'));
+
+  expect(signup.url.origin).toBe('https://port-3000.sandbox.example.test');
+  expect(signup.url.pathname).toBe('/signup');
+  expect(signup.params.get('offer_id')).toBe('starter_trial_v1');
+  expect(signup.params.get('auto_renew')).toBe('false');
+  expect(signup.params.get('plan')).toBe('starter');
+  expect(signup.params.get('monthly_tokens')).toBe('80000000');
+  expect(signup.params.get('lang')).toBe('ja');
+  expect(signup.params.get('locale')).toBe('ja');
+  expect(signup.params.get('region')).toBe('jp');
+  await expect(page.locator('a[href="#pricing"]').first()).toHaveAttribute('href', '#pricing');
+});
+
 test('token menu supports keyboard navigation and closes on focus exit', async ({ page }) => {
   await page.goto('/?lang=en&region=us');
   const consent = page.locator('#cookieConsentOk');

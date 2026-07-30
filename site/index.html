@@ -3780,6 +3780,7 @@
       }
     </style>
 <link href="responsive.css" rel="stylesheet"/>
+<script src="runtime-config.js"></script>
 </head>
 <body>
 <script>
@@ -5383,6 +5384,19 @@ SIMYは、サイトの表示、地域・言語設定の保存、利用状況の�
           switcher.setAttribute('data-bound', 'true');
         }
 
+        function configuredAppOrigin() {
+          var configured = typeof window.SIMY_APP_ORIGIN === 'string'
+            ? window.SIMY_APP_ORIGIN.trim()
+            : '';
+          if (!configured) return '';
+          try {
+            var url = new URL(configured);
+            return url.protocol === 'https:' || url.protocol === 'http:' ? url.origin : '';
+          } catch (e) {
+            return '';
+          }
+        }
+
         function currentAppHostname() {
           var host = location.hostname;
           if (host === 'dev.simy.one' || host === 'localhost' || host === '127.0.0.1') {
@@ -5391,15 +5405,20 @@ SIMYは、サイトの表示、地域・言語設定の保存、利用状況の�
           return 'app.simy.one';
         }
 
-        function isSimyAppHostname(hostname) {
-          return hostname === 'app.simy.one' || hostname === 'app-dev.simy.one';
+        function isSimyAppUrl(url) {
+          var configured = configuredAppOrigin();
+          return url.hostname === 'app.simy.one' ||
+            url.hostname === 'app-dev.simy.one' ||
+            (configured && url.origin === configured);
         }
 
         function decorateSimyAppUrl(href) {
           try {
             var url = new URL(href, location.href);
-            if (!isSimyAppHostname(url.hostname)) return href;
-            url.hostname = currentAppHostname();
+            if (!isSimyAppUrl(url)) return href;
+            var target = new URL(configuredAppOrigin() || ('https://' + currentAppHostname()));
+            url.protocol = target.protocol;
+            url.host = target.host;
             var region = document.documentElement.getAttribute('data-hero-region') || '';
             if (!regionLanguage[region]) return url.toString();
             var lang = document.documentElement.lang || regionLanguage[region] || 'en';
@@ -5415,7 +5434,7 @@ SIMYは、サイトの表示、地域・言語設定の保存、利用状況の�
         function syncAppLinksToHeroRegion() {
           var region = document.documentElement.getAttribute('data-hero-region') || '';
           if (!regionLanguage[region]) return;
-          document.querySelectorAll('a[href*="app.simy.one"], a[href*="app-dev.simy.one"]').forEach(function(link) {
+          document.querySelectorAll('a[href]').forEach(function(link) {
             var nextHref = decorateSimyAppUrl(link.getAttribute('href'));
             if (nextHref) link.setAttribute('href', nextHref);
           });
