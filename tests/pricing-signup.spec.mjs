@@ -72,6 +72,14 @@ test('selected monthly allocation reaches new signup across billing switches', a
   }
 
   await page.locator('#pricing').screenshot({ path: 'output/playwright/pricing-signup-selections.png' });
+  const cardEdges = await page.locator('.pricing-card').evaluateAll((cards) =>
+    cards.map((card) => {
+      const rect = card.getBoundingClientRect();
+      return { top: rect.top, bottom: rect.bottom };
+    })
+  );
+  expect(Math.max(...cardEdges.map(({ top }) => top)) - Math.min(...cardEdges.map(({ top }) => top))).toBeLessThanOrEqual(1);
+  expect(Math.max(...cardEdges.map(({ bottom }) => bottom)) - Math.min(...cardEdges.map(({ bottom }) => bottom))).toBeLessThanOrEqual(1);
 
   await page.locator('#langBtn').click();
   await page.locator('[data-lang-option="en"]').click();
@@ -98,15 +106,16 @@ test('selected monthly allocation reaches new signup across billing switches', a
 
 });
 
-test('Starter first-month offer opens from its plan card and defaults to no renewal', async ({ page }) => {
+test('Starter first-month offer opens below the plan grid and defaults to no renewal', async ({ page }) => {
   await page.goto('/?lang=ja&region=jp');
   const consent = page.locator('#cookieConsentOk');
   if (await consent.isVisible()) await consent.click();
 
   const card = page.locator('.pricing-card[data-plan="starter"]');
-  const entry = card.locator('#starter-trial-entry');
+  const entry = page.locator('#starter-trial-entry');
   const dialog = page.locator('#starter-trial-dialog');
 
+  await expect(card.locator('#starter-trial-entry')).toHaveCount(0);
   await expect(entry).toContainText('初月 USD 10');
   await expect(dialog).not.toBeVisible();
   await entry.click();

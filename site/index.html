@@ -2555,8 +2555,8 @@
         width: 100%;
         align-items: center;
         gap: 10px;
-        margin-top: 16px;
-        padding: 12px;
+        margin-top: 18px;
+        padding: 14px 18px;
         border: 1px solid rgba(0, 87, 255, 0.28);
         border-radius: 8px;
         background: rgba(0, 87, 255, 0.06);
@@ -2574,13 +2574,13 @@
         display: flex;
         min-width: 0;
         flex: 1;
-        flex-direction: column;
+        align-items: baseline;
+        gap: 10px;
       }
       .starter-trial-entry-copy strong {
         font-size: 0.88rem;
       }
       .starter-trial-entry-copy small {
-        margin-top: 2px;
         color: var(--muted);
         font-size: 0.72rem;
         line-height: 1.4;
@@ -2758,7 +2758,7 @@
         grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 0;
         margin-top: 34px;
-        align-items: start;
+        align-items: stretch;
       }
       .pricing-card {
         padding: 34px 30px;
@@ -3601,6 +3601,14 @@
           gap: 20px;
           padding: 22px;
         }
+        .starter-trial-entry {
+          align-items: flex-start;
+        }
+        .starter-trial-entry-copy {
+          align-items: flex-start;
+          flex-direction: column;
+          gap: 2px;
+        }
         .starter-trial-dialog {
           width: calc(100vw - 20px);
           max-height: calc(100dvh - 20px);
@@ -4436,11 +4444,6 @@
 <div class="pricing-card" data-plan="starter">
 <div class="plan-name">Starter</div>
 <div class="plan-subtitle">小さなチームや1つの業務から始める</div>
-<button aria-controls="starter-trial-dialog" aria-haspopup="dialog" class="starter-trial-entry" id="starter-trial-entry" type="button">
-<span class="starter-trial-badge">初回利用限定</span>
-<span class="starter-trial-entry-copy"><strong>初月 USD 10</strong><small>Starter・1席・80Mトークンの詳細を見る</small></span>
-<span aria-hidden="true" class="starter-trial-entry-arrow">→</span>
-</button>
 <div class="price-row">
 <span class="price-amount" id="price-starter">$16</span>
 <span class="price-unit">/ seat / 月</span>
@@ -4555,6 +4558,11 @@
 </div>
 </div>
 </div>
+<button aria-controls="starter-trial-dialog" aria-haspopup="dialog" class="starter-trial-entry" id="starter-trial-entry" type="button">
+<span class="starter-trial-badge">初回利用限定</span>
+<span class="starter-trial-entry-copy"><strong>初月 USD 10</strong><small>Starter・1席・80Mトークンの詳細を見る</small></span>
+<span aria-hidden="true" class="starter-trial-entry-arrow">→</span>
+</button>
 <dialog aria-labelledby="starter-trial-title" class="starter-trial-dialog" id="starter-trial-dialog">
 <button aria-label="閉じる" class="starter-trial-dialog-close" id="starter-trial-dialog-close" type="button">×</button>
 <div class="starter-trial-offer">
