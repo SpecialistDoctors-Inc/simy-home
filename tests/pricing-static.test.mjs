@@ -50,3 +50,21 @@ test('dynamic signup URL uses the absolute monthly_tokens contract', () => {
   assert.match(html, /'&monthly_tokens=' \+ encodeURIComponent\(monthlyTokens\)/);
   assert.match(html, /signupUrl\(plan, currentBilling, tokens \* 1000000\)/);
 });
+
+test('Starter first-month offer opens from the Starter card and defaults to no renewal', () => {
+  assert.match(
+    html,
+    /aria-controls="starter-trial-dialog" aria-haspopup="dialog" class="starter-trial-entry"/
+  );
+  assert.match(
+    html,
+    /<dialog aria-labelledby="starter-trial-title" class="starter-trial-dialog" id="starter-trial-dialog">/
+  );
+  assert.match(html, /<input id="starter-trial-auto-renew" type="checkbox">/);
+  assert.match(
+    html,
+    /offer_id=starter_trial_v1&amp;auto_renew=false&amp;plan=starter&amp;interval=monthly&amp;monthly_tokens=80000000&amp;seats=1/
+  );
+  assert.match(html, /function openStarterTrialOffer\(\)/);
+  assert.match(html, /starterTrialEntry\.addEventListener\('click', openStarterTrialOffer\)/);
+});

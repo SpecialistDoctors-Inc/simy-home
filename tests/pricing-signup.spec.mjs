@@ -75,6 +75,7 @@ test('selected monthly allocation reaches new signup across billing switches', a
 
   await page.locator('#langBtn').click();
   await page.locator('[data-lang-option="en"]').click();
+  await expect(page.locator('#starter-trial-entry')).toContainText('First month USD 10');
   for (const selection of selections) {
     await expectSignup(page.locator(`.pricing-card[data-plan="${selection.plan}"]`), {
       ...selection,
@@ -95,6 +96,61 @@ test('selected monthly allocation reaches new signup across billing switches', a
     });
   }
 
+});
+
+test('Starter first-month offer opens from its plan card and defaults to no renewal', async ({ page }) => {
+  await page.goto('/?lang=ja&region=jp');
+  const consent = page.locator('#cookieConsentOk');
+  if (await consent.isVisible()) await consent.click();
+
+  const card = page.locator('.pricing-card[data-plan="starter"]');
+  const entry = card.locator('#starter-trial-entry');
+  const dialog = page.locator('#starter-trial-dialog');
+
+  await expect(entry).toContainText('初月 USD 10');
+  await expect(dialog).not.toBeVisible();
+  await entry.click();
+  await expect(dialog).toBeVisible();
+
+  const autoRenew = dialog.locator('#starter-trial-auto-renew');
+  await expect(autoRenew).not.toBeChecked();
+  await expect(dialog.locator('#starter-trial-next-charge')).toHaveText('なし');
+  await expect(dialog.locator('#starter-trial-end-condition')).toHaveText(
+    '自動更新せず、支払済みの1か月で終了します。'
+  );
+
+  let signup = signupParams(await dialog.locator('#starter-trial-cta').getAttribute('href'));
+  expect(signup.url.hostname).toBe('app-dev.simy.one');
+  expect(signup.url.pathname).toBe('/signup');
+  expect(signup.params.get('offer_id')).toBe('starter_trial_v1');
+  expect(signup.params.get('auto_renew')).toBe('false');
+  expect(signup.params.get('plan')).toBe('starter');
+  expect(signup.params.get('interval')).toBe('monthly');
+  expect(signup.params.get('monthly_tokens')).toBe('80000000');
+  expect(signup.params.get('seats')).toBe('1');
+  expect(signup.params.get('lang')).toBe('ja');
+  expect(signup.params.get('region')).toBe('jp');
+
+  await page.screenshot({ path: 'output/playwright/starter-first-month-offer-dialog-off.png' });
+  await autoRenew.check();
+  await expect(dialog.locator('#starter-trial-next-charge')).toHaveText('USD 20 / 月');
+  signup = signupParams(await dialog.locator('#starter-trial-cta').getAttribute('href'));
+  expect(signup.params.get('auto_renew')).toBe('true');
+
+  await dialog.screenshot({ path: 'output/playwright/starter-first-month-offer-dialog-on.png' });
+  await page.keyboard.press('Escape');
+  await expect(dialog).not.toBeVisible();
+  await expect(entry).toBeFocused();
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.reload();
+  await entry.scrollIntoViewIfNeeded();
+  await entry.click();
+  await expect(dialog).toBeVisible();
+  await expect(autoRenew).not.toBeChecked();
+  await dialog.screenshot({ path: 'output/playwright/starter-first-month-offer-dialog-mobile.png' });
+  await dialog.locator('#starter-trial-dialog-close').click();
+  await expect(dialog).not.toBeVisible();
 });
 
 test('token menu supports keyboard navigation and closes on focus exit', async ({ page }) => {

@@ -2550,16 +2550,95 @@
         background: var(--ink);
         color: #fff;
       }
+      .starter-trial-entry {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        gap: 10px;
+        margin-top: 16px;
+        padding: 12px;
+        border: 1px solid rgba(0, 87, 255, 0.28);
+        border-radius: 8px;
+        background: rgba(0, 87, 255, 0.06);
+        color: var(--ink);
+        font: inherit;
+        text-align: left;
+        cursor: pointer;
+      }
+      .starter-trial-entry:hover,
+      .starter-trial-entry:focus-visible {
+        border-color: var(--blue);
+        background: rgba(0, 87, 255, 0.1);
+      }
+      .starter-trial-entry-copy {
+        display: flex;
+        min-width: 0;
+        flex: 1;
+        flex-direction: column;
+      }
+      .starter-trial-entry-copy strong {
+        font-size: 0.88rem;
+      }
+      .starter-trial-entry-copy small {
+        margin-top: 2px;
+        color: var(--muted);
+        font-size: 0.72rem;
+        line-height: 1.4;
+      }
+      .starter-trial-entry-arrow {
+        color: var(--blue);
+        font-size: 1.1rem;
+        line-height: 1;
+      }
+      .starter-trial-dialog {
+        width: min(1040px, calc(100vw - 32px));
+        max-width: none;
+        max-height: calc(100dvh - 32px);
+        padding: 0;
+        overflow: visible;
+        border: 0;
+        border-radius: 12px;
+        background: transparent;
+        color: var(--ink);
+      }
+      .starter-trial-dialog::backdrop {
+        background: rgba(7, 16, 31, 0.62);
+        backdrop-filter: blur(4px);
+      }
+      .starter-trial-dialog-close {
+        position: absolute;
+        top: 14px;
+        right: 14px;
+        z-index: 2;
+        display: grid;
+        width: 36px;
+        height: 36px;
+        place-items: center;
+        border: 1px solid rgba(7, 16, 31, 0.12);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.92);
+        color: var(--ink);
+        font: inherit;
+        font-size: 1.25rem;
+        line-height: 1;
+        cursor: pointer;
+      }
+      .starter-trial-dialog-close:hover,
+      .starter-trial-dialog-close:focus-visible {
+        border-color: var(--blue);
+        color: var(--blue);
+      }
       .starter-trial-offer {
         display: grid;
         grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
         gap: 32px;
-        margin-top: 34px;
+        max-height: calc(100dvh - 32px);
+        margin: 0;
         padding: 30px;
+        overflow-y: auto;
         border: 1px solid rgba(0, 87, 255, 0.28);
         border-radius: 12px;
-        background: linear-gradient(135deg, rgba(0, 87, 255, 0.08), rgba(255, 255, 255, 0.88));
-        scroll-margin-top: 88px;
+        background: linear-gradient(135deg, #eef4ff, #fff);
       }
       .starter-trial-badge {
         display: inline-flex;
@@ -3522,6 +3601,14 @@
           gap: 20px;
           padding: 22px;
         }
+        .starter-trial-dialog {
+          width: calc(100vw - 20px);
+          max-height: calc(100dvh - 20px);
+        }
+        .starter-trial-offer {
+          max-height: calc(100dvh - 20px);
+          padding-top: 58px;
+        }
         .starter-trial-metrics {
           grid-template-columns: 1fr;
         }
@@ -4345,35 +4432,15 @@
 <button aria-pressed="true" class="toggle-btn active" data-billing="yearly" onclick="setBilling('yearly')" type="button"><span>年払い</span><span>· 20%オフ</span></button>
 </div>
 </div>
-<aside class="starter-trial-offer" aria-labelledby="starter-trial-title">
-<div>
-<span class="starter-trial-badge">初回利用限定</span>
-<h3 id="starter-trial-title">Starter 初月オファー</h3>
-<p class="starter-trial-description">現在のプランはStarterです。最初の1か月を1席・80,000,000 SIMYトークン、合計USD 10で利用できます。</p>
-<dl class="starter-trial-metrics">
-<div class="starter-trial-metric"><dt>最初の1か月</dt><dd>USD 10</dd></div>
-<div class="starter-trial-metric"><dt>SIMYトークン</dt><dd>80,000,000</dd></div>
-<div class="starter-trial-metric"><dt>Starter</dt><dd>1席固定</dd></div>
-</dl>
-</div>
-<div class="starter-trial-controls">
-<label class="starter-trial-renew">
-<input id="starter-trial-auto-renew" type="checkbox">
-<span><strong>2か月目以降もStarterを自動更新する</strong><small>初期値はオフです。オンにすると2か月目以降はUSD 20 / 月で自動更新します。</small></span>
-</label>
-<dl class="starter-trial-summary" aria-live="polite">
-<div><dt>今回の請求</dt><dd>USD 10</dd></div>
-<div><dt>次回請求</dt><dd id="starter-trial-next-charge">なし</dd></div>
-<div><dt>終了条件</dt><dd id="starter-trial-end-condition">自動更新せず、支払済みの1か月で終了します。</dd></div>
-</dl>
-<a class="starter-trial-cta" id="starter-trial-cta" href="https://app.simy.one/signup?offer_id=starter_trial_v1&amp;auto_renew=false&amp;plan=starter&amp;interval=monthly&amp;monthly_tokens=80000000&amp;seats=1&amp;lang=en&amp;locale=en&amp;region=us">StarterをUSD 10で始める</a>
-<p class="starter-trial-protection">期間終了時は、このオファー由来の未使用トークンだけが失効します。他組織、通常購入、管理者付与などの残高とアカウントは維持されます。</p>
-</div>
-</aside>
 <div class="pricing-grid">
 <div class="pricing-card" data-plan="starter">
 <div class="plan-name">Starter</div>
 <div class="plan-subtitle">小さなチームや1つの業務から始める</div>
+<button aria-controls="starter-trial-dialog" aria-haspopup="dialog" class="starter-trial-entry" id="starter-trial-entry" type="button">
+<span class="starter-trial-badge">初回利用限定</span>
+<span class="starter-trial-entry-copy"><strong>初月 USD 10</strong><small>Starter・1席・80Mトークンの詳細を見る</small></span>
+<span aria-hidden="true" class="starter-trial-entry-arrow">→</span>
+</button>
 <div class="price-row">
 <span class="price-amount" id="price-starter">$16</span>
 <span class="price-unit">/ seat / 月</span>
@@ -4488,6 +4555,34 @@
 </div>
 </div>
 </div>
+<dialog aria-labelledby="starter-trial-title" class="starter-trial-dialog" id="starter-trial-dialog">
+<button aria-label="閉じる" class="starter-trial-dialog-close" id="starter-trial-dialog-close" type="button">×</button>
+<div class="starter-trial-offer">
+<div>
+<span class="starter-trial-badge">初回利用限定</span>
+<h3 id="starter-trial-title">Starter 初月オファー</h3>
+<p class="starter-trial-description">現在のプランはStarterです。最初の1か月を1席・80,000,000 SIMYトークン、合計USD 10で利用できます。</p>
+<dl class="starter-trial-metrics">
+<div class="starter-trial-metric"><dt>最初の1か月</dt><dd>USD 10</dd></div>
+<div class="starter-trial-metric"><dt>SIMYトークン</dt><dd>80,000,000</dd></div>
+<div class="starter-trial-metric"><dt>Starter</dt><dd>1席固定</dd></div>
+</dl>
+</div>
+<div class="starter-trial-controls">
+<label class="starter-trial-renew">
+<input id="starter-trial-auto-renew" type="checkbox">
+<span><strong>2か月目以降もStarterを自動更新する</strong><small>初期値はオフです。オンにすると2か月目以降はUSD 20 / 月で自動更新します。</small></span>
+</label>
+<dl class="starter-trial-summary" aria-live="polite">
+<div><dt>今回の請求</dt><dd>USD 10</dd></div>
+<div><dt>次回請求</dt><dd id="starter-trial-next-charge">なし</dd></div>
+<div><dt>終了条件</dt><dd id="starter-trial-end-condition">自動更新せず、支払済みの1か月で終了します。</dd></div>
+</dl>
+<a class="starter-trial-cta" id="starter-trial-cta" href="https://app.simy.one/signup?offer_id=starter_trial_v1&amp;auto_renew=false&amp;plan=starter&amp;interval=monthly&amp;monthly_tokens=80000000&amp;seats=1&amp;lang=en&amp;locale=en&amp;region=us">StarterをUSD 10で始める</a>
+<p class="starter-trial-protection">期間終了時は、このオファー由来の未使用トークンだけが失効します。他組織、通常購入、管理者付与などの残高とアカウントは維持されます。</p>
+</div>
+</div>
+</dialog>
 <div class="enterprise-section">
 <h3>Enterprise</h3>
 <p>トークン割当、専任サポート、SSO、SLAをカスタム提供。管理ワークフロー、制御、データ境界を組織規模で必要とする企業向けです。</p>
@@ -4796,6 +4891,9 @@ SIMYは、サイトの表示、地域・言語設定の保存、利用状況の�
             billing: ['月払い', '年払い', '· 20%オフ'],
             starterTrial: {
               badge: '初回利用限定',
+              entryTitle: '初月 USD 10',
+              entryDetail: 'Starter・1席・80Mトークンの詳細を見る',
+              close: '閉じる',
               title: 'Starter 初月オファー',
               description: '現在のプランはStarterです。最初の1か月を1席・80,000,000 SIMYトークン、合計USD 10で利用できます。',
               metrics: ['最初の1か月', 'SIMYトークン', 'Starter'],
@@ -4842,6 +4940,9 @@ SIMYは、サイトの表示、地域・言語設定の保存、利用状況の�
             billing: ['Monthly', 'Yearly', '· Save 20%'],
             starterTrial: {
               badge: 'First-time offer',
+              entryTitle: 'First month USD 10',
+              entryDetail: 'View Starter, one-seat, 80M-token offer',
+              close: 'Close',
               title: 'Starter first-month offer',
               description: 'Your current plan will be Starter. Get the first month with one seat and 80,000,000 SIMY tokens for USD 10 total.',
               metrics: ['First month', 'SIMY tokens', 'Starter'],
@@ -5073,7 +5174,13 @@ SIMYは、サイトの表示、地域・言語設定の保存、利用状況の�
           setOne('[data-billing="monthly"]', copy.billing[0]);
           setOne('[data-billing="yearly"] span:first-child', copy.billing[1]);
           setOne('[data-billing="yearly"] span:last-child', copy.billing[2]);
-          setOne('.starter-trial-badge', copy.starterTrial.badge);
+          document.querySelectorAll('.starter-trial-badge').forEach(function(element) {
+            element.textContent = copy.starterTrial.badge;
+          });
+          setOne('.starter-trial-entry-copy strong', copy.starterTrial.entryTitle);
+          setOne('.starter-trial-entry-copy small', copy.starterTrial.entryDetail);
+          var starterTrialClose = document.getElementById('starter-trial-dialog-close');
+          if (starterTrialClose) starterTrialClose.setAttribute('aria-label', copy.starterTrial.close);
           setOne('.starter-trial-offer h3', copy.starterTrial.title);
           setOne('.starter-trial-description', copy.starterTrial.description);
           setMany('.starter-trial-metric dt', copy.starterTrial.metrics);
@@ -5374,6 +5481,27 @@ SIMYは、サイトの表示、地域・言語設定の保存、利用状況の�
       }
       window.syncStarterTrialOffer = syncStarterTrialOffer;
 
+      function openStarterTrialOffer() {
+        var dialog = document.getElementById('starter-trial-dialog');
+        if (!dialog || dialog.open) return;
+        syncStarterTrialOffer();
+        if (typeof dialog.showModal === 'function') {
+          dialog.showModal();
+        } else {
+          dialog.setAttribute('open', '');
+        }
+      }
+
+      function closeStarterTrialOffer() {
+        var dialog = document.getElementById('starter-trial-dialog');
+        if (!dialog || !dialog.open) return;
+        if (typeof dialog.close === 'function') {
+          dialog.close();
+        } else {
+          dialog.removeAttribute('open');
+        }
+      }
+
       function syncTokenLabels() {
         document.querySelectorAll('.pricing-card').forEach(function(card) {
           var activeItem = card.querySelector('.token-dropdown-item.active');
@@ -5485,6 +5613,16 @@ SIMYは、サイトの表示、地域・言語設定の保存、利用状況の�
       if (starterTrialAutoRenew) {
         starterTrialAutoRenew.addEventListener('change', syncStarterTrialOffer);
         syncStarterTrialOffer();
+      }
+      var starterTrialEntry = document.getElementById('starter-trial-entry');
+      var starterTrialDialog = document.getElementById('starter-trial-dialog');
+      var starterTrialDialogClose = document.getElementById('starter-trial-dialog-close');
+      if (starterTrialEntry) starterTrialEntry.addEventListener('click', openStarterTrialOffer);
+      if (starterTrialDialogClose) starterTrialDialogClose.addEventListener('click', closeStarterTrialOffer);
+      if (starterTrialDialog) {
+        starterTrialDialog.addEventListener('click', function(event) {
+          if (event.target === starterTrialDialog) closeStarterTrialOffer();
+        });
       }
 
       document.querySelectorAll('.token-dropdown-wrap').forEach(function(wrap) {
