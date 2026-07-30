@@ -2550,6 +2550,130 @@
         background: var(--ink);
         color: #fff;
       }
+      .starter-trial-offer {
+        display: grid;
+        grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+        gap: 32px;
+        margin-top: 34px;
+        padding: 30px;
+        border: 1px solid rgba(0, 87, 255, 0.28);
+        border-radius: 12px;
+        background: linear-gradient(135deg, rgba(0, 87, 255, 0.08), rgba(255, 255, 255, 0.88));
+        scroll-margin-top: 88px;
+      }
+      .starter-trial-badge {
+        display: inline-flex;
+        padding: 5px 10px;
+        border-radius: 999px;
+        background: var(--blue);
+        color: #fff;
+        font-family: 'Geist Mono', monospace;
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+      .starter-trial-offer h3 {
+        margin: 16px 0 0;
+        font-size: 1.65rem;
+      }
+      .starter-trial-description {
+        max-width: 660px;
+        margin: 10px 0 0;
+        color: var(--muted);
+        font-size: 0.98rem;
+        line-height: 1.65;
+      }
+      .starter-trial-metrics {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+        margin-top: 22px;
+      }
+      .starter-trial-metric {
+        padding: 13px;
+        border: 1px solid rgba(0, 87, 255, 0.16);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.72);
+      }
+      .starter-trial-metric dt,
+      .starter-trial-summary dt {
+        color: var(--muted);
+        font-size: 0.76rem;
+      }
+      .starter-trial-metric dd {
+        margin: 4px 0 0;
+        font-weight: 760;
+      }
+      .starter-trial-controls {
+        padding: 20px;
+        border: 1px solid rgba(0, 87, 255, 0.18);
+        border-radius: 10px;
+        background: #fff;
+      }
+      .starter-trial-renew {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        cursor: pointer;
+      }
+      .starter-trial-renew input {
+        width: 17px;
+        height: 17px;
+        margin-top: 2px;
+        accent-color: var(--blue);
+      }
+      .starter-trial-renew strong {
+        display: block;
+        font-size: 0.9rem;
+      }
+      .starter-trial-renew small {
+        display: block;
+        margin-top: 4px;
+        color: var(--muted);
+        font-size: 0.78rem;
+        line-height: 1.5;
+      }
+      .starter-trial-summary {
+        margin: 18px 0 0;
+        padding: 14px 0 0;
+        border-top: 1px solid var(--line);
+      }
+      .starter-trial-summary > div {
+        display: flex;
+        justify-content: space-between;
+        gap: 14px;
+        margin-top: 10px;
+      }
+      .starter-trial-summary > div:first-child {
+        margin-top: 0;
+      }
+      .starter-trial-summary dd {
+        margin: 0;
+        max-width: 250px;
+        font-size: 0.82rem;
+        font-weight: 700;
+        line-height: 1.45;
+        text-align: right;
+      }
+      .starter-trial-cta {
+        display: block;
+        margin-top: 18px;
+        padding: 13px 14px;
+        border-radius: 8px;
+        background: var(--blue);
+        color: #fff;
+        font-size: 0.92rem;
+        font-weight: 740;
+        text-align: center;
+        text-decoration: none;
+      }
+      .starter-trial-protection {
+        margin: 10px 0 0;
+        color: var(--muted);
+        font-size: 0.74rem;
+        line-height: 1.5;
+      }
       .pricing-grid {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -3393,6 +3517,14 @@
         .pricing-head {
           display: block;
         }
+        .starter-trial-offer {
+          grid-template-columns: 1fr;
+          gap: 20px;
+          padding: 22px;
+        }
+        .starter-trial-metrics {
+          grid-template-columns: 1fr;
+        }
         .billing-toggle {
           width: min(100%, 330px);
           margin-top: 22px;
@@ -4213,6 +4345,31 @@
 <button aria-pressed="true" class="toggle-btn active" data-billing="yearly" onclick="setBilling('yearly')" type="button"><span>年払い</span><span>· 20%オフ</span></button>
 </div>
 </div>
+<aside class="starter-trial-offer" aria-labelledby="starter-trial-title">
+<div>
+<span class="starter-trial-badge">初回利用限定</span>
+<h3 id="starter-trial-title">Starter 初月オファー</h3>
+<p class="starter-trial-description">現在のプランはStarterです。最初の1か月を1席・80,000,000 SIMYトークン、合計USD 10で利用できます。</p>
+<dl class="starter-trial-metrics">
+<div class="starter-trial-metric"><dt>最初の1か月</dt><dd>USD 10</dd></div>
+<div class="starter-trial-metric"><dt>SIMYトークン</dt><dd>80,000,000</dd></div>
+<div class="starter-trial-metric"><dt>Starter</dt><dd>1席固定</dd></div>
+</dl>
+</div>
+<div class="starter-trial-controls">
+<label class="starter-trial-renew">
+<input id="starter-trial-auto-renew" type="checkbox">
+<span><strong>2か月目以降もStarterを自動更新する</strong><small>初期値はオフです。オンにすると2か月目以降はUSD 20 / 月で自動更新します。</small></span>
+</label>
+<dl class="starter-trial-summary" aria-live="polite">
+<div><dt>今回の請求</dt><dd>USD 10</dd></div>
+<div><dt>次回請求</dt><dd id="starter-trial-next-charge">なし</dd></div>
+<div><dt>終了条件</dt><dd id="starter-trial-end-condition">自動更新せず、支払済みの1か月で終了します。</dd></div>
+</dl>
+<a class="starter-trial-cta" id="starter-trial-cta" href="https://app.simy.one/signup?offer_id=starter_trial_v1&amp;auto_renew=false&amp;plan=starter&amp;interval=monthly&amp;monthly_tokens=80000000&amp;seats=1&amp;lang=en&amp;locale=en&amp;region=us">StarterをUSD 10で始める</a>
+<p class="starter-trial-protection">期間終了時は、このオファー由来の未使用トークンだけが失効します。他組織、通常購入、管理者付与などの残高とアカウントは維持されます。</p>
+</div>
+</aside>
 <div class="pricing-grid">
 <div class="pricing-card" data-plan="starter">
 <div class="plan-name">Starter</div>
@@ -4637,6 +4794,23 @@ SIMYは、サイトの表示、地域・言語設定の保存、利用状況の�
             lifeH2: '<span class="copy-line">成果の90%を生む、</span><span class="copy-line">上位10%に集中する。</span>',
             lifeP: 'Twinは、成果の90%を生む「上位10%の重要事項」以外をAIが特定し、会議で決まった担当・期限、月次報告の材料、顧客フォローのe-mail文面、手順書や資料の下書きを先に用意します。私たち人間は、AIが代替できない10%の「非連続な成長」にのみ集中できます。',
             billing: ['月払い', '年払い', '· 20%オフ'],
+            starterTrial: {
+              badge: '初回利用限定',
+              title: 'Starter 初月オファー',
+              description: '現在のプランはStarterです。最初の1か月を1席・80,000,000 SIMYトークン、合計USD 10で利用できます。',
+              metrics: ['最初の1か月', 'SIMYトークン', 'Starter'],
+              values: ['USD 10', '80,000,000', '1席固定'],
+              autoRenew: '2か月目以降もStarterを自動更新する',
+              autoRenewHelp: '初期値はオフです。オンにすると2か月目以降はUSD 20 / 月で自動更新します。',
+              summaryLabels: ['今回の請求', '次回請求', '終了条件'],
+              chargedNow: 'USD 10',
+              noNextCharge: 'なし',
+              nextCharge: 'USD 20 / 月',
+              ends: '自動更新せず、支払済みの1か月で終了します。',
+              renews: '2か月目以降はUSD 20 / 月で自動更新します。',
+              cta: 'StarterをUSD 10で始める',
+              protection: '期間終了時は、このオファー由来の未使用トークンだけが失効します。他組織、通常購入、管理者付与などの残高とアカウントは維持されます。'
+            },
             cookieTitle: 'Cookieとキャッシュの利用について',
             cookieBody: 'SIMYは、サイトの表示、地域・言語設定の保存、利用状況の改善のためにCookieやローカルストレージ等を使用します。詳しくは',
             privacy: 'プライバシーポリシー'
@@ -4666,6 +4840,23 @@ SIMYは、サイトの表示、地域・言語設定の保存、利用状況の�
             lifeH2: '<span class="copy-line">Focus on the top 10%</span><span class="copy-line">that creates 90% of the result.</span>',
             lifeP: 'SIMY identifies the work outside the highest-leverage 10%, prepares owners, deadlines, monthly report inputs, customer follow-up email drafts, procedures, and documents, and leaves humans free to focus on the non-linear decisions AI cannot replace.',
             billing: ['Monthly', 'Yearly', '· Save 20%'],
+            starterTrial: {
+              badge: 'First-time offer',
+              title: 'Starter first-month offer',
+              description: 'Your current plan will be Starter. Get the first month with one seat and 80,000,000 SIMY tokens for USD 10 total.',
+              metrics: ['First month', 'SIMY tokens', 'Starter'],
+              values: ['USD 10', '80,000,000', '1 fixed seat'],
+              autoRenew: 'Auto-renew Starter after the first month',
+              autoRenewHelp: 'Off by default. When enabled, Starter renews for USD 20 per month from month two.',
+              summaryLabels: ['Charged now', 'Next charge', 'End condition'],
+              chargedNow: 'USD 10',
+              noNextCharge: 'None',
+              nextCharge: 'USD 20 / month',
+              ends: 'No renewal. Access ends after the paid month.',
+              renews: 'Starter renews for USD 20 per month from month two.',
+              cta: 'Start Starter for USD 10',
+              protection: 'At period end, only unused tokens granted by this offer expire. Your account and balances from other organizations, standard purchases, or administrator grants remain active.'
+            },
             cookieTitle: 'Cookies and cache',
             cookieBody: 'SIMY uses cookies and local storage to display the site, save region and language settings, and improve usage. See the',
             privacy: 'Privacy Policy'
@@ -4882,6 +5073,21 @@ SIMYは、サイトの表示、地域・言語設定の保存、利用状況の�
           setOne('[data-billing="monthly"]', copy.billing[0]);
           setOne('[data-billing="yearly"] span:first-child', copy.billing[1]);
           setOne('[data-billing="yearly"] span:last-child', copy.billing[2]);
+          setOne('.starter-trial-badge', copy.starterTrial.badge);
+          setOne('.starter-trial-offer h3', copy.starterTrial.title);
+          setOne('.starter-trial-description', copy.starterTrial.description);
+          setMany('.starter-trial-metric dt', copy.starterTrial.metrics);
+          setMany('.starter-trial-metric dd', copy.starterTrial.values);
+          setOne('.starter-trial-renew strong', copy.starterTrial.autoRenew);
+          setOne('.starter-trial-renew small', copy.starterTrial.autoRenewHelp);
+          setMany('.starter-trial-summary dt', copy.starterTrial.summaryLabels);
+          setOne('.starter-trial-summary > div:first-child dd', copy.starterTrial.chargedNow);
+          setOne('.starter-trial-cta', copy.starterTrial.cta);
+          setOne('.starter-trial-protection', copy.starterTrial.protection);
+          window.simyStarterTrialCopy = copy.starterTrial;
+          if (typeof window.syncStarterTrialOffer === 'function') {
+            window.syncStarterTrialOffer();
+          }
           setOne('.cookie-consent-copy strong', copy.cookieTitle);
           var cookieCopy = document.querySelector('.cookie-consent-copy');
           if (cookieCopy) {
@@ -5136,6 +5342,38 @@ SIMYは、サイトの表示、地域・言語設定の保存、利用状況の�
         return url;
       }
 
+      function starterTrialSignupUrl(autoRenew) {
+        var url = 'https://app.simy.one/signup?offer_id=starter_trial_v1' +
+          '&auto_renew=' + encodeURIComponent(autoRenew ? 'true' : 'false') +
+          '&plan=starter&interval=monthly&monthly_tokens=80000000&seats=1' +
+          '&lang=en&locale=en&region=us';
+        if (typeof window.simyDecorateAppUrl === 'function') {
+          return window.simyDecorateAppUrl(url);
+        }
+        if (window.simyI18n && typeof window.simyI18n.decorateAppUrl === 'function') {
+          return window.simyI18n.decorateAppUrl(url);
+        }
+        return url;
+      }
+
+      function syncStarterTrialOffer() {
+        var checkbox = document.getElementById('starter-trial-auto-renew');
+        var nextCharge = document.getElementById('starter-trial-next-charge');
+        var endCondition = document.getElementById('starter-trial-end-condition');
+        var cta = document.getElementById('starter-trial-cta');
+        if (!checkbox || !nextCharge || !endCondition || !cta) return;
+        var copy = window.simyStarterTrialCopy || {
+          noNextCharge: 'None',
+          nextCharge: 'USD 20 / month',
+          ends: 'No renewal. Access ends after the paid month.',
+          renews: 'Starter renews for USD 20 per month from month two.'
+        };
+        nextCharge.textContent = checkbox.checked ? copy.nextCharge : copy.noNextCharge;
+        endCondition.textContent = checkbox.checked ? copy.renews : copy.ends;
+        cta.href = starterTrialSignupUrl(checkbox.checked);
+      }
+      window.syncStarterTrialOffer = syncStarterTrialOffer;
+
       function syncTokenLabels() {
         document.querySelectorAll('.pricing-card').forEach(function(card) {
           var activeItem = card.querySelector('.token-dropdown-item.active');
@@ -5242,6 +5480,12 @@ SIMYは、サイトの表示、地域・言語設定の保存、利用状況の�
           document.querySelectorAll('.token-dropdown-list').forEach(function(list) { list.classList.remove('open'); });
         }
       });
+
+      var starterTrialAutoRenew = document.getElementById('starter-trial-auto-renew');
+      if (starterTrialAutoRenew) {
+        starterTrialAutoRenew.addEventListener('change', syncStarterTrialOffer);
+        syncStarterTrialOffer();
+      }
 
       document.querySelectorAll('.token-dropdown-wrap').forEach(function(wrap) {
         wrap.addEventListener('keydown', function(event) {
