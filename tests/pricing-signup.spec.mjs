@@ -83,7 +83,7 @@ test('selected monthly allocation reaches new signup across billing switches', a
 
   await page.locator('#langBtn').click();
   await page.locator('[data-lang-option="en"]').click();
-  await expect(page.locator('#starter-trial-entry')).toContainText('Starter for one month · USD 10');
+  await expect(page.locator('#starter-trial-entry')).toContainText('Trial for one month · USD 10');
   for (const selection of selections) {
     await expectSignup(page.locator(`.pricing-card[data-plan="${selection.plan}"]`), {
       ...selection,
@@ -106,7 +106,7 @@ test('selected monthly allocation reaches new signup across billing switches', a
 
 });
 
-test('Starter one-time offer opens above the plan grid and defaults to no renewal', async ({ page }) => {
+test('Trial offer opens above the plan grid and defaults to no renewal', async ({ page }) => {
   await page.goto('/?lang=ja&region=jp');
   const consent = page.locator('#cookieConsentOk');
   if (await consent.isVisible()) await consent.click();
@@ -116,7 +116,7 @@ test('Starter one-time offer opens above the plan grid and defaults to no renewa
   const dialog = page.locator('#starter-trial-dialog');
 
   await expect(card.locator('#starter-trial-entry')).toHaveCount(0);
-  await expect(entry).toContainText('Starter 1か月 · USD 10');
+  await expect(entry).toContainText('Trial 1か月 · USD 10');
   await expect(entry).toContainText('自動更新は任意です');
   expect(
     await entry.evaluate((offer, grid) =>
