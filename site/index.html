@@ -2556,7 +2556,7 @@
         width: 100%;
         align-items: center;
         gap: 16px;
-        margin-top: 24px;
+        margin-bottom: 28px;
         padding: 20px 24px;
         border: 2px solid rgba(0, 87, 255, 0.42);
         border-radius: 12px;
@@ -4467,6 +4467,11 @@
 </section>
 <section class="section" id="pricing">
 <div class="container">
+<button aria-controls="starter-trial-dialog" aria-haspopup="dialog" class="starter-trial-entry" id="starter-trial-entry" type="button">
+<span class="starter-trial-badge">1回限定</span>
+<span class="starter-trial-entry-copy"><strong>Starter 1か月 · USD 10</strong><small>1席・80Mトークン。自動更新は任意です</small></span>
+<span aria-hidden="true" class="starter-trial-entry-arrow">→</span>
+</button>
 <div class="pricing-head">
 <div aria-label="Billing interval" class="billing-toggle" role="group">
 <button aria-pressed="false" class="toggle-btn" data-billing="monthly" onclick="setBilling('monthly')" type="button">月払い</button>
@@ -4591,20 +4596,15 @@
 </div>
 </div>
 </div>
-<button aria-controls="starter-trial-dialog" aria-haspopup="dialog" class="starter-trial-entry" id="starter-trial-entry" type="button">
-<span class="starter-trial-badge">初回利用限定</span>
-<span class="starter-trial-entry-copy"><strong>初月 USD 10</strong><small>Starter・1席・80Mトークンの詳細を見る</small></span>
-<span aria-hidden="true" class="starter-trial-entry-arrow">→</span>
-</button>
 <dialog aria-labelledby="starter-trial-title" class="starter-trial-dialog" id="starter-trial-dialog">
 <button aria-label="閉じる" class="starter-trial-dialog-close" id="starter-trial-dialog-close" type="button">×</button>
 <div class="starter-trial-offer">
 <div>
-<span class="starter-trial-badge">初回利用限定</span>
-<h3 id="starter-trial-title">Starter 初月オファー</h3>
-<p class="starter-trial-description">現在のプランはStarterです。最初の1か月を1席・80,000,000 SIMYトークン、合計USD 10で利用できます。</p>
+<span class="starter-trial-badge">1回限定</span>
+<h3 id="starter-trial-title">Starter 1か月オファー</h3>
+<p class="starter-trial-description">現在のプランはStarterです。1回限定で、1席・80,000,000 SIMYトークンを1か月、合計USD 10で利用できます。自動更新は任意です。</p>
 <dl class="starter-trial-metrics">
-<div class="starter-trial-metric"><dt>最初の1か月</dt><dd>USD 10</dd></div>
+<div class="starter-trial-metric"><dt>利用期間</dt><dd>1か月 · USD 10</dd></div>
 <div class="starter-trial-metric"><dt>SIMYトークン</dt><dd>80,000,000</dd></div>
 <div class="starter-trial-metric"><dt>Starter</dt><dd>1席固定</dd></div>
 </dl>
@@ -4612,14 +4612,14 @@
 <div class="starter-trial-controls">
 <label class="starter-trial-renew">
 <input id="starter-trial-auto-renew" type="checkbox">
-<span><strong>2か月目以降もStarterを自動更新する</strong><small>初期値はオフです。オンにすると2か月目以降はUSD 20 / 月で自動更新します。</small></span>
+<span><strong>期間終了後もStarterを自動更新する</strong><small>初期値はオフです。オンにすると期間終了後はUSD 20 / 月で自動更新します。</small></span>
 </label>
 <dl class="starter-trial-summary" aria-live="polite">
 <div><dt>今回の請求</dt><dd>USD 10</dd></div>
 <div><dt>次回請求</dt><dd id="starter-trial-next-charge">なし</dd></div>
 <div><dt>終了条件</dt><dd id="starter-trial-end-condition">自動更新せず、支払済みの1か月で終了します。</dd></div>
 </dl>
-<a class="starter-trial-cta" id="starter-trial-cta" href="https://app.simy.one/signup?offer_id=starter_trial_v1&amp;auto_renew=false&amp;plan=starter&amp;interval=monthly&amp;monthly_tokens=80000000&amp;seats=1&amp;lang=en&amp;locale=en&amp;region=us">StarterをUSD 10で始める</a>
+<a class="starter-trial-cta" id="starter-trial-cta" href="https://app.simy.one/signup?offer_id=starter_trial_v1&amp;auto_renew=false&amp;plan=starter&amp;interval=monthly&amp;monthly_tokens=80000000&amp;seats=1&amp;lang=en&amp;locale=en&amp;region=us">1回限定StarterをUSD 10で始める</a>
 <p class="starter-trial-protection">期間終了時は、このオファー由来の未使用トークンだけが失効します。他組織、通常購入、管理者付与などの残高とアカウントは維持されます。</p>
 </div>
 </div>
@@ -4931,23 +4931,23 @@ SIMYは、サイトの表示、地域・言語設定の保存、利用状況の�
             lifeP: 'Twinは、成果の90%を生む「上位10%の重要事項」以外をAIが特定し、会議で決まった担当・期限、月次報告の材料、顧客フォローのe-mail文面、手順書や資料の下書きを先に用意します。私たち人間は、AIが代替できない10%の「非連続な成長」にのみ集中できます。',
             billing: ['月払い', '年払い', '· 20%オフ'],
             starterTrial: {
-              badge: '初回利用限定',
-              entryTitle: '初月 USD 10',
-              entryDetail: 'Starter・1席・80Mトークンの詳細を見る',
+              badge: '1回限定',
+              entryTitle: 'Starter 1か月 · USD 10',
+              entryDetail: '1席・80Mトークン。自動更新は任意です',
               close: '閉じる',
-              title: 'Starter 初月オファー',
-              description: '現在のプランはStarterです。最初の1か月を1席・80,000,000 SIMYトークン、合計USD 10で利用できます。',
-              metrics: ['最初の1か月', 'SIMYトークン', 'Starter'],
-              values: ['USD 10', '80,000,000', '1席固定'],
-              autoRenew: '2か月目以降もStarterを自動更新する',
-              autoRenewHelp: '初期値はオフです。オンにすると2か月目以降はUSD 20 / 月で自動更新します。',
+              title: 'Starter 1か月オファー',
+              description: '現在のプランはStarterです。1回限定で、1席・80,000,000 SIMYトークンを1か月、合計USD 10で利用できます。自動更新は任意です。',
+              metrics: ['利用期間', 'SIMYトークン', 'Starter'],
+              values: ['1か月 · USD 10', '80,000,000', '1席固定'],
+              autoRenew: '期間終了後もStarterを自動更新する',
+              autoRenewHelp: '初期値はオフです。オンにすると期間終了後はUSD 20 / 月で自動更新します。',
               summaryLabels: ['今回の請求', '次回請求', '終了条件'],
               chargedNow: 'USD 10',
               noNextCharge: 'なし',
               nextCharge: 'USD 20 / 月',
               ends: '自動更新せず、支払済みの1か月で終了します。',
-              renews: '2か月目以降はUSD 20 / 月で自動更新します。',
-              cta: 'StarterをUSD 10で始める',
+              renews: '期間終了後はUSD 20 / 月で自動更新します。',
+              cta: '1回限定StarterをUSD 10で始める',
               protection: '期間終了時は、このオファー由来の未使用トークンだけが失効します。他組織、通常購入、管理者付与などの残高とアカウントは維持されます。'
             },
             cookieTitle: 'Cookieとキャッシュの利用について',
@@ -4980,23 +4980,23 @@ SIMYは、サイトの表示、地域・言語設定の保存、利用状況の�
             lifeP: 'SIMY identifies the work outside the highest-leverage 10%, prepares owners, deadlines, monthly report inputs, customer follow-up email drafts, procedures, and documents, and leaves humans free to focus on the non-linear decisions AI cannot replace.',
             billing: ['Monthly', 'Yearly', '· Save 20%'],
             starterTrial: {
-              badge: 'First-time offer',
-              entryTitle: 'First month USD 10',
-              entryDetail: 'View Starter, one-seat, 80M-token offer',
+              badge: 'One-time offer',
+              entryTitle: 'Starter for one month · USD 10',
+              entryDetail: 'One seat and 80M tokens. Auto-renew is optional',
               close: 'Close',
-              title: 'Starter first-month offer',
-              description: 'Your current plan will be Starter. Get the first month with one seat and 80,000,000 SIMY tokens for USD 10 total.',
-              metrics: ['First month', 'SIMY tokens', 'Starter'],
-              values: ['USD 10', '80,000,000', '1 fixed seat'],
-              autoRenew: 'Auto-renew Starter after the first month',
-              autoRenewHelp: 'Off by default. When enabled, Starter renews for USD 20 per month from month two.',
+              title: 'Starter one-month offer',
+              description: 'Your current plan will be Starter. This one-time offer includes one seat and 80,000,000 SIMY tokens for one month at USD 10 total. Auto-renew is optional.',
+              metrics: ['Access period', 'SIMY tokens', 'Starter'],
+              values: ['One month · USD 10', '80,000,000', '1 fixed seat'],
+              autoRenew: 'Continue with a Starter subscription after this period',
+              autoRenewHelp: 'Off by default. When enabled, Starter renews for USD 20 per month after this period.',
               summaryLabels: ['Charged now', 'Next charge', 'End condition'],
               chargedNow: 'USD 10',
               noNextCharge: 'None',
               nextCharge: 'USD 20 / month',
               ends: 'No renewal. Access ends after the paid month.',
-              renews: 'Starter renews for USD 20 per month from month two.',
-              cta: 'Start Starter for USD 10',
+              renews: 'Starter renews for USD 20 per month after this period.',
+              cta: 'Get one month of Starter for USD 10',
               protection: 'At period end, only unused tokens granted by this offer expire. Your account and balances from other organizations, standard purchases, or administrator grants remain active.'
             },
             cookieTitle: 'Cookies and cache',
@@ -5514,7 +5514,7 @@ SIMYは、サイトの表示、地域・言語設定の保存、利用状況の�
           noNextCharge: 'None',
           nextCharge: 'USD 20 / month',
           ends: 'No renewal. Access ends after the paid month.',
-          renews: 'Starter renews for USD 20 per month from month two.'
+          renews: 'Starter renews for USD 20 per month after this period.'
         };
         nextCharge.textContent = checkbox.checked ? copy.nextCharge : copy.noNextCharge;
         endCondition.textContent = checkbox.checked ? copy.renews : copy.ends;

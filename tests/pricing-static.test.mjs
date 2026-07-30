@@ -51,7 +51,7 @@ test('dynamic signup URL uses the absolute monthly_tokens contract', () => {
   assert.match(html, /signupUrl\(plan, currentBilling, tokens \* 1000000\)/);
 });
 
-test('Starter first-month offer opens below the subscription plan grid and defaults to no renewal', () => {
+test('Starter one-time offer opens above the subscription plan grid and defaults to no renewal', () => {
   assert.match(
     html,
     /aria-controls="starter-trial-dialog" aria-haspopup="dialog" class="starter-trial-entry"/
@@ -59,6 +59,10 @@ test('Starter first-month offer opens below the subscription plan grid and defau
   assert.doesNotMatch(
     html,
     /data-plan="starter"[\s\S]*?starter-trial-entry[\s\S]*?data-plan="pro"/
+  );
+  assert.match(
+    html,
+    /id="starter-trial-entry"[\s\S]*?<div class="pricing-head">[\s\S]*?<div class="pricing-grid">/
   );
   assert.match(
     html,

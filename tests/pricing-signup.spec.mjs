@@ -83,7 +83,7 @@ test('selected monthly allocation reaches new signup across billing switches', a
 
   await page.locator('#langBtn').click();
   await page.locator('[data-lang-option="en"]').click();
-  await expect(page.locator('#starter-trial-entry')).toContainText('First month USD 10');
+  await expect(page.locator('#starter-trial-entry')).toContainText('Starter for one month · USD 10');
   for (const selection of selections) {
     await expectSignup(page.locator(`.pricing-card[data-plan="${selection.plan}"]`), {
       ...selection,
@@ -106,7 +106,7 @@ test('selected monthly allocation reaches new signup across billing switches', a
 
 });
 
-test('Starter first-month offer opens below the plan grid and defaults to no renewal', async ({ page }) => {
+test('Starter one-time offer opens above the plan grid and defaults to no renewal', async ({ page }) => {
   await page.goto('/?lang=ja&region=jp');
   const consent = page.locator('#cookieConsentOk');
   if (await consent.isVisible()) await consent.click();
@@ -116,7 +116,13 @@ test('Starter first-month offer opens below the plan grid and defaults to no ren
   const dialog = page.locator('#starter-trial-dialog');
 
   await expect(card.locator('#starter-trial-entry')).toHaveCount(0);
-  await expect(entry).toContainText('初月 USD 10');
+  await expect(entry).toContainText('Starter 1か月 · USD 10');
+  await expect(entry).toContainText('自動更新は任意です');
+  expect(
+    await entry.evaluate((offer, grid) =>
+      Boolean(offer.compareDocumentPosition(grid) & Node.DOCUMENT_POSITION_FOLLOWING)
+    , await page.locator('.pricing-grid').elementHandle())
+  ).toBe(true);
   await expect(dialog).not.toBeVisible();
   await entry.click();
   await expect(dialog).toBeVisible();
@@ -140,13 +146,13 @@ test('Starter first-month offer opens below the plan grid and defaults to no ren
   expect(signup.params.get('lang')).toBe('ja');
   expect(signup.params.get('region')).toBe('jp');
 
-  await page.screenshot({ path: 'output/playwright/starter-first-month-offer-dialog-off.png' });
+  await page.screenshot({ path: 'output/playwright/starter-one-time-offer-dialog-off.png' });
   await autoRenew.check();
   await expect(dialog.locator('#starter-trial-next-charge')).toHaveText('USD 20 / 月');
   signup = signupParams(await dialog.locator('#starter-trial-cta').getAttribute('href'));
   expect(signup.params.get('auto_renew')).toBe('true');
 
-  await dialog.screenshot({ path: 'output/playwright/starter-first-month-offer-dialog-on.png' });
+  await dialog.screenshot({ path: 'output/playwright/starter-one-time-offer-dialog-on.png' });
   await page.keyboard.press('Escape');
   await expect(dialog).not.toBeVisible();
   await expect(entry).toBeFocused();
@@ -157,7 +163,7 @@ test('Starter first-month offer opens below the plan grid and defaults to no ren
   await entry.click();
   await expect(dialog).toBeVisible();
   await expect(autoRenew).not.toBeChecked();
-  await dialog.screenshot({ path: 'output/playwright/starter-first-month-offer-dialog-mobile.png' });
+  await dialog.screenshot({ path: 'output/playwright/starter-one-time-offer-dialog-mobile.png' });
   await dialog.locator('#starter-trial-dialog-close').click();
   await expect(dialog).not.toBeVisible();
 });
