@@ -3,6 +3,7 @@ import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 
 const html = await readFile(new URL('../site/index.html', import.meta.url), 'utf8');
+const runtimeConfig = await readFile(new URL('../site/runtime-config.js', import.meta.url), 'utf8');
 
 const plans = [
   { name: 'starter', tokens: 80_000_000 },
@@ -49,4 +50,38 @@ test('dynamic signup URL uses the absolute monthly_tokens contract', () => {
   assert.match(html, /function signupUrl\(plan, interval, monthlyTokens\)/);
   assert.match(html, /'&monthly_tokens=' \+ encodeURIComponent\(monthlyTokens\)/);
   assert.match(html, /signupUrl\(plan, currentBilling, tokens \* 1000000\)/);
+});
+
+test('Sandbox runtime config can override the SIMY app origin without changing production defaults', () => {
+  assert.match(html, /<script src="runtime-config\.js"><\/script>/);
+  assert.match(html, /function configuredAppOrigin\(\)/);
+  assert.match(html, /url\.protocol = target\.protocol/);
+  assert.match(html, /url\.host = target\.host/);
+  assert.match(runtimeConfig, /window\.SIMY_APP_ORIGIN = window\.SIMY_APP_ORIGIN \|\| '';/);
+});
+
+test('Trial offer opens above the subscription plan grid and defaults to no renewal', () => {
+  assert.match(
+    html,
+    /aria-controls="starter-trial-dialog" aria-haspopup="dialog" class="starter-trial-entry"/
+  );
+  assert.doesNotMatch(
+    html,
+    /data-plan="starter"[\s\S]*?starter-trial-entry[\s\S]*?data-plan="pro"/
+  );
+  assert.match(
+    html,
+    /id="starter-trial-entry"[\s\S]*?<div class="pricing-head">[\s\S]*?<div class="pricing-grid">/
+  );
+  assert.match(
+    html,
+    /<dialog aria-labelledby="starter-trial-title" class="starter-trial-dialog" id="starter-trial-dialog">/
+  );
+  assert.match(html, /<input id="starter-trial-auto-renew" type="checkbox">/);
+  assert.match(
+    html,
+    /offer_id=starter_trial_v1&amp;auto_renew=false&amp;plan=starter&amp;interval=monthly&amp;monthly_tokens=80000000&amp;seats=1/
+  );
+  assert.match(html, /function openStarterTrialOffer\(\)/);
+  assert.match(html, /starterTrialEntry\.addEventListener\('click', openStarterTrialOffer\)/);
 });
