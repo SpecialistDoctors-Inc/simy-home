@@ -69,8 +69,8 @@
       "offers": {
         "@type": "AggregateOffer",
         "priceCurrency": "USD",
-        "lowPrice": "20",
-        "highPrice": "100",
+        "lowPrice": "30",
+        "highPrice": "80",
         "offerCount": "3"
       },
       "creator": {
@@ -2589,102 +2589,54 @@
         font-size: 0.94rem;
       }
       .pricing-head {
-        display: flex;
-        justify-content: flex-end;
-        gap: 28px;
-        align-items: end;
-      }
-      .pricing-head-copy {
-        max-width: 720px;
-      }
-      .pricing-head-copy h2 {
         max-width: 760px;
       }
-      .pricing-head-copy p {
+      .pricing-head h2 {
+        margin: 10px 0 0;
+      }
+      .pricing-head p:not(.section-label) {
         margin: 18px 0 0;
         color: var(--muted);
         font-size: 1.05rem;
-      }
-      .pricing-note {
-        margin-top: 10px;
-        color: var(--muted);
-        font-size: 0.9rem;
-      }
-      .pricing-business-note {
-        max-width: 760px;
-        margin-top: 14px;
-        padding: 14px 16px;
-        border: 1px solid rgba(0, 87, 255, 0.18);
-        border-radius: 8px;
-        background: rgba(0, 87, 255, 0.05);
-        color: var(--ink);
-        font-size: 0.95rem;
-        line-height: 1.55;
-      }
-      .billing-toggle {
-        display: flex;
-        flex-shrink: 0;
-        padding: 4px;
-        border: 1px solid var(--line);
-        border-radius: 10px;
-        background: #f1f1ec;
-      }
-      .toggle-btn {
-        min-width: 112px;
-        padding: 10px 14px;
-        border: 0;
-        border-radius: 8px;
-        background: transparent;
-        color: var(--muted);
-        font: inherit;
-        font-size: 0.82rem;
-        font-weight: 700;
-        cursor: pointer;
-      }
-      .toggle-btn.active {
-        background: var(--ink);
-        color: #fff;
+        line-height: 1.65;
       }
       .pricing-grid {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 0;
-        margin-top: 34px;
-        align-items: start;
+        gap: 16px;
+        margin-top: 40px;
+        align-items: stretch;
       }
       .pricing-card {
+        display: flex;
+        min-width: 0;
+        flex-direction: column;
         padding: 34px 30px;
         border: 1px solid var(--line);
+        border-radius: 10px;
         background: var(--panel);
-      }
-      .pricing-card:first-child {
-        border-right: 0;
-        border-radius: 8px 0 0 8px;
-      }
-      .pricing-card:last-child {
-        border-left: 0;
-        border-radius: 0 8px 8px 0;
       }
       .pricing-card.featured {
         position: relative;
         z-index: 1;
-        padding-bottom: 42px;
         border: 2px solid #07101f;
-        border-radius: 8px;
+        border-radius: 10px;
         background: #07101f;
         color: #fff;
       }
       .popular-badge {
-        display: inline-block;
-        margin-bottom: 14px;
-        padding: 4px 10px;
-        border-radius: 5px;
-        background: rgba(0, 87, 255, 0.16);
-        color: #5d91ff;
+        position: absolute;
+        top: -14px;
+        left: 50%;
+        padding: 5px 12px;
+        transform: translateX(-50%);
+        border-radius: 999px;
+        background: var(--blue);
+        color: #fff;
         font-family: 'Geist Mono', monospace;
         font-size: 0.68rem;
         font-weight: 700;
-        text-transform: uppercase;
+        white-space: nowrap;
       }
       .plan-name {
         font-size: 1.2rem;
@@ -2717,38 +2669,60 @@
       .pricing-card.featured .price-unit {
         color: rgba(255, 255, 255, 0.58);
       }
-      .token-allocation {
-        display: flex;
-        width: 100%;
-        align-items: center;
-        margin: 18px 0 22px;
-        padding: 12px 14px;
+      .price-tax-detail {
+        min-height: 20px;
+        margin-top: 7px;
+        color: var(--muted);
+        font-size: 0.75rem;
+        line-height: 1.4;
+      }
+      .pricing-card.featured .price-tax-detail {
+        color: rgba(255, 255, 255, 0.58);
+      }
+      .plan-allowance {
+        display: grid;
+        gap: 0;
+        margin: 22px 0 0;
         border: 1px solid var(--line);
         border-radius: 8px;
         background: #f7f7f3;
         color: var(--ink);
-        font-family: 'Geist Mono', monospace;
-        font-size: 0.82rem;
-        font-weight: 700;
       }
-      .pricing-card.featured .token-allocation {
+      .pricing-card.featured .plan-allowance {
         border-color: rgba(255, 255, 255, 0.18);
         background: rgba(255, 255, 255, 0.06);
         color: #fff;
       }
-      .pricing-fixed-note {
-        margin: 18px 0 0;
-        padding: 13px 15px;
-        border: 1px solid rgba(0, 87, 255, 0.18);
-        border-radius: 8px;
-        background: rgba(0, 87, 255, 0.05);
-        color: var(--ink);
+      .plan-stat {
+        display: flex;
+        min-height: 62px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 12px 14px;
+      }
+      .plan-stat + .plan-stat {
+        border-top: 1px solid var(--line);
+      }
+      .pricing-card.featured .plan-stat + .plan-stat {
+        border-top-color: rgba(255, 255, 255, 0.18);
+      }
+      .plan-stat-label {
+        color: var(--muted);
+        font-size: 0.78rem;
+      }
+      .pricing-card.featured .plan-stat-label {
+        color: rgba(255, 255, 255, 0.58);
+      }
+      .plan-stat strong {
+        font-family: 'Geist Mono', monospace;
         font-size: 0.9rem;
-        line-height: 1.55;
+        text-align: right;
       }
       .plan-cta {
         display: block;
         width: 100%;
+        margin-top: 22px;
         padding: 13px 14px;
         border-radius: 8px;
         background: var(--ink);
@@ -2765,7 +2739,7 @@
         display: flex;
         flex-direction: column;
         gap: 12px;
-        margin: 26px 0 0;
+        margin: 24px 0 0;
         padding: 0;
         list-style: none;
       }
@@ -2783,51 +2757,67 @@
       .pricing-card.featured .feature-list li {
         color: rgba(255, 255, 255, 0.76);
       }
-      .task-row {
+      .pricing-extra {
         display: flex;
         align-items: center;
-        gap: 8px;
-        margin-top: 18px;
-        padding-top: 14px;
-        border-top: 1px solid var(--line);
-        color: var(--muted);
-        font-size: 0.82rem;
-      }
-      .pricing-card.featured .task-row {
-        border-top-color: rgba(255, 255, 255, 0.14);
-        color: rgba(255, 255, 255, 0.58);
-      }
-      .task-icon {
-        width: 16px;
-        height: 16px;
-        opacity: 0.55;
-      }
-      .enterprise-section {
+        justify-content: space-between;
+        gap: 24px;
         margin-top: 24px;
-        padding: 30px;
+        padding: 24px 26px;
         border: 1px solid var(--line);
-        border-radius: 8px;
+        border-radius: 10px;
         background: #fff;
-        text-align: center;
       }
-      .enterprise-section h3 {
+      .pricing-extra h3 {
         margin: 0;
-        font-size: 1.3rem;
+        font-size: 1.05rem;
       }
-      .enterprise-section p {
-        max-width: 760px;
-        margin: 10px auto 0;
+      .pricing-extra p {
+        margin: 7px 0 0;
         color: var(--muted);
+        font-size: 0.9rem;
       }
-      .enterprise-cta {
-        display: inline-flex;
-        margin-top: 18px;
-        padding: 12px 18px;
-        border-radius: 8px;
-        background: var(--ink);
-        color: #fff;
-        font-weight: 740;
-        text-decoration: none;
+      .pricing-extra-price {
+        font-family: 'Geist Mono', monospace;
+        font-size: 1rem;
+        font-weight: 700;
+      }
+      .pricing-extra-price-wrap {
+        flex-shrink: 0;
+        text-align: right;
+      }
+      .pricing-extra-tax-detail {
+        margin-top: 5px;
+        color: var(--muted);
+        font-size: 0.75rem;
+      }
+      .pricing-details {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+        margin-top: 16px;
+      }
+      .pricing-detail-card {
+        padding: 22px 24px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.54);
+      }
+      .pricing-detail-card h3 {
+        margin: 0;
+        font-size: 0.96rem;
+      }
+      .pricing-detail-card p {
+        margin: 9px 0 0;
+        color: var(--muted);
+        font-size: 0.86rem;
+        line-height: 1.65;
+      }
+      .pricing-disclaimer {
+        margin: 16px 0 0;
+        color: var(--muted);
+        font-size: 0.8rem;
+        line-height: 1.65;
       }
       .life-section {
         padding: 96px 0;
@@ -3427,6 +3417,7 @@
         .loop,
         .persona-grid,
         .pricing-grid,
+        .pricing-details,
         .footer-grid,
         .company-profile {
           grid-template-columns: 1fr;
@@ -3447,14 +3438,6 @@
         .pricing-head {
           display: block;
         }
-        .billing-toggle {
-          width: min(100%, 330px);
-          margin-top: 22px;
-        }
-        .toggle-btn {
-          flex: 1;
-          min-width: 0;
-        }
         .pricing-grid {
           gap: 16px;
         }
@@ -3467,6 +3450,10 @@
         }
         .pricing-card.featured {
           border-color: #07101f;
+        }
+        .pricing-extra {
+          align-items: flex-start;
+          flex-direction: column;
         }
         .plan-subtitle {
           min-height: auto;
@@ -3592,12 +3579,12 @@
 <a data-simy-no-translate="" href="#features">特徴</a>
 <a data-simy-no-translate="" href="#how-it-works">使い方</a>
 <a data-simy-no-translate="" href="#pricing">料金</a>
-<a class="mobile-only-nav-action mobile-signup" href="https://app.simy.one/signup?plan=pro&amp;interval=yearly&amp;monthly_tokens=160000000&amp;lang=en&amp;locale=en&amp;region=us">Proで始める</a>
+<a class="mobile-only-nav-action mobile-signup" href="mailto:sales@simy.one?subject=SIMY%20Pro%20Plan%20Inquiry">Proについて相談</a>
 <a class="mobile-only-nav-action mobile-signin" href="https://app.simy.one/login?lang=en&amp;locale=en&amp;region=us">ログイン</a>
 </div>
 <div class="nav-right">
 <a class="nav-signin" href="https://app.simy.one/login?lang=en&amp;locale=en&amp;region=us">ログイン</a>
-<a class="btn-primary" href="https://app.simy.one/signup?plan=pro&amp;interval=yearly&amp;monthly_tokens=160000000&amp;lang=en&amp;locale=en&amp;region=us">Proで始める</a>
+<a class="btn-primary" href="mailto:sales@simy.one?subject=SIMY%20Pro%20Plan%20Inquiry">Proについて相談</a>
 </div>
 <div class="region-switcher">
 <button aria-expanded="false" aria-haspopup="true" class="region-btn" type="button">
@@ -3625,7 +3612,7 @@
 <h1><span class="hero-title-line">人が足りない。</span><span class="hero-title-line">仕事は増える。</span><span class="hero-title-line">SIMYが動く。</span></h1>
 <p class="hero-sub">退職、異動、採用凍結、兼務。人は増えないのに、会議運営、進捗確認、緊急対応、月次報告、OJT、手順書作成は特定の人に積まれていく。Twinはその管理業務を、人に積まれる前に動かし、最後の判断だけを人に戻します。</p>
 <div class="hero-actions">
-<a class="btn-primary" href="https://app.simy.one/signup?plan=pro&amp;interval=yearly&amp;monthly_tokens=160000000&amp;lang=en&amp;locale=en&amp;region=us">Proで始める</a>
+<a class="btn-primary" href="mailto:sales@simy.one?subject=SIMY%20Pro%20Plan%20Inquiry">Proについて相談</a>
 <a class="btn-secondary" href="#samples">積まれる前に動かす</a>
 </div>
 </div>
@@ -4302,103 +4289,95 @@
 <section class="section" id="pricing">
 <div class="container">
 <div class="pricing-head">
-<div aria-label="Billing interval" class="billing-toggle">
-<button class="toggle-btn" data-billing="monthly" onclick="setBilling('monthly')" type="button">月払い</button>
-<button class="toggle-btn active" data-billing="yearly" onclick="setBilling('yearly')" type="button"><span>年払い</span><span>· 20%オフ</span></button>
+<p class="section-label">料金</p>
+<h2>仕事の量に合わせて選べる、シンプルな3プラン。</h2>
+<p>SIMYの利用料は月額固定です。Autorunは、お客様ご自身のCodex利用枠を使って実行します。</p>
 </div>
-</div>
-<p class="pricing-fixed-note" data-pricing-fixed-note="" data-simy-no-translate="">各プランのトークン量は1シートあたり固定です。購入シート分を組織内で共有し、毎月の利用期間ごとにリセットします（翌月への繰越なし）。</p>
 <div class="pricing-grid">
-<div class="pricing-card" data-plan="starter" data-price-a="16" data-price-m="20" data-tokens="80">
+<div class="pricing-card" data-plan="starter">
 <div class="plan-name">Starter</div>
-<div class="plan-subtitle">小さなチームや1つの業務から始める</div>
+<div class="plan-subtitle">まず日常業務の一部を任せたい方</div>
 <div class="price-row">
-<span class="price-amount" id="price-starter">$16</span>
-<span class="price-unit">/ seat / 月</span>
+<span class="price-amount">$33</span>
+<span class="price-unit">税込 / 月</span>
 </div>
-<div class="token-allocation">
-<span data-simy-no-translate="" data-token-allocation="">80M SIMYトークン / シート / 月</span>
+<div class="price-tax-detail">税抜 $30（消費税10%）</div>
+<div class="plan-allowance">
+<div class="plan-stat"><span class="plan-stat-label">SIMY Autorun</span><strong class="plan-autorun">月100回</strong></div>
+<div class="plan-stat"><span class="plan-stat-label">ファイル保存容量</span><strong class="plan-storage">10GB</strong></div>
 </div>
-<a class="plan-cta" href="https://app.simy.one/signup?plan=starter&amp;interval=yearly&amp;monthly_tokens=80000000&amp;lang=en&amp;locale=en&amp;region=us">プランを選ぶ</a>
+<a class="plan-cta" href="mailto:sales@simy.one?subject=SIMY%20Starter%20Plan%20Inquiry">このプランを相談する</a>
 <ul class="feature-list">
-<li>最大5つの接続チャネル</li>
-<li>タスクデータベース（最大1,000タスク）</li>
-<li>標準AIエージェント実行</li>
-<li>Email / Slack配信</li>
-<li>ベータ機能への早期アクセス</li>
+<li>1人用ワークスペース</li>
+<li>スケジュール実行</li>
+<li>実行結果と履歴の確認</li>
+<li>アップロードと成果物の保存</li>
 </ul>
-<div class="task-row">
-<svg class="task-icon" fill="currentColor" viewbox="0 0 16 16"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 12.5a5.5 5.5 0 110-11 5.5 5.5 0 010 11zM8 4v4l3 1.5-.5 1L7 9V4h1z"></path></svg>
-<span>20件の同時タスク</span>
 </div>
-<div class="task-row" style="border-top:none;margin-top:8px;padding-top:0">
-<svg class="task-icon" fill="currentColor" viewbox="0 0 16 16"><path d="M12.5 2H11V1h-1v1H6V1H5v1H3.5A1.5 1.5 0 002 3.5v9A1.5 1.5 0 003.5 14h9a1.5 1.5 0 001.5-1.5v-9A1.5 1.5 0 0012.5 2zm0 10.5h-9V6h9v6.5z"></path></svg>
-<span>20件の予約タスク</span>
-</div>
-</div>
-<div class="pricing-card featured" data-plan="pro" data-price-a="32" data-price-m="40" data-tokens="160">
+<div class="pricing-card featured" data-plan="pro">
 <div class="popular-badge">おすすめ</div>
 <div class="plan-name">Pro</div>
-<div class="plan-subtitle">管理職と成長チーム向け</div>
+<div class="plan-subtitle">毎日の仕事を継続的に任せたい方</div>
 <div class="price-row">
-<span class="price-amount" id="price-pro">$32</span>
-<span class="price-unit">/ seat / 月</span>
+<span class="price-amount">$55</span>
+<span class="price-unit">税込 / 月</span>
 </div>
-<div class="token-allocation">
-<span data-simy-no-translate="" data-token-allocation="">160M SIMYトークン / シート / 月</span>
+<div class="price-tax-detail">税抜 $50（消費税10%）</div>
+<div class="plan-allowance">
+<div class="plan-stat"><span class="plan-stat-label">SIMY Autorun</span><strong class="plan-autorun">回数制限なし*</strong></div>
+<div class="plan-stat"><span class="plan-stat-label">ファイル保存容量</span><strong class="plan-storage">50GB</strong></div>
 </div>
-<a class="plan-cta" href="https://app.simy.one/signup?plan=pro&amp;interval=yearly&amp;monthly_tokens=160000000&amp;lang=en&amp;locale=en&amp;region=us">プランを選ぶ</a>
+<a class="plan-cta" href="mailto:sales@simy.one?subject=SIMY%20Pro%20Plan%20Inquiry">このプランを相談する</a>
 <ul class="feature-list">
-<li>接続チャネル無制限</li>
-<li>タスクデータベース（タスク無制限）</li>
-<li>優先AIエージェント実行</li>
-<li>すべての配信連携</li>
-<li>HVP Dashboard</li>
-<li>ベータ機能への早期アクセス</li>
+<li>Starterのすべて</li>
+<li>1人用ワークスペース</li>
+<li>継続的なスケジュール実行</li>
+<li>回数を気にせず仕事を依頼</li>
 </ul>
-<div class="task-row">
-<svg class="task-icon" fill="currentColor" viewbox="0 0 16 16"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 12.5a5.5 5.5 0 110-11 5.5 5.5 0 010 11zM8 4v4l3 1.5-.5 1L7 9V4h1z"></path></svg>
-<span>50件の同時タスク</span>
 </div>
-<div class="task-row" style="border-top:none;margin-top:8px;padding-top:0">
-<svg class="task-icon" fill="currentColor" viewbox="0 0 16 16"><path d="M12.5 2H11V1h-1v1H6V1H5v1H3.5A1.5 1.5 0 002 3.5v9A1.5 1.5 0 003.5 14h9a1.5 1.5 0 001.5-1.5v-9A1.5 1.5 0 0012.5 2zm0 10.5h-9V6h9v6.5z"></path></svg>
-<span>50件の予約タスク</span>
-</div>
-</div>
-<div class="pricing-card" data-plan="scale" data-price-a="80" data-price-m="100" data-tokens="400">
-<div class="plan-name">Scale</div>
-<div class="plan-subtitle">高出力な組織向け</div>
+<div class="pricing-card" data-plan="team">
+<div class="plan-name">Team</div>
+<div class="plan-subtitle">チームで仕事と結果を共有したい方</div>
 <div class="price-row">
-<span class="price-amount" id="price-scale">$80</span>
-<span class="price-unit">/ seat / 月</span>
+<span class="price-amount">$88</span>
+<span class="price-unit">税込 / 月</span>
 </div>
-<div class="token-allocation">
-<span data-simy-no-translate="" data-token-allocation="">400M SIMYトークン / シート / 月</span>
+<div class="price-tax-detail">税抜 $80（消費税10%）</div>
+<div class="plan-allowance">
+<div class="plan-stat"><span class="plan-stat-label">SIMY Autorun</span><strong class="plan-autorun">回数制限なし*</strong></div>
+<div class="plan-stat"><span class="plan-stat-label">共有保存容量</span><strong class="plan-storage">100GB</strong></div>
 </div>
-<a class="plan-cta" href="https://app.simy.one/signup?plan=scale&amp;interval=yearly&amp;monthly_tokens=400000000&amp;lang=en&amp;locale=en&amp;region=us">プランを選ぶ</a>
+<a class="plan-cta" href="mailto:sales@simy.one?subject=SIMY%20Team%20Plan%20Inquiry">このプランを相談する</a>
 <ul class="feature-list">
-<li>接続チャネル無制限</li>
-<li>タスクデータベース（タスク無制限）</li>
-<li>優先AIエージェント実行</li>
-<li>すべての配信連携</li>
-<li>重要業務ダッシュボード + 仕事の記憶</li>
-<li>高度な分析</li>
+<li>Proのすべて</li>
+<li>最大3人まで利用可能</li>
+<li>Autorunとスケジュールの共有</li>
+<li>ファイル、結果、履歴の共有</li>
+<li>メンバー管理</li>
 </ul>
-<div class="task-row">
-<svg class="task-icon" fill="currentColor" viewbox="0 0 16 16"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 12.5a5.5 5.5 0 110-11 5.5 5.5 0 010 11zM8 4v4l3 1.5-.5 1L7 9V4h1z"></path></svg>
-<span>100件の同時タスク</span>
-</div>
-<div class="task-row" style="border-top:none;margin-top:8px;padding-top:0">
-<svg class="task-icon" fill="currentColor" viewbox="0 0 16 16"><path d="M12.5 2H11V1h-1v1H6V1H5v1H3.5A1.5 1.5 0 002 3.5v9A1.5 1.5 0 003.5 14h9a1.5 1.5 0 001.5-1.5v-9A1.5 1.5 0 0012.5 2zm0 10.5h-9V6h9v6.5z"></path></svg>
-<span>100件の予約タスク</span>
 </div>
 </div>
+<div class="pricing-extra">
+<div>
+<h3>ファイル保存容量を追加</h3>
+<p>必要なときだけ、どのプランにも追加できます。</p>
 </div>
-<div class="enterprise-section">
-<h3>Enterprise</h3>
-<p>トークン割当、専任サポート、SSO、SLAをカスタム提供。管理ワークフロー、制御、データ境界を組織規模で必要とする企業向けです。</p>
-<a class="enterprise-cta" href="mailto:sales@simy.one">営業に相談</a>
+<div class="pricing-extra-price-wrap">
+<div class="pricing-extra-price">30GB / $11（税込）/ 月</div>
+<div class="pricing-extra-tax-detail">税抜 $10（消費税10%）</div>
 </div>
+</div>
+<div class="pricing-details">
+<div class="pricing-detail-card">
+<h3>Autorunの回数について</h3>
+<p>ユーザー操作またはスケジュールによって1つのAutorunが開始されると1回として数えます。SIMY側の障害による自動再試行は回数に含みません。</p>
+</div>
+<div class="pricing-detail-card">
+<h3>ファイル保存容量について</h3>
+<p>アップロードしたファイルとSIMYが作成した成果物が対象です。使用量が80%に達すると通知し、上限到達後も既存ファイルは保持します。</p>
+</div>
+</div>
+<p class="pricing-disclaimer">* 「回数制限なし」はSIMY側のAutorun実行回数を指します。Codex側の利用枠および安全な利用に関する制限が適用されます。日本向け表示価格は消費税10%を含みます。税額と最終合計は、契約時に請求先住所を確認したうえで確定します。SIMYの料金にCodex利用料は含まれません。</p>
 </div>
 </section>
 <section class="final-cta">
@@ -4406,7 +4385,7 @@
 <h2><span class="copy-line">人が足りない。</span><span class="copy-line">仕事は増える。</span><span class="copy-line">SIMYが動く。</span></h2>
 <p>Twinは、欠員・兼務・採用凍結で特定の人に積まれる未返信対応、会議後の担当・期限整理、月次報告、顧客フォロー、資料作成を、人に積まれる前に進めます。</p>
 <div class="final-actions">
-<a class="btn-primary" href="https://app.simy.one/signup?plan=pro&amp;interval=yearly&amp;monthly_tokens=160000000&amp;lang=en&amp;locale=en&amp;region=us">Proで始める</a>
+<a class="btn-primary" href="mailto:sales@simy.one?subject=SIMY%20Pro%20Plan%20Inquiry">Proについて相談</a>
 <a class="btn-secondary" href="mailto:sales@simy.one">営業に相談</a>
 </div>
 </div>
@@ -4431,7 +4410,7 @@
 <a href="press-release.html">プレスリリース</a>
 <a href="mailto:sales@simy.one">お問い合わせ</a>
 <a href="https://app.simy.one/login?lang=en&amp;locale=en&amp;region=us">ログイン</a>
-<a href="https://app.simy.one/signup?plan=pro&amp;interval=yearly&amp;monthly_tokens=160000000&amp;lang=en&amp;locale=en&amp;region=us">アカウント作成</a>
+<a href="mailto:sales@simy.one?subject=SIMY%20Plan%20Inquiry">料金について相談</a>
 </div>
 <div class="footer-col">
 <div class="footer-col-title">Legal</div>
@@ -4581,6 +4560,7 @@ SIMYは、サイトの表示、地域・言語設定の保存、利用状況の�
         okButton.addEventListener('click', acceptConsent);
       })();
     </script>
+<script src="pricing-catalog.js"></script>
 <script>
       (function() {
         var languageOptions = [
@@ -4782,7 +4762,7 @@ SIMYは、サイトの表示、地域・言語設定の保存、利用状況の�
           ja: {
             nav: ['できること', '特徴', '使い方', '料金'],
             signin: 'ログイン',
-            primaryCta: 'Proで始める',
+            primaryCta: 'Proについて相談',
             secondaryCta: '積まれる前に動かす',
             region: 'Region',
             eyebrow: '人が足りない。仕事は増える。SIMYが動く。',
@@ -4803,7 +4783,31 @@ SIMYは、サイトの表示、地域・言語設定の保存、利用状況の�
             lifeLabel: '10/90ルールの徹底',
             lifeH2: '<span class="copy-line">成果の90%を生む、</span><span class="copy-line">上位10%に集中する。</span>',
             lifeP: 'Twinは、成果の90%を生む「上位10%の重要事項」以外をAIが特定し、会議で決まった担当・期限、月次報告の材料、顧客フォローのe-mail文面、手順書や資料の下書きを先に用意します。私たち人間は、AIが代替できない10%の「非連続な成長」にのみ集中できます。',
-            billing: ['月払い', '年払い', '· 20%オフ'],
+            pricing: {
+              label: '料金',
+              title: '仕事の量に合わせて選べる、シンプルな3プラン。',
+              lead: 'SIMYの利用料は月額固定です。Autorunは、お客様ご自身のCodex利用枠を使って実行します。',
+              priceUnit: '税込 / 月',
+              popular: 'おすすめ',
+              subtitles: ['まず日常業務の一部を任せたい方', '毎日の仕事を継続的に任せたい方', 'チームで仕事と結果を共有したい方'],
+              autoruns: ['月100回', '回数制限なし*', '回数制限なし*'],
+              storageLabels: ['ファイル保存容量', 'ファイル保存容量', '共有保存容量'],
+              storages: ['10GB', '50GB', '100GB'],
+              cta: 'このプランを相談する',
+              features: [
+                ['1人用ワークスペース', 'スケジュール実行', '実行結果と履歴の確認', 'アップロードと成果物の保存'],
+                ['Starterのすべて', '1人用ワークスペース', '継続的なスケジュール実行', '回数を気にせず仕事を依頼'],
+                ['Proのすべて', '最大3人まで利用可能', 'Autorunとスケジュールの共有', 'ファイル、結果、履歴の共有', 'メンバー管理']
+              ],
+              extraTitle: 'ファイル保存容量を追加',
+              extraBody: '必要なときだけ、どのプランにも追加できます。',
+              extraPrice: '30GB / $11（税込）/ 月',
+              details: [
+                ['Autorunの回数について', 'ユーザー操作またはスケジュールによって1つのAutorunが開始されると1回として数えます。SIMY側の障害による自動再試行は回数に含みません。'],
+                ['ファイル保存容量について', 'アップロードしたファイルとSIMYが作成した成果物が対象です。使用量が80%に達すると通知し、上限到達後も既存ファイルは保持します。']
+              ],
+              disclaimer: '* 「回数制限なし」はSIMY側のAutorun実行回数を指します。Codex側の利用枠および安全な利用に関する制限が適用されます。日本向け表示価格は消費税10%を含みます。税額と最終合計は、契約時に請求先住所を確認したうえで確定します。SIMYの料金にCodex利用料は含まれません。'
+            },
             cookieTitle: 'Cookieとキャッシュの利用について',
             cookieBody: 'SIMYは、サイトの表示、地域・言語設定の保存、利用状況の改善のためにCookieやローカルストレージ等を使用します。詳しくは',
             privacy: 'プライバシーポリシー'
@@ -4811,7 +4815,7 @@ SIMYは、サイトの表示、地域・言語設定の保存、利用状況の�
           en: {
             nav: ['What it does', 'Features', 'How it works', 'Pricing'],
             signin: 'Log in',
-            primaryCta: 'Start with Pro',
+            primaryCta: 'Contact us about Pro',
             secondaryCta: 'Move work before it piles up',
             region: 'Region',
             eyebrow: 'Short-staffed. More work. SIMY gets it done.',
@@ -4832,7 +4836,31 @@ SIMYは、サイトの表示、地域・言語設定の保存、利用状況の�
             lifeLabel: 'The 10/90 rule',
             lifeH2: '<span class="copy-line">Focus on the top 10%</span><span class="copy-line">that creates 90% of the result.</span>',
             lifeP: 'SIMY identifies the work outside the highest-leverage 10%, prepares owners, deadlines, monthly report inputs, customer follow-up email drafts, procedures, and documents, and leaves humans free to focus on the non-linear decisions AI cannot replace.',
-            billing: ['Monthly', 'Yearly', '· Save 20%'],
+            pricing: {
+              label: 'Pricing',
+              title: 'Three simple plans that scale with your workload.',
+              lead: 'SIMY has a fixed monthly fee. Autorun uses the Codex allowance included with your own account.',
+              priceUnit: '+ applicable tax / month',
+              popular: 'Most popular',
+              subtitles: ['For delegating part of your daily work', 'For keeping everyday work moving', 'For sharing work and results with your team'],
+              autoruns: ['100 / month', 'No run limit*', 'No run limit*'],
+              storageLabels: ['File storage', 'File storage', 'Shared storage'],
+              storages: ['10GB', '50GB', '100GB'],
+              cta: 'Contact us about this plan',
+              features: [
+                ['Workspace for one person', 'Scheduled runs', 'Results and run history', 'Uploads and generated files'],
+                ['Everything in Starter', 'Workspace for one person', 'Ongoing scheduled runs', 'Delegate work without counting runs'],
+                ['Everything in Pro', 'Up to 3 people', 'Shared Autoruns and schedules', 'Shared files, results, and history', 'Member management']
+              ],
+              extraTitle: 'Add file storage',
+              extraBody: 'Add it to any plan only when you need it.',
+              extraPrice: '30GB / $10 + tax / month',
+              details: [
+                ['How Autorun usage is counted', 'One user-initiated or scheduled Autorun counts as one run. Automatic retries caused by a SIMY service issue do not count.'],
+                ['How file storage works', 'Storage includes uploaded files and files generated by SIMY. We notify you at 80% usage and retain existing files after you reach the limit.']
+              ],
+              disclaimer: '* “No run limit” refers to SIMY Autorun executions. Codex account allowances and reasonable-use safeguards still apply. Prices exclude tax. Tax may apply based on your billing location; we will confirm the tax amount and final total before you sign. Codex charges are not included in the SIMY fee.'
+            },
             cookieTitle: 'Cookies and cache',
             cookieBody: 'SIMY uses cookies and local storage to display the site, save region and language settings, and improve usage. See the',
             privacy: 'Privacy Policy'
@@ -5072,9 +5100,37 @@ SIMYは、サイトの表示、地域・言語設定の保存、利用状況の�
           setOne('.life-section .section-label', copy.lifeLabel);
           setOne('.life-section h2', copy.lifeH2, true);
           setOne('.life-copy p:not(.section-label)', copy.lifeP);
-          setOne('[data-billing="monthly"]', copy.billing[0]);
-          setOne('[data-billing="yearly"] span:first-child', copy.billing[1]);
-          setOne('[data-billing="yearly"] span:last-child', copy.billing[2]);
+          setOne('#pricing .section-label', copy.pricing.label);
+          setOne('#pricing .pricing-head h2', copy.pricing.title);
+          setOne('#pricing .pricing-head p:not(.section-label)', copy.pricing.lead);
+          setOne('#pricing .popular-badge', copy.pricing.popular);
+          document.querySelectorAll('#pricing .pricing-card').forEach(function(card, index) {
+            var subtitle = card.querySelector('.plan-subtitle');
+            var priceUnit = card.querySelector('.price-unit');
+            var autorun = card.querySelector('.plan-autorun');
+            var storageLabel = card.querySelectorAll('.plan-stat-label')[1];
+            var storage = card.querySelector('.plan-storage');
+            var cta = card.querySelector('.plan-cta');
+            if (subtitle) subtitle.textContent = copy.pricing.subtitles[index];
+            if (priceUnit) priceUnit.textContent = copy.pricing.priceUnit;
+            if (autorun) autorun.textContent = copy.pricing.autoruns[index];
+            if (storageLabel) storageLabel.textContent = copy.pricing.storageLabels[index];
+            if (storage) storage.textContent = copy.pricing.storages[index];
+            if (cta) cta.textContent = copy.pricing.cta;
+            card.querySelectorAll('.feature-list li').forEach(function(item, itemIndex) {
+              item.textContent = copy.pricing.features[index][itemIndex];
+            });
+          });
+          setOne('#pricing .pricing-extra h3', copy.pricing.extraTitle);
+          setOne('#pricing .pricing-extra p', copy.pricing.extraBody);
+          setOne('#pricing .pricing-extra-price', copy.pricing.extraPrice);
+          document.querySelectorAll('#pricing .pricing-detail-card').forEach(function(card, index) {
+            var detail = copy.pricing.details[index];
+            if (card.querySelector('h3')) card.querySelector('h3').textContent = detail[0];
+            if (card.querySelector('p')) card.querySelector('p').textContent = detail[1];
+          });
+          setOne('#pricing .pricing-disclaimer', copy.pricing.disclaimer);
+          if (window.SIMY_PRICING) window.SIMY_PRICING.applyToDocument(document);
           setOne('.cookie-consent-copy strong', copy.cookieTitle);
           var cookieCopy = document.querySelector('.cookie-consent-copy');
           if (cookieCopy) {
@@ -5098,6 +5154,7 @@ SIMYは、サイトの表示、地域・言語設定の保存、利用状況の�
             var region = supportedRegion(languageRegion[lang]);
             if (region) setRegion(region, persist, false);
           }
+          if (window.SIMY_PRICING) window.SIMY_PRICING.applyToDocument(document);
           try { window.dispatchEvent(new CustomEvent('simy:languagechange', { detail: { lang: lang } })); } catch (e) {}
           syncAppLinksToHeroRegion();
           return lang;
@@ -5118,6 +5175,7 @@ SIMYは、サイトの表示、地域・言語設定の保存、利用状況の�
           if (syncLanguage !== false) {
             setLanguage(currentLanguageForRegion(region), persist, false);
           }
+          if (window.SIMY_PRICING) window.SIMY_PRICING.applyToDocument(document);
           syncAppLinksToHeroRegion();
           return region;
         }
@@ -5256,142 +5314,6 @@ SIMYは、サイトの表示、地域・言語設定の保存、利用状況の�
         setTimeout(syncAppLinksToHeroRegion, 500);
         setTimeout(syncAppLinksToHeroRegion, 1500);
       })();
-    </script>
-<script>
-      var currentBilling = 'yearly';
-
-      var pricingDynamicCopy = {
-        ar: {
-          tokensShort: 'M رمز SIMY / مقعد / شهر',
-          fixedNote: 'عدد الرموز في كل خطة ثابت لكل مقعد. تشكل المقاعد المشتراة رصيداً مشتركاً للمؤسسة، ويُعاد تعيينه في بداية كل دورة استخدام شهرية من دون ترحيل.'
-        },
-        de: {
-          tokensShort: 'M SIMY-Token / Sitz / Monat',
-          fixedNote: 'Die Tokenmenge jedes Tarifs ist pro Sitz fest. Gekaufte Sitze bilden einen gemeinsamen Organisationspool, der zu Beginn jedes monatlichen Nutzungszeitraums ohne Übertrag zurückgesetzt wird.'
-        },
-        en: {
-          tokensShort: 'M SIMY tokens / seat / month',
-          fixedNote: 'Each plan has a fixed token allowance per seat. Purchased seats form one shared organization pool, reset at the start of each monthly usage period with no rollover.'
-        },
-        es: {
-          tokensShort: 'M tokens SIMY / asiento / mes',
-          fixedNote: 'Cada plan tiene una cantidad fija de tokens por asiento. Los asientos comprados forman un fondo compartido por la organización que se reinicia al inicio de cada período mensual de uso, sin acumulación.'
-        },
-        fr: {
-          tokensShort: 'M jetons SIMY / siège / mois',
-          fixedNote: 'Chaque forfait comprend un nombre fixe de jetons par siège. Les sièges achetés forment une réserve partagée par l’organisation, réinitialisée au début de chaque période d’utilisation mensuelle, sans report.'
-        },
-        hi: {
-          tokensShort: 'M SIMY टोकन / सीट / माह',
-          fixedNote: 'हर प्लान में प्रति सीट टोकन की मात्रा तय है। खरीदी गई सभी सीटों के टोकन संगठन में साझा होते हैं और हर मासिक उपयोग अवधि की शुरुआत में बिना कैरीओवर के रीसेट होते हैं।'
-        },
-        id: {
-          tokensShort: 'M token SIMY / kursi / bulan',
-          fixedNote: 'Setiap paket memiliki jumlah token tetap per kursi. Kursi yang dibeli membentuk satu kumpulan bersama untuk organisasi dan direset pada awal setiap periode penggunaan bulanan tanpa carryover.'
-        },
-        it: {
-          tokensShort: 'M token SIMY / postazione / mese',
-          fixedNote: 'Ogni piano include una quantità fissa di token per postazione. Le postazioni acquistate formano un unico pool condiviso dall’organizzazione, azzerato all’inizio di ogni periodo di utilizzo mensile, senza riporto.'
-        },
-        ja: {
-          tokensShort: 'M SIMYトークン / シート / 月',
-          fixedNote: '各プランのトークン量は1シートあたり固定です。購入シート分を組織内で共有し、毎月の利用期間ごとにリセットします（翌月への繰越なし）。'
-        },
-        kn: {
-          tokensShort: 'M SIMY ಟೋಕನ್ / ಸೀಟ್ / ತಿಂಗಳು',
-          fixedNote: 'ಪ್ರತಿ ಯೋಜನೆಯಲ್ಲಿ ಪ್ರತಿ ಸೀಟ್‌ಗೆ ನಿಗದಿತ ಟೋಕನ್ ಪ್ರಮಾಣವಿದೆ. ಖರೀದಿಸಿದ ಸೀಟ್‌ಗಳ ಟೋಕನ್‌ಗಳನ್ನು ಸಂಸ್ಥೆಯಲ್ಲಿ ಹಂಚಿಕೊಳ್ಳಲಾಗುತ್ತದೆ ಮತ್ತು ಪ್ರತಿ ಮಾಸಿಕ ಬಳಕೆಯ ಅವಧಿಯ ಆರಂಭದಲ್ಲಿ ಮುಂದಿನ ತಿಂಗಳಿಗೆ ವರ್ಗಾವಣೆಯಿಲ್ಲದೆ ಮರುಹೊಂದಿಸಲಾಗುತ್ತದೆ.'
-        },
-        ko: {
-          tokensShort: 'M SIMY 토큰 / 시트 / 월',
-          fixedNote: '각 플랜의 토큰은 시트당 고정됩니다. 구매한 시트의 토큰은 조직에서 하나의 풀로 공유되며 매월 이용 기간이 시작될 때 이월 없이 초기화됩니다.'
-        },
-        'pt-BR': {
-          tokensShort: 'M tokens SIMY / assento / mês',
-          fixedNote: 'Cada plano tem uma quantidade fixa de tokens por assento. Os assentos comprados formam um único saldo compartilhado pela organização, redefinido no início de cada período mensal de uso, sem acúmulo.'
-        },
-        ru: {
-          tokensShort: 'M токенов SIMY / место / месяц',
-          fixedNote: 'В каждом плане задан фиксированный объём токенов на место. Токены купленных мест объединяются в общий пул организации и сбрасываются в начале каждого месячного периода использования без переноса.'
-        },
-        te: {
-          tokensShort: 'M SIMY టోకెన్లు / సీటు / నెల',
-          fixedNote: 'ప్రతి ప్లాన్‌లో ఒక్కో సీటుకు టోకెన్ల పరిమాణం స్థిరంగా ఉంటుంది. కొనుగోలు చేసిన సీట్ల టోకెన్లు సంస్థలో పంచుకోబడతాయి మరియు ప్రతి నెలవారీ వినియోగ కాలం ప్రారంభంలో క్యారీ ఓవర్ లేకుండా రీసెట్ అవుతాయి.'
-        },
-        th: {
-          tokensShort: 'M โทเคน SIMY / ที่นั่ง / เดือน',
-          fixedNote: 'แต่ละแพ็กเกจมีจำนวนโทเคนคงที่ต่อที่นั่ง โทเคนจากที่นั่งที่ซื้อจะรวมเป็นโควตาที่ใช้ร่วมกันในองค์กรและรีเซ็ตเมื่อเริ่มรอบการใช้งานแต่ละเดือนโดยไม่มีการทบยอด'
-        },
-        vi: {
-          tokensShort: 'M token SIMY / chỗ / tháng',
-          fixedNote: 'Mỗi gói có lượng token cố định cho mỗi chỗ. Token của các chỗ đã mua được dùng chung trong toàn tổ chức và đặt lại vào đầu mỗi kỳ sử dụng hàng tháng, không chuyển sang tháng sau.'
-        },
-        'zh-Hans': {
-          tokensShort: 'M SIMY 令牌 / 席位 / 月',
-          fixedNote: '每个方案的每席位令牌量固定。已购买席位的令牌在组织内共享，并在每个月度使用周期开始时重置，不结转到下月。'
-        },
-        'zh-Hant': {
-          tokensShort: 'M SIMY 代幣 / 席位 / 月',
-          fixedNote: '每個方案的每席位代幣量固定。已購買席位的代幣在組織內共享，並於每個月度使用週期開始時重設，不結轉至下月。'
-        }
-      };
-
-      function currentPricingCopy() {
-        return pricingDynamicCopy[document.documentElement.lang] || pricingDynamicCopy.en;
-      }
-
-      function formatTokenLabel(tokens) {
-        var value = parseInt(tokens, 10);
-        return value.toLocaleString(document.documentElement.lang || 'en') + currentPricingCopy().tokensShort;
-      }
-
-      function signupUrl(plan, interval, tokens) {
-        var monthlyTokens = parseInt(tokens, 10) * 1000000;
-        var lang = document.documentElement.lang || 'en';
-        var region = document.documentElement.getAttribute('data-hero-region') || 'us';
-        return 'https://app.simy.one/signup?plan=' + encodeURIComponent(plan) +
-          '&interval=' + encodeURIComponent(interval) +
-          '&monthly_tokens=' + encodeURIComponent(monthlyTokens) +
-          '&lang=' + encodeURIComponent(lang) +
-          '&locale=' + encodeURIComponent(lang) +
-          '&region=' + encodeURIComponent(region);
-      }
-
-      function syncFixedPricingCopy() {
-        document.querySelectorAll('.pricing-card').forEach(function(card) {
-          var label = card.querySelector('[data-token-allocation]');
-          if (label) label.textContent = formatTokenLabel(card.getAttribute('data-tokens'));
-        });
-        var fixedNote = document.querySelector('[data-pricing-fixed-note]');
-        if (fixedNote) fixedNote.textContent = currentPricingCopy().fixedNote;
-      }
-
-      function setBilling(type) {
-        currentBilling = type;
-        document.querySelectorAll('.toggle-btn').forEach(function(btn) {
-          btn.classList.toggle('active', btn.getAttribute('data-billing') === type);
-        });
-        document.querySelectorAll('.pricing-card').forEach(function(card) {
-          updatePrice(card);
-        });
-      }
-
-      function updatePrice(card) {
-        var tokens = parseInt(card.getAttribute('data-tokens'), 10);
-        var priceM = parseFloat(card.getAttribute('data-price-m'));
-        var priceA = parseFloat(card.getAttribute('data-price-a'));
-        var price = currentBilling === 'monthly' ? priceM : priceA;
-        var plan = card.getAttribute('data-plan');
-        var priceEl = document.getElementById('price-' + plan);
-        if (priceEl) priceEl.textContent = '$' + (Number.isInteger(price) ? price : price.toFixed(2));
-        var cta = card.querySelector('.plan-cta');
-        if (cta) cta.href = signupUrl(plan, currentBilling, tokens);
-      }
-
-      syncFixedPricingCopy();
-      new MutationObserver(syncFixedPricingCopy).observe(document.documentElement, {
-        attributes: true,
-        attributeFilter: ['lang']
-      });
     </script>
 <script>
       (function() {

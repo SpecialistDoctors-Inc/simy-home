@@ -269,11 +269,11 @@ p, li, a, h1, h2, h3, h4, h5, h6, span, div, td, th, dd, dt, blockquote {
   /* Pricing grid already has its own 900px breakpoint but reinforce */
   .pricing-grid { grid-template-columns: 1fr !important; max-width: 100% !important; }
   .pricing-card { padding: 28px 22px !important; }
-  .pricing-card.featured { padding: 28px 22px 36px !important; }
+  .pricing-card.featured { padding: 28px 22px !important; }
   .price-amount { font-size: 2.6rem !important; }
 
-  /* Enterprise / CTA boxes */
-  .enterprise-section { padding: 32px 20px !important; margin-top: 48px !important; }
+  .pricing-details { grid-template-columns: 1fr !important; }
+  .pricing-extra { padding: 22px 20px !important; }
 
   /* ---- Flex rows that need to stack ---- */
   .row-stack-mobile,
@@ -299,7 +299,7 @@ p, li, a, h1, h2, h3, h4, h5, h6, span, div, td, th, dd, dt, blockquote {
   .btn-row { flex-direction: column; align-items: stretch !important; gap: 12px !important; }
   .btn-row > a, .btn-row > button { width: 100%; text-align: center; }
 
-  /* ---- Enterprise / info card wide sections ---- */
+  /* ---- Wide page sections ---- */
   section { padding-left: 0; padding-right: 0; }
 }
 
