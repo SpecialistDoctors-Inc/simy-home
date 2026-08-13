@@ -12,17 +12,19 @@
 <meta content="index, follow" name="robots"/>
 <meta content="website" property="og:type"/>
 <meta content="https://simy.one/" property="og:url"/>
-<meta content="SIMY - 人が足りない。仕事は増える。SIMYが動く。" property="og:title"/>
-<meta content="SIMYは欠員・兼務・採用凍結で特定の人に積まれる会議運営、報告、緊急対応、手順書作成を、人に積まれる前に動かします。" property="og:description"/>
+<meta content="SIMY - Short-staffed. More work. SIMY gets it done." property="og:title"/>
+<meta content="SIMY handles meetings, reports, urgent responses, and procedure drafts before they pile up on overloaded teams." property="og:description"/>
 <meta content="SIMY" property="og:site_name"/>
-<meta content="https://simy.one/ogp.png" property="og:image"/>
+<meta content="https://simy.one/ogp-home-global-202608-v2.png" property="og:image"/>
 <meta content="1200" property="og:image:width"/>
 <meta content="630" property="og:image:height"/>
+<meta content="Short-staffed. More work. SIMY gets it done. Meetings, reports, urgent responses, and procedure drafts before they pile up." property="og:image:alt"/>
 <meta content="en_US" property="og:locale"/>
 <meta content="summary_large_image" name="twitter:card"/>
-<meta content="SIMY - 人が足りない。仕事は増える。SIMYが動く。" name="twitter:title"/>
-<meta content="SIMYは欠員・兼務・採用凍結で特定の人に積まれる会議運営、報告、緊急対応、手順書作成を、人に積まれる前に動かします。" name="twitter:description"/>
-<meta content="https://simy.one/ogp.png" name="twitter:image"/>
+<meta content="SIMY - Short-staffed. More work. SIMY gets it done." name="twitter:title"/>
+<meta content="SIMY handles meetings, reports, urgent responses, and procedure drafts before they pile up on overloaded teams." name="twitter:description"/>
+<meta content="https://simy.one/ogp-home-global-202608-v2.png" name="twitter:image"/>
+<meta content="Short-staffed. More work. SIMY gets it done. Meetings, reports, urgent responses, and procedure drafts before they pile up." name="twitter:image:alt"/>
 <meta content="#f9f9f6" name="theme-color"/>
 <script type="application/ld+json">
     {
@@ -888,6 +890,12 @@
       }
       .hero-copy {
         max-width: 720px;
+      }
+      html[dir="rtl"] .hero-copy {
+        max-width: 660px;
+        margin-right: auto;
+        margin-left: 0;
+        text-align: right;
       }
       .eyebrow {
         display: inline-flex;
@@ -4806,12 +4814,12 @@ SIMYは、サイトの表示、地域・言語設定の保存、利用状況の�
             primaryCta: 'Start with Pro',
             secondaryCta: 'Move work before it piles up',
             region: 'Region',
-            eyebrow: 'People are short. Work keeps growing. SIMY moves.',
-            h1: '<span class="hero-title-line">People are short.</span><span class="hero-title-line">Work keeps growing.</span><span class="hero-title-line">SIMY moves.</span>',
-            sub: 'Attrition, transfers, hiring freezes, and double-duty roles keep adding management work to the same capable people. SIMY moves meeting operations, progress checks, urgent responses, monthly reports, OJT, and procedure drafts before they pile up, then returns the final judgment to humans.',
-            samplesLabel: 'People are short. Work keeps growing.',
-            samplesH2: '<span class="copy-line">SIMY moves</span><span class="copy-line">the management work</span><span class="copy-line">before it piles up.</span>',
-            samplesLead: 'When teams cover departures, transfers, double-duty roles, and hiring freezes, meetings, management, training, reporting, and urgent responses collect around a few people. SIMY moves that work forward so the department does not stall.',
+            eyebrow: 'Short-staffed. More work. SIMY gets it done.',
+            h1: '<span class="hero-title-line">Short-staffed.</span><span class="hero-title-line">More work.</span><span class="hero-title-line">SIMY gets it done.</span>',
+            sub: 'Attrition, transfers, hiring freezes, and double-duty roles keep adding management work to the same capable people. SIMY handles meeting operations, progress checks, urgent responses, monthly reports, OJT, and procedure drafts before they pile up, then returns the final judgment to humans.',
+            samplesLabel: 'Short-staffed. More work.',
+            samplesH2: '<span class="copy-line">SIMY gets</span><span class="copy-line">the management work done</span><span class="copy-line">before it piles up.</span>',
+            samplesLead: 'When teams cover departures, transfers, double-duty roles, and hiring freezes, meetings, management, training, reporting, and urgent responses collect around a few people. SIMY gets that work done so the department does not stall.',
             experienceMore: 'Show 3 more',
             experience: [
               ['Meeting operations and progress checks', 'Weekly meetings, department coordination, team progress, and teammate instructions keep moving.'],
@@ -5845,7 +5853,7 @@ SIMYは、サイトの表示、地域・言語設定の保存、利用状況の�
           if (localBundleLoading) return;
           localBundleLoading = true;
           var script = document.createElement('script');
-          script.src = 'lang/home-dom-bundle.js?v=20260712-static-home-4';
+          script.src = 'lang/home-dom-bundle.js?v=20260813-copy-4';
           script.onload = function() {
             localBundleLoading = false;
             var callbacks = localBundleCallbacks.splice(0);
@@ -5913,7 +5921,7 @@ SIMYは、サイトの表示、地域・言語設定の保存、利用状況の�
             return;
           }
           var xhr = new XMLHttpRequest();
-          xhr.open('GET', '/lang/home-dom/' + lang + '.json?v=20260712-static-home-4', true);
+          xhr.open('GET', '/lang/home-dom/' + lang + '.json?v=20260813-copy-4', true);
           xhr.onreadystatechange = function() {
             if (xhr.readyState !== 4) return;
             if (xhr.status === 200) {
