@@ -1,5 +1,7 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
 
 const pricing = require('../site/pricing-catalog.js');
 
@@ -35,4 +37,14 @@ test('tax arithmetic stays in integer cents', () => {
   assert.equal(pricing.grossCents(3000, 1000), 3300);
   assert.equal(pricing.grossCents(1000, 1000), 1100);
   assert.throws(() => pricing.grossCents(10.5, 1000), /baseCents/);
+});
+
+test('pricing and primary CTAs open the matching SIMY app signup flow', () => {
+  const html = fs.readFileSync(path.join(__dirname, '../site/index.html'), 'utf8');
+
+  for (const plan of ['starter', 'pro', 'team']) {
+    assert.match(html, new RegExp(`class="plan-cta" href="https://app\\.simy\\.one/signup\\?plan=${plan}"`));
+  }
+  assert.match(html, /class="btn-primary" href="https:\/\/app\.simy\.one\/signup\?plan=pro"/);
+  assert.doesNotMatch(html, /class="plan-cta" href="mailto:/);
 });
