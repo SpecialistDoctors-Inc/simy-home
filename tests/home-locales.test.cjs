@@ -8,6 +8,7 @@ const repoRoot = path.resolve(__dirname, "..");
 const i18nSource = fs.readFileSync(path.join(repoRoot, "site/home-i18n.js"), "utf8");
 const localesSource = fs.readFileSync(path.join(repoRoot, "site/home-locales.js"), "utf8");
 const homeHtml = fs.readFileSync(path.join(repoRoot, "site/index.html"), "utf8");
+const homeCss = fs.readFileSync(path.join(repoRoot, "site/home.css"), "utf8");
 
 function extractJapaneseCopy() {
   const marker = "const JA_COPY = Object.freeze(";
@@ -75,6 +76,31 @@ test("locale bundle loads before the homepage translation runtime", () => {
   );
 });
 
+test("all section-level messages share one responsive typography role", () => {
+  const sectionHeadingIds = [
+    "product-title",
+    "codex-title",
+    "method-title",
+    "connected-apps-title",
+    "use-cases-title",
+    "comparison-title",
+    "pricing-title",
+    "final-title"
+  ];
+
+  for (const id of sectionHeadingIds) {
+    assert.match(
+      homeHtml,
+      new RegExp(`<h2 class="section-heading" id="${id}">`),
+      `${id} must use the shared section-heading role`
+    );
+  }
+
+  assert.match(homeCss, /\.section-heading\s*\{[^}]*font-size:\s*var\(--type-section-heading\)/s);
+  assert.match(homeCss, /h1,\s*h2,\s*h3\s*\{[^}]*text-wrap:\s*balance/s);
+  assert.doesNotMatch(homeCss, /\.final-copy h2\s*\{[^}]*font-size:/s);
+});
+
 test("keeps Traditional Chinese distinct and omits unsupported China region", () => {
   assert.doesNotMatch(i18nSource, /locale\.startsWith\("zh-"\)/);
   assert.match(i18nSource, /\["zh", "zh-cn", "zh-sg", "zh-hans"\]/);
@@ -91,7 +117,8 @@ test("protects the global editorial message in every locale", () => {
     "General agents complete tasks.",
     "SIMY preserves your way of working.",
     "Make every Autorun earn your confidence.",
-    "Tell SIMY what needs to move. Autorun takes it from there."
+    "Tell SIMY what needs to move.",
+    "Autorun takes it from there."
   ];
 
   for (const key of editorialKeys) {

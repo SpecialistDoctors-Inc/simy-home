@@ -21,6 +21,7 @@
   --page-width: 1360px;
   --section-x: clamp(1.35rem, 4vw, 4.75rem);
   --section-y: clamp(5rem, 9vw, 9rem);
+  --type-section-heading: clamp(2.7rem, 5.2vw, 5.5rem);
   --display: "Helvetica Neue", "Arial Nova", Helvetica, Arial, sans-serif;
   --body: Inter, "Helvetica Neue", Helvetica, Arial, sans-serif;
   --mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
@@ -89,6 +90,37 @@ h1,
 h2,
 h3 {
   font-family: var(--display);
+  text-wrap: balance;
+}
+
+.section-heading {
+  font-size: var(--type-section-heading);
+  font-weight: 870;
+  letter-spacing: -0.065em;
+  line-break: strict;
+  line-height: 0.96;
+}
+
+html[lang="ja"],
+html[lang="zh-Hans"] {
+  --type-section-heading: clamp(2.55rem, 4.7vw, 5rem);
+}
+
+html[lang="ja"] .section-heading,
+html[lang="zh-Hans"] .section-heading {
+  letter-spacing: -0.045em;
+  line-height: 1.04;
+}
+
+@supports (word-break: auto-phrase) {
+  html[lang="ja"] h1,
+  html[lang="ja"] h2,
+  html[lang="ja"] h3,
+  html[lang="zh-Hans"] h1,
+  html[lang="zh-Hans"] h2,
+  html[lang="zh-Hans"] h3 {
+    word-break: auto-phrase;
+  }
 }
 
 ::selection {
@@ -470,6 +502,7 @@ html[lang="ja"] .pricing-intro h2 {
   color: var(--ink-soft);
   font-size: clamp(0.96rem, 1.15vw, 1.08rem);
   line-height: 1.65;
+  text-wrap: pretty;
 }
 
 .hero-actions,
@@ -973,17 +1006,10 @@ html[lang="ja"] .pricing-intro h2 {
 
 .section-intro h2 {
   max-width: 18ch;
-  font-size: clamp(2.7rem, 5.2vw, 5.5rem);
-  font-weight: 870;
-  letter-spacing: -0.065em;
-  line-height: 0.96;
 }
 
 html[lang="ja"] .section-intro h2 {
   max-width: 100%;
-  font-size: clamp(2.55rem, 4.7vw, 5rem);
-  letter-spacing: -0.045em;
-  line-height: 1.04;
 }
 
 .section-intro > div > p {
@@ -992,6 +1018,7 @@ html[lang="ja"] .section-intro h2 {
   color: var(--ink-soft);
   font-size: clamp(1rem, 1.35vw, 1.2rem);
   line-height: 1.6;
+  text-wrap: pretty;
 }
 
 .section-dark {
@@ -2824,10 +2851,6 @@ html[lang="ja"] .section-intro h2 {
   50% { box-shadow: 0 0 0 0.65rem rgba(21, 21, 21, 0.02); }
 }
 
-.comparison-intro {
-  grid-template-columns: minmax(11rem, 0.45fr) minmax(0, 1.55fr);
-}
-
 .comparison-table {
   margin-top: clamp(4rem, 7vw, 7rem);
   border-top: 1px solid var(--line);
@@ -3299,11 +3322,8 @@ html[lang="ja"] .section-intro h2 {
 }
 
 .final-copy h2 {
-  max-width: 11ch;
+  max-width: 15ch;
   margin-top: 2rem;
-  font-size: clamp(3.2rem, 6.5vw, 7rem);
-  letter-spacing: -0.075em;
-  line-height: 0.9;
 }
 
 .final-copy > p:not(.section-kicker) {
@@ -3312,6 +3332,7 @@ html[lang="ja"] .section-intro h2 {
   color: rgba(255, 255, 255, 0.75);
   font-size: clamp(1rem, 1.4vw, 1.2rem);
   line-height: 1.6;
+  text-wrap: pretty;
 }
 
 .text-link-light {
@@ -4255,6 +4276,12 @@ html[lang="ja"] .section-intro h2 {
 }
 
 @media (max-width: 620px) {
+  :root,
+  html[lang="ja"],
+  html[lang="zh-Hans"] {
+    --type-section-heading: clamp(2.05rem, 10.4vw, 3.25rem);
+  }
+
   html {
     scroll-padding-top: 4.25rem;
   }
@@ -4411,7 +4438,7 @@ html[lang="ja"] .section-intro h2 {
 
   .section-intro h2,
   .final-copy h2 {
-    font-size: clamp(2.8rem, 13vw, 4.5rem);
+    max-width: 100%;
   }
 
   .demo-tabs button {
@@ -4742,10 +4769,6 @@ html[lang="ja"] .section-intro h2 {
 }
 
 @media (max-width: 360px) {
-  .section-intro h2 {
-    font-size: clamp(2.2rem, 12vw, 2.7rem);
-  }
-
   .apps-grid {
     grid-template-columns: 1fr;
   }
