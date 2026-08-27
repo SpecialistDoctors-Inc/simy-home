@@ -3205,16 +3205,6 @@ html[lang="ja"] .section-intro h2 {
   font-size: clamp(1.08rem, 1.75vw, 1.42rem);
 }
 
-.pricing-plan-alias {
-  display: block;
-  margin-top: -0.8rem;
-  color: var(--ink-soft);
-  font-family: var(--mono);
-  font-size: 0.54rem;
-  font-weight: 760;
-  letter-spacing: 0.02em;
-}
-
 .pricing-table thead strong {
   display: block;
   margin-top: 1.15rem;
@@ -3253,6 +3243,24 @@ html[lang="ja"] .section-intro h2 {
   font-weight: 850;
   letter-spacing: 0.05em;
   text-transform: uppercase;
+}
+
+.pricing-trial {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  padding: 0.38rem 0.6rem;
+  border: 1px solid rgba(18, 76, 190, 0.24);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--blue-deep);
+  font-family: var(--mono);
+  font-size: 0.53rem;
+  font-weight: 850;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .pricing-table tbody th {
@@ -4301,6 +4309,27 @@ html[lang="ja"] .section-intro h2 {
     min-width: 0;
   }
 
+  .pricing-table thead th {
+    height: 15rem;
+  }
+
+  .pricing-popular {
+    right: 50%;
+    transform: translateX(50%);
+  }
+
+  .pricing-pro .pricing-trial {
+    top: 2.75rem;
+    right: 50%;
+    left: auto;
+    transform: translateX(50%);
+  }
+
+  .pricing-pro .pricing-plan-name {
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+
   .control-grid article {
     min-height: 15rem;
   }
@@ -4731,6 +4760,20 @@ html[lang="ja"] .section-intro h2 {
     transform: translateX(50%);
   }
 
+  .pricing-trial {
+    top: 0.55rem;
+    left: 0.55rem;
+    padding: 0.3rem 0.42rem;
+    font-size: 0.49rem;
+  }
+
+  .pricing-pro .pricing-trial {
+    top: 2.15rem;
+    right: 50%;
+    left: auto;
+    transform: translateX(50%);
+  }
+
   .pricing-table tbody th {
     position: sticky;
     left: 0;
@@ -4814,6 +4857,10 @@ html[lang="ja"] .section-intro h2 {
 }
 
 @media (max-width: 360px) {
+  .pricing-table thead th {
+    height: 13rem;
+  }
+
   .apps-grid {
     grid-template-columns: 1fr;
   }
