@@ -32,7 +32,7 @@
     <meta name="twitter:description" content="SIMY learns your way of working, selects the right Pipeline, and Autorun moves it forward.">
     <meta name="twitter:image" content="https://simy.one/ogp-home-global-202608-v4.png">
     <meta name="twitter:image:alt" content="You’re using AI. But the workload hasn’t gone down. Turn chats and conversations into workflows that get work done.">
-    <link rel="stylesheet" href="home.css?v=20260827-typography-4">
+    <link rel="stylesheet" href="home.css?v=20260828-ai-apps-1">
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -49,9 +49,9 @@
         }
       }
     </script>
-    <script src="home-locales.js?v=20260827-typography-4" defer></script>
-    <script src="home-i18n.js?v=20260827-typography-4" defer></script>
-    <script src="home.js?v=20260827-typography-4" defer></script>
+    <script src="home-locales.js?v=20260828-ai-apps-1" defer></script>
+    <script src="home-i18n.js?v=20260828-ai-apps-1" defer></script>
+    <script src="home.js?v=20260828-ai-apps-1" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -407,40 +407,63 @@
         </div>
 
         <div class="apps-system" data-motion-loop>
-          <ul class="apps-grid" role="list" aria-label="Apps that connect with SIMY">
-            <li class="app-tile app-google">
-              <span class="app-badge" aria-hidden="true">G</span>
-              <div><strong>Google Workspace</strong><small>Gmail · Drive · Calendar</small></div>
-            </li>
-            <li class="app-tile app-analytics">
-              <span class="app-badge" aria-hidden="true">↗</span>
-              <div><strong>Google Analytics</strong><small>GA4 · Search Console</small></div>
-            </li>
-            <li class="app-tile app-microsoft">
-              <span class="app-badge" aria-hidden="true">M</span>
-              <div><strong>Microsoft</strong><small>Account connection</small></div>
-            </li>
-            <li class="app-tile app-slack">
-              <span class="app-badge" aria-hidden="true">#</span>
-              <div><strong>Slack</strong><small>Messages · Channels</small></div>
-            </li>
-            <li class="app-tile app-github">
-              <span class="app-badge" aria-hidden="true">GH</span>
-              <div><strong>GitHub</strong><small>Repositories · Pull requests</small></div>
-            </li>
-            <li class="app-tile app-zoom">
-              <span class="app-badge" aria-hidden="true">▶</span>
-              <div><strong>Zoom</strong><small>Recordings · Transcripts</small></div>
-            </li>
-            <li class="app-tile app-notion">
-              <span class="app-badge" aria-hidden="true">N</span>
-              <div><strong>Notion</strong><small>Pages · Databases</small></div>
-            </li>
-            <li class="app-tile app-box">
-              <span class="app-badge" aria-hidden="true">B</span>
-              <div><strong>Box</strong><small>Company documents</small></div>
-            </li>
-          </ul>
+          <div class="apps-groups">
+            <section class="apps-group" aria-labelledby="ai-coding-tools-title">
+              <h3 class="apps-group-label" id="ai-coding-tools-title">AI coding tools</h3>
+              <ul class="apps-grid apps-grid-ai" role="list" aria-label="AI coding tools that connect with SIMY">
+                <li class="app-tile app-codex">
+                  <span class="app-badge" aria-hidden="true">CX</span>
+                  <div><strong>Codex</strong><small>Sessions · Development work</small></div>
+                </li>
+                <li class="app-tile app-claude">
+                  <span class="app-badge" aria-hidden="true">C</span>
+                  <div><strong>Claude Code</strong><small>Chats · Development context</small></div>
+                </li>
+                <li class="app-tile app-copilot">
+                  <span class="app-badge" aria-hidden="true">CP</span>
+                  <div><strong>GitHub Copilot</strong><small>Chats · Code suggestions</small></div>
+                </li>
+              </ul>
+            </section>
+
+            <section class="apps-group" aria-labelledby="work-systems-title">
+              <h3 class="apps-group-label" id="work-systems-title">Work apps</h3>
+              <ul class="apps-grid" role="list" aria-label="Apps that connect with SIMY">
+                <li class="app-tile app-google">
+                  <span class="app-badge" aria-hidden="true">G</span>
+                  <div><strong>Google Workspace</strong><small>Gmail · Drive · Calendar</small></div>
+                </li>
+                <li class="app-tile app-analytics">
+                  <span class="app-badge" aria-hidden="true">↗</span>
+                  <div><strong>Google Analytics</strong><small>GA4 · Search Console</small></div>
+                </li>
+                <li class="app-tile app-microsoft">
+                  <span class="app-badge" aria-hidden="true">M</span>
+                  <div><strong>Microsoft</strong><small>Account connection</small></div>
+                </li>
+                <li class="app-tile app-slack">
+                  <span class="app-badge" aria-hidden="true">#</span>
+                  <div><strong>Slack</strong><small>Messages · Channels</small></div>
+                </li>
+                <li class="app-tile app-github">
+                  <span class="app-badge" aria-hidden="true">GH</span>
+                  <div><strong>GitHub</strong><small>Repositories · Pull requests</small></div>
+                </li>
+                <li class="app-tile app-zoom">
+                  <span class="app-badge" aria-hidden="true">▶</span>
+                  <div><strong>Zoom</strong><small>Recordings · Transcripts</small></div>
+                </li>
+                <li class="app-tile app-notion">
+                  <span class="app-badge" aria-hidden="true">N</span>
+                  <div><strong>Notion</strong><small>Pages · Databases</small></div>
+                </li>
+                <li class="app-tile app-box">
+                  <span class="app-badge" aria-hidden="true">B</span>
+                  <div><strong>Box</strong><small>Company documents</small></div>
+                </li>
+              </ul>
+            </section>
+          </div>
 
           <div class="apps-bridge" aria-hidden="true"><span><i></i></span></div>
 
