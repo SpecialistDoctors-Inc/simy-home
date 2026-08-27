@@ -2341,6 +2341,25 @@ html[lang="ja"] .section-intro h2 {
   overflow: hidden;
 }
 
+.apps-groups {
+  display: grid;
+  gap: clamp(1.5rem, 2.6vw, 2.25rem);
+}
+
+.apps-group {
+  min-width: 0;
+}
+
+.apps-group-label {
+  margin: 0 0 0.7rem;
+  color: rgba(255, 255, 255, 0.68);
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 .apps-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -2350,6 +2369,10 @@ html[lang="ja"] .section-intro h2 {
   border-radius: var(--radius-md);
   overflow: hidden;
   list-style: none;
+}
+
+.apps-grid-ai {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .app-tile {
@@ -2401,6 +2424,21 @@ html[lang="ja"] .section-intro h2 {
 .app-google .app-badge {
   background: conic-gradient(from -35deg, #4285f4, #34a853, #fbbc05, #ea4335, #4285f4);
   color: #fff;
+}
+
+.app-codex .app-badge {
+  background: #111;
+  color: #fff;
+}
+
+.app-claude .app-badge {
+  background: #f4e7de;
+  color: #b9573f;
+}
+
+.app-copilot .app-badge {
+  background: linear-gradient(135deg, #e9f0ff, #efe9ff);
+  color: #4d4ac7;
 }
 
 .app-analytics .app-badge {
@@ -4147,6 +4185,10 @@ html[lang="ja"] .section-intro h2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .apps-grid-ai {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
   .apps-workflow {
     grid-template-columns: 1fr;
   }
@@ -4398,6 +4440,10 @@ html[lang="ja"] .section-intro h2 {
     margin-top: 3.5rem;
     padding: 0.75rem;
     border-radius: var(--radius-md);
+  }
+
+  .apps-grid-ai {
+    grid-template-columns: 1fr;
   }
 
   .app-tile {

@@ -32,6 +32,9 @@ function loadAdditionalLocales() {
 const intentionallyShared = new Set([
   "My AI",
   "SIMY Autorun",
+  "Codex",
+  "Claude Code",
+  "GitHub Copilot",
   "Google Workspace",
   "Gmail · Drive · Calendar",
   "GA4 · Search Console",
@@ -74,6 +77,24 @@ test("locale bundle loads before the homepage translation runtime", () => {
     homeHtml.indexOf("home-locales.js") < homeHtml.indexOf("home-i18n.js"),
     "translated copy must be available before home-i18n.js applies the initial locale"
   );
+});
+
+test("connected apps feature the three AI coding tools without disturbing the work-apps grid", () => {
+  for (const [className, productName] of [
+    ["app-codex", "Codex"],
+    ["app-claude", "Claude Code"],
+    ["app-copilot", "GitHub Copilot"]
+  ]) {
+    assert.match(
+      homeHtml,
+      new RegExp(`<li class="app-tile ${className}">[\\s\\S]*?<strong>${productName}</strong>`),
+      `${productName} must appear in the connected-apps section`
+    );
+  }
+
+  assert.match(homeHtml, /<ul class="apps-grid apps-grid-ai"[^>]*>[\s\S]*?<\/ul>/);
+  assert.match(homeCss, /\.apps-grid-ai\s*\{[^}]*grid-template-columns:\s*repeat\(3,/s);
+  assert.match(homeCss, /@media \(max-width: 620px\)[\s\S]*?\.apps-grid-ai\s*\{[^}]*grid-template-columns:\s*1fr/s);
 });
 
 test("all section-level messages share one responsive typography role", () => {
