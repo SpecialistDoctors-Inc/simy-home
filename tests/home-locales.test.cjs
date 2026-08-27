@@ -122,6 +122,45 @@ test("all section-level messages share one responsive typography role", () => {
   assert.doesNotMatch(homeCss, /\.final-copy h2\s*\{[^}]*font-size:/s);
 });
 
+test("use-case metrics size themselves from the card instead of the viewport", () => {
+  assert.match(homeCss, /\.use-case-card\s*\{[^}]*container-type:\s*inline-size/s);
+  assert.match(
+    homeCss,
+    /\.case-metric\s*>\s*div\s*\{[^}]*grid-template-columns:\s*repeat\(3,\s*max-content\)[^}]*gap:\s*clamp\([^;]*cqi/s
+  );
+  assert.match(
+    homeCss,
+    /\.case-metric b,\s*\.case-metric strong\s*\{[^}]*font-size:\s*clamp\([^;]*cqi/s
+  );
+  assert.equal(
+    homeHtml.match(/class="case-metric case-metric-wide"/g)?.length,
+    2,
+    "the two copy-dense metrics must use the compact, container-aware size"
+  );
+  const metricPattern = (className, metric) => new RegExp(
+    `<div class="${className}">\\s*<span class="sr-only">[\\s\\S]*?</span>\\s*<div aria-hidden="true"><b>${metric.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}</b>`
+  );
+  for (const metric of ["60m", "3.5–4d"]) {
+    assert.match(
+      homeHtml,
+      metricPattern("case-metric case-metric-wide", metric),
+      `${metric} must use the copy-dense metric treatment`
+    );
+  }
+  for (const metric of ["1/5", "1.0×"]) {
+    assert.match(
+      homeHtml,
+      metricPattern("case-metric", metric),
+      `${metric} must retain the large metric treatment`
+    );
+  }
+  assert.doesNotMatch(
+    homeCss,
+    /\.case-metric (?:b|strong)[^{]*\{[^}]*font-size:\s*clamp\([^;]*vw/s,
+    "metric values must not grow from the full viewport width"
+  );
+});
+
 test("keeps Traditional Chinese distinct and omits unsupported China region", () => {
   assert.doesNotMatch(i18nSource, /locale\.startsWith\("zh-"\)/);
   assert.match(i18nSource, /\["zh", "zh-cn", "zh-sg", "zh-hans"\]/);
