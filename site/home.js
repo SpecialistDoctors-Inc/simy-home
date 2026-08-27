@@ -101,7 +101,8 @@ if (menuButton && mobileMenu) {
   const menuLabel = menuButton.querySelector(".sr-only");
   const pageMain = document.querySelector("main");
   const headerBrand = document.querySelector(".nav-frame > .brand");
-  const menuItems = Array.from(mobileMenu.querySelectorAll("a[href], button:not([disabled])"));
+  const menuItems = Array.from(mobileMenu.querySelectorAll("a[href], button:not([disabled]), select:not([disabled])"));
+  const menuCloseItems = Array.from(mobileMenu.querySelectorAll("a[href], button:not([disabled])"));
   const setMenuOpen = (open) => {
     menuButton.setAttribute("aria-expanded", String(open));
     menuLabel.textContent = translateHomeText(open ? "Close navigation" : "Open navigation");
@@ -122,8 +123,11 @@ if (menuButton && mobileMenu) {
     setMenuOpen(menuButton.getAttribute("aria-expanded") !== "true");
   });
 
-  menuItems.forEach((item) => {
+  menuCloseItems.forEach((item) => {
     item.addEventListener("click", () => setMenuOpen(false));
+  });
+  mobileMenu.querySelectorAll("[data-locale-select]").forEach((select) => {
+    select.addEventListener("change", () => setMenuOpen(false));
   });
 
   document.addEventListener("keydown", (event) => {
@@ -158,7 +162,7 @@ if (menuButton && mobileMenu) {
     }
   });
 
-  window.matchMedia("(min-width: 1351px)").addEventListener("change", (event) => {
+  window.matchMedia("(min-width: 1440px)").addEventListener("change", (event) => {
     if (event.matches) setMenuOpen(false);
   });
 }

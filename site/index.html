@@ -8,6 +8,10 @@
     <link rel="canonical" href="https://simy.one/">
     <link rel="alternate" hreflang="en" href="https://simy.one/?lang=en">
     <link rel="alternate" hreflang="ja" href="https://simy.one/?lang=ja">
+    <link rel="alternate" hreflang="hi" href="https://simy.one/?lang=hi">
+    <link rel="alternate" hreflang="es" href="https://simy.one/?lang=es">
+    <link rel="alternate" hreflang="fr" href="https://simy.one/?lang=fr">
+    <link rel="alternate" hreflang="zh-Hans" href="https://simy.one/?lang=zh-Hans">
     <link rel="alternate" hreflang="x-default" href="https://simy.one/">
     <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
     <link rel="apple-touch-icon" href="favicon-180.png">
@@ -28,7 +32,7 @@
     <meta name="twitter:description" content="When the conversation ends, SIMY selects the right pipeline and Autorun gets to work.">
     <meta name="twitter:image" content="https://simy.one/ogp-home-global-202608-v4.png">
     <meta name="twitter:image:alt" content="You’re using AI. But the workload hasn’t gone down. Turn chats and conversations into workflows that get work done.">
-    <link rel="stylesheet" href="home.css?v=20260827-pricing-fit-1">
+    <link rel="stylesheet" href="home.css?v=20260827-core-locales-7">
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -45,8 +49,9 @@
         }
       }
     </script>
-    <script src="home-i18n.js?v=20260827-pricing-fit-1" defer></script>
-    <script src="home.js?v=20260827-pricing-fit-1" defer></script>
+    <script src="home-locales.js?v=20260827-core-locales-7" defer></script>
+    <script src="home-i18n.js?v=20260827-core-locales-7" defer></script>
+    <script src="home.js?v=20260827-core-locales-7" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -70,10 +75,17 @@
         </nav>
 
         <div class="nav-actions">
-          <div class="language-switcher" role="group" aria-label="Language">
-            <button type="button" data-locale-button="en" aria-pressed="true">EN</button>
-            <button type="button" data-locale-button="ja" aria-pressed="false" lang="ja">日本語</button>
-          </div>
+          <label class="language-switcher">
+            <span class="sr-only">Language</span>
+            <select data-locale-select aria-label="Language">
+              <option value="en" lang="en">English</option>
+              <option value="ja" lang="ja">日本語</option>
+              <option value="hi" lang="hi">हिन्दी</option>
+              <option value="es" lang="es">Español</option>
+              <option value="fr" lang="fr">Français</option>
+              <option value="zh-Hans" lang="zh-Hans">简体中文</option>
+            </select>
+          </label>
           <a class="nav-login" href="https://app.simy.one/login?lang=en&amp;locale=en&amp;region=us">Log in</a>
           <a class="button button-small button-dark" href="mailto:sales@simy.one?subject=Map%20my%20first%20SIMY%20workflow">Map my workflow</a>
         </div>
@@ -93,10 +105,17 @@
         <a href="#connected-apps">Apps</a>
         <a href="#why-simy">Why SIMY</a>
         <a href="#pricing">Pricing</a>
-        <div class="language-switcher mobile-language-switcher" role="group" aria-label="Language">
-          <button type="button" data-locale-button="en" aria-pressed="true">EN</button>
-          <button type="button" data-locale-button="ja" aria-pressed="false" lang="ja">日本語</button>
-        </div>
+        <label class="language-switcher mobile-language-switcher">
+          <span class="sr-only">Language</span>
+          <select data-locale-select aria-label="Language">
+            <option value="en" lang="en">English</option>
+            <option value="ja" lang="ja">日本語</option>
+            <option value="hi" lang="hi">हिन्दी</option>
+            <option value="es" lang="es">Español</option>
+            <option value="fr" lang="fr">Français</option>
+            <option value="zh-Hans" lang="zh-Hans">简体中文</option>
+          </select>
+        </label>
         <a href="https://app.simy.one/login?lang=en&amp;locale=en&amp;region=us">Log in</a>
         <a class="button button-dark" href="mailto:sales@simy.one?subject=Map%20my%20first%20SIMY%20workflow">Map my workflow</a>
       </nav>
