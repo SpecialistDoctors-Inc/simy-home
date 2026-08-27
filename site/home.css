@@ -3103,7 +3103,7 @@ html[lang="ja"] .section-intro h2 {
 }
 
 .pricing-table thead .pricing-pro,
-.pricing-table tbody td:last-child {
+.pricing-table tbody td:nth-child(3) {
   background: var(--blue-soft);
 }
 
