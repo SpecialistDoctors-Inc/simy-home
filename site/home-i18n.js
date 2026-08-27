@@ -369,7 +369,10 @@
     const queryLocale = normalizeLocale(new URL(window.location.href).searchParams.get("lang"));
     if (queryLocale) return queryLocale;
     try {
-      return normalizeLocale(window.localStorage.getItem(STORAGE_KEY)) || "en";
+      return normalizeLocale(window.localStorage.getItem(STORAGE_KEY))
+        || normalizeLocale(window.localStorage.getItem("simy-lang"))
+        || normalizeLocale(window.localStorage.getItem("simy-language"))
+        || "en";
     } catch {
       return "en";
     }
@@ -454,6 +457,16 @@
         continue;
       }
 
+      const localUrl = new URL(originalHref, window.location.href);
+      if (
+        localUrl.origin === window.location.origin
+        && ["/privacy.html", "/terms.html"].includes(localUrl.pathname)
+      ) {
+        localUrl.searchParams.set("lang", locale);
+        link.setAttribute("href", `${localUrl.pathname}${localUrl.search}${localUrl.hash}`);
+        continue;
+      }
+
       if (originalHref.startsWith("mailto:") && originalHref.includes("?subject=")) {
         const address = originalHref.slice(0, originalHref.indexOf("?subject="));
         const originalSubject = decodeURIComponent(originalHref.slice(originalHref.indexOf("?subject=") + 9));
@@ -495,6 +508,10 @@
     if (persist) {
       try {
         window.localStorage.setItem(STORAGE_KEY, currentLocale);
+        window.localStorage.setItem("simy-lang", currentLocale);
+        window.localStorage.setItem("simy-language", currentLocale);
+        window.localStorage.setItem("simy-lang-source", "manual");
+        window.localStorage.setItem("simy-language-source", "manual");
       } catch {
         // The selector still works when storage is unavailable.
       }
