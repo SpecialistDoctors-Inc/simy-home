@@ -235,8 +235,8 @@
     "Results describe the cited internal or reference case. Targets are pilot goals, not guarantees.": "結果は、記載した社内検証または参考事例に基づきます。目標はパイロットでの検証値であり、保証ではありません。",
 
     "Not another general-purpose agent": "汎用エージェントとは違う",
-    "General agents complete tasks.": "汎用エージェントは、タスクを終わらせる。",
-    "SIMY preserves your way of working.": "SIMYは、あなたの仕事のやり方を仕組みに残す。",
+    "General agents complete tasks.": "汎用AIは、タスクを終える。",
+    "SIMY preserves your way of working.": "SIMYは、あなたの仕事の型を残す。",
     "The difference": "違い",
     "General-purpose agent": "汎用エージェント",
     "What it learns from": "何から学ぶか",
@@ -306,7 +306,8 @@
     "Choose a plan": "プランを選ぶ",
     "Choose a SIMY plan and continue to secure Stripe Checkout": "SIMYのプランを選び、安全なStripe Checkoutへ進む",
 
-    "Tell SIMY what needs to move. Autorun takes it from there.": "進めたい仕事をSIMYに伝える。その先はAutorunが動かす。",
+    "Tell SIMY what needs to move.": "進めたい仕事をSIMYへ。",
+    "Autorun takes it from there.": "あとはAutorun。",
     "SIMY recognizes the work, selects the right Pipeline, and moves it forward automatically.": "SIMYが仕事を見極め、合うパイプラインを選び、自動で前へ進めます。",
     "YOUR": "あなたの",
     "WAY": "やり方",
