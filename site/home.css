@@ -3104,7 +3104,24 @@ html[lang="ja"] .section-intro h2 {
 
 .pricing-table thead .pricing-pro,
 .pricing-table tbody td:nth-child(3) {
-  background: var(--blue-soft);
+  background: #eaf4ff;
+  box-shadow:
+    inset 2px 0 0 var(--blue),
+    inset -2px 0 0 var(--blue);
+}
+
+.pricing-table thead .pricing-pro {
+  box-shadow:
+    inset 2px 0 0 var(--blue),
+    inset -2px 0 0 var(--blue),
+    inset 0 2px 0 var(--blue);
+}
+
+.pricing-table tbody tr:last-child td:nth-child(3) {
+  box-shadow:
+    inset 2px 0 0 var(--blue),
+    inset -2px 0 0 var(--blue),
+    inset 0 -2px 0 var(--blue);
 }
 
 .pricing-plan-name {
@@ -3113,6 +3130,21 @@ html[lang="ja"] .section-intro h2 {
   font-size: clamp(1rem, 1.5vw, 1.25rem);
   font-weight: 850;
   letter-spacing: -0.03em;
+}
+
+.pricing-pro .pricing-plan-name {
+  color: var(--blue-deep);
+  font-size: clamp(1.08rem, 1.75vw, 1.42rem);
+}
+
+.pricing-plan-alias {
+  display: block;
+  margin-top: -0.8rem;
+  color: var(--ink-soft);
+  font-family: var(--mono);
+  font-size: 0.54rem;
+  font-weight: 760;
+  letter-spacing: 0.02em;
 }
 
 .pricing-table thead strong {

@@ -188,4 +188,35 @@ if (motionLoops.length) {
   }
 }
 
+const pricingTableWrap = document.querySelector(".pricing-table-wrap");
+const featuredPricingPlan = pricingTableWrap?.querySelector(".pricing-pro");
+const compactPricing = window.matchMedia("(max-width: 620px)");
+let hasCenteredFeaturedPlan = false;
+let centeredPricingWidth = 0;
+
+function centerFeaturedPricingPlan() {
+  if (!pricingTableWrap || !featuredPricingPlan || !compactPricing.matches || hasCenteredFeaturedPlan) return;
+
+  window.requestAnimationFrame(() => {
+    pricingTableWrap.scrollLeft = Math.max(
+      0,
+      featuredPricingPlan.offsetLeft - (pricingTableWrap.clientWidth - featuredPricingPlan.offsetWidth) / 2
+    );
+    centeredPricingWidth = pricingTableWrap.clientWidth;
+    hasCenteredFeaturedPlan = true;
+  });
+}
+
+centerFeaturedPricingPlan();
+compactPricing.addEventListener("change", (event) => {
+  if (!event.matches) return;
+  hasCenteredFeaturedPlan = false;
+  centerFeaturedPricingPlan();
+});
+window.addEventListener("resize", () => {
+  if (!compactPricing.matches || pricingTableWrap?.clientWidth === centeredPricingWidth) return;
+  hasCenteredFeaturedPlan = false;
+  centerFeaturedPricingPlan();
+});
+
 renderScenario("codex");
