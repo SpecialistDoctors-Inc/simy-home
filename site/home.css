@@ -2629,6 +2629,7 @@ html[lang="ja"] .section-intro h2 {
 .use-case-card {
   display: flex;
   flex-direction: column;
+  container-type: inline-size;
   min-height: 39rem;
   padding: clamp(1.5rem, 3vw, 2.75rem);
   border-right: 1px solid var(--line);
@@ -2693,9 +2694,11 @@ html[lang="ja"] .section-intro h2 {
 }
 
 .case-metric > div {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, max-content);
   align-items: baseline;
-  gap: clamp(0.7rem, 2vw, 1.5rem);
+  gap: clamp(0.25rem, 2cqi, 0.85rem);
+  max-width: 100%;
   font-family: var(--mono);
   letter-spacing: -0.08em;
   line-height: 0.85;
@@ -2703,8 +2706,13 @@ html[lang="ja"] .section-intro h2 {
 
 .case-metric b,
 .case-metric strong {
-  font-size: clamp(2.7rem, 6vw, 5.6rem);
+  font-size: clamp(1.8rem, 14cqi, 5.6rem);
   white-space: nowrap;
+}
+
+.case-metric-wide b,
+.case-metric-wide strong {
+  font-size: clamp(1.2rem, 9.5cqi, 5.6rem);
 }
 
 .case-metric b {
@@ -2717,7 +2725,7 @@ html[lang="ja"] .section-intro h2 {
 }
 
 .case-metric i {
-  font-size: clamp(1.4rem, 3vw, 2.5rem);
+  font-size: clamp(0.9rem, 5cqi, 2.5rem);
   font-style: normal;
   font-weight: 450;
 }
@@ -4589,15 +4597,6 @@ html[lang="ja"] .section-intro h2 {
     flex-direction: column;
   }
 
-  .case-metric > div {
-    gap: 0.65rem;
-  }
-
-  .case-metric b,
-  .case-metric strong {
-    font-size: clamp(2.15rem, 10.8vw, 4.2rem);
-  }
-
   .case-path {
     display: flex;
     flex-wrap: wrap;
@@ -4830,19 +4829,6 @@ html[lang="ja"] .section-intro h2 {
   .use-case-card {
     min-height: 33rem;
     padding: 1.1rem;
-  }
-
-  .case-metric > div {
-    gap: 0.35rem;
-  }
-
-  .case-metric b,
-  .case-metric strong {
-    font-size: clamp(2rem, 11.5vw, 2.5rem);
-  }
-
-  .case-metric i {
-    font-size: 1.05rem;
   }
 
   .case-callout {
