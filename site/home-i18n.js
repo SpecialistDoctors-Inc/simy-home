@@ -179,7 +179,6 @@
     "GA4 · Search Console": "GA4・Search Console",
     "Account connection": "アカウント接続",
     "Messages · Channels": "メッセージ・チャンネル",
-    "Customer conversations": "顧客との会話",
     "Repositories · Pull requests": "リポジトリ・Pull Request",
     "Recordings · Transcripts": "録画・文字起こし",
     "Pages · Databases": "ページ・データベース",

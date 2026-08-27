@@ -2312,7 +2312,7 @@ html[lang="ja"] .section-intro h2 {
 
 .apps-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   padding: 0;
   border-top: 1px solid rgba(255, 255, 255, 0.24);
   border-left: 1px solid rgba(255, 255, 255, 0.24);
@@ -2385,11 +2385,6 @@ html[lang="ja"] .section-intro h2 {
 .app-slack .app-badge {
   background: #f5eafa;
   color: #7b2b82;
-}
-
-.app-line .app-badge {
-  background: #e8faec;
-  color: #06b63c;
 }
 
 .app-github .app-badge {
@@ -3521,7 +3516,6 @@ html[lang="ja"] .section-intro h2 {
 .apps-system.is-in-view .app-tile:nth-child(6) { animation-delay: 300ms; }
 .apps-system.is-in-view .app-tile:nth-child(7) { animation-delay: 360ms; }
 .apps-system.is-in-view .app-tile:nth-child(8) { animation-delay: 420ms; }
-.apps-system.is-in-view .app-tile:nth-child(9) { animation-delay: 480ms; }
 
 .apps-system.is-in-view .apps-bridge i {
   animation: apps-context-flow 6.4s ease-in-out infinite;
@@ -4126,10 +4120,6 @@ html[lang="ja"] .section-intro h2 {
 
   .apps-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .app-tile:last-child {
-    grid-column: 1 / -1;
   }
 
   .apps-workflow {
