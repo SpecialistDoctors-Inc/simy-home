@@ -236,45 +236,43 @@ h3 {
 }
 
 .language-switcher {
-  display: inline-flex;
+  position: relative;
+  display: inline-grid;
   align-items: center;
-  padding: 0.18rem;
-  border: 1px solid var(--line-soft);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.7);
+  min-width: 7.4rem;
 }
 
-.language-switcher button {
-  min-width: 2.35rem;
-  min-height: 2rem;
-  padding: 0.32rem 0.58rem;
-  border: 0;
-  border-radius: 999px;
-  background: transparent;
+.language-switcher::after {
+  content: "↓";
+  position: absolute;
+  right: 0.65rem;
   color: var(--ink-soft);
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  pointer-events: none;
+}
+
+.language-switcher select {
+  width: 100%;
+  min-height: 2.35rem;
+  padding: 0.45rem 1.75rem 0.45rem 0.7rem;
+  appearance: none;
+  border: 1px solid var(--line-soft);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.82);
+  color: var(--ink);
   cursor: pointer;
   font-family: var(--mono);
   font-size: 0.62rem;
   font-weight: 850;
   line-height: 1;
-  white-space: nowrap;
 }
 
-.language-switcher button[data-locale-button="ja"] {
-  min-width: 3.65rem;
-}
-
-.language-switcher button[aria-pressed="true"] {
-  background: var(--ink);
-  color: #fff;
-}
-
-.language-switcher button:hover:not([aria-pressed="true"]) {
+.language-switcher select:hover {
   background: var(--lime);
-  color: var(--ink);
 }
 
-.language-switcher button:focus-visible {
+.language-switcher select:focus-visible {
   outline-offset: 2px;
 }
 
@@ -3944,7 +3942,7 @@ html[lang="ja"] .section-intro h2 {
   to { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
-@media (max-width: 1350px) {
+@media (max-width: 1439px) {
   .site-header {
     background: var(--paper);
     backdrop-filter: none;
@@ -4024,8 +4022,8 @@ html[lang="ja"] .section-intro h2 {
   }
 
   .mobile-language-switcher {
-    display: inline-flex;
-    align-self: flex-start;
+    display: inline-grid;
+    align-self: stretch;
     margin: 1rem 0.5rem 0;
   }
 

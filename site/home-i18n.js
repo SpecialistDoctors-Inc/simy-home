@@ -1,6 +1,6 @@
 (() => {
   const STORAGE_KEY = "simy-home-locale";
-  const SUPPORTED_LOCALES = new Set(["en", "ja"]);
+  const SUPPORTED_LOCALES = new Set(["en", "ja", "hi", "es", "fr", "zh-Hans"]);
 
   const JA_COPY = Object.freeze({
     "Skip to content": "本文へ移動",
@@ -353,6 +353,38 @@
       socialDescription: "会話が終わると、SIMYが最適なパイプラインを選び、Autorunが仕事を動かします。",
       imageAlt: "AIは使っている。でも、仕事は減っていない。チャットや会話を、仕事が進む仕組みに変える。",
       ogLocale: "ja_JP"
+    },
+    hi: {
+      title: "SIMY — बातचीत को काम पूरा करने वाले वर्कफ़्लो में बदलें",
+      description: "चैट और बातचीत को काम पूरा करने वाले वर्कफ़्लो में बदलें। बातचीत खत्म होते ही SIMY सही पाइपलाइन चुनता है और Autorun काम आगे बढ़ाता है।",
+      socialTitle: "आप AI का उपयोग कर रहे हैं। लेकिन काम का बोझ कम नहीं हुआ।",
+      socialDescription: "बातचीत खत्म होते ही SIMY सही पाइपलाइन चुनता है और Autorun काम आगे बढ़ाता है।",
+      imageAlt: "आप AI का उपयोग कर रहे हैं। लेकिन काम का बोझ कम नहीं हुआ। चैट और बातचीत को काम पूरा करने वाले वर्कफ़्लो में बदलें।",
+      ogLocale: "hi_IN"
+    },
+    es: {
+      title: "SIMY — Convierte conversaciones en flujos de trabajo que avanzan",
+      description: "Convierte chats y conversaciones en flujos de trabajo que hacen avanzar el trabajo. Cuando termina la conversación, SIMY elige el pipeline adecuado y Autorun se pone en marcha.",
+      socialTitle: "Usas IA. Pero la carga de trabajo no ha disminuido.",
+      socialDescription: "Cuando termina la conversación, SIMY elige el pipeline adecuado y Autorun se pone en marcha.",
+      imageAlt: "Usas IA. Pero la carga de trabajo no ha disminuido. Convierte chats y conversaciones en flujos de trabajo que hacen avanzar el trabajo.",
+      ogLocale: "es_ES"
+    },
+    fr: {
+      title: "SIMY — Transformez les conversations en workflows qui avancent",
+      description: "Transformez les chats et les conversations en workflows qui font avancer le travail. À la fin de la conversation, SIMY choisit le bon pipeline et Autorun se met au travail.",
+      socialTitle: "Vous utilisez l’IA. Mais la charge de travail n’a pas diminué.",
+      socialDescription: "À la fin de la conversation, SIMY choisit le bon pipeline et Autorun se met au travail.",
+      imageAlt: "Vous utilisez l’IA. Mais la charge de travail n’a pas diminué. Transformez les chats et les conversations en workflows qui font avancer le travail.",
+      ogLocale: "fr_FR"
+    },
+    "zh-Hans": {
+      title: "SIMY — 将对话变成真正推进工作的工作流",
+      description: "将聊天和对话变成真正推进工作的工作流。对话结束后，SIMY 会选择合适的管线，由 Autorun 推动工作继续向前。",
+      socialTitle: "你在使用 AI，但工作量并没有减少。",
+      socialDescription: "对话结束后，SIMY 会选择合适的管线，由 Autorun 推动工作继续向前。",
+      imageAlt: "你在使用 AI，但工作量并没有减少。将聊天和对话变成真正推进工作的工作流。",
+      ogLocale: "zh_CN"
     }
   };
 
@@ -361,26 +393,30 @@
   const attributeRecords = [];
 
   function normalizeLocale(value) {
-    const locale = String(value || "").toLowerCase().split("-")[0];
-    return SUPPORTED_LOCALES.has(locale) ? locale : null;
+    const locale = String(value || "").trim().toLowerCase();
+    if (["zh", "zh-cn", "zh-sg", "zh-hans"].includes(locale)) return "zh-Hans";
+    const baseLocale = locale.split("-")[0];
+    return SUPPORTED_LOCALES.has(baseLocale) ? baseLocale : null;
   }
 
   function resolveInitialLocale() {
     const queryLocale = normalizeLocale(new URL(window.location.href).searchParams.get("lang"));
     if (queryLocale) return queryLocale;
     try {
-      return normalizeLocale(window.localStorage.getItem(STORAGE_KEY))
+      const savedLocale = normalizeLocale(window.localStorage.getItem(STORAGE_KEY))
         || normalizeLocale(window.localStorage.getItem("simy-lang"))
-        || normalizeLocale(window.localStorage.getItem("simy-language"))
-        || "en";
+        || normalizeLocale(window.localStorage.getItem("simy-language"));
+      if (savedLocale) return savedLocale;
     } catch {
-      return "en";
+      // The selector still works when storage is unavailable.
     }
+    return "en";
   }
 
   function translate(value, locale = currentLocale) {
-    if (locale !== "ja") return value;
-    return JA_COPY[value] || value;
+    if (locale === "en") return value;
+    const copy = locale === "ja" ? JA_COPY : window.SIMY_HOME_LOCALES?.[locale];
+    return copy?.[value] || value;
   }
 
   function collectOriginalContent() {
@@ -444,15 +480,23 @@
   }
 
   function updateLinks(locale) {
-    const localeParams = locale === "ja"
-      ? { lang: "ja", locale: "ja", region: "jp" }
-      : { lang: "en", locale: "en", region: "us" };
+    const localeParams = {
+      en: { lang: "en", locale: "en", region: "us" },
+      ja: { lang: "ja", locale: "ja", region: "jp" },
+      hi: { lang: "hi", locale: "hi", region: "in" },
+      es: { lang: "es", locale: "es", region: "es" },
+      fr: { lang: "fr", locale: "fr", region: "fr" },
+      "zh-Hans": { lang: "zh-Hans", locale: "zh-Hans", region: null }
+    }[locale];
 
     for (const link of document.querySelectorAll("a[href]")) {
       const originalHref = link.dataset.originalHref || link.getAttribute("href") || "";
       if (originalHref.startsWith("https://app.simy.one/")) {
         const url = new URL(originalHref);
-        for (const [name, value] of Object.entries(localeParams)) url.searchParams.set(name, value);
+        for (const [name, value] of Object.entries(localeParams)) {
+          if (value === null) url.searchParams.delete(name);
+          else url.searchParams.set(name, value);
+        }
         link.setAttribute("href", url.toString());
         continue;
       }
@@ -470,10 +514,16 @@
       if (originalHref.startsWith("mailto:") && originalHref.includes("?subject=")) {
         const address = originalHref.slice(0, originalHref.indexOf("?subject="));
         const originalSubject = decodeURIComponent(originalHref.slice(originalHref.indexOf("?subject=") + 9));
-        const subject = locale === "ja"
-          ? (originalSubject === "SIMY English site inquiry"
-              ? "SIMYについて相談したい"
-              : "SIMYで最初のワークフローを設計したい")
+        const localizedSubjects = {
+          ja: ["SIMYについて相談したい", "SIMYで最初のワークフローを設計したい"],
+          hi: ["SIMY के बारे में परामर्श", "SIMY के साथ मेरा पहला वर्कफ़्लो डिज़ाइन करें"],
+          es: ["Consulta sobre SIMY", "Diseñar mi primer flujo de trabajo con SIMY"],
+          fr: ["Demande d’information sur SIMY", "Concevoir mon premier workflow avec SIMY"],
+          "zh-Hans": ["咨询 SIMY", "设计我的第一个 SIMY 工作流"]
+        };
+        const subjectPair = localizedSubjects[locale];
+        const subject = subjectPair
+          ? subjectPair[originalSubject === "SIMY English site inquiry" ? 0 : 1]
           : originalSubject;
         link.setAttribute("href", `${address}?subject=${encodeURIComponent(subject)}`);
       }
@@ -498,8 +548,8 @@
       record.element.setAttribute(record.name, translate(record.value));
     }
 
-    for (const button of document.querySelectorAll("[data-locale-button]")) {
-      button.setAttribute("aria-pressed", String(button.dataset.localeButton === currentLocale));
+    for (const select of document.querySelectorAll("[data-locale-select]")) {
+      select.value = currentLocale;
     }
 
     updateMeta(currentLocale);
@@ -531,9 +581,9 @@
   const localeInUrl = normalizeLocale(new URL(window.location.href).searchParams.get("lang"));
   applyLocale(initialLocale, { updateHistory: !localeInUrl && initialLocale !== "en" });
 
-  for (const button of document.querySelectorAll("[data-locale-button]")) {
-    button.addEventListener("click", () => {
-      applyLocale(button.dataset.localeButton, { persist: true, updateHistory: true });
+  for (const select of document.querySelectorAll("[data-locale-select]")) {
+    select.addEventListener("change", () => {
+      applyLocale(select.value, { persist: true, updateHistory: true });
     });
   }
 })();
