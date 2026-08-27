@@ -4588,7 +4588,13 @@ html[lang="ja"] .section-intro h2 {
   }
 
   .pricing-table {
-    min-width: 46rem;
+    width: 208%;
+    min-width: 0;
+  }
+
+  .pricing-table-wrap {
+    scroll-padding-left: 46%;
+    scroll-snap-type: inline mandatory;
   }
 
   .pricing-scroll-hint {
@@ -4602,7 +4608,7 @@ html[lang="ja"] .section-intro h2 {
   }
 
   .pricing-feature-column {
-    width: 36%;
+    width: 22.115%;
   }
 
   .pricing-table th,
@@ -4615,8 +4621,16 @@ html[lang="ja"] .section-intro h2 {
   }
 
   .pricing-table thead th:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 4;
     padding-inline: 0.75rem;
     font-size: 0.62rem;
+  }
+
+  .pricing-table thead th:not(:first-child) {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
   }
 
   .pricing-plan-name {
@@ -4642,6 +4656,9 @@ html[lang="ja"] .section-intro h2 {
   }
 
   .pricing-table tbody th {
+    position: sticky;
+    left: 0;
+    z-index: 3;
     padding-left: 0.75rem;
     font-size: 0.8rem;
     line-height: 1.35;

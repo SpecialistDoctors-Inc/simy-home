@@ -190,6 +190,7 @@ if (motionLoops.length) {
 
 const pricingTableWrap = document.querySelector(".pricing-table-wrap");
 const featuredPricingPlan = pricingTableWrap?.querySelector(".pricing-pro");
+const pricingFeatureHeader = pricingTableWrap?.querySelector("thead th:first-child");
 const compactPricing = window.matchMedia("(max-width: 620px)");
 let hasCenteredFeaturedPlan = false;
 let centeredPricingWidth = 0;
@@ -200,7 +201,7 @@ function centerFeaturedPricingPlan() {
   window.requestAnimationFrame(() => {
     pricingTableWrap.scrollLeft = Math.max(
       0,
-      featuredPricingPlan.offsetLeft - (pricingTableWrap.clientWidth - featuredPricingPlan.offsetWidth) / 2
+      featuredPricingPlan.offsetLeft - (pricingFeatureHeader?.offsetWidth ?? 0)
     );
     centeredPricingWidth = pricingTableWrap.clientWidth;
     hasCenteredFeaturedPlan = true;
