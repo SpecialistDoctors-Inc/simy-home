@@ -404,7 +404,9 @@ h3 {
 .eyebrow,
 .section-kicker {
   display: flex;
+  min-width: 0;
   align-items: center;
+  flex-wrap: wrap;
   gap: 0.55rem;
   font-family: var(--mono);
   font-size: 0.7rem;
@@ -963,6 +965,10 @@ html[lang="ja"] .pricing-intro h2 {
   grid-template-columns: minmax(11rem, 0.55fr) minmax(0, 1.45fr);
   gap: clamp(2rem, 7vw, 8rem);
   align-items: start;
+}
+
+.section-intro > * {
+  min-width: 0;
 }
 
 .section-intro h2 {
@@ -4736,6 +4742,10 @@ html[lang="ja"] .section-intro h2 {
 }
 
 @media (max-width: 360px) {
+  .section-intro h2 {
+    font-size: clamp(2.2rem, 12vw, 2.7rem);
+  }
+
   .apps-grid {
     grid-template-columns: 1fr;
   }

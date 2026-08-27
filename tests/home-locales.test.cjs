@@ -9,12 +9,16 @@ const i18nSource = fs.readFileSync(path.join(repoRoot, "site/home-i18n.js"), "ut
 const localesSource = fs.readFileSync(path.join(repoRoot, "site/home-locales.js"), "utf8");
 const homeHtml = fs.readFileSync(path.join(repoRoot, "site/index.html"), "utf8");
 
-function extractJapaneseSourceKeys() {
+function extractJapaneseCopy() {
   const marker = "const JA_COPY = Object.freeze(";
   const start = i18nSource.indexOf(marker) + marker.length;
   const end = i18nSource.indexOf(");", start);
   assert.ok(start >= marker.length && end > start, "JA_COPY must remain readable by the locale coverage test");
-  return Object.keys(Function(`"use strict"; return ${i18nSource.slice(start, end)}`)());
+  return Function(`"use strict"; return ${i18nSource.slice(start, end)}`)();
+}
+
+function extractJapaneseSourceKeys() {
+  return Object.keys(extractJapaneseCopy());
 }
 
 function loadAdditionalLocales() {
@@ -75,4 +79,39 @@ test("keeps Traditional Chinese distinct and omits unsupported China region", ()
   assert.doesNotMatch(i18nSource, /locale\.startsWith\("zh-"\)/);
   assert.match(i18nSource, /\["zh", "zh-cn", "zh-sg", "zh-hans"\]/);
   assert.doesNotMatch(i18nSource, /region: "cn"/);
+});
+
+test("protects the global editorial message in every locale", () => {
+  const locales = { ja: extractJapaneseCopy(), ...loadAdditionalLocales() };
+  const editorialKeys = [
+    "Bring in the conversations that matter. SIMY learns the checks, priorities, and non-negotiables behind your best work, turns them into focused Pipelines, and selects the right one automatically. Autorun takes it from there.",
+    "Choose the conversations that reveal your checks, priorities, and non-negotiables. SIMY extracts the patterns that repeat, separates them from one-off detail, and ignores the rest.",
+    "Your conversations become the way work gets done.",
+    "SIMY finds the missing inputs, the right people, and the next move. Autorun handles the sequence, so the work keeps moving until your attention is actually needed.",
+    "General agents complete tasks.",
+    "SIMY preserves your way of working.",
+    "Make every Autorun earn your confidence.",
+    "Tell SIMY what needs to move. Autorun takes it from there."
+  ];
+
+  for (const key of editorialKeys) {
+    assert.ok(homeHtml.includes(key), `live HTML must include the editorial message: ${key}`);
+    assert.ok(i18nSource.includes(JSON.stringify(key)), `JA_COPY must include the editorial message: ${key}`);
+    for (const [locale, copy] of Object.entries(locales)) {
+      assert.ok(copy[key]?.trim(), `${locale} must include the editorial message: ${key}`);
+      assert.notEqual(copy[key], key, `${locale} must localize the editorial message: ${key}`);
+    }
+  }
+
+  for (const retired of [
+    "No agent or pipeline to choose",
+    "You ask. SIMY selects the pipeline. Autorun gets to work.",
+    "A general agent can do the task.",
+    "Put a Quality Loop around every Autorun.",
+    "Choose the conversations that reveal your standards. SIMY extracts the patterns that repeat, separates them from one-off detail, and ignores the rest."
+  ]) {
+    assert.ok(!homeHtml.includes(retired), `live HTML must retire: ${retired}`);
+    assert.ok(!i18nSource.includes(JSON.stringify(retired)), `JA_COPY must retire: ${retired}`);
+    assert.ok(!localesSource.includes(JSON.stringify(retired)), `locale copy must retire: ${retired}`);
+  }
 });
