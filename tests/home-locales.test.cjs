@@ -79,6 +79,16 @@ test("locale bundle loads before the homepage translation runtime", () => {
   );
 });
 
+test("existing-account login links open the SIMY app home", () => {
+  const loginLinks = [...homeHtml.matchAll(/<a\b[^>]*data-existing-account-login[^>]*>/g)];
+
+  assert.equal(loginLinks.length, 4, "desktop, mobile, final CTA, and footer must expose login");
+  for (const [link] of loginLinks) {
+    assert.match(link, /href="https:\/\/app\.simy\.one\/"/);
+  }
+  assert.doesNotMatch(homeHtml, /https:\/\/app\.simy\.one\/login(?:[?"'])/);
+});
+
 test("connected apps feature the three AI coding tools without disturbing the work-apps grid", () => {
   for (const [className, productName] of [
     ["app-codex", "Codex"],
