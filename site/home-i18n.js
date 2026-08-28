@@ -20,6 +20,8 @@
     "Why SIMY": "SIMYの違い",
     "Pricing": "料金",
     "Log in": "ログイン",
+    "Sign up": "新規登録",
+    "Account": "アカウント",
     "Log in to SIMY": "SIMYにログイン",
     "Map my workflow": "最初のワークフローを相談",
     "Map my first workflow": "最初のワークフローを相談",

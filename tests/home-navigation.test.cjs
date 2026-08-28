@@ -21,8 +21,10 @@ test("mobile navigation closes from blank and outside clicks", () => {
 });
 
 test("homepage cache-busts the current navigation behavior", () => {
-  assert.match(homeHtml, /home\.css\?v=20260828-language-picker-2/);
-  assert.match(homeHtml, /home\.js\?v=20260828-language-picker-2/);
+  assert.match(homeHtml, /home\.css\?v=20260828-direct-auth-1/);
+  assert.match(homeHtml, /home-locales\.js\?v=20260828-direct-auth-1/);
+  assert.match(homeHtml, /home-i18n\.js\?v=20260828-direct-auth-1/);
+  assert.match(homeHtml, /home\.js\?v=20260828-direct-auth-1/);
 });
 
 test("language picker follows its responsive grid and closes when focus leaves", () => {
