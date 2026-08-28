@@ -130,6 +130,16 @@ if (menuButton && mobileMenu) {
     select.addEventListener("change", () => setMenuOpen(false));
   });
 
+  mobileMenu.addEventListener("click", (event) => {
+    if (event.target === mobileMenu) setMenuOpen(false);
+  });
+
+  document.addEventListener("pointerdown", (event) => {
+    const open = menuButton.getAttribute("aria-expanded") === "true";
+    if (!open || menuButton.contains(event.target) || mobileMenu.contains(event.target)) return;
+    setMenuOpen(false);
+  });
+
   document.addEventListener("keydown", (event) => {
     const open = menuButton.getAttribute("aria-expanded") === "true";
     if (!open) return;
