@@ -3232,6 +3232,91 @@ html[lang="ja"] .section-intro h2 {
   max-width: 18ch;
 }
 
+.pricing-billing-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  margin-top: clamp(3rem, 5vw, 5rem);
+  padding: 0.7rem;
+  border: 1px solid var(--line);
+  border-radius: 1.1rem;
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: 0 0.8rem 2.5rem rgba(17, 17, 17, 0.06);
+  backdrop-filter: blur(0.8rem);
+}
+
+.pricing-billing-switch {
+  display: grid;
+  flex: 0 0 auto;
+  grid-template-columns: repeat(2, minmax(8.4rem, 1fr));
+  gap: 0.25rem;
+  padding: 0.25rem;
+  border-radius: 0.85rem;
+  background: #eef1f4;
+}
+
+.pricing-billing-switch button {
+  display: inline-flex;
+  min-height: 3rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  padding: 0.65rem 0.85rem;
+  border: 0;
+  border-radius: 0.65rem;
+  background: transparent;
+  color: var(--ink-soft);
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 820;
+  cursor: pointer;
+  transition: background-color 180ms ease, box-shadow 180ms ease, color 180ms ease, transform 180ms ease;
+}
+
+.pricing-billing-switch button:hover {
+  color: var(--ink);
+}
+
+.pricing-billing-switch button:active {
+  transform: translateY(1px);
+}
+
+.pricing-billing-switch button[aria-pressed="true"] {
+  background: #fff;
+  color: var(--ink);
+  box-shadow: 0 0.35rem 1rem rgba(17, 17, 17, 0.1);
+}
+
+.pricing-billing-switch button:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+
+.pricing-saving {
+  padding: 0.28rem 0.42rem;
+  border-radius: 999px;
+  background: var(--mint);
+  color: #07533e;
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.pricing-billing-disclosure {
+  flex: 1 1 24rem;
+  max-width: 44rem;
+  margin-right: 0.65rem;
+  color: var(--ink-soft);
+  font-size: 0.77rem;
+  font-weight: 650;
+  line-height: 1.45;
+  text-wrap: pretty;
+}
+
 .pricing-scroll-hint {
   display: none;
 }
@@ -3239,7 +3324,7 @@ html[lang="ja"] .section-intro h2 {
 .pricing-table-wrap {
   max-width: 100%;
   min-width: 0;
-  margin-top: clamp(4rem, 7vw, 7rem);
+  margin-top: 1.5rem;
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   contain: inline-size paint;
@@ -3255,7 +3340,7 @@ html[lang="ja"] .section-intro h2 {
 
 .pricing-table {
   width: 100%;
-  min-width: 62rem;
+  min-width: 58rem;
   border-spacing: 0;
   table-layout: fixed;
 }
@@ -3283,7 +3368,7 @@ html[lang="ja"] .section-intro h2 {
 
 .pricing-table thead th {
   position: relative;
-  height: 13rem;
+  height: 18rem;
   background: #f5f6f7;
   text-align: left;
   vertical-align: bottom;
@@ -3302,7 +3387,7 @@ html[lang="ja"] .section-intro h2 {
   text-align: center;
 }
 
-.pricing-table thead .pricing-pro,
+.pricing-table thead .pricing-quality,
 .pricing-table tbody td:nth-child(3) {
   background: #eaf4ff;
   box-shadow:
@@ -3310,7 +3395,7 @@ html[lang="ja"] .section-intro h2 {
     inset -2px 0 0 var(--blue);
 }
 
-.pricing-table thead .pricing-pro {
+.pricing-table thead .pricing-quality {
   box-shadow:
     inset 2px 0 0 var(--blue),
     inset -2px 0 0 var(--blue),
@@ -3332,22 +3417,12 @@ html[lang="ja"] .section-intro h2 {
   letter-spacing: -0.03em;
 }
 
-.pricing-pro .pricing-plan-name {
+.pricing-quality .pricing-plan-name {
   color: var(--blue-deep);
   font-size: clamp(1.08rem, 1.75vw, 1.42rem);
 }
 
-.pricing-plan-alias {
-  display: block;
-  margin-top: -0.8rem;
-  color: var(--ink-soft);
-  font-family: var(--mono);
-  font-size: 0.54rem;
-  font-weight: 760;
-  letter-spacing: 0.02em;
-}
-
-.pricing-table thead strong {
+.pricing-table thead .pricing-price {
   display: block;
   margin-top: 1.15rem;
   font-family: var(--mono);
@@ -3356,7 +3431,7 @@ html[lang="ja"] .section-intro h2 {
   line-height: 0.9;
 }
 
-.pricing-table thead strong small {
+.pricing-table thead .pricing-price small {
   font-size: 0.42em;
   vertical-align: top;
 }
@@ -3370,6 +3445,42 @@ html[lang="ja"] .section-intro h2 {
   font-weight: 750;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+}
+
+.pricing-tax-mode,
+.pricing-total,
+.pricing-base-price {
+  display: block;
+  color: var(--ink-soft);
+  font-family: var(--mono);
+  font-size: 0.52rem;
+  font-weight: 720;
+  line-height: 1.45;
+}
+
+.pricing-tax-mode {
+  margin-top: 0.25rem;
+  color: #5e6872;
+}
+
+.pricing-total {
+  margin-top: 0.65rem;
+}
+
+.pricing-total strong,
+.pricing-base-price strong {
+  color: var(--ink);
+  font-size: inherit;
+  letter-spacing: 0;
+}
+
+.pricing-base-price {
+  margin-top: 0.2rem;
+}
+
+.pricing-total[hidden],
+.pricing-base-price[hidden] {
+  display: none;
 }
 
 .pricing-popular {
@@ -3398,19 +3509,101 @@ html[lang="ja"] .section-intro h2 {
   color: var(--blue-deep);
 }
 
+.pricing-feature-with-action {
+  display: grid;
+  justify-items: start;
+  gap: 0.55rem;
+}
+
+.pricing-info-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.38rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--blue-deep);
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  font-weight: 820;
+  line-height: 1.25;
+  text-align: left;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2rem;
+  cursor: pointer;
+}
+
+.pricing-info-icon {
+  display: inline-grid;
+  width: 1.05rem;
+  height: 1.05rem;
+  flex: 0 0 1.05rem;
+  place-items: center;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  font-size: 0.64rem;
+  font-style: normal;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.pricing-info-button:hover {
+  color: var(--blue);
+}
+
+.pricing-info-button:focus-visible {
+  border-radius: 0.2rem;
+  outline: 2px solid var(--blue);
+  outline-offset: 0.3rem;
+}
+
 .pricing-table tbody td {
   color: var(--ink-soft);
   text-align: center;
 }
 
-.pricing-check {
-  color: var(--ink);
+.pricing-status {
+  display: inline-flex;
+  min-width: 7.6rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.44rem 0.68rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
   font-family: var(--mono);
-  font-size: 1.25rem;
+  font-size: 0.62rem;
+  font-weight: 820;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.pricing-status-icon {
+  display: inline-grid;
+  width: 1.18rem;
+  height: 1.18rem;
+  flex: 0 0 1.18rem;
+  place-items: center;
+  border-radius: 50%;
+  font-size: 0.72rem;
   font-weight: 900;
+  line-height: 1;
+}
+
+.pricing-status-included {
+  border-color: #a9dfc7;
+  background: #edfff6;
+  color: #0b6547;
+}
+
+.pricing-status-included .pricing-status-icon {
+  background: #137a58;
+  color: #fff;
 }
 
 .pricing-dash {
+  color: var(--ink-soft);
   font-size: 1.15rem;
 }
 
@@ -3447,6 +3640,14 @@ html[lang="ja"] .section-intro h2 {
   line-height: 1.55;
 }
 
+.pricing-foot .pricing-tax-note {
+  max-width: 82ch;
+  color: var(--ink-soft);
+  font-family: var(--body);
+  font-size: 0.7rem;
+  font-weight: 620;
+}
+
 .pricing-foot-copy {
   display: grid;
   gap: 0.75rem;
@@ -3473,6 +3674,151 @@ html[lang="ja"] .section-intro h2 {
 .pricing-foot .button {
   min-width: 12rem;
   flex: 0 0 auto;
+}
+
+body.dialog-open {
+  overflow: hidden;
+}
+
+.storage-dialog {
+  width: min(calc(100% - 2rem), 34rem);
+  max-width: none;
+  max-height: calc(100dvh - 2rem);
+  padding: 0;
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: #fff;
+  color: var(--ink);
+  box-shadow: 0 2rem 6rem rgba(17, 17, 17, 0.3);
+}
+
+.storage-dialog::backdrop {
+  background: rgba(17, 17, 17, 0.58);
+  backdrop-filter: blur(0.2rem);
+}
+
+.storage-dialog-card {
+  display: grid;
+  gap: 1.25rem;
+  padding: clamp(1.35rem, 4vw, 2.25rem);
+}
+
+.storage-dialog-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.storage-dialog-header h2 {
+  max-width: none;
+  margin-top: 0.55rem;
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  letter-spacing: -0.055em;
+  line-height: 0.95;
+}
+
+html[lang="ja"] .storage-dialog-header h2,
+html[lang="zh-Hans"] .storage-dialog-header h2 {
+  white-space: nowrap;
+}
+
+.storage-dialog-close {
+  display: inline-grid;
+  width: 2.6rem;
+  height: 2.6rem;
+  flex: 0 0 2.6rem;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: #fff;
+  color: var(--ink);
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+.storage-dialog-close:hover {
+  background: #f2f4f6;
+}
+
+.storage-dialog-close:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 0.2rem;
+}
+
+.storage-dialog-description {
+  max-width: 48ch;
+  color: var(--ink-soft);
+  font-size: 0.94rem;
+  line-height: 1.55;
+}
+
+.storage-addon-table-wrap {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+}
+
+.storage-addon-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.storage-addon-table th,
+.storage-addon-table td {
+  width: 50%;
+  padding: 1rem 1.15rem;
+  border-right: 1px solid var(--line-soft);
+  border-bottom: 1px solid var(--line-soft);
+  text-align: left;
+  vertical-align: middle;
+}
+
+.storage-addon-table tr > *:last-child {
+  border-right: 0;
+}
+
+.storage-addon-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.storage-addon-table thead th {
+  background: #112f55;
+  color: #fff;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  font-weight: 820;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.storage-addon-table tbody tr:nth-child(even) {
+  background: #f7f8fa;
+}
+
+.storage-addon-table td strong {
+  display: block;
+  color: var(--ink);
+  font-size: 1.1rem;
+}
+
+.storage-addon-table td small {
+  display: block;
+  margin-top: 0.18rem;
+  color: var(--ink-soft);
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  font-weight: 720;
+  text-transform: uppercase;
+}
+
+.storage-dialog-note {
+  color: var(--ink-soft);
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  font-weight: 720;
 }
 
 .final-cta {
@@ -4752,6 +5098,11 @@ html[lang="ja"] .section-intro h2 {
     max-width: 100%;
   }
 
+  html[lang="ja"] .pricing-intro h2 {
+    font-size: clamp(2rem, 9vw, 2.35rem);
+    line-height: 1.04;
+  }
+
   .demo-tabs button {
     min-width: 0;
     flex: 1;
@@ -4930,9 +5281,34 @@ html[lang="ja"] .section-intro h2 {
     scroll-snap-type: inline mandatory;
   }
 
+  .pricing-billing-bar {
+    align-items: stretch;
+    flex-direction: column;
+    margin-top: 2.5rem;
+    padding: 0.55rem;
+  }
+
+  .pricing-billing-switch {
+    width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .pricing-billing-switch button {
+    min-height: 2.8rem;
+    gap: 0.35rem;
+    padding-inline: 0.55rem;
+  }
+
+  .pricing-billing-disclosure {
+    flex-basis: auto;
+    margin: 0;
+    padding: 0.35rem 0.45rem 0.25rem;
+    font-size: 0.69rem;
+  }
+
   .pricing-scroll-hint {
     display: block;
-    margin: 2.5rem 0 -2.8rem;
+    margin: 1.25rem 0 -0.35rem;
     color: var(--blue-deep);
     font-family: var(--mono);
     font-size: 0.7rem;
@@ -4950,7 +5326,7 @@ html[lang="ja"] .section-intro h2 {
   }
 
   .pricing-table thead th {
-    height: 11.5rem;
+    height: 15.5rem;
   }
 
   .pricing-table thead th:first-child {
@@ -4972,12 +5348,18 @@ html[lang="ja"] .section-intro h2 {
     line-height: 1.15;
   }
 
-  .pricing-table thead strong {
+  .pricing-table thead .pricing-price {
     font-size: 2rem;
   }
 
   .pricing-period {
     font-size: 0.58rem;
+  }
+
+  .pricing-tax-mode,
+  .pricing-total,
+  .pricing-base-price {
+    font-size: 0.48rem;
   }
 
   .pricing-popular {
@@ -4997,7 +5379,25 @@ html[lang="ja"] .section-intro h2 {
     line-height: 1.35;
   }
 
-  .pricing-check,
+  .pricing-info-button {
+    max-width: 9.5rem;
+    font-size: 0.54rem;
+  }
+
+  .pricing-status {
+    min-width: 0;
+    gap: 0.32rem;
+    padding: 0.38rem 0.46rem;
+    font-size: 0.56rem;
+  }
+
+  .pricing-status-icon {
+    width: 1rem;
+    height: 1rem;
+    flex-basis: 1rem;
+    font-size: 0.62rem;
+  }
+
   .pricing-dash {
     font-size: 1rem;
   }
@@ -5017,6 +5417,29 @@ html[lang="ja"] .section-intro h2 {
 
   .pricing-foot .button {
     width: 100%;
+  }
+
+  .storage-dialog {
+    width: calc(100% - 1rem);
+    max-height: calc(100dvh - 1rem);
+  }
+
+  .storage-dialog-card {
+    gap: 1rem;
+    padding: 1.2rem;
+  }
+
+  .storage-dialog-header {
+    gap: 0.8rem;
+  }
+
+  .storage-dialog-header h2 {
+    font-size: clamp(1.35rem, 7vw, 1.75rem);
+  }
+
+  .storage-addon-table th,
+  .storage-addon-table td {
+    padding: 0.85rem 0.75rem;
   }
 
   .final-cta {
@@ -5071,6 +5494,17 @@ html[lang="ja"] .section-intro h2 {
 }
 
 @media (max-width: 360px) {
+  .pricing-billing-switch button {
+    flex-wrap: wrap;
+    row-gap: 0.15rem;
+    padding-inline: 0.35rem;
+  }
+
+  .pricing-saving {
+    padding: 0.22rem 0.32rem;
+    font-size: 0.52rem;
+  }
+
   .apps-grid {
     grid-template-columns: 1fr;
   }
