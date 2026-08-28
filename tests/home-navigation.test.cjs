@@ -20,6 +20,22 @@ test("mobile navigation closes from blank and outside clicks", () => {
   );
 });
 
-test("homepage cache-busts the menu dismissal behavior", () => {
-  assert.match(homeHtml, /home\.js\?v=20260828-menu-dismiss-1/);
+test("homepage cache-busts the current navigation behavior", () => {
+  assert.match(homeHtml, /home\.css\?v=20260828-language-picker-2/);
+  assert.match(homeHtml, /home\.js\?v=20260828-language-picker-2/);
+});
+
+test("language picker follows its responsive grid and closes when focus leaves", () => {
+  assert.match(
+    homeScript,
+    /const columns = window\.matchMedia\("\(max-width: 620px\)"\)\.matches \? 3 : 2;/,
+    "arrow navigation must follow the rendered two- or three-column language grid"
+  );
+  assert.match(homeScript, /event\.key === 'ArrowDown' && index \+ columns < languageOptions\.length/);
+  assert.match(homeScript, /event\.key === 'ArrowRight' && index % columns < columns - 1/);
+  assert.match(
+    homeScript,
+    /languagePicker\.addEventListener\("focusout", \(\) => \{[\s\S]*?!languagePicker\.contains\(document\.activeElement\)[\s\S]*?setLanguagePickerOpen\(false\)/,
+    "moving focus to the next header action must dismiss the language panel"
+  );
 });

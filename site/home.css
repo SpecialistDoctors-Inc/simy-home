@@ -189,7 +189,7 @@ html[lang="zh-Hans"] .section-heading {
 
 .nav-frame {
   display: grid;
-  grid-template-columns: minmax(13rem, 1fr) auto minmax(13rem, 1fr);
+  grid-template-columns: minmax(13rem, 1fr) auto auto minmax(13rem, 1fr);
   align-items: center;
   min-height: 4.75rem;
   border-right: 1px solid var(--line);
@@ -267,49 +267,177 @@ html[lang="zh-Hans"] .section-heading {
   padding-right: 1rem;
 }
 
-.language-switcher {
+.language-picker {
   position: relative;
-  display: inline-grid;
+  flex: 0 0 auto;
+}
+
+.language-trigger {
+  display: grid;
+  grid-template-columns: 1rem minmax(0, auto) auto auto;
   align-items: center;
-  min-width: 7.4rem;
-}
-
-.language-switcher::after {
-  content: "↓";
-  position: absolute;
-  right: 0.65rem;
-  color: var(--ink-soft);
-  font-family: var(--mono);
-  font-size: 0.62rem;
-  pointer-events: none;
-}
-
-.language-switcher select {
-  width: 100%;
-  min-height: 2.35rem;
-  padding: 0.45rem 1.75rem 0.45rem 0.7rem;
-  appearance: none;
+  min-height: 2.75rem;
+  gap: 0.45rem;
+  padding: 0.5rem 0.7rem;
   border: 1px solid var(--line-soft);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.82);
+  background: rgba(255, 255, 255, 0.86);
   color: var(--ink);
   cursor: pointer;
+  font: inherit;
+  transition: border-color 160ms ease, background 160ms ease, box-shadow 160ms ease;
+  list-style: none;
+}
+
+.language-trigger::-webkit-details-marker {
+  display: none;
+}
+
+.language-trigger:hover,
+.language-picker[open] .language-trigger {
+  border-color: var(--ink);
+  background: var(--lime);
+  box-shadow: 0 0 0 1px var(--ink);
+}
+
+.language-trigger:focus-visible,
+.language-option:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 2px;
+}
+
+.language-globe {
+  width: 1rem;
+  height: 1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.7;
+}
+
+.language-current {
+  min-width: 4.75rem;
+  overflow: hidden;
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.language-current-code,
+.language-option small {
+  color: var(--ink-soft);
   font-family: var(--mono);
-  font-size: 0.62rem;
+  font-size: 0.58rem;
   font-weight: 850;
   line-height: 1;
 }
 
-.language-switcher select:hover {
-  background: var(--lime);
+.language-chevron {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  transition: transform 160ms ease;
 }
 
-.language-switcher select:focus-visible {
-  outline-offset: 2px;
+.language-picker[open] .language-chevron {
+  transform: rotate(180deg);
 }
 
-.mobile-language-switcher {
+.language-panel {
+  position: absolute;
+  z-index: 130;
+  top: calc(100% + 0.65rem);
+  right: 0;
+  width: 21rem;
+  padding: 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background: var(--paper);
+  box-shadow: 0 1.25rem 3rem rgba(17, 17, 16, 0.18);
   display: none;
+}
+
+.language-picker[open] .language-panel {
+  display: block;
+}
+
+.language-panel-label {
+  margin: 0;
+  color: var(--ink-soft);
+  font-family: var(--mono);
+  font-size: 0.64rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.language-panel-label {
+  padding: 0.2rem 0.25rem 0.65rem;
+}
+
+.language-option-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.4rem;
+}
+
+.language-option {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  min-height: 3.5rem;
+  gap: 0.45rem;
+  padding: 0.65rem 2rem 0.65rem 0.75rem;
+  border: 1px solid var(--line-soft);
+  border-radius: 0.7rem;
+  background: #fff;
+  color: var(--ink);
+  text-decoration: none;
+  transition: border-color 140ms ease, background 140ms ease, transform 140ms ease;
+}
+
+.language-option:hover {
+  border-color: var(--ink);
+  background: var(--lime);
+  transform: translateY(-1px);
+}
+
+.language-option > span {
+  overflow: hidden;
+  font-size: 0.84rem;
+  font-weight: 800;
+  line-height: 1.1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.language-option > b {
+  position: absolute;
+  right: 0.7rem;
+  display: grid;
+  width: 1rem;
+  height: 1rem;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--blue);
+  color: #fff;
+  font-size: 0.65rem;
+  line-height: 1;
+  opacity: 0;
+}
+
+.language-option[aria-current="true"] {
+  border-color: var(--blue);
+  background: var(--ice);
+  box-shadow: inset 3px 0 0 var(--blue);
+}
+
+.language-option[aria-current="true"] > b {
+  opacity: 1;
 }
 
 .nav-login {
@@ -4022,7 +4150,7 @@ html[lang="ja"] .section-intro h2 {
   }
 
   .nav-frame {
-    grid-template-columns: 1fr auto;
+    grid-template-columns: minmax(0, 1fr) auto auto;
   }
 
   .desktop-nav {
@@ -4031,6 +4159,11 @@ html[lang="ja"] .section-intro h2 {
 
   .nav-actions {
     display: none;
+  }
+
+  .language-panel {
+    right: -4.25rem;
+    width: min(21rem, calc(100vw - 1rem));
   }
 
   .menu-button {
@@ -4071,6 +4204,8 @@ html[lang="ja"] .section-intro h2 {
     left: 0;
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
+    overscroll-behavior: contain;
     padding: 1rem;
     border-right: 1px solid var(--line);
     border-left: 1px solid var(--line);
@@ -4092,12 +4227,6 @@ html[lang="ja"] .section-intro h2 {
 
   .mobile-menu .button {
     margin-top: auto;
-  }
-
-  .mobile-language-switcher {
-    display: inline-grid;
-    align-self: stretch;
-    margin: 1rem 0.5rem 0;
   }
 
   .hero {
@@ -4142,7 +4271,7 @@ html[lang="ja"] .section-intro h2 {
   }
 
   .nav-frame {
-    grid-template-columns: 1fr auto;
+    grid-template-columns: minmax(0, 1fr) auto auto;
   }
 
   .hero {
@@ -4350,6 +4479,51 @@ html[lang="ja"] .section-intro h2 {
 
   .brand-tag {
     display: none;
+  }
+
+  .language-trigger {
+    grid-template-columns: 1rem auto auto;
+    min-width: 4.25rem;
+    justify-content: center;
+    padding-inline: 0.65rem;
+  }
+
+  .language-current {
+    display: none;
+  }
+
+  .language-panel {
+    border-radius: 0.85rem;
+  }
+
+  .language-option-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .language-option {
+    display: flex;
+    min-width: 0;
+    min-height: 3.25rem;
+    justify-content: center;
+    padding: 0.55rem 0.4rem;
+    text-align: center;
+  }
+
+  .language-option > span {
+    max-width: 100%;
+    font-size: 0.78rem;
+  }
+
+  .language-option > small {
+    display: none;
+  }
+
+  .language-option > b {
+    top: 0.28rem;
+    right: 0.28rem;
+    width: 0.82rem;
+    height: 0.82rem;
+    font-size: 0.52rem;
   }
 
   .mobile-menu {
