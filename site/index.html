@@ -32,7 +32,7 @@
     <meta name="twitter:description" content="SIMY learns your way of working, selects the right Pipeline, and Autorun moves it forward.">
     <meta name="twitter:image" content="https://simy.one/ogp-home-global-202608-v4.png">
     <meta name="twitter:image:alt" content="You’re using AI. But the workload hasn’t gone down. Turn chats and conversations into workflows that get work done.">
-    <link rel="stylesheet" href="home.css?v=20260828-direct-auth-1">
+    <link rel="stylesheet" href="home.css?v=20260828-pricing-pro-1">
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -49,9 +49,10 @@
         }
       }
     </script>
-    <script src="home-locales.js?v=20260828-direct-auth-1" defer></script>
-    <script src="home-i18n.js?v=20260828-direct-auth-1" defer></script>
-    <script src="home.js?v=20260828-direct-auth-1" defer></script>
+    <script src="home-locales.js?v=20260828-pricing-pro-1" defer></script>
+    <script src="home-i18n.js?v=20260828-pricing-pro-1" defer></script>
+    <script src="pricing-catalog.js?v=20260828-pricing-pro-1" defer></script>
+    <script src="home.js?v=20260828-pricing-pro-1" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -662,10 +663,26 @@
           </div>
         </div>
 
+        <div class="pricing-billing-bar">
+          <div class="pricing-billing-switch" role="group" aria-label="Billing cycle">
+            <button type="button" data-billing-cycle="annual" aria-pressed="true" aria-label="Show annual billing prices">
+              <span>Annual</span>
+              <span class="pricing-saving">Save 17%</span>
+            </button>
+            <button type="button" data-billing-cycle="monthly" aria-pressed="false" aria-label="Show monthly billing prices">
+              <span>Monthly</span>
+            </button>
+          </div>
+          <p class="pricing-billing-disclosure" aria-live="polite">
+            <span data-billing-copy="annual">Annual plans are billed once a year. Prices below are the effective monthly cost.</span>
+            <span data-billing-copy="monthly" hidden>Monthly plans are billed every month.</span>
+          </p>
+        </div>
+
         <p class="pricing-scroll-hint">Swipe to compare plans →</p>
-        <div class="pricing-table-wrap" tabindex="0" role="region" aria-label="SIMY monthly plan comparison" aria-describedby="pricing-note">
+        <div class="pricing-table-wrap" tabindex="0" role="region" aria-label="SIMY plan comparison" aria-describedby="pricing-note">
           <table class="pricing-table">
-            <caption class="sr-only">Starter, SIMY Quality, and Team monthly pricing and features</caption>
+            <caption class="sr-only">Starter, SIMY Quality, and Pro pricing and features</caption>
             <colgroup>
               <col class="pricing-feature-column">
               <col>
@@ -674,92 +691,132 @@
             </colgroup>
             <thead>
               <tr>
-                <th scope="col"><span>Monthly · USD</span></th>
-                <th scope="col">
+                <th scope="col"><span>Pricing · USD</span></th>
+                <th scope="col" data-pricing-plan="starter">
                   <span class="pricing-plan-name">Starter</span>
-                  <strong><small>$</small>30</strong>
-                  <span class="pricing-period">per month · before tax</span>
+                  <strong class="pricing-price"><small>$</small><span data-price-amount>29.8</span></strong>
+                  <span class="pricing-period">
+                    <span data-billing-copy="annual">per month · billed annually</span>
+                    <span data-billing-copy="monthly" hidden>per month · billed monthly</span>
+                  </span>
+                  <span class="pricing-tax-mode">
+                    <span data-tax-mode="exclusive">before applicable taxes</span>
+                    <span data-tax-mode="inclusive" hidden>tax included</span>
+                  </span>
+                  <span class="pricing-total" data-annual-total>
+                    <span>Annual total</span> <strong data-price-total>$357.60</strong> ·
+                    <span data-tax-mode="exclusive">before applicable taxes</span>
+                    <span data-tax-mode="inclusive" hidden>tax included</span>
+                  </span>
+                  <span class="pricing-base-price" data-base-price-detail hidden><span>Before tax</span> <strong data-base-price>$29.8</strong> / <span>month</span></span>
                 </th>
-                <th class="pricing-pro" scope="col">
+                <th class="pricing-quality" scope="col" data-pricing-plan="quality">
                   <span class="pricing-popular">Recommended</span>
                   <span class="pricing-plan-name">SIMY Quality</span>
-                  <span class="pricing-plan-alias">Pro plan at checkout</span>
-                  <strong><small>$</small>50</strong>
-                  <span class="pricing-period">per month · before tax</span>
+                  <strong class="pricing-price"><small>$</small><span data-price-amount>49.8</span></strong>
+                  <span class="pricing-period">
+                    <span data-billing-copy="annual">per month · billed annually</span>
+                    <span data-billing-copy="monthly" hidden>per month · billed monthly</span>
+                  </span>
+                  <span class="pricing-tax-mode">
+                    <span data-tax-mode="exclusive">before applicable taxes</span>
+                    <span data-tax-mode="inclusive" hidden>tax included</span>
+                  </span>
+                  <span class="pricing-total" data-annual-total>
+                    <span>Annual total</span> <strong data-price-total>$597.60</strong> ·
+                    <span data-tax-mode="exclusive">before applicable taxes</span>
+                    <span data-tax-mode="inclusive" hidden>tax included</span>
+                  </span>
+                  <span class="pricing-base-price" data-base-price-detail hidden><span>Before tax</span> <strong data-base-price>$49.8</strong> / <span>month</span></span>
                 </th>
-                <th scope="col">
-                  <span class="pricing-plan-name">Team</span>
-                  <strong><small>$</small>80</strong>
-                  <span class="pricing-period">per month · before tax</span>
+                <th scope="col" data-pricing-plan="pro">
+                  <span class="pricing-plan-name">Pro</span>
+                  <strong class="pricing-price"><small>$</small><span data-price-amount>79.8</span></strong>
+                  <span class="pricing-period">
+                    <span data-billing-copy="annual">per month · billed annually</span>
+                    <span data-billing-copy="monthly" hidden>per month · billed monthly</span>
+                  </span>
+                  <span class="pricing-tax-mode">
+                    <span data-tax-mode="exclusive">before applicable taxes</span>
+                    <span data-tax-mode="inclusive" hidden>tax included</span>
+                  </span>
+                  <span class="pricing-total" data-annual-total>
+                    <span>Annual total</span> <strong data-price-total>$957.60</strong> ·
+                    <span data-tax-mode="exclusive">before applicable taxes</span>
+                    <span data-tax-mode="inclusive" hidden>tax included</span>
+                  </span>
+                  <span class="pricing-base-price" data-base-price-detail hidden><span>Before tax</span> <strong data-base-price>$79.8</strong> / <span>month</span></span>
                 </th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <th scope="row">Autorun allowance</th>
-                <td><strong class="pricing-value">100 runs</strong></td>
+                <td><strong class="pricing-value">Unlimited</strong></td>
                 <td><strong class="pricing-value">Unlimited</strong></td>
                 <td><strong class="pricing-value">Unlimited</strong></td>
               </tr>
               <tr>
-                <th scope="row">Storage</th>
+                <th scope="row">
+                  <span class="pricing-feature-with-action">
+                    <span>Storage</span>
+                    <button class="pricing-info-button" type="button" data-storage-dialog-open aria-haspopup="dialog" aria-controls="storage-pricing-dialog" aria-label="View additional storage pricing">
+                      <span class="pricing-info-icon" aria-hidden="true">i</span>
+                      <span>Additional storage pricing</span>
+                    </button>
+                  </span>
+                </th>
                 <td><strong class="pricing-value">10 GB</strong></td>
                 <td><strong class="pricing-value">50 GB</strong></td>
                 <td><strong class="pricing-value">100 GB</strong></td>
               </tr>
               <tr>
-                <th scope="row">Users</th>
-                <td><strong class="pricing-value">Up to 1 user</strong></td>
-                <td><strong class="pricing-value">Up to 1 user</strong></td>
-                <td><strong class="pricing-value">Up to 3 users</strong></td>
-              </tr>
-              <tr>
                 <th scope="row">Codex account connection</th>
-                <td><span class="pricing-check"><span class="sr-only">Included</span>✓</span></td>
-                <td><span class="pricing-check"><span class="sr-only">Included</span>✓</span></td>
-                <td><span class="pricing-check"><span class="sr-only">Included</span>✓</span></td>
+                <td><span class="pricing-status pricing-status-included"><span class="pricing-status-icon" aria-hidden="true">✓</span><span>Included</span></span></td>
+                <td><span class="pricing-status pricing-status-included"><span class="pricing-status-icon" aria-hidden="true">✓</span><span>Included</span></span></td>
+                <td><span class="pricing-status pricing-status-included"><span class="pricing-status-icon" aria-hidden="true">✓</span><span>Included</span></span></td>
               </tr>
               <tr>
                 <th scope="row">Meeting Autorun</th>
-                <td><span class="pricing-check"><span class="sr-only">Included</span>✓</span></td>
-                <td><span class="pricing-check"><span class="sr-only">Included</span>✓</span></td>
-                <td><span class="pricing-check"><span class="sr-only">Included</span>✓</span></td>
+                <td><span class="pricing-status pricing-status-included"><span class="pricing-status-icon" aria-hidden="true">✓</span><span>Included</span></span></td>
+                <td><span class="pricing-status pricing-status-included"><span class="pricing-status-icon" aria-hidden="true">✓</span><span>Included</span></span></td>
+                <td><span class="pricing-status pricing-status-included"><span class="pricing-status-icon" aria-hidden="true">✓</span><span>Included</span></span></td>
               </tr>
               <tr>
                 <th scope="row">Save and reuse Pipelines</th>
-                <td><span class="pricing-check"><span class="sr-only">Included</span>✓</span></td>
-                <td><span class="pricing-check"><span class="sr-only">Included</span>✓</span></td>
-                <td><span class="pricing-check"><span class="sr-only">Included</span>✓</span></td>
+                <td><span class="pricing-status pricing-status-included"><span class="pricing-status-icon" aria-hidden="true">✓</span><span>Included</span></span></td>
+                <td><span class="pricing-status pricing-status-included"><span class="pricing-status-icon" aria-hidden="true">✓</span><span>Included</span></span></td>
+                <td><span class="pricing-status pricing-status-included"><span class="pricing-status-icon" aria-hidden="true">✓</span><span>Included</span></span></td>
               </tr>
               <tr>
                 <th scope="row">Use your connected ChatGPT plan</th>
-                <td><span class="pricing-check"><span class="sr-only">Included</span>✓</span></td>
-                <td><span class="pricing-check"><span class="sr-only">Included</span>✓</span></td>
-                <td><span class="pricing-check"><span class="sr-only">Included</span>✓</span></td>
+                <td><span class="pricing-status pricing-status-included"><span class="pricing-status-icon" aria-hidden="true">✓</span><span>Included</span></span></td>
+                <td><span class="pricing-status pricing-status-included"><span class="pricing-status-icon" aria-hidden="true">✓</span><span>Included</span></span></td>
+                <td><span class="pricing-status pricing-status-included"><span class="pricing-status-icon" aria-hidden="true">✓</span><span>Included</span></span></td>
               </tr>
               <tr>
                 <th scope="row">Quality Loop</th>
                 <td><span class="pricing-dash"><span class="sr-only">Not included</span>&mdash;</span></td>
-                <td><span class="pricing-check"><span class="sr-only">Included</span>✓</span></td>
-                <td><span class="pricing-check"><span class="sr-only">Included</span>✓</span></td>
+                <td><span class="pricing-status pricing-status-included"><span class="pricing-status-icon" aria-hidden="true">✓</span><span>Included</span></span></td>
+                <td><span class="pricing-status pricing-status-included"><span class="pricing-status-icon" aria-hidden="true">✓</span><span>Included</span></span></td>
               </tr>
               <tr>
                 <th scope="row">Target error rate ≤3%<sup>*</sup></th>
                 <td><span class="pricing-dash"><span class="sr-only">Not included</span>&mdash;</span></td>
-                <td><span class="pricing-check"><span class="sr-only">Included</span>✓</span></td>
-                <td><span class="pricing-check"><span class="sr-only">Included</span>✓</span></td>
+                <td><span class="pricing-status pricing-status-included"><span class="pricing-status-icon" aria-hidden="true">✓</span><span>Included</span></span></td>
+                <td><span class="pricing-status pricing-status-included"><span class="pricing-status-icon" aria-hidden="true">✓</span><span>Included</span></span></td>
               </tr>
               <tr>
                 <th scope="row">Hearing Mode</th>
                 <td><span class="pricing-dash"><span class="sr-only">Not included</span>&mdash;</span></td>
                 <td><span class="pricing-dash"><span class="sr-only">Not included</span>&mdash;</span></td>
-                <td><span class="pricing-check"><span class="sr-only">Included</span>✓</span></td>
+                <td><span class="pricing-status pricing-status-included"><span class="pricing-status-icon" aria-hidden="true">✓</span><span>Included</span></span></td>
               </tr>
               <tr>
                 <th scope="row">Real-time suggestions</th>
                 <td><span class="pricing-dash"><span class="sr-only">Not included</span>&mdash;</span></td>
                 <td><span class="pricing-dash"><span class="sr-only">Not included</span>&mdash;</span></td>
-                <td><span class="pricing-check"><span class="sr-only">Included</span>✓</span></td>
+                <td><span class="pricing-status pricing-status-included"><span class="pricing-status-icon" aria-hidden="true">✓</span><span>Included</span></span></td>
               </tr>
               <tr>
                 <th scope="row">Hearing minutes</th>
@@ -780,11 +837,57 @@
         <div class="pricing-foot" id="pricing-note">
           <div class="pricing-foot-copy">
             <p><sup>*</sup> The ≤3% error rate is a target when SIMY&rsquo;s defined testing and verification criteria are met. It is not a guaranteed result.</p>
-            <p class="stripe-note"><span aria-hidden="true">▣</span> The purchase page shows the plans currently available for checkout and the final price before payment. Stripe securely processes payment.</p>
+            <p class="pricing-tax-note">Prices are shown in USD. Japanese prices include 10% consumption tax. In other countries and regions, taxes may apply based on the billing address.</p>
+            <p class="stripe-note"><span aria-hidden="true">▣</span> The purchase page shows the plans currently available for checkout and the final total before payment. Stripe securely processes payment.</p>
           </div>
           <a class="button button-dark" href="https://app.simy.one/signup?lang=en&amp;locale=en&amp;region=us" aria-label="Choose a SIMY plan and continue to secure Stripe Checkout">Choose a plan <span aria-hidden="true">↗</span></a>
         </div>
       </section>
+
+      <dialog class="storage-dialog" id="storage-pricing-dialog" data-storage-dialog aria-labelledby="storage-dialog-title" aria-describedby="storage-dialog-description">
+        <div class="storage-dialog-card">
+          <header class="storage-dialog-header">
+            <div>
+              <p class="section-kicker">Storage add-ons</p>
+              <h2 id="storage-dialog-title">Additional storage pricing</h2>
+            </div>
+            <button class="storage-dialog-close" type="button" data-storage-dialog-close aria-label="Close additional storage pricing">
+              <span aria-hidden="true">×</span>
+            </button>
+          </header>
+          <p class="storage-dialog-description" id="storage-dialog-description">Choose the capacity you need. Prices are billed monthly.</p>
+          <div class="storage-addon-table-wrap">
+            <table class="storage-addon-table">
+              <caption class="sr-only">Additional storage monthly pricing</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Monthly price</th>
+                  <th scope="col">Additional storage</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td data-storage-capacity="30 GB"><strong data-storage-price-amount>$10</strong> <small><span>per month</span> · <span data-tax-mode="exclusive">before applicable taxes</span><span data-tax-mode="inclusive" hidden>tax included</span></small></td>
+                  <td><strong>30 GB</strong></td>
+                </tr>
+                <tr>
+                  <td data-storage-capacity="200 GB"><strong data-storage-price-amount>$40</strong> <small><span>per month</span> · <span data-tax-mode="exclusive">before applicable taxes</span><span data-tax-mode="inclusive" hidden>tax included</span></small></td>
+                  <td><strong>200 GB</strong></td>
+                </tr>
+                <tr>
+                  <td data-storage-capacity="1 TB"><strong data-storage-price-amount>$100</strong> <small><span>per month</span> · <span data-tax-mode="exclusive">before applicable taxes</span><span data-tax-mode="inclusive" hidden>tax included</span></small></td>
+                  <td><strong>1 TB</strong></td>
+                </tr>
+                <tr>
+                  <td data-storage-capacity="5 TB"><strong data-storage-price-amount>$500</strong> <small><span>per month</span> · <span data-tax-mode="exclusive">before applicable taxes</span><span data-tax-mode="inclusive" hidden>tax included</span></small></td>
+                  <td><strong>5 TB</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="storage-dialog-note">Prices are shown in USD. Japanese prices include 10% consumption tax. Elsewhere, taxes may apply at checkout.</p>
+        </div>
+      </dialog>
 
       <section class="final-cta" aria-labelledby="final-title">
         <div class="final-copy">

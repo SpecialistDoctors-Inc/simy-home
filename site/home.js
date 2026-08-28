@@ -260,8 +260,83 @@ if (motionLoops.length) {
   }
 }
 
+const pricingCatalog = window.SIMY_PRICING;
+const billingCycleButtons = Array.from(document.querySelectorAll("[data-billing-cycle]"));
+const pricingPlans = Array.from(document.querySelectorAll("[data-pricing-plan]"));
+const storagePrices = Array.from(document.querySelectorAll("[data-storage-capacity]"));
+let activeBillingCycle = "annual";
+
+function formatUsd(value, minimumFractionDigits = 0) {
+  const rounded = Math.round((value + Number.EPSILON) * 100) / 100;
+  const hasFraction = !Number.isInteger(rounded);
+  return `$${rounded.toLocaleString("en-US", {
+    minimumFractionDigits: Math.max(minimumFractionDigits, hasFraction ? 1 : 0),
+    maximumFractionDigits: 2
+  })}`;
+}
+
+function renderPricing() {
+  const locale = window.SIMY_HOME_I18N?.locale || document.documentElement.lang || "en";
+  const isJapanese = locale === "ja";
+
+  billingCycleButtons.forEach((button) => {
+    button.setAttribute("aria-pressed", String(button.dataset.billingCycle === activeBillingCycle));
+  });
+
+  document.querySelectorAll("[data-billing-copy]").forEach((element) => {
+    element.hidden = element.dataset.billingCopy !== activeBillingCycle;
+  });
+  document.querySelectorAll("[data-annual-total]").forEach((element) => {
+    element.hidden = activeBillingCycle !== "annual";
+  });
+  document.querySelectorAll("[data-tax-mode='exclusive']").forEach((element) => {
+    element.hidden = isJapanese;
+  });
+  document.querySelectorAll("[data-tax-mode='inclusive']").forEach((element) => {
+    element.hidden = !isJapanese;
+  });
+  document.querySelectorAll("[data-base-price-detail]").forEach((element) => {
+    element.hidden = !isJapanese;
+  });
+
+  pricingPlans.forEach((plan) => {
+    const basePriceCents = pricingCatalog.priceCents(plan.dataset.pricingPlan, activeBillingCycle);
+    const displayPriceCents = isJapanese
+      ? pricingCatalog.grossCents(basePriceCents, pricingCatalog.JAPAN_CONSUMPTION_TAX_BPS)
+      : basePriceCents;
+    const displayPrice = displayPriceCents / 100;
+    const basePrice = basePriceCents / 100;
+    const priceAmount = plan.querySelector("[data-price-amount]");
+    const annualTotal = plan.querySelector("[data-price-total]");
+    const basePriceDetail = plan.querySelector("[data-base-price]");
+
+    if (priceAmount) priceAmount.textContent = formatUsd(displayPrice).slice(1);
+    if (annualTotal) annualTotal.textContent = formatUsd(displayPriceCents * 12 / 100, 2);
+    if (basePriceDetail) basePriceDetail.textContent = formatUsd(basePrice);
+  });
+
+  storagePrices.forEach((cell) => {
+    const basePriceCents = pricingCatalog.storagePriceCents(cell.dataset.storageCapacity);
+    const displayPriceCents = isJapanese
+      ? pricingCatalog.grossCents(basePriceCents, pricingCatalog.JAPAN_CONSUMPTION_TAX_BPS)
+      : basePriceCents;
+    const amount = cell.querySelector("[data-storage-price-amount]");
+    if (amount) amount.textContent = formatUsd(displayPriceCents / 100);
+  });
+}
+
+billingCycleButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    activeBillingCycle = button.dataset.billingCycle === "monthly" ? "monthly" : "annual";
+    renderPricing();
+  });
+});
+
+window.addEventListener("simy:locale-change", renderPricing);
+renderPricing();
+
 const pricingTableWrap = document.querySelector(".pricing-table-wrap");
-const featuredPricingPlan = pricingTableWrap?.querySelector(".pricing-pro");
+const featuredPricingPlan = pricingTableWrap?.querySelector(".pricing-quality");
 const pricingFeatureHeader = pricingTableWrap?.querySelector("thead th:first-child");
 const compactPricing = window.matchMedia("(max-width: 620px)");
 let hasCenteredFeaturedPlan = false;
@@ -291,5 +366,41 @@ window.addEventListener("resize", () => {
   hasCenteredFeaturedPlan = false;
   centerFeaturedPricingPlan();
 });
+
+const storageDialog = document.querySelector("[data-storage-dialog]");
+const storageDialogOpenButtons = Array.from(document.querySelectorAll("[data-storage-dialog-open]"));
+const storageDialogCloseButton = storageDialog?.querySelector("[data-storage-dialog-close]");
+let storageDialogReturnFocus = null;
+
+function closeStorageDialog() {
+  if (!storageDialog?.open) return;
+  storageDialog.close();
+}
+
+if (storageDialog) {
+  storageDialogOpenButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      storageDialogReturnFocus = button;
+      if (!storageDialog.open) storageDialog.showModal();
+      document.body.classList.add("dialog-open");
+      storageDialogCloseButton?.focus();
+    });
+  });
+
+  storageDialogCloseButton?.addEventListener("click", closeStorageDialog);
+  storageDialog.addEventListener("click", (event) => {
+    if (event.target === storageDialog) closeStorageDialog();
+  });
+  storageDialog.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape") return;
+    event.preventDefault();
+    closeStorageDialog();
+  });
+  storageDialog.addEventListener("close", () => {
+    document.body.classList.remove("dialog-open");
+    storageDialogReturnFocus?.focus();
+    storageDialogReturnFocus = null;
+  });
+}
 
 renderScenario("codex");
