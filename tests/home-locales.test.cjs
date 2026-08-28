@@ -61,15 +61,31 @@ test("Hindi, Spanish, French, and Simplified Chinese cover all homepage copy", (
   }
 });
 
-test("homepage exposes every supported language in both selectors and hreflang metadata", () => {
+test("homepage exposes every supported language in one responsive, no-JS-safe picker", () => {
   for (const locale of ["en", "ja", "hi", "es", "fr", "zh-Hans"]) {
     assert.equal(
-      homeHtml.match(new RegExp(`data-locale-select[\\s\\S]*?<option value="${locale}" lang="${locale}"`, "g"))?.length,
-      2,
-      `${locale} must appear in the desktop and mobile language selectors`
+      homeHtml.match(new RegExp(`data-locale-option="${locale}"`, "g"))?.length,
+      1,
+      `${locale} must appear once in the responsive language picker`
     );
     assert.match(homeHtml, new RegExp(`hreflang="${locale}"`), `${locale} must have an hreflang link`);
   }
+  assert.match(homeHtml, /<details class="language-picker"[^>]*data-language-picker>/);
+  assert.match(homeHtml, /<summary class="language-trigger"[^>]*aria-label="Language: English"[^>]*data-language-trigger/);
+  assert.doesNotMatch(homeHtml, /<summary class="language-trigger"[^>]*aria-expanded=/);
+  assert.doesNotMatch(homeHtml, /data-language-panel[^>]*hidden/);
+  assert.doesNotMatch(homeHtml, /data-locale-select/);
+  assert.match(i18nSource, /option\.setAttribute\("aria-current", "true"\)/);
+  assert.match(i18nSource, /trigger\.setAttribute\("aria-label", `\$\{translate\("Language"\)\}: \$\{presentation\.label\}`\)/);
+  assert.match(homeCss, /\.language-trigger\s*\{[^}]*min-height:\s*2\.75rem/s);
+  assert.match(
+    homeCss,
+    /@media \(max-width: 620px\)[\s\S]*?\.language-option-grid\s*\{[^}]*grid-template-columns:\s*repeat\(3,\s*minmax\(0,\s*1fr\)\)/s
+  );
+  assert.match(
+    homeCss,
+    /@media \(max-width: 620px\)[\s\S]*?\.language-option\s*\{[^}]*min-height:\s*3\.25rem/s
+  );
 });
 
 test("locale bundle loads before the homepage translation runtime", () => {

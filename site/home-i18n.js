@@ -1,6 +1,14 @@
 (() => {
   const STORAGE_KEY = "simy-home-locale";
   const SUPPORTED_LOCALES = new Set(["en", "ja", "hi", "es", "fr", "zh-Hans"]);
+  const LOCALE_PRESENTATION = Object.freeze({
+    en: { label: "English", code: "EN" },
+    ja: { label: "日本語", code: "JA" },
+    hi: { label: "हिन्दी", code: "HI" },
+    es: { label: "Español", code: "ES" },
+    fr: { label: "Français", code: "FR" },
+    "zh-Hans": { label: "简体中文", code: "ZH" }
+  });
 
   const JA_COPY = Object.freeze({
     "Skip to content": "本文へ移動",
@@ -554,8 +562,20 @@
       record.element.setAttribute(record.name, translate(record.value));
     }
 
-    for (const select of document.querySelectorAll("[data-locale-select]")) {
-      select.value = currentLocale;
+    const presentation = LOCALE_PRESENTATION[currentLocale];
+    for (const element of document.querySelectorAll("[data-locale-current]")) {
+      element.textContent = presentation.label;
+    }
+    for (const element of document.querySelectorAll("[data-locale-current-code]")) {
+      element.textContent = presentation.code;
+    }
+    for (const trigger of document.querySelectorAll("[data-language-trigger]")) {
+      trigger.setAttribute("aria-label", `${translate("Language")}: ${presentation.label}`);
+    }
+    for (const option of document.querySelectorAll("[data-locale-option]")) {
+      const selected = option.dataset.localeOption === currentLocale;
+      if (selected) option.setAttribute("aria-current", "true");
+      else option.removeAttribute("aria-current");
     }
 
     updateMeta(currentLocale);
@@ -587,9 +607,10 @@
   const localeInUrl = normalizeLocale(new URL(window.location.href).searchParams.get("lang"));
   applyLocale(initialLocale, { updateHistory: !localeInUrl && initialLocale !== "en" });
 
-  for (const select of document.querySelectorAll("[data-locale-select]")) {
-    select.addEventListener("change", () => {
-      applyLocale(select.value, { persist: true, updateHistory: true });
+  for (const option of document.querySelectorAll("[data-locale-option]")) {
+    option.addEventListener("click", (event) => {
+      event.preventDefault();
+      applyLocale(option.dataset.localeOption, { persist: true, updateHistory: true });
     });
   }
 })();
