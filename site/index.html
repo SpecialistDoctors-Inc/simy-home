@@ -32,7 +32,7 @@
     <meta name="twitter:description" content="SIMY learns your way of working, selects the right Pipeline, and Autorun moves it forward.">
     <meta name="twitter:image" content="https://simy.one/ogp-home-global-202608-v4.png">
     <meta name="twitter:image:alt" content="You’re using AI. But the workload hasn’t gone down. Turn chats and conversations into workflows that get work done.">
-    <link rel="stylesheet" href="home.css?v=20260828-language-picker-2">
+    <link rel="stylesheet" href="home.css?v=20260828-direct-auth-1">
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -49,9 +49,9 @@
         }
       }
     </script>
-    <script src="home-locales.js?v=20260828-ai-apps-1" defer></script>
-    <script src="home-i18n.js?v=20260828-language-picker-2" defer></script>
-    <script src="home.js?v=20260828-language-picker-2" defer></script>
+    <script src="home-locales.js?v=20260828-direct-auth-1" defer></script>
+    <script src="home-i18n.js?v=20260828-direct-auth-1" defer></script>
+    <script src="home.js?v=20260828-direct-auth-1" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -99,7 +99,7 @@
 
         <div class="nav-actions">
           <a class="nav-login" data-existing-account-login href="https://app.simy.one/">Log in</a>
-          <a class="button button-small button-dark" href="mailto:sales@simy.one?subject=Map%20my%20first%20SIMY%20workflow">Map my workflow</a>
+          <a class="button button-small button-dark nav-signup" data-new-account-signup href="https://app.simy.one/signup?lang=en&amp;locale=en&amp;region=us">Sign up</a>
         </div>
 
         <button class="menu-button" type="button" aria-expanded="false" aria-controls="mobile-menu" data-menu-button>
@@ -107,6 +107,11 @@
           <span></span>
           <span></span>
         </button>
+      </div>
+
+      <div class="site-frame mobile-auth-actions" role="group" aria-label="Account">
+        <a class="mobile-auth-login" data-existing-account-login href="https://app.simy.one/">Log in</a>
+        <a class="mobile-auth-signup" data-new-account-signup href="https://app.simy.one/signup?lang=en&amp;locale=en&amp;region=us">Sign up</a>
       </div>
 
       <nav class="mobile-menu site-frame" id="mobile-menu" aria-label="Mobile navigation" data-mobile-menu hidden>
@@ -117,8 +122,6 @@
         <a href="#connected-apps">Apps</a>
         <a href="#why-simy">Why SIMY</a>
         <a href="#pricing">Pricing</a>
-        <a data-existing-account-login href="https://app.simy.one/">Log in</a>
-        <a class="button button-dark" href="mailto:sales@simy.one?subject=Map%20my%20first%20SIMY%20workflow">Map my workflow</a>
       </nav>
     </header>
 

@@ -454,6 +454,10 @@ html[lang="zh-Hans"] .section-heading {
   white-space: nowrap;
 }
 
+.mobile-auth-actions {
+  display: none;
+}
+
 .button {
   display: inline-flex;
   align-items: center;
@@ -4150,7 +4154,7 @@ html[lang="ja"] .section-intro h2 {
   }
 
   .nav-frame {
-    grid-template-columns: minmax(0, 1fr) auto auto;
+    grid-template-columns: minmax(0, 1fr) auto auto auto;
   }
 
   .desktop-nav {
@@ -4158,12 +4162,40 @@ html[lang="ja"] .section-intro h2 {
   }
 
   .nav-actions {
-    display: none;
+    display: flex;
+    align-self: stretch;
+    gap: 0;
+    padding-right: 0;
   }
 
   .language-panel {
-    right: -4.25rem;
+    right: 0;
     width: min(21rem, calc(100vw - 1rem));
+  }
+
+  .nav-actions .nav-login,
+  .nav-actions .nav-signup {
+    align-self: stretch;
+    justify-content: center;
+    border-radius: 0;
+    font-size: 0.72rem;
+  }
+
+  .nav-actions .nav-login {
+    padding-inline: 0.8rem;
+    border-left: 1px solid var(--line-soft);
+  }
+
+  .nav-actions .nav-signup {
+    min-height: auto;
+    padding-inline: 0.9rem;
+    border-top: 0;
+    border-bottom: 0;
+  }
+
+  .nav-actions .button:hover {
+    transform: none;
+    box-shadow: none;
   }
 
   .menu-button {
@@ -4271,7 +4303,7 @@ html[lang="ja"] .section-intro h2 {
   }
 
   .nav-frame {
-    grid-template-columns: minmax(0, 1fr) auto auto;
+    grid-template-columns: minmax(0, 1fr) auto auto auto;
   }
 
   .hero {
@@ -4462,7 +4494,7 @@ html[lang="ja"] .section-intro h2 {
   }
 
   html {
-    scroll-padding-top: 4.25rem;
+    scroll-padding-top: 7.5rem;
   }
 
   .site-header {
@@ -4470,10 +4502,13 @@ html[lang="ja"] .section-intro h2 {
   }
 
   .nav-frame {
+    grid-template-columns: minmax(0, 1fr) auto 4.25rem;
     min-height: 4.25rem;
   }
 
   .nav-frame > .brand {
+    grid-column: 1;
+    grid-row: 1;
     padding-left: 1rem;
   }
 
@@ -4486,6 +4521,54 @@ html[lang="ja"] .section-intro h2 {
     min-width: 4.25rem;
     justify-content: center;
     padding-inline: 0.65rem;
+  }
+
+  .language-picker {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .language-panel {
+    right: -4.25rem;
+  }
+
+  .nav-actions {
+    display: none;
+  }
+
+  .mobile-auth-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    min-height: 3.25rem;
+    border-top: 1px solid var(--line);
+    border-right: 1px solid var(--line);
+    border-left: 1px solid var(--line);
+  }
+
+  .mobile-auth-actions > a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 3.25rem;
+    padding: 0 0.75rem;
+    color: var(--ink);
+    font-size: 0.8rem;
+    font-weight: 850;
+    text-decoration: none;
+  }
+
+  .mobile-auth-login {
+    border-right: 1px solid var(--line);
+  }
+
+  .mobile-auth-signup {
+    background: var(--ink);
+    color: #fff !important;
+  }
+
+  .menu-button {
+    grid-column: 3;
+    grid-row: 1;
   }
 
   .language-current {
@@ -4527,7 +4610,7 @@ html[lang="ja"] .section-intro h2 {
   }
 
   .mobile-menu {
-    top: 4.25rem;
+    top: 7.5rem;
   }
 
   .hero-copy {

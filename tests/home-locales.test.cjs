@@ -98,11 +98,39 @@ test("locale bundle loads before the homepage translation runtime", () => {
 test("existing-account login links open the SIMY app home", () => {
   const loginLinks = [...homeHtml.matchAll(/<a\b[^>]*data-existing-account-login[^>]*>/g)];
 
-  assert.equal(loginLinks.length, 4, "desktop, mobile, final CTA, and footer must expose login");
+  assert.equal(loginLinks.length, 4, "desktop header, mobile header, final CTA, and footer must expose login");
   for (const [link] of loginLinks) {
     assert.match(link, /href="https:\/\/app\.simy\.one\/"/);
   }
   assert.doesNotMatch(homeHtml, /https:\/\/app\.simy\.one\/login(?:[?"'])/);
+});
+
+test("header exposes direct login and signup actions outside the mobile menu", () => {
+  assert.match(
+    homeHtml,
+    /<div class="nav-actions">[\s\S]*?data-existing-account-login[\s\S]*?data-new-account-signup[\s\S]*?<\/div>/,
+    "login and signup must remain visible in the page header"
+  );
+  assert.match(
+    homeHtml,
+    /<div class="site-frame mobile-auth-actions"[^>]*>[\s\S]*?data-existing-account-login[\s\S]*?data-new-account-signup[\s\S]*?<\/div>/,
+    "mobile login and signup must follow the menu button in logical focus order"
+  );
+  const signupLinks = [...homeHtml.matchAll(/<a\b[^>]*data-new-account-signup[^>]*>/g)];
+  assert.equal(signupLinks.length, 2, "desktop and mobile headers must expose signup");
+  for (const [link] of signupLinks) {
+    assert.match(link, /href="https:\/\/app\.simy\.one\/signup\?lang=en&amp;locale=en&amp;region=us"/);
+  }
+  assert.doesNotMatch(
+    homeHtml,
+    /<nav class="mobile-menu"[\s\S]*?(?:data-existing-account-login|data-new-account-signup)[\s\S]*?<\/nav>/,
+    "auth actions must not be duplicated behind the hamburger menu"
+  );
+  assert.match(
+    homeCss,
+    /@media \(max-width: 620px\)[\s\S]*?\.mobile-auth-actions\s*\{[^}]*display:\s*grid;[^}]*grid-template-columns:\s*repeat\(2,\s*minmax\(0,\s*1fr\)\);/s,
+    "narrow screens must show login and signup in a full-width header row"
+  );
 });
 
 test("connected apps feature the three AI coding tools without disturbing the work-apps grid", () => {
