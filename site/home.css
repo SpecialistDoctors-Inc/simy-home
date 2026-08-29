@@ -3498,6 +3498,24 @@ html[lang="ja"] .section-intro h2 {
   text-transform: uppercase;
 }
 
+.pricing-trial {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  padding: 0.38rem 0.6rem;
+  border: 1px solid rgba(18, 76, 190, 0.24);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--blue-deep);
+  font-family: var(--mono);
+  font-size: 0.53rem;
+  font-weight: 850;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
 .pricing-table tbody th {
   background: #fff;
   font-size: clamp(0.82rem, 1.1vw, 0.96rem);
@@ -4808,6 +4826,27 @@ html[lang="zh-Hans"] .storage-dialog-header h2 {
     min-width: 0;
   }
 
+  .pricing-table thead th {
+    height: 15rem;
+  }
+
+  .pricing-popular {
+    right: 50%;
+    transform: translateX(50%);
+  }
+
+  .pricing-quality .pricing-trial {
+    top: 2.75rem;
+    right: 50%;
+    left: auto;
+    transform: translateX(50%);
+  }
+
+  .pricing-quality .pricing-plan-name {
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+
   .control-grid article {
     min-height: 15rem;
   }
@@ -5367,6 +5406,20 @@ html[lang="zh-Hans"] .storage-dialog-header h2 {
     right: 50%;
     padding: 0.3rem 0.45rem;
     font-size: 0.53rem;
+    transform: translateX(50%);
+  }
+
+  .pricing-trial {
+    top: 0.55rem;
+    left: 0.55rem;
+    padding: 0.3rem 0.42rem;
+    font-size: 0.49rem;
+  }
+
+  .pricing-quality .pricing-trial {
+    top: 2.15rem;
+    right: 50%;
+    left: auto;
     transform: translateX(50%);
   }
 

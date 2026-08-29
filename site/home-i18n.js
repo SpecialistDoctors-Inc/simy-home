@@ -312,6 +312,7 @@
     "Monthly · USD": "月額・米ドル",
     "per month · before tax": "月額・税別",
     "Recommended": "おすすめ",
+    "1 month free": "1か月無料",
     "Autorun allowance": "自動実行",
     "Unlimited": "無制限",
     "Storage": "ストレージ",

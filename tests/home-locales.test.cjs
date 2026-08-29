@@ -105,6 +105,32 @@ test("existing-account login links open the SIMY app home", () => {
   assert.doesNotMatch(homeHtml, /https:\/\/app\.simy\.one\/login(?:[?"'])/);
 });
 
+test("pricing gives Starter unlimited Autorun and one free month to Starter and SIMY Quality", () => {
+  const pricingSection = homeHtml.match(/<section class="pricing[\s\S]*?<\/section>/)?.[0];
+  assert.ok(pricingSection, "pricing section must remain present");
+
+  const planHeaders = Object.fromEntries(
+    [...pricingSection.matchAll(/<th[^>]*data-pricing-plan="(starter|quality|pro)"[^>]*>([\s\S]*?)<\/th>/g)]
+      .map(([, plan, content]) => [plan, content])
+  );
+  assert.deepEqual(Object.keys(planHeaders), ["starter", "quality", "pro"]);
+  assert.match(planHeaders.starter, /pricing-trial">1 month free</);
+  assert.match(planHeaders.quality, /pricing-trial">1 month free</);
+  assert.doesNotMatch(planHeaders.pro, /pricing-trial/);
+  assert.equal(pricingSection.match(/pricing-trial">1 month free</g)?.length, 2);
+
+  const autorunRow = pricingSection.match(/<th scope="row">Autorun allowance<\/th>([\s\S]*?)<\/tr>/)?.[1];
+  assert.ok(autorunRow, "Autorun allowance row must remain present");
+  assert.equal(autorunRow.match(/pricing-value">Unlimited</g)?.length, 3);
+  assert.doesNotMatch(homeHtml, /100 runs/);
+
+  const locales = { ja: extractJapaneseCopy(), ...loadAdditionalLocales() };
+  for (const [locale, copy] of Object.entries(locales)) {
+    assert.ok(copy["1 month free"]?.trim(), `${locale} must localize the one-month offer`);
+    assert.notEqual(copy["1 month free"], "1 month free", `${locale} must not reuse the English offer`);
+  }
+});
+
 test("header exposes direct login and signup actions outside the mobile menu", () => {
   assert.match(
     homeHtml,
