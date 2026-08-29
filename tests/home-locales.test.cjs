@@ -105,6 +105,19 @@ test("existing-account login links open the SIMY app home", () => {
   assert.doesNotMatch(homeHtml, /https:\/\/app\.simy\.one\/login(?:[?"'])/);
 });
 
+test("company overview links directly to AwakApp company information", () => {
+  assert.match(
+    homeHtml,
+    /<a data-company-overview href="https:\/\/www\.awak\.app\/#company">Company overview<\/a>/,
+    "the SIMY footer must take visitors directly to the parent-company overview"
+  );
+
+  const locales = { ja: extractJapaneseCopy(), ...loadAdditionalLocales() };
+  for (const [locale, copy] of Object.entries(locales)) {
+    assert.ok(copy["Company overview"]?.trim(), `${locale} must localize the company overview link`);
+  }
+});
+
 test("pricing gives Starter unlimited Autorun, free trials, and a truthful Enterprise inquiry", () => {
   const pricingSection = homeHtml.match(/<section class="pricing[\s\S]*?<\/section>/)?.[0];
   assert.ok(pricingSection, "pricing section must remain present");

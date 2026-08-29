@@ -352,6 +352,7 @@
     "Logical database isolation by organization": "各社ごとにデータベースを論理分離",
     "Enterprise rollout": "Enterprise導入支援",
     "Security and rollout support": "セキュリティ・導入支援",
+    "Company overview": "会社概要",
     "The ≤3% error rate is a target when SIMY’s defined testing and verification criteria are met. It is not a guaranteed result.": "≤3%のエラー率は、SIMYが定めるテスト・検証基準を満たした場合の目標値であり、結果を保証するものではありません。",
     "Prices are shown in USD. Headline plan prices exclude tax. Japanese pages also show the price including 10% consumption tax. In other countries and regions, taxes may apply based on the billing address.": "価格は米ドル表記です。大きく表示したプラン価格は税別で、その下に消費税10%を含む税込価格を併記しています。その他の国・地域では、請求先住所に応じた税が加算される場合があります。",
     "The purchase page shows the plans currently available for checkout and the final price before payment. Stripe securely processes payment.": "購入画面で、現在申し込めるプランと最終価格を決済前に確認できます。決済はStripeで安全に処理されます。",
