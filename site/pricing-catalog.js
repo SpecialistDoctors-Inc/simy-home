@@ -65,22 +65,25 @@
     var taxInclusive = normalizedRegion === 'jp' || japanese;
     var amounts = {};
     var baseAmounts = {};
+    var taxInclusiveAmounts = {};
     var annualTotals = {};
 
     Object.keys(PLAN_PRICE_CENTS[cycle]).forEach(function (plan) {
       var base = priceCents(plan, cycle);
-      var display = taxInclusive ? grossCents(base, JAPAN_CONSUMPTION_TAX_BPS) : base;
-      amounts[plan] = usd(display);
+      var taxInclusiveAmount = taxInclusive ? grossCents(base, JAPAN_CONSUMPTION_TAX_BPS) : base;
+      amounts[plan] = usd(base);
       baseAmounts[plan] = usd(base);
-      annualTotals[plan] = cycle === 'annual' ? usd(display * 12) : null;
+      taxInclusiveAmounts[plan] = usd(taxInclusiveAmount);
+      annualTotals[plan] = cycle === 'annual' ? usd(taxInclusiveAmount * 12) : null;
     });
 
     return {
       region: taxInclusive ? 'jp' : (normalizedRegion === 'us' ? 'us' : 'other'),
       billingCycle: cycle,
-      displayMode: taxInclusive ? 'tax-inclusive' : 'tax-exclusive',
+      displayMode: taxInclusive ? 'tax-exclusive-primary' : 'tax-exclusive',
       amounts: amounts,
       baseAmounts: baseAmounts,
+      taxInclusiveAmounts: taxInclusiveAmounts,
       annualTotals: annualTotals,
       savingsPercent: {
         starter: savingsPercent('starter'),
@@ -94,8 +97,8 @@
       }, {}),
       taxNote: taxInclusive
         ? (japanese
-          ? '日本語表示の価格は消費税10%を含みます。'
-          : 'Prices for Japan include 10% consumption tax.')
+          ? '大きく表示したプラン価格は税別で、消費税10%を含む税込価格を別に併記します。'
+          : 'Headline plan prices exclude tax; totals including 10% Japan consumption tax are shown separately.')
         : 'Applicable taxes are calculated from the billing address at checkout.'
     };
   }

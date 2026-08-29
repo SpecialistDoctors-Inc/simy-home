@@ -608,8 +608,7 @@ html[lang="ja"] .hero h1 {
   line-height: 0.95;
 }
 
-html[lang="ja"] .hero h1 span,
-html[lang="ja"] .pricing-intro h2 {
+html[lang="ja"] .hero h1 span {
   white-space: pre-line;
 }
 
@@ -3232,6 +3231,18 @@ html[lang="ja"] .section-intro h2 {
   max-width: 18ch;
 }
 
+html[lang="ja"] .pricing-intro h2 {
+  max-width: 11em;
+  line-height: 1.06;
+  white-space: normal;
+  text-wrap: balance;
+}
+
+html[lang="ja"] .pricing-intro > div > p {
+  max-width: 42ch;
+  line-height: 1.75;
+}
+
 .pricing-billing-bar {
   display: flex;
   flex-wrap: wrap;
@@ -3295,12 +3306,12 @@ html[lang="ja"] .section-intro h2 {
 }
 
 .pricing-saving {
-  padding: 0.28rem 0.42rem;
+  padding: 0.32rem 0.5rem;
   border-radius: 999px;
   background: var(--mint);
   color: #07533e;
   font-family: var(--mono);
-  font-size: 0.58rem;
+  font-size: 0.75rem;
   font-weight: 900;
   letter-spacing: 0.02em;
   white-space: nowrap;
@@ -3311,7 +3322,7 @@ html[lang="ja"] .section-intro h2 {
   max-width: 44rem;
   margin-right: 0.65rem;
   color: var(--ink-soft);
-  font-size: 0.77rem;
+  font-size: 0.9rem;
   font-weight: 650;
   line-height: 1.45;
   text-wrap: pretty;
@@ -3340,13 +3351,13 @@ html[lang="ja"] .section-intro h2 {
 
 .pricing-table {
   width: 100%;
-  min-width: 58rem;
+  min-width: 70rem;
   border-spacing: 0;
   table-layout: fixed;
 }
 
 .pricing-feature-column {
-  width: 34%;
+  width: 30%;
 }
 
 .pricing-table th,
@@ -3367,8 +3378,7 @@ html[lang="ja"] .section-intro h2 {
 }
 
 .pricing-table thead th {
-  position: relative;
-  height: 18rem;
+  height: 21rem;
   background: #f5f6f7;
   text-align: left;
   vertical-align: bottom;
@@ -3377,7 +3387,7 @@ html[lang="ja"] .section-intro h2 {
 .pricing-table thead th:first-child {
   color: var(--ink-soft);
   font-family: var(--mono);
-  font-size: 0.63rem;
+  font-size: 0.75rem;
   font-weight: 800;
   letter-spacing: 0.07em;
   text-transform: uppercase;
@@ -3385,6 +3395,7 @@ html[lang="ja"] .section-intro h2 {
 
 .pricing-table thead th:not(:first-child) {
   text-align: center;
+  vertical-align: top;
 }
 
 .pricing-table thead .pricing-quality,
@@ -3409,6 +3420,30 @@ html[lang="ja"] .section-intro h2 {
     inset 0 -2px 0 var(--blue);
 }
 
+.pricing-table thead .pricing-enterprise,
+.pricing-table tbody td:last-child {
+  background: #f3f4f5;
+  box-shadow:
+    inset 2px 0 0 var(--ink),
+    inset -2px 0 0 var(--ink);
+}
+
+.pricing-table thead .pricing-enterprise {
+  background: var(--ink);
+  color: #fff;
+  box-shadow:
+    inset 2px 0 0 var(--ink),
+    inset -2px 0 0 var(--ink),
+    inset 0 2px 0 var(--ink);
+}
+
+.pricing-table tbody tr:last-child td:last-child {
+  box-shadow:
+    inset 2px 0 0 var(--ink),
+    inset -2px 0 0 var(--ink),
+    inset 0 -2px 0 var(--ink);
+}
+
 .pricing-plan-name {
   display: block;
   min-height: 2.5rem;
@@ -3420,6 +3455,10 @@ html[lang="ja"] .section-intro h2 {
 .pricing-quality .pricing-plan-name {
   color: var(--blue-deep);
   font-size: clamp(1.08rem, 1.75vw, 1.42rem);
+}
+
+.pricing-enterprise .pricing-plan-name {
+  color: #fff;
 }
 
 .pricing-table thead .pricing-price {
@@ -3441,7 +3480,7 @@ html[lang="ja"] .section-intro h2 {
   margin-top: 0.85rem;
   color: var(--ink-soft);
   font-family: var(--mono);
-  font-size: 0.56rem;
+  font-size: 0.78rem;
   font-weight: 750;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -3449,11 +3488,11 @@ html[lang="ja"] .section-intro h2 {
 
 .pricing-tax-mode,
 .pricing-total,
-.pricing-base-price {
+.pricing-tax-included-price {
   display: block;
   color: var(--ink-soft);
   font-family: var(--mono);
-  font-size: 0.52rem;
+  font-size: 0.72rem;
   font-weight: 720;
   line-height: 1.45;
 }
@@ -3468,52 +3507,108 @@ html[lang="ja"] .section-intro h2 {
 }
 
 .pricing-total strong,
-.pricing-base-price strong {
+.pricing-tax-included-price strong {
   color: var(--ink);
   font-size: inherit;
   letter-spacing: 0;
 }
 
-.pricing-base-price {
+.pricing-tax-included-price {
   margin-top: 0.2rem;
 }
 
 .pricing-total[hidden],
-.pricing-base-price[hidden] {
+.pricing-tax-included-price[hidden] {
   display: none;
 }
 
+.pricing-badge-stack {
+  display: flex;
+  min-height: 4.75rem;
+  align-items: center;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
 .pricing-popular {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  padding: 0.38rem 0.6rem;
+  display: inline-flex;
+  padding: 0.44rem 0.68rem;
   border-radius: 999px;
   background: var(--blue);
   color: #fff;
   font-family: var(--mono);
-  font-size: 0.53rem;
+  font-size: 0.78rem;
   font-weight: 850;
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
 
 .pricing-trial {
-  position: absolute;
-  top: 1rem;
-  left: 1rem;
-  padding: 0.38rem 0.6rem;
+  display: inline-flex;
+  padding: 0.44rem 0.68rem;
   border: 1px solid rgba(18, 76, 190, 0.24);
   border-radius: 999px;
   background: #fff;
   color: var(--blue-deep);
   font-family: var(--mono);
-  font-size: 0.53rem;
+  font-size: 0.78rem;
   font-weight: 850;
   letter-spacing: 0.04em;
   line-height: 1;
   text-transform: uppercase;
   white-space: nowrap;
+}
+
+.pricing-enterprise-price {
+  display: block;
+  margin-top: 1.15rem;
+  color: #fff;
+  font-size: clamp(1.25rem, 2vw, 1.75rem);
+  font-weight: 850;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  text-wrap: balance;
+}
+
+.pricing-enterprise-copy {
+  display: block;
+  max-width: 24ch;
+  margin: 0.85rem auto 0;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.76rem;
+  font-weight: 620;
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+.pricing-enterprise-link {
+  display: inline-flex;
+  min-height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  margin-top: 0.85rem;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid rgba(255, 255, 255, 0.38);
+  border-radius: 999px;
+  color: #fff;
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  font-weight: 820;
+  text-decoration: none;
+  transition: border-color 180ms ease, background-color 180ms ease, color 180ms ease;
+}
+
+.pricing-enterprise-link:hover,
+.pricing-enterprise-link:focus-visible {
+  border-color: var(--mint);
+  background: var(--mint);
+  color: #07533e;
+}
+
+.pricing-enterprise-link:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
 }
 
 .pricing-table tbody th {
@@ -3542,7 +3637,7 @@ html[lang="ja"] .section-intro h2 {
   background: transparent;
   color: var(--blue-deep);
   font-family: var(--mono);
-  font-size: 0.58rem;
+  font-size: 0.72rem;
   font-weight: 820;
   line-height: 1.25;
   text-align: left;
@@ -3591,7 +3686,7 @@ html[lang="ja"] .section-intro h2 {
   border: 1px solid transparent;
   border-radius: 999px;
   font-family: var(--mono);
-  font-size: 0.62rem;
+  font-size: 0.74rem;
   font-weight: 820;
   line-height: 1;
   white-space: nowrap;
@@ -3604,7 +3699,7 @@ html[lang="ja"] .section-intro h2 {
   flex: 0 0 1.18rem;
   place-items: center;
   border-radius: 50%;
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 900;
   line-height: 1;
 }
@@ -3632,12 +3727,52 @@ html[lang="ja"] .section-intro h2 {
   line-height: 1.2;
 }
 
+.pricing-value-custom {
+  max-width: 14ch;
+  margin-inline: auto;
+  color: var(--ink);
+  font-size: clamp(0.78rem, 1.1vw, 0.95rem);
+  line-height: 1.35;
+  text-wrap: balance;
+}
+
+html[lang="ja"] .pricing-plan-name {
+  letter-spacing: -0.02em;
+}
+
+html[lang="ja"] .pricing-period,
+html[lang="ja"] .pricing-tax-mode,
+html[lang="ja"] .pricing-total,
+html[lang="ja"] .pricing-tax-included-price,
+html[lang="ja"] .pricing-table tbody td > small {
+  letter-spacing: 0.01em;
+  line-height: 1.55;
+  text-transform: none;
+}
+
+html[lang="ja"] .pricing-table tbody th {
+  line-height: 1.5;
+}
+
+html[lang="ja"] .pricing-status {
+  min-width: 6.5rem;
+  font-family: var(--body);
+  font-size: 0.75rem;
+  letter-spacing: 0.01em;
+}
+
+html[lang="ja"] .pricing-enterprise-copy {
+  max-width: 18ch;
+  font-size: 0.78rem;
+  line-height: 1.65;
+}
+
 .pricing-table tbody td > small {
   display: block;
   margin-top: 0.3rem;
   color: var(--ink-soft);
   font-family: var(--mono);
-  font-size: 0.54rem;
+  font-size: 0.64rem;
   font-weight: 700;
   text-transform: uppercase;
 }
@@ -3654,7 +3789,7 @@ html[lang="ja"] .section-intro h2 {
   max-width: 68ch;
   color: var(--ink-soft);
   font-family: var(--mono);
-  font-size: 0.64rem;
+  font-size: 0.72rem;
   line-height: 1.55;
 }
 
@@ -3662,7 +3797,7 @@ html[lang="ja"] .section-intro h2 {
   max-width: 82ch;
   color: var(--ink-soft);
   font-family: var(--body);
-  font-size: 0.7rem;
+  font-size: 0.78rem;
   font-weight: 620;
 }
 
@@ -3675,7 +3810,7 @@ html[lang="ja"] .section-intro h2 {
   max-width: 78ch;
   color: var(--ink);
   font-family: var(--body);
-  font-size: 0.74rem;
+  font-size: 0.8rem;
   font-weight: 680;
 }
 
@@ -4823,28 +4958,20 @@ html[lang="zh-Hans"] .storage-dialog-header h2 {
   }
 
   .pricing-table {
-    min-width: 0;
+    min-width: 70rem;
   }
 
   .pricing-table thead th {
-    height: 15rem;
-  }
-
-  .pricing-popular {
-    right: 50%;
-    transform: translateX(50%);
-  }
-
-  .pricing-quality .pricing-trial {
-    top: 2.75rem;
-    right: 50%;
-    left: auto;
-    transform: translateX(50%);
+    height: 22rem;
   }
 
   .pricing-quality .pricing-plan-name {
     font-size: 0.85rem;
     white-space: nowrap;
+  }
+
+  .pricing-enterprise-copy {
+    font-size: 0.72rem;
   }
 
   .control-grid article {
@@ -5311,7 +5438,7 @@ html[lang="zh-Hans"] .storage-dialog-header h2 {
   }
 
   .pricing-table {
-    width: 208%;
+    width: 262%;
     min-width: 0;
   }
 
@@ -5342,7 +5469,7 @@ html[lang="zh-Hans"] .storage-dialog-header h2 {
     flex-basis: auto;
     margin: 0;
     padding: 0.35rem 0.45rem 0.25rem;
-    font-size: 0.69rem;
+    font-size: 0.82rem;
   }
 
   .pricing-scroll-hint {
@@ -5356,7 +5483,7 @@ html[lang="zh-Hans"] .storage-dialog-header h2 {
   }
 
   .pricing-feature-column {
-    width: 22.115%;
+    width: 17.56%;
   }
 
   .pricing-table th,
@@ -5365,7 +5492,7 @@ html[lang="zh-Hans"] .storage-dialog-header h2 {
   }
 
   .pricing-table thead th {
-    height: 15.5rem;
+    height: 20.5rem;
   }
 
   .pricing-table thead th:first-child {
@@ -5373,7 +5500,7 @@ html[lang="zh-Hans"] .storage-dialog-header h2 {
     left: 0;
     z-index: 4;
     padding-inline: 0.75rem;
-    font-size: 0.62rem;
+    font-size: 0.72rem;
   }
 
   .pricing-table thead th:not(:first-child) {
@@ -5392,35 +5519,47 @@ html[lang="zh-Hans"] .storage-dialog-header h2 {
   }
 
   .pricing-period {
-    font-size: 0.58rem;
+    font-size: 0.75rem;
   }
 
   .pricing-tax-mode,
   .pricing-total,
-  .pricing-base-price {
-    font-size: 0.48rem;
+  .pricing-tax-included-price {
+    font-size: 0.72rem;
   }
 
   .pricing-popular {
-    top: 0.55rem;
-    right: 50%;
-    padding: 0.3rem 0.45rem;
-    font-size: 0.53rem;
-    transform: translateX(50%);
+    padding: 0.36rem 0.52rem;
+    font-size: 0.75rem;
   }
 
   .pricing-trial {
-    top: 0.55rem;
-    left: 0.55rem;
-    padding: 0.3rem 0.42rem;
-    font-size: 0.49rem;
+    padding: 0.36rem 0.52rem;
+    font-size: 0.75rem;
   }
 
-  .pricing-quality .pricing-trial {
-    top: 2.15rem;
-    right: 50%;
-    left: auto;
-    transform: translateX(50%);
+  .pricing-enterprise-price {
+    margin-top: 0.85rem;
+    font-size: 1.05rem;
+  }
+
+  .pricing-enterprise-copy {
+    max-width: 20ch;
+    margin-top: 0.65rem;
+    font-size: 0.72rem;
+    line-height: 1.45;
+  }
+
+  .pricing-enterprise-link {
+    min-height: 2.3rem;
+    margin-top: 0.65rem;
+    padding: 0.42rem 0.55rem;
+    font-size: 0.75rem;
+  }
+
+  .pricing-badge-stack {
+    min-height: 4.4rem;
+    gap: 0.35rem;
   }
 
   .pricing-table tbody th {
@@ -5434,14 +5573,14 @@ html[lang="zh-Hans"] .storage-dialog-header h2 {
 
   .pricing-info-button {
     max-width: 9.5rem;
-    font-size: 0.54rem;
+    font-size: 0.72rem;
   }
 
   .pricing-status {
     min-width: 0;
     gap: 0.32rem;
     padding: 0.38rem 0.46rem;
-    font-size: 0.56rem;
+    font-size: 0.7rem;
   }
 
   .pricing-status-icon {
@@ -5460,7 +5599,7 @@ html[lang="zh-Hans"] .storage-dialog-header h2 {
   }
 
   .pricing-table tbody td > small {
-    font-size: 0.5rem;
+    font-size: 0.68rem;
   }
 
   .pricing-foot {
@@ -5554,8 +5693,8 @@ html[lang="zh-Hans"] .storage-dialog-header h2 {
   }
 
   .pricing-saving {
-    padding: 0.22rem 0.32rem;
-    font-size: 0.52rem;
+    padding: 0.28rem 0.4rem;
+    font-size: 0.7rem;
   }
 
   .apps-grid {

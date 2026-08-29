@@ -295,24 +295,23 @@ function renderPricing() {
   document.querySelectorAll("[data-tax-mode='inclusive']").forEach((element) => {
     element.hidden = !isJapanese;
   });
-  document.querySelectorAll("[data-base-price-detail]").forEach((element) => {
+  document.querySelectorAll("[data-tax-included-price-detail]").forEach((element) => {
     element.hidden = !isJapanese;
   });
 
   pricingPlans.forEach((plan) => {
     const basePriceCents = pricingCatalog.priceCents(plan.dataset.pricingPlan, activeBillingCycle);
-    const displayPriceCents = isJapanese
+    const taxInclusivePriceCents = isJapanese
       ? pricingCatalog.grossCents(basePriceCents, pricingCatalog.JAPAN_CONSUMPTION_TAX_BPS)
       : basePriceCents;
-    const displayPrice = displayPriceCents / 100;
     const basePrice = basePriceCents / 100;
     const priceAmount = plan.querySelector("[data-price-amount]");
     const annualTotal = plan.querySelector("[data-price-total]");
-    const basePriceDetail = plan.querySelector("[data-base-price]");
+    const taxIncludedPriceDetail = plan.querySelector("[data-tax-included-price]");
 
-    if (priceAmount) priceAmount.textContent = formatUsd(displayPrice).slice(1);
-    if (annualTotal) annualTotal.textContent = formatUsd(displayPriceCents * 12 / 100, 2);
-    if (basePriceDetail) basePriceDetail.textContent = formatUsd(basePrice);
+    if (priceAmount) priceAmount.textContent = formatUsd(basePrice).slice(1);
+    if (annualTotal) annualTotal.textContent = formatUsd(taxInclusivePriceCents * 12 / 100, 2);
+    if (taxIncludedPriceDetail) taxIncludedPriceDetail.textContent = formatUsd(taxInclusivePriceCents / 100);
   });
 
   storagePrices.forEach((cell) => {
