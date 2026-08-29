@@ -61,15 +61,31 @@ test("Hindi, Spanish, French, and Simplified Chinese cover all homepage copy", (
   }
 });
 
-test("homepage exposes every supported language in both selectors and hreflang metadata", () => {
+test("homepage exposes every supported language in one responsive, no-JS-safe picker", () => {
   for (const locale of ["en", "ja", "hi", "es", "fr", "zh-Hans"]) {
     assert.equal(
-      homeHtml.match(new RegExp(`data-locale-select[\\s\\S]*?<option value="${locale}" lang="${locale}"`, "g"))?.length,
-      2,
-      `${locale} must appear in the desktop and mobile language selectors`
+      homeHtml.match(new RegExp(`data-locale-option="${locale}"`, "g"))?.length,
+      1,
+      `${locale} must appear once in the responsive language picker`
     );
     assert.match(homeHtml, new RegExp(`hreflang="${locale}"`), `${locale} must have an hreflang link`);
   }
+  assert.match(homeHtml, /<details class="language-picker"[^>]*data-language-picker>/);
+  assert.match(homeHtml, /<summary class="language-trigger"[^>]*aria-label="Language: English"[^>]*data-language-trigger/);
+  assert.doesNotMatch(homeHtml, /<summary class="language-trigger"[^>]*aria-expanded=/);
+  assert.doesNotMatch(homeHtml, /data-language-panel[^>]*hidden/);
+  assert.doesNotMatch(homeHtml, /data-locale-select/);
+  assert.match(i18nSource, /option\.setAttribute\("aria-current", "true"\)/);
+  assert.match(i18nSource, /trigger\.setAttribute\("aria-label", `\$\{translate\("Language"\)\}: \$\{presentation\.label\}`\)/);
+  assert.match(homeCss, /\.language-trigger\s*\{[^}]*min-height:\s*2\.75rem/s);
+  assert.match(
+    homeCss,
+    /@media \(max-width: 620px\)[\s\S]*?\.language-option-grid\s*\{[^}]*grid-template-columns:\s*repeat\(3,\s*minmax\(0,\s*1fr\)\)/s
+  );
+  assert.match(
+    homeCss,
+    /@media \(max-width: 620px\)[\s\S]*?\.language-option\s*\{[^}]*min-height:\s*3\.25rem/s
+  );
 });
 
 test("locale bundle loads before the homepage translation runtime", () => {
@@ -82,7 +98,7 @@ test("locale bundle loads before the homepage translation runtime", () => {
 test("existing-account login links open the SIMY app home", () => {
   const loginLinks = [...homeHtml.matchAll(/<a\b[^>]*data-existing-account-login[^>]*>/g)];
 
-  assert.equal(loginLinks.length, 4, "desktop, mobile, final CTA, and footer must expose login");
+  assert.equal(loginLinks.length, 4, "desktop header, mobile header, final CTA, and footer must expose login");
   for (const [link] of loginLinks) {
     assert.match(link, /href="https:\/\/app\.simy\.one\/"/);
   }
@@ -93,12 +109,14 @@ test("pricing gives Starter unlimited Autorun and one free month to Starter and 
   const pricingSection = homeHtml.match(/<section class="pricing[\s\S]*?<\/section>/)?.[0];
   assert.ok(pricingSection, "pricing section must remain present");
 
-  const planHeaders = [...pricingSection.matchAll(/<th(?: class="pricing-pro")? scope="col">([\s\S]*?)<\/th>/g)]
-    .map(([, content]) => content);
-  assert.equal(planHeaders.length, 4, "pricing table must keep its label column and three plan columns");
-  assert.match(planHeaders[1], /pricing-trial">1 month free</);
-  assert.match(planHeaders[2], /pricing-trial">1 month free</);
-  assert.doesNotMatch(planHeaders[3], /pricing-trial/);
+  const planHeaders = Object.fromEntries(
+    [...pricingSection.matchAll(/<th[^>]*data-pricing-plan="(starter|quality|pro)"[^>]*>([\s\S]*?)<\/th>/g)]
+      .map(([, plan, content]) => [plan, content])
+  );
+  assert.deepEqual(Object.keys(planHeaders), ["starter", "quality", "pro"]);
+  assert.match(planHeaders.starter, /pricing-trial">1 month free</);
+  assert.match(planHeaders.quality, /pricing-trial">1 month free</);
+  assert.doesNotMatch(planHeaders.pro, /pricing-trial/);
   assert.equal(pricingSection.match(/pricing-trial">1 month free</g)?.length, 2);
 
   const autorunRow = pricingSection.match(/<th scope="row">Autorun allowance<\/th>([\s\S]*?)<\/tr>/)?.[1];
@@ -111,6 +129,34 @@ test("pricing gives Starter unlimited Autorun and one free month to Starter and 
     assert.ok(copy["1 month free"]?.trim(), `${locale} must localize the one-month offer`);
     assert.notEqual(copy["1 month free"], "1 month free", `${locale} must not reuse the English offer`);
   }
+});
+
+test("header exposes direct login and signup actions outside the mobile menu", () => {
+  assert.match(
+    homeHtml,
+    /<div class="nav-actions">[\s\S]*?data-existing-account-login[\s\S]*?data-new-account-signup[\s\S]*?<\/div>/,
+    "login and signup must remain visible in the page header"
+  );
+  assert.match(
+    homeHtml,
+    /<div class="site-frame mobile-auth-actions"[^>]*>[\s\S]*?data-existing-account-login[\s\S]*?data-new-account-signup[\s\S]*?<\/div>/,
+    "mobile login and signup must follow the menu button in logical focus order"
+  );
+  const signupLinks = [...homeHtml.matchAll(/<a\b[^>]*data-new-account-signup[^>]*>/g)];
+  assert.equal(signupLinks.length, 2, "desktop and mobile headers must expose signup");
+  for (const [link] of signupLinks) {
+    assert.match(link, /href="https:\/\/app\.simy\.one\/signup\?lang=en&amp;locale=en&amp;region=us"/);
+  }
+  assert.doesNotMatch(
+    homeHtml,
+    /<nav class="mobile-menu"[\s\S]*?(?:data-existing-account-login|data-new-account-signup)[\s\S]*?<\/nav>/,
+    "auth actions must not be duplicated behind the hamburger menu"
+  );
+  assert.match(
+    homeCss,
+    /@media \(max-width: 620px\)[\s\S]*?\.mobile-auth-actions\s*\{[^}]*display:\s*grid;[^}]*grid-template-columns:\s*repeat\(2,\s*minmax\(0,\s*1fr\)\);/s,
+    "narrow screens must show login and signup in a full-width header row"
+  );
 });
 
 test("connected apps feature the three AI coding tools without disturbing the work-apps grid", () => {

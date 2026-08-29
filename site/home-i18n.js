@@ -1,6 +1,14 @@
 (() => {
   const STORAGE_KEY = "simy-home-locale";
   const SUPPORTED_LOCALES = new Set(["en", "ja", "hi", "es", "fr", "zh-Hans"]);
+  const LOCALE_PRESENTATION = Object.freeze({
+    en: { label: "English", code: "EN" },
+    ja: { label: "日本語", code: "JA" },
+    hi: { label: "हिन्दी", code: "HI" },
+    es: { label: "Español", code: "ES" },
+    fr: { label: "Français", code: "FR" },
+    "zh-Hans": { label: "简体中文", code: "ZH" }
+  });
 
   const JA_COPY = Object.freeze({
     "Skip to content": "本文へ移動",
@@ -12,6 +20,8 @@
     "Why SIMY": "SIMYの違い",
     "Pricing": "料金",
     "Log in": "ログイン",
+    "Sign up": "新規登録",
+    "Account": "アカウント",
     "Log in to SIMY": "SIMYにログイン",
     "Map my workflow": "最初のワークフローを相談",
     "Map my first workflow": "最初のワークフローを相談",
@@ -277,9 +287,28 @@
 
     "Recommended · SIMY Quality": "おすすめ · SIMY Quality",
     "Swipe to compare plans →": "横にスワイプしてプランを比較 →",
-    "Make every Autorun earn your confidence.": "すべてのAutorunに、任せられる品質を。",
-    "SIMY Quality checks the work before it reaches you—without slowing down what comes next.": "SIMY Qualityが、仕事があなたに届く前に検証します。次の流れは止めません。",
-    "Starter, SIMY Quality, and Team monthly pricing and features": "Starter、SIMY Quality、Teamの月額料金と機能比較",
+    "Make every Autorun earn your confidence.": "Autorunを、\n任せられる品質へ。",
+    "SIMY Quality checks the work before it reaches you—without slowing down what comes next.": "SIMY Qualityが、あなたに届く前に仕事を検証。次の流れは止めません。",
+    "Billing cycle": "請求周期",
+    "Annual": "年払い",
+    "Show annual billing prices": "年払いの料金を表示",
+    "Save 17%": "17%お得",
+    "Monthly": "月払い",
+    "Show monthly billing prices": "月払いの料金を表示",
+    "Annual plans are billed once a year. Prices below are the effective monthly cost.": "年払いは年1回の請求です。以下は1か月あたりの換算額です。",
+    "Monthly plans are billed every month.": "月払いは毎月請求されます。",
+    "SIMY plan comparison": "SIMY料金プラン比較",
+    "Starter, SIMY Quality, and Pro pricing and features": "Starter、SIMY Quality、Proの料金と機能比較",
+    "Pricing · USD": "料金・米ドル",
+    "per month · billed annually": "1か月あたり・年払い",
+    "per month · billed monthly": "1か月あたり・月払い",
+    "before applicable taxes": "税別",
+    "tax included": "税込",
+    "Annual total": "年額",
+    "Before tax": "税抜",
+    "month": "月",
+    "per month": "月額",
+    "Starter, SIMY Quality, and Pro monthly pricing and features": "Starter、SIMY Quality、Proの月額料金と機能比較",
     "Monthly · USD": "月額・米ドル",
     "per month · before tax": "月額・税別",
     "Recommended": "おすすめ",
@@ -287,9 +316,16 @@
     "Autorun allowance": "自動実行",
     "Unlimited": "無制限",
     "Storage": "ストレージ",
-    "Users": "ユーザー数",
-    "Up to 1 user": "最大1ユーザー",
-    "Up to 3 users": "最大3ユーザー",
+    "View additional storage pricing": "追加ストレージ料金を見る",
+    "Storage add-ons": "ストレージ追加オプション",
+    "Additional storage pricing": "追加ストレージ料金",
+    "Close additional storage pricing": "追加ストレージ料金を閉じる",
+    "Choose the capacity you need. Prices are billed monthly.": "必要な容量を選べます。料金は月額です。",
+    "Additional storage monthly pricing": "追加ストレージの月額料金",
+    "Monthly price": "月額料金",
+    "Additional storage": "追加容量",
+    "Prices shown in USD.": "価格は米ドル表記です。",
+    "Prices are shown in USD. Japanese prices include 10% consumption tax. Elsewhere, taxes may apply at checkout.": "価格は米ドル表記です。日本語表示の価格は消費税10%込みです。その他の国・地域では、決済時に税が加算される場合があります。",
     "Codex account connection": "Codexアカウント連携",
     "Included": "含まれます",
     "Meeting Autorun": "Meeting Autorun",
@@ -307,7 +343,9 @@
     "$2 / 60 min": "$2 / 60分",
     "usage-based": "従量制",
     "The ≤3% error rate is a target when SIMY’s defined testing and verification criteria are met. It is not a guaranteed result.": "≤3%のエラー率は、SIMYが定めるテスト・検証基準を満たした場合の目標値であり、結果を保証するものではありません。",
+    "Prices are shown in USD. Japanese prices include 10% consumption tax. In other countries and regions, taxes may apply based on the billing address.": "価格は米ドル表記です。日本語表示の価格は消費税10%込みです。その他の国・地域では、請求先住所に応じた税が加算される場合があります。",
     "The purchase page shows the plans currently available for checkout and the final price before payment. Stripe securely processes payment.": "購入画面で、現在申し込めるプランと最終価格を決済前に確認できます。決済はStripeで安全に処理されます。",
+    "The purchase page shows the plans currently available for checkout and the final total before payment. Stripe securely processes payment.": "購入画面で、現在申し込めるプランと最終請求額を決済前に確認できます。決済はStripeで安全に処理されます。",
     "Choose a plan": "プランを選ぶ",
     "Choose a SIMY plan and continue to secure Stripe Checkout": "SIMYのプランを選び、安全なStripe Checkoutへ進む",
 
@@ -553,8 +591,20 @@
       record.element.setAttribute(record.name, translate(record.value));
     }
 
-    for (const select of document.querySelectorAll("[data-locale-select]")) {
-      select.value = currentLocale;
+    const presentation = LOCALE_PRESENTATION[currentLocale];
+    for (const element of document.querySelectorAll("[data-locale-current]")) {
+      element.textContent = presentation.label;
+    }
+    for (const element of document.querySelectorAll("[data-locale-current-code]")) {
+      element.textContent = presentation.code;
+    }
+    for (const trigger of document.querySelectorAll("[data-language-trigger]")) {
+      trigger.setAttribute("aria-label", `${translate("Language")}: ${presentation.label}`);
+    }
+    for (const option of document.querySelectorAll("[data-locale-option]")) {
+      const selected = option.dataset.localeOption === currentLocale;
+      if (selected) option.setAttribute("aria-current", "true");
+      else option.removeAttribute("aria-current");
     }
 
     updateMeta(currentLocale);
@@ -586,9 +636,10 @@
   const localeInUrl = normalizeLocale(new URL(window.location.href).searchParams.get("lang"));
   applyLocale(initialLocale, { updateHistory: !localeInUrl && initialLocale !== "en" });
 
-  for (const select of document.querySelectorAll("[data-locale-select]")) {
-    select.addEventListener("change", () => {
-      applyLocale(select.value, { persist: true, updateHistory: true });
+  for (const option of document.querySelectorAll("[data-locale-option]")) {
+    option.addEventListener("click", (event) => {
+      event.preventDefault();
+      applyLocale(option.dataset.localeOption, { persist: true, updateHistory: true });
     });
   }
 })();

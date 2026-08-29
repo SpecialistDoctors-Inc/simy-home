@@ -96,6 +96,68 @@ scenarioButtons.forEach((button, index) => {
 
 const menuButton = document.querySelector("[data-menu-button]");
 const mobileMenu = document.querySelector("[data-mobile-menu]");
+const languagePicker = document.querySelector("[data-language-picker]");
+
+if (languagePicker) {
+  const languageTrigger = languagePicker.querySelector(".language-trigger");
+  const languagePanel = languagePicker.querySelector("[data-language-panel]");
+  const languageOptions = Array.from(languagePanel.querySelectorAll("[data-locale-option]"));
+  const setLanguagePickerOpen = (open, { focusOption = false } = {}) => {
+    languagePicker.open = open;
+    languageTrigger.setAttribute("aria-expanded", String(open));
+    languagePicker.classList.toggle("is-open", open);
+    if (open && focusOption) {
+      (languageOptions.find((option) => option.hasAttribute("aria-current")) || languageOptions[0])?.focus();
+    }
+  };
+
+  setLanguagePickerOpen(languagePicker.open);
+  languagePicker.addEventListener("toggle", () => {
+    const open = languagePicker.open;
+    languageTrigger.setAttribute("aria-expanded", String(open));
+    languagePicker.classList.toggle("is-open", open);
+  });
+  languageTrigger.addEventListener("keydown", (event) => {
+    if (!['ArrowDown', 'ArrowUp'].includes(event.key)) return;
+    event.preventDefault();
+    setLanguagePickerOpen(true, { focusOption: true });
+  });
+  languageOptions.forEach((option, index) => {
+    option.addEventListener("click", () => setLanguagePickerOpen(false));
+    option.addEventListener("keydown", (event) => {
+      if (!['ArrowDown', 'ArrowUp', 'ArrowLeft', 'ArrowRight', 'Home', 'End', 'Escape'].includes(event.key)) return;
+      event.preventDefault();
+      if (event.key === 'Escape') {
+        setLanguagePickerOpen(false);
+        languageTrigger.focus();
+        return;
+      }
+      const columns = window.matchMedia("(max-width: 620px)").matches ? 3 : 2;
+      let nextIndex = index;
+      if (event.key === 'ArrowDown' && index + columns < languageOptions.length) nextIndex = index + columns;
+      if (event.key === 'ArrowUp' && index - columns >= 0) nextIndex = index - columns;
+      if (event.key === 'ArrowRight' && index % columns < columns - 1 && index + 1 < languageOptions.length) nextIndex = index + 1;
+      if (event.key === 'ArrowLeft' && index % columns > 0) nextIndex = index - 1;
+      if (event.key === 'Home') nextIndex = 0;
+      if (event.key === 'End') nextIndex = languageOptions.length - 1;
+      languageOptions[nextIndex].focus();
+    });
+  });
+  languagePicker.addEventListener("focusout", () => {
+    window.setTimeout(() => {
+      if (!languagePicker.contains(document.activeElement)) setLanguagePickerOpen(false);
+    }, 0);
+  });
+  document.addEventListener("pointerdown", (event) => {
+    if (!languagePicker.contains(event.target)) setLanguagePickerOpen(false);
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape" || !languagePicker.open) return;
+    setLanguagePickerOpen(false);
+    languageTrigger.focus();
+  });
+  window.matchMedia("(max-width: 1439px)").addEventListener("change", () => setLanguagePickerOpen(false));
+}
 
 if (menuButton && mobileMenu) {
   const menuLabel = menuButton.querySelector(".sr-only");
@@ -126,8 +188,14 @@ if (menuButton && mobileMenu) {
   menuCloseItems.forEach((item) => {
     item.addEventListener("click", () => setMenuOpen(false));
   });
-  mobileMenu.querySelectorAll("[data-locale-select]").forEach((select) => {
-    select.addEventListener("change", () => setMenuOpen(false));
+  mobileMenu.addEventListener("click", (event) => {
+    if (event.target === mobileMenu) setMenuOpen(false);
+  });
+
+  document.addEventListener("pointerdown", (event) => {
+    const open = menuButton.getAttribute("aria-expanded") === "true";
+    if (!open || menuButton.contains(event.target) || mobileMenu.contains(event.target)) return;
+    setMenuOpen(false);
   });
 
   document.addEventListener("keydown", (event) => {
@@ -192,8 +260,83 @@ if (motionLoops.length) {
   }
 }
 
+const pricingCatalog = window.SIMY_PRICING;
+const billingCycleButtons = Array.from(document.querySelectorAll("[data-billing-cycle]"));
+const pricingPlans = Array.from(document.querySelectorAll("[data-pricing-plan]"));
+const storagePrices = Array.from(document.querySelectorAll("[data-storage-capacity]"));
+let activeBillingCycle = "annual";
+
+function formatUsd(value, minimumFractionDigits = 0) {
+  const rounded = Math.round((value + Number.EPSILON) * 100) / 100;
+  const hasFraction = !Number.isInteger(rounded);
+  return `$${rounded.toLocaleString("en-US", {
+    minimumFractionDigits: Math.max(minimumFractionDigits, hasFraction ? 1 : 0),
+    maximumFractionDigits: 2
+  })}`;
+}
+
+function renderPricing() {
+  const locale = window.SIMY_HOME_I18N?.locale || document.documentElement.lang || "en";
+  const isJapanese = locale === "ja";
+
+  billingCycleButtons.forEach((button) => {
+    button.setAttribute("aria-pressed", String(button.dataset.billingCycle === activeBillingCycle));
+  });
+
+  document.querySelectorAll("[data-billing-copy]").forEach((element) => {
+    element.hidden = element.dataset.billingCopy !== activeBillingCycle;
+  });
+  document.querySelectorAll("[data-annual-total]").forEach((element) => {
+    element.hidden = activeBillingCycle !== "annual";
+  });
+  document.querySelectorAll("[data-tax-mode='exclusive']").forEach((element) => {
+    element.hidden = isJapanese;
+  });
+  document.querySelectorAll("[data-tax-mode='inclusive']").forEach((element) => {
+    element.hidden = !isJapanese;
+  });
+  document.querySelectorAll("[data-base-price-detail]").forEach((element) => {
+    element.hidden = !isJapanese;
+  });
+
+  pricingPlans.forEach((plan) => {
+    const basePriceCents = pricingCatalog.priceCents(plan.dataset.pricingPlan, activeBillingCycle);
+    const displayPriceCents = isJapanese
+      ? pricingCatalog.grossCents(basePriceCents, pricingCatalog.JAPAN_CONSUMPTION_TAX_BPS)
+      : basePriceCents;
+    const displayPrice = displayPriceCents / 100;
+    const basePrice = basePriceCents / 100;
+    const priceAmount = plan.querySelector("[data-price-amount]");
+    const annualTotal = plan.querySelector("[data-price-total]");
+    const basePriceDetail = plan.querySelector("[data-base-price]");
+
+    if (priceAmount) priceAmount.textContent = formatUsd(displayPrice).slice(1);
+    if (annualTotal) annualTotal.textContent = formatUsd(displayPriceCents * 12 / 100, 2);
+    if (basePriceDetail) basePriceDetail.textContent = formatUsd(basePrice);
+  });
+
+  storagePrices.forEach((cell) => {
+    const basePriceCents = pricingCatalog.storagePriceCents(cell.dataset.storageCapacity);
+    const displayPriceCents = isJapanese
+      ? pricingCatalog.grossCents(basePriceCents, pricingCatalog.JAPAN_CONSUMPTION_TAX_BPS)
+      : basePriceCents;
+    const amount = cell.querySelector("[data-storage-price-amount]");
+    if (amount) amount.textContent = formatUsd(displayPriceCents / 100);
+  });
+}
+
+billingCycleButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    activeBillingCycle = button.dataset.billingCycle === "monthly" ? "monthly" : "annual";
+    renderPricing();
+  });
+});
+
+window.addEventListener("simy:locale-change", renderPricing);
+renderPricing();
+
 const pricingTableWrap = document.querySelector(".pricing-table-wrap");
-const featuredPricingPlan = pricingTableWrap?.querySelector(".pricing-pro");
+const featuredPricingPlan = pricingTableWrap?.querySelector(".pricing-quality");
 const pricingFeatureHeader = pricingTableWrap?.querySelector("thead th:first-child");
 const compactPricing = window.matchMedia("(max-width: 620px)");
 let hasCenteredFeaturedPlan = false;
@@ -223,5 +366,41 @@ window.addEventListener("resize", () => {
   hasCenteredFeaturedPlan = false;
   centerFeaturedPricingPlan();
 });
+
+const storageDialog = document.querySelector("[data-storage-dialog]");
+const storageDialogOpenButtons = Array.from(document.querySelectorAll("[data-storage-dialog-open]"));
+const storageDialogCloseButton = storageDialog?.querySelector("[data-storage-dialog-close]");
+let storageDialogReturnFocus = null;
+
+function closeStorageDialog() {
+  if (!storageDialog?.open) return;
+  storageDialog.close();
+}
+
+if (storageDialog) {
+  storageDialogOpenButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      storageDialogReturnFocus = button;
+      if (!storageDialog.open) storageDialog.showModal();
+      document.body.classList.add("dialog-open");
+      storageDialogCloseButton?.focus();
+    });
+  });
+
+  storageDialogCloseButton?.addEventListener("click", closeStorageDialog);
+  storageDialog.addEventListener("click", (event) => {
+    if (event.target === storageDialog) closeStorageDialog();
+  });
+  storageDialog.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape") return;
+    event.preventDefault();
+    closeStorageDialog();
+  });
+  storageDialog.addEventListener("close", () => {
+    document.body.classList.remove("dialog-open");
+    storageDialogReturnFocus?.focus();
+    storageDialogReturnFocus = null;
+  });
+}
 
 renderScenario("codex");
