@@ -32,7 +32,7 @@
     <meta name="twitter:description" content="SIMY learns your way of working, selects the right Pipeline, and Autorun moves it forward.">
     <meta name="twitter:image" content="https://simy.one/ogp-home-global-202608-v4.png">
     <meta name="twitter:image:alt" content="You’re using AI. But the workload hasn’t gone down. Turn chats and conversations into workflows that get work done.">
-    <link rel="stylesheet" href="home.css?v=20260829-pricing-trials-2">
+    <link rel="stylesheet" href="home.css?v=20260829-pricing-hierarchy-4">
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -49,10 +49,10 @@
         }
       }
     </script>
-    <script src="home-locales.js?v=20260829-pricing-trials-2" defer></script>
-    <script src="home-i18n.js?v=20260829-pricing-trials-2" defer></script>
-    <script src="pricing-catalog.js?v=20260829-pricing-trials-2" defer></script>
-    <script src="home.js?v=20260829-pricing-trials-2" defer></script>
+    <script src="home-locales.js?v=20260829-pricing-hierarchy-4" defer></script>
+    <script src="home-i18n.js?v=20260829-pricing-hierarchy-4" defer></script>
+    <script src="pricing-catalog.js?v=20260829-pricing-hierarchy-4" defer></script>
+    <script src="home.js?v=20260829-pricing-hierarchy-4" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -682,9 +682,10 @@
         <p class="pricing-scroll-hint">Swipe to compare plans →</p>
         <div class="pricing-table-wrap" tabindex="0" role="region" aria-label="SIMY plan comparison" aria-describedby="pricing-note">
           <table class="pricing-table">
-            <caption class="sr-only">Starter, SIMY Quality, and Pro pricing and features</caption>
+            <caption class="sr-only">Starter, SIMY Quality, Pro, and Enterprise pricing and features</caption>
             <colgroup>
               <col class="pricing-feature-column">
+              <col>
               <col>
               <col>
               <col>
@@ -693,7 +694,9 @@
               <tr>
                 <th scope="col"><span>Pricing · USD</span></th>
                 <th scope="col" data-pricing-plan="starter">
-                  <span class="pricing-trial">1 month free</span>
+                  <span class="pricing-badge-stack">
+                    <span class="pricing-trial">1 month free</span>
+                  </span>
                   <span class="pricing-plan-name">Starter</span>
                   <strong class="pricing-price"><small>$</small><span data-price-amount>29.8</span></strong>
                   <span class="pricing-period">
@@ -701,19 +704,20 @@
                     <span data-billing-copy="monthly" hidden>per month · billed monthly</span>
                   </span>
                   <span class="pricing-tax-mode">
-                    <span data-tax-mode="exclusive">before applicable taxes</span>
-                    <span data-tax-mode="inclusive" hidden>tax included</span>
+                    <span>before applicable taxes</span>
                   </span>
                   <span class="pricing-total" data-annual-total>
                     <span>Annual total</span> <strong data-price-total>$357.60</strong> ·
                     <span data-tax-mode="exclusive">before applicable taxes</span>
                     <span data-tax-mode="inclusive" hidden>tax included</span>
                   </span>
-                  <span class="pricing-base-price" data-base-price-detail hidden><span>Before tax</span> <strong data-base-price>$29.8</strong> / <span>month</span></span>
+                  <span class="pricing-tax-included-price" data-tax-included-price-detail hidden><span>tax included</span> <strong data-tax-included-price>$32.78</strong> / <span>month</span></span>
                 </th>
                 <th class="pricing-quality" scope="col" data-pricing-plan="quality">
-                  <span class="pricing-popular">Recommended</span>
-                  <span class="pricing-trial">1 month free</span>
+                  <span class="pricing-badge-stack">
+                    <span class="pricing-popular">Recommended</span>
+                    <span class="pricing-trial">1 month free</span>
+                  </span>
                   <span class="pricing-plan-name">SIMY Quality</span>
                   <strong class="pricing-price"><small>$</small><span data-price-amount>49.8</span></strong>
                   <span class="pricing-period">
@@ -721,17 +725,17 @@
                     <span data-billing-copy="monthly" hidden>per month · billed monthly</span>
                   </span>
                   <span class="pricing-tax-mode">
-                    <span data-tax-mode="exclusive">before applicable taxes</span>
-                    <span data-tax-mode="inclusive" hidden>tax included</span>
+                    <span>before applicable taxes</span>
                   </span>
                   <span class="pricing-total" data-annual-total>
                     <span>Annual total</span> <strong data-price-total>$597.60</strong> ·
                     <span data-tax-mode="exclusive">before applicable taxes</span>
                     <span data-tax-mode="inclusive" hidden>tax included</span>
                   </span>
-                  <span class="pricing-base-price" data-base-price-detail hidden><span>Before tax</span> <strong data-base-price>$49.8</strong> / <span>month</span></span>
+                  <span class="pricing-tax-included-price" data-tax-included-price-detail hidden><span>tax included</span> <strong data-tax-included-price>$54.78</strong> / <span>month</span></span>
                 </th>
                 <th scope="col" data-pricing-plan="pro">
+                  <span class="pricing-badge-stack" aria-hidden="true"></span>
                   <span class="pricing-plan-name">Pro</span>
                   <strong class="pricing-price"><small>$</small><span data-price-amount>79.8</span></strong>
                   <span class="pricing-period">
@@ -739,15 +743,21 @@
                     <span data-billing-copy="monthly" hidden>per month · billed monthly</span>
                   </span>
                   <span class="pricing-tax-mode">
-                    <span data-tax-mode="exclusive">before applicable taxes</span>
-                    <span data-tax-mode="inclusive" hidden>tax included</span>
+                    <span>before applicable taxes</span>
                   </span>
                   <span class="pricing-total" data-annual-total>
                     <span>Annual total</span> <strong data-price-total>$957.60</strong> ·
                     <span data-tax-mode="exclusive">before applicable taxes</span>
                     <span data-tax-mode="inclusive" hidden>tax included</span>
                   </span>
-                  <span class="pricing-base-price" data-base-price-detail hidden><span>Before tax</span> <strong data-base-price>$79.8</strong> / <span>month</span></span>
+                  <span class="pricing-tax-included-price" data-tax-included-price-detail hidden><span>tax included</span> <strong data-tax-included-price>$87.78</strong> / <span>month</span></span>
+                </th>
+                <th class="pricing-enterprise" scope="col">
+                  <span class="pricing-badge-stack" aria-hidden="true"></span>
+                  <span class="pricing-plan-name">Enterprise</span>
+                  <strong class="pricing-enterprise-price">Custom pricing</strong>
+                  <span class="pricing-enterprise-copy">We will confirm your organization size, security needs, and operating requirements, then recommend pricing and rollout.</span>
+                  <a class="pricing-enterprise-link" href="mailto:sales@simy.one">Talk to us about Enterprise <span aria-hidden="true">↗</span></a>
                 </th>
               </tr>
             </thead>
@@ -757,6 +767,7 @@
                 <td><strong class="pricing-value">Unlimited</strong></td>
                 <td><strong class="pricing-value">Unlimited</strong></td>
                 <td><strong class="pricing-value">Unlimited</strong></td>
+                <td><strong class="pricing-value pricing-value-custom">Tailored</strong></td>
               </tr>
               <tr>
                 <th scope="row">
@@ -771,9 +782,11 @@
                 <td><strong class="pricing-value">10 GB</strong></td>
                 <td><strong class="pricing-value">50 GB</strong></td>
                 <td><strong class="pricing-value">100 GB</strong></td>
+                <td><strong class="pricing-value pricing-value-custom">Tailored</strong></td>
               </tr>
               <tr>
                 <th scope="row">Codex account connection</th>
+                <td><span class="pricing-status pricing-status-included"><span class="pricing-status-icon" aria-hidden="true">✓</span><span>Included</span></span></td>
                 <td><span class="pricing-status pricing-status-included"><span class="pricing-status-icon" aria-hidden="true">✓</span><span>Included</span></span></td>
                 <td><span class="pricing-status pricing-status-included"><span class="pricing-status-icon" aria-hidden="true">✓</span><span>Included</span></span></td>
                 <td><span class="pricing-status pricing-status-included"><span class="pricing-status-icon" aria-hidden="true">✓</span><span>Included</span></span></td>
@@ -783,9 +796,11 @@
                 <td><span class="pricing-status pricing-status-included"><span class="pricing-status-icon" aria-hidden="true">✓</span><span>Included</span></span></td>
                 <td><span class="pricing-status pricing-status-included"><span class="pricing-status-icon" aria-hidden="true">✓</span><span>Included</span></span></td>
                 <td><span class="pricing-status pricing-status-included"><span class="pricing-status-icon" aria-hidden="true">✓</span><span>Included</span></span></td>
+                <td><span class="pricing-status pricing-status-included"><span class="pricing-status-icon" aria-hidden="true">✓</span><span>Included</span></span></td>
               </tr>
               <tr>
                 <th scope="row">Save and reuse Pipelines</th>
+                <td><span class="pricing-status pricing-status-included"><span class="pricing-status-icon" aria-hidden="true">✓</span><span>Included</span></span></td>
                 <td><span class="pricing-status pricing-status-included"><span class="pricing-status-icon" aria-hidden="true">✓</span><span>Included</span></span></td>
                 <td><span class="pricing-status pricing-status-included"><span class="pricing-status-icon" aria-hidden="true">✓</span><span>Included</span></span></td>
                 <td><span class="pricing-status pricing-status-included"><span class="pricing-status-icon" aria-hidden="true">✓</span><span>Included</span></span></td>
@@ -795,10 +810,12 @@
                 <td><span class="pricing-status pricing-status-included"><span class="pricing-status-icon" aria-hidden="true">✓</span><span>Included</span></span></td>
                 <td><span class="pricing-status pricing-status-included"><span class="pricing-status-icon" aria-hidden="true">✓</span><span>Included</span></span></td>
                 <td><span class="pricing-status pricing-status-included"><span class="pricing-status-icon" aria-hidden="true">✓</span><span>Included</span></span></td>
+                <td><span class="pricing-status pricing-status-included"><span class="pricing-status-icon" aria-hidden="true">✓</span><span>Included</span></span></td>
               </tr>
               <tr>
                 <th scope="row">Quality Loop</th>
                 <td><span class="pricing-dash"><span class="sr-only">Not included</span>&mdash;</span></td>
+                <td><span class="pricing-status pricing-status-included"><span class="pricing-status-icon" aria-hidden="true">✓</span><span>Included</span></span></td>
                 <td><span class="pricing-status pricing-status-included"><span class="pricing-status-icon" aria-hidden="true">✓</span><span>Included</span></span></td>
                 <td><span class="pricing-status pricing-status-included"><span class="pricing-status-icon" aria-hidden="true">✓</span><span>Included</span></span></td>
               </tr>
@@ -807,11 +824,13 @@
                 <td><span class="pricing-dash"><span class="sr-only">Not included</span>&mdash;</span></td>
                 <td><span class="pricing-status pricing-status-included"><span class="pricing-status-icon" aria-hidden="true">✓</span><span>Included</span></span></td>
                 <td><span class="pricing-status pricing-status-included"><span class="pricing-status-icon" aria-hidden="true">✓</span><span>Included</span></span></td>
+                <td><span class="pricing-status pricing-status-included"><span class="pricing-status-icon" aria-hidden="true">✓</span><span>Included</span></span></td>
               </tr>
               <tr>
                 <th scope="row">Hearing Mode</th>
                 <td><span class="pricing-dash"><span class="sr-only">Not included</span>&mdash;</span></td>
                 <td><span class="pricing-dash"><span class="sr-only">Not included</span>&mdash;</span></td>
+                <td><span class="pricing-status pricing-status-included"><span class="pricing-status-icon" aria-hidden="true">✓</span><span>Included</span></span></td>
                 <td><span class="pricing-status pricing-status-included"><span class="pricing-status-icon" aria-hidden="true">✓</span><span>Included</span></span></td>
               </tr>
               <tr>
@@ -819,18 +838,35 @@
                 <td><span class="pricing-dash"><span class="sr-only">Not included</span>&mdash;</span></td>
                 <td><span class="pricing-dash"><span class="sr-only">Not included</span>&mdash;</span></td>
                 <td><span class="pricing-status pricing-status-included"><span class="pricing-status-icon" aria-hidden="true">✓</span><span>Included</span></span></td>
+                <td><span class="pricing-status pricing-status-included"><span class="pricing-status-icon" aria-hidden="true">✓</span><span>Included</span></span></td>
               </tr>
               <tr>
                 <th scope="row">Hearing minutes</th>
                 <td><span class="pricing-dash"><span class="sr-only">Not included</span>&mdash;</span></td>
                 <td><span class="pricing-dash"><span class="sr-only">Not included</span>&mdash;</span></td>
                 <td><strong class="pricing-value">600 min included</strong><small>each month</small></td>
+                <td><strong class="pricing-value pricing-value-custom">Tailored</strong></td>
               </tr>
               <tr>
                 <th scope="row">Additional Hearing usage</th>
                 <td><span class="pricing-dash"><span class="sr-only">Not included</span>&mdash;</span></td>
                 <td><span class="pricing-dash"><span class="sr-only">Not included</span>&mdash;</span></td>
                 <td><strong class="pricing-value">$2 / 60 min</strong><small>usage-based</small></td>
+                <td><strong class="pricing-value pricing-value-custom">Custom</strong></td>
+              </tr>
+              <tr>
+                <th scope="row">Logical database isolation by organization</th>
+                <td><span class="pricing-dash"><span class="sr-only">Not included</span>&mdash;</span></td>
+                <td><span class="pricing-dash"><span class="sr-only">Not included</span>&mdash;</span></td>
+                <td><span class="pricing-dash"><span class="sr-only">Not included</span>&mdash;</span></td>
+                <td><span class="pricing-status pricing-status-included"><span class="pricing-status-icon" aria-hidden="true">✓</span><span>Included</span></span></td>
+              </tr>
+              <tr>
+                <th scope="row">Enterprise rollout</th>
+                <td><span class="pricing-dash"><span class="sr-only">Not included</span>&mdash;</span></td>
+                <td><span class="pricing-dash"><span class="sr-only">Not included</span>&mdash;</span></td>
+                <td><span class="pricing-dash"><span class="sr-only">Not included</span>&mdash;</span></td>
+                <td><strong class="pricing-value pricing-value-custom">Security and rollout support</strong></td>
               </tr>
             </tbody>
           </table>
@@ -839,7 +875,7 @@
         <div class="pricing-foot" id="pricing-note">
           <div class="pricing-foot-copy">
             <p><sup>*</sup> The ≤3% error rate is a target when SIMY&rsquo;s defined testing and verification criteria are met. It is not a guaranteed result.</p>
-            <p class="pricing-tax-note">Prices are shown in USD. Japanese prices include 10% consumption tax. In other countries and regions, taxes may apply based on the billing address.</p>
+            <p class="pricing-tax-note">Prices are shown in USD. Headline plan prices exclude tax. Japanese pages also show the price including 10% consumption tax. In other countries and regions, taxes may apply based on the billing address.</p>
             <p class="stripe-note"><span aria-hidden="true">▣</span> The purchase page shows the plans currently available for checkout and the final total before payment. Stripe securely processes payment.</p>
           </div>
           <a class="button button-dark" href="https://app.simy.one/signup?lang=en&amp;locale=en&amp;region=us" aria-label="Choose a SIMY plan and continue to secure Stripe Checkout">Choose a plan <span aria-hidden="true">↗</span></a>

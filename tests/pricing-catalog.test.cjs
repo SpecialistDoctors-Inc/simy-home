@@ -26,25 +26,28 @@ test('monthly billing uses the higher flexible prices and has no annual total', 
   assert.deepEqual(result.annualTotals, { starter: null, quality: null, pro: null });
 });
 
-test('Japan presents 10% tax-inclusive annual and monthly amounts', () => {
+test('Japan keeps the headline price tax-exclusive and adds 10% tax-inclusive detail', () => {
   const annual = pricing.presentation('jp', 'ja');
   const monthly = pricing.presentation('jp', 'ja', 'monthly');
 
-  assert.equal(annual.displayMode, 'tax-inclusive');
-  assert.deepEqual(annual.amounts, { starter: '$32.78', quality: '$54.78', pro: '$87.78' });
+  assert.equal(annual.displayMode, 'tax-exclusive-primary');
+  assert.deepEqual(annual.amounts, { starter: '$29.80', quality: '$49.80', pro: '$79.80' });
+  assert.deepEqual(annual.taxInclusiveAmounts, { starter: '$32.78', quality: '$54.78', pro: '$87.78' });
   assert.deepEqual(annual.annualTotals, {
     starter: '$393.36',
     quality: '$657.36',
     pro: '$1,053.36'
   });
-  assert.deepEqual(monthly.amounts, { starter: '$39.38', quality: '$65.78', pro: '$105.38' });
+  assert.deepEqual(monthly.amounts, { starter: '$35.80', quality: '$59.80', pro: '$95.80' });
+  assert.deepEqual(monthly.taxInclusiveAmounts, { starter: '$39.38', quality: '$65.78', pro: '$105.38' });
   assert.deepEqual(annual.storageAmounts, {
     '30 GB': '$11',
     '200 GB': '$44',
     '1 TB': '$110',
     '5 TB': '$550'
   });
-  assert.match(annual.taxNote, /消費税10%を含みます/);
+  assert.match(annual.taxNote, /プラン価格は税別/);
+  assert.match(annual.taxNote, /税込価格を別に併記/);
 });
 
 test('other regions remain tax-exclusive without inventing a tax rate', () => {
@@ -79,6 +82,22 @@ test('homepage storage rows use catalog capacity keys instead of duplicated pric
     ['30 GB', '200 GB', '1 TB', '5 TB']
   );
   assert.match(runtime, /pricingCatalog\.storagePriceCents\(cell\.dataset\.storageCapacity\)/);
+});
+
+test('homepage renders Japanese tax-inclusive prices as secondary detail, not the headline', () => {
+  const root = path.resolve(__dirname, '..');
+  const html = fs.readFileSync(path.join(root, 'site/index.html'), 'utf8');
+  const runtime = fs.readFileSync(path.join(root, 'site/home.js'), 'utf8');
+
+  assert.equal(
+    html.match(/data-tax-included-price-detail/g)?.length,
+    3,
+    'each paid self-serve plan must reserve one tax-inclusive detail line'
+  );
+  assert.doesNotMatch(html, /data-base-price-detail|data-base-price=/);
+  assert.match(runtime, /priceAmount\.textContent = formatUsd\(basePrice\)\.slice\(1\)/);
+  assert.match(runtime, /annualTotal\.textContent = formatUsd\(taxInclusivePriceCents \* 12 \/ 100, 2\)/);
+  assert.match(runtime, /taxIncludedPriceDetail\.textContent = formatUsd\(taxInclusivePriceCents \/ 100\)/);
 });
 
 test('homepage pricing bundles do not ship the retired Starter Autorun cap', () => {

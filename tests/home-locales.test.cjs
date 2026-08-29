@@ -105,7 +105,7 @@ test("existing-account login links open the SIMY app home", () => {
   assert.doesNotMatch(homeHtml, /https:\/\/app\.simy\.one\/login(?:[?"'])/);
 });
 
-test("pricing gives Starter unlimited Autorun and one free month to Starter and SIMY Quality", () => {
+test("pricing gives Starter unlimited Autorun, free trials, and a truthful Enterprise inquiry", () => {
   const pricingSection = homeHtml.match(/<section class="pricing[\s\S]*?<\/section>/)?.[0];
   assert.ok(pricingSection, "pricing section must remain present");
 
@@ -118,17 +118,94 @@ test("pricing gives Starter unlimited Autorun and one free month to Starter and 
   assert.match(planHeaders.quality, /pricing-trial">1 month free</);
   assert.doesNotMatch(planHeaders.pro, /pricing-trial/);
   assert.equal(pricingSection.match(/pricing-trial">1 month free</g)?.length, 2);
+  assert.equal(
+    pricingSection.match(/class="pricing-badge-stack"/g)?.length,
+    4,
+    "every plan header must reserve the same in-flow badge area"
+  );
 
   const autorunRow = pricingSection.match(/<th scope="row">Autorun allowance<\/th>([\s\S]*?)<\/tr>/)?.[1];
   assert.ok(autorunRow, "Autorun allowance row must remain present");
   assert.equal(autorunRow.match(/pricing-value">Unlimited</g)?.length, 3);
+  assert.match(autorunRow, /pricing-value pricing-value-custom">Tailored</);
   assert.doesNotMatch(homeHtml, /100 runs/);
+
+  assert.match(pricingSection, /<th class="pricing-enterprise" scope="col">/);
+  assert.match(pricingSection, /pricing-enterprise-price">Custom pricing</);
+  assert.match(pricingSection, /href="mailto:sales@simy\.one">Talk to us about Enterprise/);
+  assert.match(pricingSection, /Enterprise rollout/);
+  assert.match(pricingSection, /Security and rollout support/);
+  assert.doesNotMatch(pricingSection, /pricing-value pricing-value-custom">Contact us/);
+  const pricingRows = [...pricingSection.matchAll(/<tbody>[\s\S]*?<\/tbody>/g)]
+    .flatMap(([body]) => [...body.matchAll(/<tr>([\s\S]*?)<\/tr>/g)])
+    .map(([, row]) => row);
+  assert.ok(pricingRows.length > 0, "pricing comparison must keep its feature rows");
+  for (const row of pricingRows) {
+    assert.equal(row.match(/<td\b/g)?.length, 4, "each feature row must align across all four plans");
+  }
+
+  const enterpriseIncludedFeatures = [
+    "Codex account connection",
+    "Meeting Autorun",
+    "Save and reuse Pipelines",
+    "Use your connected ChatGPT plan",
+    "Quality Loop",
+    "Target error rate ≤3%",
+    "Hearing Mode",
+    "Real-time suggestions",
+    "Logical database isolation by organization"
+  ];
+  for (const feature of enterpriseIncludedFeatures) {
+    const row = pricingRows.find((content) => content.includes(feature));
+    assert.ok(row, `${feature} must remain in the pricing comparison`);
+    const cells = [...row.matchAll(/<td\b[^>]*>([\s\S]*?)<\/td>/g)].map(([, content]) => content);
+    assert.match(cells.at(-1), /pricing-status pricing-status-included/, `${feature} must be available in Enterprise`);
+  }
 
   const locales = { ja: extractJapaneseCopy(), ...loadAdditionalLocales() };
   for (const [locale, copy] of Object.entries(locales)) {
     assert.ok(copy["1 month free"]?.trim(), `${locale} must localize the one-month offer`);
     assert.notEqual(copy["1 month free"], "1 month free", `${locale} must not reuse the English offer`);
+    for (const key of ["Custom pricing", "Talk to us about Enterprise", "Tailored", "Logical database isolation by organization"]) {
+      assert.ok(copy[key]?.trim(), `${locale} must localize ${key}`);
+    }
   }
+});
+
+test("pricing decision copy remains visibly larger than disclaimer typography", () => {
+  const minimumRemBySelector = new Map([
+    [".pricing-saving", 0.75],
+    [".pricing-period", 0.78],
+    [".pricing-tax-mode,\n.pricing-total,\n.pricing-tax-included-price", 0.72],
+    [".pricing-popular", 0.78],
+    [".pricing-trial", 0.78],
+    [".pricing-enterprise-copy", 0.76],
+    [".pricing-enterprise-link", 0.76],
+    [".pricing-status", 0.74]
+  ]);
+
+  for (const [selector, minimumRem] of minimumRemBySelector) {
+    const escapedSelector = selector.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const block = homeCss.match(new RegExp(`${escapedSelector}\\s*\\{([^}]*)\\}`))?.[1];
+    assert.ok(block, `${selector} must remain styled`);
+    const fontSize = Number(block.match(/font-size:\s*([0-9.]+)rem/)?.[1]);
+    assert.ok(
+      fontSize >= minimumRem,
+      `${selector} must use at least ${minimumRem}rem so offer and billing terms do not look like hidden disclaimers`
+    );
+  }
+
+  assert.match(
+    homeCss,
+    /\.pricing-badge-stack\s*\{[^}]*display:\s*flex;[^}]*min-height:\s*4\.75rem;[^}]*flex-direction:\s*column;/s,
+    "plan badges must use one shared vertical flow instead of language-sensitive absolute placement"
+  );
+  for (const selector of [".pricing-popular", ".pricing-trial"]) {
+    const escapedSelector = selector.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const block = homeCss.match(new RegExp(`${escapedSelector}\\s*\\{([^}]*)\\}`))?.[1];
+    assert.doesNotMatch(block, /position:\s*absolute/, `${selector} must stay in the badge stack flow`);
+  }
+  assert.doesNotMatch(homeHtml, /pricing-enterprise-badge/, "Enterprise must not show a redundant inquiry badge above its heading");
 });
 
 test("header exposes direct login and signup actions outside the mobile menu", () => {
