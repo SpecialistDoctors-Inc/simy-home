@@ -21,11 +21,18 @@ test("mobile navigation closes from blank and outside clicks", () => {
 });
 
 test("homepage cache-busts the current home assets", () => {
-  assert.match(homeHtml, /home\.css\?v=20260829-company-links-5/);
-  assert.match(homeHtml, /home-locales\.js\?v=20260829-company-links-5/);
-  assert.match(homeHtml, /home-i18n\.js\?v=20260829-company-links-5/);
-  assert.match(homeHtml, /pricing-catalog\.js\?v=20260829-company-links-5/);
-  assert.match(homeHtml, /home\.js\?v=20260829-company-links-5/);
+  assert.match(homeHtml, /home\.css\?v=20260830-remove-control-cards-6/);
+  assert.match(homeHtml, /home-locales\.js\?v=20260830-remove-control-cards-6/);
+  assert.match(homeHtml, /home-i18n\.js\?v=20260830-remove-control-cards-6/);
+  assert.match(homeHtml, /pricing-catalog\.js\?v=20260830-remove-control-cards-6/);
+  assert.match(homeHtml, /home\.js\?v=20260830-remove-control-cards-6/);
+});
+
+test("homepage omits the redundant learning-control cards", () => {
+  assert.doesNotMatch(homeHtml, /class="control-grid"/);
+  assert.doesNotMatch(homeHtml, /Choose what SIMY can learn from\./);
+  assert.doesNotMatch(homeHtml, /See exactly what SIMY kept\./);
+  assert.doesNotMatch(homeHtml, /Set the guardrails once\./);
 });
 
 test("language picker follows its responsive grid and closes when focus leaves", () => {

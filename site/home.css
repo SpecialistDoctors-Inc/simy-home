@@ -3176,51 +3176,6 @@ html[lang="ja"] .section-intro h2 {
   content: "";
 }
 
-.control-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  margin-top: 4rem;
-  border-top: 1px solid var(--line);
-  border-left: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-}
-
-.control-grid article {
-  min-height: 18rem;
-  padding: clamp(1.25rem, 2.5vw, 2rem);
-  border-right: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.72);
-}
-
-.control-icon {
-  display: grid;
-  place-items: center;
-  width: 3.25rem;
-  height: 3.25rem;
-  border: 1px solid rgba(50, 115, 215, 0.3);
-  border-radius: var(--radius-sm);
-  background: var(--blue-soft);
-  color: var(--blue-deep);
-  font-size: 1.2rem;
-  font-weight: 900;
-}
-
-.control-grid h3 {
-  margin-top: 3.5rem;
-  font-size: clamp(1.25rem, 2vw, 1.65rem);
-  letter-spacing: -0.04em;
-}
-
-.control-grid p {
-  max-width: 32ch;
-  margin-top: 0.75rem;
-  color: var(--ink-soft);
-  font-size: 0.86rem;
-  line-height: 1.6;
-}
-
 .pricing {
   background:
     radial-gradient(circle at 88% 12%, rgba(146, 237, 206, 0.3), transparent 28rem),
@@ -4915,10 +4870,6 @@ html[lang="zh-Hans"] .storage-dialog-header h2 {
     grid-template-columns: 0.62fr 1fr 1.1fr;
   }
 
-  .control-grid {
-    grid-template-columns: 1fr;
-  }
-
   .integration-proof {
     grid-template-columns: 1fr;
   }
@@ -4972,10 +4923,6 @@ html[lang="zh-Hans"] .storage-dialog-header h2 {
 
   .pricing-enterprise-copy {
     font-size: 0.72rem;
-  }
-
-  .control-grid article {
-    min-height: 15rem;
   }
 
   .final-cta {

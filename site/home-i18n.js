@@ -278,13 +278,6 @@
     "Your priorities": "あなたの優先順位",
     "Essential checks": "欠かせない確認",
     "Non-negotiables": "譲れない基準",
-    "Choose what SIMY can learn from.": "SIMYに学ばせる会話は、あなたが選ぶ。",
-    "Share only the conversations you want SIMY to learn from.": "学ばせたい会話だけを共有します。",
-    "See exactly what SIMY kept.": "残した内容を、すべて確認できる。",
-    "Review the checks, priorities, and non-negotiables before they become a reusable Pipeline.": "パイプラインにする前に、確認項目、優先順位、譲れない基準を見直せます。",
-    "Set the guardrails once.": "境界は、一度だけ決める。",
-    "SIMY selects and runs the right Pipeline within the limits you define.": "SIMYは、あなたが決めた範囲で合うパイプラインを選び、実行します。",
-
     "Recommended · SIMY Quality": "おすすめ · SIMY Quality",
     "Swipe to compare plans →": "横にスワイプしてプランを比較 →",
     "Make every Autorun earn your confidence.": "Autorunを、任せられる品質へ。",
