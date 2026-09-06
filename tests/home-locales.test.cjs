@@ -113,6 +113,14 @@ test("company overview links directly to AwakApp company information", () => {
   );
 
   const locales = { ja: extractJapaneseCopy(), ...loadAdditionalLocales() };
+  assert.equal(
+    locales.ja["IT Engineer · Financial Planner · Pharmaceutical MR · Dental Clinic"],
+    "ITエンジニア・ファイナンシャルプランナー・製薬MR・歯科クリニック"
+  );
+  assert.match(
+    locales.ja["Choose IT Engineer, Financial Planner, Pharmaceutical MR, or Dental Clinic. The same SIMY Quality (SQM) adapts its terminology, workflow, and review criteria to your field."],
+    /ITエンジニア・ファイナンシャルプランナー・製薬MR・歯科クリニック向けとして選べます/
+  );
   for (const [locale, copy] of Object.entries(locales)) {
     assert.ok(copy["Company overview"]?.trim(), `${locale} must localize the company overview link`);
   }
@@ -183,6 +191,51 @@ test("pricing gives Starter unlimited Autorun, free trials, and a truthful Enter
       assert.ok(copy[key]?.trim(), `${locale} must localize ${key}`);
     }
   }
+});
+
+test("SIMY Quality presents industry-specific SQM options at the updated price", () => {
+  const pricingSection = homeHtml.match(/<section class="pricing[\s\S]*?<\/section>/)?.[0];
+  assert.ok(pricingSection, "pricing section must remain present");
+
+  const qualityHeader = pricingSection.match(/<th class="pricing-quality"[\s\S]*?<\/th>/)?.[0];
+  assert.ok(qualityHeader, "SIMY Quality plan header must remain present");
+  assert.match(qualityHeader, /data-price-amount>59\.8</);
+  assert.match(qualityHeader, /pricing-plan-specializations">IT Engineer · Financial Planner · Pharmaceutical MR · Dental Clinic</);
+  assert.match(pricingSection, /<th scope="row">Industry-optimized SQM<\/th>/);
+
+  const industryRow = pricingSection.match(/<th scope="row">Industry-optimized SQM<\/th>([\s\S]*?)<\/tr>/)?.[1];
+  assert.ok(industryRow, "industry-optimized SQM row must remain present");
+  assert.equal(industryRow.match(/IT Engineer · Financial Planner · Pharmaceutical MR · Dental Clinic/g)?.length, 3);
+  assert.match(industryRow, /pricing-dash/);
+
+  const proHeader = pricingSection.match(/<th scope="col" data-pricing-plan="pro">([\s\S]*?)<\/th>/)?.[1];
+  assert.match(proHeader, /data-price-amount>89\.8</);
+
+  const locales = { ja: extractJapaneseCopy(), ...loadAdditionalLocales() };
+  for (const [locale, copy] of Object.entries(locales)) {
+    for (const key of [
+      "Industry-ready · SIMY Quality",
+      "Quality checks shaped around your profession.",
+      "Choose IT Engineer, Financial Planner, Pharmaceutical MR, or Dental Clinic. The same SIMY Quality (SQM) adapts its terminology, workflow, and review criteria to your field.",
+      "IT Engineer · Financial Planner · Pharmaceutical MR · Dental Clinic",
+      "Industry-optimized SQM"
+    ]) {
+      assert.ok(copy[key]?.trim(), `${locale} must localize ${key}`);
+    }
+  }
+
+  for (const selector of [".pricing-plan-specializations", ".pricing-value-specializations"]) {
+    const escapedSelector = selector.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const block = homeCss.match(new RegExp(`${escapedSelector}\\s*\\{([^}]*)\\}`))?.[1];
+    assert.ok(block, `${selector} must keep specialization label styling`);
+    assert.match(block, /word-break:\s*keep-all/, `${selector} must avoid breaking industry names mid-word`);
+    assert.match(block, /overflow-wrap:\s*normal/, `${selector} must wrap at natural separators first`);
+  }
+  assert.match(
+    homeCss,
+    /@media \(max-width: 620px\)[\s\S]*?\.pricing-plan-specializations,\s*\.pricing-value-specializations\s*\{[^}]*font-size:\s*0\.68rem/s,
+    "mobile pricing must keep long industry labels inside narrow pricing columns"
+  );
 });
 
 test("pricing decision copy remains visibly larger than disclaimer typography", () => {
@@ -346,7 +399,7 @@ test("protects the global editorial message in every locale", () => {
     "SIMY finds the missing inputs, the right people, and the next move. Autorun handles the sequence, so the work keeps moving until your attention is actually needed.",
     "General agents complete tasks.",
     "SIMY preserves your way of working.",
-    "Make every Autorun earn your confidence.",
+    "Quality checks shaped around your profession.",
     "Tell SIMY what needs to move.",
     "Autorun takes it from there."
   ];

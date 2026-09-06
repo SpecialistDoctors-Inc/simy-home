@@ -7,8 +7,8 @@
 
   var JAPAN_CONSUMPTION_TAX_BPS = 1000;
   var PLAN_PRICE_CENTS = Object.freeze({
-    annual: Object.freeze({ starter: 2980, quality: 4980, pro: 7980 }),
-    monthly: Object.freeze({ starter: 3580, quality: 5980, pro: 9580 })
+    annual: Object.freeze({ starter: 2980, quality: 5980, pro: 8980 }),
+    monthly: Object.freeze({ starter: 3580, quality: 7180, pro: 10780 })
   });
   var STORAGE_ADD_ON_CENTS = Object.freeze({
     '30 GB': 1000,
