@@ -9,11 +9,11 @@ test('annual billing is the default and exposes effective monthly prices and tot
   const result = pricing.presentation('us', 'en');
 
   assert.equal(result.billingCycle, 'annual');
-  assert.deepEqual(result.amounts, { starter: '$29.80', quality: '$49.80', pro: '$79.80' });
+  assert.deepEqual(result.amounts, { starter: '$29.80', quality: '$59.80', pro: '$89.80' });
   assert.deepEqual(result.annualTotals, {
     starter: '$357.60',
-    quality: '$597.60',
-    pro: '$957.60'
+    quality: '$717.60',
+    pro: '$1,077.60'
   });
   assert.deepEqual(result.savingsPercent, { starter: 17, quality: 17, pro: 17 });
 });
@@ -22,7 +22,7 @@ test('monthly billing uses the higher flexible prices and has no annual total', 
   const result = pricing.presentation('us', 'en', 'monthly');
 
   assert.equal(result.billingCycle, 'monthly');
-  assert.deepEqual(result.amounts, { starter: '$35.80', quality: '$59.80', pro: '$95.80' });
+  assert.deepEqual(result.amounts, { starter: '$35.80', quality: '$71.80', pro: '$107.80' });
   assert.deepEqual(result.annualTotals, { starter: null, quality: null, pro: null });
 });
 
@@ -31,15 +31,15 @@ test('Japan keeps the headline price tax-exclusive and adds 10% tax-inclusive de
   const monthly = pricing.presentation('jp', 'ja', 'monthly');
 
   assert.equal(annual.displayMode, 'tax-exclusive-primary');
-  assert.deepEqual(annual.amounts, { starter: '$29.80', quality: '$49.80', pro: '$79.80' });
-  assert.deepEqual(annual.taxInclusiveAmounts, { starter: '$32.78', quality: '$54.78', pro: '$87.78' });
+  assert.deepEqual(annual.amounts, { starter: '$29.80', quality: '$59.80', pro: '$89.80' });
+  assert.deepEqual(annual.taxInclusiveAmounts, { starter: '$32.78', quality: '$65.78', pro: '$98.78' });
   assert.deepEqual(annual.annualTotals, {
     starter: '$393.36',
-    quality: '$657.36',
-    pro: '$1,053.36'
+    quality: '$789.36',
+    pro: '$1,185.36'
   });
-  assert.deepEqual(monthly.amounts, { starter: '$35.80', quality: '$59.80', pro: '$95.80' });
-  assert.deepEqual(monthly.taxInclusiveAmounts, { starter: '$39.38', quality: '$65.78', pro: '$105.38' });
+  assert.deepEqual(monthly.amounts, { starter: '$35.80', quality: '$71.80', pro: '$107.80' });
+  assert.deepEqual(monthly.taxInclusiveAmounts, { starter: '$39.38', quality: '$78.98', pro: '$118.58' });
   assert.deepEqual(annual.storageAmounts, {
     '30 GB': '$11',
     '200 GB': '$44',

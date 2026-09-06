@@ -3412,6 +3412,20 @@ html[lang="ja"] .pricing-intro > div > p {
   font-size: clamp(1.08rem, 1.75vw, 1.42rem);
 }
 
+.pricing-plan-specializations {
+  display: block;
+  max-width: 18rem;
+  margin: 0.35rem auto 0;
+  color: var(--blue-deep);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 800;
+  line-height: 1.35;
+  overflow-wrap: normal;
+  text-wrap: balance;
+  word-break: keep-all;
+}
+
 .pricing-enterprise .pricing-plan-name {
   color: #fff;
 }
@@ -3689,6 +3703,15 @@ html[lang="ja"] .pricing-intro > div > p {
   font-size: clamp(0.78rem, 1.1vw, 0.95rem);
   line-height: 1.35;
   text-wrap: balance;
+}
+
+.pricing-value-specializations {
+  color: var(--blue-deep);
+  font-size: 0.72rem;
+  line-height: 1.45;
+  overflow-wrap: normal;
+  text-wrap: balance;
+  word-break: keep-all;
 }
 
 html[lang="ja"] .pricing-plan-name {
@@ -5543,6 +5566,11 @@ html[lang="zh-Hans"] .storage-dialog-header h2 {
 
   .pricing-value {
     font-size: 0.78rem;
+  }
+
+  .pricing-plan-specializations,
+  .pricing-value-specializations {
+    font-size: 0.68rem;
   }
 
   .pricing-table tbody td > small {
