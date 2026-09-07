@@ -9,21 +9,22 @@ test('annual billing is the default and exposes effective monthly prices and tot
   const result = pricing.presentation('us', 'en');
 
   assert.equal(result.billingCycle, 'annual');
-  assert.deepEqual(result.amounts, { starter: '$29.80', quality: '$59.80', pro: '$89.80' });
+  assert.deepEqual(result.amounts, { starter: '$29.80', quality: '$59.80' });
   assert.deepEqual(result.annualTotals, {
     starter: '$357.60',
-    quality: '$717.60',
-    pro: '$1,077.60'
+    quality: '$717.60'
   });
-  assert.deepEqual(result.savingsPercent, { starter: 17, quality: 17, pro: 17 });
+  assert.deepEqual(result.savingsPercent, { starter: 17, quality: 17 });
+  assert.equal(result.realtimeAddOnAmount, '$30');
 });
 
 test('monthly billing uses the higher flexible prices and has no annual total', () => {
   const result = pricing.presentation('us', 'en', 'monthly');
 
   assert.equal(result.billingCycle, 'monthly');
-  assert.deepEqual(result.amounts, { starter: '$35.80', quality: '$71.80', pro: '$107.80' });
-  assert.deepEqual(result.annualTotals, { starter: null, quality: null, pro: null });
+  assert.deepEqual(result.amounts, { starter: '$35.80', quality: '$71.80' });
+  assert.deepEqual(result.annualTotals, { starter: null, quality: null });
+  assert.equal(result.realtimeAddOnAmount, '$30');
 });
 
 test('Japan keeps the headline price tax-exclusive and adds 10% tax-inclusive detail', () => {
@@ -31,15 +32,16 @@ test('Japan keeps the headline price tax-exclusive and adds 10% tax-inclusive de
   const monthly = pricing.presentation('jp', 'ja', 'monthly');
 
   assert.equal(annual.displayMode, 'tax-exclusive-primary');
-  assert.deepEqual(annual.amounts, { starter: '$29.80', quality: '$59.80', pro: '$89.80' });
-  assert.deepEqual(annual.taxInclusiveAmounts, { starter: '$32.78', quality: '$65.78', pro: '$98.78' });
+  assert.deepEqual(annual.amounts, { starter: '$29.80', quality: '$59.80' });
+  assert.deepEqual(annual.taxInclusiveAmounts, { starter: '$32.78', quality: '$65.78' });
   assert.deepEqual(annual.annualTotals, {
     starter: '$393.36',
-    quality: '$789.36',
-    pro: '$1,185.36'
+    quality: '$789.36'
   });
-  assert.deepEqual(monthly.amounts, { starter: '$35.80', quality: '$71.80', pro: '$107.80' });
-  assert.deepEqual(monthly.taxInclusiveAmounts, { starter: '$39.38', quality: '$78.98', pro: '$118.58' });
+  assert.deepEqual(monthly.amounts, { starter: '$35.80', quality: '$71.80' });
+  assert.deepEqual(monthly.taxInclusiveAmounts, { starter: '$39.38', quality: '$78.98' });
+  assert.equal(annual.realtimeAddOnAmount, '$30');
+  assert.equal(annual.realtimeAddOnTaxInclusiveAmount, '$33');
   assert.deepEqual(annual.storageAmounts, {
     '30 GB': '$11',
     '200 GB': '$44',
@@ -66,6 +68,7 @@ test('tax and price arithmetic stays in integer cents', () => {
   assert.equal(pricing.grossCents(1000, 1000), 1100);
   assert.equal(pricing.storagePriceCents('30 GB'), 1000);
   assert.equal(pricing.storagePriceCents('5 TB'), 50000);
+  assert.equal(pricing.realtimeAddOnPriceCents(), 3000);
   assert.throws(() => pricing.priceCents('unknown', 'annual'), /unknown pricing plan/);
   assert.throws(() => pricing.storagePriceCents('unknown'), /unknown storage capacity/);
   assert.throws(() => pricing.grossCents(10.5, 1000), /baseCents/);
@@ -92,12 +95,13 @@ test('homepage renders Japanese tax-inclusive prices as secondary detail, not th
   assert.equal(
     html.match(/data-tax-included-price-detail/g)?.length,
     3,
-    'each paid self-serve plan must reserve one tax-inclusive detail line'
+    'two self-serve plans and the Realtime add-on must reserve a tax-inclusive detail line'
   );
   assert.doesNotMatch(html, /data-base-price-detail|data-base-price=/);
   assert.match(runtime, /priceAmount\.textContent = formatUsd\(basePrice\)\.slice\(1\)/);
   assert.match(runtime, /annualTotal\.textContent = formatUsd\(taxInclusivePriceCents \* 12 \/ 100, 2\)/);
   assert.match(runtime, /taxIncludedPriceDetail\.textContent = formatUsd\(taxInclusivePriceCents \/ 100\)/);
+  assert.match(runtime, /taxIncludedPrice\.textContent = formatUsd\(taxInclusivePriceCents \/ 100\)/);
 });
 
 test('homepage pricing bundles do not ship the retired Starter Autorun cap', () => {

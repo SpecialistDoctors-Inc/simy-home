@@ -3306,7 +3306,7 @@ html[lang="ja"] .pricing-intro > div > p {
 
 .pricing-table {
   width: 100%;
-  min-width: 70rem;
+  min-width: 58rem;
   border-spacing: 0;
   table-layout: fixed;
 }
@@ -3410,20 +3410,6 @@ html[lang="ja"] .pricing-intro > div > p {
 .pricing-quality .pricing-plan-name {
   color: var(--blue-deep);
   font-size: clamp(1.08rem, 1.75vw, 1.42rem);
-}
-
-.pricing-plan-specializations {
-  display: block;
-  max-width: 18rem;
-  margin: 0.35rem auto 0;
-  color: var(--blue-deep);
-  font-family: var(--mono);
-  font-size: 0.72rem;
-  font-weight: 800;
-  line-height: 1.35;
-  overflow-wrap: normal;
-  text-wrap: balance;
-  word-break: keep-all;
 }
 
 .pricing-enterprise .pricing-plan-name {
@@ -3753,6 +3739,89 @@ html[lang="ja"] .pricing-enterprise-copy {
   font-size: 0.64rem;
   font-weight: 700;
   text-transform: uppercase;
+}
+
+.pricing-realtime-addon {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 1.5rem;
+  padding: clamp(1.35rem, 3vw, 2rem);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(circle at 100% 0, rgba(70, 213, 170, 0.17), transparent 34%),
+    #f5f9ff;
+  box-shadow: 0 1.25rem 4rem rgba(17, 17, 17, 0.06);
+}
+
+.pricing-realtime-copy h3 {
+  margin-top: 0.4rem;
+  font-size: clamp(1.55rem, 3vw, 2.35rem);
+  letter-spacing: -0.045em;
+}
+
+.pricing-realtime-copy > p:last-of-type {
+  max-width: 54ch;
+  margin-top: 0.5rem;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+
+.pricing-realtime-copy ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pricing-realtime-copy li {
+  padding: 0.46rem 0.68rem;
+  border: 1px solid rgba(18, 76, 190, 0.18);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--blue-deep);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 780;
+  line-height: 1.25;
+}
+
+.pricing-realtime-price {
+  display: grid;
+  min-width: 14rem;
+  justify-items: end;
+  gap: 0.35rem;
+  text-align: right;
+}
+
+.pricing-realtime-price > strong {
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: clamp(2.6rem, 5vw, 4.4rem);
+  letter-spacing: -0.08em;
+  line-height: 0.9;
+}
+
+.pricing-realtime-price > strong small {
+  font-size: 0.42em;
+  vertical-align: top;
+}
+
+.pricing-realtime-price > span {
+  color: var(--ink-soft);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 720;
+  line-height: 1.45;
+}
+
+.pricing-realtime-price > span strong {
+  color: var(--ink);
+  font-size: inherit;
 }
 
 .pricing-foot {
@@ -4932,7 +5001,7 @@ html[lang="zh-Hans"] .storage-dialog-header h2 {
   }
 
   .pricing-table {
-    min-width: 70rem;
+    min-width: 58rem;
   }
 
   .pricing-table thead th {
@@ -5408,7 +5477,7 @@ html[lang="zh-Hans"] .storage-dialog-header h2 {
   }
 
   .pricing-table {
-    width: 262%;
+    width: 208%;
     min-width: 0;
   }
 
@@ -5453,7 +5522,7 @@ html[lang="zh-Hans"] .storage-dialog-header h2 {
   }
 
   .pricing-feature-column {
-    width: 17.56%;
+    width: 22.12%;
   }
 
   .pricing-table th,
@@ -5568,9 +5637,19 @@ html[lang="zh-Hans"] .storage-dialog-header h2 {
     font-size: 0.78rem;
   }
 
-  .pricing-plan-specializations,
   .pricing-value-specializations {
     font-size: 0.68rem;
+  }
+
+  .pricing-realtime-addon {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .pricing-realtime-price {
+    min-width: 0;
+    justify-items: start;
+    text-align: left;
   }
 
   .pricing-table tbody td > small {

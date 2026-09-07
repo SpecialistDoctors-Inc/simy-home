@@ -263,6 +263,7 @@ if (motionLoops.length) {
 const pricingCatalog = window.SIMY_PRICING;
 const billingCycleButtons = Array.from(document.querySelectorAll("[data-billing-cycle]"));
 const pricingPlans = Array.from(document.querySelectorAll("[data-pricing-plan]"));
+const realtimeAddon = document.querySelector("[data-realtime-addon]");
 const storagePrices = Array.from(document.querySelectorAll("[data-storage-capacity]"));
 let activeBillingCycle = "annual";
 
@@ -313,6 +314,18 @@ function renderPricing() {
     if (annualTotal) annualTotal.textContent = formatUsd(taxInclusivePriceCents * 12 / 100, 2);
     if (taxIncludedPriceDetail) taxIncludedPriceDetail.textContent = formatUsd(taxInclusivePriceCents / 100);
   });
+
+  if (realtimeAddon) {
+    const basePriceCents = pricingCatalog.realtimeAddOnPriceCents();
+    const taxInclusivePriceCents = isJapanese
+      ? pricingCatalog.grossCents(basePriceCents, pricingCatalog.JAPAN_CONSUMPTION_TAX_BPS)
+      : basePriceCents;
+    const priceAmount = realtimeAddon.querySelector("[data-realtime-addon-price]");
+    const taxIncludedPrice = realtimeAddon.querySelector("[data-realtime-tax-included-price]");
+
+    if (priceAmount) priceAmount.textContent = formatUsd(basePriceCents / 100).slice(1);
+    if (taxIncludedPrice) taxIncludedPrice.textContent = formatUsd(taxInclusivePriceCents / 100);
+  }
 
   storagePrices.forEach((cell) => {
     const basePriceCents = pricingCatalog.storagePriceCents(cell.dataset.storageCapacity);

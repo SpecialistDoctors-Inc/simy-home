@@ -7,9 +7,10 @@
 
   var JAPAN_CONSUMPTION_TAX_BPS = 1000;
   var PLAN_PRICE_CENTS = Object.freeze({
-    annual: Object.freeze({ starter: 2980, quality: 5980, pro: 8980 }),
-    monthly: Object.freeze({ starter: 3580, quality: 7180, pro: 10780 })
+    annual: Object.freeze({ starter: 2980, quality: 5980 }),
+    monthly: Object.freeze({ starter: 3580, quality: 7180 })
   });
+  var REALTIME_ADD_ON_CENTS = 3000;
   var STORAGE_ADD_ON_CENTS = Object.freeze({
     '30 GB': 1000,
     '200 GB': 4000,
@@ -58,6 +59,10 @@
     return cents;
   }
 
+  function realtimeAddOnPriceCents() {
+    return REALTIME_ADD_ON_CENTS;
+  }
+
   function presentation(region, language, billingCycle) {
     var cycle = normalizeBillingCycle(billingCycle);
     var normalizedRegion = String(region || '').toLowerCase();
@@ -87,9 +92,10 @@
       annualTotals: annualTotals,
       savingsPercent: {
         starter: savingsPercent('starter'),
-        quality: savingsPercent('quality'),
-        pro: savingsPercent('pro')
+        quality: savingsPercent('quality')
       },
+      realtimeAddOnAmount: usd(REALTIME_ADD_ON_CENTS),
+      realtimeAddOnTaxInclusiveAmount: usd(taxInclusive ? grossCents(REALTIME_ADD_ON_CENTS, JAPAN_CONSUMPTION_TAX_BPS) : REALTIME_ADD_ON_CENTS),
       storageAmounts: Object.keys(STORAGE_ADD_ON_CENTS).reduce(function (result, capacity) {
         var base = storagePriceCents(capacity);
         result[capacity] = usd(taxInclusive ? grossCents(base, JAPAN_CONSUMPTION_TAX_BPS) : base);
@@ -106,9 +112,11 @@
   return Object.freeze({
     JAPAN_CONSUMPTION_TAX_BPS: JAPAN_CONSUMPTION_TAX_BPS,
     PLAN_PRICE_CENTS: PLAN_PRICE_CENTS,
+    REALTIME_ADD_ON_CENTS: REALTIME_ADD_ON_CENTS,
     STORAGE_ADD_ON_CENTS: STORAGE_ADD_ON_CENTS,
     grossCents: grossCents,
     priceCents: priceCents,
+    realtimeAddOnPriceCents: realtimeAddOnPriceCents,
     savingsPercent: savingsPercent,
     storagePriceCents: storagePriceCents,
     presentation: presentation

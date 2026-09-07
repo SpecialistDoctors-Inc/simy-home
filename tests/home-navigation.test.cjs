@@ -21,11 +21,34 @@ test("mobile navigation closes from blank and outside clicks", () => {
 });
 
 test("homepage cache-busts the current home assets", () => {
-  assert.match(homeHtml, /home\.css\?v=20260907-industry-quality-pricing-2/);
-  assert.match(homeHtml, /home-locales\.js\?v=20260907-industry-quality-pricing-2/);
-  assert.match(homeHtml, /home-i18n\.js\?v=20260907-industry-quality-pricing-2/);
-  assert.match(homeHtml, /pricing-catalog\.js\?v=20260907-industry-quality-pricing-2/);
-  assert.match(homeHtml, /home\.js\?v=20260907-industry-quality-pricing-2/);
+  assert.match(homeHtml, /home\.css\?v=20260907-industry-realtime-pricing-3/);
+  assert.match(homeHtml, /home-locales\.js\?v=20260907-industry-realtime-pricing-3/);
+  assert.match(homeHtml, /home-i18n\.js\?v=20260907-industry-realtime-pricing-3/);
+  assert.match(homeHtml, /pricing-catalog\.js\?v=20260907-industry-realtime-pricing-3/);
+  assert.match(homeHtml, /home\.js\?v=20260907-industry-realtime-pricing-3/);
+});
+
+test("active subpages do not route visitors into the retired Pro plan", () => {
+  const subpages = ["compare.html", "privacy.html", "terms.html", "press-release.html"];
+  const bundleSource = fs.readFileSync(path.join(repoRoot, "site", "lang", "i18n-bundle.js"), "utf8");
+  const bundle = JSON.parse(bundleSource.replace(/^window\.SIMY_I18N_BUNDLE\s*=\s*/, "").replace(/;\s*$/, ""));
+
+  for (const file of subpages) {
+    const source = fs.readFileSync(path.join(repoRoot, "site", file), "utf8");
+    assert.doesNotMatch(source, /signup\?plan=pro|data-i18n="home\.cta\.primary"|Start with Pro/);
+  }
+
+  const pressRelease = fs.readFileSync(path.join(repoRoot, "site", "press-release.html"), "utf8");
+  assert.doesNotMatch(pressRelease, /data-i18n="newpress\.avail\.p"|Teams can begin with Pro/);
+
+  for (const file of fs.readdirSync(path.join(repoRoot, "site", "lang")).filter((name) => name.endsWith(".json"))) {
+    const copy = JSON.parse(fs.readFileSync(path.join(repoRoot, "site", "lang", file), "utf8"));
+    const locale = file.replace(/\.json$/, "");
+    assert.equal(copy["home.cta.primary"], copy["pricing.cta"], `${file} must use the neutral plan-choice CTA`);
+    assert.equal(copy["newpress.avail.p"], copy["pricing.webNote"], `${file} must not advertise Pro as a course`);
+    assert.equal(bundle[locale]["home.cta.primary"], copy["home.cta.primary"], `${file} CTA must match the file-preview bundle`);
+    assert.equal(bundle[locale]["newpress.avail.p"], copy["newpress.avail.p"], `${file} availability must match the file-preview bundle`);
+  }
 });
 
 test("homepage omits the redundant learning-control cards", () => {
