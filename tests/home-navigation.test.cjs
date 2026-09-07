@@ -6,6 +6,7 @@ const test = require("node:test");
 const repoRoot = path.resolve(__dirname, "..");
 const homeScript = fs.readFileSync(path.join(repoRoot, "site/home.js"), "utf8");
 const homeHtml = fs.readFileSync(path.join(repoRoot, "site/index.html"), "utf8");
+const homeCss = fs.readFileSync(path.join(repoRoot, "site/home.css"), "utf8");
 
 test("mobile navigation closes from blank and outside clicks", () => {
   assert.match(
@@ -21,11 +22,28 @@ test("mobile navigation closes from blank and outside clicks", () => {
 });
 
 test("homepage cache-busts the current home assets", () => {
-  assert.match(homeHtml, /home\.css\?v=20260907-industry-realtime-pricing-3/);
+  assert.match(homeHtml, /home\.css\?v=20260907-realtime-price-symbol-1/);
   assert.match(homeHtml, /home-locales\.js\?v=20260907-industry-realtime-pricing-3/);
   assert.match(homeHtml, /home-i18n\.js\?v=20260907-industry-realtime-pricing-3/);
   assert.match(homeHtml, /pricing-catalog\.js\?v=20260907-industry-realtime-pricing-3/);
   assert.match(homeHtml, /home\.js\?v=20260907-industry-realtime-pricing-3/);
+});
+
+test("Realtime add-on keeps the currency symbol in the price line", () => {
+  assert.match(
+    homeCss,
+    /\.pricing-realtime-price > strong \{[^}]*display: inline-flex;[^}]*align-items: center;/s,
+    "the plus sign, currency symbol, and amount must share one centered price line"
+  );
+  assert.match(
+    homeCss,
+    /\.pricing-realtime-price > strong small \{[^}]*font-size: 0\.56em;[^}]*line-height: 1;/s
+  );
+  assert.doesNotMatch(
+    homeCss,
+    /\.pricing-realtime-price > strong small \{[^}]*vertical-align: top;/s,
+    "the currency symbol must not render as a superscript"
+  );
 });
 
 test("active subpages do not route visitors into the retired Pro plan", () => {

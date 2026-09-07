@@ -3799,16 +3799,29 @@ html[lang="ja"] .pricing-enterprise-copy {
 }
 
 .pricing-realtime-price > strong {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.015em;
   color: var(--ink);
   font-family: var(--mono);
   font-size: clamp(2.6rem, 5vw, 4.4rem);
-  letter-spacing: -0.08em;
-  line-height: 0.9;
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+.pricing-realtime-price > strong > span[aria-hidden="true"] {
+  font-size: 0.72em;
+  line-height: 1;
 }
 
 .pricing-realtime-price > strong small {
-  font-size: 0.42em;
-  vertical-align: top;
+  font-size: 0.56em;
+  line-height: 1;
+}
+
+.pricing-realtime-price > strong [data-realtime-addon-price] {
+  letter-spacing: -0.08em;
+  line-height: 1;
 }
 
 .pricing-realtime-price > span {
