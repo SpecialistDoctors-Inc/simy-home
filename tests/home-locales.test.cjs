@@ -118,8 +118,8 @@ test("company overview links directly to AwakApp company information", () => {
     "ITエンジニア・ファイナンシャルプランナー・製薬MR・歯科クリニック"
   );
   assert.match(
-    locales.ja["Choose IT Engineer, Financial Planner, Pharmaceutical MR, or Dental Clinic. The same SIMY Quality (SQM) adapts its terminology, workflow, and review criteria to your field."],
-    /ITエンジニア・ファイナンシャルプランナー・製薬MR・歯科クリニック向けとして選べます/
+    locales.ja["Choose IT Engineer, Financial Planner, Pharmaceutical MR, or Dental Clinic. SIMY by Industry includes the existing SIMY Quality (SQM), adapted to your field’s terminology, workflow, and review criteria."],
+    /ITエンジニア・ファイナンシャルプランナー・製薬MR・歯科クリニックから選べます/
   );
   for (const [locale, copy] of Object.entries(locales)) {
     assert.ok(copy["Company overview"]?.trim(), `${locale} must localize the company overview link`);
@@ -131,23 +131,22 @@ test("pricing gives Starter unlimited Autorun, free trials, and a truthful Enter
   assert.ok(pricingSection, "pricing section must remain present");
 
   const planHeaders = Object.fromEntries(
-    [...pricingSection.matchAll(/<th[^>]*data-pricing-plan="(starter|quality|pro)"[^>]*>([\s\S]*?)<\/th>/g)]
+    [...pricingSection.matchAll(/<th[^>]*data-pricing-plan="(starter|quality)"[^>]*>([\s\S]*?)<\/th>/g)]
       .map(([, plan, content]) => [plan, content])
   );
-  assert.deepEqual(Object.keys(planHeaders), ["starter", "quality", "pro"]);
+  assert.deepEqual(Object.keys(planHeaders), ["starter", "quality"]);
   assert.match(planHeaders.starter, /pricing-trial">1 month free</);
   assert.match(planHeaders.quality, /pricing-trial">1 month free</);
-  assert.doesNotMatch(planHeaders.pro, /pricing-trial/);
   assert.equal(pricingSection.match(/pricing-trial">1 month free</g)?.length, 2);
   assert.equal(
     pricingSection.match(/class="pricing-badge-stack"/g)?.length,
-    4,
+    3,
     "every plan header must reserve the same in-flow badge area"
   );
 
   const autorunRow = pricingSection.match(/<th scope="row">Autorun allowance<\/th>([\s\S]*?)<\/tr>/)?.[1];
   assert.ok(autorunRow, "Autorun allowance row must remain present");
-  assert.equal(autorunRow.match(/pricing-value">Unlimited</g)?.length, 3);
+  assert.equal(autorunRow.match(/pricing-value">Unlimited</g)?.length, 2);
   assert.match(autorunRow, /pricing-value pricing-value-custom">Tailored</);
   assert.doesNotMatch(homeHtml, /100 runs/);
 
@@ -162,7 +161,7 @@ test("pricing gives Starter unlimited Autorun, free trials, and a truthful Enter
     .map(([, row]) => row);
   assert.ok(pricingRows.length > 0, "pricing comparison must keep its feature rows");
   for (const row of pricingRows) {
-    assert.equal(row.match(/<td\b/g)?.length, 4, "each feature row must align across all four plans");
+    assert.equal(row.match(/<td\b/g)?.length, 3, "each feature row must align across all three plans");
   }
 
   const enterpriseIncludedFeatures = [
@@ -172,8 +171,6 @@ test("pricing gives Starter unlimited Autorun, free trials, and a truthful Enter
     "Use your connected ChatGPT plan",
     "Quality Loop",
     "Target error rate ≤3%",
-    "Hearing Mode",
-    "Real-time suggestions",
     "Logical database isolation by organization"
   ];
   for (const feature of enterpriseIncludedFeatures) {
@@ -193,38 +190,49 @@ test("pricing gives Starter unlimited Autorun, free trials, and a truthful Enter
   }
 });
 
-test("SIMY Quality presents industry-specific SQM options at the updated price", () => {
+test("SIMY by Industry presents industry-specific SQM with Realtime as a $30 add-on", () => {
   const pricingSection = homeHtml.match(/<section class="pricing[\s\S]*?<\/section>/)?.[0];
   assert.ok(pricingSection, "pricing section must remain present");
 
   const qualityHeader = pricingSection.match(/<th class="pricing-quality"[\s\S]*?<\/th>/)?.[0];
-  assert.ok(qualityHeader, "SIMY Quality plan header must remain present");
+  assert.ok(qualityHeader, "SIMY by Industry plan header must remain present");
+  assert.match(qualityHeader, /pricing-plan-name">SIMY by Industry</);
   assert.match(qualityHeader, /data-price-amount>59\.8</);
-  assert.match(qualityHeader, /pricing-plan-specializations">IT Engineer · Financial Planner · Pharmaceutical MR · Dental Clinic</);
+  assert.doesNotMatch(qualityHeader, /IT Engineer · Financial Planner · Pharmaceutical MR · Dental Clinic/);
   assert.match(pricingSection, /<th scope="row">Industry-optimized SQM<\/th>/);
 
   const industryRow = pricingSection.match(/<th scope="row">Industry-optimized SQM<\/th>([\s\S]*?)<\/tr>/)?.[1];
   assert.ok(industryRow, "industry-optimized SQM row must remain present");
-  assert.equal(industryRow.match(/IT Engineer · Financial Planner · Pharmaceutical MR · Dental Clinic/g)?.length, 3);
+  assert.equal(industryRow.match(/IT Engineer · Financial Planner · Pharmaceutical MR · Dental Clinic/g)?.length, 2);
   assert.match(industryRow, /pricing-dash/);
 
-  const proHeader = pricingSection.match(/<th scope="col" data-pricing-plan="pro">([\s\S]*?)<\/th>/)?.[1];
-  assert.match(proHeader, /data-price-amount>89\.8</);
+  assert.doesNotMatch(pricingSection, /data-pricing-plan="pro"|pricing-plan-name">Pro</);
+  assert.match(pricingSection, /class="pricing-realtime-addon"[^>]*data-realtime-addon/);
+  assert.match(pricingSection, /data-realtime-addon-price>30</);
+  assert.match(pricingSection, /Add real-time support to SIMY by Industry only when you need it\./);
+  for (const feature of ["Hearing Mode", "Real-time suggestions", "600 min included each month", "Additional usage: $2 / 60 min"]) {
+    assert.ok(pricingSection.includes(feature), `${feature} must be explained in the Realtime add-on`);
+  }
 
   const locales = { ja: extractJapaneseCopy(), ...loadAdditionalLocales() };
   for (const [locale, copy] of Object.entries(locales)) {
     for (const key of [
-      "Industry-ready · SIMY Quality",
+      "Industry-ready · SIMY by Industry",
       "Quality checks shaped around your profession.",
-      "Choose IT Engineer, Financial Planner, Pharmaceutical MR, or Dental Clinic. The same SIMY Quality (SQM) adapts its terminology, workflow, and review criteria to your field.",
+      "Choose IT Engineer, Financial Planner, Pharmaceutical MR, or Dental Clinic. SIMY by Industry includes the existing SIMY Quality (SQM), adapted to your field’s terminology, workflow, and review criteria.",
       "IT Engineer · Financial Planner · Pharmaceutical MR · Dental Clinic",
-      "Industry-optimized SQM"
+      "Industry-optimized SQM",
+      "Optional add-on",
+      "Add real-time support to SIMY by Industry only when you need it.",
+      "Realtime add-on features",
+      "600 min included each month",
+      "Additional usage: $2 / 60 min"
     ]) {
       assert.ok(copy[key]?.trim(), `${locale} must localize ${key}`);
     }
   }
 
-  for (const selector of [".pricing-plan-specializations", ".pricing-value-specializations"]) {
+  for (const selector of [".pricing-value-specializations"]) {
     const escapedSelector = selector.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     const block = homeCss.match(new RegExp(`${escapedSelector}\\s*\\{([^}]*)\\}`))?.[1];
     assert.ok(block, `${selector} must keep specialization label styling`);
@@ -233,7 +241,7 @@ test("SIMY Quality presents industry-specific SQM options at the updated price",
   }
   assert.match(
     homeCss,
-    /@media \(max-width: 620px\)[\s\S]*?\.pricing-plan-specializations,\s*\.pricing-value-specializations\s*\{[^}]*font-size:\s*0\.68rem/s,
+    /@media \(max-width: 620px\)[\s\S]*?\.pricing-value-specializations\s*\{[^}]*font-size:\s*0\.68rem/s,
     "mobile pricing must keep long industry labels inside narrow pricing columns"
   );
 });
