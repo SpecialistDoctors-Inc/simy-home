@@ -10,6 +10,27 @@ const localesSource = fs.readFileSync(path.join(repoRoot, "site/home-locales.js"
 const homeHtml = fs.readFileSync(path.join(repoRoot, "site/index.html"), "utf8");
 const homeCss = fs.readFileSync(path.join(repoRoot, "site/home.css"), "utf8");
 
+test("Japanese user-facing copy describes checks without internal evidence jargon", () => {
+  const japaneseCopy = extractJapaneseCopy();
+  assert.equal(japaneseCopy["Verify the evidence"], "事実を確かめる");
+  assert.equal(
+    japaneseCopy["Prepare the evidence for the next decision."],
+    "次の判断に必要な情報を揃える。"
+  );
+  assert.equal(japaneseCopy["Proof where we have it."], "実績は、確認済みの数字で。");
+
+  const userFacingJapaneseSources = [
+    i18nSource,
+    fs.readFileSync(path.join(repoRoot, "site/lang/ja.json"), "utf8"),
+    fs.readFileSync(path.join(repoRoot, "site/lang/i18n-bundle.js"), "utf8"),
+    fs.readFileSync(path.join(repoRoot, "site/old/index.html"), "utf8"),
+    fs.readFileSync(path.join(repoRoot, "site/old/lang/ja.json"), "utf8")
+  ];
+  for (const source of userFacingJapaneseSources) {
+    assert.doesNotMatch(source, /根拠/);
+  }
+});
+
 function extractJapaneseCopy() {
   const marker = "const JA_COPY = Object.freeze(";
   const start = i18nSource.indexOf(marker) + marker.length;
