@@ -9,6 +9,7 @@ const i18nSource = fs.readFileSync(path.join(repoRoot, "site/home-i18n.js"), "ut
 const localesSource = fs.readFileSync(path.join(repoRoot, "site/home-locales.js"), "utf8");
 const homeHtml = fs.readFileSync(path.join(repoRoot, "site/index.html"), "utf8");
 const homeCss = fs.readFileSync(path.join(repoRoot, "site/home.css"), "utf8");
+const homeScript = fs.readFileSync(path.join(repoRoot, "site/home.js"), "utf8");
 
 function extractJapaneseCopy() {
   const marker = "const JA_COPY = Object.freeze(";
@@ -167,7 +168,7 @@ test("pricing gives Starter unlimited Autorun, free trials, and a truthful Enter
   const enterpriseIncludedFeatures = [
     "Codex account connection",
     "Meeting Autorun",
-    "Save and reuse Pipelines",
+    "Save and reuse Workflows",
     "Use your connected ChatGPT plan",
     "Quality Loop",
     "Target error rate ≤3%",
@@ -401,7 +402,7 @@ test("keeps Traditional Chinese distinct and omits unsupported China region", ()
 test("protects the global editorial message in every locale", () => {
   const locales = { ja: extractJapaneseCopy(), ...loadAdditionalLocales() };
   const editorialKeys = [
-    "Bring in the conversations that matter. SIMY learns the checks, priorities, and non-negotiables behind your best work, turns them into focused Pipelines, and selects the right one automatically. Autorun takes it from there.",
+    "Bring in the conversations that matter. SIMY learns the checks, priorities, and non-negotiables behind your best work, turns them into focused Workflows, and selects the right one automatically. Autorun takes it from there.",
     "Choose the conversations that reveal your checks, priorities, and non-negotiables. SIMY extracts the patterns that repeat, separates them from one-off detail, and ignores the rest.",
     "Your conversations become the way work gets done.",
     "SIMY finds the missing inputs, the right people, and the next move. Autorun handles the sequence, so the work keeps moving until your attention is actually needed.",
@@ -424,6 +425,8 @@ test("protects the global editorial message in every locale", () => {
   for (const retired of [
     "No agent or pipeline to choose",
     "You ask. SIMY selects the pipeline. Autorun gets to work.",
+    "No agent or workflow to choose",
+    "You ask. SIMY selects the workflow. Autorun gets to work.",
     "A general agent can do the task.",
     "Put a Quality Loop around every Autorun.",
     "Choose the conversations that reveal your standards. SIMY extracts the patterns that repeat, separates them from one-off detail, and ignores the rest."
@@ -431,5 +434,50 @@ test("protects the global editorial message in every locale", () => {
     assert.ok(!homeHtml.includes(retired), `live HTML must retire: ${retired}`);
     assert.ok(!i18nSource.includes(JSON.stringify(retired)), `JA_COPY must retire: ${retired}`);
     assert.ok(!localesSource.includes(JSON.stringify(retired)), `locale copy must retire: ${retired}`);
+  }
+});
+
+test("all published product copy calls pipelines workflows", () => {
+  const legacyTerms = /\bpipelines?\b|パイプライン|पाइपलाइन|管线|流水线|流水線|파이프라인|خط أنابيب|ಪೈಪ್‌ಲೈನ್|పైప్‌లైన్|ท่อส่ง|Конвейер/iu;
+  const copySources = {
+    "site/index.html": homeHtml,
+    "site/home-i18n.js": i18nSource,
+    "site/home-locales.js": localesSource,
+    "site/home.js": homeScript,
+    "site/lang/i18n-bundle.js": fs.readFileSync(path.join(repoRoot, "site/lang/i18n-bundle.js"), "utf8")
+  };
+
+  for (const directory of ["site/lang", "site/old/lang"]) {
+    for (const file of fs.readdirSync(path.join(repoRoot, directory)).filter((name) => name.endsWith(".json"))) {
+      copySources[`${directory}/${file}`] = fs.readFileSync(path.join(repoRoot, directory, file), "utf8");
+    }
+  }
+
+  for (const [file, source] of Object.entries(copySources)) {
+    assert.doesNotMatch(source, legacyTerms, `${file} must not expose legacy pipeline terminology`);
+  }
+
+  const locales = { ja: extractJapaneseCopy(), ...loadAdditionalLocales() };
+  assert.equal(locales.ja.WORKFLOW, "ワークフロー");
+  assert.equal(locales.hi.WORKFLOW, "वर्कफ़्लो");
+  assert.equal(locales["zh-Hans"].WORKFLOW, "工作流");
+  for (const [locale, copy] of Object.entries(locales)) {
+    assert.ok(copy["Save and reuse Workflows"]?.trim(), `${locale} must localize the Workflow pricing feature`);
+  }
+
+  for (const file of [
+    "site/assets/index-DnVveaIK.js",
+    "site/assets/index-DnVveaIK.js.bak",
+    "site/old/assets/index-DnVveaIK.js",
+    "site/old/assets/index-DnVveaIK.js.bak"
+  ]) {
+    const demoBundle = fs.readFileSync(path.join(repoRoot, file), "utf8");
+    assert.match(demoBundle, /"View Workflow Progress"/, `${file} must expose Workflow progress`);
+    assert.match(demoBundle, /children:"Workflow Progress"/, `${file} must label Workflow progress`);
+    assert.doesNotMatch(
+      demoBundle,
+      /"View Pipeline Progress"|children:"Pipeline Progress"|"Showing pipeline progress"/,
+      `${file} must not expose legacy Pipeline progress copy`
+    );
   }
 });

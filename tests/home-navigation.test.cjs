@@ -23,10 +23,27 @@ test("mobile navigation closes from blank and outside clicks", () => {
 
 test("homepage cache-busts the current home assets", () => {
   assert.match(homeHtml, /home\.css\?v=20260907-realtime-price-symbol-1/);
-  assert.match(homeHtml, /home-locales\.js\?v=20260907-industry-realtime-pricing-3/);
-  assert.match(homeHtml, /home-i18n\.js\?v=20260907-industry-realtime-pricing-3/);
+  assert.match(homeHtml, /home-locales\.js\?v=20260915-workflow-terminology-1/);
+  assert.match(homeHtml, /home-i18n\.js\?v=20260915-workflow-terminology-1/);
   assert.match(homeHtml, /pricing-catalog\.js\?v=20260907-industry-realtime-pricing-3/);
-  assert.match(homeHtml, /home\.js\?v=20260907-industry-realtime-pricing-3/);
+  assert.match(homeHtml, /home\.js\?v=20260915-workflow-terminology-1/);
+});
+
+test("pages loading the demo bundle cache-bust its workflow terminology", () => {
+  const pages = ["careers.html", "contact.html", "how-it-works.html", "integrations.html", "security.html", "status.html"];
+  for (const directory of ["site", "site/old"]) {
+    for (const page of pages) {
+      const source = fs.readFileSync(path.join(repoRoot, directory, page), "utf8");
+      assert.match(
+        source,
+        /\/assets\/index-DnVveaIK\.js\?v=20260915-workflow-terminology-1/,
+        `${directory}/${page} must load the updated workflow terminology bundle`
+      );
+    }
+  }
+
+  const publishedBackup = fs.readFileSync(path.join(repoRoot, "site/index.html.bak"), "utf8");
+  assert.match(publishedBackup, /\/assets\/index-DnVveaIK\.js\?v=20260915-workflow-terminology-1/);
 });
 
 test("Realtime add-on keeps the currency symbol in the price line", () => {
