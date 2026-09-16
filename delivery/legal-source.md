@@ -1,0 +1,1 @@
+Seller disclosure content copied without substantive edits from ai-mentor-home commit 17d1f64 src/app/seller-info/page.tsx, also verified live at https://ai-mentor.app/seller-info/. Only branding, navigation, responsive layout changed. Existing simy.one terms/privacy content unchanged. Before: seller 404, existing terms/privacy exact .html paths200.

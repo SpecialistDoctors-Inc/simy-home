@@ -2,41 +2,41 @@ const scenarios = {
   codex: {
     source: "Request in Codex",
     prompt: "Review this release before it ships. Check the user impact, evidence, and review quality.",
-    acknowledgement: "I matched this work to your release-quality pipeline. Autorun is starting the essential checks now.",
-    workflow: "Your release-quality pipeline",
+    acknowledgement: "I matched this work to your release-quality workflow. Autorun is starting the essential checks now.",
+    workflow: "Your release-quality workflow",
     steps: [
       ["Recognize the work", "Done"],
-      ["Select the matching pipeline", "Done"],
+      ["Select the matching workflow", "Done"],
       ["Run the essential checks", "Running"],
       ["Update My Actions", "Next"]
     ],
-    output: "No agent chosen · pipeline selected · Autorun running"
+    output: "No agent chosen · workflow selected · Autorun running"
   },
   claude: {
     source: "Request in Claude Code",
     prompt: "Investigate this regression. Trace the cause before changing code and leave evidence another engineer can review.",
-    acknowledgement: "I matched this to your investigation pipeline. Autorun is tracing the cause and preserving the review evidence now.",
-    workflow: "Your investigation pipeline",
+    acknowledgement: "I matched this to your investigation workflow. Autorun is tracing the cause and preserving the review evidence now.",
+    workflow: "Your investigation workflow",
     steps: [
       ["Recognize the investigation", "Done"],
-      ["Select the matching pipeline", "Done"],
+      ["Select the matching workflow", "Done"],
       ["Trace cause and evidence", "Running"],
       ["Update My Actions", "Next"]
     ],
-    output: "No agent chosen · investigation pipeline selected · Autorun running"
+    output: "No agent chosen · investigation workflow selected · Autorun running"
   },
   cowork: {
     source: "Request in Cowork",
     prompt: "Turn these updates into a concise decision brief. Surface only material changes and trace every claim to evidence.",
-    acknowledgement: "I matched this to your decision-brief pipeline. Autorun is applying your materiality and evidence checks now.",
-    workflow: "Your decision-brief pipeline",
+    acknowledgement: "I matched this to your decision-brief workflow. Autorun is applying your materiality and evidence checks now.",
+    workflow: "Your decision-brief workflow",
     steps: [
       ["Recognize the briefing task", "Done"],
-      ["Select the matching pipeline", "Done"],
+      ["Select the matching workflow", "Done"],
       ["Apply the briefing checks", "Running"],
       ["Update My Actions", "Next"]
     ],
-    output: "No agent chosen · briefing pipeline selected · Autorun running"
+    output: "No agent chosen · briefing workflow selected · Autorun running"
   }
 };
 
