@@ -65,7 +65,17 @@ jobs:
             --exclude "*.html" \
             --exclude "i18n.js" \
             --exclude "lang/*" \
+            --exclude ".well-known/apple-app-site-association" \
             --cache-control "public, max-age=86400"
+
+      - name: Publish apple-app-site-association (application/json, no redirect)
+        # Extensionless file: set the content type explicitly. It is excluded
+        # from the sync above so --delete never removes it.
+        run: |
+          aws s3 cp site/.well-known/apple-app-site-association \
+            s3://${{ secrets.SITE_S3_BUCKET }}/.well-known/apple-app-site-association \
+            --content-type "application/json" \
+            --cache-control "public, max-age=3600"
 
       - name: Publish old homepage slash URL
         run: |
