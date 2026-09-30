@@ -68,6 +68,12 @@ const TARGET_QUERIES = [
   { query: "PLAUD Unlimited", pattern: /Unlimited/ },
   { query: "PLAUD NOTE Pro", pattern: /NOTE Pro/ },
   { query: "Plaud NotePin", pattern: /NotePin/ },
+  // Added from Ahrefs Keywords Explorer (JP, 2026-09-30): high-volume post-purchase terms.
+  { query: "PLAUD 使い方", pattern: /使い方/ },
+  { query: "Plaud Web", pattern: /Plaud Web/ },
+  { query: "Plaud Desktop", pattern: /Plaud Desktop/ },
+  { query: "PLAUD どこの国", pattern: /どこの国/ },
+  { query: "PLAUD 情報漏洩", pattern: /情報漏洩/ },
 ];
 
 // Co-occurrence terms from the top-20 SERP analysis that fit a post-purchase guide.
@@ -82,6 +88,10 @@ const ADOPTED_TERMS = [
   "写真", "ポケット", "削除", "専用", "ファイル", "追加", "保存", "話者", "転送", "オンライン",
   "管理", "理解", "作成", "マインドマップ", "質問", "自動的", "準拠", "言語", "連続", "問題",
   "検証", "ノート", "日本語",
+  // Ahrefs "Also talk about" and matching-term vocabulary (JP, 2026-09-30).
+  "使い方", "ログイン", "Web", "Desktop", "パソコン", "充電", "接続", "セキュリティ", "情報漏洩", "学習",
+  "Zoom", "アカウント", "違い", "方法", "GPT", "Gemini", "Claude", "SOC 2", "HIPAA", "GDPR",
+  "AutoFlow", "暗号化", "データセンター", "月額", "翻訳", "ダウンロード",
 ];
 
 // Terms that pull the page toward e-commerce listings; the guide must not use them.
