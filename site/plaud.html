@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="google-site-verification" content="1n6_tVJZRZlQax8luEg5VsuG7gg-kCEam5VFiWIJs3U">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PLAUD NOTE 活用ガイド｜AI文字起こし・要約の先を自動化する連携 | SIMY</title>
-<meta name="description" content="PLAUD NOTEの録音・文字起こし・要約を仕事に変える活用ガイド。届いたらやること、SIMYとの連携方法、料金プランと対応モデルの比較、Ask Plaudとの違いまで。Plaudアカウントを接続するだけで、フォローメールや共有をSIMYが進めます。">
+<title>PLAUD NOTEの使い方｜AI文字起こし・要約の先を自動化 | SIMY</title>
+<meta name="description" content="PLAUD NOTEの使い方ガイド。届いたらやること、Plaud WebとDesktopの使い方、料金プランと対応モデルの比較、セキュリティまで。Plaudアカウントを接続するだけで、要約のあとのフォローメールや共有をSIMYが進めます。">
 <link rel="canonical" href="https://simy.one/plaud.html">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://simy.one/plaud.html">
@@ -673,6 +673,21 @@ thead th.simy { background: var(--blue-deep); }
         },
         {
           "@type": "Question",
+          "name": "PLAUDはどこの国の会社ですか？",
+          "acceptedAnswer": { "@type": "Answer", "text": "PLAUDを開発するPlaud Inc.は、米国サンフランシスコに本社を置く会社です。日本では、PLAUD株式会社がサポートやデータの管理を担っています。" }
+        },
+        {
+          "@type": "Question",
+          "name": "PCでもPLAUDを使えますか？",
+          "acceptedAnswer": { "@type": "Answer", "text": "使えます。ブラウザ版のPlaud Webで録音の確認や編集ができ、WindowsとMac向けのPlaud Desktopでは、Zoomなどのオンライン会議をボットなしで録音できます。" }
+        },
+        {
+          "@type": "Question",
+          "name": "PLAUDの録音がAIの学習に使われたり、情報漏洩したりしませんか？",
+          "acceptedAnswer": { "@type": "Answer", "text": "PLAUDは、明示的な同意がない限り録音データをAIの学習に使わないと案内しています。SOC 2 Type II、HIPAA、GDPR、ISO/IEC 27001に準拠し、データは暗号化して保存されます。SIMYでの取り扱いは、セキュリティとプライバシーポリシーのページで公開しています。" }
+        },
+        {
+          "@type": "Question",
           "name": "Notionへのエクスポートや、ファイルの書き出しは必要ですか？",
           "acceptedAnswer": { "@type": "Answer", "text": "必要ありません。SIMYは、Plaudアカウントの録音、文字起こし、要約を直接検索して参照します。" }
         },
@@ -797,7 +812,7 @@ thead th.simy { background: var(--blue-deep); }
     <nav class="toc" aria-label="目次">
       <p class="toc-title">目次</p>
       <ol>
-        <li><a href="#setup"><span>01</span>届いたらまずやること</a></li>
+        <li><a href="#setup"><span>01</span>使い方：届いたらやること</a></li>
         <li><a href="#features"><span>02</span>PLAUD NOTEの主な機能</a></li>
         <li><a href="#after"><span>03</span>要約のあとに残る仕事</a></li>
         <li><a href="#connect"><span>04</span>PLAUDとSIMYの連携方法</a></li>
@@ -805,7 +820,7 @@ thead th.simy { background: var(--blue-deep); }
         <li><a href="#compare"><span>06</span>Ask Plaud・MCPとの違い</a></li>
         <li><a href="#usecases"><span>07</span>ビジネスでの活用例</a></li>
         <li><a href="#pricing"><span>08</span>料金プランと対応モデル</a></li>
-        <li><a href="#privacy"><span>09</span>データとプライバシー</a></li>
+        <li><a href="#privacy"><span>09</span>セキュリティと情報漏洩</a></li>
         <li><a href="#faq"><span>10</span>よくある質問</a></li>
         <li><a href="#sources"><span>11</span>参考情報</a></li>
       </ol>
@@ -815,7 +830,7 @@ thead th.simy { background: var(--blue-deep); }
       <details class="toc-mobile">
         <summary>目次</summary>
         <ol>
-          <li><a href="#setup">届いたらまずやること</a></li>
+          <li><a href="#setup">使い方：届いたらやること</a></li>
           <li><a href="#features">PLAUD NOTEの主な機能</a></li>
           <li><a href="#after">要約のあとに残る仕事</a></li>
           <li><a href="#connect">PLAUDとSIMYの連携方法</a></li>
@@ -823,7 +838,7 @@ thead th.simy { background: var(--blue-deep); }
           <li><a href="#compare">Ask Plaud・MCPとの違い</a></li>
           <li><a href="#usecases">ビジネスでの活用例</a></li>
           <li><a href="#pricing">料金プランと対応モデル</a></li>
-          <li><a href="#privacy">データとプライバシー</a></li>
+          <li><a href="#privacy">セキュリティと情報漏洩</a></li>
           <li><a href="#faq">よくある質問</a></li>
           <li><a href="#sources">参考情報</a></li>
         </ol>
@@ -834,14 +849,14 @@ thead th.simy { background: var(--blue-deep); }
       <!-- 01 -->
       <section class="sec" id="setup" aria-labelledby="h-setup">
         <span class="sec-label">01 / SETUP</span>
-        <h2 id="h-setup">PLAUDが届いたら、最初にやる5つのこと</h2>
+        <h2 id="h-setup">PLAUDの使い方：届いたら最初にやる5つのこと</h2>
         <p>PLAUDを買ったばかりの人も、すでに使っている人も、次の5つを確認しておきましょう。録音の音質も、そのあとの仕事の進み方も変わります。</p>
         <ol class="checklist">
           <li>
             <span class="num">1</span>
             <div>
-              <h3>アプリを入れて、本体とペアリングする</h3>
-              <p>スマホにPLAUDアプリを入れ、本体とペアリングしてデバイスを登録します。録音データは本体からアプリに転送されたあと、文字起こしが始まります。本体の保存容量がいっぱいになる前に、こまめに転送しておくと安心です。</p>
+              <h3>充電して、アプリと本体をペアリングする</h3>
+              <p>まず本体を付属の充電器で充電します。NotePinはマグネット式の充電ドックに置くだけで、約2時間で満充電になります。次にスマホにPLAUDアプリを入れ、本体とペアリングしてデバイスを登録します。録音データは本体からアプリに転送されたあと、文字起こしが始まります。本体の保存容量がいっぱいになる前に、こまめに転送しておくと安心です。</p>
             </div>
           </li>
           <li>
@@ -873,6 +888,14 @@ thead th.simy { background: var(--blue-deep); }
             </div>
           </li>
         </ol>
+
+        <h3>PCで使うなら：Plaud WebとPlaud Desktop</h3>
+        <p>PLAUDはスマホだけでなく、パソコンでも使えます。</p>
+        <ul class="plain-list">
+          <li><strong>Plaud Web：</strong>ブラウザからPlaudアカウントにログインして、録音の確認や文字起こしの編集ができます。</li>
+          <li><strong>Plaud Desktop：</strong>WindowsとMacのデスクトップアプリです。Zoom、Microsoft Teams、Google Meetなどのオンライン会議を、ボットを参加させずに録音できます。PLAUDのユーザーは無料で使えます。</li>
+        </ul>
+        <p>どの方法で録音しても、Plaudアカウントに保存された録音はSIMYから参照できます。</p>
       </section>
 
       <!-- 02 -->
@@ -894,7 +917,7 @@ thead th.simy { background: var(--blue-deep); }
           <div class="feature">
             <span class="tag">SUMMARIZE</span>
             <h3>要約</h3>
-            <p>1万種類以上の要約テンプレートと、自分で作るカスタムテンプレートで要約を生成できます。要約に使うAIモデルも複数から選べます。</p>
+            <p>1万種類以上の要約テンプレートと、自分で作るカスタムテンプレートで要約を生成できます。要約に使うAIモデルは、GPT、Gemini、Claudeなどから選べます。</p>
           </div>
           <div class="feature">
             <span class="tag">MIND MAP</span>
@@ -914,7 +937,7 @@ thead th.simy { background: var(--blue-deep); }
           <div class="feature wide">
             <span class="tag">EXPORT / INTEGRATION</span>
             <h3>エクスポートと連携</h3>
-            <p>TXT、DOCX、PDF、SRTなど27種類以上の形式でファイルを書き出せます。Notionへの書き出しやZapierとの連携、AIツールから録音を読み出せるPLAUD MCPにも対応しています。</p>
+            <p>TXT、DOCX、PDF、SRTなど27種類以上の形式でファイルを書き出せます。Notionへの書き出し、AutoFlow機能、Zapierとの連携、AIツールから録音を読み出せるPLAUD MCPにも対応しています。</p>
           </div>
         </div>
       </section>
@@ -1172,12 +1195,13 @@ thead th.simy { background: var(--blue-deep); }
       <!-- 09 -->
       <section class="sec" id="privacy" aria-labelledby="h-privacy">
         <span class="sec-label">09 / PRIVACY</span>
-        <h2 id="h-privacy">データ・プライバシーと録音の同意</h2>
-        <p>会話の記録を扱う以上、データの扱いと同意の取り方は最初に確認しておきましょう。</p>
+        <h2 id="h-privacy">セキュリティ・情報漏洩対策と録音の同意</h2>
+        <p>会話の記録を扱う以上、情報漏洩への備えと同意の取り方は最初に確認しておきましょう。</p>
         <ul class="plain-list">
           <li><strong>録音の同意：</strong>録音を始める前に、会話に参加する全員から同意を取ってください。SIMYの<a href="/terms.html">利用規約</a>でも、録音の同意の取得はお客さまの責任としています。</li>
           <li><strong>SIMYとの接続：</strong>接続は、Plaudの認証画面であなたのPlaudアカウントにログインし、許可して行います。</li>
-          <li><strong>PLAUD側のデータ：</strong>PLAUDは、ISO 27001とISO 27701に準拠したセキュリティ体制を公開しています。不要になった録音は、PLAUDアプリから削除できます。</li>
+          <li><strong>PLAUDのセキュリティ：</strong>PLAUDは、SOC 2 Type II、HIPAA、GDPR、ISO/IEC 27001への準拠を公開しています。データは通信時にTLS 1.2以上、保存時にAES-256で暗号化され、日本にもデータセンターがあります。</li>
+          <li><strong>AIの学習：</strong>PLAUDは、ユーザーが明示的に同意しない限り、録音データをAIの学習に使わないと案内しています。不要になった録音は、PLAUDアプリから削除できます。</li>
           <li><strong>PLAUD MCPを使う場合：</strong>Web版のChatGPTやClaudeから使うと、録音データはPLAUDの米国のサーバーを経由します。PLAUDは、処理後にデータを保存しないと案内しています。</li>
           <li><strong>SIMY側のデータ：</strong>SIMYでのデータの取り扱いは、<a href="/security.html">セキュリティ</a>と<a href="/privacy.html">プライバシーポリシー</a>で公開しています。</li>
         </ul>
@@ -1203,6 +1227,18 @@ thead th.simy { background: var(--blue-deep); }
           <details>
             <summary>PLAUD NOTE Pro、NotePinなど、どのモデルでも使えますか？</summary>
             <div class="a"><p>はい。SIMYはPlaudアカウントに保存された文字起こしと要約を参照するため、モデルによる違いはありません。通話も録音したい場合は、通話モードのあるPLAUD NOTEかPLAUD NOTE Proを選んでください。</p></div>
+          </details>
+          <details>
+            <summary>PLAUDはどこの国の会社ですか？</summary>
+            <div class="a"><p>PLAUDを開発するPlaud Inc.は、米国サンフランシスコに本社を置く会社です。日本では、PLAUD株式会社がサポートやデータの管理を担っています。</p></div>
+          </details>
+          <details>
+            <summary>PCでもPLAUDを使えますか？</summary>
+            <div class="a"><p>使えます。ブラウザ版のPlaud Webで録音の確認や編集ができ、WindowsとMac向けのPlaud Desktopでは、Zoomなどのオンライン会議をボットなしで録音できます。</p></div>
+          </details>
+          <details>
+            <summary>PLAUDの録音がAIの学習に使われたり、情報漏洩したりしませんか？</summary>
+            <div class="a"><p>PLAUDは、明示的な同意がない限り録音データをAIの学習に使わないと案内しています。SOC 2 Type II、HIPAA、GDPR、ISO/IEC 27001に準拠し、データは暗号化して保存されます。SIMYでの取り扱いは、セキュリティとプライバシーポリシーのページで公開しています。</p></div>
           </details>
           <details>
             <summary>Notionへのエクスポートや、ファイルの書き出しは必要ですか？</summary>
@@ -1247,12 +1283,15 @@ thead th.simy { background: var(--blue-deep); }
       <section class="sec" id="sources" aria-labelledby="h-sources">
         <span class="sec-label">11 / SOURCES</span>
         <h2 id="h-sources">参考情報</h2>
-        <p>PLAUDの価格、仕様、機能は、次の公式情報で確認しました（確認日：2026年9月30日）。</p>
+        <p>PLAUDの価格、仕様、機能、セキュリティは、次の公式情報で確認しました（確認日：2026年9月30日）。Plaud Desktopについては、<a href="https://www.watch.impress.co.jp/docs/news/2076169.html" target="_blank" rel="noopener">Impress Watchの記事</a>も参照しました。</p>
         <ul class="plain-list">
           <li><a href="https://jp.plaud.ai/products/plaud-ai-membership" target="_blank" rel="noopener">Plaud AI アプリ年間プロプラン（料金プランと機能の比較）</a></li>
           <li><a href="https://jp.plaud.ai/blogs/blog/plaud-note-pro" target="_blank" rel="noopener">Plaud Note Proとは？他モデルとの違い（モデルの価格と仕様）</a></li>
           <li><a href="https://docs.plaud.ai/plaud-mcp-cli/mcp" target="_blank" rel="noopener">Plaud MCP（Plaud Dev API ドキュメント）</a></li>
           <li><a href="https://www.plaud.ai/blogs/news/introducing-plaud-mcp-and-cli" target="_blank" rel="noopener">Introducing Plaud MCP and CLI（PLAUD公式ブログ）</a></li>
+          <li><a href="https://www.plaud.ai/pages/trust" target="_blank" rel="noopener">Plaud Trust Center（セキュリティと準拠規格）</a></li>
+          <li><a href="https://jp.plaud.ai/pages/japan-privacy-security" target="_blank" rel="noopener">Plaud Inc.とPLAUD株式会社について</a></li>
+          <li><a href="https://jp.plaud.ai/products/plaud-notepin-accessory-charging-kit" target="_blank" rel="noopener">Plaud NotePin 専用充電器セット</a></li>
         </ul>
       </section>
     </article>
