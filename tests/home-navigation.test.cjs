@@ -30,20 +30,29 @@ test("homepage cache-busts the current home assets", () => {
 });
 
 test("pages loading the demo bundle cache-bust its workflow terminology", () => {
-  const pages = ["careers.html", "contact.html", "how-it-works.html", "integrations.html", "security.html", "status.html"];
   for (const directory of ["site", "site/old"]) {
-    for (const page of pages) {
-      const source = fs.readFileSync(path.join(repoRoot, directory, page), "utf8");
-      assert.match(
-        source,
-        /\/assets\/index-DnVveaIK\.js\?v=20260915-workflow-terminology-1/,
-        `${directory}/${page} must load the updated workflow terminology bundle`
-      );
-    }
+    const source = fs.readFileSync(path.join(repoRoot, directory, "contact.html"), "utf8");
+    assert.match(
+      source,
+      /\/assets\/index-DnVveaIK\.js\?v=20260915-workflow-terminology-1/,
+      `${directory}/contact.html must load the updated workflow terminology bundle`
+    );
   }
 
   const publishedBackup = fs.readFileSync(path.join(repoRoot, "site/index.html.bak"), "utf8");
   assert.match(publishedBackup, /\/assets\/index-DnVveaIK\.js\?v=20260915-workflow-terminology-1/);
+});
+
+test("static pages with a hidden #root do not load the SPA bundle", () => {
+  // The SPA router has no route for these pages, so it rendered its NotFound
+  // screen (an extra hidden "404" H1) into #root.
+  for (const directory of ["site", "site/old"]) {
+    for (const page of fs.readdirSync(path.join(repoRoot, directory)).filter((name) => name.endsWith(".html"))) {
+      const source = fs.readFileSync(path.join(repoRoot, directory, page), "utf8");
+      if (!/<div id="root" style="display:none!important">/.test(source)) continue;
+      assert.doesNotMatch(source, /\/assets\/index-[\w-]+\.js/, `${directory}/${page} must not load the SPA bundle`);
+    }
+  }
 });
 
 test("Realtime add-on keeps the currency symbol in the price line", () => {
