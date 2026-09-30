@@ -1,4 +1,4 @@
-// Static SEO checklist for site/plaud.html.
+// Static SEO checklist for site/guides/plaud.html.
 // Each test maps to one item in docs/seo/seo-complete-definition.md.
 const assert = require("node:assert/strict");
 const fs = require("node:fs");
@@ -7,9 +7,9 @@ const test = require("node:test");
 
 const repoRoot = path.resolve(__dirname, "..");
 const siteRoot = path.join(repoRoot, "site");
-const html = fs.readFileSync(path.join(siteRoot, "plaud.html"), "utf8");
+const html = fs.readFileSync(path.join(siteRoot, "guides", "plaud.html"), "utf8");
 
-const CANONICAL = "https://simy.one/plaud.html";
+const CANONICAL = "https://simy.one/guides/plaud.html";
 const OG_IMAGE = "https://simy.one/ogp-plaud.png";
 
 // ---------- helpers ----------
@@ -262,13 +262,13 @@ test("D4 BreadcrumbList uses absolute URLs and ends at the canonical", () => {
 // ---------- E. crawl and index ----------
 test("E1 robots.txt does not block the page", () => {
   const robots = fs.readFileSync(path.join(siteRoot, "robots.txt"), "utf8");
-  const blocked = [...robots.matchAll(/^Disallow:\s*(\S+)/gm)].map((m) => m[1]).filter((p) => "/plaud.html".startsWith(p));
+  const blocked = [...robots.matchAll(/^Disallow:\s*(\S+)/gm)].map((m) => m[1]).filter((p) => "/guides/plaud.html".startsWith(p));
   assert.deepEqual(blocked, []);
 });
 
 test("E2 sitemap lists the canonical with the current lastmod", () => {
   const sitemap = fs.readFileSync(path.join(siteRoot, "sitemap.xml"), "utf8");
-  const entry = sitemap.match(/<url>\s*<loc>https:\/\/simy\.one\/plaud\.html<\/loc>\s*<lastmod>([^<]+)<\/lastmod>/);
+  const entry = sitemap.match(/<url>\s*<loc>https:\/\/simy\.one\/guides\/plaud\.html<\/loc>\s*<lastmod>([^<]+)<\/lastmod>/);
   assert.ok(entry, "plaud.html is not in sitemap.xml");
   assert.equal(entry[1], node("Article").dateModified);
 });
@@ -276,9 +276,9 @@ test("E2 sitemap lists the canonical with the current lastmod", () => {
 test("E3 at least one other page links to the guide", () => {
   const linking = fs
     .readdirSync(siteRoot)
-    .filter((f) => f.endsWith(".html") && f !== "plaud.html")
-    .filter((f) => /href="\/plaud\.html"/.test(fs.readFileSync(path.join(siteRoot, f), "utf8")));
-  assert.ok(linking.length >= 1, "no page links to /plaud.html");
+    .filter((f) => f.endsWith(".html"))
+    .filter((f) => /href="\/guides\/plaud\.html"/.test(fs.readFileSync(path.join(siteRoot, f), "utf8")));
+  assert.ok(linking.length >= 1, "no page links to /guides/plaud.html");
 });
 
 test("E4 every internal link points to an existing file", () => {
@@ -294,7 +294,7 @@ test("E4 every internal link points to an existing file", () => {
   assert.deepEqual(broken, []);
 });
 
-test("E5 production redirects /plaud to /plaud.html", () => {
+test("E5 production redirects /guides/plaud to /guides/plaud.html", () => {
   const fn = fs.readFileSync(path.join(repoRoot, "infra/cloudfront-functions/redirect-prod.js"), "utf8");
   assert.match(fn, /if \(uri !== '\/' && !uri\.includes\('\.'\)\) \{[\s\S]*?statusCode: 301[\s\S]*?uri \+ '\.html'/);
 });

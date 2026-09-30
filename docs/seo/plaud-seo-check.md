@@ -1,6 +1,6 @@
 # plaud.html SEOチェック結果
 
-- 対象：`site/plaud.html`（Dev環境 https://dev.simy.one/plaud.html）
+- 対象：`site/guides/plaud.html`（Dev環境 https://dev.simy.one/guides/plaud.html）
 - 基準：[seo-complete-definition.md](seo-complete-definition.md)
 - 判定日：2026年9月30日
 
@@ -52,7 +52,7 @@ Ahrefs Keywords Explorer（日本）で「plaud」を調べ、購入後の検索
 | A7 | 本文5,000字以上 | 合格 | 9,136字 |
 | B1 | titleが「PLAUD」で始まり25〜35字 | 合格 | 全角換算28.5字 |
 | B2 | descriptionが「PLAUD」を含み80〜120字 | 合格 | 全角換算101.5字 |
-| B3 | canonicalが自己参照の絶対URL | 合格 | https://simy.one/plaud.html |
+| B3 | canonicalが自己参照の絶対URL | 合格 | https://simy.one/guides/plaud.html |
 | B4 | lang=ja と og:locale=ja_JP | 合格 | |
 | B5 | OGPとTwitterカードが完全 | 合格 | |
 | B6 | ページ専用の1200×630 OG画像 | 合格 | ogp-plaud.png（36KB） |

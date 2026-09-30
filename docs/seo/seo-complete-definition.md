@@ -1,6 +1,6 @@
 # SEO対応が「完璧」である状態の定義
 
-simy.one の個別ページ（まずは `site/plaud.html`）に適用する定義とチェックリストです。
+simy.one の個別ページ（まずは `site/guides/plaud.html`）に適用する定義とチェックリストです。
 
 ## 1. 定義
 
@@ -64,7 +64,7 @@ simy.one の個別ページ（まずは `site/plaud.html`）に適用する定�
 |---|---|---|
 | B1 | titleが「PLAUD」で始まり、全角換算25〜35字 | 静的 |
 | B2 | meta descriptionが「PLAUD」を含み、全角換算80〜120字 | 静的 |
-| B3 | canonicalが、自分自身の絶対URL（https://simy.one/plaud.html）を指す | 静的 |
+| B3 | canonicalが、自分自身の絶対URL（https://simy.one/guides/plaud.html）を指す | 静的 |
 | B4 | `html lang="ja"` と `og:locale=ja_JP` | 静的 |
 | B5 | OGPとTwitterカードがそろい、og:urlがcanonicalと一致する | 静的 |
 | B6 | og:imageがページ専用で、実在する1200×630の画像である | 静的 |
@@ -132,7 +132,7 @@ node --test tests/plaud-seo.test.cjs
 ```
 
 ```bash
-npx lighthouse http://localhost:8080/plaud.html --only-categories=performance,accessibility,best-practices,seo --output=json --output-path=./lighthouse-plaud.json --chrome-flags="--headless=new"
+npx lighthouse http://localhost:8080/guides/plaud.html --only-categories=performance,accessibility,best-practices,seo --output=json --output-path=./lighthouse-plaud.json --chrome-flags="--headless=new"
 ```
 
 判定結果は [plaud-seo-check.md](plaud-seo-check.md) に記録します。
