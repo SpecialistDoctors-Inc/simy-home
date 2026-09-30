@@ -332,12 +332,11 @@
     }, true);
   }
 
-  /* ── Detect preferred language ─────────────────────────────── */
-  function detect() {
+  /* ── Language pinned by the URL itself, or null ─────────────── */
+  function urlLang() {
     var params = new URLSearchParams(location.search);
-    var langs = navigator.languages || [navigator.language || navigator.userLanguage || ''];
 
-    // 1. Query param ?region=fr should land on that region and its
+    // Query param ?region=fr should land on that region and its
     // native language unless ?lang= is explicitly provided.
     var qRegion = supportedRegion(params.get('region'));
     var qLang = params.get('lang');
@@ -347,6 +346,16 @@
       if (resolved) return safeLangForPage(resolved);
     }
     if (qRegion) return safeLangForPage(REGION_BY_CODE[qRegion].lang);
+    return null;
+  }
+
+  /* ── Detect preferred language ─────────────────────────────── */
+  function detect() {
+    var langs = navigator.languages || [navigator.language || navigator.userLanguage || ''];
+
+    // 1. Query params (?lang=, then ?region=).
+    var fromUrl = urlLang();
+    if (fromUrl) return fromUrl;
 
     // 2. Chinese script is a language choice, not just a region choice.
     //    Without this guard, zh-CN / zh-SG browsers can be routed through
@@ -1705,7 +1714,24 @@
     document.head.appendChild(style);
   }
 
-  /* ── Inject hreflang links for SEO ───────────────────────────── */
+  /* ── Inject hreflang + canonical links for SEO ───────────────── */
+  // Production origin, as in index.html, so www / dev / CloudFront-domain
+  // copies declare the same cluster and canonicalize to simy.one.
+  var SEO_ORIGIN = 'https://simy.one';
+
+  function seoBaseUrl() {
+    return SEO_ORIGIN + (location.pathname === '/index.html' ? '/' : location.pathname);
+  }
+
+  // Localized pages ship without a static canonical and get the hreflang
+  // cluster plus a per-variant canonical below. Pages that declare their own
+  // canonical (legacy copies) or are noindex (error pages) get neither.
+  function hasLanguageVariants() {
+    var robots = document.querySelector('meta[name="robots"]');
+    if (robots && /noindex/i.test(robots.getAttribute('content') || '')) return false;
+    return !document.querySelector('link[rel="canonical"]');
+  }
+
   function injectHreflang() {
     // Map our codes to BCP-47 hreflang values
     var hreflangMap = {
@@ -1714,7 +1740,7 @@
       'hi': 'hi', 'te': 'te', 'kn': 'kn', 'ko': 'ko', 'vi': 'vi',
       'th': 'th', 'id': 'id', 'ru': 'ru', 'pt-BR': 'pt-BR'
     };
-    var base = location.origin + (location.pathname === '/index.html' ? '/' : location.pathname);
+    var base = seoBaseUrl();
     // x-default (no lang param)
     var xdef = document.createElement('link');
     xdef.rel = 'alternate';
@@ -1729,6 +1755,18 @@
       link.href = base + '?lang=' + code;
       document.head.appendChild(link);
     });
+  }
+
+  // One HTML file serves every ?lang= variant, so localized pages ship no
+  // static canonical. Point it at the variant this URL pins (the language
+  // crawlers render), never at x-default: a translation canonicalized to the
+  // English URL is treated as its duplicate and is not indexed on its own.
+  function injectCanonical() {
+    var lang = urlLang();
+    var link = document.createElement('link');
+    link.rel = 'canonical';
+    link.href = seoBaseUrl() + (lang ? '?lang=' + lang : '');
+    document.head.appendChild(link);
   }
 
   /* ── Static mobile nav: keep signup reachable when .nav-right is hidden ── */
@@ -1765,7 +1803,10 @@
   /* ── Init ───────────────────────────────────────────────────── */
   function init() {
     injectCSS();
-    injectHreflang();
+    if (hasLanguageVariants()) {
+      injectHreflang();
+      injectCanonical();
+    }
     buildSwitcher();
     bindRegionSwitcher();
     enhanceStaticMobileNav();
