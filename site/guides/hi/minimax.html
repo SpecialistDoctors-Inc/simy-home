@@ -1,0 +1,1680 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="google-site-verification" content="1n6_tVJZRZlQax8luEg5VsuG7gg-kCEam5VFiWIJs3U">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MiniMax H3 क्या है? वीडियो AI, M3, कीमत, लोकल रन | SIMY</title>
+<meta name="description" content="MiniMax H3 क्या है? आवाज़ वाला वीडियो बनाने वाला H3, टेक्स्ट मॉडल M3, Token Plan की कीमत, लोकल रन और लाइसेंस, अक्टूबर 2026 तक। बनाने के बाद का काम SIMY को।">
+<link rel="canonical" href="https://simy.one/guides/hi/minimax.html">
+<link rel="alternate" hreflang="ja" href="https://simy.one/guides/minimax.html">
+<link rel="alternate" hreflang="en" href="https://simy.one/guides/en/minimax.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://simy.one/guides/zh-hans/minimax.html">
+<link rel="alternate" hreflang="es" href="https://simy.one/guides/es/minimax.html">
+<link rel="alternate" hreflang="fr" href="https://simy.one/guides/fr/minimax.html">
+<link rel="alternate" hreflang="hi" href="https://simy.one/guides/hi/minimax.html">
+<link rel="alternate" hreflang="x-default" href="https://simy.one/guides/en/minimax.html">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://simy.one/guides/hi/minimax.html">
+<meta property="og:title" content="MiniMax से बनाया, अब आगे का काम न रुके | SIMY">
+<meta property="og:description" content="MiniMax H3 क्या है? वीडियो के लिए H3, टेक्स्ट के लिए M3, कीमत और लाइसेंस। स्क्रिप्ट, आवाज़ और वीडियो MiniMax बनाए, उसके बाद ज़िम्मेदार, डेडलाइन और शेयरिंग SIMY मीटिंग और चैट से उठाकर आगे बढ़ाता है।">
+<meta property="og:site_name" content="SIMY">
+<meta property="og:image" content="https://simy.one/ogp.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="MiniMax से बनाया, अब आगे का काम न रुके। MiniMax उपयोग गाइड | SIMY">
+<meta property="og:locale" content="hi_IN">
+<meta property="article:published_time" content="2026-10-01">
+<meta property="article:modified_time" content="2026-10-01">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="MiniMax से बनाया, अब आगे का काम न रुके | SIMY">
+<meta name="twitter:description" content="MiniMax H3 क्या है? वीडियो के लिए H3, टेक्स्ट के लिए M3, कीमत और लाइसेंस। स्क्रिप्ट, आवाज़ और वीडियो MiniMax बनाए, उसके बाद ज़िम्मेदार, डेडलाइन और शेयरिंग SIMY मीटिंग और चैट से उठाकर आगे बढ़ाता है।">
+<meta name="twitter:image" content="https://simy.one/ogp.png">
+<meta name="twitter:image:alt" content="MiniMax से बनाया, अब आगे का काम न रुके। MiniMax उपयोग गाइड | SIMY">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#f6f5f4">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png">
+<style>
+:root {
+  --paper: #f6f5f4;
+  --paper-light: #ffffff;
+  --ink: #111111;
+  --ink-soft: #5d5b58;
+  --ink-faint: #6b6865;
+  --line-soft: rgba(17, 17, 17, 0.14);
+  --ui-line: #d9dde2;
+  --blue: #3273d7;
+  --blue-deep: #235db8;
+  --blue-soft: #eef5ff;
+  --mint: #92edce;
+  --coral-soft: #fff1ec;
+  --yellow: #ffd166;
+  --radius: 0.8rem;
+  --radius-sm: 0.5rem;
+  --sans: "Helvetica Neue", Arial, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", Meiryo, sans-serif;
+  --mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  --page: 1180px;
+  --gutter: clamp(16px, 4vw, 40px);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.85;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+a { color: inherit; }
+a:focus-visible, summary:focus-visible {
+  outline: 3px solid rgba(50, 115, 215, 0.45);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+img { max-width: 100%; display: block; }
+
+.wrap { width: min(var(--page), 100% - var(--gutter) * 2); margin: 0 auto; }
+
+.skip {
+  position: absolute; left: -9999px; top: 8px;
+  background: var(--ink); color: #fff; padding: 8px 14px; border-radius: 6px; z-index: 100;
+}
+.skip:focus { left: 8px; }
+
+/* ---------- Header ---------- */
+.site-header {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(246, 245, 244, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--ink);
+}
+.header-inner {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  min-height: 64px;
+}
+.brand {
+  display: inline-flex; align-items: center; gap: 10px;
+  text-decoration: none; font-weight: 800; letter-spacing: 0.01em;
+}
+.brand img { width: 28px; height: 28px; border-radius: 7px; }
+.brand-sub {
+  padding-left: 12px; margin-left: 2px;
+  border-left: 1px solid var(--line-soft);
+  color: var(--ink-soft); font-size: 0.8rem; font-weight: 500;
+}
+.header-actions { display: flex; align-items: center; gap: 6px; }
+.header-link {
+  padding: 8px 10px; font-size: 0.86rem; font-weight: 600; text-decoration: none; color: var(--ink);
+}
+.header-link:hover { color: var(--blue-deep); }
+.header-cta {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px;
+  background: var(--ink); color: #fff; text-decoration: none;
+  font-size: 0.86rem; font-weight: 700; border-radius: 6px;
+  transition: background 0.2s;
+}
+.header-cta:hover { background: var(--blue-deep); }
+
+/* ---------- Hero ---------- */
+.hero {
+  position: relative;
+  border-bottom: 1px solid var(--ink);
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(rgba(17, 17, 17, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(17, 17, 17, 0.045) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-position: -1px -1px;
+}
+.hero-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+  gap: clamp(32px, 5vw, 72px);
+  align-items: center;
+  padding: clamp(40px, 7vw, 96px) 0 clamp(48px, 7vw, 104px);
+}
+
+.crumbs {
+  display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 22px; padding: 0; list-style: none;
+  font-size: 0.78rem; color: var(--ink-soft);
+}
+.crumbs li + li::before { content: "/"; margin-right: 6px; color: var(--ink-faint); }
+.crumbs a { text-decoration: none; }
+.crumbs a:hover { text-decoration: underline; }
+
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin: 0 0 22px; padding: 6px 12px;
+  background: var(--paper-light); border: 1px solid var(--ink); border-radius: 999px;
+  font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.04em;
+}
+.eyebrow::before {
+  content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--blue);
+  box-shadow: 0 0 0 3px var(--blue-soft);
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2rem, 4.6vw, 3.9rem);
+  line-height: 1.16;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+h1 .line { display: block; }
+h1 .hl { color: var(--blue); }
+
+.lead {
+  max-width: 36em;
+  margin: 26px 0 0;
+  font-size: clamp(1rem, 1.35vw, 1.1rem);
+  line-height: 1.95;
+  color: #2c2b29;
+}
+
+.cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 52px; padding: 0 22px;
+  border: 1px solid var(--ink); border-radius: 8px;
+  font-weight: 700; font-size: 0.98rem; text-decoration: none;
+  transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+}
+.btn-primary {
+  background: var(--blue-deep); color: #fff; border-color: var(--ink);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.btn-primary:hover { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 var(--ink); }
+.btn-ghost { background: var(--paper-light); color: var(--ink); }
+.btn-ghost:hover { background: var(--blue-soft); }
+.btn .arrow { font-family: var(--mono); font-size: 0.9em; }
+
+.hero-points {
+  display: flex; flex-wrap: wrap; gap: 8px 18px;
+  margin: 26px 0 0; padding: 0; list-style: none;
+  font-size: 0.84rem; color: var(--ink-soft);
+}
+.hero-points li { display: inline-flex; align-items: center; gap: 7px; }
+.hero-points li::before {
+  content: ""; width: 14px; height: 14px; flex: none;
+  border: 1px solid var(--ink); border-radius: 50%;
+  background: var(--mint) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath d='M3.5 7.2 6 9.5l4.5-5' fill='none' stroke='%23111' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 12px no-repeat;
+}
+
+/* Relay card: the signature visual */
+.relay {
+  position: relative;
+  background: var(--paper-light);
+  border: 1px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: 8px 8px 0 var(--ink);
+  overflow: hidden;
+}
+.relay-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--ink);
+  background: var(--ink); color: #fff;
+  font-family: var(--mono); font-size: 0.78rem;
+}
+.rec { display: inline-flex; align-items: center; gap: 8px; min-width: 0; }
+.rec-dot {
+  width: 9px; height: 9px; border-radius: 50%; background: #ff865f; flex: none;
+  animation: rec 1.6s ease-in-out infinite;
+}
+.rec-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.relay-meta { display: flex; flex-wrap: wrap; gap: 6px; padding: 12px 18px 4px; }
+.chip {
+  display: inline-flex; align-items: center; padding: 2px 9px;
+  border: 1px solid var(--line-soft); border-radius: 999px;
+  font-family: var(--mono); font-size: 0.7rem; color: var(--ink-soft); background: var(--paper);
+}
+.relay-steps { list-style: none; margin: 0; padding: 8px 10px 12px; }
+.step {
+  display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; align-items: center; gap: 10px;
+  padding: 9px 8px;
+  border-radius: 8px;
+  opacity: 0; transform: translateY(6px);
+  animation: rise 0.5s cubic-bezier(.2,.7,.2,1) forwards;
+}
+.step .no { font-family: var(--mono); font-size: 0.72rem; color: var(--ink-faint); }
+.step .what { font-size: 0.9rem; font-weight: 650; line-height: 1.45; }
+.step .what small { display: block; font-weight: 400; font-size: 0.74rem; color: var(--ink-soft); }
+.status {
+  font-family: var(--mono); font-size: 0.68rem; white-space: nowrap;
+  padding: 3px 8px; border-radius: 999px; border: 1px solid var(--ink);
+}
+.s-done { background: var(--paper); }
+.s-plaud .status { border-color: var(--line-soft); color: var(--ink-soft); }
+.s-run { background: var(--blue-soft); }
+.s-run .status { background: var(--blue-deep); color: #fff; }
+.s-next .status { background: var(--paper-light); }
+.s-you { background: #fff8e3; }
+.s-you .status { background: var(--yellow); }
+.bar {
+  grid-column: 2 / 4; height: 4px; margin-top: 6px;
+  background: rgba(50, 115, 215, 0.16); border-radius: 4px; overflow: hidden;
+}
+.bar::after {
+  content: ""; display: block; height: 100%; width: 62%;
+  background: var(--blue); border-radius: 4px;
+  animation: progress 2.8s ease-in-out infinite alternate;
+}
+.handoff {
+  display: flex; align-items: center; gap: 10px;
+  margin: 6px 4px; padding: 8px 0;
+  font-family: var(--mono); font-size: 0.72rem; color: var(--blue-deep);
+  opacity: 0; animation: rise 0.5s ease forwards;
+}
+.handoff::before, .handoff::after { content: ""; flex: 1; border-top: 1.5px dashed var(--blue); }
+.relay-foot {
+  padding: 12px 18px 14px;
+  border-top: 1px solid var(--line-soft);
+  font-size: 0.82rem; color: var(--ink-soft);
+}
+.relay-foot strong { color: var(--ink); }
+.caption { margin: 12px 4px 0; font-size: 0.74rem; color: var(--ink-faint); text-align: right; }
+
+.relay-steps > :nth-child(1) { animation-delay: 0.10s; }
+.relay-steps > :nth-child(2) { animation-delay: 0.22s; }
+.relay-steps > :nth-child(3) { animation-delay: 0.34s; }
+.relay-steps > :nth-child(4) { animation-delay: 0.62s; }
+.relay-steps > :nth-child(5) { animation-delay: 0.86s; }
+.relay-steps > :nth-child(6) { animation-delay: 1.02s; }
+.relay-steps > :nth-child(7) { animation-delay: 1.18s; }
+.relay-steps > :nth-child(8) { animation-delay: 1.34s; }
+
+@keyframes rise { to { opacity: 1; transform: none; } }
+@keyframes rec { 50% { opacity: 0.25; } }
+@keyframes progress { from { width: 34%; } to { width: 88%; } }
+
+/* ---------- Guide layout ---------- */
+.guide {
+  display: grid;
+  grid-template-columns: 232px minmax(0, 1fr);
+  gap: clamp(32px, 5vw, 72px);
+  padding: clamp(40px, 6vw, 80px) 0 clamp(56px, 7vw, 96px);
+}
+.toc { position: sticky; top: 92px; align-self: start; font-size: 0.84rem; }
+.toc-title {
+  margin: 0 0 12px; font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.08em;
+  color: var(--ink-soft);
+}
+.toc ol { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--line-soft); }
+.toc a {
+  display: grid; grid-template-columns: 26px 1fr; gap: 4px;
+  margin-left: -1px; padding: 7px 0 7px 12px;
+  border-left: 2px solid transparent;
+  color: var(--ink-soft); text-decoration: none; line-height: 1.5;
+}
+.toc a span { font-family: var(--mono); font-size: 0.72rem; padding-top: 1px; }
+.toc a:hover { color: var(--ink); }
+.toc a.is-active { color: var(--ink); font-weight: 700; border-left-color: var(--blue); }
+.toc-mobile { display: none; }
+
+.article { min-width: 0; max-width: 800px; }
+.byline {
+  display: flex; flex-wrap: wrap; gap: 4px 16px;
+  margin: 0 0 8px; font-family: var(--mono); font-size: 0.74rem; color: var(--ink-faint);
+}
+
+.sec { padding-top: clamp(40px, 5vw, 64px); }
+.sec:first-of-type { padding-top: 0; }
+.sec-label {
+  display: inline-block; margin: 0 0 12px;
+  font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.06em; color: var(--blue-deep);
+}
+h2 {
+  margin: 0 0 18px;
+  font-size: clamp(1.5rem, 2.8vw, 2.1rem);
+  line-height: 1.35; font-weight: 800; letter-spacing: -0.01em;
+}
+h3 { margin: 32px 0 12px; font-size: 1.15rem; line-height: 1.5; font-weight: 750; }
+.article p { margin: 0 0 16px; }
+.article p a, .plain-list a, .faq a { color: var(--blue-deep); text-decoration: underline; text-underline-offset: 3px; }
+.muted { color: var(--ink-soft); }
+.small { font-size: 0.84rem; }
+
+/* Checklist */
+.checklist { list-style: none; margin: 24px 0 0; padding: 0; display: grid; gap: 12px; }
+.checklist li {
+  display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 16px;
+  padding: 18px 20px;
+  background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.checklist .num {
+  display: grid; place-items: center; width: 44px; height: 44px;
+  border: 1px solid var(--ink); border-radius: 50%;
+  font-family: var(--mono); font-weight: 700;
+}
+.checklist li.hook { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.checklist li.hook .num { background: var(--blue-deep); color: #fff; }
+.checklist h3 { margin: 2px 0 4px; font-size: 1.02rem; }
+.checklist p { margin: 0; font-size: 0.93rem; color: #34322f; }
+
+/* Feature grid */
+.features { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+.feature {
+  padding: 20px; background: var(--paper-light);
+  border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.feature .tag {
+  display: inline-block; margin-bottom: 8px;
+  font-family: var(--mono); font-size: 0.7rem; color: var(--ink-soft);
+}
+.feature h3 { margin: 0 0 6px; font-size: 1.04rem; }
+.feature p { margin: 0; font-size: 0.92rem; color: #34322f; }
+.feature.wide { grid-column: 1 / -1; }
+
+/* Gap section */
+.split { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+.split-col { padding: 22px; border-radius: var(--radius); border: 1px solid var(--ink); }
+.split-col h3 { margin: 0 0 12px; font-size: 1rem; display: flex; align-items: center; gap: 8px; }
+.split-col ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.split-col li { position: relative; padding-left: 22px; font-size: 0.94rem; line-height: 1.6; }
+.split-col li::before { position: absolute; left: 0; top: 0; font-family: var(--mono); }
+.col-plaud { background: var(--paper-light); }
+.col-plaud li { color: var(--ink-soft); }
+.col-plaud li::before { content: "✓"; color: #1b7a58; }
+.col-left { background: var(--coral-soft); box-shadow: 4px 4px 0 var(--ink); }
+.col-left li::before { content: "□"; color: var(--ink); }
+.who {
+  font-family: var(--mono); font-size: 0.68rem; font-weight: 400;
+  padding: 2px 8px; border: 1px solid var(--ink); border-radius: 999px; background: var(--paper-light);
+}
+
+.quote {
+  margin: 28px 0 0; padding: 22px 24px;
+  border-left: 4px solid var(--blue); background: var(--blue-soft); border-radius: 0 var(--radius) var(--radius) 0;
+}
+.quote p { margin: 0; font-size: 1.12rem; font-weight: 750; line-height: 1.7; }
+.quote p + p { margin-top: 8px; font-size: 0.93rem; font-weight: 400; color: #34322f; }
+
+/* Connect */
+.connect {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 310px); gap: 24px;
+  align-items: start; margin-top: 24px;
+}
+.connect-steps { list-style: none; margin: 0; padding: 0; counter-reset: s; display: grid; gap: 10px; }
+.connect-steps li {
+  counter-increment: s; position: relative;
+  padding: 16px 18px 16px 62px;
+  background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.connect-steps li::before {
+  content: counter(s); position: absolute; left: 18px; top: 16px;
+  width: 30px; height: 30px; display: grid; place-items: center;
+  border: 1px solid var(--ink); border-radius: 50%; background: var(--paper);
+  font-family: var(--mono); font-weight: 700; font-size: 0.86rem;
+}
+.connect-steps li.key { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.connect-steps li.key::before { background: var(--blue-deep); color: #fff; }
+.connect-steps b { display: block; font-size: 1rem; line-height: 1.5; }
+.connect-steps span { display: block; margin-top: 4px; font-size: 0.9rem; color: #34322f; line-height: 1.7; }
+
+.mock {
+  padding: 18px; background: var(--paper-light);
+  border: 1px solid var(--ink); border-radius: var(--radius); box-shadow: 6px 6px 0 var(--blue);
+}
+.mock-head { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 12px; align-items: start; }
+.mock-mark {
+  display: grid; place-items: center; width: 44px; height: 44px;
+  border-radius: 10px; background: var(--paper); font-weight: 900; font-size: 1.15rem;
+}
+.mock-title { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 1.05rem; }
+.mock-state {
+  padding: 1px 8px; border-radius: 999px; background: var(--paper);
+  font-size: 0.7rem; font-weight: 500; color: var(--ink-soft);
+}
+.mock-desc { margin: 4px 0 0; font-size: 0.82rem; color: var(--ink-soft); line-height: 1.6; }
+.mock-box {
+  margin: 14px 0 10px; padding: 12px 14px;
+  border: 1px solid var(--ui-line); border-radius: 8px; font-size: 0.86rem; font-weight: 650;
+}
+.mock-btn {
+  display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px;
+  border-radius: 8px; background: var(--blue-deep); color: #fff; font-weight: 700; font-size: 0.92rem;
+}
+.mock-foot { margin-top: 8px; text-align: center; font-size: 0.76rem; color: var(--ink-soft); }
+
+.asks { list-style: none; margin: 12px 0 18px; padding: 0; display: grid; gap: 8px; }
+.asks li {
+  padding: 12px 16px; font-size: 0.94rem; line-height: 1.7;
+  background: var(--blue-soft); border: 1px solid rgba(50, 115, 215, 0.28);
+  border-radius: 12px 12px 12px 3px;
+}
+
+/* Tables */
+.table-wrap {
+  margin: 20px 0 8px; overflow-x: auto; -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--ink); border-radius: var(--radius); background: var(--paper-light);
+}
+table { width: 100%; border-collapse: collapse; font-size: 0.9rem; line-height: 1.6; }
+th, td { padding: 12px 14px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--ui-line); }
+thead th { background: var(--ink); color: #fff; font-weight: 700; font-size: 0.82rem; white-space: nowrap; }
+tbody th { font-weight: 700; white-space: nowrap; background: var(--paper); }
+tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
+td.simy { background: var(--blue-soft); }
+thead th.simy { background: var(--blue-deep); }
+.t-wide { min-width: 640px; }
+.t-models { min-width: 760px; }
+.t-price td:nth-child(2) { white-space: nowrap; }
+.scroll-hint { display: none; margin: 0 0 12px; font-size: 0.76rem; color: var(--ink-faint); }
+
+.note {
+  margin: 16px 0 0; padding: 14px 16px;
+  background: var(--paper-light); border: 1px dashed var(--ink-faint); border-radius: var(--radius-sm);
+  font-size: 0.88rem; color: #34322f;
+}
+.note b { color: var(--ink); }
+
+/* Sample comparison */
+.sample { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 16px; margin-top: 24px; align-items: start; }
+.sheet { padding: 20px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); }
+.sheet-label {
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;
+  font-family: var(--mono); font-size: 0.72rem; color: var(--ink-soft);
+}
+.sheet dl { margin: 0; font-size: 0.88rem; line-height: 1.65; }
+.sheet dt { margin-top: 10px; font-weight: 700; }
+.sheet dt:first-child { margin-top: 0; }
+.sheet dd { margin: 2px 0 0; color: #34322f; }
+.outs { display: grid; gap: 10px; }
+.out { padding: 14px 16px; background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius); }
+.out-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 6px; }
+.out-head b { font-size: 0.92rem; }
+.out p { margin: 0; font-size: 0.86rem; color: #34322f; line-height: 1.7; }
+.out.you { background: #fff8e3; }
+.pill {
+  font-family: var(--mono); font-size: 0.66rem; white-space: nowrap;
+  padding: 2px 8px; border-radius: 999px; border: 1px solid var(--ink); background: var(--paper);
+}
+.pill.run { background: var(--blue-deep); color: #fff; }
+.pill.you { background: var(--yellow); }
+.pill.ok { background: var(--mint); }
+.sample-foot { margin-top: 18px; font-weight: 700; }
+
+/* Use cases */
+.cases { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+.case { padding: 22px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); }
+.case h3 { margin: 0 0 4px; font-size: 1.06rem; }
+.case .device { margin: 0 0 12px; font-family: var(--mono); font-size: 0.72rem; color: var(--blue-deep); }
+.case p { margin: 0 0 8px; font-size: 0.9rem; color: #34322f; }
+.case ul { margin: 0; padding-left: 1.1em; font-size: 0.9rem; line-height: 1.7; }
+
+/* Lists */
+.plain-list { margin: 16px 0 0; padding-left: 1.2em; }
+.plain-list li { margin-bottom: 10px; }
+
+/* FAQ */
+.faq { margin-top: 20px; border-top: 1px solid var(--ink); }
+.faq details { border-bottom: 1px solid var(--ui-line); }
+.faq summary {
+  list-style: none; cursor: pointer;
+  display: grid; grid-template-columns: 28px minmax(0, 1fr) 20px; gap: 10px; align-items: start;
+  padding: 18px 4px; font-weight: 700; line-height: 1.6;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::before { content: "Q"; font-family: var(--mono); color: var(--blue-deep); }
+.faq summary::after {
+  content: "+"; font-family: var(--mono); font-size: 1.1rem; line-height: 1.4; text-align: right;
+  transition: transform 0.2s;
+}
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq .a { padding: 0 4px 18px 42px; font-size: 0.94rem; color: #34322f; }
+.faq .a p { margin: 0; }
+
+/* Closing CTA */
+.closing { background: var(--ink); color: #fff; border-top: 1px solid var(--ink); }
+.closing-inner {
+  display: grid; grid-template-columns: minmax(0, 1.2fr) auto; gap: 32px; align-items: center;
+  padding: clamp(48px, 7vw, 88px) 0;
+}
+.closing h2 { color: #fff; margin: 0 0 12px; font-size: clamp(1.6rem, 3.4vw, 2.5rem); }
+.closing p { margin: 0; color: rgba(255, 255, 255, 0.8); }
+.closing .cta-row { margin-top: 0; }
+.closing .btn-primary { box-shadow: 4px 4px 0 var(--mint); border-color: #fff; }
+.closing .btn-primary:hover { box-shadow: 5px 5px 0 var(--mint); }
+.closing .btn-ghost { background: transparent; color: #fff; border-color: rgba(255, 255, 255, 0.5); }
+.closing .btn-ghost:hover { background: rgba(255, 255, 255, 0.08); }
+
+/* Footer */
+.site-footer { padding: 36px 0 48px; font-size: 0.82rem; color: var(--ink-soft); }
+.footer-links { display: flex; flex-wrap: wrap; gap: 4px 20px; margin: 0 0 18px; padding: 0; list-style: none; }
+.footer-links a { display: inline-block; padding: 6px 0; text-decoration: none; color: var(--ink); }
+.footer-links a:hover { text-decoration: underline; }
+.site-footer p { margin: 0 0 6px; line-height: 1.7; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1080px) {
+  .guide { grid-template-columns: minmax(0, 1fr); }
+  .toc { display: none; }
+  .toc-mobile {
+    display: block; margin: 0 0 32px;
+    background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius);
+  }
+  .toc-mobile summary {
+    cursor: pointer; list-style: none; padding: 14px 18px;
+    font-family: var(--mono); font-size: 0.8rem; display: flex; justify-content: space-between;
+  }
+  .toc-mobile summary::-webkit-details-marker { display: none; }
+  .toc-mobile summary::after { content: "+"; }
+  .toc-mobile[open] summary::after { content: "−"; }
+  .toc-mobile ol { margin: 0; padding: 0 18px 14px 40px; font-size: 0.9rem; }
+  .toc-mobile li { padding: 3px 0; }
+  .toc-mobile a { display: inline-block; padding: 4px 0; text-decoration: none; }
+  .article { max-width: none; }
+}
+
+@media (max-width: 960px) {
+  .hero-inner { grid-template-columns: minmax(0, 1fr); }
+  .hero-visual { max-width: 580px; }
+  .relay { box-shadow: 6px 6px 0 var(--ink); }
+}
+
+@media (max-width: 860px) {
+  .sample { grid-template-columns: minmax(0, 1fr); }
+  .connect { grid-template-columns: minmax(0, 1fr); }
+  .mock { max-width: 360px; }
+  .closing-inner { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 640px) {
+  body { font-size: 15.5px; }
+  .brand-sub, .header-link { display: none; }
+  .header-cta { padding: 0 14px; }
+  .features, .split, .cases { grid-template-columns: minmax(0, 1fr); }
+  .checklist li { grid-template-columns: 40px minmax(0, 1fr); gap: 12px; padding: 16px; }
+  .checklist .num { width: 36px; height: 36px; font-size: 0.86rem; }
+  .connect-steps li { padding-left: 56px; }
+  .connect-steps li::before { left: 14px; }
+  .btn { width: 100%; }
+  .scroll-hint { display: block; }
+  .faq .a { padding-left: 4px; }
+  .step { grid-template-columns: 24px minmax(0, 1fr) auto; gap: 8px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .step, .handoff { animation: none; opacity: 1; transform: none; }
+  .rec-dot, .bar::after { animation: none; }
+  .btn, .header-cta { transition: none; }
+}
+
+/* ---------- Guide v2: scene cards, timeline, folds ---------- */
+.intro { max-width: 34em; margin: 0 0 8px; font-size: 1.02rem; color: #34322f; }
+.scenes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 22px; }
+.scenes.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.scene {
+  position: relative; padding: 22px 20px 20px;
+  background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius);
+  min-height: 168px; display: flex; flex-direction: column; gap: 8px;
+}
+.scene .k { font-family: var(--mono); font-size: 0.7rem; color: var(--ink-faint); letter-spacing: 0.04em; }
+.scene b { display: block; font-size: 1.22rem; line-height: 1.35; letter-spacing: -0.01em; }
+.scene p { margin: 0; font-size: 0.9rem; line-height: 1.65; color: #34322f; }
+.scene .mark {
+  position: absolute; right: 16px; top: 14px;
+  width: 30px; height: 30px; display: grid; place-items: center;
+  border: 1px solid var(--ink); border-radius: 50%; font-family: var(--mono); font-size: 0.9rem; font-weight: 700;
+}
+.scene.pain { background: var(--coral-soft); }
+.scene.pain .mark { background: var(--paper-light); }
+.scene.wish { background: var(--blue-soft); border-color: var(--blue-deep); box-shadow: 4px 4px 0 var(--blue); }
+.scene.wish .mark { background: var(--blue-deep); color: #fff; border-color: var(--blue-deep); }
+.scene.wish.you { background: #fff8e3; border-color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+.scene.wish.you .mark { background: var(--yellow); color: var(--ink); border-color: var(--ink); }
+.scene-foot { margin: 14px 0 0; font-size: 0.9rem; color: var(--ink-soft); }
+.scene-foot b { color: var(--ink); }
+
+/* Timeline */
+.tl-wrap {
+  margin-top: 22px; padding: 22px 20px 18px;
+  background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius);
+}
+.tl-row { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 14px; align-items: center; }
+.tl-row + .tl-row { margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--line-soft); }
+.tl-who {
+  font-family: var(--mono); font-size: 0.72rem; font-weight: 700; text-align: center;
+  padding: 6px 4px; border: 1px solid var(--ink); border-radius: 999px; background: var(--paper);
+}
+.tl-who.simy { background: var(--blue-deep); color: #fff; border-color: var(--blue-deep); }
+.tl-who.you { background: var(--yellow); }
+.tl { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; }
+.tl li {
+  position: relative; min-height: 64px; padding: 10px 8px 8px;
+  border-radius: var(--radius-sm); font-size: 0.8rem; line-height: 1.4; font-weight: 650;
+  display: flex; flex-direction: column; justify-content: flex-start; gap: 4px;
+}
+.tl li small { display: block; font-weight: 400; font-size: 0.7rem; color: var(--ink-soft); }
+.tl li.on { background: var(--paper); border: 1px solid var(--line-soft); color: var(--ink-soft); }
+.tl li.gap { border: 1.5px dashed var(--ink-faint); color: var(--ink-faint); background: transparent; }
+.tl li.gap::after { content: "？"; position: absolute; right: 8px; top: 6px; font-family: var(--mono); }
+.tl li.run { background: var(--blue-soft); border: 1px solid var(--blue-deep); color: var(--ink); }
+.tl li.run::after { content: "✓"; position: absolute; right: 8px; top: 6px; font-family: var(--mono); color: var(--blue-deep); }
+.tl li.you { background: #fff8e3; border: 1px solid var(--ink); color: var(--ink); }
+.tl li.you::after { content: "आप"; position: absolute; right: 8px; top: 7px; font-family: var(--mono); font-size: 0.62rem; }
+.tl li.blank { border: 0; background: transparent; }
+.tl-note { margin: 14px 0 0; font-size: 0.86rem; color: #34322f; }
+.tl-note b { color: var(--ink); }
+.three { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 0; padding: 0; list-style: none; }
+.three li {
+  padding: 8px 14px; font-weight: 800; font-size: 1rem;
+  background: var(--ink); color: #fff; border-radius: 999px;
+}
+
+/* 3-step start */
+.steps3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 22px; counter-reset: st; }
+.steps3 li {
+  counter-increment: st; list-style: none; position: relative;
+  padding: 54px 18px 18px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.steps3 li::before {
+  content: counter(st); position: absolute; left: 18px; top: 16px;
+  width: 28px; height: 28px; display: grid; place-items: center;
+  border: 1px solid var(--ink); border-radius: 50%; background: var(--paper);
+  font-family: var(--mono); font-weight: 700; font-size: 0.84rem;
+}
+.steps3 li.key { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.steps3 li.key::before { background: var(--blue-deep); color: #fff; }
+.steps3 b { display: block; font-size: 1.02rem; line-height: 1.45; }
+.steps3 span { display: block; margin-top: 6px; font-size: 0.88rem; color: #34322f; line-height: 1.65; }
+.steps3 { padding: 0; }
+
+/* Industry grid */
+.ind { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 22px; }
+.ind-card { padding: 18px 18px 14px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); }
+.ind-card h3 { margin: 0 0 10px; font-size: 1.04rem; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.ind-card h3 small { font-family: var(--mono); font-size: 0.68rem; font-weight: 400; color: var(--blue-deep); white-space: normal; }
+.ind-card h3 { flex-wrap: wrap; }
+.ind-rows { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+.ind-rows li { display: grid; grid-template-columns: minmax(0, 1fr) 14px minmax(0, 1.4fr); gap: 6px; align-items: center; font-size: 0.86rem; line-height: 1.5; }
+.ind-rows li span:first-child { color: var(--ink-soft); }
+.ind-rows li span:nth-child(2) { font-family: var(--mono); color: var(--blue-deep); text-align: center; }
+.ind-rows li span:last-child { font-weight: 650; }
+
+/* Folded reference */
+.fold { margin-top: 12px; border: 1px solid var(--ui-line); border-radius: var(--radius); background: var(--paper-light); }
+.fold > summary {
+  list-style: none; cursor: pointer; padding: 16px 18px;
+  display: grid; grid-template-columns: minmax(0, 1fr) 20px; gap: 10px; align-items: center;
+  font-weight: 750; font-size: 1.02rem; line-height: 1.5;
+}
+.fold > summary::-webkit-details-marker { display: none; }
+.fold > summary::after { content: "+"; font-family: var(--mono); font-size: 1.1rem; text-align: right; grid-column: 2; grid-row: 1; }
+.fold > summary small { grid-column: 1; }
+.fold[open] > summary::after { content: "−"; }
+.fold > summary small { display: block; margin-top: 2px; font-weight: 400; font-size: 0.82rem; color: var(--ink-soft); }
+.fold-body { padding: 0 18px 18px; font-size: 0.93rem; }
+.fold-body h3 { margin: 18px 0 8px; font-size: 1rem; }
+.fold-body h3:first-child { margin-top: 0; }
+.fold-body p { margin: 0 0 10px; }
+.fold-body .table-wrap { margin: 12px 0 6px; }
+.fold-body .plain-list { margin-top: 8px; }
+.fold-body .plain-list li { margin-bottom: 6px; }
+
+@media (max-width: 960px) {
+  .scenes, .scenes.four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tl { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .tl li.blank { display: none; }
+}
+@media (max-width: 640px) {
+  .scenes, .scenes.four, .steps3, .ind { grid-template-columns: minmax(0, 1fr); }
+  .scene { min-height: 0; }
+  .tl-row { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .tl-who { justify-self: start; }
+  .tl { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ind-rows li { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .ind-rows li span:nth-child(2) { display: none; }
+  .ind-rows li { padding: 6px 0; border-bottom: 1px dashed var(--line-soft); }
+}
+
+/* Next read */
+.next-read { margin-top: clamp(40px, 5vw, 64px); padding-top: 24px; border-top: 1px solid var(--ink); }
+.next-read h2 { font-size: 1.2rem; margin: 0 0 14px; }
+.next-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.next-grid a { display: block; padding: 14px 16px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); text-decoration: none; color: var(--ink); }
+.next-grid a:hover { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.next-grid b { display: block; font-size: 0.96rem; }
+.next-grid span { display: block; margin-top: 4px; font-size: 0.82rem; color: var(--ink-soft); }
+.next-all { display: inline-block; margin-top: 12px; font-weight: 700; color: var(--blue-deep); }
+@media (max-width: 760px) { .next-grid { grid-template-columns: minmax(0, 1fr); } }
+
+.lang-switch { position: relative; }
+.lang-switch > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 10px; border: 1px solid var(--ui-line); border-radius: 999px; background: var(--paper-light); font-size: 0.8rem; font-weight: 700; }
+.lang-switch > summary::-webkit-details-marker { display: none; }
+.lang-switch ul { position: absolute; right: 0; top: calc(100% + 6px); z-index: 30; margin: 0; padding: 6px; list-style: none; min-width: 150px; background: var(--paper-light); border: 1px solid var(--ink); border-radius: 10px; box-shadow: 4px 4px 0 var(--ink); }
+.lang-switch li a { display: block; padding: 8px 10px; border-radius: 6px; color: var(--ink); text-decoration: none; font-size: 0.88rem; }
+.lang-switch li a:hover, .lang-switch li a[aria-current] { background: var(--blue-soft); }
+@media (max-width: 960px) { .brand-sub { display: none; } .header-actions { gap: 4px; } .lang-switch > summary { padding: 0 8px; } }
+@media (max-width: 640px) { .lang-switch .ls-label { display: none; } .lang-switch > summary { padding: 0 10px; } }
+/* Typography: balanced headings, phrase-aware Japanese breaks, tighter mobile headings */
+h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
+:lang(ja) h1, :lang(ja) h2, :lang(ja) h3, :lang(ja) .eyebrow, :lang(ja) .scene b, :lang(ja) .lead { word-break: auto-phrase; }
+.lead, .intro, .scene p { text-wrap: pretty; }
+@media (max-width: 640px) { h2 { font-size: 1.32rem; line-height: 1.4; } .eyebrow { font-size: 0.72rem; } .closing h2 { font-size: 1.5rem; } }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://simy.one/guides/hi/minimax.html#article",
+      "headline": "MiniMax उपयोग गाइड: MiniMax H3 क्या है? वीडियो AI, M3, कीमत और लोकल रन",
+      "description": "MiniMax किस देश का AI है, आवाज़ वाला वीडियो बनाने वाला MiniMax H3, टेक्स्ट मॉडल MiniMax-M3, वीडियो ऐप Hailuo, वॉइस ऐप MiniMax Audio, Token Plan, Anthropic-संगत API, लाइसेंस, लोकल रन और डेटा कहाँ सेव होता है। बनाने के बाद बचे ज़िम्मेदार, डेडलाइन और शेयरिंग को SIMY कैसे आगे बढ़ाता है।",
+      "inLanguage": "hi",
+      "datePublished": "2026-10-01",
+      "dateModified": "2026-10-01",
+      "mainEntityOfPage": "https://simy.one/guides/hi/minimax.html",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://simy.one/ogp.png",
+        "width": 1200,
+        "height": 630
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "SIMY",
+        "url": "https://simy.one/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "AwakApp Inc.",
+        "url": "https://www.awak.app/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://simy.one/simy-icon-square.png"
+        }
+      },
+      "about": [
+        {
+          "@type": "Thing",
+          "name": "MiniMax"
+        },
+        {
+          "@type": "Thing",
+          "name": "MiniMax-M3"
+        },
+        {
+          "@type": "Thing",
+          "name": "MiniMax H3"
+        },
+        {
+          "@type": "Thing",
+          "name": "Hailuo"
+        },
+        {
+          "@type": "Thing",
+          "name": "लार्ज लैंग्वेज मॉडल"
+        }
+      ],
+      "citation": [
+        "https://www.minimax.io/",
+        "https://huggingface.co/MiniMaxAI/MiniMax-M3",
+        "https://huggingface.co/MiniMaxAI/MiniMax-H3",
+        "https://platform.minimax.io/docs/guides/pricing-paygo.md",
+        "https://platform.minimax.io/docs/guides/pricing-token-plan.md",
+        "https://platform.minimax.io/docs/guides/local-deploy.md",
+        "https://code.minimax.io/doc/en/privacy-policy.html"
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "SIMY",
+          "item": "https://simy.one/?lang=hi"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "गाइड",
+          "item": "https://simy.one/guides/hi/index.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "MiniMax उपयोग गाइड",
+          "item": "https://simy.one/guides/hi/minimax.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "MiniMax क्या है?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "MiniMax, शंघाई (चीन) की एक AI कंपनी है। यह वीडियो जनरेशन के लिए MiniMax H3, टेक्स्ट के लिए MiniMax-M3 और वॉइस सिंथेसिस के लिए MiniMax Audio जैसे मॉडल और ऐप बनाती है।"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "MiniMax किस देश का AI है?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "इसे शंघाई (चीन) की एक कंपनी बनाती है। अंतरराष्ट्रीय ऐप सिंगापुर की कंपनी Nanonoble Pte. Ltd. उपलब्ध कराती है।"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "MiniMax H3 क्या है?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "MiniMax H3, जुलाई 2026 के अंत में MiniMax का घोषित, आवाज़ वाला वीडियो बनाने वाला जनरेटिव मॉडल है। यह टेक्स्ट, इमेज, वीडियो और ऑडियो के आधार पर 15 सेकंड तक का वीडियो बनाता है और Hailuo या API से इस्तेमाल होता है। यह टेक्स्ट मॉडल MiniMax-M3 से अलग मॉडल है।"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "क्या MiniMax H3 लोकल चल सकता है?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "निजी PC पर चलाना मुश्किल ही मानें। वेट Hugging Face पर जारी हैं, लेकिन आधिकारिक तरीका 4 GPU वाले सेटअप का उदाहरण देता है। आसानी से आज़माना हो, तो Hailuo या API व्यावहारिक हैं।"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "क्या MiniMax मुफ़्त में इस्तेमाल हो सकता है?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "यह हर ऐप में अलग है, इसलिए मुफ़्त उपयोग की सीमा हर ऐप की आधिकारिक जानकारी में देखें। API पेड है: इस्तेमाल के अनुसार भुगतान, या मासिक Token Plan।"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "MiniMax Token Plan की कीमत क्या है?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "अक्टूबर 2026 तक इसके 3 स्तर हैं: Plus $22/माह, Max $55/माह, Ultra $132/माह। हर 5 घंटे और हर हफ़्ते की उपयोग सीमा है।"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "MiniMax Audio क्या है?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "यह MiniMax का वॉइस सिंथेसिस ऐप और मॉडल है, जो टेक्स्ट को स्वाभाविक आवाज़ में बदलता है। ट्रेनिंग वीडियो के नैरेशन या प्रोडक्ट परिचय के वॉइसओवर में काम आता है।"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "क्या MiniMax के मॉडल Claude Code से इस्तेमाल हो सकते हैं?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "हाँ। MiniMax का API, Anthropic-संगत फ़ॉर्मेट की सलाह देता है, इसलिए Claude Code जैसे टूल का कनेक्शन पता और API की बदलकर MiniMax-M3 चला सकते हैं।"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "क्या MiniMax लोकल (अपने PC पर) चल सकता है?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "मौजूदा MiniMax-M3 को निजी PC पर चलाना व्यावहारिक नहीं है। Ollama की आधिकारिक लाइब्रेरी का M3 cloud टैग वाला है (Ollama के क्लाउड पर चलने वाला वर्शन), और आधिकारिक सेल्फ़-होस्ट तरीका कई हाई-परफ़ॉर्मेंस GPU मानकर चलता है।"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "क्या MiniMax के मॉडल कमर्शियल उपयोग में लिए जा सकते हैं?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "शर्तों के साथ, हाँ। MiniMax-M3 के कमर्शियल उपयोग में \"Built with MiniMax M3\" दिखाना और MiniMax को सूचना देना ज़रूरी है, और सालाना राजस्व 20 मिलियन डॉलर से ज़्यादा हो तो पहले लिखित अनुमति चाहिए। MiniMax H3 का लाइसेंस EU, ब्रिटेन, दक्षिण कोरिया और अमेरिका को लागू क्षेत्र से बाहर रखता है, इसलिए जिस देश में इस्तेमाल करेंगे, वह भी जाँचें।"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "MiniMax में डाली गई जानकारी कहाँ सेव होती है?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "अंतरराष्ट्रीय ऐप की पॉलिसी में लिखा है कि सिद्धांततः डेटा सिंगापुर से बाहर ट्रांसफ़र नहीं होता। API की अलग पॉलिसी है, इसलिए अनुबंध से पहले पूरा पाठ पढ़ें।"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "क्या SIMY, MiniMax से चलता है?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "नहीं। फ़िलहाल SIMY, MiniMax से कनेक्ट नहीं होता; यह आपके ChatGPT (Codex) अकाउंट और आपके PC के Claude Code से चलता है। MiniMax से बनी स्क्रिप्ट या सामग्री आप सीधे मीटिंग या चैट में ला सकते हैं।"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "MiniMax से बनाने के बाद का काम, क्या हर बार SIMY से कहना पड़ता है?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "नहीं। SIMY मीटिंग के रिकॉर्ड और चैट से तय बातें, ज़िम्मेदार और डेडलाइन ख़ुद उठाता है। आपका तरीका बातचीत से सीखता है, और सिर्फ़ फ़ैसले वाली बातें आपके पास लौटाता है।"
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">मुख्य सामग्री पर जाएँ</a>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="/?lang=hi">
+      <img src="/simy-icon-56.png" alt="SIMY" width="28" height="28">
+      <span aria-hidden="true">SIMY</span>
+      <span class="brand-sub">MiniMax उपयोग गाइड</span>
+    </a>
+    <nav class="header-actions" aria-label="अकाउंट">
+      <details class="lang-switch"><summary aria-label="Language: हिन्दी"><span aria-hidden="true">🌐</span> <span class="ls-label">हिन्दी</span></summary><ul><li><a href="/guides/minimax.html" hreflang="ja" lang="ja">日本語</a></li><li><a href="/guides/en/minimax.html" hreflang="en" lang="en">English</a></li><li><a href="/guides/zh-hans/minimax.html" hreflang="zh-Hans" lang="zh-Hans">中文</a></li><li><a href="/guides/es/minimax.html" hreflang="es" lang="es">Español</a></li><li><a href="/guides/fr/minimax.html" hreflang="fr" lang="fr">Français</a></li><li><a href="/guides/hi/minimax.html" hreflang="hi" lang="hi" aria-current="page">हिन्दी</a></li></ul></details>
+      <a class="header-link" href="/download/hi.html">डाउनलोड</a>
+      <a class="header-link" href="https://app.simy.one/login?lang=hi&amp;locale=hi&amp;region=in">लॉग इन</a>
+      <a class="header-cta" href="https://app.simy.one/signup?lang=hi&amp;locale=hi&amp;region=in&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=minimax_guide_hi&amp;utm_content=header">प्लान चुनकर शुरू करें</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" aria-labelledby="page-title">
+    <div class="wrap hero-inner">
+      <div>
+        <ol class="crumbs" aria-label="ब्रेडक्रंब">
+          <li><a href="/?lang=hi">SIMY</a></li>
+          <li><a href="/guides/hi/index.html">गाइड</a></li>
+          <li aria-current="page">MiniMax उपयोग गाइड</li>
+        </ol>
+        <p class="eyebrow">MiniMax इस्तेमाल करने वालों के लिए गाइड</p>
+        <h1 id="page-title">
+          <span class="line">MiniMax से बनाया,</span>
+          <span class="line hl">अब आगे का काम</span>
+          <span class="line">न रुके।</span>
+        </h1>
+        <p class="lead">स्क्रिप्ट, आवाज़ और वीडियो, MiniMax सस्ते में और जल्दी बना देता है। लेकिन "कौन जाँचेगा, कब और किसे भेजना है", यह अब भी आपके ज़िम्मे रहता है। वह आगे का काम SIMY बढ़ाता है।</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="https://app.simy.one/signup?lang=hi&amp;locale=hi&amp;region=in&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=minimax_guide_hi&amp;utm_content=hero">प्लान चुनकर शुरू करें <span class="arrow" aria-hidden="true">↗</span></a>
+          <a class="btn btn-ghost" href="#connect">कैसे जोड़ें, देखें <span class="arrow" aria-hidden="true">↓</span></a>
+        </div>
+        <ul class="hero-points">
+          <li>MiniMax अपने काम पर वैसे ही</li>
+          <li>SIMY मीटिंग और चैट से काम उठाए</li>
+          <li>आपके ChatGPT (Codex) से चले</li>
+        </ul>
+      </div>
+
+      <div class="hero-visual">
+        <div class="relay" role="img" aria-label="उदाहरण: MiniMax नए प्रोडक्ट के परिचय वीडियो की स्क्रिप्ट, नैरेशन ऑडियो और वीडियो का ड्राफ़्ट बनाता है। उसके बाद तय हुए बदलाव और ज़िम्मेदारों की सूची, प्रोडक्शन कंपनी को अनुरोध ईमेल का ड्राफ़्ट और टीम के लिए शेयर मैसेज SIMY तैयार करता है, और आपके पास सिर्फ़ यह फ़ैसला बचता है कि रिलीज़ की तारीख पक्की करें या नहीं">
+          <div class="relay-head" aria-hidden="true">
+            <span class="rec"><span class="rec-dot"></span><span class="rec-name">प्लानिंग मीटिंग_नया प्रोडक्ट वीडियो_1001</span></span>
+            <span>38:40</span>
+          </div>
+          <div class="relay-meta" aria-hidden="true">
+            <span class="chip">MiniMax-M3</span>
+            <span class="chip">H3 · Audio</span>
+            <span class="chip">4 प्रतिभागी</span>
+          </div>
+          <ol class="relay-steps" aria-hidden="true">
+            <li class="step s-done s-plaud"><span class="no">01</span><span class="what">स्क्रिप्ट का ड्राफ़्ट<small>60 सेकंड के वीडियो के 3 विकल्प</small></span><span class="status">MiniMax ✓</span></li>
+            <li class="step s-done s-plaud"><span class="no">02</span><span class="what">नैरेशन ऑडियो<small>स्क्रिप्ट से वॉइसओवर</small></span><span class="status">MiniMax ✓</span></li>
+            <li class="step s-done s-plaud"><span class="no">03</span><span class="what">वीडियो का ड्राफ़्ट<small>H3 से दृश्यों का रफ़</small></span><span class="status">MiniMax ✓</span></li>
+            <li class="handoff">MiniMax यहाँ तक / आगे SIMY</li>
+            <li class="step s-done"><span class="no">04</span><span class="what">तय बदलाव और ज़िम्मेदार<small>कौन, कब तक, क्या</small></span><span class="status">पूरा</span></li>
+            <li class="step s-run"><span class="no">05</span><span class="what">प्रोडक्शन कंपनी को ईमेल<small>आपकी लिखने की शैली में Gmail ड्राफ़्ट</small></span><span class="status">Autorun</span><span class="bar"></span></li>
+            <li class="step s-next"><span class="no">06</span><span class="what">टीम के लिए शेयर मैसेज<small>सेल्स और PR को रिलीज़ प्लान</small></span><span class="status">अगला</span></li>
+            <li class="step s-you"><span class="no">07</span><span class="what">रिलीज़ की तारीख पक्की करें?<small>आपके पास सिर्फ़ फ़ैसला</small></span><span class="status">आपकी बारी</span></li>
+          </ol>
+          <div class="relay-foot" aria-hidden="true"><strong>आपको बस तय करना है और भेजना है।</strong></div>
+        </div>
+        <p class="caption">* स्क्रीन केवल समझाने के लिए एक उदाहरण है</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap guide">
+    <nav class="toc" aria-label="विषय-सूची">
+      <p class="toc-title">विषय-सूची</p>
+      <ol>
+        <li><a href="#scene"><span>01</span>बनाने के बाद, क्या ऐसा होता है?</a></li>
+        <li><a href="#wish"><span>02</span>असल में, आप यह चाहते थे</a></li>
+        <li><a href="#gap"><span>03</span>MiniMax यहीं रुकता है</a></li>
+        <li><a href="#connect"><span>04</span>SIMY जोड़ता है</a></li>
+        <li><a href="#sample"><span>05</span>एक मीटिंग से तुलना</a></li>
+        <li><a href="#usecases"><span>06</span>उद्योग के हिसाब से: MiniMax और SIMY</a></li>
+        <li><a href="#start"><span>07</span>शुरुआत: 3 कदम</a></li>
+        <li><a href="#reference"><span>08</span>MiniMax क्या है: H3, M3, कीमत</a></li>
+        <li><a href="#faq"><span>09</span>अक्सर पूछे जाने वाले सवाल</a></li>
+        <li><a href="#sources"><span>10</span>संदर्भ</a></li>
+      </ol>
+    </nav>
+
+    <article class="article">
+      <details class="toc-mobile">
+        <summary>विषय-सूची</summary>
+        <ol>
+          <li><a href="#scene">बनाने के बाद, क्या ऐसा होता है?</a></li>
+          <li><a href="#wish">असल में, आप यह चाहते थे</a></li>
+          <li><a href="#gap">MiniMax यहीं रुकता है</a></li>
+          <li><a href="#connect">SIMY जोड़ता है</a></li>
+          <li><a href="#sample">एक मीटिंग से तुलना</a></li>
+          <li><a href="#usecases">उद्योग के हिसाब से: MiniMax और SIMY</a></li>
+          <li><a href="#start">शुरुआत: 3 कदम</a></li>
+          <li><a href="#reference">MiniMax क्या है: H3, M3, कीमत</a></li>
+          <li><a href="#faq">अक्सर पूछे जाने वाले सवाल</a></li>
+          <li><a href="#sources">संदर्भ</a></li>
+        </ol>
+      </details>
+
+      <p class="byline"><span>अंतिम अपडेट: <time datetime="2026-10-01">1 अक्टूबर 2026</time></span><span>प्रकाशक: SIMY (AwakApp Inc.)</span></p>
+
+      <!-- 01 -->
+      <section class="sec" id="scene" aria-labelledby="h-scene">
+        <span class="sec-label">01 / AFTER THE OUTPUT</span>
+        <h2 id="h-scene">MiniMax से बनाने के बाद, क्या ऐसा होता है?</h2>
+        <p class="intro">स्क्रिप्ट, आवाज़ और वीडियो का रफ़, MiniMax से एक झटके में तैयार। फिर भी उसके बाद यह होता है।</p>
+        <div class="scenes">
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">1</span>
+            <span class="k">सामग्री बनने का अगला दिन</span>
+            <b>कौन-सा चुना था?</b>
+            <p>स्क्रिप्ट और वीडियो के 3-3 विकल्प बने। मीटिंग में चुना गया विकल्प चैट में कहीं खो गया।</p>
+          </div>
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">2</span>
+            <span class="k">बदलाव तय करने वाली मीटिंग</span>
+            <b>ठीक कौन करेगा?</b>
+            <p>नैरेशन के शब्द और लंबाई बदलनी है। ज़िम्मेदार और डेडलाइन, सब सिर्फ़ ज़ुबानी।</p>
+          </div>
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">3</span>
+            <span class="k">रिलीज़ से पहले का हफ़्ता</span>
+            <b>अभी तक बताया नहीं</b>
+            <p>बनाने की भागदौड़ में प्रोडक्शन कंपनी और सेल्स को ख़बर देना टल गया।</p>
+          </div>
+        </div>
+        <p class="scene-foot">बनाना MiniMax से झट से हो जाता है। <b>काम आगे बढ़ेगा या नहीं, यह बनाने के बाद तय होता है।</b></p>
+      </section>
+
+      <!-- 02 -->
+      <section class="sec" id="wish" aria-labelledby="h-wish">
+        <span class="sec-label">02 / WHAT YOU REALLY WANTED</span>
+        <h2 id="h-wish">असल में, आप यह चाहते थे: MiniMax से बनाने के बाद</h2>
+        <p class="intro">वही मीटिंग, वही MiniMax। सामग्री बनते ही, आप चाहते थे कि ऐसा हो।</p>
+        <div class="scenes four">
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">मीटिंग ख़त्म होते ही</span>
+            <b>चुना विकल्प और ज़िम्मेदार सूची में</b>
+            <p>सामग्री MiniMax ही बनाए। चुना गया विकल्प और बदलावों के ज़िम्मेदार और डेडलाइन, पहले से सूची में।</p>
+          </div>
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">बदलाव तय होते ही</span>
+            <b>अनुरोध का मैसेज तैयार</b>
+            <p>प्रोडक्शन कंपनी को अनुरोध और टीम के लिए अपडेट, आपके अपने अंदाज़ में तैयार।</p>
+          </div>
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">रिलीज़ से पहले</span>
+            <b>अटका काम ख़ुद सामने आए</b>
+            <p>जवाब या पुष्टि के इंतज़ार में अटका काम, अगली मीटिंग से पहले SIMY बता देता है।</p>
+          </div>
+          <div class="scene wish you">
+            <span class="mark" aria-hidden="true">!</span>
+            <span class="k">आपके पास लौटता है</span>
+            <b>सिर्फ़ फ़ैसला</b>
+            <p>"क्या रिलीज़ अगले हफ़्ते पक्की करें?" बस यही एक सवाल लौटता है।</p>
+          </div>
+        </div>
+        <p class="scene-foot">यह <b>SIMY से मीटिंग और चैट जोड़ने के बाद की अगली मीटिंग से</b> होता है। MiniMax अपने काम के लिए वैसे ही इस्तेमाल करते रहें।</p>
+      </section>
+
+      <!-- 03 -->
+      <section class="sec" id="gap" aria-labelledby="h-gap">
+        <span class="sec-label">03 / WHERE MINIMAX STOPS</span>
+        <h2 id="h-gap">MiniMax का जवाब यहीं रुक जाता है</h2>
+        <p class="intro">MiniMax की ताक़त है "जो माँगा, वह बनाना"। उसके आगे का काम कोई नहीं उठाता।</p>
+        <div class="tl-wrap" role="img" aria-label="टाइमलाइन। अनुरोध, स्क्रिप्ट या टेक्स्ट, और आवाज़ या वीडियो तक MiniMax पूरा करता है, लेकिन ज़िम्मेदार और डेडलाइन, अनुरोध भेजना, टीम से शेयर करना और अगली बार तक की जाँच ख़ाली रह जाते हैं">
+          <div class="tl-row">
+            <span class="tl-who">MiniMax</span>
+            <ol class="tl">
+              <li class="on">अनुरोध<small>आप कहते हैं</small></li>
+              <li class="on">स्क्रिप्ट, टेक्स्ट<small>M3 से सस्ता और तेज़</small></li>
+              <li class="on">आवाज़, वीडियो<small>Audio और H3</small></li>
+              <li class="gap">ज़िम्मेदार और डेडलाइन</li>
+              <li class="gap">अनुरोध भेजना</li>
+              <li class="gap">टीम से शेयर</li>
+              <li class="gap">अगली बार तक जाँच</li>
+            </ol>
+          </div>
+        </div>
+        <p class="caption">* फ़्लो केवल समझाने के लिए एक उदाहरण है</p>
+        <p class="tl-note"><b>ऐप हो, API हो या MiniMax Code, सब यहीं रुकते हैं।</b> सामग्री जितनी बार चाहें बना सकते हैं। लेकिन हर बार कहना आपको है, और काम पूरा हुआ या नहीं, यह देखना भी आपको।</p>
+      </section>
+
+      <!-- 04 -->
+      <section class="sec" id="connect" aria-labelledby="h-connect">
+        <span class="sec-label">04 / CONNECT</span>
+        <h2 id="h-connect">SIMY जोड़ता है। MiniMax वैसा ही, बनाने के बाद का काम SIMY को</h2>
+        <p class="intro">ख़ाली पड़े 4 खाने SIMY भरता है। आपके पास लौटता है सिर्फ़ फ़ैसले का एक खाना।</p>
+        <div class="tl-wrap" role="img" aria-label="टाइमलाइन। अनुरोध, स्क्रिप्ट या टेक्स्ट, और आवाज़ या वीडियो MiniMax करता है। ज़िम्मेदार और डेडलाइन, अनुरोध भेजना और टीम से शेयर करना SIMY आगे बढ़ाता है, और सिर्फ़ फ़ैसला आपके पास लौटता है">
+          <div class="tl-row">
+            <span class="tl-who">MiniMax</span>
+            <ol class="tl">
+              <li class="on">अनुरोध</li>
+              <li class="on">स्क्रिप्ट, टेक्स्ट</li>
+              <li class="on">आवाज़, वीडियो</li>
+              <li class="blank"></li><li class="blank"></li><li class="blank"></li><li class="blank"></li>
+            </ol>
+          </div>
+          <div class="tl-row">
+            <span class="tl-who simy">SIMY</span>
+            <ol class="tl">
+              <li class="blank"></li><li class="blank"></li><li class="blank"></li>
+              <li class="run">ज़िम्मेदार और डेडलाइन<small>मीटिंग से उठाए</small></li>
+              <li class="run">अनुरोध भेजना<small>Gmail में ड्राफ़्ट तक</small></li>
+              <li class="run">टीम से शेयर<small>मंज़ूरी के बाद पोस्ट</small></li>
+              <li class="you">फ़ैसला<small>सिर्फ़ 1 सवाल लौटे</small></li>
+            </ol>
+          </div>
+        </div>
+        <p class="caption">* फ़्लो केवल समझाने के लिए एक उदाहरण है</p>
+        <ul class="three" aria-label="SIMY की 3 खूबियाँ">
+          <li>मीटिंग और चैट से उठाए</li>
+          <li>आपके तरीके से</li>
+          <li>सिर्फ़ फ़ैसला लौटाए</li>
+        </ul>
+        <p class="tl-note">SIMY मीटिंग के रिकॉर्ड और चैट से "उसके बाद का काम" ख़ुद ढूँढता है। आप जो कदम और जाँच बार-बार करते हैं, उन्हें बातचीत से सीखता है, उसी तरीके से आगे बढ़ाता है और काम पूरा हुआ या नहीं, My Actions में दिखाता है।</p>
+
+        <div class="connect">
+          <ol class="connect-steps">
+            <li><b>SIMY पर साइन अप करें और ChatGPT (Codex) जोड़ें</b><span>SIMY का क्लाउड एक्ज़ीक्यूशन आपके अपने ChatGPT अकाउंट से चलता है। Codex का उपयोग आपके ChatGPT प्लान की सीमा में होता है।</span></li>
+            <li class="key"><b>SIMY डेस्कटॉप ऐप इंस्टॉल करें</b><span>आपके PC का Claude Code, SIMY के लिए काम करने वाला बन सकता है। Claude Code और Codex की बातचीत से बार-बार होने वाले काम को "SIMY का सुझाव" बनाता है। बातचीत का मूल पाठ सर्वर पर सेव नहीं होता। <a href="/download/hi.html">यहाँ से डाउनलोड करें</a></span></li>
+            <li><b>मीटिंग के रिकॉर्ड जोड़ें</b><span>इंटीग्रेशन स्क्रीन पर Plaud, Notion आदि जोड़ें। MiniMax से बनी स्क्रिप्ट या सामग्री का लिंक मीटिंग या चैट में डालें, SIMY उसे उठा लेता है।</span></li>
+          </ol>
+          <div>
+            <div class="mock" role="img" aria-label="SIMY के My Actions का उदाहरण। मीटिंग से उठाए गए काम: तय बदलाव और ज़िम्मेदारों की सूची पूरी, प्रोडक्शन कंपनी को अनुरोध ईमेल का ड्राफ़्ट चल रहा है, और रिलीज़ की तारीख पक्की करने का फ़ैसला आपकी बारी में है।">
+              <div class="mock-head" aria-hidden="true">
+                <span class="mock-mark">S</span>
+                <div>
+                  <div class="mock-title">My Actions <span class="mock-state">● आपकी बारी 1</span></div>
+                  <p class="mock-desc">प्लानिंग मीटिंग_नया प्रोडक्ट वीडियो_1001 से उठाए गए काम</p>
+                </div>
+              </div>
+              <div class="mock-box" aria-hidden="true">बदलाव और ज़िम्मेदारों की सूची ✓ / अनुरोध ईमेल का ड्राफ़्ट (चल रहा है) / टीम से शेयर (अगला)</div>
+              <div class="mock-btn" aria-hidden="true">रिलीज़ की तारीख पक्की करने का फ़ैसला करें</div>
+              <div class="mock-foot" aria-hidden="true">सिर्फ़ फ़ैसले वाले काम आपके पास लौटते हैं</div>
+            </div>
+            <p class="caption">* SIMY स्क्रीन का एक उदाहरण</p>
+          </div>
+        </div>
+        <p class="note"><b>SIMY और MiniMax का संबंध:</b> फ़िलहाल SIMY, MiniMax से कनेक्ट नहीं होता। SIMY ख़ुद आपके ChatGPT (Codex) अकाउंट और आपके PC के Claude Code से चलता है। स्क्रिप्ट, आवाज़ और वीडियो बनाने के लिए MiniMax को उसकी ताक़त के काम में वैसे ही इस्तेमाल करें; उसका नतीजा मीटिंग या चैट में लाएँ, आगे का काम SIMY बढ़ाता है।</p>
+      </section>
+
+      <!-- 05 -->
+      <section class="sec" id="sample" aria-labelledby="h-sample">
+        <span class="sec-label">05 / SAMPLE</span>
+        <h2 id="h-sample">एक मीटिंग से तुलना: MiniMax की सामग्री और SIMY का अगला कदम</h2>
+        <p class="intro">नए प्रोडक्ट के परिचय वीडियो पर 40 मिनट की प्लानिंग मीटिंग, जिसमें सामग्री MiniMax से बनी, उसका एक नमूना। बाईं ओर MiniMax, दाईं ओर SIMY।</p>
+        <div class="sample">
+          <div class="sheet">
+            <div class="sheet-label"><span>MiniMax से बनी सामग्री (उदाहरण)</span><span>M3 · Audio · Hailuo</span></div>
+            <dl>
+              <dt>स्क्रिप्ट</dt>
+              <dd>60 सेकंड के वीडियो के 3 विकल्प। मीटिंग में विकल्प B "फ़ील्ड का एक दिन" चुना गया।</dd>
+              <dt>नैरेशन</dt>
+              <dd>शांत आवाज़ में वॉइसओवर। सुझाव आया कि पहला वाक्य लंबा है।</dd>
+              <dt>वीडियो का ड्राफ़्ट</dt>
+              <dd>हर दृश्य का रफ़। आख़िरी शॉट में प्रोडक्ट लोगो जोड़ना है।</dd>
+              <dt>अनिर्णीत बातें</dt>
+              <dd>रिलीज़ प्रदर्शनी से एक हफ़्ता पहले हो या प्रदर्शनी के दिन।</dd>
+            </dl>
+          </div>
+          <div class="outs">
+            <div class="out">
+              <div class="out-head"><b>बदलाव और ज़िम्मेदारों की सूची</b><span class="pill ok">पूरा</span></div>
+              <p>पहला वाक्य छोटा करना: आप, 3 अक्टूबर। आख़िरी शॉट में लोगो: प्रोडक्शन कंपनी, 8 अक्टूबर। सबटाइटल की जाँच: PR टीम, 9 अक्टूबर।</p>
+            </div>
+            <div class="out">
+              <div class="out-head"><b>प्रोडक्शन कंपनी को अनुरोध ईमेल</b><span class="pill run">Autorun</span></div>
+              <p>विकल्प B तय हुआ, आख़िरी शॉट में लोगो जोड़ना है और 8 अक्टूबर तक डिलीवरी चाहिए, यह सब आपके हमेशा वाले अंदाज़ में। Gmail में ड्राफ़्ट के रूप में सेव।</p>
+            </div>
+            <div class="out">
+              <div class="out-head"><b>टीम के लिए शेयर मैसेज</b><span class="pill">अगला</span></div>
+              <p>"परिचय वीडियो विकल्प B के साथ आगे बढ़ रहा है। रिलीज़ की तारीख इसी हफ़्ते पक्की होगी।" मंज़ूरी मिलते ही चैट में पोस्ट।</p>
+            </div>
+            <div class="out you">
+              <div class="out-head"><b>आपका फ़ैसला</b><span class="pill you">आपकी बारी</span></div>
+              <p>रिलीज़ प्रदर्शनी से एक हफ़्ता पहले हो या उसी दिन। सिर्फ़ फ़ैसले वाली बात आपके पास लौटती है।</p>
+            </div>
+          </div>
+        </div>
+        <p class="sample-foot">MiniMax बनाता है, SIMY आगे बढ़ाता है। दुनिया के सामने क्या जाएगा, यह फ़ैसला आपका ही रहता है।</p>
+      </section>
+
+      <!-- 06 -->
+      <section class="sec" id="usecases" aria-labelledby="h-usecases">
+        <span class="sec-label">06 / BY INDUSTRY</span>
+        <h2 id="h-usecases">उद्योग के हिसाब से: MiniMax का उपयोग और SIMY क्या देता है</h2>
+        <p class="intro">MiniMax से बनाने के बाद SIMY क्या तैयार करता है। अकेले हों या टीम में, ढाँचा वही है।</p>
+        <div class="ind">
+          <div class="ind-card">
+            <h3>मार्केटिंग और PR <small>MiniMax: परिचय वीडियो, नैरेशन</small></h3>
+            <ul class="ind-rows">
+              <li><span>वीडियो प्लानिंग मीटिंग</span><span>→</span><span>चुना विकल्प, बदलावों के ज़िम्मेदार और डेडलाइन</span></li>
+              <li><span>सामग्री की समीक्षा</span><span>→</span><span>प्रोडक्शन कंपनी को अनुरोध ईमेल का ड्राफ़्ट</span></li>
+              <li><span>रिलीज़ से पहले</span><span>→</span><span>पुष्टि बाकी कामों की सूची और 1 फ़ैसला</span></li>
+            </ul>
+          </div>
+          <div class="ind-card">
+            <h3>शिक्षा और ट्रेनिंग <small>MiniMax: पाठ्य सामग्री का वॉइसओवर</small></h3>
+            <ul class="ind-rows">
+              <li><span>कोर्स सामग्री की मीटिंग</span><span>→</span><span>हर अध्याय के ज़िम्मेदार और डेडलाइन</span></li>
+              <li><span>प्रतिभागियों के फ़ीडबैक की समीक्षा</span><span>→</span><span>सुधार की जगहें और ट्रेनर को अनुरोध</span></li>
+              <li><span>कोर्स शुरू होने से पहले</span><span>→</span><span>बाकी सामग्री का रिमाइंडर</span></li>
+            </ul>
+          </div>
+          <div class="ind-card">
+            <h3>डेवलपमेंट टीम <small>MiniMax: API और MiniMax Code</small></h3>
+            <ul class="ind-rows">
+              <li><span>डिज़ाइन रिव्यू मीटिंग</span><span>→</span><span>तय बदलाव और ज़िम्मेदारों की सूची</span></li>
+              <li><span>कोड लिखने के बाद</span><span>→</span><span>PC के Claude Code से अगला काम</span></li>
+              <li><span>हफ़्ते के अंत में</span><span>→</span><span>प्रगति और फ़ैसले बाकी कामों का सार</span></li>
+            </ul>
+          </div>
+          <div class="ind-card">
+            <h3>मैनेजमेंट मीटिंग, 1on1 <small>MiniMax: दस्तावेज़ों का सार, मुद्दे छाँटना</small></h3>
+            <ul class="ind-rows">
+              <li><span>मैनेजमेंट मीटिंग</span><span>→</span><span>फ़ैसलों और ज़िम्मेदारों की सूची, संबंधित लोगों से शेयर</span></li>
+              <li><span>1on1</span><span>→</span><span>"उसका क्या हुआ?" पूछने से पहले, प्रगति और बाकी फ़ैसले</span></li>
+              <li><span>हफ़्ते के अंत में</span><span>→</span><span>कई मीटिंग्स को जोड़कर साप्ताहिक रिपोर्ट</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- 07 -->
+      <section class="sec" id="start" aria-labelledby="h-start">
+        <span class="sec-label">07 / START</span>
+        <h2 id="h-start">शुरुआत: MiniMax वैसा ही, बस 3 कदम</h2>
+        <ol class="steps3">
+          <li><b>MiniMax हमेशा की तरह इस्तेमाल करें</b><span>स्क्रिप्ट, आवाज़, वीडियो, कोड। ऐप, API या MiniMax Code, कुछ भी चलेगा।</span></li>
+          <li class="key"><b>SIMY पर साइन अप करें और ChatGPT जोड़ें</b><span>क्लाउड एक्ज़ीक्यूशन आपके ChatGPT (Codex) से होता है। <a href="#connect">जोड़ने का तरीका</a> ऊपर दिया है। Claude Code इस्तेमाल करते हैं, तो SIMY डेस्कटॉप ऐप भी। <a href="/download/hi.html">यहाँ से डाउनलोड करें</a></span></li>
+          <li><b>एक मीटिंग पूरी करें</b><span>ज़िम्मेदार और डेडलाइन, अनुरोध का ड्राफ़्ट और शेयर मैसेज आपके पास आ जाते हैं। तय कीजिए, भेजिए। बस इतना।</span></li>
+        </ol>
+        <p class="note"><b>साइन अप का क्रम:</b> प्लान चुनें → ईमेल से पुष्टि करें → कार्ड से भुगतान करें (कोई फ़्री प्लान नहीं है)। <a href="/?lang=hi#pricing">प्राइसिंग देखें</a> / PC ऐप <a href="/download/hi.html">डाउनलोड पेज</a> से।</p>
+        <p class="note"><b>MiniMax इस्तेमाल करने का तरीका नहीं बदलता।</b> SIMY, MiniMax की जगह नहीं लेता; यह बनाने के बाद का काम संभालने वाली अलग व्यवस्था है।</p>
+      </section>
+
+      <!-- 08 -->
+      <section class="sec" id="reference" aria-labelledby="h-reference">
+        <span class="sec-label">08 / REFERENCE</span>
+        <h2 id="h-reference">MiniMax क्या है: H3, M3, कीमत, API, लोकल रन (विस्तार से जानने के लिए)</h2>
+        <p class="intro">यहाँ से नीचे का हिस्सा तब खोलें, जब आपको ख़ुद MiniMax के बारे में जाँचना हो। मॉडल के नाम और कीमतें अक्टूबर 2026 की जानकारी हैं।</p>
+
+        <details class="fold">
+          <summary>MiniMax क्या है: किस देश का AI<small>शंघाई, चीन की AI कंपनी। टेक्स्ट, वीडियो और आवाज़ के मॉडल</small></summary>
+          <div class="fold-body">
+            <h3>MiniMax को कौन बनाता है</h3>
+            <p>MiniMax, शंघाई (चीन) की एक AI कंपनी है। टेक्स्ट संभालने वाले लार्ज लैंग्वेज मॉडल (LLM) के साथ-साथ यह वीडियो जनरेशन और वॉइस सिंथेसिस के मॉडल और ऐप ख़ुद बनाती है। अंतरराष्ट्रीय ऐप सिंगापुर की कंपनी Nanonoble Pte. Ltd. उपलब्ध कराती है।</p>
+            <h3>इस्तेमाल के 3 तरीके</h3>
+            <ul class="plain-list">
+              <li><strong>ऐप:</strong> MiniMax Code, MiniMax Audio, वीडियो के लिए Hailuo आदि, वेब या मोबाइल पर।</li>
+              <li><strong>API:</strong> MiniMax के प्लेटफ़ॉर्म (platform.minimax.io) से अपने सिस्टम या डेवलपमेंट टूल में जोड़ें। इस्तेमाल के हिसाब से भुगतान और फ़िक्स्ड Token Plan, दोनों हैं।</li>
+              <li><strong>ओपन वेट:</strong> Hugging Face पर जारी MiniMax-M3 या MiniMax H3 के वेट अपने सर्वर पर चलाएँ। इसके लिए लाइसेंस की शर्तें हैं।</li>
+            </ul>
+            <p class="small muted">"Minimax" गेम थ्योरी की एक खोज पद्धति (मिनिमैक्स एल्गोरिद्म) का नाम भी है। इस पेज में बात AI कंपनी MiniMax की है।</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>मुख्य प्रोडक्ट: वीडियो के लिए H3, टेक्स्ट के लिए M3, आवाज़ के लिए MiniMax Audio<small>अक्टूबर 2026 तक। नाम और पीढ़ियाँ अक्सर बदलती हैं</small></summary>
+          <div class="fold-body">
+            <p class="scroll-hint">टेबल को दाईं ओर स्क्रॉल कर सकते हैं →</p>
+            <div class="table-wrap">
+              <table class="t-wide">
+                <thead>
+                  <tr><th scope="col">प्रोडक्ट / मॉडल</th><th scope="col">क्या कर सकता है</th><th scope="col">कहाँ उपलब्ध</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">MiniMax H3</th><td>आवाज़ वाला वीडियो बनाने वाला जनरेटिव मॉडल। टेक्स्ट, इमेज, वीडियो और ऑडियो के आधार पर 15 सेकंड तक का वीडियो बनाता है</td><td>Hailuo, API, ओपन वेट</td></tr>
+                  <tr><th scope="row">MiniMax-M3</th><td>मौजूदा मुख्य टेक्स्ट मॉडल। 10 लाख टोकन का कॉन्टेक्स्ट, टेक्स्ट, इमेज और वीडियो इनपुट</td><td>API, ओपन वेट</td></tr>
+                  <tr><th scope="row">MiniMax-M2.7</th><td>पिछली पीढ़ी का टेक्स्ट मॉडल</td><td>API, ओपन वेट</td></tr>
+                  <tr><th scope="row">MiniMax Code</th><td>कोडिंग और रिसर्च सौंपने वाला एजेंट ऐप</td><td>ऐप</td></tr>
+                  <tr><th scope="row">Hailuo</th><td>वीडियो जनरेशन ऐप। H3 जैसे मॉडल से टेक्स्ट या इमेज से वीडियो बनाता है</td><td>ऐप आदि</td></tr>
+                  <tr><th scope="row">MiniMax Audio</th><td>टेक्स्ट को स्वाभाविक आवाज़ में बदलने वाला वॉइस सिंथेसिस ऐप (मॉडल का नाम MiniMax Speech)</td><td>ऐप आदि</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 id="h3">MiniMax H3 क्या है</h3>
+            <p>MiniMax H3, जुलाई 2026 के अंत में MiniMax का घोषित वीडियो जनरेशन मॉडल है। यह टेक्स्ट, इमेज, वीडियो और ऑडियो के आधार पर स्टीरियो आवाज़ वाला वीडियो (4 से 15 सेकंड, अधिकतम 2K) बनाता है। आधिकारिक मॉडल कार्ड के अनुसार संवाद के लिए 11 भाषाएँ समर्थित हैं।</p>
+            <ul class="plain-list">
+              <li><strong>कहाँ उपलब्ध:</strong> वीडियो ऐप Hailuo, MiniMax का API, और Hugging Face पर जारी वेट।</li>
+              <li><strong>M3 से अंतर:</strong> H3 वीडियो बनाने वाला मॉडल है, M3 टेक्स्ट संभालने वाला। दोनों अलग हैं।</li>
+              <li><strong>लोकल चलाना:</strong> निजी PC के लिए यह भारी मॉडल है। विवरण नीचे <a href="#local">लोकल रन की हकीकत</a> में देखें।</li>
+            </ul>
+            <h3>MiniMax-M3 क्या है</h3>
+            <p>MiniMax-M3, जून 2026 में जारी MiniMax का मौजूदा मुख्य टेक्स्ट मॉडल है। कुल पैरामीटर लगभग 428 अरब हैं (एक बार के इन्फ़रेंस में लगभग 23 अरब सक्रिय), और यह 10 लाख टोकन का कॉन्टेक्स्ट तथा टेक्स्ट, इमेज और वीडियो इनपुट सपोर्ट करता है। API की दर कम है, और कोडिंग टूल से फ़िक्स्ड कीमत पर इस्तेमाल के लिए Token Plan भी है।</p>
+            <h3>MiniMax Audio कैसे इस्तेमाल करें</h3>
+            <p>जो टेक्स्ट पढ़वाना है, उसे पेस्ट करें, आवाज़ का प्रकार और बोलने की गति चुनें, और ऑडियो बनाएँ। ट्रेनिंग वीडियो का नैरेशन, प्रोडक्ट परिचय का वॉइसओवर या टीम के लिए घोषणा, इन सबमें काम आता है। किसी व्यक्ति जैसी आवाज़ बनाते समय उस व्यक्ति की सहमति और जहाँ प्रकाशित करेंगे, उस प्लेटफ़ॉर्म के नियम ज़रूर देखें।</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>MiniMax से क्या कर सकते हैं: काम में उपयोग<small>टेक्स्ट, आवाज़ और वीडियो, एक ही कंपनी के टूल से</small></summary>
+          <div class="fold-body">
+            <ul class="plain-list">
+              <li><strong>टेक्स्ट:</strong> MiniMax-M3 से स्क्रिप्ट, लेख, ईमेल और रिपोर्ट का पहला ड्राफ़्ट। लंबे दस्तावेज़ों का सार, या इमेज और वीडियो दिखाकर समझाना भी।</li>
+              <li><strong>आवाज़:</strong> MiniMax Audio से स्क्रिप्ट का नैरेशन या वॉइसओवर। ट्रेनिंग, प्रोडक्ट परिचय और टीम की घोषणाओं के लिए।</li>
+              <li><strong>वीडियो:</strong> Hailuo या API से MiniMax H3 चलाकर, टेक्स्ट या इमेज से आवाज़ वाले छोटे वीडियो। स्टोरीबोर्ड जैसे रफ़ या सोशल मीडिया के छोटे वीडियो के ड्राफ़्ट के लिए उपयुक्त।</li>
+              <li><strong>कोडिंग:</strong> MiniMax Code, या Anthropic-संगत API से जुड़े कोडिंग टूल को कोड का काम सौंपें।</li>
+            </ul>
+            <h3>Hailuo (H3) से वीडियो बनाने का क्रम</h3>
+            <ol class="plain-list">
+              <li><strong>जो दृश्य चाहिए, उसे शब्दों में लिखें।</strong> जैसे "सुबह के ऑफ़िस में, कर्मचारी टैबलेट देखते हुए मीटिंग कर रहे हैं", जगह, लोग और हरकत साफ़ लिखें।</li>
+              <li><strong>ज़रूरत हो तो इमेज जोड़ें।</strong> प्रोडक्ट फ़ोटो या संदर्भ इमेज में गति जोड़ सकते हैं।</li>
+              <li><strong>कई बनाकर चुनें।</strong> एक ही निर्देश पर भी नतीजा हर बार अलग आता है, इसलिए विकल्प साथ रखकर तुलना करना सबसे आसान है।</li>
+            </ol>
+            <p>किसी व्यक्ति का चेहरा, लोगो या किसी और के काम जैसी अभिव्यक्ति इस्तेमाल करते समय अधिकार और प्रकाशन प्लेटफ़ॉर्म के नियम जाँचें। बाहर जाने वाले वीडियो को प्रकाशित करने से पहले आख़िर में इंसानी नज़र से ज़रूर देखें।</p>
+            <p>किसी भी उपयोग में, MiniMax "सामग्री" या "ड्राफ़्ट" तक देता है। उसके आधार पर मीटिंग में तय ज़िम्मेदार, डेडलाइन और संबंधित लोगों से संपर्क, <a href="#connect">SIMY मीटिंग और चैट से उठाकर</a> आगे बढ़ाता है।</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>कीमत का हिसाब: इस्तेमाल के अनुसार भुगतान और Token Plan<small>टेक्स्ट API सस्ते वर्ग में। फ़िक्स्ड प्लान $22/माह से</small></summary>
+          <div class="fold-body">
+            <ul class="plain-list">
+              <li><strong>इस्तेमाल के अनुसार भुगतान:</strong> अक्टूबर 2026 तक, MiniMax-M3 के लिए 512K टोकन तक के इनपुट पर प्रति 10 लाख टोकन इनपुट $0.30 और आउटपुट $1.20। 512K से लंबे इनपुट पर दोगुना, और प्राथमिकता प्रोसेसिंग पर 1.5 गुना। चीनी LLM में भी यह सस्ते वर्ग में आता है।</li>
+              <li><strong>Token Plan:</strong> कोडिंग टूल आदि से फ़िक्स्ड कीमत पर इस्तेमाल का प्लान, 3 स्तर: Plus $22/माह, Max $55/माह, Ultra $132/माह। हर 5 घंटे और हर हफ़्ते की उपयोग सीमा है।</li>
+              <li><strong>टैक्स:</strong> कीमतें अमेरिकी डॉलर में हैं। टैक्स और ताज़ा रकम <a href="https://platform.minimax.io/docs/guides/pricing-paygo.md" target="_blank" rel="noopener">इस्तेमाल-आधारित कीमत पेज</a> और <a href="https://platform.minimax.io/docs/guides/pricing-token-plan.md" target="_blank" rel="noopener">Token Plan पेज</a> पर देखें।</li>
+            </ul>
+            <h3>कौन-सा चुनें</h3>
+            <ul class="plain-list">
+              <li><strong>रोज़ कोडिंग टूल में इस्तेमाल:</strong> अगर खपत का अंदाज़ा मुश्किल है, तो Token Plan से महीने का ख़र्च तय रखना आसान है।</li>
+              <li><strong>अपने सिस्टम में जोड़ना:</strong> प्रोसेसिंग की मात्रा के अनुपात वाला इस्तेमाल-आधारित भुगतान बेहतर है। छोटे से आज़माएँ, प्रति काम लागत देखें, फिर बढ़ाएँ।</li>
+            </ul>
+            <p>वीडियो और आवाज़ की कीमत, टेक्स्ट से अलग व्यवस्था में है। कितने और कितने लंबे बनाते हैं, उस पर निर्भर है, इसलिए आधिकारिक पेज पर देखें।</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>MiniMax API: Anthropic-संगत फ़ॉर्मेट की सलाह<small>Claude Code जैसे Anthropic फ़ॉर्मेट वाले टूल से जोड़ें</small></summary>
+          <div class="fold-body">
+            <ul class="plain-list">
+              <li><strong>शुरुआत:</strong> MiniMax के प्लेटफ़ॉर्म (platform.minimax.io) पर API की बनाएँ।</li>
+              <li><strong>संगतता:</strong> आधिकारिक रूप से Anthropic SDK-संगत फ़ॉर्मेट की सलाह दी जाती है। OpenAI के Chat Completions और Responses API फ़ॉर्मेट भी सपोर्टेड हैं।</li>
+              <li><strong>कोडिंग टूल से इस्तेमाल:</strong> Claude Code जैसे Anthropic फ़ॉर्मेट वाले टूल का कनेक्शन पता और API की MiniMax वाले से बदल दें, तो MiniMax-M3 चलता है। तरीका आधिकारिक डॉक्यूमेंटेशन में है।</li>
+            </ul>
+            <h3>API शुरू करने के कदम</h3>
+            <ol class="plain-list">
+              <li><strong>MiniMax प्लेटफ़ॉर्म पर अकाउंट बनाएँ।</strong> इस्तेमाल-आधारित भुगतान या Token Plan चुनें।</li>
+              <li><strong>API की बनाएँ।</strong> की को एनवायरनमेंट वेरिएबल में रखें; कोड या शेयर किए दस्तावेज़ में सीधे न लिखें।</li>
+              <li><strong>अपने परिचित टूल का कनेक्शन बदलें।</strong> Anthropic या OpenAI फ़ॉर्मेट चुनें, फिर URL और मॉडल का नाम बदलें।</li>
+              <li><strong>छोटे से आज़माएँ, खपत देखें।</strong> लंबे इनपुट पर दर बढ़ती है। रोज़ की खपत देखकर ही असली मात्रा तक बढ़ाएँ।</li>
+            </ol>
+            <p class="note"><b>SIMY से संबंध:</b> फ़िलहाल SIMY, MiniMax की API की से कनेक्ट नहीं होता। SIMY का क्लाउड एक्ज़ीक्यूशन आपके ChatGPT (Codex) अकाउंट से चलता है।</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>ओपन वेट और लाइसेंस: कमर्शियल उपयोग शर्तों के साथ<small>M3 और H3 दोनों का अपना लाइसेंस। सबको "ओपन सोर्स" न मानें</small></summary>
+          <div class="fold-body">
+            <p>MiniMax-M3 के मॉडल वेट Hugging Face पर जारी हैं, लेकिन लाइसेंस कंपनी का अपना "MiniMax Community License" है। गैर-कमर्शियल उपयोग खुला है, पर कमर्शियल उपयोग की शर्तें हैं।</p>
+            <ul class="plain-list">
+              <li><strong>कमर्शियल उपयोग में:</strong> "Built with MiniMax M3" दिखाना और MiniMax को सूचना देना ज़रूरी है।</li>
+              <li><strong>सालाना राजस्व 20 मिलियन डॉलर से ज़्यादा हो तो:</strong> कमर्शियल उपयोग से पहले MiniMax की लिखित अनुमति ज़रूरी है।</li>
+              <li><strong>प्रतिबंधित उपयोग:</strong> सैन्य उपयोग आदि प्रतिबंधित हैं।</li>
+              <li><strong>M2.7:</strong> इसका भी अपना अलग लाइसेंस है।</li>
+            </ul>
+            <h3>MiniMax H3 का लाइसेंस</h3>
+            <ul class="plain-list">
+              <li><strong>लागू क्षेत्र:</strong> MiniMax H3 Community License, EU, ब्रिटेन, दक्षिण कोरिया और अमेरिका को लागू क्षेत्र से बाहर रखता है। अपने देश के साथ-साथ, विदेशी दफ़्तरों या ग्राहकों के देश में इस्तेमाल करना हो, तो भी जाँचें।</li>
+              <li><strong>कमर्शियल उपयोग में:</strong> प्रोडक्ट की स्क्रीन पर "MiniMax H3" दिखाना ज़रूरी है। सालाना राजस्व 20 मिलियन डॉलर से ज़्यादा हो, तो पहले लिखित अनुमति ज़रूरी है।</li>
+            </ul>
+            <p>सिर्फ़ कंपनी के भीतर आज़माने में भी, कमर्शियल माना जाएगा या नहीं, इससे शर्तें बदलती हैं। काम में इस्तेमाल से पहले <a href="https://huggingface.co/MiniMaxAI/MiniMax-M3/raw/main/LICENSE" target="_blank" rel="noopener">M3 का लाइसेंस</a> और <a href="https://huggingface.co/MiniMaxAI/MiniMax-H3/blob/main/LICENSE" target="_blank" rel="noopener">H3 का लाइसेंस</a> पढ़ें।</p>
+          </div>
+        </details>
+
+        <details class="fold" id="local">
+          <summary>क्या MiniMax H3 और M3 लोकल चल सकते हैं<small>दोनों निजी PC के लिए भारी। आधिकारिक तरीका कई GPU वाला</small></summary>
+          <div class="fold-body">
+            <p>"minimax h3 local" बहुत खोजा जाता है, लेकिन अक्टूबर 2026 तक, आम PC पर H3 या M3 चलाना मुश्किल ही मानें।</p>
+            <ul class="plain-list">
+              <li><strong>Ollama:</strong> आधिकारिक लाइब्रेरी के minimax-m3 और minimax-m2.7 पर "cloud" टैग है। यानी ये Ollama के क्लाउड पर चलते हैं और इनपुट Ollama के सर्वर पर जाता है। कम्युनिटी के बनाए वर्शन भी हैं, पर वे आधिकारिक नहीं।</li>
+              <li><strong>MiniMax H3:</strong> वेट जारी हैं, लेकिन आधिकारिक तरीका 4 GPU वाले सेटअप का उदाहरण देता है। ComfyUI में इस्तेमाल का तरीका भी जारी है, पर ज़रूरी GPU मेमोरी अपने सिस्टम पर जाँचें।</li>
+              <li><strong>M3 और M2.7 का आधिकारिक तरीका:</strong> M3 के लिए 8 B200 GPU (प्रायोगिक), और M2.7 के लिए बड़ी मेमोरी वाले 4 GPU का अनुमान दिया गया है। ये डेटा सेंटर वाले सेटअप हैं।</li>
+              <li><strong>अपने PC पर चलाना हो:</strong> <a href="/guides/hi/qwen.html">Qwen गाइड</a> और <a href="/guides/hi/glm.html">GLM गाइड</a> में बताए छोटे टेक्स्ट मॉडल विकल्प हैं।</li>
+            </ul>
+            <p>अगर मक़सद "डेटा बाहर न जाए" है, तो cloud टैग वाले मॉडल उसमें नहीं आते। अपने GPU सर्वर पर वेट चलाएँ, या ऐसा मॉडल चुनें जो आपके सिस्टम पर चल सके।</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>डेटा कहाँ सेव होता है: अंतरराष्ट्रीय सेवा सिंगापुर से<small>ऐप और API की पॉलिसी अलग-अलग</small></summary>
+          <div class="fold-body">
+            <p class="scroll-hint">टेबल को दाईं ओर स्क्रॉल कर सकते हैं →</p>
+            <div class="table-wrap">
+              <table class="t-wide">
+                <thead>
+                  <tr><th scope="col">इस्तेमाल का तरीका</th><th scope="col">प्रदाता</th><th scope="col">डेटा कहाँ सेव (पॉलिसी के अनुसार)</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">अंतरराष्ट्रीय ऐप</th><td>Nanonoble Pte. Ltd. (सिंगापुर)</td><td>सिद्धांततः सिंगापुर से बाहर ट्रांसफ़र नहीं होता, ऐसा लिखा है (19 जनवरी 2026 को अपडेट)</td></tr>
+                  <tr><th scope="row">API</th><td>MiniMax</td><td>API पॉलिसी में अमेरिकी डेटा सेंटर में स्टोरेज का उल्लेख है। अनुबंध से पहले पूरा पाठ पढ़ें</td></tr>
+                  <tr><th scope="row">ओपन वेट अपने यहाँ चलाना</th><td>आपकी कंपनी</td><td>सिर्फ़ आपके अपने सर्वर के भीतर</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <ul class="plain-list">
+              <li><strong>पहले कंपनी के नियम देखें:</strong> कई कंपनियों में जनरेटिव AI के नियम तय करते हैं कि कौन-सी सेवा और कौन-सी जानकारी डाली जा सकती है।</li>
+              <li><strong>गोपनीय जानकारी न डालना, यही बुनियाद:</strong> किसी भी AI में, ग्राहक की जानकारी या अप्रकाशित आँकड़े डालने से पहले सोचें।</li>
+              <li><strong>आवाज़ और चेहरे की सामग्री में सावधानी:</strong> आवाज़ या वीडियो बनाने में किसी व्यक्ति की आवाज़ या चेहरा इस्तेमाल करें, तो उसकी सहमति और प्रकाशन प्लेटफ़ॉर्म के नियम जाँचें।</li>
+            </ul>
+            <p class="small muted">डेटा से जुड़ी जानकारी 1 अक्टूबर 2026 तक की <a href="https://code.minimax.io/doc/en/privacy-policy.html" target="_blank" rel="noopener">अंतरराष्ट्रीय ऐप की प्राइवेसी पॉलिसी</a> और <a href="https://www.minimax.io/privacy-policy-v2.html" target="_blank" rel="noopener">MiniMax प्राइवेसी पॉलिसी</a> पर आधारित है। SIMY में डेटा कैसे संभाला जाता है, यह <a href="/security.html">सुरक्षा</a> और <a href="/privacy.html?lang=hi">प्राइवेसी पॉलिसी</a> में बताया गया है।</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>भाषाएँ: MiniMax अलग-अलग भाषाओं में कितना काम आता है<small>M3 की समर्थित भाषाओं की आधिकारिक सूची नहीं है</small></summary>
+          <div class="fold-body">
+            <p>अक्टूबर 2026 तक, MiniMax-M3 की समर्थित भाषाओं की सूची आधिकारिक रूप से नहीं दी गई है। वहीं वीडियो मॉडल H3 के मॉडल कार्ड में लिखा है कि संवाद के लिए 11 भाषाएँ समर्थित हैं; आपकी भाषा उसमें है या नहीं, मॉडल कार्ड में देखें। दोनों को अपने असली काम की सामग्री पर आज़माकर जाँचें।</p>
+            <ul class="plain-list">
+              <li><strong>टेक्स्ट:</strong> स्क्रिप्ट या ईमेल का ड्राफ़्ट, शिष्टाचार और शब्दों का चुनाव जाँचकर ही इस्तेमाल करें।</li>
+              <li><strong>आवाज़:</strong> वॉइसओवर में नाम और संख्याओं का उच्चारण सुनकर जाँचें।</li>
+              <li><strong>वीडियो:</strong> स्क्रीन के अंदर के अक्षर बिगड़े तो नहीं, यह देखें। सबटाइटल बाद में एडिटिंग सॉफ़्टवेयर से डालना ज़्यादा भरोसेमंद है।</li>
+            </ul>
+            <p>अंग्रेज़ी या चीनी स्क्रिप्ट को M3 से अपनी भाषा में बदलना और MiniMax Audio से वॉइसओवर बनाना, ऐसा क्रम भी बना सकते हैं। मीटिंग में तय बदलावों के ज़िम्मेदार और डेडलाइन, और प्रोडक्शन कंपनी या टीम से संपर्क, SIMY को सौंप सकते हैं।</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>ChatGPT, Claude और दूसरे चीनी LLM से अंतर<small>कौन अच्छा, कौन बुरा नहीं; हर एक की ताक़त अलग जगह है</small></summary>
+          <div class="fold-body">
+            <p class="scroll-hint">टेबल को दाईं ओर स्क्रॉल कर सकते हैं →</p>
+            <div class="table-wrap">
+              <table class="t-wide">
+                <thead>
+                  <tr><th scope="col">तुलना का बिंदु</th><th scope="col">MiniMax</th><th scope="col">Kimi</th><th scope="col">Qwen</th><th scope="col">DeepSeek</th><th scope="col" class="simy">SIMY</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">डेवलपर</th><td>MiniMax (शंघाई)</td><td>Moonshot AI (बीजिंग)</td><td>Alibaba समूह (हांगझोउ)</td><td>DeepSeek (हांगझोउ)</td><td class="simy">AwakApp Inc.</td></tr>
+                  <tr><th scope="row">ताक़त</th><td>सस्ता API, आवाज़ वाला वीडियो (H3)</td><td>लंबा कॉन्टेक्स्ट, कोडिंग</td><td>कई भाषाएँ, लोकल रन</td><td>रीज़निंग और सस्ता API</td><td class="simy">जवाब के बाद का काम आगे बढ़ाना</td></tr>
+                  <tr><th scope="row">फ़िक्स्ड प्लान</th><td>Token Plan</td><td>मेंबरशिप प्लान</td><td>Coding Plan</td><td>नहीं</td><td class="simy">आपके ChatGPT से चलता है</td></tr>
+                  <tr><th scope="row">शुरुआत कहाँ से</th><td>आप कहते हैं</td><td>आप कहते हैं</td><td>आप कहते हैं</td><td>आप कहते हैं</td><td class="simy">मीटिंग और चैट से, SIMY ख़ुद उठाता है</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3>चुनने का अंदाज़ा</h3>
+            <ul class="plain-list">
+              <li><strong>टेक्स्ट, आवाज़ और वीडियो एक ही जगह बनाने हों:</strong> MiniMax (वीडियो के लिए H3, टेक्स्ट के लिए M3)।</li>
+              <li><strong>लंबे दस्तावेज़ एक साथ पढ़वाने हों:</strong> <a href="/guides/hi/kimi.html">Kimi गाइड</a> देखें।</li>
+              <li><strong>API की लागत न्यूनतम रखनी हो:</strong> MiniMax या <a href="/guides/hi/deepseek.html">DeepSeek (गाइड)</a>। DeepSeek में समय के हिसाब से दर बदलती है।</li>
+            </ul>
+            <p class="note"><b>कैसे बाँटें:</b> सामग्री या ड्राफ़्ट बनाने के लिए MiniMax समेत कोई भी AI चलेगा। उसके बाद ज़िम्मेदार, डेडलाइन, अनुरोध और शेयरिंग हर बार ख़ुद देख रहे हैं, तो वहाँ SIMY काम आता है। कंपनियों के अंतर <a href="/guides/hi/china-llm.html">चीनी LLM की तुलना</a> में, ByteDance के मॉडल <a href="/guides/hi/doubao.html">Doubao गाइड</a> में, और Zhipu के मॉडल <a href="/guides/hi/glm.html">GLM गाइड</a> में दिए हैं।</p>
+          </div>
+        </details>
+      </section>
+
+      <!-- 09 -->
+      <section class="sec" id="faq" aria-labelledby="h-faq">
+        <span class="sec-label">09 / FAQ</span>
+        <h2 id="h-faq">अक्सर पूछे जाने वाले सवाल</h2>
+        <div class="faq">
+          <details>
+            <summary>MiniMax क्या है?</summary>
+            <div class="a"><p>MiniMax, शंघाई (चीन) की एक AI कंपनी है। यह वीडियो जनरेशन के लिए MiniMax H3, टेक्स्ट के लिए MiniMax-M3 और वॉइस सिंथेसिस के लिए MiniMax Audio जैसे मॉडल और ऐप बनाती है।</p></div>
+          </details>
+          <details>
+            <summary>MiniMax किस देश का AI है?</summary>
+            <div class="a"><p>इसे शंघाई (चीन) की एक कंपनी बनाती है। अंतरराष्ट्रीय ऐप सिंगापुर की कंपनी Nanonoble Pte. Ltd. उपलब्ध कराती है।</p></div>
+          </details>
+          <details>
+            <summary>MiniMax H3 क्या है?</summary>
+            <div class="a"><p>MiniMax H3, जुलाई 2026 के अंत में MiniMax का घोषित, आवाज़ वाला वीडियो बनाने वाला जनरेटिव मॉडल है। यह टेक्स्ट, इमेज, वीडियो और ऑडियो के आधार पर 15 सेकंड तक का वीडियो बनाता है और Hailuo या API से इस्तेमाल होता है। यह टेक्स्ट मॉडल MiniMax-M3 से अलग मॉडल है।</p></div>
+          </details>
+          <details>
+            <summary>क्या MiniMax H3 लोकल चल सकता है?</summary>
+            <div class="a"><p>निजी PC पर चलाना मुश्किल ही मानें। वेट Hugging Face पर जारी हैं, लेकिन आधिकारिक तरीका 4 GPU वाले सेटअप का उदाहरण देता है। आसानी से आज़माना हो, तो Hailuo या API व्यावहारिक हैं।</p></div>
+          </details>
+          <details>
+            <summary>क्या MiniMax मुफ़्त में इस्तेमाल हो सकता है?</summary>
+            <div class="a"><p>यह हर ऐप में अलग है, इसलिए मुफ़्त उपयोग की सीमा हर ऐप की आधिकारिक जानकारी में देखें। API पेड है: इस्तेमाल के अनुसार भुगतान, या मासिक Token Plan।</p></div>
+          </details>
+          <details>
+            <summary>MiniMax Token Plan की कीमत क्या है?</summary>
+            <div class="a"><p>अक्टूबर 2026 तक इसके 3 स्तर हैं: Plus $22/माह, Max $55/माह, Ultra $132/माह। हर 5 घंटे और हर हफ़्ते की उपयोग सीमा है।</p></div>
+          </details>
+          <details>
+            <summary>MiniMax Audio क्या है?</summary>
+            <div class="a"><p>यह MiniMax का वॉइस सिंथेसिस ऐप और मॉडल है, जो टेक्स्ट को स्वाभाविक आवाज़ में बदलता है। ट्रेनिंग वीडियो के नैरेशन या प्रोडक्ट परिचय के वॉइसओवर में काम आता है।</p></div>
+          </details>
+          <details>
+            <summary>क्या MiniMax के मॉडल Claude Code से इस्तेमाल हो सकते हैं?</summary>
+            <div class="a"><p>हाँ। MiniMax का API, Anthropic-संगत फ़ॉर्मेट की सलाह देता है, इसलिए Claude Code जैसे टूल का कनेक्शन पता और API की बदलकर MiniMax-M3 चला सकते हैं।</p></div>
+          </details>
+          <details>
+            <summary>क्या MiniMax लोकल (अपने PC पर) चल सकता है?</summary>
+            <div class="a"><p>मौजूदा MiniMax-M3 को निजी PC पर चलाना व्यावहारिक नहीं है। Ollama की आधिकारिक लाइब्रेरी का M3 cloud टैग वाला है (Ollama के क्लाउड पर चलने वाला वर्शन), और आधिकारिक सेल्फ़-होस्ट तरीका कई हाई-परफ़ॉर्मेंस GPU मानकर चलता है।</p></div>
+          </details>
+          <details>
+            <summary>क्या MiniMax के मॉडल कमर्शियल उपयोग में लिए जा सकते हैं?</summary>
+            <div class="a"><p>शर्तों के साथ, हाँ। MiniMax-M3 के कमर्शियल उपयोग में "Built with MiniMax M3" दिखाना और MiniMax को सूचना देना ज़रूरी है, और सालाना राजस्व 20 मिलियन डॉलर से ज़्यादा हो तो पहले लिखित अनुमति चाहिए। MiniMax H3 का लाइसेंस EU, ब्रिटेन, दक्षिण कोरिया और अमेरिका को लागू क्षेत्र से बाहर रखता है, इसलिए जिस देश में इस्तेमाल करेंगे, वह भी जाँचें।</p></div>
+          </details>
+          <details>
+            <summary>MiniMax में डाली गई जानकारी कहाँ सेव होती है?</summary>
+            <div class="a"><p>अंतरराष्ट्रीय ऐप की पॉलिसी में लिखा है कि सिद्धांततः डेटा सिंगापुर से बाहर ट्रांसफ़र नहीं होता। API की अलग पॉलिसी है, इसलिए अनुबंध से पहले पूरा पाठ पढ़ें।</p></div>
+          </details>
+          <details>
+            <summary>क्या SIMY, MiniMax से चलता है?</summary>
+            <div class="a"><p>नहीं। फ़िलहाल SIMY, MiniMax से कनेक्ट नहीं होता; यह आपके ChatGPT (Codex) अकाउंट और आपके PC के Claude Code से चलता है। MiniMax से बनी स्क्रिप्ट या सामग्री आप सीधे मीटिंग या चैट में ला सकते हैं।</p></div>
+          </details>
+          <details>
+            <summary>MiniMax से बनाने के बाद का काम, क्या हर बार SIMY से कहना पड़ता है?</summary>
+            <div class="a"><p>नहीं। SIMY मीटिंग के रिकॉर्ड और चैट से तय बातें, ज़िम्मेदार और डेडलाइन ख़ुद उठाता है। आपका तरीका बातचीत से सीखता है, और सिर्फ़ फ़ैसले वाली बातें आपके पास लौटाता है।</p></div>
+          </details>
+        </div>
+      </section>
+
+      <!-- 10 -->
+      <section class="sec" id="sources" aria-labelledby="h-sources">
+        <span class="sec-label">10 / SOURCES</span>
+        <h2 id="h-sources">संदर्भ</h2>
+        <p>MiniMax के प्रोडक्ट (H3, M3), कीमत की व्यवस्था, लाइसेंस और डेटा से जुड़ी जानकारी नीचे दिए आधिकारिक स्रोतों से जाँची गई है (जाँच की तारीख: 1 अक्टूबर 2026)। मॉडल के नाम और कीमतें अक्सर बदलती हैं, इसलिए ताज़ा जानकारी हर आधिकारिक पेज पर देखें।</p>
+        <ul class="plain-list">
+          <li><a href="https://www.minimax.io/" target="_blank" rel="noopener">MiniMax आधिकारिक साइट</a></li>
+          <li><a href="https://huggingface.co/MiniMaxAI" target="_blank" rel="noopener">MiniMaxAI (Hugging Face)</a>, <a href="https://huggingface.co/MiniMaxAI/MiniMax-M3" target="_blank" rel="noopener">MiniMax-M3 मॉडल कार्ड</a></li>
+          <li><a href="https://huggingface.co/MiniMaxAI/MiniMax-H3" target="_blank" rel="noopener">MiniMax-H3 मॉडल कार्ड (Hugging Face)</a>, <a href="https://huggingface.co/MiniMaxAI/MiniMax-H3/blob/main/LICENSE" target="_blank" rel="noopener">MiniMax H3 Community License</a></li>
+          <li><a href="https://huggingface.co/MiniMaxAI/MiniMax-M3/raw/main/LICENSE" target="_blank" rel="noopener">MiniMax Community License (MiniMax-M3)</a></li>
+          <li><a href="https://platform.minimax.io/docs/guides/pricing-paygo.md" target="_blank" rel="noopener">इस्तेमाल-आधारित कीमत (MiniMax प्लेटफ़ॉर्म)</a></li>
+          <li><a href="https://platform.minimax.io/docs/guides/pricing-token-plan.md" target="_blank" rel="noopener">Token Plan (MiniMax प्लेटफ़ॉर्म)</a></li>
+          <li><a href="https://platform.minimax.io/docs/llms.txt" target="_blank" rel="noopener">API डॉक्यूमेंटेशन सूची (MiniMax प्लेटफ़ॉर्म)</a></li>
+          <li><a href="https://platform.minimax.io/docs/guides/local-deploy.md" target="_blank" rel="noopener">लोकल डिप्लॉयमेंट (MiniMax प्लेटफ़ॉर्म)</a></li>
+          <li><a href="https://code.minimax.io/doc/en/privacy-policy.html" target="_blank" rel="noopener">अंतरराष्ट्रीय ऐप की प्राइवेसी पॉलिसी</a>, <a href="https://www.minimax.io/privacy-policy-v2.html" target="_blank" rel="noopener">MiniMax प्राइवेसी पॉलिसी</a></li>
+          <li><a href="https://ollama.com/search?q=minimax" target="_blank" rel="noopener">MiniMax मॉडल सूची (Ollama लाइब्रेरी)</a></li>
+        </ul>
+      </section>
+      <aside class="next-read" aria-labelledby="h-next">
+        <h2 id="h-next">आगे पढ़ें</h2>
+        <div class="next-grid"><a href="/guides/hi/china-llm.html"><b>चीनी LLM की तुलना</b><span>MiniMax, Kimi, DeepSeek आदि का अंतर और सही चुनाव</span></a><a href="/guides/hi/kimi.html"><b>Kimi उपयोग गाइड</b><span>Kimi K3 का उपयोग, API, Kimi Code</span></a><a href="/guides/hi/qwen.html"><b>Qwen उपयोग गाइड</b><span>अपने PC पर चलने वाला चीनी LLM</span></a></div>
+        <a class="next-all" href="/guides/hi/index.html">सभी गाइड →</a>
+      </aside>
+    </article>
+  </div>
+
+  <section class="closing" aria-labelledby="h-closing">
+    <div class="wrap closing-inner">
+      <div>
+        <h2 id="h-closing">MiniMax से बनाया,<br>आगे का काम SIMY को।</h2>
+        <p>MiniMax अपने काम पर वैसे ही। मीटिंग और चैट से उठाया काम SIMY आगे बढ़ाता है और सिर्फ़ फ़ैसला लौटाता है। दुनिया के सामने क्या जाएगा, यह फ़ैसला आपका ही रहता है।</p>
+      </div>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="https://app.simy.one/signup?lang=hi&amp;locale=hi&amp;region=in&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=minimax_guide_hi&amp;utm_content=closing">प्लान चुनकर शुरू करें <span class="arrow" aria-hidden="true">↗</span></a>
+        <a class="btn btn-ghost" href="mailto:sales@simy.one?subject=SIMY%20%E0%A4%85%E0%A4%AA%E0%A4%A8%E0%A4%BE%E0%A4%A8%E0%A5%87%20%E0%A4%95%E0%A5%87%20%E0%A4%AC%E0%A4%BE%E0%A4%B0%E0%A5%87%20%E0%A4%AE%E0%A5%87%E0%A4%82%20%E0%A4%AC%E0%A4%BE%E0%A4%A4%20%E0%A4%95%E0%A4%B0%E0%A4%A8%E0%A5%80%20%E0%A4%B9%E0%A5%88">बात करें</a>
+        <a class="btn btn-ghost" href="/download/hi.html">ऐप डाउनलोड करें <span class="arrow" aria-hidden="true">↓</span></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <ul class="footer-links">
+      <li><a href="/?lang=hi">होम</a></li>
+      <li><a href="/?lang=hi#pricing">मूल्य</a></li>
+      <li><a href="/integrations.html">इंटीग्रेशन</a></li>
+      <li><a href="/download/hi.html">डाउनलोड</a></li>
+      <li><a href="/guides/hi/index.html">सभी गाइड</a></li>
+      <li><a href="/guides/hi/claude.html">Claude</a></li>
+      <li><a href="/guides/hi/codex.html">Codex</a></li>
+      <li><a href="/guides/hi/cowork.html">Cowork</a></li>
+      <li><a href="/guides/hi/chatgpt.html">ChatGPT</a></li>
+      <li><a href="/guides/hi/plaud.html">PLAUD</a></li>
+      <li><a href="/guides/hi/meeting-notes.html">AI मीटिंग नोट्स</a></li>
+      <li><a href="/guides/hi/china-llm.html">चीनी AI की तुलना</a></li>
+      <li><a href="/guides/hi/deepseek.html">DeepSeek</a></li>
+      <li><a href="/guides/hi/qwen.html">Qwen</a></li>
+      <li><a href="/security.html">सुरक्षा</a></li>
+      <li><a href="/privacy.html?lang=hi">गोपनीयता नीति</a></li>
+      <li><a href="/terms.html?lang=hi">उपयोग की शर्तें</a></li>
+    </ul>
+    <p>MiniMax और Hailuo, MiniMax या उसकी संबद्ध कंपनियों के ट्रेडमार्क हैं। SIMY, MiniMax से स्वतंत्र प्रोडक्ट है।</p>
+    <p>Codex और ChatGPT, OpenAI के प्रोडक्ट हैं। अन्य कंपनी और प्रोडक्ट नाम उनके संबंधित मालिकों के ट्रेडमार्क या पंजीकृत ट्रेडमार्क हैं।</p>
+    <p>&copy; 2026 SIMY by AwakApp Inc.</p>
+  </div>
+</footer>
+<script>
+(function () {
+  var links = Array.prototype.slice.call(document.querySelectorAll('.toc a'));
+  if (!links.length) return;
+  var items = links.map(function (a) {
+    return { link: a, section: document.getElementById(a.getAttribute('href').slice(1)) };
+  }).filter(function (item) { return item.section; });
+  var ticking = false;
+  function update() {
+    ticking = false;
+    var line = window.innerHeight * 0.35;
+    var atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+    var current = null;
+    items.forEach(function (item) {
+      if (item.section.getBoundingClientRect().top <= line) current = item;
+    });
+    if (atBottom) current = items[items.length - 1];
+    items.forEach(function (item) { item.link.classList.toggle('is-active', item === current); });
+  }
+  window.addEventListener('scroll', function () {
+    if (!ticking) { ticking = true; window.requestAnimationFrame(update); }
+  }, { passive: true });
+  update();
+})();
+</script>
+<script src="/analytics.js" defer></script>
+</body>
+</html>

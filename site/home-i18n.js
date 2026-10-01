@@ -394,6 +394,7 @@
     "All guides": "ガイド一覧",
     "Download": "ダウンロード",
     "AI meeting notes": "AI議事録",
+    "Chinese AI compared": "中国のAI比較",
     "Privacy": "プライバシー",
     "Terms": "利用規約",
     "Oakland, California · Built for work that should keep moving.": "米国カリフォルニア州オークランド・止めたくない仕事のために。",
