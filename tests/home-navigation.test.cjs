@@ -22,7 +22,7 @@ test("mobile navigation closes from blank and outside clicks", () => {
 });
 
 test("homepage cache-busts the current home assets", () => {
-  assert.match(homeHtml, /home\.css\?v=20261001-hero-lead-copy-1/);
+  assert.match(homeHtml, /home\.css\?v=20261001-pricing-cta-visible-1/);
   assert.match(homeHtml, /home-locales\.js\?v=20261001-hero-lead-copy-1/);
   assert.match(homeHtml, /home-i18n\.js\?v=20261001-hero-lead-copy-1/);
   assert.match(homeHtml, /pricing-catalog\.js\?v=20260907-industry-realtime-pricing-3/);
@@ -30,13 +30,12 @@ test("homepage cache-busts the current home assets", () => {
 });
 
 test("pricing call to action opens the signup plan selection page", () => {
-  assert.match(
-    homeHtml,
-    /<a class="button button-dark" href="https:\/\/app\.simy\.one\/signup\/\?lang=en&amp;locale=en&amp;region=us" aria-label="Choose a SIMY plan and continue to secure Stripe Checkout">Choose a plan/
-  );
   assert.match(homeHtml, /data-billing-cycle="annual"/);
   assert.match(homeHtml, /data-billing-cycle="monthly"/);
   assert.match(homeHtml, /data-pricing-plan="quality"/);
+  assert.match(homeHtml, /<th scope="col" data-pricing-plan="starter">[\s\S]*?<a class="pricing-plan-link"[^>]*>Choose a plan/);
+  assert.match(homeHtml, /<th class="pricing-quality" scope="col" data-pricing-plan="quality">[\s\S]*?<a class="pricing-plan-link"[^>]*>Choose a plan/);
+  assert.equal((homeHtml.match(/href="https:\/\/app\.simy\.one\/signup\/\?lang=en&amp;locale=en&amp;region=us" aria-label="Choose a SIMY plan and continue to secure Stripe Checkout"/g) || []).length, 2);
 });
 
 test("pages loading the demo bundle cache-bust its workflow terminology", () => {
