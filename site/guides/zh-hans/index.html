@@ -1,29 +1,26 @@
 <!doctype html>
-<html lang="ja">
+<html lang="zh-Hans">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SIMYをダウンロード｜Mac・Windows・iPhone | SIMY</title>
-<meta name="description" content="SIMYデスクトップアプリ（Mac・Windows）とiOSアプリのダウンロード。アカウント作成から、インストール、ログインまでの3ステップ。PCのAIとの会話から、SIMYが次の仕事を見つけます。">
-<link rel="canonical" href="https://simy.one/download.html">
-<link rel="alternate" hreflang="ja" href="https://simy.one/download.html">
-<link rel="alternate" hreflang="en" href="https://simy.one/download/en.html">
-<link rel="alternate" hreflang="zh-Hans" href="https://simy.one/download/zh-hans.html">
-<link rel="alternate" hreflang="es" href="https://simy.one/download/es.html">
-<link rel="alternate" hreflang="fr" href="https://simy.one/download/fr.html">
-<link rel="alternate" hreflang="hi" href="https://simy.one/download/hi.html">
-<link rel="alternate" hreflang="x-default" href="https://simy.one/download/en.html">
+<title>AI 使用指南合集：Claude、Codex、ChatGPT、PLAUD、AI 会议纪要 | SIMY</title>
+<meta name="description" content="按你正在用的 AI 工具挑选、从工作视角出发的使用指南。涵盖 Claude、OpenAI Codex、Claude Cowork、ChatGPT、PLAUD NOTE 和 AI 会议纪要工具的用法，以及回答和摘要之后剩下的工作该怎么收尾。">
+<link rel="canonical" href="https://simy.one/guides/zh-hans/index.html">
+<link rel="alternate" hreflang="ja" href="https://simy.one/guides/index.html">
+<link rel="alternate" hreflang="en" href="https://simy.one/guides/en/index.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://simy.one/guides/zh-hans/index.html">
+<link rel="alternate" hreflang="es" href="https://simy.one/guides/es/index.html">
+<link rel="alternate" hreflang="fr" href="https://simy.one/guides/fr/index.html">
+<link rel="alternate" hreflang="hi" href="https://simy.one/guides/hi/index.html">
+<link rel="alternate" hreflang="x-default" href="https://simy.one/guides/en/index.html">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://simy.one/download.html">
-<meta property="og:title" content="SIMYをダウンロード｜Mac・Windows・iPhone">
-<meta property="og:description" content="PCのClaude CodeやCodexの会話から、SIMYが次の仕事を見つけます。">
+<meta property="og:url" content="https://simy.one/guides/zh-hans/index.html">
+<meta property="og:title" content="AI 使用指南合集｜SIMY">
+<meta property="og:description" content="按你正在用的 AI 工具挑选、从工作视角出发的使用指南。">
 <meta property="og:site_name" content="SIMY">
-<meta property="og:image" content="https://simy.one/ogp-download.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:locale" content="ja_JP">
+<meta property="og:image" content="https://simy.one/ogp.png">
+<meta property="og:locale" content="zh_CN">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://simy.one/ogp-download.png">
 <meta name="robots" content="index, follow">
 <meta name="theme-color" content="#f6f5f4">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
@@ -656,7 +653,7 @@ thead th.simy { background: var(--blue-deep); }
 .tl li.run { background: var(--blue-soft); border: 1px solid var(--blue-deep); color: var(--ink); }
 .tl li.run::after { content: "✓"; position: absolute; right: 8px; top: 6px; font-family: var(--mono); color: var(--blue-deep); }
 .tl li.you { background: #fff8e3; border: 1px solid var(--ink); color: var(--ink); }
-.tl li.you::after { content: "あなた"; position: absolute; right: 8px; top: 7px; font-family: var(--mono); font-size: 0.62rem; }
+.tl li.you::after { content: "你"; position: absolute; right: 8px; top: 7px; font-family: var(--mono); font-size: 0.62rem; }
 .tl li.blank { border: 0; background: transparent; }
 .tl-note { margin: 14px 0 0; font-size: 0.86rem; color: #34322f; }
 .tl-note b { color: var(--ink); }
@@ -730,50 +727,17 @@ thead th.simy { background: var(--blue-deep); }
   .ind-rows li { padding: 6px 0; border-bottom: 1px dashed var(--line-soft); }
 }
 
-/* ---------- Download page ---------- */
-.dl-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 26px; }
-.dl-card {
-  display: flex; flex-direction: column; gap: 10px; padding: 22px 20px;
-  background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius);
-}
-.dl-card.is-you { box-shadow: 6px 6px 0 var(--blue); }
-.dl-card .os { font-family: var(--mono); font-size: 0.72rem; color: var(--ink-soft); letter-spacing: 0.04em; }
-.dl-card h3 { margin: 0; font-size: 1.2rem; }
-.dl-card p { margin: 0; font-size: 0.88rem; color: #34322f; line-height: 1.65; }
-.dl-card .btn { margin-top: auto; justify-content: center; }
-.dl-meta { font-family: var(--mono); font-size: 0.72rem; color: var(--ink-faint); }
-.you-badge {
-  display: none; align-self: flex-start; padding: 2px 10px; border-radius: 999px;
-  background: var(--yellow); border: 1px solid var(--ink); font-size: 0.7rem; font-weight: 700;
-}
-.dl-card.is-you .you-badge { display: inline-block; }
-.dl-main { padding: clamp(40px, 6vw, 72px) 0 clamp(56px, 7vw, 96px); }
-.dl-main .wrap > .sec { max-width: 980px; }
-@media (max-width: 860px) { .dl-grid { grid-template-columns: minmax(0, 1fr); } }
-
-.funnel { list-style: none; margin: 28px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; border: 1px solid var(--ink); border-radius: var(--radius); overflow: hidden; background: var(--paper-light); }
-.funnel li { position: relative; padding: 16px 18px 16px 58px; border-left: 1px solid var(--ui-line); }
-.funnel li:first-child { border-left: 0; }
-.funnel li.is-now { background: var(--blue-soft); }
-.funnel .fn { position: absolute; left: 18px; top: 16px; width: 28px; height: 28px; display: grid; place-items: center; border: 1px solid var(--ink); border-radius: 50%; background: var(--paper); font-family: var(--mono); font-weight: 700; font-size: 0.84rem; }
-.funnel li.is-now .fn { background: var(--blue-deep); color: #fff; border-color: var(--blue-deep); }
-.funnel b { display: block; font-size: 1rem; }
-.funnel small { display: block; margin-top: 2px; font-size: 0.8rem; color: var(--ink-soft); }
-.paths { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 16px; margin-top: 16px; align-items: start; }
-.path { padding: 22px 20px; border: 1px solid var(--ui-line); border-radius: var(--radius); background: var(--paper-light); display: flex; flex-direction: column; gap: 10px; }
-.path-new { border-color: var(--ink); box-shadow: 6px 6px 0 var(--blue); }
-.path-h { margin: 0; font-size: 1.3rem; }
-.path p { margin: 0; font-size: 0.92rem; color: #34322f; }
-.need { margin: 0; padding-left: 1.1em; font-size: 0.88rem; line-height: 1.8; }
-.path .btn { justify-content: center; }
-.path .dl-grid { grid-template-columns: minmax(0, 1fr); margin-top: 4px; gap: 10px; }
-.path .dl-card { padding: 14px 16px; gap: 8px; border-color: var(--ui-line); }
-.path .dl-card.is-you { border-color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
-.path .dl-card h3 { font-size: 1.02rem; }
-.mobile-hint { margin: 4px 0 0; font-size: 0.86rem; color: var(--ink-soft); }
-.linkbtn { background: none; border: 0; padding: 0; font: inherit; color: var(--blue-deep); text-decoration: underline; cursor: pointer; }
-.dl-meta a { color: var(--blue-deep); }
-@media (max-width: 860px) { .paths, .funnel { grid-template-columns: minmax(0, 1fr); } .funnel li { border-left: 0; border-top: 1px solid var(--ui-line); } .funnel li:first-child { border-top: 0; } }
+.gl-main { padding: clamp(32px, 5vw, 64px) 0 clamp(56px, 7vw, 96px); }
+.gl-main .sec { max-width: 1040px; }
+.ggrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 26px; }
+.gcard { display: flex; flex-direction: column; gap: 8px; padding: 22px 20px 18px; background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius); text-decoration: none; color: var(--ink); transition: transform .15s, box-shadow .15s; min-height: 200px; }
+.gcard:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--blue); }
+.gcard .k { font-family: var(--mono); font-size: 0.72rem; color: var(--blue-deep); }
+.gcard b { font-size: 1.12rem; line-height: 1.45; }
+.gcard p { margin: 0; font-size: 0.88rem; color: #34322f; line-height: 1.65; }
+.gcard .go { margin-top: auto; font-weight: 700; font-size: 0.88rem; color: var(--blue-deep); }
+@media (max-width: 960px) { .ggrid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .ggrid { grid-template-columns: minmax(0, 1fr); } .gcard { min-height: 0; } }
 
 .lang-switch { position: relative; }
 .lang-switch > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 10px; border: 1px solid var(--ui-line); border-radius: 999px; background: var(--paper-light); font-size: 0.8rem; font-weight: 700; }
@@ -784,350 +748,113 @@ thead th.simy { background: var(--blue-deep); }
 @media (max-width: 960px) { .brand-sub { display: none; } .header-actions { gap: 4px; } .lang-switch > summary { padding: 0 8px; } }
 </style>
 <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "SoftwareApplication",
-      "name": "SIMY",
-      "applicationCategory": "BusinessApplication",
-      "operatingSystem": "macOS, Windows, iOS",
-      "url": "https://simy.one/download.html",
-      "publisher": {
-        "@type": "Organization",
-        "name": "AwakApp Inc.",
-        "url": "https://www.awak.app/"
-      }
-    },
-    {
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "SIMY",
-          "item": "https://simy.one/"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "ダウンロード",
-          "item": "https://simy.one/download.html"
-        }
-      ]
-    },
-    {
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "無料で試せますか？",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "無料プランはありません。月額プランを選んで登録すると、アプリとWebの両方を使えます。料金はホームの料金欄をご覧ください。"
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "アカウントを作る前に、アプリだけ入れてもいいですか？",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "入れることはできますが、ログインにはSIMYのアカウントが必要です。先にアカウントを作ってから、アプリの「ログイン」を押すのがいちばん早い順番です。"
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "登録には何が必要ですか？",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "メールアドレスとクレジットカードです。届いたメールのリンクで本人確認をするので、パスワードは決めなくて構いません。支払いはカード決済の画面で行います。"
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "アプリで「ログイン」を押したら「Unauthorized」と出ました。",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "ブラウザでSIMYにログインしていない状態です。先にWebでログイン（はじめての方はアカウント作成）をしてから、アプリの「ログイン」をもう一度押してください。"
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Claude CodeやCodexを使っていなくても、入れる意味はありますか？",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "会議やチャットから仕事を拾う機能はWebだけで使えるので、アプリは必須ではありません。PCでClaude CodeやCodexを使っている方は、アプリを入れると会話が提案になり、SIMYからPCのAIを動かせます。"
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "ChatGPTやClaudeの契約は必要ですか？",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "SIMYのクラウド実行は、お使いのChatGPTアカウント（Codex）で動きます。PCのClaude Codeを動かすときは、あなたのClaude Codeのログインがそのまま使われます。Claudeのトークンをクラウド実行に連携することはできません。Geminiのトークン連携は開発中です。"
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "IntelのMacでも使えますか？",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "現在のMac版はAppleシリコン（M1以降）向けです。IntelのMacでは、Webから SIMY をお使いください。"
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "ダウンロードしたファイル名が「SIMY-CLI」になっています。",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "同じものです。デスクトップアプリには、エンジニア向けにターミナルから使える SIMY CLI も入っているため、ファイル名にその名前が付いています。ふだんはアプリの画面だけで使えます。"
-          }
-        }
-      ]
-    }
-  ]
-}
+{"@context":"https://schema.org","@graph":[
+ {"@type":"CollectionPage","name":"AI 使用指南合集","url":"https://simy.one/guides/zh-hans/index.html","inLanguage":"zh-Hans"},
+ {"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"SIMY","item":"https://simy.one/?lang=zh-Hans"},{"@type":"ListItem","position":2,"name":"指南","item":"https://simy.one/guides/zh-hans/index.html"}]},
+ {"@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"url":"https://simy.one/guides/zh-hans/claude.html","name":"Claude 使用指南"},{"@type":"ListItem","position":2,"url":"https://simy.one/guides/zh-hans/codex.html","name":"OpenAI Codex 使用指南"},{"@type":"ListItem","position":3,"url":"https://simy.one/guides/zh-hans/cowork.html","name":"Claude Cowork 使用指南"},{"@type":"ListItem","position":4,"url":"https://simy.one/guides/zh-hans/chatgpt.html","name":"ChatGPT 使用指南"},{"@type":"ListItem","position":5,"url":"https://simy.one/guides/zh-hans/plaud.html","name":"PLAUD NOTE 使用指南"},{"@type":"ListItem","position":6,"url":"https://simy.one/guides/zh-hans/meeting-notes.html","name":"AI 会议纪要（Teams、Meet、Notion AI、Notta）使用指南"}]}
+]}
 </script>
 </head>
 <body>
-<a class="skip" href="#main">本文へスキップ</a>
-
+<a class="skip" href="#main">跳到正文</a>
 <header class="site-header">
   <div class="wrap header-inner">
-    <a class="brand" href="/?lang=ja">
+    <a class="brand" href="/?lang=zh-Hans">
       <img src="/simy-icon-56.png" alt="SIMY" width="28" height="28">
       <span aria-hidden="true">SIMY</span>
-      <span class="brand-sub">ダウンロード</span>
+      <span class="brand-sub">指南</span>
     </a>
-    <nav class="header-actions" aria-label="アカウント">
-      <details class="lang-switch"><summary aria-label="Language">🌐 日本語</summary><ul><li><a href="/download.html" hreflang="ja" lang="ja" aria-current="page">日本語</a></li><li><a href="/download/en.html" hreflang="en" lang="en">English</a></li><li><a href="/download/zh-hans.html" hreflang="zh-Hans" lang="zh-Hans">中文</a></li><li><a href="/download/es.html" hreflang="es" lang="es">Español</a></li><li><a href="/download/fr.html" hreflang="fr" lang="fr">Français</a></li><li><a href="/download/hi.html" hreflang="hi" lang="hi">हिन्दी</a></li></ul></details>
-      <a class="header-link" href="https://app.simy.one/login?lang=ja&amp;locale=ja&amp;region=jp">ログイン</a>
-      <a class="header-cta" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=download&amp;utm_content=header">アカウントを作る</a>
+    <nav class="header-actions" aria-label="账户">
+      <details class="lang-switch"><summary aria-label="Language">🌐 中文</summary><ul><li><a href="/guides/index.html" hreflang="ja" lang="ja">日本語</a></li><li><a href="/guides/en/index.html" hreflang="en" lang="en">English</a></li><li><a href="/guides/zh-hans/index.html" hreflang="zh-Hans" lang="zh-Hans" aria-current="page">中文</a></li><li><a href="/guides/es/index.html" hreflang="es" lang="es">Español</a></li><li><a href="/guides/fr/index.html" hreflang="fr" lang="fr">Français</a></li><li><a href="/guides/hi/index.html" hreflang="hi" lang="hi">हिन्दी</a></li></ul></details>
+      <a class="header-link" href="/download/zh-hans.html">下载</a>
+      <a class="header-link" href="https://app.simy.one/login?lang=zh-Hans&amp;locale=zh-Hans">登录</a>
+      <a class="header-cta" href="https://app.simy.one/signup?lang=zh-Hans&amp;locale=zh-Hans&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=guides_index_zh-hans&amp;utm_content=header">选择方案并开始</a>
     </nav>
   </div>
 </header>
-
-<main id="main" class="dl-main">
+<main id="main" class="gl-main">
   <div class="wrap">
-    <ol class="crumbs" aria-label="パンくずリスト">
-      <li><a href="https://simy.one/">SIMY</a></li>
-      <li aria-current="page">ダウンロード</li>
+    <ol class="crumbs" aria-label="面包屑导航">
+      <li><a href="/?lang=zh-Hans">SIMY</a></li>
+      <li aria-current="page">指南</li>
     </ol>
-
     <section class="sec" aria-labelledby="page-title">
-      <p class="eyebrow">SIMY デスクトップアプリ</p>
+      <p class="eyebrow">AI 使用指南</p>
       <h1 id="page-title">
-        <span class="line">SIMYを、</span>
-        <span class="line hl">あなたのPCに。</span>
+        <span class="line">从你正在用的 AI 开始，</span>
+        <span class="line hl">选一篇读吧。</span>
       </h1>
-      <p class="lead">入れるだけで、PCのAIとの会話からSIMYが次の仕事を見つけます。黒い画面の操作はいりません。</p>
-
-      <ol class="funnel" aria-label="はじめるまでの流れ">
-        <li class="is-now"><span class="fn">1</span><b>アカウントを作る</b><small>プランを選ぶ → メール確認 → カード決済</small></li>
-        <li><span class="fn">2</span><b>アプリを入れる</b><small>ダウンロードして開く</small></li>
-        <li><span class="fn">3</span><b>ログインを押す</b><small>ブラウザが開いて、自動でつながる</small></li>
-      </ol>
-
-      <div class="paths">
-        <div class="path path-new">
-          <span class="os">はじめての方</span>
-          <h2 class="path-h">まず、アカウントを作る</h2>
-          <p>アプリのログインにはSIMYのアカウントが必要です。先に作っておくと、アプリを開いてすぐ使えます。</p>
-          <ul class="need">
-            <li>メールアドレス（パスワードは不要）</li>
-            <li>クレジットカード（月額プラン。無料プランはありません）</li>
-          </ul>
-          <a class="btn btn-primary" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=download&amp;utm_content=account_first">プランを選んでアカウントを作る <span class="arrow" aria-hidden="true">↗</span></a>
-          <span class="dl-meta">登録が終わった画面からも、アプリをダウンロードできます ／ <a href="/?lang=ja#pricing">料金を見る</a></span>
-        </div>
-        <div class="path">
-          <span class="os">アカウントをお持ちの方</span>
-          <h2 class="path-h">アプリをダウンロード</h2>
-          <div class="dl-grid">
-            <div class="dl-card" data-os="mac">
-              <span class="you-badge">お使いのPC</span>
-              <span class="os">macOS · Apple シリコン（M1以降）</span>
-              <h3>Mac版</h3>
-              <a class="btn btn-primary" data-dl="mac" href="https://simy.one/downloads/simy-cli/0.5.45/SIMY-CLI-0.5.45-macos-arm64.dmg">Mac版をダウンロード <span class="arrow" aria-hidden="true">↓</span></a>
-              <span class="dl-meta" data-meta="mac">.dmg</span>
-            </div>
-            <div class="dl-card" data-os="win">
-              <span class="you-badge">お使いのPC</span>
-              <span class="os">Windows · x64</span>
-              <h3>Windows版</h3>
-              <a class="btn btn-primary" data-dl="win" href="https://simy.one/downloads/simy-cli/windows/0.5.45/SIMY-CLI-0.5.45-windows-x64-setup.exe">Windows版をダウンロード <span class="arrow" aria-hidden="true">↓</span></a>
-              <span class="dl-meta" data-meta="win">.exe</span>
-            </div>
-            <div class="dl-card" data-os="ios">
-              <span class="you-badge">お使いの端末</span>
-              <span class="os">iPhone</span>
-              <h3>iOSアプリ</h3>
-              <a class="btn btn-ghost" href="https://apps.apple.com/jp/app/id6745385262" target="_blank" rel="noopener">App Storeで見る <span class="arrow" aria-hidden="true">↗</span></a>
-              <span class="dl-meta">会議の録音と、判断への返事に</span>
-            </div>
-          </div>
-          <p class="mobile-hint" hidden>PC版は、PCでこのページを開いてダウンロードしてください。<button type="button" class="linkbtn" data-share>このページのリンクを送る</button></p>
-        </div>
+      <p class="lead">无论哪款 AI，只要开口，都能帮你完成一件事。每篇指南都整理了用法、价格，以及“之后每次都会剩下的工作”该怎么收尾。</p>
+      <div class="ggrid">
+        <a class="gcard" href="/guides/zh-hans/claude.html">
+          <span class="k">Claude</span>
+          <b>不用每次都去找 Claude。</b>
+          <p>写给复制回答、转发分享、然后再去提问的人</p>
+          <span class="go">阅读指南 <span aria-hidden="true">→</span></span>
+        </a>
+        <a class="gcard" href="/guides/zh-hans/codex.html">
+          <span class="k">OpenAI Codex</span>
+          <b>把 Codex 请来做一整天的工作。</b>
+          <p>写给一件事做完了、第二天还在敲同样指令的人</p>
+          <span class="go">阅读指南 <span aria-hidden="true">→</span></span>
+        </a>
+        <a class="gcard" href="/guides/zh-hans/cowork.html">
+          <span class="k">Claude Cowork</span>
+          <b>Cowork 做完之后，接住下一步。</b>
+          <p>写给桌面工作已清空、会议待办还留着的人</p>
+          <span class="go">阅读指南 <span aria-hidden="true">→</span></span>
+        </a>
+        <a class="gcard" href="/guides/zh-hans/chatgpt.html">
+          <span class="k">ChatGPT</span>
+          <b>不用每次都去找 ChatGPT。</b>
+          <p>写给答案有了、却还要重贴和收尾的人</p>
+          <span class="go">阅读指南 <span aria-hidden="true">→</span></span>
+        </a>
+        <a class="gcard" href="/guides/zh-hans/plaud.html">
+          <span class="k">PLAUD NOTE</span>
+          <b>PLAUD 的录音，别止步于摘要。</b>
+          <p>写给摘要收到了、邮件和客户备忘还没动的人</p>
+          <span class="go">阅读指南 <span aria-hidden="true">→</span></span>
+        </a>
+        <a class="gcard" href="/guides/zh-hans/meeting-notes.html">
+          <span class="k">AI 会议纪要（Teams、Meet、Notion AI、Notta）</span>
+          <b>纪要写好了，工作还没完。</b>
+          <p>写给纪要已出、分享和待办还没处理的人</p>
+          <span class="go">阅读指南 <span aria-hidden="true">→</span></span>
+        </a>
       </div>
     </section>
-
-    <section class="sec" aria-labelledby="h-install">
-      <span class="sec-label">INSTALL</span>
-      <h2 id="h-install">入れ方：開いて、ログインを押すだけ</h2>
-      <div class="ind">
-        <div class="ind-card" data-install="mac">
-          <h3>Mac <small>.dmg</small></h3>
-          <ol class="plain-list">
-            <li>ダウンロードした .dmg を開く</li>
-            <li>SIMY を「アプリケーション」にドラッグする</li>
-            <li>SIMY を開き、「ログイン」を押す</li>
-          </ol>
-        </div>
-        <div class="ind-card" data-install="win">
-          <h3>Windows <small>.exe</small></h3>
-          <ol class="plain-list">
-            <li>ダウンロードした .exe を開く</li>
-            <li>青い保護画面が出たら「詳細情報」→「実行」</li>
-            <li>SIMY を開き、「ログイン」を押す</li>
-          </ol>
-        </div>
-      </div>
-      <p class="note"><b>「ログイン」を押すと：</b>ブラウザが開き、SIMYにログイン済みならそのまま自動でつながります。ブラウザに「Unauthorized」と出たときは、先に<a href="https://app.simy.one/login?lang=ja&amp;locale=ja&amp;region=jp">Webでログイン</a>してから、アプリの「ログイン」をもう一度押してください。</p>
-    </section>
-
-    <section class="sec" aria-labelledby="h-what">
-      <span class="sec-label">WHAT IT DOES</span>
-      <h2 id="h-what">PCに入れると、できること</h2>
-      <div class="scenes">
-        <div class="scene wish">
-          <span class="mark" aria-hidden="true">1</span>
-          <span class="k">会話から</span>
-          <b>次の仕事が届く</b>
-          <p>Claude CodeやCodexとの会話から、繰り返している仕事を「SIMYからの提案」にします。</p>
-        </div>
-        <div class="scene wish">
-          <span class="mark" aria-hidden="true">2</span>
-          <span class="k">SIMYから</span>
-          <b>PCのAIを動かす</b>
-          <p>あなたのログインのまま、PCのClaude CodeやCodexに仕事を進めさせます。</p>
-        </div>
-        <div class="scene wish you">
-          <span class="mark" aria-hidden="true">!</span>
-          <span class="k">あなたには</span>
-          <b>判断だけ</b>
-          <p>送ってよいか、この金額でよいか。戻ってくるのは判断が必要なところだけです。</p>
-        </div>
-      </div>
-      <p class="note"><b>安心のために：</b>読むのは会話のやり取りだけで、既定で直近90日分です。ツールの出力は送らず、会話本文はサーバーに保存しません。設定でいつでも止められます。</p>
-    </section>
-
-    <section class="sec" id="faq" aria-labelledby="h-faq">
-      <span class="sec-label">FAQ</span>
-      <h2 id="h-faq">よくある質問</h2>
-      <div class="faq">
-        <details>
-          <summary>無料で試せますか？</summary>
-          <div class="a"><p>無料プランはありません。月額プランを選んで登録すると、アプリとWebの両方を使えます。料金はホームの料金欄をご覧ください。</p></div>
-        </details>
-        <details>
-          <summary>アカウントを作る前に、アプリだけ入れてもいいですか？</summary>
-          <div class="a"><p>入れることはできますが、ログインにはSIMYのアカウントが必要です。先にアカウントを作ってから、アプリの「ログイン」を押すのがいちばん早い順番です。</p></div>
-        </details>
-        <details>
-          <summary>登録には何が必要ですか？</summary>
-          <div class="a"><p>メールアドレスとクレジットカードです。届いたメールのリンクで本人確認をするので、パスワードは決めなくて構いません。支払いはカード決済の画面で行います。</p></div>
-        </details>
-        <details>
-          <summary>アプリで「ログイン」を押したら「Unauthorized」と出ました。</summary>
-          <div class="a"><p>ブラウザでSIMYにログインしていない状態です。先にWebでログイン（はじめての方はアカウント作成）をしてから、アプリの「ログイン」をもう一度押してください。</p></div>
-        </details>
-        <details>
-          <summary>Claude CodeやCodexを使っていなくても、入れる意味はありますか？</summary>
-          <div class="a"><p>会議やチャットから仕事を拾う機能はWebだけで使えるので、アプリは必須ではありません。PCでClaude CodeやCodexを使っている方は、アプリを入れると会話が提案になり、SIMYからPCのAIを動かせます。</p></div>
-        </details>
-        <details>
-          <summary>ChatGPTやClaudeの契約は必要ですか？</summary>
-          <div class="a"><p>SIMYのクラウド実行は、お使いのChatGPTアカウント（Codex）で動きます。PCのClaude Codeを動かすときは、あなたのClaude Codeのログインがそのまま使われます。Claudeのトークンをクラウド実行に連携することはできません。Geminiのトークン連携は開発中です。</p></div>
-        </details>
-        <details>
-          <summary>IntelのMacでも使えますか？</summary>
-          <div class="a"><p>現在のMac版はAppleシリコン（M1以降）向けです。IntelのMacでは、Webから SIMY をお使いください。</p></div>
-        </details>
-        <details>
-          <summary>ダウンロードしたファイル名が「SIMY-CLI」になっています。</summary>
-          <div class="a"><p>同じものです。デスクトップアプリには、エンジニア向けにターミナルから使える SIMY CLI も入っているため、ファイル名にその名前が付いています。ふだんはアプリの画面だけで使えます。</p></div>
-        </details>
-      </div>
-    </section>
-
-    <section class="sec" aria-labelledby="h-guides">
-      <span class="sec-label">GUIDES</span>
-      <h2 id="h-guides">使っているツール別のガイド</h2>
-      <ul class="three" aria-label="ガイド一覧">
-        <li><a href="/guides/claude.html" style="color:#fff;text-decoration:none">Claude</a></li>
-        <li><a href="/guides/codex.html" style="color:#fff;text-decoration:none">OpenAI Codex</a></li>
-        <li><a href="/guides/cowork.html" style="color:#fff;text-decoration:none">Claude Cowork</a></li>
-        <li><a href="/guides/chatgpt.html" style="color:#fff;text-decoration:none">ChatGPT</a></li>
-        <li><a href="/guides/plaud.html" style="color:#fff;text-decoration:none">PLAUD NOTE</a></li>
-        <li><a href="/guides/meeting-notes.html" style="color:#fff;text-decoration:none">AI議事録</a></li>
+    <section class="sec" aria-labelledby="h-common">
+      <span class="sec-label">COMMON</span>
+      <h2 id="h-common">不管用哪款 AI，剩下的工作都一样</h2>
+      <ul class="three" aria-label="SIMY 的三个特点">
+        <li>从会议和聊天中接活</li>
+        <li>按你的做法来</li>
+        <li>只把判断交给你</li>
       </ul>
+      <p class="tl-note">每次开口的是你，重新粘贴的是你，分享出去、再回头确认做没做完的，也是你。SIMY 从会议和聊天中接住工作，按你的做法推进，只把需要你判断的地方交回给你。</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="https://app.simy.one/signup?lang=zh-Hans&amp;locale=zh-Hans&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=guides_index_zh-hans&amp;utm_content=body">选择方案并开始 <span class="arrow" aria-hidden="true">↗</span></a>
+        <a class="btn btn-ghost" href="/download/zh-hans.html">下载应用 <span class="arrow" aria-hidden="true">↓</span></a>
+      </div>
     </section>
   </div>
 </main>
-
 <footer class="site-footer">
   <div class="wrap">
     <ul class="footer-links">
-      <li><a href="/?lang=ja">ホーム</a></li>
-      <li><a href="/?lang=ja#pricing">料金</a></li>
-      <li><a href="/integrations.html">連携</a></li>
-      <li><a href="/guides/index.html">ガイド一覧</a></li>
-      <li><a href="/security.html">セキュリティ</a></li>
-      <li><a href="/privacy.html">プライバシーポリシー</a></li>
-      <li><a href="/terms.html">利用規約</a></li>
+      <li><a href="/?lang=zh-Hans">首页</a></li>
+      <li><a href="/?lang=zh-Hans#pricing">价格</a></li>
+      <li><a href="/integrations.html">集成</a></li>
+      <li><a href="/download/zh-hans.html">下载</a></li>
+      <li><a href="/security.html">安全</a></li>
+      <li><a href="/privacy.html?lang=zh-Hans">隐私政策</a></li>
+      <li><a href="/terms.html?lang=zh-Hans">使用条款</a></li>
     </ul>
-    <p>Claude、Claude CodeはAnthropicの、CodexとChatGPTはOpenAIの商標です。その他の社名・製品名は、各社の商標または登録商標です。</p>
+    <p>Claude、Claude Code、Claude Cowork 是 Anthropic 的商标，ChatGPT 和 Codex 是 OpenAI 的商标，PLAUD 和 NotePin 是其各自权利人的商标。SIMY 是独立于上述公司的产品。</p>
     <p>&copy; 2026 SIMY by AwakApp Inc.</p>
   </div>
 </footer>
-<script>
-(function () {
-  var ua = navigator.userAgent || '';
-  var os = /iPhone|iPad|iPod/.test(ua) ? 'ios' : /Windows/.test(ua) ? 'win' : /Mac/.test(ua) ? 'mac' : '';
-  if (os) {
-    var card = document.querySelector('.dl-card[data-os="' + os + '"]');
-    if (card) { card.classList.add('is-you'); card.parentNode.insertBefore(card, card.parentNode.firstChild); }
-    var inst = document.querySelector('[data-install="' + os + '"]');
-    if (inst) inst.parentNode.insertBefore(inst, inst.parentNode.firstChild);
-  }
-  if (os === 'ios' || /Android/.test(ua)) {
-    var hint = document.querySelector('.mobile-hint');
-    if (hint) hint.hidden = false;
-    var share = document.querySelector('[data-share]');
-    if (share) share.addEventListener('click', function () {
-      var url = 'https://simy.one/download.html';
-      if (navigator.share) { navigator.share({ title: 'SIMYをダウンロード', url: url }).catch(function () {}); }
-      else { location.href = 'mailto:?subject=' + encodeURIComponent('SIMYをダウンロード') + '&body=' + encodeURIComponent(url); }
-    });
-  }
-  function mb(n) { return n ? (n / 1048576).toFixed(0) + 'MB' : ''; }
-  function apply(key, manifest, ext) {
-    if (!manifest || !manifest.artifacts || !manifest.artifacts.length) return;
-    var a = manifest.artifacts[0];
-    var link = document.querySelector('[data-dl="' + key + '"]');
-    var meta = document.querySelector('[data-meta="' + key + '"]');
-    if (link && a.url) link.href = a.url;
-    if (meta) meta.textContent = 'v' + manifest.version + ' · ' + ext + (a.size ? ' · ' + mb(a.size) : '');
-  }
-  function load(path, key, ext) {
-    if (!window.fetch) return;
-    fetch(path, { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : null; })
-      .then(function (m) { apply(key, m, ext); }).catch(function () {});
-  }
-  load('/downloads/simy-cli/latest.json', 'mac', '.dmg');
-  load('/downloads/simy-cli/windows/latest.json', 'win', '.exe');
-})();
-</script>
 <script src="/analytics.js" defer></script>
 </body>
 </html>

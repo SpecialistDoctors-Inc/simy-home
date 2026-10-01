@@ -6,6 +6,13 @@
 <title>AI活用ガイド一覧｜Claude・Codex・ChatGPT・PLAUD・AI議事録 | SIMY</title>
 <meta name="description" content="使っているAIツールから選べる、仕事目線の活用ガイド。Claude、OpenAI Codex、Claude Cowork、ChatGPT、PLAUD NOTE、AI議事録ツールの使い方と、回答や要約のあとに残る仕事の片づけ方。">
 <link rel="canonical" href="https://simy.one/guides/index.html">
+<link rel="alternate" hreflang="ja" href="https://simy.one/guides/index.html">
+<link rel="alternate" hreflang="en" href="https://simy.one/guides/en/index.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://simy.one/guides/zh-hans/index.html">
+<link rel="alternate" hreflang="es" href="https://simy.one/guides/es/index.html">
+<link rel="alternate" hreflang="fr" href="https://simy.one/guides/fr/index.html">
+<link rel="alternate" hreflang="hi" href="https://simy.one/guides/hi/index.html">
+<link rel="alternate" hreflang="x-default" href="https://simy.one/guides/en/index.html">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://simy.one/guides/index.html">
 <meta property="og:title" content="AI活用ガイド一覧｜SIMY">
@@ -731,6 +738,14 @@ thead th.simy { background: var(--blue-deep); }
 .gcard .go { margin-top: auto; font-weight: 700; font-size: 0.88rem; color: var(--blue-deep); }
 @media (max-width: 960px) { .ggrid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 640px) { .ggrid { grid-template-columns: minmax(0, 1fr); } .gcard { min-height: 0; } }
+
+.lang-switch { position: relative; }
+.lang-switch > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 10px; border: 1px solid var(--ui-line); border-radius: 999px; background: var(--paper-light); font-size: 0.8rem; font-weight: 700; }
+.lang-switch > summary::-webkit-details-marker { display: none; }
+.lang-switch ul { position: absolute; right: 0; top: calc(100% + 6px); z-index: 30; margin: 0; padding: 6px; list-style: none; min-width: 150px; background: var(--paper-light); border: 1px solid var(--ink); border-radius: 10px; box-shadow: 4px 4px 0 var(--ink); }
+.lang-switch li a { display: block; padding: 8px 10px; border-radius: 6px; color: var(--ink); text-decoration: none; font-size: 0.88rem; }
+.lang-switch li a:hover, .lang-switch li a[aria-current] { background: var(--blue-soft); }
+@media (max-width: 960px) { .brand-sub { display: none; } .header-actions { gap: 4px; } .lang-switch > summary { padding: 0 8px; } }
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
@@ -750,6 +765,7 @@ thead th.simy { background: var(--blue-deep); }
       <span class="brand-sub">ガイド</span>
     </a>
     <nav class="header-actions" aria-label="アカウント">
+      <details class="lang-switch"><summary aria-label="Language">🌐 日本語</summary><ul><li><a href="/guides/index.html" hreflang="ja" lang="ja" aria-current="page">日本語</a></li><li><a href="/guides/en/index.html" hreflang="en" lang="en">English</a></li><li><a href="/guides/zh-hans/index.html" hreflang="zh-Hans" lang="zh-Hans">中文</a></li><li><a href="/guides/es/index.html" hreflang="es" lang="es">Español</a></li><li><a href="/guides/fr/index.html" hreflang="fr" lang="fr">Français</a></li><li><a href="/guides/hi/index.html" hreflang="hi" lang="hi">हिन्दी</a></li></ul></details>
       <a class="header-link" href="/download.html">ダウンロード</a>
       <a class="header-link" href="https://app.simy.one/login?lang=ja&amp;locale=ja&amp;region=jp">ログイン</a>
       <a class="header-cta" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=guides_index&amp;utm_content=header">プランを選んではじめる</a>

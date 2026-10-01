@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="ja">
+<html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="google-site-verification" content="1n6_tVJZRZlQax8luEg5VsuG7gg-kCEam5VFiWIJs3U">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PLAUD NOTEの使い方｜AI文字起こし・要約の先を自動化 | SIMY</title>
-<meta name="description" content="PLAUD NOTEの使い方ガイド。届いたらやること、Plaud WebとDesktopの使い方、料金プランと対応モデルの比較、セキュリティまで。Plaudアカウントを接続するだけで、要約のあとのフォローメールや共有をSIMYが進めます。">
-<link rel="canonical" href="https://simy.one/guides/plaud.html">
+<title>Cómo usar PLAUD NOTE: más allá del resumen con IA | SIMY</title>
+<meta name="description" content="Guía de PLAUD NOTE: primeros pasos, Plaud Web y Desktop, planes, modelos y seguridad. Conecta Plaud y SIMY avanza lo que queda tras el resumen.">
+<link rel="canonical" href="https://simy.one/guides/es/plaud.html">
 <link rel="alternate" hreflang="ja" href="https://simy.one/guides/plaud.html">
 <link rel="alternate" hreflang="en" href="https://simy.one/guides/en/plaud.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://simy.one/guides/zh-hans/plaud.html">
@@ -15,22 +15,22 @@
 <link rel="alternate" hreflang="hi" href="https://simy.one/guides/hi/plaud.html">
 <link rel="alternate" hreflang="x-default" href="https://simy.one/guides/en/plaud.html">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://simy.one/guides/plaud.html">
-<meta property="og:title" content="PLAUDの録音を、文字起こしと要約で終わらせない。｜SIMY">
-<meta property="og:description" content="Plaudアカウントを接続するだけで、要約から先の仕事をSIMYが進めます。届いたらやること、連携方法、料金プランと対応モデルまで。">
+<meta property="og:url" content="https://simy.one/guides/es/plaud.html">
+<meta property="og:title" content="Que tus grabaciones de PLAUD no terminen en un resumen | SIMY">
+<meta property="og:description" content="Conecta tu cuenta de Plaud y SIMY avanza el trabajo que viene después del resumen. Primeros pasos, conexión, planes y modelos.">
 <meta property="og:site_name" content="SIMY">
-<meta property="og:image" content="https://simy.one/ogp-plaud.png">
+<meta property="og:image" content="https://simy.one/ogp.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="PLAUDの録音を、文字起こしと要約で終わらせない。PLAUD NOTE 活用ガイド｜SIMY">
-<meta property="og:locale" content="ja_JP">
+<meta property="og:image:alt" content="Que tus grabaciones de PLAUD no terminen en un resumen. Guía de PLAUD NOTE | SIMY">
+<meta property="og:locale" content="es_ES">
 <meta property="article:published_time" content="2026-09-30">
 <meta property="article:modified_time" content="2026-10-01">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="PLAUDの録音を、文字起こしと要約で終わらせない。｜SIMY">
-<meta name="twitter:description" content="Plaudアカウントを接続するだけで、要約から先の仕事をSIMYが進めます。届いたらやること、連携方法、料金プランと対応モデルまで。">
-<meta name="twitter:image" content="https://simy.one/ogp-plaud.png">
-<meta name="twitter:image:alt" content="PLAUDの録音を、文字起こしと要約で終わらせない。PLAUD NOTE 活用ガイド｜SIMY">
+<meta name="twitter:title" content="Que tus grabaciones de PLAUD no terminen en un resumen | SIMY">
+<meta name="twitter:description" content="Conecta tu cuenta de Plaud y SIMY avanza el trabajo que viene después del resumen. Primeros pasos, conexión, planes y modelos.">
+<meta name="twitter:image" content="https://simy.one/ogp.png">
+<meta name="twitter:image:alt" content="Que tus grabaciones de PLAUD no terminen en un resumen. Guía de PLAUD NOTE | SIMY">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="theme-color" content="#f6f5f4">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
@@ -663,7 +663,7 @@ thead th.simy { background: var(--blue-deep); }
 .tl li.run { background: var(--blue-soft); border: 1px solid var(--blue-deep); color: var(--ink); }
 .tl li.run::after { content: "✓"; position: absolute; right: 8px; top: 6px; font-family: var(--mono); color: var(--blue-deep); }
 .tl li.you { background: #fff8e3; border: 1px solid var(--ink); color: var(--ink); }
-.tl li.you::after { content: "あなた"; position: absolute; right: 8px; top: 7px; font-family: var(--mono); font-size: 0.62rem; }
+.tl li.you::after { content: "tú"; position: absolute; right: 8px; top: 7px; font-family: var(--mono); font-size: 0.62rem; }
 .tl li.blank { border: 0; background: transparent; }
 .tl-note { margin: 14px 0 0; font-size: 0.86rem; color: #34322f; }
 .tl-note b { color: var(--ink); }
@@ -762,16 +762,16 @@ thead th.simy { background: var(--blue-deep); }
   "@graph": [
     {
       "@type": "Article",
-      "@id": "https://simy.one/guides/plaud.html#article",
-      "headline": "PLAUD NOTE 活用ガイド：AI文字起こし・要約の先を自動化する連携",
-      "description": "PLAUD NOTEの録音・文字起こし・要約を仕事に変える活用ガイド。会議のあとに残る仕事、SIMYとの連携方法、届いたらやること、料金プランと対応モデル、セキュリティ。",
-      "inLanguage": "ja",
+      "@id": "https://simy.one/guides/es/plaud.html#article",
+      "headline": "Guía de PLAUD NOTE: lleva la transcripción y el resumen con IA hasta el trabajo terminado",
+      "description": "Guía para convertir las grabaciones, transcripciones y resúmenes de PLAUD NOTE en trabajo hecho: lo que queda después de la reunión, cómo conectar SIMY, primeros pasos, planes, modelos y seguridad.",
+      "inLanguage": "es",
       "datePublished": "2026-09-30",
       "dateModified": "2026-10-01",
-      "mainEntityOfPage": "https://simy.one/guides/plaud.html",
+      "mainEntityOfPage": "https://simy.one/guides/es/plaud.html",
       "image": {
         "@type": "ImageObject",
-        "url": "https://simy.one/ogp-plaud.png",
+        "url": "https://simy.one/ogp.png",
         "width": 1200,
         "height": 630
       },
@@ -796,16 +796,16 @@ thead th.simy { background: var(--blue-deep); }
         },
         {
           "@type": "Thing",
-          "name": "AI文字起こし"
+          "name": "Transcripción con IA"
         },
         {
           "@type": "Thing",
-          "name": "議事録"
+          "name": "Actas de reunión"
         }
       ],
       "citation": [
-        "https://jp.plaud.ai/products/plaud-ai-membership",
-        "https://jp.plaud.ai/blogs/blog/plaud-note-pro",
+        "https://www.plaud.ai/",
+        "https://www.plaud.ai/products/plaud-note-pro",
         "https://docs.plaud.ai/plaud-mcp-cli/mcp"
       ]
     },
@@ -821,14 +821,14 @@ thead th.simy { background: var(--blue-deep); }
         {
           "@type": "ListItem",
           "position": 2,
-          "name": "ガイド",
-          "item": "https://simy.one/guides/index.html"
+          "name": "Guías",
+          "item": "https://simy.one/guides/es/index.html"
         },
         {
           "@type": "ListItem",
           "position": 3,
-          "name": "PLAUD NOTE 活用ガイド",
-          "item": "https://simy.one/guides/plaud.html"
+          "name": "Guía de PLAUD NOTE",
+          "item": "https://simy.one/guides/es/plaud.html"
         }
       ]
     },
@@ -837,98 +837,98 @@ thead th.simy { background: var(--blue-deep); }
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "PLAUDを買ったばかりです。何から始めればいいですか？",
+          "name": "Acabo de comprar PLAUD. ¿Por dónde empiezo?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "PLAUDアプリで本体をペアリングし、録音モードと要約テンプレートを確認してください。そのあとSIMYの連携画面でPlaudアカウントを接続すれば、最初の会議から使えます。"
+            "text": "Empareja el dispositivo en la app de PLAUD y revisa el modo de grabación y la plantilla de resumen. Después conecta tu cuenta de Plaud en la pantalla de integraciones de SIMY y podrás usarlo desde la primera reunión."
           }
         },
         {
           "@type": "Question",
-          "name": "PLAUDをすでに使っています。これまでの録音もSIMYで使えますか？",
+          "name": "Ya uso PLAUD. ¿SIMY puede usar mis grabaciones anteriores?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "はい。接続すると、Plaudアカウントに保存されている録音、文字起こし、要約をSIMYが検索して参照します。"
+            "text": "Sí. Al conectar, SIMY busca y consulta las grabaciones, transcripciones y resúmenes guardados en tu cuenta de Plaud."
           }
         },
         {
           "@type": "Question",
-          "name": "PLAUD NOTE Pro、NotePinなど、どのモデルでも使えますか？",
+          "name": "¿Funciona con cualquier modelo, como PLAUD NOTE Pro o NotePin?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "はい。SIMYはPlaudアカウントに保存された文字起こしと要約を参照するため、モデルによる違いはありません。通話も録音したい場合は、通話モードのあるPLAUD NOTEかPLAUD NOTE Proを選んでください。"
+            "text": "Sí. SIMY consulta las transcripciones y resúmenes de tu cuenta de Plaud, así que el modelo no importa. Si también quieres grabar llamadas, elige PLAUD NOTE o PLAUD NOTE Pro, que tienen modo llamada."
           }
         },
         {
           "@type": "Question",
-          "name": "PLAUDのStarter（無料）やUnlimitedなど、どの料金プランでも接続できますか？",
+          "name": "¿Puedo conectar con cualquier plan de PLAUD, como Starter (gratis) o Unlimited?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "はい。接続に必要なのは、デバイスを登録済みのPlaudアカウントだけです。プランの違いは文字起こし時間です。Starterは月300分、Proは月1,200分、Unlimitedは無制限です。"
+            "text": "Sí. Solo necesitas una cuenta de Plaud con tu dispositivo registrado. Los planes se diferencian en el tiempo de transcripción: Starter tiene 300 minutos al mes, Pro 1200 minutos al mes y Unlimited no tiene límite."
           }
         },
         {
           "@type": "Question",
-          "name": "Notionへのエクスポートや、PLAUD MCPの設定は必要ですか？",
+          "name": "¿Tengo que exportar a Notion o configurar PLAUD MCP?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "必要ありません。PLAUD MCPは、録音をChatGPTやClaudeから読み出すPLAUD公式の仕組みですが、SIMYはPlaudアカウントを直接参照するため、エクスポートもMCPの設定もいりません。"
+            "text": "No. PLAUD MCP es el mecanismo oficial de PLAUD para leer grabaciones desde ChatGPT o Claude, pero SIMY consulta tu cuenta de Plaud directamente, así que no necesitas exportar ni configurar MCP."
           }
         },
         {
           "@type": "Question",
-          "name": "PLAUDはどこの国の会社ですか？",
+          "name": "¿De qué país es la empresa PLAUD?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "PLAUDを開発するPlaud Inc.は、米国サンフランシスコに本社を置く会社です。日本では、PLAUD株式会社がサポートやデータの管理を担っています。"
+            "text": "Plaud Inc., la empresa que desarrolla PLAUD, tiene su sede en San Francisco, Estados Unidos."
           }
         },
         {
           "@type": "Question",
-          "name": "PLAUDの録音がAIの学習に使われたり、情報漏洩したりしませんか？",
+          "name": "¿Mis grabaciones de PLAUD se usan para entrenar IA o corren riesgo de filtrarse?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "PLAUDは、明示的な同意がない限り録音データをAIの学習に使わないと案内しています。SOC 2 Type II、HIPAA、GDPR、ISO/IEC 27001に準拠し、データは暗号化して保存されます。SIMYでの取り扱いは、セキュリティとプライバシーポリシーのページで公開しています。"
+            "text": "PLAUD indica que no usa las grabaciones para entrenar IA sin tu consentimiento explícito. Cumple SOC 2 Type II, HIPAA, GDPR e ISO/IEC 27001 y guarda los datos cifrados. Cómo los trata SIMY se explica en las páginas de Seguridad y de Política de privacidad."
           }
         },
         {
           "@type": "Question",
-          "name": "議事録の形式（参加者・議題・決定事項・次アクション）は、毎回指定が必要ですか？",
+          "name": "¿Tengo que indicar el formato del acta (asistentes, temas, acuerdos, próximos pasos) cada vez?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "いいえ。一度あなたの型で仕上げれば、SIMYはそのやり方を学び、次の会議からは同じ形で用意します。文字起こしを貼って、同じ指示を打ち直す作業はなくなります。"
+            "text": "No. Si lo terminas una vez con tu formato, SIMY aprende cómo lo haces y lo prepara igual desde la siguiente reunión. Se acabó pegar la transcripción y repetir las mismas instrucciones."
           }
         },
         {
           "@type": "Question",
-          "name": "「何が決まったか」の判断は、AIがしますか？私がしますか？",
+          "name": "¿Quién decide «qué se acordó»: la IA o yo?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "判断はあなたです。SIMYは文字起こしと要約から候補を整理して下書きまで進め、金額や送信の可否など、判断が必要なところだけをあなたに返します。"
+            "text": "Tú. SIMY ordena los candidatos a partir de la transcripción y el resumen y avanza hasta el borrador, pero te devuelve solo lo que requiere una decisión, como el importe o si se envía."
           }
         },
         {
           "@type": "Question",
-          "name": "Notion AI、Notta、Teamsなど、PLAUD以外の文字起こしでもSIMYは使えますか？",
+          "name": "¿SIMY funciona con otras transcripciones, como Notion AI, Notta o Teams?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "このページはPLAUD向けですが、SIMYの連携画面にはNotionやGoogleなど他の接続先もあります。会議の文脈をそこから渡せます。対応状況は連携画面で確認してください。"
+            "text": "Esta página trata de PLAUD, pero la pantalla de integraciones de SIMY tiene otros destinos, como Notion o Google. Desde ahí puedes pasarle el contexto de tus reuniones. Consulta la disponibilidad en la pantalla de integraciones."
           }
         },
         {
           "@type": "Question",
-          "name": "SIMYを使うと、AIの利用料が別にかかりますか？",
+          "name": "¿Usar SIMY implica pagar aparte por la IA?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "SIMYはお使いのChatGPTアカウントをつなぎ、Codex App Server経由で仕事を進めます。Codexの利用は、お使いのChatGPTプランの範囲で行われます。SIMY自体の料金は料金ページをご覧ください。"
+            "text": "SIMY se conecta a tu cuenta de ChatGPT y trabaja a través de Codex App Server. El uso de Codex se descuenta de tu plan de ChatGPT. Para el precio de SIMY, consulta la página de precios."
           }
         },
         {
           "@type": "Question",
-          "name": "録音するときに相手の同意は必要ですか？",
+          "name": "¿Necesito el consentimiento de los demás para grabar?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "必要です。録音を始める前に、会話に参加する全員から同意を取ってください。SIMYの利用規約でも、録音の同意の取得はお客さまの責任としています。"
+            "text": "Sí. Antes de grabar, pide permiso a todas las personas que participan en la conversación. Los términos de uso de SIMY también establecen que obtenerlo es responsabilidad del cliente."
           }
         }
       ]
@@ -938,20 +938,20 @@ thead th.simy { background: var(--blue-deep); }
 </script>
 </head>
 <body>
-<a class="skip" href="#main">本文へスキップ</a>
+<a class="skip" href="#main">Saltar al contenido</a>
 
 <header class="site-header">
   <div class="wrap header-inner">
-    <a class="brand" href="/?lang=ja">
+    <a class="brand" href="/?lang=es">
       <img src="/simy-icon-56.png" alt="SIMY" width="28" height="28">
       <span aria-hidden="true">SIMY</span>
-      <span class="brand-sub">PLAUD 活用ガイド</span>
+      <span class="brand-sub">Guía de PLAUD</span>
     </a>
-    <nav class="header-actions" aria-label="アカウント">
-      <details class="lang-switch"><summary aria-label="Language">🌐 日本語</summary><ul><li><a href="/guides/plaud.html" hreflang="ja" lang="ja" aria-current="page">日本語</a></li><li><a href="/guides/en/plaud.html" hreflang="en" lang="en">English</a></li><li><a href="/guides/zh-hans/plaud.html" hreflang="zh-Hans" lang="zh-Hans">中文</a></li><li><a href="/guides/es/plaud.html" hreflang="es" lang="es">Español</a></li><li><a href="/guides/fr/plaud.html" hreflang="fr" lang="fr">Français</a></li><li><a href="/guides/hi/plaud.html" hreflang="hi" lang="hi">हिन्दी</a></li></ul></details>
-      <a class="header-link" href="/download.html">ダウンロード</a>
-      <a class="header-link" href="https://app.simy.one/login?lang=ja&amp;locale=ja&amp;region=jp">ログイン</a>
-      <a class="header-cta" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=plaud_guide&amp;utm_content=header">プランを選んではじめる</a>
+    <nav class="header-actions" aria-label="Cuenta">
+      <details class="lang-switch"><summary aria-label="Language">🌐 Español</summary><ul><li><a href="/guides/plaud.html" hreflang="ja" lang="ja">日本語</a></li><li><a href="/guides/en/plaud.html" hreflang="en" lang="en">English</a></li><li><a href="/guides/zh-hans/plaud.html" hreflang="zh-Hans" lang="zh-Hans">中文</a></li><li><a href="/guides/es/plaud.html" hreflang="es" lang="es" aria-current="page">Español</a></li><li><a href="/guides/fr/plaud.html" hreflang="fr" lang="fr">Français</a></li><li><a href="/guides/hi/plaud.html" hreflang="hi" lang="hi">हिन्दी</a></li></ul></details>
+      <a class="header-link" href="/download/es.html">Descargar</a>
+      <a class="header-link" href="https://app.simy.one/login?lang=es&amp;locale=es&amp;region=es">Iniciar sesión</a>
+      <a class="header-cta" href="https://app.simy.one/signup?lang=es&amp;locale=es&amp;region=es&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=plaud_guide_es&amp;utm_content=header">Elige un plan y empieza</a>
     </nav>
   </div>
 </header>
@@ -960,190 +960,190 @@ thead th.simy { background: var(--blue-deep); }
   <section class="hero" aria-labelledby="page-title">
     <div class="wrap hero-inner">
       <div>
-        <ol class="crumbs" aria-label="パンくずリスト">
+        <ol class="crumbs" aria-label="Ruta de navegación">
           <li><a href="https://simy.one/">SIMY</a></li>
-          <li><a href="/guides/index.html">ガイド</a></li>
-          <li aria-current="page">PLAUD NOTE 活用ガイド</li>
+          <li><a href="/guides/es/index.html">Guías</a></li>
+          <li aria-current="page">Guía de PLAUD NOTE</li>
         </ol>
-        <p class="eyebrow">PLAUD NOTE ユーザーのための活用ガイド</p>
+        <p class="eyebrow">Guía para quienes usan PLAUD NOTE</p>
         <h1 id="page-title">
-          <span class="line">PLAUDの録音を、</span>
-          <span class="line hl">文字起こしと要約で</span>
-          <span class="line">終わらせない。</span>
+          <span class="line">Que tus grabaciones de PLAUD</span>
+          <span class="line hl">no terminen</span>
+          <span class="line">en un resumen.</span>
         </h1>
-        <p class="lead">PLAUD（プラウド）の要約のあと、メール、顧客メモ、共有はまだ手元に残る。Plaudを接続するだけで、その先をSIMYが進めます。</p>
+        <p class="lead">Después del resumen de PLAUD aún te quedan el correo, las notas del cliente y el aviso al equipo. Conecta Plaud y SIMY avanza todo lo que sigue.</p>
         <div class="cta-row">
-          <a class="btn btn-primary" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=plaud_guide&amp;utm_content=hero">プランを選んではじめる <span class="arrow" aria-hidden="true">↗</span></a>
-          <a class="btn btn-ghost" href="#connect">つなぎ方を見る <span class="arrow" aria-hidden="true">↓</span></a>
+          <a class="btn btn-primary" href="https://app.simy.one/signup?lang=es&amp;locale=es&amp;region=es&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=plaud_guide_es&amp;utm_content=hero">Elige un plan y empieza <span class="arrow" aria-hidden="true">↗</span></a>
+          <a class="btn btn-ghost" href="#connect">Ver cómo se conecta <span class="arrow" aria-hidden="true">↓</span></a>
         </div>
         <ul class="hero-points">
-          <li>Plaudアカウントを接続するだけ</li>
-          <li>エクスポートやMCPの設定は不要</li>
-          <li>お使いのChatGPTプランで動く</li>
+          <li>Solo conectas tu cuenta de Plaud</li>
+          <li>Sin exportar nada ni configurar MCP</li>
+          <li>Funciona con tu plan de ChatGPT</li>
         </ul>
       </div>
 
       <div class="hero-visual">
-        <div class="relay" role="img" aria-label="例：PLAUDが録音・文字起こし・要約までを行い、その先のフォローメールの下書き、顧客メモの更新、社内共有の文面をSIMYが用意し、金額の最終確認だけがあなたに残る流れ">
+        <div class="relay" role="img" aria-label="Ejemplo: PLAUD graba, transcribe y resume. Después, SIMY prepara el borrador del correo de seguimiento, actualiza las notas del cliente y redacta el aviso al equipo. A ti solo te queda confirmar el importe">
           <div class="relay-head" aria-hidden="true">
-            <span class="rec"><span class="rec-dot"></span><span class="rec-name">商談_A社_0930.m4a</span></span>
+            <span class="rec"><span class="rec-dot"></span><span class="rec-name">reunion_clienteA_0930.m4a</span></span>
             <span>42:18</span>
           </div>
           <div class="relay-meta" aria-hidden="true">
             <span class="chip">PLAUD NOTE Pro</span>
-            <span class="chip">対面モード</span>
-            <span class="chip">話者 3名</span>
+            <span class="chip">Modo presencial</span>
+            <span class="chip">3 hablantes</span>
           </div>
           <ol class="relay-steps" aria-hidden="true">
-            <li class="step s-done s-plaud"><span class="no">01</span><span class="what">録音<small>ボタンを押して会話を記録</small></span><span class="status">PLAUD ✓</span></li>
-            <li class="step s-done s-plaud"><span class="no">02</span><span class="what">文字起こし<small>話者を分けて書き起こし</small></span><span class="status">PLAUD ✓</span></li>
-            <li class="step s-done s-plaud"><span class="no">03</span><span class="what">要約<small>テンプレート「商談」</small></span><span class="status">PLAUD ✓</span></li>
-            <li class="handoff">PLAUDはここまで ／ ここからSIMY</li>
-            <li class="step s-done"><span class="no">04</span><span class="what">お礼とフォローのメール<small>あなたの文面の癖で下書き</small></span><span class="status">下書き済</span></li>
-            <li class="step s-run"><span class="no">05</span><span class="what">顧客メモを更新<small>検討状況・懸念・決裁時期</small></span><span class="status">Autorun</span><span class="bar"></span></li>
-            <li class="step s-next"><span class="no">06</span><span class="what">社内共有の文面を用意<small>見積もりの前提をチームへ</small></span><span class="status">次</span></li>
-            <li class="step s-you"><span class="no">07</span><span class="what">金額と納期の最終確認<small>判断だけがあなたに残る</small></span><span class="status">あなたの番</span></li>
+            <li class="step s-done s-plaud"><span class="no">01</span><span class="what">Grabar<small>Un botón y la conversación queda guardada</small></span><span class="status">PLAUD ✓</span></li>
+            <li class="step s-done s-plaud"><span class="no">02</span><span class="what">Transcribir<small>Separada por hablante</small></span><span class="status">PLAUD ✓</span></li>
+            <li class="step s-done s-plaud"><span class="no">03</span><span class="what">Resumir<small>Plantilla «Reunión comercial»</small></span><span class="status">PLAUD ✓</span></li>
+            <li class="handoff">Hasta aquí PLAUD / desde aquí SIMY</li>
+            <li class="step s-done"><span class="no">04</span><span class="what">Correo de agradecimiento y seguimiento<small>Borrador con tu forma de escribir</small></span><span class="status">Borrador listo</span></li>
+            <li class="step s-run"><span class="no">05</span><span class="what">Actualizar notas del cliente<small>Estado, dudas y fecha de decisión</small></span><span class="status">Autorun</span><span class="bar"></span></li>
+            <li class="step s-next"><span class="no">06</span><span class="what">Preparar el aviso al equipo<small>Supuestos del presupuesto</small></span><span class="status">Siguiente</span></li>
+            <li class="step s-you"><span class="no">07</span><span class="what">Confirmar importe y plazo<small>Solo la decisión queda para ti</small></span><span class="status">Tu turno</span></li>
           </ol>
-          <div class="relay-foot" aria-hidden="true"><strong>あなたがやるのは、レビューして送ることだけ。</strong></div>
+          <div class="relay-foot" aria-hidden="true"><strong>Lo único que haces: revisar y enviar.</strong></div>
         </div>
-        <p class="caption">※ 画面は説明用のイメージです</p>
+        <p class="caption">* Pantalla ilustrativa</p>
       </div>
     </div>
   </section>
 
   <div class="wrap guide">
-    <nav class="toc" aria-label="目次">
-      <p class="toc-title">目次</p>
+    <nav class="toc" aria-label="Índice">
+      <p class="toc-title">Índice</p>
       <ol>
-        <li><a href="#scene"><span>01</span>会議のあと、こうなっていませんか</a></li>
-        <li><a href="#wish"><span>02</span>本当は、こうしたかった</a></li>
-        <li><a href="#gap"><span>03</span>PLAUDはここで止まる</a></li>
-        <li><a href="#connect"><span>04</span>SIMYがつなぐ</a></li>
-        <li><a href="#sample"><span>05</span>商談1件で比較</a></li>
-        <li><a href="#usecases"><span>06</span>業種別：会議とSIMYが出すもの</a></li>
-        <li><a href="#start"><span>07</span>はじめ方：3ステップ</a></li>
-        <li><a href="#reference"><span>08</span>使い方・料金・セキュリティ</a></li>
-        <li><a href="#faq"><span>09</span>よくある質問</a></li>
-        <li><a href="#sources"><span>10</span>参考情報</a></li>
+        <li><a href="#scene"><span>01</span>Después de la reunión, ¿te pasa esto?</a></li>
+        <li><a href="#wish"><span>02</span>Lo que de verdad querías</a></li>
+        <li><a href="#gap"><span>03</span>Dónde se detiene PLAUD</a></li>
+        <li><a href="#connect"><span>04</span>SIMY lo conecta</a></li>
+        <li><a href="#sample"><span>05</span>Una reunión, dos resultados</a></li>
+        <li><a href="#usecases"><span>06</span>Por sector: reuniones y entregables</a></li>
+        <li><a href="#start"><span>07</span>Cómo empezar en 3 pasos</a></li>
+        <li><a href="#reference"><span>08</span>Uso, planes y seguridad</a></li>
+        <li><a href="#faq"><span>09</span>Preguntas frecuentes</a></li>
+        <li><a href="#sources"><span>10</span>Fuentes</a></li>
       </ol>
     </nav>
 
     <article class="article">
       <details class="toc-mobile">
-        <summary>目次</summary>
+        <summary>Índice</summary>
         <ol>
-          <li><a href="#scene">会議のあと、こうなっていませんか</a></li>
-          <li><a href="#wish">本当は、こうしたかった</a></li>
-          <li><a href="#gap">PLAUDはここで止まる</a></li>
-          <li><a href="#connect">SIMYがつなぐ</a></li>
-          <li><a href="#sample">商談1件で比較</a></li>
-          <li><a href="#usecases">業種別：会議とSIMYが出すもの</a></li>
-          <li><a href="#start">はじめ方：3ステップ</a></li>
-          <li><a href="#reference">使い方・料金・セキュリティ</a></li>
-          <li><a href="#faq">よくある質問</a></li>
-          <li><a href="#sources">参考情報</a></li>
+          <li><a href="#scene">Después de la reunión, ¿te pasa esto?</a></li>
+          <li><a href="#wish">Lo que de verdad querías</a></li>
+          <li><a href="#gap">Dónde se detiene PLAUD</a></li>
+          <li><a href="#connect">SIMY lo conecta</a></li>
+          <li><a href="#sample">Una reunión, dos resultados</a></li>
+          <li><a href="#usecases">Por sector: reuniones y entregables</a></li>
+          <li><a href="#start">Cómo empezar en 3 pasos</a></li>
+          <li><a href="#reference">Uso, planes y seguridad</a></li>
+          <li><a href="#faq">Preguntas frecuentes</a></li>
+          <li><a href="#sources">Fuentes</a></li>
         </ol>
       </details>
 
-      <p class="byline"><span>最終更新：<time datetime="2026-10-01">2026年10月1日</time></span><span>発行：SIMY（AwakApp Inc.）</span></p>
+      <p class="byline"><span>Última actualización: <time datetime="2026-10-01">1 de octubre de 2026</time></span><span>Publicado por SIMY (AwakApp Inc.)</span></p>
 
       <!-- 01 -->
       <section class="sec" id="scene" aria-labelledby="h-scene">
         <span class="sec-label">01 / AFTER THE MEETING</span>
-        <h2 id="h-scene">会議のあと、こうなっていませんか</h2>
-        <p class="intro">PLAUDの要約は届いている。それでも、会議が終わった30分後に起きていること。</p>
+        <h2 id="h-scene">Después de la reunión, ¿te pasa esto?</h2>
+        <p class="intro">El resumen de PLAUD ya llegó. Aun así, esto es lo que ocurre 30 minutos después.</p>
         <div class="scenes">
           <div class="scene pain">
             <span class="mark" aria-hidden="true">1</span>
-            <span class="k">30分後</span>
-            <b>何言ってたっけ</b>
-            <p>要約は読んだ。でも、相手の言い回しや金額のニュアンスが戻ってこない。</p>
+            <span class="k">30 min después</span>
+            <b>¿Qué dijo?</b>
+            <p>Leíste el resumen, pero no recuerdas el tono exacto ni los matices del precio.</p>
           </div>
           <div class="scene pain">
             <span class="mark" aria-hidden="true">2</span>
-            <span class="k">1時間後</span>
-            <b>コピーして、貼る</b>
-            <p>文字起こしをChatGPTに貼って、うちの型に直す。同じ指示を、毎回。</p>
+            <span class="k">1 hora después</span>
+            <b>Copiar y pegar</b>
+            <p>Pegas la transcripción en ChatGPT y la adaptas a tu formato. La misma orden, cada vez.</p>
           </div>
           <div class="scene pain">
             <span class="mark" aria-hidden="true">3</span>
-            <span class="k">その日の夜</span>
-            <b>報告は、結局自分</b>
-            <p>Slackに貼り、Notionを更新し、お礼のメールを書き、ToDoに書き写す。</p>
+            <span class="k">Esa noche</span>
+            <b>El informe es tuyo</b>
+            <p>Pegar en Slack, actualizar Notion, escribir el agradecimiento, pasar las tareas.</p>
           </div>
         </div>
-        <p class="scene-foot">録音・文字起こし・要約は、PLAUDで一瞬で終わる。<b>会議の価値が決まる仕事は、そのあとに残っています。</b></p>
+        <p class="scene-foot">Grabar, transcribir y resumir: PLAUD lo hace en un instante. <b>El trabajo que define el valor de la reunión viene después.</b></p>
       </section>
 
       <!-- 02 -->
       <section class="sec" id="wish" aria-labelledby="h-wish">
         <span class="sec-label">02 / WHAT YOU REALLY WANTED</span>
-        <h2 id="h-wish">本当は、こうしたかった：PLAUDの要約のあと</h2>
-        <p class="intro">同じ会議。同じPLAUD。会議室を出たときに、こうなっていてほしかった。</p>
+        <h2 id="h-wish">Lo que de verdad querías después del resumen de PLAUD</h2>
+        <p class="intro">La misma reunión. El mismo PLAUD. Al salir de la sala, querías encontrarte esto.</p>
         <div class="scenes four">
           <div class="scene wish">
             <span class="mark" aria-hidden="true">✓</span>
-            <span class="k">会議室を出たとき</span>
-            <b>終わったら、届いてる</b>
-            <p>お礼メールの下書きと顧客メモの更新案が、もうチャットに来ている。</p>
+            <span class="k">Al salir de la sala</span>
+            <b>Ya está listo</b>
+            <p>El borrador del agradecimiento y las notas del cliente ya están en tu chat.</p>
           </div>
           <div class="scene wish">
             <span class="mark" aria-hidden="true">✓</span>
-            <span class="k">頼まなくても</span>
-            <b>あなたの型で、毎回</b>
-            <p>参加者・議題・決定事項・次アクション。指示しなくても、いつもの形。</p>
+            <span class="k">Sin pedirlo</span>
+            <b>Siempre a tu manera</b>
+            <p>Asistentes, temas, acuerdos y próximos pasos. Tu formato, sin dar órdenes.</p>
           </div>
           <div class="scene wish">
             <span class="mark" aria-hidden="true">✓</span>
-            <span class="k">次回の前に</span>
-            <b>顧客ごとに積み上がる</b>
-            <p>前回の懸念と決裁時期が顧客メモに残り、次の提案の前提になっている。</p>
+            <span class="k">Antes de la próxima</span>
+            <b>Historial por cliente</b>
+            <p>Las dudas y la fecha de decisión quedan en las notas y sirven para la próxima propuesta.</p>
           </div>
           <div class="scene wish you">
             <span class="mark" aria-hidden="true">!</span>
-            <span class="k">あなたに戻るのは</span>
-            <b>判断だけ</b>
-            <p>「この金額で送ってよいか」。戻ってくるのはその一問だけ。</p>
+            <span class="k">Lo que vuelve a ti</span>
+            <b>Solo decidir</b>
+            <p>«¿Lo envío con este importe?». Esa es la única pregunta que vuelve.</p>
           </div>
         </div>
-        <p class="scene-foot">これは、<b>SIMYにPlaudアカウントを接続した次の会議から</b>起きることです。</p>
+        <p class="scene-foot">Esto pasa <b>desde la primera reunión después de conectar tu cuenta de Plaud a SIMY</b>.</p>
       </section>
 
       <!-- 03 -->
       <section class="sec" id="gap" aria-labelledby="h-gap">
         <span class="sec-label">03 / WHERE PLAUD STOPS</span>
-        <h2 id="h-gap">PLAUDの文字起こしと要約は、ここで止まる</h2>
-        <p class="intro">PLAUDが得意なのは「何が話されたか」まで。その先は、誰も拾っていません。</p>
-        <div class="tl-wrap" role="img" aria-label="タイムライン。録音、文字起こし、要約まではPLAUDが終えるが、お礼メール、顧客メモ、社内共有、次回の段取りは空白のまま残る">
+        <h2 id="h-gap">Aquí se detienen la transcripción y el resumen de PLAUD</h2>
+        <p class="intro">PLAUD es excelente para saber «qué se dijo». Lo que viene después no lo recoge nadie.</p>
+        <div class="tl-wrap" role="img" aria-label="Línea de tiempo. PLAUD termina la grabación, la transcripción y el resumen, pero el correo de agradecimiento, las notas del cliente, el aviso al equipo y la preparación de la próxima reunión quedan vacíos">
           <div class="tl-row">
             <span class="tl-who">PLAUD</span>
             <ol class="tl">
-              <li class="on">録音<small>ボタンひとつ</small></li>
-              <li class="on">文字起こし<small>話者を分けて</small></li>
-              <li class="on">要約<small>テンプレートで</small></li>
-              <li class="gap">お礼メール</li>
-              <li class="gap">顧客メモ</li>
-              <li class="gap">社内共有</li>
-              <li class="gap">次回の段取り</li>
+              <li class="on">Grabar<small>Con un botón</small></li>
+              <li class="on">Transcribir<small>Por hablante</small></li>
+              <li class="on">Resumir<small>Con plantilla</small></li>
+              <li class="gap">Agradecimiento</li>
+              <li class="gap">Notas del cliente</li>
+              <li class="gap">Aviso al equipo</li>
+              <li class="gap">Próxima reunión</li>
             </ol>
           </div>
         </div>
-        <p class="caption">※ 流れは説明用のイメージです</p>
-        <p class="tl-note"><b>Ask PlaudやChatGPT＋PLAUD MCPでも、同じところで止まります。</b>録音に質問はできる。下書きも出せる。でも「頼む」のは毎回あなたで、終わったかを見に行くのもあなたです。</p>
+        <p class="caption">* Flujo ilustrativo</p>
+        <p class="tl-note"><b>Con Ask Plaud o con ChatGPT + PLAUD MCP te quedas en el mismo punto.</b> Puedes preguntarle a la grabación y sacar borradores. Pero eres tú quien lo pide cada vez y quien comprueba si se terminó.</p>
       </section>
 
       <!-- 04 -->
       <section class="sec" id="connect" aria-labelledby="h-connect">
         <span class="sec-label">04 / CONNECT</span>
-        <h2 id="h-connect">SIMYがつなぐ。Plaudアカウントを接続するだけ</h2>
-        <p class="intro">空白だった4つを、SIMYが埋めます。あなたに戻るのは、判断の1マスだけ。</p>
-        <div class="tl-wrap" role="img" aria-label="タイムライン。録音、文字起こし、要約はPLAUD。お礼メール、顧客メモ、社内共有、次回の段取りはSIMYが進め、金額の最終確認だけがあなたに戻る">
+        <h2 id="h-connect">SIMY lo conecta. Solo vinculas tu cuenta de Plaud</h2>
+        <p class="intro">SIMY llena las cuatro casillas vacías. A ti solo vuelve la casilla de la decisión.</p>
+        <div class="tl-wrap" role="img" aria-label="Línea de tiempo. PLAUD graba, transcribe y resume. SIMY avanza el correo de agradecimiento, las notas del cliente, el aviso al equipo y la próxima reunión, y solo la confirmación del importe vuelve a ti">
           <div class="tl-row">
             <span class="tl-who">PLAUD</span>
             <ol class="tl">
-              <li class="on">録音</li>
-              <li class="on">文字起こし</li>
-              <li class="on">要約</li>
+              <li class="on">Grabar</li>
+              <li class="on">Transcribir</li>
+              <li class="on">Resumir</li>
               <li class="blank"></li><li class="blank"></li><li class="blank"></li><li class="blank"></li>
             </ol>
           </div>
@@ -1151,124 +1151,124 @@ thead th.simy { background: var(--blue-deep); }
             <span class="tl-who simy">SIMY</span>
             <ol class="tl">
               <li class="blank"></li><li class="blank"></li><li class="blank"></li>
-              <li class="run">お礼メール<small>あなたの文面で下書き</small></li>
-              <li class="run">顧客メモ<small>懸念・決裁時期を更新</small></li>
-              <li class="run">社内共有<small>見積もりの前提を文面に</small></li>
-              <li class="you">金額の確認<small>判断だけ戻る</small></li>
+              <li class="run">Agradecimiento<small>Borrador con tu estilo</small></li>
+              <li class="run">Notas del cliente<small>Dudas y fecha de decisión</small></li>
+              <li class="run">Aviso al equipo<small>Supuestos del presupuesto</small></li>
+              <li class="you">Confirmar importe<small>Solo vuelve la decisión</small></li>
             </ol>
           </div>
         </div>
-        <p class="caption">※ 流れは説明用のイメージです</p>
-        <ul class="three" aria-label="SIMYの3つの特徴">
-          <li>会議から拾う</li>
-          <li>あなたのやり方で</li>
-          <li>判断だけ返す</li>
+        <p class="caption">* Flujo ilustrativo</p>
+        <ul class="three" aria-label="Tres rasgos de SIMY">
+          <li>Parte de la reunión</li>
+          <li>A tu manera</li>
+          <li>Solo te devuelve decisiones</li>
         </ul>
-        <p class="tl-note">SIMYは、Plaudアカウントの録音・文字起こし・要約を参照して、会議のあとの仕事を自分で見つけます。頼まなくても始まり、あなたが良い仕事で繰り返している確認と優先順位を学んで、同じやり方で進めます。</p>
+        <p class="tl-note">SIMY consulta las grabaciones, transcripciones y resúmenes de tu cuenta de Plaud y encuentra por sí mismo el trabajo posterior a la reunión. Arranca sin que se lo pidas y aprende las comprobaciones y prioridades que repites cuando haces un buen trabajo.</p>
 
         <div class="connect">
           <ol class="connect-steps">
-            <li><b>SIMYの連携画面を開く</b><span>アカウントがまだなければ、先にSIMYに登録します。</span></li>
-            <li class="key"><b>Plaudの「接続する」を押す</b><span>新しいタブでPlaudの認証画面が開きます。エクスポートもMCPの設定もいりません。</span></li>
-            <li><b>Plaudアカウントでログインして、許可する</b><span>接続は完了。次の会議から、要約の先をSIMYに任せられます。</span></li>
+            <li><b>Abre la pantalla de integraciones de SIMY</b><span>Si aún no tienes cuenta, primero regístrate en SIMY.</span></li>
+            <li class="key"><b>Pulsa «Conectar» en Plaud</b><span>Se abre la autenticación de Plaud en una pestaña nueva. Sin exportar nada ni configurar MCP.</span></li>
+            <li><b>Inicia sesión en Plaud y da permiso</b><span>Listo. Desde la próxima reunión, SIMY se encarga de lo que viene después del resumen.</span></li>
           </ol>
           <div>
-            <div class="mock" role="img" aria-label="SIMYの連携画面にあるPlaudの接続カードのイメージ。録音、文字起こし、要約を検索・参照します。接続するボタンを押すと、新しいタブで認証します。">
+            <div class="mock" role="img" aria-label="Imagen de la tarjeta de conexión de Plaud en la pantalla de integraciones de SIMY. Busca y consulta grabaciones, transcripciones y resúmenes. Al pulsar Conectar, la autenticación se abre en una pestaña nueva.">
               <div class="mock-head" aria-hidden="true">
                 <span class="mock-mark">P</span>
                 <div>
-                  <div class="mock-title">Plaud <span class="mock-state">● 未接続</span></div>
-                  <p class="mock-desc">録音、文字起こし、要約を検索・参照します</p>
+                  <div class="mock-title">Plaud <span class="mock-state">● Sin conectar</span></div>
+                  <p class="mock-desc">Busca y consulta grabaciones, transcripciones y resúmenes</p>
                 </div>
               </div>
-              <div class="mock-box" aria-hidden="true">Plaudアカウントを接続してください</div>
-              <div class="mock-btn" aria-hidden="true">接続する</div>
-              <div class="mock-foot" aria-hidden="true">↗ 新しいタブで認証します</div>
+              <div class="mock-box" aria-hidden="true">Conecta tu cuenta de Plaud</div>
+              <div class="mock-btn" aria-hidden="true">Conectar</div>
+              <div class="mock-foot" aria-hidden="true">↗ La autenticación se abre en otra pestaña</div>
             </div>
-            <p class="caption">※ SIMYの連携画面のイメージです</p>
+            <p class="caption">* Imagen ilustrativa de la pantalla de integraciones de SIMY</p>
           </div>
         </div>
-        <p class="note"><b>必要なもの：</b>デバイスを登録済みのPlaudアカウント。PLAUDのどのプラン、どのモデルでも接続できます。</p>
+        <p class="note"><b>Qué necesitas:</b> una cuenta de Plaud con tu dispositivo registrado. Funciona con cualquier plan y cualquier modelo de PLAUD.</p>
       </section>
 
       <!-- 05 -->
       <section class="sec" id="sample" aria-labelledby="h-sample">
         <span class="sec-label">05 / SAMPLE</span>
-        <h2 id="h-sample">商談1件で比較：PLAUDの要約と、SIMYが仕上げる下書き</h2>
-        <p class="intro">45分の商談をPLAUD NOTE Proで録音した場合のサンプルです。左がPLAUD、右がSIMY。</p>
+        <h2 id="h-sample">Una reunión comercial: el resumen de PLAUD frente a lo que prepara SIMY</h2>
+        <p class="intro">Ejemplo de una reunión de 45 minutos grabada con PLAUD NOTE Pro. A la izquierda, PLAUD; a la derecha, SIMY.</p>
         <div class="sample">
           <div class="sheet">
-            <div class="sheet-label"><span>PLAUDの要約（例）</span><span>商談テンプレート</span></div>
+            <div class="sheet-label"><span>Resumen de PLAUD (ejemplo)</span><span>Plantilla comercial</span></div>
             <dl>
-              <dt>概要</dt>
-              <dd>営業支援ツールの導入を検討中。現在は3部署で試験運用している。</dd>
-              <dt>決定事項</dt>
-              <dd>10月中に見積もりを提出する。次回は情報システム部も同席する。</dd>
-              <dt>課題</dt>
-              <dd>既存のCRMとの連携方法。予算は年度内に確定する予定。</dd>
-              <dt>ToDo</dt>
-              <dd>見積もりの作成（自社）。参加者リストの共有（先方）。</dd>
+              <dt>Resumen</dt>
+              <dd>Evalúan implantar una herramienta de ventas. Hoy la prueban en 3 departamentos.</dd>
+              <dt>Acuerdos</dt>
+              <dd>Enviar el presupuesto en octubre. En la próxima reunión participará el área de sistemas.</dd>
+              <dt>Pendientes</dt>
+              <dd>Cómo integrarla con el CRM actual. El presupuesto se cierra antes de fin de año fiscal.</dd>
+              <dt>Tareas</dt>
+              <dd>Preparar el presupuesto (nosotros). Compartir la lista de asistentes (cliente).</dd>
             </dl>
           </div>
           <div class="outs">
             <div class="out">
-              <div class="out-head"><b>フォローメール</b><span class="pill ok">下書き完了</span></div>
-              <p>件名「本日のお打ち合わせのお礼と、次回のご相談」。10月中にお見積もりをお送りすること、次回は情報システム部の方にもご同席いただきたいことを、あなたのいつもの文面で。</p>
+              <div class="out-head"><b>Correo de seguimiento</b><span class="pill ok">Borrador listo</span></div>
+              <p>Asunto: «Gracias por la reunión de hoy y próximos pasos». Que enviarás el presupuesto en octubre y que te gustaría contar con el área de sistemas la próxima vez, con tu redacción habitual.</p>
             </div>
             <div class="out">
-              <div class="out-head"><b>顧客メモ</b><span class="pill run">Autorun</span></div>
-              <p>検討段階：試験運用中（3部署）。決裁：年度内に予算確定。懸念：既存CRMとの連携。次回：情報システム部が同席。</p>
+              <div class="out-head"><b>Notas del cliente</b><span class="pill run">Autorun</span></div>
+              <p>Etapa: piloto (3 departamentos). Decisión: presupuesto antes de fin de año fiscal. Duda: integración con el CRM. Próxima: asiste sistemas.</p>
             </div>
             <div class="out">
-              <div class="out-head"><b>社内共有の文面</b><span class="pill">次</span></div>
-              <p>「A社の見積もりの前提を共有します。CRM連携の可否を、技術チームに確認させてください。」</p>
+              <div class="out-head"><b>Aviso al equipo</b><span class="pill">Siguiente</span></div>
+              <p>«Comparto los supuestos del presupuesto para el cliente A. ¿Puede el equipo técnico confirmar si es viable integrarlo con su CRM?».</p>
             </div>
             <div class="out you">
-              <div class="out-head"><b>あなたの確認</b><span class="pill you">あなたの番</span></div>
-              <p>見積もりの金額と納期。判断が必要なところだけが、あなたに戻ってきます。</p>
+              <div class="out-head"><b>Tu revisión</b><span class="pill you">Tu turno</span></div>
+              <p>Importe y plazo del presupuesto. Solo vuelve a ti lo que requiere una decisión.</p>
             </div>
           </div>
         </div>
-        <p class="sample-foot">PLAUDが記録し、SIMYが動かす。商談そのものは、あなたの腕の見せ所のままです。</p>
+        <p class="sample-foot">PLAUD registra y SIMY mueve el trabajo. La reunión sigue siendo tu momento de brillar.</p>
       </section>
 
       <!-- 06 -->
       <section class="sec" id="usecases" aria-labelledby="h-usecases">
         <span class="sec-label">06 / BY INDUSTRY</span>
-        <h2 id="h-usecases">業種別：会議の種類と、SIMYが出すもの</h2>
-        <p class="intro">PLAUDで記録した会話から、SIMYが何を用意するか。個人でも企業のチームでも、ビジネスの型は同じです。</p>
+        <h2 id="h-usecases">Por sector: tipo de reunión y lo que entrega SIMY</h2>
+        <p class="intro">Qué prepara SIMY a partir de lo que grabas con PLAUD. Seas profesional independiente o equipo de empresa, el patrón es el mismo.</p>
         <div class="ind">
           <div class="ind-card">
-            <h3>営業・商談 <small>PLAUD NOTE Pro（対面・通話）</small></h3>
+            <h3>Ventas <small>PLAUD NOTE Pro (presencial y llamadas)</small></h3>
             <ul class="ind-rows">
-              <li><span>初回商談</span><span>→</span><span>お礼メール・論点メモ・活動ログ</span></li>
-              <li><span>見積もり前の打ち合わせ</span><span>→</span><span>前提の社内共有・顧客メモの更新</span></li>
-              <li><span>電話でのフォロー</span><span>→</span><span>次回アポの候補と確認事項</span></li>
+              <li><span>Primera reunión</span><span>→</span><span>Agradecimiento, puntos clave y registro de actividad</span></li>
+              <li><span>Reunión previa al presupuesto</span><span>→</span><span>Aviso interno de supuestos y notas actualizadas</span></li>
+              <li><span>Seguimiento por teléfono</span><span>→</span><span>Fechas candidatas y puntos a confirmar</span></li>
             </ul>
           </div>
           <div class="ind-card">
-            <h3>FP・保険の面談 <small>PLAUD NotePin S（対面）</small></h3>
+            <h3>Asesoría financiera y seguros <small>PLAUD NotePin S (presencial)</small></h3>
             <ul class="ind-rows">
-              <li><span>初回ヒアリング</span><span>→</span><span>ヒアリングの整理・提案書の骨子</span></li>
-              <li><span>2回目以降の面談</span><span>→</span><span>複数回をまとめた経過メモ</span></li>
-              <li><span>面談のあと</span><span>→</span><span>次回までの宿題リスト</span></li>
+              <li><span>Primera entrevista</span><span>→</span><span>Necesidades ordenadas y esquema de propuesta</span></li>
+              <li><span>Entrevistas siguientes</span><span>→</span><span>Nota de evolución de varias sesiones</span></li>
+              <li><span>Tras cada entrevista</span><span>→</span><span>Lista de pendientes para la próxima</span></li>
             </ul>
           </div>
           <div class="ind-card">
-            <h3>歯科・クリニック <small>PLAUD NotePin（ハンズフリー）</small></h3>
+            <h3>Clínicas dentales y consultas <small>PLAUD NotePin (manos libres)</small></h3>
             <ul class="ind-rows">
-              <li><span>カウンセリング</span><span>→</span><span>説明内容の記録・補足説明の下書き</span></li>
-              <li><span>朝礼・ミーティング</span><span>→</span><span>決めたことがスタッフに届く申し送り</span></li>
-              <li><span>月次の振り返り</span><span>→</span><span>複数回をまとめた報告</span></li>
+              <li><span>Consulta informativa</span><span>→</span><span>Registro de lo explicado y borrador de aclaraciones</span></li>
+              <li><span>Reunión matinal</span><span>→</span><span>Lo acordado llega al personal como relevo</span></li>
+              <li><span>Revisión mensual</span><span>→</span><span>Informe que reúne varias sesiones</span></li>
             </ul>
-            <p class="small muted" style="margin:10px 0 0">患者さんの同意と院内のルールに沿って録音してください。</p>
+            <p class="small muted" style="margin:10px 0 0">Graba solo con el consentimiento del paciente y según las normas de tu centro.</p>
           </div>
           <div class="ind-card">
-            <h3>経営会議・1on1 <small>PLAUD NOTE Pro（会議室で最大5m）</small></h3>
+            <h3>Dirección y 1:1 <small>PLAUD NOTE Pro (hasta 5 m en sala)</small></h3>
             <ul class="ind-rows">
-              <li><span>経営会議</span><span>→</span><span>決定事項と担当者の一覧・関係者への共有</span></li>
-              <li><span>1on1</span><span>→</span><span>「あれどうなった」を聞く前に、進捗と判断待ち</span></li>
-              <li><span>週の終わり</span><span>→</span><span>複数の会議をまとめた週次報告</span></li>
+              <li><span>Comité de dirección</span><span>→</span><span>Acuerdos y responsables, compartidos con los implicados</span></li>
+              <li><span>1:1</span><span>→</span><span>Avances y decisiones pendientes antes de preguntar «¿cómo va?»</span></li>
+              <li><span>Fin de semana</span><span>→</span><span>Informe semanal de varias reuniones</span></li>
             </ul>
           </div>
         </div>
@@ -1277,127 +1277,127 @@ thead th.simy { background: var(--blue-deep); }
       <!-- 07 -->
       <section class="sec" id="start" aria-labelledby="h-start">
         <span class="sec-label">07 / START</span>
-        <h2 id="h-start">はじめ方：PLAUDが届いたら、3ステップ</h2>
+        <h2 id="h-start">Cómo empezar: 3 pasos cuando llega tu PLAUD</h2>
         <ol class="steps3">
-          <li><b>PLAUDをペアリングして、録音する</b><span>充電して、アプリと本体をつなぐ。要約テンプレートと話者名を設定しておくと、要約の粒度がそろいます。</span></li>
-          <li class="key"><b>SIMYにPlaudアカウントを接続する</b><span>連携画面で「接続する」を押すだけ。<a href="#connect">つなぎ方</a>は上のとおりです。</span></li>
-          <li><b>会議を1件、録音して終わる</b><span>要約の先の仕事が届きます。レビューして、送る。それだけです。</span></li>
+          <li><b>Empareja PLAUD y graba</b><span>Cárgalo y conéctalo a la app. Si configuras la plantilla de resumen y los nombres de los hablantes, los resúmenes salen más uniformes.</span></li>
+          <li class="key"><b>Conecta tu cuenta de Plaud a SIMY</b><span>Solo pulsa «Conectar» en integraciones. <a href="#connect">Cómo se conecta</a>, arriba.</span></li>
+          <li><b>Graba una reunión y termina</b><span>Te llega el trabajo que sigue al resumen. Revisas y envías. Nada más.</span></li>
         </ol>
-        <p class="note"><b>登録の流れ：</b>プランを選ぶ → メールで本人確認 → カードで決済。無料プランはありません。<a href="/?lang=ja#pricing">料金を見る</a>。PCで使うアプリは<a href="/download.html">ダウンロードページ</a>から。</p>
-        <p class="note"><b>PLAUDをすでに使っている人は、</b>ステップ2だけ。接続すると、これまでの録音もSIMYが参照します。</p>
+        <p class="note"><b>Cómo es el registro:</b> eliges un plan → confirmas tu correo → pagas con tarjeta. No hay plan gratuito. <a href="/?lang=es#pricing">Ver precios</a>. La app para PC está en la <a href="/download/es.html">página de descarga</a>.</p>
+        <p class="note"><b>Si ya usas PLAUD,</b> solo necesitas el paso 2. Al conectar, SIMY también consulta tus grabaciones anteriores.</p>
       </section>
 
       <!-- 08 -->
       <section class="sec" id="reference" aria-labelledby="h-reference">
         <span class="sec-label">08 / REFERENCE</span>
-        <h2 id="h-reference">PLAUDの使い方・料金プラン・セキュリティ（詳しく知りたい人向け）</h2>
-        <p class="intro">ここから下は、PLAUD本体のことを確かめたいときに開いてください。SIMYとの接続には、どれも影響しません。</p>
+        <h2 id="h-reference">Cómo usar PLAUD, planes y seguridad (para quien quiera más detalle)</h2>
+        <p class="intro">Abre estas secciones cuando quieras comprobar algo de PLAUD. Nada de esto afecta a la conexión con SIMY.</p>
 
         <details class="fold">
-          <summary>PLAUDの使い方：届いたら最初にやる5つのこと<small>充電・ペアリング・録音モード・要約テンプレート・話者名</small></summary>
+          <summary>Cómo usar PLAUD: las 5 primeras cosas al recibirlo<small>Carga, emparejamiento, modo de grabación, plantillas y hablantes</small></summary>
           <div class="fold-body">
-            <h3>届いたら最初にやる5つのこと</h3>
+            <h3>Las 5 primeras cosas al recibirlo</h3>
             <ol class="plain-list">
-              <li><strong>充電して、アプリと本体をペアリングする。</strong>NotePinはマグネット式の充電ドックに置くだけで、約2時間で満充電になります。録音データは本体からアプリに転送されたあと、文字起こしが始まります。本体の保存容量がいっぱいになる前に、こまめに転送しておくと安心です。</li>
-              <li><strong>録音モードを確かめる。</strong>PLAUD NOTEとPLAUD NOTE Proは、対面と通話の2つのモードを選択して録音できます。NOTE Proは自動的に切り替わります。NotePinシリーズは対面の録音専用です。</li>
-              <li><strong>要約テンプレートを選ぶ。</strong>商談、1on1、講義など1万種類以上のテンプレートから選べます。よく使う会議の型はカスタムテンプレートとして追加しておくと、生成される要約の粒度がそろいます。</li>
-              <li><strong>話者名を登録する。</strong>文字起こしの話者を名前にしておくと、議事録が読みやすくなり、誰が何を引き受けたかも追いやすくなります。</li>
-              <li><strong>SIMYにPlaudアカウントを接続する。</strong>連携画面で「接続する」を押すだけです。</li>
+              <li><strong>Cárgalo y empareja el dispositivo con la app.</strong> NotePin se carga sobre su base magnética y tarda unas 2 horas en llenarse. Las grabaciones pasan del dispositivo a la app y luego empieza la transcripción. Transfiérelas a menudo, antes de que se llene la memoria.</li>
+              <li><strong>Revisa el modo de grabación.</strong> PLAUD NOTE y PLAUD NOTE Pro graban en dos modos: presencial y llamada. NOTE Pro cambia de modo automáticamente. La serie NotePin graba solo en presencial.</li>
+              <li><strong>Elige una plantilla de resumen.</strong> Hay más de 10 000 plantillas, como reunión comercial, 1:1 o clase. Si añades como plantilla personalizada el tipo de reunión que más usas, los resúmenes salen más uniformes.</li>
+              <li><strong>Registra los nombres de los hablantes.</strong> Con nombres en la transcripción, el acta se lee mejor y es fácil ver quién se comprometió a qué.</li>
+              <li><strong>Conecta tu cuenta de Plaud a SIMY.</strong> Solo pulsa «Conectar» en la pantalla de integraciones.</li>
             </ol>
-            <h3>PCで使うなら：Plaud WebとPlaud Desktop</h3>
+            <h3>En la PC: Plaud Web y Plaud Desktop</h3>
             <ul class="plain-list">
-              <li><strong>Plaud Web：</strong>ブラウザからPlaudアカウントにログインして、録音の確認や文字起こしの編集ができます。</li>
-              <li><strong>Plaud Desktop：</strong>WindowsとMacのデスクトップアプリです。Zoom、Microsoft Teams、Google Meetなどのオンライン会議を、ボットを参加させずに録音できます。PLAUDのユーザーは無料で使えます。</li>
+              <li><strong>Plaud Web:</strong> entras a tu cuenta de Plaud desde el navegador para revisar grabaciones y editar transcripciones.</li>
+              <li><strong>Plaud Desktop:</strong> app de escritorio para Windows y Mac. Graba reuniones en línea de Zoom, Microsoft Teams o Google Meet sin meter un bot en la llamada. Es gratuita para usuarios de PLAUD.</li>
             </ul>
-            <p>スマホでもパソコンでも、Plaudアカウントに保存された録音はSIMYから参照できます。</p>
+            <p>Desde el teléfono o desde la PC, SIMY puede consultar las grabaciones guardadas en tu cuenta de Plaud.</p>
           </div>
         </details>
 
         <details class="fold">
-          <summary>PLAUD NOTEの主な機能：録音・文字起こし・要約・Ask Plaud<small>AIボイスレコーダーとして、ここまでが得意</small></summary>
+          <summary>Funciones principales de PLAUD NOTE: grabar, transcribir, resumir y Ask Plaud<small>Lo que una grabadora con IA hace bien</small></summary>
           <div class="fold-body">
-            <h3>録音・文字起こし・要約</h3>
-            <p>PLAUD NOTEは、会話の録音から文字起こし、要約までをAIで自動化するボイスレコーダーです。ボタンひとつで録音を開始し、大事な瞬間にはハイライトで印をつけられます。NOTE Proは最大50時間の連続録音に対応し、胸ポケットにクリップで留められるNotePinシリーズもあります。文字起こしは112言語に対応し、日本語の会話も話者を分けて書き起こします。精度はマイクとの距離や周囲のノイズで変わり、会議室なら4つのマイクで最大5m先の音声まで収音できるNOTE Proが有利です。要約に使うAIモデルはGPT、Gemini、Claudeなどから選べます。</p>
-            <h3>マインドマップ・Ask Plaud・マルチモーダル入力</h3>
-            <p>会話の構造を図にするマインドマップで長い会議の全体像を理解できます。Ask Plaud（ベータ版）では、録音の内容について「先方の予算感は？」のように質問できます。録音に写真やテキストを添えて、ひとつのノートとして記録することもできます。</p>
-            <h3>エクスポートと連携</h3>
-            <p>TXT、DOCX、PDF、SRTなど27種類以上の形式でファイルを書き出せます。Notionへの書き出し、AutoFlow機能、Zapierとの連携、AIツールから録音を読み出せるPLAUD MCPにも対応しています。社外に送るならPDF、社内で編集・保存するならDOCX、文字起こし全文を軽いファイルで残すならTXT、再生位置つきの記録や動画の字幕ならSRTが向いています。SIMYと使うだけなら、エクスポートは必要ありません。</p>
+            <h3>Grabación, transcripción y resumen</h3>
+            <p>PLAUD NOTE es una grabadora de voz que automatiza con IA la grabación, la transcripción y el resumen de conversaciones. Empiezas a grabar con un botón y puedes marcar los momentos importantes. NOTE Pro graba hasta 50 horas seguidas, y la serie NotePin se engancha al bolsillo de la camisa. La transcripción admite 112 idiomas, incluido el español, y separa a los hablantes. La precisión depende de la distancia al micrófono y del ruido; en sala, NOTE Pro, con 4 micrófonos que captan hasta 5 m, lleva ventaja. Para resumir puedes elegir modelos de IA como GPT, Gemini o Claude.</p>
+            <h3>Mapas mentales, Ask Plaud y entrada multimodal</h3>
+            <p>El mapa mental dibuja la estructura de la conversación y ayuda a ver una reunión larga de un vistazo. Con Ask Plaud (beta) puedes preguntarle a una grabación, por ejemplo «¿Qué presupuesto mencionó el cliente?». También puedes añadir fotos o texto a una grabación y guardarlo todo como una sola nota.</p>
+            <h3>Exportación e integraciones</h3>
+            <p>Exporta en más de 27 formatos, como TXT, DOCX, PDF o SRT. Admite exportar a Notion, la función AutoFlow, la integración con Zapier y PLAUD MCP, que permite leer grabaciones desde herramientas de IA. PDF para enviar fuera, DOCX para editar dentro, TXT para guardar la transcripción completa en un archivo ligero y SRT para subtítulos o registros con marcas de tiempo. Si solo lo usas con SIMY, no necesitas exportar nada.</p>
           </div>
         </details>
 
         <details class="fold">
-          <summary>料金プランの比較：Starter・Pro・Unlimited<small>違いは文字起こし時間。SIMYはどのプランでも接続できる</small></summary>
+          <summary>Planes: Starter, Pro y Unlimited<small>La diferencia es el tiempo de transcripción. SIMY se conecta con cualquiera</small></summary>
           <div class="fold-body">
-            <p class="scroll-hint">表は横にスクロールできます →</p>
+            <p class="scroll-hint">Desliza la tabla en horizontal →</p>
             <div class="table-wrap">
               <table class="t-wide t-price">
                 <thead>
-                  <tr><th scope="col">PLAUDのプラン</th><th scope="col">価格（税込）</th><th scope="col">文字起こし時間</th><th scope="col">SIMYとの接続</th></tr>
+                  <tr><th scope="col">Plan de PLAUD</th><th scope="col">Precio</th><th scope="col">Tiempo de transcripción</th><th scope="col">Conexión con SIMY</th></tr>
                 </thead>
                 <tbody>
-                  <tr><th scope="row">Starter</th><td>無料</td><td>月300分</td><td>接続して使える</td></tr>
-                  <tr><th scope="row">Pro</th><td>年額16,800円</td><td>月1,200分</td><td>接続して使える</td></tr>
-                  <tr><th scope="row">Unlimited</th><td>年額40,000円</td><td>無制限（1日最大24時間）</td><td>接続して使える</td></tr>
+                  <tr><th scope="row">Starter</th><td>Gratis</td><td>300 min al mes</td><td>Sí</td></tr>
+                  <tr><th scope="row">Pro</th><td>Pago anual. Consulta el precio de tu región</td><td>1200 min al mes</td><td>Sí</td></tr>
+                  <tr><th scope="row">Unlimited</th><td>Pago anual. Consulta el precio de tu región</td><td>Sin límite (máx. 24 h al día)</td><td>Sí</td></tr>
                 </tbody>
               </table>
             </div>
-            <p class="note"><b>目安：</b>1回1時間以内の会議なら、月300分で5回分です。週に2回以上録音するならPro、毎日商談があるならUnlimited。要約テンプレート、Ask Plaud、マインドマップ、112言語の文字起こし、27種類以上のエクスポートは全プラン共通です。月額ではなく年額での案内です。</p>
+            <p class="note"><b>Referencia:</b> con reuniones de hasta 1 hora, 300 minutos al mes son 5 reuniones. Si grabas dos o más veces por semana, Pro; si tienes reuniones comerciales a diario, Unlimited. Plantillas, Ask Plaud, mapas mentales, transcripción en 112 idiomas y más de 27 formatos de exportación vienen en todos los planes. Consulta el precio para tu país en la <a href="https://www.plaud.ai/" target="_blank" rel="noopener">web oficial de PLAUD</a>.</p>
           </div>
         </details>
 
         <details class="fold">
-          <summary>対応モデルの比較：PLAUD NOTE Pro・NOTE・NotePin<small>どのモデルで録音しても、SIMYは同じように使える</small></summary>
+          <summary>Modelos: PLAUD NOTE Pro, NOTE y NotePin<small>Grabes con el que grabes, SIMY funciona igual</small></summary>
           <div class="fold-body">
-            <p class="scroll-hint">表は横にスクロールできます →</p>
+            <p class="scroll-hint">Desliza la tabla en horizontal →</p>
             <div class="table-wrap">
               <table class="t-wide t-models t-price">
                 <thead>
-                  <tr><th scope="col">モデル</th><th scope="col">本体価格（税込）</th><th scope="col">録音モード</th><th scope="col">マイク・収音</th><th scope="col">連続録音</th><th scope="col">向いている人</th></tr>
+                  <tr><th scope="col">Modelo</th><th scope="col">Precio</th><th scope="col">Modo de grabación</th><th scope="col">Micrófonos y alcance</th><th scope="col">Grabación continua</th><th scope="col">Ideal para</th></tr>
                 </thead>
                 <tbody>
-                  <tr><th scope="row">PLAUD NOTE Pro</th><td>30,800円</td><td>対面・通話（自動切替）</td><td>4マイク・最大5m</td><td>最大50時間</td><td>会議室や通話録音が多い人</td></tr>
-                  <tr><th scope="row">PLAUD NOTE</th><td>27,500円</td><td>対面・通話</td><td>2マイク・最大3m</td><td>最大30時間</td><td>スマホに付けて通話も録りたい人</td></tr>
-                  <tr><th scope="row">PLAUD NotePin S</th><td>28,600円</td><td>対面のみ</td><td>2マイク・最大3m</td><td>最大20時間</td><td>外回りや現場で身につけたい人</td></tr>
-                  <tr><th scope="row">PLAUD NotePin</th><td>27,500円</td><td>対面のみ</td><td>—</td><td>最大20時間</td><td>軽さ（16.6g）を重視する人</td></tr>
+                  <tr><th scope="row">PLAUD NOTE Pro</th><td>Según región</td><td>Presencial y llamada (automático)</td><td>4 micrófonos, hasta 5 m</td><td>Hasta 50 h</td><td>Muchas reuniones en sala o llamadas</td></tr>
+                  <tr><th scope="row">PLAUD NOTE</th><td>Según región</td><td>Presencial y llamada</td><td>2 micrófonos, hasta 3 m</td><td>Hasta 30 h</td><td>Llevarlo pegado al teléfono y grabar llamadas</td></tr>
+                  <tr><th scope="row">PLAUD NotePin S</th><td>Según región</td><td>Solo presencial</td><td>2 micrófonos, hasta 3 m</td><td>Hasta 20 h</td><td>Llevarlo encima en visitas o en campo</td></tr>
+                  <tr><th scope="row">PLAUD NotePin</th><td>Según región</td><td>Solo presencial</td><td>—</td><td>Hasta 20 h</td><td>Quien prioriza la ligereza (16,6 g)</td></tr>
                 </tbody>
               </table>
             </div>
-            <p class="small muted">価格と仕様は、2026年9月30日に確認したPLAUD公式サイトの情報です。最新の情報は<a href="https://jp.plaud.ai/" target="_blank" rel="noopener">PLAUD公式サイト</a>をご確認ください。</p>
+            <p class="small muted">Especificaciones según la web oficial de PLAUD, consultada el 30 de septiembre de 2026. Para precios y datos actualizados, consulta la <a href="https://www.plaud.ai/" target="_blank" rel="noopener">web oficial de PLAUD</a>.</p>
           </div>
         </details>
 
         <details class="fold">
-          <summary>Ask Plaud・ChatGPT＋PLAUD MCPとSIMYの違い<small>どれが良い悪いではなく、止まる場所が違う</small></summary>
+          <summary>Ask Plaud, ChatGPT + PLAUD MCP y SIMY: en qué se diferencian<small>No es cuál es mejor, sino dónde se detiene cada uno</small></summary>
           <div class="fold-body">
-            <p class="scroll-hint">表は横にスクロールできます →</p>
+            <p class="scroll-hint">Desliza la tabla en horizontal →</p>
             <div class="table-wrap">
               <table class="t-wide">
                 <thead>
-                  <tr><th scope="col">比較項目</th><th scope="col">Ask Plaud</th><th scope="col">ChatGPT＋PLAUD MCP</th><th scope="col" class="simy">SIMY</th></tr>
+                  <tr><th scope="col">Aspecto</th><th scope="col">Ask Plaud</th><th scope="col">ChatGPT + PLAUD MCP</th><th scope="col" class="simy">SIMY</th></tr>
                 </thead>
                 <tbody>
-                  <tr><th scope="row">準備</th><td>不要（アプリに内蔵）</td><td>MCPの設定とログイン</td><td class="simy">「接続する」を押すだけ</td></tr>
-                  <tr><th scope="row">起点</th><td>あなたが質問する</td><td>あなたがチャットで頼む</td><td class="simy">会議から、SIMYが拾う</td></tr>
-                  <tr><th scope="row">あなたのやり方</th><td>テンプレートで調整</td><td>プロンプトで毎回伝える</td><td class="simy">良い仕事の確認事項と優先順位を学ぶ</td></tr>
-                  <tr><th scope="row">返ってくるもの</th><td>回答</td><td>回答と下書き</td><td class="simy">下書き・メモの更新・共有の文面と、判断の1問</td></tr>
-                  <tr><th scope="row">手元に残るもの</th><td>質問の履歴</td><td>チャットの履歴</td><td class="simy">進行中・完了・あなた待ちが並ぶMy Actions</td></tr>
+                  <tr><th scope="row">Preparación</th><td>Ninguna (viene en la app)</td><td>Configurar MCP e iniciar sesión</td><td class="simy">Pulsar «Conectar»</td></tr>
+                  <tr><th scope="row">Quién empieza</th><td>Tú preguntas</td><td>Tú lo pides en el chat</td><td class="simy">SIMY lo detecta en la reunión</td></tr>
+                  <tr><th scope="row">Tu forma de trabajar</th><td>Ajustas plantillas</td><td>La explicas en cada prompt</td><td class="simy">Aprende tus comprobaciones y prioridades</td></tr>
+                  <tr><th scope="row">Qué recibes</th><td>Respuestas</td><td>Respuestas y borradores</td><td class="simy">Borradores, notas actualizadas, avisos y una pregunta para decidir</td></tr>
+                  <tr><th scope="row">Qué te queda</th><td>Historial de preguntas</td><td>Historial del chat</td><td class="simy">My Actions: en curso, terminado y pendiente de ti</td></tr>
                 </tbody>
               </table>
             </div>
-            <p class="note"><b>選び方：</b>1回きりの確認ならAsk Plaudで十分です。同じ種類の会議が毎週あり、そのあとの仕事が毎回同じなら、SIMYの出番です。ChatGPTの使い方そのものは<a href="/guides/chatgpt.html">ChatGPT活用ガイド</a>にまとめています。</p>
+            <p class="note"><b>Cómo elegir:</b> para una consulta puntual, Ask Plaud basta. Si cada semana tienes el mismo tipo de reunión y después siempre toca el mismo trabajo, ahí entra SIMY. El uso de ChatGPT en sí lo explicamos en la <a href="/guides/es/chatgpt.html">guía de ChatGPT</a>.</p>
           </div>
         </details>
 
         <details class="fold">
-          <summary>セキュリティ・情報漏洩対策と録音の同意<small>学習に使われない設定、暗号化、データセンター、同意の取り方</small></summary>
+          <summary>Seguridad, fugas de información y consentimiento para grabar<small>Uso para entrenar IA, cifrado y cómo pedir consentimiento</small></summary>
           <div class="fold-body">
             <ul class="plain-list">
-              <li><strong>録音の同意：</strong>録音を始める前に、会話に参加する全員から同意を取ってください。SIMYの<a href="/terms.html">利用規約</a>でも、録音の同意の取得はお客さまの責任としています。</li>
-              <li><strong>PLAUDのセキュリティ：</strong>PLAUDは、SOC 2 Type II、HIPAA、GDPR、ISO/IEC 27001への準拠を公開しています。データは通信時にTLS 1.2以上、保存時にAES-256で暗号化され、日本にもデータセンターがあります。</li>
-              <li><strong>AIの学習：</strong>PLAUDは、ユーザーが明示的に同意しない限り、録音データをAIの学習に使わないと案内しています。不要になった録音はPLAUDアプリから削除できます。</li>
-              <li><strong>PLAUD MCPを使う場合：</strong>Web版のChatGPTやClaudeから使うと、録音データはPLAUDの米国のサーバーを経由します。PLAUDは、処理後にデータを保存しないと案内しています。</li>
-              <li><strong>SIMYとの接続：</strong>Plaudの認証画面であなたのPlaudアカウントにログインし、許可して行います。SIMYでのデータの取り扱いは、<a href="/security.html">セキュリティ</a>と<a href="/privacy.html">プライバシーポリシー</a>で公開しています。</li>
-              <li><strong>文字起こしの精度と検証：</strong>マイクとの距離を縮める、ノイズを減らす、話者名を登録する、が基本です。オンライン会議はスピーカーの近くに本体を置くとクリアな音質で録れます。短い会議で検証してから本番に使うと安心です。翻訳やダウンロードが必要な場面も、PLAUDアプリ側で対応できます。</li>
+              <li><strong>Consentimiento:</strong> antes de grabar, pide permiso a todas las personas de la conversación. Los <a href="/terms.html?lang=es">términos de uso</a> de SIMY también establecen que obtenerlo es responsabilidad del cliente.</li>
+              <li><strong>Seguridad de PLAUD:</strong> PLAUD declara cumplir SOC 2 Type II, HIPAA, GDPR e ISO/IEC 27001. Los datos se cifran con TLS 1.2 o superior en tránsito y con AES-256 en reposo.</li>
+              <li><strong>Entrenamiento de IA:</strong> PLAUD indica que no usa las grabaciones para entrenar IA sin el consentimiento explícito del usuario. Puedes borrar las grabaciones que ya no necesites desde la app.</li>
+              <li><strong>Si usas PLAUD MCP:</strong> desde ChatGPT o Claude en la web, los datos pasan por servidores de PLAUD en Estados Unidos. PLAUD indica que no los conserva tras procesarlos.</li>
+              <li><strong>Conexión con SIMY:</strong> inicias sesión en tu cuenta de Plaud en su propia pantalla de autenticación y das permiso. Cómo trata SIMY los datos se explica en <a href="/security.html">Seguridad</a> y en la <a href="/privacy.html?lang=es">política de privacidad</a>.</li>
+              <li><strong>Precisión de la transcripción:</strong> acerca el micrófono, reduce el ruido y registra a los hablantes. En reuniones en línea, coloca el dispositivo cerca del altavoz. Pruébalo con una reunión corta antes de usarlo en serio. Si necesitas traducir o descargar, la app de PLAUD también lo permite.</li>
             </ul>
           </div>
         </details>
@@ -1406,55 +1406,55 @@ thead th.simy { background: var(--blue-deep); }
       <!-- 09 -->
       <section class="sec" id="faq" aria-labelledby="h-faq">
         <span class="sec-label">09 / FAQ</span>
-        <h2 id="h-faq">よくある質問</h2>
+        <h2 id="h-faq">Preguntas frecuentes</h2>
         <div class="faq">
           <details>
-            <summary>PLAUDを買ったばかりです。何から始めればいいですか？</summary>
-            <div class="a"><p>PLAUDアプリで本体をペアリングし、録音モードと要約テンプレートを確認してください。そのあとSIMYの連携画面でPlaudアカウントを接続すれば、最初の会議から使えます。</p></div>
+            <summary>Acabo de comprar PLAUD. ¿Por dónde empiezo?</summary>
+            <div class="a"><p>Empareja el dispositivo en la app de PLAUD y revisa el modo de grabación y la plantilla de resumen. Después conecta tu cuenta de Plaud en la pantalla de integraciones de SIMY y podrás usarlo desde la primera reunión.</p></div>
           </details>
           <details>
-            <summary>PLAUDをすでに使っています。これまでの録音もSIMYで使えますか？</summary>
-            <div class="a"><p>はい。接続すると、Plaudアカウントに保存されている録音、文字起こし、要約をSIMYが検索して参照します。</p></div>
+            <summary>Ya uso PLAUD. ¿SIMY puede usar mis grabaciones anteriores?</summary>
+            <div class="a"><p>Sí. Al conectar, SIMY busca y consulta las grabaciones, transcripciones y resúmenes guardados en tu cuenta de Plaud.</p></div>
           </details>
           <details>
-            <summary>PLAUD NOTE Pro、NotePinなど、どのモデルでも使えますか？</summary>
-            <div class="a"><p>はい。SIMYはPlaudアカウントに保存された文字起こしと要約を参照するため、モデルによる違いはありません。通話も録音したい場合は、通話モードのあるPLAUD NOTEかPLAUD NOTE Proを選んでください。</p></div>
+            <summary>¿Funciona con cualquier modelo, como PLAUD NOTE Pro o NotePin?</summary>
+            <div class="a"><p>Sí. SIMY consulta las transcripciones y resúmenes de tu cuenta de Plaud, así que el modelo no importa. Si también quieres grabar llamadas, elige PLAUD NOTE o PLAUD NOTE Pro, que tienen modo llamada.</p></div>
           </details>
           <details>
-            <summary>PLAUDのStarter（無料）やUnlimitedなど、どの料金プランでも接続できますか？</summary>
-            <div class="a"><p>はい。接続に必要なのは、デバイスを登録済みのPlaudアカウントだけです。プランの違いは文字起こし時間です。Starterは月300分、Proは月1,200分、Unlimitedは無制限です。</p></div>
+            <summary>¿Puedo conectar con cualquier plan de PLAUD, como Starter (gratis) o Unlimited?</summary>
+            <div class="a"><p>Sí. Solo necesitas una cuenta de Plaud con tu dispositivo registrado. Los planes se diferencian en el tiempo de transcripción: Starter tiene 300 minutos al mes, Pro 1200 minutos al mes y Unlimited no tiene límite.</p></div>
           </details>
           <details>
-            <summary>Notionへのエクスポートや、PLAUD MCPの設定は必要ですか？</summary>
-            <div class="a"><p>必要ありません。PLAUD MCPは、録音をChatGPTやClaudeから読み出すPLAUD公式の仕組みですが、SIMYはPlaudアカウントを直接参照するため、エクスポートもMCPの設定もいりません。</p></div>
+            <summary>¿Tengo que exportar a Notion o configurar PLAUD MCP?</summary>
+            <div class="a"><p>No. PLAUD MCP es el mecanismo oficial de PLAUD para leer grabaciones desde ChatGPT o Claude, pero SIMY consulta tu cuenta de Plaud directamente, así que no necesitas exportar ni configurar MCP.</p></div>
           </details>
           <details>
-            <summary>PLAUDはどこの国の会社ですか？</summary>
-            <div class="a"><p>PLAUDを開発するPlaud Inc.は、米国サンフランシスコに本社を置く会社です。日本では、PLAUD株式会社がサポートやデータの管理を担っています。</p></div>
+            <summary>¿De qué país es la empresa PLAUD?</summary>
+            <div class="a"><p>Plaud Inc., la empresa que desarrolla PLAUD, tiene su sede en San Francisco, Estados Unidos.</p></div>
           </details>
           <details>
-            <summary>PLAUDの録音がAIの学習に使われたり、情報漏洩したりしませんか？</summary>
-            <div class="a"><p>PLAUDは、明示的な同意がない限り録音データをAIの学習に使わないと案内しています。SOC 2 Type II、HIPAA、GDPR、ISO/IEC 27001に準拠し、データは暗号化して保存されます。SIMYでの取り扱いは、セキュリティとプライバシーポリシーのページで公開しています。</p></div>
+            <summary>¿Mis grabaciones de PLAUD se usan para entrenar IA o corren riesgo de filtrarse?</summary>
+            <div class="a"><p>PLAUD indica que no usa las grabaciones para entrenar IA sin tu consentimiento explícito. Cumple SOC 2 Type II, HIPAA, GDPR e ISO/IEC 27001 y guarda los datos cifrados. Cómo los trata SIMY se explica en las páginas de Seguridad y de Política de privacidad.</p></div>
           </details>
           <details>
-            <summary>議事録の形式（参加者・議題・決定事項・次アクション）は、毎回指定が必要ですか？</summary>
-            <div class="a"><p>いいえ。一度あなたの型で仕上げれば、SIMYはそのやり方を学び、次の会議からは同じ形で用意します。文字起こしを貼って、同じ指示を打ち直す作業はなくなります。</p></div>
+            <summary>¿Tengo que indicar el formato del acta (asistentes, temas, acuerdos, próximos pasos) cada vez?</summary>
+            <div class="a"><p>No. Si lo terminas una vez con tu formato, SIMY aprende cómo lo haces y lo prepara igual desde la siguiente reunión. Se acabó pegar la transcripción y repetir las mismas instrucciones.</p></div>
           </details>
           <details>
-            <summary>「何が決まったか」の判断は、AIがしますか？私がしますか？</summary>
-            <div class="a"><p>判断はあなたです。SIMYは文字起こしと要約から候補を整理して下書きまで進め、金額や送信の可否など、判断が必要なところだけをあなたに返します。</p></div>
+            <summary>¿Quién decide «qué se acordó»: la IA o yo?</summary>
+            <div class="a"><p>Tú. SIMY ordena los candidatos a partir de la transcripción y el resumen y avanza hasta el borrador, pero te devuelve solo lo que requiere una decisión, como el importe o si se envía.</p></div>
           </details>
           <details>
-            <summary>Notion AI、Notta、Teamsなど、PLAUD以外の文字起こしでもSIMYは使えますか？</summary>
-            <div class="a"><p>このページはPLAUD向けですが、SIMYの連携画面にはNotionやGoogleなど他の接続先もあります。会議の文脈をそこから渡せます。対応状況は連携画面で確認してください。</p></div>
+            <summary>¿SIMY funciona con otras transcripciones, como Notion AI, Notta o Teams?</summary>
+            <div class="a"><p>Esta página trata de PLAUD, pero la pantalla de integraciones de SIMY tiene otros destinos, como Notion o Google. Desde ahí puedes pasarle el contexto de tus reuniones. Consulta la disponibilidad en la pantalla de integraciones.</p></div>
           </details>
           <details>
-            <summary>SIMYを使うと、AIの利用料が別にかかりますか？</summary>
-            <div class="a"><p>SIMYはお使いのChatGPTアカウントをつなぎ、Codex App Server経由で仕事を進めます。Codexの利用は、お使いのChatGPTプランの範囲で行われます。SIMY自体の料金は<a href="/?lang=ja#pricing">料金ページ</a>をご覧ください。</p></div>
+            <summary>¿Usar SIMY implica pagar aparte por la IA?</summary>
+            <div class="a"><p>SIMY se conecta a tu cuenta de ChatGPT y trabaja a través de Codex App Server. El uso de Codex se descuenta de tu plan de ChatGPT. Para el precio de SIMY, consulta la <a href="/?lang=es#pricing">página de precios</a>.</p></div>
           </details>
           <details>
-            <summary>録音するときに相手の同意は必要ですか？</summary>
-            <div class="a"><p>必要です。録音を始める前に、会話に参加する全員から同意を取ってください。SIMYの<a href="/terms.html">利用規約</a>でも、録音の同意の取得はお客さまの責任としています。</p></div>
+            <summary>¿Necesito el consentimiento de los demás para grabar?</summary>
+            <div class="a"><p>Sí. Antes de grabar, pide permiso a todas las personas que participan en la conversación. Los <a href="/terms.html?lang=es">términos de uso</a> de SIMY también establecen que obtenerlo es responsabilidad del cliente.</p></div>
           </details>
         </div>
       </section>
@@ -1462,22 +1462,20 @@ thead th.simy { background: var(--blue-deep); }
       <!-- 10 -->
       <section class="sec" id="sources" aria-labelledby="h-sources">
         <span class="sec-label">10 / SOURCES</span>
-        <h2 id="h-sources">参考情報</h2>
-        <p>PLAUDの価格、仕様、機能、セキュリティは、次の公式情報で確認しました（確認日：2026年9月30日）。Plaud Desktopについては、<a href="https://www.watch.impress.co.jp/docs/news/2076169.html" target="_blank" rel="noopener">Impress Watchの記事</a>も参照しました。会議のあとに残る仕事の場面は、日本のAI活用系YouTubeチャンネルの解説動画を参考にしています。</p>
+        <h2 id="h-sources">Fuentes</h2>
+        <p>Los planes, especificaciones, funciones y seguridad de PLAUD se comprobaron en la siguiente información oficial (consultada el 30 de septiembre de 2026). Las escenas del trabajo que queda tras la reunión se inspiran en videos explicativos sobre el uso de la IA.</p>
         <ul class="plain-list">
-          <li><a href="https://jp.plaud.ai/products/plaud-ai-membership" target="_blank" rel="noopener">Plaud AI アプリ年間プロプラン（料金プランと機能の比較）</a></li>
-          <li><a href="https://jp.plaud.ai/blogs/blog/plaud-note-pro" target="_blank" rel="noopener">Plaud Note Proとは？他モデルとの違い（モデルの価格と仕様）</a></li>
-          <li><a href="https://docs.plaud.ai/plaud-mcp-cli/mcp" target="_blank" rel="noopener">Plaud MCP（Plaud Dev API ドキュメント）</a></li>
-          <li><a href="https://www.plaud.ai/blogs/news/introducing-plaud-mcp-and-cli" target="_blank" rel="noopener">Introducing Plaud MCP and CLI（PLAUD公式ブログ）</a></li>
-          <li><a href="https://www.plaud.ai/pages/trust" target="_blank" rel="noopener">Plaud Trust Center（セキュリティと準拠規格）</a></li>
-          <li><a href="https://jp.plaud.ai/pages/japan-privacy-security" target="_blank" rel="noopener">Plaud Inc.とPLAUD株式会社について</a></li>
-          <li><a href="https://jp.plaud.ai/products/plaud-notepin-accessory-charging-kit" target="_blank" rel="noopener">Plaud NotePin 専用充電器セット</a></li>
+          <li><a href="https://www.plaud.ai/" target="_blank" rel="noopener">PLAUD (web oficial: modelos y planes)</a></li>
+          <li><a href="https://www.plaud.ai/products/plaud-note-pro" target="_blank" rel="noopener">PLAUD NOTE Pro (página oficial del producto)</a></li>
+          <li><a href="https://docs.plaud.ai/plaud-mcp-cli/mcp" target="_blank" rel="noopener">Plaud MCP (documentación de Plaud Dev API)</a></li>
+          <li><a href="https://www.plaud.ai/blogs/news/introducing-plaud-mcp-and-cli" target="_blank" rel="noopener">Introducing Plaud MCP and CLI (blog oficial de PLAUD)</a></li>
+          <li><a href="https://www.plaud.ai/pages/trust" target="_blank" rel="noopener">Plaud Trust Center (seguridad y normas que cumple)</a></li>
         </ul>
       </section>
       <aside class="next-read" aria-labelledby="h-next">
-        <h2 id="h-next">次に読む</h2>
-        <div class="next-grid"><a href="/guides/meeting-notes.html"><b>AI議事録ツールの選び方</b><span>どのツールでも残る、共有とToDo</span></a><a href="/guides/chatgpt.html"><b>ChatGPT 活用ガイド</b><span>貼り直しと仕上げを、毎回やらない</span></a><a href="/guides/claude.html"><b>Claude 活用ガイド</b><span>回答のあとに残る仕事を、Claudeで頼み直さない</span></a></div>
-        <a class="next-all" href="/guides/index.html">ガイド一覧へ →</a>
+        <h2 id="h-next">Sigue leyendo</h2>
+        <div class="next-grid"><a href="/guides/es/meeting-notes.html"><b>Cómo elegir una herramienta de actas con IA</b><span>Lo que queda con cualquier herramienta: avisos y tareas</span></a><a href="/guides/es/chatgpt.html"><b>Guía de ChatGPT</b><span>Deja de pegar y retocar cada vez</span></a><a href="/guides/es/claude.html"><b>Guía de Claude</b><span>No vuelvas a pedirle a Claude lo que queda tras la respuesta</span></a></div>
+        <a class="next-all" href="/guides/es/index.html">Todas las guías →</a>
       </aside>
     </article>
   </div>
@@ -1485,13 +1483,13 @@ thead th.simy { background: var(--blue-deep); }
   <section class="closing" aria-labelledby="h-closing">
     <div class="wrap closing-inner">
       <div>
-        <h2 id="h-closing">次の会議が終わったら、<br>要約を読み返す前にSIMYへ。</h2>
-        <p>Plaudアカウントを接続するだけで、次の会議から使えます。SIMYが返すのは判断だけ。商談は、あなたの腕の見せ所のままです。</p>
+        <h2 id="h-closing">Cuando termine tu próxima reunión,<br>pásala a SIMY antes de releer el resumen.</h2>
+        <p>Conecta tu cuenta de Plaud y úsalo desde la próxima reunión. SIMY solo te devuelve decisiones. La reunión sigue siendo tu momento de brillar.</p>
       </div>
       <div class="cta-row">
-        <a class="btn btn-primary" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=plaud_guide&amp;utm_content=closing">プランを選んではじめる <span class="arrow" aria-hidden="true">↗</span></a>
-        <a class="btn btn-ghost" href="mailto:sales@simy.one?subject=PLAUD%E9%80%A3%E6%90%BA%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%E7%9B%B8%E8%AB%87%E3%81%97%E3%81%9F%E3%81%84">相談する</a>
-        <a class="btn btn-ghost" href="/download.html">アプリをダウンロード <span class="arrow" aria-hidden="true">↓</span></a>
+        <a class="btn btn-primary" href="https://app.simy.one/signup?lang=es&amp;locale=es&amp;region=es&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=plaud_guide_es&amp;utm_content=closing">Elige un plan y empieza <span class="arrow" aria-hidden="true">↗</span></a>
+        <a class="btn btn-ghost" href="mailto:sales@simy.one?subject=Consulta%20sobre%20la%20integraci%C3%B3n%20con%20PLAUD">Hablar con ventas</a>
+        <a class="btn btn-ghost" href="/download/es.html">Descargar la app <span class="arrow" aria-hidden="true">↓</span></a>
       </div>
     </div>
   </section>
@@ -1500,23 +1498,23 @@ thead th.simy { background: var(--blue-deep); }
 <footer class="site-footer">
   <div class="wrap">
     <ul class="footer-links">
-      <li><a href="/?lang=ja">ホーム</a></li>
-      <li><a href="/?lang=ja#how-it-works">仕組み</a></li>
-      <li><a href="/?lang=ja#pricing">料金</a></li>
-      <li><a href="/integrations.html">連携</a></li>
-      <li><a href="/download.html">ダウンロード</a></li>
-      <li><a href="/guides/chatgpt.html">ChatGPT活用ガイド</a></li>
-      <li><a href="/guides/claude.html">Claude活用ガイド</a></li>
-      <li><a href="/guides/codex.html">Codex活用ガイド</a></li>
-      <li><a href="/guides/cowork.html">Cowork活用ガイド</a></li>
-      <li><a href="/guides/meeting-notes.html">AI議事録ガイド</a></li>
-      <li><a href="/security.html">セキュリティ</a></li>
-      <li><a href="/about.html">会社概要</a></li>
-      <li><a href="/privacy.html">プライバシーポリシー</a></li>
-      <li><a href="/terms.html">利用規約</a></li>
+      <li><a href="/?lang=es">Inicio</a></li>
+      <li><a href="/?lang=es#how-it-works">Cómo funciona</a></li>
+      <li><a href="/?lang=es#pricing">Precios</a></li>
+      <li><a href="/integrations.html">Integraciones</a></li>
+      <li><a href="/download/es.html">Descargar</a></li>
+      <li><a href="/guides/es/chatgpt.html">Guía de ChatGPT</a></li>
+      <li><a href="/guides/es/claude.html">Guía de Claude</a></li>
+      <li><a href="/guides/es/codex.html">Guía de Codex</a></li>
+      <li><a href="/guides/es/cowork.html">Guía de Cowork</a></li>
+      <li><a href="/guides/es/meeting-notes.html">Guía de actas con IA</a></li>
+      <li><a href="/security.html">Seguridad</a></li>
+      <li><a href="/about.html">Empresa</a></li>
+      <li><a href="/privacy.html?lang=es">Política de privacidad</a></li>
+      <li><a href="/terms.html?lang=es">Términos de uso</a></li>
     </ul>
-    <p>PLAUD、PLAUD NOTE、NotePinは、各権利者の商標または登録商標です。SIMYはPLAUDから独立した製品であり、PLAUDによる提携や承認を受けたものではありません。</p>
-    <p>CodexとChatGPTはOpenAIの製品です。その他の社名・製品名は、各社の商標または登録商標です。</p>
+    <p>PLAUD, PLAUD NOTE y NotePin son marcas comerciales o registradas de sus respectivos titulares. SIMY es un producto independiente de PLAUD y no está afiliado ni respaldado por PLAUD.</p>
+    <p>Codex y ChatGPT son productos de OpenAI. Los demás nombres de empresas y productos son marcas comerciales o registradas de sus respectivos titulares.</p>
     <p>&copy; 2026 SIMY by AwakApp Inc.</p>
   </div>
 </footer>
