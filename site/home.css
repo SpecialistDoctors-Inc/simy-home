@@ -613,6 +613,7 @@ html[lang="ja"] .hero h1 span {
 }
 
 .hero-lead {
+  white-space: pre-line;
   width: fit-content;
   max-width: 31ch;
   margin-top: clamp(2rem, 4vw, 3.25rem);
@@ -5197,7 +5198,7 @@ html[lang="zh-Hans"] .storage-dialog-header h2 {
 
   .hero-lead {
     max-width: 100%;
-    font-size: 1.5rem;
+    font-size: clamp(1.2rem, 6vw, 1.5rem);
   }
 
   .hero-actions,
