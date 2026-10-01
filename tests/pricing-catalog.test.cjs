@@ -1,115 +1,23 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const fs = require('node:fs');
-const path = require('node:path');
-
 const pricing = require('../site/pricing-catalog.js');
 
-test('annual billing is the default and exposes effective monthly prices and totals', () => {
-  const result = pricing.presentation('us', 'en');
-
-  assert.equal(result.billingCycle, 'annual');
-  assert.deepEqual(result.amounts, { starter: '$29.80', quality: '$59.80' });
-  assert.deepEqual(result.annualTotals, {
-    starter: '$357.60',
-    quality: '$717.60'
+test('monthly plan prices match the live signup contract', () => {
+  assert.deepEqual(pricing.PLAN_PRICE_CENTS, {
+    starter: 3000,
+    pro: 5000,
+    team: 8000
   });
-  assert.deepEqual(result.savingsPercent, { starter: 17, quality: 17 });
-  assert.equal(result.realtimeAddOnAmount, '$30');
+  assert.equal(pricing.priceCents('starter'), 3000);
+  assert.equal(pricing.priceCents('pro'), 5000);
+  assert.equal(pricing.priceCents('team'), 8000);
+  assert.throws(() => pricing.priceCents('unknown'), /unknown pricing plan/);
 });
 
-test('monthly billing uses the higher flexible prices and has no annual total', () => {
-  const result = pricing.presentation('us', 'en', 'monthly');
-
-  assert.equal(result.billingCycle, 'monthly');
-  assert.deepEqual(result.amounts, { starter: '$35.80', quality: '$71.80' });
-  assert.deepEqual(result.annualTotals, { starter: null, quality: null });
-  assert.equal(result.realtimeAddOnAmount, '$30');
-});
-
-test('Japan keeps the headline price tax-exclusive and adds 10% tax-inclusive detail', () => {
-  const annual = pricing.presentation('jp', 'ja');
-  const monthly = pricing.presentation('jp', 'ja', 'monthly');
-
-  assert.equal(annual.displayMode, 'tax-exclusive-primary');
-  assert.deepEqual(annual.amounts, { starter: '$29.80', quality: '$59.80' });
-  assert.deepEqual(annual.taxInclusiveAmounts, { starter: '$32.78', quality: '$65.78' });
-  assert.deepEqual(annual.annualTotals, {
-    starter: '$393.36',
-    quality: '$789.36'
-  });
-  assert.deepEqual(monthly.amounts, { starter: '$35.80', quality: '$71.80' });
-  assert.deepEqual(monthly.taxInclusiveAmounts, { starter: '$39.38', quality: '$78.98' });
-  assert.equal(annual.realtimeAddOnAmount, '$30');
-  assert.equal(annual.realtimeAddOnTaxInclusiveAmount, '$33');
-  assert.deepEqual(annual.storageAmounts, {
-    '30 GB': '$11',
-    '200 GB': '$44',
-    '1 TB': '$110',
-    '5 TB': '$550'
-  });
-  assert.match(annual.taxNote, /プラン価格は税別/);
-  assert.match(annual.taxNote, /税込価格を別に併記/);
-});
-
-test('other regions remain tax-exclusive without inventing a tax rate', () => {
-  const result = pricing.presentation('fr', 'fr');
-
-  assert.equal(result.region, 'other');
-  assert.equal(result.displayMode, 'tax-exclusive');
-  assert.match(result.taxNote, /billing address at checkout/);
-  assert.doesNotMatch(result.taxNote, /\b\d+%/);
-});
-
-test('tax and price arithmetic stays in integer cents', () => {
-  assert.equal(pricing.priceCents('starter', 'annual'), 2980);
-  assert.equal(pricing.priceCents('starter', 'monthly'), 3580);
-  assert.equal(pricing.grossCents(2980, 1000), 3278);
-  assert.equal(pricing.grossCents(1000, 1000), 1100);
-  assert.equal(pricing.storagePriceCents('30 GB'), 1000);
-  assert.equal(pricing.storagePriceCents('5 TB'), 50000);
-  assert.equal(pricing.realtimeAddOnPriceCents(), 3000);
-  assert.throws(() => pricing.priceCents('unknown', 'annual'), /unknown pricing plan/);
-  assert.throws(() => pricing.storagePriceCents('unknown'), /unknown storage capacity/);
+test('Japanese tax-inclusive detail uses integer-cent arithmetic', () => {
+  assert.equal(pricing.grossCents(3000, pricing.JAPAN_CONSUMPTION_TAX_BPS), 3300);
+  assert.equal(pricing.grossCents(5000, pricing.JAPAN_CONSUMPTION_TAX_BPS), 5500);
+  assert.equal(pricing.grossCents(8000, pricing.JAPAN_CONSUMPTION_TAX_BPS), 8800);
   assert.throws(() => pricing.grossCents(10.5, 1000), /baseCents/);
-});
-
-test('homepage storage rows use catalog capacity keys instead of duplicated prices', () => {
-  const root = path.resolve(__dirname, '..');
-  const html = fs.readFileSync(path.join(root, 'site/index.html'), 'utf8');
-  const runtime = fs.readFileSync(path.join(root, 'site/home.js'), 'utf8');
-
-  assert.doesNotMatch(html, /data-storage-price=/);
-  assert.deepEqual(
-    [...html.matchAll(/data-storage-capacity="([^"]+)"/g)].map((match) => match[1]),
-    ['30 GB', '200 GB', '1 TB', '5 TB']
-  );
-  assert.match(runtime, /pricingCatalog\.storagePriceCents\(cell\.dataset\.storageCapacity\)/);
-});
-
-test('homepage renders Japanese tax-inclusive prices as secondary detail, not the headline', () => {
-  const root = path.resolve(__dirname, '..');
-  const html = fs.readFileSync(path.join(root, 'site/index.html'), 'utf8');
-  const runtime = fs.readFileSync(path.join(root, 'site/home.js'), 'utf8');
-
-  assert.equal(
-    html.match(/data-tax-included-price-detail/g)?.length,
-    3,
-    'two self-serve plans and the Realtime add-on must reserve a tax-inclusive detail line'
-  );
-  assert.doesNotMatch(html, /data-base-price-detail|data-base-price=/);
-  assert.match(runtime, /priceAmount\.textContent = formatUsd\(basePrice\)\.slice\(1\)/);
-  assert.match(runtime, /annualTotal\.textContent = formatUsd\(taxInclusivePriceCents \* 12 \/ 100, 2\)/);
-  assert.match(runtime, /taxIncludedPriceDetail\.textContent = formatUsd\(taxInclusivePriceCents \/ 100\)/);
-  assert.match(runtime, /taxIncludedPrice\.textContent = formatUsd\(taxInclusivePriceCents \/ 100\)/);
-});
-
-test('homepage pricing bundles do not ship the retired Starter Autorun cap', () => {
-  const root = path.resolve(__dirname, '..');
-  const localeBundles = ['home-i18n.js', 'home-locales.js'];
-
-  localeBundles.forEach((file) => {
-    const source = fs.readFileSync(path.join(root, 'site', file), 'utf8');
-    assert.doesNotMatch(source, /"100 runs"\s*:/, `${file} must not retain the old Starter cap`);
-  });
+  assert.throws(() => pricing.grossCents(1000, -1), /taxBasisPoints/);
 });

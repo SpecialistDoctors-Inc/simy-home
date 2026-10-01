@@ -261,88 +261,36 @@ if (motionLoops.length) {
 }
 
 const pricingCatalog = window.SIMY_PRICING;
-const billingCycleButtons = Array.from(document.querySelectorAll("[data-billing-cycle]"));
 const pricingPlans = Array.from(document.querySelectorAll("[data-pricing-plan]"));
-const realtimeAddon = document.querySelector("[data-realtime-addon]");
-const storagePrices = Array.from(document.querySelectorAll("[data-storage-capacity]"));
-let activeBillingCycle = "annual";
 
-function formatUsd(value, minimumFractionDigits = 0) {
-  const rounded = Math.round((value + Number.EPSILON) * 100) / 100;
-  const hasFraction = !Number.isInteger(rounded);
-  return `$${rounded.toLocaleString("en-US", {
-    minimumFractionDigits: Math.max(minimumFractionDigits, hasFraction ? 1 : 0),
+function formatUsd(cents) {
+  return "$" + (cents / 100).toLocaleString("en-US", {
+    minimumFractionDigits: cents % 100 === 0 ? 0 : 2,
     maximumFractionDigits: 2
-  })}`;
+  });
 }
 
 function renderPricing() {
   const locale = window.SIMY_HOME_I18N?.locale || document.documentElement.lang || "en";
   const isJapanese = locale === "ja";
 
-  billingCycleButtons.forEach((button) => {
-    button.setAttribute("aria-pressed", String(button.dataset.billingCycle === activeBillingCycle));
-  });
-
-  document.querySelectorAll("[data-billing-copy]").forEach((element) => {
-    element.hidden = element.dataset.billingCopy !== activeBillingCycle;
-  });
-  document.querySelectorAll("[data-annual-total]").forEach((element) => {
-    element.hidden = activeBillingCycle !== "annual";
-  });
-  document.querySelectorAll("[data-tax-mode='exclusive']").forEach((element) => {
-    element.hidden = isJapanese;
-  });
-  document.querySelectorAll("[data-tax-mode='inclusive']").forEach((element) => {
-    element.hidden = !isJapanese;
-  });
   document.querySelectorAll("[data-tax-included-price-detail]").forEach((element) => {
     element.hidden = !isJapanese;
   });
 
   pricingPlans.forEach((plan) => {
-    const basePriceCents = pricingCatalog.priceCents(plan.dataset.pricingPlan, activeBillingCycle);
-    const taxInclusivePriceCents = isJapanese
-      ? pricingCatalog.grossCents(basePriceCents, pricingCatalog.JAPAN_CONSUMPTION_TAX_BPS)
-      : basePriceCents;
-    const basePrice = basePriceCents / 100;
+    const basePriceCents = pricingCatalog.priceCents(plan.dataset.pricingPlan);
+    const taxInclusivePriceCents = pricingCatalog.grossCents(
+      basePriceCents,
+      pricingCatalog.JAPAN_CONSUMPTION_TAX_BPS
+    );
     const priceAmount = plan.querySelector("[data-price-amount]");
-    const annualTotal = plan.querySelector("[data-price-total]");
-    const taxIncludedPriceDetail = plan.querySelector("[data-tax-included-price]");
+    const taxIncludedPrice = plan.querySelector("[data-tax-included-price]");
 
-    if (priceAmount) priceAmount.textContent = formatUsd(basePrice).slice(1);
-    if (annualTotal) annualTotal.textContent = formatUsd(taxInclusivePriceCents * 12 / 100, 2);
-    if (taxIncludedPriceDetail) taxIncludedPriceDetail.textContent = formatUsd(taxInclusivePriceCents / 100);
-  });
-
-  if (realtimeAddon) {
-    const basePriceCents = pricingCatalog.realtimeAddOnPriceCents();
-    const taxInclusivePriceCents = isJapanese
-      ? pricingCatalog.grossCents(basePriceCents, pricingCatalog.JAPAN_CONSUMPTION_TAX_BPS)
-      : basePriceCents;
-    const priceAmount = realtimeAddon.querySelector("[data-realtime-addon-price]");
-    const taxIncludedPrice = realtimeAddon.querySelector("[data-realtime-tax-included-price]");
-
-    if (priceAmount) priceAmount.textContent = formatUsd(basePriceCents / 100).slice(1);
-    if (taxIncludedPrice) taxIncludedPrice.textContent = formatUsd(taxInclusivePriceCents / 100);
-  }
-
-  storagePrices.forEach((cell) => {
-    const basePriceCents = pricingCatalog.storagePriceCents(cell.dataset.storageCapacity);
-    const displayPriceCents = isJapanese
-      ? pricingCatalog.grossCents(basePriceCents, pricingCatalog.JAPAN_CONSUMPTION_TAX_BPS)
-      : basePriceCents;
-    const amount = cell.querySelector("[data-storage-price-amount]");
-    if (amount) amount.textContent = formatUsd(displayPriceCents / 100);
+    if (priceAmount) priceAmount.textContent = formatUsd(basePriceCents).slice(1);
+    if (taxIncludedPrice) taxIncludedPrice.textContent = formatUsd(taxInclusivePriceCents);
   });
 }
-
-billingCycleButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    activeBillingCycle = button.dataset.billingCycle === "monthly" ? "monthly" : "annual";
-    renderPricing();
-  });
-});
 
 window.addEventListener("simy:locale-change", renderPricing);
 renderPricing();
@@ -378,41 +326,5 @@ window.addEventListener("resize", () => {
   hasCenteredFeaturedPlan = false;
   centerFeaturedPricingPlan();
 });
-
-const storageDialog = document.querySelector("[data-storage-dialog]");
-const storageDialogOpenButtons = Array.from(document.querySelectorAll("[data-storage-dialog-open]"));
-const storageDialogCloseButton = storageDialog?.querySelector("[data-storage-dialog-close]");
-let storageDialogReturnFocus = null;
-
-function closeStorageDialog() {
-  if (!storageDialog?.open) return;
-  storageDialog.close();
-}
-
-if (storageDialog) {
-  storageDialogOpenButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      storageDialogReturnFocus = button;
-      if (!storageDialog.open) storageDialog.showModal();
-      document.body.classList.add("dialog-open");
-      storageDialogCloseButton?.focus();
-    });
-  });
-
-  storageDialogCloseButton?.addEventListener("click", closeStorageDialog);
-  storageDialog.addEventListener("click", (event) => {
-    if (event.target === storageDialog) closeStorageDialog();
-  });
-  storageDialog.addEventListener("keydown", (event) => {
-    if (event.key !== "Escape") return;
-    event.preventDefault();
-    closeStorageDialog();
-  });
-  storageDialog.addEventListener("close", () => {
-    document.body.classList.remove("dialog-open");
-    storageDialogReturnFocus?.focus();
-    storageDialogReturnFocus = null;
-  });
-}
 
 renderScenario("codex");
