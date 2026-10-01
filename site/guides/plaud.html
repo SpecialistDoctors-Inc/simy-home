@@ -18,7 +18,7 @@
 <meta property="og:image:alt" content="PLAUDの録音を、文字起こしと要約で終わらせない。PLAUD NOTE 活用ガイド｜SIMY">
 <meta property="og:locale" content="ja_JP">
 <meta property="article:published_time" content="2026-09-30">
-<meta property="article:modified_time" content="2026-09-30">
+<meta property="article:modified_time" content="2026-10-01">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="PLAUDの録音を、文字起こしと要約で終わらせない。｜SIMY">
 <meta name="twitter:description" content="Plaudアカウントを接続するだけで、要約から先の仕事をSIMYが進めます。届いたらやること、連携方法、料金プランと対応モデルまで。">
@@ -603,6 +603,132 @@ thead th.simy { background: var(--blue-deep); }
   .rec-dot, .bar::after { animation: none; }
   .btn, .header-cta { transition: none; }
 }
+
+/* ---------- Guide v2: scene cards, timeline, folds ---------- */
+.intro { max-width: 34em; margin: 0 0 8px; font-size: 1.02rem; color: #34322f; }
+.scenes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 22px; }
+.scenes.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.scene {
+  position: relative; padding: 22px 20px 20px;
+  background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius);
+  min-height: 168px; display: flex; flex-direction: column; gap: 8px;
+}
+.scene .k { font-family: var(--mono); font-size: 0.7rem; color: var(--ink-faint); letter-spacing: 0.04em; }
+.scene b { display: block; font-size: 1.22rem; line-height: 1.35; letter-spacing: -0.01em; }
+.scene p { margin: 0; font-size: 0.9rem; line-height: 1.65; color: #34322f; }
+.scene .mark {
+  position: absolute; right: 16px; top: 14px;
+  width: 30px; height: 30px; display: grid; place-items: center;
+  border: 1px solid var(--ink); border-radius: 50%; font-family: var(--mono); font-size: 0.9rem; font-weight: 700;
+}
+.scene.pain { background: var(--coral-soft); }
+.scene.pain .mark { background: var(--paper-light); }
+.scene.wish { background: var(--blue-soft); border-color: var(--blue-deep); box-shadow: 4px 4px 0 var(--blue); }
+.scene.wish .mark { background: var(--blue-deep); color: #fff; border-color: var(--blue-deep); }
+.scene.wish.you { background: #fff8e3; border-color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+.scene.wish.you .mark { background: var(--yellow); color: var(--ink); border-color: var(--ink); }
+.scene-foot { margin: 14px 0 0; font-size: 0.9rem; color: var(--ink-soft); }
+.scene-foot b { color: var(--ink); }
+
+/* Timeline */
+.tl-wrap {
+  margin-top: 22px; padding: 22px 20px 18px;
+  background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius);
+}
+.tl-row { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 14px; align-items: center; }
+.tl-row + .tl-row { margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--line-soft); }
+.tl-who {
+  font-family: var(--mono); font-size: 0.72rem; font-weight: 700; text-align: center;
+  padding: 6px 4px; border: 1px solid var(--ink); border-radius: 999px; background: var(--paper);
+}
+.tl-who.simy { background: var(--blue-deep); color: #fff; border-color: var(--blue-deep); }
+.tl-who.you { background: var(--yellow); }
+.tl { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; }
+.tl li {
+  position: relative; min-height: 64px; padding: 10px 8px 8px;
+  border-radius: var(--radius-sm); font-size: 0.8rem; line-height: 1.4; font-weight: 650;
+  display: flex; flex-direction: column; justify-content: flex-start; gap: 4px;
+}
+.tl li small { display: block; font-weight: 400; font-size: 0.7rem; color: var(--ink-soft); }
+.tl li.on { background: var(--paper); border: 1px solid var(--line-soft); color: var(--ink-soft); }
+.tl li.gap { border: 1.5px dashed var(--ink-faint); color: var(--ink-faint); background: transparent; }
+.tl li.gap::after { content: "？"; position: absolute; right: 8px; top: 6px; font-family: var(--mono); }
+.tl li.run { background: var(--blue-soft); border: 1px solid var(--blue-deep); color: var(--ink); }
+.tl li.run::after { content: "✓"; position: absolute; right: 8px; top: 6px; font-family: var(--mono); color: var(--blue-deep); }
+.tl li.you { background: #fff8e3; border: 1px solid var(--ink); color: var(--ink); }
+.tl li.you::after { content: "あなた"; position: absolute; right: 8px; top: 7px; font-family: var(--mono); font-size: 0.62rem; }
+.tl li.blank { border: 0; background: transparent; }
+.tl-note { margin: 14px 0 0; font-size: 0.86rem; color: #34322f; }
+.tl-note b { color: var(--ink); }
+.three { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 0; padding: 0; list-style: none; }
+.three li {
+  padding: 8px 14px; font-weight: 800; font-size: 1rem;
+  background: var(--ink); color: #fff; border-radius: 999px;
+}
+
+/* 3-step start */
+.steps3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 22px; counter-reset: st; }
+.steps3 li {
+  counter-increment: st; list-style: none; position: relative;
+  padding: 54px 18px 18px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.steps3 li::before {
+  content: counter(st); position: absolute; left: 18px; top: 16px;
+  width: 28px; height: 28px; display: grid; place-items: center;
+  border: 1px solid var(--ink); border-radius: 50%; background: var(--paper);
+  font-family: var(--mono); font-weight: 700; font-size: 0.84rem;
+}
+.steps3 li.key { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.steps3 li.key::before { background: var(--blue-deep); color: #fff; }
+.steps3 b { display: block; font-size: 1.02rem; line-height: 1.45; }
+.steps3 span { display: block; margin-top: 6px; font-size: 0.88rem; color: #34322f; line-height: 1.65; }
+.steps3 { padding: 0; }
+
+/* Industry grid */
+.ind { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 22px; }
+.ind-card { padding: 18px 18px 14px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); }
+.ind-card h3 { margin: 0 0 10px; font-size: 1.04rem; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.ind-card h3 small { font-family: var(--mono); font-size: 0.68rem; font-weight: 400; color: var(--blue-deep); white-space: nowrap; }
+.ind-rows { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+.ind-rows li { display: grid; grid-template-columns: minmax(0, 1fr) 14px minmax(0, 1.4fr); gap: 6px; align-items: center; font-size: 0.86rem; line-height: 1.5; }
+.ind-rows li span:first-child { color: var(--ink-soft); }
+.ind-rows li span:nth-child(2) { font-family: var(--mono); color: var(--blue-deep); text-align: center; }
+.ind-rows li span:last-child { font-weight: 650; }
+
+/* Folded reference */
+.fold { margin-top: 12px; border: 1px solid var(--ui-line); border-radius: var(--radius); background: var(--paper-light); }
+.fold > summary {
+  list-style: none; cursor: pointer; padding: 16px 18px;
+  display: grid; grid-template-columns: minmax(0, 1fr) 20px; gap: 10px; align-items: center;
+  font-weight: 750; font-size: 1.02rem; line-height: 1.5;
+}
+.fold > summary::-webkit-details-marker { display: none; }
+.fold > summary::after { content: "+"; font-family: var(--mono); font-size: 1.1rem; text-align: right; }
+.fold[open] > summary::after { content: "−"; }
+.fold > summary small { display: block; margin-top: 2px; font-weight: 400; font-size: 0.82rem; color: var(--ink-soft); }
+.fold-body { padding: 0 18px 18px; font-size: 0.93rem; }
+.fold-body h3 { margin: 18px 0 8px; font-size: 1rem; }
+.fold-body h3:first-child { margin-top: 0; }
+.fold-body p { margin: 0 0 10px; }
+.fold-body .table-wrap { margin: 12px 0 6px; }
+.fold-body .plain-list { margin-top: 8px; }
+.fold-body .plain-list li { margin-bottom: 6px; }
+
+@media (max-width: 960px) {
+  .scenes, .scenes.four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tl { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .tl li.blank { display: none; }
+}
+@media (max-width: 640px) {
+  .scenes, .scenes.four, .steps3, .ind { grid-template-columns: minmax(0, 1fr); }
+  .scene { min-height: 0; }
+  .tl-row { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .tl-who { justify-self: start; }
+  .tl { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ind-rows li { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .ind-rows li span:nth-child(2) { display: none; }
+  .ind-rows li { padding: 6px 0; border-bottom: 1px dashed var(--line-soft); }
+}
 </style>
 <script type="application/ld+json">
 {
@@ -612,10 +738,10 @@ thead th.simy { background: var(--blue-deep); }
       "@type": "Article",
       "@id": "https://simy.one/guides/plaud.html#article",
       "headline": "PLAUD NOTE 活用ガイド：AI文字起こし・要約の先を自動化する連携",
-      "description": "PLAUD NOTEの録音・文字起こし・要約を仕事に変える活用ガイド。届いたらやること、SIMYとの連携方法、料金プランと対応モデルの比較、Ask Plaudとの違い。",
+      "description": "PLAUD NOTEの録音・文字起こし・要約を仕事に変える活用ガイド。会議のあとに残る仕事、SIMYとの連携方法、届いたらやること、料金プランと対応モデル、セキュリティ。",
       "inLanguage": "ja",
       "datePublished": "2026-09-30",
-      "dateModified": "2026-09-30",
+      "dateModified": "2026-10-01",
       "mainEntityOfPage": "https://simy.one/guides/plaud.html",
       "image": {
         "@type": "ImageObject",
@@ -663,13 +789,18 @@ thead th.simy { background: var(--blue-deep); }
         },
         {
           "@type": "Question",
-          "name": "PLAUDの無料プラン（Starter）でもSIMYと接続できますか？",
-          "acceptedAnswer": { "@type": "Answer", "text": "はい。接続に必要なのは、デバイスを登録済みのPlaudアカウントです。Starterプランの文字起こし時間は月300分です。" }
+          "name": "PLAUD NOTE Pro、NotePinなど、どのモデルでも使えますか？",
+          "acceptedAnswer": { "@type": "Answer", "text": "はい。SIMYはPlaudアカウントに保存された文字起こしと要約を参照するため、モデルによる違いはありません。通話も録音したい場合は、通話モードのあるPLAUD NOTEかPLAUD NOTE Proを選んでください。" }
         },
         {
           "@type": "Question",
-          "name": "PLAUD NOTE Pro、NotePinなど、どのモデルでも使えますか？",
-          "acceptedAnswer": { "@type": "Answer", "text": "はい。SIMYはPlaudアカウントに保存された文字起こしと要約を参照するため、モデルによる違いはありません。通話も録音したい場合は、通話モードのあるPLAUD NOTEかPLAUD NOTE Proを選んでください。" }
+          "name": "PLAUDのStarter（無料）やUnlimitedなど、どの料金プランでも接続できますか？",
+          "acceptedAnswer": { "@type": "Answer", "text": "はい。接続に必要なのは、デバイスを登録済みのPlaudアカウントだけです。プランの違いは文字起こし時間です。Starterは月300分、Proは月1,200分、Unlimitedは無制限です。" }
+        },
+        {
+          "@type": "Question",
+          "name": "Notionへのエクスポートや、PLAUD MCPの設定は必要ですか？",
+          "acceptedAnswer": { "@type": "Answer", "text": "必要ありません。PLAUD MCPは、録音をChatGPTやClaudeから読み出すPLAUD公式の仕組みですが、SIMYはPlaudアカウントを直接参照するため、エクスポートもMCPの設定もいりません。" }
         },
         {
           "@type": "Question",
@@ -678,53 +809,28 @@ thead th.simy { background: var(--blue-deep); }
         },
         {
           "@type": "Question",
-          "name": "PCでもPLAUDを使えますか？",
-          "acceptedAnswer": { "@type": "Answer", "text": "使えます。ブラウザ版のPlaud Webで録音の確認や編集ができ、WindowsとMac向けのPlaud Desktopでは、Zoomなどのオンライン会議をボットなしで録音できます。" }
-        },
-        {
-          "@type": "Question",
           "name": "PLAUDの録音がAIの学習に使われたり、情報漏洩したりしませんか？",
           "acceptedAnswer": { "@type": "Answer", "text": "PLAUDは、明示的な同意がない限り録音データをAIの学習に使わないと案内しています。SOC 2 Type II、HIPAA、GDPR、ISO/IEC 27001に準拠し、データは暗号化して保存されます。SIMYでの取り扱いは、セキュリティとプライバシーポリシーのページで公開しています。" }
         },
         {
           "@type": "Question",
-          "name": "Notionへのエクスポートや、ファイルの書き出しは必要ですか？",
-          "acceptedAnswer": { "@type": "Answer", "text": "必要ありません。SIMYは、Plaudアカウントの録音、文字起こし、要約を直接検索して参照します。" }
+          "name": "議事録の形式（参加者・議題・決定事項・次アクション）は、毎回指定が必要ですか？",
+          "acceptedAnswer": { "@type": "Answer", "text": "いいえ。一度あなたの型で仕上げれば、SIMYはそのやり方を学び、次の会議からは同じ形で用意します。文字起こしを貼って、同じ指示を打ち直す作業はなくなります。" }
         },
         {
           "@type": "Question",
-          "name": "PLAUD MCPとは何ですか？SIMYで設定は必要ですか？",
-          "acceptedAnswer": { "@type": "Answer", "text": "PLAUD MCPは、PLAUDの録音、文字起こし、要約を、ChatGPT、Claude、CodexなどのAIツールから読み出せるPLAUD公式の仕組みです。SIMYと使う場合、MCPの設定は必要ありません。SIMYの連携画面でPlaudアカウントを接続するだけです。" }
+          "name": "「何が決まったか」の判断は、AIがしますか？私がしますか？",
+          "acceptedAnswer": { "@type": "Answer", "text": "判断はあなたです。SIMYは文字起こしと要約から候補を整理して下書きまで進め、金額や送信の可否など、判断が必要なところだけをあなたに返します。" }
         },
         {
           "@type": "Question",
-          "name": "Unlimitedプランは必要ですか？",
-          "acceptedAnswer": { "@type": "Answer", "text": "録音する時間しだいです。文字起こしが月1,200分（20時間）を超えるならUnlimited、月300分（5時間）以内ならStarterで足ります。その間ならProが目安です。" }
-        },
-        {
-          "@type": "Question",
-          "name": "Ask PlaudやChatGPTがあれば、SIMYは必要ありませんか？",
-          "acceptedAnswer": { "@type": "Answer", "text": "1件の録音に質問したいだけなら、Ask Plaudで十分です。SIMYが役に立つのは、会議のあとにメール、メモの更新、共有といった複数の仕事が毎回発生する場合です。SIMYはあなたの仕事の基準を学び、合うワークフローを選んで、Autorunが先へ進めます。" }
+          "name": "Notion AI、Notta、Teamsなど、PLAUD以外の文字起こしでもSIMYは使えますか？",
+          "acceptedAnswer": { "@type": "Answer", "text": "このページはPLAUD向けですが、SIMYの連携画面にはNotionやGoogleなど他の接続先もあります。会議の文脈をそこから渡せます。対応状況は連携画面で確認してください。" }
         },
         {
           "@type": "Question",
           "name": "SIMYを使うと、AIの利用料が別にかかりますか？",
           "acceptedAnswer": { "@type": "Answer", "text": "SIMYはお使いのChatGPTアカウントをつなぎ、Codex App Server経由で仕事を進めます。Codexの利用は、お使いのChatGPTプランの範囲で行われます。SIMY自体の料金は料金ページをご覧ください。" }
-        },
-        {
-          "@type": "Question",
-          "name": "文字起こしの精度が低いときは、どうすればいいですか？",
-          "acceptedAnswer": { "@type": "Answer", "text": "話し手とマイクの距離を縮める、周囲のノイズを減らす、話者名を登録する、の3つが基本です。オンライン会議は、スピーカーの近くに本体を置くとクリアな音声で録れます。精度を評価するなら、短い会議で検証してから本番に使いましょう。SIMYは要約に加えて文字起こしも参照するため、要約で落ちた細部も拾えます。" }
-        },
-        {
-          "@type": "Question",
-          "name": "複数の録音をまとめて、1つの報告にできますか？",
-          "acceptedAnswer": { "@type": "Answer", "text": "できます。接続したPlaudの複数の録音をもとに、週次報告や顧客ごとの経過報告を作るようSIMYに頼めます。" }
-        },
-        {
-          "@type": "Question",
-          "name": "接続がうまくいかないときは、どうすればいいですか？",
-          "acceptedAnswer": { "@type": "Answer", "text": "デバイスを登録済みのPlaudアカウントでログインしているか確認してください。認証を途中でやめた場合は、SIMYの連携画面に戻って接続し直してください。" }
         },
         {
           "@type": "Question",
@@ -768,10 +874,10 @@ thead th.simy { background: var(--blue-deep); }
           <span class="line hl">文字起こしと要約で</span>
           <span class="line">終わらせない。</span>
         </h1>
-        <p class="lead">PLAUD（プラウド）を買って、届いて、録音も文字起こしも要約もAIでできるようになった。けれど会議のあとには、フォローメール、議事録の共有、顧客メモの更新、次の段取りがまだ残っています。SIMYにPlaudアカウントを接続するだけで、要約から先の仕事を、あなたのやり方でSIMYが進めます。</p>
+        <p class="lead">PLAUD（プラウド）が要約を出したあと、メール、顧客メモ、共有は、まだあなたの手元に残っています。Plaudアカウントを接続するだけで、その先をSIMYがあなたのやり方で進めます。</p>
         <div class="cta-row">
           <a class="btn btn-primary" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=plaud_guide&amp;utm_content=hero">会議1件から試す <span class="arrow" aria-hidden="true">↗</span></a>
-          <a class="btn btn-ghost" href="#connect">連携方法を見る <span class="arrow" aria-hidden="true">↓</span></a>
+          <a class="btn btn-ghost" href="#connect">つなぎ方を見る <span class="arrow" aria-hidden="true">↓</span></a>
         </div>
         <ul class="hero-points">
           <li>Plaudアカウントを接続するだけ</li>
@@ -781,7 +887,7 @@ thead th.simy { background: var(--blue-deep); }
       </div>
 
       <div class="hero-visual">
-        <div class="relay" role="img" aria-label="例：PLAUDが録音・文字起こし・要約までを行い、その先のフォローメール、顧客メモの更新、社内共有の文面をSIMYが用意し、金額の最終確認だけがあなたに残る流れ">
+        <div class="relay" role="img" aria-label="例：PLAUDが録音・文字起こし・要約までを行い、その先のフォローメールの下書き、顧客メモの更新、社内共有の文面をSIMYが用意し、金額の最終確認だけがあなたに残る流れ">
           <div class="relay-head" aria-hidden="true">
             <span class="rec"><span class="rec-dot"></span><span class="rec-name">商談_A社_0930.m4a</span></span>
             <span>42:18</span>
@@ -796,7 +902,7 @@ thead th.simy { background: var(--blue-deep); }
             <li class="step s-done s-plaud"><span class="no">02</span><span class="what">文字起こし<small>話者を分けて書き起こし</small></span><span class="status">PLAUD ✓</span></li>
             <li class="step s-done s-plaud"><span class="no">03</span><span class="what">要約<small>テンプレート「商談」</small></span><span class="status">PLAUD ✓</span></li>
             <li class="handoff">PLAUDはここまで ／ ここからSIMY</li>
-            <li class="step s-done"><span class="no">04</span><span class="what">お礼とフォローのメール<small>あなたの文面の癖で下書き</small></span><span class="status">完了</span></li>
+            <li class="step s-done"><span class="no">04</span><span class="what">お礼とフォローのメール<small>あなたの文面の癖で下書き</small></span><span class="status">下書き済</span></li>
             <li class="step s-run"><span class="no">05</span><span class="what">顧客メモを更新<small>検討状況・懸念・決裁時期</small></span><span class="status">Autorun</span><span class="bar"></span></li>
             <li class="step s-next"><span class="no">06</span><span class="what">社内共有の文面を用意<small>見積もりの前提をチームへ</small></span><span class="status">次</span></li>
             <li class="step s-you"><span class="no">07</span><span class="what">金額と納期の最終確認<small>判断だけがあなたに残る</small></span><span class="status">あなたの番</span></li>
@@ -812,17 +918,16 @@ thead th.simy { background: var(--blue-deep); }
     <nav class="toc" aria-label="目次">
       <p class="toc-title">目次</p>
       <ol>
-        <li><a href="#setup"><span>01</span>使い方：届いたらやること</a></li>
-        <li><a href="#features"><span>02</span>PLAUD NOTEの主な機能</a></li>
-        <li><a href="#after"><span>03</span>要約のあとに残る仕事</a></li>
-        <li><a href="#connect"><span>04</span>PLAUDとSIMYの連携方法</a></li>
+        <li><a href="#scene"><span>01</span>会議のあと、こうなっていませんか</a></li>
+        <li><a href="#wish"><span>02</span>本当は、こうしたかった</a></li>
+        <li><a href="#gap"><span>03</span>PLAUDはここで止まる</a></li>
+        <li><a href="#connect"><span>04</span>SIMYがつなぐ</a></li>
         <li><a href="#sample"><span>05</span>商談1件で比較</a></li>
-        <li><a href="#compare"><span>06</span>Ask Plaud・MCPとの違い</a></li>
-        <li><a href="#usecases"><span>07</span>ビジネスでの活用例</a></li>
-        <li><a href="#pricing"><span>08</span>料金プランと対応モデル</a></li>
-        <li><a href="#privacy"><span>09</span>セキュリティと情報漏洩</a></li>
-        <li><a href="#faq"><span>10</span>よくある質問</a></li>
-        <li><a href="#sources"><span>11</span>参考情報</a></li>
+        <li><a href="#usecases"><span>06</span>業種別：会議とSIMYが出すもの</a></li>
+        <li><a href="#start"><span>07</span>はじめ方：3ステップ</a></li>
+        <li><a href="#reference"><span>08</span>使い方・料金・セキュリティ</a></li>
+        <li><a href="#faq"><span>09</span>よくある質問</a></li>
+        <li><a href="#sources"><span>10</span>参考情報</a></li>
       </ol>
     </nav>
 
@@ -830,160 +935,145 @@ thead th.simy { background: var(--blue-deep); }
       <details class="toc-mobile">
         <summary>目次</summary>
         <ol>
-          <li><a href="#setup">使い方：届いたらやること</a></li>
-          <li><a href="#features">PLAUD NOTEの主な機能</a></li>
-          <li><a href="#after">要約のあとに残る仕事</a></li>
-          <li><a href="#connect">PLAUDとSIMYの連携方法</a></li>
+          <li><a href="#scene">会議のあと、こうなっていませんか</a></li>
+          <li><a href="#wish">本当は、こうしたかった</a></li>
+          <li><a href="#gap">PLAUDはここで止まる</a></li>
+          <li><a href="#connect">SIMYがつなぐ</a></li>
           <li><a href="#sample">商談1件で比較</a></li>
-          <li><a href="#compare">Ask Plaud・MCPとの違い</a></li>
-          <li><a href="#usecases">ビジネスでの活用例</a></li>
-          <li><a href="#pricing">料金プランと対応モデル</a></li>
-          <li><a href="#privacy">セキュリティと情報漏洩</a></li>
+          <li><a href="#usecases">業種別：会議とSIMYが出すもの</a></li>
+          <li><a href="#start">はじめ方：3ステップ</a></li>
+          <li><a href="#reference">使い方・料金・セキュリティ</a></li>
           <li><a href="#faq">よくある質問</a></li>
           <li><a href="#sources">参考情報</a></li>
         </ol>
       </details>
 
-      <p class="byline"><span>最終更新：<time datetime="2026-09-30">2026年9月30日</time></span><span>発行：SIMY（AwakApp Inc.）</span></p>
+      <p class="byline"><span>最終更新：<time datetime="2026-10-01">2026年10月1日</time></span><span>発行：SIMY（AwakApp Inc.）</span></p>
 
       <!-- 01 -->
-      <section class="sec" id="setup" aria-labelledby="h-setup">
-        <span class="sec-label">01 / SETUP</span>
-        <h2 id="h-setup">PLAUDの使い方：届いたら最初にやる5つのこと</h2>
-        <p>PLAUDを買ったばかりの人も、すでに使っている人も、次の5つを確認しておきましょう。録音の音質も、そのあとの仕事の進み方も変わります。</p>
-        <ol class="checklist">
-          <li>
-            <span class="num">1</span>
-            <div>
-              <h3>充電して、アプリと本体をペアリングする</h3>
-              <p>まず本体を付属の充電器で充電します。NotePinはマグネット式の充電ドックに置くだけで、約2時間で満充電になります。次にスマホにPLAUDアプリを入れ、本体とペアリングしてデバイスを登録します。録音データは本体からアプリに転送されたあと、文字起こしが始まります。本体の保存容量がいっぱいになる前に、こまめに転送しておくと安心です。</p>
-            </div>
-          </li>
-          <li>
-            <span class="num">2</span>
-            <div>
-              <h3>録音モードを確かめる</h3>
-              <p>PLAUD NOTEとPLAUD NOTE Proは、対面と通話の2つのモードを選択して録音できます。NOTE Proは自動的に切り替わります。NotePinシリーズは対面の録音専用なので、通話録音もしたい人はNOTE系を選びます。</p>
-            </div>
-          </li>
-          <li>
-            <span class="num">3</span>
-            <div>
-              <h3>要約テンプレートを選ぶ</h3>
-              <p>商談、1on1、講義など、1万種類以上のテンプレートから選べます。よく使う会議の型はカスタムテンプレートとして追加しておくと、生成される要約の粒度がそろいます。</p>
-            </div>
-          </li>
-          <li>
-            <span class="num">4</span>
-            <div>
-              <h3>話者名を登録する</h3>
-              <p>文字起こしの話者を名前にしておくと、議事録が読みやすくなります。誰が何を引き受けたかも追いやすくなります。</p>
-            </div>
-          </li>
-          <li class="hook">
-            <span class="num">5</span>
-            <div>
-              <h3>SIMYにPlaudアカウントを接続する</h3>
-              <p>SIMYの連携画面で、Plaudの「接続する」を押すだけです。これで、会議のあとの仕事をSIMYが進められるようになります。<a href="#connect">接続の手順を見る</a></p>
-            </div>
-          </li>
-        </ol>
-
-        <h3>PCで使うなら：Plaud WebとPlaud Desktop</h3>
-        <p>PLAUDはスマホだけでなく、パソコンでも使えます。</p>
-        <ul class="plain-list">
-          <li><strong>Plaud Web：</strong>ブラウザからPlaudアカウントにログインして、録音の確認や文字起こしの編集ができます。</li>
-          <li><strong>Plaud Desktop：</strong>WindowsとMacのデスクトップアプリです。Zoom、Microsoft Teams、Google Meetなどのオンライン会議を、ボットを参加させずに録音できます。PLAUDのユーザーは無料で使えます。</li>
-        </ul>
-        <p>どの方法で録音しても、Plaudアカウントに保存された録音はSIMYから参照できます。</p>
+      <section class="sec" id="scene" aria-labelledby="h-scene">
+        <span class="sec-label">01 / AFTER THE MEETING</span>
+        <h2 id="h-scene">会議のあと、こうなっていませんか</h2>
+        <p class="intro">PLAUDの要約は届いている。それでも、会議が終わった30分後に起きていること。</p>
+        <div class="scenes">
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">1</span>
+            <span class="k">30分後</span>
+            <b>何言ってたっけ</b>
+            <p>要約は読んだ。でも、相手の言い回しや金額のニュアンスが戻ってこない。</p>
+          </div>
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">2</span>
+            <span class="k">1時間後</span>
+            <b>コピーして、貼る</b>
+            <p>文字起こしをChatGPTに貼って、うちの型に直す。同じ指示を、毎回。</p>
+          </div>
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">3</span>
+            <span class="k">その日の夜</span>
+            <b>報告は、結局自分</b>
+            <p>Slackに貼り、Notionを更新し、お礼のメールを書き、ToDoに書き写す。</p>
+          </div>
+        </div>
+        <p class="scene-foot">録音・文字起こし・要約は、PLAUDで一瞬で終わる。<b>会議の価値が決まる仕事は、そのあとに残っています。</b></p>
       </section>
 
       <!-- 02 -->
-      <section class="sec" id="features" aria-labelledby="h-features">
-        <span class="sec-label">02 / FEATURES</span>
-        <h2 id="h-features">PLAUD NOTEの主な機能：録音・文字起こし・要約・Ask Plaud</h2>
-        <p>PLAUD NOTEは、会話の録音から文字起こし、要約までをAIで自動化するボイスレコーダーです。主な機能を整理します。ここまでの仕事は、PLAUDがとても得意です。</p>
-        <div class="features">
-          <div class="feature">
-            <span class="tag">RECORD</span>
-            <h3>録音</h3>
-            <p>ボタンひとつで録音を開始できます。対面と通話の録音モードがあり、大事な瞬間にはハイライトで印をつけられます。NOTE Proは最大50時間の連続録音に対応します。胸ポケットにクリップで留められるNotePinシリーズもあります。</p>
+      <section class="sec" id="wish" aria-labelledby="h-wish">
+        <span class="sec-label">02 / WHAT YOU REALLY WANTED</span>
+        <h2 id="h-wish">本当は、こうしたかった</h2>
+        <p class="intro">同じ会議。同じPLAUD。会議室を出たときに、こうなっていてほしかった。</p>
+        <div class="scenes four">
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">会議室を出たとき</span>
+            <b>終わったら、届いてる</b>
+            <p>お礼メールの下書きと顧客メモの更新案が、もうチャットに来ている。</p>
           </div>
-          <div class="feature">
-            <span class="tag">TRANSCRIBE</span>
-            <h3>文字起こし</h3>
-            <p>112言語に対応し、日本語の会話も話者を分けて書き起こします。精度はマイクとの距離や周囲のノイズで変わります。会議室なら、4つのマイクで最大5m先の音声まで収音できるNOTE Proが有利です。</p>
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">頼まなくても</span>
+            <b>あなたの型で、毎回</b>
+            <p>参加者・議題・決定事項・次アクション。指示しなくても、いつもの形。</p>
           </div>
-          <div class="feature">
-            <span class="tag">SUMMARIZE</span>
-            <h3>要約</h3>
-            <p>1万種類以上の要約テンプレートと、自分で作るカスタムテンプレートで要約を生成できます。要約に使うAIモデルは、GPT、Gemini、Claudeなどから選べます。</p>
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">次回の前に</span>
+            <b>顧客ごとに積み上がる</b>
+            <p>前回の懸念と決裁時期が顧客メモに残り、次の提案の前提になっている。</p>
           </div>
-          <div class="feature">
-            <span class="tag">MIND MAP</span>
-            <h3>マインドマップ</h3>
-            <p>会話の構造を図にして、議論の流れを整理できます。長い会議の全体像を理解するのに便利です。</p>
-          </div>
-          <div class="feature">
-            <span class="tag">ASK</span>
-            <h3>Ask Plaud</h3>
-            <p>録音の内容について、AIに質問できます（ベータ版）。「先方の予算感は？」のような確認をその場で済ませられます。</p>
-          </div>
-          <div class="feature">
-            <span class="tag">MULTIMODAL</span>
-            <h3>マルチモーダル入力</h3>
-            <p>録音に写真やテキストを添えて、ひとつのノートとして記録できます。ホワイトボードや資料の写真も一緒に残せます。</p>
-          </div>
-          <div class="feature wide">
-            <span class="tag">EXPORT / INTEGRATION</span>
-            <h3>エクスポートと連携</h3>
-            <p>TXT、DOCX、PDF、SRTなど27種類以上の形式でファイルを書き出せます。Notionへの書き出し、AutoFlow機能、Zapierとの連携、AIツールから録音を読み出せるPLAUD MCPにも対応しています。</p>
+          <div class="scene wish you">
+            <span class="mark" aria-hidden="true">!</span>
+            <span class="k">あなたに戻るのは</span>
+            <b>判断だけ</b>
+            <p>「この金額で送ってよいか」。戻ってくるのはその一問だけ。</p>
           </div>
         </div>
+        <p class="scene-foot">これは、<b>SIMYにPlaudアカウントを接続した次の会議から</b>起きることです。</p>
       </section>
 
       <!-- 03 -->
-      <section class="sec" id="after" aria-labelledby="h-after">
-        <span class="sec-label">03 / AFTER THE SUMMARY</span>
-        <h2 id="h-after">要約のあとに、まだ残っている仕事</h2>
-        <p>PLAUDの要約は「何が話されたか」をまとめてくれます。でも、会議の価値が決まるのは、そのあとに何が動いたかです。要約を読み返し、コピーして、貼り付けて、書き直す作業は、会議のたびに発生します。</p>
-        <div class="split">
-          <div class="split-col col-plaud">
-            <h3><span class="who">PLAUD</span>終わらせてくれること</h3>
-            <ul>
-              <li>会話の録音と保存</li>
-              <li>話者を分けた書き起こし</li>
-              <li>要約とマインドマップ</li>
-              <li>議事録のたたき台</li>
-            </ul>
-          </div>
-          <div class="split-col col-left">
-            <h3><span class="who">あなた</span>まだ手元に残ること</h3>
-            <ul>
-              <li>相手へのお礼とフォローメール</li>
-              <li>議事録の整形と、関係者への共有・報告</li>
-              <li>顧客メモやCRM、スプレッドシートの更新</li>
-              <li>宿題・期限・担当者の管理</li>
-              <li>次回の提案や見積もりの準備</li>
-            </ul>
+      <section class="sec" id="gap" aria-labelledby="h-gap">
+        <span class="sec-label">03 / WHERE PLAUD STOPS</span>
+        <h2 id="h-gap">PLAUDの文字起こしと要約は、ここで止まる</h2>
+        <p class="intro">PLAUDが得意なのは「何が話されたか」まで。その先は、誰も拾っていません。</p>
+        <div class="tl-wrap" role="img" aria-label="タイムライン。録音、文字起こし、要約まではPLAUDが終えるが、お礼メール、顧客メモ、社内共有、次回の段取りは空白のまま残る">
+          <div class="tl-row">
+            <span class="tl-who">PLAUD</span>
+            <ol class="tl">
+              <li class="on">録音<small>ボタンひとつ</small></li>
+              <li class="on">文字起こし<small>話者を分けて</small></li>
+              <li class="on">要約<small>テンプレートで</small></li>
+              <li class="gap">お礼メール</li>
+              <li class="gap">顧客メモ</li>
+              <li class="gap">社内共有</li>
+              <li class="gap">次回の段取り</li>
+            </ol>
           </div>
         </div>
-        <div class="quote">
-          <p>問題は、会議ではない。会議のあとに生まれる空白だ。</p>
-          <p>SIMYは、この空白を埋めるために作られています。あなたが良い仕事で繰り返している確認と判断を学び、会議の文脈を、フォロー、資料、顧客メモ、チーム共有に変えます。</p>
-        </div>
+        <p class="caption">※ 流れは説明用のイメージです</p>
+        <p class="tl-note"><b>Ask PlaudやChatGPT＋PLAUD MCPでも、同じところで止まります。</b>録音に質問はできる。下書きも出せる。でも「頼む」のは毎回あなたで、終わったかを見に行くのもあなたです。</p>
       </section>
 
       <!-- 04 -->
       <section class="sec" id="connect" aria-labelledby="h-connect">
         <span class="sec-label">04 / CONNECT</span>
-        <h2 id="h-connect">PLAUDとSIMYの連携方法：「接続する」を押すだけ</h2>
-        <p>SIMYには、Plaudとの連携が最初から用意されています。ファイルのエクスポートも、Notionへの書き出しも、MCPの設定も必要ありません。SIMYの連携画面でPlaudアカウントを接続するだけです。</p>
+        <h2 id="h-connect">SIMYがつなぐ。Plaudアカウントを接続するだけ</h2>
+        <p class="intro">空白だった4つを、SIMYが埋めます。あなたに戻るのは、判断の1マスだけ。</p>
+        <div class="tl-wrap" role="img" aria-label="タイムライン。録音、文字起こし、要約はPLAUD。お礼メール、顧客メモ、社内共有、次回の段取りはSIMYが進め、金額の最終確認だけがあなたに戻る">
+          <div class="tl-row">
+            <span class="tl-who">PLAUD</span>
+            <ol class="tl">
+              <li class="on">録音</li>
+              <li class="on">文字起こし</li>
+              <li class="on">要約</li>
+              <li class="blank"></li><li class="blank"></li><li class="blank"></li><li class="blank"></li>
+            </ol>
+          </div>
+          <div class="tl-row">
+            <span class="tl-who simy">SIMY</span>
+            <ol class="tl">
+              <li class="blank"></li><li class="blank"></li><li class="blank"></li>
+              <li class="run">お礼メール<small>あなたの文面で下書き</small></li>
+              <li class="run">顧客メモ<small>懸念・決裁時期を更新</small></li>
+              <li class="run">社内共有<small>見積もりの前提を文面に</small></li>
+              <li class="you">金額の確認<small>判断だけ戻る</small></li>
+            </ol>
+          </div>
+        </div>
+        <p class="caption">※ 流れは説明用のイメージです</p>
+        <ul class="three" aria-label="SIMYの3つの特徴">
+          <li>会議から拾う</li>
+          <li>あなたのやり方で</li>
+          <li>判断だけ返す</li>
+        </ul>
+        <p class="tl-note">SIMYは、Plaudアカウントの録音・文字起こし・要約を参照して、会議のあとの仕事を自分で見つけます。頼まなくても始まり、あなたが良い仕事で繰り返している確認と優先順位を学んで、同じやり方で進めます。</p>
+
         <div class="connect">
           <ol class="connect-steps">
-            <li><b>SIMYにログインして、連携画面を開く</b><span>アカウントがまだない場合は、先にSIMYに登録します。</span></li>
-            <li class="key"><b>Plaudの「接続する」を押す</b><span>新しいタブで、Plaudの認証画面が開きます。</span></li>
-            <li><b>Plaudアカウントでログインして、許可する</b><span>これで接続は完了です。次の会議から、録音のあとの仕事をSIMYに任せられます。</span></li>
+            <li><b>SIMYの連携画面を開く</b><span>アカウントがまだなければ、先にSIMYに登録します。</span></li>
+            <li class="key"><b>Plaudの「接続する」を押す</b><span>新しいタブでPlaudの認証画面が開きます。エクスポートもMCPの設定もいりません。</span></li>
+            <li><b>Plaudアカウントでログインして、許可する</b><span>接続は完了。次の会議から、要約の先をSIMYに任せられます。</span></li>
           </ol>
           <div>
             <div class="mock" role="img" aria-label="SIMYの連携画面にあるPlaudの接続カードのイメージ。録音、文字起こし、要約を検索・参照します。接続するボタンを押すと、新しいタブで認証します。">
@@ -1001,40 +1091,14 @@ thead th.simy { background: var(--blue-deep); }
             <p class="caption">※ SIMYの連携画面のイメージです</p>
           </div>
         </div>
-        <p class="note"><b>必要なもの：</b>デバイスを登録済みのPlaudアカウント。認証を途中でやめた場合は、SIMYの連携画面に戻って接続し直してください。</p>
-
-        <h3>接続すると、SIMYができること</h3>
-        <p>SIMYは、Plaudアカウントに保存された録音、文字起こし、要約を検索して参照します。そのうえで合うワークフローを選び、Autorunが会議のあとの仕事を進めます。たとえば、こんなふうに頼めます。</p>
-        <ul class="asks">
-          <li>「今日のA社との商談の録音から、お礼のメールと顧客メモを用意して」</li>
-          <li>「今週の面談の要約をまとめて、週次報告にして」</li>
-          <li>「先月の定例で決まったことと、まだ終わっていない宿題を出して」</li>
-        </ul>
-        <p>要約だけでなく文字起こしも参照するので、要約で落ちた金額や日付、相手の言い回しまで拾って仕事に反映できます。</p>
-
-        <h3>PLAUDのエクスポート形式と使い分け</h3>
-        <p>SIMYと使うだけなら、エクスポートは必要ありません。社外に送ったり、別の場所に保管したりするためにファイルで残したいときは、次のように使い分けます。</p>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr><th scope="col">形式</th><th scope="col">向いている使い方</th></tr>
-            </thead>
-            <tbody>
-              <tr><th scope="row">Notion</th><td>ノートを検索できる形でためていく</td></tr>
-              <tr><th scope="row">DOCX</th><td>議事録として整え、社内で編集・保存する</td></tr>
-              <tr><th scope="row">PDF</th><td>社外に送る記録や、書き換えたくない記録</td></tr>
-              <tr><th scope="row">TXT</th><td>文字起こし全文を軽いファイルで残す</td></tr>
-              <tr><th scope="row">SRT</th><td>再生位置つきの記録や、動画の字幕</td></tr>
-            </tbody>
-          </table>
-        </div>
+        <p class="note"><b>必要なもの：</b>デバイスを登録済みのPlaudアカウント。PLAUDのどのプラン、どのモデルでも接続できます。</p>
       </section>
 
       <!-- 05 -->
       <section class="sec" id="sample" aria-labelledby="h-sample">
         <span class="sec-label">05 / SAMPLE</span>
         <h2 id="h-sample">商談1件で比較：PLAUDの要約と、SIMYが仕上げる下書き</h2>
-        <p>45分の商談をPLAUD NOTE Proで録音した場合の例です。PLAUDの要約と、そのあとにSIMYが仕上げる下書きを並べました。内容は説明用のサンプルです。</p>
+        <p class="intro">45分の商談をPLAUD NOTE Proで録音した場合のサンプルです。左がPLAUD、右がSIMY。</p>
         <div class="sample">
           <div class="sheet">
             <div class="sheet-label"><span>PLAUDの要約（例）</span><span>商談テンプレート</span></div>
@@ -1068,148 +1132,182 @@ thead th.simy { background: var(--blue-deep); }
             </div>
           </div>
         </div>
-        <p class="sample-foot">PLAUDが記録し、SIMYが動かす。あなたは内容をレビューして、送信するだけです。</p>
+        <p class="sample-foot">PLAUDが記録し、SIMYが動かす。商談そのものは、あなたの腕の見せ所のままです。</p>
       </section>
 
       <!-- 06 -->
-      <section class="sec" id="compare" aria-labelledby="h-compare">
-        <span class="sec-label">06 / COMPARE</span>
-        <h2 id="h-compare">Ask Plaud・ChatGPT＋PLAUD MCPとSIMYの違い</h2>
-        <p>PLAUDの録音をAIで扱う方法は、ほかにもあります。どれが良い悪いではなく、得意なことが違います。</p>
-        <p class="scroll-hint">表は横にスクロールできます →</p>
-        <div class="table-wrap">
-          <table class="t-wide">
-            <thead>
-              <tr>
-                <th scope="col">比較項目</th>
-                <th scope="col">Ask Plaud</th>
-                <th scope="col">ChatGPT＋PLAUD MCP</th>
-                <th scope="col" class="simy">SIMY</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><th scope="row">準備</th><td>不要（アプリに内蔵）</td><td>MCPの設定とログイン</td><td class="simy">「接続する」を押すだけ</td></tr>
-              <tr><th scope="row">得意なこと</th><td>1件の録音への質問</td><td>複数の録音を横断した質問や下書き</td><td class="simy">会議のあとの仕事を最後まで進める</td></tr>
-              <tr><th scope="row">使い方</th><td>PLAUDアプリで質問する</td><td>チャットで毎回指示する</td><td class="simy">一度頼めば、次からは合うワークフローを自動で選ぶ</td></tr>
-              <tr><th scope="row">あなたのやり方</th><td>テンプレートで調整する</td><td>プロンプトで毎回伝える</td><td class="simy">良い仕事の確認事項と優先順位を学ぶ</td></tr>
-              <tr><th scope="row">返ってくるもの</th><td>回答</td><td>回答と下書き</td><td class="simy">メールの下書き、メモの更新、共有の文面をAutorunが順に進める</td></tr>
-              <tr><th scope="row">手元に残るもの</th><td>質問の履歴</td><td>チャットの履歴</td><td class="simy">進行中・完了・あなた待ちの仕事が並ぶMy Actions</td></tr>
-            </tbody>
-          </table>
+      <section class="sec" id="usecases" aria-labelledby="h-usecases">
+        <span class="sec-label">06 / BY INDUSTRY</span>
+        <h2 id="h-usecases">業種別：会議の種類と、SIMYが出すもの</h2>
+        <p class="intro">PLAUDで記録した会話から、SIMYが何を用意するか。個人でも企業のチームでも、ビジネスの型は同じです。</p>
+        <div class="ind">
+          <div class="ind-card">
+            <h3>営業・商談 <small>PLAUD NOTE Pro（対面・通話）</small></h3>
+            <ul class="ind-rows">
+              <li><span>初回商談</span><span>→</span><span>お礼メール・論点メモ・活動ログ</span></li>
+              <li><span>見積もり前の打ち合わせ</span><span>→</span><span>前提の社内共有・顧客メモの更新</span></li>
+              <li><span>電話でのフォロー</span><span>→</span><span>次回アポの候補と確認事項</span></li>
+            </ul>
+          </div>
+          <div class="ind-card">
+            <h3>FP・保険の面談 <small>PLAUD NotePin S（対面）</small></h3>
+            <ul class="ind-rows">
+              <li><span>初回ヒアリング</span><span>→</span><span>ヒアリングの整理・提案書の骨子</span></li>
+              <li><span>2回目以降の面談</span><span>→</span><span>複数回をまとめた経過メモ</span></li>
+              <li><span>面談のあと</span><span>→</span><span>次回までの宿題リスト</span></li>
+            </ul>
+          </div>
+          <div class="ind-card">
+            <h3>歯科・クリニック <small>PLAUD NotePin（ハンズフリー）</small></h3>
+            <ul class="ind-rows">
+              <li><span>カウンセリング</span><span>→</span><span>説明内容の記録・補足説明の下書き</span></li>
+              <li><span>朝礼・ミーティング</span><span>→</span><span>決めたことがスタッフに届く申し送り</span></li>
+              <li><span>月次の振り返り</span><span>→</span><span>複数回をまとめた報告</span></li>
+            </ul>
+            <p class="small muted" style="margin:10px 0 0">患者さんの同意と院内のルールに沿って録音してください。</p>
+          </div>
+          <div class="ind-card">
+            <h3>経営会議・1on1 <small>PLAUD NOTE Pro（会議室で最大5m）</small></h3>
+            <ul class="ind-rows">
+              <li><span>経営会議</span><span>→</span><span>決定事項と担当者の一覧・関係者への共有</span></li>
+              <li><span>1on1</span><span>→</span><span>「あれどうなった」を聞く前に、進捗と判断待ち</span></li>
+              <li><span>週の終わり</span><span>→</span><span>複数の会議をまとめた週次報告</span></li>
+            </ul>
+          </div>
         </div>
-        <p class="note"><b>選び方：</b>1回きりの確認ならAsk Plaudで十分です。同じ種類の会議が毎週あり、そのあとの仕事が毎回同じなら、SIMYの出番です。</p>
       </section>
 
       <!-- 07 -->
-      <section class="sec" id="usecases" aria-labelledby="h-usecases">
-        <span class="sec-label">07 / USE CASES</span>
-        <h2 id="h-usecases">ビジネスでの活用例</h2>
-        <p>個人でも企業のチームでも使えます。PLAUDで記録した会話から、SIMYがどんな仕事を進めるか。職種ごとの例です。</p>
-        <div class="cases">
-          <div class="case">
-            <h3>営業・商談</h3>
-            <p class="device">おすすめ：PLAUD NOTE Pro（対面・通話）</p>
-            <p>商談のあとに進める仕事</p>
-            <ul>
-              <li>お礼とフォローのメール</li>
-              <li>顧客メモとCRMの更新</li>
-              <li>見積もりの前提の社内共有</li>
-              <li>次回アポの候補日の整理</li>
-            </ul>
-          </div>
-          <div class="case">
-            <h3>FP・保険の面談</h3>
-            <p class="device">おすすめ：PLAUD NotePin S（対面）</p>
-            <p>面談のあとに進める仕事</p>
-            <ul>
-              <li>ヒアリング内容の整理</li>
-              <li>提案書の骨子</li>
-              <li>次回までの宿題リスト</li>
-              <li>複数回の面談をまとめた経過メモ</li>
-            </ul>
-          </div>
-          <div class="case">
-            <h3>歯科・クリニックのカウンセリング</h3>
-            <p class="device">おすすめ：PLAUD NotePin（対面・ハンズフリー）</p>
-            <p>カウンセリングのあとに進める仕事</p>
-            <ul>
-              <li>説明した内容の記録</li>
-              <li>患者さんへの補足説明の下書き</li>
-              <li>スタッフ間の申し送り</li>
-            </ul>
-            <p class="small muted" style="margin-top:8px">患者さんの同意と院内のルールに沿って録音してください。</p>
-          </div>
-          <div class="case">
-            <h3>経営会議・1on1</h3>
-            <p class="device">おすすめ：PLAUD NOTE Pro（会議室で最大5m）</p>
-            <p>会議のあとに進める仕事</p>
-            <ul>
-              <li>決定事項と担当者の一覧</li>
-              <li>関係者への共有</li>
-              <li>複数の会議をまとめた週次報告</li>
-            </ul>
-          </div>
-        </div>
+      <section class="sec" id="start" aria-labelledby="h-start">
+        <span class="sec-label">07 / START</span>
+        <h2 id="h-start">はじめ方：PLAUDが届いたら、3ステップ</h2>
+        <ol class="steps3">
+          <li><b>PLAUDをペアリングして、録音する</b><span>充電して、アプリと本体をつなぐ。要約テンプレートと話者名を設定しておくと、要約の粒度がそろいます。</span></li>
+          <li class="key"><b>SIMYにPlaudアカウントを接続する</b><span>連携画面で「接続する」を押すだけ。<a href="#connect">つなぎ方</a>は上のとおりです。</span></li>
+          <li><b>会議を1件、録音して終わる</b><span>要約の先の仕事が届きます。レビューして、送る。それだけです。</span></li>
+        </ol>
+        <p class="note"><b>PLAUDをすでに使っている人は、</b>ステップ2だけ。接続すると、これまでの録音もSIMYが参照します。</p>
       </section>
 
       <!-- 08 -->
-      <section class="sec" id="pricing" aria-labelledby="h-pricing">
-        <span class="sec-label">08 / PRICING &amp; MODELS</span>
-        <h2 id="h-pricing">PLAUDの料金プランと対応モデル</h2>
-        <p>SIMYとの接続は、PLAUDのどのプランでも、どのモデルでも使えます。プランとモデルを選ぶときの目安をまとめました。</p>
+      <section class="sec" id="reference" aria-labelledby="h-reference">
+        <span class="sec-label">08 / REFERENCE</span>
+        <h2 id="h-reference">PLAUDの使い方・料金プラン・セキュリティ（詳しく知りたい人向け）</h2>
+        <p class="intro">ここから下は、PLAUD本体のことを確かめたいときに開いてください。SIMYとの接続には、どれも影響しません。</p>
 
-        <h3>料金プランの価格比較：Starter・Pro・Unlimited</h3>
-        <p class="scroll-hint">表は横にスクロールできます →</p>
-        <div class="table-wrap">
-          <table class="t-wide t-price">
-            <thead>
-              <tr><th scope="col">プラン</th><th scope="col">価格（税込）</th><th scope="col">文字起こし時間</th><th scope="col">SIMYとの接続</th></tr>
-            </thead>
-            <tbody>
-              <tr><th scope="row">Starter</th><td>無料</td><td>月300分</td><td>接続して使える</td></tr>
-              <tr><th scope="row">Pro</th><td>年額16,800円</td><td>月1,200分</td><td>接続して使える</td></tr>
-              <tr><th scope="row">Unlimited</th><td>年額40,000円</td><td>無制限（1日最大24時間）</td><td>接続して使える</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <p class="note"><b>プランの目安：</b>1回1時間以内の会議なら、月300分で5回分です。週に2回以上会議を録音するならPro、毎日商談があるならUnlimitedが目安です。要約テンプレート、Ask Plaud、マインドマップ、112言語の文字起こし、27種類以上のエクスポートは、全プラン共通です。</p>
+        <details class="fold">
+          <summary>PLAUDの使い方：届いたら最初にやる5つのこと<small>充電・ペアリング・録音モード・要約テンプレート・話者名</small></summary>
+          <div class="fold-body">
+            <h3>届いたら最初にやる5つのこと</h3>
+            <ol class="plain-list">
+              <li><strong>充電して、アプリと本体をペアリングする。</strong>NotePinはマグネット式の充電ドックに置くだけで、約2時間で満充電になります。録音データは本体からアプリに転送されたあと、文字起こしが始まります。本体の保存容量がいっぱいになる前に、こまめに転送しておくと安心です。</li>
+              <li><strong>録音モードを確かめる。</strong>PLAUD NOTEとPLAUD NOTE Proは、対面と通話の2つのモードを選択して録音できます。NOTE Proは自動的に切り替わります。NotePinシリーズは対面の録音専用です。</li>
+              <li><strong>要約テンプレートを選ぶ。</strong>商談、1on1、講義など1万種類以上のテンプレートから選べます。よく使う会議の型はカスタムテンプレートとして追加しておくと、生成される要約の粒度がそろいます。</li>
+              <li><strong>話者名を登録する。</strong>文字起こしの話者を名前にしておくと、議事録が読みやすくなり、誰が何を引き受けたかも追いやすくなります。</li>
+              <li><strong>SIMYにPlaudアカウントを接続する。</strong>連携画面で「接続する」を押すだけです。</li>
+            </ol>
+            <h3>PCで使うなら：Plaud WebとPlaud Desktop</h3>
+            <ul class="plain-list">
+              <li><strong>Plaud Web：</strong>ブラウザからPlaudアカウントにログインして、録音の確認や文字起こしの編集ができます。</li>
+              <li><strong>Plaud Desktop：</strong>WindowsとMacのデスクトップアプリです。Zoom、Microsoft Teams、Google Meetなどのオンライン会議を、ボットを参加させずに録音できます。PLAUDのユーザーは無料で使えます。</li>
+            </ul>
+            <p>スマホでもパソコンでも、Plaudアカウントに保存された録音はSIMYから参照できます。</p>
+          </div>
+        </details>
 
-        <h3>対応モデルの比較：PLAUD NOTE Pro・NOTE・NotePin</h3>
-        <p class="scroll-hint">表は横にスクロールできます →</p>
-        <div class="table-wrap">
-          <table class="t-wide t-models t-price">
-            <thead>
-              <tr><th scope="col">モデル</th><th scope="col">本体価格（税込）</th><th scope="col">録音モード</th><th scope="col">マイク・収音</th><th scope="col">連続録音</th><th scope="col">向いている人</th></tr>
-            </thead>
-            <tbody>
-              <tr><th scope="row">PLAUD NOTE Pro</th><td>30,800円</td><td>対面・通話（自動切替）</td><td>4マイク・最大5m</td><td>最大50時間</td><td>会議室や通話での録音が多い人</td></tr>
-              <tr><th scope="row">PLAUD NOTE</th><td>27,500円</td><td>対面・通話</td><td>2マイク・最大3m</td><td>最大30時間</td><td>スマホに付けて通話も録りたい人</td></tr>
-              <tr><th scope="row">PLAUD NotePin S</th><td>28,600円</td><td>対面のみ</td><td>2マイク・最大3m</td><td>最大20時間</td><td>外回りや現場で身につけたい人</td></tr>
-              <tr><th scope="row">PLAUD NotePin</th><td>27,500円</td><td>対面のみ</td><td>—</td><td>最大20時間</td><td>軽さ（16.6g）を重視する人</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <p class="small muted">価格と仕様は、2026年9月30日に確認したPLAUD公式サイトの情報です。最新の情報は<a href="https://jp.plaud.ai/" target="_blank" rel="noopener">PLAUD公式サイト</a>をご確認ください。どのモデルで録音しても、SIMYは同じように使えます。</p>
+        <details class="fold">
+          <summary>PLAUD NOTEの主な機能：録音・文字起こし・要約・Ask Plaud<small>AIボイスレコーダーとして、ここまでが得意</small></summary>
+          <div class="fold-body">
+            <h3>録音・文字起こし・要約</h3>
+            <p>PLAUD NOTEは、会話の録音から文字起こし、要約までをAIで自動化するボイスレコーダーです。ボタンひとつで録音を開始し、大事な瞬間にはハイライトで印をつけられます。NOTE Proは最大50時間の連続録音に対応し、胸ポケットにクリップで留められるNotePinシリーズもあります。文字起こしは112言語に対応し、日本語の会話も話者を分けて書き起こします。精度はマイクとの距離や周囲のノイズで変わり、会議室なら4つのマイクで最大5m先の音声まで収音できるNOTE Proが有利です。要約に使うAIモデルはGPT、Gemini、Claudeなどから選べます。</p>
+            <h3>マインドマップ・Ask Plaud・マルチモーダル入力</h3>
+            <p>会話の構造を図にするマインドマップで長い会議の全体像を理解できます。Ask Plaud（ベータ版）では、録音の内容について「先方の予算感は？」のように質問できます。録音に写真やテキストを添えて、ひとつのノートとして記録することもできます。</p>
+            <h3>エクスポートと連携</h3>
+            <p>TXT、DOCX、PDF、SRTなど27種類以上の形式でファイルを書き出せます。Notionへの書き出し、AutoFlow機能、Zapierとの連携、AIツールから録音を読み出せるPLAUD MCPにも対応しています。社外に送るならPDF、社内で編集・保存するならDOCX、文字起こし全文を軽いファイルで残すならTXT、再生位置つきの記録や動画の字幕ならSRTが向いています。SIMYと使うだけなら、エクスポートは必要ありません。</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>料金プランの比較：Starter・Pro・Unlimited<small>違いは文字起こし時間。SIMYはどのプランでも接続できる</small></summary>
+          <div class="fold-body">
+            <p class="scroll-hint">表は横にスクロールできます →</p>
+            <div class="table-wrap">
+              <table class="t-wide t-price">
+                <thead>
+                  <tr><th scope="col">PLAUDのプラン</th><th scope="col">価格（税込）</th><th scope="col">文字起こし時間</th><th scope="col">SIMYとの接続</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Starter</th><td>無料</td><td>月300分</td><td>接続して使える</td></tr>
+                  <tr><th scope="row">Pro</th><td>年額16,800円</td><td>月1,200分</td><td>接続して使える</td></tr>
+                  <tr><th scope="row">Unlimited</th><td>年額40,000円</td><td>無制限（1日最大24時間）</td><td>接続して使える</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="note"><b>目安：</b>1回1時間以内の会議なら、月300分で5回分です。週に2回以上録音するならPro、毎日商談があるならUnlimited。要約テンプレート、Ask Plaud、マインドマップ、112言語の文字起こし、27種類以上のエクスポートは全プラン共通です。月額ではなく年額での案内です。</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>対応モデルの比較：PLAUD NOTE Pro・NOTE・NotePin<small>どのモデルで録音しても、SIMYは同じように使える</small></summary>
+          <div class="fold-body">
+            <p class="scroll-hint">表は横にスクロールできます →</p>
+            <div class="table-wrap">
+              <table class="t-wide t-models t-price">
+                <thead>
+                  <tr><th scope="col">モデル</th><th scope="col">本体価格（税込）</th><th scope="col">録音モード</th><th scope="col">マイク・収音</th><th scope="col">連続録音</th><th scope="col">向いている人</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">PLAUD NOTE Pro</th><td>30,800円</td><td>対面・通話（自動切替）</td><td>4マイク・最大5m</td><td>最大50時間</td><td>会議室や通話録音が多い人</td></tr>
+                  <tr><th scope="row">PLAUD NOTE</th><td>27,500円</td><td>対面・通話</td><td>2マイク・最大3m</td><td>最大30時間</td><td>スマホに付けて通話も録りたい人</td></tr>
+                  <tr><th scope="row">PLAUD NotePin S</th><td>28,600円</td><td>対面のみ</td><td>2マイク・最大3m</td><td>最大20時間</td><td>外回りや現場で身につけたい人</td></tr>
+                  <tr><th scope="row">PLAUD NotePin</th><td>27,500円</td><td>対面のみ</td><td>—</td><td>最大20時間</td><td>軽さ（16.6g）を重視する人</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="small muted">価格と仕様は、2026年9月30日に確認したPLAUD公式サイトの情報です。最新の情報は<a href="https://jp.plaud.ai/" target="_blank" rel="noopener">PLAUD公式サイト</a>をご確認ください。</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>Ask Plaud・ChatGPT＋PLAUD MCPとSIMYの違い<small>どれが良い悪いではなく、止まる場所が違う</small></summary>
+          <div class="fold-body">
+            <p class="scroll-hint">表は横にスクロールできます →</p>
+            <div class="table-wrap">
+              <table class="t-wide">
+                <thead>
+                  <tr><th scope="col">比較項目</th><th scope="col">Ask Plaud</th><th scope="col">ChatGPT＋PLAUD MCP</th><th scope="col" class="simy">SIMY</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">準備</th><td>不要（アプリに内蔵）</td><td>MCPの設定とログイン</td><td class="simy">「接続する」を押すだけ</td></tr>
+                  <tr><th scope="row">起点</th><td>あなたが質問する</td><td>あなたがチャットで頼む</td><td class="simy">会議から、SIMYが拾う</td></tr>
+                  <tr><th scope="row">あなたのやり方</th><td>テンプレートで調整</td><td>プロンプトで毎回伝える</td><td class="simy">良い仕事の確認事項と優先順位を学ぶ</td></tr>
+                  <tr><th scope="row">返ってくるもの</th><td>回答</td><td>回答と下書き</td><td class="simy">下書き・メモの更新・共有の文面と、判断の1問</td></tr>
+                  <tr><th scope="row">手元に残るもの</th><td>質問の履歴</td><td>チャットの履歴</td><td class="simy">進行中・完了・あなた待ちが並ぶMy Actions</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="note"><b>選び方：</b>1回きりの確認ならAsk Plaudで十分です。同じ種類の会議が毎週あり、そのあとの仕事が毎回同じなら、SIMYの出番です。ChatGPTの使い方そのものは<a href="/guides/chatgpt.html">ChatGPT活用ガイド</a>にまとめています。</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>セキュリティ・情報漏洩対策と録音の同意<small>学習に使われない設定、暗号化、データセンター、同意の取り方</small></summary>
+          <div class="fold-body">
+            <ul class="plain-list">
+              <li><strong>録音の同意：</strong>録音を始める前に、会話に参加する全員から同意を取ってください。SIMYの<a href="/terms.html">利用規約</a>でも、録音の同意の取得はお客さまの責任としています。</li>
+              <li><strong>PLAUDのセキュリティ：</strong>PLAUDは、SOC 2 Type II、HIPAA、GDPR、ISO/IEC 27001への準拠を公開しています。データは通信時にTLS 1.2以上、保存時にAES-256で暗号化され、日本にもデータセンターがあります。</li>
+              <li><strong>AIの学習：</strong>PLAUDは、ユーザーが明示的に同意しない限り、録音データをAIの学習に使わないと案内しています。不要になった録音はPLAUDアプリから削除できます。</li>
+              <li><strong>PLAUD MCPを使う場合：</strong>Web版のChatGPTやClaudeから使うと、録音データはPLAUDの米国のサーバーを経由します。PLAUDは、処理後にデータを保存しないと案内しています。</li>
+              <li><strong>SIMYとの接続：</strong>Plaudの認証画面であなたのPlaudアカウントにログインし、許可して行います。SIMYでのデータの取り扱いは、<a href="/security.html">セキュリティ</a>と<a href="/privacy.html">プライバシーポリシー</a>で公開しています。</li>
+              <li><strong>文字起こしの精度と検証：</strong>マイクとの距離を縮める、ノイズを減らす、話者名を登録する、が基本です。オンライン会議はスピーカーの近くに本体を置くとクリアな音質で録れます。短い会議で検証してから本番に使うと安心です。翻訳やダウンロードが必要な場面も、PLAUDアプリ側で対応できます。</li>
+            </ul>
+          </div>
+        </details>
       </section>
 
       <!-- 09 -->
-      <section class="sec" id="privacy" aria-labelledby="h-privacy">
-        <span class="sec-label">09 / PRIVACY</span>
-        <h2 id="h-privacy">セキュリティ・情報漏洩対策と録音の同意</h2>
-        <p>会話の記録を扱う以上、情報漏洩への備えと同意の取り方は最初に確認しておきましょう。</p>
-        <ul class="plain-list">
-          <li><strong>録音の同意：</strong>録音を始める前に、会話に参加する全員から同意を取ってください。SIMYの<a href="/terms.html">利用規約</a>でも、録音の同意の取得はお客さまの責任としています。</li>
-          <li><strong>SIMYとの接続：</strong>接続は、Plaudの認証画面であなたのPlaudアカウントにログインし、許可して行います。</li>
-          <li><strong>PLAUDのセキュリティ：</strong>PLAUDは、SOC 2 Type II、HIPAA、GDPR、ISO/IEC 27001への準拠を公開しています。データは通信時にTLS 1.2以上、保存時にAES-256で暗号化され、日本にもデータセンターがあります。</li>
-          <li><strong>AIの学習：</strong>PLAUDは、ユーザーが明示的に同意しない限り、録音データをAIの学習に使わないと案内しています。不要になった録音は、PLAUDアプリから削除できます。</li>
-          <li><strong>PLAUD MCPを使う場合：</strong>Web版のChatGPTやClaudeから使うと、録音データはPLAUDの米国のサーバーを経由します。PLAUDは、処理後にデータを保存しないと案内しています。</li>
-          <li><strong>SIMY側のデータ：</strong>SIMYでのデータの取り扱いは、<a href="/security.html">セキュリティ</a>と<a href="/privacy.html">プライバシーポリシー</a>で公開しています。</li>
-        </ul>
-      </section>
-
-      <!-- 10 -->
       <section class="sec" id="faq" aria-labelledby="h-faq">
-        <span class="sec-label">10 / FAQ</span>
+        <span class="sec-label">09 / FAQ</span>
         <h2 id="h-faq">よくある質問</h2>
         <div class="faq">
           <details>
@@ -1221,69 +1319,53 @@ thead th.simy { background: var(--blue-deep); }
             <div class="a"><p>はい。接続すると、Plaudアカウントに保存されている録音、文字起こし、要約をSIMYが検索して参照します。</p></div>
           </details>
           <details>
-            <summary>PLAUDの無料プラン（Starter）でもSIMYと接続できますか？</summary>
-            <div class="a"><p>はい。接続に必要なのは、デバイスを登録済みのPlaudアカウントです。Starterプランの文字起こし時間は月300分です。</p></div>
-          </details>
-          <details>
             <summary>PLAUD NOTE Pro、NotePinなど、どのモデルでも使えますか？</summary>
             <div class="a"><p>はい。SIMYはPlaudアカウントに保存された文字起こしと要約を参照するため、モデルによる違いはありません。通話も録音したい場合は、通話モードのあるPLAUD NOTEかPLAUD NOTE Proを選んでください。</p></div>
+          </details>
+          <details>
+            <summary>PLAUDのStarter（無料）やUnlimitedなど、どの料金プランでも接続できますか？</summary>
+            <div class="a"><p>はい。接続に必要なのは、デバイスを登録済みのPlaudアカウントだけです。プランの違いは文字起こし時間です。Starterは月300分、Proは月1,200分、Unlimitedは無制限です。</p></div>
+          </details>
+          <details>
+            <summary>Notionへのエクスポートや、PLAUD MCPの設定は必要ですか？</summary>
+            <div class="a"><p>必要ありません。PLAUD MCPは、録音をChatGPTやClaudeから読み出すPLAUD公式の仕組みですが、SIMYはPlaudアカウントを直接参照するため、エクスポートもMCPの設定もいりません。</p></div>
           </details>
           <details>
             <summary>PLAUDはどこの国の会社ですか？</summary>
             <div class="a"><p>PLAUDを開発するPlaud Inc.は、米国サンフランシスコに本社を置く会社です。日本では、PLAUD株式会社がサポートやデータの管理を担っています。</p></div>
           </details>
           <details>
-            <summary>PCでもPLAUDを使えますか？</summary>
-            <div class="a"><p>使えます。ブラウザ版のPlaud Webで録音の確認や編集ができ、WindowsとMac向けのPlaud Desktopでは、Zoomなどのオンライン会議をボットなしで録音できます。</p></div>
-          </details>
-          <details>
             <summary>PLAUDの録音がAIの学習に使われたり、情報漏洩したりしませんか？</summary>
             <div class="a"><p>PLAUDは、明示的な同意がない限り録音データをAIの学習に使わないと案内しています。SOC 2 Type II、HIPAA、GDPR、ISO/IEC 27001に準拠し、データは暗号化して保存されます。SIMYでの取り扱いは、セキュリティとプライバシーポリシーのページで公開しています。</p></div>
           </details>
           <details>
-            <summary>Notionへのエクスポートや、ファイルの書き出しは必要ですか？</summary>
-            <div class="a"><p>必要ありません。SIMYは、Plaudアカウントの録音、文字起こし、要約を直接検索して参照します。</p></div>
+            <summary>議事録の形式（参加者・議題・決定事項・次アクション）は、毎回指定が必要ですか？</summary>
+            <div class="a"><p>いいえ。一度あなたの型で仕上げれば、SIMYはそのやり方を学び、次の会議からは同じ形で用意します。文字起こしを貼って、同じ指示を打ち直す作業はなくなります。</p></div>
           </details>
           <details>
-            <summary>PLAUD MCPとは何ですか？SIMYで設定は必要ですか？</summary>
-            <div class="a"><p>PLAUD MCPは、PLAUDの録音、文字起こし、要約を、ChatGPT、Claude、CodexなどのAIツールから読み出せるPLAUD公式の仕組みです。SIMYと使う場合、MCPの設定は必要ありません。SIMYの連携画面でPlaudアカウントを接続するだけです。</p></div>
+            <summary>「何が決まったか」の判断は、AIがしますか？私がしますか？</summary>
+            <div class="a"><p>判断はあなたです。SIMYは文字起こしと要約から候補を整理して下書きまで進め、金額や送信の可否など、判断が必要なところだけをあなたに返します。</p></div>
           </details>
           <details>
-            <summary>Unlimitedプランは必要ですか？</summary>
-            <div class="a"><p>録音する時間しだいです。文字起こしが月1,200分（20時間）を超えるならUnlimited、月300分（5時間）以内ならStarterで足ります。その間ならProが目安です。</p></div>
-          </details>
-          <details>
-            <summary>Ask PlaudやChatGPTがあれば、SIMYは必要ありませんか？</summary>
-            <div class="a"><p>1件の録音に質問したいだけなら、Ask Plaudで十分です。SIMYが役に立つのは、会議のあとにメール、メモの更新、共有といった複数の仕事が毎回発生する場合です。SIMYはあなたの仕事の基準を学び、合うワークフローを選んで、Autorunが先へ進めます。</p></div>
+            <summary>Notion AI、Notta、Teamsなど、PLAUD以外の文字起こしでもSIMYは使えますか？</summary>
+            <div class="a"><p>このページはPLAUD向けですが、SIMYの連携画面にはNotionやGoogleなど他の接続先もあります。会議の文脈をそこから渡せます。対応状況は連携画面で確認してください。</p></div>
           </details>
           <details>
             <summary>SIMYを使うと、AIの利用料が別にかかりますか？</summary>
             <div class="a"><p>SIMYはお使いのChatGPTアカウントをつなぎ、Codex App Server経由で仕事を進めます。Codexの利用は、お使いのChatGPTプランの範囲で行われます。SIMY自体の料金は<a href="/?lang=ja#pricing">料金ページ</a>をご覧ください。</p></div>
           </details>
           <details>
-            <summary>文字起こしの精度が低いときは、どうすればいいですか？</summary>
-            <div class="a"><p>話し手とマイクの距離を縮める、周囲のノイズを減らす、話者名を登録する、の3つが基本です。オンライン会議は、スピーカーの近くに本体を置くとクリアな音声で録れます。精度を評価するなら、短い会議で検証してから本番に使いましょう。SIMYは要約に加えて文字起こしも参照するため、要約で落ちた細部も拾えます。</p></div>
-          </details>
-          <details>
-            <summary>複数の録音をまとめて、1つの報告にできますか？</summary>
-            <div class="a"><p>できます。接続したPlaudの複数の録音をもとに、週次報告や顧客ごとの経過報告を作るようSIMYに頼めます。</p></div>
-          </details>
-          <details>
-            <summary>接続がうまくいかないときは、どうすればいいですか？</summary>
-            <div class="a"><p>デバイスを登録済みのPlaudアカウントでログインしているか確認してください。認証を途中でやめた場合は、SIMYの連携画面に戻って接続し直してください。</p></div>
-          </details>
-          <details>
             <summary>録音するときに相手の同意は必要ですか？</summary>
-            <div class="a"><p>必要です。録音を始める前に、会話に参加する全員から同意を取ってください。SIMYの利用規約でも、録音の同意の取得はお客さまの責任としています。</p></div>
+            <div class="a"><p>必要です。録音を始める前に、会話に参加する全員から同意を取ってください。SIMYの<a href="/terms.html">利用規約</a>でも、録音の同意の取得はお客さまの責任としています。</p></div>
           </details>
         </div>
       </section>
 
-      <!-- 11 -->
+      <!-- 10 -->
       <section class="sec" id="sources" aria-labelledby="h-sources">
-        <span class="sec-label">11 / SOURCES</span>
+        <span class="sec-label">10 / SOURCES</span>
         <h2 id="h-sources">参考情報</h2>
-        <p>PLAUDの価格、仕様、機能、セキュリティは、次の公式情報で確認しました（確認日：2026年9月30日）。Plaud Desktopについては、<a href="https://www.watch.impress.co.jp/docs/news/2076169.html" target="_blank" rel="noopener">Impress Watchの記事</a>も参照しました。</p>
+        <p>PLAUDの価格、仕様、機能、セキュリティは、次の公式情報で確認しました（確認日：2026年9月30日）。Plaud Desktopについては、<a href="https://www.watch.impress.co.jp/docs/news/2076169.html" target="_blank" rel="noopener">Impress Watchの記事</a>も参照しました。会議のあとに残る仕事の場面は、日本のAI活用系YouTubeチャンネルの解説動画を参考にしています。</p>
         <ul class="plain-list">
           <li><a href="https://jp.plaud.ai/products/plaud-ai-membership" target="_blank" rel="noopener">Plaud AI アプリ年間プロプラン（料金プランと機能の比較）</a></li>
           <li><a href="https://jp.plaud.ai/blogs/blog/plaud-note-pro" target="_blank" rel="noopener">Plaud Note Proとは？他モデルとの違い（モデルの価格と仕様）</a></li>
@@ -1301,7 +1383,7 @@ thead th.simy { background: var(--blue-deep); }
     <div class="wrap closing-inner">
       <div>
         <h2 id="h-closing">次の会議が終わったら、<br>要約を読み返す前にSIMYへ。</h2>
-        <p>Plaudアカウントを接続するだけで、会議1件から試せます。</p>
+        <p>Plaudアカウントを接続するだけで、会議1件から試せます。SIMYが返すのは判断だけ。商談は、あなたの腕の見せ所のままです。</p>
       </div>
       <div class="cta-row">
         <a class="btn btn-primary" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=plaud_guide&amp;utm_content=closing">会議1件から試す <span class="arrow" aria-hidden="true">↗</span></a>
@@ -1318,6 +1400,7 @@ thead th.simy { background: var(--blue-deep); }
       <li><a href="/?lang=ja#how-it-works">仕組み</a></li>
       <li><a href="/?lang=ja#pricing">料金</a></li>
       <li><a href="/integrations.html">連携</a></li>
+      <li><a href="/guides/chatgpt.html">ChatGPT活用ガイド</a></li>
       <li><a href="/security.html">セキュリティ</a></li>
       <li><a href="/about.html">会社概要</a></li>
       <li><a href="/privacy.html">プライバシーポリシー</a></li>
@@ -1328,7 +1411,6 @@ thead th.simy { background: var(--blue-deep); }
     <p>&copy; 2026 SIMY by AwakApp Inc.</p>
   </div>
 </footer>
-
 <script>
 (function () {
   var links = Array.prototype.slice.call(document.querySelectorAll('.toc a'));
