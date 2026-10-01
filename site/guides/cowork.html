@@ -881,7 +881,7 @@ thead th.simy { background: var(--blue-deep); }
           "name": "SIMY を使うには Claude の有料プランが必要ですか？",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "いいえ。SIMY のクラウド実行はお使いの ChatGPT アカウント（Codex）で行い、Codex の利用はお使いの ChatGPT プランの範囲で、ローカルでは PC 上の Claude Code を実行役にできます。SIMY の料金は料金ページをご覧ください。"
+            "text": "SIMY だけなら不要です。SIMY CLI を入れると、Claude Code の会話を SIMY に取り込み、SIMY から Claude Code を動かせます。このときは、あなたの Claude のログインとプランがそのまま使われます。Claude のトークンを SIMY のクラウド実行に連携することはできず、クラウド実行はお使いの ChatGPT アカウント（Codex）で動きます。Gemini のトークン連携は開発中です。SIMY の料金は料金ページをご覧ください。"
           }
         },
         {
@@ -945,7 +945,7 @@ thead th.simy { background: var(--blue-deep); }
         <ul class="hero-points">
           <li>指示していない仕事を、会議とチャットから拾う</li>
           <li>一度仕上げた型を、毎回頼まなくても再現する</li>
-          <li>Claude の有料プランがなくても使える</li>
+          <li>Claude Code の会話も、SIMY に取り込める</li>
         </ul>
       </div>
 
@@ -1134,8 +1134,8 @@ thead th.simy { background: var(--blue-deep); }
 
         <div class="connect">
           <ol class="connect-steps">
-            <li><b>SIMY に登録する</b><span>クラウドで動かすなら、お使いの ChatGPT アカウントをつなぎます。Codex の利用は、お使いの ChatGPT プランの範囲です。SIMY は Claude のプランでは動きません。</span></li>
-            <li class="key"><b>ローカルなら、Claude Code を実行役にする</b><span>simy デスクトップアプリ／CLI が、PC 上の Claude Code を実行役にできます。Cowork と同じ Claude の環境が、そのまま働き手になります。</span></li>
+            <li><b>SIMY に登録する</b><span>クラウドで動かすなら、お使いの ChatGPT アカウントをつなぎます。Codex の利用は、お使いの ChatGPT プランの範囲です。Gemini のトークン連携は開発中です。</span></li>
+            <li class="key"><b>ローカルなら、Claude Code を実行役にする</b><span>SIMY CLI（デスクトップアプリ）が、PC 上の Claude Code を SIMY から動かします。Claude Code の会話も SIMY に取り込まれ、「SIMY からの提案」になります。</span></li>
             <li><b>「SIMY からの提案」を受け取る</b><span>Claude Code や Codex の会話履歴（既定90日分）から、繰り返している仕事を WorkFlow の候補として提案します。会話の本文はサーバーに保存しません。</span></li>
           </ol>
           <div>
@@ -1154,7 +1154,7 @@ thead th.simy { background: var(--blue-deep); }
             <p class="caption">※ SIMY の画面のイメージです</p>
           </div>
         </div>
-        <p class="note"><b>必要なもの：</b>SIMY のアカウント。Claude の有料プランは、SIMY には必要ありません（Cowork を使うには必要です）。クラウド実行はお使いの ChatGPT（Codex）、ローカル実行は PC 上の Claude Code です。</p>
+        <p class="note"><b>必要なもの：</b>SIMY のアカウント。Claude Code の会話の取り込みと操作は SIMY CLI でできます。できないのは、Claude のトークンを SIMY のクラウド実行に連携することだけで、クラウド実行はお使いの ChatGPT（Codex）で動きます。Gemini のトークン連携は開発中です。</p>
       </section>
 
       <!-- 05 -->
@@ -1323,7 +1323,7 @@ thead th.simy { background: var(--blue-deep); }
             </div>
             <h3>プランの選び方の目安</h3>
             <p>個人で机の上の仕事を任せるなら Pro から。1日に何件も走らせる、長い作業を並行させるなら、利用上限の大きい Max が候補になります。チームで使い、誰がどのフォルダやツールに触れるかを管理したいなら Team、部門別の権限や利用額の上限、活動ログの外部連携まで必要なら Enterprise です。各プランの利用上限と金額は変わることがあるため、ここには書かず、公式の料金ページで確認してください。</p>
-            <p class="note"><b>SIMY との関係：</b>SIMY を使うのに Claude の有料プランは必要ありません。SIMY のクラウド実行はお使いの ChatGPT アカウント（Codex）で、ローカル実行は PC 上の Claude Code です。SIMY の料金は<a href="/?lang=ja#pricing">料金ページ</a>へ。</p>
+            <p class="note"><b>SIMY との関係：</b>SIMY だけなら Claude の有料プランは不要です。SIMY CLI を入れると Claude Code の会話を取り込み、SIMY から Claude Code を動かせます。Claude のトークンはクラウド実行に連携できず、クラウド実行はお使いの ChatGPT アカウント（Codex）で動きます。SIMY の料金は<a href="/?lang=ja#pricing">料金ページ</a>へ。</p>
           </div>
         </details>
 
@@ -1444,7 +1444,7 @@ thead th.simy { background: var(--blue-deep); }
           </details>
           <details>
             <summary>SIMY を使うには Claude の有料プランが必要ですか？</summary>
-            <div class="a"><p>いいえ。SIMY のクラウド実行はお使いの ChatGPT アカウント（Codex）で行い、Codex の利用はお使いの ChatGPT プランの範囲で、ローカルでは PC 上の Claude Code を実行役にできます。SIMY の料金は<a href="/?lang=ja#pricing">料金ページ</a>をご覧ください。</p></div>
+            <div class="a"><p>SIMY だけなら不要です。SIMY CLI を入れると、Claude Code の会話を SIMY に取り込み、SIMY から Claude Code を動かせます。このときは、あなたの Claude のログインとプランがそのまま使われます。Claude のトークンを SIMY のクラウド実行に連携することはできず、クラウド実行はお使いの ChatGPT アカウント（Codex）で動きます。Gemini のトークン連携は開発中です。SIMY の料金は<a href="/?lang=ja#pricing">料金ページ</a>をご覧ください。</p></div>
           </details>
           <details>
             <summary>Claude Code と Cowork は、どちらを使えばいいですか？</summary>
