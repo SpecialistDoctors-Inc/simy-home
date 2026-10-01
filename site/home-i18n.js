@@ -33,7 +33,7 @@
     "You’re using AI.": "AIは使っている。",
     "But the workload hasn’t gone down.": "でも、仕事は\n減っていない。",
     "You’re using AI. But the workload hasn’t gone down.": "AIは使っている。でも、仕事は減っていない。",
-    "Turn chats and conversations into workflows that get work done.": "チャットや会話を、仕事が進む仕組みに変える。",
+    "Chats become workflows.\nAI gets it done.": "チャットや会話を、仕事が進む仕組みに変える。",
     "Turn conversations into workflows that get work done.": "会話を、仕事が進む仕組みに変える。",
     "Bring in the conversations that matter. SIMY learns the checks, priorities, and non-negotiables behind your best work, turns them into focused Workflows, and selects the right one automatically. Autorun takes it from there.": "必要な会話だけをSIMYへ。あなたが良い仕事で欠かさない確認、優先順位、譲れない基準を学び、必要なものだけのワークフローに変えます。新しい仕事が来れば最適なものを自動で選び、その先はAutorunが進めます。",
     "See SIMY at work": "SIMYの動きを見る",
