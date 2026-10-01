@@ -6,6 +6,13 @@
 <title>SIMYをダウンロード｜Mac・Windows・iPhone | SIMY</title>
 <meta name="description" content="SIMYデスクトップアプリ（Mac・Windows）とiOSアプリのダウンロード。アカウント作成から、インストール、ログインまでの3ステップ。PCのAIとの会話から、SIMYが次の仕事を見つけます。">
 <link rel="canonical" href="https://simy.one/download.html">
+<link rel="alternate" hreflang="ja" href="https://simy.one/download.html">
+<link rel="alternate" hreflang="en" href="https://simy.one/download/en.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://simy.one/download/zh-hans.html">
+<link rel="alternate" hreflang="es" href="https://simy.one/download/es.html">
+<link rel="alternate" hreflang="fr" href="https://simy.one/download/fr.html">
+<link rel="alternate" hreflang="hi" href="https://simy.one/download/hi.html">
+<link rel="alternate" hreflang="x-default" href="https://simy.one/download/en.html">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://simy.one/download.html">
 <meta property="og:title" content="SIMYをダウンロード｜Mac・Windows・iPhone">
@@ -767,6 +774,14 @@ thead th.simy { background: var(--blue-deep); }
 .linkbtn { background: none; border: 0; padding: 0; font: inherit; color: var(--blue-deep); text-decoration: underline; cursor: pointer; }
 .dl-meta a { color: var(--blue-deep); }
 @media (max-width: 860px) { .paths, .funnel { grid-template-columns: minmax(0, 1fr); } .funnel li { border-left: 0; border-top: 1px solid var(--ui-line); } .funnel li:first-child { border-top: 0; } }
+
+.lang-switch { position: relative; }
+.lang-switch > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 10px; border: 1px solid var(--ui-line); border-radius: 999px; background: var(--paper-light); font-size: 0.8rem; font-weight: 700; }
+.lang-switch > summary::-webkit-details-marker { display: none; }
+.lang-switch ul { position: absolute; right: 0; top: calc(100% + 6px); z-index: 30; margin: 0; padding: 6px; list-style: none; min-width: 150px; background: var(--paper-light); border: 1px solid var(--ink); border-radius: 10px; box-shadow: 4px 4px 0 var(--ink); }
+.lang-switch li a { display: block; padding: 8px 10px; border-radius: 6px; color: var(--ink); text-decoration: none; font-size: 0.88rem; }
+.lang-switch li a:hover, .lang-switch li a[aria-current] { background: var(--blue-soft); }
+@media (max-width: 960px) { .brand-sub { display: none; } .header-actions { gap: 4px; } .lang-switch > summary { padding: 0 8px; } }
 </style>
 <script type="application/ld+json">
 {
@@ -885,6 +900,7 @@ thead th.simy { background: var(--blue-deep); }
       <span class="brand-sub">ダウンロード</span>
     </a>
     <nav class="header-actions" aria-label="アカウント">
+      <details class="lang-switch"><summary aria-label="Language">🌐 日本語</summary><ul><li><a href="/download.html" hreflang="ja" lang="ja" aria-current="page">日本語</a></li><li><a href="/download/en.html" hreflang="en" lang="en">English</a></li><li><a href="/download/zh-hans.html" hreflang="zh-Hans" lang="zh-Hans">中文</a></li><li><a href="/download/es.html" hreflang="es" lang="es">Español</a></li><li><a href="/download/fr.html" hreflang="fr" lang="fr">Français</a></li><li><a href="/download/hi.html" hreflang="hi" lang="hi">हिन्दी</a></li></ul></details>
       <a class="header-link" href="https://app.simy.one/login?lang=ja&amp;locale=ja&amp;region=jp">ログイン</a>
       <a class="header-cta" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=download&amp;utm_content=header">アカウントを作る</a>
     </nav>
@@ -1065,6 +1081,7 @@ thead th.simy { background: var(--blue-deep); }
       <li><a href="/?lang=ja">ホーム</a></li>
       <li><a href="/?lang=ja#pricing">料金</a></li>
       <li><a href="/integrations.html">連携</a></li>
+      <li><a href="/guides/index.html">ガイド一覧</a></li>
       <li><a href="/security.html">セキュリティ</a></li>
       <li><a href="/privacy.html">プライバシーポリシー</a></li>
       <li><a href="/terms.html">利用規約</a></li>
@@ -1111,5 +1128,6 @@ thead th.simy { background: var(--blue-deep); }
   load('/downloads/simy-cli/windows/latest.json', 'win', '.exe');
 })();
 </script>
+<script src="/analytics.js" defer></script>
 </body>
 </html>

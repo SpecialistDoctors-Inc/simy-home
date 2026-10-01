@@ -22,9 +22,9 @@ test("mobile navigation closes from blank and outside clicks", () => {
 });
 
 test("homepage cache-busts the current home assets", () => {
-  assert.match(homeHtml, /home\.css\?v=20261001-pricing-cta-visible-1/);
-  assert.match(homeHtml, /home-locales\.js\?v=20261001-hero-lead-copy-1/);
-  assert.match(homeHtml, /home-i18n\.js\?v=20261001-hero-lead-copy-1/);
+  assert.match(homeHtml, /home\.css\?v=20261001-field-voices-1/);
+  assert.match(homeHtml, /home-locales\.js\?v=20261001-guides-voices-1/);
+  assert.match(homeHtml, /home-i18n\.js\?v=20261001-guides-voices-1/);
   assert.match(homeHtml, /pricing-catalog\.js\?v=20260907-industry-realtime-pricing-3/);
   assert.match(homeHtml, /home\.js\?v=20260915-workflow-terminology-1/);
 });

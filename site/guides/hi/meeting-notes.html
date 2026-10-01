@@ -1,0 +1,1626 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="google-site-verification" content="1n6_tVJZRZlQax8luEg5VsuG7gg-kCEam5VFiWIJs3U">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI मीटिंग नोट्स टूल चुनें | Teams, Meet, Notion AI | SIMY</title>
+<meta name="description" content="AI मीटिंग नोट्स टूल की तुलना: Teams Copilot, Meet Gemini, Notion AI, Notta, tl;dv, फ़ोन रिकॉर्डिंग। हर टूल के बाद बचा शेयर और To-Do SIMY आगे बढ़ाता है।">
+<link rel="canonical" href="https://simy.one/guides/hi/meeting-notes.html">
+<link rel="alternate" hreflang="ja" href="https://simy.one/guides/meeting-notes.html">
+<link rel="alternate" hreflang="en" href="https://simy.one/guides/en/meeting-notes.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://simy.one/guides/zh-hans/meeting-notes.html">
+<link rel="alternate" hreflang="es" href="https://simy.one/guides/es/meeting-notes.html">
+<link rel="alternate" hreflang="fr" href="https://simy.one/guides/fr/meeting-notes.html">
+<link rel="alternate" hreflang="hi" href="https://simy.one/guides/hi/meeting-notes.html">
+<link rel="alternate" hreflang="x-default" href="https://simy.one/guides/en/meeting-notes.html">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://simy.one/guides/hi/meeting-notes.html">
+<meta property="og:title" content="मिनट्स बन गए। काम अभी बाकी है। | AI मीटिंग नोट्स टूल का चुनाव और सारांश के आगे | SIMY">
+<meta property="og:description" content="Teams Copilot, Meet का Gemini, Notion AI, Notta, tl;dv, PLAUD। स्थिति के हिसाब से चुनाव, और किसी भी टूल के बाद बचा &quot;सारांश के आगे&quot; का काम SIMY कैसे बढ़ाता है।">
+<meta property="og:site_name" content="SIMY">
+<meta property="og:image" content="https://simy.one/ogp.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="मिनट्स बन गए। काम अभी बाकी है। AI मीटिंग नोट्स गाइड | SIMY">
+<meta property="og:locale" content="hi_IN">
+<meta property="article:published_time" content="2026-10-01">
+<meta property="article:modified_time" content="2026-10-01">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="मिनट्स बन गए। काम अभी बाकी है। | AI मीटिंग नोट्स टूल का चुनाव और सारांश के आगे | SIMY">
+<meta name="twitter:description" content="Teams Copilot, Meet का Gemini, Notion AI, Notta, tl;dv, PLAUD। स्थिति के हिसाब से चुनाव, और किसी भी टूल के बाद बचा &quot;सारांश के आगे&quot; का काम SIMY कैसे बढ़ाता है।">
+<meta name="twitter:image" content="https://simy.one/ogp.png">
+<meta name="twitter:image:alt" content="मिनट्स बन गए। काम अभी बाकी है। AI मीटिंग नोट्स गाइड | SIMY">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#f6f5f4">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png">
+<style>
+:root {
+  --paper: #f6f5f4;
+  --paper-light: #ffffff;
+  --ink: #111111;
+  --ink-soft: #5d5b58;
+  --ink-faint: #6b6865;
+  --line-soft: rgba(17, 17, 17, 0.14);
+  --ui-line: #d9dde2;
+  --blue: #3273d7;
+  --blue-deep: #235db8;
+  --blue-soft: #eef5ff;
+  --mint: #92edce;
+  --coral-soft: #fff1ec;
+  --yellow: #ffd166;
+  --radius: 0.8rem;
+  --radius-sm: 0.5rem;
+  --sans: "Helvetica Neue", Arial, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", Meiryo, sans-serif;
+  --mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  --page: 1180px;
+  --gutter: clamp(16px, 4vw, 40px);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.85;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+a { color: inherit; }
+a:focus-visible, summary:focus-visible {
+  outline: 3px solid rgba(50, 115, 215, 0.45);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+img { max-width: 100%; display: block; }
+
+.wrap { width: min(var(--page), 100% - var(--gutter) * 2); margin: 0 auto; }
+
+.skip {
+  position: absolute; left: -9999px; top: 8px;
+  background: var(--ink); color: #fff; padding: 8px 14px; border-radius: 6px; z-index: 100;
+}
+.skip:focus { left: 8px; }
+
+/* ---------- Header ---------- */
+.site-header {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(246, 245, 244, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--ink);
+}
+.header-inner {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  min-height: 64px;
+}
+.brand {
+  display: inline-flex; align-items: center; gap: 10px;
+  text-decoration: none; font-weight: 800; letter-spacing: 0.01em;
+}
+.brand img { width: 28px; height: 28px; border-radius: 7px; }
+.brand-sub {
+  padding-left: 12px; margin-left: 2px;
+  border-left: 1px solid var(--line-soft);
+  color: var(--ink-soft); font-size: 0.8rem; font-weight: 500;
+}
+.header-actions { display: flex; align-items: center; gap: 6px; }
+.header-link {
+  padding: 8px 10px; font-size: 0.86rem; font-weight: 600; text-decoration: none; color: var(--ink);
+}
+.header-link:hover { color: var(--blue-deep); }
+.header-cta {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px;
+  background: var(--ink); color: #fff; text-decoration: none;
+  font-size: 0.86rem; font-weight: 700; border-radius: 6px;
+  transition: background 0.2s;
+}
+.header-cta:hover { background: var(--blue-deep); }
+
+/* ---------- Hero ---------- */
+.hero {
+  position: relative;
+  border-bottom: 1px solid var(--ink);
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(rgba(17, 17, 17, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(17, 17, 17, 0.045) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-position: -1px -1px;
+}
+.hero-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+  gap: clamp(32px, 5vw, 72px);
+  align-items: center;
+  padding: clamp(40px, 7vw, 96px) 0 clamp(48px, 7vw, 104px);
+}
+
+.crumbs {
+  display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 22px; padding: 0; list-style: none;
+  font-size: 0.78rem; color: var(--ink-soft);
+}
+.crumbs li + li::before { content: "/"; margin-right: 6px; color: var(--ink-faint); }
+.crumbs a { text-decoration: none; }
+.crumbs a:hover { text-decoration: underline; }
+
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin: 0 0 22px; padding: 6px 12px;
+  background: var(--paper-light); border: 1px solid var(--ink); border-radius: 999px;
+  font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.04em;
+}
+.eyebrow::before {
+  content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--blue);
+  box-shadow: 0 0 0 3px var(--blue-soft);
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2rem, 4.6vw, 3.9rem);
+  line-height: 1.16;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+h1 .line { display: block; }
+h1 .hl { color: var(--blue); }
+
+.lead {
+  max-width: 36em;
+  margin: 26px 0 0;
+  font-size: clamp(1rem, 1.35vw, 1.1rem);
+  line-height: 1.95;
+  color: #2c2b29;
+}
+
+.cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 52px; padding: 0 22px;
+  border: 1px solid var(--ink); border-radius: 8px;
+  font-weight: 700; font-size: 0.98rem; text-decoration: none;
+  transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+}
+.btn-primary {
+  background: var(--blue-deep); color: #fff; border-color: var(--ink);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.btn-primary:hover { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 var(--ink); }
+.btn-ghost { background: var(--paper-light); color: var(--ink); }
+.btn-ghost:hover { background: var(--blue-soft); }
+.btn .arrow { font-family: var(--mono); font-size: 0.9em; }
+
+.hero-points {
+  display: flex; flex-wrap: wrap; gap: 8px 18px;
+  margin: 26px 0 0; padding: 0; list-style: none;
+  font-size: 0.84rem; color: var(--ink-soft);
+}
+.hero-points li { display: inline-flex; align-items: center; gap: 7px; }
+.hero-points li::before {
+  content: ""; width: 14px; height: 14px; flex: none;
+  border: 1px solid var(--ink); border-radius: 50%;
+  background: var(--mint) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath d='M3.5 7.2 6 9.5l4.5-5' fill='none' stroke='%23111' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 12px no-repeat;
+}
+
+/* Relay card: the signature visual */
+.relay {
+  position: relative;
+  background: var(--paper-light);
+  border: 1px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: 8px 8px 0 var(--ink);
+  overflow: hidden;
+}
+.relay-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--ink);
+  background: var(--ink); color: #fff;
+  font-family: var(--mono); font-size: 0.78rem;
+}
+.rec { display: inline-flex; align-items: center; gap: 8px; min-width: 0; }
+.rec-dot {
+  width: 9px; height: 9px; border-radius: 50%; background: #ff865f; flex: none;
+  animation: rec 1.6s ease-in-out infinite;
+}
+.rec-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.relay-meta { display: flex; flex-wrap: wrap; gap: 6px; padding: 12px 18px 4px; }
+.chip {
+  display: inline-flex; align-items: center; padding: 2px 9px;
+  border: 1px solid var(--line-soft); border-radius: 999px;
+  font-family: var(--mono); font-size: 0.7rem; color: var(--ink-soft); background: var(--paper);
+}
+.relay-steps { list-style: none; margin: 0; padding: 8px 10px 12px; }
+.step {
+  display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; align-items: center; gap: 10px;
+  padding: 9px 8px;
+  border-radius: 8px;
+  opacity: 0; transform: translateY(6px);
+  animation: rise 0.5s cubic-bezier(.2,.7,.2,1) forwards;
+}
+.step .no { font-family: var(--mono); font-size: 0.72rem; color: var(--ink-faint); }
+.step .what { font-size: 0.9rem; font-weight: 650; line-height: 1.45; }
+.step .what small { display: block; font-weight: 400; font-size: 0.74rem; color: var(--ink-soft); }
+.status {
+  font-family: var(--mono); font-size: 0.68rem; white-space: nowrap;
+  padding: 3px 8px; border-radius: 999px; border: 1px solid var(--ink);
+}
+.s-done { background: var(--paper); }
+.s-plaud .status { border-color: var(--line-soft); color: var(--ink-soft); }
+.s-run { background: var(--blue-soft); }
+.s-run .status { background: var(--blue-deep); color: #fff; }
+.s-next .status { background: var(--paper-light); }
+.s-you { background: #fff8e3; }
+.s-you .status { background: var(--yellow); }
+.bar {
+  grid-column: 2 / 4; height: 4px; margin-top: 6px;
+  background: rgba(50, 115, 215, 0.16); border-radius: 4px; overflow: hidden;
+}
+.bar::after {
+  content: ""; display: block; height: 100%; width: 62%;
+  background: var(--blue); border-radius: 4px;
+  animation: progress 2.8s ease-in-out infinite alternate;
+}
+.handoff {
+  display: flex; align-items: center; gap: 10px;
+  margin: 6px 4px; padding: 8px 0;
+  font-family: var(--mono); font-size: 0.72rem; color: var(--blue-deep);
+  opacity: 0; animation: rise 0.5s ease forwards;
+}
+.handoff::before, .handoff::after { content: ""; flex: 1; border-top: 1.5px dashed var(--blue); }
+.relay-foot {
+  padding: 12px 18px 14px;
+  border-top: 1px solid var(--line-soft);
+  font-size: 0.82rem; color: var(--ink-soft);
+}
+.relay-foot strong { color: var(--ink); }
+.caption { margin: 12px 4px 0; font-size: 0.74rem; color: var(--ink-faint); text-align: right; }
+
+.relay-steps > :nth-child(1) { animation-delay: 0.10s; }
+.relay-steps > :nth-child(2) { animation-delay: 0.22s; }
+.relay-steps > :nth-child(3) { animation-delay: 0.34s; }
+.relay-steps > :nth-child(4) { animation-delay: 0.62s; }
+.relay-steps > :nth-child(5) { animation-delay: 0.86s; }
+.relay-steps > :nth-child(6) { animation-delay: 1.02s; }
+.relay-steps > :nth-child(7) { animation-delay: 1.18s; }
+.relay-steps > :nth-child(8) { animation-delay: 1.34s; }
+
+@keyframes rise { to { opacity: 1; transform: none; } }
+@keyframes rec { 50% { opacity: 0.25; } }
+@keyframes progress { from { width: 34%; } to { width: 88%; } }
+
+/* ---------- Guide layout ---------- */
+.guide {
+  display: grid;
+  grid-template-columns: 232px minmax(0, 1fr);
+  gap: clamp(32px, 5vw, 72px);
+  padding: clamp(40px, 6vw, 80px) 0 clamp(56px, 7vw, 96px);
+}
+.toc { position: sticky; top: 92px; align-self: start; font-size: 0.84rem; }
+.toc-title {
+  margin: 0 0 12px; font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.08em;
+  color: var(--ink-soft);
+}
+.toc ol { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--line-soft); }
+.toc a {
+  display: grid; grid-template-columns: 26px 1fr; gap: 4px;
+  margin-left: -1px; padding: 7px 0 7px 12px;
+  border-left: 2px solid transparent;
+  color: var(--ink-soft); text-decoration: none; line-height: 1.5;
+}
+.toc a span { font-family: var(--mono); font-size: 0.72rem; padding-top: 1px; }
+.toc a:hover { color: var(--ink); }
+.toc a.is-active { color: var(--ink); font-weight: 700; border-left-color: var(--blue); }
+.toc-mobile { display: none; }
+
+.article { min-width: 0; max-width: 800px; }
+.byline {
+  display: flex; flex-wrap: wrap; gap: 4px 16px;
+  margin: 0 0 8px; font-family: var(--mono); font-size: 0.74rem; color: var(--ink-faint);
+}
+
+.sec { padding-top: clamp(40px, 5vw, 64px); }
+.sec:first-of-type { padding-top: 0; }
+.sec-label {
+  display: inline-block; margin: 0 0 12px;
+  font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.06em; color: var(--blue-deep);
+}
+h2 {
+  margin: 0 0 18px;
+  font-size: clamp(1.5rem, 2.8vw, 2.1rem);
+  line-height: 1.35; font-weight: 800; letter-spacing: -0.01em;
+}
+h3 { margin: 32px 0 12px; font-size: 1.15rem; line-height: 1.5; font-weight: 750; }
+.article p { margin: 0 0 16px; }
+.article p a, .plain-list a, .faq a { color: var(--blue-deep); text-decoration: underline; text-underline-offset: 3px; }
+.muted { color: var(--ink-soft); }
+.small { font-size: 0.84rem; }
+
+/* Checklist */
+.checklist { list-style: none; margin: 24px 0 0; padding: 0; display: grid; gap: 12px; }
+.checklist li {
+  display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 16px;
+  padding: 18px 20px;
+  background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.checklist .num {
+  display: grid; place-items: center; width: 44px; height: 44px;
+  border: 1px solid var(--ink); border-radius: 50%;
+  font-family: var(--mono); font-weight: 700;
+}
+.checklist li.hook { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.checklist li.hook .num { background: var(--blue-deep); color: #fff; }
+.checklist h3 { margin: 2px 0 4px; font-size: 1.02rem; }
+.checklist p { margin: 0; font-size: 0.93rem; color: #34322f; }
+
+/* Feature grid */
+.features { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+.feature {
+  padding: 20px; background: var(--paper-light);
+  border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.feature .tag {
+  display: inline-block; margin-bottom: 8px;
+  font-family: var(--mono); font-size: 0.7rem; color: var(--ink-soft);
+}
+.feature h3 { margin: 0 0 6px; font-size: 1.04rem; }
+.feature p { margin: 0; font-size: 0.92rem; color: #34322f; }
+.feature.wide { grid-column: 1 / -1; }
+
+/* Gap section */
+.split { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+.split-col { padding: 22px; border-radius: var(--radius); border: 1px solid var(--ink); }
+.split-col h3 { margin: 0 0 12px; font-size: 1rem; display: flex; align-items: center; gap: 8px; }
+.split-col ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.split-col li { position: relative; padding-left: 22px; font-size: 0.94rem; line-height: 1.6; }
+.split-col li::before { position: absolute; left: 0; top: 0; font-family: var(--mono); }
+.col-plaud { background: var(--paper-light); }
+.col-plaud li { color: var(--ink-soft); }
+.col-plaud li::before { content: "✓"; color: #1b7a58; }
+.col-left { background: var(--coral-soft); box-shadow: 4px 4px 0 var(--ink); }
+.col-left li::before { content: "□"; color: var(--ink); }
+.who {
+  font-family: var(--mono); font-size: 0.68rem; font-weight: 400;
+  padding: 2px 8px; border: 1px solid var(--ink); border-radius: 999px; background: var(--paper-light);
+}
+
+.quote {
+  margin: 28px 0 0; padding: 22px 24px;
+  border-left: 4px solid var(--blue); background: var(--blue-soft); border-radius: 0 var(--radius) var(--radius) 0;
+}
+.quote p { margin: 0; font-size: 1.12rem; font-weight: 750; line-height: 1.7; }
+.quote p + p { margin-top: 8px; font-size: 0.93rem; font-weight: 400; color: #34322f; }
+
+/* Connect */
+.connect {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 310px); gap: 24px;
+  align-items: start; margin-top: 24px;
+}
+.connect-steps { list-style: none; margin: 0; padding: 0; counter-reset: s; display: grid; gap: 10px; }
+.connect-steps li {
+  counter-increment: s; position: relative;
+  padding: 16px 18px 16px 62px;
+  background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.connect-steps li::before {
+  content: counter(s); position: absolute; left: 18px; top: 16px;
+  width: 30px; height: 30px; display: grid; place-items: center;
+  border: 1px solid var(--ink); border-radius: 50%; background: var(--paper);
+  font-family: var(--mono); font-weight: 700; font-size: 0.86rem;
+}
+.connect-steps li.key { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.connect-steps li.key::before { background: var(--blue-deep); color: #fff; }
+.connect-steps b { display: block; font-size: 1rem; line-height: 1.5; }
+.connect-steps span { display: block; margin-top: 4px; font-size: 0.9rem; color: #34322f; line-height: 1.7; }
+
+.mock {
+  padding: 18px; background: var(--paper-light);
+  border: 1px solid var(--ink); border-radius: var(--radius); box-shadow: 6px 6px 0 var(--blue);
+}
+.mock-head { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 12px; align-items: start; }
+.mock-mark {
+  display: grid; place-items: center; width: 44px; height: 44px;
+  border-radius: 10px; background: var(--paper); font-weight: 900; font-size: 1.15rem;
+}
+.mock-title { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 1.05rem; }
+.mock-state {
+  padding: 1px 8px; border-radius: 999px; background: var(--paper);
+  font-size: 0.7rem; font-weight: 500; color: var(--ink-soft);
+}
+.mock-desc { margin: 4px 0 0; font-size: 0.82rem; color: var(--ink-soft); line-height: 1.6; }
+.mock-box {
+  margin: 14px 0 10px; padding: 12px 14px;
+  border: 1px solid var(--ui-line); border-radius: 8px; font-size: 0.86rem; font-weight: 650;
+}
+.mock-btn {
+  display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px;
+  border-radius: 8px; background: var(--blue-deep); color: #fff; font-weight: 700; font-size: 0.92rem;
+}
+.mock-foot { margin-top: 8px; text-align: center; font-size: 0.76rem; color: var(--ink-soft); }
+
+.asks { list-style: none; margin: 12px 0 18px; padding: 0; display: grid; gap: 8px; }
+.asks li {
+  padding: 12px 16px; font-size: 0.94rem; line-height: 1.7;
+  background: var(--blue-soft); border: 1px solid rgba(50, 115, 215, 0.28);
+  border-radius: 12px 12px 12px 3px;
+}
+
+/* Tables */
+.table-wrap {
+  margin: 20px 0 8px; overflow-x: auto; -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--ink); border-radius: var(--radius); background: var(--paper-light);
+}
+table { width: 100%; border-collapse: collapse; font-size: 0.9rem; line-height: 1.6; }
+th, td { padding: 12px 14px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--ui-line); }
+thead th { background: var(--ink); color: #fff; font-weight: 700; font-size: 0.82rem; white-space: nowrap; }
+tbody th { font-weight: 700; white-space: nowrap; background: var(--paper); }
+tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
+td.simy { background: var(--blue-soft); }
+thead th.simy { background: var(--blue-deep); }
+.t-wide { min-width: 640px; }
+.t-models { min-width: 760px; }
+.t-price td:nth-child(2) { white-space: nowrap; }
+.scroll-hint { display: none; margin: 0 0 12px; font-size: 0.76rem; color: var(--ink-faint); }
+
+.note {
+  margin: 16px 0 0; padding: 14px 16px;
+  background: var(--paper-light); border: 1px dashed var(--ink-faint); border-radius: var(--radius-sm);
+  font-size: 0.88rem; color: #34322f;
+}
+.note b { color: var(--ink); }
+
+/* Sample comparison */
+.sample { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 16px; margin-top: 24px; align-items: start; }
+.sheet { padding: 20px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); }
+.sheet-label {
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;
+  font-family: var(--mono); font-size: 0.72rem; color: var(--ink-soft);
+}
+.sheet dl { margin: 0; font-size: 0.88rem; line-height: 1.65; }
+.sheet dt { margin-top: 10px; font-weight: 700; }
+.sheet dt:first-child { margin-top: 0; }
+.sheet dd { margin: 2px 0 0; color: #34322f; }
+.outs { display: grid; gap: 10px; }
+.out { padding: 14px 16px; background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius); }
+.out-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 6px; }
+.out-head b { font-size: 0.92rem; }
+.out p { margin: 0; font-size: 0.86rem; color: #34322f; line-height: 1.7; }
+.out.you { background: #fff8e3; }
+.pill {
+  font-family: var(--mono); font-size: 0.66rem; white-space: nowrap;
+  padding: 2px 8px; border-radius: 999px; border: 1px solid var(--ink); background: var(--paper);
+}
+.pill.run { background: var(--blue-deep); color: #fff; }
+.pill.you { background: var(--yellow); }
+.pill.ok { background: var(--mint); }
+.sample-foot { margin-top: 18px; font-weight: 700; }
+
+/* Use cases */
+.cases { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+.case { padding: 22px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); }
+.case h3 { margin: 0 0 4px; font-size: 1.06rem; }
+.case .device { margin: 0 0 12px; font-family: var(--mono); font-size: 0.72rem; color: var(--blue-deep); }
+.case p { margin: 0 0 8px; font-size: 0.9rem; color: #34322f; }
+.case ul { margin: 0; padding-left: 1.1em; font-size: 0.9rem; line-height: 1.7; }
+
+/* Lists */
+.plain-list { margin: 16px 0 0; padding-left: 1.2em; }
+.plain-list li { margin-bottom: 10px; }
+
+/* FAQ */
+.faq { margin-top: 20px; border-top: 1px solid var(--ink); }
+.faq details { border-bottom: 1px solid var(--ui-line); }
+.faq summary {
+  list-style: none; cursor: pointer;
+  display: grid; grid-template-columns: 28px minmax(0, 1fr) 20px; gap: 10px; align-items: start;
+  padding: 18px 4px; font-weight: 700; line-height: 1.6;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::before { content: "Q"; font-family: var(--mono); color: var(--blue-deep); }
+.faq summary::after {
+  content: "+"; font-family: var(--mono); font-size: 1.1rem; line-height: 1.4; text-align: right;
+  transition: transform 0.2s;
+}
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq .a { padding: 0 4px 18px 42px; font-size: 0.94rem; color: #34322f; }
+.faq .a p { margin: 0; }
+
+/* Closing CTA */
+.closing { background: var(--ink); color: #fff; border-top: 1px solid var(--ink); }
+.closing-inner {
+  display: grid; grid-template-columns: minmax(0, 1.2fr) auto; gap: 32px; align-items: center;
+  padding: clamp(48px, 7vw, 88px) 0;
+}
+.closing h2 { color: #fff; margin: 0 0 12px; font-size: clamp(1.6rem, 3.4vw, 2.5rem); }
+.closing p { margin: 0; color: rgba(255, 255, 255, 0.8); }
+.closing .cta-row { margin-top: 0; }
+.closing .btn-primary { box-shadow: 4px 4px 0 var(--mint); border-color: #fff; }
+.closing .btn-primary:hover { box-shadow: 5px 5px 0 var(--mint); }
+.closing .btn-ghost { background: transparent; color: #fff; border-color: rgba(255, 255, 255, 0.5); }
+.closing .btn-ghost:hover { background: rgba(255, 255, 255, 0.08); }
+
+/* Footer */
+.site-footer { padding: 36px 0 48px; font-size: 0.82rem; color: var(--ink-soft); }
+.footer-links { display: flex; flex-wrap: wrap; gap: 4px 20px; margin: 0 0 18px; padding: 0; list-style: none; }
+.footer-links a { display: inline-block; padding: 6px 0; text-decoration: none; color: var(--ink); }
+.footer-links a:hover { text-decoration: underline; }
+.site-footer p { margin: 0 0 6px; line-height: 1.7; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1080px) {
+  .guide { grid-template-columns: minmax(0, 1fr); }
+  .toc { display: none; }
+  .toc-mobile {
+    display: block; margin: 0 0 32px;
+    background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius);
+  }
+  .toc-mobile summary {
+    cursor: pointer; list-style: none; padding: 14px 18px;
+    font-family: var(--mono); font-size: 0.8rem; display: flex; justify-content: space-between;
+  }
+  .toc-mobile summary::-webkit-details-marker { display: none; }
+  .toc-mobile summary::after { content: "+"; }
+  .toc-mobile[open] summary::after { content: "−"; }
+  .toc-mobile ol { margin: 0; padding: 0 18px 14px 40px; font-size: 0.9rem; }
+  .toc-mobile li { padding: 3px 0; }
+  .toc-mobile a { display: inline-block; padding: 4px 0; text-decoration: none; }
+  .article { max-width: none; }
+}
+
+@media (max-width: 960px) {
+  .hero-inner { grid-template-columns: minmax(0, 1fr); }
+  .hero-visual { max-width: 580px; }
+  .relay { box-shadow: 6px 6px 0 var(--ink); }
+}
+
+@media (max-width: 860px) {
+  .sample { grid-template-columns: minmax(0, 1fr); }
+  .connect { grid-template-columns: minmax(0, 1fr); }
+  .mock { max-width: 360px; }
+  .closing-inner { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 640px) {
+  body { font-size: 15.5px; }
+  .brand-sub, .header-link { display: none; }
+  .header-cta { padding: 0 14px; }
+  .features, .split, .cases { grid-template-columns: minmax(0, 1fr); }
+  .checklist li { grid-template-columns: 40px minmax(0, 1fr); gap: 12px; padding: 16px; }
+  .checklist .num { width: 36px; height: 36px; font-size: 0.86rem; }
+  .connect-steps li { padding-left: 56px; }
+  .connect-steps li::before { left: 14px; }
+  .btn { width: 100%; }
+  .scroll-hint { display: block; }
+  .faq .a { padding-left: 4px; }
+  .step { grid-template-columns: 24px minmax(0, 1fr) auto; gap: 8px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .step, .handoff { animation: none; opacity: 1; transform: none; }
+  .rec-dot, .bar::after { animation: none; }
+  .btn, .header-cta { transition: none; }
+}
+
+/* ---------- Guide v2: scene cards, timeline, folds ---------- */
+.intro { max-width: 34em; margin: 0 0 8px; font-size: 1.02rem; color: #34322f; }
+.scenes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 22px; }
+.scenes.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.scene {
+  position: relative; padding: 22px 20px 20px;
+  background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius);
+  min-height: 168px; display: flex; flex-direction: column; gap: 8px;
+}
+.scene .k { font-family: var(--mono); font-size: 0.7rem; color: var(--ink-faint); letter-spacing: 0.04em; }
+.scene b { display: block; font-size: 1.22rem; line-height: 1.35; letter-spacing: -0.01em; }
+.scene p { margin: 0; font-size: 0.9rem; line-height: 1.65; color: #34322f; }
+.scene .mark {
+  position: absolute; right: 16px; top: 14px;
+  width: 30px; height: 30px; display: grid; place-items: center;
+  border: 1px solid var(--ink); border-radius: 50%; font-family: var(--mono); font-size: 0.9rem; font-weight: 700;
+}
+.scene.pain { background: var(--coral-soft); }
+.scene.pain .mark { background: var(--paper-light); }
+.scene.wish { background: var(--blue-soft); border-color: var(--blue-deep); box-shadow: 4px 4px 0 var(--blue); }
+.scene.wish .mark { background: var(--blue-deep); color: #fff; border-color: var(--blue-deep); }
+.scene.wish.you { background: #fff8e3; border-color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+.scene.wish.you .mark { background: var(--yellow); color: var(--ink); border-color: var(--ink); }
+.scene-foot { margin: 14px 0 0; font-size: 0.9rem; color: var(--ink-soft); }
+.scene-foot b { color: var(--ink); }
+
+/* Timeline */
+.tl-wrap {
+  margin-top: 22px; padding: 22px 20px 18px;
+  background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius);
+}
+.tl-row { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 14px; align-items: center; }
+.tl-row + .tl-row { margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--line-soft); }
+.tl-who {
+  font-family: var(--mono); font-size: 0.72rem; font-weight: 700; text-align: center;
+  padding: 6px 4px; border: 1px solid var(--ink); border-radius: 999px; background: var(--paper);
+}
+.tl-who.simy { background: var(--blue-deep); color: #fff; border-color: var(--blue-deep); }
+.tl-who.you { background: var(--yellow); }
+.tl { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; }
+.tl li {
+  position: relative; min-height: 64px; padding: 10px 8px 8px;
+  border-radius: var(--radius-sm); font-size: 0.8rem; line-height: 1.4; font-weight: 650;
+  display: flex; flex-direction: column; justify-content: flex-start; gap: 4px;
+}
+.tl li small { display: block; font-weight: 400; font-size: 0.7rem; color: var(--ink-soft); }
+.tl li.on { background: var(--paper); border: 1px solid var(--line-soft); color: var(--ink-soft); }
+.tl li.gap { border: 1.5px dashed var(--ink-faint); color: var(--ink-faint); background: transparent; }
+.tl li.gap::after { content: "？"; position: absolute; right: 8px; top: 6px; font-family: var(--mono); }
+.tl li.run { background: var(--blue-soft); border: 1px solid var(--blue-deep); color: var(--ink); }
+.tl li.run::after { content: "✓"; position: absolute; right: 8px; top: 6px; font-family: var(--mono); color: var(--blue-deep); }
+.tl li.you { background: #fff8e3; border: 1px solid var(--ink); color: var(--ink); }
+.tl li.you::after { content: "आप"; position: absolute; right: 8px; top: 7px; font-family: var(--mono); font-size: 0.62rem; }
+.tl li.blank { border: 0; background: transparent; }
+.tl-note { margin: 14px 0 0; font-size: 0.86rem; color: #34322f; }
+.tl-note b { color: var(--ink); }
+.three { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 0; padding: 0; list-style: none; }
+.three li {
+  padding: 8px 14px; font-weight: 800; font-size: 1rem;
+  background: var(--ink); color: #fff; border-radius: 999px;
+}
+
+/* 3-step start */
+.steps3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 22px; counter-reset: st; }
+.steps3 li {
+  counter-increment: st; list-style: none; position: relative;
+  padding: 54px 18px 18px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.steps3 li::before {
+  content: counter(st); position: absolute; left: 18px; top: 16px;
+  width: 28px; height: 28px; display: grid; place-items: center;
+  border: 1px solid var(--ink); border-radius: 50%; background: var(--paper);
+  font-family: var(--mono); font-weight: 700; font-size: 0.84rem;
+}
+.steps3 li.key { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.steps3 li.key::before { background: var(--blue-deep); color: #fff; }
+.steps3 b { display: block; font-size: 1.02rem; line-height: 1.45; }
+.steps3 span { display: block; margin-top: 6px; font-size: 0.88rem; color: #34322f; line-height: 1.65; }
+.steps3 { padding: 0; }
+
+/* Industry grid */
+.ind { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 22px; }
+.ind-card { padding: 18px 18px 14px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); }
+.ind-card h3 { margin: 0 0 10px; font-size: 1.04rem; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.ind-card h3 small { font-family: var(--mono); font-size: 0.68rem; font-weight: 400; color: var(--blue-deep); white-space: nowrap; }
+.ind-rows { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+.ind-rows li { display: grid; grid-template-columns: minmax(0, 1fr) 14px minmax(0, 1.4fr); gap: 6px; align-items: center; font-size: 0.86rem; line-height: 1.5; }
+.ind-rows li span:first-child { color: var(--ink-soft); }
+.ind-rows li span:nth-child(2) { font-family: var(--mono); color: var(--blue-deep); text-align: center; }
+.ind-rows li span:last-child { font-weight: 650; }
+
+/* Folded reference */
+.fold { margin-top: 12px; border: 1px solid var(--ui-line); border-radius: var(--radius); background: var(--paper-light); }
+.fold > summary {
+  list-style: none; cursor: pointer; padding: 16px 18px;
+  display: grid; grid-template-columns: minmax(0, 1fr) 20px; gap: 10px; align-items: center;
+  font-weight: 750; font-size: 1.02rem; line-height: 1.5;
+}
+.fold > summary::-webkit-details-marker { display: none; }
+.fold > summary::after { content: "+"; font-family: var(--mono); font-size: 1.1rem; text-align: right; }
+.fold[open] > summary::after { content: "−"; }
+.fold > summary small { display: block; margin-top: 2px; font-weight: 400; font-size: 0.82rem; color: var(--ink-soft); }
+.fold-body { padding: 0 18px 18px; font-size: 0.93rem; }
+.fold-body h3 { margin: 18px 0 8px; font-size: 1rem; }
+.fold-body h3:first-child { margin-top: 0; }
+.fold-body p { margin: 0 0 10px; }
+.fold-body .table-wrap { margin: 12px 0 6px; }
+.fold-body .plain-list { margin-top: 8px; }
+.fold-body .plain-list li { margin-bottom: 6px; }
+
+@media (max-width: 960px) {
+  .scenes, .scenes.four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tl { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .tl li.blank { display: none; }
+}
+@media (max-width: 640px) {
+  .scenes, .scenes.four, .steps3, .ind { grid-template-columns: minmax(0, 1fr); }
+  .scene { min-height: 0; }
+  .tl-row { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .tl-who { justify-self: start; }
+  .tl { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ind-rows li { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .ind-rows li span:nth-child(2) { display: none; }
+  .ind-rows li { padding: 6px 0; border-bottom: 1px dashed var(--line-soft); }
+}
+
+/* Next read */
+.next-read { margin-top: clamp(40px, 5vw, 64px); padding-top: 24px; border-top: 1px solid var(--ink); }
+.next-read h2 { font-size: 1.2rem; margin: 0 0 14px; }
+.next-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.next-grid a { display: block; padding: 14px 16px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); text-decoration: none; color: var(--ink); }
+.next-grid a:hover { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.next-grid b { display: block; font-size: 0.96rem; }
+.next-grid span { display: block; margin-top: 4px; font-size: 0.82rem; color: var(--ink-soft); }
+.next-all { display: inline-block; margin-top: 12px; font-weight: 700; color: var(--blue-deep); }
+@media (max-width: 760px) { .next-grid { grid-template-columns: minmax(0, 1fr); } }
+
+.lang-switch { position: relative; }
+.lang-switch > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 10px; border: 1px solid var(--ui-line); border-radius: 999px; background: var(--paper-light); font-size: 0.8rem; font-weight: 700; }
+.lang-switch > summary::-webkit-details-marker { display: none; }
+.lang-switch ul { position: absolute; right: 0; top: calc(100% + 6px); z-index: 30; margin: 0; padding: 6px; list-style: none; min-width: 150px; background: var(--paper-light); border: 1px solid var(--ink); border-radius: 10px; box-shadow: 4px 4px 0 var(--ink); }
+.lang-switch li a { display: block; padding: 8px 10px; border-radius: 6px; color: var(--ink); text-decoration: none; font-size: 0.88rem; }
+.lang-switch li a:hover, .lang-switch li a[aria-current] { background: var(--blue-soft); }
+@media (max-width: 960px) { .brand-sub { display: none; } .header-actions { gap: 4px; } .lang-switch > summary { padding: 0 8px; } }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://simy.one/guides/hi/meeting-notes.html#article",
+      "headline": "AI मीटिंग नोट्स टूल कैसे चुनें (स्थिति के हिसाब से), और सारांश के आगे का काम अपने आप करने वाला SIMY",
+      "description": "Teams Copilot, Google Meet का Gemini, Notion AI Meeting Notes, Notta, tl;dv और PLAUD को स्थिति के हिसाब से समझें, और जानें कि किसी भी टूल के सारांश पर रुकने के बाद शेयर, To-Do और अगली मीटिंग की तैयारी SIMY कैसे आगे बढ़ाता है।",
+      "inLanguage": "hi",
+      "datePublished": "2026-10-01",
+      "dateModified": "2026-10-01",
+      "mainEntityOfPage": "https://simy.one/guides/hi/meeting-notes.html",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://simy.one/ogp.png",
+        "width": 1200,
+        "height": 630
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "SIMY",
+        "url": "https://simy.one/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "AwakApp Inc.",
+        "url": "https://www.awak.app/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://simy.one/simy-icon-square.png"
+        }
+      },
+      "about": [
+        {
+          "@type": "Thing",
+          "name": "AI मीटिंग नोट्स"
+        },
+        {
+          "@type": "Thing",
+          "name": "ट्रांसक्रिप्शन"
+        },
+        {
+          "@type": "Thing",
+          "name": "मीटिंग ऑटोमेशन"
+        }
+      ],
+      "citation": [
+        "https://www.microsoft.com/en-us/microsoft-365/copilot",
+        "https://learn.microsoft.com/en-us/microsoftteams/copilot-teams-transcription",
+        "https://support.google.com/meet/answer/14754931",
+        "https://www.notion.com/product/ai-meeting-notes",
+        "https://www.notta.ai/",
+        "https://tldv.io/",
+        "https://www.plaud.ai/",
+        "https://aistudio.google.com/"
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "SIMY",
+          "item": "https://simy.one/?lang=hi"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "गाइड",
+          "item": "https://simy.one/guides/hi/index.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "AI मीटिंग नोट्स टूल गाइड",
+          "item": "https://simy.one/guides/hi/meeting-notes.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "आखिर सबसे अच्छा AI मीटिंग नोट्स टूल कौन-सा है?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "यह कंपनी के माहौल से तय होता है। सिर्फ़ Microsoft है तो Teams का Copilot, सिर्फ़ Google है तो Meet का Gemini, टूल चुनने की आज़ादी है तो Notion AI Meeting Notes, रिकॉर्डिंग बॉट चल सकता है तो Notta या tl;dv, और आमने-सामने मीटिंग ज़्यादा हैं तो PLAUD। सारांश की सटीकता से ज़्यादा \"सारांश कहाँ पहुँचता है\" देखकर चुनें, तो आगे का काम जुड़ता है।"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "क्या मीटिंग में बॉट जोड़े बिना रिकॉर्ड कर सकते हैं?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "हाँ। Teams का Copilot और Meet का Gemini मीटिंग टूल के अपने फ़ीचर हैं, इसलिए कोई बॉट प्रतिभागी नहीं जुड़ता। Notion AI Meeting Notes आपके डिवाइस की आवाज़ से रिकॉर्ड करता है, और PLAUD डिवाइस से रिकॉर्ड करता है। Notta और tl;dv में बॉट प्रतिभागी के रूप में जुड़ता है।"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "मिनट्स अंग्रेज़ी में आ जाते हैं। क्या हिंदी में मिल सकते हैं?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "कई टूल में ट्रांसक्रिप्शन या आउटपुट की भाषा सेट की जा सकती है, पर हिंदी का सपोर्ट हर टूल में अलग है। हिंदी की मीटिंग फिर भी अंग्रेज़ी में आए, तो अक्सर मीटिंग या सारांश की भाषा सेटिंग अंग्रेज़ी पर होती है, इसलिए हर टूल की सेटिंग जाँचें। रिकॉर्ड किसी भी भाषा में हो, SIMY आगे का काम उसी भाषा और ढाँचे में तैयार करता है जो आप आम तौर पर इस्तेमाल करते हैं।"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "मुफ़्त में काम चलाना है। क्या इस्तेमाल करूँ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "फ़ोन के वॉइस मेमो से रिकॉर्ड करके ऑडियो Google AI Studio को देना और ट्रांसक्रिप्ट व सारांश बनवाना, बिना अतिरिक्त खर्च के आज़माया जा सकता है। Notta और tl;dv में भी फ़्री प्लान हैं, पर महीने के ट्रांसक्रिप्शन समय की सीमा है। मुफ़्त तरीके के साथ भी सारांश के आगे का काम SIMY को सौंपा जा सकता है।"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "क्या PLAUD जैसे डिवाइस की ज़रूरत है?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ज़्यादातर ऑनलाइन मीटिंग हों, तो ज़रूरत नहीं। मीटिंग टूल का फ़ीचर या Notion AI काफ़ी है। आमने-सामने सेल्स मीटिंग, परामर्श या मीटिंग रूम में बैठकें ज़्यादा हों, तो बस रखकर रिकॉर्ड करने वाला PLAUD ठीक रहता है। SIMY दोनों तरह के रिकॉर्ड के साथ एक जैसा काम करता है।"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "क्या मिनट्स का फ़ॉर्मैट (प्रतिभागी, एजेंडा, फ़ैसले, अगले कदम) हर बार बताना पड़ेगा?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "नहीं। एक बार अपने ढंग से तैयार कर दें, तो SIMY वह तरीका सीख लेता है और अगली मीटिंग से उसी रूप में तैयार करता है। ट्रांसक्रिप्ट चैट AI में चिपकाकर वही निर्देश दोबारा लिखने का काम खत्म हो जाता है।"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "\"क्या तय हुआ\", इसका फ़ैसला AI करेगा या मैं?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "फ़ैसला आप करते हैं। SIMY ट्रांसक्रिप्ट और सारांश से संभावित फ़ैसले और ज़िम्मेदार लोग व्यवस्थित करके ड्राफ़्ट तक पहुँचाता है, और तारीख बदलना या भेजना है या नहीं जैसी, फ़ैसले वाली बातें ही आपके पास लौटाता है।"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "मीटिंग की जानकारी SIMY तक कैसे पहुँचती है?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "PLAUD के लिए SIMY की इंटीग्रेशन स्क्रीन पर बस \"कनेक्ट करें\" दबाएँ। Notion AI के रिकॉर्ड Notion इंटीग्रेशन से, और Meet के Gemini से बने Google Docs, Google इंटीग्रेशन से पहुँचते हैं। जो लोग Claude Code या Codex में मिनट्स सँभालते हैं, उनकी बातचीत के इतिहास से SIMY काम के सुझाव ढूँढता है। उपलब्धता इंटीग्रेशन पेज पर देखें।"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "क्या SIMY इस्तेमाल करने पर AI का अलग शुल्क लगता है?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "SIMY आपका ChatGPT खाता जोड़कर Codex से काम आगे बढ़ाता है। Codex का उपयोग आपके ChatGPT प्लान की सीमा में होता है। SIMY की अपनी कीमत के लिए प्राइसिंग पेज देखें।"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "क्या गोपनीय मीटिंग में भी इस्तेमाल कर सकते हैं? रिकॉर्डिंग की सहमति ज़रूरी है?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "रिकॉर्डिंग और ट्रांसक्रिप्शन से पहले सभी प्रतिभागियों की सहमति और कंपनी के नियम जाँचें। गोपनीय मीटिंग में सिर्फ़ IT विभाग से मंज़ूर टूल इस्तेमाल करें, और हर टूल में डेटा के ट्रेनिंग में इस्तेमाल की सेटिंग भी जाँचें। SIMY में डेटा कैसे सँभाला जाता है, यह सुरक्षा और गोपनीयता नीति के पेज पर बताया गया है।"
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">मुख्य सामग्री पर जाएँ</a>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="/?lang=hi">
+      <img src="/simy-icon-56.png" alt="SIMY" width="28" height="28">
+      <span aria-hidden="true">SIMY</span>
+      <span class="brand-sub">AI मीटिंग नोट्स गाइड</span>
+    </a>
+    <nav class="header-actions" aria-label="खाता">
+      <details class="lang-switch"><summary aria-label="Language">🌐 हिन्दी</summary><ul><li><a href="/guides/meeting-notes.html" hreflang="ja" lang="ja">日本語</a></li><li><a href="/guides/en/meeting-notes.html" hreflang="en" lang="en">English</a></li><li><a href="/guides/zh-hans/meeting-notes.html" hreflang="zh-Hans" lang="zh-Hans">中文</a></li><li><a href="/guides/es/meeting-notes.html" hreflang="es" lang="es">Español</a></li><li><a href="/guides/fr/meeting-notes.html" hreflang="fr" lang="fr">Français</a></li><li><a href="/guides/hi/meeting-notes.html" hreflang="hi" lang="hi" aria-current="page">हिन्दी</a></li></ul></details>
+      <a class="header-link" href="/download/hi.html">डाउनलोड</a>
+      <a class="header-link" href="https://app.simy.one/login?lang=hi&amp;locale=hi&amp;region=in">लॉग इन</a>
+      <a class="header-cta" href="https://app.simy.one/signup?lang=hi&amp;locale=hi&amp;region=in&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=meeting_notes_guide_hi&amp;utm_content=header">प्लान चुनकर शुरू करें</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" aria-labelledby="page-title">
+    <div class="wrap hero-inner">
+      <div>
+        <ol class="crumbs" aria-label="ब्रेडक्रंब">
+          <li><a href="https://simy.one/?lang=hi">SIMY</a></li>
+          <li><a href="/guides/hi/index.html">गाइड</a></li>
+          <li aria-current="page">AI मीटिंग नोट्स टूल गाइड</li>
+        </ol>
+        <p class="eyebrow">AI मीटिंग नोट्स टूल का चुनाव, और सारांश के आगे</p>
+        <h1 id="page-title">
+          <span class="line">AI मिनट्स बन गए।</span>
+          <span class="line hl">काम अभी बाकी है।</span>
+          <span class="line">टूल कोई भी हो।</span>
+        </h1>
+        <p class="lead">Teams, Meet, Notion AI, Notta, PLAUD। सारांश तो हर टूल देता है। शेयर, To-Do और अगली मीटिंग की तैयारी से आगे का काम SIMY आपके तरीके से बढ़ाता है।</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="https://app.simy.one/signup?lang=hi&amp;locale=hi&amp;region=in&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=meeting_notes_guide_hi&amp;utm_content=hero">प्लान चुनकर शुरू करें <span class="arrow" aria-hidden="true">↗</span></a>
+          <a class="btn btn-ghost" href="#gap">स्थिति के हिसाब से चुनाव देखें <span class="arrow" aria-hidden="true">↓</span></a>
+        </div>
+        <ul class="hero-points">
+          <li>मौजूदा मीटिंग नोट्स टूल वैसा ही रहे</li>
+          <li>बस रिकॉर्ड की जगह कनेक्ट करें</li>
+          <li>आपके अपने ChatGPT प्लान पर चलता है</li>
+        </ul>
+      </div>
+
+      <div class="hero-visual">
+        <div class="relay" role="img" aria-label="उदाहरण: मीटिंग नोट्स AI रिकॉर्डिंग, ट्रांसक्रिप्ट और सारांश तक का काम करता है। उसके बाद शेयर का मसौदा, ज़िम्मेदार लोग और To-Do, और अगली मीटिंग की तैयारी SIMY करता है, और आपके पास सिर्फ़ तारीख का फ़ैसला बचता है">
+          <div class="relay-head" aria-hidden="true">
+            <span class="rec"><span class="rec-dot"></span><span class="rec-name">weekly_sync_1001</span></span>
+            <span>58:40</span>
+          </div>
+          <div class="relay-meta" aria-hidden="true">
+            <span class="chip">मीटिंग नोट्स AI</span>
+            <span class="chip">ऑनलाइन मीटिंग</span>
+            <span class="chip">6 प्रतिभागी</span>
+          </div>
+          <ol class="relay-steps" aria-hidden="true">
+            <li class="step s-done s-plaud"><span class="no">01</span><span class="what">रिकॉर्डिंग<small>मीटिंग टूल या डिवाइस से</small></span><span class="status">नोट्स AI ✓</span></li>
+            <li class="step s-done s-plaud"><span class="no">02</span><span class="what">ट्रांसक्रिप्ट<small>वक्ताओं को अलग करके</small></span><span class="status">नोट्स AI ✓</span></li>
+            <li class="step s-done s-plaud"><span class="no">03</span><span class="what">सारांश<small>सार, फ़ैसले, To-Do</small></span><span class="status">नोट्स AI ✓</span></li>
+            <li class="handoff">नोट्स AI यहाँ तक / यहाँ से SIMY</li>
+            <li class="step s-done"><span class="no">04</span><span class="what">शेयर का मसौदा<small>अनुपस्थित लोगों और संबंधित विभागों को, आपकी भाषा में</small></span><span class="status">ड्राफ़्ट तैयार</span></li>
+            <li class="step s-run"><span class="no">05</span><span class="what">ज़िम्मेदार लोग और To-Do<small>कौन, कब तक, एक सूची में</small></span><span class="status">Autorun</span><span class="bar"></span></li>
+            <li class="step s-next"><span class="no">06</span><span class="what">अगली मीटिंग की तैयारी<small>बचे हुए मुद्दे और जाँचने की बातें</small></span><span class="status">अगला</span></li>
+            <li class="step s-you"><span class="no">07</span><span class="what">रिलीज़ की तारीख आगे बढ़ाएँ?<small>आपके पास सिर्फ़ फ़ैसला बचता है</small></span><span class="status">आपकी बारी</span></li>
+          </ol>
+          <div class="relay-foot" aria-hidden="true"><strong>आपको बस देखना है और भेजना है।</strong></div>
+        </div>
+        <p class="caption">* स्क्रीन केवल समझाने के लिए एक उदाहरण है</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap guide">
+    <nav class="toc" aria-label="विषय-सूची">
+      <p class="toc-title">विषय-सूची</p>
+      <ol>
+        <li><a href="#scene"><span>01</span>मीटिंग के बाद, क्या ऐसा होता है?</a></li>
+        <li><a href="#wish"><span>02</span>असल में आप यह चाहते थे</a></li>
+        <li><a href="#gap"><span>03</span>स्थिति के हिसाब से चुनाव, और रुकने की जगह</a></li>
+        <li><a href="#connect"><span>04</span>SIMY जोड़ता है</a></li>
+        <li><a href="#sample"><span>05</span>एक नियमित मीटिंग में तुलना</a></li>
+        <li><a href="#usecases"><span>06</span>उद्योग के अनुसार: मीटिंग और SIMY का नतीजा</a></li>
+        <li><a href="#start"><span>07</span>शुरुआत: 3 कदम</a></li>
+        <li><a href="#reference"><span>08</span>मिनट्स का ढाँचा, हर टूल की खास बातें, सुरक्षा</a></li>
+        <li><a href="#faq"><span>09</span>अक्सर पूछे जाने वाले सवाल</a></li>
+        <li><a href="#sources"><span>10</span>संदर्भ</a></li>
+      </ol>
+    </nav>
+
+    <article class="article">
+      <details class="toc-mobile">
+        <summary>विषय-सूची</summary>
+        <ol>
+          <li><a href="#scene">मीटिंग के बाद, क्या ऐसा होता है?</a></li>
+          <li><a href="#wish">असल में आप यह चाहते थे</a></li>
+          <li><a href="#gap">स्थिति के हिसाब से चुनाव, और रुकने की जगह</a></li>
+          <li><a href="#connect">SIMY जोड़ता है</a></li>
+          <li><a href="#sample">एक नियमित मीटिंग में तुलना</a></li>
+          <li><a href="#usecases">उद्योग के अनुसार: मीटिंग और SIMY का नतीजा</a></li>
+          <li><a href="#start">शुरुआत: 3 कदम</a></li>
+          <li><a href="#reference">मिनट्स का ढाँचा, हर टूल की खास बातें, सुरक्षा</a></li>
+          <li><a href="#faq">अक्सर पूछे जाने वाले सवाल</a></li>
+          <li><a href="#sources">संदर्भ</a></li>
+        </ol>
+      </details>
+
+      <p class="byline"><span>अंतिम अपडेट: <time datetime="2026-10-01">1 अक्टूबर 2026</time></span><span>प्रकाशक: SIMY (AwakApp Inc.)</span></p>
+
+      <!-- 01 -->
+      <section class="sec" id="scene" aria-labelledby="h-scene">
+        <span class="sec-label">01 / AFTER THE MEETING</span>
+        <h2 id="h-scene">मीटिंग के बाद, क्या ऐसा होता है?</h2>
+        <p class="intro">AI के बनाए मिनट्स आ चुके हैं। फिर भी मीटिंग खत्म होने के 30 मिनट बाद यह सब होता है।</p>
+        <div class="scenes">
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">1</span>
+            <span class="k">30 मिनट बाद</span>
+            <b>क्या कहा था?</b>
+            <p>सारांश पढ़ लिया। पर वह काम किसने लिया था, और बारीक बातें क्या थीं, याद नहीं आता।</p>
+          </div>
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">2</span>
+            <span class="k">1 घंटे बाद</span>
+            <b>कॉपी और पेस्ट</b>
+            <p>Teams का ट्रांसक्रिप्ट कॉपी करके चैट AI में चिपकाना और अपने फ़ॉर्मैट में बदलवाना। हर बार।</p>
+          </div>
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">3</span>
+            <span class="k">अगली सुबह</span>
+            <b>अगला कदम गायब</b>
+            <p>"आगे क्या करना है" लिखा ही नहीं। हर कोई अपने AI से दोबारा सारांश बनाता है, To-Do छूट जाते हैं।</p>
+          </div>
+        </div>
+        <p class="scene-foot">रिकॉर्डिंग, ट्रांसक्रिप्ट और सारांश, कोई भी टूल कुछ मिनटों में कर देता है। <b>मीटिंग की असली कीमत तय करने वाला काम उसके बाद बचा रहता है।</b></p>
+      </section>
+
+      <!-- 02 -->
+      <section class="sec" id="wish" aria-labelledby="h-wish">
+        <span class="sec-label">02 / WHAT YOU REALLY WANTED</span>
+        <h2 id="h-wish">असल में आप यह चाहते थे: AI मिनट्स के बाद</h2>
+        <p class="intro">वही मीटिंग, वही नोट्स टूल। मीटिंग से निकलते ही आप चाहते थे कि यह हो चुका हो।</p>
+        <div class="scenes four">
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">मीटिंग से निकलते ही</span>
+            <b>खत्म होते ही तैयार</b>
+            <p>अनुपस्थित लोगों के लिए अपडेट और हर व्यक्ति की To-Do सूची, चैट में पहले से मौजूद।</p>
+          </div>
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">बिना कहे</span>
+            <b>हर बार आपके ढंग से</b>
+            <p>प्रतिभागी, एजेंडा, फ़ैसले, अगले कदम। बिना निर्देश के, हमेशा वाला ढाँचा।</p>
+          </div>
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">अगली सुबह तक</span>
+            <b>फ़ैसले पहुँच चुके</b>
+            <p>फ़ैसले ज़िम्मेदार लोगों तक पहुँचे, और बचे मुद्दे अगली मीटिंग के एजेंडा में।</p>
+          </div>
+          <div class="scene wish you">
+            <span class="mark" aria-hidden="true">!</span>
+            <span class="k">आपके पास लौटता है</span>
+            <b>सिर्फ़ फ़ैसला</b>
+            <p>"क्या रिलीज़ एक हफ़्ता आगे बढ़ा दें?" लौटकर बस यही एक सवाल आता है।</p>
+          </div>
+        </div>
+        <p class="scene-foot">यह सब <b>मौजूदा नोट्स टूल के साथ, रिकॉर्ड की जगह SIMY से जोड़ने के बाद की अगली मीटिंग से</b> होने लगता है।</p>
+      </section>
+
+      <!-- 03 -->
+      <section class="sec" id="gap" aria-labelledby="h-gap">
+        <span class="sec-label">03 / WHICH TOOL, AND WHERE IT STOPS</span>
+        <h2 id="h-gap">स्थिति के हिसाब से चुनाव। और हर टूल जहाँ रुकता है</h2>
+        <p class="intro">AI मीटिंग नोट्स टूल आपकी कंपनी के माहौल से तय होता है। उलझन बस इन्हीं कुछ स्थितियों में होती है।</p>
+        <p class="scroll-hint">तालिका को दाएँ स्क्रॉल कर सकते हैं →</p>
+        <div class="table-wrap">
+          <table class="t-wide">
+            <thead>
+              <tr><th scope="col">आपका माहौल</th><th scope="col">कौन-सा टूल</th><th scope="col">रिकॉर्ड कैसे</th><th scope="col">सारांश कहाँ आता है</th><th scope="col">ध्यान रखें</th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">कंपनी सिर्फ़ Microsoft पर</th><td>Teams का Copilot</td><td>Teams मीटिंग का ट्रांसक्रिप्शन चालू करें</td><td>Teams की मीटिंग चैट और सारांश</td><td>Microsoft 365 Copilot लाइसेंस चाहिए। ट्रांसक्रिप्शन और Copilot एडमिन ने चालू किए हों, यह ज़रूरी है</td></tr>
+              <tr><th scope="row">कंपनी सिर्फ़ Google पर</th><td>Meet का Gemini</td><td>"Take notes with Gemini" चालू करें</td><td>Google Docs। मीटिंग के 2 से 3 मिनट बाद ईमेल आता है</td><td>Gemini वाला Google Workspace प्लान चाहिए</td></tr>
+              <tr><th scope="row">टूल चुनने की आज़ादी</th><td>Notion AI Meeting Notes</td><td>Notion पेज पर रिकॉर्ड बटन। कोई बॉट नहीं जुड़ता</td><td>वही Notion पेज</td><td>Notion AI वाला ऊपर का प्लान चाहिए</td></tr>
+              <tr><th scope="row">रिकॉर्डिंग बॉट चल सकता है</th><td>Notta, tl;dv</td><td>बॉट प्रतिभागी के रूप में मीटिंग में जुड़ता है। कैलेंडर से जुड़कर अपने आप</td><td>हर टूल की वेब स्क्रीन</td><td>ग्राहकों की मीटिंग में बॉट जोड़ना मुश्किल। फ़्री प्लान में ट्रांसक्रिप्शन समय की सीमा</td></tr>
+              <tr><th scope="row">मुफ़्त में काम चलाना है</th><td>फ़ोन का वॉइस मेमो + Google AI Studio</td><td>वॉइस मेमो से रिकॉर्ड करके ऑडियो फ़ाइल देना</td><td>AI Studio की स्क्रीन</td><td>कोई अतिरिक्त खर्च नहीं। हाथ का काम ज़्यादा, हर बार वही निर्देश</td></tr>
+              <tr><th scope="row">आमने-सामने मीटिंग ज़्यादा</th><td>PLAUD</td><td>डिवाइस रखकर रिकॉर्ड करें</td><td>PLAUD ऐप</td><td>आमने-सामने और कॉल के लिए। विस्तार से <a href="/guides/hi/plaud.html">PLAUD गाइड</a> में</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="small muted">अक्टूबर 2026 तक की आधिकारिक जानकारी पर आधारित। कीमत और प्लान के नाम हर कंपनी के आधिकारिक पेज पर देखें।</p>
+
+        <div class="tl-wrap" role="img" aria-label="टाइमलाइन। Teams Copilot, Meet Gemini, Notion AI, Notta और tl;dv, और मुफ़्त तरीका, सबकी रेखा रिकॉर्डिंग, ट्रांसक्रिप्ट और सारांश पर खत्म होती है, और शेयर का मसौदा, ज़िम्मेदार लोग और To-Do, अगली मीटिंग की तैयारी और फ़ैसला खाली रह जाते हैं">
+          <div class="tl-row">
+            <span class="tl-who">Teams</span>
+            <ol class="tl">
+              <li class="on">रिकॉर्डिंग</li>
+              <li class="on">ट्रांसक्रिप्ट</li>
+              <li class="on">सारांश</li>
+              <li class="gap">शेयर का मसौदा</li>
+              <li class="gap">ज़िम्मेदारी और To-Do</li>
+              <li class="gap">अगली तैयारी</li>
+              <li class="gap">फ़ैसला</li>
+            </ol>
+          </div>
+          <div class="tl-row">
+            <span class="tl-who">Meet</span>
+            <ol class="tl">
+              <li class="on">रिकॉर्डिंग</li>
+              <li class="on">ट्रांसक्रिप्ट</li>
+              <li class="on">सारांश</li>
+              <li class="gap">शेयर का मसौदा</li>
+              <li class="gap">ज़िम्मेदारी और To-Do</li>
+              <li class="gap">अगली तैयारी</li>
+              <li class="gap">फ़ैसला</li>
+            </ol>
+          </div>
+          <div class="tl-row">
+            <span class="tl-who">Notion</span>
+            <ol class="tl">
+              <li class="on">रिकॉर्डिंग</li>
+              <li class="on">ट्रांसक्रिप्ट</li>
+              <li class="on">सारांश</li>
+              <li class="gap">शेयर का मसौदा</li>
+              <li class="gap">ज़िम्मेदारी और To-Do</li>
+              <li class="gap">अगली तैयारी</li>
+              <li class="gap">फ़ैसला</li>
+            </ol>
+          </div>
+          <div class="tl-row">
+            <span class="tl-who">बॉट वाले</span>
+            <ol class="tl">
+              <li class="on">रिकॉर्डिंग</li>
+              <li class="on">ट्रांसक्रिप्ट</li>
+              <li class="on">सारांश</li>
+              <li class="gap">शेयर का मसौदा</li>
+              <li class="gap">ज़िम्मेदारी और To-Do</li>
+              <li class="gap">अगली तैयारी</li>
+              <li class="gap">फ़ैसला</li>
+            </ol>
+          </div>
+          <div class="tl-row">
+            <span class="tl-who">मुफ़्त, आमने-सामने</span>
+            <ol class="tl">
+              <li class="on">रिकॉर्डिंग</li>
+              <li class="on">ट्रांसक्रिप्ट</li>
+              <li class="on">सारांश</li>
+              <li class="gap">शेयर का मसौदा</li>
+              <li class="gap">ज़िम्मेदारी और To-Do</li>
+              <li class="gap">अगली तैयारी</li>
+              <li class="gap">फ़ैसला</li>
+            </ol>
+          </div>
+        </div>
+        <p class="caption">* प्रवाह केवल समझाने के लिए एक उदाहरण है</p>
+        <p class="tl-note"><b>कोई भी टूल चुनें, रेखा एक ही जगह रुकती है।</b> सारांश से सवाल पूछ सकते हैं। ट्रांसक्रिप्ट चैट AI में चिपकाकर मसौदा भी बनवा सकते हैं। पर "कहना" हर बार आपका काम है, और काम हुआ या नहीं, यह देखने भी आपको ही जाना पड़ता है।</p>
+      </section>
+
+      <!-- 04 -->
+      <section class="sec" id="connect" aria-labelledby="h-connect">
+        <span class="sec-label">04 / CONNECT</span>
+        <h2 id="h-connect">SIMY जोड़ता है। नोट्स टूल वही रहता है</h2>
+        <p class="intro">खाली पड़े चार में से तीन खाने SIMY भरता है। आपके पास सिर्फ़ फ़ैसले का एक खाना लौटता है।</p>
+        <div class="tl-wrap" role="img" aria-label="टाइमलाइन। रिकॉर्डिंग, ट्रांसक्रिप्ट और सारांश मीटिंग नोट्स AI का। शेयर का मसौदा, ज़िम्मेदार लोग और To-Do, और अगली मीटिंग की तैयारी SIMY आगे बढ़ाता है, और सिर्फ़ तारीख का फ़ैसला आपके पास लौटता है">
+          <div class="tl-row">
+            <span class="tl-who">नोट्स AI</span>
+            <ol class="tl">
+              <li class="on">रिकॉर्डिंग</li>
+              <li class="on">ट्रांसक्रिप्ट</li>
+              <li class="on">सारांश</li>
+              <li class="blank"></li><li class="blank"></li><li class="blank"></li><li class="blank"></li>
+            </ol>
+          </div>
+          <div class="tl-row">
+            <span class="tl-who simy">SIMY</span>
+            <ol class="tl">
+              <li class="blank"></li><li class="blank"></li><li class="blank"></li>
+              <li class="run">शेयर का मसौदा<small>अनुपस्थित लोग और विभाग</small></li>
+              <li class="run">ज़िम्मेदारी और To-Do<small>कौन, कब तक</small></li>
+              <li class="run">अगली तैयारी<small>बचे मुद्दे और जाँच</small></li>
+              <li class="you">तारीख का फ़ैसला<small>सिर्फ़ फ़ैसला लौटता है</small></li>
+            </ol>
+          </div>
+        </div>
+        <p class="caption">* प्रवाह केवल समझाने के लिए एक उदाहरण है</p>
+        <ul class="three" aria-label="SIMY की 3 खूबियाँ">
+          <li>मीटिंग से उठाना</li>
+          <li>आपके तरीके से</li>
+          <li>सिर्फ़ फ़ैसला लौटाना</li>
+        </ul>
+        <p class="tl-note">SIMY मीटिंग के रिकॉर्ड से "उसके बाद का काम" खुद ढूँढता है। बिना कहे शुरू होता है, और आपके अच्छे काम में बार-बार दिखने वाली जाँच और प्राथमिकता सीखकर उसी तरीके से आगे बढ़ता है।</p>
+
+        <div class="connect">
+          <ol class="connect-steps">
+            <li><b>SIMY की इंटीग्रेशन स्क्रीन खोलें</b><span>अगर खाता नहीं है, तो पहले SIMY पर रजिस्टर करें। नोट्स टूल बदलने की ज़रूरत नहीं।</span></li>
+            <li class="key"><b>जहाँ मीटिंग का रिकॉर्ड है, उसे कनेक्ट करें</b><span>PLAUD के लिए SIMY में बना इंटीग्रेशन है, बस "कनेक्ट करें" दबाएँ। Notion AI के रिकॉर्ड Notion इंटीग्रेशन से, और Meet के Gemini से बने Google Docs, Google इंटीग्रेशन से पहुँचते हैं।</span></li>
+            <li><b>Claude Code और Codex की बातचीत भी, जैसी है वैसी</b><span>अगर आप ट्रांसक्रिप्ट Claude Code या Codex में सँभालते हैं, तो PC पर <code>simy</code> ऐप इंस्टॉल करने पर SIMY उस बातचीत के इतिहास से काम के सुझाव "SIMY से सुझाव" के रूप में देता है। मूल पाठ सर्वर पर सेव नहीं होता।</span></li>
+          </ol>
+          <div>
+            <div class="mock" role="img" aria-label="SIMY की इंटीग्रेशन स्क्रीन का उदाहरण। मीटिंग के रिकॉर्ड वाली जगहों के रूप में Plaud, Notion और Google दिखते हैं, और कनेक्ट करें बटन दबाने पर नए टैब में प्रमाणीकरण होता है।">
+              <div class="mock-head" aria-hidden="true">
+                <span class="mock-mark">⇄</span>
+                <div>
+                  <div class="mock-title">इंटीग्रेशन <span class="mock-state">● मीटिंग के रिकॉर्ड</span></div>
+                  <p class="mock-desc">मिनट्स, ट्रांसक्रिप्ट और सारांश खोजता और देखता है</p>
+                </div>
+              </div>
+              <div class="mock-box" aria-hidden="true">Plaud / Notion / Google</div>
+              <div class="mock-btn" aria-hidden="true">कनेक्ट करें</div>
+              <div class="mock-foot" aria-hidden="true">↗ नए टैब में प्रमाणीकरण होगा</div>
+            </div>
+            <p class="caption">* SIMY की इंटीग्रेशन स्क्रीन का उदाहरण</p>
+          </div>
+        </div>
+        <p class="note"><b>Teams Copilot, Notta या tl;dv इस्तेमाल करते हैं, तो:</b> सारांश Notion या Google Docs में रखने की आदत डालें, तो वह इसी रास्ते से SIMY तक पहुँचता है। कनेक्शन की ताज़ा सूची <a href="/integrations.html">इंटीग्रेशन पेज</a> पर है। PLAUD जोड़ने का तरीका <a href="/guides/hi/plaud.html">PLAUD गाइड</a> में है।</p>
+      </section>
+
+      <!-- 05 -->
+      <section class="sec" id="sample" aria-labelledby="h-sample">
+        <span class="sec-label">05 / SAMPLE</span>
+        <h2 id="h-sample">एक नियमित मीटिंग में तुलना: नोट्स AI का सारांश और SIMY का तैयार काम</h2>
+        <p class="intro">6 लोगों की साप्ताहिक मीटिंग (लगभग 1 घंटा), ऑनलाइन मीटिंग के नोट्स AI से रिकॉर्ड करने का उदाहरण। बाईं ओर नोट्स AI, दाईं ओर SIMY।</p>
+        <div class="sample">
+          <div class="sheet">
+            <div class="sheet-label"><span>नोट्स AI का सारांश (उदाहरण)</span><span>अपने आप बना</span></div>
+            <dl>
+              <dt>सार</dt>
+              <dd>नए फ़ीचर की रिलीज़ की तैयारी और ग्राहक सवालों के जवाब के बँटवारे पर चर्चा हुई।</dd>
+              <dt>फ़ैसले</dt>
+              <dd>टेस्टिंग एक हफ़्ता बढ़ाने का प्रस्ताव आया। सवालों का पहला जवाब सपोर्ट टीम देगी।</dd>
+              <dt>चुनौतियाँ</dt>
+              <dd>टेस्टिंग बढ़ी तो रिलीज़ की तारीख और सेल्स को सूचना देने का समय तय नहीं।</dd>
+              <dt>To-Do</dt>
+              <dd>टेस्ट प्लान की समीक्षा। FAQ अपडेट। सेल्स टीम को जानकारी।</dd>
+            </dl>
+          </div>
+          <div class="outs">
+            <div class="out">
+              <div class="out-head"><b>शेयर का मसौदा</b><span class="pill ok">ड्राफ़्ट तैयार</span></div>
+              <p>अनुपस्थित 2 लोगों और सेल्स टीम के लिए: "टेस्टिंग एक हफ़्ता बढ़ाने का प्रस्ताव है। तय होते ही रिलीज़ की तारीख और सूचना की योजना शेयर करेंगे", आपकी हमेशा वाली भाषा में।</p>
+            </div>
+            <div class="out">
+              <div class="out-head"><b>ज़िम्मेदार लोग और To-Do</b><span class="pill run">Autorun</span></div>
+              <p>टेस्ट प्लान की समीक्षा: डेवलपमेंट लीड, इस शुक्रवार तक। FAQ अपडेट: सपोर्ट, रिलीज़ से एक दिन पहले तक। सेल्स को सूचना: आप, रिलीज़ की तारीख तय होने के बाद।</p>
+            </div>
+            <div class="out">
+              <div class="out-head"><b>अगली मीटिंग की तैयारी</b><span class="pill">अगला</span></div>
+              <p>अगले हफ़्ते के एजेंडा में "रिलीज़ की तारीख तय करना" और "सूचना का मसौदा" जोड़ना। शुरुआत में पिछले फ़ैसले और प्रगति रखना।</p>
+            </div>
+            <div class="out you">
+              <div class="out-head"><b>आपकी पुष्टि</b><span class="pill you">आपकी बारी</span></div>
+              <p>"टेस्टिंग एक हफ़्ता बढ़ाकर रिलीज़ 15 अक्टूबर को करें?" सिर्फ़ फ़ैसले वाली बातें आपके पास लौटती हैं।</p>
+            </div>
+          </div>
+        </div>
+        <p class="sample-foot">नोट्स AI रिकॉर्ड करता है, SIMY काम आगे बढ़ाता है। मीटिंग की चर्चा और फ़ैसले का हुनर आपका ही रहता है।</p>
+      </section>
+
+      <!-- 06 -->
+      <section class="sec" id="usecases" aria-labelledby="h-usecases">
+        <span class="sec-label">06 / BY INDUSTRY</span>
+        <h2 id="h-usecases">उद्योग के अनुसार: मीटिंग का प्रकार और SIMY क्या देता है</h2>
+        <p class="intro">नोट्स टूल दफ़्तर से तय होता है। मीटिंग के बाद SIMY क्या तैयार करता है, यह आपके काम के क्षेत्र से तय होता है।</p>
+        <div class="ind">
+          <div class="ind-card">
+            <h3>प्रोजेक्ट की नियमित मीटिंग <small>Teams Copilot / Meet Gemini</small></h3>
+            <ul class="ind-rows">
+              <li><span>साप्ताहिक मीटिंग</span><span>→</span><span>हर व्यक्ति की To-Do, अनुपस्थित लोगों के लिए अपडेट</span></li>
+              <li><span>प्रगति की समीक्षा</span><span>→</span><span>सिर्फ़ पिछड़े काम और फ़ैसले वाली बातें</span></li>
+              <li><span>रेट्रोस्पेक्टिव</span><span>→</span><span>कई मीटिंग्स जोड़कर रिपोर्ट</span></li>
+            </ul>
+          </div>
+          <div class="ind-card">
+            <h3>सेल्स टीम <small>Notion AI / PLAUD</small></h3>
+            <ul class="ind-rows">
+              <li><span>डील रिव्यू मीटिंग</span><span>→</span><span>हर डील के अगले कदम, ग्राहक नोट अपडेट</span></li>
+              <li><span>ग्राहक के साथ नियमित मीटिंग</span><span>→</span><span>धन्यवाद ईमेल का ड्राफ़्ट, टीम अपडेट का मसौदा</span></li>
+              <li><span>महीने की शुरुआत की आँकड़ों वाली मीटिंग</span><span>→</span><span>तय कदमों और ज़िम्मेदार लोगों की सूची</span></li>
+            </ul>
+          </div>
+          <div class="ind-card">
+            <h3>मैनेजमेंट मीटिंग और 1-on-1 <small>Notion AI / Meet Gemini</small></h3>
+            <ul class="ind-rows">
+              <li><span>मैनेजमेंट मीटिंग</span><span>→</span><span>फ़ैसलों और ज़िम्मेदार लोगों की सूची, संबंधित लोगों से शेयर</span></li>
+              <li><span>1-on-1</span><span>→</span><span>"उसका क्या हुआ?" पूछने से पहले प्रगति और लंबित फ़ैसले</span></li>
+              <li><span>बोर्ड मीटिंग से पहले</span><span>→</span><span>पिछले फ़ैसलों और बचे कामों की सूची</span></li>
+            </ul>
+          </div>
+          <div class="ind-card">
+            <h3>क्लिनिक और स्टोर <small>PLAUD / फ़ोन का वॉइस मेमो</small></h3>
+            <ul class="ind-rows">
+              <li><span>सुबह की टीम मीटिंग</span><span>→</span><span>फ़ैसले स्टाफ़ तक पहुँचाने वाला हैंडओवर नोट</span></li>
+              <li><span>स्टाफ़ मीटिंग</span><span>→</span><span>ज़िम्मेदार व्यक्ति और समय-सीमा के साथ To-Do</span></li>
+              <li><span>मासिक समीक्षा</span><span>→</span><span>कई मीटिंग्स जोड़कर रिपोर्ट</span></li>
+            </ul>
+            <p class="small muted" style="margin:10px 0 0">जहाँ मरीज़ या ग्राहक शामिल हों, वहाँ सहमति और क्लिनिक या स्टोर के नियमों के अनुसार ही रिकॉर्ड करें।</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 07 -->
+      <section class="sec" id="start" aria-labelledby="h-start">
+        <span class="sec-label">07 / START</span>
+        <h2 id="h-start">शुरुआत: मौजूदा नोट्स टूल के साथ, 3 कदम</h2>
+        <ol class="steps3">
+          <li><b>मौजूदा नोट्स टूल से, हमेशा की तरह रिकॉर्ड करें</b><span>Teams, Meet, Notion, Notta, tl;dv, PLAUD। टूल बदलने की ज़रूरत नहीं। सारांश Notion या Google Docs में रहे, ऐसी सेटिंग अगला कदम आसान बनाती है।</span></li>
+          <li class="key"><b>SIMY से रिकॉर्ड की जगह कनेक्ट करें</b><span>इंटीग्रेशन स्क्रीन पर Plaud, Notion या Google में से किसी को "कनेक्ट करें"। <a href="#connect">जोड़ने का तरीका</a> ऊपर है।</span></li>
+          <li><b>एक मीटिंग पूरी करें</b><span>शेयर का मसौदा, ज़िम्मेदार लोग और To-Do, और अगली मीटिंग की तैयारी पहुँचती है। देखें और भेजें, बस इतना।</span></li>
+        </ol>
+        <p class="note"><b>रजिस्ट्रेशन का क्रम:</b> प्लान चुनें → ईमेल से पहचान की पुष्टि → कार्ड से भुगतान। कोई फ़्री प्लान नहीं है। <a href="/?lang=hi#pricing">कीमत देखें</a>। PC पर चलने वाला ऐप <a href="/download/hi.html">डाउनलोड पेज</a> से लें।</p>
+        <p class="note"><b>अगर आप पहले से Claude Code या Codex इस्तेमाल करते हैं,</b> तो PC पर बस <code>simy</code> ऐप इंस्टॉल करके भी शुरू कर सकते हैं। बातचीत के इतिहास से मीटिंग के बाद के काम के सुझाव "SIMY से सुझाव" के रूप में आते हैं।</p>
+      </section>
+
+      <!-- 08 -->
+      <section class="sec" id="reference" aria-labelledby="h-reference">
+        <span class="sec-label">08 / REFERENCE</span>
+        <h2 id="h-reference">मिनट्स का ढाँचा, हर टूल की खास बातें, सुरक्षा (विस्तार से जानने के लिए)</h2>
+        <p class="intro">नीचे का हिस्सा तब खोलें जब मिनट्स बेहतर बनाने हों या किसी टूल के बारे में पक्का करना हो।</p>
+
+        <details class="fold">
+          <summary>मिनट्स का ढाँचा: प्रतिभागी, एजेंडा, फ़ैसले, अगले कदम<small>चैट AI में चिपकाते समय का प्रॉम्प्ट उदाहरण भी</small></summary>
+          <div class="fold-body">
+            <h3>पढ़े जाने वाले मिनट्स के 4 हिस्से</h3>
+            <ol class="plain-list">
+              <li><strong>प्रतिभागी और अनुपस्थित लोग।</strong> कौन था और कौन नहीं, इससे तय होता है कि किसे जानकारी भेजनी है।</li>
+              <li><strong>एजेंडा।</strong> बोलने के क्रम में नहीं, तय करने की ज़रूरत के क्रम में रखें, ताकि बाद में ढूँढना आसान हो।</li>
+              <li><strong>फ़ैसले।</strong> "जो तय हुआ" और "जो प्रस्ताव आया पर तय नहीं हुआ", इन्हें अलग रखें। ये मिल जाएँ तो अगले हफ़्ते वही चर्चा फिर करनी पड़ती है।</li>
+              <li><strong>अगले कदम।</strong> ज़िम्मेदार व्यक्ति और समय-सीमा ज़रूर लिखें। जिस मीटिंग में "आगे क्या करना है" साफ़ न हो, उसके बाद का सारा काम आपके पास लौट आता है।</li>
+            </ol>
+            <h3>ट्रांसक्रिप्ट चैट AI में चिपकाते समय का प्रॉम्प्ट उदाहरण</h3>
+            <p class="note">"नीचे दिए ट्रांसक्रिप्ट से मिनट्स बनाओ। क्रम: प्रतिभागी, एजेंडा, फ़ैसले, लंबित मुद्दे, अगले कदम (ज़िम्मेदार व्यक्ति और समय-सीमा)। फ़ैसले और लंबित मुद्दे अलग रखो। वक्ताओं के नाम ट्रांसक्रिप्ट जैसे ही रखो। हिंदी में, बुलेट पॉइंट में।"</p>
+            <h3>फ़ैसले और लंबित मुद्दे कैसे अलग करें (उदाहरण)</h3>
+            <ul class="plain-list">
+              <li><strong>फ़ैसला:</strong> "सवालों का पहला जवाब सपोर्ट टीम देगी।" कर्ता और क्रिया साफ़ हैं, और कोई विरोध नहीं आया।</li>
+              <li><strong>लंबित मुद्दा:</strong> "टेस्टिंग एक हफ़्ता बढ़ाने का प्रस्ताव।" प्रस्ताव आया, पर रिलीज़ की तारीख और सूचना की योजना तय नहीं, किसी के फ़ैसले का इंतज़ार है।</li>
+              <li><strong>अगला कदम:</strong> "टेस्ट प्लान की समीक्षा: डेवलपमेंट लीड, इस शुक्रवार तक।" ज़िम्मेदार व्यक्ति और समय-सीमा दोनों हों, तभी यह अगला कदम बनता है।</li>
+            </ul>
+            <p>इससे सारांश का रूप एक जैसा हो जाता है। पर यह निर्देश लिखना, बने हुए मिनट्स सही जगह चिपकाना, और ज़िम्मेदार लोगों को To-Do बताना, हर बार आपका काम है। SIMY एक बार आपके ढंग से तैयार मिनट्स का तरीका सीख लेता है और अगली मीटिंग से बिना कहे उसी रूप में तैयार करता है।</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>हर टूल की खास बातें: Teams Copilot, Meet Gemini, Notion AI, Notta, tl;dv, PLAUD<small>अक्टूबर 2026 तक की आधिकारिक जानकारी से, सिर्फ़ पक्के तथ्य</small></summary>
+          <div class="fold-body">
+            <h3>Microsoft Teams का Copilot</h3>
+            <p>Teams मीटिंग का ट्रांसक्रिप्शन (या रिकॉर्डिंग) चालू हो, तो मीटिंग के दौरान Copilot से सवाल पूछ सकते हैं, और मीटिंग के बाद सारांश और फ़ैसलों की सूची भी मिलती है। Microsoft 365 Copilot लाइसेंस चाहिए, और ट्रांसक्रिप्शन व Copilot का उपयोग संगठन के एडमिन नीति से चालू या बंद कर सकते हैं। न चले, तो पहले एडमिन से सेटिंग पूछें।</p>
+            <h3>Google Meet का Gemini (Take notes)</h3>
+            <p>मीटिंग के दौरान "Take notes with Gemini" चालू करने पर मीटिंग के बाद सारांश Google Docs में बनता है और आयोजक को ईमेल से पहुँचता है। Gemini वाला Google Workspace प्लान चाहिए। यह मीटिंग टूल का अपना फ़ीचर है, इसलिए न बॉट चाहिए, न रिकॉर्डिंग डिवाइस।</p>
+            <h3>Notion AI Meeting Notes</h3>
+            <p>Notion पेज पर रिकॉर्डिंग शुरू करने पर आपके डिवाइस की आवाज़ से ट्रांसक्रिप्ट और सारांश उसी पेज पर बनते हैं। मीटिंग में कोई बॉट नहीं जुड़ता। ऑनलाइन और आमने-सामने, दोनों में चलता है, और मिनट्स सीधे Notion के डेटाबेस में जमा होते जाते हैं। Notion AI ऊपर के प्लान में शामिल है।</p>
+            <h3>Notta और tl;dv</h3>
+            <p>दोनों में रिकॉर्डिंग बॉट Zoom, Teams या Google Meet की मीटिंग में प्रतिभागी के रूप में जुड़कर रिकॉर्ड करता है। कैलेंडर से जोड़ने पर यह शेड्यूल के हिसाब से अपने आप जुड़ता है, और ट्रांसक्रिप्ट व सारांश वेब स्क्रीन पर दिखते हैं। फ़्री प्लान में महीने के ट्रांसक्रिप्शन समय की सीमा है। बाहरी लोगों के साथ मीटिंग में बॉट के जुड़ने की बात पहले से बताना ज़रूरी है।</p>
+            <h3>मिनट्स अपने आप Notion में (tl;dv या Notta + Zapier)</h3>
+            <ol class="plain-list">
+              <li>मीटिंग खत्म होते ही रिकॉर्डिंग टूल सारांश बनाता है।</li>
+              <li>Zapier उस सारांश से Notion के डेटाबेस में पेज बनाता है।</li>
+              <li>Slack पर "मिनट्स तैयार हैं" की सूचना आती है।</li>
+            </ol>
+            <p>कॉपी करने का काम अपने आप हो जाता है। फिर भी शेयर का मसौदा, ज़िम्मेदारी और To-Do, अगली मीटिंग की तैयारी और आपका फ़ैसला बाकी रहते हैं। वही आगे का काम SIMY करता है।</p>
+            <h3>मुफ़्त तरीका: फ़ोन का वॉइस मेमो + Google AI Studio</h3>
+            <p>फ़ोन के वॉइस मेमो से रिकॉर्ड करके ऑडियो फ़ाइल Google AI Studio को दें, तो ट्रांसक्रिप्ट और सारांश मिल जाते हैं। कोई अतिरिक्त खर्च नहीं, पर रिकॉर्डिंग भेजना, प्रॉम्प्ट लिखना और नतीजा कॉपी करना हर बार हाथ से करना पड़ता है।</p>
+            <p>iPhone और Android के वॉइस मेमो (रिकॉर्डर ऐप) में ट्रांसक्रिप्शन पहले से होता है (मॉडल और OS वर्ज़न के अनुसार अलग)। पहले इसी से आज़माएँ, और सिर्फ़ ऑडियो फ़ाइल हो तब Google AI Studio इस्तेमाल करें, इतना काफ़ी है।</p>
+            <p>मुफ़्त में भी ट्रांसक्रिप्ट तक पहुँच जाते हैं। फिर भी शेयर, To-Do और फ़ैसला बाकी रहते हैं।</p>
+            <h3>PLAUD</h3>
+            <p>कार्ड या पिन जैसे डिवाइस से आमने-सामने या कॉल की बातचीत रिकॉर्ड करता है, और ऐप में ट्रांसक्रिप्ट और सारांश बनाता है। SIMY में इसका इंटीग्रेशन पहले से है; बस "कनेक्ट करें", और सारांश के आगे का काम SIMY बढ़ाता है। उपयोग और प्लान <a href="/guides/hi/plaud.html">PLAUD गाइड</a> में हैं।</p>
+            <h3>एक तालिका में तुलना</h3>
+            <p class="scroll-hint">तालिका को दाएँ स्क्रॉल कर सकते हैं →</p>
+            <div class="table-wrap">
+              <table class="t-wide t-models">
+                <thead>
+                  <tr><th scope="col">टूल</th><th scope="col">रिकॉर्ड कैसे</th><th scope="col">बॉट जुड़ता है?</th><th scope="col">सारांश कहाँ आता है</th><th scope="col">क्या चाहिए</th><th scope="col">किसके लिए</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Teams का Copilot</th><td>Teams मीटिंग का ट्रांसक्रिप्शन</td><td>नहीं</td><td>Teams की मीटिंग चैट</td><td>Microsoft 365 Copilot लाइसेंस, एडमिन की मंज़ूरी</td><td>जिनकी अंदरूनी मीटिंग Teams पर होती हैं</td></tr>
+                  <tr><th scope="row">Meet का Gemini</th><td>Meet का "Take notes"</td><td>नहीं</td><td>Google Docs + ईमेल</td><td>Gemini वाला Workspace प्लान</td><td>Google Workspace वाली कंपनियाँ</td></tr>
+                  <tr><th scope="row">Notion AI</th><td>Notion पेज पर रिकॉर्डिंग</td><td>नहीं</td><td>Notion पेज</td><td>Notion AI वाला ऊपर का प्लान</td><td>जो मिनट्स Notion में जमा करना चाहते हैं</td></tr>
+                  <tr><th scope="row">Notta</th><td>बॉट जुड़ता है, या ऐप से रिकॉर्डिंग</td><td>हाँ</td><td>Notta की वेब स्क्रीन</td><td>खाता (फ़्री प्लान भी)</td><td>जिनके यहाँ कई मीटिंग टूल चलते हैं</td></tr>
+                  <tr><th scope="row">tl;dv</th><td>बॉट जुड़ता है</td><td>हाँ</td><td>tl;dv की वेब स्क्रीन</td><td>खाता (फ़्री प्लान भी)</td><td>Zoom या Meet पर, रिकॉर्डिंग भी रखनी हो</td></tr>
+                  <tr><th scope="row">PLAUD</th><td>डिवाइस से रिकॉर्डिंग</td><td>नहीं</td><td>PLAUD ऐप</td><td>डिवाइस और Plaud खाता</td><td>जिनकी आमने-सामने मीटिंग या कॉल ज़्यादा हैं</td></tr>
+                  <tr><th scope="row">वॉइस मेमो + AI Studio</th><td>फ़ोन से रिकॉर्ड करके ऑडियो देना</td><td>नहीं</td><td>AI Studio की स्क्रीन</td><td>Google खाता</td><td>जो पहले मुफ़्त में आज़माना चाहते हैं</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="small muted">हर टूल के फ़ीचर और प्लान 1 अक्टूबर 2026 को आधिकारिक पेजों से जाँचे गए हैं। कीमतें जल्दी बदलती हैं, इसलिए इस पेज पर नहीं दी गई हैं।</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>AI मिनट्स की सटीकता बढ़ाने के 5 तरीके<small>हर टूल में काम आते हैं। SIMY तक पहुँचाने से पहले ठीक रखें, तो आगे के काम की गुणवत्ता बढ़ती है</small></summary>
+          <div class="fold-body">
+            <ol class="plain-list">
+              <li><strong>मीटिंग की शुरुआत में एजेंडा और प्रतिभागियों के नाम बोलें।</strong> ट्रांसक्रिप्ट की शुरुआत में एजेंडा और नाम हों, तो सारांश के शीर्षक और वक्ताओं का मिलान ठीक रहता है।</li>
+              <li><strong>जो तय हुआ, उसे उसी पल दोहराएँ।</strong> "तो, टेस्टिंग एक हफ़्ता बढ़ाना तय हुआ" जैसा एक वाक्य जोड़ने से फ़ैसले और लंबित मुद्दे मिलते नहीं।</li>
+              <li><strong>ज़िम्मेदार व्यक्ति और समय-सीमा वहीं बोलें।</strong> "FAQ अपडेट नेहा करेंगी, रिलीज़ से एक दिन पहले तक" कहने पर To-Do में ज़िम्मेदार व्यक्ति और समय-सीमा जुड़ जाते हैं।</li>
+              <li><strong>माइक और भाषा की सेटिंग जाँचें।</strong> ऑनलाइन मीटिंग में हेडसेट, आमने-सामने में टेबल के बीच में रिकॉर्डिंग डिवाइस। भाषा की सेटिंग गलत हो, तो सारांश भी उसी भाषा में आता है।</li>
+              <li><strong>वक्ताओं के नाम रजिस्टर करें।</strong> "वक्ता 1", "वक्ता 2" रहने पर पता नहीं चलता कि किसने कौन-सा काम लिया। टूल का वक्ता-पहचान फ़ीचर इस्तेमाल करें।</li>
+            </ol>
+            <p>ये 5 बातें SIMY के आगे का काम करते समय भी असर दिखाती हैं। फ़ैसले और ज़िम्मेदार लोग जितने साफ़ हों, शेयर का मसौदा और To-Do उतने सटीक बनते हैं, और आपके पास लौटने वाले फ़ैसले उतने कम होते हैं।</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>टूल अपनाने के बाद अक्सर होने वाली 3 बातें<small>टूल तो आ गया, फिर भी मीटिंग के बाद कुछ क्यों नहीं बदला</small></summary>
+          <div class="fold-body">
+            <h3>1. हर कोई अपने पसंदीदा AI से दोबारा सारांश बनाता है</h3>
+            <p>कंपनी में Teams का Copilot होने के बावजूद लोग ट्रांसक्रिप्ट कॉपी करके अपने चैट AI में चिपकाते हैं। वजह: "हमारे फ़ॉर्मैट में चाहिए"। टूल के टेम्पलेट काफ़ी नहीं होते, और आखिर में हर बार प्रॉम्प्ट लिखना पड़ता है। SIMY आपके एक बार तैयार किए ढाँचे को सीखकर अगली मीटिंग से उसी रूप में तैयार करता है।</p>
+            <h3>2. सारांश आता है, पर कोई पढ़ता नहीं</h3>
+            <p>सारांश मीटिंग चैट या Notion में अपने आप जमा होने लगे, तो लोग निश्चिंत होकर पढ़ना छोड़ देते हैं। न पढ़ें, तो फ़ैसले और अगले कदम भी छूट जाते हैं। ज़रूरत सारांश पढ़वाने की नहीं, बल्कि उसमें से "आपके लिए काम" निकालकर पहुँचाने की है। SIMY पहुँचाता है शेयर का मसौदा, हर व्यक्ति की To-Do, और आपके लिए फ़ैसले का एक सवाल।</p>
+            <h3>3. "उसका क्या हुआ?" पूछते फिरना</h3>
+            <p>To-Do मिनट्स में लिखी हों, तब भी काम हुआ या नहीं, यह किसी को जाकर देखना पड़ता है। काम सौंपने वाला लगातार "उस मामले का क्या हुआ था" सोचता रहता है। SIMY में चल रहे, पूरे और आपके इंतज़ार वाले काम My Actions में दिखते हैं, इसलिए पूछते फिरने की ज़रूरत नहीं रहती।</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>नोट्स AI, चैट AI में चिपकाना, और SIMY में अंतर<small>कौन अच्छा, कौन बुरा नहीं; बस रुकने की जगह अलग है</small></summary>
+          <div class="fold-body">
+            <p class="scroll-hint">तालिका को दाएँ स्क्रॉल कर सकते हैं →</p>
+            <div class="table-wrap">
+              <table class="t-wide">
+                <thead>
+                  <tr><th scope="col">तुलना</th><th scope="col">नोट्स AI का अपने आप सारांश</th><th scope="col">ट्रांसक्रिप्ट चैट AI में चिपकाना</th><th scope="col" class="simy">SIMY</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">शुरुआत</th><td>मीटिंग खत्म होना</td><td>आप चिपकाते और कहते हैं</td><td class="simy">मीटिंग के रिकॉर्ड से SIMY उठाता है</td></tr>
+                  <tr><th scope="row">आपका ढाँचा</th><td>टूल का टेम्पलेट</td><td>हर बार प्रॉम्प्ट में बताना</td><td class="simy">अच्छे काम की जाँच और प्राथमिकता सीखता है</td></tr>
+                  <tr><th scope="row">क्या लौटता है</th><td>सारांश</td><td>मिनट्स का मसौदा</td><td class="simy">शेयर का मसौदा, ज़िम्मेदार लोग और To-Do, अगली तैयारी, और फ़ैसले का एक सवाल</td></tr>
+                  <tr><th scope="row">आपके पास क्या रहता है</th><td>सारांश का पेज</td><td>चैट का इतिहास</td><td class="simy">चल रहे, पूरे और आपके इंतज़ार वाले काम, My Actions में</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="note"><b>कैसे चुनें:</b> एक बार की मीटिंग के लिए नोट्स AI का सारांश काफ़ी है। अगर वही मीटिंग हर हफ़्ते होती है और उसके बाद का काम भी हर बार वही होता है, तो SIMY काम आता है। चैट AI के इस्तेमाल के बारे में <a href="/guides/hi/chatgpt.html">ChatGPT गाइड</a> में लिखा है।</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>फिर भी, हाथ से मिनट्स लिखने का फ़ायदा<small>खुद क्या करना है, यह साफ़ होता है। यही जगह SIMY के "सिर्फ़ फ़ैसला लौटाना" की है</small></summary>
+          <div class="fold-body">
+            <p>AI मिनट्स आम होने के बाद भी कुछ लोग कहते हैं कि "मिनट्स हाथ से लिखना बेहतर है"। वजह रिकॉर्ड की सटीकता नहीं है। लिखते हुए यह साफ़ होता है कि "क्या तय हुआ, और मुझे आगे क्या करना है"। क्या तय हुआ, इसकी बारीकी पहचानना एक हुनर है, और सारांश टूल यह काम नहीं करते।</p>
+            <p>SIMY भी इसी बात को अहमियत देता है। SIMY शेयर का मसौदा और To-Do की व्यवस्था आगे बढ़ाता है, पर "क्या तय हुआ" और "तारीख बदलें या नहीं" जैसे फ़ैसले हमेशा आपको लौटाता है। हाथ से लिखने वालों को जो "अपना अगला कदम साफ़ होने" का एहसास मिलता था, उसे लिखने में समय लगाए बिना बनाए रखना, यही SIMY का तरीका है।</p>
+            <p>जो हाथ से लिखना जारी रखना चाहते हैं, उनके लिए व्यावहारिक तरीका है: सिर्फ़ फ़ैसले और अगले कदम हाथ से लिखें, बाकी नोट्स AI पर छोड़ दें। SIMY हाथ से लिखे फ़ैसले भी पढ़कर आगे का काम बढ़ाता है।</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>सुरक्षा: गोपनीय मीटिंग, ट्रेनिंग सेटिंग, रिकॉर्डिंग की सहमति<small>कंपनी के नियम, हर टूल में डेटा का व्यवहार, SIMY का तरीका</small></summary>
+          <div class="fold-body">
+            <ul class="plain-list">
+              <li><strong>रिकॉर्डिंग की सहमति:</strong> रिकॉर्डिंग या ट्रांसक्रिप्शन शुरू करने से पहले सभी प्रतिभागियों को बताकर सहमति लें। बॉट वाले टूल में जुड़ा हुआ बॉट प्रतिभागियों की सूची में दिखता है, फिर भी पहले से बताना शिष्टाचार है। SIMY की <a href="/terms.html?lang=hi">उपयोग की शर्तों</a> में भी रिकॉर्डिंग की सहमति लेना ग्राहक की ज़िम्मेदारी बताया गया है।</li>
+              <li><strong>गोपनीय मीटिंग:</strong> HR, विलय-अधिग्रहण (M&amp;A), अघोषित वित्तीय नतीजों जैसी मीटिंग में सिर्फ़ IT विभाग से मंज़ूर टूल इस्तेमाल करें। अगर कंपनी Microsoft या Google के प्रबंधन में है, तो उसी मीटिंग टूल का अपना फ़ीचर (Teams Copilot, Meet Gemini) एडमिन की सेटिंग के दायरे में चलता है, इसलिए ज़्यादा सुरक्षित रहता है।</li>
+              <li><strong>AI ट्रेनिंग की सेटिंग:</strong> हर टूल की नीति या सेटिंग होती है कि डाला गया डेटा AI ट्रेनिंग में इस्तेमाल हो या नहीं। निजी प्लान में यह कभी-कभी डिफ़ॉल्ट रूप से चालू होता है, इसलिए काम के लिए कंपनी प्लान या ट्रेनिंग बंद करने की सेटिंग जाँचें। ChatGPT में सेटिंग के Data controls में "Improve the model for everyone" बंद किया जा सकता है।</li>
+              <li><strong>SIMY से कनेक्शन:</strong> Plaud, Notion और Google का कनेक्शन उनकी अपनी प्रमाणीकरण स्क्रीन पर अपने खाते से लॉग इन करके अनुमति देने से होता है। Claude Code और Codex की बातचीत का इतिहास PC पर <code>simy</code> ऐप पढ़ता है, और मूल पाठ सर्वर पर सेव किए बिना सिर्फ़ काम के सुझाव बनाता है। SIMY में डेटा कैसे सँभाला जाता है, यह <a href="/security.html">सुरक्षा</a> और <a href="/privacy.html?lang=hi">गोपनीयता नीति</a> में बताया गया है।</li>
+              <li><strong>भेजना और लिखना आपकी मंज़ूरी से:</strong> SIMY का तैयार किया शेयर का मसौदा Gmail में सिर्फ़ ड्राफ़्ट के रूप में सेव होता है। Slack पर पोस्ट और Notion में लिखना आपकी मंज़ूरी के बाद ही होता है। कुछ भी अपने आप नहीं भेजा जाता।</li>
+            </ul>
+          </div>
+        </details>
+      </section>
+
+      <!-- 09 -->
+      <section class="sec" id="faq" aria-labelledby="h-faq">
+        <span class="sec-label">09 / FAQ</span>
+        <h2 id="h-faq">अक्सर पूछे जाने वाले सवाल</h2>
+        <div class="faq">
+          <details>
+            <summary>आखिर सबसे अच्छा AI मीटिंग नोट्स टूल कौन-सा है?</summary>
+            <div class="a"><p>यह कंपनी के माहौल से तय होता है। सिर्फ़ Microsoft है तो Teams का Copilot, सिर्फ़ Google है तो Meet का Gemini, टूल चुनने की आज़ादी है तो Notion AI Meeting Notes, रिकॉर्डिंग बॉट चल सकता है तो Notta या tl;dv, और आमने-सामने मीटिंग ज़्यादा हैं तो PLAUD। सारांश की सटीकता से ज़्यादा "सारांश कहाँ पहुँचता है" देखकर चुनें, तो आगे का काम जुड़ता है।</p></div>
+          </details>
+          <details>
+            <summary>क्या मीटिंग में बॉट जोड़े बिना रिकॉर्ड कर सकते हैं?</summary>
+            <div class="a"><p>हाँ। Teams का Copilot और Meet का Gemini मीटिंग टूल के अपने फ़ीचर हैं, इसलिए कोई बॉट प्रतिभागी नहीं जुड़ता। Notion AI Meeting Notes आपके डिवाइस की आवाज़ से रिकॉर्ड करता है, और PLAUD डिवाइस से रिकॉर्ड करता है। Notta और tl;dv में बॉट प्रतिभागी के रूप में जुड़ता है।</p></div>
+          </details>
+          <details>
+            <summary>मिनट्स अंग्रेज़ी में आ जाते हैं। क्या हिंदी में मिल सकते हैं?</summary>
+            <div class="a"><p>कई टूल में ट्रांसक्रिप्शन या आउटपुट की भाषा सेट की जा सकती है, पर हिंदी का सपोर्ट हर टूल में अलग है। हिंदी की मीटिंग फिर भी अंग्रेज़ी में आए, तो अक्सर मीटिंग या सारांश की भाषा सेटिंग अंग्रेज़ी पर होती है, इसलिए हर टूल की सेटिंग जाँचें। रिकॉर्ड किसी भी भाषा में हो, SIMY आगे का काम उसी भाषा और ढाँचे में तैयार करता है जो आप आम तौर पर इस्तेमाल करते हैं।</p></div>
+          </details>
+          <details>
+            <summary>मुफ़्त में काम चलाना है। क्या इस्तेमाल करूँ?</summary>
+            <div class="a"><p>फ़ोन के वॉइस मेमो से रिकॉर्ड करके ऑडियो Google AI Studio को देना और ट्रांसक्रिप्ट व सारांश बनवाना, बिना अतिरिक्त खर्च के आज़माया जा सकता है। Notta और tl;dv में भी फ़्री प्लान हैं, पर महीने के ट्रांसक्रिप्शन समय की सीमा है। मुफ़्त तरीके के साथ भी सारांश के आगे का काम SIMY को सौंपा जा सकता है।</p></div>
+          </details>
+          <details>
+            <summary>क्या PLAUD जैसे डिवाइस की ज़रूरत है?</summary>
+            <div class="a"><p>ज़्यादातर ऑनलाइन मीटिंग हों, तो ज़रूरत नहीं। मीटिंग टूल का फ़ीचर या Notion AI काफ़ी है। आमने-सामने सेल्स मीटिंग, परामर्श या मीटिंग रूम में बैठकें ज़्यादा हों, तो बस रखकर रिकॉर्ड करने वाला PLAUD ठीक रहता है। SIMY दोनों तरह के रिकॉर्ड के साथ एक जैसा काम करता है।</p></div>
+          </details>
+          <details>
+            <summary>क्या मिनट्स का फ़ॉर्मैट (प्रतिभागी, एजेंडा, फ़ैसले, अगले कदम) हर बार बताना पड़ेगा?</summary>
+            <div class="a"><p>नहीं। एक बार अपने ढंग से तैयार कर दें, तो SIMY वह तरीका सीख लेता है और अगली मीटिंग से उसी रूप में तैयार करता है। ट्रांसक्रिप्ट चैट AI में चिपकाकर वही निर्देश दोबारा लिखने का काम खत्म हो जाता है।</p></div>
+          </details>
+          <details>
+            <summary>"क्या तय हुआ", इसका फ़ैसला AI करेगा या मैं?</summary>
+            <div class="a"><p>फ़ैसला आप करते हैं। SIMY ट्रांसक्रिप्ट और सारांश से संभावित फ़ैसले और ज़िम्मेदार लोग व्यवस्थित करके ड्राफ़्ट तक पहुँचाता है, और तारीख बदलना या भेजना है या नहीं जैसी, फ़ैसले वाली बातें ही आपके पास लौटाता है।</p></div>
+          </details>
+          <details>
+            <summary>मीटिंग की जानकारी SIMY तक कैसे पहुँचती है?</summary>
+            <div class="a"><p>PLAUD के लिए SIMY की इंटीग्रेशन स्क्रीन पर बस "कनेक्ट करें" दबाएँ। Notion AI के रिकॉर्ड Notion इंटीग्रेशन से, और Meet के Gemini से बने Google Docs, Google इंटीग्रेशन से पहुँचते हैं। जो लोग Claude Code या Codex में मिनट्स सँभालते हैं, उनकी बातचीत के इतिहास से SIMY काम के सुझाव ढूँढता है। उपलब्धता <a href="/integrations.html">इंटीग्रेशन पेज</a> पर देखें।</p></div>
+          </details>
+          <details>
+            <summary>क्या SIMY इस्तेमाल करने पर AI का अलग शुल्क लगता है?</summary>
+            <div class="a"><p>SIMY आपका ChatGPT खाता जोड़कर Codex से काम आगे बढ़ाता है। Codex का उपयोग आपके ChatGPT प्लान की सीमा में होता है। SIMY की अपनी कीमत के लिए <a href="/?lang=hi#pricing">प्राइसिंग पेज</a> देखें।</p></div>
+          </details>
+          <details>
+            <summary>क्या गोपनीय मीटिंग में भी इस्तेमाल कर सकते हैं? रिकॉर्डिंग की सहमति ज़रूरी है?</summary>
+            <div class="a"><p>रिकॉर्डिंग और ट्रांसक्रिप्शन से पहले सभी प्रतिभागियों की सहमति और कंपनी के नियम जाँचें। गोपनीय मीटिंग में सिर्फ़ IT विभाग से मंज़ूर टूल इस्तेमाल करें, और हर टूल में डेटा के ट्रेनिंग में इस्तेमाल की सेटिंग भी जाँचें। SIMY में डेटा कैसे सँभाला जाता है, यह <a href="/security.html">सुरक्षा</a> और <a href="/privacy.html?lang=hi">गोपनीयता नीति</a> के पेज पर बताया गया है।</p></div>
+          </details>
+        </div>
+      </section>
+
+      <!-- 10 -->
+      <section class="sec" id="sources" aria-labelledby="h-sources">
+        <span class="sec-label">10 / SOURCES</span>
+        <h2 id="h-sources">संदर्भ</h2>
+        <p>हर टूल के फ़ीचर, ज़रूरी प्लान और रिकॉर्ड करने का तरीका नीचे दिए आधिकारिक स्रोतों से जाँचा गया है (जाँच की तारीख: 1 अक्टूबर 2026)। मीटिंग के बाद बचे काम के दृश्य AI के उपयोग पर बने व्याख्या वीडियो से प्रेरित हैं।</p>
+        <ul class="plain-list">
+          <li><a href="https://www.microsoft.com/en-us/microsoft-365/copilot" target="_blank" rel="noopener">Microsoft 365 Copilot (Microsoft आधिकारिक)</a></li>
+          <li><a href="https://learn.microsoft.com/en-us/microsoftteams/copilot-teams-transcription" target="_blank" rel="noopener">Teams मीटिंग में Copilot और ट्रांसक्रिप्शन की सेटिंग (Microsoft Learn)</a></li>
+          <li><a href="https://support.google.com/meet/answer/14754931" target="_blank" rel="noopener">Google Meet में Gemini से नोट्स बनाना (Google Meet हेल्प)</a></li>
+          <li><a href="https://www.notion.com/product/ai-meeting-notes" target="_blank" rel="noopener">Notion AI Meeting Notes (Notion आधिकारिक)</a></li>
+          <li><a href="https://www.notta.ai/" target="_blank" rel="noopener">Notta (आधिकारिक साइट)</a></li>
+          <li><a href="https://tldv.io/" target="_blank" rel="noopener">tl;dv (आधिकारिक साइट)</a></li>
+          <li><a href="https://www.plaud.ai/" target="_blank" rel="noopener">PLAUD (आधिकारिक साइट)</a></li>
+          <li><a href="https://aistudio.google.com/" target="_blank" rel="noopener">Google AI Studio (Google आधिकारिक)</a></li>
+        </ul>
+      </section>
+      <aside class="next-read" aria-labelledby="h-next">
+        <h2 id="h-next">आगे पढ़ें</h2>
+        <div class="next-grid"><a href="/guides/hi/plaud.html"><b>PLAUD NOTE गाइड</b><span>सारांश के बाद का ईमेल और ग्राहक नोट</span></a><a href="/guides/hi/chatgpt.html"><b>ChatGPT गाइड</b><span>चिपकाना और सुधारना, हर बार नहीं</span></a><a href="/guides/hi/cowork.html"><b>Claude Cowork गाइड</b><span>डेस्क के काम के बाद बचा मीटिंग का होमवर्क</span></a></div>
+        <a class="next-all" href="/guides/hi/index.html">सभी गाइड →</a>
+      </aside>
+    </article>
+  </div>
+
+  <section class="closing" aria-labelledby="h-closing">
+    <div class="wrap closing-inner">
+      <div>
+        <h2 id="h-closing">अगली मीटिंग के बाद,<br>सारांश दोबारा पढ़ने से पहले SIMY पर आएँ।</h2>
+        <p>नोट्स टूल वही रहे। बस रिकॉर्ड की जगह कनेक्ट करें, और अगली मीटिंग से इस्तेमाल करें। SIMY लौटाता है सिर्फ़ फ़ैसला। मीटिंग की चर्चा का हुनर आपका ही रहता है।</p>
+      </div>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="https://app.simy.one/signup?lang=hi&amp;locale=hi&amp;region=in&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=meeting_notes_guide_hi&amp;utm_content=closing">प्लान चुनकर शुरू करें <span class="arrow" aria-hidden="true">↗</span></a>
+        <a class="btn btn-ghost" href="mailto:sales@simy.one?subject=AI%20%E0%A4%AE%E0%A5%80%E0%A4%9F%E0%A4%BF%E0%A4%82%E0%A4%97%20%E0%A4%A8%E0%A5%8B%E0%A4%9F%E0%A5%8D%E0%A4%B8%20%E0%A4%94%E0%A4%B0%20SIMY%20%E0%A4%95%E0%A5%87%20%E0%A4%95%E0%A4%A8%E0%A5%87%E0%A4%95%E0%A5%8D%E0%A4%B6%E0%A4%A8%20%E0%A4%95%E0%A5%87%20%E0%A4%AC%E0%A4%BE%E0%A4%B0%E0%A5%87%20%E0%A4%AE%E0%A5%87%E0%A4%82%20%E0%A4%AC%E0%A4%BE%E0%A4%A4%20%E0%A4%95%E0%A4%B0%E0%A4%A8%E0%A5%80%20%E0%A4%B9%E0%A5%88">बात करें</a>
+        <a class="btn btn-ghost" href="/download/hi.html">ऐप डाउनलोड करें <span class="arrow" aria-hidden="true">↓</span></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <ul class="footer-links">
+      <li><a href="/?lang=hi">होम</a></li>
+      <li><a href="/?lang=hi#how-it-works">यह कैसे काम करता है</a></li>
+      <li><a href="/?lang=hi#pricing">कीमत</a></li>
+      <li><a href="/integrations.html">इंटीग्रेशन</a></li>
+      <li><a href="/download/hi.html">डाउनलोड</a></li>
+      <li><a href="/guides/hi/plaud.html">PLAUD गाइड</a></li>
+      <li><a href="/guides/hi/chatgpt.html">ChatGPT गाइड</a></li>
+      <li><a href="/guides/hi/claude.html">Claude गाइड</a></li>
+      <li><a href="/guides/hi/codex.html">Codex गाइड</a></li>
+      <li><a href="/guides/hi/cowork.html">Cowork गाइड</a></li>
+      <li><a href="/security.html">सुरक्षा</a></li>
+      <li><a href="/about.html">कंपनी के बारे में</a></li>
+      <li><a href="/privacy.html?lang=hi">गोपनीयता नीति</a></li>
+      <li><a href="/terms.html?lang=hi">उपयोग की शर्तें</a></li>
+    </ul>
+    <p>Microsoft Teams, Copilot, Google Meet, Gemini, Notion, Notta, tl;dv और PLAUD अपने-अपने अधिकारधारकों के ट्रेडमार्क या पंजीकृत ट्रेडमार्क हैं। SIMY इन सभी कंपनियों से स्वतंत्र उत्पाद है और इसे इनकी साझेदारी या स्वीकृति प्राप्त नहीं है।</p>
+    <p>Codex और ChatGPT, OpenAI के उत्पाद हैं। Claude Code, Anthropic का उत्पाद है। अन्य कंपनियों और उत्पादों के नाम उनके संबंधित ट्रेडमार्क या पंजीकृत ट्रेडमार्क हैं।</p>
+    <p>&copy; 2026 SIMY by AwakApp Inc.</p>
+  </div>
+</footer>
+<script>
+(function () {
+  var links = Array.prototype.slice.call(document.querySelectorAll('.toc a'));
+  if (!links.length) return;
+  var items = links.map(function (a) {
+    return { link: a, section: document.getElementById(a.getAttribute('href').slice(1)) };
+  }).filter(function (item) { return item.section; });
+  var ticking = false;
+  function update() {
+    ticking = false;
+    var line = window.innerHeight * 0.35;
+    var atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+    var current = null;
+    items.forEach(function (item) {
+      if (item.section.getBoundingClientRect().top <= line) current = item;
+    });
+    if (atBottom) current = items[items.length - 1];
+    items.forEach(function (item) { item.link.classList.toggle('is-active', item === current); });
+  }
+  window.addEventListener('scroll', function () {
+    if (!ticking) { ticking = true; window.requestAnimationFrame(update); }
+  }, { passive: true });
+  update();
+})();
+</script>
+<script src="/analytics.js" defer></script>
+</body>
+</html>

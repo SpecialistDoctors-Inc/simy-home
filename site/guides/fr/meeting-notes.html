@@ -1,0 +1,1626 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="google-site-verification" content="1n6_tVJZRZlQax8luEg5VsuG7gg-kCEam5VFiWIJs3U">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Compte rendu IA : Teams, Meet, Notion AI ou Notta ? | SIMY</title>
+<meta name="description" content="Comparatif des outils de compte rendu IA : Teams Copilot, Gemini dans Meet, Notion AI, Notta, tl;dv. Le partage et les tâches restants, SIMY s'en charge.">
+<link rel="canonical" href="https://simy.one/guides/fr/meeting-notes.html">
+<link rel="alternate" hreflang="ja" href="https://simy.one/guides/meeting-notes.html">
+<link rel="alternate" hreflang="en" href="https://simy.one/guides/en/meeting-notes.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://simy.one/guides/zh-hans/meeting-notes.html">
+<link rel="alternate" hreflang="es" href="https://simy.one/guides/es/meeting-notes.html">
+<link rel="alternate" hreflang="fr" href="https://simy.one/guides/fr/meeting-notes.html">
+<link rel="alternate" hreflang="hi" href="https://simy.one/guides/hi/meeting-notes.html">
+<link rel="alternate" hreflang="x-default" href="https://simy.one/guides/en/meeting-notes.html">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://simy.one/guides/fr/meeting-notes.html">
+<meta property="og:title" content="Le compte rendu est prêt. Le travail, pas encore. | SIMY">
+<meta property="og:description" content="Teams Copilot, Gemini dans Meet, Notion AI, Notta, tl;dv, PLAUD : comment choisir selon la situation, et comment SIMY fait avancer ce qui suit le résumé.">
+<meta property="og:site_name" content="SIMY">
+<meta property="og:image" content="https://simy.one/ogp.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="SIMY : le travail qui suit le compte rendu de réunion IA">
+<meta property="og:locale" content="fr_FR">
+<meta property="article:published_time" content="2026-10-01">
+<meta property="article:modified_time" content="2026-10-01">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Le compte rendu est prêt. Le travail, pas encore. | SIMY">
+<meta name="twitter:description" content="Teams Copilot, Gemini dans Meet, Notion AI, Notta, tl;dv, PLAUD : comment choisir selon la situation, et comment SIMY fait avancer ce qui suit le résumé.">
+<meta name="twitter:image" content="https://simy.one/ogp.png">
+<meta name="twitter:image:alt" content="SIMY : le travail qui suit le compte rendu de réunion IA">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#f6f5f4">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png">
+<style>
+:root {
+  --paper: #f6f5f4;
+  --paper-light: #ffffff;
+  --ink: #111111;
+  --ink-soft: #5d5b58;
+  --ink-faint: #6b6865;
+  --line-soft: rgba(17, 17, 17, 0.14);
+  --ui-line: #d9dde2;
+  --blue: #3273d7;
+  --blue-deep: #235db8;
+  --blue-soft: #eef5ff;
+  --mint: #92edce;
+  --coral-soft: #fff1ec;
+  --yellow: #ffd166;
+  --radius: 0.8rem;
+  --radius-sm: 0.5rem;
+  --sans: "Helvetica Neue", Arial, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", Meiryo, sans-serif;
+  --mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  --page: 1180px;
+  --gutter: clamp(16px, 4vw, 40px);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.85;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+a { color: inherit; }
+a:focus-visible, summary:focus-visible {
+  outline: 3px solid rgba(50, 115, 215, 0.45);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+img { max-width: 100%; display: block; }
+
+.wrap { width: min(var(--page), 100% - var(--gutter) * 2); margin: 0 auto; }
+
+.skip {
+  position: absolute; left: -9999px; top: 8px;
+  background: var(--ink); color: #fff; padding: 8px 14px; border-radius: 6px; z-index: 100;
+}
+.skip:focus { left: 8px; }
+
+/* ---------- Header ---------- */
+.site-header {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(246, 245, 244, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--ink);
+}
+.header-inner {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  min-height: 64px;
+}
+.brand {
+  display: inline-flex; align-items: center; gap: 10px;
+  text-decoration: none; font-weight: 800; letter-spacing: 0.01em;
+}
+.brand img { width: 28px; height: 28px; border-radius: 7px; }
+.brand-sub {
+  padding-left: 12px; margin-left: 2px;
+  border-left: 1px solid var(--line-soft);
+  color: var(--ink-soft); font-size: 0.8rem; font-weight: 500;
+}
+.header-actions { display: flex; align-items: center; gap: 6px; }
+.header-link {
+  padding: 8px 10px; font-size: 0.86rem; font-weight: 600; text-decoration: none; color: var(--ink);
+}
+.header-link:hover { color: var(--blue-deep); }
+.header-cta {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px;
+  background: var(--ink); color: #fff; text-decoration: none;
+  font-size: 0.86rem; font-weight: 700; border-radius: 6px;
+  transition: background 0.2s;
+}
+.header-cta:hover { background: var(--blue-deep); }
+
+/* ---------- Hero ---------- */
+.hero {
+  position: relative;
+  border-bottom: 1px solid var(--ink);
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(rgba(17, 17, 17, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(17, 17, 17, 0.045) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-position: -1px -1px;
+}
+.hero-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+  gap: clamp(32px, 5vw, 72px);
+  align-items: center;
+  padding: clamp(40px, 7vw, 96px) 0 clamp(48px, 7vw, 104px);
+}
+
+.crumbs {
+  display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 22px; padding: 0; list-style: none;
+  font-size: 0.78rem; color: var(--ink-soft);
+}
+.crumbs li + li::before { content: "/"; margin-right: 6px; color: var(--ink-faint); }
+.crumbs a { text-decoration: none; }
+.crumbs a:hover { text-decoration: underline; }
+
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin: 0 0 22px; padding: 6px 12px;
+  background: var(--paper-light); border: 1px solid var(--ink); border-radius: 999px;
+  font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.04em;
+}
+.eyebrow::before {
+  content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--blue);
+  box-shadow: 0 0 0 3px var(--blue-soft);
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2rem, 4.6vw, 3.9rem);
+  line-height: 1.16;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+h1 .line { display: block; }
+h1 .hl { color: var(--blue); }
+
+.lead {
+  max-width: 36em;
+  margin: 26px 0 0;
+  font-size: clamp(1rem, 1.35vw, 1.1rem);
+  line-height: 1.95;
+  color: #2c2b29;
+}
+
+.cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 52px; padding: 0 22px;
+  border: 1px solid var(--ink); border-radius: 8px;
+  font-weight: 700; font-size: 0.98rem; text-decoration: none;
+  transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+}
+.btn-primary {
+  background: var(--blue-deep); color: #fff; border-color: var(--ink);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.btn-primary:hover { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 var(--ink); }
+.btn-ghost { background: var(--paper-light); color: var(--ink); }
+.btn-ghost:hover { background: var(--blue-soft); }
+.btn .arrow { font-family: var(--mono); font-size: 0.9em; }
+
+.hero-points {
+  display: flex; flex-wrap: wrap; gap: 8px 18px;
+  margin: 26px 0 0; padding: 0; list-style: none;
+  font-size: 0.84rem; color: var(--ink-soft);
+}
+.hero-points li { display: inline-flex; align-items: center; gap: 7px; }
+.hero-points li::before {
+  content: ""; width: 14px; height: 14px; flex: none;
+  border: 1px solid var(--ink); border-radius: 50%;
+  background: var(--mint) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath d='M3.5 7.2 6 9.5l4.5-5' fill='none' stroke='%23111' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 12px no-repeat;
+}
+
+/* Relay card: the signature visual */
+.relay {
+  position: relative;
+  background: var(--paper-light);
+  border: 1px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: 8px 8px 0 var(--ink);
+  overflow: hidden;
+}
+.relay-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--ink);
+  background: var(--ink); color: #fff;
+  font-family: var(--mono); font-size: 0.78rem;
+}
+.rec { display: inline-flex; align-items: center; gap: 8px; min-width: 0; }
+.rec-dot {
+  width: 9px; height: 9px; border-radius: 50%; background: #ff865f; flex: none;
+  animation: rec 1.6s ease-in-out infinite;
+}
+.rec-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.relay-meta { display: flex; flex-wrap: wrap; gap: 6px; padding: 12px 18px 4px; }
+.chip {
+  display: inline-flex; align-items: center; padding: 2px 9px;
+  border: 1px solid var(--line-soft); border-radius: 999px;
+  font-family: var(--mono); font-size: 0.7rem; color: var(--ink-soft); background: var(--paper);
+}
+.relay-steps { list-style: none; margin: 0; padding: 8px 10px 12px; }
+.step {
+  display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; align-items: center; gap: 10px;
+  padding: 9px 8px;
+  border-radius: 8px;
+  opacity: 0; transform: translateY(6px);
+  animation: rise 0.5s cubic-bezier(.2,.7,.2,1) forwards;
+}
+.step .no { font-family: var(--mono); font-size: 0.72rem; color: var(--ink-faint); }
+.step .what { font-size: 0.9rem; font-weight: 650; line-height: 1.45; }
+.step .what small { display: block; font-weight: 400; font-size: 0.74rem; color: var(--ink-soft); }
+.status {
+  font-family: var(--mono); font-size: 0.68rem; white-space: nowrap;
+  padding: 3px 8px; border-radius: 999px; border: 1px solid var(--ink);
+}
+.s-done { background: var(--paper); }
+.s-plaud .status { border-color: var(--line-soft); color: var(--ink-soft); }
+.s-run { background: var(--blue-soft); }
+.s-run .status { background: var(--blue-deep); color: #fff; }
+.s-next .status { background: var(--paper-light); }
+.s-you { background: #fff8e3; }
+.s-you .status { background: var(--yellow); }
+.bar {
+  grid-column: 2 / 4; height: 4px; margin-top: 6px;
+  background: rgba(50, 115, 215, 0.16); border-radius: 4px; overflow: hidden;
+}
+.bar::after {
+  content: ""; display: block; height: 100%; width: 62%;
+  background: var(--blue); border-radius: 4px;
+  animation: progress 2.8s ease-in-out infinite alternate;
+}
+.handoff {
+  display: flex; align-items: center; gap: 10px;
+  margin: 6px 4px; padding: 8px 0;
+  font-family: var(--mono); font-size: 0.72rem; color: var(--blue-deep);
+  opacity: 0; animation: rise 0.5s ease forwards;
+}
+.handoff::before, .handoff::after { content: ""; flex: 1; border-top: 1.5px dashed var(--blue); }
+.relay-foot {
+  padding: 12px 18px 14px;
+  border-top: 1px solid var(--line-soft);
+  font-size: 0.82rem; color: var(--ink-soft);
+}
+.relay-foot strong { color: var(--ink); }
+.caption { margin: 12px 4px 0; font-size: 0.74rem; color: var(--ink-faint); text-align: right; }
+
+.relay-steps > :nth-child(1) { animation-delay: 0.10s; }
+.relay-steps > :nth-child(2) { animation-delay: 0.22s; }
+.relay-steps > :nth-child(3) { animation-delay: 0.34s; }
+.relay-steps > :nth-child(4) { animation-delay: 0.62s; }
+.relay-steps > :nth-child(5) { animation-delay: 0.86s; }
+.relay-steps > :nth-child(6) { animation-delay: 1.02s; }
+.relay-steps > :nth-child(7) { animation-delay: 1.18s; }
+.relay-steps > :nth-child(8) { animation-delay: 1.34s; }
+
+@keyframes rise { to { opacity: 1; transform: none; } }
+@keyframes rec { 50% { opacity: 0.25; } }
+@keyframes progress { from { width: 34%; } to { width: 88%; } }
+
+/* ---------- Guide layout ---------- */
+.guide {
+  display: grid;
+  grid-template-columns: 232px minmax(0, 1fr);
+  gap: clamp(32px, 5vw, 72px);
+  padding: clamp(40px, 6vw, 80px) 0 clamp(56px, 7vw, 96px);
+}
+.toc { position: sticky; top: 92px; align-self: start; font-size: 0.84rem; }
+.toc-title {
+  margin: 0 0 12px; font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.08em;
+  color: var(--ink-soft);
+}
+.toc ol { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--line-soft); }
+.toc a {
+  display: grid; grid-template-columns: 26px 1fr; gap: 4px;
+  margin-left: -1px; padding: 7px 0 7px 12px;
+  border-left: 2px solid transparent;
+  color: var(--ink-soft); text-decoration: none; line-height: 1.5;
+}
+.toc a span { font-family: var(--mono); font-size: 0.72rem; padding-top: 1px; }
+.toc a:hover { color: var(--ink); }
+.toc a.is-active { color: var(--ink); font-weight: 700; border-left-color: var(--blue); }
+.toc-mobile { display: none; }
+
+.article { min-width: 0; max-width: 800px; }
+.byline {
+  display: flex; flex-wrap: wrap; gap: 4px 16px;
+  margin: 0 0 8px; font-family: var(--mono); font-size: 0.74rem; color: var(--ink-faint);
+}
+
+.sec { padding-top: clamp(40px, 5vw, 64px); }
+.sec:first-of-type { padding-top: 0; }
+.sec-label {
+  display: inline-block; margin: 0 0 12px;
+  font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.06em; color: var(--blue-deep);
+}
+h2 {
+  margin: 0 0 18px;
+  font-size: clamp(1.5rem, 2.8vw, 2.1rem);
+  line-height: 1.35; font-weight: 800; letter-spacing: -0.01em;
+}
+h3 { margin: 32px 0 12px; font-size: 1.15rem; line-height: 1.5; font-weight: 750; }
+.article p { margin: 0 0 16px; }
+.article p a, .plain-list a, .faq a { color: var(--blue-deep); text-decoration: underline; text-underline-offset: 3px; }
+.muted { color: var(--ink-soft); }
+.small { font-size: 0.84rem; }
+
+/* Checklist */
+.checklist { list-style: none; margin: 24px 0 0; padding: 0; display: grid; gap: 12px; }
+.checklist li {
+  display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 16px;
+  padding: 18px 20px;
+  background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.checklist .num {
+  display: grid; place-items: center; width: 44px; height: 44px;
+  border: 1px solid var(--ink); border-radius: 50%;
+  font-family: var(--mono); font-weight: 700;
+}
+.checklist li.hook { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.checklist li.hook .num { background: var(--blue-deep); color: #fff; }
+.checklist h3 { margin: 2px 0 4px; font-size: 1.02rem; }
+.checklist p { margin: 0; font-size: 0.93rem; color: #34322f; }
+
+/* Feature grid */
+.features { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+.feature {
+  padding: 20px; background: var(--paper-light);
+  border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.feature .tag {
+  display: inline-block; margin-bottom: 8px;
+  font-family: var(--mono); font-size: 0.7rem; color: var(--ink-soft);
+}
+.feature h3 { margin: 0 0 6px; font-size: 1.04rem; }
+.feature p { margin: 0; font-size: 0.92rem; color: #34322f; }
+.feature.wide { grid-column: 1 / -1; }
+
+/* Gap section */
+.split { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+.split-col { padding: 22px; border-radius: var(--radius); border: 1px solid var(--ink); }
+.split-col h3 { margin: 0 0 12px; font-size: 1rem; display: flex; align-items: center; gap: 8px; }
+.split-col ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.split-col li { position: relative; padding-left: 22px; font-size: 0.94rem; line-height: 1.6; }
+.split-col li::before { position: absolute; left: 0; top: 0; font-family: var(--mono); }
+.col-plaud { background: var(--paper-light); }
+.col-plaud li { color: var(--ink-soft); }
+.col-plaud li::before { content: "✓"; color: #1b7a58; }
+.col-left { background: var(--coral-soft); box-shadow: 4px 4px 0 var(--ink); }
+.col-left li::before { content: "□"; color: var(--ink); }
+.who {
+  font-family: var(--mono); font-size: 0.68rem; font-weight: 400;
+  padding: 2px 8px; border: 1px solid var(--ink); border-radius: 999px; background: var(--paper-light);
+}
+
+.quote {
+  margin: 28px 0 0; padding: 22px 24px;
+  border-left: 4px solid var(--blue); background: var(--blue-soft); border-radius: 0 var(--radius) var(--radius) 0;
+}
+.quote p { margin: 0; font-size: 1.12rem; font-weight: 750; line-height: 1.7; }
+.quote p + p { margin-top: 8px; font-size: 0.93rem; font-weight: 400; color: #34322f; }
+
+/* Connect */
+.connect {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 310px); gap: 24px;
+  align-items: start; margin-top: 24px;
+}
+.connect-steps { list-style: none; margin: 0; padding: 0; counter-reset: s; display: grid; gap: 10px; }
+.connect-steps li {
+  counter-increment: s; position: relative;
+  padding: 16px 18px 16px 62px;
+  background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.connect-steps li::before {
+  content: counter(s); position: absolute; left: 18px; top: 16px;
+  width: 30px; height: 30px; display: grid; place-items: center;
+  border: 1px solid var(--ink); border-radius: 50%; background: var(--paper);
+  font-family: var(--mono); font-weight: 700; font-size: 0.86rem;
+}
+.connect-steps li.key { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.connect-steps li.key::before { background: var(--blue-deep); color: #fff; }
+.connect-steps b { display: block; font-size: 1rem; line-height: 1.5; }
+.connect-steps span { display: block; margin-top: 4px; font-size: 0.9rem; color: #34322f; line-height: 1.7; }
+
+.mock {
+  padding: 18px; background: var(--paper-light);
+  border: 1px solid var(--ink); border-radius: var(--radius); box-shadow: 6px 6px 0 var(--blue);
+}
+.mock-head { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 12px; align-items: start; }
+.mock-mark {
+  display: grid; place-items: center; width: 44px; height: 44px;
+  border-radius: 10px; background: var(--paper); font-weight: 900; font-size: 1.15rem;
+}
+.mock-title { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 1.05rem; }
+.mock-state {
+  padding: 1px 8px; border-radius: 999px; background: var(--paper);
+  font-size: 0.7rem; font-weight: 500; color: var(--ink-soft);
+}
+.mock-desc { margin: 4px 0 0; font-size: 0.82rem; color: var(--ink-soft); line-height: 1.6; }
+.mock-box {
+  margin: 14px 0 10px; padding: 12px 14px;
+  border: 1px solid var(--ui-line); border-radius: 8px; font-size: 0.86rem; font-weight: 650;
+}
+.mock-btn {
+  display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px;
+  border-radius: 8px; background: var(--blue-deep); color: #fff; font-weight: 700; font-size: 0.92rem;
+}
+.mock-foot { margin-top: 8px; text-align: center; font-size: 0.76rem; color: var(--ink-soft); }
+
+.asks { list-style: none; margin: 12px 0 18px; padding: 0; display: grid; gap: 8px; }
+.asks li {
+  padding: 12px 16px; font-size: 0.94rem; line-height: 1.7;
+  background: var(--blue-soft); border: 1px solid rgba(50, 115, 215, 0.28);
+  border-radius: 12px 12px 12px 3px;
+}
+
+/* Tables */
+.table-wrap {
+  margin: 20px 0 8px; overflow-x: auto; -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--ink); border-radius: var(--radius); background: var(--paper-light);
+}
+table { width: 100%; border-collapse: collapse; font-size: 0.9rem; line-height: 1.6; }
+th, td { padding: 12px 14px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--ui-line); }
+thead th { background: var(--ink); color: #fff; font-weight: 700; font-size: 0.82rem; white-space: nowrap; }
+tbody th { font-weight: 700; white-space: nowrap; background: var(--paper); }
+tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
+td.simy { background: var(--blue-soft); }
+thead th.simy { background: var(--blue-deep); }
+.t-wide { min-width: 640px; }
+.t-models { min-width: 760px; }
+.t-price td:nth-child(2) { white-space: nowrap; }
+.scroll-hint { display: none; margin: 0 0 12px; font-size: 0.76rem; color: var(--ink-faint); }
+
+.note {
+  margin: 16px 0 0; padding: 14px 16px;
+  background: var(--paper-light); border: 1px dashed var(--ink-faint); border-radius: var(--radius-sm);
+  font-size: 0.88rem; color: #34322f;
+}
+.note b { color: var(--ink); }
+
+/* Sample comparison */
+.sample { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 16px; margin-top: 24px; align-items: start; }
+.sheet { padding: 20px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); }
+.sheet-label {
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;
+  font-family: var(--mono); font-size: 0.72rem; color: var(--ink-soft);
+}
+.sheet dl { margin: 0; font-size: 0.88rem; line-height: 1.65; }
+.sheet dt { margin-top: 10px; font-weight: 700; }
+.sheet dt:first-child { margin-top: 0; }
+.sheet dd { margin: 2px 0 0; color: #34322f; }
+.outs { display: grid; gap: 10px; }
+.out { padding: 14px 16px; background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius); }
+.out-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 6px; }
+.out-head b { font-size: 0.92rem; }
+.out p { margin: 0; font-size: 0.86rem; color: #34322f; line-height: 1.7; }
+.out.you { background: #fff8e3; }
+.pill {
+  font-family: var(--mono); font-size: 0.66rem; white-space: nowrap;
+  padding: 2px 8px; border-radius: 999px; border: 1px solid var(--ink); background: var(--paper);
+}
+.pill.run { background: var(--blue-deep); color: #fff; }
+.pill.you { background: var(--yellow); }
+.pill.ok { background: var(--mint); }
+.sample-foot { margin-top: 18px; font-weight: 700; }
+
+/* Use cases */
+.cases { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+.case { padding: 22px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); }
+.case h3 { margin: 0 0 4px; font-size: 1.06rem; }
+.case .device { margin: 0 0 12px; font-family: var(--mono); font-size: 0.72rem; color: var(--blue-deep); }
+.case p { margin: 0 0 8px; font-size: 0.9rem; color: #34322f; }
+.case ul { margin: 0; padding-left: 1.1em; font-size: 0.9rem; line-height: 1.7; }
+
+/* Lists */
+.plain-list { margin: 16px 0 0; padding-left: 1.2em; }
+.plain-list li { margin-bottom: 10px; }
+
+/* FAQ */
+.faq { margin-top: 20px; border-top: 1px solid var(--ink); }
+.faq details { border-bottom: 1px solid var(--ui-line); }
+.faq summary {
+  list-style: none; cursor: pointer;
+  display: grid; grid-template-columns: 28px minmax(0, 1fr) 20px; gap: 10px; align-items: start;
+  padding: 18px 4px; font-weight: 700; line-height: 1.6;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::before { content: "Q"; font-family: var(--mono); color: var(--blue-deep); }
+.faq summary::after {
+  content: "+"; font-family: var(--mono); font-size: 1.1rem; line-height: 1.4; text-align: right;
+  transition: transform 0.2s;
+}
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq .a { padding: 0 4px 18px 42px; font-size: 0.94rem; color: #34322f; }
+.faq .a p { margin: 0; }
+
+/* Closing CTA */
+.closing { background: var(--ink); color: #fff; border-top: 1px solid var(--ink); }
+.closing-inner {
+  display: grid; grid-template-columns: minmax(0, 1.2fr) auto; gap: 32px; align-items: center;
+  padding: clamp(48px, 7vw, 88px) 0;
+}
+.closing h2 { color: #fff; margin: 0 0 12px; font-size: clamp(1.6rem, 3.4vw, 2.5rem); }
+.closing p { margin: 0; color: rgba(255, 255, 255, 0.8); }
+.closing .cta-row { margin-top: 0; }
+.closing .btn-primary { box-shadow: 4px 4px 0 var(--mint); border-color: #fff; }
+.closing .btn-primary:hover { box-shadow: 5px 5px 0 var(--mint); }
+.closing .btn-ghost { background: transparent; color: #fff; border-color: rgba(255, 255, 255, 0.5); }
+.closing .btn-ghost:hover { background: rgba(255, 255, 255, 0.08); }
+
+/* Footer */
+.site-footer { padding: 36px 0 48px; font-size: 0.82rem; color: var(--ink-soft); }
+.footer-links { display: flex; flex-wrap: wrap; gap: 4px 20px; margin: 0 0 18px; padding: 0; list-style: none; }
+.footer-links a { display: inline-block; padding: 6px 0; text-decoration: none; color: var(--ink); }
+.footer-links a:hover { text-decoration: underline; }
+.site-footer p { margin: 0 0 6px; line-height: 1.7; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1080px) {
+  .guide { grid-template-columns: minmax(0, 1fr); }
+  .toc { display: none; }
+  .toc-mobile {
+    display: block; margin: 0 0 32px;
+    background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius);
+  }
+  .toc-mobile summary {
+    cursor: pointer; list-style: none; padding: 14px 18px;
+    font-family: var(--mono); font-size: 0.8rem; display: flex; justify-content: space-between;
+  }
+  .toc-mobile summary::-webkit-details-marker { display: none; }
+  .toc-mobile summary::after { content: "+"; }
+  .toc-mobile[open] summary::after { content: "−"; }
+  .toc-mobile ol { margin: 0; padding: 0 18px 14px 40px; font-size: 0.9rem; }
+  .toc-mobile li { padding: 3px 0; }
+  .toc-mobile a { display: inline-block; padding: 4px 0; text-decoration: none; }
+  .article { max-width: none; }
+}
+
+@media (max-width: 960px) {
+  .hero-inner { grid-template-columns: minmax(0, 1fr); }
+  .hero-visual { max-width: 580px; }
+  .relay { box-shadow: 6px 6px 0 var(--ink); }
+}
+
+@media (max-width: 860px) {
+  .sample { grid-template-columns: minmax(0, 1fr); }
+  .connect { grid-template-columns: minmax(0, 1fr); }
+  .mock { max-width: 360px; }
+  .closing-inner { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 640px) {
+  body { font-size: 15.5px; }
+  .brand-sub, .header-link { display: none; }
+  .header-cta { padding: 0 14px; }
+  .features, .split, .cases { grid-template-columns: minmax(0, 1fr); }
+  .checklist li { grid-template-columns: 40px minmax(0, 1fr); gap: 12px; padding: 16px; }
+  .checklist .num { width: 36px; height: 36px; font-size: 0.86rem; }
+  .connect-steps li { padding-left: 56px; }
+  .connect-steps li::before { left: 14px; }
+  .btn { width: 100%; }
+  .scroll-hint { display: block; }
+  .faq .a { padding-left: 4px; }
+  .step { grid-template-columns: 24px minmax(0, 1fr) auto; gap: 8px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .step, .handoff { animation: none; opacity: 1; transform: none; }
+  .rec-dot, .bar::after { animation: none; }
+  .btn, .header-cta { transition: none; }
+}
+
+/* ---------- Guide v2: scene cards, timeline, folds ---------- */
+.intro { max-width: 34em; margin: 0 0 8px; font-size: 1.02rem; color: #34322f; }
+.scenes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 22px; }
+.scenes.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.scene {
+  position: relative; padding: 22px 20px 20px;
+  background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius);
+  min-height: 168px; display: flex; flex-direction: column; gap: 8px;
+}
+.scene .k { font-family: var(--mono); font-size: 0.7rem; color: var(--ink-faint); letter-spacing: 0.04em; }
+.scene b { display: block; font-size: 1.22rem; line-height: 1.35; letter-spacing: -0.01em; }
+.scene p { margin: 0; font-size: 0.9rem; line-height: 1.65; color: #34322f; }
+.scene .mark {
+  position: absolute; right: 16px; top: 14px;
+  width: 30px; height: 30px; display: grid; place-items: center;
+  border: 1px solid var(--ink); border-radius: 50%; font-family: var(--mono); font-size: 0.9rem; font-weight: 700;
+}
+.scene.pain { background: var(--coral-soft); }
+.scene.pain .mark { background: var(--paper-light); }
+.scene.wish { background: var(--blue-soft); border-color: var(--blue-deep); box-shadow: 4px 4px 0 var(--blue); }
+.scene.wish .mark { background: var(--blue-deep); color: #fff; border-color: var(--blue-deep); }
+.scene.wish.you { background: #fff8e3; border-color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+.scene.wish.you .mark { background: var(--yellow); color: var(--ink); border-color: var(--ink); }
+.scene-foot { margin: 14px 0 0; font-size: 0.9rem; color: var(--ink-soft); }
+.scene-foot b { color: var(--ink); }
+
+/* Timeline */
+.tl-wrap {
+  margin-top: 22px; padding: 22px 20px 18px;
+  background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius);
+}
+.tl-row { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 14px; align-items: center; }
+.tl-row + .tl-row { margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--line-soft); }
+.tl-who {
+  font-family: var(--mono); font-size: 0.72rem; font-weight: 700; text-align: center;
+  padding: 6px 4px; border: 1px solid var(--ink); border-radius: 999px; background: var(--paper);
+}
+.tl-who.simy { background: var(--blue-deep); color: #fff; border-color: var(--blue-deep); }
+.tl-who.you { background: var(--yellow); }
+.tl { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; }
+.tl li {
+  position: relative; min-height: 64px; padding: 10px 8px 8px;
+  border-radius: var(--radius-sm); font-size: 0.8rem; line-height: 1.4; font-weight: 650;
+  display: flex; flex-direction: column; justify-content: flex-start; gap: 4px;
+}
+.tl li small { display: block; font-weight: 400; font-size: 0.7rem; color: var(--ink-soft); }
+.tl li.on { background: var(--paper); border: 1px solid var(--line-soft); color: var(--ink-soft); }
+.tl li.gap { border: 1.5px dashed var(--ink-faint); color: var(--ink-faint); background: transparent; }
+.tl li.gap::after { content: "？"; position: absolute; right: 8px; top: 6px; font-family: var(--mono); }
+.tl li.run { background: var(--blue-soft); border: 1px solid var(--blue-deep); color: var(--ink); }
+.tl li.run::after { content: "✓"; position: absolute; right: 8px; top: 6px; font-family: var(--mono); color: var(--blue-deep); }
+.tl li.you { background: #fff8e3; border: 1px solid var(--ink); color: var(--ink); }
+.tl li.you::after { content: "vous"; position: absolute; right: 8px; top: 7px; font-family: var(--mono); font-size: 0.62rem; }
+.tl li.blank { border: 0; background: transparent; }
+.tl-note { margin: 14px 0 0; font-size: 0.86rem; color: #34322f; }
+.tl-note b { color: var(--ink); }
+.three { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 0; padding: 0; list-style: none; }
+.three li {
+  padding: 8px 14px; font-weight: 800; font-size: 1rem;
+  background: var(--ink); color: #fff; border-radius: 999px;
+}
+
+/* 3-step start */
+.steps3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 22px; counter-reset: st; }
+.steps3 li {
+  counter-increment: st; list-style: none; position: relative;
+  padding: 54px 18px 18px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.steps3 li::before {
+  content: counter(st); position: absolute; left: 18px; top: 16px;
+  width: 28px; height: 28px; display: grid; place-items: center;
+  border: 1px solid var(--ink); border-radius: 50%; background: var(--paper);
+  font-family: var(--mono); font-weight: 700; font-size: 0.84rem;
+}
+.steps3 li.key { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.steps3 li.key::before { background: var(--blue-deep); color: #fff; }
+.steps3 b { display: block; font-size: 1.02rem; line-height: 1.45; }
+.steps3 span { display: block; margin-top: 6px; font-size: 0.88rem; color: #34322f; line-height: 1.65; }
+.steps3 { padding: 0; }
+
+/* Industry grid */
+.ind { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 22px; }
+.ind-card { padding: 18px 18px 14px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); }
+.ind-card h3 { margin: 0 0 10px; font-size: 1.04rem; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.ind-card h3 small { font-family: var(--mono); font-size: 0.68rem; font-weight: 400; color: var(--blue-deep); white-space: nowrap; }
+.ind-rows { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+.ind-rows li { display: grid; grid-template-columns: minmax(0, 1fr) 14px minmax(0, 1.4fr); gap: 6px; align-items: center; font-size: 0.86rem; line-height: 1.5; }
+.ind-rows li span:first-child { color: var(--ink-soft); }
+.ind-rows li span:nth-child(2) { font-family: var(--mono); color: var(--blue-deep); text-align: center; }
+.ind-rows li span:last-child { font-weight: 650; }
+
+/* Folded reference */
+.fold { margin-top: 12px; border: 1px solid var(--ui-line); border-radius: var(--radius); background: var(--paper-light); }
+.fold > summary {
+  list-style: none; cursor: pointer; padding: 16px 18px;
+  display: grid; grid-template-columns: minmax(0, 1fr) 20px; gap: 10px; align-items: center;
+  font-weight: 750; font-size: 1.02rem; line-height: 1.5;
+}
+.fold > summary::-webkit-details-marker { display: none; }
+.fold > summary::after { content: "+"; font-family: var(--mono); font-size: 1.1rem; text-align: right; }
+.fold[open] > summary::after { content: "−"; }
+.fold > summary small { display: block; margin-top: 2px; font-weight: 400; font-size: 0.82rem; color: var(--ink-soft); }
+.fold-body { padding: 0 18px 18px; font-size: 0.93rem; }
+.fold-body h3 { margin: 18px 0 8px; font-size: 1rem; }
+.fold-body h3:first-child { margin-top: 0; }
+.fold-body p { margin: 0 0 10px; }
+.fold-body .table-wrap { margin: 12px 0 6px; }
+.fold-body .plain-list { margin-top: 8px; }
+.fold-body .plain-list li { margin-bottom: 6px; }
+
+@media (max-width: 960px) {
+  .scenes, .scenes.four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tl { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .tl li.blank { display: none; }
+}
+@media (max-width: 640px) {
+  .scenes, .scenes.four, .steps3, .ind { grid-template-columns: minmax(0, 1fr); }
+  .scene { min-height: 0; }
+  .tl-row { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .tl-who { justify-self: start; }
+  .tl { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ind-rows li { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .ind-rows li span:nth-child(2) { display: none; }
+  .ind-rows li { padding: 6px 0; border-bottom: 1px dashed var(--line-soft); }
+}
+
+/* Next read */
+.next-read { margin-top: clamp(40px, 5vw, 64px); padding-top: 24px; border-top: 1px solid var(--ink); }
+.next-read h2 { font-size: 1.2rem; margin: 0 0 14px; }
+.next-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.next-grid a { display: block; padding: 14px 16px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); text-decoration: none; color: var(--ink); }
+.next-grid a:hover { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.next-grid b { display: block; font-size: 0.96rem; }
+.next-grid span { display: block; margin-top: 4px; font-size: 0.82rem; color: var(--ink-soft); }
+.next-all { display: inline-block; margin-top: 12px; font-weight: 700; color: var(--blue-deep); }
+@media (max-width: 760px) { .next-grid { grid-template-columns: minmax(0, 1fr); } }
+
+.lang-switch { position: relative; }
+.lang-switch > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 10px; border: 1px solid var(--ui-line); border-radius: 999px; background: var(--paper-light); font-size: 0.8rem; font-weight: 700; }
+.lang-switch > summary::-webkit-details-marker { display: none; }
+.lang-switch ul { position: absolute; right: 0; top: calc(100% + 6px); z-index: 30; margin: 0; padding: 6px; list-style: none; min-width: 150px; background: var(--paper-light); border: 1px solid var(--ink); border-radius: 10px; box-shadow: 4px 4px 0 var(--ink); }
+.lang-switch li a { display: block; padding: 8px 10px; border-radius: 6px; color: var(--ink); text-decoration: none; font-size: 0.88rem; }
+.lang-switch li a:hover, .lang-switch li a[aria-current] { background: var(--blue-soft); }
+@media (max-width: 960px) { .brand-sub { display: none; } .header-actions { gap: 4px; } .lang-switch > summary { padding: 0 8px; } }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://simy.one/guides/fr/meeting-notes.html#article",
+      "headline": "Choisir un outil de compte rendu IA selon la situation, et automatiser ce qui suit le résumé avec SIMY",
+      "description": "Teams Copilot, Gemini dans Google Meet, les notes de réunion Notion AI, Notta, tl;dv et PLAUD classés par situation, et comment SIMY fait avancer ce qui s'arrête au résumé quel que soit l'outil : partage, tâches, préparation de la réunion suivante.",
+      "inLanguage": "fr",
+      "datePublished": "2026-10-01",
+      "dateModified": "2026-10-01",
+      "mainEntityOfPage": "https://simy.one/guides/fr/meeting-notes.html",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://simy.one/ogp.png",
+        "width": 1200,
+        "height": 630
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "SIMY",
+        "url": "https://simy.one/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "AwakApp Inc.",
+        "url": "https://www.awak.app/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://simy.one/simy-icon-square.png"
+        }
+      },
+      "about": [
+        {
+          "@type": "Thing",
+          "name": "Compte rendu de réunion IA"
+        },
+        {
+          "@type": "Thing",
+          "name": "Transcription"
+        },
+        {
+          "@type": "Thing",
+          "name": "Automatisation des réunions"
+        }
+      ],
+      "citation": [
+        "https://www.microsoft.com/en-us/microsoft-365/copilot",
+        "https://learn.microsoft.com/en-us/microsoftteams/copilot-teams-transcription",
+        "https://support.google.com/meet/answer/14754931?hl=fr",
+        "https://www.notion.com/product/ai-meeting-notes",
+        "https://www.notta.ai/",
+        "https://tldv.io/",
+        "https://www.plaud.ai/",
+        "https://aistudio.google.com/"
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "SIMY",
+          "item": "https://simy.one/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://simy.one/guides/fr/index.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Guide des outils de compte rendu IA",
+          "item": "https://simy.one/guides/fr/meeting-notes.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Au final, quel est le meilleur outil de compte rendu IA ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Tout dépend de l'environnement de votre entreprise. 100 % Microsoft : Copilot dans Teams. 100 % Google : Gemini dans Meet. Outils au choix : les notes de réunion Notion AI. Robot accepté : Notta ou tl;dv. Beaucoup de présentiel : PLAUD. Choisissez selon « où arrive le résumé » plutôt que selon sa précision, et la suite s'enchaîne."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Peut-on enregistrer sans faire entrer de robot dans la réunion ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Oui. Copilot dans Teams et Gemini dans Meet sont des fonctions de l'outil de visio lui-même : aucun robot ne rejoint la réunion. Les notes de réunion Notion AI s'appuient sur l'audio de votre appareil, et PLAUD enregistre avec son propre appareil. Avec Notta et tl;dv, un robot rejoint la réunion comme participant."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Mon compte rendu sort en anglais. Peut-on l'avoir en français ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "La plupart des outils permettent de régler la langue de transcription ou de sortie. Si une réunion en français donne un résumé en anglais, c'est souvent que la langue de la réunion ou du résumé est réglée sur l'anglais : vérifiez les réglages de l'outil. SIMY, lui, prépare la suite dans la langue et le format que vous utilisez d'habitude, quelle que soit la langue de l'enregistrement."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Je veux rester gratuit. Que faut-il utiliser ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Enregistrer avec le dictaphone du téléphone, puis donner l'audio à Google AI Studio pour obtenir transcription et résumé : c'est possible sans aucun coût supplémentaire. Notta et tl;dv ont aussi des offres gratuites, mais avec un temps de transcription mensuel limité. Même avec une solution gratuite, vous pouvez confier à SIMY le travail qui suit le résumé."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Un appareil comme PLAUD est-il nécessaire ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Pas si vos réunions sont surtout en ligne : la fonction de l'outil de visio ou Notion AI suffit. Si vous avez beaucoup de rendez-vous, d'entretiens ou de réunions en salle, PLAUD, qu'il suffit de poser, est adapté. SIMY fonctionne de la même façon avec l'un ou l'autre."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Faut-il préciser le format du compte rendu (participants, ordre du jour, décisions, actions) à chaque fois ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Non. Finalisez une fois à votre façon : SIMY apprend cette méthode et prépare les réunions suivantes dans la même forme. Plus besoin de coller la transcription dans une IA et de retaper la même consigne."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Qui décide de « ce qui a été décidé » : l'IA ou moi ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "C'est vous. SIMY organise les décisions et les responsables possibles à partir de la transcription et du résumé, va jusqu'au brouillon, et ne vous renvoie que les points qui demandent une décision, comme un changement d'échéance ou le feu vert pour l'envoi."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Comment SIMY reçoit-il le contenu des réunions ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Pour PLAUD, un clic sur « Connecter » dans l'écran des intégrations de SIMY suffit. Les notes Notion AI passent par l'intégration Notion, et les Google Docs créés par Gemini dans Meet par l'intégration Google. Si vous traitez vos comptes rendus dans Claude Code ou Codex, SIMY trouve des propositions de travail dans cet historique. Vérifiez la compatibilité sur la page Intégrations."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Utiliser SIMY entraîne-t-il des frais d'IA supplémentaires ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "SIMY se connecte à votre compte ChatGPT et fait avancer le travail avec Codex. L'usage de Codex reste dans les limites de votre forfait ChatGPT. Pour le prix de SIMY lui-même, consultez la page des tarifs."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Peut-on l'utiliser pour des réunions confidentielles ? Faut-il un consentement pour enregistrer ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Avant d'enregistrer et de transcrire, obtenez l'accord de tous les participants et vérifiez les règles de votre entreprise. Pour les réunions confidentielles, n'utilisez que les outils validés par votre DSI, et vérifiez le réglage d'entraînement de chaque outil. Le traitement des données par SIMY est décrit sur les pages Sécurité et Politique de confidentialité."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Aller au contenu</a>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="/?lang=fr">
+      <img src="/simy-icon-56.png" alt="SIMY" width="28" height="28">
+      <span aria-hidden="true">SIMY</span>
+      <span class="brand-sub">Guide compte rendu IA</span>
+    </a>
+    <nav class="header-actions" aria-label="Compte">
+      <details class="lang-switch"><summary aria-label="Language">🌐 Français</summary><ul><li><a href="/guides/meeting-notes.html" hreflang="ja" lang="ja">日本語</a></li><li><a href="/guides/en/meeting-notes.html" hreflang="en" lang="en">English</a></li><li><a href="/guides/zh-hans/meeting-notes.html" hreflang="zh-Hans" lang="zh-Hans">中文</a></li><li><a href="/guides/es/meeting-notes.html" hreflang="es" lang="es">Español</a></li><li><a href="/guides/fr/meeting-notes.html" hreflang="fr" lang="fr" aria-current="page">Français</a></li><li><a href="/guides/hi/meeting-notes.html" hreflang="hi" lang="hi">हिन्दी</a></li></ul></details>
+      <a class="header-link" href="/download/fr.html">Télécharger</a>
+      <a class="header-link" href="https://app.simy.one/login?lang=fr&amp;locale=fr&amp;region=fr">Connexion</a>
+      <a class="header-cta" href="https://app.simy.one/signup?lang=fr&amp;locale=fr&amp;region=fr&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=meeting_notes_guide_fr&amp;utm_content=header">Choisir une offre</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" aria-labelledby="page-title">
+    <div class="wrap hero-inner">
+      <div>
+        <ol class="crumbs" aria-label="Fil d'Ariane">
+          <li><a href="https://simy.one/">SIMY</a></li>
+          <li><a href="/guides/fr/index.html">Guides</a></li>
+          <li aria-current="page">Guide des outils de compte rendu IA</li>
+        </ol>
+        <p class="eyebrow">Choisir un outil de compte rendu IA, et aller au-delà du résumé</p>
+        <h1 id="page-title">
+          <span class="line">Le compte rendu est prêt.</span>
+          <span class="line hl">Le travail, pas encore.</span>
+          <span class="line">Quel que soit l'outil.</span>
+        </h1>
+        <p class="lead">Teams, Meet, Notion AI, Notta, PLAUD : tous livrent un résumé. Le partage, les tâches et la suite, SIMY les fait avancer à votre façon.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="https://app.simy.one/signup?lang=fr&amp;locale=fr&amp;region=fr&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=meeting_notes_guide_fr&amp;utm_content=hero">Choisir une offre et commencer <span class="arrow" aria-hidden="true">↗</span></a>
+          <a class="btn btn-ghost" href="#gap">Choisir selon la situation <span class="arrow" aria-hidden="true">↓</span></a>
+        </div>
+        <ul class="hero-points">
+          <li>Gardez votre outil de compte rendu</li>
+          <li>Connectez simplement l'endroit où il range ses notes</li>
+          <li>Fonctionne avec votre forfait ChatGPT</li>
+        </ul>
+      </div>
+
+      <div class="hero-visual">
+        <div class="relay" role="img" aria-label="Exemple : l'IA de compte rendu enregistre, transcrit et résume. Ensuite, SIMY prépare le message de partage, la liste des responsables et des tâches, et la préparation de la réunion suivante. Il ne vous reste que la décision sur l'échéance.">
+          <div class="relay-head" aria-hidden="true">
+            <span class="rec"><span class="rec-dot"></span><span class="rec-name">point_hebdo_1001</span></span>
+            <span>58:40</span>
+          </div>
+          <div class="relay-meta" aria-hidden="true">
+            <span class="chip">IA de compte rendu</span>
+            <span class="chip">Réunion en ligne</span>
+            <span class="chip">6 participants</span>
+          </div>
+          <ol class="relay-steps" aria-hidden="true">
+            <li class="step s-done s-plaud"><span class="no">01</span><span class="what">Enregistrement<small>Par l'outil de visio ou un appareil</small></span><span class="status">IA ✓</span></li>
+            <li class="step s-done s-plaud"><span class="no">02</span><span class="what">Transcription<small>Séparée par intervenant</small></span><span class="status">IA ✓</span></li>
+            <li class="step s-done s-plaud"><span class="no">03</span><span class="what">Résumé<small>Synthèse, décisions, tâches</small></span><span class="status">IA ✓</span></li>
+            <li class="handoff">Fin de l'IA de compte rendu ／ SIMY prend le relais</li>
+            <li class="step s-done"><span class="no">04</span><span class="what">Message de partage<small>Aux absents et aux services concernés, dans votre style</small></span><span class="status">Brouillon prêt</span></li>
+            <li class="step s-run"><span class="no">05</span><span class="what">Responsables et tâches<small>Qui, et pour quand</small></span><span class="status">Autorun</span><span class="bar"></span></li>
+            <li class="step s-next"><span class="no">06</span><span class="what">Préparer la réunion suivante<small>Sujets reportés et points à vérifier</small></span><span class="status">Ensuite</span></li>
+            <li class="step s-you"><span class="no">07</span><span class="what">Repousser la date de sortie ?<small>Seule la décision vous revient</small></span><span class="status">À vous</span></li>
+          </ol>
+          <div class="relay-foot" aria-hidden="true"><strong>Il vous reste à relire, puis à envoyer.</strong></div>
+        </div>
+        <p class="caption">* Écran fourni à titre d'illustration</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap guide">
+    <nav class="toc" aria-label="Sommaire">
+      <p class="toc-title">Sommaire</p>
+      <ol>
+        <li><a href="#scene"><span>01</span>Après la réunion, ça se passe comme ça ?</a></li>
+        <li><a href="#wish"><span>02</span>Ce que vous vouliez vraiment</a></li>
+        <li><a href="#gap"><span>03</span>Choisir selon la situation, et où ça s'arrête</a></li>
+        <li><a href="#connect"><span>04</span>SIMY fait le lien</a></li>
+        <li><a href="#sample"><span>05</span>Une réunion d'équipe, deux résultats</a></li>
+        <li><a href="#usecases"><span>06</span>Par métier : réunions et livrables SIMY</a></li>
+        <li><a href="#start"><span>07</span>Démarrer en 3 étapes</a></li>
+        <li><a href="#reference"><span>08</span>Format, outils, sécurité</a></li>
+        <li><a href="#faq"><span>09</span>Questions fréquentes</a></li>
+        <li><a href="#sources"><span>10</span>Sources</a></li>
+      </ol>
+    </nav>
+
+    <article class="article">
+      <details class="toc-mobile">
+        <summary>Sommaire</summary>
+        <ol>
+          <li><a href="#scene">Après la réunion, ça se passe comme ça ?</a></li>
+          <li><a href="#wish">Ce que vous vouliez vraiment</a></li>
+          <li><a href="#gap">Choisir selon la situation, et où ça s'arrête</a></li>
+          <li><a href="#connect">SIMY fait le lien</a></li>
+          <li><a href="#sample">Une réunion d'équipe, deux résultats</a></li>
+          <li><a href="#usecases">Par métier : réunions et livrables SIMY</a></li>
+          <li><a href="#start">Démarrer en 3 étapes</a></li>
+          <li><a href="#reference">Format, outils, sécurité</a></li>
+          <li><a href="#faq">Questions fréquentes</a></li>
+          <li><a href="#sources">Sources</a></li>
+        </ol>
+      </details>
+
+      <p class="byline"><span>Dernière mise à jour : <time datetime="2026-10-01">1er octobre 2026</time></span><span>Éditeur : SIMY (AwakApp Inc.)</span></p>
+
+      <!-- 01 -->
+      <section class="sec" id="scene" aria-labelledby="h-scene">
+        <span class="sec-label">01 / AFTER THE MEETING</span>
+        <h2 id="h-scene">Après la réunion, ça se passe comme ça ?</h2>
+        <p class="intro">Le compte rendu IA est arrivé. Et pourtant, voici ce qui se passe trente minutes après la réunion.</p>
+        <div class="scenes">
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">1</span>
+            <span class="k">30 minutes après</span>
+            <b>Qui a dit quoi ?</b>
+            <p>Vous avez lu le résumé. Mais qui s'est chargé de ce point ? La nuance vous échappe.</p>
+          </div>
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">2</span>
+            <span class="k">1 heure après</span>
+            <b>Copier, coller</b>
+            <p>Copier la transcription Teams, la coller dans une IA, la remettre à votre format. À chaque fois.</p>
+          </div>
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">3</span>
+            <span class="k">Le lendemain matin</span>
+            <b>Pas de suite</b>
+            <p>Un compte rendu sans « prochaine étape ». Chacun résume avec son IA, et les tâches se perdent.</p>
+          </div>
+        </div>
+        <p class="scene-foot">Enregistrer, transcrire, résumer : n'importe quel outil le fait en quelques minutes. <b>Le travail qui fait la valeur de la réunion reste après.</b></p>
+      </section>
+
+      <!-- 02 -->
+      <section class="sec" id="wish" aria-labelledby="h-wish">
+        <span class="sec-label">02 / WHAT YOU REALLY WANTED</span>
+        <h2 id="h-wish">Ce que vous vouliez vraiment, après le compte rendu IA</h2>
+        <p class="intro">Même réunion, même outil. En quittant la réunion, voilà ce que vous auriez aimé trouver.</p>
+        <div class="scenes four">
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">En quittant la réunion</span>
+            <b>Déjà arrivé</b>
+            <p>Le message pour les absents et les tâches par responsable vous attendent déjà.</p>
+          </div>
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">Sans le demander</span>
+            <b>À votre format</b>
+            <p>Participants, ordre du jour, décisions, actions. Sans consigne, toujours la même forme.</p>
+          </div>
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">Le lendemain matin</span>
+            <b>Décisions transmises</b>
+            <p>Chaque responsable a reçu sa part, et les sujets reportés sont à l'ordre du jour suivant.</p>
+          </div>
+          <div class="scene wish you">
+            <span class="mark" aria-hidden="true">!</span>
+            <span class="k">Ce qui vous revient</span>
+            <b>Juste la décision</b>
+            <p>« Peut-on décaler la sortie d'une semaine ? » Une seule question vous revient.</p>
+          </div>
+        </div>
+        <p class="scene-foot">C'est ce qui se passe <b>dès la réunion qui suit, en gardant votre outil actuel et en connectant à SIMY l'endroit où il range ses notes</b>.</p>
+      </section>
+
+      <!-- 03 -->
+      <section class="sec" id="gap" aria-labelledby="h-gap">
+        <span class="sec-label">03 / WHICH TOOL, AND WHERE IT STOPS</span>
+        <h2 id="h-gap">Choisir selon la situation. Et l'endroit où tous s'arrêtent</h2>
+        <p class="intro">L'outil de compte rendu IA dépend de l'environnement de votre entreprise. Il n'y a que quelques cas à trancher.</p>
+        <p class="scroll-hint">Le tableau défile horizontalement →</p>
+        <div class="table-wrap">
+          <table class="t-wide">
+            <thead>
+              <tr><th scope="col">Votre environnement</th><th scope="col">L'outil</th><th scope="col">Comment il enregistre</th><th scope="col">Où arrive le résumé</th><th scope="col">À savoir</th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">Entreprise 100 % Microsoft</th><td>Copilot dans Teams</td><td>Activer la transcription de la réunion Teams</td><td>Conversation et récapitulatif de la réunion Teams</td><td>Licence Microsoft 365 Copilot requise. La transcription et Copilot doivent être activés par l'administrateur</td></tr>
+              <tr><th scope="row">Entreprise 100 % Google</th><td>Gemini dans Meet</td><td>Activer « Prendre des notes avec Gemini »</td><td>Un Google Docs, avec un e-mail 2 à 3 minutes après la réunion</td><td>Offre Google Workspace incluant Gemini requise</td></tr>
+              <tr><th scope="row">Outils au choix</th><td>Notes de réunion Notion AI</td><td>Bouton d'enregistrement dans une page Notion. Pas de robot</td><td>La page Notion elle-même</td><td>Offre supérieure incluant Notion AI requise</td></tr>
+              <tr><th scope="row">Robot d'enregistrement accepté</th><td>Notta, tl;dv</td><td>Un robot rejoint la réunion comme participant. Arrivée automatique via l'agenda</td><td>L'interface web de chaque outil</td><td>Délicat en réunion client. Offres gratuites limitées en temps de transcription</td></tr>
+              <tr><th scope="row">Rester gratuit</th><td>Dictaphone du téléphone + Google AI Studio</td><td>Enregistrer avec le dictaphone, puis fournir le fichier audio</td><td>L'interface d'AI Studio</td><td>Aucun coût supplémentaire. Beaucoup de manipulations, et la même consigne à chaque fois</td></tr>
+              <tr><th scope="row">Beaucoup de présentiel</th><td>PLAUD</td><td>Poser l'appareil et enregistrer</td><td>L'application PLAUD</td><td>Pour le présentiel et les appels. Voir le <a href="/guides/fr/plaud.html">guide PLAUD</a></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="small muted">D'après les informations officielles d'octobre 2026. Vérifiez les prix et les noms d'offres sur la page officielle de chaque éditeur.</p>
+
+        <div class="tl-wrap" role="img" aria-label="Frise. Avec Teams Copilot, Gemini dans Meet, Notion AI, Notta et tl;dv, ou la solution gratuite, la ligne s'arrête toujours après l'enregistrement, la transcription et le résumé. Le message de partage, les responsables et tâches, la préparation de la réunion suivante et la décision restent vides.">
+          <div class="tl-row">
+            <span class="tl-who">Teams</span>
+            <ol class="tl">
+              <li class="on">Enregistrer</li>
+              <li class="on">Transcrire</li>
+              <li class="on">Résumer</li>
+              <li class="gap">Partager</li>
+              <li class="gap">Tâches</li>
+              <li class="gap">Préparer la suite</li>
+              <li class="gap">Décider</li>
+            </ol>
+          </div>
+          <div class="tl-row">
+            <span class="tl-who">Meet</span>
+            <ol class="tl">
+              <li class="on">Enregistrer</li>
+              <li class="on">Transcrire</li>
+              <li class="on">Résumer</li>
+              <li class="gap">Partager</li>
+              <li class="gap">Tâches</li>
+              <li class="gap">Préparer la suite</li>
+              <li class="gap">Décider</li>
+            </ol>
+          </div>
+          <div class="tl-row">
+            <span class="tl-who">Notion</span>
+            <ol class="tl">
+              <li class="on">Enregistrer</li>
+              <li class="on">Transcrire</li>
+              <li class="on">Résumer</li>
+              <li class="gap">Partager</li>
+              <li class="gap">Tâches</li>
+              <li class="gap">Préparer la suite</li>
+              <li class="gap">Décider</li>
+            </ol>
+          </div>
+          <div class="tl-row">
+            <span class="tl-who">Robots</span>
+            <ol class="tl">
+              <li class="on">Enregistrer</li>
+              <li class="on">Transcrire</li>
+              <li class="on">Résumer</li>
+              <li class="gap">Partager</li>
+              <li class="gap">Tâches</li>
+              <li class="gap">Préparer la suite</li>
+              <li class="gap">Décider</li>
+            </ol>
+          </div>
+          <div class="tl-row">
+            <span class="tl-who">Gratuit, présentiel</span>
+            <ol class="tl">
+              <li class="on">Enregistrer</li>
+              <li class="on">Transcrire</li>
+              <li class="on">Résumer</li>
+              <li class="gap">Partager</li>
+              <li class="gap">Tâches</li>
+              <li class="gap">Préparer la suite</li>
+              <li class="gap">Décider</li>
+            </ol>
+          </div>
+        </div>
+        <p class="caption">* Déroulé fourni à titre d'illustration</p>
+        <p class="tl-note"><b>Quel que soit l'outil, la ligne s'arrête au même endroit.</b> On peut interroger le résumé. Collée dans une IA, la transcription donne un brouillon. Mais c'est toujours vous qui demandez, et vous qui vérifiez que c'est fait.</p>
+      </section>
+
+      <!-- 04 -->
+      <section class="sec" id="connect" aria-labelledby="h-connect">
+        <span class="sec-label">04 / CONNECT</span>
+        <h2 id="h-connect">SIMY fait le lien. Votre outil de compte rendu ne change pas</h2>
+        <p class="intro">Sur les quatre cases vides, SIMY en remplit trois. Il ne vous revient qu'une case : la décision.</p>
+        <div class="tl-wrap" role="img" aria-label="Frise. Enregistrement, transcription et résumé, c'est l'IA de compte rendu. Le message de partage, les responsables et tâches et la préparation de la réunion suivante, c'est SIMY. Seule la décision sur l'échéance vous revient.">
+          <div class="tl-row">
+            <span class="tl-who">IA de compte rendu</span>
+            <ol class="tl">
+              <li class="on">Enregistrer</li>
+              <li class="on">Transcrire</li>
+              <li class="on">Résumer</li>
+              <li class="blank"></li><li class="blank"></li><li class="blank"></li><li class="blank"></li>
+            </ol>
+          </div>
+          <div class="tl-row">
+            <span class="tl-who simy">SIMY</span>
+            <ol class="tl">
+              <li class="blank"></li><li class="blank"></li><li class="blank"></li>
+              <li class="run">Partager<small>aux absents et services concernés</small></li>
+              <li class="run">Tâches<small>qui, et pour quand</small></li>
+              <li class="run">Préparer la suite<small>reports et vérifications</small></li>
+              <li class="you">L'échéance<small>la décision revient</small></li>
+            </ol>
+          </div>
+        </div>
+        <p class="caption">* Déroulé fourni à titre d'illustration</p>
+        <ul class="three" aria-label="Les trois atouts de SIMY">
+          <li>Repère dans les réunions</li>
+          <li>À votre façon</li>
+          <li>Ne renvoie que les décisions</li>
+        </ul>
+        <p class="tl-note">SIMY trouve seul, dans les notes de réunion, le travail qui suit. Il démarre sans qu'on le lui demande, apprend les vérifications et les priorités qui font votre bon travail, et les applique à l'identique.</p>
+
+        <div class="connect">
+          <ol class="connect-steps">
+            <li><b>Ouvrir l'écran des intégrations de SIMY</b><span>Si vous n'avez pas encore de compte, inscrivez-vous d'abord à SIMY. Inutile de changer d'outil de compte rendu.</span></li>
+            <li class="key"><b>Connecter l'endroit où sont rangées vos notes de réunion</b><span>Pour PLAUD, un clic sur « Connecter » suffit, l'intégration est intégrée à SIMY. Les notes Notion AI passent par l'intégration Notion, les Google Docs créés par Gemini dans Meet par l'intégration Google.</span></li>
+            <li><b>Vos conversations Claude Code et Codex, telles quelles</b><span>Si vous traitez vos transcriptions dans Claude Code ou Codex, installez l'application <code>simy</code> sur votre ordinateur : SIMY tire de cet historique des propositions de travail (« Suggestions de SIMY »). Le contenu n'est pas stocké sur nos serveurs.</span></li>
+          </ol>
+          <div>
+            <div class="mock" role="img" aria-label="Illustration de l'écran des intégrations de SIMY. Plaud, Notion et Google apparaissent comme sources de notes de réunion. Le bouton Connecter ouvre l'authentification dans un nouvel onglet.">
+              <div class="mock-head" aria-hidden="true">
+                <span class="mock-mark">⇄</span>
+                <div>
+                  <div class="mock-title">Intégrations <span class="mock-state">● Notes de réunion</span></div>
+                  <p class="mock-desc">Recherche et consulte comptes rendus, transcriptions et résumés</p>
+                </div>
+              </div>
+              <div class="mock-box" aria-hidden="true">Plaud ／ Notion ／ Google</div>
+              <div class="mock-btn" aria-hidden="true">Connecter</div>
+              <div class="mock-foot" aria-hidden="true">↗ Authentification dans un nouvel onglet</div>
+            </div>
+            <p class="caption">* Illustration de l'écran des intégrations de SIMY</p>
+          </div>
+        </div>
+        <p class="note"><b>Vous utilisez Teams Copilot, Notta ou tl;dv ?</b> Rangez vos résumés dans Notion ou Google Docs : ils arrivent à SIMY par le même chemin. La liste à jour des connexions est sur la <a href="/integrations.html">page Intégrations</a>. La connexion de PLAUD est détaillée dans le <a href="/guides/fr/plaud.html">guide PLAUD</a>.</p>
+      </section>
+
+      <!-- 05 -->
+      <section class="sec" id="sample" aria-labelledby="h-sample">
+        <span class="sec-label">05 / SAMPLE</span>
+        <h2 id="h-sample">Une réunion d'équipe : le résumé de l'IA, et ce que SIMY finalise</h2>
+        <p class="intro">Exemple d'un point hebdo à six (environ une heure), enregistré par une IA de compte rendu en visio. À gauche l'IA de compte rendu, à droite SIMY.</p>
+        <div class="sample">
+          <div class="sheet">
+            <div class="sheet-label"><span>Résumé de l'IA (exemple)</span><span>Généré automatiquement</span></div>
+            <dl>
+              <dt>Synthèse</dt>
+              <dd>Préparation du lancement d'une nouvelle fonction et répartition du support client.</dd>
+              <dt>Décisions</dt>
+              <dd>Proposition de prolonger la phase de test d'une semaine. Le support assure le premier niveau de réponse.</dd>
+              <dt>Points ouverts</dt>
+              <dd>La date de sortie en cas de prolongation, et le moment de l'annonce aux commerciaux.</dd>
+              <dt>Tâches</dt>
+              <dd>Revoir le plan de test. Mettre à jour la FAQ. Informer l'équipe commerciale.</dd>
+            </dl>
+          </div>
+          <div class="outs">
+            <div class="out">
+              <div class="out-head"><b>Message de partage</b><span class="pill ok">Brouillon prêt</span></div>
+              <p>Pour les deux absents et l'équipe commerciale : « Il est proposé de prolonger les tests d'une semaine. Dès que c'est confirmé, je partage la date de sortie et le plan d'annonce. » Avec vos tournures habituelles.</p>
+            </div>
+            <div class="out">
+              <div class="out-head"><b>Responsables et tâches</b><span class="pill run">Autorun</span></div>
+              <p>Plan de test : lead dev, d'ici vendredi. FAQ : support, la veille de la sortie. Annonce aux commerciaux : vous, une fois la date fixée.</p>
+            </div>
+            <div class="out">
+              <div class="out-head"><b>Préparer la réunion suivante</b><span class="pill">Ensuite</span></div>
+              <p>« Date de sortie » et « texte de l'annonce » reportés à l'ordre du jour de la semaine prochaine. Les décisions et l'avancement de la dernière fois en ouverture.</p>
+            </div>
+            <div class="out you">
+              <div class="out-head"><b>Votre validation</b><span class="pill you">À vous</span></div>
+              <p>« Prolonger les tests d'une semaine et sortir le 15 octobre ? » Seuls les points qui demandent une décision vous reviennent.</p>
+            </div>
+          </div>
+        </div>
+        <p class="sample-foot">L'IA de compte rendu enregistre, SIMY fait avancer. Le débat et les décisions en réunion restent votre terrain.</p>
+      </section>
+
+      <!-- 06 -->
+      <section class="sec" id="usecases" aria-labelledby="h-usecases">
+        <span class="sec-label">06 / BY INDUSTRY</span>
+        <h2 id="h-usecases">Par métier : le type de réunion, et ce que SIMY livre</h2>
+        <p class="intro">L'outil de compte rendu dépend de votre lieu de travail. Ce que SIMY prépare après la réunion dépend de votre métier.</p>
+        <div class="ind">
+          <div class="ind-card">
+            <h3>Point projet <small>Teams Copilot ／ Gemini dans Meet</small></h3>
+            <ul class="ind-rows">
+              <li><span>Point hebdo</span><span>→</span><span>Tâches par responsable, message pour les absents</span></li>
+              <li><span>Suivi d'avancement</span><span>→</span><span>Seulement les retards et les points à trancher</span></li>
+              <li><span>Rétrospective</span><span>→</span><span>Rapport qui regroupe plusieurs points</span></li>
+            </ul>
+          </div>
+          <div class="ind-card">
+            <h3>Équipe commerciale <small>Notion AI ／ PLAUD</small></h3>
+            <ul class="ind-rows">
+              <li><span>Revue des affaires</span><span>→</span><span>Prochaine action par affaire, fiches clients à jour</span></li>
+              <li><span>Point régulier avec un client</span><span>→</span><span>Brouillon de remerciement, message de partage interne</span></li>
+              <li><span>Revue des chiffres du mois</span><span>→</span><span>Liste des actions décidées et des responsables</span></li>
+            </ul>
+          </div>
+          <div class="ind-card">
+            <h3>Comité de direction et entretiens individuels <small>Notion AI ／ Gemini dans Meet</small></h3>
+            <ul class="ind-rows">
+              <li><span>Comité de direction</span><span>→</span><span>Décisions et responsables, partagés aux personnes concernées</span></li>
+              <li><span>Entretien individuel</span><span>→</span><span>L'avancement et les décisions en attente, avant de demander « où en est-on ? »</span></li>
+              <li><span>Avant le conseil d'administration</span><span>→</span><span>Liste des décisions et des engagements précédents</span></li>
+            </ul>
+          </div>
+          <div class="ind-card">
+            <h3>Clinique et commerce <small>PLAUD ／ dictaphone du téléphone</small></h3>
+            <ul class="ind-rows">
+              <li><span>Briefing du matin</span><span>→</span><span>Transmissions qui arrivent à toute l'équipe</span></li>
+              <li><span>Réunion d'équipe</span><span>→</span><span>Tâches avec responsable et échéance</span></li>
+              <li><span>Bilan mensuel</span><span>→</span><span>Rapport qui regroupe plusieurs réunions</span></li>
+            </ul>
+            <p class="small muted" style="margin:10px 0 0">En présence de patients ou de clients, enregistrez avec leur consentement et selon les règles de l'établissement.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 07 -->
+      <section class="sec" id="start" aria-labelledby="h-start">
+        <span class="sec-label">07 / START</span>
+        <h2 id="h-start">Démarrer : en gardant votre outil actuel, 3 étapes</h2>
+        <ol class="steps3">
+          <li><b>Enregistrer comme d'habitude</b><span>Teams, Meet, Notion, Notta, tl;dv, PLAUD : inutile de changer. Si vos résumés sont rangés dans Notion ou Google Docs, l'étape suivante est plus simple.</span></li>
+          <li class="key"><b>Connecter à SIMY l'endroit où sont rangées vos notes</b><span>Dans l'écran des intégrations, cliquez sur « Connecter » pour Plaud, Notion ou Google. La <a href="#connect">marche à suivre</a> est plus haut.</span></li>
+          <li><b>Terminer une réunion</b><span>Message de partage, responsables et tâches, préparation de la suite arrivent. Vous relisez, vous envoyez. C'est tout.</span></li>
+        </ol>
+        <p class="note"><b>Inscription :</b> choisir une offre → confirmer votre e-mail → payer par carte. Il n'y a pas d'offre gratuite. <a href="/?lang=fr#pricing">Voir les tarifs</a>. L'application pour ordinateur se trouve sur la <a href="/download/fr.html">page de téléchargement</a>.</p>
+        <p class="note"><b>Vous utilisez déjà Claude Code ou Codex ?</b> Il suffit aussi d'installer l'application <code>simy</code> sur votre ordinateur. À partir de votre historique de conversations, des propositions de travail après réunion arrivent sous forme de « Suggestions de SIMY ».</p>
+      </section>
+
+      <!-- 08 -->
+      <section class="sec" id="reference" aria-labelledby="h-reference">
+        <span class="sec-label">08 / REFERENCE</span>
+        <h2 id="h-reference">Format du compte rendu, points clés des outils, sécurité (pour aller plus loin)</h2>
+        <p class="intro">Ouvrez ces sections pour améliorer vos comptes rendus eux-mêmes, ou vérifier un point sur un outil.</p>
+
+        <details class="fold">
+          <summary>Le format du compte rendu : participants, ordre du jour, décisions, actions<small>Avec un exemple de requête pour une IA conversationnelle</small></summary>
+          <div class="fold-body">
+            <h3>Les 4 rubriques d'un compte rendu qu'on lit</h3>
+            <ol class="plain-list">
+              <li><strong>Présents et absents.</strong> Qui était là, qui manquait : c'est ce qui détermine à qui partager.</li>
+              <li><strong>Ordre du jour.</strong> Classez les sujets par ce qu'il fallait trancher, pas par ordre de parole : on s'y retrouve mieux ensuite.</li>
+              <li><strong>Décisions.</strong> Séparez « ce qui est décidé » de « ce qui a été proposé sans être tranché ». Sinon, on refait le même débat la semaine suivante.</li>
+              <li><strong>Actions.</strong> Toujours avec un responsable et une échéance. Une réunion sans prochaine étape explicite vous renvoie tout le travail qui suit.</li>
+            </ol>
+            <h3>Exemple de requête pour coller une transcription dans une IA</h3>
+            <p class="note">« Rédige un compte rendu à partir de la transcription suivante. Rubriques, dans cet ordre : participants, ordre du jour, décisions, points en suspens, actions (responsable et échéance). Sépare bien les décisions des points en suspens. Garde les noms des intervenants tels qu'ils figurent dans la transcription. En français, sous forme de liste. »</p>
+            <h3>Distinguer décisions et points en suspens (exemple)</h3>
+            <ul class="plain-list">
+              <li><strong>Décision :</strong> « Le support assure le premier niveau de réponse. » Un sujet, un verbe, aucune objection.</li>
+              <li><strong>Point en suspens :</strong> « Proposition de prolonger les tests d'une semaine. » Proposée, mais la date de sortie et l'annonce ne sont pas fixées : quelqu'un doit trancher.</li>
+              <li><strong>Action :</strong> « Revoir le plan de test : lead dev, d'ici vendredi. » Ce n'est une action qu'avec un responsable et une échéance.</li>
+            </ul>
+            <p>Le format du résumé est alors homogène. Mais taper cette consigne, coller le compte rendu là où il doit aller, transmettre les tâches aux responsables : c'est toujours vous. SIMY apprend la méthode d'un compte rendu que vous avez finalisé une fois, et prépare les réunions suivantes dans la même forme, sans qu'on le lui demande.</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>Points clés : Teams Copilot, Gemini dans Meet, Notion AI, Notta, tl;dv, PLAUD<small>Uniquement des faits sûrs, tirés des sources officielles d'octobre 2026</small></summary>
+          <div class="fold-body">
+            <h3>Copilot dans Microsoft Teams</h3>
+            <p>Avec la transcription (ou l'enregistrement) activée dans la réunion Teams, vous pouvez interroger Copilot pendant la réunion, puis utiliser le récapitulatif et la liste des décisions après. Il faut une licence Microsoft 365 Copilot, et l'administrateur peut activer ou désactiver la transcription et Copilot par stratégie. Si ça ne marche pas, vérifiez d'abord les réglages avec lui.</p>
+            <h3>Gemini dans Google Meet (Prendre des notes)</h3>
+            <p>Activez « Prendre des notes avec Gemini » pendant la réunion : le résumé est créé dans un Google Docs et envoyé par e-mail à l'organisateur. Il faut une offre Google Workspace incluant Gemini. C'est une fonction de l'outil de visio lui-même : ni robot, ni appareil d'enregistrement.</p>
+            <h3>Notes de réunion Notion AI</h3>
+            <p>Lancez l'enregistrement dans une page Notion : la transcription et le résumé, tirés de l'audio de votre appareil, s'inscrivent dans la page. Aucun robot ne rejoint la réunion. Ça marche en ligne comme en présentiel, et les comptes rendus s'accumulent dans votre base Notion. Notion AI est inclus dans les offres supérieures.</p>
+            <h3>Notta et tl;dv</h3>
+            <p>Dans les deux cas, un robot d'enregistrement rejoint vos réunions Zoom, Teams ou Google Meet comme participant. Relié à l'agenda, il rejoint automatiquement les réunions prévues, et vous consultez transcription et résumé dans l'interface web. Les offres gratuites limitent le temps de transcription mensuel. En réunion avec des personnes extérieures, prévenez-les de la présence du robot.</p>
+            <h3>Archiver automatiquement les comptes rendus dans Notion (tl;dv ou Notta + Zapier)</h3>
+            <ol class="plain-list">
+              <li>À la fin de la réunion, l'outil d'enregistrement produit le résumé.</li>
+              <li>Zapier crée une page dans votre base Notion avec ce résumé.</li>
+              <li>Une notification « Le compte rendu est prêt » arrive sur Slack.</li>
+            </ol>
+            <p>Le report devient automatique. Mais le message de partage, les responsables et tâches, la préparation de la suite et votre décision restent. C'est cette suite que SIMY fait avancer.</p>
+            <h3>La solution gratuite : dictaphone du téléphone + Google AI Studio</h3>
+            <p>Enregistrez avec le dictaphone du téléphone, puis donnez le fichier audio à Google AI Studio : vous obtenez transcription et résumé. Aucun coût supplémentaire, mais transférer l'audio, taper la requête et copier le résultat restent manuels, à chaque fois.</p>
+            <p>Les dictaphones d'iPhone et d'Android proposent la transcription en standard (selon le modèle et la version du système). Essayez d'abord la fonction intégrée, et passez par Google AI Studio quand vous n'avez qu'un fichier audio.</p>
+            <p>Même en gratuit, on obtient la transcription. Le partage, les tâches et la décision restent.</p>
+            <h3>PLAUD</h3>
+            <p>Un appareil format carte ou broche enregistre le présentiel et les appels ; l'application transcrit et résume. SIMY a une intégration native : un clic sur « Connecter », et SIMY fait avancer ce qui suit le résumé. Utilisation et offres sont détaillées dans le <a href="/guides/fr/plaud.html">guide PLAUD</a>.</p>
+            <h3>Tableau comparatif</h3>
+            <p class="scroll-hint">Le tableau défile horizontalement →</p>
+            <div class="table-wrap">
+              <table class="t-wide t-models">
+                <thead>
+                  <tr><th scope="col">Outil</th><th scope="col">Comment il enregistre</th><th scope="col">Robot dans la réunion</th><th scope="col">Où arrive le résumé</th><th scope="col">Ce qu'il faut</th><th scope="col">Pour qui</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Copilot dans Teams</th><td>Transcription de la réunion Teams</td><td>Non</td><td>Conversation de la réunion Teams</td><td>Licence Microsoft 365 Copilot, activation par l'administrateur</td><td>Réunions internes surtout sur Teams</td></tr>
+                  <tr><th scope="row">Gemini dans Meet</th><td>« Prendre des notes » dans Meet</td><td>Non</td><td>Google Docs + e-mail</td><td>Offre Workspace incluant Gemini</td><td>Entreprises sous Google Workspace</td></tr>
+                  <tr><th scope="row">Notion AI</th><td>Enregistrement dans une page Notion</td><td>Non</td><td>Page Notion</td><td>Offre supérieure incluant Notion AI</td><td>Qui veut archiver ses comptes rendus dans Notion</td></tr>
+                  <tr><th scope="row">Notta</th><td>Robot dans la réunion, ou enregistrement dans l'application</td><td>Oui</td><td>Interface web de Notta</td><td>Un compte (offre gratuite disponible)</td><td>Qui jongle entre plusieurs outils de visio</td></tr>
+                  <tr><th scope="row">tl;dv</th><td>Robot dans la réunion</td><td>Oui</td><td>Interface web de tl;dv</td><td>Un compte (offre gratuite disponible)</td><td>Surtout Zoom et Meet, avec la vidéo en plus</td></tr>
+                  <tr><th scope="row">PLAUD</th><td>Enregistrement par l'appareil</td><td>Non</td><td>Application PLAUD</td><td>Un appareil et un compte Plaud</td><td>Beaucoup de présentiel et d'appels</td></tr>
+                  <tr><th scope="row">Dictaphone + AI Studio</th><td>Enregistrer au téléphone, puis fournir l'audio</td><td>Non</td><td>Interface d'AI Studio</td><td>Un compte Google</td><td>Qui veut d'abord essayer gratuitement</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="small muted">Fonctions et offres vérifiées sur les pages officielles le 1er octobre 2026. Les prix changent souvent : ils ne figurent pas sur cette page.</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>5 astuces pour un compte rendu IA plus précis<small>Valables pour tous les outils. Plus c'est clair, meilleur est le travail que SIMY fait ensuite</small></summary>
+          <div class="fold-body">
+            <ol class="plain-list">
+              <li><strong>Annoncer l'ordre du jour et les participants en début de réunion.</strong> Quand ils figurent en tête de la transcription, les titres du résumé et l'attribution des intervenants sont plus fiables.</li>
+              <li><strong>Reformuler chaque décision au moment où elle est prise.</strong> « Donc, on prolonge les tests d'une semaine, c'est validé. » Une phrase, et décisions et points en suspens ne se mélangent plus.</li>
+              <li><strong>Dire à voix haute le responsable et l'échéance.</strong> « La FAQ, c'est Sophie, d'ici la veille de la sortie » : la tâche a un responsable et une date.</li>
+              <li><strong>Vérifier le micro et la langue.</strong> Un casque en visio, l'appareil au centre de la table en présentiel. Si la langue reste réglée sur l'anglais, le résumé sera en anglais.</li>
+              <li><strong>Nommer les intervenants.</strong> Avec « Intervenant 1 » et « Intervenant 2 », impossible de savoir qui s'est engagé sur quoi. Utilisez la fonction d'identification de l'outil.</li>
+            </ol>
+            <p>Ces cinq points servent aussi à SIMY pour la suite. Plus les décisions et les responsables sont nets, plus le message de partage et les tâches sont justes, et moins il vous revient de décisions.</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>Trois choses qui arrivent après la mise en place<small>Pourquoi l'outil est là, mais l'après-réunion ne change pas</small></summary>
+          <div class="fold-body">
+            <h3>1. Chacun refait le résumé avec son IA</h3>
+            <p>Même avec Copilot dans Teams, certains copient la transcription dans leur propre IA. La raison : « je veux notre format ». Les modèles de l'outil ne suffisent pas, et on finit par retaper la requête à chaque fois. SIMY apprend le format que vous avez finalisé une fois, et le reprend dès la réunion suivante.</p>
+            <h3>2. Le résumé arrive, personne ne le lit</h3>
+            <p>Quand les résumés s'accumulent seuls dans la conversation de réunion ou dans Notion, on se rassure et on ne les lit plus. Non lus, décisions et actions se perdent. Le besoin n'est pas de faire lire le résumé, mais d'en extraire « le travail qui vous concerne » et de le livrer. SIMY livre le message de partage, les tâches par responsable, et une question à trancher pour vous.</p>
+            <h3>3. Courir après « où en est-on ? »</h3>
+            <p>Même écrites dans le compte rendu, les tâches n'avancent que si quelqu'un va vérifier. Celui qui a demandé se demande sans cesse « et ce sujet, ça en est où ? ». Avec SIMY, en cours, terminé et en attente de vous s'affichent dans My Actions : plus besoin de faire le tour.</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>IA de compte rendu, IA conversationnelle et SIMY : les différences<small>Aucun n'est meilleur : ils ne s'arrêtent pas au même endroit</small></summary>
+          <div class="fold-body">
+            <p class="scroll-hint">Le tableau défile horizontalement →</p>
+            <div class="table-wrap">
+              <table class="t-wide">
+                <thead>
+                  <tr><th scope="col">Critère</th><th scope="col">Résumé automatique de l'IA de compte rendu</th><th scope="col">Transcription collée dans une IA</th><th scope="col" class="simy">SIMY</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Point de départ</th><td>La fin de la réunion</td><td>Vous collez, vous demandez</td><td class="simy">SIMY repère le travail dans les notes de réunion</td></tr>
+                  <tr><th scope="row">Votre format</th><td>Les modèles de l'outil</td><td>Répété dans chaque requête</td><td class="simy">Appris de vos vérifications et priorités</td></tr>
+                  <tr><th scope="row">Ce que vous recevez</th><td>Un résumé</td><td>Un brouillon de compte rendu</td><td class="simy">Message de partage, responsables et tâches, préparation de la suite, et une question à trancher</td></tr>
+                  <tr><th scope="row">Ce qui reste visible</th><td>La page du résumé</td><td>L'historique de la conversation</td><td class="simy">My Actions : en cours, terminé, en attente de vous</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="note"><b>Comment choisir :</b> pour une réunion ponctuelle, le résumé de l'IA suffit. Si la même réunion revient chaque semaine avec le même travail derrière, c'est le rôle de SIMY. L'usage d'une IA conversationnelle est détaillé dans le <a href="/guides/fr/chatgpt.html">guide ChatGPT</a>.</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>Pourquoi écrire encore son compte rendu à la main<small>On y voit clair sur sa prochaine étape : c'est là que SIMY « ne renvoie que les décisions »</small></summary>
+          <div class="fold-body">
+            <p>Même avec l'IA, certains préfèrent écrire leurs comptes rendus à la main. Pas pour la précision : c'est en écrivant qu'on voit clairement « ce qui est décidé, et ce que je dois faire ensuite ». Juger du bon niveau de détail d'une décision est un savoir-faire, et un outil de résumé ne le remplace pas.</p>
+            <p>C'est aussi là que SIMY place l'essentiel. SIMY avance sur le partage et les tâches, mais les décisions, « qu'est-ce qui a été décidé », « décale-t-on l'échéance », vous reviennent toujours. Garder cette clarté sur sa prochaine étape, sans le temps d'écriture : c'est la méthode de SIMY.</p>
+            <p>Si vous tenez à écrire, notez à la main les décisions et les actions seulement, et laissez le reste à l'IA. SIMY lit aussi ces notes manuscrites et fait avancer la suite.</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>Sécurité : réunions confidentielles, entraînement, consentement<small>Règles internes, traitement des données par chaque outil, approche de SIMY</small></summary>
+          <div class="fold-body">
+            <ul class="plain-list">
+              <li><strong>Consentement :</strong> avant d'enregistrer ou de transcrire, prévenez tous les participants et obtenez leur accord. Avec un outil à robot, celui-ci apparaît dans la liste des participants, mais prévenir avant reste la règle de courtoisie. Les <a href="/terms.html?lang=fr">conditions d'utilisation</a> de SIMY précisent que ce consentement relève de votre responsabilité.</li>
+              <li><strong>Réunions confidentielles :</strong> RH, fusions-acquisitions, résultats non publiés : n'utilisez que les outils validés par votre DSI. Si l'entreprise est gérée sous Microsoft ou Google, la fonction de l'outil de visio lui-même (Teams Copilot, Gemini dans Meet) est plus sûre, car elle fonctionne dans le cadre fixé par l'administrateur.</li>
+              <li><strong>Entraînement de l'IA :</strong> chaque outil a une politique ou un réglage sur l'usage de vos données pour entraîner l'IA. Sur les offres individuelles, c'est parfois activé par défaut : au travail, choisissez une offre entreprise ou vérifiez le réglage de désactivation. Dans ChatGPT, désactivez « Améliorer le modèle pour tous » dans la gestion des données.</li>
+              <li><strong>Connexion à SIMY :</strong> pour Plaud, Notion et Google, vous vous connectez à votre compte sur leur écran d'authentification, puis vous autorisez l'accès. L'historique Claude Code et Codex est lu par l'application <code>simy</code> sur votre ordinateur, qui n'en tire que des propositions de travail sans stocker le contenu sur nos serveurs. Le traitement des données par SIMY est décrit sur les pages <a href="/security.html">Sécurité</a> et <a href="/privacy.html?lang=fr">Politique de confidentialité</a>.</li>
+              <li><strong>Envoi et écriture avec approbation :</strong> les messages préparés par SIMY s'arrêtent au brouillon dans Gmail. Publication sur Slack et écriture dans Notion se font après votre approbation. Rien ne part sans vous.</li>
+            </ul>
+          </div>
+        </details>
+      </section>
+
+      <!-- 09 -->
+      <section class="sec" id="faq" aria-labelledby="h-faq">
+        <span class="sec-label">09 / FAQ</span>
+        <h2 id="h-faq">Questions fréquentes</h2>
+        <div class="faq">
+          <details>
+            <summary>Au final, quel est le meilleur outil de compte rendu IA ?</summary>
+            <div class="a"><p>Tout dépend de l'environnement de votre entreprise. 100 % Microsoft : Copilot dans Teams. 100 % Google : Gemini dans Meet. Outils au choix : les notes de réunion Notion AI. Robot accepté : Notta ou tl;dv. Beaucoup de présentiel : PLAUD. Choisissez selon « où arrive le résumé » plutôt que selon sa précision, et la suite s'enchaîne.</p></div>
+          </details>
+          <details>
+            <summary>Peut-on enregistrer sans faire entrer de robot dans la réunion ?</summary>
+            <div class="a"><p>Oui. Copilot dans Teams et Gemini dans Meet sont des fonctions de l'outil de visio lui-même : aucun robot ne rejoint la réunion. Les notes de réunion Notion AI s'appuient sur l'audio de votre appareil, et PLAUD enregistre avec son propre appareil. Avec Notta et tl;dv, un robot rejoint la réunion comme participant.</p></div>
+          </details>
+          <details>
+            <summary>Mon compte rendu sort en anglais. Peut-on l'avoir en français ?</summary>
+            <div class="a"><p>La plupart des outils permettent de régler la langue de transcription ou de sortie. Si une réunion en français donne un résumé en anglais, c'est souvent que la langue de la réunion ou du résumé est réglée sur l'anglais : vérifiez les réglages de l'outil. SIMY, lui, prépare la suite dans la langue et le format que vous utilisez d'habitude, quelle que soit la langue de l'enregistrement.</p></div>
+          </details>
+          <details>
+            <summary>Je veux rester gratuit. Que faut-il utiliser ?</summary>
+            <div class="a"><p>Enregistrer avec le dictaphone du téléphone, puis donner l'audio à Google AI Studio pour obtenir transcription et résumé : c'est possible sans aucun coût supplémentaire. Notta et tl;dv ont aussi des offres gratuites, mais avec un temps de transcription mensuel limité. Même avec une solution gratuite, vous pouvez confier à SIMY le travail qui suit le résumé.</p></div>
+          </details>
+          <details>
+            <summary>Un appareil comme PLAUD est-il nécessaire ?</summary>
+            <div class="a"><p>Pas si vos réunions sont surtout en ligne : la fonction de l'outil de visio ou Notion AI suffit. Si vous avez beaucoup de rendez-vous, d'entretiens ou de réunions en salle, PLAUD, qu'il suffit de poser, est adapté. SIMY fonctionne de la même façon avec l'un ou l'autre.</p></div>
+          </details>
+          <details>
+            <summary>Faut-il préciser le format du compte rendu (participants, ordre du jour, décisions, actions) à chaque fois ?</summary>
+            <div class="a"><p>Non. Finalisez une fois à votre façon : SIMY apprend cette méthode et prépare les réunions suivantes dans la même forme. Plus besoin de coller la transcription dans une IA et de retaper la même consigne.</p></div>
+          </details>
+          <details>
+            <summary>Qui décide de « ce qui a été décidé » : l'IA ou moi ?</summary>
+            <div class="a"><p>C'est vous. SIMY organise les décisions et les responsables possibles à partir de la transcription et du résumé, va jusqu'au brouillon, et ne vous renvoie que les points qui demandent une décision, comme un changement d'échéance ou le feu vert pour l'envoi.</p></div>
+          </details>
+          <details>
+            <summary>Comment SIMY reçoit-il le contenu des réunions ?</summary>
+            <div class="a"><p>Pour PLAUD, un clic sur « Connecter » dans l'écran des intégrations de SIMY suffit. Les notes Notion AI passent par l'intégration Notion, et les Google Docs créés par Gemini dans Meet par l'intégration Google. Si vous traitez vos comptes rendus dans Claude Code ou Codex, SIMY trouve des propositions de travail dans cet historique. Vérifiez la compatibilité sur la <a href="/integrations.html">page Intégrations</a>.</p></div>
+          </details>
+          <details>
+            <summary>Utiliser SIMY entraîne-t-il des frais d'IA supplémentaires ?</summary>
+            <div class="a"><p>SIMY se connecte à votre compte ChatGPT et fait avancer le travail avec Codex. L'usage de Codex reste dans les limites de votre forfait ChatGPT. Pour le prix de SIMY lui-même, consultez la <a href="/?lang=fr#pricing">page des tarifs</a>.</p></div>
+          </details>
+          <details>
+            <summary>Peut-on l'utiliser pour des réunions confidentielles ? Faut-il un consentement pour enregistrer ?</summary>
+            <div class="a"><p>Avant d'enregistrer et de transcrire, obtenez l'accord de tous les participants et vérifiez les règles de votre entreprise. Pour les réunions confidentielles, n'utilisez que les outils validés par votre DSI, et vérifiez le réglage d'entraînement de chaque outil. Le traitement des données par SIMY est décrit sur les pages <a href="/security.html">Sécurité</a> et <a href="/privacy.html?lang=fr">Politique de confidentialité</a>.</p></div>
+          </details>
+        </div>
+      </section>
+
+      <!-- 10 -->
+      <section class="sec" id="sources" aria-labelledby="h-sources">
+        <span class="sec-label">10 / SOURCES</span>
+        <h2 id="h-sources">Sources</h2>
+        <p>Les fonctions, offres requises et modes d'enregistrement de chaque outil ont été vérifiés dans les sources officielles ci-dessous (le 1er octobre 2026). Les situations décrites après la réunion s'inspirent de vidéos explicatives sur l'usage de l'IA.</p>
+        <ul class="plain-list">
+          <li><a href="https://www.microsoft.com/en-us/microsoft-365/copilot" target="_blank" rel="noopener">Microsoft 365 Copilot (site officiel Microsoft)</a></li>
+          <li><a href="https://learn.microsoft.com/en-us/microsoftteams/copilot-teams-transcription" target="_blank" rel="noopener">Copilot et transcription dans les réunions Teams (Microsoft Learn)</a></li>
+          <li><a href="https://support.google.com/meet/answer/14754931?hl=fr" target="_blank" rel="noopener">Prendre des notes avec Gemini dans Google Meet (aide Google Meet)</a></li>
+          <li><a href="https://www.notion.com/product/ai-meeting-notes" target="_blank" rel="noopener">Notion AI Meeting Notes (site officiel Notion)</a></li>
+          <li><a href="https://www.notta.ai/" target="_blank" rel="noopener">Notta (site officiel)</a></li>
+          <li><a href="https://tldv.io/" target="_blank" rel="noopener">tl;dv (site officiel)</a></li>
+          <li><a href="https://www.plaud.ai/" target="_blank" rel="noopener">PLAUD (site officiel)</a></li>
+          <li><a href="https://aistudio.google.com/" target="_blank" rel="noopener">Google AI Studio (site officiel Google)</a></li>
+        </ul>
+      </section>
+      <aside class="next-read" aria-labelledby="h-next">
+        <h2 id="h-next">À lire ensuite</h2>
+        <div class="next-grid"><a href="/guides/fr/plaud.html"><b>Guide PLAUD NOTE</b><span>L'e-mail et la fiche client après le résumé</span></a><a href="/guides/fr/chatgpt.html"><b>Guide ChatGPT</b><span>Ne plus recoller ni retoucher à chaque fois</span></a><a href="/guides/fr/cowork.html"><b>Guide Claude Cowork</b><span>Les suites de réunion, après le travail sur le bureau</span></a></div>
+        <a class="next-all" href="/guides/fr/index.html">Tous les guides →</a>
+      </aside>
+    </article>
+  </div>
+
+  <section class="closing" aria-labelledby="h-closing">
+    <div class="wrap closing-inner">
+      <div>
+        <h2 id="h-closing">Après votre prochaine réunion,<br>passez par SIMY avant de relire le résumé.</h2>
+        <p>Gardez votre outil de compte rendu. Connectez l'endroit où il range ses notes, et c'est prêt dès la prochaine réunion. SIMY ne vous renvoie que les décisions. Le débat en réunion reste votre terrain.</p>
+      </div>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="https://app.simy.one/signup?lang=fr&amp;locale=fr&amp;region=fr&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=meeting_notes_guide_fr&amp;utm_content=closing">Choisir une offre et commencer <span class="arrow" aria-hidden="true">↗</span></a>
+        <a class="btn btn-ghost" href="mailto:sales@simy.one?subject=Question%20sur%20SIMY%20et%20les%20comptes%20rendus%20IA">Nous contacter</a>
+        <a class="btn btn-ghost" href="/download/fr.html">Télécharger l'application <span class="arrow" aria-hidden="true">↓</span></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <ul class="footer-links">
+      <li><a href="/?lang=fr">Accueil</a></li>
+      <li><a href="/?lang=fr#how-it-works">Fonctionnement</a></li>
+      <li><a href="/?lang=fr#pricing">Tarifs</a></li>
+      <li><a href="/integrations.html">Intégrations</a></li>
+      <li><a href="/download/fr.html">Télécharger</a></li>
+      <li><a href="/guides/fr/plaud.html">Guide PLAUD</a></li>
+      <li><a href="/guides/fr/chatgpt.html">Guide ChatGPT</a></li>
+      <li><a href="/guides/fr/claude.html">Guide Claude</a></li>
+      <li><a href="/guides/fr/codex.html">Guide Codex</a></li>
+      <li><a href="/guides/fr/cowork.html">Guide Cowork</a></li>
+      <li><a href="/security.html">Sécurité</a></li>
+      <li><a href="/about.html">À propos</a></li>
+      <li><a href="/privacy.html?lang=fr">Confidentialité</a></li>
+      <li><a href="/terms.html?lang=fr">Conditions d'utilisation</a></li>
+    </ul>
+    <p>Microsoft Teams, Copilot, Google Meet, Gemini, Notion, Notta, tl;dv et PLAUD sont des marques ou des marques déposées de leurs détenteurs respectifs. SIMY est un produit indépendant, ni affilié à ces sociétés ni approuvé par elles.</p>
+    <p>Codex et ChatGPT sont des produits d'OpenAI. Claude Code est un produit d'Anthropic. Les autres noms de sociétés et de produits sont des marques ou des marques déposées de leurs détenteurs respectifs.</p>
+    <p>&copy; 2026 SIMY by AwakApp Inc.</p>
+  </div>
+</footer>
+<script>
+(function () {
+  var links = Array.prototype.slice.call(document.querySelectorAll('.toc a'));
+  if (!links.length) return;
+  var items = links.map(function (a) {
+    return { link: a, section: document.getElementById(a.getAttribute('href').slice(1)) };
+  }).filter(function (item) { return item.section; });
+  var ticking = false;
+  function update() {
+    ticking = false;
+    var line = window.innerHeight * 0.35;
+    var atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+    var current = null;
+    items.forEach(function (item) {
+      if (item.section.getBoundingClientRect().top <= line) current = item;
+    });
+    if (atBottom) current = items[items.length - 1];
+    items.forEach(function (item) { item.link.classList.toggle('is-active', item === current); });
+  }
+  window.addEventListener('scroll', function () {
+    if (!ticking) { ticking = true; window.requestAnimationFrame(update); }
+  }, { passive: true });
+  update();
+})();
+</script>
+<script src="/analytics.js" defer></script>
+</body>
+</html>
