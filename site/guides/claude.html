@@ -762,7 +762,7 @@ thead th.simy { background: var(--blue-deep); }
         { "@type": "Thing", "name": "Claude Cowork" }
       ],
       "citation": [
-        "https://claude.ai/",
+        "https://claude.com/ja/pricing",
         "https://www.anthropic.com/pricing",
         "https://docs.anthropic.com/",
         "https://support.anthropic.com/"
@@ -816,7 +816,7 @@ thead th.simy { background: var(--blue-deep); }
         {
           "@type": "Question",
           "name": "SIMYを使うには、Claudeの有料プランが必要ですか？",
-          "acceptedAnswer": { "@type": "Answer", "text": "いいえ。SIMYのクラウド実行はお使いのChatGPTアカウント（Codex）で動くため、Claudeのプランを追加する必要はありません。PC上のClaude Codeをすでに使っている人は、simyデスクトップアプリを入れるとそれを実行役にもできます。" }
+          "acceptedAnswer": { "@type": "Answer", "text": "SIMYだけなら不要です。SIMY CLIを入れると、Claude Codeの会話をSIMYに取り込み、SIMYからClaude Codeを動かせます。このときは、あなたのClaude Codeのログインとプランがそのまま使われます。できないのは、Claudeのトークン（プランの利用枠）をSIMYのクラウド実行に連携することだけです。クラウド実行はお使いのChatGPTアカウント（Codex）で動き、Geminiのトークン連携は開発中です。" }
         },
         {
           "@type": "Question",
@@ -881,9 +881,9 @@ thead th.simy { background: var(--blue-deep); }
           <a class="btn btn-ghost" href="#connect">つなぎ方を見る <span class="arrow" aria-hidden="true">↓</span></a>
         </div>
         <ul class="hero-points">
-          <li>Claudeの無料・Pro・Max、どれでも</li>
-          <li>Claudeのプラン追加は不要</li>
-          <li>お使いのChatGPTアカウントで動く</li>
+          <li>Claude Codeの会話をSIMYに取り込む</li>
+          <li>SIMYからClaude Codeを動かす</li>
+          <li>Claudeのログインはそのまま</li>
         </ul>
       </div>
 
@@ -1072,8 +1072,8 @@ thead th.simy { background: var(--blue-deep); }
 
         <div class="connect">
           <ol class="connect-steps">
-            <li><b>SIMYに登録し、ChatGPT（Codex）を接続する</b><span>SIMYのクラウド実行は、お使いのChatGPTアカウントで動きます。Claudeのプランを追加する必要はありません。</span></li>
-            <li class="key"><b>simyデスクトップアプリを入れる</b><span>PC上のClaude Codeを、SIMYの実行役として使えます。Claude Codeの会話履歴から「SIMYからの提案」が作られます。会話本文はサーバーに保存しません。</span></li>
+            <li><b>SIMYに登録し、ChatGPT（Codex）を接続する</b><span>SIMYのクラウド実行は、お使いのChatGPTアカウントで動きます。Geminiのトークン連携は開発中です。</span></li>
+            <li class="key"><b>SIMY CLI（デスクトップアプリ）を入れる</b><span>Claude Codeの会話がSIMYに取り込まれ、「SIMYからの提案」になります。SIMYからPC上のClaude Codeを動かすこともできます。会話本文はサーバーに保存しません。</span></li>
             <li><b>Claude Codeにプラグインを入れる（任意）</b><span><code>/simy:delivery-loop</code>で、Claude Codeの作業を途中で止めず、区切りごとに次の一手をSIMYが返します。</span></li>
           </ol>
           <div>
@@ -1092,7 +1092,7 @@ thead th.simy { background: var(--blue-deep); }
             <p class="caption">※ SIMYの画面のイメージです</p>
           </div>
         </div>
-        <p class="note"><b>正直に書くと：</b>SIMYはClaudeのプランでは動きません。クラウド実行はお使いのChatGPT（Codex）、ローカル実行はPC上のClaude Codeです。Claudeで仕事をしている人が、Claudeをそのまま使いながらSIMYを足す、という形になります。</p>
+        <p class="note"><b>SIMYとClaudeの関係：</b>Claude Codeの会話の取り込みと、SIMYからのClaude Codeの操作は、SIMY CLIでできます。できないのは、Claudeのトークン（プランの利用枠）をSIMYのクラウド実行に連携することだけです。クラウド実行はお使いのChatGPT（Codex）で動き、Geminiのトークン連携は開発中です。</p>
       </section>
 
       <!-- 05 -->
@@ -1388,7 +1388,7 @@ thead th.simy { background: var(--blue-deep); }
           </details>
           <details>
             <summary>SIMYを使うには、Claudeの有料プランが必要ですか？</summary>
-            <div class="a"><p>いいえ。SIMYのクラウド実行はお使いのChatGPTアカウント（Codex）で動くため、Claudeのプランを追加する必要はありません。PC上のClaude Codeをすでに使っている人は、simyデスクトップアプリを入れるとそれを実行役にもできます。</p></div>
+            <div class="a"><p>SIMYだけなら不要です。SIMY CLIを入れると、Claude Codeの会話をSIMYに取り込み、SIMYからClaude Codeを動かせます。このときは、あなたのClaude Codeのログインとプランがそのまま使われます。できないのは、Claudeのトークン（プランの利用枠）をSIMYのクラウド実行に連携することだけです。クラウド実行はお使いのChatGPTアカウント（Codex）で動き、Geminiのトークン連携は開発中です。</p></div>
           </details>
           <details>
             <summary>Claudeが不調なときや利用上限に達したとき、仕事は止まりますか？</summary>
@@ -1415,7 +1415,7 @@ thead th.simy { background: var(--blue-deep); }
         <h2 id="h-sources">参考情報</h2>
         <p>Claudeの料金、モデル、機能、プライバシー設定は、次のAnthropic公式情報で確認しました（確認日：2026年10月1日）。SIMYの仕様は、SIMYの製品ソースコードで確認しています。Claudeを使う人に残る仕事の場面は、日本のAI活用系YouTubeチャンネルの解説動画を参考にしています。</p>
         <ul class="plain-list">
-          <li><a href="https://claude.ai/" target="_blank" rel="noopener">Claude（claude.ai）</a></li>
+          <li><a href="https://claude.com/ja/pricing" target="_blank" rel="noopener">Claude プランと料金（Anthropic公式）</a></li>
           <li><a href="https://www.anthropic.com/pricing" target="_blank" rel="noopener">Anthropic 料金ページ（Free・Pro・Max・Team・Enterprise）</a></li>
           <li><a href="https://docs.anthropic.com/" target="_blank" rel="noopener">Anthropic ドキュメント（モデルとClaude Code）</a></li>
           <li><a href="https://support.anthropic.com/" target="_blank" rel="noopener">Anthropic ヘルプセンター（プライバシー設定・利用上限）</a></li>
