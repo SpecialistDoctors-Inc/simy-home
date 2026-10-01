@@ -98,3 +98,18 @@
 | 10 | CTA | 「次の会議が終わったら、要約を読み返す前に SIMY へ」 | 1行 |
 
 全体の本文量は現行の3分の1（約1.5万字）を目安にする。ChatGPT / Claude / Codex / Cowork ページも同じ骨格で、画面1〜4の「場面」だけをプロダクトごとに差し替える（ChatGPT: 回答をコピペして仕事に戻す場面、Claude: 回答を共有して終わる場面、Codex/Cowork: 1タスク完了後に次を頼み直す場面）。
+
+## 2026-10-01 追記: YouTube 調査反映と6ページ化
+
+`docs/handoff/youtube-research-2026-10-01.md` の知見で、ブループリントどおりに作り直し・新規作成した。執筆ルールは `docs/handoff/guide-page-brief.md`。
+
+| ページ | 状態 |
+| --- | --- |
+| guides/plaud.html | 作り直し（場面カード・タイムライン・折りたたみ）。SEOテスト31/31 |
+| guides/chatgpt.html | 作り直し。GPTs・学習設定・広告表示を追加 |
+| guides/claude.html | 新規 |
+| guides/codex.html | 新規 |
+| guides/cowork.html | 新規（claude.com/product/cowork を2026-10-01に確認） |
+| guides/meeting-notes.html | 新規（AI議事録ツールの場面別選び方→要約の先） |
+
+6ページはフッターで相互リンク、sitemap 登録済み。残課題: 各ページの参考情報 URL の実在確認（Microsoft Learn・Google ヘルプ・OpenAI ヘルプは curl で確認不可）、Hero の lead 文を1行に詰める余地、main への PR 作成。
