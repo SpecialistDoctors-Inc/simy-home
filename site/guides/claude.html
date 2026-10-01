@@ -816,7 +816,7 @@ thead th.simy { background: var(--blue-deep); }
         {
           "@type": "Question",
           "name": "SIMYを使うには、Claudeの有料プランが必要ですか？",
-          "acceptedAnswer": { "@type": "Answer", "text": "SIMYだけなら不要です。SIMY CLIを入れると、Claude Codeの会話をSIMYに取り込み、SIMYからClaude Codeを動かせます。このときは、あなたのClaude Codeのログインとプランがそのまま使われます。できないのは、Claudeのトークン（プランの利用枠）をSIMYのクラウド実行に連携することだけです。クラウド実行はお使いのChatGPTアカウント（Codex）で動き、Geminiのトークン連携は開発中です。" }
+          "acceptedAnswer": { "@type": "Answer", "text": "SIMYだけなら不要です。SIMYデスクトップアプリを入れると、Claude Codeの会話をSIMYに取り込み、SIMYからClaude Codeを動かせます。このときは、あなたのClaude Codeのログインとプランがそのまま使われます。できないのは、Claudeのトークン（プランの利用枠）をSIMYのクラウド実行に連携することだけです。クラウド実行はお使いのChatGPTアカウント（Codex）で動き、Geminiのトークン連携は開発中です。" }
         },
         {
           "@type": "Question",
@@ -831,7 +831,7 @@ thead th.simy { background: var(--blue-deep); }
         {
           "@type": "Question",
           "name": "Claude Codeの会話が「SIMYからの提案」になるまで、何が送られますか？",
-          "acceptedAnswer": { "@type": "Answer", "text": "simyデスクトップアプリが、PC内のClaude CodeとCodexの会話履歴を既定で90日分読み、繰り返している手順と確認事項を抽象化してWorkFlow候補を作ります。会話本文は解析中だけ使い、サーバーには残りません。この取り込みは設定でいつでも止められます。" }
+          "acceptedAnswer": { "@type": "Answer", "text": "SIMYデスクトップアプリが、PC内のClaude CodeとCodexの会話履歴を既定で90日分読み、繰り返している手順と確認事項を抽象化してWorkFlow候補を作ります。会話本文は解析中だけ使い、サーバーには残りません。この取り込みは設定でいつでも止められます。" }
         },
         {
           "@type": "Question",
@@ -857,7 +857,7 @@ thead th.simy { background: var(--blue-deep); }
     <nav class="header-actions" aria-label="アカウント">
       <a class="header-link" href="/download.html">ダウンロード</a>
       <a class="header-link" href="https://app.simy.one/login?lang=ja&amp;locale=ja&amp;region=jp">ログイン</a>
-      <a class="header-cta" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=claude_guide&amp;utm_content=header">会議1件から試す</a>
+      <a class="header-cta" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=claude_guide&amp;utm_content=header">プランを選んではじめる</a>
     </nav>
   </div>
 </header>
@@ -878,7 +878,7 @@ thead th.simy { background: var(--blue-deep); }
         </h1>
         <p class="lead">Claude（クロード）は、頼めばいい回答を返してくれる。でも、文字起こしを貼るのも、返信を頼むのも、共有するのも、毎回あなたです。SIMYは会議とチャットからその仕事を拾い、あなたのやり方で進めて、判断だけを返します。</p>
         <div class="cta-row">
-          <a class="btn btn-primary" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=claude_guide&amp;utm_content=hero">会議1件から試す <span class="arrow" aria-hidden="true">↗</span></a>
+          <a class="btn btn-primary" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=claude_guide&amp;utm_content=hero">プランを選んではじめる <span class="arrow" aria-hidden="true">↗</span></a>
           <a class="btn btn-ghost" href="#connect">つなぎ方を見る <span class="arrow" aria-hidden="true">↓</span></a>
         </div>
         <ul class="hero-points">
@@ -1074,7 +1074,7 @@ thead th.simy { background: var(--blue-deep); }
         <div class="connect">
           <ol class="connect-steps">
             <li><b>SIMYに登録し、ChatGPT（Codex）を接続する</b><span>SIMYのクラウド実行は、お使いのChatGPTアカウントで動きます。Geminiのトークン連携は開発中です。</span></li>
-            <li class="key"><b>SIMY CLI（デスクトップアプリ）を入れる</b><span>Claude Codeの会話がSIMYに取り込まれ、「SIMYからの提案」になります。SIMYからPC上のClaude Codeを動かすこともできます。会話本文はサーバーに保存しません。 <a href="/download.html">ダウンロードはこちら</a></span></li>
+            <li class="key"><b>SIMYデスクトップアプリを入れる</b><span>Claude Codeの会話がSIMYに取り込まれ、「SIMYからの提案」になります。SIMYからPC上のClaude Codeを動かすこともできます。会話本文はサーバーに保存しません。 <a href="/download.html">ダウンロードはこちら</a></span></li>
             <li><b>Claude Codeにプラグインを入れる（任意）</b><span><code>/simy:delivery-loop</code>で、Claude Codeの作業を途中で止めず、区切りごとに次の一手をSIMYが返します。</span></li>
           </ol>
           <div>
@@ -1093,7 +1093,7 @@ thead th.simy { background: var(--blue-deep); }
             <p class="caption">※ SIMYの画面のイメージです</p>
           </div>
         </div>
-        <p class="note"><b>SIMYとClaudeの関係：</b>Claude Codeの会話の取り込みと、SIMYからのClaude Codeの操作は、SIMY CLIでできます。できないのは、Claudeのトークン（プランの利用枠）をSIMYのクラウド実行に連携することだけです。クラウド実行はお使いのChatGPT（Codex）で動き、Geminiのトークン連携は開発中です。</p>
+        <p class="note"><b>SIMYとClaudeの関係：</b>Claude Codeの会話の取り込みと、SIMYからのClaude Codeの操作は、SIMYデスクトップアプリでできます。できないのは、Claudeのトークン（プランの利用枠）をSIMYのクラウド実行に連携することだけです。クラウド実行はお使いのChatGPT（Codex）で動き、Geminiのトークン連携は開発中です。</p>
       </section>
 
       <!-- 05 -->
@@ -1185,10 +1185,11 @@ thead th.simy { background: var(--blue-deep); }
         <h2 id="h-start">はじめ方：Claudeはそのまま、3ステップ</h2>
         <ol class="steps3">
           <li><b>Claudeは、今の使い方のまま</b><span>無料でもProでもMaxでも。プロジェクトやコネクタの設定も、変えなくていい。</span></li>
-          <li class="key"><b>SIMYに登録して、ChatGPTを接続。simyを入れる</b><span>クラウド実行はお使いのChatGPT（Codex）。<a href="#connect">つなぎ方</a>は上のとおりです。Claude Codeを使っている人は、simyデスクトップアプリも。 <a href="/download.html">ダウンロードはこちら</a></span></li>
+          <li class="key"><b>SIMYに登録して、ChatGPTを接続。simyを入れる</b><span>クラウド実行はお使いのChatGPT（Codex）。<a href="#connect">つなぎ方</a>は上のとおりです。Claude Codeを使っている人は、SIMYデスクトップアプリも。 <a href="/download.html">ダウンロードはこちら</a></span></li>
           <li><b>1週間、ふだん通りに仕事をする</b><span>会議1件のあとに下書きが届き、週の終わりに「SIMYからの提案」が来ます。レビューして、承認する。それだけです。</span></li>
         </ol>
-        <p class="note"><b>Claude Codeをすでに使っている人は、</b>ステップ2でsimyデスクトップアプリを入れるだけ。これまでの会話から、繰り返している仕事をSIMYが見つけます。</p>
+        <p class="note"><b>登録の流れ：</b>プランを選ぶ → メールで本人確認 → カードで決済。無料プランはありません。<a href="/?lang=ja#pricing">料金を見る</a>。PCで使うアプリは<a href="/download.html">ダウンロードページ</a>から。</p>
+        <p class="note"><b>Claude Codeをすでに使っている人は、</b>ステップ2でSIMYデスクトップアプリを入れるだけ。これまでの会話から、繰り返している仕事をSIMYが見つけます。</p>
       </section>
 
       <!-- 08 -->
@@ -1333,7 +1334,7 @@ thead th.simy { background: var(--blue-deep); }
               <li><strong>progress.md：</strong>作業の進み具合。</li>
               <li><strong>別ファイル：</strong>その他の知識や資料。</li>
             </ul>
-            <p>書いて保存する手間は、あなたに残ります。SIMYは書かなくても会話からやり方を学びます（SIMY CLIがClaude Codeの会話を取り込みます）。</p>
+            <p>書いて保存する手間は、あなたに残ります。SIMYは書かなくても会話からやり方を学びます（SIMYデスクトップアプリがClaude Codeの会話を取り込みます）。</p>
           </div>
         </details>
 
@@ -1354,7 +1355,7 @@ thead th.simy { background: var(--blue-deep); }
               <li><strong>期間と停止：</strong>履歴の読み取りは既定90日分で、設定で止められます。止めると派生データも削除されます。</li>
               <li><strong>外部への書き込みは承認制：</strong>Gmailは下書き保存まで。Slackへの投稿、Notionへの書き込みは、あなたの承認を待ちます。</li>
               <li><strong>Delivery Loopのフック：</strong>Claude Code側のプラグインは、会話・トークン・プロンプトをアップロードしません。</li>
-              <li><strong>CLIのセッション：</strong>simyデスクトップアプリ／CLIのログインは48時間で失効し、再ログインが必要になります。アカウントを削除すると、個人のワークスペースも削除されます。</li>
+              <li><strong>CLIのセッション：</strong>SIMYデスクトップアプリのログインは48時間で失効し、再ログインが必要になります。アカウントを削除すると、個人のワークスペースも削除されます。</li>
             </ul>
             <p>詳しくは<a href="/security.html">セキュリティ</a>と<a href="/privacy.html">プライバシーポリシー</a>、<a href="/terms.html">利用規約</a>をご覧ください。</p>
           </div>
@@ -1419,7 +1420,7 @@ thead th.simy { background: var(--blue-deep); }
           </details>
           <details>
             <summary>SIMYを使うには、Claudeの有料プランが必要ですか？</summary>
-            <div class="a"><p>SIMYだけなら不要です。SIMY CLIを入れると、Claude Codeの会話をSIMYに取り込み、SIMYからClaude Codeを動かせます。このときは、あなたのClaude Codeのログインとプランがそのまま使われます。できないのは、Claudeのトークン（プランの利用枠）をSIMYのクラウド実行に連携することだけです。クラウド実行はお使いのChatGPTアカウント（Codex）で動き、Geminiのトークン連携は開発中です。</p></div>
+            <div class="a"><p>SIMYだけなら不要です。SIMYデスクトップアプリを入れると、Claude Codeの会話をSIMYに取り込み、SIMYからClaude Codeを動かせます。このときは、あなたのClaude Codeのログインとプランがそのまま使われます。できないのは、Claudeのトークン（プランの利用枠）をSIMYのクラウド実行に連携することだけです。クラウド実行はお使いのChatGPTアカウント（Codex）で動き、Geminiのトークン連携は開発中です。</p></div>
           </details>
           <details>
             <summary>Claudeが不調なときや利用上限に達したとき、仕事は止まりますか？</summary>
@@ -1431,7 +1432,7 @@ thead th.simy { background: var(--blue-deep); }
           </details>
           <details>
             <summary>Claude Codeの会話が「SIMYからの提案」になるまで、何が送られますか？</summary>
-            <div class="a"><p>simyデスクトップアプリが、PC内のClaude CodeとCodexの会話履歴を既定で90日分読み、繰り返している手順と確認事項を抽象化してWorkFlow候補を作ります。会話本文は解析中だけ使い、サーバーには残りません。この取り込みは設定でいつでも止められます。</p></div>
+            <div class="a"><p>SIMYデスクトップアプリが、PC内のClaude CodeとCodexの会話履歴を既定で90日分読み、繰り返している手順と確認事項を抽象化してWorkFlow候補を作ります。会話本文は解析中だけ使い、サーバーには残りません。この取り込みは設定でいつでも止められます。</p></div>
           </details>
           <details>
             <summary>Claudeで作った下書きを、毎週同じ手順で共有・記録しています。自動化できますか？</summary>
@@ -1460,10 +1461,10 @@ thead th.simy { background: var(--blue-deep); }
     <div class="wrap closing-inner">
       <div>
         <h2 id="h-closing">次にClaudeへ頼むとき、<br>その前にSIMYへ。</h2>
-        <p>Claudeはそのまま、ChatGPTアカウントを接続するだけで、会議1件から試せます。SIMYが返すのは判断だけ。商談と診療は、あなたの腕の見せ所のままです。</p>
+        <p>Claudeはそのまま、ChatGPTアカウントを接続するだけで、次の会議から使えます。SIMYが返すのは判断だけ。商談と診療は、あなたの腕の見せ所のままです。</p>
       </div>
       <div class="cta-row">
-        <a class="btn btn-primary" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=claude_guide&amp;utm_content=closing">会議1件から試す <span class="arrow" aria-hidden="true">↗</span></a>
+        <a class="btn btn-primary" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=claude_guide&amp;utm_content=closing">プランを選んではじめる <span class="arrow" aria-hidden="true">↗</span></a>
         <a class="btn btn-ghost" href="mailto:sales@simy.one?subject=Claude%E3%81%A8SIMY%E3%81%AE%E9%80%A3%E6%90%BA%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%E7%9B%B8%E8%AB%87%E3%81%97%E3%81%9F%E3%81%84">相談する</a>
         <a class="btn btn-ghost" href="/download.html">アプリをダウンロード <span class="arrow" aria-hidden="true">↓</span></a>
       </div>

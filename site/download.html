@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SIMYをダウンロード｜Mac・Windows・iPhone | SIMY</title>
-<meta name="description" content="SIMYのデスクトップアプリ（Mac・Windows）とiOSアプリのダウンロード。PCのClaude CodeやCodexの会話から次の仕事を見つけ、SIMYからPCのAIを動かし、判断だけをあなたに返します。">
+<meta name="description" content="SIMYデスクトップアプリ（Mac・Windows）とiOSアプリのダウンロード。アカウント作成から、インストール、ログインまでの3ステップ。PCのAIとの会話から、SIMYが次の仕事を見つけます。">
 <link rel="canonical" href="https://simy.one/download.html">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://simy.one/download.html">
@@ -743,6 +743,30 @@ thead th.simy { background: var(--blue-deep); }
 .dl-main { padding: clamp(40px, 6vw, 72px) 0 clamp(56px, 7vw, 96px); }
 .dl-main .wrap > .sec { max-width: 980px; }
 @media (max-width: 860px) { .dl-grid { grid-template-columns: minmax(0, 1fr); } }
+
+.funnel { list-style: none; margin: 28px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; border: 1px solid var(--ink); border-radius: var(--radius); overflow: hidden; background: var(--paper-light); }
+.funnel li { position: relative; padding: 16px 18px 16px 58px; border-left: 1px solid var(--ui-line); }
+.funnel li:first-child { border-left: 0; }
+.funnel li.is-now { background: var(--blue-soft); }
+.funnel .fn { position: absolute; left: 18px; top: 16px; width: 28px; height: 28px; display: grid; place-items: center; border: 1px solid var(--ink); border-radius: 50%; background: var(--paper); font-family: var(--mono); font-weight: 700; font-size: 0.84rem; }
+.funnel li.is-now .fn { background: var(--blue-deep); color: #fff; border-color: var(--blue-deep); }
+.funnel b { display: block; font-size: 1rem; }
+.funnel small { display: block; margin-top: 2px; font-size: 0.8rem; color: var(--ink-soft); }
+.paths { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 16px; margin-top: 16px; align-items: start; }
+.path { padding: 22px 20px; border: 1px solid var(--ui-line); border-radius: var(--radius); background: var(--paper-light); display: flex; flex-direction: column; gap: 10px; }
+.path-new { border-color: var(--ink); box-shadow: 6px 6px 0 var(--blue); }
+.path-h { margin: 0; font-size: 1.3rem; }
+.path p { margin: 0; font-size: 0.92rem; color: #34322f; }
+.need { margin: 0; padding-left: 1.1em; font-size: 0.88rem; line-height: 1.8; }
+.path .btn { justify-content: center; }
+.path .dl-grid { grid-template-columns: minmax(0, 1fr); margin-top: 4px; gap: 10px; }
+.path .dl-card { padding: 14px 16px; gap: 8px; border-color: var(--ui-line); }
+.path .dl-card.is-you { border-color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+.path .dl-card h3 { font-size: 1.02rem; }
+.mobile-hint { margin: 4px 0 0; font-size: 0.86rem; color: var(--ink-soft); }
+.linkbtn { background: none; border: 0; padding: 0; font: inherit; color: var(--blue-deep); text-decoration: underline; cursor: pointer; }
+.dl-meta a { color: var(--blue-deep); }
+@media (max-width: 860px) { .paths, .funnel { grid-template-columns: minmax(0, 1fr); } .funnel li { border-left: 0; border-top: 1px solid var(--ui-line); } .funnel li:first-child { border-top: 0; } }
 </style>
 <script type="application/ld+json">
 {
@@ -754,13 +778,96 @@ thead th.simy { background: var(--blue-deep); }
       "applicationCategory": "BusinessApplication",
       "operatingSystem": "macOS, Windows, iOS",
       "url": "https://simy.one/download.html",
-      "publisher": { "@type": "Organization", "name": "AwakApp Inc.", "url": "https://www.awak.app/" }
+      "publisher": {
+        "@type": "Organization",
+        "name": "AwakApp Inc.",
+        "url": "https://www.awak.app/"
+      }
     },
     {
       "@type": "BreadcrumbList",
       "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "SIMY", "item": "https://simy.one/" },
-        { "@type": "ListItem", "position": 2, "name": "ダウンロード", "item": "https://simy.one/download.html" }
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "SIMY",
+          "item": "https://simy.one/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "ダウンロード",
+          "item": "https://simy.one/download.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "無料で試せますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "無料プランはありません。月額プランを選んで登録すると、アプリとWebの両方を使えます。料金はホームの料金欄をご覧ください。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "アカウントを作る前に、アプリだけ入れてもいいですか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "入れることはできますが、ログインにはSIMYのアカウントが必要です。先にアカウントを作ってから、アプリの「ログイン」を押すのがいちばん早い順番です。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "登録には何が必要ですか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "メールアドレスとクレジットカードです。届いたメールのリンクで本人確認をするので、パスワードは決めなくて構いません。支払いはカード決済の画面で行います。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "アプリで「ログイン」を押したら「Unauthorized」と出ました。",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ブラウザでSIMYにログインしていない状態です。先にWebでログイン（はじめての方はアカウント作成）をしてから、アプリの「ログイン」をもう一度押してください。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Claude CodeやCodexを使っていなくても、入れる意味はありますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "会議やチャットから仕事を拾う機能はWebだけで使えるので、アプリは必須ではありません。PCでClaude CodeやCodexを使っている方は、アプリを入れると会話が提案になり、SIMYからPCのAIを動かせます。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "ChatGPTやClaudeの契約は必要ですか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "SIMYのクラウド実行は、お使いのChatGPTアカウント（Codex）で動きます。PCのClaude Codeを動かすときは、あなたのClaude Codeのログインがそのまま使われます。Claudeのトークンをクラウド実行に連携することはできません。Geminiのトークン連携は開発中です。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "IntelのMacでも使えますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "現在のMac版はAppleシリコン（M1以降）向けです。IntelのMacでは、Webから SIMY をお使いください。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "ダウンロードしたファイル名が「SIMY-CLI」になっています。",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "同じものです。デスクトップアプリには、エンジニア向けにターミナルから使える SIMY CLI も入っているため、ファイル名にその名前が付いています。ふだんはアプリの画面だけで使えます。"
+          }
+        }
       ]
     }
   ]
@@ -779,7 +886,7 @@ thead th.simy { background: var(--blue-deep); }
     </a>
     <nav class="header-actions" aria-label="アカウント">
       <a class="header-link" href="https://app.simy.one/login?lang=ja&amp;locale=ja&amp;region=jp">ログイン</a>
-      <a class="header-cta" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=download&amp;utm_content=header">新規登録</a>
+      <a class="header-cta" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=download&amp;utm_content=header">アカウントを作る</a>
     </nav>
   </div>
 </header>
@@ -792,39 +899,84 @@ thead th.simy { background: var(--blue-deep); }
     </ol>
 
     <section class="sec" aria-labelledby="page-title">
-      <p class="eyebrow">SIMY デスクトップアプリ・CLI</p>
+      <p class="eyebrow">SIMY デスクトップアプリ</p>
       <h1 id="page-title">
         <span class="line">SIMYを、</span>
         <span class="line hl">あなたのPCに。</span>
       </h1>
-      <p class="lead">PCのClaude CodeやCodexの会話から、SIMYが次の仕事を見つけます。SIMYから、PCのClaude CodeやCodexを動かすこともできます。</p>
+      <p class="lead">入れるだけで、PCのAIとの会話からSIMYが次の仕事を見つけます。黒い画面の操作はいりません。</p>
 
-      <div class="dl-grid">
-        <div class="dl-card" data-os="mac">
-          <span class="you-badge">お使いのPC</span>
-          <span class="os">macOS · Apple シリコン</span>
-          <h3>Mac版</h3>
-          <p>M1以降のMac向け。署名・公証済みのアプリです。</p>
-          <a class="btn btn-primary" data-dl="mac" href="https://simy.one/downloads/simy-cli/0.5.45/SIMY-CLI-0.5.45-macos-arm64.dmg">Mac版をダウンロード <span class="arrow" aria-hidden="true">↓</span></a>
-          <span class="dl-meta" data-meta="mac">.dmg</span>
+      <ol class="funnel" aria-label="はじめるまでの流れ">
+        <li class="is-now"><span class="fn">1</span><b>アカウントを作る</b><small>プランを選ぶ → メール確認 → カード決済</small></li>
+        <li><span class="fn">2</span><b>アプリを入れる</b><small>ダウンロードして開く</small></li>
+        <li><span class="fn">3</span><b>ログインを押す</b><small>ブラウザが開いて、自動でつながる</small></li>
+      </ol>
+
+      <div class="paths">
+        <div class="path path-new">
+          <span class="os">はじめての方</span>
+          <h2 class="path-h">まず、アカウントを作る</h2>
+          <p>アプリのログインにはSIMYのアカウントが必要です。先に作っておくと、アプリを開いてすぐ使えます。</p>
+          <ul class="need">
+            <li>メールアドレス（パスワードは不要）</li>
+            <li>クレジットカード（月額プラン。無料プランはありません）</li>
+          </ul>
+          <a class="btn btn-primary" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=download&amp;utm_content=account_first">プランを選んでアカウントを作る <span class="arrow" aria-hidden="true">↗</span></a>
+          <span class="dl-meta">登録が終わった画面からも、アプリをダウンロードできます ／ <a href="/?lang=ja#pricing">料金を見る</a></span>
         </div>
-        <div class="dl-card" data-os="win">
-          <span class="you-badge">お使いのPC</span>
-          <span class="os">Windows · x64</span>
-          <h3>Windows版</h3>
-          <p>インストーラー形式です。初回は「WindowsによってPCが保護されました」と出ることがあります。</p>
-          <a class="btn btn-primary" data-dl="win" href="https://simy.one/downloads/simy-cli/windows/0.5.45/SIMY-CLI-0.5.45-windows-x64-setup.exe">Windows版をダウンロード <span class="arrow" aria-hidden="true">↓</span></a>
-          <span class="dl-meta" data-meta="win">.exe</span>
-        </div>
-        <div class="dl-card" data-os="ios">
-          <span class="you-badge">お使いの端末</span>
-          <span class="os">iPhone</span>
-          <h3>iOSアプリ</h3>
-          <p>会議を録音し、SIMYから戻ってきた判断にスマホで答えます。</p>
-          <a class="btn btn-ghost" href="https://apps.apple.com/jp/app/id6745385262" target="_blank" rel="noopener">App Storeで見る <span class="arrow" aria-hidden="true">↗</span></a>
-          <span class="dl-meta">App Store</span>
+        <div class="path">
+          <span class="os">アカウントをお持ちの方</span>
+          <h2 class="path-h">アプリをダウンロード</h2>
+          <div class="dl-grid">
+            <div class="dl-card" data-os="mac">
+              <span class="you-badge">お使いのPC</span>
+              <span class="os">macOS · Apple シリコン（M1以降）</span>
+              <h3>Mac版</h3>
+              <a class="btn btn-primary" data-dl="mac" href="https://simy.one/downloads/simy-cli/0.5.45/SIMY-CLI-0.5.45-macos-arm64.dmg">Mac版をダウンロード <span class="arrow" aria-hidden="true">↓</span></a>
+              <span class="dl-meta" data-meta="mac">.dmg</span>
+            </div>
+            <div class="dl-card" data-os="win">
+              <span class="you-badge">お使いのPC</span>
+              <span class="os">Windows · x64</span>
+              <h3>Windows版</h3>
+              <a class="btn btn-primary" data-dl="win" href="https://simy.one/downloads/simy-cli/windows/0.5.45/SIMY-CLI-0.5.45-windows-x64-setup.exe">Windows版をダウンロード <span class="arrow" aria-hidden="true">↓</span></a>
+              <span class="dl-meta" data-meta="win">.exe</span>
+            </div>
+            <div class="dl-card" data-os="ios">
+              <span class="you-badge">お使いの端末</span>
+              <span class="os">iPhone</span>
+              <h3>iOSアプリ</h3>
+              <a class="btn btn-ghost" href="https://apps.apple.com/jp/app/id6745385262" target="_blank" rel="noopener">App Storeで見る <span class="arrow" aria-hidden="true">↗</span></a>
+              <span class="dl-meta">会議の録音と、判断への返事に</span>
+            </div>
+          </div>
+          <p class="mobile-hint" hidden>PC版は、PCでこのページを開いてダウンロードしてください。<button type="button" class="linkbtn" data-share>このページのリンクを送る</button></p>
         </div>
       </div>
+    </section>
+
+    <section class="sec" aria-labelledby="h-install">
+      <span class="sec-label">INSTALL</span>
+      <h2 id="h-install">入れ方：開いて、ログインを押すだけ</h2>
+      <div class="ind">
+        <div class="ind-card" data-install="mac">
+          <h3>Mac <small>.dmg</small></h3>
+          <ol class="plain-list">
+            <li>ダウンロードした .dmg を開く</li>
+            <li>SIMY を「アプリケーション」にドラッグする</li>
+            <li>SIMY を開き、「ログイン」を押す</li>
+          </ol>
+        </div>
+        <div class="ind-card" data-install="win">
+          <h3>Windows <small>.exe</small></h3>
+          <ol class="plain-list">
+            <li>ダウンロードした .exe を開く</li>
+            <li>青い保護画面が出たら「詳細情報」→「実行」</li>
+            <li>SIMY を開き、「ログイン」を押す</li>
+          </ol>
+        </div>
+      </div>
+      <p class="note"><b>「ログイン」を押すと：</b>ブラウザが開き、SIMYにログイン済みならそのまま自動でつながります。ブラウザに「Unauthorized」と出たときは、先に<a href="https://app.simy.one/login?lang=ja&amp;locale=ja&amp;region=jp">Webでログイン</a>してから、アプリの「ログイン」をもう一度押してください。</p>
     </section>
 
     <section class="sec" aria-labelledby="h-what">
@@ -835,13 +987,13 @@ thead th.simy { background: var(--blue-deep); }
           <span class="mark" aria-hidden="true">1</span>
           <span class="k">会話から</span>
           <b>次の仕事が届く</b>
-          <p>Claude CodeとCodexの会話（既定で直近90日）から、繰り返しの仕事を「SIMYからの提案」にします。</p>
+          <p>Claude CodeやCodexとの会話から、繰り返している仕事を「SIMYからの提案」にします。</p>
         </div>
         <div class="scene wish">
           <span class="mark" aria-hidden="true">2</span>
           <span class="k">SIMYから</span>
           <b>PCのAIを動かす</b>
-          <p>あなたのログインのまま、PCのClaude CodeやCodexを実行役にして仕事を進めます。</p>
+          <p>あなたのログインのまま、PCのClaude CodeやCodexに仕事を進めさせます。</p>
         </div>
         <div class="scene wish you">
           <span class="mark" aria-hidden="true">!</span>
@@ -850,18 +1002,46 @@ thead th.simy { background: var(--blue-deep); }
           <p>送ってよいか、この金額でよいか。戻ってくるのは判断が必要なところだけです。</p>
         </div>
       </div>
-      <p class="note"><b>送らないもの：</b>ツールの出力や推論は送らず、会話本文もサーバーに保存しません。設定でいつでも止められます。</p>
+      <p class="note"><b>安心のために：</b>読むのは会話のやり取りだけで、既定で直近90日分です。ツールの出力は送らず、会話本文はサーバーに保存しません。設定でいつでも止められます。</p>
     </section>
 
-    <section class="sec" aria-labelledby="h-start">
-      <span class="sec-label">START</span>
-      <h2 id="h-start">はじめ方：3ステップ</h2>
-      <ol class="steps3">
-        <li><b>SIMYに登録する</b><span><a href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=download&amp;utm_content=steps">Webで新規登録</a>し、お使いのChatGPTアカウントをつなぎます。</span></li>
-        <li class="key"><b>アプリを入れてログイン</b><span>上のボタンからダウンロードして起動し、SIMYのアカウントでログインします。</span></li>
-        <li><b>いつも通り仕事をする</b><span>Claude CodeやCodexを使うと、次の仕事が提案として届きます。</span></li>
-      </ol>
-      <p class="note"><b>必要なもの：</b>PCで実行役にするなら、Claude CodeかCodexがPCに入っていること。Claudeのトークン（プランの利用枠）をSIMYのクラウド実行に連携することはできません。Geminiのトークン連携は開発中です。</p>
+    <section class="sec" id="faq" aria-labelledby="h-faq">
+      <span class="sec-label">FAQ</span>
+      <h2 id="h-faq">よくある質問</h2>
+      <div class="faq">
+        <details>
+          <summary>無料で試せますか？</summary>
+          <div class="a"><p>無料プランはありません。月額プランを選んで登録すると、アプリとWebの両方を使えます。料金はホームの料金欄をご覧ください。</p></div>
+        </details>
+        <details>
+          <summary>アカウントを作る前に、アプリだけ入れてもいいですか？</summary>
+          <div class="a"><p>入れることはできますが、ログインにはSIMYのアカウントが必要です。先にアカウントを作ってから、アプリの「ログイン」を押すのがいちばん早い順番です。</p></div>
+        </details>
+        <details>
+          <summary>登録には何が必要ですか？</summary>
+          <div class="a"><p>メールアドレスとクレジットカードです。届いたメールのリンクで本人確認をするので、パスワードは決めなくて構いません。支払いはカード決済の画面で行います。</p></div>
+        </details>
+        <details>
+          <summary>アプリで「ログイン」を押したら「Unauthorized」と出ました。</summary>
+          <div class="a"><p>ブラウザでSIMYにログインしていない状態です。先にWebでログイン（はじめての方はアカウント作成）をしてから、アプリの「ログイン」をもう一度押してください。</p></div>
+        </details>
+        <details>
+          <summary>Claude CodeやCodexを使っていなくても、入れる意味はありますか？</summary>
+          <div class="a"><p>会議やチャットから仕事を拾う機能はWebだけで使えるので、アプリは必須ではありません。PCでClaude CodeやCodexを使っている方は、アプリを入れると会話が提案になり、SIMYからPCのAIを動かせます。</p></div>
+        </details>
+        <details>
+          <summary>ChatGPTやClaudeの契約は必要ですか？</summary>
+          <div class="a"><p>SIMYのクラウド実行は、お使いのChatGPTアカウント（Codex）で動きます。PCのClaude Codeを動かすときは、あなたのClaude Codeのログインがそのまま使われます。Claudeのトークンをクラウド実行に連携することはできません。Geminiのトークン連携は開発中です。</p></div>
+        </details>
+        <details>
+          <summary>IntelのMacでも使えますか？</summary>
+          <div class="a"><p>現在のMac版はAppleシリコン（M1以降）向けです。IntelのMacでは、Webから SIMY をお使いください。</p></div>
+        </details>
+        <details>
+          <summary>ダウンロードしたファイル名が「SIMY-CLI」になっています。</summary>
+          <div class="a"><p>同じものです。デスクトップアプリには、エンジニア向けにターミナルから使える SIMY CLI も入っているため、ファイル名にその名前が付いています。ふだんはアプリの画面だけで使えます。</p></div>
+        </details>
+      </div>
     </section>
 
     <section class="sec" aria-labelledby="h-guides">
@@ -900,6 +1080,18 @@ thead th.simy { background: var(--blue-deep); }
   if (os) {
     var card = document.querySelector('.dl-card[data-os="' + os + '"]');
     if (card) { card.classList.add('is-you'); card.parentNode.insertBefore(card, card.parentNode.firstChild); }
+    var inst = document.querySelector('[data-install="' + os + '"]');
+    if (inst) inst.parentNode.insertBefore(inst, inst.parentNode.firstChild);
+  }
+  if (os === 'ios' || /Android/.test(ua)) {
+    var hint = document.querySelector('.mobile-hint');
+    if (hint) hint.hidden = false;
+    var share = document.querySelector('[data-share]');
+    if (share) share.addEventListener('click', function () {
+      var url = 'https://simy.one/download.html';
+      if (navigator.share) { navigator.share({ title: 'SIMYをダウンロード', url: url }).catch(function () {}); }
+      else { location.href = 'mailto:?subject=' + encodeURIComponent('SIMYをダウンロード') + '&body=' + encodeURIComponent(url); }
+    });
   }
   function mb(n) { return n ? (n / 1048576).toFixed(0) + 'MB' : ''; }
   function apply(key, manifest, ext) {

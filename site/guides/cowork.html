@@ -881,7 +881,7 @@ thead th.simy { background: var(--blue-deep); }
           "name": "SIMY を使うには Claude の有料プランが必要ですか？",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "SIMY だけなら不要です。SIMY CLI を入れると、Claude Code の会話を SIMY に取り込み、SIMY から Claude Code を動かせます。このときは、あなたの Claude のログインとプランがそのまま使われます。Claude のトークンを SIMY のクラウド実行に連携することはできず、クラウド実行はお使いの ChatGPT アカウント（Codex）で動きます。Gemini のトークン連携は開発中です。SIMY の料金は料金ページをご覧ください。"
+            "text": "SIMY だけなら不要です。SIMY デスクトップアプリ を入れると、Claude Code の会話を SIMY に取り込み、SIMY から Claude Code を動かせます。このときは、あなたの Claude のログインとプランがそのまま使われます。Claude のトークンを SIMY のクラウド実行に連携することはできず、クラウド実行はお使いの ChatGPT アカウント（Codex）で動きます。Gemini のトークン連携は開発中です。SIMY の料金は料金ページをご覧ください。"
           }
         },
         {
@@ -919,7 +919,7 @@ thead th.simy { background: var(--blue-deep); }
     <nav class="header-actions" aria-label="アカウント">
       <a class="header-link" href="/download.html">ダウンロード</a>
       <a class="header-link" href="https://app.simy.one/login?lang=ja&amp;locale=ja&amp;region=jp">ログイン</a>
-      <a class="header-cta" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=cowork_guide&amp;utm_content=header">会議1件から試す</a>
+      <a class="header-cta" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=cowork_guide&amp;utm_content=header">プランを選んではじめる</a>
     </nav>
   </div>
 </header>
@@ -940,7 +940,7 @@ thead th.simy { background: var(--blue-deep); }
         </h1>
         <p class="lead">Claude Cowork（クロード・コワーク）は、PC のフォルダや連携ツールを相手に、あなたが指示した仕事を終わらせます。終わった仕事の次、会議で決まった宿題や共有は、まだあなたの手元に残っています。そこを SIMY が拾い、あなたのやり方で進めて、判断だけを返します。</p>
         <div class="cta-row">
-          <a class="btn btn-primary" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=cowork_guide&amp;utm_content=hero">会議1件から試す <span class="arrow" aria-hidden="true">↗</span></a>
+          <a class="btn btn-primary" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=cowork_guide&amp;utm_content=hero">プランを選んではじめる <span class="arrow" aria-hidden="true">↗</span></a>
           <a class="btn btn-ghost" href="#connect">つなぎ方を見る <span class="arrow" aria-hidden="true">↓</span></a>
         </div>
         <ul class="hero-points">
@@ -1136,7 +1136,7 @@ thead th.simy { background: var(--blue-deep); }
         <div class="connect">
           <ol class="connect-steps">
             <li><b>SIMY に登録する</b><span>クラウドで動かすなら、お使いの ChatGPT アカウントをつなぎます。Codex の利用は、お使いの ChatGPT プランの範囲です。Gemini のトークン連携は開発中です。</span></li>
-            <li class="key"><b>ローカルなら、Claude Code を実行役にする</b><span>SIMY CLI（デスクトップアプリ）が、PC 上の Claude Code を SIMY から動かします。Claude Code の会話も SIMY に取り込まれ、「SIMY からの提案」になります。 <a href="/download.html">ダウンロードはこちら</a></span></li>
+            <li class="key"><b>ローカルなら、Claude Code を実行役にする</b><span>SIMY デスクトップアプリが、PC 上の Claude Code を SIMY から動かします。Claude Code の会話も SIMY に取り込まれ、「SIMY からの提案」になります。 <a href="/download.html">ダウンロードはこちら</a></span></li>
             <li><b>「SIMY からの提案」を受け取る</b><span>Claude Code や Codex の会話履歴（既定90日分）から、繰り返している仕事を WorkFlow の候補として提案します。会話の本文はサーバーに保存しません。</span></li>
           </ol>
           <div>
@@ -1155,7 +1155,7 @@ thead th.simy { background: var(--blue-deep); }
             <p class="caption">※ SIMY の画面のイメージです</p>
           </div>
         </div>
-        <p class="note"><b>必要なもの：</b>SIMY のアカウント。Claude Code の会話の取り込みと操作は SIMY CLI でできます。できないのは、Claude のトークンを SIMY のクラウド実行に連携することだけで、クラウド実行はお使いの ChatGPT（Codex）で動きます。Gemini のトークン連携は開発中です。</p>
+        <p class="note"><b>必要なもの：</b>SIMY のアカウント。Claude Code の会話の取り込みと操作は SIMY デスクトップアプリ でできます。できないのは、Claude のトークンを SIMY のクラウド実行に連携することだけで、クラウド実行はお使いの ChatGPT（Codex）で動きます。Gemini のトークン連携は開発中です。</p>
       </section>
 
       <!-- 05 -->
@@ -1249,6 +1249,7 @@ thead th.simy { background: var(--blue-deep); }
           <li class="key"><b>SIMY に登録して、実行役をつなぐ</b><span>クラウドならお使いの ChatGPT アカウント、ローカルなら PC 上の Claude Code。<a href="#connect">つなぎ方</a>は上のとおりです。</span></li>
           <li><b>会議を1件、終える</b><span>決まった宿題が担当と期限つきで並び、共有の文面が届く。レビューして、決める。それだけです。</span></li>
         </ol>
+        <p class="note"><b>登録の流れ：</b>プランを選ぶ → メールで本人確認 → カードで決済。無料プランはありません。<a href="/?lang=ja#pricing">料金を見る</a>。PCで使うアプリは<a href="/download.html">ダウンロードページ</a>から。</p>
         <p class="note"><b>Claude Code を使っている人は、</b>会話履歴から「SIMY からの提案」が届きます。繰り返している仕事を、WorkFlow として回し始められます。</p>
       </section>
 
@@ -1324,7 +1325,7 @@ thead th.simy { background: var(--blue-deep); }
             </div>
             <h3>プランの選び方の目安</h3>
             <p>個人で机の上の仕事を任せるなら Pro から。1日に何件も走らせる、長い作業を並行させるなら、利用上限の大きい Max が候補になります。チームで使い、誰がどのフォルダやツールに触れるかを管理したいなら Team、部門別の権限や利用額の上限、活動ログの外部連携まで必要なら Enterprise です。各プランの利用上限と金額は変わることがあるため、ここには書かず、公式の料金ページで確認してください。</p>
-            <p class="note"><b>SIMY との関係：</b>SIMY だけなら Claude の有料プランは不要です。SIMY CLI を入れると Claude Code の会話を取り込み、SIMY から Claude Code を動かせます。Claude のトークンはクラウド実行に連携できず、クラウド実行はお使いの ChatGPT アカウント（Codex）で動きます。SIMY の料金は<a href="/?lang=ja#pricing">料金ページ</a>へ。</p>
+            <p class="note"><b>SIMY との関係：</b>SIMY だけなら Claude の有料プランは不要です。SIMY デスクトップアプリ を入れると Claude Code の会話を取り込み、SIMY から Claude Code を動かせます。Claude のトークンはクラウド実行に連携できず、クラウド実行はお使いの ChatGPT アカウント（Codex）で動きます。SIMY の料金は<a href="/?lang=ja#pricing">料金ページ</a>へ。</p>
           </div>
         </details>
 
@@ -1445,7 +1446,7 @@ thead th.simy { background: var(--blue-deep); }
           </details>
           <details>
             <summary>SIMY を使うには Claude の有料プランが必要ですか？</summary>
-            <div class="a"><p>SIMY だけなら不要です。SIMY CLI を入れると、Claude Code の会話を SIMY に取り込み、SIMY から Claude Code を動かせます。このときは、あなたの Claude のログインとプランがそのまま使われます。Claude のトークンを SIMY のクラウド実行に連携することはできず、クラウド実行はお使いの ChatGPT アカウント（Codex）で動きます。Gemini のトークン連携は開発中です。SIMY の料金は<a href="/?lang=ja#pricing">料金ページ</a>をご覧ください。</p></div>
+            <div class="a"><p>SIMY だけなら不要です。SIMY デスクトップアプリ を入れると、Claude Code の会話を SIMY に取り込み、SIMY から Claude Code を動かせます。このときは、あなたの Claude のログインとプランがそのまま使われます。Claude のトークンを SIMY のクラウド実行に連携することはできず、クラウド実行はお使いの ChatGPT アカウント（Codex）で動きます。Gemini のトークン連携は開発中です。SIMY の料金は<a href="/?lang=ja#pricing">料金ページ</a>をご覧ください。</p></div>
           </details>
           <details>
             <summary>Claude Code と Cowork は、どちらを使えばいいですか？</summary>
@@ -1480,7 +1481,7 @@ thead th.simy { background: var(--blue-deep); }
         <p>机の上は Cowork に、会議の宿題は SIMY に。SIMY が返すのは判断だけ。商談と決断は、あなたの腕の見せ所のままです。</p>
       </div>
       <div class="cta-row">
-        <a class="btn btn-primary" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=cowork_guide&amp;utm_content=closing">会議1件から試す <span class="arrow" aria-hidden="true">↗</span></a>
+        <a class="btn btn-primary" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=cowork_guide&amp;utm_content=closing">プランを選んではじめる <span class="arrow" aria-hidden="true">↗</span></a>
         <a class="btn btn-ghost" href="mailto:sales@simy.one?subject=Cowork%E9%80%A3%E6%90%BA%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%E7%9B%B8%E8%AB%87%E3%81%97%E3%81%9F%E3%81%84">相談する</a>
         <a class="btn btn-ghost" href="/download.html">アプリをダウンロード <span class="arrow" aria-hidden="true">↓</span></a>
       </div>
