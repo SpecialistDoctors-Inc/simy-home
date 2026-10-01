@@ -567,8 +567,9 @@
 
     for (const link of document.querySelectorAll("a[href]")) {
       const originalHref = link.dataset.originalHref || link.getAttribute("href") || "";
-      if (originalHref.startsWith("https://app.simy.one/")) {
+      if (/^https:\/\/app(?:-dev)?\.simy\.one\//.test(originalHref)) {
         const url = new URL(originalHref);
+        if (["dev.simy.one", "localhost", "127.0.0.1"].includes(window.location.hostname)) url.hostname = "app-dev.simy.one";
         for (const [name, value] of Object.entries(localeParams)) {
           if (value === null) url.searchParams.delete(name);
           else url.searchParams.set(name, value);
