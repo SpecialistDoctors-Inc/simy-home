@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI 使用指南合集：Claude、Codex、ChatGPT、PLAUD、AI 会议纪要 | SIMY</title>
-<meta name="description" content="按你正在用的 AI 工具挑选、从工作视角出发的使用指南。涵盖 Claude、OpenAI Codex、Claude Cowork、ChatGPT、PLAUD NOTE 和 AI 会议纪要工具的用法，以及回答和摘要之后剩下的工作该怎么收尾。">
+<title>AI 使用指南合集：Claude、ChatGPT、DeepSeek、Qwen | SIMY</title>
+<meta name="description" content="按你正在用的 AI 挑选、从工作视角出发的使用指南。涵盖 Claude、Codex、ChatGPT、PLAUD、AI 会议纪要，以及 DeepSeek、Qwen 等中国 AI 的用法，还有回答之后剩下的工作该怎么收尾。">
 <link rel="canonical" href="https://simy.one/guides/zh-hans/index.html">
 <link rel="alternate" hreflang="ja" href="https://simy.one/guides/index.html">
 <link rel="alternate" hreflang="en" href="https://simy.one/guides/en/index.html">
@@ -748,13 +748,16 @@ thead th.simy { background: var(--blue-deep); }
 .lang-switch li a { display: block; padding: 8px 10px; border-radius: 6px; color: var(--ink); text-decoration: none; font-size: 0.88rem; }
 .lang-switch li a:hover, .lang-switch li a[aria-current] { background: var(--blue-soft); }
 @media (max-width: 960px) { .brand-sub { display: none; } .header-actions { gap: 4px; } .lang-switch > summary { padding: 0 8px; } }
+@media (max-width: 640px) { .lang-switch .ls-label { display: none; } .lang-switch > summary { padding: 0 10px; } }
+/* Typography: balanced headings, phrase-aware Japanese breaks, tighter mobile headings */
+h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
+:lang(ja) h1, :lang(ja) h2, :lang(ja) h3, :lang(ja) .eyebrow, :lang(ja) .scene b, :lang(ja) .lead { word-break: auto-phrase; }
+.lead, .intro, .scene p { text-wrap: pretty; }
+@media (max-width: 640px) { h2 { font-size: 1.32rem; line-height: 1.4; } .eyebrow { font-size: 0.72rem; } .closing h2 { font-size: 1.5rem; } }
+@media (max-width: 400px) { h2 { font-size: 1.22rem; } .closing h2 { font-size: 1.34rem; } }
 </style>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@graph":[
- {"@type":"CollectionPage","name":"AI 使用指南合集","url":"https://simy.one/guides/zh-hans/index.html","inLanguage":"zh-Hans"},
- {"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"SIMY","item":"https://simy.one/?lang=zh-Hans"},{"@type":"ListItem","position":2,"name":"指南","item":"https://simy.one/guides/zh-hans/index.html"}]},
- {"@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"url":"https://simy.one/guides/zh-hans/claude.html","name":"Claude 使用指南"},{"@type":"ListItem","position":2,"url":"https://simy.one/guides/zh-hans/codex.html","name":"OpenAI Codex 使用指南"},{"@type":"ListItem","position":3,"url":"https://simy.one/guides/zh-hans/cowork.html","name":"Claude Cowork 使用指南"},{"@type":"ListItem","position":4,"url":"https://simy.one/guides/zh-hans/chatgpt.html","name":"ChatGPT 使用指南"},{"@type":"ListItem","position":5,"url":"https://simy.one/guides/zh-hans/plaud.html","name":"PLAUD NOTE 使用指南"},{"@type":"ListItem","position":6,"url":"https://simy.one/guides/zh-hans/meeting-notes.html","name":"AI 会议纪要（Teams、Meet、Notion AI、Notta）使用指南"}]}
-]}
+{"@context": "https://schema.org", "@graph": [{"@type": "CollectionPage", "name": "AI 使用指南合集", "url": "https://simy.one/guides/zh-hans/index.html", "inLanguage": "zh-Hans"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "SIMY", "item": "https://simy.one/?lang=zh-Hans"}, {"@type": "ListItem", "position": 2, "name": "指南", "item": "https://simy.one/guides/zh-hans/index.html"}]}, {"@type": "ItemList", "itemListElement": [{"@type": "ListItem", "position": 1, "url": "https://simy.one/guides/zh-hans/claude.html", "name": "Claude 使用指南"}, {"@type": "ListItem", "position": 2, "url": "https://simy.one/guides/zh-hans/codex.html", "name": "OpenAI Codex 使用指南"}, {"@type": "ListItem", "position": 3, "url": "https://simy.one/guides/zh-hans/cowork.html", "name": "Claude Cowork 使用指南"}, {"@type": "ListItem", "position": 4, "url": "https://simy.one/guides/zh-hans/chatgpt.html", "name": "ChatGPT 使用指南"}, {"@type": "ListItem", "position": 5, "url": "https://simy.one/guides/zh-hans/plaud.html", "name": "PLAUD NOTE 使用指南"}, {"@type": "ListItem", "position": 6, "url": "https://simy.one/guides/zh-hans/meeting-notes.html", "name": "AI 会议纪要（Teams、Meet、Notion AI、Notta）使用指南"}, {"@type": "ListItem", "position": 7, "url": "https://simy.one/guides/zh-hans/china-llm.html", "name": "中国 AI（LLM）对比指南"}, {"@type": "ListItem", "position": 8, "url": "https://simy.one/guides/zh-hans/deepseek.html", "name": "DeepSeek 指南"}, {"@type": "ListItem", "position": 9, "url": "https://simy.one/guides/zh-hans/qwen.html", "name": "Qwen 指南"}, {"@type": "ListItem", "position": 10, "url": "https://simy.one/guides/zh-hans/qwen-local.html", "name": "在自有服务器上运行 Qwen 指南"}, {"@type": "ListItem", "position": 11, "url": "https://simy.one/guides/zh-hans/kimi.html", "name": "Kimi（月之暗面）指南"}, {"@type": "ListItem", "position": 12, "url": "https://simy.one/guides/zh-hans/glm.html", "name": "GLM（Z.ai）指南"}, {"@type": "ListItem", "position": 13, "url": "https://simy.one/guides/zh-hans/minimax.html", "name": "MiniMax 指南"}, {"@type": "ListItem", "position": 14, "url": "https://simy.one/guides/zh-hans/doubao.html", "name": "豆包（Doubao）指南"}]}]}
 </script>
 </head>
 <body>
@@ -767,7 +770,7 @@ thead th.simy { background: var(--blue-deep); }
       <span class="brand-sub">指南</span>
     </a>
     <nav class="header-actions" aria-label="账户">
-      <details class="lang-switch"><summary aria-label="Language">🌐 中文</summary><ul><li><a href="/guides/index.html" hreflang="ja" lang="ja">日本語</a></li><li><a href="/guides/en/index.html" hreflang="en" lang="en">English</a></li><li><a href="/guides/zh-hans/index.html" hreflang="zh-Hans" lang="zh-Hans" aria-current="page">中文</a></li><li><a href="/guides/es/index.html" hreflang="es" lang="es">Español</a></li><li><a href="/guides/fr/index.html" hreflang="fr" lang="fr">Français</a></li><li><a href="/guides/hi/index.html" hreflang="hi" lang="hi">हिन्दी</a></li></ul></details>
+      <details class="lang-switch"><summary aria-label="Language: 中文"><span aria-hidden="true">🌐</span> <span class="ls-label">中文</span></summary><ul><li><a href="/guides/index.html" hreflang="ja" lang="ja">日本語</a></li><li><a href="/guides/en/index.html" hreflang="en" lang="en">English</a></li><li><a href="/guides/zh-hans/index.html" hreflang="zh-Hans" lang="zh-Hans" aria-current="page">中文</a></li><li><a href="/guides/es/index.html" hreflang="es" lang="es">Español</a></li><li><a href="/guides/fr/index.html" hreflang="fr" lang="fr">Français</a></li><li><a href="/guides/hi/index.html" hreflang="hi" lang="hi">हिन्दी</a></li></ul></details>
       <a class="header-link" href="/download/zh-hans.html">下载</a>
       <a class="header-link" href="https://app.simy.one/login?lang=zh-Hans&amp;locale=zh-Hans">登录</a>
       <a class="header-cta" href="https://app.simy.one/signup?lang=zh-Hans&amp;locale=zh-Hans&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=guides_index_zh-hans&amp;utm_content=header">选择方案并开始</a>
@@ -826,6 +829,61 @@ thead th.simy { background: var(--blue-deep); }
         </a>
       </div>
     </section>
+    <section class="sec" aria-labelledby="h-china">
+      <span class="sec-label">CHINA &amp; OPEN MODELS</span>
+      <h2 id="h-china">中国 AI 与开放模型</h2>
+      <p class="tl-note">又便宜又聪明的模型越来越多。选哪个、公司数据交出去多少、要不要在封闭环境里运行。这里整理了判断的依据，以及回答之后的工作怎么收尾。</p>
+      <div class="ggrid">
+        <a class="gcard" href="/guides/zh-hans/china-llm.html">
+          <span class="k">中国 AI（LLM）对比</span>
+          <b>中国 AI 又便宜又聪明。然后呢？</b>
+          <p>从价格、本地部署、数据处理三方面，对比挑选 DeepSeek、Qwen、Kimi、GLM、MiniMax、豆包</p>
+          <span class="go">阅读指南 <span aria-hidden="true">→</span></span>
+        </a>
+        <a class="gcard" href="/guides/zh-hans/deepseek.html">
+          <span class="k">DeepSeek</span>
+          <b>在公司用 DeepSeek 之前。</b>
+          <p>因为便宜选了它，却拿不准公司能不能用的人</p>
+          <span class="go">阅读指南 <span aria-hidden="true">→</span></span>
+        </a>
+        <a class="gcard" href="/guides/zh-hans/qwen.html">
+          <span class="k">Qwen</span>
+          <b>别让 Qwen 的回答停在聊天框里。</b>
+          <p>回答很快，之后的安排却还剩着的人</p>
+          <span class="go">阅读指南 <span aria-hidden="true">→</span></span>
+        </a>
+        <a class="gcard" href="/guides/zh-hans/qwen-local.html">
+          <span class="k">在自有服务器上运行 Qwen</span>
+          <b>在封闭环境中安全地用 Qwen。</b>
+          <p>想用封闭环境中的 AI 处理不能外传的对话的人</p>
+          <span class="go">阅读指南 <span aria-hidden="true">→</span></span>
+        </a>
+        <a class="gcard" href="/guides/zh-hans/kimi.html">
+          <span class="k">Kimi（月之暗面）</span>
+          <b>把 Kimi 的成果接到下一项工作。</b>
+          <p>用 Kimi K3 写代码、读资料的人</p>
+          <span class="go">阅读指南 <span aria-hidden="true">→</span></span>
+        </a>
+        <a class="gcard" href="/guides/zh-hans/glm.html">
+          <span class="k">GLM（Z.ai）</span>
+          <b>用 GLM 写完代码之后。</b>
+          <p>用 GLM Coding Plan 低成本跑 Claude Code 的人</p>
+          <span class="go">阅读指南 <span aria-hidden="true">→</span></span>
+        </a>
+        <a class="gcard" href="/guides/zh-hans/minimax.html">
+          <span class="k">MiniMax</span>
+          <b>把用 MiniMax 做的东西送到终点。</b>
+          <p>在做视频、语音、文字内容的人</p>
+          <span class="go">阅读指南 <span aria-hidden="true">→</span></span>
+        </a>
+        <a class="gcard" href="/guides/zh-hans/doubao.html">
+          <span class="k">豆包（Doubao）</span>
+          <b>用豆包之前，需要知道的事。</b>
+          <p>正在考虑字节跳动 AI 的人</p>
+          <span class="go">阅读指南 <span aria-hidden="true">→</span></span>
+        </a>
+      </div>
+    </section>
     <section class="sec" aria-labelledby="h-common">
       <span class="sec-label">COMMON</span>
       <h2 id="h-common">不管用哪款 AI，剩下的工作都一样</h2>
@@ -849,6 +907,17 @@ thead th.simy { background: var(--blue-deep); }
       <li><a href="/?lang=zh-Hans#pricing">价格</a></li>
       <li><a href="/integrations.html">集成</a></li>
       <li><a href="/download/zh-hans.html">下载</a></li>
+      <li><a href="/guides/zh-hans/index.html" aria-current="page">全部指南</a></li>
+      <li><a href="/guides/zh-hans/claude.html">Claude</a></li>
+      <li><a href="/guides/zh-hans/codex.html">Codex</a></li>
+      <li><a href="/guides/zh-hans/cowork.html">Cowork</a></li>
+      <li><a href="/guides/zh-hans/chatgpt.html">ChatGPT</a></li>
+      <li><a href="/guides/zh-hans/plaud.html">PLAUD</a></li>
+      <li><a href="/guides/zh-hans/meeting-notes.html">AI 会议纪要</a></li>
+      <li><a href="/guides/zh-hans/china-llm.html">中国 AI 对比</a></li>
+      <li><a href="/guides/zh-hans/deepseek.html">DeepSeek</a></li>
+      <li><a href="/guides/zh-hans/qwen.html">Qwen</a></li>
+      <li><a href="/guides/zh-hans/qwen-local.html">在自有服务器上运行 Qwen</a></li>
       <li><a href="/security.html">安全</a></li>
       <li><a href="/privacy.html?lang=zh-Hans">隐私政策</a></li>
       <li><a href="/terms.html?lang=zh-Hans">使用条款</a></li>

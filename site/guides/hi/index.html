@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI उपयोग गाइड: Claude, Codex, ChatGPT, PLAUD | SIMY</title>
-<meta name="description" content="Claude, OpenAI Codex, Claude Cowork, ChatGPT, PLAUD NOTE और AI मीटिंग नोट्स टूल की उपयोग गाइड, और जवाब के बाद बचा काम निपटाने का तरीका।">
+<title>AI उपयोग गाइड: Claude, ChatGPT, DeepSeek, Qwen | SIMY</title>
+<meta name="description" content="Claude, Codex, ChatGPT, PLAUD, AI मीटिंग नोट्स और DeepSeek, Qwen जैसे चीनी AI की उपयोग गाइड, और जवाब के बाद बचा काम निपटाने का तरीका।">
 <link rel="canonical" href="https://simy.one/guides/hi/index.html">
 <link rel="alternate" hreflang="ja" href="https://simy.one/guides/index.html">
 <link rel="alternate" hreflang="en" href="https://simy.one/guides/en/index.html">
@@ -748,13 +748,16 @@ thead th.simy { background: var(--blue-deep); }
 .lang-switch li a { display: block; padding: 8px 10px; border-radius: 6px; color: var(--ink); text-decoration: none; font-size: 0.88rem; }
 .lang-switch li a:hover, .lang-switch li a[aria-current] { background: var(--blue-soft); }
 @media (max-width: 960px) { .brand-sub { display: none; } .header-actions { gap: 4px; } .lang-switch > summary { padding: 0 8px; } }
+@media (max-width: 640px) { .lang-switch .ls-label { display: none; } .lang-switch > summary { padding: 0 10px; } }
+/* Typography: balanced headings, phrase-aware Japanese breaks, tighter mobile headings */
+h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
+:lang(ja) h1, :lang(ja) h2, :lang(ja) h3, :lang(ja) .eyebrow, :lang(ja) .scene b, :lang(ja) .lead { word-break: auto-phrase; }
+.lead, .intro, .scene p { text-wrap: pretty; }
+@media (max-width: 640px) { h2 { font-size: 1.32rem; line-height: 1.4; } .eyebrow { font-size: 0.72rem; } .closing h2 { font-size: 1.5rem; } }
+@media (max-width: 400px) { h2 { font-size: 1.22rem; } .closing h2 { font-size: 1.34rem; } }
 </style>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@graph":[
- {"@type":"CollectionPage","name":"AI उपयोग गाइड","url":"https://simy.one/guides/hi/index.html","inLanguage":"hi"},
- {"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"SIMY","item":"https://simy.one/?lang=hi"},{"@type":"ListItem","position":2,"name":"गाइड","item":"https://simy.one/guides/hi/index.html"}]},
- {"@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"url":"https://simy.one/guides/hi/claude.html","name":"Claude उपयोग गाइड"},{"@type":"ListItem","position":2,"url":"https://simy.one/guides/hi/codex.html","name":"OpenAI Codex उपयोग गाइड"},{"@type":"ListItem","position":3,"url":"https://simy.one/guides/hi/cowork.html","name":"Claude Cowork उपयोग गाइड"},{"@type":"ListItem","position":4,"url":"https://simy.one/guides/hi/chatgpt.html","name":"ChatGPT उपयोग गाइड"},{"@type":"ListItem","position":5,"url":"https://simy.one/guides/hi/plaud.html","name":"PLAUD NOTE उपयोग गाइड"},{"@type":"ListItem","position":6,"url":"https://simy.one/guides/hi/meeting-notes.html","name":"AI मीटिंग नोट्स (Teams, Meet, Notion AI, Notta) उपयोग गाइड"}]}
-]}
+{"@context": "https://schema.org", "@graph": [{"@type": "CollectionPage", "name": "AI उपयोग गाइड", "url": "https://simy.one/guides/hi/index.html", "inLanguage": "hi"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "SIMY", "item": "https://simy.one/?lang=hi"}, {"@type": "ListItem", "position": 2, "name": "गाइड", "item": "https://simy.one/guides/hi/index.html"}]}, {"@type": "ItemList", "itemListElement": [{"@type": "ListItem", "position": 1, "url": "https://simy.one/guides/hi/claude.html", "name": "Claude उपयोग गाइड"}, {"@type": "ListItem", "position": 2, "url": "https://simy.one/guides/hi/codex.html", "name": "OpenAI Codex उपयोग गाइड"}, {"@type": "ListItem", "position": 3, "url": "https://simy.one/guides/hi/cowork.html", "name": "Claude Cowork उपयोग गाइड"}, {"@type": "ListItem", "position": 4, "url": "https://simy.one/guides/hi/chatgpt.html", "name": "ChatGPT उपयोग गाइड"}, {"@type": "ListItem", "position": 5, "url": "https://simy.one/guides/hi/plaud.html", "name": "PLAUD NOTE उपयोग गाइड"}, {"@type": "ListItem", "position": 6, "url": "https://simy.one/guides/hi/meeting-notes.html", "name": "AI मीटिंग नोट्स (Teams, Meet, Notion AI, Notta) उपयोग गाइड"}, {"@type": "ListItem", "position": 7, "url": "https://simy.one/guides/hi/china-llm.html", "name": "चीनी AI (LLM) तुलना गाइड"}, {"@type": "ListItem", "position": 8, "url": "https://simy.one/guides/hi/deepseek.html", "name": "DeepSeek गाइड"}, {"@type": "ListItem", "position": 9, "url": "https://simy.one/guides/hi/qwen.html", "name": "Qwen गाइड"}, {"@type": "ListItem", "position": 10, "url": "https://simy.one/guides/hi/qwen-local.html", "name": "Qwen को अपने सर्वर पर चलाने की गाइड"}, {"@type": "ListItem", "position": 11, "url": "https://simy.one/guides/hi/kimi.html", "name": "Kimi (Moonshot AI) गाइड"}, {"@type": "ListItem", "position": 12, "url": "https://simy.one/guides/hi/glm.html", "name": "GLM (Z.ai) गाइड"}, {"@type": "ListItem", "position": 13, "url": "https://simy.one/guides/hi/minimax.html", "name": "MiniMax गाइड"}, {"@type": "ListItem", "position": 14, "url": "https://simy.one/guides/hi/doubao.html", "name": "Doubao गाइड"}]}]}
 </script>
 </head>
 <body>
@@ -767,7 +770,7 @@ thead th.simy { background: var(--blue-deep); }
       <span class="brand-sub">गाइड</span>
     </a>
     <nav class="header-actions" aria-label="अकाउंट">
-      <details class="lang-switch"><summary aria-label="Language">🌐 हिन्दी</summary><ul><li><a href="/guides/index.html" hreflang="ja" lang="ja">日本語</a></li><li><a href="/guides/en/index.html" hreflang="en" lang="en">English</a></li><li><a href="/guides/zh-hans/index.html" hreflang="zh-Hans" lang="zh-Hans">中文</a></li><li><a href="/guides/es/index.html" hreflang="es" lang="es">Español</a></li><li><a href="/guides/fr/index.html" hreflang="fr" lang="fr">Français</a></li><li><a href="/guides/hi/index.html" hreflang="hi" lang="hi" aria-current="page">हिन्दी</a></li></ul></details>
+      <details class="lang-switch"><summary aria-label="Language: हिन्दी"><span aria-hidden="true">🌐</span> <span class="ls-label">हिन्दी</span></summary><ul><li><a href="/guides/index.html" hreflang="ja" lang="ja">日本語</a></li><li><a href="/guides/en/index.html" hreflang="en" lang="en">English</a></li><li><a href="/guides/zh-hans/index.html" hreflang="zh-Hans" lang="zh-Hans">中文</a></li><li><a href="/guides/es/index.html" hreflang="es" lang="es">Español</a></li><li><a href="/guides/fr/index.html" hreflang="fr" lang="fr">Français</a></li><li><a href="/guides/hi/index.html" hreflang="hi" lang="hi" aria-current="page">हिन्दी</a></li></ul></details>
       <a class="header-link" href="/download/hi.html">डाउनलोड</a>
       <a class="header-link" href="https://app.simy.one/login?lang=hi&amp;locale=hi&amp;region=in">लॉग इन</a>
       <a class="header-cta" href="https://app.simy.one/signup?lang=hi&amp;locale=hi&amp;region=in&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=guides_index_hi&amp;utm_content=header">प्लान चुनकर शुरू करें</a>
@@ -826,6 +829,61 @@ thead th.simy { background: var(--blue-deep); }
         </a>
       </div>
     </section>
+    <section class="sec" aria-labelledby="h-china">
+      <span class="sec-label">CHINA &amp; OPEN MODELS</span>
+      <h2 id="h-china">चीनी AI और ओपन मॉडल इस्तेमाल करने वालों के लिए</h2>
+      <p class="tl-note">सस्ते और समझदार मॉडल बढ़ गए हैं। कौन-सा चुनें, कंपनी का डेटा कितना दें, बंद माहौल में चलाएँ या नहीं। यहाँ फ़ैसले के लिए जानकारी है, और जवाब के बाद बचा काम निपटाने का तरीका भी।</p>
+      <div class="ggrid">
+        <a class="gcard" href="/guides/hi/china-llm.html">
+          <span class="k">चीनी AI (LLM) तुलना</span>
+          <b>चीनी AI सस्ता और समझदार है। उसके आगे क्या?</b>
+          <p>DeepSeek, Qwen, Kimi, GLM, MiniMax और Doubao को कीमत, लोकल रनिंग और डेटा हैंडलिंग के आधार पर तुलना करके चुनें</p>
+          <span class="go">गाइड पढ़ें <span aria-hidden="true">→</span></span>
+        </a>
+        <a class="gcard" href="/guides/hi/deepseek.html">
+          <span class="k">DeepSeek</span>
+          <b>कंपनी में DeepSeek इस्तेमाल करने से पहले।</b>
+          <p>कम कीमत देखकर चुना, पर काम में इस्तेमाल करें या नहीं, यह तय नहीं कर पा रहे लोगों के लिए</p>
+          <span class="go">गाइड पढ़ें <span aria-hidden="true">→</span></span>
+        </a>
+        <a class="gcard" href="/guides/hi/qwen.html">
+          <span class="k">Qwen</span>
+          <b>Qwen का जवाब चैट में ही न रह जाए।</b>
+          <p>जवाब तुरंत मिलता है, पर उसके बाद की तैयारी बाकी रह जाती है, ऐसे लोगों के लिए</p>
+          <span class="go">गाइड पढ़ें <span aria-hidden="true">→</span></span>
+        </a>
+        <a class="gcard" href="/guides/hi/qwen-local.html">
+          <span class="k">Qwen को अपने सर्वर पर चलाएँ</span>
+          <b>Qwen को बंद माहौल में सुरक्षित चलाएँ।</b>
+          <p>जो बातचीत कंपनी से बाहर नहीं जा सकती, उसे बंद माहौल वाले AI से संभालना चाहते हैं, उनके लिए</p>
+          <span class="go">गाइड पढ़ें <span aria-hidden="true">→</span></span>
+        </a>
+        <a class="gcard" href="/guides/hi/kimi.html">
+          <span class="k">Kimi (Moonshot AI)</span>
+          <b>Kimi के नतीजे को अगले काम से जोड़ें।</b>
+          <p>कोड या डॉक्यूमेंट के लिए Kimi K3 इस्तेमाल करने वालों के लिए</p>
+          <span class="go">गाइड पढ़ें <span aria-hidden="true">→</span></span>
+        </a>
+        <a class="gcard" href="/guides/hi/glm.html">
+          <span class="k">GLM (Z.ai)</span>
+          <b>GLM से लिखे कोड के आगे।</b>
+          <p>GLM Coding Plan के साथ Claude Code को कम खर्च में चलाने वालों के लिए</p>
+          <span class="go">गाइड पढ़ें <span aria-hidden="true">→</span></span>
+        </a>
+        <a class="gcard" href="/guides/hi/minimax.html">
+          <span class="k">MiniMax</span>
+          <b>MiniMax से बनी चीज़ को पूरा पहुँचाएँ।</b>
+          <p>वीडियो, ऑडियो और टेक्स्ट बनाने वालों के लिए</p>
+          <span class="go">गाइड पढ़ें <span aria-hidden="true">→</span></span>
+        </a>
+        <a class="gcard" href="/guides/hi/doubao.html">
+          <span class="k">Doubao</span>
+          <b>Doubao इस्तेमाल करने से पहले जान लें।</b>
+          <p>ByteDance का AI आज़माने पर विचार करने वालों के लिए</p>
+          <span class="go">गाइड पढ़ें <span aria-hidden="true">→</span></span>
+        </a>
+      </div>
+    </section>
     <section class="sec" aria-labelledby="h-common">
       <span class="sec-label">COMMON</span>
       <h2 id="h-common">AI कोई भी हो, बचा काम एक जैसा है</h2>
@@ -846,11 +904,22 @@ thead th.simy { background: var(--blue-deep); }
   <div class="wrap">
     <ul class="footer-links">
       <li><a href="/?lang=hi">होम</a></li>
-      <li><a href="/?lang=hi#pricing">प्राइसिंग</a></li>
+      <li><a href="/?lang=hi#pricing">मूल्य</a></li>
       <li><a href="/integrations.html">इंटीग्रेशन</a></li>
       <li><a href="/download/hi.html">डाउनलोड</a></li>
+      <li><a href="/guides/hi/index.html" aria-current="page">सभी गाइड</a></li>
+      <li><a href="/guides/hi/claude.html">Claude</a></li>
+      <li><a href="/guides/hi/codex.html">Codex</a></li>
+      <li><a href="/guides/hi/cowork.html">Cowork</a></li>
+      <li><a href="/guides/hi/chatgpt.html">ChatGPT</a></li>
+      <li><a href="/guides/hi/plaud.html">PLAUD</a></li>
+      <li><a href="/guides/hi/meeting-notes.html">AI मीटिंग नोट्स</a></li>
+      <li><a href="/guides/hi/china-llm.html">चीनी AI की तुलना</a></li>
+      <li><a href="/guides/hi/deepseek.html">DeepSeek</a></li>
+      <li><a href="/guides/hi/qwen.html">Qwen</a></li>
+      <li><a href="/guides/hi/qwen-local.html">अपने सर्वर पर Qwen</a></li>
       <li><a href="/security.html">सुरक्षा</a></li>
-      <li><a href="/privacy.html?lang=hi">प्राइवेसी पॉलिसी</a></li>
+      <li><a href="/privacy.html?lang=hi">गोपनीयता नीति</a></li>
       <li><a href="/terms.html?lang=hi">उपयोग की शर्तें</a></li>
     </ul>
     <p>Claude, Claude Code और Claude Cowork, Anthropic के; ChatGPT और Codex, OpenAI के; और PLAUD व NotePin अपने संबंधित अधिकार-धारकों के ट्रेडमार्क हैं। SIMY इन कंपनियों से स्वतंत्र प्रोडक्ट है।</p>

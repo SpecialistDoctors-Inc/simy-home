@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guides IA : Claude, Codex, ChatGPT, PLAUD | SIMY</title>
-<meta name="description" content="Guides pratiques selon l'IA que vous utilisez : Claude, Codex, Cowork, ChatGPT, PLAUD NOTE, comptes rendus IA. Et le travail qui reste après.">
+<title>Guides IA : Claude, ChatGPT, DeepSeek, Qwen | SIMY</title>
+<meta name="description" content="Guides pratiques selon l'IA que vous utilisez : Claude, Codex, ChatGPT, PLAUD, comptes rendus IA, et IA chinoises comme DeepSeek ou Qwen. Et le travail qui reste après.">
 <link rel="canonical" href="https://simy.one/guides/fr/index.html">
 <link rel="alternate" hreflang="ja" href="https://simy.one/guides/index.html">
 <link rel="alternate" hreflang="en" href="https://simy.one/guides/en/index.html">
@@ -748,9 +748,16 @@ thead th.simy { background: var(--blue-deep); }
 .lang-switch li a { display: block; padding: 8px 10px; border-radius: 6px; color: var(--ink); text-decoration: none; font-size: 0.88rem; }
 .lang-switch li a:hover, .lang-switch li a[aria-current] { background: var(--blue-soft); }
 @media (max-width: 960px) { .brand-sub { display: none; } .header-actions { gap: 4px; } .lang-switch > summary { padding: 0 8px; } }
+@media (max-width: 640px) { .lang-switch .ls-label { display: none; } .lang-switch > summary { padding: 0 10px; } }
+/* Typography: balanced headings, phrase-aware Japanese breaks, tighter mobile headings */
+h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
+:lang(ja) h1, :lang(ja) h2, :lang(ja) h3, :lang(ja) .eyebrow, :lang(ja) .scene b, :lang(ja) .lead { word-break: auto-phrase; }
+.lead, .intro, .scene p { text-wrap: pretty; }
+@media (max-width: 640px) { h2 { font-size: 1.32rem; line-height: 1.4; } .eyebrow { font-size: 0.72rem; } .closing h2 { font-size: 1.5rem; } }
+@media (max-width: 400px) { h2 { font-size: 1.22rem; } .closing h2 { font-size: 1.34rem; } }
 </style>
 <script type="application/ld+json">
-{"@context": "https://schema.org", "@graph": [{"@type": "CollectionPage", "name": "Guides IA", "url": "https://simy.one/guides/fr/index.html", "inLanguage": "fr"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "SIMY", "item": "https://simy.one/"}, {"@type": "ListItem", "position": 2, "name": "Guides", "item": "https://simy.one/guides/fr/index.html"}]}, {"@type": "ItemList", "itemListElement": [{"@type": "ListItem", "position": 1, "url": "https://simy.one/guides/fr/claude.html", "name": "Guide Claude"}, {"@type": "ListItem", "position": 2, "url": "https://simy.one/guides/fr/codex.html", "name": "Guide OpenAI Codex"}, {"@type": "ListItem", "position": 3, "url": "https://simy.one/guides/fr/cowork.html", "name": "Guide Claude Cowork"}, {"@type": "ListItem", "position": 4, "url": "https://simy.one/guides/fr/chatgpt.html", "name": "Guide ChatGPT"}, {"@type": "ListItem", "position": 5, "url": "https://simy.one/guides/fr/plaud.html", "name": "Guide PLAUD NOTE"}, {"@type": "ListItem", "position": 6, "url": "https://simy.one/guides/fr/meeting-notes.html", "name": "Guide des comptes rendus IA (Teams, Meet, Notion AI, Notta)"}]}]}
+{"@context": "https://schema.org", "@graph": [{"@type": "CollectionPage", "name": "Guides IA", "url": "https://simy.one/guides/fr/index.html", "inLanguage": "fr"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "SIMY", "item": "https://simy.one/"}, {"@type": "ListItem", "position": 2, "name": "Guides", "item": "https://simy.one/guides/fr/index.html"}]}, {"@type": "ItemList", "itemListElement": [{"@type": "ListItem", "position": 1, "url": "https://simy.one/guides/fr/claude.html", "name": "Guide Claude"}, {"@type": "ListItem", "position": 2, "url": "https://simy.one/guides/fr/codex.html", "name": "Guide OpenAI Codex"}, {"@type": "ListItem", "position": 3, "url": "https://simy.one/guides/fr/cowork.html", "name": "Guide Claude Cowork"}, {"@type": "ListItem", "position": 4, "url": "https://simy.one/guides/fr/chatgpt.html", "name": "Guide ChatGPT"}, {"@type": "ListItem", "position": 5, "url": "https://simy.one/guides/fr/plaud.html", "name": "Guide PLAUD NOTE"}, {"@type": "ListItem", "position": 6, "url": "https://simy.one/guides/fr/meeting-notes.html", "name": "Guide des comptes rendus IA (Teams, Meet, Notion AI, Notta)"}, {"@type": "ListItem", "position": 7, "url": "https://simy.one/guides/fr/china-llm.html", "name": "Comparatif des IA chinoises (LLM)"}, {"@type": "ListItem", "position": 8, "url": "https://simy.one/guides/fr/deepseek.html", "name": "Guide DeepSeek"}, {"@type": "ListItem", "position": 9, "url": "https://simy.one/guides/fr/qwen.html", "name": "Guide Qwen"}, {"@type": "ListItem", "position": 10, "url": "https://simy.one/guides/fr/qwen-local.html", "name": "Guide : faire tourner Qwen sur vos serveurs"}, {"@type": "ListItem", "position": 11, "url": "https://simy.one/guides/fr/kimi.html", "name": "Guide Kimi (Moonshot AI)"}, {"@type": "ListItem", "position": 12, "url": "https://simy.one/guides/fr/glm.html", "name": "Guide GLM (Z.ai)"}, {"@type": "ListItem", "position": 13, "url": "https://simy.one/guides/fr/minimax.html", "name": "Guide MiniMax"}, {"@type": "ListItem", "position": 14, "url": "https://simy.one/guides/fr/doubao.html", "name": "Guide Doubao (豆包)"}]}]}
 </script>
 </head>
 <body>
@@ -763,7 +770,7 @@ thead th.simy { background: var(--blue-deep); }
       <span class="brand-sub">Guides</span>
     </a>
     <nav class="header-actions" aria-label="Compte">
-      <details class="lang-switch"><summary aria-label="Language">🌐 Français</summary><ul><li><a href="/guides/index.html" hreflang="ja" lang="ja">日本語</a></li><li><a href="/guides/en/index.html" hreflang="en" lang="en">English</a></li><li><a href="/guides/zh-hans/index.html" hreflang="zh-Hans" lang="zh-Hans">中文</a></li><li><a href="/guides/es/index.html" hreflang="es" lang="es">Español</a></li><li><a href="/guides/fr/index.html" hreflang="fr" lang="fr" aria-current="page">Français</a></li><li><a href="/guides/hi/index.html" hreflang="hi" lang="hi">हिन्दी</a></li></ul></details>
+      <details class="lang-switch"><summary aria-label="Language: Français"><span aria-hidden="true">🌐</span> <span class="ls-label">Français</span></summary><ul><li><a href="/guides/index.html" hreflang="ja" lang="ja">日本語</a></li><li><a href="/guides/en/index.html" hreflang="en" lang="en">English</a></li><li><a href="/guides/zh-hans/index.html" hreflang="zh-Hans" lang="zh-Hans">中文</a></li><li><a href="/guides/es/index.html" hreflang="es" lang="es">Español</a></li><li><a href="/guides/fr/index.html" hreflang="fr" lang="fr" aria-current="page">Français</a></li><li><a href="/guides/hi/index.html" hreflang="hi" lang="hi">हिन्दी</a></li></ul></details>
       <a class="header-link" href="/download/fr.html">Télécharger</a>
       <a class="header-link" href="https://app.simy.one/login?lang=fr&amp;locale=fr&amp;region=fr">Connexion</a>
       <a class="header-cta" href="https://app.simy.one/signup?lang=fr&amp;locale=fr&amp;region=fr&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=guides_index_fr&amp;utm_content=header">Choisir une offre</a>
@@ -822,6 +829,61 @@ thead th.simy { background: var(--blue-deep); }
         </a>
       </div>
     </section>
+    <section class="sec" aria-labelledby="h-china">
+      <span class="sec-label">CHINA &amp; OPEN MODELS</span>
+      <h2 id="h-china">IA chinoises et modèles ouverts</h2>
+      <p class="tl-note">Les modèles bon marché et performants se multiplient. Lequel choisir, jusqu'où confier vos données internes, faut-il l'exécuter dans un environnement fermé ? Des éléments pour décider, et pour régler le travail qui reste après la réponse.</p>
+      <div class="ggrid">
+        <a class="gcard" href="/guides/fr/china-llm.html">
+          <span class="k">Comparatif des IA chinoises (LLM)</span>
+          <b>Bon marché et douées. Et la suite ?</b>
+          <p>DeepSeek, Qwen, Kimi, GLM, MiniMax, Doubao comparés : prix, exécution locale, traitement des données</p>
+          <span class="go">Lire le guide <span aria-hidden="true">→</span></span>
+        </a>
+        <a class="gcard" href="/guides/fr/deepseek.html">
+          <span class="k">DeepSeek</span>
+          <b>DeepSeek, avant de l'utiliser au travail.</b>
+          <p>Choisi pour son prix, mais vous hésitez à l'utiliser en entreprise</p>
+          <span class="go">Lire le guide <span aria-hidden="true">→</span></span>
+        </a>
+        <a class="gcard" href="/guides/fr/qwen.html">
+          <span class="k">Qwen</span>
+          <b>Les réponses de Qwen ne s'arrêtent plus au chat.</b>
+          <p>La réponse arrive vite, mais la suite reste à organiser</p>
+          <span class="go">Lire le guide <span aria-hidden="true">→</span></span>
+        </a>
+        <a class="gcard" href="/guides/fr/qwen-local.html">
+          <span class="k">Qwen sur vos propres serveurs</span>
+          <b>Qwen, en sécurité, dans un environnement fermé.</b>
+          <p>Pour traiter avec une IA fermée les échanges qui ne doivent pas sortir</p>
+          <span class="go">Lire le guide <span aria-hidden="true">→</span></span>
+        </a>
+        <a class="gcard" href="/guides/fr/kimi.html">
+          <span class="k">Kimi (Moonshot AI)</span>
+          <b>Du travail de Kimi à la tâche suivante.</b>
+          <p>Pour celles et ceux qui utilisent Kimi K3 pour le code ou les documents</p>
+          <span class="go">Lire le guide <span aria-hidden="true">→</span></span>
+        </a>
+        <a class="gcard" href="/guides/fr/glm.html">
+          <span class="k">GLM (Z.ai)</span>
+          <b>Le code écrit avec GLM, et après ?</b>
+          <p>Pour celles et ceux qui font tourner Claude Code à moindre coût avec le GLM Coding Plan</p>
+          <span class="go">Lire le guide <span aria-hidden="true">→</span></span>
+        </a>
+        <a class="gcard" href="/guides/fr/minimax.html">
+          <span class="k">MiniMax</span>
+          <b>Ce que vous créez avec MiniMax, jusqu'au bout.</b>
+          <p>Pour celles et ceux qui créent vidéo, audio et texte</p>
+          <span class="go">Lire le guide <span aria-hidden="true">→</span></span>
+        </a>
+        <a class="gcard" href="/guides/fr/doubao.html">
+          <span class="k">Doubao (豆包)</span>
+          <b>Doubao : ce qu'il faut savoir avant de l'utiliser.</b>
+          <p>Pour celles et ceux qui envisagent l'IA de ByteDance</p>
+          <span class="go">Lire le guide <span aria-hidden="true">→</span></span>
+        </a>
+      </div>
+    </section>
     <section class="sec" aria-labelledby="h-common">
       <span class="sec-label">COMMON</span>
       <h2 id="h-common">Quelle que soit l'IA, le travail qui reste est le même</h2>
@@ -845,9 +907,20 @@ thead th.simy { background: var(--blue-deep); }
       <li><a href="/?lang=fr#pricing">Tarifs</a></li>
       <li><a href="/integrations.html">Intégrations</a></li>
       <li><a href="/download/fr.html">Télécharger</a></li>
+      <li><a href="/guides/fr/index.html" aria-current="page">Tous les guides</a></li>
+      <li><a href="/guides/fr/claude.html">Claude</a></li>
+      <li><a href="/guides/fr/codex.html">Codex</a></li>
+      <li><a href="/guides/fr/cowork.html">Cowork</a></li>
+      <li><a href="/guides/fr/chatgpt.html">ChatGPT</a></li>
+      <li><a href="/guides/fr/plaud.html">PLAUD</a></li>
+      <li><a href="/guides/fr/meeting-notes.html">Comptes rendus IA</a></li>
+      <li><a href="/guides/fr/china-llm.html">IA chinoises comparées</a></li>
+      <li><a href="/guides/fr/deepseek.html">DeepSeek</a></li>
+      <li><a href="/guides/fr/qwen.html">Qwen</a></li>
+      <li><a href="/guides/fr/qwen-local.html">Qwen sur votre serveur</a></li>
       <li><a href="/security.html">Sécurité</a></li>
       <li><a href="/privacy.html?lang=fr">Politique de confidentialité</a></li>
-      <li><a href="/terms.html?lang=fr">Conditions d'utilisation</a></li>
+      <li><a href="/terms.html?lang=fr">Conditions d’utilisation</a></li>
     </ul>
     <p>Claude, Claude Code et Claude Cowork sont des marques d'Anthropic, ChatGPT et Codex d'OpenAI, PLAUD et NotePin de leurs détenteurs respectifs. SIMY est un produit indépendant de ces sociétés.</p>
     <p>&copy; 2026 SIMY by AwakApp Inc.</p>

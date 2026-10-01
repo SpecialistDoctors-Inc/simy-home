@@ -757,6 +757,13 @@ thead th.simy { background: var(--blue-deep); }
 .lang-switch li a { display: block; padding: 8px 10px; border-radius: 6px; color: var(--ink); text-decoration: none; font-size: 0.88rem; }
 .lang-switch li a:hover, .lang-switch li a[aria-current] { background: var(--blue-soft); }
 @media (max-width: 960px) { .brand-sub { display: none; } .header-actions { gap: 4px; } .lang-switch > summary { padding: 0 8px; } }
+@media (max-width: 640px) { .lang-switch .ls-label { display: none; } .lang-switch > summary { padding: 0 10px; } }
+/* Typography: balanced headings, phrase-aware Japanese breaks, tighter mobile headings */
+h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
+:lang(ja) h1, :lang(ja) h2, :lang(ja) h3, :lang(ja) .eyebrow, :lang(ja) .scene b, :lang(ja) .lead { word-break: auto-phrase; }
+.lead, .intro, .scene p { text-wrap: pretty; }
+@media (max-width: 640px) { h2 { font-size: 1.32rem; line-height: 1.4; } .eyebrow { font-size: 0.72rem; } .closing h2 { font-size: 1.5rem; } }
+@media (max-width: 400px) { h2 { font-size: 1.22rem; } .closing h2 { font-size: 1.34rem; } }
 </style>
 <script type="application/ld+json">
 {
@@ -942,7 +949,7 @@ thead th.simy { background: var(--blue-deep); }
       <span class="brand-sub">Guía de OpenAI Codex</span>
     </a>
     <nav class="header-actions" aria-label="Cuenta">
-      <details class="lang-switch"><summary aria-label="Language">🌐 Español</summary><ul><li><a href="/guides/codex.html" hreflang="ja" lang="ja">日本語</a></li><li><a href="/guides/en/codex.html" hreflang="en" lang="en">English</a></li><li><a href="/guides/zh-hans/codex.html" hreflang="zh-Hans" lang="zh-Hans">中文</a></li><li><a href="/guides/es/codex.html" hreflang="es" lang="es" aria-current="page">Español</a></li><li><a href="/guides/fr/codex.html" hreflang="fr" lang="fr">Français</a></li><li><a href="/guides/hi/codex.html" hreflang="hi" lang="hi">हिन्दी</a></li></ul></details>
+      <details class="lang-switch"><summary aria-label="Language: Español"><span aria-hidden="true">🌐</span> <span class="ls-label">Español</span></summary><ul><li><a href="/guides/codex.html" hreflang="ja" lang="ja">日本語</a></li><li><a href="/guides/en/codex.html" hreflang="en" lang="en">English</a></li><li><a href="/guides/zh-hans/codex.html" hreflang="zh-Hans" lang="zh-Hans">中文</a></li><li><a href="/guides/es/codex.html" hreflang="es" lang="es" aria-current="page">Español</a></li><li><a href="/guides/fr/codex.html" hreflang="fr" lang="fr">Français</a></li><li><a href="/guides/hi/codex.html" hreflang="hi" lang="hi">हिन्दी</a></li></ul></details>
       <a class="header-link" href="/download/es.html">Descargar</a>
       <a class="header-link" href="https://app.simy.one/login?lang=es&amp;locale=es&amp;region=es">Iniciar sesión</a>
       <a class="header-cta" href="https://app.simy.one/signup?lang=es&amp;locale=es&amp;region=es&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=codex_guide_es&amp;utm_content=header">Elige un plan y empieza</a>
@@ -1188,7 +1195,7 @@ thead th.simy { background: var(--blue-deep); }
       <!-- 05 -->
       <section class="sec" id="sample" aria-labelledby="h-sample">
         <span class="sec-label">05 / SAMPLE</span>
-        <h2 id="h-sample">Una reunión comercial, comparada: la tarea que terminó Codex y el día siguiente que prepara SIMY</h2>
+        <h2 id="h-sample">Una reunión comercial: lo que terminó Codex y lo que prepara SIMY</h2>
         <p class="intro">Ejemplo del día en que un comercial pidió a la app de escritorio de Codex la «Propuesta para el cliente A». A la izquierda, Codex; a la derecha, SIMY.</p>
         <div class="sample">
           <div class="sheet">
@@ -1283,7 +1290,7 @@ thead th.simy { background: var(--blue-deep); }
       <!-- 08 -->
       <section class="sec" id="reference" aria-labelledby="h-reference">
         <span class="sec-label">08 / REFERENCE</span>
-        <h2 id="h-reference">Accesos, instalación, funciones, precios y límites, comparativa y seguridad de OpenAI Codex (para quien quiera más detalle)</h2>
+        <h2 id="h-reference">OpenAI Codex a fondo: instalación, precios, límites, comparativa y seguridad</h2>
         <p class="intro">Abre estas secciones cuando quieras comprobar algo de Codex en sí. Nada de esto afecta a la conexión con SIMY.</p>
 
         <details class="fold">
@@ -1544,17 +1551,21 @@ thead th.simy { background: var(--blue-deep); }
   <div class="wrap">
     <ul class="footer-links">
       <li><a href="/?lang=es">Inicio</a></li>
-      <li><a href="/?lang=es#how-it-works">Cómo funciona</a></li>
       <li><a href="/?lang=es#pricing">Precios</a></li>
       <li><a href="/integrations.html">Integraciones</a></li>
       <li><a href="/download/es.html">Descargar</a></li>
-      <li><a href="/guides/es/plaud.html">Guía de PLAUD</a></li>
-      <li><a href="/guides/es/chatgpt.html">Guía de ChatGPT</a></li>
-      <li><a href="/guides/es/claude.html">Guía de Claude</a></li>
-      <li><a href="/guides/es/cowork.html">Guía de Cowork</a></li>
-      <li><a href="/guides/es/meeting-notes.html">Guía de actas con IA</a></li>
+      <li><a href="/guides/es/index.html">Todas las guías</a></li>
+      <li><a href="/guides/es/claude.html">Claude</a></li>
+      <li><a href="/guides/es/codex.html" aria-current="page">Codex</a></li>
+      <li><a href="/guides/es/cowork.html">Cowork</a></li>
+      <li><a href="/guides/es/chatgpt.html">ChatGPT</a></li>
+      <li><a href="/guides/es/plaud.html">PLAUD</a></li>
+      <li><a href="/guides/es/meeting-notes.html">Actas con IA</a></li>
+      <li><a href="/guides/es/china-llm.html">IA china comparada</a></li>
+      <li><a href="/guides/es/deepseek.html">DeepSeek</a></li>
+      <li><a href="/guides/es/qwen.html">Qwen</a></li>
+      <li><a href="/guides/es/qwen-local.html">Qwen en tu propio servidor</a></li>
       <li><a href="/security.html">Seguridad</a></li>
-      <li><a href="/about.html">Empresa</a></li>
       <li><a href="/privacy.html?lang=es">Política de privacidad</a></li>
       <li><a href="/terms.html?lang=es">Términos de uso</a></li>
     </ul>
