@@ -729,6 +729,17 @@ thead th.simy { background: var(--blue-deep); }
   .ind-rows li span:nth-child(2) { display: none; }
   .ind-rows li { padding: 6px 0; border-bottom: 1px dashed var(--line-soft); }
 }
+
+/* Next read */
+.next-read { margin-top: clamp(40px, 5vw, 64px); padding-top: 24px; border-top: 1px solid var(--ink); }
+.next-read h2 { font-size: 1.2rem; margin: 0 0 14px; }
+.next-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.next-grid a { display: block; padding: 14px 16px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); text-decoration: none; color: var(--ink); }
+.next-grid a:hover { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.next-grid b { display: block; font-size: 0.96rem; }
+.next-grid span { display: block; margin-top: 4px; font-size: 0.82rem; color: var(--ink-soft); }
+.next-all { display: inline-block; margin-top: 12px; font-weight: 700; color: var(--blue-deep); }
+@media (max-width: 760px) { .next-grid { grid-template-columns: minmax(0, 1fr); } }
 </style>
 <script type="application/ld+json">
 {
@@ -749,17 +760,33 @@ thead th.simy { background: var(--blue-deep); }
         "width": 1200,
         "height": 630
       },
-      "author": { "@type": "Organization", "name": "SIMY", "url": "https://simy.one/" },
+      "author": {
+        "@type": "Organization",
+        "name": "SIMY",
+        "url": "https://simy.one/"
+      },
       "publisher": {
         "@type": "Organization",
         "name": "AwakApp Inc.",
         "url": "https://www.awak.app/",
-        "logo": { "@type": "ImageObject", "url": "https://simy.one/simy-icon-square.png" }
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://simy.one/simy-icon-square.png"
+        }
       },
       "about": [
-        { "@type": "Thing", "name": "PLAUD NOTE" },
-        { "@type": "Thing", "name": "AI文字起こし" },
-        { "@type": "Thing", "name": "議事録" }
+        {
+          "@type": "Thing",
+          "name": "PLAUD NOTE"
+        },
+        {
+          "@type": "Thing",
+          "name": "AI文字起こし"
+        },
+        {
+          "@type": "Thing",
+          "name": "議事録"
+        }
       ],
       "citation": [
         "https://jp.plaud.ai/products/plaud-ai-membership",
@@ -770,8 +797,24 @@ thead th.simy { background: var(--blue-deep); }
     {
       "@type": "BreadcrumbList",
       "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "SIMY", "item": "https://simy.one/" },
-        { "@type": "ListItem", "position": 2, "name": "PLAUD NOTE 活用ガイド", "item": "https://simy.one/guides/plaud.html" }
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "SIMY",
+          "item": "https://simy.one/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "ガイド",
+          "item": "https://simy.one/guides/index.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "PLAUD NOTE 活用ガイド",
+          "item": "https://simy.one/guides/plaud.html"
+        }
       ]
     },
     {
@@ -780,62 +823,98 @@ thead th.simy { background: var(--blue-deep); }
         {
           "@type": "Question",
           "name": "PLAUDを買ったばかりです。何から始めればいいですか？",
-          "acceptedAnswer": { "@type": "Answer", "text": "PLAUDアプリで本体をペアリングし、録音モードと要約テンプレートを確認してください。そのあとSIMYの連携画面でPlaudアカウントを接続すれば、最初の会議から使えます。" }
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "PLAUDアプリで本体をペアリングし、録音モードと要約テンプレートを確認してください。そのあとSIMYの連携画面でPlaudアカウントを接続すれば、最初の会議から使えます。"
+          }
         },
         {
           "@type": "Question",
           "name": "PLAUDをすでに使っています。これまでの録音もSIMYで使えますか？",
-          "acceptedAnswer": { "@type": "Answer", "text": "はい。接続すると、Plaudアカウントに保存されている録音、文字起こし、要約をSIMYが検索して参照します。" }
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "はい。接続すると、Plaudアカウントに保存されている録音、文字起こし、要約をSIMYが検索して参照します。"
+          }
         },
         {
           "@type": "Question",
           "name": "PLAUD NOTE Pro、NotePinなど、どのモデルでも使えますか？",
-          "acceptedAnswer": { "@type": "Answer", "text": "はい。SIMYはPlaudアカウントに保存された文字起こしと要約を参照するため、モデルによる違いはありません。通話も録音したい場合は、通話モードのあるPLAUD NOTEかPLAUD NOTE Proを選んでください。" }
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "はい。SIMYはPlaudアカウントに保存された文字起こしと要約を参照するため、モデルによる違いはありません。通話も録音したい場合は、通話モードのあるPLAUD NOTEかPLAUD NOTE Proを選んでください。"
+          }
         },
         {
           "@type": "Question",
           "name": "PLAUDのStarter（無料）やUnlimitedなど、どの料金プランでも接続できますか？",
-          "acceptedAnswer": { "@type": "Answer", "text": "はい。接続に必要なのは、デバイスを登録済みのPlaudアカウントだけです。プランの違いは文字起こし時間です。Starterは月300分、Proは月1,200分、Unlimitedは無制限です。" }
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "はい。接続に必要なのは、デバイスを登録済みのPlaudアカウントだけです。プランの違いは文字起こし時間です。Starterは月300分、Proは月1,200分、Unlimitedは無制限です。"
+          }
         },
         {
           "@type": "Question",
           "name": "Notionへのエクスポートや、PLAUD MCPの設定は必要ですか？",
-          "acceptedAnswer": { "@type": "Answer", "text": "必要ありません。PLAUD MCPは、録音をChatGPTやClaudeから読み出すPLAUD公式の仕組みですが、SIMYはPlaudアカウントを直接参照するため、エクスポートもMCPの設定もいりません。" }
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "必要ありません。PLAUD MCPは、録音をChatGPTやClaudeから読み出すPLAUD公式の仕組みですが、SIMYはPlaudアカウントを直接参照するため、エクスポートもMCPの設定もいりません。"
+          }
         },
         {
           "@type": "Question",
           "name": "PLAUDはどこの国の会社ですか？",
-          "acceptedAnswer": { "@type": "Answer", "text": "PLAUDを開発するPlaud Inc.は、米国サンフランシスコに本社を置く会社です。日本では、PLAUD株式会社がサポートやデータの管理を担っています。" }
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "PLAUDを開発するPlaud Inc.は、米国サンフランシスコに本社を置く会社です。日本では、PLAUD株式会社がサポートやデータの管理を担っています。"
+          }
         },
         {
           "@type": "Question",
           "name": "PLAUDの録音がAIの学習に使われたり、情報漏洩したりしませんか？",
-          "acceptedAnswer": { "@type": "Answer", "text": "PLAUDは、明示的な同意がない限り録音データをAIの学習に使わないと案内しています。SOC 2 Type II、HIPAA、GDPR、ISO/IEC 27001に準拠し、データは暗号化して保存されます。SIMYでの取り扱いは、セキュリティとプライバシーポリシーのページで公開しています。" }
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "PLAUDは、明示的な同意がない限り録音データをAIの学習に使わないと案内しています。SOC 2 Type II、HIPAA、GDPR、ISO/IEC 27001に準拠し、データは暗号化して保存されます。SIMYでの取り扱いは、セキュリティとプライバシーポリシーのページで公開しています。"
+          }
         },
         {
           "@type": "Question",
           "name": "議事録の形式（参加者・議題・決定事項・次アクション）は、毎回指定が必要ですか？",
-          "acceptedAnswer": { "@type": "Answer", "text": "いいえ。一度あなたの型で仕上げれば、SIMYはそのやり方を学び、次の会議からは同じ形で用意します。文字起こしを貼って、同じ指示を打ち直す作業はなくなります。" }
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "いいえ。一度あなたの型で仕上げれば、SIMYはそのやり方を学び、次の会議からは同じ形で用意します。文字起こしを貼って、同じ指示を打ち直す作業はなくなります。"
+          }
         },
         {
           "@type": "Question",
           "name": "「何が決まったか」の判断は、AIがしますか？私がしますか？",
-          "acceptedAnswer": { "@type": "Answer", "text": "判断はあなたです。SIMYは文字起こしと要約から候補を整理して下書きまで進め、金額や送信の可否など、判断が必要なところだけをあなたに返します。" }
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "判断はあなたです。SIMYは文字起こしと要約から候補を整理して下書きまで進め、金額や送信の可否など、判断が必要なところだけをあなたに返します。"
+          }
         },
         {
           "@type": "Question",
           "name": "Notion AI、Notta、Teamsなど、PLAUD以外の文字起こしでもSIMYは使えますか？",
-          "acceptedAnswer": { "@type": "Answer", "text": "このページはPLAUD向けですが、SIMYの連携画面にはNotionやGoogleなど他の接続先もあります。会議の文脈をそこから渡せます。対応状況は連携画面で確認してください。" }
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "このページはPLAUD向けですが、SIMYの連携画面にはNotionやGoogleなど他の接続先もあります。会議の文脈をそこから渡せます。対応状況は連携画面で確認してください。"
+          }
         },
         {
           "@type": "Question",
           "name": "SIMYを使うと、AIの利用料が別にかかりますか？",
-          "acceptedAnswer": { "@type": "Answer", "text": "SIMYはお使いのChatGPTアカウントをつなぎ、Codex App Server経由で仕事を進めます。Codexの利用は、お使いのChatGPTプランの範囲で行われます。SIMY自体の料金は料金ページをご覧ください。" }
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "SIMYはお使いのChatGPTアカウントをつなぎ、Codex App Server経由で仕事を進めます。Codexの利用は、お使いのChatGPTプランの範囲で行われます。SIMY自体の料金は料金ページをご覧ください。"
+          }
         },
         {
           "@type": "Question",
           "name": "録音するときに相手の同意は必要ですか？",
-          "acceptedAnswer": { "@type": "Answer", "text": "必要です。録音を始める前に、会話に参加する全員から同意を取ってください。SIMYの利用規約でも、録音の同意の取得はお客さまの責任としています。" }
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "必要です。録音を始める前に、会話に参加する全員から同意を取ってください。SIMYの利用規約でも、録音の同意の取得はお客さまの責任としています。"
+          }
         }
       ]
     }
@@ -867,6 +946,7 @@ thead th.simy { background: var(--blue-deep); }
       <div>
         <ol class="crumbs" aria-label="パンくずリスト">
           <li><a href="https://simy.one/">SIMY</a></li>
+          <li><a href="/guides/index.html">ガイド</a></li>
           <li aria-current="page">PLAUD NOTE 活用ガイド</li>
         </ol>
         <p class="eyebrow">PLAUD NOTE ユーザーのための活用ガイド</p>
@@ -1378,6 +1458,11 @@ thead th.simy { background: var(--blue-deep); }
           <li><a href="https://jp.plaud.ai/products/plaud-notepin-accessory-charging-kit" target="_blank" rel="noopener">Plaud NotePin 専用充電器セット</a></li>
         </ul>
       </section>
+      <aside class="next-read" aria-labelledby="h-next">
+        <h2 id="h-next">次に読む</h2>
+        <div class="next-grid"><a href="/guides/meeting-notes.html"><b>AI議事録ツールの選び方</b><span>どのツールでも残る、共有とToDo</span></a><a href="/guides/chatgpt.html"><b>ChatGPT 活用ガイド</b><span>貼り直しと仕上げを、毎回やらない</span></a><a href="/guides/claude.html"><b>Claude 活用ガイド</b><span>回答のあとに残る仕事を、Claudeで頼み直さない</span></a></div>
+        <a class="next-all" href="/guides/index.html">ガイド一覧へ →</a>
+      </aside>
     </article>
   </div>
 
@@ -1444,5 +1529,6 @@ thead th.simy { background: var(--blue-deep); }
   update();
 })();
 </script>
+<script src="/analytics.js" defer></script>
 </body>
 </html>

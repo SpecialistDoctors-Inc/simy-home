@@ -729,6 +729,17 @@ thead th.simy { background: var(--blue-deep); }
   .ind-rows li span:nth-child(2) { display: none; }
   .ind-rows li { padding: 6px 0; border-bottom: 1px dashed var(--line-soft); }
 }
+
+/* Next read */
+.next-read { margin-top: clamp(40px, 5vw, 64px); padding-top: 24px; border-top: 1px solid var(--ink); }
+.next-read h2 { font-size: 1.2rem; margin: 0 0 14px; }
+.next-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.next-grid a { display: block; padding: 14px 16px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); text-decoration: none; color: var(--ink); }
+.next-grid a:hover { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.next-grid b { display: block; font-size: 0.96rem; }
+.next-grid span { display: block; margin-top: 4px; font-size: 0.82rem; color: var(--ink-soft); }
+.next-all { display: inline-block; margin-top: 12px; font-weight: 700; color: var(--blue-deep); }
+@media (max-width: 760px) { .next-grid { grid-template-columns: minmax(0, 1fr); } }
 </style>
 <script type="application/ld+json">
 {
@@ -749,17 +760,33 @@ thead th.simy { background: var(--blue-deep); }
         "width": 1200,
         "height": 630
       },
-      "author": { "@type": "Organization", "name": "SIMY", "url": "https://simy.one/" },
+      "author": {
+        "@type": "Organization",
+        "name": "SIMY",
+        "url": "https://simy.one/"
+      },
       "publisher": {
         "@type": "Organization",
         "name": "AwakApp Inc.",
         "url": "https://www.awak.app/",
-        "logo": { "@type": "ImageObject", "url": "https://simy.one/simy-icon-square.png" }
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://simy.one/simy-icon-square.png"
+        }
       },
       "about": [
-        { "@type": "Thing", "name": "AI議事録" },
-        { "@type": "Thing", "name": "文字起こし" },
-        { "@type": "Thing", "name": "会議の自動化" }
+        {
+          "@type": "Thing",
+          "name": "AI議事録"
+        },
+        {
+          "@type": "Thing",
+          "name": "文字起こし"
+        },
+        {
+          "@type": "Thing",
+          "name": "会議の自動化"
+        }
       ],
       "citation": [
         "https://www.microsoft.com/ja-jp/microsoft-365/copilot",
@@ -775,8 +802,24 @@ thead th.simy { background: var(--blue-deep); }
     {
       "@type": "BreadcrumbList",
       "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "SIMY", "item": "https://simy.one/" },
-        { "@type": "ListItem", "position": 2, "name": "AI議事録ツール活用ガイド", "item": "https://simy.one/guides/meeting-notes.html" }
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "SIMY",
+          "item": "https://simy.one/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "ガイド",
+          "item": "https://simy.one/guides/index.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "AI議事録ツール活用ガイド",
+          "item": "https://simy.one/guides/meeting-notes.html"
+        }
       ]
     },
     {
@@ -785,52 +828,82 @@ thead th.simy { background: var(--blue-deep); }
         {
           "@type": "Question",
           "name": "結局、どのAI議事録ツールが一番いいですか？",
-          "acceptedAnswer": { "@type": "Answer", "text": "会社の環境で決まります。MicrosoftだけならTeamsのCopilot、GoogleだけならMeetのGemini、ツールが自由ならNotion AIのミーティングノート、録音ボットを入れてよいならNottaやtl;dv、対面が多いならPLAUDです。要約の精度より「要約がどこに届くか」で選ぶと、そのあとの仕事がつながります。" }
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "会社の環境で決まります。MicrosoftだけならTeamsのCopilot、GoogleだけならMeetのGemini、ツールが自由ならNotion AIのミーティングノート、録音ボットを入れてよいならNottaやtl;dv、対面が多いならPLAUDです。要約の精度より「要約がどこに届くか」で選ぶと、そのあとの仕事がつながります。"
+          }
         },
         {
           "@type": "Question",
           "name": "会議にボットを入室させずに録れますか？",
-          "acceptedAnswer": { "@type": "Answer", "text": "できます。TeamsのCopilotとMeetのGeminiは会議ツール自体の機能なので、参加者としてのボットは入りません。Notion AIのミーティングノートはあなたの端末の音声から記録し、PLAUDはデバイスで録音します。Nottaとtl;dvはボットが参加者として入室する方式です。" }
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "できます。TeamsのCopilotとMeetのGeminiは会議ツール自体の機能なので、参加者としてのボットは入りません。Notion AIのミーティングノートはあなたの端末の音声から記録し、PLAUDはデバイスで録音します。Nottaとtl;dvはボットが参加者として入室する方式です。"
+          }
         },
         {
           "@type": "Question",
           "name": "議事録が英語で出てしまいます。日本語にできますか？",
-          "acceptedAnswer": { "@type": "Answer", "text": "多くのツールで、文字起こしの言語か出力の言語を設定できます。日本語の会議なのに英語で出る場合は、会議の言語設定か要約の言語設定が英語になっていることが多いので、各ツールの設定を確認してください。SIMYは、記録された言語にかかわらず、あなたがいつも使っている言語と型で続きの仕事を用意します。" }
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "多くのツールで、文字起こしの言語か出力の言語を設定できます。日本語の会議なのに英語で出る場合は、会議の言語設定か要約の言語設定が英語になっていることが多いので、各ツールの設定を確認してください。SIMYは、記録された言語にかかわらず、あなたがいつも使っている言語と型で続きの仕事を用意します。"
+          }
         },
         {
           "@type": "Question",
           "name": "無料で済ませたいです。何を使えばいいですか？",
-          "acceptedAnswer": { "@type": "Answer", "text": "スマホのボイスメモで録音し、Google AI Studioに音声を渡して文字起こしと要約を出す方法が、追加費用なしで試せます。Nottaやtl;dvにも無料プランがありますが、月の文字起こし時間に上限があります。無料の組み合わせでも、要約の先の仕事はSIMYに渡せます。" }
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "スマホのボイスメモで録音し、Google AI Studioに音声を渡して文字起こしと要約を出す方法が、追加費用なしで試せます。Nottaやtl;dvにも無料プランがありますが、月の文字起こし時間に上限があります。無料の組み合わせでも、要約の先の仕事はSIMYに渡せます。"
+          }
         },
         {
           "@type": "Question",
           "name": "PLAUDのようなデバイスは必要ですか？",
-          "acceptedAnswer": { "@type": "Answer", "text": "オンライン会議が中心なら必要ありません。会議ツールの機能かNotion AIで十分です。対面の商談や面談、会議室での打ち合わせが多い人は、置くだけで録れるPLAUDが向いています。SIMYは、どちらの記録でも同じように使えます。" }
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "オンライン会議が中心なら必要ありません。会議ツールの機能かNotion AIで十分です。対面の商談や面談、会議室での打ち合わせが多い人は、置くだけで録れるPLAUDが向いています。SIMYは、どちらの記録でも同じように使えます。"
+          }
         },
         {
           "@type": "Question",
           "name": "議事録の形式（参加者・議題・決定事項・次アクション）は、毎回指定が必要ですか？",
-          "acceptedAnswer": { "@type": "Answer", "text": "いいえ。一度あなたの型で仕上げれば、SIMYはそのやり方を学び、次の会議からは同じ形で用意します。文字起こしをチャットAIに貼って、同じ指示を打ち直す作業はなくなります。" }
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "いいえ。一度あなたの型で仕上げれば、SIMYはそのやり方を学び、次の会議からは同じ形で用意します。文字起こしをチャットAIに貼って、同じ指示を打ち直す作業はなくなります。"
+          }
         },
         {
           "@type": "Question",
           "name": "「何が決まったか」の判断は、AIがしますか？私がしますか？",
-          "acceptedAnswer": { "@type": "Answer", "text": "判断はあなたです。SIMYは文字起こしと要約から決定事項と担当の候補を整理して下書きまで進め、期日の変更や送信の可否など、判断が必要なところだけをあなたに返します。" }
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "判断はあなたです。SIMYは文字起こしと要約から決定事項と担当の候補を整理して下書きまで進め、期日の変更や送信の可否など、判断が必要なところだけをあなたに返します。"
+          }
         },
         {
           "@type": "Question",
           "name": "SIMYには、会議の内容をどうやって渡しますか？",
-          "acceptedAnswer": { "@type": "Answer", "text": "PLAUDはSIMYの連携画面で「接続する」を押すだけです。Notion AIの記録はNotion連携、MeetのGeminiが作るGoogleドキュメントはGoogle連携で渡せます。Claude CodeやCodexで議事録を扱っている人は、その会話履歴からSIMYが仕事の候補を見つけます。対応状況は連携ページで確認してください。" }
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "PLAUDはSIMYの連携画面で「接続する」を押すだけです。Notion AIの記録はNotion連携、MeetのGeminiが作るGoogleドキュメントはGoogle連携で渡せます。Claude CodeやCodexで議事録を扱っている人は、その会話履歴からSIMYが仕事の候補を見つけます。対応状況は連携ページで確認してください。"
+          }
         },
         {
           "@type": "Question",
           "name": "SIMYを使うと、AIの利用料が別にかかりますか？",
-          "acceptedAnswer": { "@type": "Answer", "text": "SIMYはお使いのChatGPTアカウントをつなぎ、Codexで仕事を進めます。Codexの利用は、お使いのChatGPTプランの範囲で行われます。SIMY自体の料金は料金ページをご覧ください。" }
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "SIMYはお使いのChatGPTアカウントをつなぎ、Codexで仕事を進めます。Codexの利用は、お使いのChatGPTプランの範囲で行われます。SIMY自体の料金は料金ページをご覧ください。"
+          }
         },
         {
           "@type": "Question",
           "name": "機密性の高い会議でも使えますか？録音の同意は必要ですか？",
-          "acceptedAnswer": { "@type": "Answer", "text": "録音と文字起こしの前に、参加者全員の同意と会社のルールを確認してください。機密性の高い会議は、情報システム部門が認めたツールだけを使い、各ツールのデータの学習利用の設定も確認します。SIMYでのデータの取り扱いは、セキュリティとプライバシーポリシーのページで公開しています。" }
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "録音と文字起こしの前に、参加者全員の同意と会社のルールを確認してください。機密性の高い会議は、情報システム部門が認めたツールだけを使い、各ツールのデータの学習利用の設定も確認します。SIMYでのデータの取り扱いは、セキュリティとプライバシーポリシーのページで公開しています。"
+          }
         }
       ]
     }
@@ -862,6 +935,7 @@ thead th.simy { background: var(--blue-deep); }
       <div>
         <ol class="crumbs" aria-label="パンくずリスト">
           <li><a href="https://simy.one/">SIMY</a></li>
+          <li><a href="/guides/index.html">ガイド</a></li>
           <li aria-current="page">AI議事録ツール活用ガイド</li>
         </ol>
         <p class="eyebrow">AI議事録ツールの選び方と、要約の先</p>
@@ -1460,6 +1534,11 @@ thead th.simy { background: var(--blue-deep); }
           <li><a href="https://aistudio.google.com/" target="_blank" rel="noopener">Google AI Studio（Google 公式）</a></li>
         </ul>
       </section>
+      <aside class="next-read" aria-labelledby="h-next">
+        <h2 id="h-next">次に読む</h2>
+        <div class="next-grid"><a href="/guides/plaud.html"><b>PLAUD NOTE 活用ガイド</b><span>要約のあとのメールと顧客メモ</span></a><a href="/guides/chatgpt.html"><b>ChatGPT 活用ガイド</b><span>貼り直しと仕上げを、毎回やらない</span></a><a href="/guides/cowork.html"><b>Claude Cowork 活用ガイド</b><span>机の上の次に残る、会議の宿題</span></a></div>
+        <a class="next-all" href="/guides/index.html">ガイド一覧へ →</a>
+      </aside>
     </article>
   </div>
 
@@ -1526,5 +1605,6 @@ thead th.simy { background: var(--blue-deep); }
   update();
 })();
 </script>
+<script src="/analytics.js" defer></script>
 </body>
 </html>

@@ -729,6 +729,17 @@ thead th.simy { background: var(--blue-deep); }
   .ind-rows li span:nth-child(2) { display: none; }
   .ind-rows li { padding: 6px 0; border-bottom: 1px dashed var(--line-soft); }
 }
+
+/* Next read */
+.next-read { margin-top: clamp(40px, 5vw, 64px); padding-top: 24px; border-top: 1px solid var(--ink); }
+.next-read h2 { font-size: 1.2rem; margin: 0 0 14px; }
+.next-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.next-grid a { display: block; padding: 14px 16px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); text-decoration: none; color: var(--ink); }
+.next-grid a:hover { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.next-grid b { display: block; font-size: 0.96rem; }
+.next-grid span { display: block; margin-top: 4px; font-size: 0.82rem; color: var(--ink-soft); }
+.next-all { display: inline-block; margin-top: 12px; font-weight: 700; color: var(--blue-deep); }
+@media (max-width: 760px) { .next-grid { grid-template-columns: minmax(0, 1fr); } }
 </style>
 <script type="application/ld+json">
 {
@@ -800,6 +811,12 @@ thead th.simy { background: var(--blue-deep); }
         {
           "@type": "ListItem",
           "position": 2,
+          "name": "ガイド",
+          "item": "https://simy.one/guides/index.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
           "name": "ChatGPT Work・チャットGPT 活用ガイド",
           "item": "https://simy.one/guides/chatgpt.html"
         }
@@ -934,6 +951,7 @@ thead th.simy { background: var(--blue-deep); }
       <div>
         <ol class="crumbs" aria-label="パンくずリスト">
           <li><a href="https://simy.one/">SIMY</a></li>
+          <li><a href="/guides/index.html">ガイド</a></li>
           <li aria-current="page">ChatGPT Work・チャットGPT 活用ガイド</li>
         </ol>
         <p class="eyebrow">ChatGPT ユーザーのための活用ガイド</p>
@@ -1463,6 +1481,11 @@ thead th.simy { background: var(--blue-deep); }
         </ul>
         <p class="small muted">PLAUD で録音した会議から始める場合は、<a href="/guides/plaud.html">PLAUD NOTE 活用ガイド</a>も参照してください。</p>
       </section>
+      <aside class="next-read" aria-labelledby="h-next">
+        <h2 id="h-next">次に読む</h2>
+        <div class="next-grid"><a href="/guides/codex.html"><b>OpenAI Codex 活用ガイド</b><span>翌日も同じ指示を打たない</span></a><a href="/guides/claude.html"><b>Claude 活用ガイド</b><span>回答のあとに残る仕事を、Claudeで頼み直さない</span></a><a href="/guides/meeting-notes.html"><b>AI議事録ツールの選び方</b><span>どのツールでも残る、共有とToDo</span></a></div>
+        <a class="next-all" href="/guides/index.html">ガイド一覧へ →</a>
+      </aside>
     </article>
   </div>
 
@@ -1529,5 +1552,6 @@ thead th.simy { background: var(--blue-deep); }
   update();
 })();
 </script>
+<script src="/analytics.js" defer></script>
 </body>
 </html>

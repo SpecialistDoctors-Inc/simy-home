@@ -371,7 +371,9 @@
     "Contact sales": "営業に相談",
     "Legal": "法務情報",
     "Download the app": "アプリをダウンロード",
-    "Guides (Japanese)": "活用ガイド",
+    "Guides": "ガイド",
+    "All guides": "ガイド一覧",
+    "Download": "ダウンロード",
     "AI meeting notes": "AI議事録",
     "Privacy": "プライバシー",
     "Terms": "利用規約",
@@ -557,6 +559,19 @@
       }
 
       const localUrl = new URL(originalHref, window.location.href);
+      if (localUrl.origin === window.location.origin) {
+        const code = { en: "en", hi: "hi", es: "es", fr: "fr", "zh-Hans": "zh-hans" }[locale];
+        const guide = localUrl.pathname.match(/^\/guides\/([a-z-]+\.html)$/);
+        if (guide) {
+          link.setAttribute("href", code ? `/guides/${code}/${guide[1]}` : localUrl.pathname);
+          continue;
+        }
+        if (localUrl.pathname === "/download.html") {
+          link.setAttribute("href", code ? `/download/${code}.html` : "/download.html");
+          continue;
+        }
+      }
+
       if (
         localUrl.origin === window.location.origin
         && ["/privacy.html", "/terms.html"].includes(localUrl.pathname)
