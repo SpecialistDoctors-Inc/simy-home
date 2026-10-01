@@ -8,7 +8,12 @@
 <meta name="description" content="Qwenをローカル・社内サーバーの閉域網で安全に動かす方法。ローカルLLMとは、Ollama・vLLMの選び方、必要なスペック、構築手順、20項目のチェックリストを2026年10月時点で解説。">
 <link rel="canonical" href="https://simy.one/guides/qwen-local.html">
 <link rel="alternate" hreflang="ja" href="https://simy.one/guides/qwen-local.html">
-<link rel="alternate" hreflang="x-default" href="https://simy.one/guides/qwen-local.html">
+<link rel="alternate" hreflang="en" href="https://simy.one/guides/en/qwen-local.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://simy.one/guides/zh-hans/qwen-local.html">
+<link rel="alternate" hreflang="es" href="https://simy.one/guides/es/qwen-local.html">
+<link rel="alternate" hreflang="fr" href="https://simy.one/guides/fr/qwen-local.html">
+<link rel="alternate" hreflang="hi" href="https://simy.one/guides/hi/qwen-local.html">
+<link rel="alternate" hreflang="x-default" href="https://simy.one/guides/en/qwen-local.html">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://simy.one/guides/qwen-local.html">
 <meta property="og:title" content="社外に出せない会話を、自社のQwenで安全に扱う。｜SIMY">
@@ -20,7 +25,7 @@
 <meta property="og:image:alt" content="社外に出せない会話を、自社のQwenで安全に扱う。Qwenを自社サーバーで動かすガイド｜SIMY">
 <meta property="og:locale" content="ja_JP">
 <meta property="article:published_time" content="2026-10-01">
-<meta property="article:modified_time" content="2026-10-01">
+<meta property="article:modified_time" content="2026-10-02">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="社外に出せない会話を、自社のQwenで安全に扱う。｜SIMY">
 <meta name="twitter:description" content="Qwenを自社サーバー・閉域網で動かす手順。vLLMは127.0.0.1で起動し、nginxで認証、外向き通信は拒否。ライセンス、スペック、チェックリストまで。">
@@ -867,7 +872,7 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
       "description": "ローカルLLMとは何か、Qwenを選ぶ理由とライセンス、Ollama・llama.cpp・vLLM・SGLang・LM Studioの選び方、必要なGPUメモリ、閉域網での構築手順、20項目のセキュリティチェックリスト。",
       "inLanguage": "ja",
       "datePublished": "2026-10-01",
-      "dateModified": "2026-10-01",
+      "dateModified": "2026-10-02",
       "mainEntityOfPage": "https://simy.one/guides/qwen-local.html",
       "image": {
         "@type": "ImageObject",
@@ -963,7 +968,7 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
           "name": "ローカルLLMはどれがおすすめですか？",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "用途で選びます。まずPCでQwen3の4B〜8Bを試し、部署で使うならQwen3-14B・32BやQwen3.8-27B、コードならQwen3-Coderが候補です（2026年10月時点）。"
+            "text": "まず試すならQwen3の4B〜8B、部署で使うならQwen3-14B・32BやQwen3.8-27B、コードならQwen3-Coderがおすすめです（2026年10月時点）。大きなGPUを買う前に、手持ちのPCで「たたき台」に使えるかを確かめます。"
           }
         },
         {
@@ -979,7 +984,15 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
           "name": "Qwenをローカルで動かすのに必要なスペックは？",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "GPUメモリは「重み＋KVキャッシュ＋余裕」で考えます。Qwen公式の数値では、Qwen3-8BがBF16で約16GB、Qwen3-32BがFP8で約33GBで、同時に使う人数と文脈の長さでさらに増えます。"
+            "text": "Qwen公式の数値では、Qwen3-8BがBF16で約16GB、Qwen3-32BがFP8で約33GBのGPUメモリを使います。これは重みが中心の値で、同時に使う人数と文脈の長さに比例してKVキャッシュの分が増えます。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Qwen3.8-27BはRTX 5090 1枚で動きますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "4bitの量子化版なら、32GBのRTX 5090 1枚に載ります。BF16は重みだけで約54GB（計算上の目安）なので載らず、FP8版も重みだけで約29GBあるため、文脈の上限を大きく下げないと収まりません。"
           }
         },
         {
@@ -987,7 +1000,7 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
           "name": "OllamaとvLLMの違いは何ですか？",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Ollamaは手軽に試せ、既定で127.0.0.1だけで待ち受けます。vLLMは多くの人が同時に使う本番向けで、--hostを省くと全インターフェースで待ち受けるため、必ず指定します。"
+            "text": "Ollamaは手軽に試すため、vLLMは多くの人が同時に使う本番のためのエンジンです。Ollamaは既定で127.0.0.1だけで待ち受けますが、vLLMは--hostを省くと全インターフェースで待ち受けるため、必ず指定します。"
           }
         },
         {
@@ -1055,7 +1068,7 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
       <span class="brand-sub">Qwenを自社サーバーで</span>
     </a>
     <nav class="header-actions" aria-label="アカウント">
-      <details class="lang-switch"><summary aria-label="Language: 日本語"><span aria-hidden="true">🌐</span> <span class="ls-label">日本語</span></summary><ul><li><a href="/guides/qwen-local.html" hreflang="ja" lang="ja" aria-current="page">日本語</a></li><li><a href="/guides/en/index.html" hreflang="en" lang="en">English</a></li><li><a href="/guides/zh-hans/index.html" hreflang="zh-Hans" lang="zh-Hans">中文</a></li><li><a href="/guides/es/index.html" hreflang="es" lang="es">Español</a></li><li><a href="/guides/fr/index.html" hreflang="fr" lang="fr">Français</a></li><li><a href="/guides/hi/index.html" hreflang="hi" lang="hi">हिन्दी</a></li></ul></details>
+      <details class="lang-switch"><summary aria-label="Language: 日本語"><span aria-hidden="true">🌐</span> <span class="ls-label">日本語</span></summary><ul><li><a href="/guides/qwen-local.html" hreflang="ja" lang="ja" aria-current="page">日本語</a></li><li><a href="/guides/en/qwen-local.html" hreflang="en" lang="en">English</a></li><li><a href="/guides/zh-hans/qwen-local.html" hreflang="zh-Hans" lang="zh-Hans">中文</a></li><li><a href="/guides/es/qwen-local.html" hreflang="es" lang="es">Español</a></li><li><a href="/guides/fr/qwen-local.html" hreflang="fr" lang="fr">Français</a></li><li><a href="/guides/hi/qwen-local.html" hreflang="hi" lang="hi">हिन्दी</a></li></ul></details>
       <a class="header-link" href="/download.html">ダウンロード</a>
       <a class="header-link" href="https://app.simy.one/login?lang=ja&amp;locale=ja&amp;region=jp">ログイン</a>
       <a class="header-cta" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=qwen-local_guide&amp;utm_content=header">プランを選んではじめる</a>
@@ -1156,25 +1169,25 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
         </ol>
       </details>
 
-      <p class="byline"><span>最終更新：<time datetime="2026-10-01">2026年10月1日</time></span><span>発行：SIMY（AwakApp Inc.）</span></p>
+      <p class="byline"><span>最終更新：<time datetime="2026-10-02">2026年10月2日</time></span><span>発行：SIMY（AwakApp Inc.）</span></p>
 
       <!-- 01 -->
       <section class="sec" id="scene" aria-labelledby="h-scene">
         <span class="sec-label">01 / CAN'T SEND IT OUT</span>
-        <h2 id="h-scene">外部のAIに貼れない会話、こうなっていませんか</h2>
+        <h2 id="h-scene">外部のAIに貼れない社外秘、こうなっていませんか</h2>
         <p class="intro">AIを使えば早いのは分かっている。でも、その会話は社外に出せない。</p>
         <div class="scenes">
           <div class="scene pain">
             <span class="mark" aria-hidden="true">1</span>
-            <span class="k">顧問先の決算資料</span>
-            <b>クラウドAIに貼れない</b>
-            <p>守秘義務がある。要約も下書きも、結局は手作業のまま。</p>
+            <span class="k">例：個人情報入りのファイル</span>
+            <b>3分後に、電話が来た</b>
+            <p>個人契約のAIに渡して匿名化させたら、情報セキュリティ部門から連絡。報告書を書くことに。</p>
           </div>
           <div class="scene pain">
             <span class="mark" aria-hidden="true">2</span>
-            <span class="k">顧客との商談メモ</span>
-            <b>規程で外部AIは禁止</b>
-            <p>個人情報は社外に出せない。現場は便利さをあきらめている。</p>
+            <span class="k">例：顧客情報を含む文書</span>
+            <b>企画が半年止まった</b>
+            <p>「外部のAIには送れない」と法務が止めた。便利さは分かっているのに、進まない。</p>
           </div>
           <div class="scene pain">
             <span class="mark" aria-hidden="true">3</span>
@@ -1184,12 +1197,13 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
           </div>
         </div>
         <p class="scene-foot">外に出せないから、AIを使わない。<b>その二択の間に、「自社のサーバーで動かす」があります。</b></p>
+        <p class="small muted">※ 1と2は、解説動画で紹介された事例をもとにした例です（<a href="#videos">動画で語られていること</a>）。</p>
       </section>
 
       <!-- 02 -->
       <section class="sec" id="wish" aria-labelledby="h-wish">
         <span class="sec-label">02 / WHAT YOU REALLY WANTED</span>
-        <h2 id="h-wish">本当は、こうしたかった：社外秘のままAIを使う</h2>
+        <h2 id="h-wish">本当は、こうしたかった：社外秘のまま社内のQwenで</h2>
         <p class="intro">同じ資料、同じ会議。AIに任せても、データが社内から出ない状態。</p>
         <div class="scenes four">
           <div class="scene wish">
@@ -1254,7 +1268,7 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
         <ul class="plain-list">
           <li><strong>ライセンス：</strong>Qwen3やQwen3.8-27Bなど、多くのモデルがApache 2.0で公開されています。ただし、すべてではありません（下の表）。</li>
           <li><strong>日本語：</strong>Qwen3世代の発表で、日本語を含む119の言語・方言をうたっています。</li>
-          <li><strong>大きさ：</strong>PCで動く0.6B〜8Bから、1枚のGPUで動く27B〜32B、複数のGPUが要る235Bまであります。</li>
+          <li><strong>大きさ：</strong>PCで動く0.6B〜8Bから、量子化すれば1枚のGPUに載る27B〜32B、複数のGPUが要る235Bまであります。</li>
         </ul>
 
         <h3>ライセンスはモデルごとに違う</h3>
@@ -1282,7 +1296,7 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
           <div class="fold-body">
             <ul class="plain-list">
               <li><strong>まずPCで試す：</strong>Qwen3の4B〜8BやQwen3.5の小さなモデル。OllamaやLM Studioで動き、業務に効くかを確かめられます。</li>
-              <li><strong>部署で使う要約・下書き：</strong>Qwen3-14B・32B、またはQwen3.8-27B。1枚のGPUで動かせる大きさで、画像も扱えるのは3.8-27Bです。</li>
+              <li><strong>部署で使う要約・下書き：</strong>Qwen3-14B・32B、またはQwen3.8-27B。FP8や4bitの版なら1枚のGPUに載る大きさで、画像も扱えるのは3.8-27Bです。</li>
               <li><strong>コードの補助：</strong>Qwen3-Coder（30B-A3B）。活性パラメータが少ないMoEで、大きさのわりに速く動きます。</li>
               <li><strong>社内文書の検索：</strong>答えるモデルに加えて、Qwen3-EmbeddingとRerankerを組み合わせます。</li>
             </ul>
@@ -1324,7 +1338,7 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
       <!-- 05 -->
       <section class="sec" id="hardware" aria-labelledby="h-hardware">
         <span class="sec-label">05 / HARDWARE</span>
-        <h2 id="h-hardware">ハードウェアの目安：モデルの大きさ別に必要なGPUメモリ</h2>
+        <h2 id="h-hardware">ハードウェアの目安：Qwenのモデル別に必要なGPUメモリ</h2>
         <p class="intro">必要なGPUメモリは、3つの足し算で考えます。</p>
         <ul class="arch" aria-label="必要なGPUメモリの内訳">
           <li class="key">重み<small>パラメータ数 × 1つあたりのバイト数（BF16は2、FP8は1、4bitは約0.5）</small></li>
@@ -1342,13 +1356,13 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
               <tr><th scope="row">Qwen3-14B</th><td>約28GB</td><td>約16GB</td><td>約10GB</td><td>同上</td></tr>
               <tr><th scope="row">Qwen3-32B</th><td>約63GB</td><td>約33GB</td><td>約19GB</td><td>同上</td></tr>
               <tr><th scope="row">Qwen3-235B-A22B</th><td>GPU 8枚</td><td>GPU 4枚</td><td>GPU 4枚（GPTQ-INT4）</td><td>同上（SGLangでの構成）</td></tr>
-              <tr><th scope="row">Qwen3.8-27B</th><td>目安 約54GB（重みのみ）</td><td>目安 約27GB（重みのみ）</td><td>目安 約14GB（重みのみ）。Ollama版のダウンロードは約18GB</td><td>パラメータ数からの計算値。Ollamaライブラリ</td></tr>
+              <tr><th scope="row">Qwen3.8-27B</th><td>約54GB（重みのみ・計算上の目安）</td><td>約27GB（計算上）。公式FP8版は約28.8GBという計測例</td><td>約14GB（計算上）。実際のファイルは17〜18GB前後（Ollama版のダウンロードは約18GB）</td><td>パラメータ数からの計算値。計測例、Ollamaライブラリ</td></tr>
             </tbody>
           </table>
         </div>
-        <p class="small muted">Qwen3の数値は、Qwen公式の速度ベンチマーク（transformersで短い入力を処理した起動直後のGPUメモリ）です。Qwen3.8-27Bは公式の数値表がないため、パラメータ数から計算した目安で、KVキャッシュは含みません。2026年10月時点。</p>
+        <p class="small muted">Qwen3は、Qwen公式の速度ベンチマーク（transformersで短い入力を処理した起動直後のGPUメモリ）の値です。Qwen3.8-27Bは公式の数値表がないため、パラメータ数から計算した目安と個人の計測例で、KVキャッシュは含みません。量子化の版と文脈の長さで必要な量は大きく変わります（2026年10月時点）。</p>
         <ul class="plain-list">
-          <li><strong>1枚のGPUで27Bを動かす：</strong>SGLangのcookbookは、H200、RTX PRO 6000、RTX 5090、DGX Sparkを1枚で動かせる例に挙げています（量子化の版によって変わります）。</li>
+          <li><strong>Qwen3.8-27Bと32GBのGPU：</strong>BF16は重みだけで約54GB（計算上の目安）なので、RTX 5090（32GB）1枚には載りません。公式のFP8版も重みだけで約28.8GBあり、文脈を最大まで取ると32GBに収まらないという試算が紹介されています。4bitの版にするか、文脈の上限を下げるかで調整します。</li>
           <li><strong>16GBのGPU 2枚は、32GBの1枚と同じではない：</strong>2枚に分けると、カード間の通信と、それぞれに要る作業領域の分だけ不利になります。</li>
           <li><strong>長い文脈は待ち時間が延びる：</strong>ある個人の計測例では、約25万トークンの入力で最初の文字が出るまで4分を超えました。</li>
           <li><strong>Mac：</strong>Apple シリコンはメモリをGPUと共有します。モデルのファイルより十分大きいメモリが必要です。</li>
@@ -1360,7 +1374,7 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
       <section class="sec" id="build" aria-labelledby="h-build">
         <span class="sec-label">06 / BUILD</span>
         <h2 id="h-build">閉域網での構築手順：Qwen＋vLLMを社内サーバーに置く</h2>
-        <p class="intro">例はQwen3.8-27BのFP8版とvLLM（Docker）、Linuxのサーバーです。コマンドは2026年10月時点の公式ドキュメントに合わせています。</p>
+        <p class="intro">例はQwen3.8-27BのFP8版とvLLM（Docker）、Linuxのサーバーです。コマンドは2026年10月時点の公式ドキュメントに合わせています。GPUメモリが足りないときは、文脈の上限（<code>--max-model-len</code>）を下げるか、4bitの版を選びます。</p>
         <div class="tl-wrap" role="img" aria-label="構成図。社内のPCはTLSでゲートウェイのnginxにつなぎ、nginxが認証と許可リストを通した要求だけを127.0.0.1で待ち受けるvLLMに渡す。vLLMは社内のGPUでQwenを動かす。サーバーからインターネットへの通信は拒否する。モデルとコンテナは、外につながる搬入用の端末から媒体で持ち込む">
           <ul class="arch" aria-hidden="true">
             <li>社内のPC<small>ブラウザ・社内ツール</small></li>
@@ -1388,13 +1402,14 @@ docker pull vllm/vllm-openai:v0.30.0
 docker inspect --format '{{index .RepoDigests 0}}' vllm/vllm-openai:v0.30.0
 docker save vllm/vllm-openai:v0.30.0 -o vllm-openai-v0.30.0.tar</code></pre></div>
             <p><code>docker inspect</code>が表示するダイジェスト（<code>sha256:</code>で始まる値）を、台帳に書き写しておきます。</p>
+            <p><b>版を固定する理由：</b>同じリポジトリでも、新しいリビジョンで中身が変わることがあります。ある量子化版では、新しいリビジョンで投機的デコード用の層（MTP）が削られ、高速化が起動しなくなったと紹介されています。</p>
           </li>
           <li>
             <h3>SHA-256の台帳を作る</h3>
             <span class="where">搬入用の端末</span>
             <p>Hugging FaceのAPIが返す<code>lfs.oid</code>は、大きなファイル（LFS）のSHA-256です。この値と、手元のファイルを照合します。</p>
             <div class="code-block"><div class="code-head"><span>bash</span></div><pre class="code"><code><span class="c"># Hugging Face側の値を取り出す（LFSのファイルだけ）</span>
-curl -s "https://huggingface.co/api/models/Qwen/Qwen3.8-27B-FP8/tree/&lt;確認したコミットSHA&gt;?expand=true" \
+curl -s "https://huggingface.co/api/models/Qwen/Qwen3.8-27B-FP8/tree/&lt;確認したコミットSHA&gt;?recursive=true&amp;expand=true" \
   | jq -r '.[] | select(.lfs) | "\(.lfs.oid)  ./\(.path)"' &gt; HF.sha256
 
 <span class="c"># 手元のファイルと照合し、全ファイルの台帳を作る</span>
@@ -1417,7 +1432,7 @@ docker load -i vllm-openai-v0.30.0.tar</code></pre></div>
             <span class="where">閉域網のサーバー</span>
             <p>vLLMは<code>--host</code>を省くと全インターフェースで待ち受けます。必ず<code>--host 127.0.0.1</code>を書き、鍵はファイルで渡します（コマンドラインに書くと<code>ps</code>で見えます）。</p>
             <div class="code-block"><div class="code-head"><span>bash · vLLM（Docker）</span></div><pre class="code"><code><span class="c"># 鍵のファイルを作り、権限を600にする</span>
-sudo install -m 600 /dev/null /etc/llm/vllm.env
+sudo install -D -m 600 /dev/null /etc/llm/vllm.env
 echo "VLLM_API_KEY=$(openssl rand -hex 32)" | sudo tee /etc/llm/vllm.env &gt; /dev/null
 
 sudo docker run -d --name qwen --gpus all --ipc=host --network host \
@@ -1501,7 +1516,18 @@ sudo ufw enable
 
 <span class="c"># 外に出られないことを確かめる（失敗すれば正しい）</span>
 curl -m 5 https://huggingface.co</code></pre></div>
-            <p>DockerでポートをPublish（<code>-p</code>）すると、ufwの規則を通らずに公開されることがあります。この手順では<code>--network host</code>と<code>--host 127.0.0.1</code>を使い、ホスト側の規則が効くようにしています。ネットワーク側のファイアウォールでも、外向きを止めてください。</p>
+            <p>Dockerの<code>-p</code>でポートを公開すると、Dockerが自分でパケットの規則を足すため、ufwで閉じたつもりでも外から届くことがあります。この手順では<code>--network host</code>と<code>--host 127.0.0.1</code>を使い、待ち受けをローカルに限っています。</p>
+            <div class="code-block"><div class="code-head"><span>bash · -p を使う場合</span></div><pre class="code"><code><span class="c"># ホスト側は127.0.0.1だけに公開する（-p 8000:8000 は全インターフェースに公開される）</span>
+sudo docker run -d --name qwen --gpus all --ipc=host \
+  -p 127.0.0.1:8000:8000 \
+  -v /srv/llm/models:/models:ro \
+  -e HF_HUB_OFFLINE=1 -e VLLM_NO_USAGE_STATS=1 -e DO_NOT_TRACK=1 \
+  --env-file /etc/llm/vllm.env \
+  vllm/vllm-openai:v0.30.0 \
+  --model /models/Qwen3.8-27B-FP8 --served-model-name qwen3.8-27b \
+  --host 0.0.0.0 --port 8000 --max-model-len 65536
+<span class="c"># ↑ コンテナの中では0.0.0.0で待ち受け、ホスト側は127.0.0.1だけに出る</span></code></pre></div>
+            <p>この形では、コンテナの中のvLLMは<code>0.0.0.0</code>で待ち受けますが、ホストの外からは届きません。ネットワーク側のファイアウォールでも、外向きを止めてください。</p>
           </li>
           <li>
             <h3>ログと監査を残す</h3>
@@ -1528,11 +1554,12 @@ ENABLE_COMMUNITY_SHARING=false</code></pre></div>
             <p>vLLMはおよそ2週間ごとにリリースされ、毎回のようにセキュリティの修正が入ります。閉域網でも「取得 → 検証 → 台帳 → 本番」の流れで、定期的に上げてください。</p>
             <div class="code-block"><div class="code-head"><span>bash</span></div><pre class="code"><code><span class="c"># 1. 新しい版を手順1〜3と同じく取得・照合・搬入する</span>
 <span class="c"># 2. 検証環境で、旧版と新版に同じ質問を流して比べる</span>
-<span class="c"># 3. 使っている環境変数が、新しい版で消えていないかをリリースノートと照らす</span>
-env | grep -E '^(VLLM_|HF_)'
-<span class="c"># 4. 本番に入れたら、誰がいつ上げたかを1行残す</span>
+<span class="c"># 3. 使っている環境変数の名前を出し、新しい版で消えていないかをリリースノートと照らす</span>
+sudo docker inspect --format '{{range .Config.Env}}{{println .}}{{end}}' qwen \
+  | grep -E '^(VLLM_|HF_)' | cut -d= -f1
+<span class="c"># 4. 本番に入れたら、誰がいつ上げ、いつ戻したかを1行残す</span>
 echo "$(date -I) vllm &lt;旧版&gt;→&lt;新版&gt; 担当:&lt;名前&gt; 検証:OK 戻し:&lt;旧版&gt;.tar" &gt;&gt; /srv/llm/CHANGELOG</code></pre></div>
-            <p>前の版のコンテナとモデルは、戻せるように残しておきます。文脈の長さの上限など、版によって変わる値は前後で比べてください。</p>
+            <p>前の版のコンテナとモデルは、ダイジェストを控えて戻せるように残しておきます。文脈の長さの上限など、版によって変わる値は前後で比べてください。</p>
           </li>
         </ol>
       </section>
@@ -1540,7 +1567,7 @@ echo "$(date -I) vllm &lt;旧版&gt;→&lt;新版&gt; 担当:&lt;名前&gt; 検�
       <!-- 07 -->
       <section class="sec" id="checklist" aria-labelledby="h-checklist">
         <span class="sec-label">07 / CHECKLIST</span>
-        <h2 id="h-checklist">セキュリティチェックリスト：本番に入れる前の20項目</h2>
+        <h2 id="h-checklist">ローカルLLMのセキュリティチェックリスト：本番前の20項目</h2>
         <p class="intro">構築の前後で、上から順に確かめてください。チェックはこの画面の中だけで使え、どこにも送信されません。</p>
         <p class="check-progress" aria-live="polite"><b id="check-count">0</b> / 20 確認済み</p>
         <div class="secure-check">
@@ -1608,32 +1635,31 @@ echo "$(date -I) vllm &lt;旧版&gt;→&lt;新版&gt; 担当:&lt;名前&gt; 検�
       <section class="sec" id="videos" aria-labelledby="h-videos">
         <span class="sec-label">09 / FROM THE VIDEOS</span>
         <h2 id="h-videos">動画で語られていること：Qwenのセルフホストの実例</h2>
-        <p class="intro">2026年2〜10月に公開された、英語・中国語・日本語の解説動画18本を調べました。</p>
+        <p class="intro">2026年2〜10月に公開された、英語・中国語・日本語の解説動画18本を、音声の書き起こしまで確かめました。</p>
         <details class="fold">
-          <summary>18本の動画から分かること<small>現時点ではタイトル・チャプター・概要欄に基づく要約</small></summary>
+          <summary>18本の動画で語られていること<small>8つの場面と、全体から見えること</small></summary>
           <div class="fold-body">
-            <p class="small muted">この要約は、動画のタイトル、チャプター、概要欄と、概要欄からリンクされた資料をもとにしています。発話の内容は、確認でき次第ここに追記します。</p>
-            <h3>なぜ自社で動かすのか</h3>
+            <h3>発言から：8つの場面</h3>
+            <ol class="plain-list">
+              <li><strong>銀行で起きたこと（伝聞）：</strong>講演の登壇者が、顧客の銀行で起きた例として「社員が個人で契約していたAIツールに個人情報入りのファイルを読ませて匿名化させたら、3分後に情報セキュリティ部門から電話が来て、報告書と処分になった」と話しています（要約）。<br><span class="small muted">Will 保哥（講演）・<a href="https://www.youtube.com/watch?v=7tNIw_gHeSI&amp;t=5940s" target="_blank" rel="noopener">動画の 1:39:00〜</a></span></li>
+              <li><strong>危ないのはハーネス：</strong>同じ講演で「エージェントで危ないのはモデルではなくハーネス（ファイルを書き、通信する周りの仕組み）。モデルはGPUの中で文字をつないでいるだけ」と話しています（要約）。チェックリストの19（サンドボックス）の理由です。<br><span class="small muted">Will 保哥（講演）・<a href="https://www.youtube.com/watch?v=7tNIw_gHeSI&amp;t=4860s" target="_blank" rel="noopener">動画の 1:21:00〜</a></span></li>
+              <li><strong>版を固定する理由：</strong>「量子化版の新しいリビジョンでMTPの層が削られ、投機的デコードが起動しなくなった。だからコミットで固定する」と話しています（要約）。手順1の「版を固定」はこのためです。<br><span class="small muted">RepoChad・<a href="https://www.youtube.com/watch?v=57gjg6lH0kg&amp;t=245s" target="_blank" rel="noopener">動画の 4:05〜</a></span></li>
+              <li><strong>11434番には鍵がない：</strong>「Ollamaの<code>localhost:11434</code>のAPIには標準で認証がない。サーバーで使うならリバースプロキシかファイアウォールで制御する」と話しています（要約）。<br><span class="small muted">さつきのOSS研究室・<a href="https://www.youtube.com/watch?v=choPO4A52l4&amp;t=600s" target="_blank" rel="noopener">動画の 10:00〜</a></span></li>
+              <li><strong>8000番を世界に開けない：</strong>クラウドのGPUで試す例で「8000番を世界に開けたくないので、SSHのポートフォワードでつなぐ」と話しています（要約）。TLSを用意する前の、検証段階の代わりです。<br><span class="small muted">The Cef Experience・<a href="https://www.youtube.com/watch?v=0uZpuZQi7Zs&amp;t=571s" target="_blank" rel="noopener">動画の 9:31〜</a></span></li>
+              <li><strong>オンプレでも見えすぎる：</strong>「権限設計を怠ると、本来見えてはいけない給与や人事の情報までAIが答えてしまう。社内に置いただけでは安全ではない」と話しています（要約）。<br><span class="small muted">管理のプロ・<a href="https://www.youtube.com/watch?v=TPbS6JEkBF8&amp;t=1470s" target="_blank" rel="noopener">動画の 24:30〜</a></span></li>
+              <li><strong>更新の記録は1行で：</strong>「今の版を固定してタグを残し、誰がいつ上げていつ戻したかを1行残す。障害のときに効く」と話しています（要約）。手順9の記録の形です。<br><span class="small muted">AIニュース・<a href="https://www.youtube.com/watch?v=_WK1dzAidy8&amp;t=421s" target="_blank" rel="noopener">動画の 7:01〜</a></span></li>
+              <li><strong>時間もコスト：</strong>Ollamaとトンネルで2日試した末にクラウドに戻った経験から「無料には隠れたコストがある。時間もコストだ」と話しています（要約）。<br><span class="small muted">Garfield_Investment・<a href="https://www.youtube.com/watch?v=9k7LzyJ17yA&amp;t=482s" target="_blank" rel="noopener">動画の 8:02〜</a></span></li>
+            </ol>
+            <p class="small muted">非公式の改変モデルで、市販ソフトの認証回避を実演する動画もありますが、真似しないでください。出所の分からない改変版は、このページの手順では使いません。</p>
+            <h3>18本を通して見えること</h3>
             <ul class="plain-list">
-              <li><strong>守秘義務：</strong>税理士が、Mac 1台とOllama、Qwen3、Open WebUIで、オフラインで動く税務のAIを作った例。税額の計算や速度には限界があることにも触れています。</li>
-              <li><strong>会社の情報を外に出したくない：</strong>エンジニアでない人が、LM StudioでQwenの3B・7BをMacBook Airで動かす例。</li>
-              <li><strong>クラウドのアカウント停止：</strong>クラウド側でアカウントを止められて困ったことを、自社で動かす理由に挙げる講演。</li>
+              <li><strong>守秘義務：</strong>税理士がMac 1台とOllama、Qwen3、Open WebUIで、Wi-Fiを切っても動く税務のAIを作った例。複数ステップの税額計算は難しく、今は顧客の同意を得てクラウドを使うのが最適だとも話しています。</li>
+              <li><strong>エアギャップ：</strong>ツールをミラーし、モデルを物理的に搬入し、閉域内のストレージから推論エンジンを起動する4段階。評価とゲートウェイも置く流れです。</li>
+              <li><strong>エンジンの使い分け：</strong>1人ならllama.cpp、多人数ならvLLM、同じ長い指示を使い回すエージェントならSGLang。本番はWindowsよりLinuxを、という主張もあります。</li>
+              <li><strong>GPU 2枚は1枚の大きなGPUにならない：</strong>カード間の通信がボトルネックになり、1人で使う速さはあまり変わらない。増やせるのは同時接続と文脈の長さだ、という説明が複数ありました。</li>
+              <li><strong>長い文脈の待ち時間：</strong>16GBのGPU 2枚でQwen3.8-27Bを動かした例では、約25万トークンの入力で最初の文字まで4分を超えました。</li>
             </ul>
-            <h3>どう組むか</h3>
-            <ul class="plain-list">
-              <li><strong>エアギャップ構成：</strong>ミラー用のツールで閉域に持ち込み、vLLMで配信し、評価とゲートウェイを置く流れ。</li>
-              <li><strong>エンジンの使い分け：</strong>入門はllama.cpp、総合力はvLLM、エージェントはSGLang。本番はWindowsよりLinuxを、という主張。</li>
-              <li><strong>手元のGPUで27B：</strong>16GBのGPU 2枚でQwen3.8-27Bを動かし、長い文脈での待ち時間や電力を測った例。</li>
-              <li><strong>検証段階のアクセス：</strong>TLSを用意できない間、SSHのポートフォワードで接続を守る例。</li>
-            </ul>
-            <h3>何でつまずくか</h3>
-            <ul class="plain-list">
-              <li><strong>「オンプレ＝安全」ではない：</strong>バックオフィスの導入事例で、章のタイトルとして掲げられています。</li>
-              <li><strong>悪い例として使える構成：</strong>コミュニティ製の改変版GGUFを、<code>--host 0.0.0.0</code>かつ鍵なしで配信する起動スクリプト。</li>
-              <li><strong>理想と現実：</strong>Ollamaとトンネルで外から使おうとして、ツール呼び出しの弱さや、存在しないファイルを作られる問題に当たり、最後はクラウドに戻った失敗談。</li>
-              <li><strong>更新前のチェックリスト：</strong>vLLMを上げる前に、削除された環境変数を確かめ、誰がいつ上げたかを残す、という手順。</li>
-            </ul>
-            <!-- VIDEO-QUOTES -->
+            <p class="small muted">発言は、音声を自動で書き起こしたものからの要約で、逐語の引用ではありません。時刻は目安で、リンク先の30秒ほど後に話していることがあります。数値は、それぞれの構成での一例です。</p>
           </div>
         </details>
       </section>
@@ -1682,7 +1708,7 @@ echo "$(date -I) vllm &lt;旧版&gt;→&lt;新版&gt; 担当:&lt;名前&gt; 検�
       <!-- 11 -->
       <section class="sec" id="faq" aria-labelledby="h-faq">
         <span class="sec-label">11 / FAQ</span>
-        <h2 id="h-faq">よくある質問</h2>
+        <h2 id="h-faq">ローカルLLM・Qwenのよくある質問</h2>
         <div class="faq">
           <details>
             <summary>ローカルLLMとは何ですか？</summary>
@@ -1694,7 +1720,7 @@ echo "$(date -I) vllm &lt;旧版&gt;→&lt;新版&gt; 担当:&lt;名前&gt; 検�
           </details>
           <details>
             <summary>ローカルLLMはどれがおすすめですか？</summary>
-            <div class="a"><p>用途で選びます。まずPCでQwen3の4B〜8Bを試し、部署で使うならQwen3-14B・32BやQwen3.8-27B、コードならQwen3-Coderが候補です（2026年10月時点）。</p></div>
+            <div class="a"><p>まず試すならQwen3の4B〜8B、部署で使うならQwen3-14B・32BやQwen3.8-27B、コードならQwen3-Coderがおすすめです（2026年10月時点）。大きなGPUを買う前に、手持ちのPCで「たたき台」に使えるかを確かめます。</p></div>
           </details>
           <details>
             <summary>Qwenはローカルなら無料で使えますか？</summary>
@@ -1702,11 +1728,15 @@ echo "$(date -I) vllm &lt;旧版&gt;→&lt;新版&gt; 担当:&lt;名前&gt; 検�
           </details>
           <details>
             <summary>Qwenをローカルで動かすのに必要なスペックは？</summary>
-            <div class="a"><p>GPUメモリは「重み＋KVキャッシュ＋余裕」で考えます。Qwen公式の数値では、Qwen3-8BがBF16で約16GB、Qwen3-32BがFP8で約33GBで、同時に使う人数と文脈の長さでさらに増えます。</p></div>
+            <div class="a"><p>Qwen公式の数値では、Qwen3-8BがBF16で約16GB、Qwen3-32BがFP8で約33GBのGPUメモリを使います。これは重みが中心の値で、同時に使う人数と文脈の長さに比例してKVキャッシュの分が増えます。</p></div>
+          </details>
+          <details>
+            <summary>Qwen3.8-27BはRTX 5090 1枚で動きますか？</summary>
+            <div class="a"><p>4bitの量子化版なら、32GBのRTX 5090 1枚に載ります。BF16は重みだけで約54GB（計算上の目安）なので載らず、FP8版も重みだけで約29GBあるため、文脈の上限を大きく下げないと収まりません。</p></div>
           </details>
           <details>
             <summary>OllamaとvLLMの違いは何ですか？</summary>
-            <div class="a"><p>Ollamaは手軽に試せ、既定で127.0.0.1だけで待ち受けます。vLLMは多くの人が同時に使う本番向けで、--hostを省くと全インターフェースで待ち受けるため、必ず指定します。</p></div>
+            <div class="a"><p>Ollamaは手軽に試すため、vLLMは多くの人が同時に使う本番のためのエンジンです。Ollamaは既定で127.0.0.1だけで待ち受けますが、vLLMは--hostを省くと全インターフェースで待ち受けるため、必ず指定します。</p></div>
           </details>
           <details>
             <summary>閉域網でも更新は必要ですか？</summary>
