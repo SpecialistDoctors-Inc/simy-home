@@ -35,7 +35,7 @@ test("pricing call to action opens the signup plan selection page", () => {
   assert.match(homeHtml, /data-pricing-plan="quality"/);
   assert.match(homeHtml, /<th scope="col" data-pricing-plan="starter">[\s\S]*?<a class="pricing-plan-link"[^>]*>Choose a plan/);
   assert.match(homeHtml, /<th class="pricing-quality" scope="col" data-pricing-plan="quality">[\s\S]*?<a class="pricing-plan-link"[^>]*>Choose a plan/);
-  assert.equal((homeHtml.match(/href="https:\/\/app\.simy\.one\/signup\/\?lang=en&amp;locale=en&amp;region=us" aria-label="Choose a plan"/g) || []).length, 2);
+  assert.equal((homeHtml.match(/href="https:\/\/app\.simy\.one\/signup\/\?plan=(starter|quality)&amp;interval=annual&amp;lang=en&amp;locale=en&amp;region=us" aria-label="Choose a plan"/g) || []).length, 2);
 });
 
 test("pages loading the demo bundle cache-bust its workflow terminology", () => {
