@@ -1,0 +1,669 @@
+(() => {
+  const STORAGE_KEY = "simy-home-locale";
+  const SUPPORTED_LOCALES = new Set(["en", "ja", "hi", "es", "fr", "zh-Hans"]);
+  const LOCALE_PRESENTATION = Object.freeze({
+    en: { label: "English", code: "EN" },
+    ja: { label: "日本語", code: "JA" },
+    hi: { label: "हिन्दी", code: "HI" },
+    es: { label: "Español", code: "ES" },
+    fr: { label: "Français", code: "FR" },
+    "zh-Hans": { label: "简体中文", code: "ZH" }
+  });
+
+  const JA_COPY = Object.freeze({
+    "Skip to content": "本文へ移動",
+    "Your Digital Twin": "あなたのデジタルツイン",
+    "Product": "プロダクト",
+    "Use cases": "ユースケース",
+    "How it works": "仕組み",
+    "Apps": "連携アプリ",
+    "Why SIMY": "SIMYの違い",
+    "Pricing": "料金",
+    "Log in": "ログイン",
+    "Sign up": "新規登録",
+    "Account": "アカウント",
+    "Log in to SIMY": "SIMYにログイン",
+    "Map my workflow": "最初のワークフローを相談",
+    "Map my first workflow": "最初のワークフローを相談",
+    "Open navigation": "ナビゲーションを開く",
+    "Close navigation": "ナビゲーションを閉じる",
+    "Language": "言語",
+
+    "Your Digital Twin for work that keeps moving": "動き続ける仕事のための、あなたのデジタルツイン",
+    "You’re using AI.": "AIは使っている。",
+    "But the workload hasn’t gone down.": "でも、仕事は\n減っていない。",
+    "You’re using AI. But the workload hasn’t gone down.": "AIは使っている。でも、仕事は減っていない。",
+    "Chats become workflows.\nAI gets it done.": "チャットや会話を、仕事が進む仕組みに変える。",
+    "Turn conversations into workflows that get work done.": "会話を、仕事が進む仕組みに変える。",
+    "Bring in the conversations that matter. SIMY learns the checks, priorities, and non-negotiables behind your best work, turns them into focused Workflows, and selects the right one automatically. Autorun takes it from there.": "必要な会話だけをSIMYへ。あなたが良い仕事で欠かさない確認、優先順位、譲れない基準を学び、必要なものだけのワークフローに変えます。新しい仕事が来れば最適なものを自動で選び、その先はAutorunが進めます。",
+    "See SIMY at work": "SIMYの動きを見る",
+    "Talk to us": "相談する",
+    "No agent to choose": "エージェント選びは不要",
+    "No workflow to manage": "ワークフロー管理は不要",
+    "Runs Codex through App Server": "App Server経由でCodexを実行",
+    "Work pattern detected": "仕事の型を検出",
+    "Across selected work chats": "選択した仕事の会話から",
+    "“Check the user impact. Verify the evidence. Make the result easy to review.”": "「ユーザーへの影響を確認する。事実を確かめる。レビューしやすい形にする。」",
+    "AI-selected workflow": "AIが選んだワークフロー",
+    "AI-SELECTED WORKFLOW": "AIが選んだワークフロー",
+    "Release quality": "リリース品質",
+    "Running": "実行中",
+    "Protect user impact": "ユーザーへの影響を守る",
+    "Kept": "採用",
+    "Verify the evidence": "事実を確かめる",
+    "Make review effortless": "レビューしやすくする",
+    "Run with Autorun": "Autorunで実行",
+    "Working": "処理中",
+    "Selected automatically": "自動で選択済み",
+    "Autorun is already working.": "Autorunは、もう動いています。",
+    "When the conversation ends,": "会話が終わると、",
+    "Context captured": "文脈を引き継ぐ",
+    "SIMY gets to work.": "SIMYが動き出す。",
+    "The right workflow, selected automatically": "最適なワークフローを自動選択",
+    "Moving the work forward": "仕事を前へ進める",
+
+    "No agent menu. No workflow picker.": "エージェント一覧も、ワークフロー選びも不要。",
+    "Your conversations become the way work gets done.": "会話が、仕事の進め方になる。",
+    "SIMY finds the patterns behind how you work best, turns them into focused Workflows, and automatically selects the right one whenever new work arrives.": "SIMYは、あなたが良い仕事で繰り返している判断と確認を見つけ、必要なものだけのワークフローにします。新しい仕事が来れば、合うものを自動で選びます。",
+    "Conversation source": "会話の取り込み元",
+    "Request in Codex": "Codexでの依頼",
+    "Request in Claude Code": "Claude Codeでの依頼",
+    "Request in Cowork": "Coworkでの依頼",
+    "New work": "新しい仕事",
+    "You": "あなた",
+    "Review this release before it ships. Check the user impact, evidence, and review quality.": "このリリースを公開前にレビューして。ユーザーへの影響、内容の正確さ、レビュー品質を確認して。",
+    "I matched this work to your release-quality workflow. Autorun is starting the essential checks now.": "この仕事に、あなたのリリース品質ワークフローを適用しました。Autorunが必要な確認を開始します。",
+    "Investigate this regression. Trace the cause before changing code and leave evidence another engineer can review.": "このリグレッションを調査して。コードを変える前に原因を追い、別のエンジニアが確認できるよう調査結果をまとめて。",
+    "I matched this to your investigation workflow. Autorun is tracing the cause and preserving the review evidence now.": "この仕事に、あなたの調査ワークフローを適用しました。Autorunが原因を追い、レビューに必要な調査結果をまとめます。",
+    "Turn these updates into a concise decision brief. Surface only material changes and trace every claim to evidence.": "この更新を簡潔な意思決定資料にして。重要な変更だけを示し、それぞれ確認できる情報を添えて。",
+    "I matched this to your decision-brief workflow. Autorun is applying your materiality and evidence checks now.": "この仕事に、あなたの意思決定資料ワークフローを適用しました。Autorunが重要性と内容の確認を進めます。",
+    "You bring the request. SIMY brings the right way of working.": "あなたは仕事を頼む。SIMYが、あなたらしい進め方を選ぶ。",
+    "Your release-quality workflow": "あなたのリリース品質ワークフロー",
+    "Your investigation workflow": "あなたの調査ワークフロー",
+    "Your decision-brief workflow": "あなたの意思決定資料ワークフロー",
+    "Recognize the work": "仕事を見極める",
+    "Recognize the investigation": "調査内容を見極める",
+    "Recognize the briefing task": "資料作成の目的を見極める",
+    "Done": "完了",
+    "Select the matching workflow": "合うワークフローを選ぶ",
+    "Run the essential checks": "必要な確認を実行する",
+    "Trace cause and evidence": "原因と事実を確認する",
+    "Apply the briefing checks": "資料の確認項目を実行する",
+    "Update My Actions": "My Actionsを更新する",
+    "Next": "次",
+    "What you did not have to do": "あなたがしなくてよかったこと",
+    "No agent chosen · workflow selected · Autorun running": "エージェント選びなし・ワークフロー選択済み・Autorun実行中",
+    "No agent chosen · investigation workflow selected · Autorun running": "エージェント選びなし・調査ワークフロー選択済み・Autorun実行中",
+    "No agent chosen · briefing workflow selected · Autorun running": "エージェント選びなし・資料作成ワークフロー選択済み・Autorun実行中",
+    "Describe the outcome. SIMY selects the Workflow.": "成果を伝える。SIMYがワークフローを選ぶ。",
+    "Autorun moves it forward.": "その先は、Autorunが進める。",
+
+    "Codex, connected": "Codexと連携",
+    "Keep working in Codex. Let SIMY carry the work forward.": "Codexで頼む。その先の仕事はSIMYが動かす。",
+    "Connect the ChatGPT account you already use. Through Codex App Server, SIMY starts and continues Codex sessions for you; usage stays with your ChatGPT plan.": "いつものChatGPTアカウントを接続するだけ。SIMYはCodex App Server経由でCodexセッションを開始・継続し、利用量は現在のChatGPTプランに従います。",
+    "01 / CONNECT": "01 / 接続",
+    "Your ChatGPT account": "あなたのChatGPTアカウント",
+    "Connect the account and ChatGPT plan you already use.": "いつも使っているアカウントとChatGPTプランを接続します。",
+    "Connected": "接続済み",
+    "02 / RUN": "02 / 実行",
+    "SIMY uses the app-server protocol to start and continue Codex sessions.": "SIMYがApp ServerプロトコルでCodexセッションを開始・継続します。",
+    "OpenAI documentation": "OpenAI公式ドキュメント",
+    "03 / MOVE": "03 / 前進",
+    "SIMY selects how the work should run and moves it forward.": "SIMYが仕事の進め方を選び、前へ動かします。",
+    "Autorun working": "Autorun実行中",
+    "Codex and ChatGPT are products of OpenAI. SIMY is an independent product.": "CodexとChatGPTはOpenAIの製品です。SIMYは独立した製品です。",
+
+    "The SIMY loop": "SIMYの仕事の進め方",
+    "Stop managing the AI. Start moving the work.": "AIを管理するのをやめて、仕事を動かそう。",
+    "SIMY finds the missing inputs, the right people, and the next move. Autorun handles the sequence, so the work keeps moving until your attention is actually needed.": "SIMYが、足りない情報、関わるべき人、次の一手を見極めます。Autorunが順番どおりに進め、あなたの確認が本当に必要なところまで仕事を止めません。",
+    "01 / MY AI": "01 / MY AI",
+    "Ask once. Get a way of working that lasts.": "一度頼めば、次からはあなたのやり方で進む。",
+    "SIMY understands the outcome and selects the right Workflow automatically—no agent catalog, no setup maze.": "SIMYが目的を理解し、合うワークフローを自動で選びます。エージェント一覧も、複雑な設定もありません。",
+    "My AI": "My AI",
+    "◇ Network": "◇ ネットワーク",
+    "New session": "新しいセッション",
+    "Prepare the renewal brief": "更新提案資料を準備",
+    "Ready": "準備完了",
+    "Review customer risks": "顧客リスクを確認",
+    "Draft the Q3 plan": "第3四半期計画を下書き",
+    "Needs input": "入力が必要",
+    "Chat": "チャット",
+    "Review scope confirmed": "レビュー範囲を確認済み",
+    "Complete": "完了",
+    "Results are ready for review.": "成果物をレビューできます。",
+    "Prepared for you": "準備したもの",
+    "Ask SIMY to continue or revise…": "続行や修正をSIMYに頼む…",
+    "02 / AUTORUN + MY ACTIONS": "02 / AUTORUN + MY ACTIONS",
+    "Let Autorun get there before the follow-up.": "催促が必要になる前に、Autorunが動く。",
+    "SIMY advances recurring and delegated work before it turns into another reminder. My Actions shows only what is moving, finished, or waiting on you.": "定例業務や任せた仕事を、確認や催促が増える前にSIMYが進めます。My Actionsに残るのは、進行中、完了、あなたを待っている仕事だけです。",
+    "My Actions": "My Actions",
+    "4 active": "4件実行中",
+    "Active": "実行中",
+    "Backlog": "バックログ",
+    "SIMY Autorun": "SIMY Autorun",
+    "Renewal brief": "更新提案資料",
+    "Autorun running": "Autorun実行中",
+    "Weekly status update": "週次進捗レポート",
+    "My actions": "自分の対応",
+    "Do now": "今やる",
+    "Approve the customer response": "顧客への返信を承認",
+    "Waiting for you": "あなたの確認待ち",
+    "Today": "今日",
+    "Confirm the rollout date": "展開日を確認",
+    "Owner: you": "担当：あなた",
+    "03 / TEMPLATES": "03 / テンプレート",
+    "Build the Workflow once. Use it without thinking twice.": "一度つくる。次からは、意識せず使える。",
+    "Your focused Workflows stay ready. Whenever similar work returns, SIMY selects the right one automatically.": "必要なものだけで作ったワークフローは、いつでも使える状態に。似た仕事が来るたび、SIMYが自動で選びます。",
+    "Search by outcome or template": "成果やテンプレートを検索",
+    "Operations": "業務運営",
+    "Decisions": "意思決定",
+    "Meetings": "会議",
+    "Customer follow-up": "顧客フォロー",
+    "OPERATIONS": "業務運営",
+    "Daily leadership brief": "毎日の経営ブリーフ",
+    "Turn updates into decisions, risks, and owners.": "更新情報を、判断・リスク・担当へ整理します。",
+    "Use template": "このテンプレートを使う",
+    "CUSTOMER WORK": "顧客対応",
+    "Important changes only": "重要な変化だけを知らせる",
+    "Surface the shifts that need a human decision.": "人の判断が必要な変化だけを知らせます。",
+    "04 / MEETINGS": "04 / 会議",
+    "Turn meetings into momentum.": "会議を、次の動きに変える。",
+    "With consent, SIMY keeps purpose and context together, then turns decisions into the next steps while they are still fresh.": "同意のもと、SIMYが目的と文脈を会話につなぎとめ、決定が新しいうちに次の行動へ変えます。",
+    "● Listening": "● 聞き取り中",
+    "Outcome to capture": "今回得たい成果",
+    "Prepare the evidence for the next decision.": "次の判断に必要な情報を揃える。",
+    "05 / GROWTH": "05 / 成長",
+    "See what gets stronger with every run.": "実行するほど、強くなるものが見える。",
+    "Completed work reveals the skills, judgment, and repeatable ways of working your team is building.": "完了した仕事から、チームに積み上がるスキル、判断力、再現できる仕事の型が見えてきます。",
+    "Level": "レベル",
+    "This week": "今週",
+    "Workflow design": "ワークフロー設計",
+    "Decision quality": "意思決定の質",
+    "Follow-through": "実行力",
+
+    "Connected apps": "連携アプリ",
+    "Your work stays in the tools your team already uses.": "いつものツールの中で、仕事はそのまま進む。",
+    "Connect the apps that hold your conversations, meetings, documents, code, and business signals. SIMY brings in the right context, runs the selected Workflow, and returns the result where the next step happens.": "会話、会議、文書、コード、事業データがあるアプリを接続。SIMYが必要な文脈を取り込み、選んだワークフローを実行し、次の仕事が始まる場所へ結果を返します。",
+    "AI coding tools": "AI開発ツール",
+    "AI coding tools that connect with SIMY": "SIMYと連携できるAI開発ツール",
+    "Work apps": "業務アプリ",
+    "Sessions · Development work": "セッション・開発作業",
+    "Chats · Development context": "チャット・開発コンテキスト",
+    "Chats · Code suggestions": "チャット・コード提案",
+    "Google Workspace": "Google Workspace",
+    "Gmail · Drive · Calendar": "Gmail・Drive・カレンダー",
+    "GA4 · Search Console": "GA4・Search Console",
+    "Account connection": "アカウント接続",
+    "Messages · Channels": "メッセージ・チャンネル",
+    "Repositories · Pull requests": "リポジトリ・Pull Request",
+    "Recordings · Transcripts": "録画・文字起こし",
+    "Pages · Databases": "ページ・データベース",
+    "Company documents": "社内文書",
+    "Context in": "文脈を取り込む",
+    "Messages · meetings · files · metrics": "メッセージ・会議・ファイル・指標",
+    "Workflow selected": "ワークフローを選択",
+    "Work out": "仕事へ戻す",
+    "Actions · drafts · decisions · updates": "アクション・下書き・判断・更新",
+    "Available access and actions depend on the accounts and permissions you connect.": "参照・実行できる範囲は、接続したアカウントと権限によって異なります。",
+
+    "Measured results · Pilot goals": "実測結果・パイロット目標",
+    "Proof where we have it.": "実績は、確認済みの数字で。",
+    "Clear targets where we are still learning.": "検証中の目標は、明確に。",
+    "Every result is labeled as measured, replayed, referenced, or targeted—so evidence never gets mistaken for a promise.": "数字は、実測・再現検証・参考事例・目標のどれかを明記。実績と目標を混同させません。",
+    "01 / SOFTWARE ENGINEERING": "01 / ソフトウェア開発",
+    "INTERNAL AUDIT REPLAY": "社内再現検証",
+    "Detection improved from one of five cases to five of five cases in the same audit replay.": "同じ監査再現テストで、不具合の検出は5件中1件から5件中5件へ改善しました。",
+    "audit replay detection": "監査再現テストでの検出",
+    "Catch the bug before the PR leaves the loop.": "PRを出す前に、不具合を捕まえる。",
+    "A knowledge base of 387 historical defects informed the replay checks. Detection improved from one of five cases to five of five.": "過去387件の不具合ナレッジを再現テストに反映。検出は5件中1件から5件中5件へ改善しました。",
+    "Requirement": "要件",
+    "Independent audit": "独立監査",
+    "Five-case cross-repository audit replay · August 2026": "複数リポジトリを横断した5件の監査再現テスト・2026年8月",
+    "02 / FINANCIAL PLANNING": "02 / ファイナンシャルプランニング",
+    "WORKFLOW TARGET": "業務目標",
+    "Current preparation and follow-up work is about sixty minutes. The workflow target is ten to fifteen minutes of review.": "現在約60分かかる面談準備とフォローを、10〜15分の確認時間にすることが目標です。",
+    "60m": "60分",
+    "10–15m": "10〜15分",
+    "current manual work → review-time target": "現在の手作業 → 確認時間の目標",
+    "Walk in prepared. Leave with the follow-up underway.": "準備して面談へ。終わる頃にはフォローも進んでいる。",
+    "SIMY drafts the client record, planning inputs, next agenda, and follow-up—then surfaces the next line during the meeting.": "SIMYが顧客記録、プランニング情報、次回の議題、フォローを下書きし、面談中は次に伝えるべき内容を表示します。",
+    "PILOT CONVERSION GOAL": "パイロット成約率目標",
+    "FP interviews and an eight-case product-comparison study · July–August 2026": "FPへのインタビューと8件の製品比較検証・2026年7〜8月",
+    "03 / ELECTIVE DENTAL CARE": "03 / 歯科の自由診療",
+    "REFERENCE CASE": "参考事例",
+    "A comparable script-improvement case grew monthly revenue to one point four times its starting level.": "同様のスクリプト改善事例では、月間売上が開始時の1.4倍になりました。",
+    "starting point → monthly revenue index": "開始時 → 月間売上指数",
+    "Coach the next line while the consultation is happening.": "説明の最中に、次の一言を支援する。",
+    "SIMY listens for missing explanations and surfaces the next line in real time, so each consultation can improve the script that follows.": "SIMYが説明の抜けを聞き取り、次に伝える内容をリアルタイムで表示。面談のたびに、次の説明スクリプトを改善できます。",
+    "Live consultation": "相談中",
+    "Clarify the treatment difference before discussing price.": "価格の前に、治療の違いを明確に説明する。",
+    "Comparable clinic result; two dental use cases reviewed; SIMY deployment pending": "類似医院の結果・歯科2事例を確認・SIMY導入は未実施",
+    "04 / SME SALES": "04 / 中小企業の営業",
+    "PILOT TARGET": "パイロット目標",
+    "Current field survey and drawing work takes three and a half to four days. The pilot target is a draft quote within twenty-four hours of the customer request.": "現在3.5〜4日かかる現地調査と図面作業を、顧客からの依頼後24時間以内の見積もり下書きへ短縮することが目標です。",
+    "3.5–4d": "3.5〜4日",
+    "<24h": "24時間以内",
+    "pilot target · request → draft quote": "パイロット目標・依頼 → 見積もり下書き",
+    "Turn the customer ask into a quote before the window closes.": "顧客の要望を、機会を逃す前に見積もりへ。",
+    "SIMY converts requirements, field notes, and drawings into the next workflow, drafts the quote, and keeps every handoff moving.": "SIMYが要件、現地メモ、図面を次のワークフローへつなぎ、見積もりを下書きして、引き継ぎを止めずに進めます。",
+    "WIN-RATE GOAL": "受注率目標",
+    "Current workflow measured in an August 2026 field visit; target to validate in pilot": "2026年8月の現場訪問で現行業務を計測・目標はパイロットで検証予定",
+    "Results describe the cited internal or reference case. Targets are pilot goals, not guarantees.": "結果は、記載した社内検証または参考事例に基づきます。目標はパイロットでの検証値であり、保証ではありません。",
+
+    "Not another general-purpose agent": "汎用エージェントとは違う",
+    "General agents complete tasks.": "汎用AIは、タスクを終える。",
+    "SIMY preserves your way of working.": "SIMYは、あなたの仕事の型を残す。",
+    "The difference": "違い",
+    "General-purpose agent": "汎用エージェント",
+    "What it learns from": "何から学ぶか",
+    "The current prompt and general instructions": "今のプロンプトと一般的な指示",
+    "Patterns across the work conversations you choose": "あなたが選んだ仕事の会話に繰り返し現れる型",
+    "What it keeps": "何を残すか",
+    "What is useful for the task in front of it": "目の前のタスクに役立つ情報",
+    "Your repeated checks, priorities, and non-negotiables": "繰り返し大切にする確認、優先順位、譲れない基準",
+    "What you choose": "あなたが選ぶもの",
+    "The agent, prompt, and next step": "エージェント、プロンプト、次の手順",
+    "Nothing—SIMY selects the matching workflow": "何も選ばない。SIMYが合うワークフローを選ぶ",
+    "What happens next": "その後どう進むか",
+    "You prompt the next step": "次の手順を人が指示する",
+    "Autorun starts the selected workflow automatically": "Autorunが選ばれたワークフローを自動で開始する",
+    "Only the conversations that matter": "必要な会話だけ",
+    "Teach SIMY what good work looks like—without giving it everything.": "すべてを渡さず、良い仕事の基準だけをSIMYへ。",
+    "Choose the conversations that reveal your checks, priorities, and non-negotiables. SIMY extracts the patterns that repeat, separates them from one-off detail, and ignores the rest.": "あなたが大切にする確認、優先順位、譲れない基準が表れた会話を選びます。SIMYは繰り返す型を抽出し、一度きりの情報と分け、それ以外は残しません。",
+    "Bring in": "取り込むもの",
+    "Codex chats": "Codexのチャット",
+    "Claude Code chats": "Claude Codeのチャット",
+    "Cowork chats": "Coworkのチャット",
+    "SIMY keeps": "SIMYが残すもの",
+    "Your priorities": "あなたの優先順位",
+    "Essential checks": "欠かせない確認",
+    "Non-negotiables": "譲れない基準",
+    "Simple monthly pricing": "シンプルな月額料金",
+    "Choose the plan that fits your work.": "仕事に合うプランを選びましょう。",
+    "Choose Starter, Pro, or Team. Select an industry package during signup; it does not change the plan price.": "Starter、Pro、Teamから選べます。業界パッケージは申込時に選択でき、プラン料金は変わりません。",
+    "Plans are billed monthly in USD. Prices below exclude applicable taxes.": "料金は米ドル建ての月払いです。以下の価格は税別です。",
+    "Starter, Pro, and Team pricing and limits": "Starter、Pro、Teamの料金と利用枠",
+    "Choose Starter plan": "Starterを申し込む",
+    "Choose Pro plan": "Proを申し込む",
+    "Choose Team plan": "Teamを申し込む",
+    "100 / month": "月100回",
+    "Maximum users": "最大ユーザー数",
+    "Additional storage is available in 30 GB units for $10 per month before tax. Japanese pages also show plan prices including 10% consumption tax. The checkout page confirms the final total before payment.": "追加ストレージは30 GB単位で月額$10（税別）です。日本語ページには消費税10%を含むプラン料金も併記します。決済前に申込画面で最終金額を確認できます。",
+    "Choose a plan above to continue to signup. For Enterprise needs, contact us.": "上のプランから申込画面へ進めます。Enterpriseをご希望の場合はお問い合わせください。",
+    "Industry-ready · SIMY by Industry": "業種別に最適化 · SIMY by Industry",
+    "Swipe to compare plans →": "横にスワイプしてプランを比較 →",
+    "Quality checks shaped around your profession.": "あなたの業種に合った品質チェックを。",
+    "Choose IT Engineer, Financial Planner, Pharmaceutical MR, or Dental Clinic. SIMY by Industry includes the existing SIMY Quality (SQM), adapted to your field’s terminology, workflow, and review criteria.": "SIMY by Industryは、ITエンジニア・ファイナンシャルプランナー・製薬MR・歯科クリニックから選べます。既存のSIMY Quality（SQM）を、業種ごとの用語、業務フロー、確認基準に合わせて最適化します。",
+    "IT Engineer · Financial Planner · Pharmaceutical MR · Dental Clinic": "ITエンジニア・ファイナンシャルプランナー・製薬MR・歯科クリニック",
+    "Billing cycle": "請求周期",
+    "Annual": "年払い",
+    "Show annual billing prices": "年払いの料金を表示",
+    "Save 17%": "17%お得",
+    "Monthly": "月払い",
+    "Show monthly billing prices": "月払いの料金を表示",
+    "Annual plans are billed once a year. Prices below are the effective monthly cost.": "年払いは年1回の請求です。以下は1か月あたりの換算額です。",
+    "Monthly plans are billed every month.": "月払いは毎月請求されます。",
+    "SIMY plan comparison": "SIMY料金プラン比較",
+    "Starter, SIMY by Industry, and Enterprise pricing and features": "Starter、SIMY by Industry、Enterpriseの料金と機能比較",
+    "Pricing · USD": "料金比較（USD）",
+    "per month · billed annually": "月額換算・年払い",
+    "per month · billed monthly": "月額・毎月払い",
+    "before applicable taxes": "税別",
+    "tax included": "税込",
+    "Annual total": "年額",
+    "Before tax": "税抜",
+    "month": "月",
+    "per month": "月額",
+    "Monthly · USD": "月額・米ドル",
+    "per month · before tax": "月額・税別",
+    "Recommended": "おすすめ",
+    "1 month free": "1か月無料",
+    "Autorun allowance": "自動実行",
+    "Unlimited": "無制限",
+    "Storage": "ストレージ",
+    "View additional storage pricing": "追加ストレージ料金を見る",
+    "Storage add-ons": "ストレージ追加オプション",
+    "Additional storage pricing": "追加ストレージ料金",
+    "Close additional storage pricing": "追加ストレージ料金を閉じる",
+    "Choose the capacity you need. Prices are billed monthly.": "必要な容量を選べます。料金は月額です。",
+    "Additional storage monthly pricing": "追加ストレージの月額料金",
+    "Monthly price": "月額料金",
+    "Additional storage": "追加容量",
+    "Prices shown in USD.": "価格は米ドル表記です。",
+    "Prices are shown in USD. Japanese prices include 10% consumption tax. Elsewhere, taxes may apply at checkout.": "価格は米ドル表記です。日本語表示の価格は消費税10%込みです。その他の国・地域では、決済時に税が加算される場合があります。",
+    "Codex account connection": "Codexアカウント連携",
+    "Included": "利用可",
+    "Meeting Autorun": "Meeting Autorun",
+    "Save and reuse Workflows": "ワークフローの保存・再利用",
+    "Use your connected ChatGPT plan": "接続したChatGPTプランを利用",
+    "Quality Loop": "Quality Loop",
+    "Industry-optimized SQM": "業種別に最適化されたSQM",
+    "Optional add-on": "追加オプション",
+    "Add real-time support to SIMY by Industry only when you need it.": "必要なときだけ、SIMY by Industryにリアルタイム支援を追加できます。",
+    "Realtime add-on features": "Realtimeオプションの機能",
+    "600 min included each month": "毎月600分込み",
+    "Additional usage: $2 / 60 min": "追加利用：$2 / 60分",
+    "Not included": "含まれません",
+    "Target error rate ≤3%": "目標エラー率 ≤3%",
+    "Hearing Mode": "Hearing Mode",
+    "Real-time suggestions": "リアルタイム提案",
+    "Hearing minutes": "Hearing利用時間",
+    "600 min included": "600分込み",
+    "each month": "毎月",
+    "Additional Hearing usage": "Hearing追加利用",
+    "$2 / 60 min": "$2 / 60分",
+    "usage-based": "従量制",
+    "Enterprise": "Enterprise",
+    "Custom pricing": "個別見積もり",
+    "We will confirm your organization size, security needs, and operating requirements, then recommend pricing and rollout.": "組織の利用規模やセキュリティ・運用要件を確認し、料金と導入方法をご案内します。",
+    "Talk to us about Enterprise": "Enterpriseを相談する",
+    "Tailored": "個別に設定",
+    "Custom": "個別設定",
+    "Logical database isolation by organization": "各社ごとにデータベースを論理分離",
+    "Enterprise rollout": "Enterprise導入支援",
+    "Security and rollout support": "セキュリティ・導入支援",
+    "Company overview": "会社概要",
+    "The ≤3% error rate is a target when SIMY’s defined testing and verification criteria are met. It is not a guaranteed result.": "≤3%のエラー率は、SIMYが定めるテスト・検証基準を満たした場合の目標値であり、結果を保証するものではありません。",
+    "Prices are shown in USD. Headline plan prices exclude tax. Japanese pages also show the price including 10% consumption tax. In other countries and regions, taxes may apply based on the billing address.": "価格は米ドル表記です。大きく表示したプラン価格は税別で、その下に消費税10%を含む税込価格を併記しています。その他の国・地域では、請求先住所に応じた税が加算される場合があります。",
+    "The purchase page shows the plans currently available for checkout and the final price before payment. Stripe securely processes payment.": "購入画面で、現在申し込めるプランと最終価格を決済前に確認できます。決済はStripeで安全に処理されます。",
+    "The purchase page shows the plans currently available for checkout and the final total before payment. Stripe securely processes payment.": "購入画面で、現在申し込めるプランと最終請求額を決済前に確認できます。決済はStripeで安全に処理されます。",
+    "Choose a plan": "プランを選ぶ",
+    "Choose a SIMY plan and continue to secure Stripe Checkout": "SIMYのプランを選び、安全なStripe Checkoutへ進む",
+
+    "Tell SIMY what needs to move.": "進めたい仕事をSIMYへ。",
+    "Autorun takes it from there.": "あとはAutorun。",
+    "SIMY recognizes the work, selects the right Workflow, and moves it forward automatically.": "SIMYが仕事を見極め、合うワークフローを選び、自動で前へ進めます。",
+    "YOUR": "あなたの",
+    "WAY": "やり方",
+    "CHATS": "会話",
+    "ESSENTIALS": "大切なこと",
+    "WORKFLOW": "ワークフロー",
+    "Codex connection": "Codex連携",
+    "Get started": "はじめる",
+    "Contact sales": "営業に相談",
+    "Legal": "法務情報",
+    "Download the app": "アプリをダウンロード",
+    "Guides (Japanese)": "活用ガイド",
+    "AI meeting notes": "AI議事録",
+    "Privacy": "プライバシー",
+    "Terms": "利用規約",
+    "Oakland, California · Built for work that should keep moving.": "米国カリフォルニア州オークランド・止めたくない仕事のために。",
+
+    "SIMY home": "SIMYホーム",
+    "Primary navigation": "メインナビゲーション",
+    "Mobile navigation": "モバイルナビゲーション",
+    "Product principles": "プロダクトの原則",
+    "A conversation becoming a working workflow": "会話が実行されるワークフローへ変わる様子",
+    "When the conversation ends, SIMY gets to work": "会話が終わるとSIMYが仕事を始める流れ",
+    "ChatGPT account connects to Codex App Server, which powers SIMY workflows and Autorun": "ChatGPTアカウントをCodex App Serverへ接続し、SIMYのワークフローとAutorunを動かす流れ",
+    "SIMY monthly plan comparison": "SIMY月額プラン比較",
+    "Apps that connect with SIMY": "SIMYと連携できるアプリ",
+    "Connected app context flows into SIMY, which selects a workflow, runs Autorun, and returns completed work": "連携アプリの文脈をSIMYへ取り込み、ワークフローを選び、Autorunを実行して、完了した仕事を戻す流れ",
+    "Requirement, implementation, independent audit, pull request": "要件、実装、独立監査、Pull Requestの流れ",
+    "Live consultation guidance": "相談中のリアルタイム提案",
+    "General-purpose agents compared with SIMY": "汎用エージェントとSIMYの比較"
+  });
+
+  const PAGE_META = {
+    en: {
+      title: "SIMY — Turn conversations into workflows that get work done",
+      description: "Turn chats and conversations into workflows that get work done. SIMY learns how you work, selects the right Workflow, and Autorun moves it forward.",
+      socialTitle: "You’re using AI. But the workload hasn’t gone down.",
+      socialDescription: "SIMY learns your way of working, selects the right Workflow, and Autorun moves it forward.",
+      imageAlt: "You’re using AI. But the workload hasn’t gone down. Turn chats and conversations into workflows that get work done.",
+      ogLocale: "en_US"
+    },
+    ja: {
+      title: "SIMY — 会話を、仕事が進むワークフローに",
+      description: "チャットや会話を、仕事が進む仕組みに変える。SIMYがあなたの仕事の基準を学び、合うワークフローを選び、Autorunがその先を進めます。",
+      socialTitle: "AIは使っている。でも、仕事は減っていない。",
+      socialDescription: "SIMYがあなたの仕事の基準を学び、合うワークフローを選び、Autorunがその先を進めます。",
+      imageAlt: "AIは使っている。でも、仕事は減っていない。チャットや会話を、仕事が進む仕組みに変える。",
+      ogLocale: "ja_JP"
+    },
+    hi: {
+      title: "SIMY — बातचीत को काम पूरा करने वाले वर्कफ़्लो में बदलें",
+      description: "चैट और बातचीत को काम आगे बढ़ाने वाले वर्कफ़्लो में बदलें। SIMY आपके काम करने का तरीका सीखता है, सही Workflow चुनता है और Autorun उसे आगे बढ़ाता है।",
+      socialTitle: "आप AI का उपयोग कर रहे हैं। लेकिन काम का बोझ कम नहीं हुआ।",
+      socialDescription: "SIMY आपके काम करने का तरीका सीखता है, सही Workflow चुनता है और Autorun उसे आगे बढ़ाता है।",
+      imageAlt: "आप AI का उपयोग कर रहे हैं। लेकिन काम का बोझ कम नहीं हुआ। चैट और बातचीत को काम पूरा करने वाले वर्कफ़्लो में बदलें।",
+      ogLocale: "hi_IN"
+    },
+    es: {
+      title: "SIMY — Convierte conversaciones en flujos de trabajo que avanzan",
+      description: "Convierte chats y conversaciones en flujos que hacen avanzar el trabajo. SIMY aprende cómo trabajas, elige el Workflow adecuado y Autorun se ocupa del resto.",
+      socialTitle: "Usas IA. Pero la carga de trabajo no ha disminuido.",
+      socialDescription: "SIMY aprende cómo trabajas, elige el Workflow adecuado y Autorun se ocupa del resto.",
+      imageAlt: "Usas IA. Pero la carga de trabajo no ha disminuido. Convierte chats y conversaciones en flujos de trabajo que hacen avanzar el trabajo.",
+      ogLocale: "es_ES"
+    },
+    fr: {
+      title: "SIMY — Transformez les conversations en workflows qui avancent",
+      description: "Transformez les échanges en workflows qui font réellement avancer le travail. SIMY apprend votre manière de travailler, choisit le bon Workflow et Autorun prend le relais.",
+      socialTitle: "Vous utilisez l’IA. Mais la charge de travail n’a pas diminué.",
+      socialDescription: "SIMY apprend votre manière de travailler, choisit le bon Workflow et Autorun prend le relais.",
+      imageAlt: "Vous utilisez l’IA. Mais la charge de travail n’a pas diminué. Transformez les chats et les conversations en workflows qui font avancer le travail.",
+      ogLocale: "fr_FR"
+    },
+    "zh-Hans": {
+      title: "SIMY — 将对话变成真正推进工作的工作流",
+      description: "把聊天和对话变成真正推进工作的工作流。SIMY 学习你的工作方式，选择合适的工作流，再由 Autorun 持续推进。",
+      socialTitle: "你在使用 AI，但工作量并没有减少。",
+      socialDescription: "SIMY 学习你的工作方式，选择合适的工作流，再由 Autorun 持续推进。",
+      imageAlt: "你在使用 AI，但工作量并没有减少。将聊天和对话变成真正推进工作的工作流。",
+      ogLocale: "zh_CN"
+    }
+  };
+
+  let currentLocale = "en";
+  const textRecords = [];
+  const attributeRecords = [];
+
+  function normalizeLocale(value) {
+    const locale = String(value || "").trim().toLowerCase();
+    if (["zh", "zh-cn", "zh-sg", "zh-hans"].includes(locale)) return "zh-Hans";
+    const baseLocale = locale.split("-")[0];
+    return SUPPORTED_LOCALES.has(baseLocale) ? baseLocale : null;
+  }
+
+  function resolveInitialLocale() {
+    const queryLocale = normalizeLocale(new URL(window.location.href).searchParams.get("lang"));
+    if (queryLocale) return queryLocale;
+    try {
+      const savedLocale = normalizeLocale(window.localStorage.getItem(STORAGE_KEY))
+        || normalizeLocale(window.localStorage.getItem("simy-lang"))
+        || normalizeLocale(window.localStorage.getItem("simy-language"));
+      if (savedLocale) return savedLocale;
+    } catch {
+      // The selector still works when storage is unavailable.
+    }
+    return "en";
+  }
+
+  function translate(value, locale = currentLocale) {
+    if (locale === "en") return value;
+    const copy = locale === "ja" ? JA_COPY : window.SIMY_HOME_LOCALES?.[locale];
+    return copy?.[value] || value;
+  }
+
+  function collectOriginalContent() {
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    let node = walker.nextNode();
+    while (node) {
+      if (!node.parentElement?.hasAttribute("data-current-year")) {
+        const value = node.nodeValue || "";
+        const core = value.trim();
+        if (core) {
+          textRecords.push({
+            node,
+            core,
+            leading: value.match(/^\s*/)?.[0] || "",
+            trailing: value.match(/\s*$/)?.[0] || ""
+          });
+        }
+      }
+      node = walker.nextNode();
+    }
+
+    for (const element of document.querySelectorAll("[aria-label], [title], [placeholder], [alt]")) {
+      for (const name of ["aria-label", "title", "placeholder", "alt"]) {
+        if (!element.hasAttribute(name)) continue;
+        attributeRecords.push({ element, name, value: element.getAttribute(name) || "" });
+      }
+    }
+
+    for (const link of document.querySelectorAll("a[href]")) {
+      link.dataset.originalHref = link.getAttribute("href") || "";
+    }
+  }
+
+  function updateMeta(locale) {
+    const meta = PAGE_META[locale];
+    document.title = meta.title;
+    const values = {
+      'meta[name="description"]': meta.description,
+      'meta[property="og:title"]': meta.socialTitle,
+      'meta[property="og:description"]': meta.socialDescription,
+      'meta[property="og:image:alt"]': meta.imageAlt,
+      'meta[property="og:locale"]': meta.ogLocale,
+      'meta[name="twitter:title"]': meta.socialTitle,
+      'meta[name="twitter:description"]': meta.socialDescription,
+      'meta[name="twitter:image:alt"]': meta.imageAlt
+    };
+    for (const [selector, content] of Object.entries(values)) {
+      document.querySelector(selector)?.setAttribute("content", content);
+    }
+
+    const structuredData = document.querySelector('script[type="application/ld+json"]');
+    if (structuredData) {
+      try {
+        const payload = JSON.parse(structuredData.textContent || "{}");
+        payload.description = meta.description;
+        structuredData.textContent = JSON.stringify(payload);
+      } catch {
+        // Leave valid static metadata untouched if a future schema shape changes.
+      }
+    }
+  }
+
+  function updateLinks(locale) {
+    const localeParams = {
+      en: { lang: "en", locale: "en", region: "us" },
+      ja: { lang: "ja", locale: "ja", region: "jp" },
+      hi: { lang: "hi", locale: "hi", region: "in" },
+      es: { lang: "es", locale: "es", region: "es" },
+      fr: { lang: "fr", locale: "fr", region: "fr" },
+      "zh-Hans": { lang: "zh-Hans", locale: "zh-Hans", region: null }
+    }[locale];
+
+    for (const link of document.querySelectorAll("a[href]")) {
+      const originalHref = link.dataset.originalHref || link.getAttribute("href") || "";
+      if (originalHref.startsWith("https://app.simy.one/")) {
+        const url = new URL(originalHref);
+        for (const [name, value] of Object.entries(localeParams)) {
+          if (value === null) url.searchParams.delete(name);
+          else url.searchParams.set(name, value);
+        }
+        link.setAttribute("href", url.toString());
+        continue;
+      }
+
+      const localUrl = new URL(originalHref, window.location.href);
+      if (
+        localUrl.origin === window.location.origin
+        && ["/privacy.html", "/terms.html"].includes(localUrl.pathname)
+      ) {
+        localUrl.searchParams.set("lang", locale);
+        link.setAttribute("href", `${localUrl.pathname}${localUrl.search}${localUrl.hash}`);
+        continue;
+      }
+
+      if (originalHref.startsWith("mailto:") && originalHref.includes("?subject=")) {
+        const address = originalHref.slice(0, originalHref.indexOf("?subject="));
+        const originalSubject = decodeURIComponent(originalHref.slice(originalHref.indexOf("?subject=") + 9));
+        const localizedSubjects = {
+          ja: ["SIMYについて相談したい", "SIMYで最初のワークフローを設計したい"],
+          hi: ["SIMY के बारे में परामर्श", "SIMY के साथ मेरा पहला वर्कफ़्लो डिज़ाइन करें"],
+          es: ["Consulta sobre SIMY", "Diseñar mi primer flujo de trabajo con SIMY"],
+          fr: ["Demande d’information sur SIMY", "Concevoir mon premier workflow avec SIMY"],
+          "zh-Hans": ["咨询 SIMY", "设计我的第一个 SIMY 工作流"]
+        };
+        const subjectPair = localizedSubjects[locale];
+        const subject = subjectPair
+          ? subjectPair[originalSubject === "SIMY English site inquiry" ? 0 : 1]
+          : originalSubject;
+        link.setAttribute("href", `${address}?subject=${encodeURIComponent(subject)}`);
+      }
+    }
+  }
+
+  function updateUrl(locale) {
+    const url = new URL(window.location.href);
+    url.searchParams.set("lang", locale);
+    window.history.replaceState({}, "", `${url.pathname}${url.search}${url.hash}`);
+  }
+
+  function applyLocale(locale, { persist = false, updateHistory = false } = {}) {
+    currentLocale = normalizeLocale(locale) || "en";
+    document.documentElement.lang = currentLocale;
+    document.documentElement.dir = "ltr";
+
+    for (const record of textRecords) {
+      record.node.nodeValue = `${record.leading}${translate(record.core)}${record.trailing}`;
+    }
+    for (const record of attributeRecords) {
+      record.element.setAttribute(record.name, translate(record.value));
+    }
+
+    const presentation = LOCALE_PRESENTATION[currentLocale];
+    for (const element of document.querySelectorAll("[data-locale-current]")) {
+      element.textContent = presentation.label;
+    }
+    for (const element of document.querySelectorAll("[data-locale-current-code]")) {
+      element.textContent = presentation.code;
+    }
+    for (const trigger of document.querySelectorAll("[data-language-trigger]")) {
+      trigger.setAttribute("aria-label", `${translate("Language")}: ${presentation.label}`);
+    }
+    for (const option of document.querySelectorAll("[data-locale-option]")) {
+      const selected = option.dataset.localeOption === currentLocale;
+      if (selected) option.setAttribute("aria-current", "true");
+      else option.removeAttribute("aria-current");
+    }
+
+    updateMeta(currentLocale);
+    updateLinks(currentLocale);
+    if (updateHistory) updateUrl(currentLocale);
+    if (persist) {
+      try {
+        window.localStorage.setItem(STORAGE_KEY, currentLocale);
+        window.localStorage.setItem("simy-lang", currentLocale);
+        window.localStorage.setItem("simy-language", currentLocale);
+        window.localStorage.setItem("simy-lang-source", "manual");
+        window.localStorage.setItem("simy-language-source", "manual");
+      } catch {
+        // The selector still works when storage is unavailable.
+      }
+    }
+    window.dispatchEvent(new CustomEvent("simy:locale-change", { detail: { locale: currentLocale } }));
+  }
+
+  window.SIMY_HOME_I18N = {
+    get locale() {
+      return currentLocale;
+    },
+    translate
+  };
+
+  collectOriginalContent();
+  const initialLocale = resolveInitialLocale();
+  const localeInUrl = normalizeLocale(new URL(window.location.href).searchParams.get("lang"));
+  applyLocale(initialLocale, { updateHistory: !localeInUrl && initialLocale !== "en" });
+
+  for (const option of document.querySelectorAll("[data-locale-option]")) {
+    option.addEventListener("click", (event) => {
+      event.preventDefault();
+      applyLocale(option.dataset.localeOption, { persist: true, updateHistory: true });
+    });
+  }
+})();

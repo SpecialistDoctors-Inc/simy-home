@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="google-site-verification" content="1n6_tVJZRZlQax8luEg5VsuG7gg-kCEam5VFiWIJs3U">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OpenAI Codex の使い方・料金・利用制限ガイド｜アプリ・CLI・スマホの入口と、コードを書かない仕事への広げ方 | SIMY</title>
-<meta name="description" content="OpenAI Codex（ChatGPT の Codex）の使い方ガイド。デスクトップアプリ・CLI・VS Code・Cloud・スマホの入口、導入手順、できること、料金と利用制限、Claude Code との比較と併用、セキュリティまで。1回頼んだ仕事を、SIMY が会議やチャットから拾って毎回 Codex に進めさせます。">
+<title>OpenAI Codexの使い方・料金・利用制限｜アプリとCLIの始め方 | SIMY</title>
+<meta name="description" content="OpenAI Codexの使い方ガイド。アプリ・CLI・スマホの入口、導入手順、料金と利用制限、Claude Codeとの併用まで。翌日も同じ指示を打つ仕事は、SIMYが会議とチャットから拾います。">
 <link rel="canonical" href="https://simy.one/guides/codex.html">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://simy.one/guides/codex.html">
@@ -908,6 +908,7 @@ thead th.simy { background: var(--blue-deep); }
       <span class="brand-sub">OpenAI Codex 活用ガイド</span>
     </a>
     <nav class="header-actions" aria-label="アカウント">
+      <a class="header-link" href="/download.html">ダウンロード</a>
       <a class="header-link" href="https://app.simy.one/login?lang=ja&amp;locale=ja&amp;region=jp">ログイン</a>
       <a class="header-cta" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=codex_guide&amp;utm_content=header">仕事1件から試す</a>
     </nav>
@@ -1035,7 +1036,7 @@ thead th.simy { background: var(--blue-deep); }
       <!-- 02 -->
       <section class="sec" id="wish" aria-labelledby="h-wish">
         <span class="sec-label">02 / WHAT YOU REALLY WANTED</span>
-        <h2 id="h-wish">本当は、こうしたかった</h2>
+        <h2 id="h-wish">本当は、こうしたかった：Codexの仕事のあと</h2>
         <p class="intro">同じ Codex。同じ ChatGPT のプラン。1日の終わりに、こうなっていてほしかった。</p>
         <div class="scenes four">
           <div class="scene wish">
@@ -1126,7 +1127,7 @@ thead th.simy { background: var(--blue-deep); }
         <div class="connect">
           <ol class="connect-steps">
             <li><b>SIMY に登録し、ChatGPT アカウントを接続する</b><span>Codex が使える Plus 以上のプランが対象です。Codex の利用は、お使いのプランの範囲で行われます。</span></li>
-            <li class="key"><b>SIMY デスクトップアプリ（または CLI）を入れる</b><span>PC 上の Codex の会話履歴（既定で90日分）を読み、繰り返している仕事を「SIMY からの提案」として出します。本文はサーバーに保存しません。</span></li>
+            <li class="key"><b>SIMY デスクトップアプリ（または CLI）を入れる</b><span>PC 上の Codex の会話履歴（既定で90日分）を読み、繰り返している仕事を「SIMY からの提案」として出します。本文はサーバーに保存しません。 <a href="/download.html">ダウンロードはこちら</a></span></li>
             <li><b>iOS アプリで、判断だけ返す</b><span>提案を WorkFlow にすると、次からは SIMY が Codex に頼みます。判断待ちはスマホに届きます。</span></li>
           </ol>
           <div>
@@ -1235,7 +1236,7 @@ thead th.simy { background: var(--blue-deep); }
         <span class="sec-label">07 / START</span>
         <h2 id="h-start">はじめ方：Codex を1回使ったら、3ステップ</h2>
         <ol class="steps3">
-          <li><b>Codex のデスクトップアプリで、仕事を1件頼む</b><span>ChatGPT アカウントでログインし、日本語で頼む。会社調査でも、提案資料でも、議事録でも。</span></li>
+          <li><b>Codex のデスクトップアプリで、仕事を1件頼む</b><span>ChatGPT アカウントでログインし、日本語で頼む。会社調査でも、提案資料でも、議事録でも。 <a href="/download.html">ダウンロードはこちら</a></span></li>
           <li class="key"><b>SIMY に ChatGPT アカウントを接続する</b><span>Codex 側の設定はそのまま。<a href="#connect">つなぎ方</a>は上のとおりです。</span></li>
           <li><b>翌日、「SIMY からの提案」を見る</b><span>繰り返していた仕事が候補として届きます。WorkFlow にして、判断だけ返す。それだけです。</span></li>
         </ol>
@@ -1332,7 +1333,7 @@ thead th.simy { background: var(--blue-deep); }
             <h3>skills・MCP・サブエージェント</h3>
             <p><strong>skills</strong> は、手順と判断基準をまとめた再利用できる指示のセットです。「週報の作り方」「議事録の型」を skill にしておくと、毎回の説明を省けます。<strong>MCP（Model Context Protocol）</strong>は、外部のツールやデータを Codex につなぐ共通の規格で、プラグインにないサービス（Figma、社内 DB など）はここから足します。長いタスクは<strong>サブエージェント</strong>に分けて並行して進められます。</p>
             <h3>スケジュール・プランモード・レビュー</h3>
-            <p><strong>スケジュール</strong>は「毎朝9時に競合のニュースをまとめる」のように、時刻を起点にタスクを繰り返す機能です。<strong>プランモード</strong>は、実行の前に手順と影響範囲だけを出させて確認するモードです。<strong>コードレビュー</strong>は GitHub の PR を Codex に点検させる機能で、開発チーム向けです。</p>
+            <p><strong>スケジュール</strong>は「毎週金曜に、その週のメール・Slack・営業記録を突き合わせて、上司への週報を Slack 用に下書きする」のように、時刻を起点にタスクを繰り返す機能です。<strong>プランモード</strong>は、実行の前に手順と影響範囲だけを出させて確認するモードです。<strong>コードレビュー</strong>は GitHub の PR を Codex に点検させる機能で、開発チーム向けです。</p>
             <h3>コードを書かない仕事での使い方（例）</h3>
             <ul class="plain-list">
               <li><strong>会社調査：</strong>Chrome で相手企業のサイトとニュースを読み、要点と論点を Docs にまとめる。</li>
@@ -1341,7 +1342,7 @@ thead th.simy { background: var(--blue-deep); }
               <li><strong>日程調整：</strong>Calendar の空きから候補を3つ出し、招待メールを Gmail の下書きに保存する。</li>
               <li><strong>表の更新：</strong>Sheets の進捗表を読み、会議で決まった変更を反映し、差分を一覧にする。</li>
             </ul>
-            <p class="note"><b>SIMY との関係：</b>スケジュールは時刻が起点、SIMY は会議とチャットが起点です。Codex のプラグインで Gmail の下書きや Slides が作れるからこそ、SIMY は「いつ・何を・どこまで」を決める側に専念できます。</p>
+            <p class="note"><b>SIMY との関係：</b>スケジュールは時刻が起点で、それでも最初の指示を書くのはあなたです。SIMY は会議とチャットから起点を拾います。Codex のプラグインで Gmail の下書きや Slides が作れるからこそ、SIMY は「いつ・何を・どこまで」を決める側に専念できます。</p>
           </div>
         </details>
 
@@ -1370,7 +1371,7 @@ thead th.simy { background: var(--blue-deep); }
               <li><strong>使用量を確認する場所：</strong>デスクトップアプリとCLI では使用量メーター、ChatGPT の設定画面ではプランごとの利用状況が見られます。</li>
             </ul>
             <h3>枠を長持ちさせるコツ</h3>
-            <p>1回の指示に材料の場所と出来上がりの形を書く、長い会話は新しいスレッドに分ける、調査と作成を別のタスクにする。この3つで、同じ仕事でも消費が目に見えて減ります。SIMY が Codex に頼むときも、学んだ型をそのまま渡すため、やり直しの消費が少なくなります。</p>
+            <p>1回の指示に材料の場所と出来上がりの形を書く、長い会話は新しいスレッドに分ける、調査と作成を別のタスクにする。この3つで、同じ仕事でも消費が目に見えて減ります。モデルは画家の腕前、推論レベルは絵にかける時間。使用量が気になるときは、推論レベルを下げます。SIMY が Codex に頼むときも、学んだ型をそのまま渡すため、やり直しの消費が少なくなります。</p>
             <p class="small muted">プランと価格は 2026年10月1日に確認した OpenAI の公式情報です。上限の数値は変更されることがあるため、このページには書いていません。最新は <a href="https://chatgpt.com/ja-JP/pricing/" target="_blank" rel="noopener">ChatGPT の料金ページ</a>で確認してください。</p>
             <p class="note"><b>SIMY を使う場合：</b>Codex の利用は、お使いの ChatGPT プランの範囲で行われます。SIMY が Codex の利用料を上乗せすることはありません。SIMY 自体の料金は<a href="/?lang=ja#pricing">料金ページ</a>にあります。</p>
           </div>
@@ -1492,6 +1493,7 @@ thead th.simy { background: var(--blue-deep); }
       <div class="cta-row">
         <a class="btn btn-primary" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=codex_guide&amp;utm_content=closing">仕事1件から試す <span class="arrow" aria-hidden="true">↗</span></a>
         <a class="btn btn-ghost" href="mailto:sales@simy.one?subject=Codex%E9%80%A3%E6%90%BA%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%E7%9B%B8%E8%AB%87%E3%81%97%E3%81%9F%E3%81%84">相談する</a>
+        <a class="btn btn-ghost" href="/download.html">アプリをダウンロード <span class="arrow" aria-hidden="true">↓</span></a>
       </div>
     </div>
   </section>
@@ -1504,6 +1506,7 @@ thead th.simy { background: var(--blue-deep); }
       <li><a href="/?lang=ja#how-it-works">仕組み</a></li>
       <li><a href="/?lang=ja#pricing">料金</a></li>
       <li><a href="/integrations.html">連携</a></li>
+      <li><a href="/download.html">ダウンロード</a></li>
       <li><a href="/guides/plaud.html">PLAUD活用ガイド</a></li>
       <li><a href="/guides/chatgpt.html">ChatGPT活用ガイド</a></li>
       <li><a href="/guides/claude.html">Claude活用ガイド</a></li>

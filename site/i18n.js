@@ -21,6 +21,8 @@
   var TWIN_PAGE_LOCALES = SUPPORTED;
   var CACHE = {};
   var CURRENT_LANG = DEFAULT;
+  var I18N_VERSION = '20260712-i18n-keys-7';
+  var BUNDLE_LOADING = {};
 
   /* ── Home (/) React SPA translation bridge ──
      The home page (/) is served by a compiled React bundle whose source is
@@ -32,9 +34,51 @@
      pages #root is absent, so this bridge is a no-op. */
   var HOME_DOM_CACHE = {};     // { [lang]: { [enSource]: translated } }
   var ROOT_NODE_MAP = null;    // WeakMap<Text, string> — trimmed English source per text node
+  var STATIC_NODE_MAP = null;  // WeakMap<Text, string> — trimmed static home source per text node
+  var STATIC_HEAD_MAP = null;  // Map<Element|Document, { attr, source }>
   var ROOT_OBSERVER = null;
   var ROOT_DEBOUNCE = null;
   var ROOT_APPLYING = false;   // guard against observer self-triggering
+
+  function scriptBaseUrl() {
+    var scripts = document.getElementsByTagName('script');
+    for (var i = scripts.length - 1; i >= 0; i--) {
+      var src = scripts[i].getAttribute('src') || '';
+      if (src.indexOf('i18n.js') !== -1) {
+        return new URL(src, location.href).href.replace(/[^/]*$/, '');
+      }
+    }
+    return new URL('.', location.href).href;
+  }
+
+  function resourceUrl(relativePath) {
+    if (location.protocol === 'file:') {
+      return scriptBaseUrl() + relativePath;
+    }
+    return '/' + relativePath;
+  }
+
+  function loadBundle(globalName, relativePath, cb) {
+    if (window[globalName]) return cb(true);
+    if (BUNDLE_LOADING[globalName]) {
+      BUNDLE_LOADING[globalName].push(cb);
+      return;
+    }
+    BUNDLE_LOADING[globalName] = [cb];
+    var script = document.createElement('script');
+    script.src = resourceUrl(relativePath + '?v=' + I18N_VERSION);
+    script.onload = function () {
+      var callbacks = BUNDLE_LOADING[globalName] || [];
+      delete BUNDLE_LOADING[globalName];
+      for (var i = 0; i < callbacks.length; i++) callbacks[i](!!window[globalName]);
+    };
+    script.onerror = function () {
+      var callbacks = BUNDLE_LOADING[globalName] || [];
+      delete BUNDLE_LOADING[globalName];
+      for (var i = 0; i < callbacks.length; i++) callbacks[i](false);
+    };
+    (document.head || document.documentElement).appendChild(script);
+  }
 
   /* ── Map browser locale to our supported codes ────────────── */
   var LOCALE_MAP = {
@@ -171,6 +215,15 @@
     if (queryRegion) return queryRegion;
     var queryLangRegion = supportedRegion(regionFromLang(params.get('lang')));
     if (queryLangRegion) return queryLangRegion;
+    var currentLangRegion = supportedRegion(regionFromLang(CURRENT_LANG || detect()));
+    if (currentLangRegion) return currentLangRegion;
+    try {
+      var savedRegionSource = localStorage.getItem('simy-region-source');
+      var savedRegion = savedRegionSource === 'manual'
+        ? supportedRegion(localStorage.getItem('simy-region'))
+        : '';
+      if (savedRegion) return savedRegion;
+    } catch (e) {}
     var api = window.SIMYRegion || window.SIMY_REGION || null;
     if (api && typeof api.get === 'function') {
       var apiRegion = supportedRegion(api.get());
@@ -182,37 +235,16 @@
       var tzRegion = supportedRegion(regionFromTimezone(timeZone, langs[0] || ''));
       if (tzRegion) return tzRegion;
     } catch (e2) {}
-    var currentLangRegion = supportedRegion(regionFromLang(CURRENT_LANG || ''));
-    if (currentLangRegion) return currentLangRegion;
-    try {
-      var savedRegionSource = localStorage.getItem('simy-region-source');
-      var savedRegion = savedRegionSource === 'manual'
-        ? supportedRegion(localStorage.getItem('simy-region'))
-        : '';
-      if (savedRegion) return savedRegion;
-    } catch (e) {}
     return supportedRegion(regionFromLang(CURRENT_LANG || detect())) || 'us';
-  }
-
-  function currentAppHostname() {
-    var host = location.hostname;
-    if (host === 'dev.simy.one' || host === 'localhost' || host === '127.0.0.1') {
-      return 'app-dev.simy.one';
-    }
-    return 'app.simy.one';
-  }
-
-  function isAppHostname(hostname) {
-    return hostname === 'app.simy.one' || hostname === 'app-dev.simy.one';
   }
 
   function decorateAppUrl(href) {
     try {
       var url = new URL(href, location.href);
-      if (!isAppHostname(url.hostname)) return href;
-      url.hostname = currentAppHostname();
+      if (url.hostname !== 'app.simy.one') return href;
       var lang = CURRENT_LANG || document.documentElement.lang || detect();
-      var region = currentRegionForApp();
+      var langRegion = supportedRegion(regionFromLang(lang));
+      var region = (lang && lang !== 'en' && langRegion) ? langRegion : currentRegionForApp();
       url.searchParams.set('lang', lang);
       url.searchParams.set('locale', lang);
       url.searchParams.set('region', region);
@@ -257,7 +289,7 @@
     for (var i = 0; i < links.length; i++) {
       var href = links[i].getAttribute('href');
       if (!href) continue;
-      var nextHref = href.indexOf('app.simy.one') !== -1 || href.indexOf('app-dev.simy.one') !== -1
+      var nextHref = href.indexOf('app.simy.one') !== -1
         ? decorateAppUrl(href)
         : decorateSiteUrl(href);
       links[i].setAttribute('href', nextHref);
@@ -293,7 +325,7 @@
       if (!target || target === document || !target.getAttribute) return;
       var href = target.getAttribute('href');
       if (!href) return;
-      var nextHref = href.indexOf('app.simy.one') !== -1 || href.indexOf('app-dev.simy.one') !== -1
+      var nextHref = href.indexOf('app.simy.one') !== -1
         ? decorateAppUrl(href)
         : decorateSiteUrl(href);
       if (nextHref && nextHref !== href) target.setAttribute('href', nextHref);
@@ -324,32 +356,31 @@
       return safeLangForPage(primaryResolved);
     }
 
-    // 3. Browser / OS country signal through timezone. This must beat
-    //    localStorage so a visitor landing in Japan gets JP and a visitor
-    //    landing in the US gets US, even if a previous session saved another
-    //    region.
-    try {
-      var timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
-      var tzRegion = supportedRegion(regionFromTimezone(timeZone, langs[0] || ''));
-      if (tzRegion) return safeLangForPage(REGION_BY_CODE[tzRegion].lang);
-    } catch (e) {}
-
-    // 4. Saved language preference — check BOTH keys. The React bundle on /
+    // 3. Saved language preference — check BOTH keys. The React bundle on /
     //    uses 'simy-language' for its internal LanguageContext, while
     //    the static pages use 'simy-lang'. Either key is authoritative.
+    //    A manual language choice must beat timezone on later direct visits.
     var savedLangSource = localStorage.getItem('simy-lang-source');
     var saved = savedLangSource === 'manual' ? localStorage.getItem('simy-lang') : null;
     if (saved && SUPPORTED.indexOf(saved) !== -1) return safeLangForPage(saved);
-    var savedReact = savedLangSource === 'manual' ? localStorage.getItem('simy-language') : null;
+    var savedReactSource = localStorage.getItem('simy-language-source') || savedLangSource;
+    var savedReact = savedReactSource === 'manual' ? localStorage.getItem('simy-language') : null;
     if (savedReact && SUPPORTED.indexOf(savedReact) !== -1) return safeLangForPage(savedReact);
 
-    // 5. Explicitly selected saved region preference. Use it only when the
+    // 4. Explicitly selected saved region preference. Use it only when the
     //    browser does not expose a usable current country/language signal.
     var savedRegionSource = localStorage.getItem('simy-region-source');
     var savedRegion = savedRegionSource === 'manual'
       ? supportedRegion(localStorage.getItem('simy-region'))
       : '';
     if (savedRegion) return safeLangForPage(REGION_BY_CODE[savedRegion].lang);
+
+    // 5. Browser / OS country signal through timezone.
+    try {
+      var timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+      var tzRegion = supportedRegion(regionFromTimezone(timeZone, langs[0] || ''));
+      if (tzRegion) return safeLangForPage(REGION_BY_CODE[tzRegion].lang);
+    } catch (e) {}
 
     // 6. Browser / OS language
     for (var i = 0; i < langs.length; i++) {
@@ -364,8 +395,17 @@
   function load(lang, cb) {
     if (CACHE[lang]) return cb(CACHE[lang]);
 
+    if (location.protocol === 'file:') {
+      loadBundle('SIMY_I18N_BUNDLE', 'lang/i18n-bundle.js', function (ok) {
+        var bundle = ok ? window.SIMY_I18N_BUNDLE : null;
+        CACHE[lang] = (bundle && bundle[lang]) || {};
+        cb(CACHE[lang]);
+      });
+      return;
+    }
+
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'lang/' + lang + '.json', true);
+    xhr.open('GET', resourceUrl('lang/' + lang + '.json?v=' + I18N_VERSION), true);
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) {
         if (xhr.status === 200) {
@@ -407,7 +447,7 @@
         "index": { t: "SIMY - 重要な会議のあと、仕事を止めない", d: "お客さまとの打ち合わせ、投資家との面談、社内の意思決定のあと、SIMYがフォロー、顧客メモ、提案、チーム共有、次にやることを進めます。" },
         "pricing": { t: "料金 — SIMY | AIコード生成プラン 月額20ドルから", d: "会議からコードを生成するSIMYの料金。Starter月額$20、Pro$40、Scale$100。GitHub Copilot・Cursorより安価なプラン。" },
         "compare": { t: "SIMY比較 — 会議後の仕事を引き継ぐYour Twin", d: "エージェントは作業をする。Twinは文脈を引き継ぐ。会議からフォロー、資料、顧客メモ、チーム共有、次にやることへ進めます。" },
-        "press-release": { t: "ニュース — SIMY、会議後の仕事を進めるInteligence Twinを発表", d: "Meeting ends. Your Twin starts working. SIMYは会議の文脈をフォロー、提案、顧客メモ、チーム共有、次にやることへ変えるInteligence Twinを発表しました。" },
+        "press-release": { t: "ニュース — SIMY、会議後の仕事を進めるInteligence Twinを発表", d: "会議は終了します。あなたのTwinが仕事を始めます。SIMYは会議の文脈をフォロー、提案、顧客メモ、チーム共有、次にやることへ変えるInteligence Twinを発表しました。" },
         "privacy": { t: "プライバシーポリシー — SIMY by AwakApp Inc.", d: "SIMYのプライバシーポリシー。AwakApp Inc.が個人情報をどのように収集、利用、開示、保護するかを説明します。" },
         "terms": { t: "利用規約 — SIMY by AwakApp Inc.", d: "SIMYの利用規約。AwakApp Inc.が提供するSIMYの利用条件を説明します。" },
         "how-it-works": { t: "使い方 — SIMY | 会議からコード生成 4ステップ", d: "SIMYが会議をGitHubプルリクエストに変える4ステップ：録画、AI処理、コード生成、PR作成。プロンプト不要。" },
@@ -628,8 +668,11 @@
   };
 
   function pageKey() {
+    var explicitPage = document.querySelector('meta[name="simy-page"]');
+    if (explicitPage && explicitPage.content) return explicitPage.content;
     var p = location.pathname;
     if (p === '/' || p === '') return 'index';
+    if (p === '/compare/' || /\/compare\/index\.html$/.test(p)) return 'compare';
     var m = p.match(/\/([^/]+?)(?:\.html)?$/);
     return m ? m[1] : 'index';
   }
@@ -645,6 +688,10 @@
       document.head.appendChild(el);
     }
     el.setAttribute('content', content);
+  }
+
+  function stripSeoHtml(value) {
+    return (value || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
   }
 
   function applySEO(lang) {
@@ -665,6 +712,40 @@
       }
     }
     if (data.kw) setMetaTag('keywords', data.kw);
+  }
+
+  function applyDictionarySEO(dict, langCode) {
+    if (!dict) return;
+    if (langCode === DEFAULT) return;
+    var key = pageKey();
+    var title = '';
+    var desc = '';
+    if (key === 'index') {
+      title = stripSeoHtml(dict['home.h1']);
+      desc = stripSeoHtml(dict['home.final.p']);
+    } else if (key === 'press-release' || key === 'press') {
+      title = stripSeoHtml(dict['newpress.h1']);
+      desc = stripSeoHtml(dict['newpress.lead']);
+    } else if (key === 'privacy') {
+      title = stripSeoHtml(dict['privacy.title']);
+      desc = stripSeoHtml(dict['privacy.intro']);
+    } else if (key === 'terms') {
+      title = stripSeoHtml(dict['terms.title']);
+      desc = stripSeoHtml(dict['terms.intro']);
+    } else if (key === '404' || key === 'error') {
+      title = stripSeoHtml(dict['e404.h1']);
+      desc = stripSeoHtml(dict['e404.p']);
+    }
+    if (title) {
+      document.title = title + ' — SIMY';
+      setMetaTag('og:title', document.title, 'property');
+      setMetaTag('twitter:title', document.title);
+    }
+    if (desc) {
+      setMetaTag('description', desc);
+      setMetaTag('og:description', desc, 'property');
+      setMetaTag('twitter:description', desc);
+    }
   }
 
   /* ── Capture original (English) DOM content on first apply ──
@@ -695,13 +776,18 @@
   /* ── Home #root bridge: load per-language dictionary ─────────── */
   function loadHomeDom(lang, cb) {
     if (HOME_DOM_CACHE[lang]) return cb(HOME_DOM_CACHE[lang]);
-    // English is identity — nothing to load
-    if (lang === DEFAULT) {
-      HOME_DOM_CACHE[lang] = {};
-      return cb(HOME_DOM_CACHE[lang]);
+
+    if (location.protocol === 'file:') {
+      loadBundle('SIMY_HOME_DOM_BUNDLE', 'lang/home-dom-bundle.js', function (ok) {
+        var bundle = ok ? window.SIMY_HOME_DOM_BUNDLE : null;
+        HOME_DOM_CACHE[lang] = (bundle && bundle[lang]) || {};
+        cb(HOME_DOM_CACHE[lang]);
+      });
+      return;
     }
+
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'lang/home-dom/' + lang + '.json', true);
+    xhr.open('GET', resourceUrl('lang/home-dom/' + lang + '.json?v=' + I18N_VERSION), true);
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) {
         if (xhr.status === 200) {
@@ -712,6 +798,134 @@
       }
     };
     xhr.send();
+  }
+
+  function isStaticDomBridgePage() {
+    return !document.getElementById('root');
+  }
+
+  function shouldApplyStaticHeadBridge() {
+    var p = location.pathname;
+    return p === '/demo.html' || p === '/demo';
+  }
+
+  function shouldSkipHomeDomNode(n, root) {
+    var p = n.parentNode;
+    while (p && p !== root) {
+      if (p.nodeType !== 1) {
+        p = p.parentNode;
+        continue;
+      }
+      var tag = (p.tagName || '').toLowerCase();
+      if (tag === 'script' || tag === 'style' || tag === 'noscript' || tag === 'svg') return true;
+      if (p.hasAttribute && (
+        p.hasAttribute('data-simy-no-translate') ||
+        p.hasAttribute('data-i18n') ||
+        p.hasAttribute('data-i18n-html') ||
+        p.hasAttribute('data-lang-option') ||
+        p.hasAttribute('data-region-btn')
+      )) return true;
+      if (p.classList && (
+        p.classList.contains('lang-switcher') ||
+        p.classList.contains('region-switcher') ||
+        p.classList.contains('mobile-menu-btn')
+      )) return true;
+      p = p.parentNode;
+    }
+    return false;
+  }
+
+  function captureStaticOriginals(root) {
+    if (!STATIC_NODE_MAP) STATIC_NODE_MAP = new WeakMap();
+    if (!STATIC_NODE_MAP._list) STATIC_NODE_MAP._list = [];
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
+    var n;
+    while ((n = walker.nextNode())) {
+      if (STATIC_NODE_MAP.has(n)) continue;
+      var raw = n.nodeValue;
+      if (!raw) continue;
+      var trimmed = raw.replace(/\s+/g, ' ').trim();
+      if (!trimmed) continue;
+      if (/^[\s\d.,:%×·$/()\-+]*$/.test(trimmed)) continue;
+      if (shouldSkipHomeDomNode(n, root)) continue;
+      STATIC_NODE_MAP.set(n, trimmed);
+      STATIC_NODE_MAP._list.push(n);
+    }
+  }
+
+  function captureStaticHeadOriginals() {
+    if (STATIC_HEAD_MAP) return;
+    STATIC_HEAD_MAP = [];
+    function add(target, attr, value) {
+      var source = (value || '').replace(/\s+/g, ' ').trim();
+      if (!source) return;
+      STATIC_HEAD_MAP.push({ target: target, attr: attr, source: source });
+    }
+    add(document, 'title', document.title);
+    var selectors = [
+      'meta[name="description"]',
+      'meta[property="og:title"]',
+      'meta[property="og:description"]',
+      'meta[name="twitter:title"]',
+      'meta[name="twitter:description"]'
+    ];
+    for (var i = 0; i < selectors.length; i++) {
+      var el = document.querySelector(selectors[i]);
+      if (el) add(el, 'content', el.getAttribute('content') || '');
+    }
+  }
+
+  function applyStaticHeadDom(langCode) {
+    if (!shouldApplyStaticHeadBridge()) return;
+    if (!HOME_DOM_CACHE[langCode]) return;
+    captureStaticHeadOriginals();
+    var dict = HOME_DOM_CACHE[langCode] || {};
+    for (var i = 0; i < STATIC_HEAD_MAP.length; i++) {
+      var item = STATIC_HEAD_MAP[i];
+      var translated = dict[item.source];
+      var target = (translated !== undefined && translated !== null && translated !== '')
+        ? translated
+        : item.source;
+      if (item.attr === 'title') {
+        if (document.title !== target) document.title = target;
+      } else if (item.target && item.target.setAttribute) {
+        if (item.target.getAttribute(item.attr) !== target) item.target.setAttribute(item.attr, target);
+      }
+    }
+  }
+
+  function applyStaticHomeDom(langCode) {
+    if (!isStaticDomBridgePage()) return;
+    if (document.getElementById('root')) return;
+    var root = document.body;
+    if (!root) return;
+    captureStaticOriginals(root);
+    if (!STATIC_NODE_MAP || !STATIC_NODE_MAP._list) return;
+    if (!HOME_DOM_CACHE[langCode]) {
+      loadHomeDom(langCode, function () { applyStaticHomeDom(langCode); });
+      return;
+    }
+    applyStaticHeadDom(langCode);
+    var dict = HOME_DOM_CACHE[langCode] || {};
+    var list = STATIC_NODE_MAP._list;
+    var alive = [];
+    for (var i = 0; i < list.length; i++) {
+      var node = list[i];
+      if (!node || !node.isConnected) continue;
+      alive.push(node);
+      var orig = STATIC_NODE_MAP.get(node);
+      if (!orig) continue;
+      var translated = dict[orig];
+      var target = (translated !== undefined && translated !== null && translated !== '')
+        ? translated
+        : orig;
+      var raw = node.nodeValue || '';
+      var mLead = raw.match(/^\s*/);
+      var mTail = raw.match(/\s*$/);
+      var next = (mLead ? mLead[0] : '') + target + (mTail ? mTail[0] : '');
+      if (node.nodeValue !== next) node.nodeValue = next;
+    }
+    STATIC_NODE_MAP._list = alive;
   }
 
   /* ── Home #root bridge: walk text nodes, capture originals ─── */
@@ -1138,6 +1352,7 @@
 
     // Inject localized SEO (title, description, keywords, OG, Twitter)
     applySEO(meta.code || DEFAULT);
+    applyDictionarySEO(dict, meta.code || DEFAULT);
 
     // Text-only replacements — fall back to captured original if dict
     // lacks the key so we never leave a stale translation behind.
@@ -1203,6 +1418,7 @@
     if (document.getElementById('root')) {
       applyRoot(CURRENT_LANG);
     }
+    applyStaticHomeDom(CURRENT_LANG);
   }
 
   /* ── Language names for switcher ───────────────────────────── */
@@ -1582,9 +1798,12 @@
     } else {
       // Still apply to set display name
       load(DEFAULT, function (dict) {
+        document.documentElement.lang = DEFAULT;
+        document.documentElement.dir = 'ltr';
         var display = document.getElementById('langDisplay');
         if (display) display.textContent = (dict._meta || {}).name || 'English';
         decorateAppLinks();
+        applyStaticHomeDom(DEFAULT);
       });
     }
 
@@ -1593,6 +1812,7 @@
     // dictionary and installs a MutationObserver that re-applies the
     // current language on every React render.
     initHomeDomBridge();
+    applyStaticHomeDom(lang);
 
     // Keep simy-lang / simy-language in sync across i18n.js and the
     // React bundle. Without this, changing language via one side can

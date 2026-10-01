@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="google-site-verification" content="1n6_tVJZRZlQax8luEg5VsuG7gg-kCEam5VFiWIJs3U">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ChatGPT Work とは？使い方・料金・Chat／Codex との違い｜チャットGPT活用ガイド | SIMY</title>
-<meta name="description" content="ChatGPT に毎回頼まなくてすむ使い方の活用ガイド。GPTs・プロジェクト・カスタム指示の工夫と限界、学習させない5つの設定、料金プラン（Free・Go・Plus・Pro・Business）、ChatGPT Work と Codex の違い、セキュリティまで。回答のあとに残る仕事は、お使いの ChatGPT プランの上で SIMY が進めます。">
+<title>ChatGPT（チャットGPT）の使い方・料金｜Work・Codexとの違い | SIMY</title>
+<meta name="description" content="ChatGPT（チャットGPT）の使い方と料金、GPTsの作り方、学習させない設定、WorkとCodexの違いを解説。回答のあとに残る仕事は、お使いのChatGPTプランの上でSIMYが進めます。">
 <link rel="canonical" href="https://simy.one/guides/chatgpt.html">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://simy.one/guides/chatgpt.html">
@@ -895,6 +895,14 @@ thead th.simy { background: var(--blue-deep); }
             "@type": "Answer",
             "text": "クラウドでの実行は、お使いの ChatGPT アカウント（Codex）で行います。PC 上では、SIMY のデスクトップアプリや CLI が、Codex のほかに Claude Code も実行役にできます。どちらかが不調なときや利用枠の上限に当たったときの備えになります。"
           }
+        },
+        {
+          "@type": "Question",
+          "name": "ChatGPT で Excel の関数やマクロ（VBA・GAS）を作れますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "作れます。やりたいことを日本語で書くと数式やコードが返ってくるので、Excel や Apps Script に貼って実行します。社外秘のデータは貼らず、学習に使わせない設定も確認してください。毎回 ChatGPT に頼んでいる定型の仕事は、SIMY が会議とチャットから拾って進めます。"
+          }
         }
       ]
     }
@@ -913,6 +921,7 @@ thead th.simy { background: var(--blue-deep); }
       <span class="brand-sub">ChatGPT 活用ガイド</span>
     </a>
     <nav class="header-actions" aria-label="アカウント">
+      <a class="header-link" href="/download.html">ダウンロード</a>
       <a class="header-link" href="https://app.simy.one/login?lang=ja&amp;locale=ja&amp;region=jp">ログイン</a>
       <a class="header-cta" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=chatgpt_guide&amp;utm_content=header">会議1件から試す</a>
     </nav>
@@ -1040,7 +1049,7 @@ thead th.simy { background: var(--blue-deep); }
       <!-- 02 -->
       <section class="sec" id="wish" aria-labelledby="h-wish">
         <span class="sec-label">02 / WHAT YOU REALLY WANTED</span>
-        <h2 id="h-wish">本当は、こうしたかった</h2>
+        <h2 id="h-wish">本当は、こうしたかった：ChatGPTの回答のあと</h2>
         <p class="intro">同じ ChatGPT。同じプラン。会議が終わったとき、こうなっていてほしかった。</p>
         <div class="scenes four">
           <div class="scene wish">
@@ -1262,6 +1271,18 @@ thead th.simy { background: var(--blue-deep); }
               <li><strong>プロジェクト：</strong>顧客や案件ごとにプロジェクトを作り、資料と会話をまとめておくと、Chat も Work も同じ前提で動けます。</li>
               <li><strong>GPTs（カスタム GPT）：</strong>「議事録を、うちの型に直す GPT」のように、1つのタスクの型を固めて保存します。GPT ストアで公開されている GPTs は無料プランでも使えますが、作成できるのは Plus 以上です。ワークスペースの中だけで共有する社内限定の GPTs は、Team や Business 以上で作れます（2026年10月時点）。</li>
             </ul>
+            <h3>GPTs の作り方：4ステップ</h3>
+            <ol class="plain-list">
+              <li><strong>「GPT を作成」を開く。</strong>作成は Plus 以上の有料プランで、無料プランは使うだけです（2026年10月時点）。</li>
+              <li><strong>指示・知識ファイル・会話のきっかけ・機能を設定する。</strong>指示文は ChatGPT に「こういう GPT の指示を書いて」と下書きさせてかまいません。</li>
+              <li><strong>公開範囲を選ぶ。</strong>自分だけ、リンクを知っている人、社内（Team・Business 以上のワークスペース）から選びます。</li>
+              <li><strong>使う。</strong>例：自社資料を読ませた相談役、URL を渡すとニュースを要約する GPT。</li>
+            </ol>
+            <p class="note">それでも、GPT を開くのも、資料や URL を貼るのも、頼むのも毎回あなたです。会議とチャットから仕事を拾うところから、SIMY が引き受けます。</p>
+            <h3>入力待ちプロンプト：無料プランでもできる工夫</h3>
+            <p>最初に「これから送る箇条書きを、このルールで文章にして。わかったら『はい』と答えて」とルールを固め、あとはデータだけを送ります。</p>
+            <p>会話が長くなると最初の指示を忘れていくので、崩れてきたら新しいチャットで固め直します。</p>
+            <p class="note">それでも、チャットを開いてルールを貼り直し、データを運ぶのは毎回あなたです。SIMY は、あなたのやり方を会話から学び、毎回の指示なしで進めます。</p>
             <h3>それでも残ること</h3>
             <p>GPTs は「1タスクの型」です。起点を決めるのはあなたで、文字起こしを貼るのも、できた文面を置き場所に運ぶのも、次の会議でまた同じ GPT を開くのもあなたです。長い会話では最初の指示が効かなくなり、新しいチャットでやり直すこともあります。</p>
             <p class="scroll-hint">表は横にスクロールできます →</p>
@@ -1292,6 +1313,10 @@ thead th.simy { background: var(--blue-deep); }
               <li><strong>メモリの範囲を決める。</strong>メモリを有効にすると過去の会話を踏まえて答えてくれますが、顧客名や金額まで覚えさせたくない場合もあります。プロジェクト単位に絞るか、オフにするかを最初に決めます。</li>
               <li><strong>回答の置き場所と、次の仕事の起点を決める。</strong>回答をコピーして終わりにせず、Notion、Google ドライブ、Slack のどこに置くかを決めます。置き場所が決まっていることが、SIMY と仕事をつなぐ入口になります。</li>
             </ol>
+            <h3>頼み方の型：目的・相手・構成・制約</h3>
+            <p>メールなどを頼むときは、4つを書いてから頼むと手直しが減ります。</p>
+            <p>例：「目的：打ち合わせ日程の再調整。相手：取引先の部長。構成：お詫び→候補日3つ→返信のお願い。制約：200字以内、敬体」。</p>
+            <p class="note">それでも、型を書いて頼むのは毎回あなたです。SIMY は会議とチャットから「誰に、何を送るか」を拾い、あなたの型で下書きまで進めます。</p>
           </div>
         </details>
 
@@ -1417,6 +1442,10 @@ thead th.simy { background: var(--blue-deep); }
             <summary>ChatGPT 以外の AI でも SIMY を使えますか？</summary>
             <div class="a"><p>クラウドでの実行は、お使いの ChatGPT アカウント（Codex）で行います。PC 上では、SIMY のデスクトップアプリや CLI が、Codex のほかに Claude Code も実行役にできます。どちらかが不調なときや利用枠の上限に当たったときの備えになります。</p></div>
           </details>
+          <details>
+            <summary>ChatGPT で Excel の関数やマクロ（VBA・GAS）を作れますか？</summary>
+            <div class="a"><p>作れます。やりたいことを日本語で書くと数式やコードが返ってくるので、Excel や Apps Script に貼って実行します。社外秘のデータは貼らず、学習に使わせない設定も確認してください。毎回 ChatGPT に頼んでいる定型の仕事は、SIMY が会議とチャットから拾って進めます。</p></div>
+          </details>
         </div>
       </section>
 
@@ -1445,6 +1474,7 @@ thead th.simy { background: var(--blue-deep); }
       <div class="cta-row">
         <a class="btn btn-primary" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=chatgpt_guide&amp;utm_content=closing">会議1件から試す <span class="arrow" aria-hidden="true">↗</span></a>
         <a class="btn btn-ghost" href="mailto:sales@simy.one?subject=ChatGPT%E9%80%A3%E6%90%BA%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%E7%9B%B8%E8%AB%87%E3%81%97%E3%81%9F%E3%81%84">相談する</a>
+        <a class="btn btn-ghost" href="/download.html">アプリをダウンロード <span class="arrow" aria-hidden="true">↓</span></a>
       </div>
     </div>
   </section>
@@ -1457,6 +1487,7 @@ thead th.simy { background: var(--blue-deep); }
       <li><a href="/?lang=ja#how-it-works">仕組み</a></li>
       <li><a href="/?lang=ja#pricing">料金</a></li>
       <li><a href="/integrations.html">連携</a></li>
+      <li><a href="/download.html">ダウンロード</a></li>
       <li><a href="/guides/plaud.html">PLAUD活用ガイド</a></li>
       <li><a href="/guides/claude.html">Claude活用ガイド</a></li>
       <li><a href="/guides/codex.html">Codex活用ガイド</a></li>

@@ -1,0 +1,13 @@
+/* Compact navigation for mobile legal documents; desktop pages are unchanged. */
+.legal-mobile-toolbar { display: none; }
+@media (max-width: 600px) {
+  .static-nav { display: none; }
+  .legal-mobile-toolbar { display: flex; position: sticky; top: 0; z-index: 30; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 20px; background: #fff; border-bottom: 1px solid #e3e7ec; }
+  .legal-mobile-toolbar a { min-height: 44px; display: inline-flex; align-items: center; color: #0767bd; text-decoration: underline; font-size: 15px; }
+  .legal-mobile-toolbar .legal-brand { font-weight: 700; font-size: 20px; text-decoration: none; }
+  .legal-content { padding: 24px 20px 40px; }
+  .legal-content .container { padding: 0; }
+  .policy-header h1, .terms-header h1 { font-size: 28px; line-height: 1.5; letter-spacing: 0; }
+  .policy-body p, .terms-body p, .policy-body li, .terms-body li { font-size: 16px; overflow-wrap: anywhere; }
+  .policy-body a, .terms-body a { min-height: 44px; display: inline-flex; align-items: center; }
+}

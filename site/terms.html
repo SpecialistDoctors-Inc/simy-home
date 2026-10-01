@@ -19,6 +19,7 @@
     <link rel="icon" type="image/png" href="/favicon.png">
     <link rel="apple-touch-icon" href="/favicon.png">
     <link rel="stylesheet" href="/subpage.css">
+    <link rel="stylesheet" href="/legal-navigation.css">
   </head>
   <body>
     <nav class="static-nav" id="staticNav">
@@ -34,7 +35,7 @@
         </div>
         <div class="nav-right">
           <a href="https://app.simy.one/login" class="nav-signin" data-i18n="nav.signin">Sign in</a>
-          <a href="https://app.simy.one/signup?plan=pro&interval=yearly&lang=en&locale=en&region=us" class="btn-primary" data-i18n="home.cta.primary">Start with Pro</a>
+          <a href="https://app.simy.one/signup?lang=en&locale=en&region=us" class="btn-primary" data-i18n="pricing.cta">Choose plan</a>
         </div>
         <div class="region-switcher">
           <button class="region-btn" type="button" aria-haspopup="true" aria-expanded="false">
@@ -45,6 +46,7 @@
         </div>
       </div>
     </nav>
+    <nav class="legal-mobile-toolbar" aria-label="Legal information"><a class="legal-brand" href="/">SIMY</a><a href="/legal.html">規約とサービス情報</a></nav>
     <main class="legal-content">
 <div class="container">
   <div class="terms-content">
@@ -212,7 +214,7 @@
         <div class="footer-bottom" data-i18n="footer.copy">&copy; 2026 SIMY by AwakApp Inc. All rights reserved.</div>
       </div>
     </footer>
-    <script src="/i18n.js"></script>
+    <script src="i18n.js?v=20260712-i18n-keys-7"></script>
     <script>
       document.querySelectorAll('a.eml').forEach(function(el){
         var e=el.dataset.u+String.fromCharCode(64)+el.dataset.d;
