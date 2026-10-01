@@ -588,6 +588,23 @@
     window.history.replaceState({}, "", `${url.pathname}${url.search}${url.hash}`);
   }
 
+  // Each translation must be self-canonical: pointing ?lang=ja at the English
+  // root tells search engines the translation is a duplicate. The canonical is
+  // the static hreflang URL of the language this URL names (x-default without
+  // ?lang=), so canonical and alternates stay byte-identical.
+  function updateCanonical() {
+    const urlLocale = normalizeLocale(new URL(window.location.href).searchParams.get("lang"));
+    const alternate = document.querySelector(`link[rel="alternate"][hreflang="${urlLocale || "x-default"}"]`);
+    if (!alternate) return;
+    let canonical = document.querySelector('link[rel="canonical"]');
+    if (!canonical) {
+      canonical = document.createElement("link");
+      canonical.rel = "canonical";
+      document.head.append(canonical);
+    }
+    canonical.href = alternate.getAttribute("href");
+  }
+
   function applyLocale(locale, { persist = false, updateHistory = false } = {}) {
     currentLocale = normalizeLocale(locale) || "en";
     document.documentElement.lang = currentLocale;
@@ -619,6 +636,7 @@
     updateMeta(currentLocale);
     updateLinks(currentLocale);
     if (updateHistory) updateUrl(currentLocale);
+    updateCanonical();
     if (persist) {
       try {
         window.localStorage.setItem(STORAGE_KEY, currentLocale);
