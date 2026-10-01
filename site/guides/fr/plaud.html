@@ -1,0 +1,1563 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="google-site-verification" content="1n6_tVJZRZlQax8luEg5VsuG7gg-kCEam5VFiWIJs3U">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guide PLAUD NOTE : aller au-delà de la transcription | SIMY</title>
+<meta name="description" content="Guide PLAUD NOTE : premiers pas, Plaud Web et Desktop, offres, modèles, sécurité. Connectez Plaud : SIMY prépare le suivi après le résumé.">
+<link rel="canonical" href="https://simy.one/guides/fr/plaud.html">
+<link rel="alternate" hreflang="ja" href="https://simy.one/guides/plaud.html">
+<link rel="alternate" hreflang="en" href="https://simy.one/guides/en/plaud.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://simy.one/guides/zh-hans/plaud.html">
+<link rel="alternate" hreflang="es" href="https://simy.one/guides/es/plaud.html">
+<link rel="alternate" hreflang="fr" href="https://simy.one/guides/fr/plaud.html">
+<link rel="alternate" hreflang="hi" href="https://simy.one/guides/hi/plaud.html">
+<link rel="alternate" hreflang="x-default" href="https://simy.one/guides/en/plaud.html">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://simy.one/guides/fr/plaud.html">
+<meta property="og:title" content="Vos enregistrements PLAUD ne s'arrêtent plus au résumé | SIMY">
+<meta property="og:description" content="Connectez votre compte Plaud, et SIMY fait avancer le travail qui suit le résumé. Premiers pas, intégration, offres et modèles.">
+<meta property="og:site_name" content="SIMY">
+<meta property="og:image" content="https://simy.one/ogp.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="SIMY : le travail qui suit le résumé PLAUD">
+<meta property="og:locale" content="fr_FR">
+<meta property="article:published_time" content="2026-09-30">
+<meta property="article:modified_time" content="2026-10-01">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Vos enregistrements PLAUD ne s'arrêtent plus au résumé | SIMY">
+<meta name="twitter:description" content="Connectez votre compte Plaud, et SIMY fait avancer le travail qui suit le résumé. Premiers pas, intégration, offres et modèles.">
+<meta name="twitter:image" content="https://simy.one/ogp.png">
+<meta name="twitter:image:alt" content="SIMY : le travail qui suit le résumé PLAUD">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#f6f5f4">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png">
+<style>
+:root {
+  --paper: #f6f5f4;
+  --paper-light: #ffffff;
+  --ink: #111111;
+  --ink-soft: #5d5b58;
+  --ink-faint: #6b6865;
+  --line-soft: rgba(17, 17, 17, 0.14);
+  --ui-line: #d9dde2;
+  --blue: #3273d7;
+  --blue-deep: #235db8;
+  --blue-soft: #eef5ff;
+  --mint: #92edce;
+  --coral-soft: #fff1ec;
+  --yellow: #ffd166;
+  --radius: 0.8rem;
+  --radius-sm: 0.5rem;
+  --sans: "Helvetica Neue", Arial, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", Meiryo, sans-serif;
+  --mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  --page: 1180px;
+  --gutter: clamp(16px, 4vw, 40px);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.85;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+a { color: inherit; }
+a:focus-visible, summary:focus-visible {
+  outline: 3px solid rgba(50, 115, 215, 0.45);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+img { max-width: 100%; display: block; }
+
+.wrap { width: min(var(--page), 100% - var(--gutter) * 2); margin: 0 auto; }
+
+.skip {
+  position: absolute; left: -9999px; top: 8px;
+  background: var(--ink); color: #fff; padding: 8px 14px; border-radius: 6px; z-index: 100;
+}
+.skip:focus { left: 8px; }
+
+/* ---------- Header ---------- */
+.site-header {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(246, 245, 244, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--ink);
+}
+.header-inner {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  min-height: 64px;
+}
+.brand {
+  display: inline-flex; align-items: center; gap: 10px;
+  text-decoration: none; font-weight: 800; letter-spacing: 0.01em;
+}
+.brand img { width: 28px; height: 28px; border-radius: 7px; }
+.brand-sub {
+  padding-left: 12px; margin-left: 2px;
+  border-left: 1px solid var(--line-soft);
+  color: var(--ink-soft); font-size: 0.8rem; font-weight: 500;
+}
+.header-actions { display: flex; align-items: center; gap: 6px; }
+.header-link {
+  padding: 8px 10px; font-size: 0.86rem; font-weight: 600; text-decoration: none; color: var(--ink);
+}
+.header-link:hover { color: var(--blue-deep); }
+.header-cta {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px;
+  background: var(--ink); color: #fff; text-decoration: none;
+  font-size: 0.86rem; font-weight: 700; border-radius: 6px;
+  transition: background 0.2s;
+}
+.header-cta:hover { background: var(--blue-deep); }
+
+/* ---------- Hero ---------- */
+.hero {
+  position: relative;
+  border-bottom: 1px solid var(--ink);
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(rgba(17, 17, 17, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(17, 17, 17, 0.045) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-position: -1px -1px;
+}
+.hero-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+  gap: clamp(32px, 5vw, 72px);
+  align-items: center;
+  padding: clamp(40px, 7vw, 96px) 0 clamp(48px, 7vw, 104px);
+}
+
+.crumbs {
+  display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 22px; padding: 0; list-style: none;
+  font-size: 0.78rem; color: var(--ink-soft);
+}
+.crumbs li + li::before { content: "/"; margin-right: 6px; color: var(--ink-faint); }
+.crumbs a { text-decoration: none; }
+.crumbs a:hover { text-decoration: underline; }
+
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin: 0 0 22px; padding: 6px 12px;
+  background: var(--paper-light); border: 1px solid var(--ink); border-radius: 999px;
+  font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.04em;
+}
+.eyebrow::before {
+  content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--blue);
+  box-shadow: 0 0 0 3px var(--blue-soft);
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2rem, 4.6vw, 3.9rem);
+  line-height: 1.16;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+h1 .line { display: block; }
+h1 .hl { color: var(--blue); }
+
+.lead {
+  max-width: 36em;
+  margin: 26px 0 0;
+  font-size: clamp(1rem, 1.35vw, 1.1rem);
+  line-height: 1.95;
+  color: #2c2b29;
+}
+
+.cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 52px; padding: 0 22px;
+  border: 1px solid var(--ink); border-radius: 8px;
+  font-weight: 700; font-size: 0.98rem; text-decoration: none;
+  transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+}
+.btn-primary {
+  background: var(--blue-deep); color: #fff; border-color: var(--ink);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.btn-primary:hover { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 var(--ink); }
+.btn-ghost { background: var(--paper-light); color: var(--ink); }
+.btn-ghost:hover { background: var(--blue-soft); }
+.btn .arrow { font-family: var(--mono); font-size: 0.9em; }
+
+.hero-points {
+  display: flex; flex-wrap: wrap; gap: 8px 18px;
+  margin: 26px 0 0; padding: 0; list-style: none;
+  font-size: 0.84rem; color: var(--ink-soft);
+}
+.hero-points li { display: inline-flex; align-items: center; gap: 7px; }
+.hero-points li::before {
+  content: ""; width: 14px; height: 14px; flex: none;
+  border: 1px solid var(--ink); border-radius: 50%;
+  background: var(--mint) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath d='M3.5 7.2 6 9.5l4.5-5' fill='none' stroke='%23111' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 12px no-repeat;
+}
+
+/* Relay card: the signature visual */
+.relay {
+  position: relative;
+  background: var(--paper-light);
+  border: 1px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: 8px 8px 0 var(--ink);
+  overflow: hidden;
+}
+.relay-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--ink);
+  background: var(--ink); color: #fff;
+  font-family: var(--mono); font-size: 0.78rem;
+}
+.rec { display: inline-flex; align-items: center; gap: 8px; min-width: 0; }
+.rec-dot {
+  width: 9px; height: 9px; border-radius: 50%; background: #ff865f; flex: none;
+  animation: rec 1.6s ease-in-out infinite;
+}
+.rec-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.relay-meta { display: flex; flex-wrap: wrap; gap: 6px; padding: 12px 18px 4px; }
+.chip {
+  display: inline-flex; align-items: center; padding: 2px 9px;
+  border: 1px solid var(--line-soft); border-radius: 999px;
+  font-family: var(--mono); font-size: 0.7rem; color: var(--ink-soft); background: var(--paper);
+}
+.relay-steps { list-style: none; margin: 0; padding: 8px 10px 12px; }
+.step {
+  display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; align-items: center; gap: 10px;
+  padding: 9px 8px;
+  border-radius: 8px;
+  opacity: 0; transform: translateY(6px);
+  animation: rise 0.5s cubic-bezier(.2,.7,.2,1) forwards;
+}
+.step .no { font-family: var(--mono); font-size: 0.72rem; color: var(--ink-faint); }
+.step .what { font-size: 0.9rem; font-weight: 650; line-height: 1.45; }
+.step .what small { display: block; font-weight: 400; font-size: 0.74rem; color: var(--ink-soft); }
+.status {
+  font-family: var(--mono); font-size: 0.68rem; white-space: nowrap;
+  padding: 3px 8px; border-radius: 999px; border: 1px solid var(--ink);
+}
+.s-done { background: var(--paper); }
+.s-plaud .status { border-color: var(--line-soft); color: var(--ink-soft); }
+.s-run { background: var(--blue-soft); }
+.s-run .status { background: var(--blue-deep); color: #fff; }
+.s-next .status { background: var(--paper-light); }
+.s-you { background: #fff8e3; }
+.s-you .status { background: var(--yellow); }
+.bar {
+  grid-column: 2 / 4; height: 4px; margin-top: 6px;
+  background: rgba(50, 115, 215, 0.16); border-radius: 4px; overflow: hidden;
+}
+.bar::after {
+  content: ""; display: block; height: 100%; width: 62%;
+  background: var(--blue); border-radius: 4px;
+  animation: progress 2.8s ease-in-out infinite alternate;
+}
+.handoff {
+  display: flex; align-items: center; gap: 10px;
+  margin: 6px 4px; padding: 8px 0;
+  font-family: var(--mono); font-size: 0.72rem; color: var(--blue-deep);
+  opacity: 0; animation: rise 0.5s ease forwards;
+}
+.handoff::before, .handoff::after { content: ""; flex: 1; border-top: 1.5px dashed var(--blue); }
+.relay-foot {
+  padding: 12px 18px 14px;
+  border-top: 1px solid var(--line-soft);
+  font-size: 0.82rem; color: var(--ink-soft);
+}
+.relay-foot strong { color: var(--ink); }
+.caption { margin: 12px 4px 0; font-size: 0.74rem; color: var(--ink-faint); text-align: right; }
+
+.relay-steps > :nth-child(1) { animation-delay: 0.10s; }
+.relay-steps > :nth-child(2) { animation-delay: 0.22s; }
+.relay-steps > :nth-child(3) { animation-delay: 0.34s; }
+.relay-steps > :nth-child(4) { animation-delay: 0.62s; }
+.relay-steps > :nth-child(5) { animation-delay: 0.86s; }
+.relay-steps > :nth-child(6) { animation-delay: 1.02s; }
+.relay-steps > :nth-child(7) { animation-delay: 1.18s; }
+.relay-steps > :nth-child(8) { animation-delay: 1.34s; }
+
+@keyframes rise { to { opacity: 1; transform: none; } }
+@keyframes rec { 50% { opacity: 0.25; } }
+@keyframes progress { from { width: 34%; } to { width: 88%; } }
+
+/* ---------- Guide layout ---------- */
+.guide {
+  display: grid;
+  grid-template-columns: 232px minmax(0, 1fr);
+  gap: clamp(32px, 5vw, 72px);
+  padding: clamp(40px, 6vw, 80px) 0 clamp(56px, 7vw, 96px);
+}
+.toc { position: sticky; top: 92px; align-self: start; font-size: 0.84rem; }
+.toc-title {
+  margin: 0 0 12px; font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.08em;
+  color: var(--ink-soft);
+}
+.toc ol { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--line-soft); }
+.toc a {
+  display: grid; grid-template-columns: 26px 1fr; gap: 4px;
+  margin-left: -1px; padding: 7px 0 7px 12px;
+  border-left: 2px solid transparent;
+  color: var(--ink-soft); text-decoration: none; line-height: 1.5;
+}
+.toc a span { font-family: var(--mono); font-size: 0.72rem; padding-top: 1px; }
+.toc a:hover { color: var(--ink); }
+.toc a.is-active { color: var(--ink); font-weight: 700; border-left-color: var(--blue); }
+.toc-mobile { display: none; }
+
+.article { min-width: 0; max-width: 800px; }
+.byline {
+  display: flex; flex-wrap: wrap; gap: 4px 16px;
+  margin: 0 0 8px; font-family: var(--mono); font-size: 0.74rem; color: var(--ink-faint);
+}
+
+.sec { padding-top: clamp(40px, 5vw, 64px); }
+.sec:first-of-type { padding-top: 0; }
+.sec-label {
+  display: inline-block; margin: 0 0 12px;
+  font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.06em; color: var(--blue-deep);
+}
+h2 {
+  margin: 0 0 18px;
+  font-size: clamp(1.5rem, 2.8vw, 2.1rem);
+  line-height: 1.35; font-weight: 800; letter-spacing: -0.01em;
+}
+h3 { margin: 32px 0 12px; font-size: 1.15rem; line-height: 1.5; font-weight: 750; }
+.article p { margin: 0 0 16px; }
+.article p a, .plain-list a, .faq a { color: var(--blue-deep); text-decoration: underline; text-underline-offset: 3px; }
+.muted { color: var(--ink-soft); }
+.small { font-size: 0.84rem; }
+
+/* Checklist */
+.checklist { list-style: none; margin: 24px 0 0; padding: 0; display: grid; gap: 12px; }
+.checklist li {
+  display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 16px;
+  padding: 18px 20px;
+  background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.checklist .num {
+  display: grid; place-items: center; width: 44px; height: 44px;
+  border: 1px solid var(--ink); border-radius: 50%;
+  font-family: var(--mono); font-weight: 700;
+}
+.checklist li.hook { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.checklist li.hook .num { background: var(--blue-deep); color: #fff; }
+.checklist h3 { margin: 2px 0 4px; font-size: 1.02rem; }
+.checklist p { margin: 0; font-size: 0.93rem; color: #34322f; }
+
+/* Feature grid */
+.features { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+.feature {
+  padding: 20px; background: var(--paper-light);
+  border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.feature .tag {
+  display: inline-block; margin-bottom: 8px;
+  font-family: var(--mono); font-size: 0.7rem; color: var(--ink-soft);
+}
+.feature h3 { margin: 0 0 6px; font-size: 1.04rem; }
+.feature p { margin: 0; font-size: 0.92rem; color: #34322f; }
+.feature.wide { grid-column: 1 / -1; }
+
+/* Gap section */
+.split { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+.split-col { padding: 22px; border-radius: var(--radius); border: 1px solid var(--ink); }
+.split-col h3 { margin: 0 0 12px; font-size: 1rem; display: flex; align-items: center; gap: 8px; }
+.split-col ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.split-col li { position: relative; padding-left: 22px; font-size: 0.94rem; line-height: 1.6; }
+.split-col li::before { position: absolute; left: 0; top: 0; font-family: var(--mono); }
+.col-plaud { background: var(--paper-light); }
+.col-plaud li { color: var(--ink-soft); }
+.col-plaud li::before { content: "✓"; color: #1b7a58; }
+.col-left { background: var(--coral-soft); box-shadow: 4px 4px 0 var(--ink); }
+.col-left li::before { content: "□"; color: var(--ink); }
+.who {
+  font-family: var(--mono); font-size: 0.68rem; font-weight: 400;
+  padding: 2px 8px; border: 1px solid var(--ink); border-radius: 999px; background: var(--paper-light);
+}
+
+.quote {
+  margin: 28px 0 0; padding: 22px 24px;
+  border-left: 4px solid var(--blue); background: var(--blue-soft); border-radius: 0 var(--radius) var(--radius) 0;
+}
+.quote p { margin: 0; font-size: 1.12rem; font-weight: 750; line-height: 1.7; }
+.quote p + p { margin-top: 8px; font-size: 0.93rem; font-weight: 400; color: #34322f; }
+
+/* Connect */
+.connect {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 310px); gap: 24px;
+  align-items: start; margin-top: 24px;
+}
+.connect-steps { list-style: none; margin: 0; padding: 0; counter-reset: s; display: grid; gap: 10px; }
+.connect-steps li {
+  counter-increment: s; position: relative;
+  padding: 16px 18px 16px 62px;
+  background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.connect-steps li::before {
+  content: counter(s); position: absolute; left: 18px; top: 16px;
+  width: 30px; height: 30px; display: grid; place-items: center;
+  border: 1px solid var(--ink); border-radius: 50%; background: var(--paper);
+  font-family: var(--mono); font-weight: 700; font-size: 0.86rem;
+}
+.connect-steps li.key { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.connect-steps li.key::before { background: var(--blue-deep); color: #fff; }
+.connect-steps b { display: block; font-size: 1rem; line-height: 1.5; }
+.connect-steps span { display: block; margin-top: 4px; font-size: 0.9rem; color: #34322f; line-height: 1.7; }
+
+.mock {
+  padding: 18px; background: var(--paper-light);
+  border: 1px solid var(--ink); border-radius: var(--radius); box-shadow: 6px 6px 0 var(--blue);
+}
+.mock-head { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 12px; align-items: start; }
+.mock-mark {
+  display: grid; place-items: center; width: 44px; height: 44px;
+  border-radius: 10px; background: var(--paper); font-weight: 900; font-size: 1.15rem;
+}
+.mock-title { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 1.05rem; }
+.mock-state {
+  padding: 1px 8px; border-radius: 999px; background: var(--paper);
+  font-size: 0.7rem; font-weight: 500; color: var(--ink-soft);
+}
+.mock-desc { margin: 4px 0 0; font-size: 0.82rem; color: var(--ink-soft); line-height: 1.6; }
+.mock-box {
+  margin: 14px 0 10px; padding: 12px 14px;
+  border: 1px solid var(--ui-line); border-radius: 8px; font-size: 0.86rem; font-weight: 650;
+}
+.mock-btn {
+  display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px;
+  border-radius: 8px; background: var(--blue-deep); color: #fff; font-weight: 700; font-size: 0.92rem;
+}
+.mock-foot { margin-top: 8px; text-align: center; font-size: 0.76rem; color: var(--ink-soft); }
+
+.asks { list-style: none; margin: 12px 0 18px; padding: 0; display: grid; gap: 8px; }
+.asks li {
+  padding: 12px 16px; font-size: 0.94rem; line-height: 1.7;
+  background: var(--blue-soft); border: 1px solid rgba(50, 115, 215, 0.28);
+  border-radius: 12px 12px 12px 3px;
+}
+
+/* Tables */
+.table-wrap {
+  margin: 20px 0 8px; overflow-x: auto; -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--ink); border-radius: var(--radius); background: var(--paper-light);
+}
+table { width: 100%; border-collapse: collapse; font-size: 0.9rem; line-height: 1.6; }
+th, td { padding: 12px 14px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--ui-line); }
+thead th { background: var(--ink); color: #fff; font-weight: 700; font-size: 0.82rem; white-space: nowrap; }
+tbody th { font-weight: 700; white-space: nowrap; background: var(--paper); }
+tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
+td.simy { background: var(--blue-soft); }
+thead th.simy { background: var(--blue-deep); }
+.t-wide { min-width: 640px; }
+.t-models { min-width: 760px; }
+.t-price td:nth-child(2) { white-space: nowrap; }
+.scroll-hint { display: none; margin: 0 0 12px; font-size: 0.76rem; color: var(--ink-faint); }
+
+.note {
+  margin: 16px 0 0; padding: 14px 16px;
+  background: var(--paper-light); border: 1px dashed var(--ink-faint); border-radius: var(--radius-sm);
+  font-size: 0.88rem; color: #34322f;
+}
+.note b { color: var(--ink); }
+
+/* Sample comparison */
+.sample { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 16px; margin-top: 24px; align-items: start; }
+.sheet { padding: 20px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); }
+.sheet-label {
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;
+  font-family: var(--mono); font-size: 0.72rem; color: var(--ink-soft);
+}
+.sheet dl { margin: 0; font-size: 0.88rem; line-height: 1.65; }
+.sheet dt { margin-top: 10px; font-weight: 700; }
+.sheet dt:first-child { margin-top: 0; }
+.sheet dd { margin: 2px 0 0; color: #34322f; }
+.outs { display: grid; gap: 10px; }
+.out { padding: 14px 16px; background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius); }
+.out-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 6px; }
+.out-head b { font-size: 0.92rem; }
+.out p { margin: 0; font-size: 0.86rem; color: #34322f; line-height: 1.7; }
+.out.you { background: #fff8e3; }
+.pill {
+  font-family: var(--mono); font-size: 0.66rem; white-space: nowrap;
+  padding: 2px 8px; border-radius: 999px; border: 1px solid var(--ink); background: var(--paper);
+}
+.pill.run { background: var(--blue-deep); color: #fff; }
+.pill.you { background: var(--yellow); }
+.pill.ok { background: var(--mint); }
+.sample-foot { margin-top: 18px; font-weight: 700; }
+
+/* Use cases */
+.cases { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+.case { padding: 22px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); }
+.case h3 { margin: 0 0 4px; font-size: 1.06rem; }
+.case .device { margin: 0 0 12px; font-family: var(--mono); font-size: 0.72rem; color: var(--blue-deep); }
+.case p { margin: 0 0 8px; font-size: 0.9rem; color: #34322f; }
+.case ul { margin: 0; padding-left: 1.1em; font-size: 0.9rem; line-height: 1.7; }
+
+/* Lists */
+.plain-list { margin: 16px 0 0; padding-left: 1.2em; }
+.plain-list li { margin-bottom: 10px; }
+
+/* FAQ */
+.faq { margin-top: 20px; border-top: 1px solid var(--ink); }
+.faq details { border-bottom: 1px solid var(--ui-line); }
+.faq summary {
+  list-style: none; cursor: pointer;
+  display: grid; grid-template-columns: 28px minmax(0, 1fr) 20px; gap: 10px; align-items: start;
+  padding: 18px 4px; font-weight: 700; line-height: 1.6;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::before { content: "Q"; font-family: var(--mono); color: var(--blue-deep); }
+.faq summary::after {
+  content: "+"; font-family: var(--mono); font-size: 1.1rem; line-height: 1.4; text-align: right;
+  transition: transform 0.2s;
+}
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq .a { padding: 0 4px 18px 42px; font-size: 0.94rem; color: #34322f; }
+.faq .a p { margin: 0; }
+
+/* Closing CTA */
+.closing { background: var(--ink); color: #fff; border-top: 1px solid var(--ink); }
+.closing-inner {
+  display: grid; grid-template-columns: minmax(0, 1.2fr) auto; gap: 32px; align-items: center;
+  padding: clamp(48px, 7vw, 88px) 0;
+}
+.closing h2 { color: #fff; margin: 0 0 12px; font-size: clamp(1.6rem, 3.4vw, 2.5rem); }
+.closing p { margin: 0; color: rgba(255, 255, 255, 0.8); }
+.closing .cta-row { margin-top: 0; }
+.closing .btn-primary { box-shadow: 4px 4px 0 var(--mint); border-color: #fff; }
+.closing .btn-primary:hover { box-shadow: 5px 5px 0 var(--mint); }
+.closing .btn-ghost { background: transparent; color: #fff; border-color: rgba(255, 255, 255, 0.5); }
+.closing .btn-ghost:hover { background: rgba(255, 255, 255, 0.08); }
+
+/* Footer */
+.site-footer { padding: 36px 0 48px; font-size: 0.82rem; color: var(--ink-soft); }
+.footer-links { display: flex; flex-wrap: wrap; gap: 4px 20px; margin: 0 0 18px; padding: 0; list-style: none; }
+.footer-links a { display: inline-block; padding: 6px 0; text-decoration: none; color: var(--ink); }
+.footer-links a:hover { text-decoration: underline; }
+.site-footer p { margin: 0 0 6px; line-height: 1.7; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1080px) {
+  .guide { grid-template-columns: minmax(0, 1fr); }
+  .toc { display: none; }
+  .toc-mobile {
+    display: block; margin: 0 0 32px;
+    background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius);
+  }
+  .toc-mobile summary {
+    cursor: pointer; list-style: none; padding: 14px 18px;
+    font-family: var(--mono); font-size: 0.8rem; display: flex; justify-content: space-between;
+  }
+  .toc-mobile summary::-webkit-details-marker { display: none; }
+  .toc-mobile summary::after { content: "+"; }
+  .toc-mobile[open] summary::after { content: "−"; }
+  .toc-mobile ol { margin: 0; padding: 0 18px 14px 40px; font-size: 0.9rem; }
+  .toc-mobile li { padding: 3px 0; }
+  .toc-mobile a { display: inline-block; padding: 4px 0; text-decoration: none; }
+  .article { max-width: none; }
+}
+
+@media (max-width: 960px) {
+  .hero-inner { grid-template-columns: minmax(0, 1fr); }
+  .hero-visual { max-width: 580px; }
+  .relay { box-shadow: 6px 6px 0 var(--ink); }
+}
+
+@media (max-width: 860px) {
+  .sample { grid-template-columns: minmax(0, 1fr); }
+  .connect { grid-template-columns: minmax(0, 1fr); }
+  .mock { max-width: 360px; }
+  .closing-inner { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 640px) {
+  body { font-size: 15.5px; }
+  .brand-sub, .header-link { display: none; }
+  .header-cta { padding: 0 14px; }
+  .features, .split, .cases { grid-template-columns: minmax(0, 1fr); }
+  .checklist li { grid-template-columns: 40px minmax(0, 1fr); gap: 12px; padding: 16px; }
+  .checklist .num { width: 36px; height: 36px; font-size: 0.86rem; }
+  .connect-steps li { padding-left: 56px; }
+  .connect-steps li::before { left: 14px; }
+  .btn { width: 100%; }
+  .scroll-hint { display: block; }
+  .faq .a { padding-left: 4px; }
+  .step { grid-template-columns: 24px minmax(0, 1fr) auto; gap: 8px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .step, .handoff { animation: none; opacity: 1; transform: none; }
+  .rec-dot, .bar::after { animation: none; }
+  .btn, .header-cta { transition: none; }
+}
+
+/* ---------- Guide v2: scene cards, timeline, folds ---------- */
+.intro { max-width: 34em; margin: 0 0 8px; font-size: 1.02rem; color: #34322f; }
+.scenes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 22px; }
+.scenes.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.scene {
+  position: relative; padding: 22px 20px 20px;
+  background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius);
+  min-height: 168px; display: flex; flex-direction: column; gap: 8px;
+}
+.scene .k { font-family: var(--mono); font-size: 0.7rem; color: var(--ink-faint); letter-spacing: 0.04em; }
+.scene b { display: block; font-size: 1.22rem; line-height: 1.35; letter-spacing: -0.01em; }
+.scene p { margin: 0; font-size: 0.9rem; line-height: 1.65; color: #34322f; }
+.scene .mark {
+  position: absolute; right: 16px; top: 14px;
+  width: 30px; height: 30px; display: grid; place-items: center;
+  border: 1px solid var(--ink); border-radius: 50%; font-family: var(--mono); font-size: 0.9rem; font-weight: 700;
+}
+.scene.pain { background: var(--coral-soft); }
+.scene.pain .mark { background: var(--paper-light); }
+.scene.wish { background: var(--blue-soft); border-color: var(--blue-deep); box-shadow: 4px 4px 0 var(--blue); }
+.scene.wish .mark { background: var(--blue-deep); color: #fff; border-color: var(--blue-deep); }
+.scene.wish.you { background: #fff8e3; border-color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+.scene.wish.you .mark { background: var(--yellow); color: var(--ink); border-color: var(--ink); }
+.scene-foot { margin: 14px 0 0; font-size: 0.9rem; color: var(--ink-soft); }
+.scene-foot b { color: var(--ink); }
+
+/* Timeline */
+.tl-wrap {
+  margin-top: 22px; padding: 22px 20px 18px;
+  background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius);
+}
+.tl-row { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 14px; align-items: center; }
+.tl-row + .tl-row { margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--line-soft); }
+.tl-who {
+  font-family: var(--mono); font-size: 0.72rem; font-weight: 700; text-align: center;
+  padding: 6px 4px; border: 1px solid var(--ink); border-radius: 999px; background: var(--paper);
+}
+.tl-who.simy { background: var(--blue-deep); color: #fff; border-color: var(--blue-deep); }
+.tl-who.you { background: var(--yellow); }
+.tl { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; }
+.tl li {
+  position: relative; min-height: 64px; padding: 10px 8px 8px;
+  border-radius: var(--radius-sm); font-size: 0.8rem; line-height: 1.4; font-weight: 650;
+  display: flex; flex-direction: column; justify-content: flex-start; gap: 4px;
+}
+.tl li small { display: block; font-weight: 400; font-size: 0.7rem; color: var(--ink-soft); }
+.tl li.on { background: var(--paper); border: 1px solid var(--line-soft); color: var(--ink-soft); }
+.tl li.gap { border: 1.5px dashed var(--ink-faint); color: var(--ink-faint); background: transparent; }
+.tl li.gap::after { content: "？"; position: absolute; right: 8px; top: 6px; font-family: var(--mono); }
+.tl li.run { background: var(--blue-soft); border: 1px solid var(--blue-deep); color: var(--ink); }
+.tl li.run::after { content: "✓"; position: absolute; right: 8px; top: 6px; font-family: var(--mono); color: var(--blue-deep); }
+.tl li.you { background: #fff8e3; border: 1px solid var(--ink); color: var(--ink); }
+.tl li.you::after { content: "vous"; position: absolute; right: 8px; top: 7px; font-family: var(--mono); font-size: 0.62rem; }
+.tl li.blank { border: 0; background: transparent; }
+.tl-note { margin: 14px 0 0; font-size: 0.86rem; color: #34322f; }
+.tl-note b { color: var(--ink); }
+.three { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 0; padding: 0; list-style: none; }
+.three li {
+  padding: 8px 14px; font-weight: 800; font-size: 1rem;
+  background: var(--ink); color: #fff; border-radius: 999px;
+}
+
+/* 3-step start */
+.steps3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 22px; counter-reset: st; }
+.steps3 li {
+  counter-increment: st; list-style: none; position: relative;
+  padding: 54px 18px 18px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.steps3 li::before {
+  content: counter(st); position: absolute; left: 18px; top: 16px;
+  width: 28px; height: 28px; display: grid; place-items: center;
+  border: 1px solid var(--ink); border-radius: 50%; background: var(--paper);
+  font-family: var(--mono); font-weight: 700; font-size: 0.84rem;
+}
+.steps3 li.key { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.steps3 li.key::before { background: var(--blue-deep); color: #fff; }
+.steps3 b { display: block; font-size: 1.02rem; line-height: 1.45; }
+.steps3 span { display: block; margin-top: 6px; font-size: 0.88rem; color: #34322f; line-height: 1.65; }
+.steps3 { padding: 0; }
+
+/* Industry grid */
+.ind { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 22px; }
+.ind-card { padding: 18px 18px 14px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); }
+.ind-card h3 { margin: 0 0 10px; font-size: 1.04rem; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.ind-card h3 small { font-family: var(--mono); font-size: 0.68rem; font-weight: 400; color: var(--blue-deep); white-space: normal; }
+.ind-card h3 { flex-wrap: wrap; }
+.ind-rows { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+.ind-rows li { display: grid; grid-template-columns: minmax(0, 1fr) 14px minmax(0, 1.4fr); gap: 6px; align-items: center; font-size: 0.86rem; line-height: 1.5; }
+.ind-rows li span:first-child { color: var(--ink-soft); }
+.ind-rows li span:nth-child(2) { font-family: var(--mono); color: var(--blue-deep); text-align: center; }
+.ind-rows li span:last-child { font-weight: 650; }
+
+/* Folded reference */
+.fold { margin-top: 12px; border: 1px solid var(--ui-line); border-radius: var(--radius); background: var(--paper-light); }
+.fold > summary {
+  list-style: none; cursor: pointer; padding: 16px 18px;
+  display: grid; grid-template-columns: minmax(0, 1fr) 20px; gap: 10px; align-items: center;
+  font-weight: 750; font-size: 1.02rem; line-height: 1.5;
+}
+.fold > summary::-webkit-details-marker { display: none; }
+.fold > summary::after { content: "+"; font-family: var(--mono); font-size: 1.1rem; text-align: right; grid-column: 2; grid-row: 1; }
+.fold > summary small { grid-column: 1; }
+.fold[open] > summary::after { content: "−"; }
+.fold > summary small { display: block; margin-top: 2px; font-weight: 400; font-size: 0.82rem; color: var(--ink-soft); }
+.fold-body { padding: 0 18px 18px; font-size: 0.93rem; }
+.fold-body h3 { margin: 18px 0 8px; font-size: 1rem; }
+.fold-body h3:first-child { margin-top: 0; }
+.fold-body p { margin: 0 0 10px; }
+.fold-body .table-wrap { margin: 12px 0 6px; }
+.fold-body .plain-list { margin-top: 8px; }
+.fold-body .plain-list li { margin-bottom: 6px; }
+
+@media (max-width: 960px) {
+  .scenes, .scenes.four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tl { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .tl li.blank { display: none; }
+}
+@media (max-width: 640px) {
+  .scenes, .scenes.four, .steps3, .ind { grid-template-columns: minmax(0, 1fr); }
+  .scene { min-height: 0; }
+  .tl-row { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .tl-who { justify-self: start; }
+  .tl { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ind-rows li { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .ind-rows li span:nth-child(2) { display: none; }
+  .ind-rows li { padding: 6px 0; border-bottom: 1px dashed var(--line-soft); }
+}
+
+/* Next read */
+.next-read { margin-top: clamp(40px, 5vw, 64px); padding-top: 24px; border-top: 1px solid var(--ink); }
+.next-read h2 { font-size: 1.2rem; margin: 0 0 14px; }
+.next-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.next-grid a { display: block; padding: 14px 16px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); text-decoration: none; color: var(--ink); }
+.next-grid a:hover { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.next-grid b { display: block; font-size: 0.96rem; }
+.next-grid span { display: block; margin-top: 4px; font-size: 0.82rem; color: var(--ink-soft); }
+.next-all { display: inline-block; margin-top: 12px; font-weight: 700; color: var(--blue-deep); }
+@media (max-width: 760px) { .next-grid { grid-template-columns: minmax(0, 1fr); } }
+
+.lang-switch { position: relative; }
+.lang-switch > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 10px; border: 1px solid var(--ui-line); border-radius: 999px; background: var(--paper-light); font-size: 0.8rem; font-weight: 700; }
+.lang-switch > summary::-webkit-details-marker { display: none; }
+.lang-switch ul { position: absolute; right: 0; top: calc(100% + 6px); z-index: 30; margin: 0; padding: 6px; list-style: none; min-width: 150px; background: var(--paper-light); border: 1px solid var(--ink); border-radius: 10px; box-shadow: 4px 4px 0 var(--ink); }
+.lang-switch li a { display: block; padding: 8px 10px; border-radius: 6px; color: var(--ink); text-decoration: none; font-size: 0.88rem; }
+.lang-switch li a:hover, .lang-switch li a[aria-current] { background: var(--blue-soft); }
+@media (max-width: 960px) { .brand-sub { display: none; } .header-actions { gap: 4px; } .lang-switch > summary { padding: 0 8px; } }
+@media (max-width: 640px) { .lang-switch .ls-label { display: none; } .lang-switch > summary { padding: 0 10px; } }
+/* Typography: balanced headings, phrase-aware Japanese breaks, tighter mobile headings */
+h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
+:lang(ja) h1, :lang(ja) h2, :lang(ja) h3, :lang(ja) .eyebrow, :lang(ja) .scene b, :lang(ja) .lead { word-break: auto-phrase; }
+.lead, .intro, .scene p { text-wrap: pretty; }
+@media (max-width: 640px) { h2 { font-size: 1.32rem; line-height: 1.4; } .eyebrow { font-size: 0.72rem; } .closing h2 { font-size: 1.5rem; } }
+@media (max-width: 400px) { h2 { font-size: 1.22rem; } .closing h2 { font-size: 1.34rem; } }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://simy.one/guides/fr/plaud.html#article",
+      "headline": "Guide PLAUD NOTE : automatiser ce qui suit la transcription et le résumé IA",
+      "description": "Guide pour transformer les enregistrements, transcriptions et résumés PLAUD NOTE en travail accompli : ce qui reste après la réunion, l'intégration avec SIMY, les premiers pas, les offres et modèles, la sécurité.",
+      "inLanguage": "fr",
+      "datePublished": "2026-09-30",
+      "dateModified": "2026-10-01",
+      "mainEntityOfPage": "https://simy.one/guides/fr/plaud.html",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://simy.one/ogp.png",
+        "width": 1200,
+        "height": 630
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "SIMY",
+        "url": "https://simy.one/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "AwakApp Inc.",
+        "url": "https://www.awak.app/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://simy.one/simy-icon-square.png"
+        }
+      },
+      "about": [
+        {
+          "@type": "Thing",
+          "name": "PLAUD NOTE"
+        },
+        {
+          "@type": "Thing",
+          "name": "Transcription IA"
+        },
+        {
+          "@type": "Thing",
+          "name": "Compte rendu de réunion"
+        }
+      ],
+      "citation": [
+        "https://jp.plaud.ai/products/plaud-ai-membership",
+        "https://jp.plaud.ai/blogs/blog/plaud-note-pro",
+        "https://docs.plaud.ai/plaud-mcp-cli/mcp"
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "SIMY",
+          "item": "https://simy.one/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://simy.one/guides/fr/index.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Guide PLAUD NOTE",
+          "item": "https://simy.one/guides/fr/plaud.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Je viens d'acheter un PLAUD. Par où commencer ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Appairez l'appareil dans l'application PLAUD, puis vérifiez le mode d'enregistrement et le modèle de résumé. Connectez ensuite votre compte Plaud dans l'écran des intégrations de SIMY : vous pourrez l'utiliser dès la première réunion."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "J'utilise déjà PLAUD. Mes anciens enregistrements sont-ils utilisables dans SIMY ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Oui. Une fois connecté, SIMY recherche et consulte les enregistrements, transcriptions et résumés stockés dans votre compte Plaud."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Tous les modèles fonctionnent-ils, comme le PLAUD NOTE Pro ou le NotePin ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Oui. SIMY consulte les transcriptions et résumés stockés dans votre compte Plaud : le modèle ne change rien. Pour enregistrer aussi les appels, choisissez le PLAUD NOTE ou le PLAUD NOTE Pro, qui ont un mode appel."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Peut-on se connecter avec n'importe quelle offre PLAUD, Starter (gratuite) ou Unlimited ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Oui. Il suffit d'un compte Plaud avec un appareil enregistré. Les offres diffèrent par le temps de transcription : 300 minutes par mois pour Starter, 1 200 pour Pro, illimité pour Unlimited."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Faut-il exporter vers Notion ou configurer PLAUD MCP ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Non. PLAUD MCP est le dispositif officiel de PLAUD pour lire les enregistrements depuis ChatGPT ou Claude, mais SIMY consulte directement votre compte Plaud : ni export, ni configuration MCP."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "De quel pays est l'entreprise PLAUD ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Plaud Inc., qui développe PLAUD, a son siège à San Francisco, aux États-Unis."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Mes enregistrements PLAUD risquent-ils de servir à entraîner l'IA ou de fuiter ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "PLAUD indique ne pas utiliser les enregistrements pour entraîner l'IA sans consentement explicite. PLAUD est conforme SOC 2 Type II, HIPAA, RGPD et ISO/IEC 27001, et les données sont stockées chiffrées. Le traitement par SIMY est décrit sur les pages Sécurité et Politique de confidentialité."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Faut-il préciser le format du compte rendu (participants, ordre du jour, décisions, actions) à chaque fois ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Non. Finalisez une fois à votre façon : SIMY apprend cette méthode et prépare les réunions suivantes dans la même forme. Plus besoin de coller la transcription et de retaper la même consigne."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Qui décide de « ce qui a été décidé » : l'IA ou moi ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "C'est vous. SIMY organise les éléments à partir de la transcription et du résumé, va jusqu'au brouillon, et ne vous renvoie que les points qui demandent une décision, comme un montant ou le feu vert pour l'envoi."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "SIMY fonctionne-t-il avec d'autres outils de transcription que PLAUD (Notion AI, Notta, Teams…) ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Cette page porte sur PLAUD, mais l'écran des intégrations de SIMY propose d'autres connexions, comme Notion ou Google. Le contexte de vos réunions peut passer par là. Vérifiez la compatibilité dans l'écran des intégrations."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Utiliser SIMY entraîne-t-il des frais d'IA supplémentaires ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "SIMY se connecte à votre compte ChatGPT et fait avancer le travail via Codex App Server. L'usage de Codex reste dans les limites de votre forfait ChatGPT. Pour le prix de SIMY lui-même, consultez la page des tarifs."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Faut-il le consentement des autres participants pour enregistrer ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Oui. Avant d'enregistrer, obtenez l'accord de toutes les personnes présentes. Les conditions d'utilisation de SIMY précisent que ce consentement relève de votre responsabilité."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Aller au contenu</a>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="/?lang=fr">
+      <img src="/simy-icon-56.png" alt="SIMY" width="28" height="28">
+      <span aria-hidden="true">SIMY</span>
+      <span class="brand-sub">Guide PLAUD</span>
+    </a>
+    <nav class="header-actions" aria-label="Compte">
+      <details class="lang-switch"><summary aria-label="Language: Français"><span aria-hidden="true">🌐</span> <span class="ls-label">Français</span></summary><ul><li><a href="/guides/plaud.html" hreflang="ja" lang="ja">日本語</a></li><li><a href="/guides/en/plaud.html" hreflang="en" lang="en">English</a></li><li><a href="/guides/zh-hans/plaud.html" hreflang="zh-Hans" lang="zh-Hans">中文</a></li><li><a href="/guides/es/plaud.html" hreflang="es" lang="es">Español</a></li><li><a href="/guides/fr/plaud.html" hreflang="fr" lang="fr" aria-current="page">Français</a></li><li><a href="/guides/hi/plaud.html" hreflang="hi" lang="hi">हिन्दी</a></li></ul></details>
+      <a class="header-link" href="/download/fr.html">Télécharger</a>
+      <a class="header-link" href="https://app.simy.one/login?lang=fr&amp;locale=fr&amp;region=fr">Connexion</a>
+      <a class="header-cta" href="https://app.simy.one/signup?lang=fr&amp;locale=fr&amp;region=fr&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=plaud_guide_fr&amp;utm_content=header">Choisir une offre</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" aria-labelledby="page-title">
+    <div class="wrap hero-inner">
+      <div>
+        <ol class="crumbs" aria-label="Fil d'Ariane">
+          <li><a href="https://simy.one/">SIMY</a></li>
+          <li><a href="/guides/fr/index.html">Guides</a></li>
+          <li aria-current="page">Guide PLAUD NOTE</li>
+        </ol>
+        <p class="eyebrow">Guide pratique pour les utilisateurs de PLAUD NOTE</p>
+        <h1 id="page-title">
+          <span class="line">Vos enregistrements PLAUD</span>
+          <span class="line hl">ne s'arrêtent plus</span>
+          <span class="line">au résumé.</span>
+        </h1>
+        <p class="lead">Après le résumé PLAUD, l'e-mail, la fiche client et le partage restent à faire. Connectez Plaud, et SIMY s'occupe de la suite.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="https://app.simy.one/signup?lang=fr&amp;locale=fr&amp;region=fr&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=plaud_guide_fr&amp;utm_content=hero">Choisir une offre et commencer <span class="arrow" aria-hidden="true">↗</span></a>
+          <a class="btn btn-ghost" href="#connect">Voir comment connecter <span class="arrow" aria-hidden="true">↓</span></a>
+        </div>
+        <ul class="hero-points">
+          <li>Il suffit de connecter votre compte Plaud</li>
+          <li>Ni export, ni configuration MCP</li>
+          <li>Fonctionne avec votre forfait ChatGPT</li>
+        </ul>
+      </div>
+
+      <div class="hero-visual">
+        <div class="relay" role="img" aria-label="Exemple : PLAUD enregistre, transcrit et résume. Ensuite, SIMY prépare le brouillon de l'e-mail de suivi, la mise à jour de la fiche client et le message de partage interne. Il ne vous reste que la vérification finale du prix.">
+          <div class="relay-head" aria-hidden="true">
+            <span class="rec"><span class="rec-dot"></span><span class="rec-name">rdv_client-A_0930.m4a</span></span>
+            <span>42:18</span>
+          </div>
+          <div class="relay-meta" aria-hidden="true">
+            <span class="chip">PLAUD NOTE Pro</span>
+            <span class="chip">Mode présentiel</span>
+            <span class="chip">3 intervenants</span>
+          </div>
+          <ol class="relay-steps" aria-hidden="true">
+            <li class="step s-done s-plaud"><span class="no">01</span><span class="what">Enregistrement<small>Un bouton, et la conversation est captée</small></span><span class="status">PLAUD ✓</span></li>
+            <li class="step s-done s-plaud"><span class="no">02</span><span class="what">Transcription<small>Séparée par intervenant</small></span><span class="status">PLAUD ✓</span></li>
+            <li class="step s-done s-plaud"><span class="no">03</span><span class="what">Résumé<small>Modèle « rendez-vous client »</small></span><span class="status">PLAUD ✓</span></li>
+            <li class="handoff">Fin de PLAUD ／ SIMY prend le relais</li>
+            <li class="step s-done"><span class="no">04</span><span class="what">E-mail de remerciement et de suivi<small>Rédigé dans votre style</small></span><span class="status">Brouillon prêt</span></li>
+            <li class="step s-run"><span class="no">05</span><span class="what">Mise à jour de la fiche client<small>Avancement, objections, date de décision</small></span><span class="status">Autorun</span><span class="bar"></span></li>
+            <li class="step s-next"><span class="no">06</span><span class="what">Message de partage interne<small>Hypothèses du devis pour l'équipe</small></span><span class="status">Ensuite</span></li>
+            <li class="step s-you"><span class="no">07</span><span class="what">Validation du prix et du délai<small>Seule la décision vous revient</small></span><span class="status">À vous</span></li>
+          </ol>
+          <div class="relay-foot" aria-hidden="true"><strong>Il vous reste à relire, puis à envoyer.</strong></div>
+        </div>
+        <p class="caption">* Écran fourni à titre d'illustration</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap guide">
+    <nav class="toc" aria-label="Sommaire">
+      <p class="toc-title">Sommaire</p>
+      <ol>
+        <li><a href="#scene"><span>01</span>Après la réunion, ça se passe comme ça ?</a></li>
+        <li><a href="#wish"><span>02</span>Ce que vous vouliez vraiment</a></li>
+        <li><a href="#gap"><span>03</span>Là où PLAUD s'arrête</a></li>
+        <li><a href="#connect"><span>04</span>SIMY fait le lien</a></li>
+        <li><a href="#sample"><span>05</span>Un rendez-vous client, deux résultats</a></li>
+        <li><a href="#usecases"><span>06</span>Par métier : réunions et livrables SIMY</a></li>
+        <li><a href="#start"><span>07</span>Démarrer en 3 étapes</a></li>
+        <li><a href="#reference"><span>08</span>Utilisation, offres, sécurité</a></li>
+        <li><a href="#faq"><span>09</span>Questions fréquentes</a></li>
+        <li><a href="#sources"><span>10</span>Sources</a></li>
+      </ol>
+    </nav>
+
+    <article class="article">
+      <details class="toc-mobile">
+        <summary>Sommaire</summary>
+        <ol>
+          <li><a href="#scene">Après la réunion, ça se passe comme ça ?</a></li>
+          <li><a href="#wish">Ce que vous vouliez vraiment</a></li>
+          <li><a href="#gap">Là où PLAUD s'arrête</a></li>
+          <li><a href="#connect">SIMY fait le lien</a></li>
+          <li><a href="#sample">Un rendez-vous client, deux résultats</a></li>
+          <li><a href="#usecases">Par métier : réunions et livrables SIMY</a></li>
+          <li><a href="#start">Démarrer en 3 étapes</a></li>
+          <li><a href="#reference">Utilisation, offres, sécurité</a></li>
+          <li><a href="#faq">Questions fréquentes</a></li>
+          <li><a href="#sources">Sources</a></li>
+        </ol>
+      </details>
+
+      <p class="byline"><span>Dernière mise à jour : <time datetime="2026-10-01">1er octobre 2026</time></span><span>Éditeur : SIMY (AwakApp Inc.)</span></p>
+
+      <!-- 01 -->
+      <section class="sec" id="scene" aria-labelledby="h-scene">
+        <span class="sec-label">01 / AFTER THE MEETING</span>
+        <h2 id="h-scene">Après la réunion, ça se passe comme ça ?</h2>
+        <p class="intro">Le résumé PLAUD est arrivé. Et pourtant, voici ce qui se passe trente minutes après la réunion.</p>
+        <div class="scenes">
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">1</span>
+            <span class="k">30 minutes après</span>
+            <b>Qu'a-t-il dit ?</b>
+            <p>Vous avez lu le résumé. Mais la formulation exacte et la nuance sur le prix vous échappent.</p>
+          </div>
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">2</span>
+            <span class="k">1 heure après</span>
+            <b>Copier, coller</b>
+            <p>Coller la transcription dans ChatGPT, la remettre à votre format. La même consigne, à chaque fois.</p>
+          </div>
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">3</span>
+            <span class="k">Le soir même</span>
+            <b>Le compte rendu, c'est vous</b>
+            <p>Coller dans Slack, mettre Notion à jour, écrire le remerciement, recopier les tâches.</p>
+          </div>
+        </div>
+        <p class="scene-foot">Enregistrer, transcrire, résumer : PLAUD le fait en un instant. <b>Le travail qui fait la valeur de la réunion reste après.</b></p>
+      </section>
+
+      <!-- 02 -->
+      <section class="sec" id="wish" aria-labelledby="h-wish">
+        <span class="sec-label">02 / WHAT YOU REALLY WANTED</span>
+        <h2 id="h-wish">Ce que vous vouliez vraiment, après le résumé PLAUD</h2>
+        <p class="intro">Même réunion, même PLAUD. En sortant de la salle, voilà ce que vous auriez aimé trouver.</p>
+        <div class="scenes four">
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">En sortant de la salle</span>
+            <b>Déjà arrivé</b>
+            <p>Le brouillon de remerciement et la mise à jour de la fiche client vous attendent déjà.</p>
+          </div>
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">Sans le demander</span>
+            <b>À votre format</b>
+            <p>Participants, ordre du jour, décisions, actions. Sans consigne, toujours la même forme.</p>
+          </div>
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">Avant le prochain rendez-vous</span>
+            <b>Un historique par client</b>
+            <p>Les objections et la date de décision restent dans la fiche, prêtes pour la proposition.</p>
+          </div>
+          <div class="scene wish you">
+            <span class="mark" aria-hidden="true">!</span>
+            <span class="k">Ce qui vous revient</span>
+            <b>Juste la décision</b>
+            <p>« Peut-on envoyer à ce prix ? » Une seule question vous revient.</p>
+          </div>
+        </div>
+        <p class="scene-foot">C'est ce qui se passe <b>dès la réunion qui suit la connexion de votre compte Plaud à SIMY</b>.</p>
+      </section>
+
+      <!-- 03 -->
+      <section class="sec" id="gap" aria-labelledby="h-gap">
+        <span class="sec-label">03 / WHERE PLAUD STOPS</span>
+        <h2 id="h-gap">Là où s'arrêtent la transcription et le résumé PLAUD</h2>
+        <p class="intro">PLAUD excelle à dire « ce qui s'est dit ». Au-delà, personne ne prend le relais.</p>
+        <div class="tl-wrap" role="img" aria-label="Frise. Enregistrement, transcription et résumé, PLAUD s'en charge. L'e-mail de remerciement, la fiche client, le partage interne et la préparation du prochain rendez-vous restent vides.">
+          <div class="tl-row">
+            <span class="tl-who">PLAUD</span>
+            <ol class="tl">
+              <li class="on">Enregistrer<small>un seul bouton</small></li>
+              <li class="on">Transcrire<small>par intervenant</small></li>
+              <li class="on">Résumer<small>avec un modèle</small></li>
+              <li class="gap">Remercier</li>
+              <li class="gap">Fiche client</li>
+              <li class="gap">Partage interne</li>
+              <li class="gap">Rendez-vous suivant</li>
+            </ol>
+          </div>
+        </div>
+        <p class="caption">* Déroulé fourni à titre d'illustration</p>
+        <p class="tl-note"><b>Avec Ask Plaud ou ChatGPT + PLAUD MCP, ça s'arrête au même endroit.</b> On peut interroger l'enregistrement, obtenir un brouillon. Mais c'est toujours vous qui demandez, et vous qui vérifiez que c'est fait.</p>
+      </section>
+
+      <!-- 04 -->
+      <section class="sec" id="connect" aria-labelledby="h-connect">
+        <span class="sec-label">04 / CONNECT</span>
+        <h2 id="h-connect">SIMY fait le lien : il suffit de connecter votre compte Plaud</h2>
+        <p class="intro">SIMY remplit les quatre cases vides. Il ne vous revient qu'une case : la décision.</p>
+        <div class="tl-wrap" role="img" aria-label="Frise. Enregistrement, transcription et résumé, c'est PLAUD. L'e-mail de remerciement, la fiche client, le partage interne et la suite, c'est SIMY. Seule la vérification finale du prix vous revient.">
+          <div class="tl-row">
+            <span class="tl-who">PLAUD</span>
+            <ol class="tl">
+              <li class="on">Enregistrer</li>
+              <li class="on">Transcrire</li>
+              <li class="on">Résumer</li>
+              <li class="blank"></li><li class="blank"></li><li class="blank"></li><li class="blank"></li>
+            </ol>
+          </div>
+          <div class="tl-row">
+            <span class="tl-who simy">SIMY</span>
+            <ol class="tl">
+              <li class="blank"></li><li class="blank"></li><li class="blank"></li>
+              <li class="run">Remercier<small>brouillon dans votre style</small></li>
+              <li class="run">Fiche client<small>objections, date de décision</small></li>
+              <li class="run">Partage interne<small>hypothèses du devis</small></li>
+              <li class="you">Valider le prix<small>la décision revient</small></li>
+            </ol>
+          </div>
+        </div>
+        <p class="caption">* Déroulé fourni à titre d'illustration</p>
+        <ul class="three" aria-label="Les trois atouts de SIMY">
+          <li>Repère dans les réunions</li>
+          <li>À votre façon</li>
+          <li>Ne renvoie que les décisions</li>
+        </ul>
+        <p class="tl-note">SIMY consulte les enregistrements, transcriptions et résumés de votre compte Plaud et trouve seul le travail qui suit la réunion. Il démarre sans qu'on le lui demande, apprend les vérifications et les priorités qui font votre bon travail, et les applique à l'identique.</p>
+
+        <div class="connect">
+          <ol class="connect-steps">
+            <li><b>Ouvrir l'écran des intégrations de SIMY</b><span>Si vous n'avez pas encore de compte, inscrivez-vous d'abord à SIMY.</span></li>
+            <li class="key"><b>Cliquer sur « Connecter » pour Plaud</b><span>L'écran d'authentification Plaud s'ouvre dans un nouvel onglet. Ni export, ni configuration MCP.</span></li>
+            <li><b>Se connecter avec votre compte Plaud et autoriser</b><span>C'est fait. Dès la prochaine réunion, SIMY prend en charge ce qui suit le résumé.</span></li>
+          </ol>
+          <div>
+            <div class="mock" role="img" aria-label="Illustration de la carte de connexion Plaud dans l'écran des intégrations de SIMY. Recherche et consulte enregistrements, transcriptions et résumés. Le bouton Connecter ouvre l'authentification dans un nouvel onglet.">
+              <div class="mock-head" aria-hidden="true">
+                <span class="mock-mark">P</span>
+                <div>
+                  <div class="mock-title">Plaud <span class="mock-state">● Non connecté</span></div>
+                  <p class="mock-desc">Recherche et consulte enregistrements, transcriptions et résumés</p>
+                </div>
+              </div>
+              <div class="mock-box" aria-hidden="true">Connectez votre compte Plaud</div>
+              <div class="mock-btn" aria-hidden="true">Connecter</div>
+              <div class="mock-foot" aria-hidden="true">↗ Authentification dans un nouvel onglet</div>
+            </div>
+            <p class="caption">* Illustration de l'écran des intégrations de SIMY</p>
+          </div>
+        </div>
+        <p class="note"><b>Ce qu'il faut :</b> un compte Plaud avec un appareil enregistré. Toutes les offres et tous les modèles PLAUD peuvent être connectés.</p>
+      </section>
+
+      <!-- 05 -->
+      <section class="sec" id="sample" aria-labelledby="h-sample">
+        <span class="sec-label">05 / SAMPLE</span>
+        <h2 id="h-sample">Un rendez-vous client : le résumé PLAUD, et les brouillons de SIMY</h2>
+        <p class="intro">Exemple d'un rendez-vous de 45 minutes enregistré avec un PLAUD NOTE Pro. À gauche PLAUD, à droite SIMY.</p>
+        <div class="sample">
+          <div class="sheet">
+            <div class="sheet-label"><span>Résumé PLAUD (exemple)</span><span>Modèle rendez-vous client</span></div>
+            <dl>
+              <dt>Contexte</dt>
+              <dd>Le client étudie un outil d'aide à la vente. Test en cours dans trois services.</dd>
+              <dt>Décisions</dt>
+              <dd>Envoyer un devis en octobre. La DSI participera au prochain rendez-vous.</dd>
+              <dt>Points ouverts</dt>
+              <dd>L'intégration au CRM existant. Budget arrêté d'ici la fin de l'exercice.</dd>
+              <dt>Tâches</dt>
+              <dd>Préparer le devis (nous). Partager la liste des participants (client).</dd>
+            </dl>
+          </div>
+          <div class="outs">
+            <div class="out">
+              <div class="out-head"><b>E-mail de suivi</b><span class="pill ok">Brouillon prêt</span></div>
+              <p>Objet : « Merci pour notre échange et prochaines étapes ». L'envoi du devis en octobre, l'invitation de la DSI au prochain rendez-vous, avec vos tournures habituelles.</p>
+            </div>
+            <div class="out">
+              <div class="out-head"><b>Fiche client</b><span class="pill run">Autorun</span></div>
+              <p>Avancement : test en cours (3 services). Décision : budget arrêté d'ici la fin de l'exercice. Objection : intégration CRM. Prochain rendez-vous : avec la DSI.</p>
+            </div>
+            <div class="out">
+              <div class="out-head"><b>Message de partage interne</b><span class="pill">Ensuite</span></div>
+              <p>« Voici les hypothèses du devis pour le client A. Pouvez-vous confirmer avec l'équipe technique la faisabilité de l'intégration CRM ? »</p>
+            </div>
+            <div class="out you">
+              <div class="out-head"><b>Votre validation</b><span class="pill you">À vous</span></div>
+              <p>Le montant du devis et le délai. Seuls les points qui demandent une décision vous reviennent.</p>
+            </div>
+          </div>
+        </div>
+        <p class="sample-foot">PLAUD enregistre, SIMY fait avancer. Le rendez-vous lui-même reste votre terrain.</p>
+      </section>
+
+      <!-- 06 -->
+      <section class="sec" id="usecases" aria-labelledby="h-usecases">
+        <span class="sec-label">06 / BY INDUSTRY</span>
+        <h2 id="h-usecases">Par métier : le type de réunion, et ce que SIMY livre</h2>
+        <p class="intro">À partir d'une conversation enregistrée avec PLAUD, voici ce que SIMY prépare. Indépendant ou équipe en entreprise, le principe est le même.</p>
+        <div class="ind">
+          <div class="ind-card">
+            <h3>Vente et rendez-vous clients <small>PLAUD NOTE Pro (présentiel, appels)</small></h3>
+            <ul class="ind-rows">
+              <li><span>Premier rendez-vous</span><span>→</span><span>Remerciement, notes sur les enjeux, journal d'activité</span></li>
+              <li><span>Réunion avant devis</span><span>→</span><span>Hypothèses partagées en interne, fiche client à jour</span></li>
+              <li><span>Relance téléphonique</span><span>→</span><span>Créneaux pour le prochain rendez-vous et points à vérifier</span></li>
+            </ul>
+          </div>
+          <div class="ind-card">
+            <h3>Conseil financier et assurance <small>PLAUD NotePin S (présentiel)</small></h3>
+            <ul class="ind-rows">
+              <li><span>Premier entretien</span><span>→</span><span>Besoins organisés, trame de la proposition</span></li>
+              <li><span>Entretiens suivants</span><span>→</span><span>Note de suivi qui reprend tous les entretiens</span></li>
+              <li><span>Après l'entretien</span><span>→</span><span>Liste des suites à donner</span></li>
+            </ul>
+          </div>
+          <div class="ind-card">
+            <h3>Cabinet dentaire et clinique <small>PLAUD NotePin (mains libres)</small></h3>
+            <ul class="ind-rows">
+              <li><span>Consultation</span><span>→</span><span>Trace des explications, brouillon du complément</span></li>
+              <li><span>Briefing et réunion d'équipe</span><span>→</span><span>Transmissions qui arrivent à toute l'équipe</span></li>
+              <li><span>Bilan mensuel</span><span>→</span><span>Rapport qui regroupe plusieurs réunions</span></li>
+            </ul>
+            <p class="small muted" style="margin:10px 0 0">Enregistrez avec le consentement des patients et selon les règles de votre établissement.</p>
+          </div>
+          <div class="ind-card">
+            <h3>Comité de direction et entretiens individuels <small>PLAUD NOTE Pro (jusqu'à 5 m en salle)</small></h3>
+            <ul class="ind-rows">
+              <li><span>Comité de direction</span><span>→</span><span>Décisions et responsables, partagés aux personnes concernées</span></li>
+              <li><span>Entretien individuel</span><span>→</span><span>L'avancement et les décisions en attente, avant de demander « où en est-on ? »</span></li>
+              <li><span>Fin de semaine</span><span>→</span><span>Point hebdo qui regroupe plusieurs réunions</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- 07 -->
+      <section class="sec" id="start" aria-labelledby="h-start">
+        <span class="sec-label">07 / START</span>
+        <h2 id="h-start">Démarrer : votre PLAUD est arrivé, 3 étapes</h2>
+        <ol class="steps3">
+          <li><b>Appairer PLAUD et enregistrer</b><span>Chargez l'appareil et reliez-le à l'application. Choisissez un modèle de résumé et nommez les intervenants : les résumés seront homogènes.</span></li>
+          <li class="key"><b>Connecter votre compte Plaud à SIMY</b><span>Un clic sur « Connecter » dans l'écran des intégrations. La <a href="#connect">marche à suivre</a> est plus haut.</span></li>
+          <li><b>Enregistrer une réunion, puis la terminer</b><span>Le travail qui suit le résumé arrive. Vous relisez, vous envoyez. C'est tout.</span></li>
+        </ol>
+        <p class="note"><b>Inscription :</b> choisir une offre → confirmer votre e-mail → payer par carte. Il n'y a pas d'offre gratuite. <a href="/?lang=fr#pricing">Voir les tarifs</a>. L'application pour ordinateur se trouve sur la <a href="/download/fr.html">page de téléchargement</a>.</p>
+        <p class="note"><b>Vous utilisez déjà PLAUD ?</b> Seule l'étape 2 compte. Une fois connecté, SIMY consulte aussi vos enregistrements passés.</p>
+      </section>
+
+      <!-- 08 -->
+      <section class="sec" id="reference" aria-labelledby="h-reference">
+        <span class="sec-label">08 / REFERENCE</span>
+        <h2 id="h-reference">Utiliser PLAUD, offres, sécurité (pour aller plus loin)</h2>
+        <p class="intro">Ouvrez ces sections pour vérifier un point sur PLAUD lui-même. Rien de tout cela n'affecte la connexion à SIMY.</p>
+
+        <details class="fold">
+          <summary>Utiliser PLAUD : les 5 premières choses à faire<small>Charge, appairage, mode d'enregistrement, modèle de résumé, noms des intervenants</small></summary>
+          <div class="fold-body">
+            <h3>Les 5 premières choses à faire à la réception</h3>
+            <ol class="plain-list">
+              <li><strong>Charger l'appareil et l'appairer avec l'application.</strong> Le NotePin se pose simplement sur sa station de charge magnétique et se recharge entièrement en deux heures environ. Les enregistrements sont transférés de l'appareil vers l'application, puis la transcription démarre. Transférez régulièrement, avant que la mémoire de l'appareil ne soit pleine.</li>
+              <li><strong>Vérifier le mode d'enregistrement.</strong> PLAUD NOTE et PLAUD NOTE Pro proposent deux modes : présentiel et appel. Le NOTE Pro bascule automatiquement. La gamme NotePin n'enregistre qu'en présentiel.</li>
+              <li><strong>Choisir un modèle de résumé.</strong> Rendez-vous client, entretien individuel, cours : plus de 10 000 modèles. Ajoutez vos types de réunion fréquents en modèles personnalisés, et vos résumés auront toujours le même niveau de détail.</li>
+              <li><strong>Nommer les intervenants.</strong> Des noms à la place des « intervenant 1 » rendent le compte rendu plus lisible, et montrent qui s'est engagé sur quoi.</li>
+              <li><strong>Connecter votre compte Plaud à SIMY.</strong> Un clic sur « Connecter » dans l'écran des intégrations.</li>
+            </ol>
+            <h3>Sur ordinateur : Plaud Web et Plaud Desktop</h3>
+            <ul class="plain-list">
+              <li><strong>Plaud Web :</strong> connectez-vous à votre compte Plaud depuis un navigateur pour réécouter vos enregistrements et corriger les transcriptions.</li>
+              <li><strong>Plaud Desktop :</strong> l'application pour Windows et Mac. Elle enregistre vos réunions en ligne (Zoom, Microsoft Teams, Google Meet…) sans y faire entrer de robot. Gratuite pour les utilisateurs PLAUD.</li>
+            </ul>
+            <p>Sur téléphone comme sur ordinateur, SIMY peut consulter les enregistrements stockés dans votre compte Plaud.</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>Principales fonctions de PLAUD NOTE : enregistrement, transcription, résumé, Ask Plaud<small>Ce que fait très bien un enregistreur vocal IA</small></summary>
+          <div class="fold-body">
+            <h3>Enregistrement, transcription, résumé</h3>
+            <p>PLAUD NOTE est un enregistreur vocal qui automatise par l'IA l'enregistrement, la transcription et le résumé des conversations. Un bouton lance l'enregistrement, et vous marquez les moments importants d'un repère. Le NOTE Pro enregistre jusqu'à 50 heures en continu ; la gamme NotePin se clipse à une poche de chemise. La transcription couvre 112 langues, dont le français, et sépare les intervenants. La précision dépend de la distance au micro et du bruit ambiant : en salle de réunion, le NOTE Pro et ses quatre micros, qui captent jusqu'à 5 m, a l'avantage. Pour le résumé, vous choisissez le modèle d'IA parmi GPT, Gemini, Claude et d'autres.</p>
+            <h3>Carte mentale, Ask Plaud, saisie multimodale</h3>
+            <p>La carte mentale donne une vue d'ensemble d'une longue réunion. Avec Ask Plaud (bêta), vous interrogez l'enregistrement : « Quel budget le client a-t-il évoqué ? » Vous pouvez aussi joindre photos et texte à l'enregistrement, dans une même note.</p>
+            <h3>Export et intégrations</h3>
+            <p>Plus de 27 formats d'export : TXT, DOCX, PDF, SRT… PLAUD prend aussi en charge l'export vers Notion, la fonction AutoFlow, Zapier et PLAUD MCP, qui permet aux outils d'IA de lire les enregistrements. PDF pour l'externe, DOCX pour éditer en interne, TXT pour archiver la transcription complète, SRT pour les horodatages et les sous-titres. Avec SIMY, aucun export n'est nécessaire.</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>Comparer les offres : Starter, Pro, Unlimited<small>La différence : le temps de transcription. SIMY se connecte avec toutes</small></summary>
+          <div class="fold-body">
+            <p class="scroll-hint">Le tableau défile horizontalement →</p>
+            <div class="table-wrap">
+              <table class="t-wide t-price">
+                <thead>
+                  <tr><th scope="col">Offre PLAUD</th><th scope="col">Prix</th><th scope="col">Temps de transcription</th><th scope="col">Connexion à SIMY</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Starter</th><td>Gratuit</td><td>300 min par mois</td><td>Oui</td></tr>
+                  <tr><th scope="row">Pro</th><td>Abonnement annuel, prix selon la région</td><td>1 200 min par mois</td><td>Oui</td></tr>
+                  <tr><th scope="row">Unlimited</th><td>Abonnement annuel, prix selon la région</td><td>Illimité (jusqu'à 24 h par jour)</td><td>Oui</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="note"><b>Repères :</b> avec des réunions d'une heure au plus, 300 minutes font cinq réunions par mois. Pro si vous enregistrez au moins deux fois par semaine, Unlimited si vous avez des rendez-vous tous les jours. Modèles de résumé, Ask Plaud, carte mentale, transcription en 112 langues et plus de 27 formats d'export sont inclus dans toutes les offres. Les offres payantes sont facturées à l'année. Vérifiez le prix applicable dans votre région sur le <a href="https://www.plaud.ai/" target="_blank" rel="noopener">site officiel de PLAUD</a>.</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>Comparer les modèles : PLAUD NOTE Pro, NOTE, NotePin<small>Quel que soit le modèle, SIMY s'utilise de la même façon</small></summary>
+          <div class="fold-body">
+            <p class="scroll-hint">Le tableau défile horizontalement →</p>
+            <div class="table-wrap">
+              <table class="t-wide t-models t-price">
+                <thead>
+                  <tr><th scope="col">Modèle</th><th scope="col">Prix</th><th scope="col">Modes d'enregistrement</th><th scope="col">Micros et portée</th><th scope="col">Enregistrement continu</th><th scope="col">Pour qui</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">PLAUD NOTE Pro</th><td>Selon la région</td><td>Présentiel et appel (bascule auto)</td><td>4 micros, jusqu'à 5 m</td><td>Jusqu'à 50 h</td><td>Beaucoup de réunions en salle ou d'appels</td></tr>
+                  <tr><th scope="row">PLAUD NOTE</th><td>Selon la région</td><td>Présentiel et appel</td><td>2 micros, jusqu'à 3 m</td><td>Jusqu'à 30 h</td><td>Fixé au téléphone, pour enregistrer aussi les appels</td></tr>
+                  <tr><th scope="row">PLAUD NotePin S</th><td>Selon la région</td><td>Présentiel uniquement</td><td>2 micros, jusqu'à 3 m</td><td>Jusqu'à 20 h</td><td>À porter sur soi, en visite ou sur le terrain</td></tr>
+                  <tr><th scope="row">PLAUD NotePin</th><td>Selon la région</td><td>Présentiel uniquement</td><td>—</td><td>Jusqu'à 20 h</td><td>Pour qui privilégie la légèreté (16,6 g)</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="small muted">Caractéristiques vérifiées sur le site officiel de PLAUD le 30 septembre 2026. Pour les prix et les informations à jour, consultez le <a href="https://www.plaud.ai/" target="_blank" rel="noopener">site officiel de PLAUD</a>.</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>Ask Plaud, ChatGPT + PLAUD MCP et SIMY : les différences<small>Aucun n'est meilleur : ils ne s'arrêtent pas au même endroit</small></summary>
+          <div class="fold-body">
+            <p class="scroll-hint">Le tableau défile horizontalement →</p>
+            <div class="table-wrap">
+              <table class="t-wide">
+                <thead>
+                  <tr><th scope="col">Critère</th><th scope="col">Ask Plaud</th><th scope="col">ChatGPT + PLAUD MCP</th><th scope="col" class="simy">SIMY</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Mise en place</th><td>Aucune (intégré à l'application)</td><td>Configuration MCP et connexion</td><td class="simy">Un clic sur « Connecter »</td></tr>
+                  <tr><th scope="row">Point de départ</th><td>Vous posez une question</td><td>Vous demandez dans la conversation</td><td class="simy">SIMY repère le travail dans la réunion</td></tr>
+                  <tr><th scope="row">Votre méthode</th><td>Réglée par modèle de résumé</td><td>Répétée dans chaque requête</td><td class="simy">Apprise de vos vérifications et priorités</td></tr>
+                  <tr><th scope="row">Ce que vous recevez</th><td>Une réponse</td><td>Une réponse et un brouillon</td><td class="simy">Brouillons, fiche à jour, message de partage, et une question à trancher</td></tr>
+                  <tr><th scope="row">Ce qui reste visible</th><td>L'historique des questions</td><td>L'historique de la conversation</td><td class="simy">My Actions : en cours, terminé, en attente de vous</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="note"><b>Comment choisir :</b> pour une vérification ponctuelle, Ask Plaud suffit. Si le même type de réunion revient chaque semaine avec le même travail derrière, c'est le rôle de SIMY. L'usage de ChatGPT lui-même est détaillé dans le <a href="/guides/fr/chatgpt.html">guide ChatGPT</a>.</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>Sécurité, fuites de données et consentement à l'enregistrement<small>Entraînement de l'IA, chiffrement, consentement</small></summary>
+          <div class="fold-body">
+            <ul class="plain-list">
+              <li><strong>Consentement :</strong> avant d'enregistrer, obtenez l'accord de toutes les personnes présentes. Les <a href="/terms.html?lang=fr">conditions d'utilisation</a> de SIMY précisent que ce consentement relève de votre responsabilité.</li>
+              <li><strong>Sécurité de PLAUD :</strong> PLAUD déclare sa conformité SOC 2 Type II, HIPAA, RGPD et ISO/IEC 27001. Les données sont chiffrées en TLS 1.2 ou plus en transit, et en AES-256 au repos.</li>
+              <li><strong>Entraînement de l'IA :</strong> PLAUD indique ne pas utiliser les enregistrements pour entraîner l'IA sans consentement explicite de l'utilisateur. Les enregistrements inutiles se suppriment depuis l'application PLAUD.</li>
+              <li><strong>Avec PLAUD MCP :</strong> depuis ChatGPT ou Claude sur le Web, les enregistrements transitent par les serveurs américains de PLAUD. PLAUD indique ne pas conserver les données après traitement.</li>
+              <li><strong>Connexion à SIMY :</strong> vous vous connectez à votre compte Plaud sur l'écran d'authentification Plaud, puis vous autorisez l'accès. Le traitement des données par SIMY est décrit sur les pages <a href="/security.html">Sécurité</a> et <a href="/privacy.html?lang=fr">Politique de confidentialité</a>.</li>
+              <li><strong>Précision de la transcription :</strong> rapprochez le micro, réduisez le bruit, nommez les intervenants. En visioconférence, placez l'appareil près du haut-parleur pour un son net. Testez sur une courte réunion avant de l'utiliser pour de vrai. Traduction et téléchargement se font dans l'application PLAUD.</li>
+            </ul>
+          </div>
+        </details>
+      </section>
+
+      <!-- 09 -->
+      <section class="sec" id="faq" aria-labelledby="h-faq">
+        <span class="sec-label">09 / FAQ</span>
+        <h2 id="h-faq">Questions fréquentes</h2>
+        <div class="faq">
+          <details>
+            <summary>Je viens d'acheter un PLAUD. Par où commencer ?</summary>
+            <div class="a"><p>Appairez l'appareil dans l'application PLAUD, puis vérifiez le mode d'enregistrement et le modèle de résumé. Connectez ensuite votre compte Plaud dans l'écran des intégrations de SIMY : vous pourrez l'utiliser dès la première réunion.</p></div>
+          </details>
+          <details>
+            <summary>J'utilise déjà PLAUD. Mes anciens enregistrements sont-ils utilisables dans SIMY ?</summary>
+            <div class="a"><p>Oui. Une fois connecté, SIMY recherche et consulte les enregistrements, transcriptions et résumés stockés dans votre compte Plaud.</p></div>
+          </details>
+          <details>
+            <summary>Tous les modèles fonctionnent-ils, comme le PLAUD NOTE Pro ou le NotePin ?</summary>
+            <div class="a"><p>Oui. SIMY consulte les transcriptions et résumés stockés dans votre compte Plaud : le modèle ne change rien. Pour enregistrer aussi les appels, choisissez le PLAUD NOTE ou le PLAUD NOTE Pro, qui ont un mode appel.</p></div>
+          </details>
+          <details>
+            <summary>Peut-on se connecter avec n'importe quelle offre PLAUD, Starter (gratuite) ou Unlimited ?</summary>
+            <div class="a"><p>Oui. Il suffit d'un compte Plaud avec un appareil enregistré. Les offres diffèrent par le temps de transcription : 300 minutes par mois pour Starter, 1 200 pour Pro, illimité pour Unlimited.</p></div>
+          </details>
+          <details>
+            <summary>Faut-il exporter vers Notion ou configurer PLAUD MCP ?</summary>
+            <div class="a"><p>Non. PLAUD MCP est le dispositif officiel de PLAUD pour lire les enregistrements depuis ChatGPT ou Claude, mais SIMY consulte directement votre compte Plaud : ni export, ni configuration MCP.</p></div>
+          </details>
+          <details>
+            <summary>De quel pays est l'entreprise PLAUD ?</summary>
+            <div class="a"><p>Plaud Inc., qui développe PLAUD, a son siège à San Francisco, aux États-Unis.</p></div>
+          </details>
+          <details>
+            <summary>Mes enregistrements PLAUD risquent-ils de servir à entraîner l'IA ou de fuiter ?</summary>
+            <div class="a"><p>PLAUD indique ne pas utiliser les enregistrements pour entraîner l'IA sans consentement explicite. PLAUD est conforme SOC 2 Type II, HIPAA, RGPD et ISO/IEC 27001, et les données sont stockées chiffrées. Le traitement par SIMY est décrit sur les pages Sécurité et Politique de confidentialité.</p></div>
+          </details>
+          <details>
+            <summary>Faut-il préciser le format du compte rendu (participants, ordre du jour, décisions, actions) à chaque fois ?</summary>
+            <div class="a"><p>Non. Finalisez une fois à votre façon : SIMY apprend cette méthode et prépare les réunions suivantes dans la même forme. Plus besoin de coller la transcription et de retaper la même consigne.</p></div>
+          </details>
+          <details>
+            <summary>Qui décide de « ce qui a été décidé » : l'IA ou moi ?</summary>
+            <div class="a"><p>C'est vous. SIMY organise les éléments à partir de la transcription et du résumé, va jusqu'au brouillon, et ne vous renvoie que les points qui demandent une décision, comme un montant ou le feu vert pour l'envoi.</p></div>
+          </details>
+          <details>
+            <summary>SIMY fonctionne-t-il avec d'autres outils de transcription que PLAUD (Notion AI, Notta, Teams…) ?</summary>
+            <div class="a"><p>Cette page porte sur PLAUD, mais l'écran des intégrations de SIMY propose d'autres connexions, comme Notion ou Google. Le contexte de vos réunions peut passer par là. Vérifiez la compatibilité dans l'écran des intégrations.</p></div>
+          </details>
+          <details>
+            <summary>Utiliser SIMY entraîne-t-il des frais d'IA supplémentaires ?</summary>
+            <div class="a"><p>SIMY se connecte à votre compte ChatGPT et fait avancer le travail via Codex App Server. L'usage de Codex reste dans les limites de votre forfait ChatGPT. Pour le prix de SIMY lui-même, consultez la <a href="/?lang=fr#pricing">page des tarifs</a>.</p></div>
+          </details>
+          <details>
+            <summary>Faut-il le consentement des autres participants pour enregistrer ?</summary>
+            <div class="a"><p>Oui. Avant d'enregistrer, obtenez l'accord de toutes les personnes présentes. Les <a href="/terms.html?lang=fr">conditions d'utilisation</a> de SIMY précisent que ce consentement relève de votre responsabilité.</p></div>
+          </details>
+        </div>
+      </section>
+
+      <!-- 10 -->
+      <section class="sec" id="sources" aria-labelledby="h-sources">
+        <span class="sec-label">10 / SOURCES</span>
+        <h2 id="h-sources">Sources</h2>
+        <p>Les caractéristiques, fonctions et la sécurité de PLAUD ont été vérifiées dans les sources officielles ci-dessous (le 30 septembre 2026). Pour Plaud Desktop, nous nous sommes aussi appuyés sur un <a href="https://www.watch.impress.co.jp/docs/news/2076169.html" target="_blank" rel="noopener">article d'Impress Watch (en japonais)</a>. Les situations décrites après la réunion s'inspirent de vidéos explicatives sur l'usage de l'IA.</p>
+        <ul class="plain-list">
+          <li><a href="https://jp.plaud.ai/products/plaud-ai-membership" target="_blank" rel="noopener">Offres de l'application Plaud AI (comparatif des offres et fonctions, site japonais)</a></li>
+          <li><a href="https://jp.plaud.ai/blogs/blog/plaud-note-pro" target="_blank" rel="noopener">Plaud Note Pro et les autres modèles (caractéristiques, site japonais)</a></li>
+          <li><a href="https://docs.plaud.ai/plaud-mcp-cli/mcp" target="_blank" rel="noopener">Plaud MCP (documentation Plaud Dev API)</a></li>
+          <li><a href="https://www.plaud.ai/blogs/news/introducing-plaud-mcp-and-cli" target="_blank" rel="noopener">Introducing Plaud MCP and CLI (blog officiel PLAUD)</a></li>
+          <li><a href="https://www.plaud.ai/pages/trust" target="_blank" rel="noopener">Plaud Trust Center (sécurité et conformité)</a></li>
+          <li><a href="https://jp.plaud.ai/pages/japan-privacy-security" target="_blank" rel="noopener">À propos de Plaud Inc. (site japonais)</a></li>
+          <li><a href="https://jp.plaud.ai/products/plaud-notepin-accessory-charging-kit" target="_blank" rel="noopener">Kit de charge Plaud NotePin (site japonais)</a></li>
+        </ul>
+      </section>
+      <aside class="next-read" aria-labelledby="h-next">
+        <h2 id="h-next">À lire ensuite</h2>
+        <div class="next-grid"><a href="/guides/fr/meeting-notes.html"><b>Choisir un outil de compte rendu IA</b><span>Le partage et les tâches, qui restent quel que soit l'outil</span></a><a href="/guides/fr/chatgpt.html"><b>Guide ChatGPT</b><span>Ne plus recoller ni retoucher à chaque fois</span></a><a href="/guides/fr/claude.html"><b>Guide Claude</b><span>Ce qui reste après la réponse, sans le redemander à Claude</span></a></div>
+        <a class="next-all" href="/guides/fr/index.html">Tous les guides →</a>
+      </aside>
+    </article>
+  </div>
+
+  <section class="closing" aria-labelledby="h-closing">
+    <div class="wrap closing-inner">
+      <div>
+        <h2 id="h-closing">Après la réunion,<br>passez par SIMY avant de relire le résumé.</h2>
+        <p>Il suffit de connecter votre compte Plaud, dès la prochaine réunion. SIMY ne vous renvoie que les décisions. Le rendez-vous client reste votre terrain.</p>
+      </div>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="https://app.simy.one/signup?lang=fr&amp;locale=fr&amp;region=fr&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=plaud_guide_fr&amp;utm_content=closing">Choisir une offre et commencer <span class="arrow" aria-hidden="true">↗</span></a>
+        <a class="btn btn-ghost" href="mailto:sales@simy.one?subject=Question%20sur%20l%27int%C3%A9gration%20PLAUD">Nous contacter</a>
+        <a class="btn btn-ghost" href="/download/fr.html">Télécharger l'application <span class="arrow" aria-hidden="true">↓</span></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <ul class="footer-links">
+      <li><a href="/?lang=fr">Accueil</a></li>
+      <li><a href="/?lang=fr#pricing">Tarifs</a></li>
+      <li><a href="/integrations.html">Intégrations</a></li>
+      <li><a href="/download/fr.html">Télécharger</a></li>
+      <li><a href="/guides/fr/index.html">Tous les guides</a></li>
+      <li><a href="/guides/fr/claude.html">Claude</a></li>
+      <li><a href="/guides/fr/codex.html">Codex</a></li>
+      <li><a href="/guides/fr/cowork.html">Cowork</a></li>
+      <li><a href="/guides/fr/chatgpt.html">ChatGPT</a></li>
+      <li><a href="/guides/fr/plaud.html" aria-current="page">PLAUD</a></li>
+      <li><a href="/guides/fr/meeting-notes.html">Comptes rendus IA</a></li>
+      <li><a href="/guides/fr/china-llm.html">IA chinoises comparées</a></li>
+      <li><a href="/guides/fr/deepseek.html">DeepSeek</a></li>
+      <li><a href="/guides/fr/qwen.html">Qwen</a></li>
+      <li><a href="/guides/fr/qwen-local.html">Qwen sur votre serveur</a></li>
+      <li><a href="/security.html">Sécurité</a></li>
+      <li><a href="/privacy.html?lang=fr">Politique de confidentialité</a></li>
+      <li><a href="/terms.html?lang=fr">Conditions d’utilisation</a></li>
+    </ul>
+    <p>PLAUD, PLAUD NOTE et NotePin sont des marques ou des marques déposées de leurs détenteurs respectifs. SIMY est un produit indépendant de PLAUD, qui n'est ni affilié à PLAUD ni approuvé par PLAUD.</p>
+    <p>Codex et ChatGPT sont des produits d'OpenAI. Les autres noms de sociétés et de produits sont des marques ou des marques déposées de leurs détenteurs respectifs.</p>
+    <p>&copy; 2026 SIMY by AwakApp Inc.</p>
+  </div>
+</footer>
+<script>
+(function () {
+  var links = Array.prototype.slice.call(document.querySelectorAll('.toc a'));
+  if (!links.length) return;
+  var items = links.map(function (a) {
+    return { link: a, section: document.getElementById(a.getAttribute('href').slice(1)) };
+  }).filter(function (item) { return item.section; });
+  var ticking = false;
+  function update() {
+    ticking = false;
+    var line = window.innerHeight * 0.35;
+    var atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+    var current = null;
+    items.forEach(function (item) {
+      if (item.section.getBoundingClientRect().top <= line) current = item;
+    });
+    if (atBottom) current = items[items.length - 1];
+    items.forEach(function (item) { item.link.classList.toggle('is-active', item === current); });
+  }
+  window.addEventListener('scroll', function () {
+    if (!ticking) { ticking = true; window.requestAnimationFrame(update); }
+  }, { passive: true });
+  update();
+})();
+</script>
+<script src="/analytics.js" defer></script>
+</body>
+</html>

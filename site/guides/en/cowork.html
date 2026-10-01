@@ -1,0 +1,1572 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="google-site-verification" content="1n6_tVJZRZlQax8luEg5VsuG7gg-kCEam5VFiWIJs3U">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What Is Claude Cowork? Pricing and Copilot Cowork | SIMY</title>
+<meta name="description" content="Claude Cowork for non-engineers: usage, pricing, platforms, and how it compares with Copilot Cowork and Claude Code. SIMY picks up your meeting follow-ups.">
+<link rel="canonical" href="https://simy.one/guides/en/cowork.html">
+<link rel="alternate" hreflang="ja" href="https://simy.one/guides/cowork.html">
+<link rel="alternate" hreflang="en" href="https://simy.one/guides/en/cowork.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://simy.one/guides/zh-hans/cowork.html">
+<link rel="alternate" hreflang="es" href="https://simy.one/guides/es/cowork.html">
+<link rel="alternate" hreflang="fr" href="https://simy.one/guides/fr/cowork.html">
+<link rel="alternate" hreflang="hi" href="https://simy.one/guides/hi/cowork.html">
+<link rel="alternate" hreflang="x-default" href="https://simy.one/guides/en/cowork.html">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://simy.one/guides/en/cowork.html">
+<meta property="og:title" content="Pick up where Cowork stops. | SIMY">
+<meta property="og:description" content="Claude Cowork finishes your desk tasks and scheduled jobs. SIMY picks up the work born in meetings and chat, does it your way, and returns only decisions. Plus Cowork usage, pricing and Copilot Cowork comparison.">
+<meta property="og:site_name" content="SIMY">
+<meta property="og:image" content="https://simy.one/ogp.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="SIMY">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-10-01">
+<meta property="article:modified_time" content="2026-10-01">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Pick up where Cowork stops. | SIMY">
+<meta name="twitter:description" content="Claude Cowork finishes your desk tasks and scheduled jobs. SIMY picks up the work born in meetings and chat, does it your way, and returns only decisions.">
+<meta name="twitter:image" content="https://simy.one/ogp.png">
+<meta name="twitter:image:alt" content="SIMY">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#f6f5f4">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png">
+
+<style>
+:root {
+  --paper: #f6f5f4;
+  --paper-light: #ffffff;
+  --ink: #111111;
+  --ink-soft: #5d5b58;
+  --ink-faint: #6b6865;
+  --line-soft: rgba(17, 17, 17, 0.14);
+  --ui-line: #d9dde2;
+  --blue: #3273d7;
+  --blue-deep: #235db8;
+  --blue-soft: #eef5ff;
+  --mint: #92edce;
+  --coral-soft: #fff1ec;
+  --yellow: #ffd166;
+  --radius: 0.8rem;
+  --radius-sm: 0.5rem;
+  --sans: "Helvetica Neue", Arial, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", Meiryo, sans-serif;
+  --mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  --page: 1180px;
+  --gutter: clamp(16px, 4vw, 40px);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.85;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+a { color: inherit; }
+a:focus-visible, summary:focus-visible {
+  outline: 3px solid rgba(50, 115, 215, 0.45);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+img { max-width: 100%; display: block; }
+
+.wrap { width: min(var(--page), 100% - var(--gutter) * 2); margin: 0 auto; }
+
+.skip {
+  position: absolute; left: -9999px; top: 8px;
+  background: var(--ink); color: #fff; padding: 8px 14px; border-radius: 6px; z-index: 100;
+}
+.skip:focus { left: 8px; }
+
+/* ---------- Header ---------- */
+.site-header {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(246, 245, 244, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--ink);
+}
+.header-inner {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  min-height: 64px;
+}
+.brand {
+  display: inline-flex; align-items: center; gap: 10px;
+  text-decoration: none; font-weight: 800; letter-spacing: 0.01em;
+}
+.brand img { width: 28px; height: 28px; border-radius: 7px; }
+.brand-sub {
+  padding-left: 12px; margin-left: 2px;
+  border-left: 1px solid var(--line-soft);
+  color: var(--ink-soft); font-size: 0.8rem; font-weight: 500;
+}
+.header-actions { display: flex; align-items: center; gap: 6px; }
+.header-link {
+  padding: 8px 10px; font-size: 0.86rem; font-weight: 600; text-decoration: none; color: var(--ink);
+}
+.header-link:hover { color: var(--blue-deep); }
+.header-cta {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px;
+  background: var(--ink); color: #fff; text-decoration: none;
+  font-size: 0.86rem; font-weight: 700; border-radius: 6px;
+  transition: background 0.2s;
+}
+.header-cta:hover { background: var(--blue-deep); }
+
+/* ---------- Hero ---------- */
+.hero {
+  position: relative;
+  border-bottom: 1px solid var(--ink);
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(rgba(17, 17, 17, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(17, 17, 17, 0.045) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-position: -1px -1px;
+}
+.hero-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+  gap: clamp(32px, 5vw, 72px);
+  align-items: center;
+  padding: clamp(40px, 7vw, 96px) 0 clamp(48px, 7vw, 104px);
+}
+
+.crumbs {
+  display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 22px; padding: 0; list-style: none;
+  font-size: 0.78rem; color: var(--ink-soft);
+}
+.crumbs li + li::before { content: "/"; margin-right: 6px; color: var(--ink-faint); }
+.crumbs a { text-decoration: none; }
+.crumbs a:hover { text-decoration: underline; }
+
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin: 0 0 22px; padding: 6px 12px;
+  background: var(--paper-light); border: 1px solid var(--ink); border-radius: 999px;
+  font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.04em;
+}
+.eyebrow::before {
+  content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--blue);
+  box-shadow: 0 0 0 3px var(--blue-soft);
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2rem, 4.6vw, 3.9rem);
+  line-height: 1.16;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+h1 .line { display: block; }
+h1 .hl { color: var(--blue); }
+
+.lead {
+  max-width: 36em;
+  margin: 26px 0 0;
+  font-size: clamp(1rem, 1.35vw, 1.1rem);
+  line-height: 1.95;
+  color: #2c2b29;
+}
+
+.cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 52px; padding: 0 22px;
+  border: 1px solid var(--ink); border-radius: 8px;
+  font-weight: 700; font-size: 0.98rem; text-decoration: none;
+  transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+}
+.btn-primary {
+  background: var(--blue-deep); color: #fff; border-color: var(--ink);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.btn-primary:hover { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 var(--ink); }
+.btn-ghost { background: var(--paper-light); color: var(--ink); }
+.btn-ghost:hover { background: var(--blue-soft); }
+.btn .arrow { font-family: var(--mono); font-size: 0.9em; }
+
+.hero-points {
+  display: flex; flex-wrap: wrap; gap: 8px 18px;
+  margin: 26px 0 0; padding: 0; list-style: none;
+  font-size: 0.84rem; color: var(--ink-soft);
+}
+.hero-points li { display: inline-flex; align-items: center; gap: 7px; }
+.hero-points li::before {
+  content: ""; width: 14px; height: 14px; flex: none;
+  border: 1px solid var(--ink); border-radius: 50%;
+  background: var(--mint) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath d='M3.5 7.2 6 9.5l4.5-5' fill='none' stroke='%23111' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 12px no-repeat;
+}
+
+/* Relay card: the signature visual */
+.relay {
+  position: relative;
+  background: var(--paper-light);
+  border: 1px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: 8px 8px 0 var(--ink);
+  overflow: hidden;
+}
+.relay-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--ink);
+  background: var(--ink); color: #fff;
+  font-family: var(--mono); font-size: 0.78rem;
+}
+.rec { display: inline-flex; align-items: center; gap: 8px; min-width: 0; }
+.rec-dot {
+  width: 9px; height: 9px; border-radius: 50%; background: #ff865f; flex: none;
+  animation: rec 1.6s ease-in-out infinite;
+}
+.rec-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.relay-meta { display: flex; flex-wrap: wrap; gap: 6px; padding: 12px 18px 4px; }
+.chip {
+  display: inline-flex; align-items: center; padding: 2px 9px;
+  border: 1px solid var(--line-soft); border-radius: 999px;
+  font-family: var(--mono); font-size: 0.7rem; color: var(--ink-soft); background: var(--paper);
+}
+.relay-steps { list-style: none; margin: 0; padding: 8px 10px 12px; }
+.step {
+  display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; align-items: center; gap: 10px;
+  padding: 9px 8px;
+  border-radius: 8px;
+  opacity: 0; transform: translateY(6px);
+  animation: rise 0.5s cubic-bezier(.2,.7,.2,1) forwards;
+}
+.step .no { font-family: var(--mono); font-size: 0.72rem; color: var(--ink-faint); }
+.step .what { font-size: 0.9rem; font-weight: 650; line-height: 1.45; }
+.step .what small { display: block; font-weight: 400; font-size: 0.74rem; color: var(--ink-soft); }
+.status {
+  font-family: var(--mono); font-size: 0.68rem; white-space: nowrap;
+  padding: 3px 8px; border-radius: 999px; border: 1px solid var(--ink);
+}
+.s-done { background: var(--paper); }
+.s-plaud .status { border-color: var(--line-soft); color: var(--ink-soft); }
+.s-run { background: var(--blue-soft); }
+.s-run .status { background: var(--blue-deep); color: #fff; }
+.s-next .status { background: var(--paper-light); }
+.s-you { background: #fff8e3; }
+.s-you .status { background: var(--yellow); }
+.bar {
+  grid-column: 2 / 4; height: 4px; margin-top: 6px;
+  background: rgba(50, 115, 215, 0.16); border-radius: 4px; overflow: hidden;
+}
+.bar::after {
+  content: ""; display: block; height: 100%; width: 62%;
+  background: var(--blue); border-radius: 4px;
+  animation: progress 2.8s ease-in-out infinite alternate;
+}
+.handoff {
+  display: flex; align-items: center; gap: 10px;
+  margin: 6px 4px; padding: 8px 0;
+  font-family: var(--mono); font-size: 0.72rem; color: var(--blue-deep);
+  opacity: 0; animation: rise 0.5s ease forwards;
+}
+.handoff::before, .handoff::after { content: ""; flex: 1; border-top: 1.5px dashed var(--blue); }
+.relay-foot {
+  padding: 12px 18px 14px;
+  border-top: 1px solid var(--line-soft);
+  font-size: 0.82rem; color: var(--ink-soft);
+}
+.relay-foot strong { color: var(--ink); }
+.caption { margin: 12px 4px 0; font-size: 0.74rem; color: var(--ink-faint); text-align: right; }
+
+.relay-steps > :nth-child(1) { animation-delay: 0.10s; }
+.relay-steps > :nth-child(2) { animation-delay: 0.22s; }
+.relay-steps > :nth-child(3) { animation-delay: 0.34s; }
+.relay-steps > :nth-child(4) { animation-delay: 0.62s; }
+.relay-steps > :nth-child(5) { animation-delay: 0.86s; }
+.relay-steps > :nth-child(6) { animation-delay: 1.02s; }
+.relay-steps > :nth-child(7) { animation-delay: 1.18s; }
+.relay-steps > :nth-child(8) { animation-delay: 1.34s; }
+
+@keyframes rise { to { opacity: 1; transform: none; } }
+@keyframes rec { 50% { opacity: 0.25; } }
+@keyframes progress { from { width: 34%; } to { width: 88%; } }
+
+/* ---------- Guide layout ---------- */
+.guide {
+  display: grid;
+  grid-template-columns: 232px minmax(0, 1fr);
+  gap: clamp(32px, 5vw, 72px);
+  padding: clamp(40px, 6vw, 80px) 0 clamp(56px, 7vw, 96px);
+}
+.toc { position: sticky; top: 92px; align-self: start; font-size: 0.84rem; }
+.toc-title {
+  margin: 0 0 12px; font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.08em;
+  color: var(--ink-soft);
+}
+.toc ol { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--line-soft); }
+.toc a {
+  display: grid; grid-template-columns: 26px 1fr; gap: 4px;
+  margin-left: -1px; padding: 7px 0 7px 12px;
+  border-left: 2px solid transparent;
+  color: var(--ink-soft); text-decoration: none; line-height: 1.5;
+}
+.toc a span { font-family: var(--mono); font-size: 0.72rem; padding-top: 1px; }
+.toc a:hover { color: var(--ink); }
+.toc a.is-active { color: var(--ink); font-weight: 700; border-left-color: var(--blue); }
+.toc-mobile { display: none; }
+
+.article { min-width: 0; max-width: 800px; }
+.byline {
+  display: flex; flex-wrap: wrap; gap: 4px 16px;
+  margin: 0 0 8px; font-family: var(--mono); font-size: 0.74rem; color: var(--ink-faint);
+}
+
+.sec { padding-top: clamp(40px, 5vw, 64px); }
+.sec:first-of-type { padding-top: 0; }
+.sec-label {
+  display: inline-block; margin: 0 0 12px;
+  font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.06em; color: var(--blue-deep);
+}
+h2 {
+  margin: 0 0 18px;
+  font-size: clamp(1.5rem, 2.8vw, 2.1rem);
+  line-height: 1.35; font-weight: 800; letter-spacing: -0.01em;
+}
+h3 { margin: 32px 0 12px; font-size: 1.15rem; line-height: 1.5; font-weight: 750; }
+.article p { margin: 0 0 16px; }
+.article p a, .plain-list a, .faq a { color: var(--blue-deep); text-decoration: underline; text-underline-offset: 3px; }
+.muted { color: var(--ink-soft); }
+.small { font-size: 0.84rem; }
+
+/* Checklist */
+.checklist { list-style: none; margin: 24px 0 0; padding: 0; display: grid; gap: 12px; }
+.checklist li {
+  display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 16px;
+  padding: 18px 20px;
+  background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.checklist .num {
+  display: grid; place-items: center; width: 44px; height: 44px;
+  border: 1px solid var(--ink); border-radius: 50%;
+  font-family: var(--mono); font-weight: 700;
+}
+.checklist li.hook { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.checklist li.hook .num { background: var(--blue-deep); color: #fff; }
+.checklist h3 { margin: 2px 0 4px; font-size: 1.02rem; }
+.checklist p { margin: 0; font-size: 0.93rem; color: #34322f; }
+
+/* Feature grid */
+.features { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+.feature {
+  padding: 20px; background: var(--paper-light);
+  border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.feature .tag {
+  display: inline-block; margin-bottom: 8px;
+  font-family: var(--mono); font-size: 0.7rem; color: var(--ink-soft);
+}
+.feature h3 { margin: 0 0 6px; font-size: 1.04rem; }
+.feature p { margin: 0; font-size: 0.92rem; color: #34322f; }
+.feature.wide { grid-column: 1 / -1; }
+
+/* Gap section */
+.split { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+.split-col { padding: 22px; border-radius: var(--radius); border: 1px solid var(--ink); }
+.split-col h3 { margin: 0 0 12px; font-size: 1rem; display: flex; align-items: center; gap: 8px; }
+.split-col ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.split-col li { position: relative; padding-left: 22px; font-size: 0.94rem; line-height: 1.6; }
+.split-col li::before { position: absolute; left: 0; top: 0; font-family: var(--mono); }
+.col-plaud { background: var(--paper-light); }
+.col-plaud li { color: var(--ink-soft); }
+.col-plaud li::before { content: "✓"; color: #1b7a58; }
+.col-left { background: var(--coral-soft); box-shadow: 4px 4px 0 var(--ink); }
+.col-left li::before { content: "□"; color: var(--ink); }
+.who {
+  font-family: var(--mono); font-size: 0.68rem; font-weight: 400;
+  padding: 2px 8px; border: 1px solid var(--ink); border-radius: 999px; background: var(--paper-light);
+}
+
+.quote {
+  margin: 28px 0 0; padding: 22px 24px;
+  border-left: 4px solid var(--blue); background: var(--blue-soft); border-radius: 0 var(--radius) var(--radius) 0;
+}
+.quote p { margin: 0; font-size: 1.12rem; font-weight: 750; line-height: 1.7; }
+.quote p + p { margin-top: 8px; font-size: 0.93rem; font-weight: 400; color: #34322f; }
+
+/* Connect */
+.connect {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 310px); gap: 24px;
+  align-items: start; margin-top: 24px;
+}
+.connect-steps { list-style: none; margin: 0; padding: 0; counter-reset: s; display: grid; gap: 10px; }
+.connect-steps li {
+  counter-increment: s; position: relative;
+  padding: 16px 18px 16px 62px;
+  background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.connect-steps li::before {
+  content: counter(s); position: absolute; left: 18px; top: 16px;
+  width: 30px; height: 30px; display: grid; place-items: center;
+  border: 1px solid var(--ink); border-radius: 50%; background: var(--paper);
+  font-family: var(--mono); font-weight: 700; font-size: 0.86rem;
+}
+.connect-steps li.key { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.connect-steps li.key::before { background: var(--blue-deep); color: #fff; }
+.connect-steps b { display: block; font-size: 1rem; line-height: 1.5; }
+.connect-steps span { display: block; margin-top: 4px; font-size: 0.9rem; color: #34322f; line-height: 1.7; }
+
+.mock {
+  padding: 18px; background: var(--paper-light);
+  border: 1px solid var(--ink); border-radius: var(--radius); box-shadow: 6px 6px 0 var(--blue);
+}
+.mock-head { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 12px; align-items: start; }
+.mock-mark {
+  display: grid; place-items: center; width: 44px; height: 44px;
+  border-radius: 10px; background: var(--paper); font-weight: 900; font-size: 1.15rem;
+}
+.mock-title { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 1.05rem; }
+.mock-state {
+  padding: 1px 8px; border-radius: 999px; background: var(--paper);
+  font-size: 0.7rem; font-weight: 500; color: var(--ink-soft);
+}
+.mock-desc { margin: 4px 0 0; font-size: 0.82rem; color: var(--ink-soft); line-height: 1.6; }
+.mock-box {
+  margin: 14px 0 10px; padding: 12px 14px;
+  border: 1px solid var(--ui-line); border-radius: 8px; font-size: 0.86rem; font-weight: 650;
+}
+.mock-btn {
+  display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px;
+  border-radius: 8px; background: var(--blue-deep); color: #fff; font-weight: 700; font-size: 0.92rem;
+}
+.mock-foot { margin-top: 8px; text-align: center; font-size: 0.76rem; color: var(--ink-soft); }
+
+.asks { list-style: none; margin: 12px 0 18px; padding: 0; display: grid; gap: 8px; }
+.asks li {
+  padding: 12px 16px; font-size: 0.94rem; line-height: 1.7;
+  background: var(--blue-soft); border: 1px solid rgba(50, 115, 215, 0.28);
+  border-radius: 12px 12px 12px 3px;
+}
+
+/* Tables */
+.table-wrap {
+  margin: 20px 0 8px; overflow-x: auto; -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--ink); border-radius: var(--radius); background: var(--paper-light);
+}
+table { width: 100%; border-collapse: collapse; font-size: 0.9rem; line-height: 1.6; }
+th, td { padding: 12px 14px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--ui-line); }
+thead th { background: var(--ink); color: #fff; font-weight: 700; font-size: 0.82rem; white-space: nowrap; }
+tbody th { font-weight: 700; white-space: nowrap; background: var(--paper); }
+tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
+td.simy { background: var(--blue-soft); }
+thead th.simy { background: var(--blue-deep); }
+.t-wide { min-width: 640px; }
+.t-models { min-width: 760px; }
+.t-price td:nth-child(2) { white-space: nowrap; }
+.scroll-hint { display: none; margin: 0 0 12px; font-size: 0.76rem; color: var(--ink-faint); }
+
+.note {
+  margin: 16px 0 0; padding: 14px 16px;
+  background: var(--paper-light); border: 1px dashed var(--ink-faint); border-radius: var(--radius-sm);
+  font-size: 0.88rem; color: #34322f;
+}
+.note b { color: var(--ink); }
+
+/* Sample comparison */
+.sample { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 16px; margin-top: 24px; align-items: start; }
+.sheet { padding: 20px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); }
+.sheet-label {
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;
+  font-family: var(--mono); font-size: 0.72rem; color: var(--ink-soft);
+}
+.sheet dl { margin: 0; font-size: 0.88rem; line-height: 1.65; }
+.sheet dt { margin-top: 10px; font-weight: 700; }
+.sheet dt:first-child { margin-top: 0; }
+.sheet dd { margin: 2px 0 0; color: #34322f; }
+.outs { display: grid; gap: 10px; }
+.out { padding: 14px 16px; background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius); }
+.out-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 6px; }
+.out-head b { font-size: 0.92rem; }
+.out p { margin: 0; font-size: 0.86rem; color: #34322f; line-height: 1.7; }
+.out.you { background: #fff8e3; }
+.pill {
+  font-family: var(--mono); font-size: 0.66rem; white-space: nowrap;
+  padding: 2px 8px; border-radius: 999px; border: 1px solid var(--ink); background: var(--paper);
+}
+.pill.run { background: var(--blue-deep); color: #fff; }
+.pill.you { background: var(--yellow); }
+.pill.ok { background: var(--mint); }
+.sample-foot { margin-top: 18px; font-weight: 700; }
+
+/* Use cases */
+.cases { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+.case { padding: 22px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); }
+.case h3 { margin: 0 0 4px; font-size: 1.06rem; }
+.case .device { margin: 0 0 12px; font-family: var(--mono); font-size: 0.72rem; color: var(--blue-deep); }
+.case p { margin: 0 0 8px; font-size: 0.9rem; color: #34322f; }
+.case ul { margin: 0; padding-left: 1.1em; font-size: 0.9rem; line-height: 1.7; }
+
+/* Lists */
+.plain-list { margin: 16px 0 0; padding-left: 1.2em; }
+.plain-list li { margin-bottom: 10px; }
+
+/* FAQ */
+.faq { margin-top: 20px; border-top: 1px solid var(--ink); }
+.faq details { border-bottom: 1px solid var(--ui-line); }
+.faq summary {
+  list-style: none; cursor: pointer;
+  display: grid; grid-template-columns: 28px minmax(0, 1fr) 20px; gap: 10px; align-items: start;
+  padding: 18px 4px; font-weight: 700; line-height: 1.6;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::before { content: "Q"; font-family: var(--mono); color: var(--blue-deep); }
+.faq summary::after {
+  content: "+"; font-family: var(--mono); font-size: 1.1rem; line-height: 1.4; text-align: right;
+  transition: transform 0.2s;
+}
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq .a { padding: 0 4px 18px 42px; font-size: 0.94rem; color: #34322f; }
+.faq .a p { margin: 0; }
+
+/* Closing CTA */
+.closing { background: var(--ink); color: #fff; border-top: 1px solid var(--ink); }
+.closing-inner {
+  display: grid; grid-template-columns: minmax(0, 1.2fr) auto; gap: 32px; align-items: center;
+  padding: clamp(48px, 7vw, 88px) 0;
+}
+.closing h2 { color: #fff; margin: 0 0 12px; font-size: clamp(1.6rem, 3.4vw, 2.5rem); }
+.closing p { margin: 0; color: rgba(255, 255, 255, 0.8); }
+.closing .cta-row { margin-top: 0; }
+.closing .btn-primary { box-shadow: 4px 4px 0 var(--mint); border-color: #fff; }
+.closing .btn-primary:hover { box-shadow: 5px 5px 0 var(--mint); }
+.closing .btn-ghost { background: transparent; color: #fff; border-color: rgba(255, 255, 255, 0.5); }
+.closing .btn-ghost:hover { background: rgba(255, 255, 255, 0.08); }
+
+/* Footer */
+.site-footer { padding: 36px 0 48px; font-size: 0.82rem; color: var(--ink-soft); }
+.footer-links { display: flex; flex-wrap: wrap; gap: 4px 20px; margin: 0 0 18px; padding: 0; list-style: none; }
+.footer-links a { display: inline-block; padding: 6px 0; text-decoration: none; color: var(--ink); }
+.footer-links a:hover { text-decoration: underline; }
+.site-footer p { margin: 0 0 6px; line-height: 1.7; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1080px) {
+  .guide { grid-template-columns: minmax(0, 1fr); }
+  .toc { display: none; }
+  .toc-mobile {
+    display: block; margin: 0 0 32px;
+    background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius);
+  }
+  .toc-mobile summary {
+    cursor: pointer; list-style: none; padding: 14px 18px;
+    font-family: var(--mono); font-size: 0.8rem; display: flex; justify-content: space-between;
+  }
+  .toc-mobile summary::-webkit-details-marker { display: none; }
+  .toc-mobile summary::after { content: "+"; }
+  .toc-mobile[open] summary::after { content: "−"; }
+  .toc-mobile ol { margin: 0; padding: 0 18px 14px 40px; font-size: 0.9rem; }
+  .toc-mobile li { padding: 3px 0; }
+  .toc-mobile a { display: inline-block; padding: 4px 0; text-decoration: none; }
+  .article { max-width: none; }
+}
+
+@media (max-width: 960px) {
+  .hero-inner { grid-template-columns: minmax(0, 1fr); }
+  .hero-visual { max-width: 580px; }
+  .relay { box-shadow: 6px 6px 0 var(--ink); }
+}
+
+@media (max-width: 860px) {
+  .sample { grid-template-columns: minmax(0, 1fr); }
+  .connect { grid-template-columns: minmax(0, 1fr); }
+  .mock { max-width: 360px; }
+  .closing-inner { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 640px) {
+  body { font-size: 15.5px; }
+  .brand-sub, .header-link { display: none; }
+  .header-cta { padding: 0 14px; }
+  .features, .split, .cases { grid-template-columns: minmax(0, 1fr); }
+  .checklist li { grid-template-columns: 40px minmax(0, 1fr); gap: 12px; padding: 16px; }
+  .checklist .num { width: 36px; height: 36px; font-size: 0.86rem; }
+  .connect-steps li { padding-left: 56px; }
+  .connect-steps li::before { left: 14px; }
+  .btn { width: 100%; }
+  .scroll-hint { display: block; }
+  .faq .a { padding-left: 4px; }
+  .step { grid-template-columns: 24px minmax(0, 1fr) auto; gap: 8px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .step, .handoff { animation: none; opacity: 1; transform: none; }
+  .rec-dot, .bar::after { animation: none; }
+  .btn, .header-cta { transition: none; }
+}
+
+/* ---------- Guide v2: scene cards, timeline, folds ---------- */
+.intro { max-width: 34em; margin: 0 0 8px; font-size: 1.02rem; color: #34322f; }
+.scenes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 22px; }
+.scenes.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.scene {
+  position: relative; padding: 22px 20px 20px;
+  background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius);
+  min-height: 168px; display: flex; flex-direction: column; gap: 8px;
+}
+.scene .k { font-family: var(--mono); font-size: 0.7rem; color: var(--ink-faint); letter-spacing: 0.04em; }
+.scene b { display: block; font-size: 1.22rem; line-height: 1.35; letter-spacing: -0.01em; }
+.scene p { margin: 0; font-size: 0.9rem; line-height: 1.65; color: #34322f; }
+.scene .mark {
+  position: absolute; right: 16px; top: 14px;
+  width: 30px; height: 30px; display: grid; place-items: center;
+  border: 1px solid var(--ink); border-radius: 50%; font-family: var(--mono); font-size: 0.9rem; font-weight: 700;
+}
+.scene.pain { background: var(--coral-soft); }
+.scene.pain .mark { background: var(--paper-light); }
+.scene.wish { background: var(--blue-soft); border-color: var(--blue-deep); box-shadow: 4px 4px 0 var(--blue); }
+.scene.wish .mark { background: var(--blue-deep); color: #fff; border-color: var(--blue-deep); }
+.scene.wish.you { background: #fff8e3; border-color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+.scene.wish.you .mark { background: var(--yellow); color: var(--ink); border-color: var(--ink); }
+.scene-foot { margin: 14px 0 0; font-size: 0.9rem; color: var(--ink-soft); }
+.scene-foot b { color: var(--ink); }
+
+/* Timeline */
+.tl-wrap {
+  margin-top: 22px; padding: 22px 20px 18px;
+  background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius);
+}
+.tl-row { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 14px; align-items: center; }
+.tl-row + .tl-row { margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--line-soft); }
+.tl-who {
+  font-family: var(--mono); font-size: 0.72rem; font-weight: 700; text-align: center;
+  padding: 6px 4px; border: 1px solid var(--ink); border-radius: 999px; background: var(--paper);
+}
+.tl-who.simy { background: var(--blue-deep); color: #fff; border-color: var(--blue-deep); }
+.tl-who.you { background: var(--yellow); }
+.tl { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; }
+.tl li {
+  position: relative; min-height: 64px; padding: 10px 8px 8px;
+  border-radius: var(--radius-sm); font-size: 0.8rem; line-height: 1.4; font-weight: 650;
+  display: flex; flex-direction: column; justify-content: flex-start; gap: 4px;
+}
+.tl li small { display: block; font-weight: 400; font-size: 0.7rem; color: var(--ink-soft); }
+.tl li.on { background: var(--paper); border: 1px solid var(--line-soft); color: var(--ink-soft); }
+.tl li.gap { border: 1.5px dashed var(--ink-faint); color: var(--ink-faint); background: transparent; }
+.tl li.gap::after { content: "？"; position: absolute; right: 8px; top: 6px; font-family: var(--mono); }
+.tl li.run { background: var(--blue-soft); border: 1px solid var(--blue-deep); color: var(--ink); }
+.tl li.run::after { content: "✓"; position: absolute; right: 8px; top: 6px; font-family: var(--mono); color: var(--blue-deep); }
+.tl li.you { background: #fff8e3; border: 1px solid var(--ink); color: var(--ink); }
+.tl li.you::after { content: "You"; position: absolute; right: 8px; top: 7px; font-family: var(--mono); font-size: 0.62rem; }
+.tl li.blank { border: 0; background: transparent; }
+.tl-note { margin: 14px 0 0; font-size: 0.86rem; color: #34322f; }
+.tl-note b { color: var(--ink); }
+.three { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 0; padding: 0; list-style: none; }
+.three li {
+  padding: 8px 14px; font-weight: 800; font-size: 1rem;
+  background: var(--ink); color: #fff; border-radius: 999px;
+}
+
+/* 3-step start */
+.steps3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 22px; counter-reset: st; }
+.steps3 li {
+  counter-increment: st; list-style: none; position: relative;
+  padding: 54px 18px 18px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.steps3 li::before {
+  content: counter(st); position: absolute; left: 18px; top: 16px;
+  width: 28px; height: 28px; display: grid; place-items: center;
+  border: 1px solid var(--ink); border-radius: 50%; background: var(--paper);
+  font-family: var(--mono); font-weight: 700; font-size: 0.84rem;
+}
+.steps3 li.key { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.steps3 li.key::before { background: var(--blue-deep); color: #fff; }
+.steps3 b { display: block; font-size: 1.02rem; line-height: 1.45; }
+.steps3 span { display: block; margin-top: 6px; font-size: 0.88rem; color: #34322f; line-height: 1.65; }
+.steps3 { padding: 0; }
+
+/* Industry grid */
+.ind { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 22px; }
+.ind-card { padding: 18px 18px 14px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); }
+.ind-card h3 { margin: 0 0 10px; font-size: 1.04rem; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.ind-card h3 small { font-family: var(--mono); font-size: 0.68rem; font-weight: 400; color: var(--blue-deep); white-space: normal; }
+.ind-card h3 { flex-wrap: wrap; }
+.ind-rows { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+.ind-rows li { display: grid; grid-template-columns: minmax(0, 1fr) 14px minmax(0, 1.4fr); gap: 6px; align-items: center; font-size: 0.86rem; line-height: 1.5; }
+.ind-rows li span:first-child { color: var(--ink-soft); }
+.ind-rows li span:nth-child(2) { font-family: var(--mono); color: var(--blue-deep); text-align: center; }
+.ind-rows li span:last-child { font-weight: 650; }
+
+/* Folded reference */
+.fold { margin-top: 12px; border: 1px solid var(--ui-line); border-radius: var(--radius); background: var(--paper-light); }
+.fold > summary {
+  list-style: none; cursor: pointer; padding: 16px 18px;
+  display: grid; grid-template-columns: minmax(0, 1fr) 20px; gap: 10px; align-items: center;
+  font-weight: 750; font-size: 1.02rem; line-height: 1.5;
+}
+.fold > summary::-webkit-details-marker { display: none; }
+.fold > summary::after { content: "+"; font-family: var(--mono); font-size: 1.1rem; text-align: right; grid-column: 2; grid-row: 1; }
+.fold > summary small { grid-column: 1; }
+.fold[open] > summary::after { content: "−"; }
+.fold > summary small { display: block; margin-top: 2px; font-weight: 400; font-size: 0.82rem; color: var(--ink-soft); }
+.fold-body { padding: 0 18px 18px; font-size: 0.93rem; }
+.fold-body h3 { margin: 18px 0 8px; font-size: 1rem; }
+.fold-body h3:first-child { margin-top: 0; }
+.fold-body p { margin: 0 0 10px; }
+.fold-body .table-wrap { margin: 12px 0 6px; }
+.fold-body .plain-list { margin-top: 8px; }
+.fold-body .plain-list li { margin-bottom: 6px; }
+
+@media (max-width: 960px) {
+  .scenes, .scenes.four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tl { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .tl li.blank { display: none; }
+}
+@media (max-width: 640px) {
+  .scenes, .scenes.four, .steps3, .ind { grid-template-columns: minmax(0, 1fr); }
+  .scene { min-height: 0; }
+  .tl-row { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .tl-who { justify-self: start; }
+  .tl { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ind-rows li { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .ind-rows li span:nth-child(2) { display: none; }
+  .ind-rows li { padding: 6px 0; border-bottom: 1px dashed var(--line-soft); }
+}
+
+/* Next read */
+.next-read { margin-top: clamp(40px, 5vw, 64px); padding-top: 24px; border-top: 1px solid var(--ink); }
+.next-read h2 { font-size: 1.2rem; margin: 0 0 14px; }
+.next-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.next-grid a { display: block; padding: 14px 16px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); text-decoration: none; color: var(--ink); }
+.next-grid a:hover { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.next-grid b { display: block; font-size: 0.96rem; }
+.next-grid span { display: block; margin-top: 4px; font-size: 0.82rem; color: var(--ink-soft); }
+.next-all { display: inline-block; margin-top: 12px; font-weight: 700; color: var(--blue-deep); }
+@media (max-width: 760px) { .next-grid { grid-template-columns: minmax(0, 1fr); } }
+
+.lang-switch { position: relative; }
+.lang-switch > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 10px; border: 1px solid var(--ui-line); border-radius: 999px; background: var(--paper-light); font-size: 0.8rem; font-weight: 700; }
+.lang-switch > summary::-webkit-details-marker { display: none; }
+.lang-switch ul { position: absolute; right: 0; top: calc(100% + 6px); z-index: 30; margin: 0; padding: 6px; list-style: none; min-width: 150px; background: var(--paper-light); border: 1px solid var(--ink); border-radius: 10px; box-shadow: 4px 4px 0 var(--ink); }
+.lang-switch li a { display: block; padding: 8px 10px; border-radius: 6px; color: var(--ink); text-decoration: none; font-size: 0.88rem; }
+.lang-switch li a:hover, .lang-switch li a[aria-current] { background: var(--blue-soft); }
+@media (max-width: 960px) { .brand-sub { display: none; } .header-actions { gap: 4px; } .lang-switch > summary { padding: 0 8px; } }
+@media (max-width: 640px) { .lang-switch .ls-label { display: none; } .lang-switch > summary { padding: 0 10px; } }
+/* Typography: balanced headings, phrase-aware Japanese breaks, tighter mobile headings */
+h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
+:lang(ja) h1, :lang(ja) h2, :lang(ja) h3, :lang(ja) .eyebrow, :lang(ja) .scene b, :lang(ja) .lead { word-break: auto-phrase; }
+.lead, .intro, .scene p { text-wrap: pretty; }
+@media (max-width: 640px) { h2 { font-size: 1.32rem; line-height: 1.4; } .eyebrow { font-size: 0.72rem; } .closing h2 { font-size: 1.5rem; } }
+@media (max-width: 400px) { h2 { font-size: 1.22rem; } .closing h2 { font-size: 1.34rem; } }
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://simy.one/guides/en/cowork.html#article",
+      "headline": "Claude Cowork guide: how to use it, pricing, how it differs from Copilot Cowork, and picking up what comes next with SIMY",
+      "description": "Claude Cowork for non-engineers: how to use it, getting started, pricing and platforms, safety, and how it compares with Copilot Cowork and Claude Code. SIMY connects the meeting follow-ups, sharing and decisions left after Cowork finishes.",
+      "inLanguage": "en",
+      "datePublished": "2026-10-01",
+      "dateModified": "2026-10-01",
+      "mainEntityOfPage": "https://simy.one/guides/en/cowork.html",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://simy.one/ogp.png",
+        "width": 1200,
+        "height": 630
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "SIMY",
+        "url": "https://simy.one/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "AwakApp Inc.",
+        "url": "https://www.awak.app/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://simy.one/simy-icon-square.png"
+        }
+      },
+      "about": [
+        { "@type": "Thing", "name": "Claude Cowork" },
+        { "@type": "Thing", "name": "Anthropic" },
+        { "@type": "Thing", "name": "Business automation" }
+      ],
+      "citation": [
+        "https://claude.com/product/cowork",
+        "https://claude.com/pricing",
+        "https://code.claude.com/docs/en/overview",
+        "https://www.microsoft.com/en-us/microsoft-365/copilot"
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "SIMY", "item": "https://simy.one/" },
+        { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://simy.one/guides/en/index.html" },
+        { "@type": "ListItem", "position": 3, "name": "Claude Cowork Guide", "item": "https://simy.one/guides/en/cowork.html" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What does the name Claude Cowork mean?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Cowork comes from \"co-work,\" working together. It's the name of Anthropic's Claude agent that does work on your behalf."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Claude Cowork free?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. As of October 1, 2026, official guidance says Cowork is a paid-plan feature rolling out from Pro and Max. Check Claude's official pricing page for prices."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does Claude Cowork work on Windows?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "As of October 1, 2026, Claude offers official desktop app downloads for Windows (including arm64). Check the latest official page for coverage and feature differences."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use Claude Cowork on my phone?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Anthropic says Cowork is rolling out to web and mobile too (mobile in beta). The expected use is checking on work started on the desktop and adding instructions from your phone."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "When can I start using Claude Cowork?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "As of October 1, 2026, paid plans can use it from the Claude desktop app. Plans and platforms are expanding in stages, so check official announcements for when it reaches your plan."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What can Claude Cowork do?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It reads and writes files in folders you choose, creates spreadsheets and documents, researches and fills in forms in a dedicated browser, and controls the screen only when needed. It can run on daily, weekly or monthly schedules, and you can tailor it to your work with skills, connectors and plugins."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Have Claude chat and Cowork been merged?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Anthropic says \"Claude Cowork is now just Claude,\" rolling Cowork out as part of Claude itself starting with Pro and Max (as of October 1, 2026). The merge is in progress, so check the latest official guidance for menu locations and names."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How are Cowork's scheduled runs different from SIMY's Autorun?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The starting point differs. Cowork schedules repeat work you designed at a set time; SIMY's Autorun takes work picked up from meetings and chat, does it your way, and returns only decisions. Both have scheduled runs."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How is it different from Copilot Cowork?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Copilot Cowork is Microsoft's work agent in Copilot, suited to work inside Microsoft 365. Claude Cowork is Anthropic's agent, suited to work across local folders and many tools. Both start from your instructions. Check each company's official guidance for details."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need a paid Claude plan to use SIMY?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Not for SIMY itself. With the SIMY desktop app, you can bring your Claude Code chats into SIMY and run Claude Code from SIMY. That uses your existing Claude login and plan. Claude tokens can't be used for SIMY's cloud runs; cloud runs use your ChatGPT account (Codex). Gemini token support is in development. For SIMY pricing, see the pricing page."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Claude Code or Cowork: which should I use?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Claude Code for code and repositories; Cowork for documents, spreadsheets and folders. SIMY creates \"Suggestions from SIMY\" from your Claude Code chat history and can use Claude Code to do the work locally."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is it safe to let Cowork touch folders on my computer?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Claude can touch only the folders you choose and the tools you connect, and deleting anything needs your approval. With permission settings on, it shows its plan before important actions and waits for approval. Start with a folder you can afford to mess up."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="/?lang=en">
+      <img src="/simy-icon-56.png" alt="SIMY" width="28" height="28">
+      <span aria-hidden="true">SIMY</span>
+      <span class="brand-sub">Claude Cowork Guide</span>
+    </a>
+    <nav class="header-actions" aria-label="Account">
+      <details class="lang-switch"><summary aria-label="Language: English"><span aria-hidden="true">🌐</span> <span class="ls-label">English</span></summary><ul><li><a href="/guides/cowork.html" hreflang="ja" lang="ja">日本語</a></li><li><a href="/guides/en/cowork.html" hreflang="en" lang="en" aria-current="page">English</a></li><li><a href="/guides/zh-hans/cowork.html" hreflang="zh-Hans" lang="zh-Hans">中文</a></li><li><a href="/guides/es/cowork.html" hreflang="es" lang="es">Español</a></li><li><a href="/guides/fr/cowork.html" hreflang="fr" lang="fr">Français</a></li><li><a href="/guides/hi/cowork.html" hreflang="hi" lang="hi">हिन्दी</a></li></ul></details>
+      <a class="header-link" href="/download/en.html">Download</a>
+      <a class="header-link" href="https://app.simy.one/login?lang=en&amp;locale=en&amp;region=us">Log in</a>
+      <a class="header-cta" href="https://app.simy.one/signup?lang=en&amp;locale=en&amp;region=us&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=cowork_guide_en&amp;utm_content=header">Choose a plan</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" aria-labelledby="page-title">
+    <div class="wrap hero-inner">
+      <div>
+        <ol class="crumbs" aria-label="Breadcrumb">
+          <li><a href="https://simy.one/">SIMY</a></li>
+          <li><a href="/guides/en/index.html">Guides</a></li>
+          <li aria-current="page">Claude Cowork Guide</li>
+        </ol>
+        <p class="eyebrow">Anthropic's agent that does the work for you</p>
+        <h1 id="page-title">
+          <span class="line">Pick up</span>
+          <span class="line hl">where Cowork</span>
+          <span class="line">stops.</span>
+        </h1>
+        <p class="lead">Claude Cowork finishes the work you assign, using your folders and connected tools. What comes next, the follow-ups and sharing agreed in meetings, is still on you. SIMY picks that up, does it your way, and returns only the decisions.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="https://app.simy.one/signup?lang=en&amp;locale=en&amp;region=us&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=cowork_guide_en&amp;utm_content=hero">Choose a plan <span class="arrow" aria-hidden="true">↗</span></a>
+          <a class="btn btn-ghost" href="#connect">See how it connects <span class="arrow" aria-hidden="true">↓</span></a>
+        </div>
+        <ul class="hero-points">
+          <li>Picks up unassigned work from meetings and chat</li>
+          <li>Repeats your format without being asked</li>
+          <li>Brings your Claude Code chats into SIMY</li>
+        </ul>
+      </div>
+
+      <div class="hero-visual">
+        <div class="relay" role="img" aria-label="Example: after Cowork finishes organizing a folder and writing a how-to doc, SIMY lines up the meeting follow-ups, prepares the share message and the next meeting's plan. Only the quote amount is left for you to decide.">
+          <div class="relay-head" aria-hidden="true">
+            <span class="rec"><span class="rec-dot"></span><span class="rec-name">Cowork: sort the sales folder, write a how-to</span></span>
+            <span>Done 09:14</span>
+          </div>
+          <div class="relay-meta" aria-hidden="true">
+            <span class="chip">Claude Cowork</span>
+            <span class="chip">Target: Sales files</span>
+            <span class="chip">Runs every Monday</span>
+          </div>
+          <ol class="relay-steps" aria-hidden="true">
+            <li class="step s-done s-plaud"><span class="no">01</span><span class="what">Sort the folder<small>Proposals, quotes, meeting notes</small></span><span class="status">Cowork ✓</span></li>
+            <li class="step s-done s-plaud"><span class="no">02</span><span class="what">Write the how-to<small>Naming rules and where to save</small></span><span class="status">Cowork ✓</span></li>
+            <li class="step s-done s-plaud"><span class="no">03</span><span class="what">Report done<small>9 duplicates flagged, not deleted</small></span><span class="status">Cowork ✓</span></li>
+            <li class="handoff">Cowork stops here / SIMY takes over</li>
+            <li class="step s-done"><span class="no">04</span><span class="what">Meeting follow-ups<small>Listed with owners and deadlines</small></span><span class="status">Listed</span></li>
+            <li class="step s-run"><span class="no">05</span><span class="what">Share<small>How-to location to the team, posts on approval</small></span><span class="status">Autorun</span><span class="bar"></span></li>
+            <li class="step s-next"><span class="no">06</span><span class="what">Next meeting prep<small>Draft agenda for the next sales meeting</small></span><span class="status">Next</span></li>
+            <li class="step s-you"><span class="no">07</span><span class="what">Decide the quote amount<small>Only the decision is left to you</small></span><span class="status">Your turn</span></li>
+          </ol>
+          <div class="relay-foot" aria-hidden="true"><strong>All you do is review and decide.</strong></div>
+        </div>
+        <p class="caption">* Screen shown for illustration only</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap guide">
+    <nav class="toc" aria-label="Contents">
+      <p class="toc-title">Contents</p>
+      <ol>
+        <li><a href="#scene"><span>01</span>After the task: sound familiar?</a></li>
+        <li><a href="#wish"><span>02</span>What you really wanted</a></li>
+        <li><a href="#gap"><span>03</span>Where Cowork stops</a></li>
+        <li><a href="#connect"><span>04</span>How SIMY connects</a></li>
+        <li><a href="#sample"><span>05</span>One task, side by side</a></li>
+        <li><a href="#usecases"><span>06</span>By industry: Cowork vs SIMY</a></li>
+        <li><a href="#start"><span>07</span>Get started in 3 steps</a></li>
+        <li><a href="#reference"><span>08</span>Usage, pricing, safety, comparison</a></li>
+        <li><a href="#faq"><span>09</span>FAQ</a></li>
+        <li><a href="#sources"><span>10</span>Sources</a></li>
+      </ol>
+    </nav>
+
+    <article class="article">
+      <details class="toc-mobile">
+        <summary>Contents</summary>
+        <ol>
+          <li><a href="#scene">After the task: sound familiar?</a></li>
+          <li><a href="#wish">What you really wanted</a></li>
+          <li><a href="#gap">Where Cowork stops</a></li>
+          <li><a href="#connect">How SIMY connects</a></li>
+          <li><a href="#sample">One task, side by side</a></li>
+          <li><a href="#usecases">By industry: Cowork vs SIMY</a></li>
+          <li><a href="#start">Get started in 3 steps</a></li>
+          <li><a href="#reference">Usage, pricing, safety, comparison</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#sources">Sources</a></li>
+        </ol>
+      </details>
+
+      <p class="byline"><span>Last updated: <time datetime="2026-10-01">October 1, 2026</time></span><span>Published by SIMY (AwakApp Inc.)</span></p>
+
+      <!-- 01 -->
+      <section class="sec" id="scene" aria-labelledby="h-scene">
+        <span class="sec-label">01 / AFTER THE TASK</span>
+        <h2 id="h-scene">After the task: does this sound familiar?</h2>
+        <p class="intro">Cowork finishes exactly what you asked. Here's what still happens the day after the task is done.</p>
+        <div class="scenes">
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">1</span>
+            <span class="k">Right after it's done</span>
+            <b>Folder sorted</b>
+            <p>The sales files are tidy. Nobody picked up the follow-ups from the meeting.</p>
+          </div>
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">2</span>
+            <span class="k">The next Monday</span>
+            <b>Schedule set up</b>
+            <p>The weekly report runs on its own. Deciding what to schedule is still on you.</p>
+          </div>
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">3</span>
+            <span class="k">Company policy</span>
+            <b>Copilot-only company</b>
+            <p>You can't try Cowork. Meeting follow-ups still pile up every week.</p>
+          </div>
+        </div>
+        <p class="scene-foot">Cowork finishes the work you assign. <b>Nobody assigned the work born in meetings and chat.</b></p>
+      </section>
+
+      <!-- 02 -->
+      <section class="sec" id="wish" aria-labelledby="h-wish">
+        <span class="sec-label">02 / WHAT YOU REALLY WANTED</span>
+        <h2 id="h-wish">What you really wanted after Cowork's task</h2>
+        <p class="intro">Same day. Same Cowork. This is how it should have looked when you walked out of the meeting.</p>
+        <div class="scenes four">
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">Leaving the meeting</span>
+            <b>Lined up after meetings</b>
+            <p>The agreed follow-ups are already in chat, with owners and deadlines.</p>
+          </div>
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">Without asking</span>
+            <b>Your way, every time</b>
+            <p>Finish it your way once, and next time it's prepared the same way.</p>
+          </div>
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">Before you instruct</span>
+            <b>Suggestions arrive</b>
+            <p>"Want to run this next?" arrives, based on work you did in Claude Code or Codex.</p>
+          </div>
+          <div class="scene wish you">
+            <span class="mark" aria-hidden="true">!</span>
+            <span class="k">What comes back to you</span>
+            <b>Just the decision</b>
+            <p>"OK to send at this price?" Just that one question comes back.</p>
+          </div>
+        </div>
+        <p class="scene-foot">This starts <b>from your next meeting after signing up for SIMY</b>.</p>
+      </section>
+
+      <!-- 03 -->
+      <section class="sec" id="gap" aria-labelledby="h-gap">
+        <span class="sec-label">03 / WHERE COWORK STOPS</span>
+        <h2 id="h-gap">Where Cowork stops</h2>
+        <p class="intro">Cowork is great at finishing what you assign. Beyond that, nobody picks anything up.</p>
+        <div class="tl-wrap" role="img" aria-label="Timeline. Cowork handles the instruction, running and finishing. Meeting follow-ups, re-asking, sharing and pending decisions are left blank.">
+          <div class="tl-row">
+            <span class="tl-who">Cowork</span>
+            <ol class="tl">
+              <li class="on">Instruct<small>Give a folder and a goal</small></li>
+              <li class="on">Cowork runs<small>Local files, Computer Use, schedules</small></li>
+              <li class="on">Done<small>Review and accept</small></li>
+              <li class="gap">Meeting follow-ups</li>
+              <li class="gap">Ask again</li>
+              <li class="gap">Share</li>
+              <li class="gap">Pending decisions</li>
+            </ol>
+          </div>
+        </div>
+        <p class="caption">* Flow shown for illustration only</p>
+        <p class="tl-note"><b>Scheduled runs stop at the same spot.</b> The Monday report runs. But deciding what to run and instructing it is you, and follow-ups agreed in meetings land on nobody's calendar.</p>
+      </section>
+
+      <!-- 04 -->
+      <section class="sec" id="connect" aria-labelledby="h-connect">
+        <span class="sec-label">04 / CONNECT</span>
+        <h2 id="h-connect">SIMY connects it: desk work to Cowork, meetings and chat to SIMY</h2>
+        <p class="intro">One clear line. Cowork = desk tasks and scheduled jobs. SIMY = work born in meetings and chat.</p>
+        <div class="tl-wrap" role="img" aria-label="Timeline. Cowork handles the instruction, running and finishing. SIMY handles meeting follow-ups, repeating without re-asking, and sharing. Only the decision comes back to you.">
+          <div class="tl-row">
+            <span class="tl-who">Cowork</span>
+            <ol class="tl">
+              <li class="on">Instruct</li>
+              <li class="on">Run</li>
+              <li class="on">Done</li>
+              <li class="blank"></li><li class="blank"></li><li class="blank"></li><li class="blank"></li>
+            </ol>
+          </div>
+          <div class="tl-row">
+            <span class="tl-who simy">SIMY</span>
+            <ol class="tl">
+              <li class="blank"></li><li class="blank"></li><li class="blank"></li>
+              <li class="run">Follow-ups<small>By owner and deadline</small></li>
+              <li class="run">No re-asking<small>Your way, every time</small></li>
+              <li class="run">Share<small>Slack and Notion on approval</small></li>
+              <li class="you">Decide<small>Only decisions come back</small></li>
+            </ol>
+          </div>
+        </div>
+        <p class="caption">* Flow shown for illustration only</p>
+        <ul class="three" aria-label="Three things SIMY does">
+          <li>Picks up from meetings</li>
+          <li>Does it your way</li>
+          <li>Returns only decisions</li>
+        </ul>
+        <p class="tl-note">SIMY finds the follow-up work in your meeting records and chats on its own. It starts without being asked, learns the checks and priorities you repeat when you do good work, and follows the same approach.</p>
+
+        <div class="connect">
+          <ol class="connect-steps">
+            <li><b>Sign up for SIMY</b><span>For cloud runs, connect your ChatGPT account. Codex usage comes out of your ChatGPT plan. Gemini token support is in development.</span></li>
+            <li class="key"><b>Locally, let Claude Code do the work</b><span>The SIMY desktop app lets SIMY run Claude Code on your computer. Your Claude Code chats also come into SIMY and become "Suggestions from SIMY." <a href="/download/en.html">Download here</a></span></li>
+            <li><b>Get "Suggestions from SIMY"</b><span>From your Claude Code and Codex chat history (90 days by default), SIMY suggests repeat work as WorkFlow candidates. Chat text is not stored on our servers.</span></li>
+          </ol>
+          <div>
+            <div class="mock" role="img" aria-label="Illustration of Suggestions from SIMY. It finds repeat work in your Claude Code chat history and shows it as a WorkFlow candidate. Chat text is not stored on the servers.">
+              <div class="mock-head" aria-hidden="true">
+                <span class="mock-mark">S</span>
+                <div>
+                  <div class="mock-title">Suggestions from SIMY <span class="mock-state">● 3</span></div>
+                  <p class="mock-desc">Repeat work found in your Claude Code history</p>
+                </div>
+              </div>
+              <div class="mock-box" aria-hidden="true">After sorting sales files, list meeting follow-ups by owner</div>
+              <div class="mock-btn" aria-hidden="true">Run this WorkFlow</div>
+              <div class="mock-foot" aria-hidden="true">Chat text is not stored on our servers</div>
+            </div>
+            <p class="caption">* SIMY screen shown for illustration only</p>
+          </div>
+        </div>
+        <p class="note"><b>What you need:</b> a SIMY account. The SIMY desktop app imports your Claude Code chats and runs Claude Code. The only thing it can't do is use your Claude tokens for SIMY's cloud runs; cloud runs use your ChatGPT (Codex). Gemini token support is in development.</p>
+      </section>
+
+      <!-- 05 -->
+      <section class="sec" id="sample" aria-labelledby="h-sample">
+        <span class="sec-label">05 / SAMPLE</span>
+        <h2 id="h-sample">One task, side by side: Cowork's report and the next work SIMY picks up</h2>
+        <p class="intro">A sample Monday when Cowork was asked to "sort the sales folder and write a how-to." Cowork on the left, SIMY on the right.</p>
+        <div class="sample">
+          <div class="sheet">
+            <div class="sheet-label"><span>Cowork's report (example)</span><span>Target: Sales folder</span></div>
+            <dl>
+              <dt>Sorted</dt>
+              <dd>128 files into Proposals, Quotes, Meeting notes and Other. Flagged 9 likely duplicates (not deleted).</dd>
+              <dt>How-to</dt>
+              <dd>Wrote a how-to on naming rules and where to save new files.</dd>
+              <dt>Schedule</dt>
+              <dd>Set to run the same sort every Monday at 8:00.</dd>
+              <dt>Waiting on you</dt>
+              <dd>Whether to delete the 9 duplicates.</dd>
+            </dl>
+          </div>
+          <div class="outs">
+            <div class="out">
+              <div class="out-head"><b>Meeting follow-ups</b><span class="pill ok">Listed</span></div>
+              <p>Three follow-ups from Monday's sales meeting (resend Client A's quote, send case studies to Client B, split duties for next month's trade show), listed with owners and deadlines.</p>
+            </div>
+            <div class="out">
+              <div class="out-head"><b>Share</b><span class="pill run">Autorun</span></div>
+              <p>A message for the team's Slack with where Cowork's how-to lives and the naming rules. Posts once you approve.</p>
+            </div>
+            <div class="out">
+              <div class="out-head"><b>Next meeting prep</b><span class="pill">Next</span></div>
+              <p>Draft agenda for the next sales meeting, with progress on last week's follow-ups pulled from the previous notes.</p>
+            </div>
+            <div class="out you">
+              <div class="out-head"><b>Your check</b><span class="pill you">Your turn</span></div>
+              <p>The quote amount for Client A. Only what needs your call comes back to you.</p>
+            </div>
+          </div>
+        </div>
+        <p class="sample-foot">Cowork clears the desk, SIMY moves the meeting follow-ups. The deal itself is still where you shine.</p>
+      </section>
+
+      <!-- 06 -->
+      <section class="sec" id="usecases" aria-labelledby="h-usecases">
+        <span class="sec-label">06 / BY INDUSTRY</span>
+        <h2 id="h-usecases">By industry: work for Cowork, and what SIMY delivers</h2>
+        <p class="intro">Desk work goes to Cowork. Work born in meetings and chat goes to SIMY. The split is the same in any industry.</p>
+        <div class="ind">
+          <div class="ind-card">
+            <h3>Sales <small>Cowork: prospect research, sorting deal folders</small></h3>
+            <ul class="ind-rows">
+              <li><span>Sales meeting</span><span>→</span><span>Follow-ups with owners and deadlines</span></li>
+              <li><span>After a client meeting</span><span>→</span><span>Thank-you draft, client notes updated</span></li>
+              <li><span>End of the week</span><span>→</span><span>Pending decisions, before anyone asks</span></li>
+            </ul>
+          </div>
+          <div class="ind-card">
+            <h3>Back office and finance <small>Cowork: month-end totals, sorting invoices</small></h3>
+            <ul class="ind-rows">
+              <li><span>Month-end close meeting</span><span>→</span><span>Drafts of check-in requests to teams</span></li>
+              <li><span>Expense policy change</span><span>→</span><span>Announcement and updated steps</span></li>
+              <li><span>Help-desk chat</span><span>→</span><span>Reply drafts, and only the calls to make</span></li>
+            </ul>
+          </div>
+          <div class="ind-card">
+            <h3>Leadership and 1:1s <small>Cowork: scheduled weekly reports</small></h3>
+            <ul class="ind-rows">
+              <li><span>Leadership meeting</span><span>→</span><span>Decisions, owners, and sharing</span></li>
+              <li><span>1:1</span><span>→</span><span>Only progress and pending decisions</span></li>
+              <li><span>Quarterly review</span><span>→</span><span>One report across meetings</span></li>
+            </ul>
+          </div>
+          <div class="ind-card">
+            <h3>Agencies and consulting <small>Cowork: sorting deliverables, unifying formats</small></h3>
+            <ul class="ind-rows">
+              <li><span>Regular client sync</span><span>→</span><span>Follow-ups and owners before next time</span></li>
+              <li><span>Client requests in chat</span><span>→</span><span>Quote assumptions and open questions</span></li>
+              <li><span>Review session</span><span>→</span><span>Fix list, plus only the calls to make</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- 07 -->
+      <section class="sec" id="start" aria-labelledby="h-start">
+        <span class="sec-label">07 / START</span>
+        <h2 id="h-start">Get started: with or without Cowork, in 3 steps</h2>
+        <ol class="steps3">
+          <li><b>Hand desk work to Cowork</b><span>Open Cowork in the Claude desktop app, pick a folder, and state the goal. Put weekly work on a schedule. Not using Cowork? Start from step 2. <a href="/download/en.html">Download here</a></span></li>
+          <li class="key"><b>Sign up for SIMY and connect what does the work</b><span>Your ChatGPT account for the cloud, or Claude Code on your computer locally. See <a href="#connect">how it connects</a> above.</span></li>
+          <li><b>Finish one meeting</b><span>The agreed follow-ups appear with owners and deadlines, and the share message arrives. Review and decide. That's it.</span></li>
+        </ol>
+        <p class="note"><b>How sign-up works:</b> choose a plan → verify your email → pay by card. There is no free plan. <a href="/?lang=en#pricing">See pricing</a>. Get the desktop app from the <a href="/download/en.html">download page</a>.</p>
+        <p class="note"><b>If you use Claude Code,</b> "Suggestions from SIMY" arrive from your chat history, and you can start running your repeat work as WorkFlows.</p>
+      </section>
+
+      <!-- 08 -->
+      <section class="sec" id="reference" aria-labelledby="h-reference">
+        <span class="sec-label">08 / REFERENCE</span>
+        <h2 id="h-reference">Claude Cowork usage, pricing, safety and comparison (for the details)</h2>
+        <p class="intro">Open these when you want to check something about Cowork itself. None of it affects how you use SIMY.</p>
+
+        <details class="fold">
+          <summary>What is Claude Cowork, in one line for non-engineers<small>How it differs from chat, the 2026 merge, what it can do</small></summary>
+          <div class="fold-body">
+            <h3>In one line</h3>
+            <p>Claude Cowork is Anthropic's agent that does work for you. Chat Claude's job was to answer questions; Cowork's job is to take a goal, work inside the folders and tools you choose, and hand the result back for review. Separate from Claude Code, which is for people who write code, it's built for everyday work with documents, spreadsheets and folders.</p>
+            <h3>How it differs from chat Claude</h3>
+            <p>With chat, copying the answer into a file is left to you. Cowork opens the file, writes to it, and reports "done." You can see which files it opened, which tools it used and what it chose, so you can stop it or have it redo things midway.</p>
+            <h3>About the 2026 merge with chat</h3>
+            <p>As of October 1, 2026, Anthropic's official page says "Claude Cowork is now just Claude," rolling Cowork out as part of Claude itself rather than a separate menu, starting with Pro and Max. The merge began in September 2026 and is still in progress, so menu locations and names may change. Check the official announcements for the latest.</p>
+            <h3>What it can do, in short</h3>
+            <ul class="plain-list">
+              <li>Read, create and edit files in folders you choose on your computer</li>
+              <li>Open a dedicated browser to research and fill in forms (separate from your own browser)</li>
+              <li>Control the screen only when needed (Computer Use)</li>
+              <li>Run the same job on a daily, weekly or monthly schedule</li>
+              <li>Split big jobs and work on the parts in parallel</li>
+              <li>Fit your work with skills, connectors and plugins</li>
+            </ul>
+            <h3>Examples from the official page</h3>
+            <p>Anthropic's product page lists examples built around non-engineering work. A report that gathers last week's marketing numbers every Monday morning, compares them, and saves a deck to Drive. A roll-up that combines each region's export from the month-end folder into one sheet and flags rows far from budget. A first-pass review that checks a contracts folder against your policy and writes a memo per contract with clause numbers. A read-back that goes through a quarter of deal notes and summarizes each deal's status and recurring objections. Each one is "point to a folder, state the goal," and the result comes back for review.</p>
+            <h3>Terms used in this guide</h3>
+            <p>Chat Claude, Cowork for doing work, and Claude Code for code are three entry points to the same Claude models. In this guide, Cowork means the feature that finishes desk work, and SIMY means the side that picks up and runs work born in meetings and chat. Using Claude itself is covered in a separate guide.</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>Getting started: your first task from the desktop app<small>Installing, choosing a folder, what to hand off first</small></summary>
+          <div class="fold-body">
+            <ol class="plain-list">
+              <li><strong>Install the Claude desktop app.</strong> Official downloads exist for macOS, Windows (including arm64), ChromeOS and Linux (as of October 1, 2026). Web and mobile are rolling out, with mobile in beta. Check the latest official page for Windows coverage and feature differences.</li>
+              <li><strong>Log in on a paid plan.</strong> Cowork is a paid-plan feature. See "Pricing and platforms" below.</li>
+              <li><strong>Open Cowork and pick a folder.</strong> Claude can only touch the folder you pick here and the tools you connect. Start with something low-risk, like a messy folder of files.</li>
+              <li><strong>Say only "what."</strong> Write the goal, not the steps: "Split this folder into proposals, quotes and meeting notes, and write a how-to on naming."</li>
+              <li><strong>Watch the steps and review the result.</strong> Deleting anything requires your approval.</li>
+            </ol>
+            <p>Once you're comfortable, put weekly work on a schedule. It runs even with your laptop closed, and the results wait for you.</p>
+            <h3>Writing your first instruction</h3>
+            <ul class="plain-list">
+              <li><strong>Narrow it to one folder.</strong> Not "the whole desktop," but something with visible edges, like "Sales files."</li>
+              <li><strong>Describe the result in one line.</strong> "Four folders: proposals, quotes, notes, other" or "one tab per region." Deciding the format up front speeds up review.</li>
+              <li><strong>Say what not to do.</strong> "Don't delete anything." "Don't send anything outside." Approvals exist, but writing it down adds peace of mind.</li>
+              <li><strong>Ask for a report.</strong> "At the end, list what you couldn't do and what needs a decision." That one line turns pending items into a list.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>Pricing and platforms: not on the free plan<small>Pro and up, Team and Enterprise, web and mobile</small></summary>
+          <div class="fold-body">
+            <p class="scroll-hint">Scroll the table sideways →</p>
+            <div class="table-wrap">
+              <table class="t-wide">
+                <thead>
+                  <tr><th scope="col">Item</th><th scope="col">Official guidance as of October 1, 2026</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Plans</th><td>Paid plans (rolling out from Pro and Max; on Team and Enterprise, admins set features and permissions)</td></tr>
+                  <tr><th scope="row">Free plan</th><td>Cowork not available</td></tr>
+                  <tr><th scope="row">Platforms</th><td>Desktop (macOS, Windows, ChromeOS, Linux), web, mobile (beta)</td></tr>
+                  <tr><th scope="row">Dedicated browser</th><td>Available in the desktop app on Pro, Max and Team</td></tr>
+                  <tr><th scope="row">Price</th><td>Check Claude's official pricing page for each plan and for prices in your region (including how tax is shown)</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3>Choosing a plan</h3>
+            <p>For one person handing off desk work, start with Pro (about $20/month, excl. tax, as of October 2026). If you run many jobs a day or long work in parallel, Max with its higher limits is the candidate. To use it as a team and control who can touch which folders and tools, Team; for per-department permissions, spend caps and exporting activity logs, Enterprise. Limits and prices can change, so check the official pricing page for the rest.</p>
+            <p class="note"><b>With SIMY:</b> SIMY itself doesn't need a paid Claude plan. With the SIMY desktop app, you can bring Claude Code chats in and run Claude Code from SIMY. Claude tokens can't be used for cloud runs; cloud runs use your ChatGPT account (Codex). For SIMY pricing, see the <a href="/?lang=en#pricing">pricing page</a>.</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>Business use cases: what skills, connectors and plugins can do<small>Auto-written how-tos, sorting folders, Excel and PowerPoint</small></summary>
+          <div class="fold-body">
+            <h3>Four easy things to hand off first</h3>
+            <ul class="plain-list">
+              <li><strong>Sorting folders:</strong> group piled-up files by type and flag likely duplicates. Deletion only after approval.</li>
+              <li><strong>Auto-written how-tos:</strong> turn the steps it just did into an internal how-to doc.</li>
+              <li><strong>Excel roll-ups:</strong> combine several export files into one sheet and flag rows with big changes.</li>
+              <li><strong>PowerPoint decks:</strong> the same weekly report structure, refreshed with new numbers on a schedule.</li>
+            </ul>
+            <h3>Instructions you can use as is</h3>
+            <ul class="plain-list">
+              <li>"Split the sales folder into proposals, quotes, meeting notes and other. Don't delete duplicates; list them."</li>
+              <li>"Write the steps you just followed as a how-to for new hires in Word. Include where to save and naming rules."</li>
+              <li>"Combine the four CSVs in the expenses folder into one Excel file and highlight rows that moved 10% or more from last month."</li>
+              <li>"Every Monday at 8:00, make the weekly report in PowerPoint with last week's numbers and save it to the reports folder."</li>
+            </ul>
+            <h3>Skills, connectors and plugins</h3>
+            <p>Skills give Claude business know-how like "how we write reports." Connectors link tools you already use, such as Microsoft 365, Google Drive and Slack. Plugins bundle skills, connectors and subagents into one installable package. Plugins for legal, finance, brand voice and more are available, and on Team and Enterprise admins can set up an internal marketplace.</p>
+            <p>All of these help finish the work you assigned faster and more accurately. None of them is a way for someone to pick up the follow-ups agreed in a meeting. That's SIMY's job.</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>From meeting notes to reports and email: the loop of repeating the same instruction<small>Work that Cowork runs, and the instruction that's still left</small></summary>
+          <div class="fold-body">
+            <p>Give Cowork a meeting-notes folder and ask it to "pull out decisions and follow-ups," and you'll get a clean result. Weekly reports run on a schedule, and email replies can be drafted. Up to here, Cowork does well.</p>
+            <p>What's left is the structure. After every meeting, you save the transcript, open Cowork and type the same instruction. Even on a schedule, "which meeting, which follow-up, to whom" has to be redesigned each time. Stopping email at a draft is reassuring in Codex and Cowork alike; it's not anyone's selling point.</p>
+            <p>SIMY removes the instructing step. It picks up work from meeting records and chat, learns how you finished it once, prepares it the same way next time, and lists only what needs a decision in My Actions. It's meant to run alongside Cowork, taking what Cowork finishes and moving on to what's next.</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>Safety: permissions, folder scope, deletion<small>What Cowork can touch, and what you keep in your hands</small></summary>
+          <div class="fold-body">
+            <ul class="plain-list">
+              <li><strong>Folder scope:</strong> Claude can touch only the folders you choose and the tools you connect. Nothing else is in reach.</li>
+              <li><strong>Deletion:</strong> deleting anything requires your approval.</li>
+              <li><strong>Checks before acting:</strong> with permission settings on, it shows its plan before important actions and waits for approval. You can stop or redirect it midway.</li>
+              <li><strong>Dedicated browser:</strong> web tasks run in a separate browser inside Cowork, apart from your own browser's logins and tabs.</li>
+              <li><strong>Team and Enterprise:</strong> admins can set per-team access, spend caps and per-department tool permissions, and send activity logs to a SIEM.</li>
+            </ul>
+            <p>Start with a folder you can afford to mess up. Until you're comfortable, delete and send things yourself. On SIMY's side, Gmail stops at saving drafts, and Slack posts and Notion writes need approval. How we handle data is described in <a href="/security.html">Security</a> and the <a href="/privacy.html?lang=en">Privacy Policy</a>.</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>Comparing Copilot Cowork and Claude Code, and when to use each<small>Compared by starting point; schedules aren't the contest</small></summary>
+          <div class="fold-body">
+            <p class="scroll-hint">Scroll the table sideways →</p>
+            <div class="table-wrap">
+              <table class="t-wide t-models">
+                <thead>
+                  <tr><th scope="col">Compare</th><th scope="col">Claude Cowork</th><th scope="col">Copilot Cowork</th><th scope="col">Claude Code</th><th scope="col" class="simy">SIMY</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Starts from</th><td>Your instructions (on the desktop)</td><td>Your instructions (inside Microsoft 365)</td><td>Your instructions (terminal or editor)</td><td class="simy">Meetings and chat, picked up by SIMY</td></tr>
+                  <tr><th scope="row">Best for</th><td>Work with folders, documents, spreadsheets</td><td>Work inside Microsoft 365: Word, Excel, Teams</td><td>Code and repositories</td><td class="simy">Follow-ups, sharing and decisions after meetings</td></tr>
+                  <tr><th scope="row">Your way of working</th><td>Set with skills and plugins</td><td>Set in Copilot settings</td><td>Written in CLAUDE.md and similar</td><td class="simy">Learns your checks and priorities from conversations</td></tr>
+                  <tr><th scope="row">Scheduled runs</th><td>Yes</td><td>Yes (check official guidance)</td><td>Depends on setup</td><td class="simy">Autorun (reassurance, not the pitch)</td></tr>
+                  <tr><th scope="row">What you get back</th><td>Deliverables for review</td><td>Deliverables for review</td><td>Code changes</td><td class="simy">Drafts, share text, and one decision</td></tr>
+                  <tr><th scope="row">What you're left with</th><td>Task history</td><td>History inside Microsoft 365</td><td>Session history</td><td class="simy">My Actions: in progress, done, waiting on you</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3>Cowork or Claude Code</h3>
+            <p>Claude Code is the entry point for working with code and repositories from a terminal or editor, built for engineers. If you're a non-engineer working with documents, spreadsheets and folders, Cowork is enough. If you use both, split it as code to Claude Code, desk work to Cowork, meeting follow-ups to SIMY. SIMY finds repeat work in your Claude Code history and offers it as "Suggestions from SIMY," so routine work you did by hand in Claude Code can become a WorkFlow as is.</p>
+            <h3>If your company chose Copilot Cowork</h3>
+            <p>If your company standardizes on Microsoft 365 and Copilot, you may not be able to try Claude Cowork. Meeting follow-ups and chat requests still appear every week. SIMY doesn't replace Copilot; it picks up and runs work from meetings and chat, so it sits alongside Copilot Cowork. SIMY runs work with your ChatGPT (Codex) or Claude Code on your computer, separate from your Copilot license.</p>
+            <p class="note"><b>How to choose:</b> Microsoft 365-centered company, Copilot Cowork; work across local folders and many tools, Claude Cowork; code, Claude Code. Whichever you choose, picking up meeting follow-ups is a separate job, and that's where SIMY layers on. Since SIMY can run work with both Codex and Claude Code, it's also a backup when one has issues or hits its limit. Check Microsoft's official guidance for Copilot Cowork's specs.</p>
+          </div>
+        </details>
+      </section>
+
+      <!-- 09 -->
+      <section class="sec" id="faq" aria-labelledby="h-faq">
+        <span class="sec-label">09 / FAQ</span>
+        <h2 id="h-faq">Frequently asked questions</h2>
+        <div class="faq">
+          <details>
+            <summary>What does the name Claude Cowork mean?</summary>
+            <div class="a"><p>Cowork comes from "co-work," working together. It's the name of Anthropic's Claude agent that does work on your behalf.</p></div>
+          </details>
+          <details>
+            <summary>Is Claude Cowork free?</summary>
+            <div class="a"><p>No. As of October 1, 2026, official guidance says Cowork is a paid-plan feature rolling out from Pro and Max. Check Claude's official pricing page for prices.</p></div>
+          </details>
+          <details>
+            <summary>Does Claude Cowork work on Windows?</summary>
+            <div class="a"><p>As of October 1, 2026, Claude offers official desktop app downloads for Windows (including arm64). Check the latest official page for coverage and feature differences.</p></div>
+          </details>
+          <details>
+            <summary>Can I use Claude Cowork on my phone?</summary>
+            <div class="a"><p>Anthropic says Cowork is rolling out to web and mobile too (mobile in beta). The expected use is checking on work started on the desktop and adding instructions from your phone.</p></div>
+          </details>
+          <details>
+            <summary>When can I start using Claude Cowork?</summary>
+            <div class="a"><p>As of October 1, 2026, paid plans can use it from the Claude desktop app. Plans and platforms are expanding in stages, so check official announcements for when it reaches your plan.</p></div>
+          </details>
+          <details>
+            <summary>What can Claude Cowork do?</summary>
+            <div class="a"><p>It reads and writes files in folders you choose, creates spreadsheets and documents, researches and fills in forms in a dedicated browser, and controls the screen only when needed. It can run on daily, weekly or monthly schedules, and you can tailor it to your work with skills, connectors and plugins.</p></div>
+          </details>
+          <details>
+            <summary>Have Claude chat and Cowork been merged?</summary>
+            <div class="a"><p>Anthropic says "Claude Cowork is now just Claude," rolling Cowork out as part of Claude itself starting with Pro and Max (as of October 1, 2026). The merge is in progress, so check the latest official guidance for menu locations and names.</p></div>
+          </details>
+          <details>
+            <summary>How are Cowork's scheduled runs different from SIMY's Autorun?</summary>
+            <div class="a"><p>The starting point differs. Cowork schedules repeat work you designed at a set time; SIMY's Autorun takes work picked up from meetings and chat, does it your way, and returns only decisions. Both have scheduled runs.</p></div>
+          </details>
+          <details>
+            <summary>How is it different from Copilot Cowork?</summary>
+            <div class="a"><p>Copilot Cowork is Microsoft's work agent in Copilot, suited to work inside Microsoft 365. Claude Cowork is Anthropic's agent, suited to work across local folders and many tools. Both start from your instructions. Check each company's official guidance for details.</p></div>
+          </details>
+          <details>
+            <summary>Do I need a paid Claude plan to use SIMY?</summary>
+            <div class="a"><p>Not for SIMY itself. With the SIMY desktop app, you can bring your Claude Code chats into SIMY and run Claude Code from SIMY. That uses your existing Claude login and plan. Claude tokens can't be used for SIMY's cloud runs; cloud runs use your ChatGPT account (Codex). Gemini token support is in development. For SIMY pricing, see the <a href="/?lang=en#pricing">pricing page</a>.</p></div>
+          </details>
+          <details>
+            <summary>Claude Code or Cowork: which should I use?</summary>
+            <div class="a"><p>Claude Code for code and repositories; Cowork for documents, spreadsheets and folders. SIMY creates "Suggestions from SIMY" from your Claude Code chat history and can use Claude Code to do the work locally.</p></div>
+          </details>
+          <details>
+            <summary>Is it safe to let Cowork touch folders on my computer?</summary>
+            <div class="a"><p>Claude can touch only the folders you choose and the tools you connect, and deleting anything needs your approval. With permission settings on, it shows its plan before important actions and waits for approval. Start with a folder you can afford to mess up.</p></div>
+          </details>
+        </div>
+      </section>
+
+      <!-- 10 -->
+      <section class="sec" id="sources" aria-labelledby="h-sources">
+        <span class="sec-label">10 / SOURCES</span>
+        <h2 id="h-sources">Sources</h2>
+        <p>Claude Cowork's features, platforms, plans and safety were checked against the official sources below (checked October 1, 2026). Copilot Cowork references Microsoft's official guidance. The scenes of work left after a task draw on AI how-to videos.</p>
+        <ul class="plain-list">
+          <li><a href="https://claude.com/product/cowork" target="_blank" rel="noopener">Claude Cowork (Anthropic product page: features, platforms, safety)</a></li>
+          <li><a href="https://claude.com/pricing" target="_blank" rel="noopener">Claude plans and pricing (Anthropic)</a></li>
+          <li><a href="https://code.claude.com/docs/en/overview" target="_blank" rel="noopener">Claude Code overview (Anthropic documentation)</a></li>
+          <li><a href="https://www.microsoft.com/en-us/microsoft-365/copilot" target="_blank" rel="noopener">Microsoft 365 Copilot (Microsoft)</a></li>
+        </ul>
+      </section>
+      <aside class="next-read" aria-labelledby="h-next">
+        <h2 id="h-next">Read next</h2>
+        <div class="next-grid"><a href="/guides/en/claude.html"><b>Claude Guide</b><span>Stop re-asking Claude for the work after the answer</span></a><a href="/guides/en/codex.html"><b>OpenAI Codex Guide</b><span>Stop retyping the same prompt tomorrow</span></a><a href="/guides/en/meeting-notes.html"><b>Choosing an AI meeting notes tool</b><span>Sharing and to-dos, left by every tool</span></a></div>
+        <a class="next-all" href="/guides/en/index.html">All guides →</a>
+      </aside>
+    </article>
+  </div>
+
+  <section class="closing" aria-labelledby="h-closing">
+    <div class="wrap closing-inner">
+      <div>
+        <h2 id="h-closing">When your next meeting ends,<br>go to SIMY before opening Cowork.</h2>
+        <p>Desk work to Cowork, meeting follow-ups to SIMY. SIMY returns only decisions. The deals and the big calls stay where you shine.</p>
+      </div>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="https://app.simy.one/signup?lang=en&amp;locale=en&amp;region=us&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=cowork_guide_en&amp;utm_content=closing">Choose a plan <span class="arrow" aria-hidden="true">↗</span></a>
+        <a class="btn btn-ghost" href="mailto:sales@simy.one?subject=Question%20about%20using%20SIMY%20with%20Cowork">Talk to us</a>
+        <a class="btn btn-ghost" href="/download/en.html">Download the app <span class="arrow" aria-hidden="true">↓</span></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <ul class="footer-links">
+      <li><a href="/?lang=en">Home</a></li>
+      <li><a href="/?lang=en#pricing">Pricing</a></li>
+      <li><a href="/integrations.html">Integrations</a></li>
+      <li><a href="/download/en.html">Download</a></li>
+      <li><a href="/guides/en/index.html">All guides</a></li>
+      <li><a href="/guides/en/claude.html">Claude</a></li>
+      <li><a href="/guides/en/codex.html">Codex</a></li>
+      <li><a href="/guides/en/cowork.html" aria-current="page">Cowork</a></li>
+      <li><a href="/guides/en/chatgpt.html">ChatGPT</a></li>
+      <li><a href="/guides/en/plaud.html">PLAUD</a></li>
+      <li><a href="/guides/en/meeting-notes.html">AI meeting notes</a></li>
+      <li><a href="/guides/en/china-llm.html">Chinese AI compared</a></li>
+      <li><a href="/guides/en/deepseek.html">DeepSeek</a></li>
+      <li><a href="/guides/en/qwen.html">Qwen</a></li>
+      <li><a href="/guides/en/qwen-local.html">Qwen on your own server</a></li>
+      <li><a href="/security.html">Security</a></li>
+      <li><a href="/privacy.html?lang=en">Privacy Policy</a></li>
+      <li><a href="/terms.html?lang=en">Terms of Use</a></li>
+    </ul>
+    <p>Claude, Claude Cowork and Claude Code are trademarks of Anthropic PBC. Copilot and Microsoft 365 are trademarks or registered trademarks of Microsoft Corporation. SIMY is an independent product and is not affiliated with or endorsed by Anthropic or Microsoft.</p>
+    <p>Codex and ChatGPT are products of OpenAI. Other company and product names are trademarks or registered trademarks of their respective owners.</p>
+    <p>&copy; 2026 SIMY by AwakApp Inc.</p>
+  </div>
+</footer>
+<script>
+(function () {
+  var links = Array.prototype.slice.call(document.querySelectorAll('.toc a'));
+  if (!links.length) return;
+  var items = links.map(function (a) {
+    return { link: a, section: document.getElementById(a.getAttribute('href').slice(1)) };
+  }).filter(function (item) { return item.section; });
+  var ticking = false;
+  function update() {
+    ticking = false;
+    var line = window.innerHeight * 0.35;
+    var atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+    var current = null;
+    items.forEach(function (item) {
+      if (item.section.getBoundingClientRect().top <= line) current = item;
+    });
+    if (atBottom) current = items[items.length - 1];
+    items.forEach(function (item) { item.link.classList.toggle('is-active', item === current); });
+  }
+  window.addEventListener('scroll', function () {
+    if (!ticking) { ticking = true; window.requestAnimationFrame(update); }
+  }, { passive: true });
+  update();
+})();
+</script>
+<script src="/analytics.js" defer></script>
+</body>
+</html>

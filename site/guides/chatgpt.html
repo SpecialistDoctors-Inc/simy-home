@@ -4,15 +4,22 @@
 <meta charset="UTF-8">
 <meta name="google-site-verification" content="1n6_tVJZRZlQax8luEg5VsuG7gg-kCEam5VFiWIJs3U">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ChatGPT Work とは？使い方・料金・Chat／Codex との違い｜チャットGPT活用ガイド | SIMY</title>
-<meta name="description" content="ChatGPT に毎回頼まなくてすむ使い方の活用ガイド。GPTs・プロジェクト・カスタム指示の工夫と限界、学習させない5つの設定、料金プラン（Free・Go・Plus・Pro・Business）、ChatGPT Work と Codex の違い、セキュリティまで。回答のあとに残る仕事は、お使いの ChatGPT プランの上で SIMY が進めます。">
+<title>ChatGPT（チャットGPT）の使い方・料金｜Work・Codexとの違い | SIMY</title>
+<meta name="description" content="ChatGPT（チャットGPT）の使い方と料金、GPTsの作り方、学習させない設定、WorkとCodexの違いを解説。回答のあとに残る仕事は、お使いのChatGPTプランの上でSIMYが進めます。">
 <link rel="canonical" href="https://simy.one/guides/chatgpt.html">
+<link rel="alternate" hreflang="ja" href="https://simy.one/guides/chatgpt.html">
+<link rel="alternate" hreflang="en" href="https://simy.one/guides/en/chatgpt.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://simy.one/guides/zh-hans/chatgpt.html">
+<link rel="alternate" hreflang="es" href="https://simy.one/guides/es/chatgpt.html">
+<link rel="alternate" hreflang="fr" href="https://simy.one/guides/fr/chatgpt.html">
+<link rel="alternate" hreflang="hi" href="https://simy.one/guides/hi/chatgpt.html">
+<link rel="alternate" hreflang="x-default" href="https://simy.one/guides/en/chatgpt.html">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://simy.one/guides/chatgpt.html">
 <meta property="og:title" content="ChatGPT に、毎回頼まなくていい。｜SIMY">
 <meta property="og:description" content="ChatGPT Work の使い方・料金・Chat／Codex との違いを整理。回答のあとに残る仕事は、お使いの ChatGPT プランの上で SIMY が進めます。">
 <meta property="og:site_name" content="SIMY">
-<meta property="og:image" content="https://simy.one/ogp.png">
+<meta property="og:image" content="https://simy.one/ogp-chatgpt.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="ChatGPT に、毎回頼まなくていい。チャットGPT活用ガイド｜SIMY">
@@ -22,7 +29,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="ChatGPT に、毎回頼まなくていい。｜SIMY">
 <meta name="twitter:description" content="ChatGPT Work の使い方・料金・Chat／Codex との違いを整理。回答のあとに残る仕事は、お使いの ChatGPT プランの上で SIMY が進めます。">
-<meta name="twitter:image" content="https://simy.one/ogp.png">
+<meta name="twitter:image" content="https://simy.one/ogp-chatgpt.png">
 <meta name="twitter:image:alt" content="ChatGPT に、毎回頼まなくていい。チャットGPT活用ガイド｜SIMY">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="theme-color" content="#f6f5f4">
@@ -688,7 +695,8 @@ thead th.simy { background: var(--blue-deep); }
 .ind { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 22px; }
 .ind-card { padding: 18px 18px 14px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); }
 .ind-card h3 { margin: 0 0 10px; font-size: 1.04rem; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
-.ind-card h3 small { font-family: var(--mono); font-size: 0.68rem; font-weight: 400; color: var(--blue-deep); white-space: nowrap; }
+.ind-card h3 small { font-family: var(--mono); font-size: 0.68rem; font-weight: 400; color: var(--blue-deep); white-space: normal; }
+.ind-card h3 { flex-wrap: wrap; }
 .ind-rows { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
 .ind-rows li { display: grid; grid-template-columns: minmax(0, 1fr) 14px minmax(0, 1.4fr); gap: 6px; align-items: center; font-size: 0.86rem; line-height: 1.5; }
 .ind-rows li span:first-child { color: var(--ink-soft); }
@@ -703,7 +711,8 @@ thead th.simy { background: var(--blue-deep); }
   font-weight: 750; font-size: 1.02rem; line-height: 1.5;
 }
 .fold > summary::-webkit-details-marker { display: none; }
-.fold > summary::after { content: "+"; font-family: var(--mono); font-size: 1.1rem; text-align: right; }
+.fold > summary::after { content: "+"; font-family: var(--mono); font-size: 1.1rem; text-align: right; grid-column: 2; grid-row: 1; }
+.fold > summary small { grid-column: 1; }
 .fold[open] > summary::after { content: "−"; }
 .fold > summary small { display: block; margin-top: 2px; font-weight: 400; font-size: 0.82rem; color: var(--ink-soft); }
 .fold-body { padding: 0 18px 18px; font-size: 0.93rem; }
@@ -729,6 +738,32 @@ thead th.simy { background: var(--blue-deep); }
   .ind-rows li span:nth-child(2) { display: none; }
   .ind-rows li { padding: 6px 0; border-bottom: 1px dashed var(--line-soft); }
 }
+
+/* Next read */
+.next-read { margin-top: clamp(40px, 5vw, 64px); padding-top: 24px; border-top: 1px solid var(--ink); }
+.next-read h2 { font-size: 1.2rem; margin: 0 0 14px; }
+.next-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.next-grid a { display: block; padding: 14px 16px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); text-decoration: none; color: var(--ink); }
+.next-grid a:hover { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.next-grid b { display: block; font-size: 0.96rem; }
+.next-grid span { display: block; margin-top: 4px; font-size: 0.82rem; color: var(--ink-soft); }
+.next-all { display: inline-block; margin-top: 12px; font-weight: 700; color: var(--blue-deep); }
+@media (max-width: 760px) { .next-grid { grid-template-columns: minmax(0, 1fr); } }
+
+.lang-switch { position: relative; }
+.lang-switch > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 10px; border: 1px solid var(--ui-line); border-radius: 999px; background: var(--paper-light); font-size: 0.8rem; font-weight: 700; }
+.lang-switch > summary::-webkit-details-marker { display: none; }
+.lang-switch ul { position: absolute; right: 0; top: calc(100% + 6px); z-index: 30; margin: 0; padding: 6px; list-style: none; min-width: 150px; background: var(--paper-light); border: 1px solid var(--ink); border-radius: 10px; box-shadow: 4px 4px 0 var(--ink); }
+.lang-switch li a { display: block; padding: 8px 10px; border-radius: 6px; color: var(--ink); text-decoration: none; font-size: 0.88rem; }
+.lang-switch li a:hover, .lang-switch li a[aria-current] { background: var(--blue-soft); }
+@media (max-width: 960px) { .brand-sub { display: none; } .header-actions { gap: 4px; } .lang-switch > summary { padding: 0 8px; } }
+@media (max-width: 640px) { .lang-switch .ls-label { display: none; } .lang-switch > summary { padding: 0 10px; } }
+/* Typography: balanced headings, phrase-aware Japanese breaks, tighter mobile headings */
+h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
+:lang(ja) h1, :lang(ja) h2, :lang(ja) h3, :lang(ja) .eyebrow, :lang(ja) .scene b, :lang(ja) .lead { word-break: auto-phrase; }
+.lead, .intro, .scene p { text-wrap: pretty; }
+@media (max-width: 640px) { h2 { font-size: 1.32rem; line-height: 1.4; } .eyebrow { font-size: 0.72rem; } .closing h2 { font-size: 1.5rem; } }
+@media (max-width: 400px) { h2 { font-size: 1.22rem; } .closing h2 { font-size: 1.34rem; } }
 </style>
 <script type="application/ld+json">
 {
@@ -745,7 +780,7 @@ thead th.simy { background: var(--blue-deep); }
       "mainEntityOfPage": "https://simy.one/guides/chatgpt.html",
       "image": {
         "@type": "ImageObject",
-        "url": "https://simy.one/ogp.png",
+        "url": "https://simy.one/ogp-chatgpt.png",
         "width": 1200,
         "height": 630
       },
@@ -783,8 +818,8 @@ thead th.simy { background: var(--blue-deep); }
       ],
       "citation": [
         "https://chatgpt.com/ja-JP/pricing",
-        "https://help.openai.com/en/articles/7730893-data-controls-faq",
-        "https://help.openai.com/en/articles/8554397-creating-a-gpt",
+        "https://help.openai.com/en/articles/7730893-data-controls-in-chatgpt",
+        "https://help.openai.com/en/articles/8554397-creating-and-editing-gpts",
         "https://chatgpt.com/gpts"
       ]
     },
@@ -800,6 +835,12 @@ thead th.simy { background: var(--blue-deep); }
         {
           "@type": "ListItem",
           "position": 2,
+          "name": "ガイド",
+          "item": "https://simy.one/guides/index.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
           "name": "ChatGPT Work・チャットGPT 活用ガイド",
           "item": "https://simy.one/guides/chatgpt.html"
         }
@@ -895,6 +936,14 @@ thead th.simy { background: var(--blue-deep); }
             "@type": "Answer",
             "text": "クラウドでの実行は、お使いの ChatGPT アカウント（Codex）で行います。PC 上では、SIMY のデスクトップアプリや CLI が、Codex のほかに Claude Code も実行役にできます。どちらかが不調なときや利用枠の上限に当たったときの備えになります。"
           }
+        },
+        {
+          "@type": "Question",
+          "name": "ChatGPT で Excel の関数やマクロ（VBA・GAS）を作れますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "作れます。やりたいことを日本語で書くと数式やコードが返ってくるので、Excel や Apps Script に貼って実行します。社外秘のデータは貼らず、学習に使わせない設定も確認してください。毎回 ChatGPT に頼んでいる定型の仕事は、SIMY が会議とチャットから拾って進めます。"
+          }
         }
       ]
     }
@@ -913,8 +962,10 @@ thead th.simy { background: var(--blue-deep); }
       <span class="brand-sub">ChatGPT 活用ガイド</span>
     </a>
     <nav class="header-actions" aria-label="アカウント">
+      <details class="lang-switch"><summary aria-label="Language: 日本語"><span aria-hidden="true">🌐</span> <span class="ls-label">日本語</span></summary><ul><li><a href="/guides/chatgpt.html" hreflang="ja" lang="ja" aria-current="page">日本語</a></li><li><a href="/guides/en/chatgpt.html" hreflang="en" lang="en">English</a></li><li><a href="/guides/zh-hans/chatgpt.html" hreflang="zh-Hans" lang="zh-Hans">中文</a></li><li><a href="/guides/es/chatgpt.html" hreflang="es" lang="es">Español</a></li><li><a href="/guides/fr/chatgpt.html" hreflang="fr" lang="fr">Français</a></li><li><a href="/guides/hi/chatgpt.html" hreflang="hi" lang="hi">हिन्दी</a></li></ul></details>
+      <a class="header-link" href="/download.html">ダウンロード</a>
       <a class="header-link" href="https://app.simy.one/login?lang=ja&amp;locale=ja&amp;region=jp">ログイン</a>
-      <a class="header-cta" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=chatgpt_guide&amp;utm_content=header">会議1件から試す</a>
+      <a class="header-cta" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=chatgpt_guide&amp;utm_content=header">プランを選んではじめる</a>
     </nav>
   </div>
 </header>
@@ -925,6 +976,7 @@ thead th.simy { background: var(--blue-deep); }
       <div>
         <ol class="crumbs" aria-label="パンくずリスト">
           <li><a href="https://simy.one/">SIMY</a></li>
+          <li><a href="/guides/index.html">ガイド</a></li>
           <li aria-current="page">ChatGPT Work・チャットGPT 活用ガイド</li>
         </ol>
         <p class="eyebrow">ChatGPT ユーザーのための活用ガイド</p>
@@ -933,9 +985,9 @@ thead th.simy { background: var(--blue-deep); }
           <span class="line hl">毎回頼まなくて</span>
           <span class="line">いい。</span>
         </h1>
-        <p class="lead">Chat で聞く、Work で仕上げる、Codex で書く。チャットGPT（ChatGPT）は、頼めばそこまでやってくれます。でも「頼む」のは毎回あなたで、答えをコピーして仕事に戻るのもあなたです。SIMY は会議やチャットから仕事を拾い、お使いの ChatGPT プランの上で、あなたのやり方で進めます。</p>
+        <p class="lead">ChatGPTは、頼めば答えてくれる。でも、頼むのも貼り直すのも毎回あなた。SIMYは会議とチャットから仕事を拾い、判断だけを返します。</p>
         <div class="cta-row">
-          <a class="btn btn-primary" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=chatgpt_guide&amp;utm_content=hero">会議1件から試す <span class="arrow" aria-hidden="true">↗</span></a>
+          <a class="btn btn-primary" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=chatgpt_guide&amp;utm_content=hero">プランを選んではじめる <span class="arrow" aria-hidden="true">↗</span></a>
           <a class="btn btn-ghost" href="#connect">つなぎ方を見る <span class="arrow" aria-hidden="true">↓</span></a>
         </div>
         <ul class="hero-points">
@@ -1040,7 +1092,7 @@ thead th.simy { background: var(--blue-deep); }
       <!-- 02 -->
       <section class="sec" id="wish" aria-labelledby="h-wish">
         <span class="sec-label">02 / WHAT YOU REALLY WANTED</span>
-        <h2 id="h-wish">本当は、こうしたかった</h2>
+        <h2 id="h-wish">本当は、こうしたかった：ChatGPTの回答のあと</h2>
         <p class="intro">同じ ChatGPT。同じプラン。会議が終わったとき、こうなっていてほしかった。</p>
         <div class="scenes four">
           <div class="scene wish">
@@ -1244,6 +1296,7 @@ thead th.simy { background: var(--blue-deep); }
           <li class="key"><b>SIMY に ChatGPT アカウントを接続する</b><span>連携画面で「接続する」を押すだけ。<a href="#connect">つなぎ方</a>は上のとおりです。</span></li>
           <li><b>会議を1件、終える</b><span>Slack や Plaud から仕事が拾われ、下書きが届きます。レビューして、送る。それだけです。</span></li>
         </ol>
+        <p class="note"><b>登録の流れ：</b>プランを選ぶ → メールで本人確認 → カードで決済。無料プランはありません。<a href="/?lang=ja#pricing">料金を見る</a>。PCで使うアプリは<a href="/download.html">ダウンロードページ</a>から。</p>
         <p class="note"><b>Codex や Claude Code を PC で使っている人は、</b>SIMY のデスクトップアプリや CLI が、PC 上の会話履歴から WorkFlow の候補「SIMY からの提案」を作ります。会話の本文はサーバーに保存しません。</p>
       </section>
 
@@ -1262,6 +1315,18 @@ thead th.simy { background: var(--blue-deep); }
               <li><strong>プロジェクト：</strong>顧客や案件ごとにプロジェクトを作り、資料と会話をまとめておくと、Chat も Work も同じ前提で動けます。</li>
               <li><strong>GPTs（カスタム GPT）：</strong>「議事録を、うちの型に直す GPT」のように、1つのタスクの型を固めて保存します。GPT ストアで公開されている GPTs は無料プランでも使えますが、作成できるのは Plus 以上です。ワークスペースの中だけで共有する社内限定の GPTs は、Team や Business 以上で作れます（2026年10月時点）。</li>
             </ul>
+            <h3>GPTs の作り方：4ステップ</h3>
+            <ol class="plain-list">
+              <li><strong>「GPT を作成」を開く。</strong>作成は Plus 以上の有料プランで、無料プランは使うだけです（2026年10月時点）。</li>
+              <li><strong>指示・知識ファイル・会話のきっかけ・機能を設定する。</strong>指示文は ChatGPT に「こういう GPT の指示を書いて」と下書きさせてかまいません。</li>
+              <li><strong>公開範囲を選ぶ。</strong>自分だけ、リンクを知っている人、社内（Team・Business 以上のワークスペース）から選びます。</li>
+              <li><strong>使う。</strong>例：自社資料を読ませた相談役、URL を渡すとニュースを要約する GPT。</li>
+            </ol>
+            <p class="note">それでも、GPT を開くのも、資料や URL を貼るのも、頼むのも毎回あなたです。会議とチャットから仕事を拾うところから、SIMY が引き受けます。</p>
+            <h3>入力待ちプロンプト：無料プランでもできる工夫</h3>
+            <p>最初に「これから送る箇条書きを、このルールで文章にして。わかったら『はい』と答えて」とルールを固め、あとはデータだけを送ります。</p>
+            <p>会話が長くなると最初の指示を忘れていくので、崩れてきたら新しいチャットで固め直します。</p>
+            <p class="note">それでも、チャットを開いてルールを貼り直し、データを運ぶのは毎回あなたです。SIMY は、あなたのやり方を会話から学び、毎回の指示なしで進めます。</p>
             <h3>それでも残ること</h3>
             <p>GPTs は「1タスクの型」です。起点を決めるのはあなたで、文字起こしを貼るのも、できた文面を置き場所に運ぶのも、次の会議でまた同じ GPT を開くのもあなたです。長い会話では最初の指示が効かなくなり、新しいチャットでやり直すこともあります。</p>
             <p class="scroll-hint">表は横にスクロールできます →</p>
@@ -1292,6 +1357,10 @@ thead th.simy { background: var(--blue-deep); }
               <li><strong>メモリの範囲を決める。</strong>メモリを有効にすると過去の会話を踏まえて答えてくれますが、顧客名や金額まで覚えさせたくない場合もあります。プロジェクト単位に絞るか、オフにするかを最初に決めます。</li>
               <li><strong>回答の置き場所と、次の仕事の起点を決める。</strong>回答をコピーして終わりにせず、Notion、Google ドライブ、Slack のどこに置くかを決めます。置き場所が決まっていることが、SIMY と仕事をつなぐ入口になります。</li>
             </ol>
+            <h3>頼み方の型：目的・相手・構成・制約</h3>
+            <p>メールなどを頼むときは、4つを書いてから頼むと手直しが減ります。</p>
+            <p>例：「目的：打ち合わせ日程の再調整。相手：取引先の部長。構成：お詫び→候補日3つ→返信のお願い。制約：200字以内、敬体」。</p>
+            <p class="note">それでも、型を書いて頼むのは毎回あなたです。SIMY は会議とチャットから「誰に、何を送るか」を拾い、あなたの型で下書きまで進めます。</p>
           </div>
         </details>
 
@@ -1417,6 +1486,10 @@ thead th.simy { background: var(--blue-deep); }
             <summary>ChatGPT 以外の AI でも SIMY を使えますか？</summary>
             <div class="a"><p>クラウドでの実行は、お使いの ChatGPT アカウント（Codex）で行います。PC 上では、SIMY のデスクトップアプリや CLI が、Codex のほかに Claude Code も実行役にできます。どちらかが不調なときや利用枠の上限に当たったときの備えになります。</p></div>
           </details>
+          <details>
+            <summary>ChatGPT で Excel の関数やマクロ（VBA・GAS）を作れますか？</summary>
+            <div class="a"><p>作れます。やりたいことを日本語で書くと数式やコードが返ってくるので、Excel や Apps Script に貼って実行します。社外秘のデータは貼らず、学習に使わせない設定も確認してください。毎回 ChatGPT に頼んでいる定型の仕事は、SIMY が会議とチャットから拾って進めます。</p></div>
+          </details>
         </div>
       </section>
 
@@ -1427,12 +1500,17 @@ thead th.simy { background: var(--blue-deep); }
         <p>ChatGPT の料金、機能、設定は、次の OpenAI の公式情報で確認しました（料金は 2026年9月30日、広告と GPTs の扱いは 2026年10月1日時点）。回答のあとに残る仕事の場面は、日本の AI 活用系 YouTube チャンネルの解説動画を参考にしています。</p>
         <ul class="plain-list">
           <li><a href="https://chatgpt.com/ja-JP/pricing" target="_blank" rel="noopener">ChatGPT 料金プラン（日本）</a></li>
-          <li><a href="https://help.openai.com/en/articles/7730893-data-controls-faq" target="_blank" rel="noopener">Data Controls FAQ（学習に使わせない設定、OpenAI ヘルプセンター）</a></li>
-          <li><a href="https://help.openai.com/en/articles/8554397-creating-a-gpt" target="_blank" rel="noopener">Creating a GPT（GPTs の作成、OpenAI ヘルプセンター）</a></li>
+          <li><a href="https://help.openai.com/en/articles/7730893-data-controls-in-chatgpt" target="_blank" rel="noopener">Data controls in ChatGPT（学習に使わせない設定、OpenAI ヘルプセンター）</a></li>
+          <li><a href="https://help.openai.com/en/articles/8554397-creating-and-editing-gpts" target="_blank" rel="noopener">Creating and editing GPTs（GPTs の作成、OpenAI ヘルプセンター）</a></li>
           <li><a href="https://chatgpt.com/gpts" target="_blank" rel="noopener">GPT ストア</a></li>
         </ul>
         <p class="small muted">PLAUD で録音した会議から始める場合は、<a href="/guides/plaud.html">PLAUD NOTE 活用ガイド</a>も参照してください。</p>
       </section>
+      <aside class="next-read" aria-labelledby="h-next">
+        <h2 id="h-next">次に読む</h2>
+        <div class="next-grid"><a href="/guides/codex.html"><b>OpenAI Codex 活用ガイド</b><span>翌日も同じ指示を打たない</span></a><a href="/guides/claude.html"><b>Claude 活用ガイド</b><span>回答のあとに残る仕事を、Claudeで頼み直さない</span></a><a href="/guides/meeting-notes.html"><b>AI議事録ツールの選び方</b><span>どのツールでも残る、共有とToDo</span></a></div>
+        <a class="next-all" href="/guides/index.html">ガイド一覧へ →</a>
+      </aside>
     </article>
   </div>
 
@@ -1440,11 +1518,12 @@ thead th.simy { background: var(--blue-deep); }
     <div class="wrap closing-inner">
       <div>
         <h2 id="h-closing">次に ChatGPT を開く前に、<br>SIMY へ。</h2>
-        <p>お使いの ChatGPT プランのまま、会議1件から試せます。SIMY が返すのは判断だけ。商談は、あなたの腕の見せ所のままです。</p>
+        <p>お使いの ChatGPT プランのまま、次の会議から使えます。SIMY が返すのは判断だけ。商談は、あなたの腕の見せ所のままです。</p>
       </div>
       <div class="cta-row">
-        <a class="btn btn-primary" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=chatgpt_guide&amp;utm_content=closing">会議1件から試す <span class="arrow" aria-hidden="true">↗</span></a>
+        <a class="btn btn-primary" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=chatgpt_guide&amp;utm_content=closing">プランを選んではじめる <span class="arrow" aria-hidden="true">↗</span></a>
         <a class="btn btn-ghost" href="mailto:sales@simy.one?subject=ChatGPT%E9%80%A3%E6%90%BA%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%E7%9B%B8%E8%AB%87%E3%81%97%E3%81%9F%E3%81%84">相談する</a>
+        <a class="btn btn-ghost" href="/download.html">アプリをダウンロード <span class="arrow" aria-hidden="true">↓</span></a>
       </div>
     </div>
   </section>
@@ -1454,16 +1533,21 @@ thead th.simy { background: var(--blue-deep); }
   <div class="wrap">
     <ul class="footer-links">
       <li><a href="/?lang=ja">ホーム</a></li>
-      <li><a href="/?lang=ja#how-it-works">仕組み</a></li>
       <li><a href="/?lang=ja#pricing">料金</a></li>
       <li><a href="/integrations.html">連携</a></li>
-      <li><a href="/guides/plaud.html">PLAUD活用ガイド</a></li>
-      <li><a href="/guides/claude.html">Claude活用ガイド</a></li>
-      <li><a href="/guides/codex.html">Codex活用ガイド</a></li>
-      <li><a href="/guides/cowork.html">Cowork活用ガイド</a></li>
-      <li><a href="/guides/meeting-notes.html">AI議事録ガイド</a></li>
+      <li><a href="/download.html">ダウンロード</a></li>
+      <li><a href="/guides/index.html">ガイド一覧</a></li>
+      <li><a href="/guides/claude.html">Claude</a></li>
+      <li><a href="/guides/codex.html">Codex</a></li>
+      <li><a href="/guides/cowork.html">Cowork</a></li>
+      <li><a href="/guides/chatgpt.html" aria-current="page">ChatGPT</a></li>
+      <li><a href="/guides/plaud.html">PLAUD</a></li>
+      <li><a href="/guides/meeting-notes.html">AI議事録</a></li>
+      <li><a href="/guides/china-llm.html">中国のAI比較</a></li>
+      <li><a href="/guides/deepseek.html">DeepSeek</a></li>
+      <li><a href="/guides/qwen.html">Qwen</a></li>
+      <li><a href="/guides/qwen-local.html">Qwenを自社サーバーで</a></li>
       <li><a href="/security.html">セキュリティ</a></li>
-      <li><a href="/about.html">会社概要</a></li>
       <li><a href="/privacy.html">プライバシーポリシー</a></li>
       <li><a href="/terms.html">利用規約</a></li>
     </ul>
@@ -1497,5 +1581,6 @@ thead th.simy { background: var(--blue-deep); }
   update();
 })();
 </script>
+<script src="/analytics.js" defer></script>
 </body>
 </html>

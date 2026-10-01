@@ -434,11 +434,11 @@
         "press-release": { t: "News — SIMY Introduces Your Inteligence Twin for the Work After Meetings", d: "Meeting ends. Your Twin starts working. SIMY introduces an Inteligence Twin that turns meeting context into follow-up, proposals, customer notes, team updates, and next steps." },
         "privacy": { t: "Privacy Policy — SIMY by AwakApp Inc.", d: "SIMY Privacy Policy. Learn how AwakApp Inc. collects, uses, discloses, and protects your personal information when using SIMY." },
         "terms": { t: "Terms of Use — SIMY by AwakApp Inc.", d: "SIMY Terms of Use. Terms and conditions governing your use of SIMY by AwakApp Inc." },
-        "how-it-works": { t: "How SIMY Works — AI Code Generation from Meetings in 4 Steps", d: "See how SIMY turns meetings into shipped GitHub pull requests in 4 steps: record, AI processes, code generates, PR ships." },
-        "contact": { t: "Request a Demo — SIMY | AI Code Generation Platform", d: "Request a SIMY demo. AI code generation from meetings — book a demo, start a free trial, or ask about Enterprise plans." },
-        "integrations": { t: "Integrations — SIMY | GitHub, Slack, Zoom, Google Workspace", d: "Connect SIMY with GitHub, Slack, Zoom, and Google Workspace. Ship code from meetings — no IDE extension required." },
-        "security": { t: "Security — SIMY | Enterprise AI Coding, HIPAA & SOC2", d: "Enterprise-grade AI code generation with HIPAA and SOC2 roadmap. Trusted by medical SaaS and fintech teams." },
-        "about": { t: "About AwakApp Inc. — Makers of SIMY AI Coding Agent", d: "AwakApp Inc., the company behind SIMY — the AI coding agent that generates code from meetings." }
+        "how-it-works": { t: "How SIMY Works — From Conversations to Workflows That Run", d: "SIMY picks up work from meetings and chats, learns how you do it, runs it as a Workflow on your own ChatGPT account, and returns only the decisions to you." },
+        "contact": { t: "Talk to SIMY — Demos and Questions", d: "Ask about SIMY, book a screen-share demo, or map your first Workflow with our team." },
+        "integrations": { t: "Integrations — SIMY | Slack, Google, Notion, PLAUD, ChatGPT", d: "Connect SIMY to the tools your team already uses. SIMY carries work from conversations into Slack, Google Workspace, Notion, PLAUD and your ChatGPT account." },
+        "security": { t: "Security — SIMY | How Your Data Is Handled", d: "How SIMY handles meeting and chat data: emails stop at drafts, posts wait for your approval, and work runs on your own ChatGPT account." },
+        "about": { t: "About AwakApp Inc. — The Company Behind SIMY", d: "AwakApp Inc. builds SIMY, which turns conversations into workflows that get work done." }
       }
     },
     "ja": {
@@ -450,11 +450,11 @@
         "press-release": { t: "ニュース — SIMY、会議後の仕事を進めるInteligence Twinを発表", d: "会議は終了します。あなたのTwinが仕事を始めます。SIMYは会議の文脈をフォロー、提案、顧客メモ、チーム共有、次にやることへ変えるInteligence Twinを発表しました。" },
         "privacy": { t: "プライバシーポリシー — SIMY by AwakApp Inc.", d: "SIMYのプライバシーポリシー。AwakApp Inc.が個人情報をどのように収集、利用、開示、保護するかを説明します。" },
         "terms": { t: "利用規約 — SIMY by AwakApp Inc.", d: "SIMYの利用規約。AwakApp Inc.が提供するSIMYの利用条件を説明します。" },
-        "how-it-works": { t: "使い方 — SIMY | 会議からコード生成 4ステップ", d: "SIMYが会議をGitHubプルリクエストに変える4ステップ：録画、AI処理、コード生成、PR作成。プロンプト不要。" },
-        "contact": { t: "デモ申込 — SIMY | AIコード生成プラットフォーム", d: "SIMYのデモをリクエスト。会議からコードを生成するAI — デモ予約、無料トライアル、エンタープライズ相談。" },
-        "integrations": { t: "連携サービス — SIMY | GitHub・Slack・Zoom・Google Workspace", d: "GitHub、Slack、Zoom、Google WorkspaceとSIMYを連携。IDE拡張不要で会議からコードを出荷。" },
-        "security": { t: "セキュリティ — SIMY | エンタープライズ・HIPAA・SOC2対応", d: "HIPAA・SOC2ロードマップ付きエンタープライズ級AIコード生成。医療SaaS・フィンテックで採用。" },
-        "about": { t: "会社概要 — AwakApp株式会社 (SIMY運営元)", d: "SIMYを開発するAwakApp株式会社。会議からコードを生成するAIコーディングエージェントの開発元。" }
+        "how-it-works": { t: "仕組み — SIMY | 会話を、仕事が進むワークフローに", d: "SIMYは会議とチャットから仕事を拾い、あなたのやり方を学び、お使いのChatGPTアカウントでワークフローとして進め、判断だけを返します。" },
+        "contact": { t: "相談・デモ — SIMY", d: "SIMYについての相談、画面共有でのデモ、最初のワークフローづくりをご相談いただけます。" },
+        "integrations": { t: "連携 — SIMY | Slack・Google・Notion・PLAUD・ChatGPT", d: "いつものツールのままSIMYにつなげます。会話から生まれた仕事を、Slack、Google Workspace、Notion、PLAUD、ChatGPTアカウントへ運びます。" },
+        "security": { t: "セキュリティ — SIMY | データの取り扱い", d: "会議とチャットのデータをSIMYがどう扱うか。メールは下書きまで、投稿は承認してから、実行はお使いのChatGPTアカウントで。" },
+        "about": { t: "会社概要 — AwakApp Inc.（SIMY運営元）", d: "SIMYを開発するAwakApp Inc.。会話を、仕事が進むワークフローに変えます。" }
       }
     },
     "zh-Hans": {
@@ -463,11 +463,11 @@
         "index": { t: "SIMY - The Work After Important Meetings Moves Itself", d: "After sales calls, customer meetings, investor conversations, and internal decisions, SIMY moves follow-up, customer notes, proposals, team updates, and next steps before deals, trust, and speed are lost." },
         "pricing": { t: "价格 — SIMY | AI代码生成套餐 每月20美元起", d: "SIMY从会议生成代码的定价。Starter每月$20，Pro$40，Scale$100。比GitHub Copilot更便宜。" },
         "compare": { t: "SIMY vs Copilot、Cursor、Devin、Claude Code 对比", d: "SIMY对比GitHub Copilot、Cursor、Devin、Claude Code。从会议自动生成代码的自主AI工程师。" },
-        "how-it-works": { t: "工作原理 — SIMY | 4步从会议生成代码", d: "了解SIMY如何通过4步将会议转化为GitHub拉取请求：录制、AI处理、代码生成、PR发布。" },
-        "contact": { t: "申请演示 — SIMY | AI代码生成平台", d: "申请SIMY演示。从会议生成代码的AI — 预约演示、免费试用或咨询企业版。" },
-        "integrations": { t: "集成 — SIMY | GitHub、Slack、Zoom、Google Workspace", d: "将SIMY与GitHub、Slack、Zoom和Google Workspace集成。无需IDE扩展即可从会议发布代码。" },
-        "security": { t: "安全 — SIMY | 企业级AI编程、HIPAA与SOC2", d: "SIMY企业级AI代码生成，配备HIPAA和SOC2合规路线图。受医疗SaaS和金融科技团队信赖。" },
-        "about": { t: "关于 AwakApp Inc. — SIMY AI编程代理的制造商", d: "AwakApp Inc.，SIMY背后的公司——从会议生成代码的AI编程代理。" }
+        "how-it-works": { t: "工作原理 — SIMY | 把对话变成能推进的工作流", d: "SIMY 从会议和聊天中拾取工作，学习你的做法，在你自己的 ChatGPT 账户上以工作流推进，只把需要判断的事交还给你。" },
+        "contact": { t: "咨询与演示 — SIMY", d: "咨询 SIMY、预约屏幕共享演示，或与我们一起设计第一个工作流。" },
+        "integrations": { t: "集成 — SIMY | Slack、Google、Notion、PLAUD、ChatGPT", d: "连接你团队已在使用的工具。SIMY 把对话中产生的工作带到 Slack、Google Workspace、Notion、PLAUD 和你的 ChatGPT 账户。" },
+        "security": { t: "安全 — SIMY | 数据如何处理", d: "SIMY 如何处理会议和聊天数据：邮件只到草稿，发布需你批准，执行使用你自己的 ChatGPT 账户。" },
+        "about": { t: "关于 AwakApp Inc. — SIMY 的开发公司", d: "AwakApp Inc. 开发 SIMY，把对话变成能推进工作的工作流。" }
       }
     },
     "zh-Hant": {
@@ -489,11 +489,11 @@
         "index": { t: "SIMY - The Work After Important Meetings Moves Itself", d: "After sales calls, customer meetings, investor conversations, and internal decisions, SIMY moves follow-up, customer notes, proposals, team updates, and next steps before deals, trust, and speed are lost." },
         "pricing": { t: "Tarifs — SIMY | Génération de code IA dès 20 $/mois", d: "Tarifs SIMY pour la génération de code depuis les réunions. Starter 20$, Pro 40$, Scale 100$/mois." },
         "compare": { t: "SIMY vs Copilot, Cursor, Devin et Claude Code", d: "SIMY vs GitHub Copilot, Cursor, Devin et Claude Code. IA autonome qui génère du code depuis les réunions." },
-        "how-it-works": { t: "Fonctionnement — SIMY | De la réunion au code en 4 étapes", d: "Découvrez comment SIMY transforme les réunions en pull requests GitHub en 4 étapes." },
-        "contact": { t: "Demander une démo — SIMY | IA génération de code", d: "Demandez une démo SIMY. Génération de code IA depuis les réunions." },
-        "integrations": { t: "Intégrations — SIMY | GitHub, Slack, Zoom, Google Workspace", d: "Connectez SIMY à GitHub, Slack, Zoom et Google Workspace." },
-        "security": { t: "Sécurité — SIMY | Codage IA Entreprise, HIPAA & SOC2", d: "Génération de code IA avec feuille de route HIPAA et SOC2." },
-        "about": { t: "À propos d'AwakApp Inc. — Créateurs de SIMY", d: "AwakApp Inc., l'entreprise derrière SIMY." }
+        "how-it-works": { t: "Fonctionnement — SIMY | Des conversations aux workflows", d: "SIMY récupère le travail issu des réunions et des chats, apprend votre façon de faire, l’exécute en workflow sur votre propre compte ChatGPT et ne vous renvoie que les décisions." },
+        "contact": { t: "Nous contacter — SIMY | Démo et questions", d: "Posez vos questions sur SIMY, réservez une démo en partage d’écran ou concevez votre premier workflow avec nous." },
+        "integrations": { t: "Intégrations — SIMY | Slack, Google, Notion, PLAUD, ChatGPT", d: "Connectez SIMY aux outils que votre équipe utilise déjà : Slack, Google Workspace, Notion, PLAUD et votre compte ChatGPT." },
+        "security": { t: "Sécurité — SIMY | Traitement de vos données", d: "Comment SIMY traite les données de réunions et de chats : e-mails en brouillon, publications après votre accord, exécution sur votre compte ChatGPT." },
+        "about": { t: "À propos d’AwakApp Inc. — L’entreprise derrière SIMY", d: "AwakApp Inc. développe SIMY, qui transforme les conversations en workflows qui font avancer le travail." }
       }
     },
     "de": {
@@ -515,11 +515,11 @@
         "index": { t: "SIMY - The Work After Important Meetings Moves Itself", d: "After sales calls, customer meetings, investor conversations, and internal decisions, SIMY moves follow-up, customer notes, proposals, team updates, and next steps before deals, trust, and speed are lost." },
         "pricing": { t: "Precios — SIMY | Generación de código IA desde 20 $/mes", d: "Precios de SIMY para generación de código desde reuniones. Starter 20$, Pro 40$, Scale 100$/mes." },
         "compare": { t: "SIMY vs Copilot, Cursor, Devin y Claude Code", d: "SIMY vs GitHub Copilot, Cursor, Devin y Claude Code. IA autónoma que genera código desde reuniones." },
-        "how-it-works": { t: "Cómo funciona — SIMY | De la reunión al código en 4 pasos", d: "Descubre cómo SIMY convierte reuniones en pull requests de GitHub en 4 pasos." },
-        "contact": { t: "Solicitar demo — SIMY | IA generación de código", d: "Solicita una demo de SIMY. Generación de código IA desde reuniones." },
-        "integrations": { t: "Integraciones — SIMY | GitHub, Slack, Zoom, Google Workspace", d: "Conecta SIMY con GitHub, Slack, Zoom y Google Workspace." },
-        "security": { t: "Seguridad — SIMY | Codificación IA Enterprise, HIPAA y SOC2", d: "Generación de código IA de nivel empresarial con HIPAA y SOC2." },
-        "about": { t: "Acerca de AwakApp Inc. — Creadores de SIMY", d: "AwakApp Inc., la empresa detrás de SIMY." }
+        "how-it-works": { t: "Cómo funciona — SIMY | De conversaciones a flujos de trabajo", d: "SIMY recoge el trabajo de reuniones y chats, aprende cómo lo haces, lo ejecuta como flujo en tu propia cuenta de ChatGPT y solo te devuelve las decisiones." },
+        "contact": { t: "Hablemos — SIMY | Demos y preguntas", d: "Consulta sobre SIMY, reserva una demo compartiendo pantalla o diseña tu primer flujo con nuestro equipo." },
+        "integrations": { t: "Integraciones — SIMY | Slack, Google, Notion, PLAUD, ChatGPT", d: "Conecta SIMY con las herramientas que tu equipo ya usa: Slack, Google Workspace, Notion, PLAUD y tu cuenta de ChatGPT." },
+        "security": { t: "Seguridad — SIMY | Cómo se tratan tus datos", d: "Cómo trata SIMY los datos de reuniones y chats: los correos quedan en borrador, las publicaciones esperan tu aprobación y todo se ejecuta en tu cuenta de ChatGPT." },
+        "about": { t: "Acerca de AwakApp Inc. — La empresa detrás de SIMY", d: "AwakApp Inc. desarrolla SIMY, que convierte conversaciones en flujos de trabajo que avanzan." }
       }
     },
     "ar": {
@@ -554,11 +554,11 @@
         "index": { t: "SIMY - The Work After Important Meetings Moves Itself", d: "After sales calls, customer meetings, investor conversations, and internal decisions, SIMY moves follow-up, customer notes, proposals, team updates, and next steps before deals, trust, and speed are lost." },
         "pricing": { t: "मूल्य — SIMY | AI कोड जनरेशन $20/माह से", d: "मीटिंग से कोड जनरेट करने के लिए SIMY की कीमत।" },
         "compare": { t: "SIMY vs Copilot, Cursor, Devin, Claude Code तुलना", d: "SIMY बनाम GitHub Copilot, Cursor, Devin और Claude Code।" },
-        "how-it-works": { t: "यह कैसे काम करता है — SIMY | 4 चरणों में मीटिंग से कोड", d: "देखें कि SIMY 4 चरणों में मीटिंग को GitHub पुल रिक्वेस्ट में कैसे बदलता है।" },
-        "contact": { t: "डेमो अनुरोध — SIMY | AI कोड जनरेशन", d: "SIMY डेमो का अनुरोध करें।" },
-        "integrations": { t: "एकीकरण — SIMY | GitHub, Slack, Zoom, Google Workspace", d: "SIMY को GitHub, Slack, Zoom और Google Workspace से कनेक्ट करें।" },
-        "security": { t: "सुरक्षा — SIMY | एंटरप्राइज AI कोडिंग, HIPAA और SOC2", d: "HIPAA और SOC2 के साथ एंटरप्राइज-ग्रेड AI कोड जनरेशन।" },
-        "about": { t: "AwakApp Inc. के बारे में — SIMY निर्माता", d: "AwakApp Inc., SIMY के पीछे की कंपनी।" }
+        "how-it-works": { t: "SIMY कैसे काम करता है — बातचीत से चलने वाले वर्कफ़्लो तक", d: "SIMY मीटिंग और चैट से काम उठाता है, आपका तरीका सीखता है, आपके अपने ChatGPT खाते पर वर्कफ़्लो के रूप में चलाता है और सिर्फ़ फ़ैसले आपको लौटाता है।" },
+        "contact": { t: "संपर्क करें — SIMY | डेमो और सवाल", d: "SIMY के बारे में पूछें, स्क्रीन-शेयर डेमो बुक करें या हमारे साथ अपना पहला वर्कफ़्लो बनाएँ।" },
+        "integrations": { t: "इंटीग्रेशन — SIMY | Slack, Google, Notion, PLAUD, ChatGPT", d: "SIMY को उन टूल्स से जोड़ें जिन्हें आपकी टीम पहले से इस्तेमाल करती है: Slack, Google Workspace, Notion, PLAUD और आपका ChatGPT खाता।" },
+        "security": { t: "सुरक्षा — SIMY | आपका डेटा कैसे संभाला जाता है", d: "SIMY मीटिंग और चैट डेटा कैसे संभालता है: ईमेल ड्राफ़्ट तक, पोस्ट आपकी मंज़ूरी के बाद, और काम आपके अपने ChatGPT खाते पर।" },
+        "about": { t: "AwakApp Inc. के बारे में — SIMY के पीछे की कंपनी", d: "AwakApp Inc. SIMY बनाती है, जो बातचीत को काम आगे बढ़ाने वाले वर्कफ़्लो में बदलता है।" }
       }
     },
     "te": {

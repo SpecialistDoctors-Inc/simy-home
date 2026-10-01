@@ -4,15 +4,22 @@
 <meta charset="UTF-8">
 <meta name="google-site-verification" content="1n6_tVJZRZlQax8luEg5VsuG7gg-kCEam5VFiWIJs3U">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Claude Cowork とは？使い方・料金・Copilot Coworkとの違いと、非エンジニアの業務活用事例 | SIMY</title>
+<title>Claude Coworkとは？使い方・料金・Copilot Coworkとの違い | SIMY</title>
 <meta name="description" content="Claude Cowork（クロード・コワーク）の使い方、始め方、料金・対応環境、Copilot Cowork や Claude Code との違いを非エンジニア向けに解説。Cowork が終えた仕事の次に残る、会議で決まった宿題・共有・次回の段取りを SIMY が拾い、判断だけを返します。">
 <link rel="canonical" href="https://simy.one/guides/cowork.html">
+<link rel="alternate" hreflang="ja" href="https://simy.one/guides/cowork.html">
+<link rel="alternate" hreflang="en" href="https://simy.one/guides/en/cowork.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://simy.one/guides/zh-hans/cowork.html">
+<link rel="alternate" hreflang="es" href="https://simy.one/guides/es/cowork.html">
+<link rel="alternate" hreflang="fr" href="https://simy.one/guides/fr/cowork.html">
+<link rel="alternate" hreflang="hi" href="https://simy.one/guides/hi/cowork.html">
+<link rel="alternate" hreflang="x-default" href="https://simy.one/guides/en/cowork.html">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://simy.one/guides/cowork.html">
 <meta property="og:title" content="Cowork が終えた仕事の、次を拾う。｜SIMY">
 <meta property="og:description" content="Claude Cowork は机の上の指示と定期タスクを終わらせる。会議とチャットで生まれた仕事は SIMY が拾い、あなたのやり方で進めて判断だけを返す。使い方・料金・Copilot Cowork との違いも。">
 <meta property="og:site_name" content="SIMY">
-<meta property="og:image" content="https://simy.one/ogp.png">
+<meta property="og:image" content="https://simy.one/ogp-cowork.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Cowork が終えた仕事の、次を拾う。Claude Cowork 活用ガイド｜SIMY">
@@ -22,7 +29,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Cowork が終えた仕事の、次を拾う。｜SIMY">
 <meta name="twitter:description" content="Claude Cowork は机の上の指示と定期タスクを終わらせる。会議とチャットで生まれた仕事は SIMY が拾い、あなたのやり方で進めて判断だけを返す。使い方・料金・Copilot Cowork との違いも。">
-<meta name="twitter:image" content="https://simy.one/ogp.png">
+<meta name="twitter:image" content="https://simy.one/ogp-cowork.png">
 <meta name="twitter:image:alt" content="Cowork が終えた仕事の、次を拾う。Claude Cowork 活用ガイド｜SIMY">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="theme-color" content="#f6f5f4">
@@ -688,7 +695,8 @@ thead th.simy { background: var(--blue-deep); }
 .ind { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 22px; }
 .ind-card { padding: 18px 18px 14px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); }
 .ind-card h3 { margin: 0 0 10px; font-size: 1.04rem; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
-.ind-card h3 small { font-family: var(--mono); font-size: 0.68rem; font-weight: 400; color: var(--blue-deep); white-space: nowrap; }
+.ind-card h3 small { font-family: var(--mono); font-size: 0.68rem; font-weight: 400; color: var(--blue-deep); white-space: normal; }
+.ind-card h3 { flex-wrap: wrap; }
 .ind-rows { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
 .ind-rows li { display: grid; grid-template-columns: minmax(0, 1fr) 14px minmax(0, 1.4fr); gap: 6px; align-items: center; font-size: 0.86rem; line-height: 1.5; }
 .ind-rows li span:first-child { color: var(--ink-soft); }
@@ -703,7 +711,8 @@ thead th.simy { background: var(--blue-deep); }
   font-weight: 750; font-size: 1.02rem; line-height: 1.5;
 }
 .fold > summary::-webkit-details-marker { display: none; }
-.fold > summary::after { content: "+"; font-family: var(--mono); font-size: 1.1rem; text-align: right; }
+.fold > summary::after { content: "+"; font-family: var(--mono); font-size: 1.1rem; text-align: right; grid-column: 2; grid-row: 1; }
+.fold > summary small { grid-column: 1; }
 .fold[open] > summary::after { content: "−"; }
 .fold > summary small { display: block; margin-top: 2px; font-weight: 400; font-size: 0.82rem; color: var(--ink-soft); }
 .fold-body { padding: 0 18px 18px; font-size: 0.93rem; }
@@ -729,6 +738,32 @@ thead th.simy { background: var(--blue-deep); }
   .ind-rows li span:nth-child(2) { display: none; }
   .ind-rows li { padding: 6px 0; border-bottom: 1px dashed var(--line-soft); }
 }
+
+/* Next read */
+.next-read { margin-top: clamp(40px, 5vw, 64px); padding-top: 24px; border-top: 1px solid var(--ink); }
+.next-read h2 { font-size: 1.2rem; margin: 0 0 14px; }
+.next-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.next-grid a { display: block; padding: 14px 16px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); text-decoration: none; color: var(--ink); }
+.next-grid a:hover { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.next-grid b { display: block; font-size: 0.96rem; }
+.next-grid span { display: block; margin-top: 4px; font-size: 0.82rem; color: var(--ink-soft); }
+.next-all { display: inline-block; margin-top: 12px; font-weight: 700; color: var(--blue-deep); }
+@media (max-width: 760px) { .next-grid { grid-template-columns: minmax(0, 1fr); } }
+
+.lang-switch { position: relative; }
+.lang-switch > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 10px; border: 1px solid var(--ui-line); border-radius: 999px; background: var(--paper-light); font-size: 0.8rem; font-weight: 700; }
+.lang-switch > summary::-webkit-details-marker { display: none; }
+.lang-switch ul { position: absolute; right: 0; top: calc(100% + 6px); z-index: 30; margin: 0; padding: 6px; list-style: none; min-width: 150px; background: var(--paper-light); border: 1px solid var(--ink); border-radius: 10px; box-shadow: 4px 4px 0 var(--ink); }
+.lang-switch li a { display: block; padding: 8px 10px; border-radius: 6px; color: var(--ink); text-decoration: none; font-size: 0.88rem; }
+.lang-switch li a:hover, .lang-switch li a[aria-current] { background: var(--blue-soft); }
+@media (max-width: 960px) { .brand-sub { display: none; } .header-actions { gap: 4px; } .lang-switch > summary { padding: 0 8px; } }
+@media (max-width: 640px) { .lang-switch .ls-label { display: none; } .lang-switch > summary { padding: 0 10px; } }
+/* Typography: balanced headings, phrase-aware Japanese breaks, tighter mobile headings */
+h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
+:lang(ja) h1, :lang(ja) h2, :lang(ja) h3, :lang(ja) .eyebrow, :lang(ja) .scene b, :lang(ja) .lead { word-break: auto-phrase; }
+.lead, .intro, .scene p { text-wrap: pretty; }
+@media (max-width: 640px) { h2 { font-size: 1.32rem; line-height: 1.4; } .eyebrow { font-size: 0.72rem; } .closing h2 { font-size: 1.5rem; } }
+@media (max-width: 400px) { h2 { font-size: 1.22rem; } .closing h2 { font-size: 1.34rem; } }
 </style>
 <script type="application/ld+json">
 {
@@ -745,7 +780,7 @@ thead th.simy { background: var(--blue-deep); }
       "mainEntityOfPage": "https://simy.one/guides/cowork.html",
       "image": {
         "@type": "ImageObject",
-        "url": "https://simy.one/ogp.png",
+        "url": "https://simy.one/ogp-cowork.png",
         "width": 1200,
         "height": 630
       },
@@ -796,6 +831,12 @@ thead th.simy { background: var(--blue-deep); }
         {
           "@type": "ListItem",
           "position": 2,
+          "name": "ガイド",
+          "item": "https://simy.one/guides/index.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
           "name": "Claude Cowork 活用ガイド",
           "item": "https://simy.one/guides/cowork.html"
         }
@@ -881,7 +922,7 @@ thead th.simy { background: var(--blue-deep); }
           "name": "SIMY を使うには Claude の有料プランが必要ですか？",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "いいえ。SIMY のクラウド実行はお使いの ChatGPT アカウント（Codex）で行い、Codex の利用はお使いの ChatGPT プランの範囲で、ローカルでは PC 上の Claude Code を実行役にできます。SIMY の料金は料金ページをご覧ください。"
+            "text": "SIMY だけなら不要です。SIMY デスクトップアプリ を入れると、Claude Code の会話を SIMY に取り込み、SIMY から Claude Code を動かせます。このときは、あなたの Claude のログインとプランがそのまま使われます。Claude のトークンを SIMY のクラウド実行に連携することはできず、クラウド実行はお使いの ChatGPT アカウント（Codex）で動きます。Gemini のトークン連携は開発中です。SIMY の料金は料金ページをご覧ください。"
           }
         },
         {
@@ -917,8 +958,10 @@ thead th.simy { background: var(--blue-deep); }
       <span class="brand-sub">Claude Cowork 活用ガイド</span>
     </a>
     <nav class="header-actions" aria-label="アカウント">
+      <details class="lang-switch"><summary aria-label="Language: 日本語"><span aria-hidden="true">🌐</span> <span class="ls-label">日本語</span></summary><ul><li><a href="/guides/cowork.html" hreflang="ja" lang="ja" aria-current="page">日本語</a></li><li><a href="/guides/en/cowork.html" hreflang="en" lang="en">English</a></li><li><a href="/guides/zh-hans/cowork.html" hreflang="zh-Hans" lang="zh-Hans">中文</a></li><li><a href="/guides/es/cowork.html" hreflang="es" lang="es">Español</a></li><li><a href="/guides/fr/cowork.html" hreflang="fr" lang="fr">Français</a></li><li><a href="/guides/hi/cowork.html" hreflang="hi" lang="hi">हिन्दी</a></li></ul></details>
+      <a class="header-link" href="/download.html">ダウンロード</a>
       <a class="header-link" href="https://app.simy.one/login?lang=ja&amp;locale=ja&amp;region=jp">ログイン</a>
-      <a class="header-cta" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=cowork_guide&amp;utm_content=header">会議1件から試す</a>
+      <a class="header-cta" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=cowork_guide&amp;utm_content=header">プランを選んではじめる</a>
     </nav>
   </div>
 </header>
@@ -929,6 +972,7 @@ thead th.simy { background: var(--blue-deep); }
       <div>
         <ol class="crumbs" aria-label="パンくずリスト">
           <li><a href="https://simy.one/">SIMY</a></li>
+          <li><a href="/guides/index.html">ガイド</a></li>
           <li aria-current="page">Claude Cowork 活用ガイド</li>
         </ol>
         <p class="eyebrow">読み方「クロード・コワーク」、Anthropic の作業代行エージェント</p>
@@ -939,13 +983,13 @@ thead th.simy { background: var(--blue-deep); }
         </h1>
         <p class="lead">Claude Cowork（クロード・コワーク）は、PC のフォルダや連携ツールを相手に、あなたが指示した仕事を終わらせます。終わった仕事の次、会議で決まった宿題や共有は、まだあなたの手元に残っています。そこを SIMY が拾い、あなたのやり方で進めて、判断だけを返します。</p>
         <div class="cta-row">
-          <a class="btn btn-primary" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=cowork_guide&amp;utm_content=hero">会議1件から試す <span class="arrow" aria-hidden="true">↗</span></a>
+          <a class="btn btn-primary" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=cowork_guide&amp;utm_content=hero">プランを選んではじめる <span class="arrow" aria-hidden="true">↗</span></a>
           <a class="btn btn-ghost" href="#connect">つなぎ方を見る <span class="arrow" aria-hidden="true">↓</span></a>
         </div>
         <ul class="hero-points">
           <li>指示していない仕事を、会議とチャットから拾う</li>
           <li>一度仕上げた型を、毎回頼まなくても再現する</li>
-          <li>Claude の有料プランがなくても使える</li>
+          <li>Claude Code の会話も、SIMY に取り込める</li>
         </ul>
       </div>
 
@@ -1044,7 +1088,7 @@ thead th.simy { background: var(--blue-deep); }
       <!-- 02 -->
       <section class="sec" id="wish" aria-labelledby="h-wish">
         <span class="sec-label">02 / WHAT YOU REALLY WANTED</span>
-        <h2 id="h-wish">本当は、こうしたかった</h2>
+        <h2 id="h-wish">本当は、こうしたかった：Coworkのタスクのあと</h2>
         <p class="intro">同じ1日。同じ Cowork。会議室を出たときに、こうなっていてほしかった。</p>
         <div class="scenes four">
           <div class="scene wish">
@@ -1134,8 +1178,8 @@ thead th.simy { background: var(--blue-deep); }
 
         <div class="connect">
           <ol class="connect-steps">
-            <li><b>SIMY に登録する</b><span>クラウドで動かすなら、お使いの ChatGPT アカウントをつなぎます。Codex の利用は、お使いの ChatGPT プランの範囲です。SIMY は Claude のプランでは動きません。</span></li>
-            <li class="key"><b>ローカルなら、Claude Code を実行役にする</b><span>simy デスクトップアプリ／CLI が、PC 上の Claude Code を実行役にできます。Cowork と同じ Claude の環境が、そのまま働き手になります。</span></li>
+            <li><b>SIMY に登録する</b><span>クラウドで動かすなら、お使いの ChatGPT アカウントをつなぎます。Codex の利用は、お使いの ChatGPT プランの範囲です。Gemini のトークン連携は開発中です。</span></li>
+            <li class="key"><b>ローカルなら、Claude Code を実行役にする</b><span>SIMY デスクトップアプリが、PC 上の Claude Code を SIMY から動かします。Claude Code の会話も SIMY に取り込まれ、「SIMY からの提案」になります。 <a href="/download.html">ダウンロードはこちら</a></span></li>
             <li><b>「SIMY からの提案」を受け取る</b><span>Claude Code や Codex の会話履歴（既定90日分）から、繰り返している仕事を WorkFlow の候補として提案します。会話の本文はサーバーに保存しません。</span></li>
           </ol>
           <div>
@@ -1154,7 +1198,7 @@ thead th.simy { background: var(--blue-deep); }
             <p class="caption">※ SIMY の画面のイメージです</p>
           </div>
         </div>
-        <p class="note"><b>必要なもの：</b>SIMY のアカウント。Claude の有料プランは、SIMY には必要ありません（Cowork を使うには必要です）。クラウド実行はお使いの ChatGPT（Codex）、ローカル実行は PC 上の Claude Code です。</p>
+        <p class="note"><b>必要なもの：</b>SIMY のアカウント。Claude Code の会話の取り込みと操作は SIMY デスクトップアプリ でできます。できないのは、Claude のトークンを SIMY のクラウド実行に連携することだけで、クラウド実行はお使いの ChatGPT（Codex）で動きます。Gemini のトークン連携は開発中です。</p>
       </section>
 
       <!-- 05 -->
@@ -1244,10 +1288,11 @@ thead th.simy { background: var(--blue-deep); }
         <span class="sec-label">07 / START</span>
         <h2 id="h-start">はじめ方：Cowork を使っていても、いなくても、3ステップ</h2>
         <ol class="steps3">
-          <li><b>机の上の仕事を Cowork に任せる</b><span>Claude デスクトップアプリで Cowork を開き、フォルダを選んで目的を伝える。毎週の仕事はスケジュールに。Cowork を使っていなくても、ステップ2から始められます。</span></li>
+          <li><b>机の上の仕事を Cowork に任せる</b><span>Claude デスクトップアプリで Cowork を開き、フォルダを選んで目的を伝える。毎週の仕事はスケジュールに。Cowork を使っていなくても、ステップ2から始められます。 <a href="/download.html">ダウンロードはこちら</a></span></li>
           <li class="key"><b>SIMY に登録して、実行役をつなぐ</b><span>クラウドならお使いの ChatGPT アカウント、ローカルなら PC 上の Claude Code。<a href="#connect">つなぎ方</a>は上のとおりです。</span></li>
           <li><b>会議を1件、終える</b><span>決まった宿題が担当と期限つきで並び、共有の文面が届く。レビューして、決める。それだけです。</span></li>
         </ol>
+        <p class="note"><b>登録の流れ：</b>プランを選ぶ → メールで本人確認 → カードで決済。無料プランはありません。<a href="/?lang=ja#pricing">料金を見る</a>。PCで使うアプリは<a href="/download.html">ダウンロードページ</a>から。</p>
         <p class="note"><b>Claude Code を使っている人は、</b>会話履歴から「SIMY からの提案」が届きます。繰り返している仕事を、WorkFlow として回し始められます。</p>
       </section>
 
@@ -1323,7 +1368,7 @@ thead th.simy { background: var(--blue-deep); }
             </div>
             <h3>プランの選び方の目安</h3>
             <p>個人で机の上の仕事を任せるなら Pro から。1日に何件も走らせる、長い作業を並行させるなら、利用上限の大きい Max が候補になります。チームで使い、誰がどのフォルダやツールに触れるかを管理したいなら Team、部門別の権限や利用額の上限、活動ログの外部連携まで必要なら Enterprise です。各プランの利用上限と金額は変わることがあるため、ここには書かず、公式の料金ページで確認してください。</p>
-            <p class="note"><b>SIMY との関係：</b>SIMY を使うのに Claude の有料プランは必要ありません。SIMY のクラウド実行はお使いの ChatGPT アカウント（Codex）で、ローカル実行は PC 上の Claude Code です。SIMY の料金は<a href="/?lang=ja#pricing">料金ページ</a>へ。</p>
+            <p class="note"><b>SIMY との関係：</b>SIMY だけなら Claude の有料プランは不要です。SIMY デスクトップアプリ を入れると Claude Code の会話を取り込み、SIMY から Claude Code を動かせます。Claude のトークンはクラウド実行に連携できず、クラウド実行はお使いの ChatGPT アカウント（Codex）で動きます。SIMY の料金は<a href="/?lang=ja#pricing">料金ページ</a>へ。</p>
           </div>
         </details>
 
@@ -1444,7 +1489,7 @@ thead th.simy { background: var(--blue-deep); }
           </details>
           <details>
             <summary>SIMY を使うには Claude の有料プランが必要ですか？</summary>
-            <div class="a"><p>いいえ。SIMY のクラウド実行はお使いの ChatGPT アカウント（Codex）で行い、Codex の利用はお使いの ChatGPT プランの範囲で、ローカルでは PC 上の Claude Code を実行役にできます。SIMY の料金は<a href="/?lang=ja#pricing">料金ページ</a>をご覧ください。</p></div>
+            <div class="a"><p>SIMY だけなら不要です。SIMY デスクトップアプリ を入れると、Claude Code の会話を SIMY に取り込み、SIMY から Claude Code を動かせます。このときは、あなたの Claude のログインとプランがそのまま使われます。Claude のトークンを SIMY のクラウド実行に連携することはできず、クラウド実行はお使いの ChatGPT アカウント（Codex）で動きます。Gemini のトークン連携は開発中です。SIMY の料金は<a href="/?lang=ja#pricing">料金ページ</a>をご覧ください。</p></div>
           </details>
           <details>
             <summary>Claude Code と Cowork は、どちらを使えばいいですか？</summary>
@@ -1469,6 +1514,11 @@ thead th.simy { background: var(--blue-deep); }
           <li><a href="https://www.microsoft.com/ja-jp/microsoft-365/copilot" target="_blank" rel="noopener">Microsoft 365 Copilot（Microsoft 公式）</a></li>
         </ul>
       </section>
+      <aside class="next-read" aria-labelledby="h-next">
+        <h2 id="h-next">次に読む</h2>
+        <div class="next-grid"><a href="/guides/claude.html"><b>Claude 活用ガイド</b><span>回答のあとに残る仕事を、Claudeで頼み直さない</span></a><a href="/guides/codex.html"><b>OpenAI Codex 活用ガイド</b><span>翌日も同じ指示を打たない</span></a><a href="/guides/meeting-notes.html"><b>AI議事録ツールの選び方</b><span>どのツールでも残る、共有とToDo</span></a></div>
+        <a class="next-all" href="/guides/index.html">ガイド一覧へ →</a>
+      </aside>
     </article>
   </div>
 
@@ -1479,8 +1529,9 @@ thead th.simy { background: var(--blue-deep); }
         <p>机の上は Cowork に、会議の宿題は SIMY に。SIMY が返すのは判断だけ。商談と決断は、あなたの腕の見せ所のままです。</p>
       </div>
       <div class="cta-row">
-        <a class="btn btn-primary" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=cowork_guide&amp;utm_content=closing">会議1件から試す <span class="arrow" aria-hidden="true">↗</span></a>
+        <a class="btn btn-primary" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=cowork_guide&amp;utm_content=closing">プランを選んではじめる <span class="arrow" aria-hidden="true">↗</span></a>
         <a class="btn btn-ghost" href="mailto:sales@simy.one?subject=Cowork%E9%80%A3%E6%90%BA%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%E7%9B%B8%E8%AB%87%E3%81%97%E3%81%9F%E3%81%84">相談する</a>
+        <a class="btn btn-ghost" href="/download.html">アプリをダウンロード <span class="arrow" aria-hidden="true">↓</span></a>
       </div>
     </div>
   </section>
@@ -1490,16 +1541,21 @@ thead th.simy { background: var(--blue-deep); }
   <div class="wrap">
     <ul class="footer-links">
       <li><a href="/?lang=ja">ホーム</a></li>
-      <li><a href="/?lang=ja#how-it-works">仕組み</a></li>
       <li><a href="/?lang=ja#pricing">料金</a></li>
       <li><a href="/integrations.html">連携</a></li>
-      <li><a href="/guides/plaud.html">PLAUD活用ガイド</a></li>
-      <li><a href="/guides/chatgpt.html">ChatGPT活用ガイド</a></li>
-      <li><a href="/guides/claude.html">Claude活用ガイド</a></li>
-      <li><a href="/guides/codex.html">Codex活用ガイド</a></li>
-      <li><a href="/guides/meeting-notes.html">AI議事録ガイド</a></li>
+      <li><a href="/download.html">ダウンロード</a></li>
+      <li><a href="/guides/index.html">ガイド一覧</a></li>
+      <li><a href="/guides/claude.html">Claude</a></li>
+      <li><a href="/guides/codex.html">Codex</a></li>
+      <li><a href="/guides/cowork.html" aria-current="page">Cowork</a></li>
+      <li><a href="/guides/chatgpt.html">ChatGPT</a></li>
+      <li><a href="/guides/plaud.html">PLAUD</a></li>
+      <li><a href="/guides/meeting-notes.html">AI議事録</a></li>
+      <li><a href="/guides/china-llm.html">中国のAI比較</a></li>
+      <li><a href="/guides/deepseek.html">DeepSeek</a></li>
+      <li><a href="/guides/qwen.html">Qwen</a></li>
+      <li><a href="/guides/qwen-local.html">Qwenを自社サーバーで</a></li>
       <li><a href="/security.html">セキュリティ</a></li>
-      <li><a href="/about.html">会社概要</a></li>
       <li><a href="/privacy.html">プライバシーポリシー</a></li>
       <li><a href="/terms.html">利用規約</a></li>
     </ul>
@@ -1533,5 +1589,6 @@ thead th.simy { background: var(--blue-deep); }
   update();
 })();
 </script>
+<script src="/analytics.js" defer></script>
 </body>
 </html>

@@ -1,0 +1,1639 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+<meta charset="UTF-8">
+<meta name="google-site-verification" content="1n6_tVJZRZlQax8luEg5VsuG7gg-kCEam5VFiWIJs3U">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI会议纪要工具怎么选：Teams、Meet、Notion AI、Notta对比 | SIMY</title>
+<meta name="description" content="按场景对比AI会议纪要工具：Teams Copilot、Meet的Gemini、Notion AI、Notta、tl;dv、免费的手机录音。无论用哪款都会剩下的共享、待办和下次安排，由SIMY推进。">
+<link rel="canonical" href="https://simy.one/guides/zh-hans/meeting-notes.html">
+<link rel="alternate" hreflang="ja" href="https://simy.one/guides/meeting-notes.html">
+<link rel="alternate" hreflang="en" href="https://simy.one/guides/en/meeting-notes.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://simy.one/guides/zh-hans/meeting-notes.html">
+<link rel="alternate" hreflang="es" href="https://simy.one/guides/es/meeting-notes.html">
+<link rel="alternate" hreflang="fr" href="https://simy.one/guides/fr/meeting-notes.html">
+<link rel="alternate" hreflang="hi" href="https://simy.one/guides/hi/meeting-notes.html">
+<link rel="alternate" hreflang="x-default" href="https://simy.one/guides/en/meeting-notes.html">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://simy.one/guides/zh-hans/meeting-notes.html">
+<meta property="og:title" content="纪要有了，工作还没完。AI会议纪要工具怎么选 | SIMY">
+<meta property="og:description" content="Teams Copilot、Meet 的 Gemini、Notion AI、Notta、tl;dv、PLAUD。按场景选工具，以及无论选哪款都会剩下的“摘要之后”如何交给SIMY推进。">
+<meta property="og:site_name" content="SIMY">
+<meta property="og:image" content="https://simy.one/ogp.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="AI会议纪要工具使用指南 | SIMY">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-10-01">
+<meta property="article:modified_time" content="2026-10-01">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="纪要有了，工作还没完。AI会议纪要工具怎么选 | SIMY">
+<meta name="twitter:description" content="Teams Copilot、Meet 的 Gemini、Notion AI、Notta、tl;dv、PLAUD。按场景选工具，以及无论选哪款都会剩下的“摘要之后”如何交给SIMY推进。">
+<meta name="twitter:image" content="https://simy.one/ogp.png">
+<meta name="twitter:image:alt" content="AI会议纪要工具使用指南 | SIMY">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#f6f5f4">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png">
+<style>
+:root {
+  --paper: #f6f5f4;
+  --paper-light: #ffffff;
+  --ink: #111111;
+  --ink-soft: #5d5b58;
+  --ink-faint: #6b6865;
+  --line-soft: rgba(17, 17, 17, 0.14);
+  --ui-line: #d9dde2;
+  --blue: #3273d7;
+  --blue-deep: #235db8;
+  --blue-soft: #eef5ff;
+  --mint: #92edce;
+  --coral-soft: #fff1ec;
+  --yellow: #ffd166;
+  --radius: 0.8rem;
+  --radius-sm: 0.5rem;
+  --sans: "Helvetica Neue", Arial, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", Meiryo, sans-serif;
+  --mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  --page: 1180px;
+  --gutter: clamp(16px, 4vw, 40px);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.85;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+a { color: inherit; }
+a:focus-visible, summary:focus-visible {
+  outline: 3px solid rgba(50, 115, 215, 0.45);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+img { max-width: 100%; display: block; }
+
+.wrap { width: min(var(--page), 100% - var(--gutter) * 2); margin: 0 auto; }
+
+.skip {
+  position: absolute; left: -9999px; top: 8px;
+  background: var(--ink); color: #fff; padding: 8px 14px; border-radius: 6px; z-index: 100;
+}
+.skip:focus { left: 8px; }
+
+/* ---------- Header ---------- */
+.site-header {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(246, 245, 244, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--ink);
+}
+.header-inner {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  min-height: 64px;
+}
+.brand {
+  display: inline-flex; align-items: center; gap: 10px;
+  text-decoration: none; font-weight: 800; letter-spacing: 0.01em;
+}
+.brand img { width: 28px; height: 28px; border-radius: 7px; }
+.brand-sub {
+  padding-left: 12px; margin-left: 2px;
+  border-left: 1px solid var(--line-soft);
+  color: var(--ink-soft); font-size: 0.8rem; font-weight: 500;
+}
+.header-actions { display: flex; align-items: center; gap: 6px; }
+.header-link {
+  padding: 8px 10px; font-size: 0.86rem; font-weight: 600; text-decoration: none; color: var(--ink);
+}
+.header-link:hover { color: var(--blue-deep); }
+.header-cta {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px;
+  background: var(--ink); color: #fff; text-decoration: none;
+  font-size: 0.86rem; font-weight: 700; border-radius: 6px;
+  transition: background 0.2s;
+}
+.header-cta:hover { background: var(--blue-deep); }
+
+/* ---------- Hero ---------- */
+.hero {
+  position: relative;
+  border-bottom: 1px solid var(--ink);
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(rgba(17, 17, 17, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(17, 17, 17, 0.045) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-position: -1px -1px;
+}
+.hero-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+  gap: clamp(32px, 5vw, 72px);
+  align-items: center;
+  padding: clamp(40px, 7vw, 96px) 0 clamp(48px, 7vw, 104px);
+}
+
+.crumbs {
+  display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 22px; padding: 0; list-style: none;
+  font-size: 0.78rem; color: var(--ink-soft);
+}
+.crumbs li + li::before { content: "/"; margin-right: 6px; color: var(--ink-faint); }
+.crumbs a { text-decoration: none; }
+.crumbs a:hover { text-decoration: underline; }
+
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin: 0 0 22px; padding: 6px 12px;
+  background: var(--paper-light); border: 1px solid var(--ink); border-radius: 999px;
+  font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.04em;
+}
+.eyebrow::before {
+  content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--blue);
+  box-shadow: 0 0 0 3px var(--blue-soft);
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2rem, 4.6vw, 3.9rem);
+  line-height: 1.16;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+h1 .line { display: block; }
+h1 .hl { color: var(--blue); }
+
+.lead {
+  max-width: 36em;
+  margin: 26px 0 0;
+  font-size: clamp(1rem, 1.35vw, 1.1rem);
+  line-height: 1.95;
+  color: #2c2b29;
+}
+
+.cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 52px; padding: 0 22px;
+  border: 1px solid var(--ink); border-radius: 8px;
+  font-weight: 700; font-size: 0.98rem; text-decoration: none;
+  transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+}
+.btn-primary {
+  background: var(--blue-deep); color: #fff; border-color: var(--ink);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.btn-primary:hover { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 var(--ink); }
+.btn-ghost { background: var(--paper-light); color: var(--ink); }
+.btn-ghost:hover { background: var(--blue-soft); }
+.btn .arrow { font-family: var(--mono); font-size: 0.9em; }
+
+.hero-points {
+  display: flex; flex-wrap: wrap; gap: 8px 18px;
+  margin: 26px 0 0; padding: 0; list-style: none;
+  font-size: 0.84rem; color: var(--ink-soft);
+}
+.hero-points li { display: inline-flex; align-items: center; gap: 7px; }
+.hero-points li::before {
+  content: ""; width: 14px; height: 14px; flex: none;
+  border: 1px solid var(--ink); border-radius: 50%;
+  background: var(--mint) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath d='M3.5 7.2 6 9.5l4.5-5' fill='none' stroke='%23111' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 12px no-repeat;
+}
+
+/* Relay card: the signature visual */
+.relay {
+  position: relative;
+  background: var(--paper-light);
+  border: 1px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: 8px 8px 0 var(--ink);
+  overflow: hidden;
+}
+.relay-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--ink);
+  background: var(--ink); color: #fff;
+  font-family: var(--mono); font-size: 0.78rem;
+}
+.rec { display: inline-flex; align-items: center; gap: 8px; min-width: 0; }
+.rec-dot {
+  width: 9px; height: 9px; border-radius: 50%; background: #ff865f; flex: none;
+  animation: rec 1.6s ease-in-out infinite;
+}
+.rec-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.relay-meta { display: flex; flex-wrap: wrap; gap: 6px; padding: 12px 18px 4px; }
+.chip {
+  display: inline-flex; align-items: center; padding: 2px 9px;
+  border: 1px solid var(--line-soft); border-radius: 999px;
+  font-family: var(--mono); font-size: 0.7rem; color: var(--ink-soft); background: var(--paper);
+}
+.relay-steps { list-style: none; margin: 0; padding: 8px 10px 12px; }
+.step {
+  display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; align-items: center; gap: 10px;
+  padding: 9px 8px;
+  border-radius: 8px;
+  opacity: 0; transform: translateY(6px);
+  animation: rise 0.5s cubic-bezier(.2,.7,.2,1) forwards;
+}
+.step .no { font-family: var(--mono); font-size: 0.72rem; color: var(--ink-faint); }
+.step .what { font-size: 0.9rem; font-weight: 650; line-height: 1.45; }
+.step .what small { display: block; font-weight: 400; font-size: 0.74rem; color: var(--ink-soft); }
+.status {
+  font-family: var(--mono); font-size: 0.68rem; white-space: nowrap;
+  padding: 3px 8px; border-radius: 999px; border: 1px solid var(--ink);
+}
+.s-done { background: var(--paper); }
+.s-plaud .status { border-color: var(--line-soft); color: var(--ink-soft); }
+.s-run { background: var(--blue-soft); }
+.s-run .status { background: var(--blue-deep); color: #fff; }
+.s-next .status { background: var(--paper-light); }
+.s-you { background: #fff8e3; }
+.s-you .status { background: var(--yellow); }
+.bar {
+  grid-column: 2 / 4; height: 4px; margin-top: 6px;
+  background: rgba(50, 115, 215, 0.16); border-radius: 4px; overflow: hidden;
+}
+.bar::after {
+  content: ""; display: block; height: 100%; width: 62%;
+  background: var(--blue); border-radius: 4px;
+  animation: progress 2.8s ease-in-out infinite alternate;
+}
+.handoff {
+  display: flex; align-items: center; gap: 10px;
+  margin: 6px 4px; padding: 8px 0;
+  font-family: var(--mono); font-size: 0.72rem; color: var(--blue-deep);
+  opacity: 0; animation: rise 0.5s ease forwards;
+}
+.handoff::before, .handoff::after { content: ""; flex: 1; border-top: 1.5px dashed var(--blue); }
+.relay-foot {
+  padding: 12px 18px 14px;
+  border-top: 1px solid var(--line-soft);
+  font-size: 0.82rem; color: var(--ink-soft);
+}
+.relay-foot strong { color: var(--ink); }
+.caption { margin: 12px 4px 0; font-size: 0.74rem; color: var(--ink-faint); text-align: right; }
+
+.relay-steps > :nth-child(1) { animation-delay: 0.10s; }
+.relay-steps > :nth-child(2) { animation-delay: 0.22s; }
+.relay-steps > :nth-child(3) { animation-delay: 0.34s; }
+.relay-steps > :nth-child(4) { animation-delay: 0.62s; }
+.relay-steps > :nth-child(5) { animation-delay: 0.86s; }
+.relay-steps > :nth-child(6) { animation-delay: 1.02s; }
+.relay-steps > :nth-child(7) { animation-delay: 1.18s; }
+.relay-steps > :nth-child(8) { animation-delay: 1.34s; }
+
+@keyframes rise { to { opacity: 1; transform: none; } }
+@keyframes rec { 50% { opacity: 0.25; } }
+@keyframes progress { from { width: 34%; } to { width: 88%; } }
+
+/* ---------- Guide layout ---------- */
+.guide {
+  display: grid;
+  grid-template-columns: 232px minmax(0, 1fr);
+  gap: clamp(32px, 5vw, 72px);
+  padding: clamp(40px, 6vw, 80px) 0 clamp(56px, 7vw, 96px);
+}
+.toc { position: sticky; top: 92px; align-self: start; font-size: 0.84rem; }
+.toc-title {
+  margin: 0 0 12px; font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.08em;
+  color: var(--ink-soft);
+}
+.toc ol { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--line-soft); }
+.toc a {
+  display: grid; grid-template-columns: 26px 1fr; gap: 4px;
+  margin-left: -1px; padding: 7px 0 7px 12px;
+  border-left: 2px solid transparent;
+  color: var(--ink-soft); text-decoration: none; line-height: 1.5;
+}
+.toc a span { font-family: var(--mono); font-size: 0.72rem; padding-top: 1px; }
+.toc a:hover { color: var(--ink); }
+.toc a.is-active { color: var(--ink); font-weight: 700; border-left-color: var(--blue); }
+.toc-mobile { display: none; }
+
+.article { min-width: 0; max-width: 800px; }
+.byline {
+  display: flex; flex-wrap: wrap; gap: 4px 16px;
+  margin: 0 0 8px; font-family: var(--mono); font-size: 0.74rem; color: var(--ink-faint);
+}
+
+.sec { padding-top: clamp(40px, 5vw, 64px); }
+.sec:first-of-type { padding-top: 0; }
+.sec-label {
+  display: inline-block; margin: 0 0 12px;
+  font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.06em; color: var(--blue-deep);
+}
+h2 {
+  margin: 0 0 18px;
+  font-size: clamp(1.5rem, 2.8vw, 2.1rem);
+  line-height: 1.35; font-weight: 800; letter-spacing: -0.01em;
+}
+h3 { margin: 32px 0 12px; font-size: 1.15rem; line-height: 1.5; font-weight: 750; }
+.article p { margin: 0 0 16px; }
+.article p a, .plain-list a, .faq a { color: var(--blue-deep); text-decoration: underline; text-underline-offset: 3px; }
+.muted { color: var(--ink-soft); }
+.small { font-size: 0.84rem; }
+
+/* Checklist */
+.checklist { list-style: none; margin: 24px 0 0; padding: 0; display: grid; gap: 12px; }
+.checklist li {
+  display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 16px;
+  padding: 18px 20px;
+  background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.checklist .num {
+  display: grid; place-items: center; width: 44px; height: 44px;
+  border: 1px solid var(--ink); border-radius: 50%;
+  font-family: var(--mono); font-weight: 700;
+}
+.checklist li.hook { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.checklist li.hook .num { background: var(--blue-deep); color: #fff; }
+.checklist h3 { margin: 2px 0 4px; font-size: 1.02rem; }
+.checklist p { margin: 0; font-size: 0.93rem; color: #34322f; }
+
+/* Feature grid */
+.features { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+.feature {
+  padding: 20px; background: var(--paper-light);
+  border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.feature .tag {
+  display: inline-block; margin-bottom: 8px;
+  font-family: var(--mono); font-size: 0.7rem; color: var(--ink-soft);
+}
+.feature h3 { margin: 0 0 6px; font-size: 1.04rem; }
+.feature p { margin: 0; font-size: 0.92rem; color: #34322f; }
+.feature.wide { grid-column: 1 / -1; }
+
+/* Gap section */
+.split { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+.split-col { padding: 22px; border-radius: var(--radius); border: 1px solid var(--ink); }
+.split-col h3 { margin: 0 0 12px; font-size: 1rem; display: flex; align-items: center; gap: 8px; }
+.split-col ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.split-col li { position: relative; padding-left: 22px; font-size: 0.94rem; line-height: 1.6; }
+.split-col li::before { position: absolute; left: 0; top: 0; font-family: var(--mono); }
+.col-plaud { background: var(--paper-light); }
+.col-plaud li { color: var(--ink-soft); }
+.col-plaud li::before { content: "✓"; color: #1b7a58; }
+.col-left { background: var(--coral-soft); box-shadow: 4px 4px 0 var(--ink); }
+.col-left li::before { content: "□"; color: var(--ink); }
+.who {
+  font-family: var(--mono); font-size: 0.68rem; font-weight: 400;
+  padding: 2px 8px; border: 1px solid var(--ink); border-radius: 999px; background: var(--paper-light);
+}
+
+.quote {
+  margin: 28px 0 0; padding: 22px 24px;
+  border-left: 4px solid var(--blue); background: var(--blue-soft); border-radius: 0 var(--radius) var(--radius) 0;
+}
+.quote p { margin: 0; font-size: 1.12rem; font-weight: 750; line-height: 1.7; }
+.quote p + p { margin-top: 8px; font-size: 0.93rem; font-weight: 400; color: #34322f; }
+
+/* Connect */
+.connect {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 310px); gap: 24px;
+  align-items: start; margin-top: 24px;
+}
+.connect-steps { list-style: none; margin: 0; padding: 0; counter-reset: s; display: grid; gap: 10px; }
+.connect-steps li {
+  counter-increment: s; position: relative;
+  padding: 16px 18px 16px 62px;
+  background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.connect-steps li::before {
+  content: counter(s); position: absolute; left: 18px; top: 16px;
+  width: 30px; height: 30px; display: grid; place-items: center;
+  border: 1px solid var(--ink); border-radius: 50%; background: var(--paper);
+  font-family: var(--mono); font-weight: 700; font-size: 0.86rem;
+}
+.connect-steps li.key { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.connect-steps li.key::before { background: var(--blue-deep); color: #fff; }
+.connect-steps b { display: block; font-size: 1rem; line-height: 1.5; }
+.connect-steps span { display: block; margin-top: 4px; font-size: 0.9rem; color: #34322f; line-height: 1.7; }
+
+.mock {
+  padding: 18px; background: var(--paper-light);
+  border: 1px solid var(--ink); border-radius: var(--radius); box-shadow: 6px 6px 0 var(--blue);
+}
+.mock-head { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 12px; align-items: start; }
+.mock-mark {
+  display: grid; place-items: center; width: 44px; height: 44px;
+  border-radius: 10px; background: var(--paper); font-weight: 900; font-size: 1.15rem;
+}
+.mock-title { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 1.05rem; }
+.mock-state {
+  padding: 1px 8px; border-radius: 999px; background: var(--paper);
+  font-size: 0.7rem; font-weight: 500; color: var(--ink-soft);
+}
+.mock-desc { margin: 4px 0 0; font-size: 0.82rem; color: var(--ink-soft); line-height: 1.6; }
+.mock-box {
+  margin: 14px 0 10px; padding: 12px 14px;
+  border: 1px solid var(--ui-line); border-radius: 8px; font-size: 0.86rem; font-weight: 650;
+}
+.mock-btn {
+  display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px;
+  border-radius: 8px; background: var(--blue-deep); color: #fff; font-weight: 700; font-size: 0.92rem;
+}
+.mock-foot { margin-top: 8px; text-align: center; font-size: 0.76rem; color: var(--ink-soft); }
+
+.asks { list-style: none; margin: 12px 0 18px; padding: 0; display: grid; gap: 8px; }
+.asks li {
+  padding: 12px 16px; font-size: 0.94rem; line-height: 1.7;
+  background: var(--blue-soft); border: 1px solid rgba(50, 115, 215, 0.28);
+  border-radius: 12px 12px 12px 3px;
+}
+
+/* Tables */
+.table-wrap {
+  margin: 20px 0 8px; overflow-x: auto; -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--ink); border-radius: var(--radius); background: var(--paper-light);
+}
+table { width: 100%; border-collapse: collapse; font-size: 0.9rem; line-height: 1.6; }
+th, td { padding: 12px 14px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--ui-line); }
+thead th { background: var(--ink); color: #fff; font-weight: 700; font-size: 0.82rem; white-space: nowrap; }
+tbody th { font-weight: 700; white-space: nowrap; background: var(--paper); }
+tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
+td.simy { background: var(--blue-soft); }
+thead th.simy { background: var(--blue-deep); }
+.t-wide { min-width: 640px; }
+.t-models { min-width: 760px; }
+.t-price td:nth-child(2) { white-space: nowrap; }
+.scroll-hint { display: none; margin: 0 0 12px; font-size: 0.76rem; color: var(--ink-faint); }
+
+.note {
+  margin: 16px 0 0; padding: 14px 16px;
+  background: var(--paper-light); border: 1px dashed var(--ink-faint); border-radius: var(--radius-sm);
+  font-size: 0.88rem; color: #34322f;
+}
+.note b { color: var(--ink); }
+
+/* Sample comparison */
+.sample { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 16px; margin-top: 24px; align-items: start; }
+.sheet { padding: 20px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); }
+.sheet-label {
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;
+  font-family: var(--mono); font-size: 0.72rem; color: var(--ink-soft);
+}
+.sheet dl { margin: 0; font-size: 0.88rem; line-height: 1.65; }
+.sheet dt { margin-top: 10px; font-weight: 700; }
+.sheet dt:first-child { margin-top: 0; }
+.sheet dd { margin: 2px 0 0; color: #34322f; }
+.outs { display: grid; gap: 10px; }
+.out { padding: 14px 16px; background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius); }
+.out-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 6px; }
+.out-head b { font-size: 0.92rem; }
+.out p { margin: 0; font-size: 0.86rem; color: #34322f; line-height: 1.7; }
+.out.you { background: #fff8e3; }
+.pill {
+  font-family: var(--mono); font-size: 0.66rem; white-space: nowrap;
+  padding: 2px 8px; border-radius: 999px; border: 1px solid var(--ink); background: var(--paper);
+}
+.pill.run { background: var(--blue-deep); color: #fff; }
+.pill.you { background: var(--yellow); }
+.pill.ok { background: var(--mint); }
+.sample-foot { margin-top: 18px; font-weight: 700; }
+
+/* Use cases */
+.cases { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+.case { padding: 22px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); }
+.case h3 { margin: 0 0 4px; font-size: 1.06rem; }
+.case .device { margin: 0 0 12px; font-family: var(--mono); font-size: 0.72rem; color: var(--blue-deep); }
+.case p { margin: 0 0 8px; font-size: 0.9rem; color: #34322f; }
+.case ul { margin: 0; padding-left: 1.1em; font-size: 0.9rem; line-height: 1.7; }
+
+/* Lists */
+.plain-list { margin: 16px 0 0; padding-left: 1.2em; }
+.plain-list li { margin-bottom: 10px; }
+
+/* FAQ */
+.faq { margin-top: 20px; border-top: 1px solid var(--ink); }
+.faq details { border-bottom: 1px solid var(--ui-line); }
+.faq summary {
+  list-style: none; cursor: pointer;
+  display: grid; grid-template-columns: 28px minmax(0, 1fr) 20px; gap: 10px; align-items: start;
+  padding: 18px 4px; font-weight: 700; line-height: 1.6;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::before { content: "Q"; font-family: var(--mono); color: var(--blue-deep); }
+.faq summary::after {
+  content: "+"; font-family: var(--mono); font-size: 1.1rem; line-height: 1.4; text-align: right;
+  transition: transform 0.2s;
+}
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq .a { padding: 0 4px 18px 42px; font-size: 0.94rem; color: #34322f; }
+.faq .a p { margin: 0; }
+
+/* Closing CTA */
+.closing { background: var(--ink); color: #fff; border-top: 1px solid var(--ink); }
+.closing-inner {
+  display: grid; grid-template-columns: minmax(0, 1.2fr) auto; gap: 32px; align-items: center;
+  padding: clamp(48px, 7vw, 88px) 0;
+}
+.closing h2 { color: #fff; margin: 0 0 12px; font-size: clamp(1.6rem, 3.4vw, 2.5rem); }
+.closing p { margin: 0; color: rgba(255, 255, 255, 0.8); }
+.closing .cta-row { margin-top: 0; }
+.closing .btn-primary { box-shadow: 4px 4px 0 var(--mint); border-color: #fff; }
+.closing .btn-primary:hover { box-shadow: 5px 5px 0 var(--mint); }
+.closing .btn-ghost { background: transparent; color: #fff; border-color: rgba(255, 255, 255, 0.5); }
+.closing .btn-ghost:hover { background: rgba(255, 255, 255, 0.08); }
+
+/* Footer */
+.site-footer { padding: 36px 0 48px; font-size: 0.82rem; color: var(--ink-soft); }
+.footer-links { display: flex; flex-wrap: wrap; gap: 4px 20px; margin: 0 0 18px; padding: 0; list-style: none; }
+.footer-links a { display: inline-block; padding: 6px 0; text-decoration: none; color: var(--ink); }
+.footer-links a:hover { text-decoration: underline; }
+.site-footer p { margin: 0 0 6px; line-height: 1.7; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1080px) {
+  .guide { grid-template-columns: minmax(0, 1fr); }
+  .toc { display: none; }
+  .toc-mobile {
+    display: block; margin: 0 0 32px;
+    background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius);
+  }
+  .toc-mobile summary {
+    cursor: pointer; list-style: none; padding: 14px 18px;
+    font-family: var(--mono); font-size: 0.8rem; display: flex; justify-content: space-between;
+  }
+  .toc-mobile summary::-webkit-details-marker { display: none; }
+  .toc-mobile summary::after { content: "+"; }
+  .toc-mobile[open] summary::after { content: "−"; }
+  .toc-mobile ol { margin: 0; padding: 0 18px 14px 40px; font-size: 0.9rem; }
+  .toc-mobile li { padding: 3px 0; }
+  .toc-mobile a { display: inline-block; padding: 4px 0; text-decoration: none; }
+  .article { max-width: none; }
+}
+
+@media (max-width: 960px) {
+  .hero-inner { grid-template-columns: minmax(0, 1fr); }
+  .hero-visual { max-width: 580px; }
+  .relay { box-shadow: 6px 6px 0 var(--ink); }
+}
+
+@media (max-width: 860px) {
+  .sample { grid-template-columns: minmax(0, 1fr); }
+  .connect { grid-template-columns: minmax(0, 1fr); }
+  .mock { max-width: 360px; }
+  .closing-inner { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 640px) {
+  body { font-size: 15.5px; }
+  .brand-sub, .header-link { display: none; }
+  .header-cta { padding: 0 14px; }
+  .features, .split, .cases { grid-template-columns: minmax(0, 1fr); }
+  .checklist li { grid-template-columns: 40px minmax(0, 1fr); gap: 12px; padding: 16px; }
+  .checklist .num { width: 36px; height: 36px; font-size: 0.86rem; }
+  .connect-steps li { padding-left: 56px; }
+  .connect-steps li::before { left: 14px; }
+  .btn { width: 100%; }
+  .scroll-hint { display: block; }
+  .faq .a { padding-left: 4px; }
+  .step { grid-template-columns: 24px minmax(0, 1fr) auto; gap: 8px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .step, .handoff { animation: none; opacity: 1; transform: none; }
+  .rec-dot, .bar::after { animation: none; }
+  .btn, .header-cta { transition: none; }
+}
+
+/* ---------- Guide v2: scene cards, timeline, folds ---------- */
+.intro { max-width: 34em; margin: 0 0 8px; font-size: 1.02rem; color: #34322f; }
+.scenes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 22px; }
+.scenes.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.scene {
+  position: relative; padding: 22px 20px 20px;
+  background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius);
+  min-height: 168px; display: flex; flex-direction: column; gap: 8px;
+}
+.scene .k { font-family: var(--mono); font-size: 0.7rem; color: var(--ink-faint); letter-spacing: 0.04em; }
+.scene b { display: block; font-size: 1.22rem; line-height: 1.35; letter-spacing: -0.01em; }
+.scene p { margin: 0; font-size: 0.9rem; line-height: 1.65; color: #34322f; }
+.scene .mark {
+  position: absolute; right: 16px; top: 14px;
+  width: 30px; height: 30px; display: grid; place-items: center;
+  border: 1px solid var(--ink); border-radius: 50%; font-family: var(--mono); font-size: 0.9rem; font-weight: 700;
+}
+.scene.pain { background: var(--coral-soft); }
+.scene.pain .mark { background: var(--paper-light); }
+.scene.wish { background: var(--blue-soft); border-color: var(--blue-deep); box-shadow: 4px 4px 0 var(--blue); }
+.scene.wish .mark { background: var(--blue-deep); color: #fff; border-color: var(--blue-deep); }
+.scene.wish.you { background: #fff8e3; border-color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+.scene.wish.you .mark { background: var(--yellow); color: var(--ink); border-color: var(--ink); }
+.scene-foot { margin: 14px 0 0; font-size: 0.9rem; color: var(--ink-soft); }
+.scene-foot b { color: var(--ink); }
+
+/* Timeline */
+.tl-wrap {
+  margin-top: 22px; padding: 22px 20px 18px;
+  background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius);
+}
+.tl-row { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 14px; align-items: center; }
+.tl-row + .tl-row { margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--line-soft); }
+.tl-who {
+  font-family: var(--mono); font-size: 0.72rem; font-weight: 700; text-align: center;
+  padding: 6px 4px; border: 1px solid var(--ink); border-radius: 999px; background: var(--paper);
+}
+.tl-who.simy { background: var(--blue-deep); color: #fff; border-color: var(--blue-deep); }
+.tl-who.you { background: var(--yellow); }
+.tl { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; }
+.tl li {
+  position: relative; min-height: 64px; padding: 10px 8px 8px;
+  border-radius: var(--radius-sm); font-size: 0.8rem; line-height: 1.4; font-weight: 650;
+  display: flex; flex-direction: column; justify-content: flex-start; gap: 4px;
+}
+.tl li small { display: block; font-weight: 400; font-size: 0.7rem; color: var(--ink-soft); }
+.tl li.on { background: var(--paper); border: 1px solid var(--line-soft); color: var(--ink-soft); }
+.tl li.gap { border: 1.5px dashed var(--ink-faint); color: var(--ink-faint); background: transparent; }
+.tl li.gap::after { content: "？"; position: absolute; right: 8px; top: 6px; font-family: var(--mono); }
+.tl li.run { background: var(--blue-soft); border: 1px solid var(--blue-deep); color: var(--ink); }
+.tl li.run::after { content: "✓"; position: absolute; right: 8px; top: 6px; font-family: var(--mono); color: var(--blue-deep); }
+.tl li.you { background: #fff8e3; border: 1px solid var(--ink); color: var(--ink); }
+.tl li.you::after { content: "你"; position: absolute; right: 8px; top: 7px; font-family: var(--mono); font-size: 0.62rem; }
+.tl li.blank { border: 0; background: transparent; }
+.tl-note { margin: 14px 0 0; font-size: 0.86rem; color: #34322f; }
+.tl-note b { color: var(--ink); }
+.three { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 0; padding: 0; list-style: none; }
+.three li {
+  padding: 8px 14px; font-weight: 800; font-size: 1rem;
+  background: var(--ink); color: #fff; border-radius: 999px;
+}
+
+/* 3-step start */
+.steps3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 22px; counter-reset: st; }
+.steps3 li {
+  counter-increment: st; list-style: none; position: relative;
+  padding: 54px 18px 18px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.steps3 li::before {
+  content: counter(st); position: absolute; left: 18px; top: 16px;
+  width: 28px; height: 28px; display: grid; place-items: center;
+  border: 1px solid var(--ink); border-radius: 50%; background: var(--paper);
+  font-family: var(--mono); font-weight: 700; font-size: 0.84rem;
+}
+.steps3 li.key { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.steps3 li.key::before { background: var(--blue-deep); color: #fff; }
+.steps3 b { display: block; font-size: 1.02rem; line-height: 1.45; }
+.steps3 span { display: block; margin-top: 6px; font-size: 0.88rem; color: #34322f; line-height: 1.65; }
+.steps3 { padding: 0; }
+
+/* Industry grid */
+.ind { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 22px; }
+.ind-card { padding: 18px 18px 14px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); }
+.ind-card h3 { margin: 0 0 10px; font-size: 1.04rem; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.ind-card h3 small { font-family: var(--mono); font-size: 0.68rem; font-weight: 400; color: var(--blue-deep); white-space: normal; }
+.ind-card h3 { flex-wrap: wrap; }
+.ind-rows { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+.ind-rows li { display: grid; grid-template-columns: minmax(0, 1fr) 14px minmax(0, 1.4fr); gap: 6px; align-items: center; font-size: 0.86rem; line-height: 1.5; }
+.ind-rows li span:first-child { color: var(--ink-soft); }
+.ind-rows li span:nth-child(2) { font-family: var(--mono); color: var(--blue-deep); text-align: center; }
+.ind-rows li span:last-child { font-weight: 650; }
+
+/* Folded reference */
+.fold { margin-top: 12px; border: 1px solid var(--ui-line); border-radius: var(--radius); background: var(--paper-light); }
+.fold > summary {
+  list-style: none; cursor: pointer; padding: 16px 18px;
+  display: grid; grid-template-columns: minmax(0, 1fr) 20px; gap: 10px; align-items: center;
+  font-weight: 750; font-size: 1.02rem; line-height: 1.5;
+}
+.fold > summary::-webkit-details-marker { display: none; }
+.fold > summary::after { content: "+"; font-family: var(--mono); font-size: 1.1rem; text-align: right; grid-column: 2; grid-row: 1; }
+.fold > summary small { grid-column: 1; }
+.fold[open] > summary::after { content: "−"; }
+.fold > summary small { display: block; margin-top: 2px; font-weight: 400; font-size: 0.82rem; color: var(--ink-soft); }
+.fold-body { padding: 0 18px 18px; font-size: 0.93rem; }
+.fold-body h3 { margin: 18px 0 8px; font-size: 1rem; }
+.fold-body h3:first-child { margin-top: 0; }
+.fold-body p { margin: 0 0 10px; }
+.fold-body .table-wrap { margin: 12px 0 6px; }
+.fold-body .plain-list { margin-top: 8px; }
+.fold-body .plain-list li { margin-bottom: 6px; }
+
+@media (max-width: 960px) {
+  .scenes, .scenes.four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tl { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .tl li.blank { display: none; }
+}
+@media (max-width: 640px) {
+  .scenes, .scenes.four, .steps3, .ind { grid-template-columns: minmax(0, 1fr); }
+  .scene { min-height: 0; }
+  .tl-row { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .tl-who { justify-self: start; }
+  .tl { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ind-rows li { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .ind-rows li span:nth-child(2) { display: none; }
+  .ind-rows li { padding: 6px 0; border-bottom: 1px dashed var(--line-soft); }
+}
+
+/* Next read */
+.next-read { margin-top: clamp(40px, 5vw, 64px); padding-top: 24px; border-top: 1px solid var(--ink); }
+.next-read h2 { font-size: 1.2rem; margin: 0 0 14px; }
+.next-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.next-grid a { display: block; padding: 14px 16px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); text-decoration: none; color: var(--ink); }
+.next-grid a:hover { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.next-grid b { display: block; font-size: 0.96rem; }
+.next-grid span { display: block; margin-top: 4px; font-size: 0.82rem; color: var(--ink-soft); }
+.next-all { display: inline-block; margin-top: 12px; font-weight: 700; color: var(--blue-deep); }
+@media (max-width: 760px) { .next-grid { grid-template-columns: minmax(0, 1fr); } }
+
+.lang-switch { position: relative; }
+.lang-switch > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 10px; border: 1px solid var(--ui-line); border-radius: 999px; background: var(--paper-light); font-size: 0.8rem; font-weight: 700; }
+.lang-switch > summary::-webkit-details-marker { display: none; }
+.lang-switch ul { position: absolute; right: 0; top: calc(100% + 6px); z-index: 30; margin: 0; padding: 6px; list-style: none; min-width: 150px; background: var(--paper-light); border: 1px solid var(--ink); border-radius: 10px; box-shadow: 4px 4px 0 var(--ink); }
+.lang-switch li a { display: block; padding: 8px 10px; border-radius: 6px; color: var(--ink); text-decoration: none; font-size: 0.88rem; }
+.lang-switch li a:hover, .lang-switch li a[aria-current] { background: var(--blue-soft); }
+@media (max-width: 960px) { .brand-sub { display: none; } .header-actions { gap: 4px; } .lang-switch > summary { padding: 0 8px; } }
+@media (max-width: 640px) { .lang-switch .ls-label { display: none; } .lang-switch > summary { padding: 0 10px; } }
+/* Typography: balanced headings, phrase-aware Japanese breaks, tighter mobile headings */
+h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
+:lang(ja) h1, :lang(ja) h2, :lang(ja) h3, :lang(ja) .eyebrow, :lang(ja) .scene b, :lang(ja) .lead { word-break: auto-phrase; }
+.lead, .intro, .scene p { text-wrap: pretty; }
+@media (max-width: 640px) { h2 { font-size: 1.32rem; line-height: 1.4; } .eyebrow { font-size: 0.72rem; } .closing h2 { font-size: 1.5rem; } }
+@media (max-width: 400px) { h2 { font-size: 1.22rem; } .closing h2 { font-size: 1.34rem; } }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://simy.one/guides/zh-hans/meeting-notes.html#article",
+      "headline": "AI会议纪要工具怎么选（按场景），以及让摘要之后的工作自动推进的SIMY",
+      "description": "按场景梳理Teams Copilot、Google Meet的Gemini、Notion AI会议笔记、Notta、tl;dv、PLAUD，并说明无论选哪款都会停在摘要的“之后”——共享、待办、下次安排——如何由SIMY推进。",
+      "inLanguage": "zh-Hans",
+      "datePublished": "2026-10-01",
+      "dateModified": "2026-10-01",
+      "mainEntityOfPage": "https://simy.one/guides/zh-hans/meeting-notes.html",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://simy.one/ogp.png",
+        "width": 1200,
+        "height": 630
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "SIMY",
+        "url": "https://simy.one/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "AwakApp Inc.",
+        "url": "https://www.awak.app/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://simy.one/simy-icon-square.png"
+        }
+      },
+      "about": [
+        {
+          "@type": "Thing",
+          "name": "AI会议纪要"
+        },
+        {
+          "@type": "Thing",
+          "name": "语音转写"
+        },
+        {
+          "@type": "Thing",
+          "name": "会议自动化"
+        }
+      ],
+      "citation": [
+        "https://www.microsoft.com/en-us/microsoft-365/copilot",
+        "https://learn.microsoft.com/zh-cn/microsoftteams/copilot-teams-transcription",
+        "https://support.google.com/meet/answer/14754931",
+        "https://www.notion.com/product/ai-meeting-notes",
+        "https://www.notta.ai/",
+        "https://tldv.io/",
+        "https://www.plaud.ai/",
+        "https://aistudio.google.com/"
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "SIMY",
+          "item": "https://simy.one/?lang=zh-Hans"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "指南",
+          "item": "https://simy.one/guides/zh-hans/index.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "AI会议纪要工具使用指南",
+          "item": "https://simy.one/guides/zh-hans/meeting-notes.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "到底哪款AI会议纪要工具最好？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "取决于公司的环境。只用Microsoft就选Teams的Copilot，只用Google就选Meet的Gemini，工具不受限就选Notion AI的会议笔记，可以让录音机器人入会就选Notta或tl;dv，面对面会议多就选PLAUD。与其比较摘要的准确度，不如看“摘要会送到哪里”，这样之后的工作才能接得上。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "能不让机器人入会就录下会议吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "能。Teams的Copilot和Meet的Gemini是会议工具自带的功能，不会有机器人作为参会者入会。Notion AI的会议笔记从你设备的声音记录，PLAUD用设备录音。Notta和tl;dv则是机器人作为参会者入会的方式。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "纪要以英文输出，能改成中文吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "大多数工具都可以设置转写语言或输出语言。明明是中文会议却输出英文，多半是会议语言或摘要语言设成了英文，请检查各工具的设置。无论记录用的是什么语言，SIMY都会用你平时使用的语言和格式准备后续工作。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "想免费解决，该用什么？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "用手机的语音备忘录录音，再把音频交给Google AI Studio生成转写和摘要，这种方法不花额外费用就能试。Notta和tl;dv也有免费套餐，但每月的转写时长有上限。即使是免费组合，摘要之后的工作也可以交给SIMY。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "需要PLAUD这样的设备吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "以线上会议为主的话不需要，会议工具自带功能或Notion AI就够了。面对面商谈、面谈、会议室开会多的人，适合放下就能录的PLAUD。无论哪种记录，SIMY的用法都一样。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "纪要格式（参会人、议题、决定事项、下一步）每次都要指定吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "不用。按你的格式完成一次后，SIMY会学会这种做法，之后的会议都按同样的格式准备。不再需要把转写贴进聊天AI、重复输入同样的指令。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "“决定了什么”由AI判断，还是由我判断？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "由你判断。SIMY从转写和摘要中整理出决定事项和负责人的候补并推进到草稿，只把改期、能否发送等需要判断的部分交还给你。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "怎样把会议内容交给SIMY？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "PLAUD只需在SIMY的连接页面点击“连接”。Notion AI的记录通过Notion集成，Meet的Gemini生成的Google文档通过Google集成传入。用Claude Code或Codex处理纪要的人，SIMY会从这些对话记录中找出工作候选。支持情况请在集成页面确认。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "使用SIMY会额外产生AI使用费吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "SIMY连接你自己的ChatGPT账号，用Codex推进工作。Codex的使用在你的ChatGPT套餐范围内进行。SIMY本身的费用请查看价格页面。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "机密性高的会议也能用吗？录音需要同意吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "录音和转写之前，请取得所有参会者的同意并确认公司规定。机密性高的会议只使用IT部门认可的工具，同时确认各工具是否把数据用于训练的设置。SIMY的数据处理方式公开在安全和隐私政策页面。"
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">跳到正文</a>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="/?lang=zh-Hans">
+      <img src="/simy-icon-56.png" alt="SIMY" width="28" height="28">
+      <span aria-hidden="true">SIMY</span>
+      <span class="brand-sub">AI会议纪要 使用指南</span>
+    </a>
+    <nav class="header-actions" aria-label="账号">
+      <details class="lang-switch"><summary aria-label="Language: 中文"><span aria-hidden="true">🌐</span> <span class="ls-label">中文</span></summary><ul><li><a href="/guides/meeting-notes.html" hreflang="ja" lang="ja">日本語</a></li><li><a href="/guides/en/meeting-notes.html" hreflang="en" lang="en">English</a></li><li><a href="/guides/zh-hans/meeting-notes.html" hreflang="zh-Hans" lang="zh-Hans" aria-current="page">中文</a></li><li><a href="/guides/es/meeting-notes.html" hreflang="es" lang="es">Español</a></li><li><a href="/guides/fr/meeting-notes.html" hreflang="fr" lang="fr">Français</a></li><li><a href="/guides/hi/meeting-notes.html" hreflang="hi" lang="hi">हिन्दी</a></li></ul></details>
+      <a class="header-link" href="/download/zh-hans.html">下载</a>
+      <a class="header-link" href="https://app.simy.one/login?lang=zh-Hans&amp;locale=zh-Hans">登录</a>
+      <a class="header-cta" href="https://app.simy.one/signup?lang=zh-Hans&amp;locale=zh-Hans&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=meeting_notes_guide_zh-hans&amp;utm_content=header">选择套餐，开始使用</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" aria-labelledby="page-title">
+    <div class="wrap hero-inner">
+      <div>
+        <ol class="crumbs" aria-label="面包屑导航">
+          <li><a href="https://simy.one/?lang=zh-Hans">SIMY</a></li>
+          <li><a href="/guides/zh-hans/index.html">指南</a></li>
+          <li aria-current="page">AI会议纪要工具使用指南</li>
+        </ol>
+        <p class="eyebrow">AI会议纪要工具怎么选，以及摘要之后</p>
+        <h1 id="page-title">
+          <span class="line">AI纪要有了。</span>
+          <span class="line hl">工作还没完。</span>
+          <span class="line">哪款工具都一样。</span>
+        </h1>
+        <p class="lead">Teams、Meet、Notion AI、Notta、PLAUD，哪款都能出摘要。共享、待办、下次安排之后的事，由SIMY按你的做法推进。</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="https://app.simy.one/signup?lang=zh-Hans&amp;locale=zh-Hans&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=meeting_notes_guide_zh-hans&amp;utm_content=hero">选择套餐，开始使用 <span class="arrow" aria-hidden="true">↗</span></a>
+          <a class="btn btn-ghost" href="#gap">查看按场景的选法 <span class="arrow" aria-hidden="true">↓</span></a>
+        </div>
+        <ul class="hero-points">
+          <li>现在的纪要工具照常使用</li>
+          <li>只需连接记录所在的地方</li>
+          <li>用你自己的ChatGPT套餐运行</li>
+        </ul>
+      </div>
+
+      <div class="hero-visual">
+        <div class="relay" role="img" aria-label="示例：纪要AI完成录音、转写和摘要，之后由SIMY准备共享文字、整理负责人和待办、安排下次会议，只有截止日期的判断留给你">
+          <div class="relay-head" aria-hidden="true">
+            <span class="rec"><span class="rec-dot"></span><span class="rec-name">例会_每周_1001</span></span>
+            <span>58:40</span>
+          </div>
+          <div class="relay-meta" aria-hidden="true">
+            <span class="chip">纪要AI</span>
+            <span class="chip">线上会议</span>
+            <span class="chip">参会 6人</span>
+          </div>
+          <ol class="relay-steps" aria-hidden="true">
+            <li class="step s-done s-plaud"><span class="no">01</span><span class="what">录音<small>会议工具或设备</small></span><span class="status">纪要AI ✓</span></li>
+            <li class="step s-done s-plaud"><span class="no">02</span><span class="what">转写<small>区分说话人逐字记录</small></span><span class="status">纪要AI ✓</span></li>
+            <li class="step s-done s-plaud"><span class="no">03</span><span class="what">摘要<small>概要、决定事项、待办</small></span><span class="status">纪要AI ✓</span></li>
+            <li class="handoff">纪要AI到此为止 ／ 接下来交给SIMY</li>
+            <li class="step s-done"><span class="no">04</span><span class="what">共享文字<small>发给缺席者和相关部门，用你的口吻</small></span><span class="status">已起草</span></li>
+            <li class="step s-run"><span class="no">05</span><span class="what">负责人与待办<small>谁、何时之前，列成清单</small></span><span class="status">Autorun</span><span class="bar"></span></li>
+            <li class="step s-next"><span class="no">06</span><span class="what">下次安排<small>顺延议题与确认事项</small></span><span class="status">下一步</span></li>
+            <li class="step s-you"><span class="no">07</span><span class="what">是否推迟发布日<small>只有判断留给你</small></span><span class="status">轮到你</span></li>
+          </ol>
+          <div class="relay-foot" aria-hidden="true"><strong>你要做的，只是审阅后发送。</strong></div>
+        </div>
+        <p class="caption">※ 画面为示意图</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap guide">
+    <nav class="toc" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <ol>
+        <li><a href="#scene"><span>01</span>会后，是不是这样？</a></li>
+        <li><a href="#wish"><span>02</span>其实你想要的是这样</a></li>
+        <li><a href="#gap"><span>03</span>按场景选工具，以及停下的位置</a></li>
+        <li><a href="#connect"><span>04</span>SIMY接上后半程</a></li>
+        <li><a href="#sample"><span>05</span>用一场例会来对比</a></li>
+        <li><a href="#usecases"><span>06</span>按行业：会议与SIMY的产出</a></li>
+        <li><a href="#start"><span>07</span>开始使用：3个步骤</a></li>
+        <li><a href="#reference"><span>08</span>纪要格式、各工具要点、安全性</a></li>
+        <li><a href="#faq"><span>09</span>常见问题</a></li>
+        <li><a href="#sources"><span>10</span>参考资料</a></li>
+      </ol>
+    </nav>
+
+    <article class="article">
+      <details class="toc-mobile">
+        <summary>目录</summary>
+        <ol>
+          <li><a href="#scene">会后，是不是这样？</a></li>
+          <li><a href="#wish">其实你想要的是这样</a></li>
+          <li><a href="#gap">按场景选工具，以及停下的位置</a></li>
+          <li><a href="#connect">SIMY接上后半程</a></li>
+          <li><a href="#sample">用一场例会来对比</a></li>
+          <li><a href="#usecases">按行业：会议与SIMY的产出</a></li>
+          <li><a href="#start">开始使用：3个步骤</a></li>
+          <li><a href="#reference">纪要格式、各工具要点、安全性</a></li>
+          <li><a href="#faq">常见问题</a></li>
+          <li><a href="#sources">参考资料</a></li>
+        </ol>
+      </details>
+
+      <p class="byline"><span>最后更新：<time datetime="2026-10-01">2026年10月1日</time></span><span>发布：SIMY（AwakApp Inc.）</span></p>
+
+      <!-- 01 -->
+      <section class="sec" id="scene" aria-labelledby="h-scene">
+        <span class="sec-label">01 / AFTER THE MEETING</span>
+        <h2 id="h-scene">会后，是不是这样？</h2>
+        <p class="intro">AI纪要已经到了。可会议结束30分钟后，发生的却是这些。</p>
+        <div class="scenes">
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">1</span>
+            <span class="k">30分钟后</span>
+            <b>刚才说了什么来着</b>
+            <p>摘要看过了，可那件事是谁接下的、细微的语气，就是想不起来。</p>
+          </div>
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">2</span>
+            <span class="k">1小时后</span>
+            <b>复制，再粘贴</b>
+            <p>复制Teams的转写，贴进聊天AI，改成自己的格式。每一次。</p>
+          </div>
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">3</span>
+            <span class="k">第二天早上</span>
+            <b>没有下一步</b>
+            <p>纪要里没写“接下来做什么”。各自用喜欢的AI重新总结，待办就此流失。</p>
+          </div>
+        </div>
+        <p class="scene-foot">录音、转写、摘要，哪款工具几分钟就能完成。<b>真正决定会议价值的工作，都留在了后面。</b></p>
+      </section>
+
+      <!-- 02 -->
+      <section class="sec" id="wish" aria-labelledby="h-wish">
+        <span class="sec-label">02 / WHAT YOU REALLY WANTED</span>
+        <h2 id="h-wish">其实你想要的是这样：AI纪要之后</h2>
+        <p class="intro">同样的会议，同样的纪要工具。离开会议时，你希望是这个样子。</p>
+        <div class="scenes four">
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">离开会议时</span>
+            <b>开完会，已送到</b>
+            <p>给缺席者的共享文字和按负责人分好的待办清单，已经出现在聊天里。</p>
+          </div>
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">不用开口</span>
+            <b>每次都是你的格式</b>
+            <p>参会人、议题、决定事项、下一步。不用交代，就是一贯的样子。</p>
+          </div>
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">第二天早上</span>
+            <b>决定已送达</b>
+            <p>决定事项已送到负责人手上，顺延的内容已放进下次议题。</p>
+          </div>
+          <div class="scene wish you">
+            <span class="mark" aria-hidden="true">!</span>
+            <span class="k">回到你手上的</span>
+            <b>只有判断</b>
+            <p>“发布日推迟一周可以吗？”回到你这里的，只有这一个问题。</p>
+          </div>
+        </div>
+        <p class="scene-foot">这就是<b>继续用现在的纪要工具，把记录所在的地方连接到SIMY之后，从下一场会议起</b>会发生的事。</p>
+      </section>
+
+      <!-- 03 -->
+      <section class="sec" id="gap" aria-labelledby="h-gap">
+        <span class="sec-label">03 / WHICH TOOL, AND WHERE IT STOPS</span>
+        <h2 id="h-gap">按场景选工具。以及，无论选哪款都会停下的位置</h2>
+        <p class="intro">AI会议纪要工具由公司的环境决定。需要犹豫的，只有5种场景。</p>
+        <p class="scroll-hint">表格可左右滑动 →</p>
+        <div class="table-wrap">
+          <table class="t-wide">
+            <thead>
+              <tr><th scope="col">你的环境</th><th scope="col">选择的工具</th><th scope="col">录制方式</th><th scope="col">摘要去向</th><th scope="col">需要知道的</th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">公司只用Microsoft</th><td>Teams 的 Copilot</td><td>开启Teams会议转写</td><td>Teams会议聊天和摘要</td><td>需要 Microsoft 365 Copilot 许可证。前提是管理员已启用转写和Copilot</td></tr>
+              <tr><th scope="row">公司只用Google</th><td>Meet 的 Gemini</td><td>开启“用Gemini做笔记”</td><td>Google文档。会后2至3分钟收到邮件</td><td>需要包含 Gemini 的 Google Workspace 套餐</td></tr>
+              <tr><th scope="row">工具不受限</th><td>Notion AI 会议笔记</td><td>在Notion页面点录音按钮，无机器人入会</td><td>该Notion页面</td><td>需要包含 Notion AI 的高级套餐</td></tr>
+              <tr><th scope="row">可以让录音机器人入会</th><td>Notta、tl;dv</td><td>机器人作为参会者入会，通过日历联动自动参加</td><td>各工具的网页界面</td><td>与客户开会时不便让机器人入会。免费套餐的转写时长有上限</td></tr>
+              <tr><th scope="row">想免费解决</th><td>手机语音备忘录＋Google AI Studio</td><td>用语音备忘录录音，再交出音频文件</td><td>AI Studio界面</td><td>无额外费用。手工操作多，每次都要同样的指令</td></tr>
+              <tr><th scope="row">面对面会议多</th><td>PLAUD</td><td>放下设备录音</td><td>PLAUD应用</td><td>适合面对面和通话。详见<a href="/guides/zh-hans/plaud.html">PLAUD使用指南</a></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="small muted">依据截至2026年10月的官方信息。价格和套餐名称请在各公司官网确认。</p>
+
+        <div class="tl-wrap" role="img" aria-label="时间线。Teams Copilot、Meet Gemini、Notion AI、Notta与tl;dv、免费组合，都在录音、转写、摘要处结束，共享文字、负责人与待办、下次安排、判断仍是空白">
+          <div class="tl-row">
+            <span class="tl-who">Teams</span>
+            <ol class="tl">
+              <li class="on">录音</li>
+              <li class="on">转写</li>
+              <li class="on">摘要</li>
+              <li class="gap">共享文字</li>
+              <li class="gap">负责人与待办</li>
+              <li class="gap">下次安排</li>
+              <li class="gap">判断</li>
+            </ol>
+          </div>
+          <div class="tl-row">
+            <span class="tl-who">Meet</span>
+            <ol class="tl">
+              <li class="on">录音</li>
+              <li class="on">转写</li>
+              <li class="on">摘要</li>
+              <li class="gap">共享文字</li>
+              <li class="gap">负责人与待办</li>
+              <li class="gap">下次安排</li>
+              <li class="gap">判断</li>
+            </ol>
+          </div>
+          <div class="tl-row">
+            <span class="tl-who">Notion</span>
+            <ol class="tl">
+              <li class="on">录音</li>
+              <li class="on">转写</li>
+              <li class="on">摘要</li>
+              <li class="gap">共享文字</li>
+              <li class="gap">负责人与待办</li>
+              <li class="gap">下次安排</li>
+              <li class="gap">判断</li>
+            </ol>
+          </div>
+          <div class="tl-row">
+            <span class="tl-who">机器人型</span>
+            <ol class="tl">
+              <li class="on">录音</li>
+              <li class="on">转写</li>
+              <li class="on">摘要</li>
+              <li class="gap">共享文字</li>
+              <li class="gap">负责人与待办</li>
+              <li class="gap">下次安排</li>
+              <li class="gap">判断</li>
+            </ol>
+          </div>
+          <div class="tl-row">
+            <span class="tl-who">免费、面对面</span>
+            <ol class="tl">
+              <li class="on">录音</li>
+              <li class="on">转写</li>
+              <li class="on">摘要</li>
+              <li class="gap">共享文字</li>
+              <li class="gap">负责人与待办</li>
+              <li class="gap">下次安排</li>
+              <li class="gap">判断</li>
+            </ol>
+          </div>
+        </div>
+        <p class="caption">※ 流程为示意图</p>
+        <p class="tl-note"><b>无论选哪款，线都停在同一个地方。</b>可以向摘要提问，把转写贴进聊天AI也能生成草稿。但每次“开口去要”的是你，去看有没有做完的也是你。</p>
+      </section>
+
+      <!-- 04 -->
+      <section class="sec" id="connect" aria-labelledby="h-connect">
+        <span class="sec-label">04 / CONNECT</span>
+        <h2 id="h-connect">SIMY接上后半程。纪要工具保持不变</h2>
+        <p class="intro">原本空着的4格中，SIMY填上3格。回到你手上的，只有判断那1格。</p>
+        <div class="tl-wrap" role="img" aria-label="时间线。录音、转写、摘要由纪要AI完成。共享文字、负责人与待办、下次安排由SIMY推进，只有截止日期的判断回到你手上">
+          <div class="tl-row">
+            <span class="tl-who">纪要AI</span>
+            <ol class="tl">
+              <li class="on">录音</li>
+              <li class="on">转写</li>
+              <li class="on">摘要</li>
+              <li class="blank"></li><li class="blank"></li><li class="blank"></li><li class="blank"></li>
+            </ol>
+          </div>
+          <div class="tl-row">
+            <span class="tl-who simy">SIMY</span>
+            <ol class="tl">
+              <li class="blank"></li><li class="blank"></li><li class="blank"></li>
+              <li class="run">共享文字<small>发给缺席者和相关部门</small></li>
+              <li class="run">负责人与待办<small>谁、何时之前</small></li>
+              <li class="run">下次安排<small>顺延议题与确认事项</small></li>
+              <li class="you">判断日期<small>只把判断交给你</small></li>
+            </ol>
+          </div>
+        </div>
+        <p class="caption">※ 流程为示意图</p>
+        <ul class="three" aria-label="SIMY的3个特点">
+          <li>从会议中接手</li>
+          <li>按你的做法</li>
+          <li>只交还判断</li>
+        </ul>
+        <p class="tl-note">SIMY从会议记录中自己找出“之后的工作”。不用你开口就会开始，并学习你在做好工作时反复进行的确认和优先级，按同样的做法推进。</p>
+
+        <div class="connect">
+          <ol class="connect-steps">
+            <li><b>打开SIMY的连接页面</b><span>如果还没有账号，请先注册SIMY。不需要更换纪要工具。</span></li>
+            <li class="key"><b>连接会议记录所在的地方</b><span>PLAUD使用SIMY内置的集成，点击“连接”即可。Notion AI的记录通过Notion集成，Meet的Gemini生成的Google文档通过Google集成传入。</span></li>
+            <li><b>Claude Code、Codex的对话也照样可用</b><span>用Claude Code或Codex处理转写的人，在电脑上安装<code>simy</code>应用后，SIMY会从这些对话记录中提出工作候选，作为“来自SIMY的建议”。正文不会保存到服务器。</span></li>
+          </ol>
+          <div>
+            <div class="mock" role="img" aria-label="SIMY连接页面的示意图。作为会议记录所在的连接项，列出Plaud、Notion、Google，点击连接按钮后在新标签页中授权。">
+              <div class="mock-head" aria-hidden="true">
+                <span class="mock-mark">⇄</span>
+                <div>
+                  <div class="mock-title">集成 <span class="mock-state">● 会议记录</span></div>
+                  <p class="mock-desc">检索并参考纪要、转写和摘要</p>
+                </div>
+              </div>
+              <div class="mock-box" aria-hidden="true">Plaud ／ Notion ／ Google</div>
+              <div class="mock-btn" aria-hidden="true">连接</div>
+              <div class="mock-foot" aria-hidden="true">↗ 在新标签页中授权</div>
+            </div>
+            <p class="caption">※ SIMY连接页面的示意图</p>
+          </div>
+        </div>
+        <p class="note"><b>使用Teams Copilot、Notta、tl;dv的人：</b>把摘要存放到Notion或Google文档，就能经由同样的路径送到SIMY。最新的连接项列表请看<a href="/integrations.html">集成页面</a>。PLAUD的连接步骤见<a href="/guides/zh-hans/plaud.html">PLAUD使用指南</a>。</p>
+      </section>
+
+      <!-- 05 -->
+      <section class="sec" id="sample" aria-labelledby="h-sample">
+        <span class="sec-label">05 / SAMPLE</span>
+        <h2 id="h-sample">用一场例会来对比：纪要AI的摘要与SIMY完成的内容</h2>
+        <p class="intro">以下是用线上会议的纪要AI记录一场6人周例会（约1小时）的示例。左边是纪要AI，右边是SIMY。</p>
+        <div class="sample">
+          <div class="sheet">
+            <div class="sheet-label"><span>纪要AI的摘要（示例）</span><span>自动生成</span></div>
+            <dl>
+              <dt>概要</dt>
+              <dd>讨论了新功能的发布准备和咨询处理的分工。</dd>
+              <dt>决定事项</dt>
+              <dd>有人提出将测试期延长1周。咨询的一线处理由客服团队负责。</dd>
+              <dt>课题</dt>
+              <dd>延长后的发布日和通知销售的时机尚未确定。</dd>
+              <dt>待办</dt>
+              <dd>重新审视测试计划。更新FAQ。同步给销售团队。</dd>
+            </dl>
+          </div>
+          <div class="outs">
+            <div class="out">
+              <div class="out-head"><b>共享文字</b><span class="pill ok">草稿完成</span></div>
+              <p>发给缺席的2人和销售团队。“目前有将测试期延长1周的方案，确定后会同步发布日和通知安排。”用你一贯的口吻。</p>
+            </div>
+            <div class="out">
+              <div class="out-head"><b>负责人与待办</b><span class="pill run">Autorun</span></div>
+              <p>重新审视测试计划：开发负责人，本周五前。更新FAQ：客服，发布前一天。通知销售：你，发布日确定后。</p>
+            </div>
+            <div class="out">
+              <div class="out-head"><b>下次安排</b><span class="pill">下一步</span></div>
+              <p>把“确定发布日”“通知文字”顺延到下周例会议题。开头列出上次的决定事项和进展。</p>
+            </div>
+            <div class="out you">
+              <div class="out-head"><b>需要你确认</b><span class="pill you">轮到你</span></div>
+              <p>“测试期延长1周，发布定在10月15日吗？”只有需要判断的部分，才会回到你手上。</p>
+            </div>
+          </div>
+        </div>
+        <p class="sample-foot">纪要AI负责记录，SIMY负责推进。会上的讨论和判断，依然是你大显身手的地方。</p>
+      </section>
+
+      <!-- 06 -->
+      <section class="sec" id="usecases" aria-labelledby="h-usecases">
+        <span class="sec-label">06 / BY INDUSTRY</span>
+        <h2 id="h-usecases">按行业：会议类型与SIMY的产出</h2>
+        <p class="intro">纪要工具由职场决定。会后SIMY准备什么，由行业决定。</p>
+        <div class="ind">
+          <div class="ind-card">
+            <h3>项目例会 <small>Teams Copilot ／ Meet Gemini</small></h3>
+            <ul class="ind-rows">
+              <li><span>周例会</span><span>→</span><span>按负责人分的待办、给缺席者的共享文字</span></li>
+              <li><span>进度确认</span><span>→</span><span>只列出滞后项和需要判断的点</span></li>
+              <li><span>复盘</span><span>→</span><span>汇总多次例会的报告</span></li>
+            </ul>
+          </div>
+          <div class="ind-card">
+            <h3>销售团队 <small>Notion AI ／ PLAUD</small></h3>
+            <ul class="ind-rows">
+              <li><span>商谈汇报会</span><span>→</span><span>按项目的下一步、更新客户备注</span></li>
+              <li><span>与客户的例会</span><span>→</span><span>感谢邮件草稿、内部共享文字</span></li>
+              <li><span>月初业绩会</span><span>→</span><span>决定的措施与负责人清单</span></li>
+            </ul>
+          </div>
+          <div class="ind-card">
+            <h3>经营会议、1对1 <small>Notion AI ／ Meet Gemini</small></h3>
+            <ul class="ind-rows">
+              <li><span>经营会议</span><span>→</span><span>决定事项与负责人清单、同步给相关人</span></li>
+              <li><span>1对1</span><span>→</span><span>在问“那件事怎样了”之前，看到进展和待决事项</span></li>
+              <li><span>董事会之前</span><span>→</span><span>上次的决定和遗留事项清单</span></li>
+            </ul>
+          </div>
+          <div class="ind-card">
+            <h3>诊所、门店 <small>PLAUD ／ 手机语音备忘录</small></h3>
+            <ul class="ind-rows">
+              <li><span>晨会</span><span>→</span><span>把决定传达给员工的交接</span></li>
+              <li><span>员工会议</span><span>→</span><span>附负责人和期限的待办</span></li>
+              <li><span>月度复盘</span><span>→</span><span>汇总多次会议的报告</span></li>
+            </ul>
+            <p class="small muted" style="margin:10px 0 0">有患者或顾客在场的场合，请在取得同意并遵守院内、店内规定的前提下录音。</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 07 -->
+      <section class="sec" id="start" aria-labelledby="h-start">
+        <span class="sec-label">07 / START</span>
+        <h2 id="h-start">开始使用：继续用现在的纪要工具，3个步骤</h2>
+        <ol class="steps3">
+          <li><b>用现在的纪要工具照常录制</b><span>Teams、Meet、Notion、Notta、tl;dv、PLAUD，都不必更换。把摘要设置为保存到Notion或Google文档，下一步会更轻松。</span></li>
+          <li class="key"><b>把记录所在的地方连接到SIMY</b><span>在连接页面对Plaud、Notion、Google中的任一项点击“连接”。<a href="#connect">连接方法</a>见上文。</span></li>
+          <li><b>开完一场会议</b><span>共享文字、负责人与待办、下次安排会送到你面前。审阅，发送，仅此而已。</span></li>
+        </ol>
+        <p class="note"><b>注册流程：</b>选择套餐 → 邮件验证身份 → 银行卡付款。没有免费套餐。<a href="/?lang=zh-Hans#pricing">查看价格</a>。电脑端应用请从<a href="/download/zh-hans.html">下载页面</a>获取。</p>
+        <p class="note"><b>已经在用Claude Code或Codex的人，</b>只要在电脑上安装<code>simy</code>应用也能开始。会后工作的候选会从对话记录中生成，作为“来自SIMY的建议”送到你面前。</p>
+      </section>
+
+      <!-- 08 -->
+      <section class="sec" id="reference" aria-labelledby="h-reference">
+        <span class="sec-label">08 / REFERENCE</span>
+        <h2 id="h-reference">纪要格式、各工具要点、安全性（想深入了解的读者）</h2>
+        <p class="intro">以下内容适合想改进纪要本身、或想确认工具细节时展开阅读。</p>
+
+        <details class="fold">
+          <summary>纪要格式：参会人、议题、决定事项、下一步<small>附贴进聊天AI时的提示词示例</small></summary>
+          <div class="fold-body">
+            <h3>有人读的纪要包含的4项</h3>
+            <ol class="plain-list">
+              <li><strong>参会人与缺席者。</strong>谁在、谁不在，决定了要同步给谁。</li>
+              <li><strong>议题。</strong>不按讨论顺序，而按需要拍板的顺序排列，事后更好找。</li>
+              <li><strong>决定事项。</strong>把“已决定的”和“提了方案但未决定的”分开。两者混在一起，下周就得把同样的讨论再来一遍。</li>
+              <li><strong>下一步。</strong>一定要写明负责人和期限。没有写清接下来做什么的会议，之后的工作会全部回到你身上。</li>
+            </ol>
+            <h3>把转写贴进聊天AI时的提示词示例</h3>
+            <p class="note">“请根据以下转写生成会议纪要。项目依次为：参会人、议题、决定事项、待定事项、下一步（负责人、期限）。决定事项和待定事项请分开。发言人姓名沿用转写中的写法。用中文，以要点列出。”</p>
+            <h3>如何区分决定事项与待定事项（示例）</h3>
+            <ul class="plain-list">
+              <li><strong>决定事项：</strong>“咨询的一线处理由客服团队负责”。有主语和动词，且没有反对意见。</li>
+              <li><strong>待定事项：</strong>“将测试期延长1周的方案”。方案提了，但发布日和通知安排未定，等某人判断。</li>
+              <li><strong>下一步：</strong>“重新审视测试计划：开发负责人，本周五前”。负责人和期限齐全，才算下一步。</li>
+            </ul>
+            <p>这样摘要的格式就统一了。但输入这段指令、把生成的纪要贴到共享处、把待办告诉负责人的，每次都还是你。按你的格式完成一次纪要后，SIMY会学会这种做法，之后的会议不用开口也会按同样的格式准备。</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>各工具要点：Teams Copilot、Meet Gemini、Notion AI、Notta、tl;dv、PLAUD<small>只取截至2026年10月官方信息中确定度高的事实</small></summary>
+          <div class="fold-body">
+            <h3>Microsoft Teams 的 Copilot</h3>
+            <p>开启Teams会议的转写（或录制）后，会议中可以向Copilot提问，会后也能用摘要和决定事项整理。需要 Microsoft 365 Copilot 许可证，转写和Copilot的使用可由组织管理员通过策略启用或停用。用不了时，先请管理员确认设置。</p>
+            <h3>Google Meet 的 Gemini（做笔记）</h3>
+            <p>会议中开启“用Gemini做笔记”，会后摘要会生成为Google文档，并通过邮件发给组织者。需要包含 Gemini 的 Google Workspace 套餐。这是会议工具自带的功能，不需要机器人入会，也不需要录音设备。</p>
+            <h3>Notion AI 会议笔记</h3>
+            <p>在Notion页面开始录音后，会根据你设备的声音把转写和摘要留在该页面。不会有机器人参会。线上和面对面都能用，纪要直接积累在Notion数据库里。Notion AI 包含在高级套餐中。</p>
+            <h3>Notta、tl;dv</h3>
+            <p>两者都是由录音机器人作为参会者进入Zoom、Teams、Google Meet会议进行记录。与日历联动后会按日程自动参加，可在网页界面查看转写和摘要。免费套餐每月的转写时长有上限。与外部人士开会时，需要事先告知机器人会入会。</p>
+            <h3>把纪要自动存进 Notion（tl;dv、Notta＋Zapier）</h3>
+            <ol class="plain-list">
+              <li>会议结束后，录制工具生成摘要。</li>
+              <li>Zapier 用该摘要在 Notion 数据库中创建页面。</li>
+              <li>Slack 收到“纪要已生成”的通知。</li>
+            </ol>
+            <p>誊写变成了自动。但共享文字、负责人与待办、下次安排、你的判断仍然剩下。接着推进这些的，就是SIMY。</p>
+            <h3>免费组合：手机语音备忘录＋Google AI Studio</h3>
+            <p>用手机语音备忘录录音，把音频文件交给Google AI Studio，就能得到转写和摘要。不花额外费用，但传输录音、输入提示词、复制结果每次都要手工操作。</p>
+            <p>iPhone和Android的语音备忘录（录音应用）自带转写功能（因机型和系统版本而异）。先试试自带功能，只有音频文件时再用 Google AI Studio，这样的顺序就够了。</p>
+            <p>免费也能做到转写。但共享、待办、判断仍然剩下。</p>
+            <h3>PLAUD</h3>
+            <p>用卡片型或胸针型设备录制面对面对话和通话，在应用中完成转写和摘要。SIMY有内置集成，只需“连接”，摘要之后的事就由SIMY推进。用法和价格整理在<a href="/guides/zh-hans/plaud.html">PLAUD使用指南</a>中。</p>
+            <h3>一览对比</h3>
+            <p class="scroll-hint">表格可左右滑动 →</p>
+            <div class="table-wrap">
+              <table class="t-wide t-models">
+                <thead>
+                  <tr><th scope="col">工具</th><th scope="col">录制方式</th><th scope="col">机器人入会</th><th scope="col">摘要去向</th><th scope="col">需要什么</th><th scope="col">适合人群</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Teams 的 Copilot</th><td>Teams会议转写</td><td>无</td><td>Teams会议聊天</td><td>Microsoft 365 Copilot 许可证，管理员启用</td><td>内部会议以Teams为主的人</td></tr>
+                  <tr><th scope="row">Meet 的 Gemini</th><td>Meet的“做笔记”</td><td>无</td><td>Google文档＋邮件</td><td>包含 Gemini 的 Workspace 套餐</td><td>使用 Google Workspace 的公司</td></tr>
+                  <tr><th scope="row">Notion AI</th><td>在Notion页面录音</td><td>无</td><td>Notion页面</td><td>包含 Notion AI 的高级套餐</td><td>想把纪要积累在Notion的人</td></tr>
+                  <tr><th scope="row">Notta</th><td>机器人入会，或用应用录音</td><td>有</td><td>Notta网页界面</td><td>账号（有免费套餐）</td><td>混用多种会议工具的人</td></tr>
+                  <tr><th scope="row">tl;dv</th><td>机器人入会</td><td>有</td><td>tl;dv网页界面</td><td>账号（有免费套餐）</td><td>以Zoom、Meet为主并想保留录像的人</td></tr>
+                  <tr><th scope="row">PLAUD</th><td>用设备录音</td><td>无</td><td>PLAUD应用</td><td>设备和Plaud账号</td><td>面对面和通话多的人</td></tr>
+                  <tr><th scope="row">语音备忘录＋AI Studio</th><td>手机录音，交出音频</td><td>无</td><td>AI Studio界面</td><td>Google账号</td><td>想先免费试试的人</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="small muted">各工具的功能和套餐，为2026年10月1日在官方页面确认的信息。价格变动频繁，本页不予刊登。</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>提高AI纪要准确度的5个诀窍<small>所有工具通用。交给SIMY前整理好，后续工作的质量也会提高</small></summary>
+          <div class="fold-body">
+            <ol class="plain-list">
+              <li><strong>会议开头，口头说出议题和参会人。</strong>转写开头有议题和姓名，摘要的标题和说话人对应会更稳定。</li>
+              <li><strong>做出决定的那一刻，再复述一遍。</strong>加一句“那么，测试期确定延长1周”，决定事项和待定事项就不会混在一起。</li>
+              <li><strong>当场说出负责人和期限。</strong>说一句“FAQ更新由小李负责，发布前一天完成”，待办就会带上负责人和期限。</li>
+              <li><strong>检查麦克风和语言设置。</strong>线上会议用耳机麦克风，面对面把录音设备放在桌子中央。语言设置还是英文的话，摘要也会是英文。</li>
+              <li><strong>登记说话人名称。</strong>停留在“说话人1”“说话人2”，就追踪不到谁接下了什么。请使用工具的说话人登记功能。</li>
+            </ol>
+            <p>这5点在SIMY推进后续工作时同样有效。决定事项和负责人越清楚，共享文字和待办就越准确，回到你手上的判断也越少。</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>引入后常见的3件事<small>工具上了，会后却没有变化的原因</small></summary>
+          <div class="fold-body">
+            <h3>1. 各自用喜欢的AI重新总结</h3>
+            <p>公司明明能用Teams的Copilot，还是有人复制转写贴进自己的聊天AI。理由是“想按我们的格式输出”。工具的模板不够用，最后每次都要敲提示词。SIMY会学习你完成过一次的格式，之后的会议都按同样的格式准备。</p>
+            <h3>2. 摘要送到了，却没人看</h3>
+            <p>摘要自动堆积在会议聊天或Notion里，大家反而放心地不看了。没人看，决定事项和下一步也会流失。需要的不是让人读摘要，而是从摘要中只取出“给你的工作”送到你面前。SIMY送来的是共享文字、按负责人分的待办，以及给你的一个判断问题。</p>
+            <h3>3. 到处去问“那件事怎样了”</h3>
+            <p>即使待办写在纪要里，有没有推进也只能有人去确认。提出请求的一方得一直惦记“那件事后来怎样了”。在SIMY里，进行中、已完成、等你处理的事项都列在My Actions中，不必再到处去问。</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>纪要AI、贴进聊天AI、SIMY的区别<small>没有好坏之分，只是停下的位置不同</small></summary>
+          <div class="fold-body">
+            <p class="scroll-hint">表格可左右滑动 →</p>
+            <div class="table-wrap">
+              <table class="t-wide">
+                <thead>
+                  <tr><th scope="col">对比项</th><th scope="col">纪要AI的自动摘要</th><th scope="col">把转写贴进聊天AI</th><th scope="col" class="simy">SIMY</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">起点</th><td>会议结束</td><td>你粘贴并提出请求</td><td class="simy">SIMY从会议记录中接手</td></tr>
+                  <tr><th scope="row">你的格式</th><td>工具的模板</td><td>每次用提示词交代</td><td class="simy">学习做好工作时的确认事项和优先级</td></tr>
+                  <tr><th scope="row">得到什么</th><td>摘要</td><td>纪要草稿</td><td class="simy">共享文字、负责人与待办、下次安排，以及一个需要判断的问题</td></tr>
+                  <tr><th scope="row">留下什么</th><td>摘要页面</td><td>聊天记录</td><td class="simy">进行中、已完成、等你处理并列的My Actions</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="note"><b>怎么选：</b>一次性的会议，纪要AI的摘要就够了。如果同样的会议每周都有、会后的工作每次都一样，就轮到SIMY上场。聊天AI本身的用法整理在<a href="/guides/zh-hans/chatgpt.html">ChatGPT使用指南</a>中。</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>即便如此，手写纪要的价值<small>能让自己该做什么变得清晰。与SIMY“只交还判断”是同一个位置</small></summary>
+          <div class="fold-body">
+            <p>即使AI纪要普及了，仍有人说“纪要还是手写好”。理由不在记录的准确度，而在于书写的过程会让“决定了什么、自己接下来该做什么”变得清晰。看准决定事项的颗粒度是一门手艺，摘要工具替代不了。</p>
+            <p>SIMY看重的也是这个位置。SIMY推进共享文字和待办整理，但“决定了什么”“要不要改期”的判断，一定会交还给你。手写的人获得的“下一步变得清晰”的感觉，SIMY让你不用花书写的时间也能保留。</p>
+            <p>想继续手写的人，比较现实的做法是只手写决定事项和下一步，其余交给纪要AI。SIMY也会读取这些手写的决定事项，接着推进。</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>安全：机密会议、训练设置、录音同意<small>公司规定、各工具的数据处理、SIMY的处理方式</small></summary>
+          <div class="fold-body">
+            <ul class="plain-list">
+              <li><strong>录音同意：</strong>开始录音或转写前，请告知所有参会者并取得同意。机器人型工具入会后会显示在参会者列表中，但事先告知才是礼貌。SIMY的<a href="/terms.html?lang=zh-Hans">服务条款</a>也规定，取得录音同意是用户的责任。</li>
+              <li><strong>机密性高的会议：</strong>人事、并购、未公布业绩等会议，请只使用IT部门认可的工具。如果公司由Microsoft或Google统一管理，会议工具自带的功能（Teams Copilot、Meet Gemini）在管理员设置的范围内运行，更偏安全。</li>
+              <li><strong>AI训练设置：</strong>各工具对是否把输入数据用于AI训练都有方针或设置。个人套餐有时默认开启，业务使用时请选择企业套餐，或确认关闭训练的设置。以ChatGPT为例，可以在设置的数据控制中关闭“为所有人改进模型”。</li>
+              <li><strong>与SIMY的连接：</strong>Plaud、Notion、Google的连接，都是在各自的授权页面用你的账号登录并授权。Claude Code和Codex的对话记录由电脑上的<code>simy</code>应用读取，正文不会保存到服务器，只生成工作候选。SIMY的数据处理方式公开在<a href="/security.html">安全</a>和<a href="/privacy.html?lang=zh-Hans">隐私政策</a>中。</li>
+              <li><strong>发送和写入需要批准：</strong>SIMY准备的共享文字，Gmail只保存到草稿。发布到Slack和写入Notion，要经过你的批准才会执行。不会擅自发送。</li>
+            </ul>
+          </div>
+        </details>
+      </section>
+
+      <!-- 09 -->
+      <section class="sec" id="faq" aria-labelledby="h-faq">
+        <span class="sec-label">09 / FAQ</span>
+        <h2 id="h-faq">常见问题</h2>
+        <div class="faq">
+          <details>
+            <summary>到底哪款AI会议纪要工具最好？</summary>
+            <div class="a"><p>取决于公司的环境。只用Microsoft就选Teams的Copilot，只用Google就选Meet的Gemini，工具不受限就选Notion AI的会议笔记，可以让录音机器人入会就选Notta或tl;dv，面对面会议多就选PLAUD。与其比较摘要的准确度，不如看“摘要会送到哪里”，这样之后的工作才能接得上。</p></div>
+          </details>
+          <details>
+            <summary>能不让机器人入会就录下会议吗？</summary>
+            <div class="a"><p>能。Teams的Copilot和Meet的Gemini是会议工具自带的功能，不会有机器人作为参会者入会。Notion AI的会议笔记从你设备的声音记录，PLAUD用设备录音。Notta和tl;dv则是机器人作为参会者入会的方式。</p></div>
+          </details>
+          <details>
+            <summary>纪要以英文输出，能改成中文吗？</summary>
+            <div class="a"><p>大多数工具都可以设置转写语言或输出语言。明明是中文会议却输出英文，多半是会议语言或摘要语言设成了英文，请检查各工具的设置。无论记录用的是什么语言，SIMY都会用你平时使用的语言和格式准备后续工作。</p></div>
+          </details>
+          <details>
+            <summary>想免费解决，该用什么？</summary>
+            <div class="a"><p>用手机的语音备忘录录音，再把音频交给Google AI Studio生成转写和摘要，这种方法不花额外费用就能试。Notta和tl;dv也有免费套餐，但每月的转写时长有上限。即使是免费组合，摘要之后的工作也可以交给SIMY。</p></div>
+          </details>
+          <details>
+            <summary>需要PLAUD这样的设备吗？</summary>
+            <div class="a"><p>以线上会议为主的话不需要，会议工具自带功能或Notion AI就够了。面对面商谈、面谈、会议室开会多的人，适合放下就能录的PLAUD。无论哪种记录，SIMY的用法都一样。</p></div>
+          </details>
+          <details>
+            <summary>纪要格式（参会人、议题、决定事项、下一步）每次都要指定吗？</summary>
+            <div class="a"><p>不用。按你的格式完成一次后，SIMY会学会这种做法，之后的会议都按同样的格式准备。不再需要把转写贴进聊天AI、重复输入同样的指令。</p></div>
+          </details>
+          <details>
+            <summary>“决定了什么”由AI判断，还是由我判断？</summary>
+            <div class="a"><p>由你判断。SIMY从转写和摘要中整理出决定事项和负责人的候补并推进到草稿，只把改期、能否发送等需要判断的部分交还给你。</p></div>
+          </details>
+          <details>
+            <summary>怎样把会议内容交给SIMY？</summary>
+            <div class="a"><p>PLAUD只需在SIMY的连接页面点击“连接”。Notion AI的记录通过Notion集成，Meet的Gemini生成的Google文档通过Google集成传入。用Claude Code或Codex处理纪要的人，SIMY会从这些对话记录中找出工作候选。支持情况请在<a href="/integrations.html">集成页面</a>确认。</p></div>
+          </details>
+          <details>
+            <summary>使用SIMY会额外产生AI使用费吗？</summary>
+            <div class="a"><p>SIMY连接你自己的ChatGPT账号，用Codex推进工作。Codex的使用在你的ChatGPT套餐范围内进行。SIMY本身的费用请查看<a href="/?lang=zh-Hans#pricing">价格页面</a>。</p></div>
+          </details>
+          <details>
+            <summary>机密性高的会议也能用吗？录音需要同意吗？</summary>
+            <div class="a"><p>录音和转写之前，请取得所有参会者的同意并确认公司规定。机密性高的会议只使用IT部门认可的工具，同时确认各工具是否把数据用于训练的设置。SIMY的数据处理方式公开在<a href="/security.html">安全</a>和<a href="/privacy.html?lang=zh-Hans">隐私政策</a>页面。</p></div>
+          </details>
+        </div>
+      </section>
+
+      <!-- 10 -->
+      <section class="sec" id="sources" aria-labelledby="h-sources">
+        <span class="sec-label">10 / SOURCES</span>
+        <h2 id="h-sources">参考资料</h2>
+        <p>各工具的功能、所需套餐、记录方式，依据以下官方信息确认（确认日期：2026年10月1日）。会后遗留工作的场景，参考了AI应用的讲解视频。</p>
+        <ul class="plain-list">
+          <li><a href="https://www.microsoft.com/en-us/microsoft-365/copilot" target="_blank" rel="noopener">Microsoft 365 Copilot（Microsoft 官方）</a></li>
+          <li><a href="https://learn.microsoft.com/zh-cn/microsoftteams/copilot-teams-transcription" target="_blank" rel="noopener">Teams 会议中的 Copilot 与转写设置（Microsoft Learn）</a></li>
+          <li><a href="https://support.google.com/meet/answer/14754931" target="_blank" rel="noopener">在 Google Meet 中用 Gemini 做笔记（Google Meet 帮助）</a></li>
+          <li><a href="https://www.notion.com/product/ai-meeting-notes" target="_blank" rel="noopener">Notion AI Meeting Notes（Notion 官方）</a></li>
+          <li><a href="https://www.notta.ai/" target="_blank" rel="noopener">Notta（官方网站）</a></li>
+          <li><a href="https://tldv.io/" target="_blank" rel="noopener">tl;dv（官方网站）</a></li>
+          <li><a href="https://www.plaud.ai/" target="_blank" rel="noopener">PLAUD（官方网站）</a></li>
+          <li><a href="https://aistudio.google.com/" target="_blank" rel="noopener">Google AI Studio（Google 官方）</a></li>
+        </ul>
+      </section>
+      <aside class="next-read" aria-labelledby="h-next">
+        <h2 id="h-next">接着读</h2>
+        <div class="next-grid"><a href="/guides/zh-hans/plaud.html"><b>PLAUD NOTE 使用指南</b><span>摘要之后的邮件和客户备注</span></a><a href="/guides/zh-hans/chatgpt.html"><b>ChatGPT 使用指南</b><span>不必每次重新粘贴、重新收尾</span></a><a href="/guides/zh-hans/cowork.html"><b>Claude Cowork 使用指南</b><span>桌面上的事之后，剩下的会议待办</span></a></div>
+        <a class="next-all" href="/guides/zh-hans/index.html">查看全部指南 →</a>
+      </aside>
+    </article>
+  </div>
+
+  <section class="closing" aria-labelledby="h-closing">
+    <div class="wrap closing-inner">
+      <div>
+        <h2 id="h-closing">下一场会议结束后，<br>先别重读摘要，交给SIMY。</h2>
+        <p>纪要工具保持不变。只需连接记录所在的地方，从下一场会议起就能用。SIMY交还给你的只有判断。会上的讨论，依然是你大显身手的地方。</p>
+      </div>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="https://app.simy.one/signup?lang=zh-Hans&amp;locale=zh-Hans&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=meeting_notes_guide_zh-hans&amp;utm_content=closing">选择套餐，开始使用 <span class="arrow" aria-hidden="true">↗</span></a>
+        <a class="btn btn-ghost" href="mailto:sales@simy.one?subject=%E6%83%B3%E5%92%A8%E8%AF%A2AI%E4%BC%9A%E8%AE%AE%E7%BA%AA%E8%A6%81%E4%B8%8ESIMY">咨询</a>
+        <a class="btn btn-ghost" href="/download/zh-hans.html">下载应用 <span class="arrow" aria-hidden="true">↓</span></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <ul class="footer-links">
+      <li><a href="/?lang=zh-Hans">首页</a></li>
+      <li><a href="/?lang=zh-Hans#pricing">价格</a></li>
+      <li><a href="/integrations.html">集成</a></li>
+      <li><a href="/download/zh-hans.html">下载</a></li>
+      <li><a href="/guides/zh-hans/index.html">全部指南</a></li>
+      <li><a href="/guides/zh-hans/claude.html">Claude</a></li>
+      <li><a href="/guides/zh-hans/codex.html">Codex</a></li>
+      <li><a href="/guides/zh-hans/cowork.html">Cowork</a></li>
+      <li><a href="/guides/zh-hans/chatgpt.html">ChatGPT</a></li>
+      <li><a href="/guides/zh-hans/plaud.html">PLAUD</a></li>
+      <li><a href="/guides/zh-hans/meeting-notes.html" aria-current="page">AI 会议纪要</a></li>
+      <li><a href="/guides/zh-hans/china-llm.html">中国 AI 对比</a></li>
+      <li><a href="/guides/zh-hans/deepseek.html">DeepSeek</a></li>
+      <li><a href="/guides/zh-hans/qwen.html">Qwen</a></li>
+      <li><a href="/guides/zh-hans/qwen-local.html">在自有服务器上运行 Qwen</a></li>
+      <li><a href="/security.html">安全</a></li>
+      <li><a href="/privacy.html?lang=zh-Hans">隐私政策</a></li>
+      <li><a href="/terms.html?lang=zh-Hans">使用条款</a></li>
+    </ul>
+    <p>Microsoft Teams、Copilot、Google Meet、Gemini、Notion、Notta、tl;dv、PLAUD是各自权利人的商标或注册商标。SIMY是独立于上述各公司的产品，未获得各公司的合作或认可。</p>
+    <p>Codex和ChatGPT是OpenAI的产品。Claude Code是Anthropic的产品。其他公司名称和产品名称是各公司的商标或注册商标。</p>
+    <p>&copy; 2026 SIMY by AwakApp Inc.</p>
+  </div>
+</footer>
+<script>
+(function () {
+  var links = Array.prototype.slice.call(document.querySelectorAll('.toc a'));
+  if (!links.length) return;
+  var items = links.map(function (a) {
+    return { link: a, section: document.getElementById(a.getAttribute('href').slice(1)) };
+  }).filter(function (item) { return item.section; });
+  var ticking = false;
+  function update() {
+    ticking = false;
+    var line = window.innerHeight * 0.35;
+    var atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+    var current = null;
+    items.forEach(function (item) {
+      if (item.section.getBoundingClientRect().top <= line) current = item;
+    });
+    if (atBottom) current = items[items.length - 1];
+    items.forEach(function (item) { item.link.classList.toggle('is-active', item === current); });
+  }
+  window.addEventListener('scroll', function () {
+    if (!ticking) { ticking = true; window.requestAnimationFrame(update); }
+  }, { passive: true });
+  update();
+})();
+</script>
+<script src="/analytics.js" defer></script>
+</body>
+</html>

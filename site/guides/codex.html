@@ -4,15 +4,22 @@
 <meta charset="UTF-8">
 <meta name="google-site-verification" content="1n6_tVJZRZlQax8luEg5VsuG7gg-kCEam5VFiWIJs3U">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OpenAI Codex の使い方・料金・利用制限ガイド｜アプリ・CLI・スマホの入口と、コードを書かない仕事への広げ方 | SIMY</title>
-<meta name="description" content="OpenAI Codex（ChatGPT の Codex）の使い方ガイド。デスクトップアプリ・CLI・VS Code・Cloud・スマホの入口、導入手順、できること、料金と利用制限、Claude Code との比較と併用、セキュリティまで。1回頼んだ仕事を、SIMY が会議やチャットから拾って毎回 Codex に進めさせます。">
+<title>OpenAI Codexの使い方・料金・利用制限｜アプリとCLIの始め方 | SIMY</title>
+<meta name="description" content="OpenAI Codexの使い方ガイド。アプリ・CLI・スマホの入口、導入手順、料金と利用制限、Claude Codeとの併用まで。翌日も同じ指示を打つ仕事は、SIMYが会議とチャットから拾います。">
 <link rel="canonical" href="https://simy.one/guides/codex.html">
+<link rel="alternate" hreflang="ja" href="https://simy.one/guides/codex.html">
+<link rel="alternate" hreflang="en" href="https://simy.one/guides/en/codex.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://simy.one/guides/zh-hans/codex.html">
+<link rel="alternate" hreflang="es" href="https://simy.one/guides/es/codex.html">
+<link rel="alternate" hreflang="fr" href="https://simy.one/guides/fr/codex.html">
+<link rel="alternate" hreflang="hi" href="https://simy.one/guides/hi/codex.html">
+<link rel="alternate" hreflang="x-default" href="https://simy.one/guides/en/codex.html">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://simy.one/guides/codex.html">
 <meta property="og:title" content="Codex を、1日の仕事に雇う。頼むのは、最初の1回だけ。｜SIMY">
 <meta property="og:description" content="OpenAI Codex の入口・導入・料金と利用制限・比較を1ページに。1回頼んだ仕事を、SIMY が会議やチャットから拾い、お使いの ChatGPT プランの上で毎回 Codex に進めさせます。">
 <meta property="og:site_name" content="SIMY">
-<meta property="og:image" content="https://simy.one/ogp.png">
+<meta property="og:image" content="https://simy.one/ogp-codex.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Codex を、1日の仕事に雇う。OpenAI Codex 活用ガイド｜SIMY">
@@ -22,7 +29,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Codex を、1日の仕事に雇う。頼むのは、最初の1回だけ。｜SIMY">
 <meta name="twitter:description" content="OpenAI Codex の入口・導入・料金と利用制限・比較を1ページに。1回頼んだ仕事を、SIMY が会議やチャットから拾い、毎回 Codex に進めさせます。">
-<meta name="twitter:image" content="https://simy.one/ogp.png">
+<meta name="twitter:image" content="https://simy.one/ogp-codex.png">
 <meta name="twitter:image:alt" content="Codex を、1日の仕事に雇う。OpenAI Codex 活用ガイド｜SIMY">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="theme-color" content="#f6f5f4">
@@ -688,7 +695,8 @@ thead th.simy { background: var(--blue-deep); }
 .ind { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 22px; }
 .ind-card { padding: 18px 18px 14px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); }
 .ind-card h3 { margin: 0 0 10px; font-size: 1.04rem; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
-.ind-card h3 small { font-family: var(--mono); font-size: 0.68rem; font-weight: 400; color: var(--blue-deep); white-space: nowrap; }
+.ind-card h3 small { font-family: var(--mono); font-size: 0.68rem; font-weight: 400; color: var(--blue-deep); white-space: normal; }
+.ind-card h3 { flex-wrap: wrap; }
 .ind-rows { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
 .ind-rows li { display: grid; grid-template-columns: minmax(0, 1fr) 14px minmax(0, 1.4fr); gap: 6px; align-items: center; font-size: 0.86rem; line-height: 1.5; }
 .ind-rows li span:first-child { color: var(--ink-soft); }
@@ -703,7 +711,8 @@ thead th.simy { background: var(--blue-deep); }
   font-weight: 750; font-size: 1.02rem; line-height: 1.5;
 }
 .fold > summary::-webkit-details-marker { display: none; }
-.fold > summary::after { content: "+"; font-family: var(--mono); font-size: 1.1rem; text-align: right; }
+.fold > summary::after { content: "+"; font-family: var(--mono); font-size: 1.1rem; text-align: right; grid-column: 2; grid-row: 1; }
+.fold > summary small { grid-column: 1; }
 .fold[open] > summary::after { content: "−"; }
 .fold > summary small { display: block; margin-top: 2px; font-weight: 400; font-size: 0.82rem; color: var(--ink-soft); }
 .fold-body { padding: 0 18px 18px; font-size: 0.93rem; }
@@ -729,6 +738,32 @@ thead th.simy { background: var(--blue-deep); }
   .ind-rows li span:nth-child(2) { display: none; }
   .ind-rows li { padding: 6px 0; border-bottom: 1px dashed var(--line-soft); }
 }
+
+/* Next read */
+.next-read { margin-top: clamp(40px, 5vw, 64px); padding-top: 24px; border-top: 1px solid var(--ink); }
+.next-read h2 { font-size: 1.2rem; margin: 0 0 14px; }
+.next-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.next-grid a { display: block; padding: 14px 16px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); text-decoration: none; color: var(--ink); }
+.next-grid a:hover { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.next-grid b { display: block; font-size: 0.96rem; }
+.next-grid span { display: block; margin-top: 4px; font-size: 0.82rem; color: var(--ink-soft); }
+.next-all { display: inline-block; margin-top: 12px; font-weight: 700; color: var(--blue-deep); }
+@media (max-width: 760px) { .next-grid { grid-template-columns: minmax(0, 1fr); } }
+
+.lang-switch { position: relative; }
+.lang-switch > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 10px; border: 1px solid var(--ui-line); border-radius: 999px; background: var(--paper-light); font-size: 0.8rem; font-weight: 700; }
+.lang-switch > summary::-webkit-details-marker { display: none; }
+.lang-switch ul { position: absolute; right: 0; top: calc(100% + 6px); z-index: 30; margin: 0; padding: 6px; list-style: none; min-width: 150px; background: var(--paper-light); border: 1px solid var(--ink); border-radius: 10px; box-shadow: 4px 4px 0 var(--ink); }
+.lang-switch li a { display: block; padding: 8px 10px; border-radius: 6px; color: var(--ink); text-decoration: none; font-size: 0.88rem; }
+.lang-switch li a:hover, .lang-switch li a[aria-current] { background: var(--blue-soft); }
+@media (max-width: 960px) { .brand-sub { display: none; } .header-actions { gap: 4px; } .lang-switch > summary { padding: 0 8px; } }
+@media (max-width: 640px) { .lang-switch .ls-label { display: none; } .lang-switch > summary { padding: 0 10px; } }
+/* Typography: balanced headings, phrase-aware Japanese breaks, tighter mobile headings */
+h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
+:lang(ja) h1, :lang(ja) h2, :lang(ja) h3, :lang(ja) .eyebrow, :lang(ja) .scene b, :lang(ja) .lead { word-break: auto-phrase; }
+.lead, .intro, .scene p { text-wrap: pretty; }
+@media (max-width: 640px) { h2 { font-size: 1.32rem; line-height: 1.4; } .eyebrow { font-size: 0.72rem; } .closing h2 { font-size: 1.5rem; } }
+@media (max-width: 400px) { h2 { font-size: 1.22rem; } .closing h2 { font-size: 1.34rem; } }
 </style>
 <script type="application/ld+json">
 {
@@ -745,7 +780,7 @@ thead th.simy { background: var(--blue-deep); }
       "mainEntityOfPage": "https://simy.one/guides/codex.html",
       "image": {
         "@type": "ImageObject",
-        "url": "https://simy.one/ogp.png",
+        "url": "https://simy.one/ogp-codex.png",
         "width": 1200,
         "height": 630
       },
@@ -778,9 +813,9 @@ thead th.simy { background: var(--blue-deep); }
         }
       ],
       "citation": [
-        "https://openai.com/codex/",
+        "https://openai.com/ja-JP/codex/",
         "https://developers.openai.com/codex/",
-        "https://chatgpt.com/pricing/"
+        "https://chatgpt.com/ja-JP/pricing/"
       ]
     },
     {
@@ -795,6 +830,12 @@ thead th.simy { background: var(--blue-deep); }
         {
           "@type": "ListItem",
           "position": 2,
+          "name": "ガイド",
+          "item": "https://simy.one/guides/index.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
           "name": "OpenAI Codex 活用ガイド",
           "item": "https://simy.one/guides/codex.html"
         }
@@ -908,8 +949,10 @@ thead th.simy { background: var(--blue-deep); }
       <span class="brand-sub">OpenAI Codex 活用ガイド</span>
     </a>
     <nav class="header-actions" aria-label="アカウント">
+      <details class="lang-switch"><summary aria-label="Language: 日本語"><span aria-hidden="true">🌐</span> <span class="ls-label">日本語</span></summary><ul><li><a href="/guides/codex.html" hreflang="ja" lang="ja" aria-current="page">日本語</a></li><li><a href="/guides/en/codex.html" hreflang="en" lang="en">English</a></li><li><a href="/guides/zh-hans/codex.html" hreflang="zh-Hans" lang="zh-Hans">中文</a></li><li><a href="/guides/es/codex.html" hreflang="es" lang="es">Español</a></li><li><a href="/guides/fr/codex.html" hreflang="fr" lang="fr">Français</a></li><li><a href="/guides/hi/codex.html" hreflang="hi" lang="hi">हिन्दी</a></li></ul></details>
+      <a class="header-link" href="/download.html">ダウンロード</a>
       <a class="header-link" href="https://app.simy.one/login?lang=ja&amp;locale=ja&amp;region=jp">ログイン</a>
-      <a class="header-cta" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=codex_guide&amp;utm_content=header">仕事1件から試す</a>
+      <a class="header-cta" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=codex_guide&amp;utm_content=header">プランを選んではじめる</a>
     </nav>
   </div>
 </header>
@@ -920,6 +963,7 @@ thead th.simy { background: var(--blue-deep); }
       <div>
         <ol class="crumbs" aria-label="パンくずリスト">
           <li><a href="https://simy.one/">SIMY</a></li>
+          <li><a href="/guides/index.html">ガイド</a></li>
           <li aria-current="page">OpenAI Codex 活用ガイド</li>
         </ol>
         <p class="eyebrow">OpenAI Codex ユーザーのための活用ガイド</p>
@@ -928,9 +972,9 @@ thead th.simy { background: var(--blue-deep); }
           <span class="line hl">1日の仕事に雇う。</span>
           <span class="line">頼むのは、最初の1回だけ。</span>
         </h1>
-        <p class="lead">OpenAI Codex（ChatGPT の Codex）は、会社調査から提案資料、議事録、報告の下書きまで、頼めば1件を仕上げます。けれど「次に何を頼むか」を決め、進み具合を見に行くのは、翌日もあなたです。SIMY は会議やチャットから次の仕事を拾い、お使いの ChatGPT アカウントで Codex を動かし、判断だけを返します。</p>
+        <p class="lead">OpenAI Codexは1件を仕上げる。でも、次に何を頼むかを決めるのは翌日もあなた。SIMYが次の仕事を拾ってCodexを動かし、判断だけを返します。</p>
         <div class="cta-row">
-          <a class="btn btn-primary" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=codex_guide&amp;utm_content=hero">仕事1件から試す <span class="arrow" aria-hidden="true">↗</span></a>
+          <a class="btn btn-primary" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=codex_guide&amp;utm_content=hero">プランを選んではじめる <span class="arrow" aria-hidden="true">↗</span></a>
           <a class="btn btn-ghost" href="#connect">つなぎ方を見る <span class="arrow" aria-hidden="true">↓</span></a>
         </div>
         <ul class="hero-points">
@@ -1035,7 +1079,7 @@ thead th.simy { background: var(--blue-deep); }
       <!-- 02 -->
       <section class="sec" id="wish" aria-labelledby="h-wish">
         <span class="sec-label">02 / WHAT YOU REALLY WANTED</span>
-        <h2 id="h-wish">本当は、こうしたかった</h2>
+        <h2 id="h-wish">本当は、こうしたかった：Codexの仕事のあと</h2>
         <p class="intro">同じ Codex。同じ ChatGPT のプラン。1日の終わりに、こうなっていてほしかった。</p>
         <div class="scenes four">
           <div class="scene wish">
@@ -1126,7 +1170,7 @@ thead th.simy { background: var(--blue-deep); }
         <div class="connect">
           <ol class="connect-steps">
             <li><b>SIMY に登録し、ChatGPT アカウントを接続する</b><span>Codex が使える Plus 以上のプランが対象です。Codex の利用は、お使いのプランの範囲で行われます。</span></li>
-            <li class="key"><b>SIMY デスクトップアプリ（または CLI）を入れる</b><span>PC 上の Codex の会話履歴（既定で90日分）を読み、繰り返している仕事を「SIMY からの提案」として出します。本文はサーバーに保存しません。</span></li>
+            <li class="key"><b>SIMY デスクトップアプリ（または CLI）を入れる</b><span>PC 上の Codex の会話履歴（既定で90日分）を読み、繰り返している仕事を「SIMY からの提案」として出します。本文はサーバーに保存しません。 <a href="/download.html">ダウンロードはこちら</a></span></li>
             <li><b>iOS アプリで、判断だけ返す</b><span>提案を WorkFlow にすると、次からは SIMY が Codex に頼みます。判断待ちはスマホに届きます。</span></li>
           </ol>
           <div>
@@ -1235,17 +1279,18 @@ thead th.simy { background: var(--blue-deep); }
         <span class="sec-label">07 / START</span>
         <h2 id="h-start">はじめ方：Codex を1回使ったら、3ステップ</h2>
         <ol class="steps3">
-          <li><b>Codex のデスクトップアプリで、仕事を1件頼む</b><span>ChatGPT アカウントでログインし、日本語で頼む。会社調査でも、提案資料でも、議事録でも。</span></li>
+          <li><b>Codex のデスクトップアプリで、仕事を1件頼む</b><span>ChatGPT アカウントでログインし、日本語で頼む。会社調査でも、提案資料でも、議事録でも。 <a href="/download.html">ダウンロードはこちら</a></span></li>
           <li class="key"><b>SIMY に ChatGPT アカウントを接続する</b><span>Codex 側の設定はそのまま。<a href="#connect">つなぎ方</a>は上のとおりです。</span></li>
           <li><b>翌日、「SIMY からの提案」を見る</b><span>繰り返していた仕事が候補として届きます。WorkFlow にして、判断だけ返す。それだけです。</span></li>
         </ol>
+        <p class="note"><b>登録の流れ：</b>プランを選ぶ → メールで本人確認 → カードで決済。無料プランはありません。<a href="/?lang=ja#pricing">料金を見る</a>。PCで使うアプリは<a href="/download.html">ダウンロードページ</a>から。</p>
         <p class="note"><b>Codex をすでに使っている人は、</b>ステップ2だけ。接続して SIMY デスクトップアプリを入れると、これまでの会話履歴から提案が始まります。</p>
       </section>
 
       <!-- 08 -->
       <section class="sec" id="reference" aria-labelledby="h-reference">
         <span class="sec-label">08 / REFERENCE</span>
-        <h2 id="h-reference">OpenAI Codex の入口・導入・できること・料金と利用制限・比較・セキュリティ（詳しく知りたい人向け）</h2>
+        <h2 id="h-reference">OpenAI Codex の使い方・料金と利用制限・比較・安全性（詳しく知りたい人向け）</h2>
         <p class="intro">ここから下は、Codex 本体のことを確かめたいときに開いてください。SIMY との接続には、どれも影響しません。</p>
 
         <details class="fold">
@@ -1332,7 +1377,7 @@ thead th.simy { background: var(--blue-deep); }
             <h3>skills・MCP・サブエージェント</h3>
             <p><strong>skills</strong> は、手順と判断基準をまとめた再利用できる指示のセットです。「週報の作り方」「議事録の型」を skill にしておくと、毎回の説明を省けます。<strong>MCP（Model Context Protocol）</strong>は、外部のツールやデータを Codex につなぐ共通の規格で、プラグインにないサービス（Figma、社内 DB など）はここから足します。長いタスクは<strong>サブエージェント</strong>に分けて並行して進められます。</p>
             <h3>スケジュール・プランモード・レビュー</h3>
-            <p><strong>スケジュール</strong>は「毎朝9時に競合のニュースをまとめる」のように、時刻を起点にタスクを繰り返す機能です。<strong>プランモード</strong>は、実行の前に手順と影響範囲だけを出させて確認するモードです。<strong>コードレビュー</strong>は GitHub の PR を Codex に点検させる機能で、開発チーム向けです。</p>
+            <p><strong>スケジュール</strong>は「毎週金曜に、その週のメール・Slack・営業記録を突き合わせて、上司への週報を Slack 用に下書きする」のように、時刻を起点にタスクを繰り返す機能です。<strong>プランモード</strong>は、実行の前に手順と影響範囲だけを出させて確認するモードです。<strong>コードレビュー</strong>は GitHub の PR を Codex に点検させる機能で、開発チーム向けです。</p>
             <h3>コードを書かない仕事での使い方（例）</h3>
             <ul class="plain-list">
               <li><strong>会社調査：</strong>Chrome で相手企業のサイトとニュースを読み、要点と論点を Docs にまとめる。</li>
@@ -1341,7 +1386,7 @@ thead th.simy { background: var(--blue-deep); }
               <li><strong>日程調整：</strong>Calendar の空きから候補を3つ出し、招待メールを Gmail の下書きに保存する。</li>
               <li><strong>表の更新：</strong>Sheets の進捗表を読み、会議で決まった変更を反映し、差分を一覧にする。</li>
             </ul>
-            <p class="note"><b>SIMY との関係：</b>スケジュールは時刻が起点、SIMY は会議とチャットが起点です。Codex のプラグインで Gmail の下書きや Slides が作れるからこそ、SIMY は「いつ・何を・どこまで」を決める側に専念できます。</p>
+            <p class="note"><b>SIMY との関係：</b>スケジュールは時刻が起点で、それでも最初の指示を書くのはあなたです。SIMY は会議とチャットから起点を拾います。Codex のプラグインで Gmail の下書きや Slides が作れるからこそ、SIMY は「いつ・何を・どこまで」を決める側に専念できます。</p>
           </div>
         </details>
 
@@ -1370,8 +1415,8 @@ thead th.simy { background: var(--blue-deep); }
               <li><strong>使用量を確認する場所：</strong>デスクトップアプリとCLI では使用量メーター、ChatGPT の設定画面ではプランごとの利用状況が見られます。</li>
             </ul>
             <h3>枠を長持ちさせるコツ</h3>
-            <p>1回の指示に材料の場所と出来上がりの形を書く、長い会話は新しいスレッドに分ける、調査と作成を別のタスクにする。この3つで、同じ仕事でも消費が目に見えて減ります。SIMY が Codex に頼むときも、学んだ型をそのまま渡すため、やり直しの消費が少なくなります。</p>
-            <p class="small muted">プランと価格は 2026年10月1日に確認した OpenAI の公式情報です。上限の数値は変更されることがあるため、このページには書いていません。最新は <a href="https://chatgpt.com/pricing/" target="_blank" rel="noopener">ChatGPT の料金ページ</a>で確認してください。</p>
+            <p>1回の指示に材料の場所と出来上がりの形を書く、長い会話は新しいスレッドに分ける、調査と作成を別のタスクにする。この3つで、同じ仕事でも消費が目に見えて減ります。モデルは画家の腕前、推論レベルは絵にかける時間。使用量が気になるときは、推論レベルを下げます。SIMY が Codex に頼むときも、学んだ型をそのまま渡すため、やり直しの消費が少なくなります。</p>
+            <p class="small muted">プランと価格は 2026年10月1日に確認した OpenAI の公式情報です。上限の数値は変更されることがあるため、このページには書いていません。最新は <a href="https://chatgpt.com/ja-JP/pricing/" target="_blank" rel="noopener">ChatGPT の料金ページ</a>で確認してください。</p>
             <p class="note"><b>SIMY を使う場合：</b>Codex の利用は、お使いの ChatGPT プランの範囲で行われます。SIMY が Codex の利用料を上乗せすることはありません。SIMY 自体の料金は<a href="/?lang=ja#pricing">料金ページ</a>にあります。</p>
           </div>
         </details>
@@ -1474,12 +1519,17 @@ thead th.simy { background: var(--blue-deep); }
         <h2 id="h-sources">参考情報</h2>
         <p>OpenAI Codex の機能、入口、料金プラン、利用制限、セキュリティは、次の公式情報で確認しました（確認日：2026年10月1日）。Codex を使ったあとに残る仕事の場面は、日本の AI 活用系 YouTube チャンネルの解説動画を参考にしています。</p>
         <ul class="plain-list">
-          <li><a href="https://openai.com/codex/" target="_blank" rel="noopener">OpenAI Codex（製品ページ）</a></li>
+          <li><a href="https://openai.com/ja-JP/codex/" target="_blank" rel="noopener">OpenAI Codex（製品ページ）</a></li>
           <li><a href="https://developers.openai.com/codex/" target="_blank" rel="noopener">Codex Documentation（OpenAI Developers：CLI・IDE・Cloud・AGENTS.md・承認モード）</a></li>
-          <li><a href="https://chatgpt.com/pricing/" target="_blank" rel="noopener">ChatGPT 料金ページ（Codex が含まれるプラン）</a></li>
+          <li><a href="https://chatgpt.com/ja-JP/pricing/" target="_blank" rel="noopener">ChatGPT 料金ページ（Codex が含まれるプラン）</a></li>
         </ul>
         <p class="small muted">Claude Code、Cursor、GitHub Copilot の記述は各社の公式サイトを参考にした 2026年10月時点の概要で、詳細は各社のページで確認してください。</p>
       </section>
+      <aside class="next-read" aria-labelledby="h-next">
+        <h2 id="h-next">次に読む</h2>
+        <div class="next-grid"><a href="/guides/claude.html"><b>Claude 活用ガイド</b><span>回答のあとに残る仕事を、Claudeで頼み直さない</span></a><a href="/guides/chatgpt.html"><b>ChatGPT 活用ガイド</b><span>貼り直しと仕上げを、毎回やらない</span></a><a href="/guides/cowork.html"><b>Claude Cowork 活用ガイド</b><span>机の上の次に残る、会議の宿題</span></a></div>
+        <a class="next-all" href="/guides/index.html">ガイド一覧へ →</a>
+      </aside>
     </article>
   </div>
 
@@ -1487,11 +1537,12 @@ thead th.simy { background: var(--blue-deep); }
     <div class="wrap closing-inner">
       <div>
         <h2 id="h-closing">Codex に、明日も同じ指示を打つ前に。<br>SIMY に1回だけ頼む。</h2>
-        <p>ChatGPT アカウントを接続するだけで、仕事1件から試せます。SIMY が返すのは判断だけ。商談と提案は、あなたの腕の見せ所のままです。</p>
+        <p>ChatGPT アカウントを接続するだけで、次の仕事から使えます。SIMY が返すのは判断だけ。商談と提案は、あなたの腕の見せ所のままです。</p>
       </div>
       <div class="cta-row">
-        <a class="btn btn-primary" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=codex_guide&amp;utm_content=closing">仕事1件から試す <span class="arrow" aria-hidden="true">↗</span></a>
+        <a class="btn btn-primary" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=codex_guide&amp;utm_content=closing">プランを選んではじめる <span class="arrow" aria-hidden="true">↗</span></a>
         <a class="btn btn-ghost" href="mailto:sales@simy.one?subject=Codex%E9%80%A3%E6%90%BA%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%E7%9B%B8%E8%AB%87%E3%81%97%E3%81%9F%E3%81%84">相談する</a>
+        <a class="btn btn-ghost" href="/download.html">アプリをダウンロード <span class="arrow" aria-hidden="true">↓</span></a>
       </div>
     </div>
   </section>
@@ -1501,16 +1552,21 @@ thead th.simy { background: var(--blue-deep); }
   <div class="wrap">
     <ul class="footer-links">
       <li><a href="/?lang=ja">ホーム</a></li>
-      <li><a href="/?lang=ja#how-it-works">仕組み</a></li>
       <li><a href="/?lang=ja#pricing">料金</a></li>
       <li><a href="/integrations.html">連携</a></li>
-      <li><a href="/guides/plaud.html">PLAUD活用ガイド</a></li>
-      <li><a href="/guides/chatgpt.html">ChatGPT活用ガイド</a></li>
-      <li><a href="/guides/claude.html">Claude活用ガイド</a></li>
-      <li><a href="/guides/cowork.html">Cowork活用ガイド</a></li>
-      <li><a href="/guides/meeting-notes.html">AI議事録ガイド</a></li>
+      <li><a href="/download.html">ダウンロード</a></li>
+      <li><a href="/guides/index.html">ガイド一覧</a></li>
+      <li><a href="/guides/claude.html">Claude</a></li>
+      <li><a href="/guides/codex.html" aria-current="page">Codex</a></li>
+      <li><a href="/guides/cowork.html">Cowork</a></li>
+      <li><a href="/guides/chatgpt.html">ChatGPT</a></li>
+      <li><a href="/guides/plaud.html">PLAUD</a></li>
+      <li><a href="/guides/meeting-notes.html">AI議事録</a></li>
+      <li><a href="/guides/china-llm.html">中国のAI比較</a></li>
+      <li><a href="/guides/deepseek.html">DeepSeek</a></li>
+      <li><a href="/guides/qwen.html">Qwen</a></li>
+      <li><a href="/guides/qwen-local.html">Qwenを自社サーバーで</a></li>
       <li><a href="/security.html">セキュリティ</a></li>
-      <li><a href="/about.html">会社概要</a></li>
       <li><a href="/privacy.html">プライバシーポリシー</a></li>
       <li><a href="/terms.html">利用規約</a></li>
     </ul>
@@ -1544,5 +1600,6 @@ thead th.simy { background: var(--blue-deep); }
   update();
 })();
 </script>
+<script src="/analytics.js" defer></script>
 </body>
 </html>
