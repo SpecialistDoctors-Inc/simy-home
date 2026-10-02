@@ -26,7 +26,7 @@ test("homepage cache-busts the current home assets", () => {
   assert.match(homeHtml, /home-locales\.js\?v=20261001-china-guides-1/);
   assert.match(homeHtml, /home-i18n\.js\?v=20261001-china-guides-1/);
   assert.match(homeHtml, /pricing-catalog\.js\?v=20260907-industry-realtime-pricing-3/);
-  assert.match(homeHtml, /home\.js\?v=20260915-workflow-terminology-1/);
+  assert.match(homeHtml, /home\.js\?v=20261002-production-plan-handoff-1/);
 });
 
 test("pricing call to action opens the signup plan selection page", () => {
@@ -45,14 +45,14 @@ test("pages loading the demo bundle cache-bust its workflow terminology", () => 
       const source = fs.readFileSync(path.join(repoRoot, directory, page), "utf8");
       assert.match(
         source,
-        /\/assets\/index-DnVveaIK\.js\?v=20260915-workflow-terminology-1/,
+        /\/assets\/index-DnVveaIK\.js\?v=20261002-production-plan-handoff-1/,
         `${directory}/${page} must load the updated workflow terminology bundle`
       );
     }
   }
 
   const publishedBackup = fs.readFileSync(path.join(repoRoot, "site/index.html.bak"), "utf8");
-  assert.match(publishedBackup, /\/assets\/index-DnVveaIK\.js\?v=20260915-workflow-terminology-1/);
+  assert.match(publishedBackup, /\/assets\/index-DnVveaIK\.js\?v=20261002-production-plan-handoff-1/);
 });
 
 test("Realtime add-on keeps the currency symbol in the price line", () => {
