@@ -44,7 +44,7 @@ def footer(code, current):
     g = lambda n: page_path(n, code)
     items = [
         (f"/?lang={hl}", L[0]), (f"/?lang={hl}#pricing", L[1]), ("/integrations.html", L[2]), (g("download"), L[3]), (g("index"), L[4]),
-        (g("claude"), "Claude"), (g("codex"), "Codex"), (g("cowork"), "Cowork"), (g("chatgpt"), "ChatGPT"), (g("plaud"), "PLAUD"),
+        (g("claude"), "Claude"), (g("codex"), "Codex"), (g("cowork"), "Cowork"), (g("chatgpt"), "ChatGPT"), (g("plaud"), "PLAUD"), (g("notta"), "Notta"),
         (g("meeting-notes"), L[5]), (g("china-llm"), L[6]), (g("deepseek"), "DeepSeek"), (g("qwen"), "Qwen"), (g("qwen-local"), L[7]),
         ("/security.html", L[8]), (f"/privacy.html{q}", L[9]), (f"/terms.html{q}", L[10]),
     ]
