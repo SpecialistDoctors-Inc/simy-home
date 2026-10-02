@@ -98,9 +98,10 @@
     "Describe the outcome. SIMY selects the Workflow.": "成果を伝える。SIMYがワークフローを選ぶ。",
     "Autorun moves it forward.": "その先は、Autorunが進める。",
 
+    "AI tools": "AIツール",
     "Codex, connected": "Codexと連携",
-    "Keep working in Codex. Let SIMY carry the work forward.": "Codexで頼む。その先の仕事はSIMYが動かす。",
-    "Connect the ChatGPT account you already use. Through Codex App Server, SIMY starts and continues Codex sessions for you; usage stays with your ChatGPT plan.": "いつものChatGPTアカウントを接続するだけ。SIMYはCodex App Server経由でCodexセッションを開始・継続し、利用量は現在のChatGPTプランに従います。",
+    "Ask in Codex, Claude, or Copilot. SIMY moves the work forward.": "Codex・Claude・Copilotで頼む。その先の仕事はSIMYが動かす。",
+    "For Codex, connect the ChatGPT account you already use. Through Codex App Server, SIMY starts and continues Codex sessions for you; usage stays with your ChatGPT plan.": "Codexの場合は、いつものChatGPTアカウントを接続するだけ。SIMYはCodex App Server経由でCodexセッションを開始・継続し、利用量は現在のChatGPTプランに従います。",
     "01 / CONNECT": "01 / 接続",
     "Your ChatGPT account": "あなたのChatGPTアカウント",
     "Connect the account and ChatGPT plan you already use.": "いつも使っているアカウントとChatGPTプランを接続します。",
