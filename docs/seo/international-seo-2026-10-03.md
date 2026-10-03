@@ -55,7 +55,7 @@ node --test tests/*.test.cjs
 
 ## 公開・計測・残る制約
 
-本作業はローカル実装まで。コミット・push・PR作成・デプロイは未実施。公開前に差分と証拠を確認し、まずdevで実配信の200応答、言語転送、認証、signup導線を確認する。devのCloudFront FunctionはTerraform管理なので、devへHTMLだけをpushしてもエッジ転送の更新にはならない。
+当初のローカル実装に続き、ユーザーから本番反映の明示的な承認を受領。最新mainのガイド・料金・連携一覧の更新を保持して統合し、PRのCI後に通常のmainマージ・本番デプロイを行う。devへの先行配信は未実施。devのCloudFront FunctionはTerraform管理なので、devへHTMLだけをpushしてもエッジ転送の更新にはならない。
 
 prod公開時はHTMLとCloudFront Functionの両方が必要。Function更新のcontinue-on-errorを外し、失敗時はデプロイを失敗として扱う。加えて実URLへのHTTP確認を必須とする。Terraform適用は行っていない。認証・S3バケット・IAM権限への変更はない。
 
@@ -79,3 +79,12 @@ prod公開時はHTMLとCloudFront Functionの両方が必要。Function更新の
 見出し修正後、ページ先頭も全6言語 × 幅1440/720/390pxで再検証（`hero-checks.json`と`*-hero-*.jpg`）。H1の矩形はhero領域内に収まり、横はみ出しなし。ヒンディー語FAQも新しい行間で撮り直した。Nodeテストはクエリの予約語キー対策を含め55件成功。`terraform fmt -check`、JS/Pythonの構文確認、ワークフローYAML解析、`git diff --check`も成功。Terraform plan/applyとGitHub上のCIは未実行。
 
 独立レビュー: 別セッションの`gpt-5.5 / xhigh`で実施。1回目の4指摘を修正し、2回目のフォローアップレビューは **No findings**。レビュー記録は`artifacts/international-seo/independent-review-{1,2}.txt`。公開前のローカル実装・検証は完了。本番への反映と検索順位への効果は未検証。
+
+
+## 本番統合時の追加検証
+
+最新main（309480d）の変更を統合。料金表、Codex/Claude/Copilot表記、連携一覧、6言語ガイドおよびNotta導線を維持して5言語のホームを再生成。生成HTMLのガイド・ダウンロードリンクも各言語の配信URLへ合わせた。全1,110件のNodeテスト、再生成一致、SEO検査が成功。
+
+統合前のChrome Extensionでの全6言語×3幅の証拠は上記の通り。統合後はChrome接続が利用できず、内蔵ブラウザーで日本語の構造・翻訳・料金リンクと英語1440pxのはみ出しなしを確認した後、ブラウザー操作がタイムアウト。統合後のモバイル・全言語再撮影は未完了であり、以前のスクリーンショットを最新main統合後の証拠とは扱わない。本番ではHTTPによるHTML・言語URL・旧URLの301・サイトマップ・静的リソースの配信を確認する。
+
+統合後の独立レビュー3回目では今回の変更による回帰なし。既存の英語ホームHTML内リンクが日本語ガイド/ダウンロードを指すP2指摘を受け、英語の静的リンクを修正。生成時に日本語を含む各言語へ変換し、6言語すべての生HTMLリンクを検査に追加。修正後も1,110件成功。

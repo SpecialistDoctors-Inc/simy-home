@@ -76,6 +76,14 @@ for locale in home.LOCALES:
     for lang,a in options.items():
         assert a['href'] == home.home_path(lang), filename
         assert ('aria-current' in a) == (lang == locale), filename
+    # Search crawlers must reach the matching language without a JS rewrite.
+    code = {'en':'en', 'hi':'hi', 'es':'es', 'fr':'fr', 'zh-Hans':'zh-hans'}.get(locale)
+    guide_prefix = f'/guides/{code}/' if code else '/guides/'
+    download_path = f'/download/{code}.html' if code else '/download.html'
+    guide_links = [a['href'] for a in page.attrs('a') if a.get('href', '').startswith('/guides/')]
+    download_links = [a['href'] for a in page.attrs('a') if a.get('href', '').startswith('/download')]
+    assert guide_links and all(h.startswith(guide_prefix) and '/' not in h[len(guide_prefix):] for h in guide_links), filename
+    assert download_links and all(h == download_path for h in download_links), filename
     # Real localized answers must exist in raw HTML, not just in a JS dictionary.
     for key in ['AI workflow automation, explained','How does SIMY use AI agents to automate workflows?',
                 'What happens after a meeting or customer conversation?','How do I stay in control of automated work?']:

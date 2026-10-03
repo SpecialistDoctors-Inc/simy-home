@@ -621,6 +621,7 @@ html[lang="ja"] .hero h1 span {
 }
 
 .hero-lead {
+  white-space: pre-line;
   width: fit-content;
   max-width: 31ch;
   margin-top: clamp(2rem, 4vw, 3.25rem);
@@ -2514,6 +2515,81 @@ html[lang="ja"] .section-intro h2 {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.apps-more {
+  min-width: 0;
+}
+
+.apps-more > summary {
+  display: flex;
+  min-height: 3.5rem;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.8rem 1.1rem;
+  border: 1px solid rgba(255, 255, 255, 0.38);
+  border-radius: var(--radius-md);
+  color: #fff;
+  cursor: pointer;
+  font-weight: 750;
+  list-style: none;
+}
+
+.apps-more > summary::-webkit-details-marker {
+  display: none;
+}
+
+.apps-more > summary:hover,
+.apps-more[open] > summary {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.apps-more > summary:focus-visible {
+  outline: 3px solid var(--lime);
+  outline-offset: 3px;
+}
+
+.apps-more > summary small {
+  margin-left: auto;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.apps-more > summary::after {
+  content: "+";
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.apps-more[open] > summary::after {
+  content: "−";
+}
+
+.apps-more-content {
+  display: grid;
+  gap: 1.5rem;
+  padding-top: 1.5rem;
+}
+
+.apps-more .apps-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.apps-more-content > .apps-group:first-child .apps-grid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.apps-more .app-tile {
+  min-height: 6.5rem;
+}
+
+.app-tile-planned {
+  background: #f2f2f1;
+}
+
+.app-tile-planned .app-badge {
+  color: #555;
+}
+
 .app-tile {
   display: grid;
   min-width: 0;
@@ -2614,6 +2690,31 @@ html[lang="ja"] .section-intro h2 {
 .app-box .app-badge {
   background: #e8f3ff;
   color: #0b68d8;
+}
+
+.app-line .app-badge {
+  background: #e5f8e8;
+  color: #087d2c;
+}
+
+.app-x .app-badge {
+  background: #161616;
+  color: #fff;
+}
+
+.app-webex .app-badge {
+  background: #e6f6f3;
+  color: #167567;
+}
+
+.app-datadog .app-badge {
+  background: #f0e9fa;
+  color: #6b3a9b;
+}
+
+.app-plaud .app-badge {
+  background: #fff0e7;
+  color: #b85827;
 }
 
 .apps-bridge {
@@ -3483,6 +3584,27 @@ html[lang="ja"] .pricing-intro > div > p {
 .pricing-total[hidden],
 .pricing-tax-included-price[hidden] {
   display: none;
+}
+
+.pricing-plan-link {
+  display: inline-flex;
+  min-height: 2.7rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 0.8rem;
+  padding: 0.55rem 0.8rem;
+  border-radius: 0.3rem;
+  background: var(--ink);
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.pricing-plan-link:focus-visible {
+  outline: 2px solid var(--blue-deep);
+  outline-offset: 3px;
 }
 
 .pricing-badge-stack {
@@ -4921,6 +5043,18 @@ html[lang="zh-Hans"] .storage-dialog-header h2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .apps-more .apps-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .apps-more-content > .apps-group:first-child .apps-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .apps-more-content > .apps-group:first-child .app-tile:last-child {
+    grid-column: span 2;
+  }
+
   .apps-grid-ai {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -5205,7 +5339,7 @@ html[lang="zh-Hans"] .storage-dialog-header h2 {
 
   .hero-lead {
     max-width: 100%;
-    font-size: 1.5rem;
+    font-size: clamp(1.2rem, 6vw, 1.5rem);
   }
 
   .hero-actions,
@@ -5281,6 +5415,30 @@ html[lang="zh-Hans"] .storage-dialog-header h2 {
 
   .apps-grid-ai {
     grid-template-columns: 1fr;
+  }
+
+  .apps-more .apps-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .apps-more-content > .apps-group:first-child .apps-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .apps-more-content > .apps-group:first-child .app-tile:last-child {
+    grid-column: auto;
+  }
+
+  .apps-more > summary {
+    flex-wrap: wrap;
+  }
+
+  .apps-more > summary small {
+    margin-left: 0;
+  }
+
+  .apps-more > summary::after {
+    margin-left: auto;
   }
 
   .app-tile {
@@ -5840,4 +5998,29 @@ html[lang="hi"] .section-heading,
 html[lang="hi"] .hero-lead {
   line-height: 1.3;
   letter-spacing: 0;
+}
+
+/* Field voices, founder note and tool entry */
+.voice-grid { list-style: none; margin: 32px 0 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+.voice-card { display: flex; flex-direction: column; justify-content: space-between; gap: 14px; padding: 20px 18px; background: var(--paper-light); border: 1px solid var(--ink); border-radius: 12px; }
+.voice-card p { margin: 0; font-size: 1rem; line-height: 1.6; font-weight: 700; }
+.voice-card span { font-size: 0.78rem; color: var(--ink-soft); }
+.founder-note { margin: 28px 0 0; padding: 24px 26px; background: var(--ink); color: #fff; border-radius: 14px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 18px; align-items: end; }
+.founder-note blockquote { margin: 0; }
+.founder-note blockquote p { margin: 0; font-size: clamp(1.1rem, 2vw, 1.45rem); line-height: 1.5; font-weight: 800; }
+.founder-note blockquote p + p { margin-top: 8px; font-size: 1rem; font-weight: 500; color: rgba(255,255,255,0.8); }
+.founder-note figcaption a { color: #fff; font-size: 0.86rem; text-underline-offset: 3px; }
+.tool-entry { margin-top: 28px; }
+.tool-entry-label { margin: 0 0 10px; font-weight: 800; }
+.tool-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.tool-chips a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px; border: 1px solid var(--ink); border-radius: 999px; background: var(--paper-light); color: var(--ink); text-decoration: none; font-weight: 700; }
+.tool-chips a:hover { background: var(--blue-soft); }
+@media (max-width: 1100px) { .voice-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .voice-grid { grid-template-columns: minmax(0, 1fr); } .founder-note { grid-template-columns: minmax(0, 1fr); } }
+/* Header with 9 nav items: keep brand tag and nav from colliding */
+@media (min-width: 1440px) {
+  .nav-frame > .brand .brand-tag { display: none; }
+}
+@media (min-width: 1440px) and (max-width: 1799px) {
+  .desktop-nav a { padding-inline: 0.75rem; }
 }

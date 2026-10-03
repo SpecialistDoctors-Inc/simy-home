@@ -1,0 +1,1639 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="google-site-verification" content="1n6_tVJZRZlQax8luEg5VsuG7gg-kCEam5VFiWIJs3U">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What Is Doubao (豆包)? ByteDance&#x27;s AI, API and Safety | SIMY</title>
+<meta name="description" content="What is Doubao (豆包)? ByteDance&#x27;s AI: pronunciation, Seed models, the BytePlus API, use outside China and Taiwan&#x27;s security review, as of October 2026.">
+<link rel="canonical" href="https://simy.one/guides/en/doubao.html">
+<link rel="alternate" hreflang="ja" href="https://simy.one/guides/doubao.html">
+<link rel="alternate" hreflang="en" href="https://simy.one/guides/en/doubao.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://simy.one/guides/zh-hans/doubao.html">
+<link rel="alternate" hreflang="es" href="https://simy.one/guides/es/doubao.html">
+<link rel="alternate" hreflang="fr" href="https://simy.one/guides/fr/doubao.html">
+<link rel="alternate" hreflang="hi" href="https://simy.one/guides/hi/doubao.html">
+<link rel="alternate" hreflang="x-default" href="https://simy.one/guides/en/doubao.html">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://simy.one/guides/en/doubao.html">
+<meta property="og:title" content="Don&#x27;t let Doubao&#x27;s answer end in the chat. | SIMY">
+<meta property="og:description" content="What is Doubao? ByteDance&#x27;s AI: how to use it, Seed models, the API and safety. After Doubao answers, SIMY picks up owners, deadlines, replies and updates from meetings and chat.">
+<meta property="og:site_name" content="SIMY">
+<meta property="og:image" content="https://simy.one/ogp.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="SIMY">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-10-01">
+<meta property="article:modified_time" content="2026-10-01">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Don&#x27;t let Doubao&#x27;s answer end in the chat. | SIMY">
+<meta name="twitter:description" content="What is Doubao? ByteDance&#x27;s AI: how to use it, Seed models, the API and safety. After Doubao answers, SIMY picks up owners, deadlines, replies and updates from meetings and chat.">
+<meta name="twitter:image" content="https://simy.one/ogp.png">
+<meta name="twitter:image:alt" content="SIMY">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#f6f5f4">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png">
+<style>
+:root {
+  --paper: #f6f5f4;
+  --paper-light: #ffffff;
+  --ink: #111111;
+  --ink-soft: #5d5b58;
+  --ink-faint: #6b6865;
+  --line-soft: rgba(17, 17, 17, 0.14);
+  --ui-line: #d9dde2;
+  --blue: #3273d7;
+  --blue-deep: #235db8;
+  --blue-soft: #eef5ff;
+  --mint: #92edce;
+  --coral-soft: #fff1ec;
+  --yellow: #ffd166;
+  --radius: 0.8rem;
+  --radius-sm: 0.5rem;
+  --sans: "Helvetica Neue", Arial, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", Meiryo, sans-serif;
+  --mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  --page: 1180px;
+  --gutter: clamp(16px, 4vw, 40px);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.85;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+a { color: inherit; }
+a:focus-visible, summary:focus-visible {
+  outline: 3px solid rgba(50, 115, 215, 0.45);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+img { max-width: 100%; display: block; }
+
+.wrap { width: min(var(--page), 100% - var(--gutter) * 2); margin: 0 auto; }
+
+.skip {
+  position: absolute; left: -9999px; top: 8px;
+  background: var(--ink); color: #fff; padding: 8px 14px; border-radius: 6px; z-index: 100;
+}
+.skip:focus { left: 8px; }
+
+/* ---------- Header ---------- */
+.site-header {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(246, 245, 244, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--ink);
+}
+.header-inner {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  min-height: 64px;
+}
+.brand {
+  display: inline-flex; align-items: center; gap: 10px;
+  text-decoration: none; font-weight: 800; letter-spacing: 0.01em;
+}
+.brand img { width: 28px; height: 28px; border-radius: 7px; }
+.brand-sub {
+  padding-left: 12px; margin-left: 2px;
+  border-left: 1px solid var(--line-soft);
+  color: var(--ink-soft); font-size: 0.8rem; font-weight: 500;
+}
+.header-actions { display: flex; align-items: center; gap: 6px; }
+.header-link {
+  padding: 8px 10px; font-size: 0.86rem; font-weight: 600; text-decoration: none; color: var(--ink);
+}
+.header-link:hover { color: var(--blue-deep); }
+.header-cta {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px;
+  background: var(--ink); color: #fff; text-decoration: none;
+  font-size: 0.86rem; font-weight: 700; border-radius: 6px;
+  transition: background 0.2s;
+}
+.header-cta:hover { background: var(--blue-deep); }
+
+/* ---------- Hero ---------- */
+.hero {
+  position: relative;
+  border-bottom: 1px solid var(--ink);
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(rgba(17, 17, 17, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(17, 17, 17, 0.045) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-position: -1px -1px;
+}
+.hero-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+  gap: clamp(32px, 5vw, 72px);
+  align-items: center;
+  padding: clamp(40px, 7vw, 96px) 0 clamp(48px, 7vw, 104px);
+}
+
+.crumbs {
+  display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 22px; padding: 0; list-style: none;
+  font-size: 0.78rem; color: var(--ink-soft);
+}
+.crumbs li + li::before { content: "/"; margin-right: 6px; color: var(--ink-faint); }
+.crumbs a { text-decoration: none; }
+.crumbs a:hover { text-decoration: underline; }
+
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin: 0 0 22px; padding: 6px 12px;
+  background: var(--paper-light); border: 1px solid var(--ink); border-radius: 999px;
+  font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.04em;
+}
+.eyebrow::before {
+  content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--blue);
+  box-shadow: 0 0 0 3px var(--blue-soft);
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2rem, 4.6vw, 3.9rem);
+  line-height: 1.16;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+h1 .line { display: block; }
+h1 .hl { color: var(--blue); }
+
+.lead {
+  max-width: 36em;
+  margin: 26px 0 0;
+  font-size: clamp(1rem, 1.35vw, 1.1rem);
+  line-height: 1.95;
+  color: #2c2b29;
+}
+
+.cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 52px; padding: 0 22px;
+  border: 1px solid var(--ink); border-radius: 8px;
+  font-weight: 700; font-size: 0.98rem; text-decoration: none;
+  transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+}
+.btn-primary {
+  background: var(--blue-deep); color: #fff; border-color: var(--ink);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.btn-primary:hover { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 var(--ink); }
+.btn-ghost { background: var(--paper-light); color: var(--ink); }
+.btn-ghost:hover { background: var(--blue-soft); }
+.btn .arrow { font-family: var(--mono); font-size: 0.9em; }
+
+.hero-points {
+  display: flex; flex-wrap: wrap; gap: 8px 18px;
+  margin: 26px 0 0; padding: 0; list-style: none;
+  font-size: 0.84rem; color: var(--ink-soft);
+}
+.hero-points li { display: inline-flex; align-items: center; gap: 7px; }
+.hero-points li::before {
+  content: ""; width: 14px; height: 14px; flex: none;
+  border: 1px solid var(--ink); border-radius: 50%;
+  background: var(--mint) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath d='M3.5 7.2 6 9.5l4.5-5' fill='none' stroke='%23111' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 12px no-repeat;
+}
+
+/* Relay card: the signature visual */
+.relay {
+  position: relative;
+  background: var(--paper-light);
+  border: 1px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: 8px 8px 0 var(--ink);
+  overflow: hidden;
+}
+.relay-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--ink);
+  background: var(--ink); color: #fff;
+  font-family: var(--mono); font-size: 0.78rem;
+}
+.rec { display: inline-flex; align-items: center; gap: 8px; min-width: 0; }
+.rec-dot {
+  width: 9px; height: 9px; border-radius: 50%; background: #ff865f; flex: none;
+  animation: rec 1.6s ease-in-out infinite;
+}
+.rec-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.relay-meta { display: flex; flex-wrap: wrap; gap: 6px; padding: 12px 18px 4px; }
+.chip {
+  display: inline-flex; align-items: center; padding: 2px 9px;
+  border: 1px solid var(--line-soft); border-radius: 999px;
+  font-family: var(--mono); font-size: 0.7rem; color: var(--ink-soft); background: var(--paper);
+}
+.relay-steps { list-style: none; margin: 0; padding: 8px 10px 12px; }
+.step {
+  display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; align-items: center; gap: 10px;
+  padding: 9px 8px;
+  border-radius: 8px;
+  opacity: 0; transform: translateY(6px);
+  animation: rise 0.5s cubic-bezier(.2,.7,.2,1) forwards;
+}
+.step .no { font-family: var(--mono); font-size: 0.72rem; color: var(--ink-faint); }
+.step .what { font-size: 0.9rem; font-weight: 650; line-height: 1.45; }
+.step .what small { display: block; font-weight: 400; font-size: 0.74rem; color: var(--ink-soft); }
+.status {
+  font-family: var(--mono); font-size: 0.68rem; white-space: nowrap;
+  padding: 3px 8px; border-radius: 999px; border: 1px solid var(--ink);
+}
+.s-done { background: var(--paper); }
+.s-plaud .status { border-color: var(--line-soft); color: var(--ink-soft); }
+.s-run { background: var(--blue-soft); }
+.s-run .status { background: var(--blue-deep); color: #fff; }
+.s-next .status { background: var(--paper-light); }
+.s-you { background: #fff8e3; }
+.s-you .status { background: var(--yellow); }
+.bar {
+  grid-column: 2 / 4; height: 4px; margin-top: 6px;
+  background: rgba(50, 115, 215, 0.16); border-radius: 4px; overflow: hidden;
+}
+.bar::after {
+  content: ""; display: block; height: 100%; width: 62%;
+  background: var(--blue); border-radius: 4px;
+  animation: progress 2.8s ease-in-out infinite alternate;
+}
+.handoff {
+  display: flex; align-items: center; gap: 10px;
+  margin: 6px 4px; padding: 8px 0;
+  font-family: var(--mono); font-size: 0.72rem; color: var(--blue-deep);
+  opacity: 0; animation: rise 0.5s ease forwards;
+}
+.handoff::before, .handoff::after { content: ""; flex: 1; border-top: 1.5px dashed var(--blue); }
+.relay-foot {
+  padding: 12px 18px 14px;
+  border-top: 1px solid var(--line-soft);
+  font-size: 0.82rem; color: var(--ink-soft);
+}
+.relay-foot strong { color: var(--ink); }
+.caption { margin: 12px 4px 0; font-size: 0.74rem; color: var(--ink-faint); text-align: right; }
+
+.relay-steps > :nth-child(1) { animation-delay: 0.10s; }
+.relay-steps > :nth-child(2) { animation-delay: 0.22s; }
+.relay-steps > :nth-child(3) { animation-delay: 0.34s; }
+.relay-steps > :nth-child(4) { animation-delay: 0.62s; }
+.relay-steps > :nth-child(5) { animation-delay: 0.86s; }
+.relay-steps > :nth-child(6) { animation-delay: 1.02s; }
+.relay-steps > :nth-child(7) { animation-delay: 1.18s; }
+.relay-steps > :nth-child(8) { animation-delay: 1.34s; }
+
+@keyframes rise { to { opacity: 1; transform: none; } }
+@keyframes rec { 50% { opacity: 0.25; } }
+@keyframes progress { from { width: 34%; } to { width: 88%; } }
+
+/* ---------- Guide layout ---------- */
+.guide {
+  display: grid;
+  grid-template-columns: 232px minmax(0, 1fr);
+  gap: clamp(32px, 5vw, 72px);
+  padding: clamp(40px, 6vw, 80px) 0 clamp(56px, 7vw, 96px);
+}
+.toc { position: sticky; top: 92px; align-self: start; font-size: 0.84rem; }
+.toc-title {
+  margin: 0 0 12px; font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.08em;
+  color: var(--ink-soft);
+}
+.toc ol { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--line-soft); }
+.toc a {
+  display: grid; grid-template-columns: 26px 1fr; gap: 4px;
+  margin-left: -1px; padding: 7px 0 7px 12px;
+  border-left: 2px solid transparent;
+  color: var(--ink-soft); text-decoration: none; line-height: 1.5;
+}
+.toc a span { font-family: var(--mono); font-size: 0.72rem; padding-top: 1px; }
+.toc a:hover { color: var(--ink); }
+.toc a.is-active { color: var(--ink); font-weight: 700; border-left-color: var(--blue); }
+.toc-mobile { display: none; }
+
+.article { min-width: 0; max-width: 800px; }
+.byline {
+  display: flex; flex-wrap: wrap; gap: 4px 16px;
+  margin: 0 0 8px; font-family: var(--mono); font-size: 0.74rem; color: var(--ink-faint);
+}
+
+.sec { padding-top: clamp(40px, 5vw, 64px); }
+.sec:first-of-type { padding-top: 0; }
+.sec-label {
+  display: inline-block; margin: 0 0 12px;
+  font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.06em; color: var(--blue-deep);
+}
+h2 {
+  margin: 0 0 18px;
+  font-size: clamp(1.5rem, 2.8vw, 2.1rem);
+  line-height: 1.35; font-weight: 800; letter-spacing: -0.01em;
+}
+h3 { margin: 32px 0 12px; font-size: 1.15rem; line-height: 1.5; font-weight: 750; }
+.article p { margin: 0 0 16px; }
+.article p a, .plain-list a, .faq a { color: var(--blue-deep); text-decoration: underline; text-underline-offset: 3px; }
+.muted { color: var(--ink-soft); }
+.small { font-size: 0.84rem; }
+
+/* Checklist */
+.checklist { list-style: none; margin: 24px 0 0; padding: 0; display: grid; gap: 12px; }
+.checklist li {
+  display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 16px;
+  padding: 18px 20px;
+  background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.checklist .num {
+  display: grid; place-items: center; width: 44px; height: 44px;
+  border: 1px solid var(--ink); border-radius: 50%;
+  font-family: var(--mono); font-weight: 700;
+}
+.checklist li.hook { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.checklist li.hook .num { background: var(--blue-deep); color: #fff; }
+.checklist h3 { margin: 2px 0 4px; font-size: 1.02rem; }
+.checklist p { margin: 0; font-size: 0.93rem; color: #34322f; }
+
+/* Feature grid */
+.features { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+.feature {
+  padding: 20px; background: var(--paper-light);
+  border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.feature .tag {
+  display: inline-block; margin-bottom: 8px;
+  font-family: var(--mono); font-size: 0.7rem; color: var(--ink-soft);
+}
+.feature h3 { margin: 0 0 6px; font-size: 1.04rem; }
+.feature p { margin: 0; font-size: 0.92rem; color: #34322f; }
+.feature.wide { grid-column: 1 / -1; }
+
+/* Gap section */
+.split { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+.split-col { padding: 22px; border-radius: var(--radius); border: 1px solid var(--ink); }
+.split-col h3 { margin: 0 0 12px; font-size: 1rem; display: flex; align-items: center; gap: 8px; }
+.split-col ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.split-col li { position: relative; padding-left: 22px; font-size: 0.94rem; line-height: 1.6; }
+.split-col li::before { position: absolute; left: 0; top: 0; font-family: var(--mono); }
+.col-plaud { background: var(--paper-light); }
+.col-plaud li { color: var(--ink-soft); }
+.col-plaud li::before { content: "✓"; color: #1b7a58; }
+.col-left { background: var(--coral-soft); box-shadow: 4px 4px 0 var(--ink); }
+.col-left li::before { content: "□"; color: var(--ink); }
+.who {
+  font-family: var(--mono); font-size: 0.68rem; font-weight: 400;
+  padding: 2px 8px; border: 1px solid var(--ink); border-radius: 999px; background: var(--paper-light);
+}
+
+.quote {
+  margin: 28px 0 0; padding: 22px 24px;
+  border-left: 4px solid var(--blue); background: var(--blue-soft); border-radius: 0 var(--radius) var(--radius) 0;
+}
+.quote p { margin: 0; font-size: 1.12rem; font-weight: 750; line-height: 1.7; }
+.quote p + p { margin-top: 8px; font-size: 0.93rem; font-weight: 400; color: #34322f; }
+
+/* Connect */
+.connect {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 310px); gap: 24px;
+  align-items: start; margin-top: 24px;
+}
+.connect-steps { list-style: none; margin: 0; padding: 0; counter-reset: s; display: grid; gap: 10px; }
+.connect-steps li {
+  counter-increment: s; position: relative;
+  padding: 16px 18px 16px 62px;
+  background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.connect-steps li::before {
+  content: counter(s); position: absolute; left: 18px; top: 16px;
+  width: 30px; height: 30px; display: grid; place-items: center;
+  border: 1px solid var(--ink); border-radius: 50%; background: var(--paper);
+  font-family: var(--mono); font-weight: 700; font-size: 0.86rem;
+}
+.connect-steps li.key { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.connect-steps li.key::before { background: var(--blue-deep); color: #fff; }
+.connect-steps b { display: block; font-size: 1rem; line-height: 1.5; }
+.connect-steps span { display: block; margin-top: 4px; font-size: 0.9rem; color: #34322f; line-height: 1.7; }
+
+.mock {
+  padding: 18px; background: var(--paper-light);
+  border: 1px solid var(--ink); border-radius: var(--radius); box-shadow: 6px 6px 0 var(--blue);
+}
+.mock-head { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 12px; align-items: start; }
+.mock-mark {
+  display: grid; place-items: center; width: 44px; height: 44px;
+  border-radius: 10px; background: var(--paper); font-weight: 900; font-size: 1.15rem;
+}
+.mock-title { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 1.05rem; }
+.mock-state {
+  padding: 1px 8px; border-radius: 999px; background: var(--paper);
+  font-size: 0.7rem; font-weight: 500; color: var(--ink-soft);
+}
+.mock-desc { margin: 4px 0 0; font-size: 0.82rem; color: var(--ink-soft); line-height: 1.6; }
+.mock-box {
+  margin: 14px 0 10px; padding: 12px 14px;
+  border: 1px solid var(--ui-line); border-radius: 8px; font-size: 0.86rem; font-weight: 650;
+}
+.mock-btn {
+  display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px;
+  border-radius: 8px; background: var(--blue-deep); color: #fff; font-weight: 700; font-size: 0.92rem;
+}
+.mock-foot { margin-top: 8px; text-align: center; font-size: 0.76rem; color: var(--ink-soft); }
+
+.asks { list-style: none; margin: 12px 0 18px; padding: 0; display: grid; gap: 8px; }
+.asks li {
+  padding: 12px 16px; font-size: 0.94rem; line-height: 1.7;
+  background: var(--blue-soft); border: 1px solid rgba(50, 115, 215, 0.28);
+  border-radius: 12px 12px 12px 3px;
+}
+
+/* Tables */
+.table-wrap {
+  margin: 20px 0 8px; overflow-x: auto; -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--ink); border-radius: var(--radius); background: var(--paper-light);
+}
+table { width: 100%; border-collapse: collapse; font-size: 0.9rem; line-height: 1.6; }
+th, td { padding: 12px 14px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--ui-line); }
+thead th { background: var(--ink); color: #fff; font-weight: 700; font-size: 0.82rem; white-space: nowrap; }
+tbody th { font-weight: 700; white-space: nowrap; background: var(--paper); }
+tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
+td.simy { background: var(--blue-soft); }
+thead th.simy { background: var(--blue-deep); }
+.t-wide { min-width: 640px; }
+.t-models { min-width: 760px; }
+.t-price td:nth-child(2) { white-space: nowrap; }
+.scroll-hint { display: none; margin: 0 0 12px; font-size: 0.76rem; color: var(--ink-faint); }
+
+.note {
+  margin: 16px 0 0; padding: 14px 16px;
+  background: var(--paper-light); border: 1px dashed var(--ink-faint); border-radius: var(--radius-sm);
+  font-size: 0.88rem; color: #34322f;
+}
+.note b { color: var(--ink); }
+
+/* Sample comparison */
+.sample { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 16px; margin-top: 24px; align-items: start; }
+.sheet { padding: 20px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); }
+.sheet-label {
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;
+  font-family: var(--mono); font-size: 0.72rem; color: var(--ink-soft);
+}
+.sheet dl { margin: 0; font-size: 0.88rem; line-height: 1.65; }
+.sheet dt { margin-top: 10px; font-weight: 700; }
+.sheet dt:first-child { margin-top: 0; }
+.sheet dd { margin: 2px 0 0; color: #34322f; }
+.outs { display: grid; gap: 10px; }
+.out { padding: 14px 16px; background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius); }
+.out-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 6px; }
+.out-head b { font-size: 0.92rem; }
+.out p { margin: 0; font-size: 0.86rem; color: #34322f; line-height: 1.7; }
+.out.you { background: #fff8e3; }
+.pill {
+  font-family: var(--mono); font-size: 0.66rem; white-space: nowrap;
+  padding: 2px 8px; border-radius: 999px; border: 1px solid var(--ink); background: var(--paper);
+}
+.pill.run { background: var(--blue-deep); color: #fff; }
+.pill.you { background: var(--yellow); }
+.pill.ok { background: var(--mint); }
+.sample-foot { margin-top: 18px; font-weight: 700; }
+
+/* Use cases */
+.cases { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+.case { padding: 22px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); }
+.case h3 { margin: 0 0 4px; font-size: 1.06rem; }
+.case .device { margin: 0 0 12px; font-family: var(--mono); font-size: 0.72rem; color: var(--blue-deep); }
+.case p { margin: 0 0 8px; font-size: 0.9rem; color: #34322f; }
+.case ul { margin: 0; padding-left: 1.1em; font-size: 0.9rem; line-height: 1.7; }
+
+/* Lists */
+.plain-list { margin: 16px 0 0; padding-left: 1.2em; }
+.plain-list li { margin-bottom: 10px; }
+
+/* FAQ */
+.faq { margin-top: 20px; border-top: 1px solid var(--ink); }
+.faq details { border-bottom: 1px solid var(--ui-line); }
+.faq summary {
+  list-style: none; cursor: pointer;
+  display: grid; grid-template-columns: 28px minmax(0, 1fr) 20px; gap: 10px; align-items: start;
+  padding: 18px 4px; font-weight: 700; line-height: 1.6;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::before { content: "Q"; font-family: var(--mono); color: var(--blue-deep); }
+.faq summary::after {
+  content: "+"; font-family: var(--mono); font-size: 1.1rem; line-height: 1.4; text-align: right;
+  transition: transform 0.2s;
+}
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq .a { padding: 0 4px 18px 42px; font-size: 0.94rem; color: #34322f; }
+.faq .a p { margin: 0; }
+
+/* Closing CTA */
+.closing { background: var(--ink); color: #fff; border-top: 1px solid var(--ink); }
+.closing-inner {
+  display: grid; grid-template-columns: minmax(0, 1.2fr) auto; gap: 32px; align-items: center;
+  padding: clamp(48px, 7vw, 88px) 0;
+}
+.closing h2 { color: #fff; margin: 0 0 12px; font-size: clamp(1.6rem, 3.4vw, 2.5rem); }
+.closing p { margin: 0; color: rgba(255, 255, 255, 0.8); }
+.closing .cta-row { margin-top: 0; }
+.closing .btn-primary { box-shadow: 4px 4px 0 var(--mint); border-color: #fff; }
+.closing .btn-primary:hover { box-shadow: 5px 5px 0 var(--mint); }
+.closing .btn-ghost { background: transparent; color: #fff; border-color: rgba(255, 255, 255, 0.5); }
+.closing .btn-ghost:hover { background: rgba(255, 255, 255, 0.08); }
+
+/* Footer */
+.site-footer { padding: 36px 0 48px; font-size: 0.82rem; color: var(--ink-soft); }
+.footer-links { display: flex; flex-wrap: wrap; gap: 4px 20px; margin: 0 0 18px; padding: 0; list-style: none; }
+.footer-links a { display: inline-block; padding: 6px 0; text-decoration: none; color: var(--ink); }
+.footer-links a:hover { text-decoration: underline; }
+.site-footer p { margin: 0 0 6px; line-height: 1.7; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1080px) {
+  .guide { grid-template-columns: minmax(0, 1fr); }
+  .toc { display: none; }
+  .toc-mobile {
+    display: block; margin: 0 0 32px;
+    background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius);
+  }
+  .toc-mobile summary {
+    cursor: pointer; list-style: none; padding: 14px 18px;
+    font-family: var(--mono); font-size: 0.8rem; display: flex; justify-content: space-between;
+  }
+  .toc-mobile summary::-webkit-details-marker { display: none; }
+  .toc-mobile summary::after { content: "+"; }
+  .toc-mobile[open] summary::after { content: "−"; }
+  .toc-mobile ol { margin: 0; padding: 0 18px 14px 40px; font-size: 0.9rem; }
+  .toc-mobile li { padding: 3px 0; }
+  .toc-mobile a { display: inline-block; padding: 4px 0; text-decoration: none; }
+  .article { max-width: none; }
+}
+
+@media (max-width: 960px) {
+  .hero-inner { grid-template-columns: minmax(0, 1fr); }
+  .hero-visual { max-width: 580px; }
+  .relay { box-shadow: 6px 6px 0 var(--ink); }
+}
+
+@media (max-width: 860px) {
+  .sample { grid-template-columns: minmax(0, 1fr); }
+  .connect { grid-template-columns: minmax(0, 1fr); }
+  .mock { max-width: 360px; }
+  .closing-inner { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 640px) {
+  body { font-size: 15.5px; }
+  .brand-sub, .header-link { display: none; }
+  .header-cta { padding: 0 14px; }
+  .features, .split, .cases { grid-template-columns: minmax(0, 1fr); }
+  .checklist li { grid-template-columns: 40px minmax(0, 1fr); gap: 12px; padding: 16px; }
+  .checklist .num { width: 36px; height: 36px; font-size: 0.86rem; }
+  .connect-steps li { padding-left: 56px; }
+  .connect-steps li::before { left: 14px; }
+  .btn { width: 100%; }
+  .scroll-hint { display: block; }
+  .faq .a { padding-left: 4px; }
+  .step { grid-template-columns: 24px minmax(0, 1fr) auto; gap: 8px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .step, .handoff { animation: none; opacity: 1; transform: none; }
+  .rec-dot, .bar::after { animation: none; }
+  .btn, .header-cta { transition: none; }
+}
+
+/* ---------- Guide v2: scene cards, timeline, folds ---------- */
+.intro { max-width: 34em; margin: 0 0 8px; font-size: 1.02rem; color: #34322f; }
+.scenes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 22px; }
+.scenes.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.scene {
+  position: relative; padding: 22px 20px 20px;
+  background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius);
+  min-height: 168px; display: flex; flex-direction: column; gap: 8px;
+}
+.scene .k { font-family: var(--mono); font-size: 0.7rem; color: var(--ink-faint); letter-spacing: 0.04em; }
+.scene b { display: block; font-size: 1.22rem; line-height: 1.35; letter-spacing: -0.01em; }
+.scene p { margin: 0; font-size: 0.9rem; line-height: 1.65; color: #34322f; }
+.scene .mark {
+  position: absolute; right: 16px; top: 14px;
+  width: 30px; height: 30px; display: grid; place-items: center;
+  border: 1px solid var(--ink); border-radius: 50%; font-family: var(--mono); font-size: 0.9rem; font-weight: 700;
+}
+.scene.pain { background: var(--coral-soft); }
+.scene.pain .mark { background: var(--paper-light); }
+.scene.wish { background: var(--blue-soft); border-color: var(--blue-deep); box-shadow: 4px 4px 0 var(--blue); }
+.scene.wish .mark { background: var(--blue-deep); color: #fff; border-color: var(--blue-deep); }
+.scene.wish.you { background: #fff8e3; border-color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+.scene.wish.you .mark { background: var(--yellow); color: var(--ink); border-color: var(--ink); }
+.scene-foot { margin: 14px 0 0; font-size: 0.9rem; color: var(--ink-soft); }
+.scene-foot b { color: var(--ink); }
+
+/* Timeline */
+.tl-wrap {
+  margin-top: 22px; padding: 22px 20px 18px;
+  background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius);
+}
+.tl-row { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 14px; align-items: center; }
+.tl-row + .tl-row { margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--line-soft); }
+.tl-who {
+  font-family: var(--mono); font-size: 0.72rem; font-weight: 700; text-align: center;
+  padding: 6px 4px; border: 1px solid var(--ink); border-radius: 999px; background: var(--paper);
+}
+.tl-who.simy { background: var(--blue-deep); color: #fff; border-color: var(--blue-deep); }
+.tl-who.you { background: var(--yellow); }
+.tl { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; }
+.tl li {
+  position: relative; min-height: 64px; padding: 10px 8px 8px;
+  border-radius: var(--radius-sm); font-size: 0.8rem; line-height: 1.4; font-weight: 650;
+  display: flex; flex-direction: column; justify-content: flex-start; gap: 4px;
+}
+.tl li small { display: block; font-weight: 400; font-size: 0.7rem; color: var(--ink-soft); }
+.tl li.on { background: var(--paper); border: 1px solid var(--line-soft); color: var(--ink-soft); }
+.tl li.gap { border: 1.5px dashed var(--ink-faint); color: var(--ink-faint); background: transparent; }
+.tl li.gap::after { content: "？"; position: absolute; right: 8px; top: 6px; font-family: var(--mono); }
+.tl li.run { background: var(--blue-soft); border: 1px solid var(--blue-deep); color: var(--ink); }
+.tl li.run::after { content: "✓"; position: absolute; right: 8px; top: 6px; font-family: var(--mono); color: var(--blue-deep); }
+.tl li.you { background: #fff8e3; border: 1px solid var(--ink); color: var(--ink); }
+.tl li.you::after { content: "You"; position: absolute; right: 8px; top: 7px; font-family: var(--mono); font-size: 0.62rem; }
+.tl li.blank { border: 0; background: transparent; }
+.tl-note { margin: 14px 0 0; font-size: 0.86rem; color: #34322f; }
+.tl-note b { color: var(--ink); }
+.three { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 0; padding: 0; list-style: none; }
+.three li {
+  padding: 8px 14px; font-weight: 800; font-size: 1rem;
+  background: var(--ink); color: #fff; border-radius: 999px;
+}
+
+/* 3-step start */
+.steps3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 22px; counter-reset: st; }
+.steps3 li {
+  counter-increment: st; list-style: none; position: relative;
+  padding: 54px 18px 18px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.steps3 li::before {
+  content: counter(st); position: absolute; left: 18px; top: 16px;
+  width: 28px; height: 28px; display: grid; place-items: center;
+  border: 1px solid var(--ink); border-radius: 50%; background: var(--paper);
+  font-family: var(--mono); font-weight: 700; font-size: 0.84rem;
+}
+.steps3 li.key { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.steps3 li.key::before { background: var(--blue-deep); color: #fff; }
+.steps3 b { display: block; font-size: 1.02rem; line-height: 1.45; }
+.steps3 span { display: block; margin-top: 6px; font-size: 0.88rem; color: #34322f; line-height: 1.65; }
+.steps3 { padding: 0; }
+
+/* Industry grid */
+.ind { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 22px; }
+.ind-card { padding: 18px 18px 14px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); }
+.ind-card h3 { margin: 0 0 10px; font-size: 1.04rem; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.ind-card h3 small { font-family: var(--mono); font-size: 0.68rem; font-weight: 400; color: var(--blue-deep); white-space: normal; }
+.ind-card h3 { flex-wrap: wrap; }
+.ind-rows { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+.ind-rows li { display: grid; grid-template-columns: minmax(0, 1fr) 14px minmax(0, 1.4fr); gap: 6px; align-items: center; font-size: 0.86rem; line-height: 1.5; }
+.ind-rows li span:first-child { color: var(--ink-soft); }
+.ind-rows li span:nth-child(2) { font-family: var(--mono); color: var(--blue-deep); text-align: center; }
+.ind-rows li span:last-child { font-weight: 650; }
+
+/* Folded reference */
+.fold { margin-top: 12px; border: 1px solid var(--ui-line); border-radius: var(--radius); background: var(--paper-light); }
+.fold > summary {
+  list-style: none; cursor: pointer; padding: 16px 18px;
+  display: grid; grid-template-columns: minmax(0, 1fr) 20px; gap: 10px; align-items: center;
+  font-weight: 750; font-size: 1.02rem; line-height: 1.5;
+}
+.fold > summary::-webkit-details-marker { display: none; }
+.fold > summary::after { content: "+"; font-family: var(--mono); font-size: 1.1rem; text-align: right; grid-column: 2; grid-row: 1; }
+.fold > summary small { grid-column: 1; }
+.fold[open] > summary::after { content: "−"; }
+.fold > summary small { display: block; margin-top: 2px; font-weight: 400; font-size: 0.82rem; color: var(--ink-soft); }
+.fold-body { padding: 0 18px 18px; font-size: 0.93rem; }
+.fold-body h3 { margin: 18px 0 8px; font-size: 1rem; }
+.fold-body h3:first-child { margin-top: 0; }
+.fold-body p { margin: 0 0 10px; }
+.fold-body .table-wrap { margin: 12px 0 6px; }
+.fold-body .plain-list { margin-top: 8px; }
+.fold-body .plain-list li { margin-bottom: 6px; }
+
+@media (max-width: 960px) {
+  .scenes, .scenes.four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tl { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .tl li.blank { display: none; }
+}
+@media (max-width: 640px) {
+  .scenes, .scenes.four, .steps3, .ind { grid-template-columns: minmax(0, 1fr); }
+  .scene { min-height: 0; }
+  .tl-row { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .tl-who { justify-self: start; }
+  .tl { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ind-rows li { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .ind-rows li span:nth-child(2) { display: none; }
+  .ind-rows li { padding: 6px 0; border-bottom: 1px dashed var(--line-soft); }
+}
+
+/* Next read */
+.next-read { margin-top: clamp(40px, 5vw, 64px); padding-top: 24px; border-top: 1px solid var(--ink); }
+.next-read h2 { font-size: 1.2rem; margin: 0 0 14px; }
+.next-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.next-grid a { display: block; padding: 14px 16px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); text-decoration: none; color: var(--ink); }
+.next-grid a:hover { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.next-grid b { display: block; font-size: 0.96rem; }
+.next-grid span { display: block; margin-top: 4px; font-size: 0.82rem; color: var(--ink-soft); }
+.next-all { display: inline-block; margin-top: 12px; font-weight: 700; color: var(--blue-deep); }
+@media (max-width: 760px) { .next-grid { grid-template-columns: minmax(0, 1fr); } }
+
+.lang-switch { position: relative; }
+.lang-switch > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 10px; border: 1px solid var(--ui-line); border-radius: 999px; background: var(--paper-light); font-size: 0.8rem; font-weight: 700; }
+.lang-switch > summary::-webkit-details-marker { display: none; }
+.lang-switch ul { position: absolute; right: 0; top: calc(100% + 6px); z-index: 30; margin: 0; padding: 6px; list-style: none; min-width: 150px; background: var(--paper-light); border: 1px solid var(--ink); border-radius: 10px; box-shadow: 4px 4px 0 var(--ink); }
+.lang-switch li a { display: block; padding: 8px 10px; border-radius: 6px; color: var(--ink); text-decoration: none; font-size: 0.88rem; }
+.lang-switch li a:hover, .lang-switch li a[aria-current] { background: var(--blue-soft); }
+@media (max-width: 960px) { .brand-sub { display: none; } .header-actions { gap: 4px; } .lang-switch > summary { padding: 0 8px; } }
+@media (max-width: 640px) { .lang-switch .ls-label { display: none; } .lang-switch > summary { padding: 0 10px; } }
+/* Typography: balanced headings, phrase-aware Japanese breaks, tighter mobile headings */
+h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
+:lang(ja) h1, :lang(ja) h2, :lang(ja) h3, :lang(ja) .eyebrow, :lang(ja) .scene b, :lang(ja) .lead { word-break: auto-phrase; }
+.lead, .intro, .scene p { text-wrap: pretty; }
+@media (max-width: 640px) { h2 { font-size: 1.32rem; line-height: 1.4; } .eyebrow { font-size: 0.72rem; } .closing h2 { font-size: 1.5rem; } }
+@media (max-width: 400px) { h2 { font-size: 1.22rem; } .closing h2 { font-size: 1.34rem; } }
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://simy.one/guides/en/doubao.html#article",
+      "headline": "Doubao (豆包) guide: what is Doubao? Using ByteDance's AI, the API and safety",
+      "description": "What Doubao (豆包) is and where it's from, the Doubao app, the Doubao-Seed series and published models, the Volcano Engine and BytePlus APIs, Doubao-Seed-Code, language support, data handling and official findings, and deciding on use at work. Plus how SIMY moves the owners, deadlines, replies and updates left after Doubao answers.",
+      "inLanguage": "en",
+      "datePublished": "2026-10-01",
+      "dateModified": "2026-10-01",
+      "mainEntityOfPage": "https://simy.one/guides/en/doubao.html",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://simy.one/ogp.png",
+        "width": 1200,
+        "height": 630
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "SIMY",
+        "url": "https://simy.one/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "AwakApp Inc.",
+        "url": "https://www.awak.app/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://simy.one/simy-icon-square.png"
+        }
+      },
+      "about": [
+        {
+          "@type": "Thing",
+          "name": "Doubao"
+        },
+        {
+          "@type": "Thing",
+          "name": "豆包"
+        },
+        {
+          "@type": "Thing",
+          "name": "ByteDance"
+        },
+        {
+          "@type": "Thing",
+          "name": "Volcano Engine"
+        },
+        {
+          "@type": "Thing",
+          "name": "Large language model"
+        }
+      ],
+      "citation": [
+        "https://www.doubao.com/",
+        "https://seed.bytedance.com/",
+        "https://huggingface.co/ByteDance-Seed",
+        "https://www.volcengine.com/product/ark",
+        "https://www.byteplus.com/en/product/modelark",
+        "https://focustaiwan.tw/cross-strait/202511160005"
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "SIMY",
+          "item": "https://simy.one/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://simy.one/guides/en/index.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Doubao Guide",
+          "item": "https://simy.one/guides/en/doubao.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is Doubao (豆包)?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Doubao (豆包) is an AI assistant from ByteDance in China, and the name of the large language model series behind it. In China it's widely used as a free chat app, and businesses can use it as a cloud API."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which country is Doubao from?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It's developed by ByteDance in China. The models are built by ByteDance's in-house research team, Seed. The API is offered through the cloud business Volcano Engine (火山引擎) in China and through BytePlus internationally."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do you pronounce Doubao?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "In Chinese it's dòubāo, roughly \"doe-bao\". The word refers to a steamed bun (baozi) filled with sweet bean paste, and it's written Doubao in English."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use the Doubao app outside China?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Doubao app is a service for China, and we couldn't find official information on its availability in other countries such as Japan. International users are reportedly offered an assistant app under a different name. Before using it for work, check who provides it and read the terms of service."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does Doubao work in languages other than Chinese?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "You can talk to it in other languages, but we couldn't find official documentation stating support for them (we checked for Japanese). Test the quality with real documents from your own work."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are Doubao's models open source?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The weights of the flagship Doubao-Seed series are not published. Some models are on Hugging Face, though, including Seed-OSS-36B (Apache 2.0) and Seed-Coder-8B."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Where can I use the Doubao API?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It's offered through Volcano Engine's Ark (火山方舟) in China and through BytePlus ModelArk internationally. Pricing and available models differ by provider, so check each official page."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is Doubao-Seed-Code?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It's ByteDance's Doubao-Seed model for coding. It's reportedly offered in China through a flat-rate coding plan on Volcano Engine. As of October 2026, we couldn't officially confirm its availability outside China, such as in Japan."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is it safe to use Doubao at work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "There's no one answer; check your company's rules and where data goes for each entry point before deciding. In tests published by Taiwan's National Security Bureau in November 2025, the Doubao app was found to have problems on 10 of 15 indicators. Even if you use it, keep confidential information out."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does SIMY run on Doubao?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. SIMY doesn't connect to Doubao at this time. SIMY runs on your ChatGPT (Codex) account and Claude Code on your computer. You can bring translations and drafts made with Doubao straight into your meetings and chats."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I have to ask SIMY every time for the work after Doubao answers?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. SIMY picks up decisions, owners and deadlines from meeting records and chats on its own. It learns your way of working from conversations and returns only the points that need your decision."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="/?lang=en">
+      <img src="/simy-icon-56.png" alt="SIMY" width="28" height="28">
+      <span aria-hidden="true">SIMY</span>
+      <span class="brand-sub">Doubao Guide</span>
+    </a>
+    <nav class="header-actions" aria-label="Account">
+      <details class="lang-switch"><summary aria-label="Language: English"><span aria-hidden="true">🌐</span> <span class="ls-label">English</span></summary><ul><li><a href="/guides/doubao.html" hreflang="ja" lang="ja">日本語</a></li><li><a href="/guides/en/doubao.html" hreflang="en" lang="en" aria-current="page">English</a></li><li><a href="/guides/zh-hans/doubao.html" hreflang="zh-Hans" lang="zh-Hans">中文</a></li><li><a href="/guides/es/doubao.html" hreflang="es" lang="es">Español</a></li><li><a href="/guides/fr/doubao.html" hreflang="fr" lang="fr">Français</a></li><li><a href="/guides/hi/doubao.html" hreflang="hi" lang="hi">हिन्दी</a></li></ul></details>
+      <a class="header-link" href="/download/en.html">Download</a>
+      <a class="header-link" href="https://app.simy.one/login?lang=en&amp;locale=en&amp;region=us">Log in</a>
+      <a class="header-cta" href="https://app.simy.one/signup?lang=en&amp;locale=en&amp;region=us&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=doubao_guide_en&amp;utm_content=header">Choose a plan</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" aria-labelledby="page-title">
+    <div class="wrap hero-inner">
+      <div>
+        <ol class="crumbs" aria-label="Breadcrumb">
+          <li><a href="https://simy.one/">SIMY</a></li>
+          <li><a href="/guides/en/index.html">Guides</a></li>
+          <li aria-current="page">Doubao Guide</li>
+        </ol>
+        <p class="eyebrow">A guide for anyone curious about Doubao (豆包)</p>
+        <h1 id="page-title">
+          <span class="line">Don't let Doubao's answer</span>
+          <span class="line hl">end in</span>
+          <span class="line">the chat.</span>
+        </h1>
+        <p class="lead">Doubao turns Chinese documents and promo copy around in seconds. But who does what, by when, is still on you. SIMY moves that part forward.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="https://app.simy.one/signup?lang=en&amp;locale=en&amp;region=us&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=doubao_guide_en&amp;utm_content=hero">Choose a plan <span class="arrow" aria-hidden="true">↗</span></a>
+          <a class="btn btn-ghost" href="#connect">See how it connects <span class="arrow" aria-hidden="true">↓</span></a>
+        </div>
+        <ul class="hero-points">
+          <li>Keep Doubao for what it does best</li>
+          <li>SIMY picks up work from meetings and chat</li>
+          <li>Runs on your ChatGPT (Codex)</li>
+        </ul>
+      </div>
+
+      <div class="hero-visual">
+        <div class="relay" role="img" aria-label="Example: Doubao translates and summarizes a regular meeting with the Shanghai promotions team and drafts promo copy. SIMY then lists owners and deadlines, drafts the reply to the local team and prepares the update for headquarters, leaving only the call on starting the campaign a week early to you.">
+          <div class="relay-head" aria-hidden="true">
+            <span class="rec"><span class="rec-dot"></span><span class="rec-name">Promo sync: Shanghai team (Oct 1)</span></span>
+            <span>52:30</span>
+          </div>
+          <div class="relay-meta" aria-hidden="true">
+            <span class="chip">Doubao</span>
+            <span class="chip">Chinese → English</span>
+            <span class="chip">6 attendees</span>
+          </div>
+          <ol class="relay-steps" aria-hidden="true">
+            <li class="step s-done s-plaud"><span class="no">01</span><span class="what">Translate<small>Chinese meeting notes into English</small></span><span class="status">Doubao ✓</span></li>
+            <li class="step s-done s-plaud"><span class="no">02</span><span class="what">Summarize<small>Numbers and issues in 3 lines</small></span><span class="status">Doubao ✓</span></li>
+            <li class="step s-done s-plaud"><span class="no">03</span><span class="what">Draft promo copy<small>3 options in Chinese</small></span><span class="status">Doubao ✓</span></li>
+            <li class="handoff">Doubao stops here / SIMY takes over</li>
+            <li class="step s-done"><span class="no">04</span><span class="what">Owners and deadlines<small>Who, what, by when</small></span><span class="status">Done</span></li>
+            <li class="step s-run"><span class="no">05</span><span class="what">Reply to the local team<small>Gmail draft in your usual tone</small></span><span class="status">Autorun</span><span class="bar"></span></li>
+            <li class="step s-next"><span class="no">06</span><span class="what">Update for headquarters<small>Ask to check stock and budget</small></span><span class="status">Next</span></li>
+            <li class="step s-you"><span class="no">07</span><span class="what">Start a week early?<small>Only the decision is left to you</small></span><span class="status">Your turn</span></li>
+          </ol>
+          <div class="relay-foot" aria-hidden="true"><strong>All you do is decide and send.</strong></div>
+        </div>
+        <p class="caption">* Screen shown for illustration only</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap guide">
+    <nav class="toc" aria-label="Contents">
+      <p class="toc-title">Contents</p>
+      <ol>
+        <li><a href="#scene"><span>01</span>After the answer</a></li>
+        <li><a href="#wish"><span>02</span>What you really wanted</a></li>
+        <li><a href="#gap"><span>03</span>Where Doubao stops</a></li>
+        <li><a href="#connect"><span>04</span>How SIMY connects</a></li>
+        <li><a href="#sample"><span>05</span>One meeting, side by side</a></li>
+        <li><a href="#usecases"><span>06</span>By industry</a></li>
+        <li><a href="#start"><span>07</span>Get started in 3 steps</a></li>
+        <li><a href="#reference"><span>08</span>Doubao, Seed models, API, safety</a></li>
+        <li><a href="#faq"><span>09</span>FAQ</a></li>
+        <li><a href="#sources"><span>10</span>Sources</a></li>
+      </ol>
+    </nav>
+
+    <article class="article">
+      <details class="toc-mobile">
+        <summary>Contents</summary>
+        <ol>
+          <li><a href="#scene">After the answer</a></li>
+          <li><a href="#wish">What you really wanted</a></li>
+          <li><a href="#gap">Where Doubao stops</a></li>
+          <li><a href="#connect">How SIMY connects</a></li>
+          <li><a href="#sample">One meeting, side by side</a></li>
+          <li><a href="#usecases">By industry</a></li>
+          <li><a href="#start">Get started in 3 steps</a></li>
+          <li><a href="#reference">Doubao, Seed models, API, safety</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#sources">Sources</a></li>
+        </ol>
+      </details>
+
+      <p class="byline"><span>Last updated: <time datetime="2026-10-01">October 1, 2026</time></span><span>Published by SIMY (AwakApp Inc.)</span></p>
+
+      <!-- 01 -->
+      <section class="sec" id="scene" aria-labelledby="h-scene">
+        <span class="sec-label">01 / AFTER THE ANSWER</span>
+        <h2 id="h-scene">After Doubao answers, does this happen?</h2>
+        <p class="intro">Translation, summary and copy, all out in seconds with Doubao. And yet, here's what happens next.</p>
+        <div class="scenes">
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">1</span>
+            <span class="k">The day after the local sync</span>
+            <b>Who's replying?</b>
+            <p>The Chinese notes got translated. The action items got buried in the translation, and the reply runs late.</p>
+          </div>
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">2</span>
+            <span class="k">A week of mass-produced copy</span>
+            <b>Which one did we pick?</b>
+            <p>Dozens of promo ideas came out. The chosen one is scattered across chats and files.</p>
+          </div>
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">3</span>
+            <span class="k">Before reporting to HQ</span>
+            <b>Rewriting it again</b>
+            <p>Rewriting what was decided locally from scratch for headquarters. Every week, the same job.</p>
+          </div>
+        </div>
+        <p class="scene-foot">Getting the answer takes seconds with Doubao. <b>Whether the work moves is decided after the answer.</b></p>
+      </section>
+
+      <!-- 02 -->
+      <section class="sec" id="wish" aria-labelledby="h-wish">
+        <span class="sec-label">02 / WHAT YOU REALLY WANTED</span>
+        <h2 id="h-wish">What you really wanted after Doubao answers</h2>
+        <p class="intro">Same meeting. Same Doubao. The moment the answer came out, this is how it should have looked.</p>
+        <div class="scenes four">
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">When the meeting ends</span>
+            <b>Owners and dates, listed</b>
+            <p>Doubao still translates and summarizes. Decisions, owners and dates are already lined up.</p>
+          </div>
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">Before a deadline</span>
+            <b>Stalled work surfaces</b>
+            <p>SIMY flags anything waiting on a reply or near its deadline before the next sync.</p>
+          </div>
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">Whatever AI answered</span>
+            <b>Decisions in one place</b>
+            <p>The chosen option and next steps live in one place, across tools and chats.</p>
+          </div>
+          <div class="scene wish you">
+            <span class="mark" aria-hidden="true">!</span>
+            <span class="k">What comes back to you</span>
+            <b>Just the decision</b>
+            <p>"Start the campaign a week early?" That one question is all that comes back.</p>
+          </div>
+        </div>
+        <p class="scene-foot">This starts <b>from your next meeting after you connect your meetings and chat to SIMY.</b> Keep using Doubao for what it does best.</p>
+      </section>
+
+      <!-- 03 -->
+      <section class="sec" id="gap" aria-labelledby="h-gap">
+        <span class="sec-label">03 / WHERE DOUBAO STOPS</span>
+        <h2 id="h-gap">Where Doubao's answer stops</h2>
+        <p class="intro">Doubao is great at answering what you ask. After that, nobody picks it up.</p>
+        <div class="tl-wrap" role="img" aria-label="Timeline: Doubao handles the question, translation and summary, and copy or drafts. Owners and deadlines, the reply, the update for headquarters and the follow-up check before the next meeting stay blank.">
+          <div class="tl-row">
+            <span class="tl-who">Doubao</span>
+            <ol class="tl">
+              <li class="on">Question<small>You ask</small></li>
+              <li class="on">Translate, summarize<small>Strong in Chinese</small></li>
+              <li class="on">Copy, drafts<small>Many options, fast</small></li>
+              <li class="gap">Owners, dates</li>
+              <li class="gap">Reply</li>
+              <li class="gap">Update HQ</li>
+              <li class="gap">Follow-up</li>
+            </ol>
+          </div>
+        </div>
+        <p class="caption">* Flow shown for illustration only</p>
+        <p class="tl-note"><b>The Doubao app or the API, it stops in the same place.</b> You can get answers as often as you like. But you're the one who asks every time, and the one who checks whether it got done.</p>
+      </section>
+
+      <!-- 04 -->
+      <section class="sec" id="connect" aria-labelledby="h-connect">
+        <span class="sec-label">04 / CONNECT</span>
+        <h2 id="h-connect">SIMY connects it. Keep Doubao, hand off what comes after</h2>
+        <p class="intro">SIMY fills the four blanks. Only one box comes back to you: the decision.</p>
+        <div class="tl-wrap" role="img" aria-label="Timeline: Doubao handles the question, translation and summary, and copy or drafts. SIMY moves owners and deadlines, the draft reply, the update for headquarters and the follow-up forward, and only the decision comes back to you.">
+          <div class="tl-row">
+            <span class="tl-who">Doubao</span>
+            <ol class="tl">
+              <li class="on">Question</li>
+              <li class="on">Translate, summarize</li>
+              <li class="on">Copy, drafts</li>
+              <li class="blank"></li><li class="blank"></li><li class="blank"></li><li class="blank"></li>
+            </ol>
+          </div>
+          <div class="tl-row">
+            <span class="tl-who simy">SIMY</span>
+            <ol class="tl">
+              <li class="blank"></li><li class="blank"></li><li class="blank"></li>
+              <li class="run">Owners, dates<small>Picked up from meetings</small></li>
+              <li class="run">Reply<small>Saved as a Gmail draft</small></li>
+              <li class="run">Update<small>Posts once you approve</small></li>
+              <li class="you">Decision<small>One question back</small></li>
+            </ol>
+          </div>
+        </div>
+        <p class="caption">* Flow shown for illustration only</p>
+        <ul class="three" aria-label="Three things SIMY does">
+          <li>Picks up work from meetings and chat</li>
+          <li>Does it your way</li>
+          <li>Returns only decisions</li>
+        </ul>
+        <p class="tl-note">SIMY finds the follow-up work in meeting records and chats on its own. It learns the steps and checks you repeat from your conversations, works the same way, and lists what's done in My Actions.</p>
+
+        <div class="connect">
+          <ol class="connect-steps">
+            <li><b>Sign up for SIMY and connect ChatGPT (Codex)</b><span>SIMY's cloud runs use your own ChatGPT account. Codex usage counts against your ChatGPT plan.</span></li>
+            <li class="key"><b>Install the SIMY desktop app</b><span>SIMY can use Claude Code on your computer to run work. It turns repeat work in your Claude Code and Codex chats into "Suggestions from SIMY". Chat text is not stored on our servers. <a href="/download/en.html">Download here</a></span></li>
+            <li><b>Connect your meeting records</b><span>Connect Plaud, Notion and more on the integrations screen. Paste summaries translated with Doubao into a meeting or chat, and SIMY picks them up.</span></li>
+          </ol>
+          <div>
+            <div class="mock" role="img" aria-label="Example of SIMY's My Actions. Work picked up from a meeting: the list of owners and deadlines is done, the draft reply to the local team is in progress, and the call on starting the campaign a week early is waiting for you.">
+              <div class="mock-head" aria-hidden="true">
+                <span class="mock-mark">S</span>
+                <div>
+                  <div class="mock-title">My Actions <span class="mock-state">● 1 waiting on you</span></div>
+                  <p class="mock-desc">Work picked up from "Promo sync: Shanghai team (Oct 1)"</p>
+                </div>
+              </div>
+              <div class="mock-box" aria-hidden="true">Owners and deadlines ✓ / Reply to local team (in progress) / HQ update (next)</div>
+              <div class="mock-btn" aria-hidden="true">Decide whether to start the campaign a week early</div>
+              <div class="mock-foot" aria-hidden="true">Only what needs your decision comes back to you</div>
+            </div>
+            <p class="caption">* SIMY screen shown for illustration only</p>
+          </div>
+        </div>
+        <p class="note"><b>How SIMY works with Doubao:</b> SIMY doesn't connect to Doubao at this time. SIMY itself runs on your ChatGPT (Codex) account and Claude Code on your computer. Keep using Doubao for translation, summaries and copy, bring its answers into your meetings and chats, and SIMY takes it from there.</p>
+      </section>
+
+      <!-- 05 -->
+      <section class="sec" id="sample" aria-labelledby="h-sample">
+        <span class="sec-label">05 / SAMPLE</span>
+        <h2 id="h-sample">One meeting, side by side: Doubao's translation and summary, and SIMY's next steps</h2>
+        <p class="intro">A sample using Doubao to translate and summarize a roughly 50-minute regular meeting with the Shanghai promotions team. Doubao on the left, SIMY on the right.</p>
+        <div class="sample">
+          <div class="sheet">
+            <div class="sheet-label"><span>Doubao translation and summary (example)</span><span>Chinese → English</span></div>
+            <dl>
+              <dt>Summary</dt>
+              <dd>Proposal to start the new product campaign a week earlier, ahead of the big November sale.</dd>
+              <dt>Numbers</dt>
+              <dd>In the last sale, stores that started earlier saw bigger sales growth.</dd>
+              <dt>Local team's request</dt>
+              <dd>Answers on extra promo budget and shipping stock early, by October 8.</dd>
+              <dt>Our action item</dt>
+              <dd>Confirm the shipping schedule with our logistics team.</dd>
+            </dl>
+          </div>
+          <div class="outs">
+            <div class="out">
+              <div class="out-head"><b>Owners and deadlines</b><span class="pill ok">Done</span></div>
+              <p>Budget answer: you, Oct 8. Shipping schedule: logistics, Oct 6. Final promo copy: local team, Oct 9.</p>
+            </div>
+            <div class="out">
+              <div class="out-head"><b>Draft reply to the local team</b><span class="pill run">Autorun</span></div>
+              <p>Thanks for the proposal, we'll answer by October 8, and please send store-level data from the last sale, in your usual tone. Saved as a Gmail draft. Translate into Chinese with your usual tool.</p>
+            </div>
+            <div class="out">
+              <div class="out-head"><b>Update for headquarters</b><span class="pill">Next</span></div>
+              <p>"Shanghai proposes starting the campaign early. Please check stock and budget." Posts to chat once you approve.</p>
+            </div>
+            <div class="out you">
+              <div class="out-head"><b>Your decision</b><span class="pill you">Your turn</span></div>
+              <p>Start the campaign a week early, or keep the plan? Only the parts that need your decision come back to you.</p>
+            </div>
+          </div>
+        </div>
+        <p class="sample-foot">Doubao translates, SIMY moves it. The call on starting early is still yours.</p>
+      </section>
+
+      <!-- 06 -->
+      <section class="sec" id="usecases" aria-labelledby="h-usecases">
+        <span class="sec-label">06 / BY INDUSTRY</span>
+        <h2 id="h-usecases">By industry: how teams use Doubao, and what SIMY delivers</h2>
+        <p class="intro">What SIMY prepares after Doubao gives you an answer. Solo or team, the pattern is the same.</p>
+        <div class="ind">
+          <div class="ind-card">
+            <h3>Cross-border e-commerce and marketing <small>Doubao: Chinese copy, summaries</small></h3>
+            <ul class="ind-rows">
+              <li><span>Promo sync with the local team</span><span>→</span><span>Owners and dates, plus a draft reply</span></li>
+              <li><span>Campaign change</span><span>→</span><span>Update for HQ, plus one decision</span></li>
+              <li><span>Before the sale</span><span>→</span><span>Reminders for work waiting on replies</span></li>
+            </ul>
+          </div>
+          <div class="ind-card">
+            <h3>Manufacturing and sourcing <small>Doubao: translating Chinese documents</small></h3>
+            <ul class="ind-rows">
+              <li><span>Regular factory meeting</span><span>→</span><span>Action items and deadlines</span></li>
+              <li><span>Spec or delivery change</span><span>→</span><span>Internal update, plus one decision</span></li>
+              <li><span>Before shipping</span><span>→</span><span>What's pending</span></li>
+            </ul>
+          </div>
+          <div class="ind-card">
+            <h3>Development teams <small>Doubao: trying Seed-OSS and TRAE</small></h3>
+            <ul class="ind-rows">
+              <li><span>Model selection meeting</span><span>→</span><span>Owners and deadlines for evaluation</span></li>
+              <li><span>After the code is written</span><span>→</span><span>Next task via Claude Code on your computer</span></li>
+              <li><span>End of the week</span><span>→</span><span>Progress and pending decisions</span></li>
+            </ul>
+          </div>
+          <div class="ind-card">
+            <h3>Leadership meetings and 1:1s <small>Doubao: summarizing local information</small></h3>
+            <ul class="ind-rows">
+              <li><span>Leadership meeting</span><span>→</span><span>Decisions and owners, shared with the people involved</span></li>
+              <li><span>1:1</span><span>→</span><span>Progress and pending decisions, before you have to ask</span></li>
+              <li><span>End of the week</span><span>→</span><span>A weekly report across meetings</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- 07 -->
+      <section class="sec" id="start" aria-labelledby="h-start">
+        <span class="sec-label">07 / START</span>
+        <h2 id="h-start">Get started: keep Doubao, three steps</h2>
+        <ol class="steps3">
+          <li><b>Use Doubao as usual</b><span>Translation, summaries, copy, drafts. Stay within what your company's rules allow.</span></li>
+          <li class="key"><b>Sign up for SIMY and connect ChatGPT</b><span>Cloud runs use your ChatGPT (Codex). See <a href="#connect">how it connects</a> above. If you use Claude Code, add the SIMY desktop app too. <a href="/download/en.html">Download here</a></span></li>
+          <li><b>Finish one meeting</b><span>Owners and deadlines, draft replies and the update arrive. You decide and send. That's it.</span></li>
+        </ol>
+        <p class="note"><b>How sign-up works:</b> choose a plan → verify your email → pay by card. There is no free plan. <a href="/?lang=en#pricing">See pricing</a>. Get the desktop app from the <a href="/download/en.html">download page</a>.</p>
+        <p class="note"><b>Nothing changes in how you use Doubao.</b> SIMY doesn't replace Doubao. It's a separate system that takes on the work after the answer.</p>
+      </section>
+
+      <!-- 08 -->
+      <section class="sec" id="reference" aria-labelledby="h-reference">
+        <span class="sec-label">08 / REFERENCE</span>
+        <h2 id="h-reference">What is Doubao (豆包)? The app, Seed models, API and safety (in depth)</h2>
+        <p class="intro">Open these when you want details on Doubao itself. Model names and specs are as of October 2026.</p>
+
+        <details class="fold">
+          <summary>What is Doubao? Pronunciation and where it's from<small>ByteDance's AI. Models by Seed, delivered via Volcano Engine</small></summary>
+          <div class="fold-body">
+            <h3>Pronunciation and meaning</h3>
+            <p>豆包 is pronounced dòubāo in Chinese (roughly "doe-bao") and written Doubao in English. The word originally means a steamed bun (baozi) filled with sweet bean paste. It's the name of an AI assistant and also of the large language model (LLM) series behind it.</p>
+            <h3>Where it's from</h3>
+            <p>Doubao is the AI of ByteDance, headquartered in Beijing, China. ByteDance is best known as TikTok's parent company. Internally, the roles are split like this:</p>
+            <ul class="plain-list">
+              <li><strong>Seed:</strong> ByteDance's research team, which builds Doubao's models (the Doubao-Seed series).</li>
+              <li><strong>Volcano Engine (火山引擎):</strong> the cloud business for China, offering Doubao models through its enterprise API, Ark (火山方舟).</li>
+              <li><strong>BytePlus:</strong> the international cloud business, offering a model API called ModelArk.</li>
+            </ul>
+            <h3>Three entry points</h3>
+            <ul class="plain-list">
+              <li><strong>The Doubao app:</strong> a free AI assistant for China, used for chat, search, writing and more.</li>
+              <li><strong>API:</strong> built into your own systems via Volcano Engine (China) or BytePlus (international).</li>
+              <li><strong>Published models:</strong> run some models released by the Seed team on your own servers. The flagship Doubao-Seed series isn't among them.</li>
+            </ul>
+            <p>Even under the same "Doubao" name, each entry point has a different operating company, contract and data handling. Read "Deciding on use at work" below as well.</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>The Doubao app, and using it outside China<small>A service for China. Availability elsewhere not officially confirmed</small></summary>
+          <div class="fold-body">
+            <p>The Doubao app is an AI assistant offered for users in China. There's a website (doubao.com) and a mobile app, widely used for free in China. The interface and guidance are mainly in Chinese.</p>
+            <ul class="plain-list">
+              <li><strong>Availability outside China:</strong> as of October 2026, we couldn't find official information showing it's offered in other markets such as Japan.</li>
+              <li><strong>The international app:</strong> international users are reportedly offered an assistant app under a different name. Check its terms of service for supported regions and the operating company.</li>
+              <li><strong>Before using it for work:</strong> check in the terms of service and privacy policy which company you'd be contracting with and where your input is stored.</li>
+            </ul>
+            <h3>What Doubao can do</h3>
+            <ul class="plain-list">
+              <li><strong>Chat:</strong> answering questions, writing, translating and summarizing. A typical use is pasting a Chinese document and asking for "the key points in three lines".</li>
+              <li><strong>Writing:</strong> many options for Chinese text such as promo copy, social posts and email drafts.</li>
+              <li><strong>Reading files and images:</strong> attach a document or image and ask it to explain or summarize.</li>
+            </ul>
+            <p>Working with Chinese market and partner information in Chinese, as is, is a big reason people outside China are interested in Doubao. Official guidance and help, on the other hand, are mostly in Chinese.</p>
+            <h3>Tips for using it at work</h3>
+            <ul class="plain-list">
+              <li><strong>Check Chinese material against the original:</strong> for amounts, dates, part numbers and names, compare with the original rather than reading only the translation.</li>
+              <li><strong>State the role and format up front:</strong> starting with who it's for and what it is, like "a polite reply to the local team, in three paragraphs", cuts down on rework.</li>
+              <li><strong>Enter only what can be public:</strong> think once before entering customer names or unpublished figures.</li>
+            </ul>
+            <p>Turning those answers into who does what by when, and chasing it, happens outside the app. If you're doing that yourself every time, see <a href="#connect">how SIMY connects</a>.</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>Seed models: the Doubao-Seed series and published models<small>Flagship weights aren't published. Seed-OSS-36B is Apache 2.0</small></summary>
+          <div class="fold-body">
+            <p class="scroll-hint">Scroll the table sideways →</p>
+            <div class="table-wrap">
+              <table class="t-wide">
+                <thead>
+                  <tr><th scope="col">Model</th><th scope="col">Role</th><th scope="col">Weights published?</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Doubao-Seed-2.1-Pro</th><td>Top model announced at a Volcano Engine event on June 23, 2026 (per press reports)</td><td>Not published</td></tr>
+                  <tr><th scope="row">Doubao-Seed-2.1 fast version</th><td>Reportedly a cheaper version than Pro, under the "Turbo" name</td><td>Not published</td></tr>
+                  <tr><th scope="row">Doubao-Seed-Code</th><td>A model for coding (reportedly offered in China)</td><td>Not published</td></tr>
+                  <tr><th scope="row">Seed-OSS-36B</th><td>A 36B model released in August 2025</td><td>Published (Apache 2.0)</td></tr>
+                  <tr><th scope="row">Seed-Coder-8B</th><td>A small model for code generation</td><td>Published</td></tr>
+                  <tr><th scope="row">UI-TARS</th><td>A model for agents that look at the screen and operate a computer</td><td>Published</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="note"><b>How this differs from open weights:</b> DeepSeek, Qwen and GLM publish weights close to their flagships, but Doubao's flagship weights aren't published. To run something yourself, get Seed-OSS-36B or similar from Hugging Face and run it with vLLM or a similar tool. As of October 2026, Ollama's official library has no Seed models.</p>
+            <h3>Running Seed-OSS-36B on your own server</h3>
+            <p>Seed-OSS-36B is published under Apache 2.0, a license that makes commercial use straightforward. At 36B it assumes a server or workstation with a high-memory GPU rather than an ordinary laptop. It doesn't match the flagship Doubao-Seed series, so decide on the use first, such as "try it without sending data out" or "summarize Chinese documents in-house", to avoid disappointment.</p>
+            <p>The model names in the table are as of October 2026 and include flagship names confirmed through press reports rather than official announcements. Names and generations change every few months, so check the model lists on Volcano Engine or BytePlus for the latest.</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>The Doubao API: Volcano Engine Ark and BytePlus ModelArk<small>Separate providers for China and international</small></summary>
+          <div class="fold-body">
+            <ul class="plain-list">
+              <li><strong>China:</strong> Volcano Engine's Ark (火山方舟) offers the Doubao-Seed series. Prices are in Chinese yuan.</li>
+              <li><strong>International:</strong> BytePlus ModelArk offers models to businesses outside China.</li>
+              <li><strong>Pricing:</strong> pay-as-you-go based on input and output tokens. Rates differ by model and provider, so check the official <a href="https://www.byteplus.com/en/product/modelark" target="_blank" rel="noopener">BytePlus ModelArk</a> or <a href="https://www.volcengine.com/product/ark" target="_blank" rel="noopener">Volcano Engine Ark</a> pages.</li>
+            </ul>
+            <h3>What to check before you start with the API</h3>
+            <ol class="plain-list">
+              <li><strong>Decide which provider to use.</strong> If your company is outside China, BytePlus is the likely option. Confirm the contracting entity and governing law.</li>
+              <li><strong>Check which models are available.</strong> Models and launch dates can differ between China and international.</li>
+              <li><strong>Check data handling.</strong> Confirm where input is stored, for how long, and whether it's used for training, in the contract and official documents.</li>
+              <li><strong>Start small and watch usage.</strong> Check usage and cost in the console before scaling to production volume.</li>
+            </ol>
+            <p class="note"><b>How SIMY relates:</b> SIMY doesn't connect to the Doubao API at this time. SIMY's cloud runs use your ChatGPT (Codex) account.</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>Doubao-Seed-Code and TRAE: for coding<small>A coding model and ByteDance's AI-powered editor</small></summary>
+          <div class="fold-body">
+            <p>ByteDance also has products for coding.</p>
+            <ul class="plain-list">
+              <li><strong>Doubao-Seed-Code:</strong> a Doubao-Seed model for generating and fixing code. Volcano Engine reportedly offers a flat-rate coding plan for it in China.</li>
+              <li><strong>TRAE:</strong> an AI-powered code editor from ByteDance. You can instruct the AI inside the editor to write or fix code.</li>
+              <li><strong>Published models:</strong> there are also small code models with published weights, such as Seed-Coder-8B.</li>
+            </ul>
+            <p>As of October 2026, we couldn't find official information on calling Doubao models from other coding tools such as Claude Code. If you want to, check each provider's official docs for how to connect.</p>
+            <p>After the code is written, SIMY picks up the fixes and owners decided in review meetings and lists them.</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>Languages: how well does Doubao work outside Chinese?<small>You can ask in other languages, but no official statement of support was found</small></summary>
+          <div class="fold-body">
+            <p>You can talk to Doubao in languages other than Chinese. But as of October 2026, we couldn't find official documentation stating support for them (we checked for Japanese). The service is built around Chinese, so test quality in your language yourself.</p>
+            <ul class="plain-list">
+              <li><strong>Good fit:</strong> summarizing Chinese documents, first-draft translation between Chinese and your language, and writing copy for the Chinese market.</li>
+              <li><strong>Worth checking:</strong> tone and formality, local names and terms, and anything about local laws or business customs. Always reread text that goes outside the company.</li>
+            </ul>
+            <p>When working with partners or local teams in China, you can split it: Doubao translates the summary, and SIMY handles the owners and deadlines for what was decided and drafts the reply. The <a href="#sample">one-meeting comparison</a> above is an example.</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>Data handling and official findings<small>Taiwan's National Security Bureau published test results in November 2025</small></summary>
+          <div class="fold-body">
+            <h3>Where data is stored</h3>
+            <p>As of October 2026, we couldn't confirm from official documents which country stores data entered into the Doubao app or API. Each entry point has a different operating company, so check the terms of service and privacy policy of the one you use.</p>
+            <h3>Official findings</h3>
+            <ul class="plain-list">
+              <li><strong>Taiwan:</strong> in November 2025, Taiwan's National Security Bureau published results of testing five Chinese generative AI apps (DeepSeek, Doubao, Wenxin Yiyan, Tongyi Qianwen and Tencent Yuanbao) on 15 indicators, including personal data collection and permission handling. Doubao was found to have problems on 10 of the 15 (reported by Focus Taiwan and Taiwan News).</li>
+              <li><strong>Japan:</strong> on February 6, 2025, the executive committee of the Digital Society Promotion Council, run by Japan's Digital Agency, issued a notice to government agencies on business use of generative AI such as DeepSeek. It doesn't ban any specific service outright; it asks agencies to assess the risks before use.</li>
+            </ul>
+            <p>These are findings and advisories from specific governments and agencies, not in themselves a ban on companies using Doubao. How to handle it is a call to make under your company's rules and your clients' requirements.</p>
+            <p class="small muted">How SIMY handles data is published on our <a href="/security.html">Security</a> page and in our <a href="/privacy.html?lang=en">Privacy Policy</a>.</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>Deciding on use at work: what to check for each entry point<small>Decide by which entry point, and for what kind of information</small></summary>
+          <div class="fold-body">
+            <p class="scroll-hint">Scroll the table sideways →</p>
+            <div class="table-wrap">
+              <table class="t-wide">
+                <thead>
+                  <tr><th scope="col">Entry point</th><th scope="col">Main use</th><th scope="col">What to check</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">The Doubao app</th><td>Research in Chinese, summarizing public information</td><td>Availability in your country, operating company, where data is stored</td></tr>
+                  <tr><th scope="row">BytePlus ModelArk</th><td>Using the API as a company outside China</td><td>Contracting entity and governing law, where data is stored, use for training</td></tr>
+                  <tr><th scope="row">Volcano Engine Ark</th><td>Use at a China office or subsidiary</td><td>Chinese law and the contract, data transfers to and from headquarters</td></tr>
+                  <tr><th scope="row">Published models like Seed-OSS</th><td>Running on your own servers</td><td>License, GPUs needed, operating effort</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3>Rules of thumb</h3>
+            <ul class="plain-list">
+              <li><strong>Check your company's rules first:</strong> some companies' generative AI policies limit which services you can use and what you can enter.</li>
+              <li><strong>Split by what you enter:</strong> translating or summarizing public information and handling customer data or unpublished figures naturally call for different entry points.</li>
+              <li><strong>Check your clients' requirements:</strong> clients in government, healthcare, pharma or defense may set conditions on using foreign AI services.</li>
+              <li><strong>Keep data in with your own environment:</strong> if data must not leave the company, running a published model on your own servers is the sure way.</li>
+            </ul>
+            <p>If you're unsure, start small with a defined scope such as "only for translating or summarizing public information", and agree in writing with IT and legal on three things: the entry point, the use and what may be entered. That makes it easier to explain later.</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>How Doubao compares with DeepSeek, Qwen and GLM<small>Not better or worse, just different openness and entry points</small></summary>
+          <div class="fold-body">
+            <p class="scroll-hint">Scroll the table sideways →</p>
+            <div class="table-wrap">
+              <table class="t-wide">
+                <thead>
+                  <tr><th scope="col">Compared</th><th scope="col">Doubao</th><th scope="col">DeepSeek</th><th scope="col">Qwen</th><th scope="col">GLM (Z.ai)</th><th scope="col" class="simy">SIMY</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Developer</th><td>ByteDance (Beijing)</td><td>DeepSeek (Hangzhou)</td><td>Alibaba Group (Hangzhou)</td><td>Zhipu AI (Beijing)</td><td class="simy">AwakApp Inc.</td></tr>
+                  <tr><th scope="row">Flagship weights</th><td>Not published (only some older models)</td><td>Published (MIT)</td><td>Mostly published</td><td>Published (own license; Flash is MIT)</td><td class="simy">—</td></tr>
+                  <tr><th scope="row">International entry point</th><td>BytePlus</td><td>Official API</td><td>Alibaba Cloud</td><td>Z.ai (Singapore company)</td><td class="simy">—</td></tr>
+                  <tr><th scope="row">Starting point</th><td>You ask</td><td>You ask</td><td>You ask</td><td>You ask</td><td class="simy">SIMY picks it up from meetings and chat</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="note"><b>How they fit together:</b> any AI, Doubao included, can produce the answers and drafts. If you're chasing the owners, deadlines, replies and updates yourself every time after that, that's where SIMY comes in. See <a href="/guides/en/china-llm.html">Chinese LLMs compared</a> for an overview, or the <a href="/guides/en/deepseek.html">DeepSeek</a>, <a href="/guides/en/qwen.html">Qwen</a>, <a href="/guides/en/glm.html">GLM (Z.ai)</a>, <a href="/guides/en/kimi.html">Kimi</a> and <a href="/guides/en/minimax.html">MiniMax</a> guides.</p>
+          </div>
+        </details>
+      </section>
+
+      <!-- 09 -->
+      <section class="sec" id="faq" aria-labelledby="h-faq">
+        <span class="sec-label">09 / FAQ</span>
+        <h2 id="h-faq">FAQ</h2>
+        <div class="faq">
+          <details>
+            <summary>What is Doubao (豆包)?</summary>
+            <div class="a"><p>Doubao (豆包) is an AI assistant from ByteDance in China, and the name of the large language model series behind it. In China it's widely used as a free chat app, and businesses can use it as a cloud API.</p></div>
+          </details>
+          <details>
+            <summary>Which country is Doubao from?</summary>
+            <div class="a"><p>It's developed by ByteDance in China. The models are built by ByteDance's in-house research team, Seed. The API is offered through the cloud business Volcano Engine (火山引擎) in China and through BytePlus internationally.</p></div>
+          </details>
+          <details>
+            <summary>How do you pronounce Doubao?</summary>
+            <div class="a"><p>In Chinese it's dòubāo, roughly "doe-bao". The word refers to a steamed bun (baozi) filled with sweet bean paste, and it's written Doubao in English.</p></div>
+          </details>
+          <details>
+            <summary>Can I use the Doubao app outside China?</summary>
+            <div class="a"><p>The Doubao app is a service for China, and we couldn't find official information on its availability in other countries such as Japan. International users are reportedly offered an assistant app under a different name. Before using it for work, check who provides it and read the terms of service.</p></div>
+          </details>
+          <details>
+            <summary>Does Doubao work in languages other than Chinese?</summary>
+            <div class="a"><p>You can talk to it in other languages, but we couldn't find official documentation stating support for them (we checked for Japanese). Test the quality with real documents from your own work.</p></div>
+          </details>
+          <details>
+            <summary>Are Doubao's models open source?</summary>
+            <div class="a"><p>The weights of the flagship Doubao-Seed series are not published. Some models are on Hugging Face, though, including Seed-OSS-36B (Apache 2.0) and Seed-Coder-8B.</p></div>
+          </details>
+          <details>
+            <summary>Where can I use the Doubao API?</summary>
+            <div class="a"><p>It's offered through Volcano Engine's Ark (火山方舟) in China and through BytePlus ModelArk internationally. Pricing and available models differ by provider, so check each official page.</p></div>
+          </details>
+          <details>
+            <summary>What is Doubao-Seed-Code?</summary>
+            <div class="a"><p>It's ByteDance's Doubao-Seed model for coding. It's reportedly offered in China through a flat-rate coding plan on Volcano Engine. As of October 2026, we couldn't officially confirm its availability outside China, such as in Japan.</p></div>
+          </details>
+          <details>
+            <summary>Is it safe to use Doubao at work?</summary>
+            <div class="a"><p>There's no one answer; check your company's rules and where data goes for each entry point before deciding. In tests published by Taiwan's National Security Bureau in November 2025, the Doubao app was found to have problems on 10 of 15 indicators. Even if you use it, keep confidential information out.</p></div>
+          </details>
+          <details>
+            <summary>Does SIMY run on Doubao?</summary>
+            <div class="a"><p>No. SIMY doesn't connect to Doubao at this time. SIMY runs on your ChatGPT (Codex) account and Claude Code on your computer. You can bring translations and drafts made with Doubao straight into your meetings and chats.</p></div>
+          </details>
+          <details>
+            <summary>Do I have to ask SIMY every time for the work after Doubao answers?</summary>
+            <div class="a"><p>No. SIMY picks up decisions, owners and deadlines from meeting records and chats on its own. It learns your way of working from conversations and returns only the points that need your decision.</p></div>
+          </details>
+        </div>
+      </section>
+
+      <!-- 10 -->
+      <section class="sec" id="sources" aria-labelledby="h-sources">
+        <span class="sec-label">10 / SOURCES</span>
+        <h2 id="h-sources">Sources</h2>
+        <p>Doubao's provider, published models, API providers and official findings were checked against the official sources and press reports below (checked October 1, 2026). Model names and the coding plan include information from press reports. Check each official page for the latest.</p>
+        <ul class="plain-list">
+          <li><a href="https://www.doubao.com/" target="_blank" rel="noopener">Doubao 豆包 (official)</a></li>
+          <li><a href="https://seed.bytedance.com/" target="_blank" rel="noopener">ByteDance Seed (official)</a></li>
+          <li><a href="https://huggingface.co/ByteDance-Seed" target="_blank" rel="noopener">ByteDance-Seed (Hugging Face)</a>, <a href="https://huggingface.co/ByteDance-Seed/Seed-OSS-36B-Instruct" target="_blank" rel="noopener">Seed-OSS-36B-Instruct</a></li>
+          <li><a href="https://www.volcengine.com/product/ark" target="_blank" rel="noopener">Ark (Volcano Engine)</a></li>
+          <li><a href="https://www.byteplus.com/en/product/modelark" target="_blank" rel="noopener">ModelArk (BytePlus)</a></li>
+          <li><a href="https://www.trae.ai/" target="_blank" rel="noopener">TRAE (official)</a></li>
+          <li><a href="https://news.aibase.com/zh/news/29089" target="_blank" rel="noopener">Coverage of the Doubao-Seed-2.1 announcement (AIbase)</a></li>
+          <li><a href="https://www.kr-asia.com/pulses/158276" target="_blank" rel="noopener">Coverage of Doubao-Seed-Code and the Coding Plan (KrASIA)</a></li>
+          <li><a href="https://focustaiwan.tw/cross-strait/202511160005" target="_blank" rel="noopener">Coverage of Taiwan's National Security Bureau testing of Chinese AI apps (Focus Taiwan, November 2025)</a>, <a href="https://www.taiwannews.com.tw/news/6245677" target="_blank" rel="noopener">same topic (Taiwan News)</a></li>
+          <li><a href="https://internet.watch.impress.co.jp/docs/news/1660903.html" target="_blank" rel="noopener">Coverage of Japan's notice to government agencies on business use of generative AI (INTERNET Watch, in Japanese, February 2025)</a></li>
+        </ul>
+      </section>
+      <aside class="next-read" aria-labelledby="h-next">
+        <h2 id="h-next">Read next</h2>
+        <div class="next-grid"><a href="/guides/en/china-llm.html"><b>Chinese LLMs compared</b><span>How Doubao, DeepSeek, Qwen and others differ</span></a><a href="/guides/en/deepseek.html"><b>DeepSeek Guide</b><span>How to use it, the API, data handling and cautions</span></a><a href="/guides/en/glm.html"><b>GLM (Z.ai) Guide</b><span>The GLM Coding Plan and using it in Claude Code</span></a></div>
+        <a class="next-all" href="/guides/en/index.html">All guides →</a>
+      </aside>
+    </article>
+  </div>
+
+  <section class="closing" aria-labelledby="h-closing">
+    <div class="wrap closing-inner">
+      <div>
+        <h2 id="h-closing">Got an answer from Doubao?<br>Hand what's next to SIMY.</h2>
+        <p>Keep Doubao for what it does best. SIMY moves the work it picks up from meetings and chat, and returns only decisions. Whether to start early is still your call.</p>
+      </div>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="https://app.simy.one/signup?lang=en&amp;locale=en&amp;region=us&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=doubao_guide_en&amp;utm_content=closing">Choose a plan <span class="arrow" aria-hidden="true">↗</span></a>
+        <a class="btn btn-ghost" href="mailto:sales@simy.one?subject=Question%20about%20using%20SIMY">Talk to us</a>
+        <a class="btn btn-ghost" href="/download/en.html">Download the app <span class="arrow" aria-hidden="true">↓</span></a>
+      </div>
+    </div>
+  </section>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <ul class="footer-links">
+      <li><a href="/?lang=en">Home</a></li>
+      <li><a href="/?lang=en#pricing">Pricing</a></li>
+      <li><a href="/integrations.html">Integrations</a></li>
+      <li><a href="/download/en.html">Download</a></li>
+      <li><a href="/guides/en/index.html">All guides</a></li>
+      <li><a href="/guides/en/claude.html">Claude</a></li>
+      <li><a href="/guides/en/codex.html">Codex</a></li>
+      <li><a href="/guides/en/cowork.html">Cowork</a></li>
+      <li><a href="/guides/en/chatgpt.html">ChatGPT</a></li>
+      <li><a href="/guides/en/plaud.html">PLAUD</a></li>
+      <li><a href="/guides/en/notta.html">Notta</a></li>
+      <li><a href="/guides/en/meeting-notes.html">AI meeting notes</a></li>
+      <li><a href="/guides/en/china-llm.html">Chinese AI compared</a></li>
+      <li><a href="/guides/en/deepseek.html">DeepSeek</a></li>
+      <li><a href="/guides/en/qwen.html">Qwen</a></li>
+      <li><a href="/guides/en/qwen-local.html">Qwen on your own server</a></li>
+      <li><a href="/security.html">Security</a></li>
+      <li><a href="/privacy.html?lang=en">Privacy Policy</a></li>
+      <li><a href="/terms.html?lang=en">Terms of Use</a></li>
+    </ul>
+    <p>Doubao (豆包) is a trademark of ByteDance or its affiliates. SIMY is an independent product and is not affiliated with ByteDance.</p>
+    <p>Codex and ChatGPT are products of OpenAI. Claude Code is a product of Anthropic. Other company and product names are trademarks or registered trademarks of their respective owners.</p>
+    <p>&copy; 2026 SIMY by AwakApp Inc.</p>
+  </div>
+</footer>
+<script>
+(function () {
+  var links = Array.prototype.slice.call(document.querySelectorAll('.toc a'));
+  if (!links.length) return;
+  var items = links.map(function (a) {
+    return { link: a, section: document.getElementById(a.getAttribute('href').slice(1)) };
+  }).filter(function (item) { return item.section; });
+  var ticking = false;
+  function update() {
+    ticking = false;
+    var line = window.innerHeight * 0.35;
+    var atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+    var current = null;
+    items.forEach(function (item) {
+      if (item.section.getBoundingClientRect().top <= line) current = item;
+    });
+    if (atBottom) current = items[items.length - 1];
+    items.forEach(function (item) { item.link.classList.toggle('is-active', item === current); });
+  }
+  window.addEventListener('scroll', function () {
+    if (!ticking) { ticking = true; window.requestAnimationFrame(update); }
+  }, { passive: true });
+  update();
+})();
+</script>
+<script src="/analytics.js" defer></script>
+</body>
+</html>

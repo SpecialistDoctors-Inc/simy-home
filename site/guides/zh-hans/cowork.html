@@ -1,0 +1,1583 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+<meta charset="UTF-8">
+<meta name="google-site-verification" content="1n6_tVJZRZlQax8luEg5VsuG7gg-kCEam5VFiWIJs3U">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Cowork 是什么？用法、价格及与 Copilot Cowork 的区别 | SIMY</title>
+<meta name="description" content="面向非工程师讲解 Claude Cowork 的用法、上手、价格与支持环境，以及与 Copilot Cowork、Claude Code 的区别。Cowork 做完之后剩下的会议待办、分享和下次安排，由 SIMY 接住，只把判断交给你。">
+<link rel="canonical" href="https://simy.one/guides/zh-hans/cowork.html">
+<link rel="alternate" hreflang="ja" href="https://simy.one/guides/cowork.html">
+<link rel="alternate" hreflang="en" href="https://simy.one/guides/en/cowork.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://simy.one/guides/zh-hans/cowork.html">
+<link rel="alternate" hreflang="es" href="https://simy.one/guides/es/cowork.html">
+<link rel="alternate" hreflang="fr" href="https://simy.one/guides/fr/cowork.html">
+<link rel="alternate" hreflang="hi" href="https://simy.one/guides/hi/cowork.html">
+<link rel="alternate" hreflang="x-default" href="https://simy.one/guides/en/cowork.html">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://simy.one/guides/zh-hans/cowork.html">
+<meta property="og:title" content="Cowork 做完之后，接住下一步。｜SIMY">
+<meta property="og:description" content="Claude Cowork 负责完成桌面上的指令和定时任务。会议和聊天中产生的工作由 SIMY 接住，按你的做法推进，只把判断交给你。另附用法、价格及与 Copilot Cowork 的区别。">
+<meta property="og:site_name" content="SIMY">
+<meta property="og:image" content="https://simy.one/ogp.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Cowork 做完之后，接住下一步。Claude Cowork 使用指南｜SIMY">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-10-01">
+<meta property="article:modified_time" content="2026-10-01">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Cowork 做完之后，接住下一步。｜SIMY">
+<meta name="twitter:description" content="Claude Cowork 负责完成桌面上的指令和定时任务。会议和聊天中产生的工作由 SIMY 接住，按你的做法推进，只把判断交给你。另附用法、价格及与 Copilot Cowork 的区别。">
+<meta name="twitter:image" content="https://simy.one/ogp.png">
+<meta name="twitter:image:alt" content="Cowork 做完之后，接住下一步。Claude Cowork 使用指南｜SIMY">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#f6f5f4">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png">
+<style>
+:root {
+  --paper: #f6f5f4;
+  --paper-light: #ffffff;
+  --ink: #111111;
+  --ink-soft: #5d5b58;
+  --ink-faint: #6b6865;
+  --line-soft: rgba(17, 17, 17, 0.14);
+  --ui-line: #d9dde2;
+  --blue: #3273d7;
+  --blue-deep: #235db8;
+  --blue-soft: #eef5ff;
+  --mint: #92edce;
+  --coral-soft: #fff1ec;
+  --yellow: #ffd166;
+  --radius: 0.8rem;
+  --radius-sm: 0.5rem;
+  --sans: "Helvetica Neue", Arial, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", Meiryo, sans-serif;
+  --mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  --page: 1180px;
+  --gutter: clamp(16px, 4vw, 40px);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.85;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+a { color: inherit; }
+a:focus-visible, summary:focus-visible {
+  outline: 3px solid rgba(50, 115, 215, 0.45);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+img { max-width: 100%; display: block; }
+
+.wrap { width: min(var(--page), 100% - var(--gutter) * 2); margin: 0 auto; }
+
+.skip {
+  position: absolute; left: -9999px; top: 8px;
+  background: var(--ink); color: #fff; padding: 8px 14px; border-radius: 6px; z-index: 100;
+}
+.skip:focus { left: 8px; }
+
+/* ---------- Header ---------- */
+.site-header {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(246, 245, 244, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--ink);
+}
+.header-inner {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  min-height: 64px;
+}
+.brand {
+  display: inline-flex; align-items: center; gap: 10px;
+  text-decoration: none; font-weight: 800; letter-spacing: 0.01em;
+}
+.brand img { width: 28px; height: 28px; border-radius: 7px; }
+.brand-sub {
+  padding-left: 12px; margin-left: 2px;
+  border-left: 1px solid var(--line-soft);
+  color: var(--ink-soft); font-size: 0.8rem; font-weight: 500;
+}
+.header-actions { display: flex; align-items: center; gap: 6px; }
+.header-link {
+  padding: 8px 10px; font-size: 0.86rem; font-weight: 600; text-decoration: none; color: var(--ink);
+}
+.header-link:hover { color: var(--blue-deep); }
+.header-cta {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px;
+  background: var(--ink); color: #fff; text-decoration: none;
+  font-size: 0.86rem; font-weight: 700; border-radius: 6px;
+  transition: background 0.2s;
+}
+.header-cta:hover { background: var(--blue-deep); }
+
+/* ---------- Hero ---------- */
+.hero {
+  position: relative;
+  border-bottom: 1px solid var(--ink);
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(rgba(17, 17, 17, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(17, 17, 17, 0.045) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-position: -1px -1px;
+}
+.hero-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+  gap: clamp(32px, 5vw, 72px);
+  align-items: center;
+  padding: clamp(40px, 7vw, 96px) 0 clamp(48px, 7vw, 104px);
+}
+
+.crumbs {
+  display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 22px; padding: 0; list-style: none;
+  font-size: 0.78rem; color: var(--ink-soft);
+}
+.crumbs li + li::before { content: "/"; margin-right: 6px; color: var(--ink-faint); }
+.crumbs a { text-decoration: none; }
+.crumbs a:hover { text-decoration: underline; }
+
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin: 0 0 22px; padding: 6px 12px;
+  background: var(--paper-light); border: 1px solid var(--ink); border-radius: 999px;
+  font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.04em;
+}
+.eyebrow::before {
+  content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--blue);
+  box-shadow: 0 0 0 3px var(--blue-soft);
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2rem, 4.6vw, 3.9rem);
+  line-height: 1.16;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+h1 .line { display: block; }
+h1 .hl { color: var(--blue); }
+
+.lead {
+  max-width: 36em;
+  margin: 26px 0 0;
+  font-size: clamp(1rem, 1.35vw, 1.1rem);
+  line-height: 1.95;
+  color: #2c2b29;
+}
+
+.cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 52px; padding: 0 22px;
+  border: 1px solid var(--ink); border-radius: 8px;
+  font-weight: 700; font-size: 0.98rem; text-decoration: none;
+  transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+}
+.btn-primary {
+  background: var(--blue-deep); color: #fff; border-color: var(--ink);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.btn-primary:hover { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 var(--ink); }
+.btn-ghost { background: var(--paper-light); color: var(--ink); }
+.btn-ghost:hover { background: var(--blue-soft); }
+.btn .arrow { font-family: var(--mono); font-size: 0.9em; }
+
+.hero-points {
+  display: flex; flex-wrap: wrap; gap: 8px 18px;
+  margin: 26px 0 0; padding: 0; list-style: none;
+  font-size: 0.84rem; color: var(--ink-soft);
+}
+.hero-points li { display: inline-flex; align-items: center; gap: 7px; }
+.hero-points li::before {
+  content: ""; width: 14px; height: 14px; flex: none;
+  border: 1px solid var(--ink); border-radius: 50%;
+  background: var(--mint) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath d='M3.5 7.2 6 9.5l4.5-5' fill='none' stroke='%23111' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 12px no-repeat;
+}
+
+/* Relay card: the signature visual */
+.relay {
+  position: relative;
+  background: var(--paper-light);
+  border: 1px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: 8px 8px 0 var(--ink);
+  overflow: hidden;
+}
+.relay-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--ink);
+  background: var(--ink); color: #fff;
+  font-family: var(--mono); font-size: 0.78rem;
+}
+.rec { display: inline-flex; align-items: center; gap: 8px; min-width: 0; }
+.rec-dot {
+  width: 9px; height: 9px; border-radius: 50%; background: #ff865f; flex: none;
+  animation: rec 1.6s ease-in-out infinite;
+}
+.rec-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.relay-meta { display: flex; flex-wrap: wrap; gap: 6px; padding: 12px 18px 4px; }
+.chip {
+  display: inline-flex; align-items: center; padding: 2px 9px;
+  border: 1px solid var(--line-soft); border-radius: 999px;
+  font-family: var(--mono); font-size: 0.7rem; color: var(--ink-soft); background: var(--paper);
+}
+.relay-steps { list-style: none; margin: 0; padding: 8px 10px 12px; }
+.step {
+  display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; align-items: center; gap: 10px;
+  padding: 9px 8px;
+  border-radius: 8px;
+  opacity: 0; transform: translateY(6px);
+  animation: rise 0.5s cubic-bezier(.2,.7,.2,1) forwards;
+}
+.step .no { font-family: var(--mono); font-size: 0.72rem; color: var(--ink-faint); }
+.step .what { font-size: 0.9rem; font-weight: 650; line-height: 1.45; }
+.step .what small { display: block; font-weight: 400; font-size: 0.74rem; color: var(--ink-soft); }
+.status {
+  font-family: var(--mono); font-size: 0.68rem; white-space: nowrap;
+  padding: 3px 8px; border-radius: 999px; border: 1px solid var(--ink);
+}
+.s-done { background: var(--paper); }
+.s-plaud .status { border-color: var(--line-soft); color: var(--ink-soft); }
+.s-run { background: var(--blue-soft); }
+.s-run .status { background: var(--blue-deep); color: #fff; }
+.s-next .status { background: var(--paper-light); }
+.s-you { background: #fff8e3; }
+.s-you .status { background: var(--yellow); }
+.bar {
+  grid-column: 2 / 4; height: 4px; margin-top: 6px;
+  background: rgba(50, 115, 215, 0.16); border-radius: 4px; overflow: hidden;
+}
+.bar::after {
+  content: ""; display: block; height: 100%; width: 62%;
+  background: var(--blue); border-radius: 4px;
+  animation: progress 2.8s ease-in-out infinite alternate;
+}
+.handoff {
+  display: flex; align-items: center; gap: 10px;
+  margin: 6px 4px; padding: 8px 0;
+  font-family: var(--mono); font-size: 0.72rem; color: var(--blue-deep);
+  opacity: 0; animation: rise 0.5s ease forwards;
+}
+.handoff::before, .handoff::after { content: ""; flex: 1; border-top: 1.5px dashed var(--blue); }
+.relay-foot {
+  padding: 12px 18px 14px;
+  border-top: 1px solid var(--line-soft);
+  font-size: 0.82rem; color: var(--ink-soft);
+}
+.relay-foot strong { color: var(--ink); }
+.caption { margin: 12px 4px 0; font-size: 0.74rem; color: var(--ink-faint); text-align: right; }
+
+.relay-steps > :nth-child(1) { animation-delay: 0.10s; }
+.relay-steps > :nth-child(2) { animation-delay: 0.22s; }
+.relay-steps > :nth-child(3) { animation-delay: 0.34s; }
+.relay-steps > :nth-child(4) { animation-delay: 0.62s; }
+.relay-steps > :nth-child(5) { animation-delay: 0.86s; }
+.relay-steps > :nth-child(6) { animation-delay: 1.02s; }
+.relay-steps > :nth-child(7) { animation-delay: 1.18s; }
+.relay-steps > :nth-child(8) { animation-delay: 1.34s; }
+
+@keyframes rise { to { opacity: 1; transform: none; } }
+@keyframes rec { 50% { opacity: 0.25; } }
+@keyframes progress { from { width: 34%; } to { width: 88%; } }
+
+/* ---------- Guide layout ---------- */
+.guide {
+  display: grid;
+  grid-template-columns: 232px minmax(0, 1fr);
+  gap: clamp(32px, 5vw, 72px);
+  padding: clamp(40px, 6vw, 80px) 0 clamp(56px, 7vw, 96px);
+}
+.toc { position: sticky; top: 92px; align-self: start; font-size: 0.84rem; }
+.toc-title {
+  margin: 0 0 12px; font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.08em;
+  color: var(--ink-soft);
+}
+.toc ol { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--line-soft); }
+.toc a {
+  display: grid; grid-template-columns: 26px 1fr; gap: 4px;
+  margin-left: -1px; padding: 7px 0 7px 12px;
+  border-left: 2px solid transparent;
+  color: var(--ink-soft); text-decoration: none; line-height: 1.5;
+}
+.toc a span { font-family: var(--mono); font-size: 0.72rem; padding-top: 1px; }
+.toc a:hover { color: var(--ink); }
+.toc a.is-active { color: var(--ink); font-weight: 700; border-left-color: var(--blue); }
+.toc-mobile { display: none; }
+
+.article { min-width: 0; max-width: 800px; }
+.byline {
+  display: flex; flex-wrap: wrap; gap: 4px 16px;
+  margin: 0 0 8px; font-family: var(--mono); font-size: 0.74rem; color: var(--ink-faint);
+}
+
+.sec { padding-top: clamp(40px, 5vw, 64px); }
+.sec:first-of-type { padding-top: 0; }
+.sec-label {
+  display: inline-block; margin: 0 0 12px;
+  font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.06em; color: var(--blue-deep);
+}
+h2 {
+  margin: 0 0 18px;
+  font-size: clamp(1.5rem, 2.8vw, 2.1rem);
+  line-height: 1.35; font-weight: 800; letter-spacing: -0.01em;
+}
+h3 { margin: 32px 0 12px; font-size: 1.15rem; line-height: 1.5; font-weight: 750; }
+.article p { margin: 0 0 16px; }
+.article p a, .plain-list a, .faq a { color: var(--blue-deep); text-decoration: underline; text-underline-offset: 3px; }
+.muted { color: var(--ink-soft); }
+.small { font-size: 0.84rem; }
+
+/* Checklist */
+.checklist { list-style: none; margin: 24px 0 0; padding: 0; display: grid; gap: 12px; }
+.checklist li {
+  display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 16px;
+  padding: 18px 20px;
+  background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.checklist .num {
+  display: grid; place-items: center; width: 44px; height: 44px;
+  border: 1px solid var(--ink); border-radius: 50%;
+  font-family: var(--mono); font-weight: 700;
+}
+.checklist li.hook { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.checklist li.hook .num { background: var(--blue-deep); color: #fff; }
+.checklist h3 { margin: 2px 0 4px; font-size: 1.02rem; }
+.checklist p { margin: 0; font-size: 0.93rem; color: #34322f; }
+
+/* Feature grid */
+.features { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+.feature {
+  padding: 20px; background: var(--paper-light);
+  border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.feature .tag {
+  display: inline-block; margin-bottom: 8px;
+  font-family: var(--mono); font-size: 0.7rem; color: var(--ink-soft);
+}
+.feature h3 { margin: 0 0 6px; font-size: 1.04rem; }
+.feature p { margin: 0; font-size: 0.92rem; color: #34322f; }
+.feature.wide { grid-column: 1 / -1; }
+
+/* Gap section */
+.split { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+.split-col { padding: 22px; border-radius: var(--radius); border: 1px solid var(--ink); }
+.split-col h3 { margin: 0 0 12px; font-size: 1rem; display: flex; align-items: center; gap: 8px; }
+.split-col ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.split-col li { position: relative; padding-left: 22px; font-size: 0.94rem; line-height: 1.6; }
+.split-col li::before { position: absolute; left: 0; top: 0; font-family: var(--mono); }
+.col-plaud { background: var(--paper-light); }
+.col-plaud li { color: var(--ink-soft); }
+.col-plaud li::before { content: "✓"; color: #1b7a58; }
+.col-left { background: var(--coral-soft); box-shadow: 4px 4px 0 var(--ink); }
+.col-left li::before { content: "□"; color: var(--ink); }
+.who {
+  font-family: var(--mono); font-size: 0.68rem; font-weight: 400;
+  padding: 2px 8px; border: 1px solid var(--ink); border-radius: 999px; background: var(--paper-light);
+}
+
+.quote {
+  margin: 28px 0 0; padding: 22px 24px;
+  border-left: 4px solid var(--blue); background: var(--blue-soft); border-radius: 0 var(--radius) var(--radius) 0;
+}
+.quote p { margin: 0; font-size: 1.12rem; font-weight: 750; line-height: 1.7; }
+.quote p + p { margin-top: 8px; font-size: 0.93rem; font-weight: 400; color: #34322f; }
+
+/* Connect */
+.connect {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 310px); gap: 24px;
+  align-items: start; margin-top: 24px;
+}
+.connect-steps { list-style: none; margin: 0; padding: 0; counter-reset: s; display: grid; gap: 10px; }
+.connect-steps li {
+  counter-increment: s; position: relative;
+  padding: 16px 18px 16px 62px;
+  background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.connect-steps li::before {
+  content: counter(s); position: absolute; left: 18px; top: 16px;
+  width: 30px; height: 30px; display: grid; place-items: center;
+  border: 1px solid var(--ink); border-radius: 50%; background: var(--paper);
+  font-family: var(--mono); font-weight: 700; font-size: 0.86rem;
+}
+.connect-steps li.key { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.connect-steps li.key::before { background: var(--blue-deep); color: #fff; }
+.connect-steps b { display: block; font-size: 1rem; line-height: 1.5; }
+.connect-steps span { display: block; margin-top: 4px; font-size: 0.9rem; color: #34322f; line-height: 1.7; }
+
+.mock {
+  padding: 18px; background: var(--paper-light);
+  border: 1px solid var(--ink); border-radius: var(--radius); box-shadow: 6px 6px 0 var(--blue);
+}
+.mock-head { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 12px; align-items: start; }
+.mock-mark {
+  display: grid; place-items: center; width: 44px; height: 44px;
+  border-radius: 10px; background: var(--paper); font-weight: 900; font-size: 1.15rem;
+}
+.mock-title { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 1.05rem; }
+.mock-state {
+  padding: 1px 8px; border-radius: 999px; background: var(--paper);
+  font-size: 0.7rem; font-weight: 500; color: var(--ink-soft);
+}
+.mock-desc { margin: 4px 0 0; font-size: 0.82rem; color: var(--ink-soft); line-height: 1.6; }
+.mock-box {
+  margin: 14px 0 10px; padding: 12px 14px;
+  border: 1px solid var(--ui-line); border-radius: 8px; font-size: 0.86rem; font-weight: 650;
+}
+.mock-btn {
+  display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px;
+  border-radius: 8px; background: var(--blue-deep); color: #fff; font-weight: 700; font-size: 0.92rem;
+}
+.mock-foot { margin-top: 8px; text-align: center; font-size: 0.76rem; color: var(--ink-soft); }
+
+.asks { list-style: none; margin: 12px 0 18px; padding: 0; display: grid; gap: 8px; }
+.asks li {
+  padding: 12px 16px; font-size: 0.94rem; line-height: 1.7;
+  background: var(--blue-soft); border: 1px solid rgba(50, 115, 215, 0.28);
+  border-radius: 12px 12px 12px 3px;
+}
+
+/* Tables */
+.table-wrap {
+  margin: 20px 0 8px; overflow-x: auto; -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--ink); border-radius: var(--radius); background: var(--paper-light);
+}
+table { width: 100%; border-collapse: collapse; font-size: 0.9rem; line-height: 1.6; }
+th, td { padding: 12px 14px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--ui-line); }
+thead th { background: var(--ink); color: #fff; font-weight: 700; font-size: 0.82rem; white-space: nowrap; }
+tbody th { font-weight: 700; white-space: nowrap; background: var(--paper); }
+tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
+td.simy { background: var(--blue-soft); }
+thead th.simy { background: var(--blue-deep); }
+.t-wide { min-width: 640px; }
+.t-models { min-width: 760px; }
+.t-price td:nth-child(2) { white-space: nowrap; }
+.scroll-hint { display: none; margin: 0 0 12px; font-size: 0.76rem; color: var(--ink-faint); }
+
+.note {
+  margin: 16px 0 0; padding: 14px 16px;
+  background: var(--paper-light); border: 1px dashed var(--ink-faint); border-radius: var(--radius-sm);
+  font-size: 0.88rem; color: #34322f;
+}
+.note b { color: var(--ink); }
+
+/* Sample comparison */
+.sample { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 16px; margin-top: 24px; align-items: start; }
+.sheet { padding: 20px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); }
+.sheet-label {
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;
+  font-family: var(--mono); font-size: 0.72rem; color: var(--ink-soft);
+}
+.sheet dl { margin: 0; font-size: 0.88rem; line-height: 1.65; }
+.sheet dt { margin-top: 10px; font-weight: 700; }
+.sheet dt:first-child { margin-top: 0; }
+.sheet dd { margin: 2px 0 0; color: #34322f; }
+.outs { display: grid; gap: 10px; }
+.out { padding: 14px 16px; background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius); }
+.out-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 6px; }
+.out-head b { font-size: 0.92rem; }
+.out p { margin: 0; font-size: 0.86rem; color: #34322f; line-height: 1.7; }
+.out.you { background: #fff8e3; }
+.pill {
+  font-family: var(--mono); font-size: 0.66rem; white-space: nowrap;
+  padding: 2px 8px; border-radius: 999px; border: 1px solid var(--ink); background: var(--paper);
+}
+.pill.run { background: var(--blue-deep); color: #fff; }
+.pill.you { background: var(--yellow); }
+.pill.ok { background: var(--mint); }
+.sample-foot { margin-top: 18px; font-weight: 700; }
+
+/* Use cases */
+.cases { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+.case { padding: 22px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); }
+.case h3 { margin: 0 0 4px; font-size: 1.06rem; }
+.case .device { margin: 0 0 12px; font-family: var(--mono); font-size: 0.72rem; color: var(--blue-deep); }
+.case p { margin: 0 0 8px; font-size: 0.9rem; color: #34322f; }
+.case ul { margin: 0; padding-left: 1.1em; font-size: 0.9rem; line-height: 1.7; }
+
+/* Lists */
+.plain-list { margin: 16px 0 0; padding-left: 1.2em; }
+.plain-list li { margin-bottom: 10px; }
+
+/* FAQ */
+.faq { margin-top: 20px; border-top: 1px solid var(--ink); }
+.faq details { border-bottom: 1px solid var(--ui-line); }
+.faq summary {
+  list-style: none; cursor: pointer;
+  display: grid; grid-template-columns: 28px minmax(0, 1fr) 20px; gap: 10px; align-items: start;
+  padding: 18px 4px; font-weight: 700; line-height: 1.6;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::before { content: "Q"; font-family: var(--mono); color: var(--blue-deep); }
+.faq summary::after {
+  content: "+"; font-family: var(--mono); font-size: 1.1rem; line-height: 1.4; text-align: right;
+  transition: transform 0.2s;
+}
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq .a { padding: 0 4px 18px 42px; font-size: 0.94rem; color: #34322f; }
+.faq .a p { margin: 0; }
+
+/* Closing CTA */
+.closing { background: var(--ink); color: #fff; border-top: 1px solid var(--ink); }
+.closing-inner {
+  display: grid; grid-template-columns: minmax(0, 1.2fr) auto; gap: 32px; align-items: center;
+  padding: clamp(48px, 7vw, 88px) 0;
+}
+.closing h2 { color: #fff; margin: 0 0 12px; font-size: clamp(1.6rem, 3.4vw, 2.5rem); }
+.closing p { margin: 0; color: rgba(255, 255, 255, 0.8); }
+.closing .cta-row { margin-top: 0; }
+.closing .btn-primary { box-shadow: 4px 4px 0 var(--mint); border-color: #fff; }
+.closing .btn-primary:hover { box-shadow: 5px 5px 0 var(--mint); }
+.closing .btn-ghost { background: transparent; color: #fff; border-color: rgba(255, 255, 255, 0.5); }
+.closing .btn-ghost:hover { background: rgba(255, 255, 255, 0.08); }
+
+/* Footer */
+.site-footer { padding: 36px 0 48px; font-size: 0.82rem; color: var(--ink-soft); }
+.footer-links { display: flex; flex-wrap: wrap; gap: 4px 20px; margin: 0 0 18px; padding: 0; list-style: none; }
+.footer-links a { display: inline-block; padding: 6px 0; text-decoration: none; color: var(--ink); }
+.footer-links a:hover { text-decoration: underline; }
+.site-footer p { margin: 0 0 6px; line-height: 1.7; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1080px) {
+  .guide { grid-template-columns: minmax(0, 1fr); }
+  .toc { display: none; }
+  .toc-mobile {
+    display: block; margin: 0 0 32px;
+    background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius);
+  }
+  .toc-mobile summary {
+    cursor: pointer; list-style: none; padding: 14px 18px;
+    font-family: var(--mono); font-size: 0.8rem; display: flex; justify-content: space-between;
+  }
+  .toc-mobile summary::-webkit-details-marker { display: none; }
+  .toc-mobile summary::after { content: "+"; }
+  .toc-mobile[open] summary::after { content: "−"; }
+  .toc-mobile ol { margin: 0; padding: 0 18px 14px 40px; font-size: 0.9rem; }
+  .toc-mobile li { padding: 3px 0; }
+  .toc-mobile a { display: inline-block; padding: 4px 0; text-decoration: none; }
+  .article { max-width: none; }
+}
+
+@media (max-width: 960px) {
+  .hero-inner { grid-template-columns: minmax(0, 1fr); }
+  .hero-visual { max-width: 580px; }
+  .relay { box-shadow: 6px 6px 0 var(--ink); }
+}
+
+@media (max-width: 860px) {
+  .sample { grid-template-columns: minmax(0, 1fr); }
+  .connect { grid-template-columns: minmax(0, 1fr); }
+  .mock { max-width: 360px; }
+  .closing-inner { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 640px) {
+  body { font-size: 15.5px; }
+  .brand-sub, .header-link { display: none; }
+  .header-cta { padding: 0 14px; }
+  .features, .split, .cases { grid-template-columns: minmax(0, 1fr); }
+  .checklist li { grid-template-columns: 40px minmax(0, 1fr); gap: 12px; padding: 16px; }
+  .checklist .num { width: 36px; height: 36px; font-size: 0.86rem; }
+  .connect-steps li { padding-left: 56px; }
+  .connect-steps li::before { left: 14px; }
+  .btn { width: 100%; }
+  .scroll-hint { display: block; }
+  .faq .a { padding-left: 4px; }
+  .step { grid-template-columns: 24px minmax(0, 1fr) auto; gap: 8px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .step, .handoff { animation: none; opacity: 1; transform: none; }
+  .rec-dot, .bar::after { animation: none; }
+  .btn, .header-cta { transition: none; }
+}
+
+/* ---------- Guide v2: scene cards, timeline, folds ---------- */
+.intro { max-width: 34em; margin: 0 0 8px; font-size: 1.02rem; color: #34322f; }
+.scenes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 22px; }
+.scenes.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.scene {
+  position: relative; padding: 22px 20px 20px;
+  background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius);
+  min-height: 168px; display: flex; flex-direction: column; gap: 8px;
+}
+.scene .k { font-family: var(--mono); font-size: 0.7rem; color: var(--ink-faint); letter-spacing: 0.04em; }
+.scene b { display: block; font-size: 1.22rem; line-height: 1.35; letter-spacing: -0.01em; }
+.scene p { margin: 0; font-size: 0.9rem; line-height: 1.65; color: #34322f; }
+.scene .mark {
+  position: absolute; right: 16px; top: 14px;
+  width: 30px; height: 30px; display: grid; place-items: center;
+  border: 1px solid var(--ink); border-radius: 50%; font-family: var(--mono); font-size: 0.9rem; font-weight: 700;
+}
+.scene.pain { background: var(--coral-soft); }
+.scene.pain .mark { background: var(--paper-light); }
+.scene.wish { background: var(--blue-soft); border-color: var(--blue-deep); box-shadow: 4px 4px 0 var(--blue); }
+.scene.wish .mark { background: var(--blue-deep); color: #fff; border-color: var(--blue-deep); }
+.scene.wish.you { background: #fff8e3; border-color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+.scene.wish.you .mark { background: var(--yellow); color: var(--ink); border-color: var(--ink); }
+.scene-foot { margin: 14px 0 0; font-size: 0.9rem; color: var(--ink-soft); }
+.scene-foot b { color: var(--ink); }
+
+/* Timeline */
+.tl-wrap {
+  margin-top: 22px; padding: 22px 20px 18px;
+  background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius);
+}
+.tl-row { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 14px; align-items: center; }
+.tl-row + .tl-row { margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--line-soft); }
+.tl-who {
+  font-family: var(--mono); font-size: 0.72rem; font-weight: 700; text-align: center;
+  padding: 6px 4px; border: 1px solid var(--ink); border-radius: 999px; background: var(--paper);
+}
+.tl-who.simy { background: var(--blue-deep); color: #fff; border-color: var(--blue-deep); }
+.tl-who.you { background: var(--yellow); }
+.tl { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; }
+.tl li {
+  position: relative; min-height: 64px; padding: 10px 8px 8px;
+  border-radius: var(--radius-sm); font-size: 0.8rem; line-height: 1.4; font-weight: 650;
+  display: flex; flex-direction: column; justify-content: flex-start; gap: 4px;
+}
+.tl li small { display: block; font-weight: 400; font-size: 0.7rem; color: var(--ink-soft); }
+.tl li.on { background: var(--paper); border: 1px solid var(--line-soft); color: var(--ink-soft); }
+.tl li.gap { border: 1.5px dashed var(--ink-faint); color: var(--ink-faint); background: transparent; }
+.tl li.gap::after { content: "？"; position: absolute; right: 8px; top: 6px; font-family: var(--mono); }
+.tl li.run { background: var(--blue-soft); border: 1px solid var(--blue-deep); color: var(--ink); }
+.tl li.run::after { content: "✓"; position: absolute; right: 8px; top: 6px; font-family: var(--mono); color: var(--blue-deep); }
+.tl li.you { background: #fff8e3; border: 1px solid var(--ink); color: var(--ink); }
+.tl li.you::after { content: "你"; position: absolute; right: 8px; top: 7px; font-family: var(--mono); font-size: 0.62rem; }
+.tl li.blank { border: 0; background: transparent; }
+.tl-note { margin: 14px 0 0; font-size: 0.86rem; color: #34322f; }
+.tl-note b { color: var(--ink); }
+.three { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 0; padding: 0; list-style: none; }
+.three li {
+  padding: 8px 14px; font-weight: 800; font-size: 1rem;
+  background: var(--ink); color: #fff; border-radius: 999px;
+}
+
+/* 3-step start */
+.steps3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 22px; counter-reset: st; }
+.steps3 li {
+  counter-increment: st; list-style: none; position: relative;
+  padding: 54px 18px 18px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.steps3 li::before {
+  content: counter(st); position: absolute; left: 18px; top: 16px;
+  width: 28px; height: 28px; display: grid; place-items: center;
+  border: 1px solid var(--ink); border-radius: 50%; background: var(--paper);
+  font-family: var(--mono); font-weight: 700; font-size: 0.84rem;
+}
+.steps3 li.key { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.steps3 li.key::before { background: var(--blue-deep); color: #fff; }
+.steps3 b { display: block; font-size: 1.02rem; line-height: 1.45; }
+.steps3 span { display: block; margin-top: 6px; font-size: 0.88rem; color: #34322f; line-height: 1.65; }
+.steps3 { padding: 0; }
+
+/* Industry grid */
+.ind { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 22px; }
+.ind-card { padding: 18px 18px 14px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); }
+.ind-card h3 { margin: 0 0 10px; font-size: 1.04rem; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.ind-card h3 small { font-family: var(--mono); font-size: 0.68rem; font-weight: 400; color: var(--blue-deep); white-space: normal; }
+.ind-card h3 { flex-wrap: wrap; }
+.ind-rows { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+.ind-rows li { display: grid; grid-template-columns: minmax(0, 1fr) 14px minmax(0, 1.4fr); gap: 6px; align-items: center; font-size: 0.86rem; line-height: 1.5; }
+.ind-rows li span:first-child { color: var(--ink-soft); }
+.ind-rows li span:nth-child(2) { font-family: var(--mono); color: var(--blue-deep); text-align: center; }
+.ind-rows li span:last-child { font-weight: 650; }
+
+/* Folded reference */
+.fold { margin-top: 12px; border: 1px solid var(--ui-line); border-radius: var(--radius); background: var(--paper-light); }
+.fold > summary {
+  list-style: none; cursor: pointer; padding: 16px 18px;
+  display: grid; grid-template-columns: minmax(0, 1fr) 20px; gap: 10px; align-items: center;
+  font-weight: 750; font-size: 1.02rem; line-height: 1.5;
+}
+.fold > summary::-webkit-details-marker { display: none; }
+.fold > summary::after { content: "+"; font-family: var(--mono); font-size: 1.1rem; text-align: right; grid-column: 2; grid-row: 1; }
+.fold > summary small { grid-column: 1; }
+.fold[open] > summary::after { content: "−"; }
+.fold > summary small { display: block; margin-top: 2px; font-weight: 400; font-size: 0.82rem; color: var(--ink-soft); }
+.fold-body { padding: 0 18px 18px; font-size: 0.93rem; }
+.fold-body h3 { margin: 18px 0 8px; font-size: 1rem; }
+.fold-body h3:first-child { margin-top: 0; }
+.fold-body p { margin: 0 0 10px; }
+.fold-body .table-wrap { margin: 12px 0 6px; }
+.fold-body .plain-list { margin-top: 8px; }
+.fold-body .plain-list li { margin-bottom: 6px; }
+
+@media (max-width: 960px) {
+  .scenes, .scenes.four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tl { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .tl li.blank { display: none; }
+}
+@media (max-width: 640px) {
+  .scenes, .scenes.four, .steps3, .ind { grid-template-columns: minmax(0, 1fr); }
+  .scene { min-height: 0; }
+  .tl-row { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .tl-who { justify-self: start; }
+  .tl { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ind-rows li { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .ind-rows li span:nth-child(2) { display: none; }
+  .ind-rows li { padding: 6px 0; border-bottom: 1px dashed var(--line-soft); }
+}
+
+/* Next read */
+.next-read { margin-top: clamp(40px, 5vw, 64px); padding-top: 24px; border-top: 1px solid var(--ink); }
+.next-read h2 { font-size: 1.2rem; margin: 0 0 14px; }
+.next-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.next-grid a { display: block; padding: 14px 16px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); text-decoration: none; color: var(--ink); }
+.next-grid a:hover { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.next-grid b { display: block; font-size: 0.96rem; }
+.next-grid span { display: block; margin-top: 4px; font-size: 0.82rem; color: var(--ink-soft); }
+.next-all { display: inline-block; margin-top: 12px; font-weight: 700; color: var(--blue-deep); }
+@media (max-width: 760px) { .next-grid { grid-template-columns: minmax(0, 1fr); } }
+
+.lang-switch { position: relative; }
+.lang-switch > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 10px; border: 1px solid var(--ui-line); border-radius: 999px; background: var(--paper-light); font-size: 0.8rem; font-weight: 700; }
+.lang-switch > summary::-webkit-details-marker { display: none; }
+.lang-switch ul { position: absolute; right: 0; top: calc(100% + 6px); z-index: 30; margin: 0; padding: 6px; list-style: none; min-width: 150px; background: var(--paper-light); border: 1px solid var(--ink); border-radius: 10px; box-shadow: 4px 4px 0 var(--ink); }
+.lang-switch li a { display: block; padding: 8px 10px; border-radius: 6px; color: var(--ink); text-decoration: none; font-size: 0.88rem; }
+.lang-switch li a:hover, .lang-switch li a[aria-current] { background: var(--blue-soft); }
+@media (max-width: 960px) { .brand-sub { display: none; } .header-actions { gap: 4px; } .lang-switch > summary { padding: 0 8px; } }
+@media (max-width: 640px) { .lang-switch .ls-label { display: none; } .lang-switch > summary { padding: 0 10px; } }
+/* Typography: balanced headings, phrase-aware Japanese breaks, tighter mobile headings */
+h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
+:lang(ja) h1, :lang(ja) h2, :lang(ja) h3, :lang(ja) .eyebrow, :lang(ja) .scene b, :lang(ja) .lead { word-break: auto-phrase; }
+.lead, .intro, .scene p { text-wrap: pretty; }
+@media (max-width: 640px) { h2 { font-size: 1.32rem; line-height: 1.4; } .eyebrow { font-size: 0.72rem; } .closing h2 { font-size: 1.5rem; } }
+@media (max-width: 400px) { h2 { font-size: 1.22rem; } .closing h2 { font-size: 1.34rem; } }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://simy.one/guides/zh-hans/cowork.html#article",
+      "headline": "Claude Cowork 使用指南：用法、价格、与 Copilot Cowork 的区别，以及接住下一步的 SIMY",
+      "description": "面向非工程师讲解 Claude Cowork 的用法、上手、价格与支持环境、安全性，以及与 Copilot Cowork、Claude Code 的对比。Cowork 做完之后剩下的会议待办、分享与判断，由 SIMY 接上。",
+      "inLanguage": "zh-Hans",
+      "datePublished": "2026-10-01",
+      "dateModified": "2026-10-01",
+      "mainEntityOfPage": "https://simy.one/guides/zh-hans/cowork.html",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://simy.one/ogp.png",
+        "width": 1200,
+        "height": 630
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "SIMY",
+        "url": "https://simy.one/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "AwakApp Inc.",
+        "url": "https://www.awak.app/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://simy.one/simy-icon-square.png"
+        }
+      },
+      "about": [
+        {
+          "@type": "Thing",
+          "name": "Claude Cowork"
+        },
+        {
+          "@type": "Thing",
+          "name": "Anthropic"
+        },
+        {
+          "@type": "Thing",
+          "name": "业务自动化"
+        }
+      ],
+      "citation": [
+        "https://claude.com/product/cowork",
+        "https://claude.com/pricing",
+        "https://code.claude.com/docs/en/overview",
+        "https://www.microsoft.com/zh-cn/microsoft-365/copilot"
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "SIMY",
+          "item": "https://simy.one/?lang=zh-Hans"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "指南",
+          "item": "https://simy.one/guides/zh-hans/index.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Claude Cowork 使用指南",
+          "item": "https://simy.one/guides/zh-hans/cowork.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Claude Cowork 可以免费使用吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "不可以。根据截至 2026 年 10 月 1 日的官方说明，Cowork 是面向付费方案的功能，从 Pro、Max 开始陆续提供。所在地区的价格请在 Claude 官方价格页面确认。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Claude Cowork 能在 Windows 上用吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "截至 2026 年 10 月 1 日，Claude 官方提供面向 Windows（含 arm64）的桌面应用下载。支持范围和功能差异，请在最新官方页面确认。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Claude Cowork 能在手机上用吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "官方表示，Cowork 正陆续在网页和移动端提供（移动端为测试版）。设想的用法是：在桌面上开始的工作，用手机查看或追加指令。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Claude Cowork 从什么时候开始可以用？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "截至 2026 年 10 月 1 日，付费方案可在 Claude 桌面应用中使用。提供的方案和环境在分阶段扩大，你所用方案的开放时间请以官方公告为准。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Claude Cowork 能做什么？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "读写你所选文件夹中的文件、制作表格和资料、用专用浏览器调研并填写表单，只在需要时操作屏幕。支持按每天、每周、每月定时执行，并能用技能、连接器、插件贴合业务。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Claude 的聊天和 Cowork 合并了吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "官方以“Claude Cowork is now just Claude”为题，说明 Cowork 将作为 Claude 本体的功能，从 Pro、Max 开始陆续提供（截至 2026 年 10 月 1 日）。整合仍在进行中，菜单位置和名称请以最新官方信息为准。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Cowork 的定时执行和 SIMY 的 Autorun 有什么不同？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "起点不同。Cowork 的定时是在设定时间重复你设计好的工作；SIMY 的 Autorun 是把从会议和聊天中接住的工作按你的格式推进，只把判断交给你。定时执行本身，两者都有。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "和 Copilot Cowork 有什么不同？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Copilot Cowork 是 Microsoft 作为 Copilot 提供的业务智能体，适合 Microsoft 365 内的工作；Claude Cowork 是 Anthropic 的智能体，适合跨电脑文件夹和多个工具的工作。两者的起点都是你的指令。详情请以各公司的官方说明为准。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "使用 SIMY 需要 Claude 的付费方案吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "只用 SIMY 的话不需要。装上 SIMY 桌面应用后，可以把 Claude Code 的对话导入 SIMY，并从 SIMY 驱动 Claude Code。这时使用的是你自己的 Claude 登录和方案。Claude 的令牌不能接入 SIMY 的云端执行，云端执行使用你自己的 ChatGPT 账户（Codex）。Gemini 的令牌联动正在开发中。SIMY 的价格请见价格页面。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Claude Code 和 Cowork，该用哪个？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "处理代码和仓库用 Claude Code，处理资料、表格、文件夹用 Cowork。SIMY 会从 Claude Code 的对话记录生成“来自 SIMY 的建议”，在本地也能让 Claude Code 当执行者。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "让 Cowork 操作电脑里的文件夹安全吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Claude 能接触的只有你选的文件夹和已连接的工具，删除需要你的批准。启用权限设置后，重要操作前会展示计划并等待批准。一开始请从弄坏也无妨的文件夹开始。"
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">跳到正文</a>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="/?lang=zh-Hans">
+      <img src="/simy-icon-56.png" alt="SIMY" width="28" height="28">
+      <span aria-hidden="true">SIMY</span>
+      <span class="brand-sub">Claude Cowork 使用指南</span>
+    </a>
+    <nav class="header-actions" aria-label="账户">
+      <details class="lang-switch"><summary aria-label="Language: 中文"><span aria-hidden="true">🌐</span> <span class="ls-label">中文</span></summary><ul><li><a href="/guides/cowork.html" hreflang="ja" lang="ja">日本語</a></li><li><a href="/guides/en/cowork.html" hreflang="en" lang="en">English</a></li><li><a href="/guides/zh-hans/cowork.html" hreflang="zh-Hans" lang="zh-Hans" aria-current="page">中文</a></li><li><a href="/guides/es/cowork.html" hreflang="es" lang="es">Español</a></li><li><a href="/guides/fr/cowork.html" hreflang="fr" lang="fr">Français</a></li><li><a href="/guides/hi/cowork.html" hreflang="hi" lang="hi">हिन्दी</a></li></ul></details>
+      <a class="header-link" href="/download/zh-hans.html">下载</a>
+      <a class="header-link" href="https://app.simy.one/login?lang=zh-Hans&amp;locale=zh-Hans">登录</a>
+      <a class="header-cta" href="https://app.simy.one/signup?lang=zh-Hans&amp;locale=zh-Hans&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=cowork_guide_zh-hans&amp;utm_content=header">选择方案并开始</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" aria-labelledby="page-title">
+    <div class="wrap hero-inner">
+      <div>
+        <ol class="crumbs" aria-label="面包屑导航">
+          <li><a href="/?lang=zh-Hans">SIMY</a></li>
+          <li><a href="/guides/zh-hans/index.html">指南</a></li>
+          <li aria-current="page">Claude Cowork 使用指南</li>
+        </ol>
+        <p class="eyebrow">Anthropic 的代办工作智能体</p>
+        <h1 id="page-title">
+          <span class="line">Cowork</span>
+          <span class="line hl">做完之后，</span>
+          <span class="line">接住下一步。</span>
+        </h1>
+        <p class="lead">Claude Cowork 围绕电脑里的文件夹和已连接的工具，完成你交代的工作。可做完之后的下一步，会议上定下的待办和分享，仍然留在你手上。SIMY 接住这部分，按你的做法推进，只把判断交给你。</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="https://app.simy.one/signup?lang=zh-Hans&amp;locale=zh-Hans&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=cowork_guide_zh-hans&amp;utm_content=hero">选择方案并开始 <span class="arrow" aria-hidden="true">↗</span></a>
+          <a class="btn btn-ghost" href="#connect">看看怎么连接 <span class="arrow" aria-hidden="true">↓</span></a>
+        </div>
+        <ul class="hero-points">
+          <li>从会议和聊天中接住没人交代的工作</li>
+          <li>做好一次的格式，不用每次开口也能重现</li>
+          <li>Claude Code 的对话也能导入 SIMY</li>
+        </ul>
+      </div>
+
+      <div class="hero-visual">
+        <div class="relay" role="img" aria-label="示例：Cowork 完成文件夹整理和操作手册后，会议上定下的待办整理、分享文案、下次安排由 SIMY 准备，只有报价金额的判断留给你">
+          <div class="relay-head" aria-hidden="true">
+            <span class="rec"><span class="rec-dot"></span><span class="rec-name">Cowork：整理销售资料文件夹并写操作手册</span></span>
+            <span>完成 09:14</span>
+          </div>
+          <div class="relay-meta" aria-hidden="true">
+            <span class="chip">Claude Cowork</span>
+            <span class="chip">对象：销售资料</span>
+            <span class="chip">每周一执行</span>
+          </div>
+          <ol class="relay-steps" aria-hidden="true">
+            <li class="step s-done s-plaud"><span class="no">01</span><span class="what">整理文件夹<small>分到提案、报价、纪要</small></span><span class="status">Cowork ✓</span></li>
+            <li class="step s-done s-plaud"><span class="no">02</span><span class="what">写操作手册<small>把命名规则和存放位置写成文档</small></span><span class="status">Cowork ✓</span></li>
+            <li class="step s-done s-plaud"><span class="no">03</span><span class="what">报告完成<small>9 个重复文件未删除，待确认</small></span><span class="status">Cowork ✓</span></li>
+            <li class="handoff">Cowork 到此为止 ／ 接下来交给 SIMY</li>
+            <li class="step s-done"><span class="no">04</span><span class="what">会议上定下的待办<small>附负责人和期限列出</small></span><span class="status">已列出</span></li>
+            <li class="step s-run"><span class="no">05</span><span class="what">分享<small>把手册位置告诉团队，发布需批准</small></span><span class="status">Autorun</span><span class="bar"></span></li>
+            <li class="step s-next"><span class="no">06</span><span class="what">下次安排<small>下次销售会议的议题草案</small></span><span class="status">下一步</span></li>
+            <li class="step s-you"><span class="no">07</span><span class="what">报价金额的判断<small>只有判断留给你</small></span><span class="status">轮到你</span></li>
+          </ol>
+          <div class="relay-foot" aria-hidden="true"><strong>你要做的，只有审阅和决定。</strong></div>
+        </div>
+        <p class="caption">※ 画面为示意图</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap guide">
+    <nav class="toc" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <ol>
+        <li><a href="#scene"><span>01</span>任务做完后，是不是这样</a></li>
+        <li><a href="#wish"><span>02</span>其实你想要的是这样</a></li>
+        <li><a href="#gap"><span>03</span>Cowork 停在这里</a></li>
+        <li><a href="#connect"><span>04</span>SIMY 接上后半程</a></li>
+        <li><a href="#sample"><span>05</span>用一件事来对比</a></li>
+        <li><a href="#usecases"><span>06</span>按行业：Cowork 与 SIMY 的分工</a></li>
+        <li><a href="#start"><span>07</span>开始使用：3 步</a></li>
+        <li><a href="#reference"><span>08</span>用法、价格、安全性、对比</a></li>
+        <li><a href="#faq"><span>09</span>常见问题</a></li>
+        <li><a href="#sources"><span>10</span>参考资料</a></li>
+      </ol>
+    </nav>
+
+    <article class="article">
+      <details class="toc-mobile">
+        <summary>目录</summary>
+        <ol>
+          <li><a href="#scene">任务做完后，是不是这样</a></li>
+          <li><a href="#wish">其实你想要的是这样</a></li>
+          <li><a href="#gap">Cowork 停在这里</a></li>
+          <li><a href="#connect">SIMY 接上后半程</a></li>
+          <li><a href="#sample">用一件事来对比</a></li>
+          <li><a href="#usecases">按行业：Cowork 与 SIMY 的分工</a></li>
+          <li><a href="#start">开始使用：3 步</a></li>
+          <li><a href="#reference">用法、价格、安全性、对比</a></li>
+          <li><a href="#faq">常见问题</a></li>
+          <li><a href="#sources">参考资料</a></li>
+        </ol>
+      </details>
+
+      <p class="byline"><span>最后更新：<time datetime="2026-10-01">2026年10月1日</time></span><span>发布：SIMY（AwakApp Inc.）</span></p>
+
+      <!-- 01 -->
+      <section class="sec" id="scene" aria-labelledby="h-scene">
+        <span class="sec-label">01 / AFTER THE TASK</span>
+        <h2 id="h-scene">任务做完后，是不是这样</h2>
+        <p class="intro">Cowork 会照你的指令把事做完。可任务完成后的第二天，还是会发生这些事。</p>
+        <div class="scenes">
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">1</span>
+            <span class="k">刚完成时</span>
+            <b>文件夹整理好了</b>
+            <p>销售资料收拾干净了。可会议上定下的待办，没有人接。</p>
+          </div>
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">2</span>
+            <span class="k">下周一</span>
+            <b>定时任务排好了</b>
+            <p>每周报告定时执行。但排什么，每次都得自己设计。</p>
+          </div>
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">3</span>
+            <span class="k">公司规定</span>
+            <b>公司只让用 Copilot</b>
+            <p>没法试 Cowork。可会议待办，每周照样产生。</p>
+          </div>
+        </div>
+        <p class="scene-foot">Cowork 会完成你交代的工作。<b>会议和聊天中产生的工作，却没有人交代过。</b></p>
+      </section>
+
+      <!-- 02 -->
+      <section class="sec" id="wish" aria-labelledby="h-wish">
+        <span class="sec-label">02 / WHAT YOU REALLY WANTED</span>
+        <h2 id="h-wish">其实你想要的是这样：Cowork 任务之后</h2>
+        <p class="intro">同样的一天，同样的 Cowork。走出会议室时，你希望已经变成这样。</p>
+        <div class="scenes four">
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">走出会议室时</span>
+            <b>会后就已排好</b>
+            <p>定下的待办附上负责人和期限，已经列在聊天里。</p>
+          </div>
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">不用开口</span>
+            <b>每次都是你的格式</b>
+            <p>按你的方式做好一次，之后就以同样的格式备好。</p>
+          </div>
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">下指令之前</span>
+            <b>收到建议</b>
+            <p>从你用 Claude Code 或 Codex 做过的工作中，送来“下次要不要自动跑这个”。</p>
+          </div>
+          <div class="scene wish you">
+            <span class="mark" aria-hidden="true">!</span>
+            <span class="k">回到你手上的</span>
+            <b>只有判断</b>
+            <p>“按这个金额报出去可以吗？”只回来这一个问题。</p>
+          </div>
+        </div>
+        <p class="scene-foot">这些，<b>从注册 SIMY 后的下一场会议</b>就会发生。</p>
+      </section>
+
+      <!-- 03 -->
+      <section class="sec" id="gap" aria-labelledby="h-gap">
+        <span class="sec-label">03 / WHERE COWORK STOPS</span>
+        <h2 id="h-gap">Cowork，停在这里</h2>
+        <p class="intro">Cowork 擅长的是“把交代的工作做完”。之后的事，没有人接。</p>
+        <div class="tl-wrap" role="img" aria-label="时间线。下指令、Cowork 执行、完成由 Cowork 完成，但会议待办、重新交代、分享、等待判断的事都还是空白">
+          <div class="tl-row">
+            <span class="tl-who">Cowork</span>
+            <ol class="tl">
+              <li class="on">下指令<small>告诉它文件夹和目的</small></li>
+              <li class="on">Cowork 执行<small>读取电脑文件、Computer Use、定时执行</small></li>
+              <li class="on">完成<small>审阅后收下</small></li>
+              <li class="gap">会议待办</li>
+              <li class="gap">重新交代</li>
+              <li class="gap">分享</li>
+              <li class="gap">等待判断</li>
+            </ol>
+          </div>
+        </div>
+        <p class="caption">※ 流程为示意图</p>
+        <p class="tl-note"><b>用上定时执行，也停在同一个地方。</b>每周一的报告会照常跑。但决定“跑什么”并下指令的是你，会议上定下的待办也不会进任何人的日程。</p>
+      </section>
+
+      <!-- 04 -->
+      <section class="sec" id="connect" aria-labelledby="h-connect">
+        <span class="sec-label">04 / CONNECT</span>
+        <h2 id="h-connect">SIMY 接上后半程：桌面交给 Cowork，会议和聊天交给 SIMY</h2>
+        <p class="intro">分界线只有一条。Cowork＝桌面上的指令与定时任务。SIMY＝会议和聊天中产生的工作。</p>
+        <div class="tl-wrap" role="img" aria-label="时间线。下指令、执行、完成由 Cowork 完成。会议待办、无需重新交代的重现、分享由 SIMY 推进，只有判断回到你手上">
+          <div class="tl-row">
+            <span class="tl-who">Cowork</span>
+            <ol class="tl">
+              <li class="on">下指令</li>
+              <li class="on">执行</li>
+              <li class="on">完成</li>
+              <li class="blank"></li><li class="blank"></li><li class="blank"></li><li class="blank"></li>
+            </ol>
+          </div>
+          <div class="tl-row">
+            <span class="tl-who simy">SIMY</span>
+            <ol class="tl">
+              <li class="blank"></li><li class="blank"></li><li class="blank"></li>
+              <li class="run">会议待办<small>按负责人和期限列出</small></li>
+              <li class="run">无需重新交代<small>每次按你的格式</small></li>
+              <li class="run">分享<small>Slack、Notion 需批准</small></li>
+              <li class="you">判断<small>只交回判断</small></li>
+            </ol>
+          </div>
+        </div>
+        <p class="caption">※ 流程为示意图</p>
+        <ul class="three" aria-label="SIMY 的三个特点">
+          <li>从会议中接活</li>
+          <li>按你的做法来</li>
+          <li>只把判断交给你</li>
+        </ul>
+        <p class="tl-note">SIMY 会自己从会议记录和聊天中，找出做完之后的工作。不用开口就开始，并学习你在出色完成工作时反复做的确认和优先顺序，按同样的方式推进。</p>
+
+        <div class="connect">
+          <ol class="connect-steps">
+            <li><b>注册 SIMY</b><span>在云端运行时，连接你自己的 ChatGPT 账户。Codex 的用量计入你自己的 ChatGPT 方案。Gemini 的令牌联动正在开发中。</span></li>
+            <li class="key"><b>在本地，让 Claude Code 当执行者</b><span>SIMY 桌面应用会从 SIMY 驱动电脑上的 Claude Code。Claude Code 的对话也会导入 SIMY，变成“来自 SIMY 的建议”。 <a href="/download/zh-hans.html">前往下载</a></span></li>
+            <li><b>接收“来自 SIMY 的建议”</b><span>从 Claude Code 和 Codex 的对话记录（默认 90 天）中，把重复的工作作为 WorkFlow 候选提出。对话正文不保存在服务器上。</span></li>
+          </ol>
+          <div>
+            <div class="mock" role="img" aria-label="“来自 SIMY 的建议”示意图。从 Claude Code 的对话记录中找到重复的工作，作为 WorkFlow 候选展示。对话正文不保存在服务器上。">
+              <div class="mock-head" aria-hidden="true">
+                <span class="mock-mark">S</span>
+                <div>
+                  <div class="mock-title">来自 SIMY 的建议 <span class="mock-state">● 3 条</span></div>
+                  <p class="mock-desc">从 Claude Code 的对话记录中，找到了重复的工作</p>
+                </div>
+              </div>
+              <div class="mock-box" aria-hidden="true">整理完销售资料后，按负责人列出会议待办</div>
+              <div class="mock-btn" aria-hidden="true">运行这个 WorkFlow</div>
+              <div class="mock-foot" aria-hidden="true">对话正文不保存在服务器上</div>
+            </div>
+            <p class="caption">※ SIMY 界面示意图</p>
+          </div>
+        </div>
+        <p class="note"><b>需要准备：</b>SIMY 账户。导入和操作 Claude Code 的对话可以通过 SIMY 桌面应用完成。唯一做不到的，是把 Claude 的令牌接入 SIMY 的云端执行；云端执行使用你自己的 ChatGPT（Codex）。Gemini 的令牌联动正在开发中。</p>
+      </section>
+
+      <!-- 05 -->
+      <section class="sec" id="sample" aria-labelledby="h-sample">
+        <span class="sec-label">05 / SAMPLE</span>
+        <h2 id="h-sample">用一件事来对比：Cowork 的完成报告，与 SIMY 接住的下一件工作</h2>
+        <p class="intro">周一把“整理销售资料文件夹并写操作手册”交给 Cowork 的示例。左边是 Cowork，右边是 SIMY。</p>
+        <div class="sample">
+          <div class="sheet">
+            <div class="sheet-label"><span>Cowork 的完成报告（示例）</span><span>对象：销售资料文件夹</span></div>
+            <dl>
+              <dt>整理</dt>
+              <dd>把 128 个文件分到“提案”“报价”“纪要”“其他”。9 个重复文件作为候选报告（未执行删除）。</dd>
+              <dt>操作手册</dt>
+              <dd>写好保存新资料时的命名规则和存放位置手册。</dd>
+              <dt>定时执行</dt>
+              <dd>设置为每周一 8:00 执行同样的整理。</dd>
+              <dt>待确认</dt>
+              <dd>9 个重复文件是否删除。</dd>
+            </dl>
+          </div>
+          <div class="outs">
+            <div class="out">
+              <div class="out-head"><b>会议上定下的待办</b><span class="pill ok">已列出</span></div>
+              <p>把周一销售会议定下的 3 项待办（A 公司重新报价、给 B 公司发案例、下月展会分工）附上负责人和期限列了出来。</p>
+            </div>
+            <div class="out">
+              <div class="out-head"><b>分享</b><span class="pill run">Autorun</span></div>
+              <p>把 Cowork 写好的手册位置和命名规则发到团队 Slack 的文案。发布需要你批准。</p>
+            </div>
+            <div class="out">
+              <div class="out-head"><b>下次安排</b><span class="pill">下一步</span></div>
+              <p>下次销售会议的议题草案。从上次记录中找出上周待办的进展并列出。</p>
+            </div>
+            <div class="out you">
+              <div class="out-head"><b>你的确认</b><span class="pill you">轮到你</span></div>
+              <p>给 A 公司的报价金额。只有需要判断的部分，会回到你手上。</p>
+            </div>
+          </div>
+        </div>
+        <p class="sample-foot">Cowork 收拾桌面，SIMY 推动会议待办。谈生意本身，依然是你大显身手的地方。</p>
+      </section>
+
+      <!-- 06 -->
+      <section class="sec" id="usecases" aria-labelledby="h-usecases">
+        <span class="sec-label">06 / BY INDUSTRY</span>
+        <h2 id="h-usecases">按行业：交给 Cowork 的工作，与 SIMY 的产出</h2>
+        <p class="intro">桌面上的工作交给 Cowork，会议和聊天中产生的工作交给 SIMY。行业不同，分法一样。</p>
+        <div class="ind">
+          <div class="ind-card">
+            <h3>销售 <small>Cowork：商谈前的企业调研、资料文件夹整理</small></h3>
+            <ul class="ind-rows">
+              <li><span>销售会议</span><span>→</span><span>按负责人和期限列出待办</span></li>
+              <li><span>商谈之后</span><span>→</span><span>感谢邮件草稿、客户备忘更新</span></li>
+              <li><span>周末</span><span>→</span><span>不用追问，先给出待判断清单</span></li>
+            </ul>
+          </div>
+          <div class="ind-card">
+            <h3>后台、财务 <small>Cowork：月结汇总、发票文件夹整理</small></h3>
+            <ul class="ind-rows">
+              <li><span>月结会议</span><span>→</span><span>给各部门的确认请求草稿</span></li>
+              <li><span>报销规则变更</span><span>→</span><span>通知文案和流程更新草案</span></li>
+              <li><span>咨询聊天</span><span>→</span><span>回复草案，只交需判断的</span></li>
+            </ul>
+          </div>
+          <div class="ind-card">
+            <h3>经营会议、1on1 <small>Cowork：定期生成周报</small></h3>
+            <ul class="ind-rows">
+              <li><span>经营会议</span><span>→</span><span>决定事项与负责人一览、分享给相关人</span></li>
+              <li><span>1on1</span><span>→</span><span>只有进度和待判断的事会报上来</span></li>
+              <li><span>季度复盘</span><span>→</span><span>汇总多场会议的报告</span></li>
+            </ul>
+          </div>
+          <div class="ind-card">
+            <h3>制作、咨询 <small>Cowork：交付文件夹整理、资料格式统一</small></h3>
+            <ul class="ind-rows">
+              <li><span>例会</span><span>→</span><span>下次之前的待办与负责人</span></li>
+              <li><span>客户的需求聊天</span><span>→</span><span>报价前提和确认事项</span></li>
+              <li><span>评审会</span><span>→</span><span>修改清单，只交需判断的</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- 07 -->
+      <section class="sec" id="start" aria-labelledby="h-start">
+        <span class="sec-label">07 / START</span>
+        <h2 id="h-start">开始使用：用不用 Cowork，都是 3 步</h2>
+        <ol class="steps3">
+          <li><b>把桌面上的工作交给 Cowork</b><span>在 Claude 桌面应用中打开 Cowork，选好文件夹并说明目的。每周的工作放进定时。不用 Cowork 的人，也可以从第 2 步开始。 <a href="/download/zh-hans.html">前往下载</a></span></li>
+          <li class="key"><b>注册 SIMY，接上执行者</b><span>云端用你自己的 ChatGPT 账户，本地用电脑上的 Claude Code。<a href="#connect">连接方法</a>见上文。</span></li>
+          <li><b>开完一场会</b><span>定下的待办附上负责人和期限列出，分享文案也会送到。审阅、决定，就这么简单。</span></li>
+        </ol>
+        <p class="note"><b>注册流程：</b>选择方案 → 邮箱验证 → 银行卡付款。没有免费方案。<a href="/?lang=zh-Hans#pricing">查看价格</a>。电脑端应用请从<a href="/download/zh-hans.html">下载页面</a>获取。</p>
+        <p class="note"><b>在用 Claude Code 的人，</b>会根据对话记录收到“来自 SIMY 的建议”。重复的工作，可以直接作为 WorkFlow 跑起来。</p>
+      </section>
+
+      <!-- 08 -->
+      <section class="sec" id="reference" aria-labelledby="h-reference">
+        <span class="sec-label">08 / REFERENCE</span>
+        <h2 id="h-reference">Claude Cowork 的用法、价格、安全性、对比（想深入了解的人）</h2>
+        <p class="intro">以下内容是想确认 Cowork 本身时再展开看的。它们都不影响 SIMY 的用法。</p>
+
+        <details class="fold">
+          <summary>Claude Cowork 是什么：写给非工程师的一句话说明<small>与聊天的区别、2026 年的整合、能做的事</small></summary>
+          <div class="fold-body">
+            <h3>一句话说</h3>
+            <p>Claude Cowork 是 Anthropic 提供的代办工作智能体。聊天里的 Claude 的工作是“回答问题”，Cowork 的工作则是“你说明目的，它就在你选定的文件夹和工具中动手，把成果交回给你审阅”。它和面向写代码的人的 Claude Code 不同，是为处理资料、表格、文件夹的一般业务而做的。</p>
+            <h3>和聊天里的 Claude 有什么不同</h3>
+            <p>用聊天，把回答复制粘贴进文件的工作留给了你。Cowork 会直接打开文件写入，做完后报告“完成了”。它打开了哪个文件、用了哪个工具、做了什么选择，都以步骤的形式可见，所以可以中途叫停或让它重做。</p>
+            <h3>关于 2026 年与聊天的整合</h3>
+            <p>截至 2026 年 10 月 1 日，Anthropic 官方页面以“Claude Cowork is now just Claude”为题，说明 Cowork 不再是与聊天分开的菜单，而将作为 Claude 本体的功能，从 Pro、Max 开始陆续提供。这项整合始于 2026 年 9 月、仍在进行中，菜单位置和名称可能变化。最新情况请以官方说明为准。</p>
+            <h3>能做的事要点</h3>
+            <ul class="plain-list">
+              <li>读取电脑内指定文件夹的文件，进行创建和编辑</li>
+              <li>打开专用浏览器做调研、填写表单（与你自己的浏览器分开）</li>
+              <li>只在需要时操作屏幕（Computer Use）</li>
+              <li>按每天、每周、每月的定时执行同样的工作</li>
+              <li>把大任务拆开并行推进</li>
+              <li>用技能、连接器、插件贴合你的业务</li>
+            </ul>
+            <h3>官方给出的用法示例</h3>
+            <p>Anthropic 的产品页面列出了以非工程师工作为设想的示例：每周一早上收集上周营销数据做对比、整理成资料存进 Drive 的报告；从月结文件夹把各地区的导出汇总成一张表、标出与预算差距大的行的汇总；把合同文件夹对照公司方针、为每份合同写带条款编号备注的初审；阅读一个季度的商谈笔记、整理各案件状况和反复出现的反对意见的回顾。都是“指定文件夹，说明目的”的形式，成果以待审阅的状态交回。</p>
+            <h3>本文中的称呼</h3>
+            <p>聊天里的 Claude、代办工作的 Cowork、面向代码的 Claude Code，是使用同一 Claude 模型的三个入口。本文把完成桌面工作的功能称为 Cowork，把接住会议和聊天中产生的工作并推动起来的一方称为 SIMY。Claude 本身的用法，见另一篇指南。</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>上手：从桌面应用开始第一个任务<small>安装、文件夹怎么选、先交给它什么</small></summary>
+          <div class="fold-body">
+            <ol class="plain-list">
+              <li><strong>安装 Claude 桌面应用。</strong>官方提供 macOS、Windows（含 arm64）、ChromeOS、Linux 的下载（截至 2026 年 10 月 1 日）。网页版和移动端也在陆续提供，移动端为测试版。Windows 上的支持范围和功能差异，请在最新官方页面确认。</li>
+              <li><strong>用付费方案登录。</strong>Cowork 是面向付费方案的功能。详见下一项“价格与支持环境”。</li>
+              <li><strong>打开 Cowork，选择文件夹。</strong>Claude 能接触的只有你在这里选的文件夹和已连接的工具。一开始先从“没整理过的资料文件夹”这类弄坏也无妨的范围开始。</li>
+              <li><strong>只说明“做什么”。</strong>像“把这个文件夹分成提案、报价、纪要，再写一份命名规则的操作手册”这样，写目的而不是步骤。</li>
+              <li><strong>看着步骤，审阅成果。</strong>删除需要你的批准。</li>
+            </ol>
+            <p>熟悉后，把每周的工作登记为定时。即使合上笔记本也会执行，回来时结果已在等你。</p>
+            <h3>写第一条指令的诀窍</h3>
+            <ul class="plain-list">
+              <li><strong>把对象限定在一个文件夹。</strong>不是“整个桌面”，而是“销售资料”这样看得见范围的单位。</li>
+              <li><strong>用一行写出成品形状。</strong>像“提案、报价、纪要、其他 4 个文件夹”“表格按地区各一个标签页”这样先定好接收方式，审阅会更快。</li>
+              <li><strong>写下不希望它做的事。</strong>“不要删除”“不要发到公司外”。虽有审批机制，写进指令更放心。</li>
+              <li><strong>要求它汇报。</strong>“最后汇总没做成的事和需要判断的事”。这一句话，就能把待确认事项列成清单。</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>价格与支持环境：免费版不能用<small>Pro 及以上、Team、Enterprise、网页与移动端</small></summary>
+          <div class="fold-body">
+            <p class="scroll-hint">表格可以左右滑动 →</p>
+            <div class="table-wrap">
+              <table class="t-wide">
+                <thead>
+                  <tr><th scope="col">项目</th><th scope="col">截至 2026 年 10 月 1 日的官方说明</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">可用方案</th><td>付费方案（从 Pro、Max 开始陆续提供。Team、Enterprise 由管理员设置功能和权限）</td></tr>
+                  <tr><th scope="row">免费方案</th><td>不能使用 Cowork</td></tr>
+                  <tr><th scope="row">支持环境</th><td>桌面（macOS、Windows、ChromeOS、Linux）、网页、移动端（测试版）</td></tr>
+                  <tr><th scope="row">专用浏览器</th><td>桌面应用的 Pro、Max、Team 可用</td></tr>
+                  <tr><th scope="row">价格</th><td>各方案的金额与所在地区价格，请在 Claude 官方价格页面确认（含税与否以官方标注为准）</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3>选方案的参考</h3>
+            <p>个人要把桌面工作交出去，从 Pro 开始。一天跑好几件、并行跑长任务的，可以考虑用量上限更大的 Max。团队使用、想管理谁能碰哪些文件夹和工具的，选 Team；需要按部门设权限、用量费用上限、把活动日志接到外部系统的，选 Enterprise。各方案的用量上限和金额可能变化，这里不写，请在官方价格页面确认。</p>
+            <p class="note"><b>与 SIMY 的关系：</b>只用 SIMY 的话，不需要 Claude 付费方案。装上 SIMY 桌面应用后，可以导入 Claude Code 的对话，并从 SIMY 驱动 Claude Code。Claude 的令牌不能接入云端执行，云端执行使用你自己的 ChatGPT 账户（Codex）。SIMY 的价格见<a href="/?lang=zh-Hans#pricing">价格页面</a>。</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>业务应用案例：技能、连接器、插件能做什么<small>自动写操作手册、文件夹分类、Excel、PowerPoint</small></summary>
+          <div class="fold-body">
+            <h3>最容易先交出去的 4 件事</h3>
+            <ul class="plain-list">
+              <li><strong>文件夹分类：</strong>把堆积的文件按类型分开，把重复文件作为候选报告。删除要你批准后才执行。</li>
+              <li><strong>自动写操作手册：</strong>把它做过的作业步骤，直接写成内部操作手册。</li>
+              <li><strong>Excel 汇总：</strong>把多个导出文件合成一张表，标出差异大的行。</li>
+              <li><strong>制作 PowerPoint：</strong>每周结构相同的汇报资料，替换数字后定期生成。</li>
+            </ul>
+            <h3>可以直接用的指令示例</h3>
+            <ul class="plain-list">
+              <li>“把销售资料文件夹分成提案、报价、纪要、其他。重复的不要删，列成清单。”</li>
+              <li>“把刚才整理的步骤，写成给新同事看的 Word 操作手册。写上存放位置和命名规则。”</li>
+              <li>“把报销文件夹里的 4 个 CSV 合成一个 Excel，环比变动 10% 以上的行标上颜色。”</li>
+              <li>“每周一 8:00，替换上周数字生成周报 PowerPoint，存进报告文件夹。”</li>
+            </ul>
+            <h3>技能、连接器、插件</h3>
+            <p>技能是让 Claude 掌握“我们公司的报告怎么写”这类业务知识的机制；连接器是接入 Microsoft 365、Google Drive、Slack 等你已在用工具的连接；插件是把技能、连接器、子智能体打包在一起的导入套件。法务、财务、品牌语调等插件已经公开，Team、Enterprise 的管理员还能搭建公司内部的插件市场。</p>
+            <p>这些都是“让你交代的工作完成得更快更准”的机制，而不是让人接住会议待办的机制。那部分，是 SIMY 的工作。</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>从会议纪要、报告到邮件处理：每次都要重复同样指令的结构<small>Cowork 能跑的工作，与指令本身仍留下的工作</small></summary>
+          <div class="fold-body">
+            <p>把纪要文件夹交给 Cowork，说“提取决定事项和待办”，就能得到整齐的结果。周报可以放进定时，邮件回复也能做到草稿。到这里为止，都是 Cowork 的拿手活。</p>
+            <p>剩下的是结构。每次会议结束，保存转录稿、打开 Cowork、敲同样指令的，是你。就算做成定时，“哪场会议的、哪项待办、交给谁”每次都得重新设计。把邮件停在草稿，Codex 和 Cowork 都一样，是让人放心的保障，而不是谁的卖点。</p>
+            <p>SIMY 去掉的正是“下指令”这道工序。它从会议记录和聊天中接住工作，学习你按自己方式完成过一次的做法，之后以同样的形状备好，只把需要判断的事列进 My Actions。前提是两者并用：收下 Cowork 的成果，再推动下一步。</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>安全性：权限、文件夹范围、删除<small>Cowork 能碰的范围，与你掌握的东西</small></summary>
+          <div class="fold-body">
+            <ul class="plain-list">
+              <li><strong>文件夹范围：</strong>Claude 能接触的只有你选的文件夹和已连接的工具，其他地方够不到。</li>
+              <li><strong>删除：</strong>删除任何东西都需要你的批准。</li>
+              <li><strong>事前确认：</strong>启用权限设置后，重要操作前会先展示计划并等待批准。可以中途叫停或改变方向。</li>
+              <li><strong>专用浏览器：</strong>网页作业在 Cowork 内的另一个浏览器中进行，与你自己浏览器的登录和标签页分开。</li>
+              <li><strong>Team、Enterprise：</strong>管理员可以按团队设置访问、用量费用上限、按部门设工具权限，并把活动日志接入 SIEM。</li>
+            </ul>
+            <p>一开始从弄坏也无妨的文件夹开始。熟悉之前，删除和发送都自己动手。在 SIMY 这边，Gmail 只到保存草稿为止，发布到 Slack、写入 Notion 都需要批准。数据的处理方式公开于<a href="/security.html">安全</a>和<a href="/privacy.html?lang=zh-Hans">隐私政策</a>。</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>与 Copilot Cowork、Claude Code 的对比与分工<small>按起点来比，不比定时执行</small></summary>
+          <div class="fold-body">
+            <p class="scroll-hint">表格可以左右滑动 →</p>
+            <div class="table-wrap">
+              <table class="t-wide t-models">
+                <thead>
+                  <tr><th scope="col">对比项</th><th scope="col">Claude Cowork</th><th scope="col">Copilot Cowork</th><th scope="col">Claude Code</th><th scope="col" class="simy">SIMY</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">起点</th><td>你的指令（在桌面上）</td><td>你的指令（在 Microsoft 365 中）</td><td>你的指令（在终端、编辑器中）</td><td class="simy">SIMY 从会议和聊天中接活</td></tr>
+                  <tr><th scope="row">适合的工作</th><td>文件夹、资料、表格的作业</td><td>Word、Excel、Teams 等 Microsoft 365 内的作业</td><td>代码与仓库的作业</td><td class="simy">会后产生的待办、分享、判断</td></tr>
+                  <tr><th scope="row">你的做法</th><td>用技能、插件指定</td><td>在 Copilot 设置中指定</td><td>写进 CLAUDE.md 等</td><td class="simy">从对话中学习出色工作的确认事项与优先顺序</td></tr>
+                  <tr><th scope="row">定时执行</th><td>有</td><td>有（请查看官方说明）</td><td>视机制而定</td><td class="simy">Autorun（不是卖点，而是保障）</td></tr>
+                  <tr><th scope="row">返回什么</th><td>待审阅的成果</td><td>待审阅的成果</td><td>代码改动</td><td class="simy">草稿、分享文案，加上一个判断</td></tr>
+                  <tr><th scope="row">留在手边的</th><td>任务记录</td><td>Microsoft 365 内的记录</td><td>会话记录</td><td class="simy">进行中、已完成、等你处理一目了然的 My Actions</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3>与 Claude Code 的分工</h3>
+            <p>Claude Code 是从终端或编辑器处理代码和仓库的入口，面向工程师。非工程师处理资料、表格、文件夹，用 Cowork 就够了。两者都用的人，按代码交给 Claude Code、桌面交给 Cowork、会议待办交给 SIMY 来分，就不会纠结。SIMY 会从 Claude Code 的对话记录中找出重复的工作，作为“来自 SIMY 的建议”提出，所以在 Claude Code 里还靠手动的固定工作，可以直接变成 WorkFlow。</p>
+            <h3>选择 Copilot Cowork 的公司也一样</h3>
+            <p>如果公司规定统一用 Microsoft 365 和 Copilot，可能没法试 Claude Cowork。即便如此，会议上定下的待办、聊天中产生的请求，每周照样会有。SIMY 不是 Copilot 的替代，而是从会议和聊天中接住工作并推动起来的一方，所以可以与 Copilot Cowork 并用。SIMY 的执行者是你自己的 ChatGPT（Codex）或电脑上的 Claude Code，与 Copilot 的合同无关。</p>
+            <p class="note"><b>怎么选：</b>公司以 Microsoft 365 为中心就选 Copilot Cowork，跨电脑文件夹和多个工具就选 Claude Cowork，写代码就选 Claude Code。无论选哪个，接住会议待办都是另一项工作，在那里叠加 SIMY。SIMY 可以让 Codex 和 Claude Code 都作为执行者，也能防备一方不稳定或达到用量上限。Copilot Cowork 的规格请以 Microsoft 官方说明为准。</p>
+          </div>
+        </details>
+      </section>
+
+      <!-- 09 -->
+      <section class="sec" id="faq" aria-labelledby="h-faq">
+        <span class="sec-label">09 / FAQ</span>
+        <h2 id="h-faq">常见问题</h2>
+        <div class="faq">
+          <details>
+            <summary>Claude Cowork 可以免费使用吗？</summary>
+            <div class="a"><p>不可以。根据截至 2026 年 10 月 1 日的官方说明，Cowork 是面向付费方案的功能，从 Pro、Max 开始陆续提供。所在地区的价格请在 Claude 官方价格页面确认。</p></div>
+          </details>
+          <details>
+            <summary>Claude Cowork 能在 Windows 上用吗？</summary>
+            <div class="a"><p>截至 2026 年 10 月 1 日，Claude 官方提供面向 Windows（含 arm64）的桌面应用下载。支持范围和功能差异，请在最新官方页面确认。</p></div>
+          </details>
+          <details>
+            <summary>Claude Cowork 能在手机上用吗？</summary>
+            <div class="a"><p>官方表示，Cowork 正陆续在网页和移动端提供（移动端为测试版）。设想的用法是：在桌面上开始的工作，用手机查看或追加指令。</p></div>
+          </details>
+          <details>
+            <summary>Claude Cowork 从什么时候开始可以用？</summary>
+            <div class="a"><p>截至 2026 年 10 月 1 日，付费方案可在 Claude 桌面应用中使用。提供的方案和环境在分阶段扩大，你所用方案的开放时间请以官方公告为准。</p></div>
+          </details>
+          <details>
+            <summary>Claude Cowork 能做什么？</summary>
+            <div class="a"><p>读写你所选文件夹中的文件、制作表格和资料、用专用浏览器调研并填写表单，只在需要时操作屏幕。支持按每天、每周、每月定时执行，并能用技能、连接器、插件贴合业务。</p></div>
+          </details>
+          <details>
+            <summary>Claude 的聊天和 Cowork 合并了吗？</summary>
+            <div class="a"><p>官方以“Claude Cowork is now just Claude”为题，说明 Cowork 将作为 Claude 本体的功能，从 Pro、Max 开始陆续提供（截至 2026 年 10 月 1 日）。整合仍在进行中，菜单位置和名称请以最新官方信息为准。</p></div>
+          </details>
+          <details>
+            <summary>Cowork 的定时执行和 SIMY 的 Autorun 有什么不同？</summary>
+            <div class="a"><p>起点不同。Cowork 的定时是在设定时间重复你设计好的工作；SIMY 的 Autorun 是把从会议和聊天中接住的工作按你的格式推进，只把判断交给你。定时执行本身，两者都有。</p></div>
+          </details>
+          <details>
+            <summary>和 Copilot Cowork 有什么不同？</summary>
+            <div class="a"><p>Copilot Cowork 是 Microsoft 作为 Copilot 提供的业务智能体，适合 Microsoft 365 内的工作；Claude Cowork 是 Anthropic 的智能体，适合跨电脑文件夹和多个工具的工作。两者的起点都是你的指令。详情请以各公司的官方说明为准。</p></div>
+          </details>
+          <details>
+            <summary>使用 SIMY 需要 Claude 的付费方案吗？</summary>
+            <div class="a"><p>只用 SIMY 的话不需要。装上 SIMY 桌面应用后，可以把 Claude Code 的对话导入 SIMY，并从 SIMY 驱动 Claude Code。这时使用的是你自己的 Claude 登录和方案。Claude 的令牌不能接入 SIMY 的云端执行，云端执行使用你自己的 ChatGPT 账户（Codex）。Gemini 的令牌联动正在开发中。SIMY 的价格请见<a href="/?lang=zh-Hans#pricing">价格页面</a>。</p></div>
+          </details>
+          <details>
+            <summary>Claude Code 和 Cowork，该用哪个？</summary>
+            <div class="a"><p>处理代码和仓库用 Claude Code，处理资料、表格、文件夹用 Cowork。SIMY 会从 Claude Code 的对话记录生成“来自 SIMY 的建议”，在本地也能让 Claude Code 当执行者。</p></div>
+          </details>
+          <details>
+            <summary>让 Cowork 操作电脑里的文件夹安全吗？</summary>
+            <div class="a"><p>Claude 能接触的只有你选的文件夹和已连接的工具，删除需要你的批准。启用权限设置后，重要操作前会展示计划并等待批准。一开始请从弄坏也无妨的文件夹开始。</p></div>
+          </details>
+        </div>
+      </section>
+
+      <!-- 10 -->
+      <section class="sec" id="sources" aria-labelledby="h-sources">
+        <span class="sec-label">10 / SOURCES</span>
+        <h2 id="h-sources">参考资料</h2>
+        <p>Claude Cowork 的功能、支持环境、提供方案与安全性，依据以下官方信息确认（确认日期：2026 年 10 月 1 日）。关于 Copilot Cowork，参考了 Microsoft 的官方说明。任务之后剩下的工作场景，参考了 AI 应用讲解视频。</p>
+        <ul class="plain-list">
+          <li><a href="https://claude.com/product/cowork" target="_blank" rel="noopener">Claude Cowork（Anthropic 官方产品页面：功能、支持环境、安全性）</a></li>
+          <li><a href="https://claude.com/pricing" target="_blank" rel="noopener">Claude 价格方案（Anthropic 官方）</a></li>
+          <li><a href="https://code.claude.com/docs/en/overview" target="_blank" rel="noopener">Claude Code 概览（Anthropic 官方文档）</a></li>
+          <li><a href="https://www.microsoft.com/zh-cn/microsoft-365/copilot" target="_blank" rel="noopener">Microsoft 365 Copilot（Microsoft 官方）</a></li>
+        </ul>
+      </section>
+      <aside class="next-read" aria-labelledby="h-next">
+        <h2 id="h-next">接着读</h2>
+        <div class="next-grid"><a href="/guides/zh-hans/claude.html"><b>Claude 使用指南</b><span>回答之后剩下的工作，不必再找 Claude 重说</span></a><a href="/guides/zh-hans/codex.html"><b>OpenAI Codex 使用指南</b><span>第二天不再敲同样的指令</span></a><a href="/guides/zh-hans/meeting-notes.html"><b>AI 会议纪要工具怎么选</b><span>哪款工具都会剩下的分享与待办</span></a></div>
+        <a class="next-all" href="/guides/zh-hans/index.html">查看全部指南 →</a>
+      </aside>
+    </article>
+  </div>
+
+  <section class="closing" aria-labelledby="h-closing">
+    <div class="wrap closing-inner">
+      <div>
+        <h2 id="h-closing">下一场会议结束后，<br>打开 Cowork 之前先交给 SIMY。</h2>
+        <p>桌面交给 Cowork，会议待办交给 SIMY。SIMY 交回的只有判断。谈生意和做决断，依然是你大显身手的地方。</p>
+      </div>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="https://app.simy.one/signup?lang=zh-Hans&amp;locale=zh-Hans&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=cowork_guide_zh-hans&amp;utm_content=closing">选择方案并开始 <span class="arrow" aria-hidden="true">↗</span></a>
+        <a class="btn btn-ghost" href="mailto:sales@simy.one?subject=%E6%83%B3%E5%92%A8%E8%AF%A2%20Cowork%20%E8%81%94%E5%8A%A8">咨询我们</a>
+        <a class="btn btn-ghost" href="/download/zh-hans.html">下载应用 <span class="arrow" aria-hidden="true">↓</span></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <ul class="footer-links">
+      <li><a href="/?lang=zh-Hans">首页</a></li>
+      <li><a href="/?lang=zh-Hans#pricing">价格</a></li>
+      <li><a href="/integrations.html">集成</a></li>
+      <li><a href="/download/zh-hans.html">下载</a></li>
+      <li><a href="/guides/zh-hans/index.html">全部指南</a></li>
+      <li><a href="/guides/zh-hans/claude.html">Claude</a></li>
+      <li><a href="/guides/zh-hans/codex.html">Codex</a></li>
+      <li><a href="/guides/zh-hans/cowork.html" aria-current="page">Cowork</a></li>
+      <li><a href="/guides/zh-hans/chatgpt.html">ChatGPT</a></li>
+      <li><a href="/guides/zh-hans/plaud.html">PLAUD</a></li>
+      <li><a href="/guides/zh-hans/notta.html">Notta</a></li>
+      <li><a href="/guides/zh-hans/meeting-notes.html">AI 会议纪要</a></li>
+      <li><a href="/guides/zh-hans/china-llm.html">中国 AI 对比</a></li>
+      <li><a href="/guides/zh-hans/deepseek.html">DeepSeek</a></li>
+      <li><a href="/guides/zh-hans/qwen.html">Qwen</a></li>
+      <li><a href="/guides/zh-hans/qwen-local.html">在自有服务器上运行 Qwen</a></li>
+      <li><a href="/security.html">安全</a></li>
+      <li><a href="/privacy.html?lang=zh-Hans">隐私政策</a></li>
+      <li><a href="/terms.html?lang=zh-Hans">使用条款</a></li>
+    </ul>
+    <p>Claude、Claude Cowork、Claude Code 是 Anthropic PBC 的商标。Copilot、Microsoft 365 是 Microsoft Corporation 的商标或注册商标。SIMY 是独立于 Anthropic 和 Microsoft 的产品，未获得两家公司的合作或认可。</p>
+    <p>Codex 和 ChatGPT 是 OpenAI 的产品。其他公司名称和产品名称是各公司的商标或注册商标。</p>
+    <p>&copy; 2026 SIMY by AwakApp Inc.</p>
+  </div>
+</footer>
+<script>
+(function () {
+  var links = Array.prototype.slice.call(document.querySelectorAll('.toc a'));
+  if (!links.length) return;
+  var items = links.map(function (a) {
+    return { link: a, section: document.getElementById(a.getAttribute('href').slice(1)) };
+  }).filter(function (item) { return item.section; });
+  var ticking = false;
+  function update() {
+    ticking = false;
+    var line = window.innerHeight * 0.35;
+    var atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+    var current = null;
+    items.forEach(function (item) {
+      if (item.section.getBoundingClientRect().top <= line) current = item;
+    });
+    if (atBottom) current = items[items.length - 1];
+    items.forEach(function (item) { item.link.classList.toggle('is-active', item === current); });
+  }
+  window.addEventListener('scroll', function () {
+    if (!ticking) { ticking = true; window.requestAnimationFrame(update); }
+  }, { passive: true });
+  update();
+})();
+</script>
+<script src="/analytics.js" defer></script>
+</body>
+</html>

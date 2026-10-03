@@ -6,6 +6,7 @@ sources, never the generated locale HTML files.
 """
 import argparse
 import json
+import re
 import subprocess
 from html import escape
 from html.parser import HTMLParser
@@ -84,6 +85,16 @@ class Localize(HTMLParser):
                     else:
                         params.pop('region', None)
                 a['href'] = urlunsplit(url._replace(query=urlencode(params)))
+            # Match runtime guide/download navigation in the raw crawlable HTML.
+            if not url.scheme and not url.netloc:
+                code = {'en': 'en', 'hi': 'hi', 'es': 'es', 'fr': 'fr', 'zh-Hans': 'zh-hans'}.get(self.locale)
+                guide = re.fullmatch(r'/guides/(?:en/)?([a-z-]+\.html)', url.path)
+                if guide:
+                    target = f'/guides/{code}/{guide[1]}' if code else f'/guides/{guide[1]}'
+                    a['href'] = urlunsplit(url._replace(path=target))
+                elif url.path in ('/download.html', '/download/en.html'):
+                    target = f'/download/{code}.html' if code else '/download.html'
+                    a['href'] = urlunsplit(url._replace(path=target))
             # Runtime localizes email subjects from the original English value.
             if original.startswith('mailto:'):
                 a['data-original-href'] = original

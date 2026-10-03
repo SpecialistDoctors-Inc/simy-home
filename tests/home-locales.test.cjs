@@ -350,6 +350,22 @@ test("connected apps feature the three AI coding tools without disturbing the wo
   assert.match(homeCss, /@media \(max-width: 620px\)[\s\S]*?\.apps-grid-ai\s*\{[^}]*grid-template-columns:\s*1fr/s);
 });
 
+test("connected apps include the Dev catalog and distinguish planned connectors", () => {
+  const available = [
+    "Google Workspace", "Google Analytics", "Microsoft", "Slack", "GitHub", "Zoom",
+    "Notion", "Box", "LINE", "X", "Webex", "Datadog", "Plaud"
+  ];
+  const planned = ["Salesforce", "HubSpot", "Sansan", "kintone", "Jira", "Veeva Vault"];
+  const section = homeHtml.match(/<section class="connected-apps[\s\S]*?<\/section>\s*<section class="use-cases/);
+  assert.ok(section, "connected-apps section must exist");
+  for (const name of [...available, ...planned]) {
+    assert.match(section[0], new RegExp(`<strong>${name}</strong>`), `${name} must be listed`);
+  }
+  assert.match(section[0], /<details class="apps-more">[\s\S]*?<summary>/);
+  assert.match(section[0], /<h3[^>]*>Planned integrations<\/h3>/);
+  assert.equal((section[0].match(/class="app-tile app-tile-planned"/g) ?? []).length, planned.length);
+});
+
 test("all section-level messages share one responsive typography role", () => {
   const sectionHeadingIds = [
     "product-title",

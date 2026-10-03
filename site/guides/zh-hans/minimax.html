@@ -1,0 +1,1683 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+<meta charset="UTF-8">
+<meta name="google-site-verification" content="1n6_tVJZRZlQax8luEg5VsuG7gg-kCEam5VFiWIJs3U">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MiniMax H3 是什么？视频 AI、M3、价格与本地运行 | SIMY</title>
+<meta name="description" content="MiniMax H3 是什么？生成带声音视频的 H3、文本模型 M3、Token Plan 价格、本地运行的现实与许可证适用范围，截至 2026 年 10 月整理。生成之后的工作交给 SIMY。">
+<link rel="canonical" href="https://simy.one/guides/zh-hans/minimax.html">
+<link rel="alternate" hreflang="ja" href="https://simy.one/guides/minimax.html">
+<link rel="alternate" hreflang="en" href="https://simy.one/guides/en/minimax.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://simy.one/guides/zh-hans/minimax.html">
+<link rel="alternate" hreflang="es" href="https://simy.one/guides/es/minimax.html">
+<link rel="alternate" hreflang="fr" href="https://simy.one/guides/fr/minimax.html">
+<link rel="alternate" hreflang="hi" href="https://simy.one/guides/hi/minimax.html">
+<link rel="alternate" hreflang="x-default" href="https://simy.one/guides/en/minimax.html">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://simy.one/guides/zh-hans/minimax.html">
+<meta property="og:title" content="用 MiniMax 做完之后，别让工作停下。｜SIMY">
+<meta property="og:description" content="MiniMax H3 是什么？视频 H3、文本 M3、价格与许可证。脚本、配音、视频都用 MiniMax 做完之后，负责人、期限和分享由 SIMY 从会议和聊天中接住并推进。">
+<meta property="og:site_name" content="SIMY">
+<meta property="og:image" content="https://simy.one/ogp.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="用 MiniMax 做完之后，别让工作停下。MiniMax 使用指南｜SIMY">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-10-01">
+<meta property="article:modified_time" content="2026-10-01">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="用 MiniMax 做完之后，别让工作停下。｜SIMY">
+<meta name="twitter:description" content="MiniMax H3 是什么？视频 H3、文本 M3、价格与许可证。脚本、配音、视频都用 MiniMax 做完之后，负责人、期限和分享由 SIMY 从会议和聊天中接住并推进。">
+<meta name="twitter:image" content="https://simy.one/ogp.png">
+<meta name="twitter:image:alt" content="用 MiniMax 做完之后，别让工作停下。MiniMax 使用指南｜SIMY">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#f6f5f4">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png">
+<style>
+:root {
+  --paper: #f6f5f4;
+  --paper-light: #ffffff;
+  --ink: #111111;
+  --ink-soft: #5d5b58;
+  --ink-faint: #6b6865;
+  --line-soft: rgba(17, 17, 17, 0.14);
+  --ui-line: #d9dde2;
+  --blue: #3273d7;
+  --blue-deep: #235db8;
+  --blue-soft: #eef5ff;
+  --mint: #92edce;
+  --coral-soft: #fff1ec;
+  --yellow: #ffd166;
+  --radius: 0.8rem;
+  --radius-sm: 0.5rem;
+  --sans: "Helvetica Neue", Arial, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", Meiryo, sans-serif;
+  --mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  --page: 1180px;
+  --gutter: clamp(16px, 4vw, 40px);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.85;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+a { color: inherit; }
+a:focus-visible, summary:focus-visible {
+  outline: 3px solid rgba(50, 115, 215, 0.45);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+img { max-width: 100%; display: block; }
+
+.wrap { width: min(var(--page), 100% - var(--gutter) * 2); margin: 0 auto; }
+
+.skip {
+  position: absolute; left: -9999px; top: 8px;
+  background: var(--ink); color: #fff; padding: 8px 14px; border-radius: 6px; z-index: 100;
+}
+.skip:focus { left: 8px; }
+
+/* ---------- Header ---------- */
+.site-header {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(246, 245, 244, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--ink);
+}
+.header-inner {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  min-height: 64px;
+}
+.brand {
+  display: inline-flex; align-items: center; gap: 10px;
+  text-decoration: none; font-weight: 800; letter-spacing: 0.01em;
+}
+.brand img { width: 28px; height: 28px; border-radius: 7px; }
+.brand-sub {
+  padding-left: 12px; margin-left: 2px;
+  border-left: 1px solid var(--line-soft);
+  color: var(--ink-soft); font-size: 0.8rem; font-weight: 500;
+}
+.header-actions { display: flex; align-items: center; gap: 6px; }
+.header-link {
+  padding: 8px 10px; font-size: 0.86rem; font-weight: 600; text-decoration: none; color: var(--ink);
+}
+.header-link:hover { color: var(--blue-deep); }
+.header-cta {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px;
+  background: var(--ink); color: #fff; text-decoration: none;
+  font-size: 0.86rem; font-weight: 700; border-radius: 6px;
+  transition: background 0.2s;
+}
+.header-cta:hover { background: var(--blue-deep); }
+
+/* ---------- Hero ---------- */
+.hero {
+  position: relative;
+  border-bottom: 1px solid var(--ink);
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(rgba(17, 17, 17, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(17, 17, 17, 0.045) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-position: -1px -1px;
+}
+.hero-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+  gap: clamp(32px, 5vw, 72px);
+  align-items: center;
+  padding: clamp(40px, 7vw, 96px) 0 clamp(48px, 7vw, 104px);
+}
+
+.crumbs {
+  display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 22px; padding: 0; list-style: none;
+  font-size: 0.78rem; color: var(--ink-soft);
+}
+.crumbs li + li::before { content: "/"; margin-right: 6px; color: var(--ink-faint); }
+.crumbs a { text-decoration: none; }
+.crumbs a:hover { text-decoration: underline; }
+
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin: 0 0 22px; padding: 6px 12px;
+  background: var(--paper-light); border: 1px solid var(--ink); border-radius: 999px;
+  font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.04em;
+}
+.eyebrow::before {
+  content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--blue);
+  box-shadow: 0 0 0 3px var(--blue-soft);
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2rem, 4.6vw, 3.9rem);
+  line-height: 1.16;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+h1 .line { display: block; }
+h1 .hl { color: var(--blue); }
+
+.lead {
+  max-width: 36em;
+  margin: 26px 0 0;
+  font-size: clamp(1rem, 1.35vw, 1.1rem);
+  line-height: 1.95;
+  color: #2c2b29;
+}
+
+.cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 52px; padding: 0 22px;
+  border: 1px solid var(--ink); border-radius: 8px;
+  font-weight: 700; font-size: 0.98rem; text-decoration: none;
+  transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+}
+.btn-primary {
+  background: var(--blue-deep); color: #fff; border-color: var(--ink);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.btn-primary:hover { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 var(--ink); }
+.btn-ghost { background: var(--paper-light); color: var(--ink); }
+.btn-ghost:hover { background: var(--blue-soft); }
+.btn .arrow { font-family: var(--mono); font-size: 0.9em; }
+
+.hero-points {
+  display: flex; flex-wrap: wrap; gap: 8px 18px;
+  margin: 26px 0 0; padding: 0; list-style: none;
+  font-size: 0.84rem; color: var(--ink-soft);
+}
+.hero-points li { display: inline-flex; align-items: center; gap: 7px; }
+.hero-points li::before {
+  content: ""; width: 14px; height: 14px; flex: none;
+  border: 1px solid var(--ink); border-radius: 50%;
+  background: var(--mint) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath d='M3.5 7.2 6 9.5l4.5-5' fill='none' stroke='%23111' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 12px no-repeat;
+}
+
+/* Relay card: the signature visual */
+.relay {
+  position: relative;
+  background: var(--paper-light);
+  border: 1px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: 8px 8px 0 var(--ink);
+  overflow: hidden;
+}
+.relay-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--ink);
+  background: var(--ink); color: #fff;
+  font-family: var(--mono); font-size: 0.78rem;
+}
+.rec { display: inline-flex; align-items: center; gap: 8px; min-width: 0; }
+.rec-dot {
+  width: 9px; height: 9px; border-radius: 50%; background: #ff865f; flex: none;
+  animation: rec 1.6s ease-in-out infinite;
+}
+.rec-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.relay-meta { display: flex; flex-wrap: wrap; gap: 6px; padding: 12px 18px 4px; }
+.chip {
+  display: inline-flex; align-items: center; padding: 2px 9px;
+  border: 1px solid var(--line-soft); border-radius: 999px;
+  font-family: var(--mono); font-size: 0.7rem; color: var(--ink-soft); background: var(--paper);
+}
+.relay-steps { list-style: none; margin: 0; padding: 8px 10px 12px; }
+.step {
+  display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; align-items: center; gap: 10px;
+  padding: 9px 8px;
+  border-radius: 8px;
+  opacity: 0; transform: translateY(6px);
+  animation: rise 0.5s cubic-bezier(.2,.7,.2,1) forwards;
+}
+.step .no { font-family: var(--mono); font-size: 0.72rem; color: var(--ink-faint); }
+.step .what { font-size: 0.9rem; font-weight: 650; line-height: 1.45; }
+.step .what small { display: block; font-weight: 400; font-size: 0.74rem; color: var(--ink-soft); }
+.status {
+  font-family: var(--mono); font-size: 0.68rem; white-space: nowrap;
+  padding: 3px 8px; border-radius: 999px; border: 1px solid var(--ink);
+}
+.s-done { background: var(--paper); }
+.s-plaud .status { border-color: var(--line-soft); color: var(--ink-soft); }
+.s-run { background: var(--blue-soft); }
+.s-run .status { background: var(--blue-deep); color: #fff; }
+.s-next .status { background: var(--paper-light); }
+.s-you { background: #fff8e3; }
+.s-you .status { background: var(--yellow); }
+.bar {
+  grid-column: 2 / 4; height: 4px; margin-top: 6px;
+  background: rgba(50, 115, 215, 0.16); border-radius: 4px; overflow: hidden;
+}
+.bar::after {
+  content: ""; display: block; height: 100%; width: 62%;
+  background: var(--blue); border-radius: 4px;
+  animation: progress 2.8s ease-in-out infinite alternate;
+}
+.handoff {
+  display: flex; align-items: center; gap: 10px;
+  margin: 6px 4px; padding: 8px 0;
+  font-family: var(--mono); font-size: 0.72rem; color: var(--blue-deep);
+  opacity: 0; animation: rise 0.5s ease forwards;
+}
+.handoff::before, .handoff::after { content: ""; flex: 1; border-top: 1.5px dashed var(--blue); }
+.relay-foot {
+  padding: 12px 18px 14px;
+  border-top: 1px solid var(--line-soft);
+  font-size: 0.82rem; color: var(--ink-soft);
+}
+.relay-foot strong { color: var(--ink); }
+.caption { margin: 12px 4px 0; font-size: 0.74rem; color: var(--ink-faint); text-align: right; }
+
+.relay-steps > :nth-child(1) { animation-delay: 0.10s; }
+.relay-steps > :nth-child(2) { animation-delay: 0.22s; }
+.relay-steps > :nth-child(3) { animation-delay: 0.34s; }
+.relay-steps > :nth-child(4) { animation-delay: 0.62s; }
+.relay-steps > :nth-child(5) { animation-delay: 0.86s; }
+.relay-steps > :nth-child(6) { animation-delay: 1.02s; }
+.relay-steps > :nth-child(7) { animation-delay: 1.18s; }
+.relay-steps > :nth-child(8) { animation-delay: 1.34s; }
+
+@keyframes rise { to { opacity: 1; transform: none; } }
+@keyframes rec { 50% { opacity: 0.25; } }
+@keyframes progress { from { width: 34%; } to { width: 88%; } }
+
+/* ---------- Guide layout ---------- */
+.guide {
+  display: grid;
+  grid-template-columns: 232px minmax(0, 1fr);
+  gap: clamp(32px, 5vw, 72px);
+  padding: clamp(40px, 6vw, 80px) 0 clamp(56px, 7vw, 96px);
+}
+.toc { position: sticky; top: 92px; align-self: start; font-size: 0.84rem; }
+.toc-title {
+  margin: 0 0 12px; font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.08em;
+  color: var(--ink-soft);
+}
+.toc ol { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--line-soft); }
+.toc a {
+  display: grid; grid-template-columns: 26px 1fr; gap: 4px;
+  margin-left: -1px; padding: 7px 0 7px 12px;
+  border-left: 2px solid transparent;
+  color: var(--ink-soft); text-decoration: none; line-height: 1.5;
+}
+.toc a span { font-family: var(--mono); font-size: 0.72rem; padding-top: 1px; }
+.toc a:hover { color: var(--ink); }
+.toc a.is-active { color: var(--ink); font-weight: 700; border-left-color: var(--blue); }
+.toc-mobile { display: none; }
+
+.article { min-width: 0; max-width: 800px; }
+.byline {
+  display: flex; flex-wrap: wrap; gap: 4px 16px;
+  margin: 0 0 8px; font-family: var(--mono); font-size: 0.74rem; color: var(--ink-faint);
+}
+
+.sec { padding-top: clamp(40px, 5vw, 64px); }
+.sec:first-of-type { padding-top: 0; }
+.sec-label {
+  display: inline-block; margin: 0 0 12px;
+  font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.06em; color: var(--blue-deep);
+}
+h2 {
+  margin: 0 0 18px;
+  font-size: clamp(1.5rem, 2.8vw, 2.1rem);
+  line-height: 1.35; font-weight: 800; letter-spacing: -0.01em;
+}
+h3 { margin: 32px 0 12px; font-size: 1.15rem; line-height: 1.5; font-weight: 750; }
+.article p { margin: 0 0 16px; }
+.article p a, .plain-list a, .faq a { color: var(--blue-deep); text-decoration: underline; text-underline-offset: 3px; }
+.muted { color: var(--ink-soft); }
+.small { font-size: 0.84rem; }
+
+/* Checklist */
+.checklist { list-style: none; margin: 24px 0 0; padding: 0; display: grid; gap: 12px; }
+.checklist li {
+  display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 16px;
+  padding: 18px 20px;
+  background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.checklist .num {
+  display: grid; place-items: center; width: 44px; height: 44px;
+  border: 1px solid var(--ink); border-radius: 50%;
+  font-family: var(--mono); font-weight: 700;
+}
+.checklist li.hook { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.checklist li.hook .num { background: var(--blue-deep); color: #fff; }
+.checklist h3 { margin: 2px 0 4px; font-size: 1.02rem; }
+.checklist p { margin: 0; font-size: 0.93rem; color: #34322f; }
+
+/* Feature grid */
+.features { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+.feature {
+  padding: 20px; background: var(--paper-light);
+  border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.feature .tag {
+  display: inline-block; margin-bottom: 8px;
+  font-family: var(--mono); font-size: 0.7rem; color: var(--ink-soft);
+}
+.feature h3 { margin: 0 0 6px; font-size: 1.04rem; }
+.feature p { margin: 0; font-size: 0.92rem; color: #34322f; }
+.feature.wide { grid-column: 1 / -1; }
+
+/* Gap section */
+.split { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+.split-col { padding: 22px; border-radius: var(--radius); border: 1px solid var(--ink); }
+.split-col h3 { margin: 0 0 12px; font-size: 1rem; display: flex; align-items: center; gap: 8px; }
+.split-col ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.split-col li { position: relative; padding-left: 22px; font-size: 0.94rem; line-height: 1.6; }
+.split-col li::before { position: absolute; left: 0; top: 0; font-family: var(--mono); }
+.col-plaud { background: var(--paper-light); }
+.col-plaud li { color: var(--ink-soft); }
+.col-plaud li::before { content: "✓"; color: #1b7a58; }
+.col-left { background: var(--coral-soft); box-shadow: 4px 4px 0 var(--ink); }
+.col-left li::before { content: "□"; color: var(--ink); }
+.who {
+  font-family: var(--mono); font-size: 0.68rem; font-weight: 400;
+  padding: 2px 8px; border: 1px solid var(--ink); border-radius: 999px; background: var(--paper-light);
+}
+
+.quote {
+  margin: 28px 0 0; padding: 22px 24px;
+  border-left: 4px solid var(--blue); background: var(--blue-soft); border-radius: 0 var(--radius) var(--radius) 0;
+}
+.quote p { margin: 0; font-size: 1.12rem; font-weight: 750; line-height: 1.7; }
+.quote p + p { margin-top: 8px; font-size: 0.93rem; font-weight: 400; color: #34322f; }
+
+/* Connect */
+.connect {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 310px); gap: 24px;
+  align-items: start; margin-top: 24px;
+}
+.connect-steps { list-style: none; margin: 0; padding: 0; counter-reset: s; display: grid; gap: 10px; }
+.connect-steps li {
+  counter-increment: s; position: relative;
+  padding: 16px 18px 16px 62px;
+  background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.connect-steps li::before {
+  content: counter(s); position: absolute; left: 18px; top: 16px;
+  width: 30px; height: 30px; display: grid; place-items: center;
+  border: 1px solid var(--ink); border-radius: 50%; background: var(--paper);
+  font-family: var(--mono); font-weight: 700; font-size: 0.86rem;
+}
+.connect-steps li.key { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.connect-steps li.key::before { background: var(--blue-deep); color: #fff; }
+.connect-steps b { display: block; font-size: 1rem; line-height: 1.5; }
+.connect-steps span { display: block; margin-top: 4px; font-size: 0.9rem; color: #34322f; line-height: 1.7; }
+
+.mock {
+  padding: 18px; background: var(--paper-light);
+  border: 1px solid var(--ink); border-radius: var(--radius); box-shadow: 6px 6px 0 var(--blue);
+}
+.mock-head { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 12px; align-items: start; }
+.mock-mark {
+  display: grid; place-items: center; width: 44px; height: 44px;
+  border-radius: 10px; background: var(--paper); font-weight: 900; font-size: 1.15rem;
+}
+.mock-title { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 1.05rem; }
+.mock-state {
+  padding: 1px 8px; border-radius: 999px; background: var(--paper);
+  font-size: 0.7rem; font-weight: 500; color: var(--ink-soft);
+}
+.mock-desc { margin: 4px 0 0; font-size: 0.82rem; color: var(--ink-soft); line-height: 1.6; }
+.mock-box {
+  margin: 14px 0 10px; padding: 12px 14px;
+  border: 1px solid var(--ui-line); border-radius: 8px; font-size: 0.86rem; font-weight: 650;
+}
+.mock-btn {
+  display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px;
+  border-radius: 8px; background: var(--blue-deep); color: #fff; font-weight: 700; font-size: 0.92rem;
+}
+.mock-foot { margin-top: 8px; text-align: center; font-size: 0.76rem; color: var(--ink-soft); }
+
+.asks { list-style: none; margin: 12px 0 18px; padding: 0; display: grid; gap: 8px; }
+.asks li {
+  padding: 12px 16px; font-size: 0.94rem; line-height: 1.7;
+  background: var(--blue-soft); border: 1px solid rgba(50, 115, 215, 0.28);
+  border-radius: 12px 12px 12px 3px;
+}
+
+/* Tables */
+.table-wrap {
+  margin: 20px 0 8px; overflow-x: auto; -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--ink); border-radius: var(--radius); background: var(--paper-light);
+}
+table { width: 100%; border-collapse: collapse; font-size: 0.9rem; line-height: 1.6; }
+th, td { padding: 12px 14px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--ui-line); }
+thead th { background: var(--ink); color: #fff; font-weight: 700; font-size: 0.82rem; white-space: nowrap; }
+tbody th { font-weight: 700; white-space: nowrap; background: var(--paper); }
+tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
+td.simy { background: var(--blue-soft); }
+thead th.simy { background: var(--blue-deep); }
+.t-wide { min-width: 640px; }
+.t-models { min-width: 760px; }
+.t-price td:nth-child(2) { white-space: nowrap; }
+.scroll-hint { display: none; margin: 0 0 12px; font-size: 0.76rem; color: var(--ink-faint); }
+
+.note {
+  margin: 16px 0 0; padding: 14px 16px;
+  background: var(--paper-light); border: 1px dashed var(--ink-faint); border-radius: var(--radius-sm);
+  font-size: 0.88rem; color: #34322f;
+}
+.note b { color: var(--ink); }
+
+/* Sample comparison */
+.sample { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 16px; margin-top: 24px; align-items: start; }
+.sheet { padding: 20px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); }
+.sheet-label {
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;
+  font-family: var(--mono); font-size: 0.72rem; color: var(--ink-soft);
+}
+.sheet dl { margin: 0; font-size: 0.88rem; line-height: 1.65; }
+.sheet dt { margin-top: 10px; font-weight: 700; }
+.sheet dt:first-child { margin-top: 0; }
+.sheet dd { margin: 2px 0 0; color: #34322f; }
+.outs { display: grid; gap: 10px; }
+.out { padding: 14px 16px; background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius); }
+.out-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 6px; }
+.out-head b { font-size: 0.92rem; }
+.out p { margin: 0; font-size: 0.86rem; color: #34322f; line-height: 1.7; }
+.out.you { background: #fff8e3; }
+.pill {
+  font-family: var(--mono); font-size: 0.66rem; white-space: nowrap;
+  padding: 2px 8px; border-radius: 999px; border: 1px solid var(--ink); background: var(--paper);
+}
+.pill.run { background: var(--blue-deep); color: #fff; }
+.pill.you { background: var(--yellow); }
+.pill.ok { background: var(--mint); }
+.sample-foot { margin-top: 18px; font-weight: 700; }
+
+/* Use cases */
+.cases { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+.case { padding: 22px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); }
+.case h3 { margin: 0 0 4px; font-size: 1.06rem; }
+.case .device { margin: 0 0 12px; font-family: var(--mono); font-size: 0.72rem; color: var(--blue-deep); }
+.case p { margin: 0 0 8px; font-size: 0.9rem; color: #34322f; }
+.case ul { margin: 0; padding-left: 1.1em; font-size: 0.9rem; line-height: 1.7; }
+
+/* Lists */
+.plain-list { margin: 16px 0 0; padding-left: 1.2em; }
+.plain-list li { margin-bottom: 10px; }
+
+/* FAQ */
+.faq { margin-top: 20px; border-top: 1px solid var(--ink); }
+.faq details { border-bottom: 1px solid var(--ui-line); }
+.faq summary {
+  list-style: none; cursor: pointer;
+  display: grid; grid-template-columns: 28px minmax(0, 1fr) 20px; gap: 10px; align-items: start;
+  padding: 18px 4px; font-weight: 700; line-height: 1.6;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::before { content: "Q"; font-family: var(--mono); color: var(--blue-deep); }
+.faq summary::after {
+  content: "+"; font-family: var(--mono); font-size: 1.1rem; line-height: 1.4; text-align: right;
+  transition: transform 0.2s;
+}
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq .a { padding: 0 4px 18px 42px; font-size: 0.94rem; color: #34322f; }
+.faq .a p { margin: 0; }
+
+/* Closing CTA */
+.closing { background: var(--ink); color: #fff; border-top: 1px solid var(--ink); }
+.closing-inner {
+  display: grid; grid-template-columns: minmax(0, 1.2fr) auto; gap: 32px; align-items: center;
+  padding: clamp(48px, 7vw, 88px) 0;
+}
+.closing h2 { color: #fff; margin: 0 0 12px; font-size: clamp(1.6rem, 3.4vw, 2.5rem); }
+.closing p { margin: 0; color: rgba(255, 255, 255, 0.8); }
+.closing .cta-row { margin-top: 0; }
+.closing .btn-primary { box-shadow: 4px 4px 0 var(--mint); border-color: #fff; }
+.closing .btn-primary:hover { box-shadow: 5px 5px 0 var(--mint); }
+.closing .btn-ghost { background: transparent; color: #fff; border-color: rgba(255, 255, 255, 0.5); }
+.closing .btn-ghost:hover { background: rgba(255, 255, 255, 0.08); }
+
+/* Footer */
+.site-footer { padding: 36px 0 48px; font-size: 0.82rem; color: var(--ink-soft); }
+.footer-links { display: flex; flex-wrap: wrap; gap: 4px 20px; margin: 0 0 18px; padding: 0; list-style: none; }
+.footer-links a { display: inline-block; padding: 6px 0; text-decoration: none; color: var(--ink); }
+.footer-links a:hover { text-decoration: underline; }
+.site-footer p { margin: 0 0 6px; line-height: 1.7; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1080px) {
+  .guide { grid-template-columns: minmax(0, 1fr); }
+  .toc { display: none; }
+  .toc-mobile {
+    display: block; margin: 0 0 32px;
+    background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius);
+  }
+  .toc-mobile summary {
+    cursor: pointer; list-style: none; padding: 14px 18px;
+    font-family: var(--mono); font-size: 0.8rem; display: flex; justify-content: space-between;
+  }
+  .toc-mobile summary::-webkit-details-marker { display: none; }
+  .toc-mobile summary::after { content: "+"; }
+  .toc-mobile[open] summary::after { content: "−"; }
+  .toc-mobile ol { margin: 0; padding: 0 18px 14px 40px; font-size: 0.9rem; }
+  .toc-mobile li { padding: 3px 0; }
+  .toc-mobile a { display: inline-block; padding: 4px 0; text-decoration: none; }
+  .article { max-width: none; }
+}
+
+@media (max-width: 960px) {
+  .hero-inner { grid-template-columns: minmax(0, 1fr); }
+  .hero-visual { max-width: 580px; }
+  .relay { box-shadow: 6px 6px 0 var(--ink); }
+}
+
+@media (max-width: 860px) {
+  .sample { grid-template-columns: minmax(0, 1fr); }
+  .connect { grid-template-columns: minmax(0, 1fr); }
+  .mock { max-width: 360px; }
+  .closing-inner { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 640px) {
+  body { font-size: 15.5px; }
+  .brand-sub, .header-link { display: none; }
+  .header-cta { padding: 0 14px; }
+  .features, .split, .cases { grid-template-columns: minmax(0, 1fr); }
+  .checklist li { grid-template-columns: 40px minmax(0, 1fr); gap: 12px; padding: 16px; }
+  .checklist .num { width: 36px; height: 36px; font-size: 0.86rem; }
+  .connect-steps li { padding-left: 56px; }
+  .connect-steps li::before { left: 14px; }
+  .btn { width: 100%; }
+  .scroll-hint { display: block; }
+  .faq .a { padding-left: 4px; }
+  .step { grid-template-columns: 24px minmax(0, 1fr) auto; gap: 8px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .step, .handoff { animation: none; opacity: 1; transform: none; }
+  .rec-dot, .bar::after { animation: none; }
+  .btn, .header-cta { transition: none; }
+}
+
+/* ---------- Guide v2: scene cards, timeline, folds ---------- */
+.intro { max-width: 34em; margin: 0 0 8px; font-size: 1.02rem; color: #34322f; }
+.scenes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 22px; }
+.scenes.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.scene {
+  position: relative; padding: 22px 20px 20px;
+  background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius);
+  min-height: 168px; display: flex; flex-direction: column; gap: 8px;
+}
+.scene .k { font-family: var(--mono); font-size: 0.7rem; color: var(--ink-faint); letter-spacing: 0.04em; }
+.scene b { display: block; font-size: 1.22rem; line-height: 1.35; letter-spacing: -0.01em; }
+.scene p { margin: 0; font-size: 0.9rem; line-height: 1.65; color: #34322f; }
+.scene .mark {
+  position: absolute; right: 16px; top: 14px;
+  width: 30px; height: 30px; display: grid; place-items: center;
+  border: 1px solid var(--ink); border-radius: 50%; font-family: var(--mono); font-size: 0.9rem; font-weight: 700;
+}
+.scene.pain { background: var(--coral-soft); }
+.scene.pain .mark { background: var(--paper-light); }
+.scene.wish { background: var(--blue-soft); border-color: var(--blue-deep); box-shadow: 4px 4px 0 var(--blue); }
+.scene.wish .mark { background: var(--blue-deep); color: #fff; border-color: var(--blue-deep); }
+.scene.wish.you { background: #fff8e3; border-color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+.scene.wish.you .mark { background: var(--yellow); color: var(--ink); border-color: var(--ink); }
+.scene-foot { margin: 14px 0 0; font-size: 0.9rem; color: var(--ink-soft); }
+.scene-foot b { color: var(--ink); }
+
+/* Timeline */
+.tl-wrap {
+  margin-top: 22px; padding: 22px 20px 18px;
+  background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius);
+}
+.tl-row { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 14px; align-items: center; }
+.tl-row + .tl-row { margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--line-soft); }
+.tl-who {
+  font-family: var(--mono); font-size: 0.72rem; font-weight: 700; text-align: center;
+  padding: 6px 4px; border: 1px solid var(--ink); border-radius: 999px; background: var(--paper);
+}
+.tl-who.simy { background: var(--blue-deep); color: #fff; border-color: var(--blue-deep); }
+.tl-who.you { background: var(--yellow); }
+.tl { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; }
+.tl li {
+  position: relative; min-height: 64px; padding: 10px 8px 8px;
+  border-radius: var(--radius-sm); font-size: 0.8rem; line-height: 1.4; font-weight: 650;
+  display: flex; flex-direction: column; justify-content: flex-start; gap: 4px;
+}
+.tl li small { display: block; font-weight: 400; font-size: 0.7rem; color: var(--ink-soft); }
+.tl li.on { background: var(--paper); border: 1px solid var(--line-soft); color: var(--ink-soft); }
+.tl li.gap { border: 1.5px dashed var(--ink-faint); color: var(--ink-faint); background: transparent; }
+.tl li.gap::after { content: "？"; position: absolute; right: 8px; top: 6px; font-family: var(--mono); }
+.tl li.run { background: var(--blue-soft); border: 1px solid var(--blue-deep); color: var(--ink); }
+.tl li.run::after { content: "✓"; position: absolute; right: 8px; top: 6px; font-family: var(--mono); color: var(--blue-deep); }
+.tl li.you { background: #fff8e3; border: 1px solid var(--ink); color: var(--ink); }
+.tl li.you::after { content: "你"; position: absolute; right: 8px; top: 7px; font-family: var(--mono); font-size: 0.62rem; }
+.tl li.blank { border: 0; background: transparent; }
+.tl-note { margin: 14px 0 0; font-size: 0.86rem; color: #34322f; }
+.tl-note b { color: var(--ink); }
+.three { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 0; padding: 0; list-style: none; }
+.three li {
+  padding: 8px 14px; font-weight: 800; font-size: 1rem;
+  background: var(--ink); color: #fff; border-radius: 999px;
+}
+
+/* 3-step start */
+.steps3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 22px; counter-reset: st; }
+.steps3 li {
+  counter-increment: st; list-style: none; position: relative;
+  padding: 54px 18px 18px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.steps3 li::before {
+  content: counter(st); position: absolute; left: 18px; top: 16px;
+  width: 28px; height: 28px; display: grid; place-items: center;
+  border: 1px solid var(--ink); border-radius: 50%; background: var(--paper);
+  font-family: var(--mono); font-weight: 700; font-size: 0.84rem;
+}
+.steps3 li.key { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.steps3 li.key::before { background: var(--blue-deep); color: #fff; }
+.steps3 b { display: block; font-size: 1.02rem; line-height: 1.45; }
+.steps3 span { display: block; margin-top: 6px; font-size: 0.88rem; color: #34322f; line-height: 1.65; }
+.steps3 { padding: 0; }
+
+/* Industry grid */
+.ind { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 22px; }
+.ind-card { padding: 18px 18px 14px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); }
+.ind-card h3 { margin: 0 0 10px; font-size: 1.04rem; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.ind-card h3 small { font-family: var(--mono); font-size: 0.68rem; font-weight: 400; color: var(--blue-deep); white-space: normal; }
+.ind-card h3 { flex-wrap: wrap; }
+.ind-rows { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+.ind-rows li { display: grid; grid-template-columns: minmax(0, 1fr) 14px minmax(0, 1.4fr); gap: 6px; align-items: center; font-size: 0.86rem; line-height: 1.5; }
+.ind-rows li span:first-child { color: var(--ink-soft); }
+.ind-rows li span:nth-child(2) { font-family: var(--mono); color: var(--blue-deep); text-align: center; }
+.ind-rows li span:last-child { font-weight: 650; }
+
+/* Folded reference */
+.fold { margin-top: 12px; border: 1px solid var(--ui-line); border-radius: var(--radius); background: var(--paper-light); }
+.fold > summary {
+  list-style: none; cursor: pointer; padding: 16px 18px;
+  display: grid; grid-template-columns: minmax(0, 1fr) 20px; gap: 10px; align-items: center;
+  font-weight: 750; font-size: 1.02rem; line-height: 1.5;
+}
+.fold > summary::-webkit-details-marker { display: none; }
+.fold > summary::after { content: "+"; font-family: var(--mono); font-size: 1.1rem; text-align: right; grid-column: 2; grid-row: 1; }
+.fold > summary small { grid-column: 1; }
+.fold[open] > summary::after { content: "−"; }
+.fold > summary small { display: block; margin-top: 2px; font-weight: 400; font-size: 0.82rem; color: var(--ink-soft); }
+.fold-body { padding: 0 18px 18px; font-size: 0.93rem; }
+.fold-body h3 { margin: 18px 0 8px; font-size: 1rem; }
+.fold-body h3:first-child { margin-top: 0; }
+.fold-body p { margin: 0 0 10px; }
+.fold-body .table-wrap { margin: 12px 0 6px; }
+.fold-body .plain-list { margin-top: 8px; }
+.fold-body .plain-list li { margin-bottom: 6px; }
+
+@media (max-width: 960px) {
+  .scenes, .scenes.four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tl { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .tl li.blank { display: none; }
+}
+@media (max-width: 640px) {
+  .scenes, .scenes.four, .steps3, .ind { grid-template-columns: minmax(0, 1fr); }
+  .scene { min-height: 0; }
+  .tl-row { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .tl-who { justify-self: start; }
+  .tl { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ind-rows li { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .ind-rows li span:nth-child(2) { display: none; }
+  .ind-rows li { padding: 6px 0; border-bottom: 1px dashed var(--line-soft); }
+}
+
+/* Next read */
+.next-read { margin-top: clamp(40px, 5vw, 64px); padding-top: 24px; border-top: 1px solid var(--ink); }
+.next-read h2 { font-size: 1.2rem; margin: 0 0 14px; }
+.next-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.next-grid a { display: block; padding: 14px 16px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); text-decoration: none; color: var(--ink); }
+.next-grid a:hover { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.next-grid b { display: block; font-size: 0.96rem; }
+.next-grid span { display: block; margin-top: 4px; font-size: 0.82rem; color: var(--ink-soft); }
+.next-all { display: inline-block; margin-top: 12px; font-weight: 700; color: var(--blue-deep); }
+@media (max-width: 760px) { .next-grid { grid-template-columns: minmax(0, 1fr); } }
+
+.lang-switch { position: relative; }
+.lang-switch > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 10px; border: 1px solid var(--ui-line); border-radius: 999px; background: var(--paper-light); font-size: 0.8rem; font-weight: 700; }
+.lang-switch > summary::-webkit-details-marker { display: none; }
+.lang-switch ul { position: absolute; right: 0; top: calc(100% + 6px); z-index: 30; margin: 0; padding: 6px; list-style: none; min-width: 150px; background: var(--paper-light); border: 1px solid var(--ink); border-radius: 10px; box-shadow: 4px 4px 0 var(--ink); }
+.lang-switch li a { display: block; padding: 8px 10px; border-radius: 6px; color: var(--ink); text-decoration: none; font-size: 0.88rem; }
+.lang-switch li a:hover, .lang-switch li a[aria-current] { background: var(--blue-soft); }
+@media (max-width: 960px) { .brand-sub { display: none; } .header-actions { gap: 4px; } .lang-switch > summary { padding: 0 8px; } }
+@media (max-width: 640px) { .lang-switch .ls-label { display: none; } .lang-switch > summary { padding: 0 10px; } }
+/* Typography: balanced headings, phrase-aware Japanese breaks, tighter mobile headings */
+h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
+:lang(ja) h1, :lang(ja) h2, :lang(ja) h3, :lang(ja) .eyebrow, :lang(ja) .scene b, :lang(ja) .lead { word-break: auto-phrase; }
+.lead, .intro, .scene p { text-wrap: pretty; }
+@media (max-width: 640px) { h2 { font-size: 1.32rem; line-height: 1.4; } .eyebrow { font-size: 0.72rem; } .closing h2 { font-size: 1.5rem; } }
+@media (max-width: 400px) { h2 { font-size: 1.22rem; } .closing h2 { font-size: 1.34rem; } }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://simy.one/guides/zh-hans/minimax.html#article",
+      "headline": "MiniMax 使用指南：MiniMax H3 是什么？视频 AI、M3、价格与本地运行",
+      "description": "MiniMax 是哪个国家的 AI，生成带声音视频的 MiniMax H3、文本模型 MiniMax-M3、视频应用海螺（Hailuo）、语音的 MiniMax Audio、Token Plan、兼容 Anthropic 的 API、许可证、本地运行与数据存储位置。以及由 SIMY 推进生成之后剩下的负责人、期限与分享的机制。",
+      "inLanguage": "zh-Hans",
+      "datePublished": "2026-10-01",
+      "dateModified": "2026-10-01",
+      "mainEntityOfPage": "https://simy.one/guides/zh-hans/minimax.html",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://simy.one/ogp.png",
+        "width": 1200,
+        "height": 630
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "SIMY",
+        "url": "https://simy.one/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "AwakApp Inc.",
+        "url": "https://www.awak.app/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://simy.one/simy-icon-square.png"
+        }
+      },
+      "about": [
+        {
+          "@type": "Thing",
+          "name": "MiniMax"
+        },
+        {
+          "@type": "Thing",
+          "name": "MiniMax-M3"
+        },
+        {
+          "@type": "Thing",
+          "name": "MiniMax H3"
+        },
+        {
+          "@type": "Thing",
+          "name": "Hailuo"
+        },
+        {
+          "@type": "Thing",
+          "name": "大语言模型"
+        }
+      ],
+      "citation": [
+        "https://www.minimax.io/",
+        "https://huggingface.co/MiniMaxAI/MiniMax-M3",
+        "https://huggingface.co/MiniMaxAI/MiniMax-H3",
+        "https://platform.minimax.io/docs/guides/pricing-paygo.md",
+        "https://platform.minimax.io/docs/guides/pricing-token-plan.md",
+        "https://platform.minimax.io/docs/guides/local-deploy.md",
+        "https://code.minimax.io/doc/en/privacy-policy.html"
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "SIMY",
+          "item": "https://simy.one/?lang=zh-Hans"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "指南",
+          "item": "https://simy.one/guides/zh-hans/index.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "MiniMax 使用指南",
+          "item": "https://simy.one/guides/zh-hans/minimax.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "MiniMax 是什么？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "MiniMax 是一家位于中国上海的 AI 公司。开发视频生成的 MiniMax H3、文本模型 MiniMax-M3、语音合成的 MiniMax Audio 等模型和应用。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "MiniMax 是哪个国家的 AI？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "由中国上海的公司开发。面向海外的应用由新加坡法人 Nanonoble Pte. Ltd. 提供。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "MiniMax H3 是什么？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "MiniMax H3 是 MiniMax 于 2026 年 7 月底发布的、生成带声音视频的模型。以文字、图片、视频、声音为线索生成最长 15 秒的视频，可在海螺（Hailuo）和 API 中使用。它与文本模型 MiniMax-M3 是不同的模型。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "MiniMax H3 能在本地运行吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "请把在个人电脑上运行视为很难的事。权重已在 Hugging Face 公开，但官方步骤以 4 块 GPU 的配置为例。想轻松试用，海螺（Hailuo）或 API 更现实。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "MiniMax 可以免费使用吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "各应用情况不同，免费可用的范围请查看各应用的官方说明。API 是收费的，分为按用量付费的按量计费和包月的 Token Plan。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "MiniMax 的 Token Plan 多少钱？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "截至 2026 年 10 月，分为 Plus 每月 22 美元、Max 每月 55 美元、Ultra 每月 132 美元 3 档。每 5 小时和每周各有用量额度。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "MiniMax Audio 是什么？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "MiniMax 的语音合成应用和模型，可以把文字变成自然的语音。可用于培训视频的旁白、产品介绍的朗读等。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "可以从 Claude Code 使用 MiniMax 的模型吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "可以。MiniMax 的 API 推荐兼容 Anthropic 的格式，把 Claude Code 等工具的接入地址和 API 密钥替换后，就能调用 MiniMax-M3。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "MiniMax 能在本地（自己的电脑）运行吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "在个人电脑上运行当前的 MiniMax-M3 并不现实。Ollama 官方库中的 M3 带 cloud 标签（在 Ollama 云端运行的版本），官方的自托管步骤以多块高性能 GPU 为前提。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "MiniMax 的模型可以商用吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "有条件地可以。MiniMax-M3 商用时需要标示“Built with MiniMax M3”并通知 MiniMax，年营收超过 2,000 万美元时需要事先获得书面许可。MiniMax H3 的许可证将欧盟、英国、韩国、美国排除在适用地区之外，因此也请确认使用的国家或地区。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "输入 MiniMax 的内容存储在哪里？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "海外版应用的政策写明，原则上不转移到新加坡境外。API 另有政策，签约前请确认全文。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "SIMY 是用 MiniMax 运行的吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "不是。SIMY 目前不连接 MiniMax，而是使用你自己的 ChatGPT（Codex）账户和电脑上的 Claude Code 运行。用 MiniMax 做的脚本和素材，可以直接带进会议或聊天。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "用 MiniMax 做完之后的工作，每次都要去请 SIMY 做吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "不用。SIMY 会自己从会议记录和聊天中接住决定事项、负责人和期限。它从对话中学习你的做法，只把需要判断的部分交给你。"
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">跳到正文</a>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="/?lang=zh-Hans">
+      <img src="/simy-icon-56.png" alt="SIMY" width="28" height="28">
+      <span aria-hidden="true">SIMY</span>
+      <span class="brand-sub">MiniMax 使用指南</span>
+    </a>
+    <nav class="header-actions" aria-label="账户">
+      <details class="lang-switch"><summary aria-label="Language: 中文"><span aria-hidden="true">🌐</span> <span class="ls-label">中文</span></summary><ul><li><a href="/guides/minimax.html" hreflang="ja" lang="ja">日本語</a></li><li><a href="/guides/en/minimax.html" hreflang="en" lang="en">English</a></li><li><a href="/guides/zh-hans/minimax.html" hreflang="zh-Hans" lang="zh-Hans" aria-current="page">中文</a></li><li><a href="/guides/es/minimax.html" hreflang="es" lang="es">Español</a></li><li><a href="/guides/fr/minimax.html" hreflang="fr" lang="fr">Français</a></li><li><a href="/guides/hi/minimax.html" hreflang="hi" lang="hi">हिन्दी</a></li></ul></details>
+      <a class="header-link" href="/download/zh-hans.html">下载</a>
+      <a class="header-link" href="https://app.simy.one/login?lang=zh-Hans&amp;locale=zh-Hans">登录</a>
+      <a class="header-cta" href="https://app.simy.one/signup?lang=zh-Hans&amp;locale=zh-Hans&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=minimax_guide_zh-hans&amp;utm_content=header">选择方案并开始</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" aria-labelledby="page-title">
+    <div class="wrap hero-inner">
+      <div>
+        <ol class="crumbs" aria-label="面包屑导航">
+          <li><a href="/?lang=zh-Hans">SIMY</a></li>
+          <li><a href="/guides/zh-hans/index.html">指南</a></li>
+          <li aria-current="page">MiniMax 使用指南</li>
+        </ol>
+        <p class="eyebrow">写给使用 MiniMax 的人</p>
+        <h1 id="page-title">
+          <span class="line">用 MiniMax 做完，</span>
+          <span class="line hl">别让之后的事</span>
+          <span class="line">停下。</span>
+        </h1>
+        <p class="lead">MiniMax 能又快又便宜地做出脚本、配音和视频。可是“谁来确认、什么时候交给谁”，仍然留在你手上。之后的部分，由 SIMY 推进。</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="https://app.simy.one/signup?lang=zh-Hans&amp;locale=zh-Hans&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=minimax_guide_zh-hans&amp;utm_content=hero">选择方案并开始 <span class="arrow" aria-hidden="true">↗</span></a>
+          <a class="btn btn-ghost" href="#connect">看看怎么连接 <span class="arrow" aria-hidden="true">↓</span></a>
+        </div>
+        <ul class="hero-points">
+          <li>MiniMax 照旧做它擅长的事</li>
+          <li>SIMY 从会议和聊天中接活</li>
+          <li>用你自己的 ChatGPT（Codex）运行</li>
+        </ul>
+      </div>
+
+      <div class="hero-visual">
+        <div class="relay" role="img" aria-label="示例：MiniMax 完成新产品介绍视频的脚本、配音和视频样片，之后的修改事项与负责人清单、给制作公司的委托邮件草稿、内部分享文案由 SIMY 准备，只有是否确定发布日期的判断留给你">
+          <div class="relay-head" aria-hidden="true">
+            <span class="rec"><span class="rec-dot"></span><span class="rec-name">策划会_新产品介绍视频_1001</span></span>
+            <span>38:40</span>
+          </div>
+          <div class="relay-meta" aria-hidden="true">
+            <span class="chip">MiniMax-M3</span>
+            <span class="chip">H3、Audio</span>
+            <span class="chip">参会 4 人</span>
+          </div>
+          <ol class="relay-steps" aria-hidden="true">
+            <li class="step s-done s-plaud"><span class="no">01</span><span class="what">脚本草稿<small>60 秒介绍视频，3 个方案</small></span><span class="status">MiniMax ✓</span></li>
+            <li class="step s-done s-plaud"><span class="no">02</span><span class="what">旁白配音<small>根据脚本生成朗读</small></span><span class="status">MiniMax ✓</span></li>
+            <li class="step s-done s-plaud"><span class="no">03</span><span class="what">视频样片<small>用 H3 做出分镜草稿</small></span><span class="status">MiniMax ✓</span></li>
+            <li class="handoff">MiniMax 到此为止 ／ 之后交给 SIMY</li>
+            <li class="step s-done"><span class="no">04</span><span class="what">修改事项与负责人<small>谁、在何时之前、做什么</small></span><span class="status">完成</span></li>
+            <li class="step s-run"><span class="no">05</span><span class="what">给制作公司的委托邮件<small>按你的行文习惯存为 Gmail 草稿</small></span><span class="status">Autorun</span><span class="bar"></span></li>
+            <li class="step s-next"><span class="no">06</span><span class="what">内部分享文案<small>向销售和公关同步发布计划</small></span><span class="status">下一步</span></li>
+            <li class="step s-you"><span class="no">07</span><span class="what">是否确定发布日期<small>只有判断留给你</small></span><span class="status">轮到你</span></li>
+          </ol>
+          <div class="relay-foot" aria-hidden="true"><strong>你要做的，只是决定，然后发送。</strong></div>
+        </div>
+        <p class="caption">※ 界面为示意图</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap guide">
+    <nav class="toc" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <ol>
+        <li><a href="#scene"><span>01</span>做完之后，是不是这样？</a></li>
+        <li><a href="#wish"><span>02</span>其实你想要的是这样</a></li>
+        <li><a href="#gap"><span>03</span>MiniMax 停在这里</a></li>
+        <li><a href="#connect"><span>04</span>SIMY 接上后面的事</a></li>
+        <li><a href="#sample"><span>05</span>用一次会议来对比</a></li>
+        <li><a href="#usecases"><span>06</span>按行业：MiniMax 的用法与 SIMY 的产出</a></li>
+        <li><a href="#start"><span>07</span>开始使用：3 步</a></li>
+        <li><a href="#reference"><span>08</span>MiniMax 是什么、H3、M3、价格</a></li>
+        <li><a href="#faq"><span>09</span>常见问题</a></li>
+        <li><a href="#sources"><span>10</span>参考资料</a></li>
+      </ol>
+    </nav>
+
+    <article class="article">
+      <details class="toc-mobile">
+        <summary>目录</summary>
+        <ol>
+          <li><a href="#scene">做完之后，是不是这样？</a></li>
+          <li><a href="#wish">其实你想要的是这样</a></li>
+          <li><a href="#gap">MiniMax 停在这里</a></li>
+          <li><a href="#connect">SIMY 接上后面的事</a></li>
+          <li><a href="#sample">用一次会议来对比</a></li>
+          <li><a href="#usecases">按行业：MiniMax 的用法与 SIMY 的产出</a></li>
+          <li><a href="#start">开始使用：3 步</a></li>
+          <li><a href="#reference">MiniMax 是什么、H3、M3、价格</a></li>
+          <li><a href="#faq">常见问题</a></li>
+          <li><a href="#sources">参考资料</a></li>
+        </ol>
+      </details>
+
+      <p class="byline"><span>最后更新：<time datetime="2026-10-01">2026年10月1日</time></span><span>发布：SIMY（AwakApp Inc.）</span></p>
+
+      <!-- 01 -->
+      <section class="sec" id="scene" aria-labelledby="h-scene">
+        <span class="sec-label">01 / AFTER THE OUTPUT</span>
+        <h2 id="h-scene">用 MiniMax 做完之后，是不是这样？</h2>
+        <p class="intro">脚本、配音、视频草稿，用 MiniMax 一口气就做好了。可在那之后，发生的却是这些。</p>
+        <div class="scenes">
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">1</span>
+            <span class="k">素材做好的第二天</span>
+            <b>最后选的是哪个？</b>
+            <p>脚本和视频各有 3 个方案。会上选定的那个，被聊天记录冲走，找不到了。</p>
+          </div>
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">2</span>
+            <span class="k">定下修改的会议</span>
+            <b>谁来改？</b>
+            <p>旁白措辞和时长要改。负责人和期限，只是口头说了一句。</p>
+          </div>
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">3</span>
+            <span class="k">发布前一周</span>
+            <b>还没通知</b>
+            <p>忙着做素材，给制作公司和销售的联络一拖再拖。</p>
+          </div>
+        </div>
+        <p class="scene-foot">做东西，MiniMax 一下就完成。<b>工作能不能推进，取决于做完之后。</b></p>
+      </section>
+
+      <!-- 02 -->
+      <section class="sec" id="wish" aria-labelledby="h-wish">
+        <span class="sec-label">02 / WHAT YOU REALLY WANTED</span>
+        <h2 id="h-wish">其实你想要的是这样：用 MiniMax 做完之后</h2>
+        <p class="intro">同样的会议，同样的 MiniMax。素材一做好，就希望已经变成这样。</p>
+        <div class="scenes four">
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">会议一结束</span>
+            <b>选定方案和负责人已列好</b>
+            <p>素材照旧用 MiniMax 做。选定的方案、修改的负责人和期限，已经排在那里。</p>
+          </div>
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">修改一定下</span>
+            <b>委托文案已写好</b>
+            <p>给制作公司的委托和内部分享，已经用你的口吻准备好。</p>
+          </div>
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">发布之前</span>
+            <b>卡住的事会送到你面前</b>
+            <p>等回复、等确认的工作，SIMY 会在下次会议前先提醒你。</p>
+          </div>
+          <div class="scene wish you">
+            <span class="mark" aria-hidden="true">!</span>
+            <span class="k">回到你手上的</span>
+            <b>只有判断</b>
+            <p>“发布日期就定在下周吗？”回来的只有这一个问题。</p>
+          </div>
+        </div>
+        <p class="scene-foot">从<b>把会议和聊天接入 SIMY 之后的下一场会议起</b>，就会这样。MiniMax 照旧用在它擅长的事上。</p>
+      </section>
+
+      <!-- 03 -->
+      <section class="sec" id="gap" aria-labelledby="h-gap">
+        <span class="sec-label">03 / WHERE MINIMAX STOPS</span>
+        <h2 id="h-gap">MiniMax 的产出，停在这里</h2>
+        <p class="intro">MiniMax 擅长的是“把你要的东西做出来”。再往后，没有人接手。</p>
+        <div class="tl-wrap" role="img" aria-label="时间线。从委托、脚本和文字，到配音和视频，MiniMax 都能完成，但负责人与期限、委托联络、内部分享、下次之前的确认仍然空着">
+          <div class="tl-row">
+            <span class="tl-who">MiniMax</span>
+            <ol class="tl">
+              <li class="on">委托<small>由你提出</small></li>
+              <li class="on">脚本、文字<small>用 M3 又快又省</small></li>
+              <li class="on">配音、视频<small>Audio 与 H3</small></li>
+              <li class="gap">负责人与期限</li>
+              <li class="gap">委托联络</li>
+              <li class="gap">内部分享</li>
+              <li class="gap">下次之前的确认</li>
+            </ol>
+          </div>
+        </div>
+        <p class="caption">※ 流程为示意图</p>
+        <p class="tl-note"><b>无论用应用、API 还是 MiniMax Code，都停在同一个地方。</b>素材可以做很多遍，可每次“开口要”的是你，去看有没有做完的也是你。</p>
+      </section>
+
+      <!-- 04 -->
+      <section class="sec" id="connect" aria-labelledby="h-connect">
+        <span class="sec-label">04 / CONNECT</span>
+        <h2 id="h-connect">SIMY 接上后面的事。MiniMax 照旧，做完之后交给 SIMY</h2>
+        <p class="intro">原本空着的 4 格，由 SIMY 填上。回到你手上的，只有判断那 1 格。</p>
+        <div class="tl-wrap" role="img" aria-label="时间线。委托、脚本和文字、配音和视频由 MiniMax 完成。负责人与期限、委托联络、内部分享由 SIMY 推进，只有判断回到你手上">
+          <div class="tl-row">
+            <span class="tl-who">MiniMax</span>
+            <ol class="tl">
+              <li class="on">委托</li>
+              <li class="on">脚本、文字</li>
+              <li class="on">配音、视频</li>
+              <li class="blank"></li><li class="blank"></li><li class="blank"></li><li class="blank"></li>
+            </ol>
+          </div>
+          <div class="tl-row">
+            <span class="tl-who simy">SIMY</span>
+            <ol class="tl">
+              <li class="blank"></li><li class="blank"></li><li class="blank"></li>
+              <li class="run">负责人与期限<small>从会议中接住</small></li>
+              <li class="run">委托联络<small>只存为 Gmail 草稿</small></li>
+              <li class="run">内部分享<small>批准后发布</small></li>
+              <li class="you">判断<small>只回来 1 个问题</small></li>
+            </ol>
+          </div>
+        </div>
+        <p class="caption">※ 流程为示意图</p>
+        <ul class="three" aria-label="SIMY 的 3 个特点">
+          <li>从会议和聊天中接活</li>
+          <li>按你的做法</li>
+          <li>只把判断交给你</li>
+        </ul>
+        <p class="tl-note">SIMY 会自己从会议记录和聊天中找出“之后的工作”。它从对话中学习你反复执行的步骤和确认事项，按同样的方式推进，并把完成情况列在 My Actions 里。</p>
+
+        <div class="connect">
+          <ol class="connect-steps">
+            <li><b>注册 SIMY，连接 ChatGPT（Codex）</b><span>SIMY 的云端执行使用你自己的 ChatGPT 账户运行。Codex 的用量在你的 ChatGPT 方案范围内。</span></li>
+            <li class="key"><b>安装 SIMY 桌面应用</b><span>可以让电脑上的 Claude Code 担任 SIMY 的执行者。SIMY 会从 Claude Code 和 Codex 的对话中找出重复的工作，变成“来自 SIMY 的建议”。对话正文不保存在服务器上。 <a href="/download/zh-hans.html">前往下载</a></span></li>
+            <li><b>接入会议记录</b><span>在集成页面连接 Plaud、Notion 等。用 MiniMax 做的脚本和素材链接，贴到会议或聊天里，SIMY 也会接住。</span></li>
+          </ol>
+          <div>
+            <div class="mock" role="img" aria-label="SIMY 中 My Actions 的示意图。作为从会议中接住的工作，修改事项与负责人清单已完成，给制作公司的委托邮件草稿正在进行，是否确定发布日期的判断正在等你。">
+              <div class="mock-head" aria-hidden="true">
+                <span class="mock-mark">S</span>
+                <div>
+                  <div class="mock-title">My Actions <span class="mock-state">● 等你处理 1</span></div>
+                  <p class="mock-desc">从 策划会_新产品介绍视频_1001 中接住的工作</p>
+                </div>
+              </div>
+              <div class="mock-box" aria-hidden="true">修改与负责人清单 ✓ ／ 委托邮件草稿（进行中）／ 内部分享（下一步）</div>
+              <div class="mock-btn" aria-hidden="true">决定是否确定发布日期</div>
+              <div class="mock-foot" aria-hidden="true">只有需要判断的事，才会回到你手上</div>
+            </div>
+            <p class="caption">※ SIMY 界面示意图</p>
+          </div>
+        </div>
+        <p class="note"><b>SIMY 与 MiniMax 的关系：</b>SIMY 目前不连接 MiniMax。SIMY 本身使用你自己的 ChatGPT（Codex）账户和电脑上的 Claude Code 运行。脚本、配音、视频的制作照旧交给擅长这些的 MiniMax，把结果带进会议或聊天，之后的事由 SIMY 推进。</p>
+      </section>
+
+      <!-- 05 -->
+      <section class="sec" id="sample" aria-labelledby="h-sample">
+        <span class="sec-label">05 / SAMPLE</span>
+        <h2 id="h-sample">用一次会议来对比：MiniMax 的素材，与 SIMY 完成的下一步</h2>
+        <p class="intro">围绕新产品介绍视频开了 40 分钟策划会，素材用 MiniMax 制作的示例。左边是 MiniMax，右边是 SIMY。</p>
+        <div class="sample">
+          <div class="sheet">
+            <div class="sheet-label"><span>用 MiniMax 做的素材（示例）</span><span>M3、Audio、Hailuo</span></div>
+            <dl>
+              <dt>脚本</dt>
+              <dd>60 秒介绍视频 3 个方案。会上选定 B 方案“现场的一天”。</dd>
+              <dt>旁白</dt>
+              <dd>沉稳的声音朗读。有人指出开头第一句太长。</dd>
+              <dt>视频样片</dt>
+              <dd>按场景的草稿。修改：最后一个镜头加入产品 Logo。</dd>
+              <dt>未决事项</dt>
+              <dd>发布日期定在展会前一周，还是展会当天。</dd>
+            </dl>
+          </div>
+          <div class="outs">
+            <div class="out">
+              <div class="out-head"><b>修改与负责人清单</b><span class="pill ok">完成</span></div>
+              <p>缩短开头第一句：你，10/3。加入 Logo 镜头：制作公司，10/8。确认字幕：公关，10/9。</p>
+            </div>
+            <div class="out">
+              <div class="out-head"><b>给制作公司的委托邮件</b><span class="pill run">Autorun</span></div>
+              <p>用你惯用的行文，写明已选定 B 方案、在最后一个镜头加入 Logo、请在 10 月 8 日前交付。存为 Gmail 草稿。</p>
+            </div>
+            <div class="out">
+              <div class="out-head"><b>内部分享文案</b><span class="pill">下一步</span></div>
+              <p>“介绍视频按 B 方案推进。发布日期本周内确定。”批准后发到聊天中。</p>
+            </div>
+            <div class="out you">
+              <div class="out-head"><b>你的判断</b><span class="pill you">轮到你</span></div>
+              <p>发布日期定在展会前一周，还是展会当天。只有需要判断的部分会回到你手上。</p>
+            </div>
+          </div>
+        </div>
+        <p class="sample-foot">MiniMax 负责制作，SIMY 负责推进。决定把哪个推向世界的，依然是你。</p>
+      </section>
+
+      <!-- 06 -->
+      <section class="sec" id="usecases" aria-labelledby="h-usecases">
+        <span class="sec-label">06 / BY INDUSTRY</span>
+        <h2 id="h-usecases">按行业：MiniMax 的用法，与 SIMY 的产出</h2>
+        <p class="intro">用 MiniMax 做完之后，SIMY 会准备什么。个人也好、团队也好，模式都一样。</p>
+        <div class="ind">
+          <div class="ind-card">
+            <h3>市场、公关 <small>MiniMax：介绍视频、旁白</small></h3>
+            <ul class="ind-rows">
+              <li><span>视频策划会</span><span>→</span><span>选定方案与修改的负责人、期限</span></li>
+              <li><span>素材评审</span><span>→</span><span>给制作公司的委托邮件草稿</span></li>
+              <li><span>发布之前</span><span>→</span><span>待确认清单与 1 个待判断问题</span></li>
+            </ul>
+          </div>
+          <div class="ind-card">
+            <h3>教育、培训 <small>MiniMax：教材朗读音频</small></h3>
+            <ul class="ind-rows">
+              <li><span>教材制作讨论会</span><span>→</span><span>各章负责人与截止日期</span></li>
+              <li><span>学员反馈复盘</span><span>→</span><span>待修改之处与给讲师的委托文案</span></li>
+              <li><span>开课之前</span><span>→</span><span>未提交素材的提醒</span></li>
+            </ul>
+          </div>
+          <div class="ind-card">
+            <h3>开发团队 <small>MiniMax：API 与 MiniMax Code</small></h3>
+            <ul class="ind-rows">
+              <li><span>设计评审会</span><span>→</span><span>确定的修改与负责人清单</span></li>
+              <li><span>写完代码之后</span><span>→</span><span>用电脑上的 Claude Code 做下一步</span></li>
+              <li><span>周末</span><span>→</span><span>进度与待判断事项汇总</span></li>
+            </ul>
+          </div>
+          <div class="ind-card">
+            <h3>经营会议、1on1 <small>MiniMax：资料摘要、论点整理</small></h3>
+            <ul class="ind-rows">
+              <li><span>经营会议</span><span>→</span><span>决定事项与负责人清单、同步给相关人员</span></li>
+              <li><span>1on1</span><span>→</span><span>在问“那件事怎么样了”之前，先看到进度和待判断事项</span></li>
+              <li><span>周末</span><span>→</span><span>汇总多场会议的周报</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- 07 -->
+      <section class="sec" id="start" aria-labelledby="h-start">
+        <span class="sec-label">07 / START</span>
+        <h2 id="h-start">开始使用：MiniMax 照旧，只需 3 步</h2>
+        <ol class="steps3">
+          <li><b>MiniMax 照常使用</b><span>脚本、配音、视频、代码。应用、API、MiniMax Code 都可以。</span></li>
+          <li class="key"><b>注册 SIMY，连接 ChatGPT</b><span>云端执行使用你自己的 ChatGPT（Codex）。<a href="#connect">连接方法</a>见上文。在用 Claude Code 的人，也请安装 SIMY 桌面应用。 <a href="/download/zh-hans.html">前往下载</a></span></li>
+          <li><b>开完一场会议</b><span>负责人与期限、委托草稿、分享文案都会送到你面前。你只需决定、发送。</span></li>
+        </ol>
+        <p class="note"><b>注册流程：</b>选择方案 → 邮箱验证 → 银行卡付款（没有免费方案）。<a href="/?lang=zh-Hans#pricing">查看价格</a>／电脑端应用请从<a href="/download/zh-hans.html">下载页面</a>获取。</p>
+        <p class="note"><b>MiniMax 的用法不变。</b>SIMY 不是 MiniMax 的替代品，而是负责做完之后那些工作的另一套机制。</p>
+      </section>
+
+      <!-- 08 -->
+      <section class="sec" id="reference" aria-labelledby="h-reference">
+        <span class="sec-label">08 / REFERENCE</span>
+        <h2 id="h-reference">MiniMax 是什么：H3、M3、价格、API 与本地运行（想深入了解的人）</h2>
+        <p class="intro">以下内容，想确认 MiniMax 本身的情况时再展开。模型名称和价格为截至 2026 年 10 月的信息。</p>
+
+        <details class="fold">
+          <summary>MiniMax 是什么：哪个国家的 AI<small>中国上海的 AI 公司。文本、视频、语音模型一应俱全</small></summary>
+          <div class="fold-body">
+            <h3>MiniMax 的开发方</h3>
+            <p>MiniMax 是一家位于中国上海的 AI 公司。除了处理文字的大语言模型（LLM），还自主开发视频生成和语音合成的模型与应用。面向海外的应用由新加坡法人 Nanonoble Pte. Ltd. 提供。</p>
+            <h3>3 种用法</h3>
+            <ul class="plain-list">
+              <li><strong>应用：</strong>在网页或手机上使用 MiniMax Code、MiniMax Audio、视频应用海螺（Hailuo）等。</li>
+              <li><strong>API：</strong>通过 MiniMax 的开放平台（platform.minimax.io）接入自家系统或开发工具。有按量计费和包月的 Token Plan。</li>
+              <li><strong>开放权重：</strong>在自家服务器上运行 Hugging Face 公开的 MiniMax-M3 或 MiniMax H3 权重。有许可证条件。</li>
+            </ul>
+            <p class="small muted">“minimax”也是博弈论中一种搜索方法（极小化极大算法）的名称。本页讨论的是 AI 公司 MiniMax。</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>主要产品：视频的 H3、文本的 M3、语音的 MiniMax Audio<small>截至 2026 年 10 月。名称和代际更新频繁</small></summary>
+          <div class="fold-body">
+            <p class="scroll-hint">表格可以左右滑动 →</p>
+            <div class="table-wrap">
+              <table class="t-wide">
+                <thead>
+                  <tr><th scope="col">产品、模型</th><th scope="col">能做什么</th><th scope="col">在哪里用</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">MiniMax H3</th><td>生成带声音视频的模型。以文字、图片、视频、声音为线索，生成最长 15 秒的视频</td><td>海螺（Hailuo）、API、开放权重</td></tr>
+                  <tr><th scope="row">MiniMax-M3</th><td>当前的主力文本模型。100 万 token 上下文，支持文本、图片、视频输入</td><td>API、开放权重</td></tr>
+                  <tr><th scope="row">MiniMax-M2.7</th><td>上一代文本模型</td><td>API、开放权重</td></tr>
+                  <tr><th scope="row">MiniMax Code</th><td>可以交给它写代码、做调研的智能体应用</td><td>应用</td></tr>
+                  <tr><th scope="row">Hailuo</th><td>视频生成应用。用 H3 等模型，从文字或图片生成视频</td><td>应用等</td></tr>
+                  <tr><th scope="row">MiniMax Audio</th><td>把文字变成自然语音的语音合成应用（模型名为 MiniMax Speech）</td><td>应用等</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 id="h3">MiniMax H3 是什么</h3>
+            <p>MiniMax H3 是 MiniMax 于 2026 年 7 月底发布的视频生成模型。以文字、图片、视频、声音为线索，生成带立体声的视频（4～15 秒，最高 2K）。官方模型卡写明，台词支持 11 种语言，具体语言请以模型卡为准。</p>
+            <ul class="plain-list">
+              <li><strong>在哪里用：</strong>视频应用海螺（Hailuo）、MiniMax 的 API、Hugging Face 公开的权重。</li>
+              <li><strong>与 M3 的区别：</strong>H3 是生成视频的模型，M3 是处理文字的文本模型，两者不同。</li>
+              <li><strong>本地运行：</strong>对个人电脑来说是很重的模型。详见下方的<a href="#local">本地运行的现实</a>。</li>
+            </ul>
+            <h3>MiniMax-M3 是什么</h3>
+            <p>MiniMax-M3 是 2026 年 6 月发布的 MiniMax 当前主力文本模型。总参数约 4,280 亿（单次推理激活约 230 亿），支持 100 万 token 上下文以及文本、图片、视频输入。API 单价低，还有可从编程工具包月使用的 Token Plan。</p>
+            <h3>MiniMax Audio 的用法</h3>
+            <p>贴入要朗读的文字，选择音色和语速，即可生成语音。可用于培训视频的旁白、产品介绍的朗读、面向内部的通知语音等。生成与真人声音相似的语音时，请确认本人同意以及发布平台的规定。</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>MiniMax 能做什么：工作中的用途<small>文字、语音、视频，都能用同一家公司的工具备齐</small></summary>
+          <div class="fold-body">
+            <ul class="plain-list">
+              <li><strong>文字：</strong>用 MiniMax-M3 写脚本、文章、邮件、报告的初稿。也能总结长资料，或者给它看图片、视频后让它说明。</li>
+              <li><strong>语音：</strong>用 MiniMax Audio 根据脚本生成旁白或朗读音频。可用于培训、产品介绍、内部通知。</li>
+              <li><strong>视频：</strong>在海螺（Hailuo）或 API 中使用 MiniMax H3，从文字或图片生成带声音的短视频。适合用作分镜草稿，或试做社交媒体短视频。</li>
+              <li><strong>编程：</strong>通过 MiniMax Code，或经由兼容 Anthropic 的 API 接入的编程工具，把写代码的工作交出去。</li>
+            </ul>
+            <h3>用海螺（H3）制作视频的流程</h3>
+            <ol class="plain-list">
+              <li><strong>用文字写出想要的场景。</strong>像“早晨的办公室里，员工一边看平板一边开会”这样，具体写出地点、人物和动作。</li>
+              <li><strong>需要的话附上图片。</strong>可以让产品照片或示意图动起来。</li>
+              <li><strong>多做几条再挑选。</strong>同样的指令每次结果都不同，把候选排在一起比较最快。</li>
+            </ol>
+            <p>使用人物面孔、Logo，或与他人作品相似的表现时，请确认权利归属和发布平台的规定。对外发布的视频，最后请由人亲自检查后再发布。</p>
+            <p>无论哪种用途，MiniMax 给出的都只是“素材”或“草稿”。在此基础上于会议中定下的负责人、期限，以及给相关人员的联络，由 <a href="#connect">SIMY 从会议和聊天中接住</a>并推进。</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>价格思路：按量计费与 Token Plan<small>文本 API 属于便宜的一档。包月每月 22 美元起</small></summary>
+          <div class="fold-body">
+            <ul class="plain-list">
+              <li><strong>按量计费：</strong>截至 2026 年 10 月，MiniMax-M3 在输入不超过 512K token 时，每 100 万 token 输入 0.30 美元、输出 1.20 美元。超过 512K 的长输入为 2 倍，优先处理为 1.5 倍。在中国的 LLM 中也属于便宜的一档。</li>
+              <li><strong>Token Plan：</strong>从编程工具等包月使用的方案，分为 Plus 每月 22 美元、Max 每月 55 美元、Ultra 每月 132 美元 3 档。每 5 小时和每周各有用量额度。</li>
+              <li><strong>税费：</strong>价格以美元标示。税费的处理和最新金额，请在<a href="https://platform.minimax.io/docs/guides/pricing-paygo.md" target="_blank" rel="noopener">按量计费价格页面</a>和 <a href="https://platform.minimax.io/docs/guides/pricing-token-plan.md" target="_blank" rel="noopener">Token Plan 页面</a>确认。</li>
+            </ul>
+            <h3>怎么选</h3>
+            <ul class="plain-list">
+              <li><strong>每天在编程工具里用：</strong>如果用量难以预估，Token Plan 更容易把每月支出定下来。</li>
+              <li><strong>接入自家系统：</strong>适合与处理量成正比的按量计费。先小规模试用，看清每件的成本后再扩大。</li>
+            </ul>
+            <p>视频和语音的价格与文本是不同的体系。会随制作的条数和时长变化，请在官方页面确认。</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>MiniMax 的 API：推荐兼容 Anthropic 的格式<small>可接入 Claude Code 等使用 Anthropic 格式通信的工具</small></summary>
+          <div class="fold-body">
+            <ul class="plain-list">
+              <li><strong>入口：</strong>在 MiniMax 开放平台（platform.minimax.io）创建 API 密钥。</li>
+              <li><strong>兼容性：</strong>官方推荐使用与 Anthropic SDK 兼容的格式。也支持 OpenAI 的 Chat Completions 和 Responses API 格式。</li>
+              <li><strong>从编程工具使用：</strong>把 Claude Code 等使用 Anthropic 格式的工具的接入地址和 API 密钥换成 MiniMax 的，就能调用 MiniMax-M3。步骤在官方文档中有说明。</li>
+            </ul>
+            <h3>开始使用 API 的步骤</h3>
+            <ol class="plain-list">
+              <li><strong>在 MiniMax 开放平台创建账户。</strong>选择按量计费或 Token Plan。</li>
+              <li><strong>创建 API 密钥。</strong>把密钥放进环境变量，不要直接写在代码或共享文档里。</li>
+              <li><strong>修改常用工具的接入地址。</strong>选择 Anthropic 格式或 OpenAI 格式，替换 URL 和模型名。</li>
+              <li><strong>先小规模试用，观察用量。</strong>长输入单价更高。确认每天的用量后，再扩大到正式规模。</li>
+            </ol>
+            <p class="note"><b>与 SIMY 的关系：</b>SIMY 目前不接入 MiniMax 的 API 密钥。SIMY 的云端执行使用你自己的 ChatGPT（Codex）账户运行。</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>开放权重与许可证：商用有条件<small>M3 和 H3 都是自有许可证，不要一概称为“开源”</small></summary>
+          <div class="fold-body">
+            <p>MiniMax-M3 的模型权重在 Hugging Face 公开，但许可证是自有的“MiniMax Community License”。非商业用途可以自由使用，商业用途有条件。</p>
+            <ul class="plain-list">
+              <li><strong>商业使用时：</strong>需要标示“Built with MiniMax M3”，并通知 MiniMax。</li>
+              <li><strong>年营收超过 2,000 万美元时：</strong>商业使用前需要获得 MiniMax 的书面许可。</li>
+              <li><strong>禁止的用途：</strong>禁止用于军事等用途。</li>
+              <li><strong>M2.7：</strong>同样是自有许可证。</li>
+            </ul>
+            <h3>MiniMax H3 的许可证</h3>
+            <ul class="plain-list">
+              <li><strong>适用地区：</strong>MiniMax H3 Community License 将欧盟、英国、韩国、美国排除在适用地区之外。在海外据点或与海外合作方一起使用时，请确认所在地区是否适用。</li>
+              <li><strong>商业使用时：</strong>需要在产品界面上标示“MiniMax H3”。年营收超过 2,000 万美元时，需要事先获得书面许可。</li>
+            </ul>
+            <p>即使只在公司内部试用，是否属于商业用途也会影响条件。在业务中使用前，请确认 <a href="https://huggingface.co/MiniMaxAI/MiniMax-M3/raw/main/LICENSE" target="_blank" rel="noopener">M3 的许可证全文</a>和 <a href="https://huggingface.co/MiniMaxAI/MiniMax-H3/blob/main/LICENSE" target="_blank" rel="noopener">H3 的许可证全文</a>。</p>
+          </div>
+        </details>
+
+        <details class="fold" id="local">
+          <summary>MiniMax H3、M3 能否在本地运行<small>对个人电脑都很重。官方步骤以多 GPU 配置为前提</small></summary>
+          <div class="fold-body">
+            <p>“MiniMax H3 本地部署”的搜索很多，但截至 2026 年 10 月，请把在普通电脑上运行 H3 或 M3 视为很难的事。</p>
+            <ul class="plain-list">
+              <li><strong>Ollama：</strong>官方库中的 minimax-m3 和 minimax-m2.7 带有“cloud”标签。意思是在 Ollama 的云端运行，输入会发送到 Ollama 的服务器。也有社区制作的版本，但并非官方版本。</li>
+              <li><strong>MiniMax H3：</strong>权重已公开，但官方步骤以 4 块 GPU 的配置为例。也公开了在 ComfyUI 中使用的步骤，所需显存请在自己的环境中确认。</li>
+              <li><strong>M3、M2.7 的官方步骤：</strong>M3 以 8 块 B200 GPU 的配置为参考（实验性质），M2.7 以 4 块大显存 GPU 为参考。这是面向数据中心的配置。</li>
+              <li><strong>想在自己的电脑上运行：</strong>可以考虑<a href="/guides/zh-hans/qwen.html">Qwen 指南</a>或 <a href="/guides/zh-hans/glm.html">GLM 指南</a>中介绍的小型文本模型。</li>
+            </ul>
+            <p>如果目的是“不让数据流出”，带 cloud 标签的模型并不符合。请在自家 GPU 服务器上运行权重，或者选择本机能跑得动的模型。</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>数据存储位置：海外窗口在新加坡<small>应用与 API 的政策分开</small></summary>
+          <div class="fold-body">
+            <p class="scroll-hint">表格可以左右滑动 →</p>
+            <div class="table-wrap">
+              <table class="t-wide">
+                <thead>
+                  <tr><th scope="col">使用方式</th><th scope="col">提供方</th><th scope="col">数据存储位置（政策中的记载）</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">海外版应用</th><td>Nanonoble Pte. Ltd.（新加坡）</td><td>写明原则上不转移到新加坡境外（2026 年 1 月 19 日更新）</td></tr>
+                  <tr><th scope="row">API</th><td>MiniMax</td><td>API 的政策中有关于在美国数据中心存储的记载。签约前请确认全文</td></tr>
+                  <tr><th scope="row">自行运营开放权重</th><td>自家公司</td><td>仅在自家服务器内</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <ul class="plain-list">
+              <li><strong>先确认公司内部规定：</strong>有些公司在生成式 AI 的使用规定中，限定了可用的服务和可输入的信息。</li>
+              <li><strong>基本原则是不输入机密：</strong>无论用哪种 AI，输入客户信息或未公开的数字之前，都请先想一想。</li>
+              <li><strong>注意声音和面孔素材：</strong>在语音或视频生成中使用他人的声音或面孔时，请确认本人同意以及发布平台的规定。</li>
+            </ul>
+            <p class="small muted">数据处理方面的内容，依据截至 2026 年 10 月 1 日的<a href="https://code.minimax.io/doc/en/privacy-policy.html" target="_blank" rel="noopener">海外版应用隐私政策</a>和 <a href="https://www.minimax.io/privacy-policy-v2.html" target="_blank" rel="noopener">MiniMax 隐私政策</a>的记载。SIMY 对数据的处理，公开在<a href="/security.html">安全</a>和<a href="/privacy.html?lang=zh-Hans">隐私政策</a>中。</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>MiniMax 的多语言：能用到什么程度<small>可以用各种语言提需求，但官方未明确列出 M3 支持的语言</small></summary>
+          <div class="fold-body">
+            <p>可以用多种语言向 MiniMax-M3 提需求，但截至 2026 年 10 月，官方没有明确列出 M3 支持的语言。另一方面，视频 H3 的模型卡写明，台词支持 11 种语言。无论哪个，都请用实际业务中的素材试一试再确认。</p>
+            <ul class="plain-list">
+              <li><strong>文字：</strong>脚本和邮件草稿，请确认措辞和语气后再使用。</li>
+              <li><strong>语音：</strong>朗读时，请听一听专有名词和数字的读法是否正确。</li>
+              <li><strong>视频：</strong>请确认画面中的文字没有变形。字幕用剪辑软件后期加入更稳妥。</li>
+            </ul>
+            <p>也可以组合这样的流程：用 M3 把其他语言的脚本翻译过来，再用 MiniMax Audio 生成朗读。会议中定下的修改负责人与期限、给制作公司或内部的联络，可以交给 SIMY。</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>与 ChatGPT、Claude 及其他中国 LLM 的区别<small>没有好坏之分，只是擅长的地方不同</small></summary>
+          <div class="fold-body">
+            <p class="scroll-hint">表格可以左右滑动 →</p>
+            <div class="table-wrap">
+              <table class="t-wide">
+                <thead>
+                  <tr><th scope="col">比较项目</th><th scope="col">MiniMax</th><th scope="col">Kimi</th><th scope="col">Qwen</th><th scope="col">DeepSeek</th><th scope="col" class="simy">SIMY</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">开发方</th><td>MiniMax（上海）</td><td>Moonshot AI（北京）</td><td>阿里巴巴集团（杭州）</td><td>DeepSeek（杭州）</td><td class="simy">AwakApp Inc.</td></tr>
+                  <tr><th scope="row">擅长的事</th><td>便宜的 API、带声音的视频（H3）</td><td>长上下文、编程</td><td>多语言、本地运行</td><td>推理与便宜的 API</td><td class="simy">推进回答之后的工作</td></tr>
+                  <tr><th scope="row">包月方案</th><td>Token Plan</td><td>会员方案</td><td>Coding Plan</td><td>无</td><td class="simy">用你自己的 ChatGPT 运行</td></tr>
+                  <tr><th scope="row">起点</th><td>由你提出</td><td>由你提出</td><td>由你提出</td><td>由你提出</td><td class="simy">SIMY 从会议和聊天中接住</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3>选择参考</h3>
+            <ul class="plain-list">
+              <li><strong>想在一处做好文字、语音和视频：</strong>MiniMax（视频用 H3，文字用 M3）。</li>
+              <li><strong>想让它一次读完长资料：</strong>参见 <a href="/guides/zh-hans/kimi.html">Kimi 指南</a>。</li>
+              <li><strong>想把 API 费用压到最低：</strong>MiniMax 或 <a href="/guides/zh-hans/deepseek.html">DeepSeek（指南）</a>。DeepSeek 的单价随时段变化。</li>
+            </ul>
+            <p class="note"><b>分工：</b>制作素材和草稿，用包括 MiniMax 在内的任何 AI 都可以。如果之后的负责人、期限、委托和分享每次都要你自己追，那就该 SIMY 出场了。各家的区别整理在<a href="/guides/zh-hans/china-llm.html">中国 LLM 对比</a>中，字节跳动的模型见 <a href="/guides/zh-hans/doubao.html">豆包（Doubao）指南</a>，智谱的模型见 <a href="/guides/zh-hans/glm.html">GLM 指南</a>。</p>
+          </div>
+        </details>
+      </section>
+
+      <!-- 09 -->
+      <section class="sec" id="faq" aria-labelledby="h-faq">
+        <span class="sec-label">09 / FAQ</span>
+        <h2 id="h-faq">常见问题</h2>
+        <div class="faq">
+          <details>
+            <summary>MiniMax 是什么？</summary>
+            <div class="a"><p>MiniMax 是一家位于中国上海的 AI 公司。开发视频生成的 MiniMax H3、文本模型 MiniMax-M3、语音合成的 MiniMax Audio 等模型和应用。</p></div>
+          </details>
+          <details>
+            <summary>MiniMax 是哪个国家的 AI？</summary>
+            <div class="a"><p>由中国上海的公司开发。面向海外的应用由新加坡法人 Nanonoble Pte. Ltd. 提供。</p></div>
+          </details>
+          <details>
+            <summary>MiniMax H3 是什么？</summary>
+            <div class="a"><p>MiniMax H3 是 MiniMax 于 2026 年 7 月底发布的、生成带声音视频的模型。以文字、图片、视频、声音为线索生成最长 15 秒的视频，可在海螺（Hailuo）和 API 中使用。它与文本模型 MiniMax-M3 是不同的模型。</p></div>
+          </details>
+          <details>
+            <summary>MiniMax H3 能在本地运行吗？</summary>
+            <div class="a"><p>请把在个人电脑上运行视为很难的事。权重已在 Hugging Face 公开，但官方步骤以 4 块 GPU 的配置为例。想轻松试用，海螺（Hailuo）或 API 更现实。</p></div>
+          </details>
+          <details>
+            <summary>MiniMax 可以免费使用吗？</summary>
+            <div class="a"><p>各应用情况不同，免费可用的范围请查看各应用的官方说明。API 是收费的，分为按用量付费的按量计费和包月的 Token Plan。</p></div>
+          </details>
+          <details>
+            <summary>MiniMax 的 Token Plan 多少钱？</summary>
+            <div class="a"><p>截至 2026 年 10 月，分为 Plus 每月 22 美元、Max 每月 55 美元、Ultra 每月 132 美元 3 档。每 5 小时和每周各有用量额度。</p></div>
+          </details>
+          <details>
+            <summary>MiniMax Audio 是什么？</summary>
+            <div class="a"><p>MiniMax 的语音合成应用和模型，可以把文字变成自然的语音。可用于培训视频的旁白、产品介绍的朗读等。</p></div>
+          </details>
+          <details>
+            <summary>可以从 Claude Code 使用 MiniMax 的模型吗？</summary>
+            <div class="a"><p>可以。MiniMax 的 API 推荐兼容 Anthropic 的格式，把 Claude Code 等工具的接入地址和 API 密钥替换后，就能调用 MiniMax-M3。</p></div>
+          </details>
+          <details>
+            <summary>MiniMax 能在本地（自己的电脑）运行吗？</summary>
+            <div class="a"><p>在个人电脑上运行当前的 MiniMax-M3 并不现实。Ollama 官方库中的 M3 带 cloud 标签（在 Ollama 云端运行的版本），官方的自托管步骤以多块高性能 GPU 为前提。</p></div>
+          </details>
+          <details>
+            <summary>MiniMax 的模型可以商用吗？</summary>
+            <div class="a"><p>有条件地可以。MiniMax-M3 商用时需要标示“Built with MiniMax M3”并通知 MiniMax，年营收超过 2,000 万美元时需要事先获得书面许可。MiniMax H3 的许可证将欧盟、英国、韩国、美国排除在适用地区之外，因此也请确认使用的国家或地区。</p></div>
+          </details>
+          <details>
+            <summary>输入 MiniMax 的内容存储在哪里？</summary>
+            <div class="a"><p>海外版应用的政策写明，原则上不转移到新加坡境外。API 另有政策，签约前请确认全文。</p></div>
+          </details>
+          <details>
+            <summary>SIMY 是用 MiniMax 运行的吗？</summary>
+            <div class="a"><p>不是。SIMY 目前不连接 MiniMax，而是使用你自己的 ChatGPT（Codex）账户和电脑上的 Claude Code 运行。用 MiniMax 做的脚本和素材，可以直接带进会议或聊天。</p></div>
+          </details>
+          <details>
+            <summary>用 MiniMax 做完之后的工作，每次都要去请 SIMY 做吗？</summary>
+            <div class="a"><p>不用。SIMY 会自己从会议记录和聊天中接住决定事项、负责人和期限。它从对话中学习你的做法，只把需要判断的部分交给你。</p></div>
+          </details>
+        </div>
+      </section>
+
+      <!-- 10 -->
+      <section class="sec" id="sources" aria-labelledby="h-sources">
+        <span class="sec-label">10 / SOURCES</span>
+        <h2 id="h-sources">参考资料</h2>
+        <p>MiniMax 的产品（H3、M3）、计费方式、许可证和数据处理，依据以下官方信息确认（确认日期：2026 年 10 月 1 日）。模型名称和价格经常变化，最新信息请以各官方页面为准。</p>
+        <ul class="plain-list">
+          <li><a href="https://www.minimax.io/" target="_blank" rel="noopener">MiniMax 官方网站</a></li>
+          <li><a href="https://huggingface.co/MiniMaxAI" target="_blank" rel="noopener">MiniMaxAI（Hugging Face）</a>、<a href="https://huggingface.co/MiniMaxAI/MiniMax-M3" target="_blank" rel="noopener">MiniMax-M3 模型卡</a></li>
+          <li><a href="https://huggingface.co/MiniMaxAI/MiniMax-H3" target="_blank" rel="noopener">MiniMax-H3 模型卡（Hugging Face）</a>、<a href="https://huggingface.co/MiniMaxAI/MiniMax-H3/blob/main/LICENSE" target="_blank" rel="noopener">MiniMax H3 Community License</a></li>
+          <li><a href="https://huggingface.co/MiniMaxAI/MiniMax-M3/raw/main/LICENSE" target="_blank" rel="noopener">MiniMax Community License（MiniMax-M3）</a></li>
+          <li><a href="https://platform.minimax.io/docs/guides/pricing-paygo.md" target="_blank" rel="noopener">按量计费价格（MiniMax 开放平台）</a></li>
+          <li><a href="https://platform.minimax.io/docs/guides/pricing-token-plan.md" target="_blank" rel="noopener">Token Plan（MiniMax 开放平台）</a></li>
+          <li><a href="https://platform.minimax.io/docs/llms.txt" target="_blank" rel="noopener">API 文档列表（MiniMax 开放平台）</a></li>
+          <li><a href="https://platform.minimax.io/docs/guides/local-deploy.md" target="_blank" rel="noopener">本地部署（MiniMax 开放平台）</a></li>
+          <li><a href="https://code.minimax.io/doc/en/privacy-policy.html" target="_blank" rel="noopener">海外版应用隐私政策</a>、<a href="https://www.minimax.io/privacy-policy-v2.html" target="_blank" rel="noopener">MiniMax 隐私政策</a></li>
+          <li><a href="https://ollama.com/search?q=minimax" target="_blank" rel="noopener">MiniMax 模型列表（Ollama 库）</a></li>
+        </ul>
+      </section>
+      <aside class="next-read" aria-labelledby="h-next">
+        <h2 id="h-next">接着读</h2>
+        <div class="next-grid"><a href="/guides/zh-hans/china-llm.html"><b>中国 LLM 对比</b><span>MiniMax、Kimi、DeepSeek 等的区别与分工</span></a><a href="/guides/zh-hans/kimi.html"><b>Kimi 使用指南</b><span>Kimi K3 的用法、API、Kimi Code</span></a><a href="/guides/zh-hans/qwen.html"><b>Qwen 使用指南</b><span>能在自己电脑上运行的中国 LLM</span></a></div>
+        <a class="next-all" href="/guides/zh-hans/index.html">查看全部指南 →</a>
+      </aside>
+    </article>
+  </div>
+
+  <section class="closing" aria-labelledby="h-closing">
+    <div class="wrap closing-inner">
+      <div>
+        <h2 id="h-closing">用 MiniMax 做完，<br>之后交给 SIMY。</h2>
+        <p>MiniMax 照旧做它擅长的事。从会议和聊天中接住的工作由 SIMY 推进，交回的只有判断。决定把哪个推向世界的，依然是你。</p>
+      </div>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="https://app.simy.one/signup?lang=zh-Hans&amp;locale=zh-Hans&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=minimax_guide_zh-hans&amp;utm_content=closing">选择方案并开始 <span class="arrow" aria-hidden="true">↗</span></a>
+        <a class="btn btn-ghost" href="mailto:sales@simy.one?subject=%E6%83%B3%E5%92%A8%E8%AF%A2%E5%A6%82%E4%BD%95%E5%AF%BC%E5%85%A5%20SIMY">咨询我们</a>
+        <a class="btn btn-ghost" href="/download/zh-hans.html">下载应用 <span class="arrow" aria-hidden="true">↓</span></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <ul class="footer-links">
+      <li><a href="/?lang=zh-Hans">首页</a></li>
+      <li><a href="/?lang=zh-Hans#pricing">价格</a></li>
+      <li><a href="/integrations.html">集成</a></li>
+      <li><a href="/download/zh-hans.html">下载</a></li>
+      <li><a href="/guides/zh-hans/index.html">全部指南</a></li>
+      <li><a href="/guides/zh-hans/claude.html">Claude</a></li>
+      <li><a href="/guides/zh-hans/codex.html">Codex</a></li>
+      <li><a href="/guides/zh-hans/cowork.html">Cowork</a></li>
+      <li><a href="/guides/zh-hans/chatgpt.html">ChatGPT</a></li>
+      <li><a href="/guides/zh-hans/plaud.html">PLAUD</a></li>
+      <li><a href="/guides/zh-hans/notta.html">Notta</a></li>
+      <li><a href="/guides/zh-hans/meeting-notes.html">AI 会议纪要</a></li>
+      <li><a href="/guides/zh-hans/china-llm.html">中国 AI 对比</a></li>
+      <li><a href="/guides/zh-hans/deepseek.html">DeepSeek</a></li>
+      <li><a href="/guides/zh-hans/qwen.html">Qwen</a></li>
+      <li><a href="/guides/zh-hans/qwen-local.html">在自有服务器上运行 Qwen</a></li>
+      <li><a href="/security.html">安全</a></li>
+      <li><a href="/privacy.html?lang=zh-Hans">隐私政策</a></li>
+      <li><a href="/terms.html?lang=zh-Hans">使用条款</a></li>
+    </ul>
+    <p>MiniMax、Hailuo 是 MiniMax 或其关联公司的商标。SIMY 是独立于 MiniMax 的产品。</p>
+    <p>Codex 和 ChatGPT 是 OpenAI 的产品。其他公司名称和产品名称是各公司的商标或注册商标。</p>
+    <p>&copy; 2026 SIMY by AwakApp Inc.</p>
+  </div>
+</footer>
+<script>
+(function () {
+  var links = Array.prototype.slice.call(document.querySelectorAll('.toc a'));
+  if (!links.length) return;
+  var items = links.map(function (a) {
+    return { link: a, section: document.getElementById(a.getAttribute('href').slice(1)) };
+  }).filter(function (item) { return item.section; });
+  var ticking = false;
+  function update() {
+    ticking = false;
+    var line = window.innerHeight * 0.35;
+    var atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+    var current = null;
+    items.forEach(function (item) {
+      if (item.section.getBoundingClientRect().top <= line) current = item;
+    });
+    if (atBottom) current = items[items.length - 1];
+    items.forEach(function (item) { item.link.classList.toggle('is-active', item === current); });
+  }
+  window.addEventListener('scroll', function () {
+    if (!ticking) { ticking = true; window.requestAnimationFrame(update); }
+  }, { passive: true });
+  update();
+})();
+</script>
+<script src="/analytics.js" defer></script>
+</body>
+</html>

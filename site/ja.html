@@ -54,7 +54,7 @@
     <script src="home-locales.js?v=20261003-international-seo-1" defer></script>
     <script src="home-i18n.js?v=20261003-international-seo-1" defer></script>
     <script src="pricing-catalog.js?v=20260907-industry-realtime-pricing-3" defer></script>
-    <script src="home.js?v=20260915-workflow-terminology-1" defer></script>
+    <script src="home.js?v=20261002-production-plan-handoff-1" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">本文へ移動</a>
@@ -69,12 +69,14 @@
 
         <nav class="desktop-nav" aria-label="メインナビゲーション">
           <a href="#product">プロダクト</a>
-          <a href="#codex-connection">Codex</a>
+          <a href="#codex-connection">AIツール</a>
           <a href="#use-cases">ユースケース</a>
           <a href="#how-it-works">仕組み</a>
           <a href="#connected-apps">連携アプリ</a>
           <a href="#why-simy">SIMYの違い</a>
           <a href="#pricing">料金</a>
+          <a href="/guides/index.html">ガイド</a>
+          <a href="/download.html">ダウンロード</a>
         </nav>
 
         <details class="language-picker" data-language-picker>
@@ -119,12 +121,14 @@
 
       <nav class="mobile-menu site-frame" id="mobile-menu" aria-label="モバイルナビゲーション" data-mobile-menu hidden>
         <a href="#product">プロダクト</a>
-        <a href="#codex-connection">Codex</a>
+        <a href="#codex-connection">AIツール</a>
         <a href="#use-cases">ユースケース</a>
         <a href="#how-it-works">仕組み</a>
         <a href="#connected-apps">連携アプリ</a>
         <a href="#why-simy">SIMYの違い</a>
         <a href="#pricing">料金</a>
+        <a href="/guides/index.html">ガイド</a>
+        <a href="/download.html">ダウンロード</a>
       </nav>
     </header>
 
@@ -258,14 +262,14 @@
 
       <section class="codex-connection section-pad" id="codex-connection" aria-labelledby="codex-title">
         <div class="section-intro codex-intro">
-          <p class="section-kicker">Codexと連携</p>
+          <p class="section-kicker">Codex · Claude · Copilot</p>
           <div>
-            <h2 class="section-heading" id="codex-title">Codexで頼む。その先の仕事はSIMYが動かす。</h2>
-            <p>いつものChatGPTアカウントを接続するだけ。SIMYはCodex App Server経由でCodexセッションを開始・継続し、利用量は現在のChatGPTプランに従います。</p>
+            <h2 class="section-heading" id="codex-title">Codex・Claude・Copilotで頼む。その先の仕事はSIMYが動かす。</h2>
+            <p>Codexの場合は、いつものChatGPTアカウントを接続するだけ。SIMYはCodex App Server経由でCodexセッションを開始・継続し、利用量は現在のChatGPTプランに従います。</p>
           </div>
         </div>
 
-        <div class="codex-flow" aria-label="ChatGPTアカウントをCodex App Serverへ接続し、SIMYのワークフローとAutorunを動かす流れ" data-motion-loop>
+        <div class="codex-flow" aria-label="Codexの接続例：ChatGPTアカウントをCodex App Serverへ接続し、SIMYのワークフローとAutorunを動かす流れ" data-motion-loop>
           <article class="codex-flow-step">
             <span class="codex-step-number">01 / 接続</span>
             <div class="codex-step-mark codex-mark-account" aria-hidden="true">ID</div>
@@ -471,6 +475,33 @@
                 </li>
               </ul>
             </section>
+
+            <details class="apps-more">
+              <summary><span>すべての連携を見る</span><small>ほかに接続可能5件・準備中6件</small></summary>
+              <div class="apps-more-content">
+                <section class="apps-group" aria-labelledby="more-available-title">
+                  <h3 class="apps-group-label" id="more-available-title">ほかの接続可能なアプリ</h3>
+                  <ul class="apps-grid" role="list" aria-label="SIMYと接続できる追加アプリ">
+                    <li class="app-tile app-line"><span class="app-badge" aria-hidden="true">L</span><div><strong>LINE</strong><small>公式アカウントのメッセージ</small></div></li>
+                    <li class="app-tile app-x"><span class="app-badge" aria-hidden="true">X</span><div><strong>X</strong><small>投稿・検索</small></div></li>
+                    <li class="app-tile app-webex"><span class="app-badge" aria-hidden="true">W</span><div><strong>Webex</strong><small>録画・字幕</small></div></li>
+                    <li class="app-tile app-datadog"><span class="app-badge" aria-hidden="true">D</span><div><strong>Datadog</strong><small>障害・監視</small></div></li>
+                    <li class="app-tile app-plaud"><span class="app-badge" aria-hidden="true">P</span><div><strong>Plaud</strong><small>録音・文字起こし・メモ</small></div></li>
+                  </ul>
+                </section>
+                <section class="apps-group" aria-labelledby="planned-apps-title">
+                  <h3 class="apps-group-label" id="planned-apps-title">対応予定の連携</h3>
+                  <ul class="apps-grid" role="list" aria-label="今後対応する連携">
+                    <li class="app-tile app-tile-planned"><span class="app-badge" aria-hidden="true">S</span><div><strong>Salesforce</strong><small>準備中</small></div></li>
+                    <li class="app-tile app-tile-planned"><span class="app-badge" aria-hidden="true">H</span><div><strong>HubSpot</strong><small>準備中</small></div></li>
+                    <li class="app-tile app-tile-planned"><span class="app-badge" aria-hidden="true">S</span><div><strong>Sansan</strong><small>準備中</small></div></li>
+                    <li class="app-tile app-tile-planned"><span class="app-badge" aria-hidden="true">K</span><div><strong>kintone</strong><small>準備中</small></div></li>
+                    <li class="app-tile app-tile-planned"><span class="app-badge" aria-hidden="true">J</span><div><strong>Jira</strong><small>準備中</small></div></li>
+                    <li class="app-tile app-tile-planned"><span class="app-badge" aria-hidden="true">V</span><div><strong>Veeva Vault</strong><small>準備中</small></div></li>
+                  </ul>
+                </section>
+              </div>
+            </details>
           </div>
 
           <div class="apps-bridge" aria-hidden="true"><span><i></i></span></div>
@@ -574,6 +605,46 @@
         </div>
 
         <p class="use-case-disclosure">結果は、記載した社内検証または参考事例に基づきます。目標はパイロットでの検証値であり、保証ではありません。</p>
+      </section>
+
+      <section class="field-voices section-pad" id="field-voices" aria-labelledby="field-voices-title">
+        <div class="section-intro">
+          <p class="section-kicker">現場でよく聞く声</p>
+          <div>
+            <h2 class="section-heading" id="field-voices-title">AIは、もう使っている。<br>それでも、仕事は積み上がる。</h2>
+            <p>営業チーム、医療機関、メーカーとの商談で、何度も聞いた言葉です。</p>
+          </div>
+        </div>
+        <ul class="voice-grid">
+          <li class="voice-card"><p>「仕事ばっかり増えて、やる事ばっかり増える」</p><span>電気設備会社 社長</span></li>
+          <li class="voice-card"><p>「ブラウザでプロンプトは叩けるけど、業務改善に直結するのは難しい」</p><span>IT商社 代表</span></li>
+          <li class="voice-card"><p>「一回一回の面会のデータが取れない。手詰まり感がある」</p><span>製薬会社 MR</span></li>
+          <li class="voice-card"><p>「一番難しいのは、運用させること」</p><span>歯科医療法人 本部</span></li>
+          <li class="voice-card"><p>「受注後の管理が、個人のスキル頼みになっている」</p><span>包装資材メーカー 営業部門</span></li>
+        </ul>
+        <figure class="founder-note">
+          <blockquote>
+            <p>「AIを使っているのに、仕事が減っていない人のために作っています」</p>
+            <p>「最後のレビューは人間。メールは間違えるといけないので、下書きまで」</p>
+          </blockquote>
+          <figcaption><a href="/founder.html">創業者 塩飽 哲生</a></figcaption>
+        </figure>
+        <div class="tool-entry">
+          <p class="tool-entry-label">いま使っているAIから、ガイドを選ぶ</p>
+          <div class="tool-chips">
+            <a href="/guides/claude.html">Claude</a>
+            <a href="/guides/codex.html">OpenAI Codex</a>
+            <a href="/guides/cowork.html">Claude Cowork</a>
+            <a href="/guides/chatgpt.html">ChatGPT</a>
+            <a href="/guides/plaud.html">PLAUD NOTE</a>
+            <a href="/guides/notta.html">Notta</a>
+            <a href="/guides/meeting-notes.html">AI議事録</a>
+            <a href="/guides/deepseek.html">DeepSeek</a>
+            <a href="/guides/qwen.html">Qwen</a>
+            <a href="/guides/china-llm.html">中国のAI比較</a>
+          </div>
+        </div>
+        <p class="use-case-disclosure">発言は、2026年のSIMYのお客様との会話から、社名を伏せて掲載しています。</p>
       </section>
 
       <section class="comparison section-pad" id="why-simy" aria-labelledby="comparison-title">
@@ -696,6 +767,7 @@
                     <span data-tax-mode="inclusive" hidden>税込</span>
                   </span>
                   <span class="pricing-tax-included-price" data-tax-included-price-detail hidden><span>税込</span> <strong data-tax-included-price>$32.78</strong> / <span>月</span></span>
+                  <a class="pricing-plan-link" href="https://app.simy.one/signup/?plan=starter&amp;interval=annual&amp;lang=ja&amp;locale=ja&amp;region=jp" aria-label="プランを選ぶ">プランを選ぶ <span aria-hidden="true">↗</span></a>
                 </th>
                 <th class="pricing-quality" scope="col" data-pricing-plan="quality">
                   <span class="pricing-badge-stack">
@@ -717,6 +789,7 @@
                     <span data-tax-mode="inclusive" hidden>税込</span>
                   </span>
                   <span class="pricing-tax-included-price" data-tax-included-price-detail hidden><span>税込</span> <strong data-tax-included-price>$65.78</strong> / <span>月</span></span>
+                  <a class="pricing-plan-link" href="https://app.simy.one/signup/?plan=quality&amp;interval=annual&amp;lang=ja&amp;locale=ja&amp;region=jp" aria-label="プランを選ぶ">プランを選ぶ <span aria-hidden="true">↗</span></a>
                 </th>
                 <th class="pricing-enterprise" scope="col">
                   <span class="pricing-badge-stack" aria-hidden="true"></span>
@@ -831,7 +904,6 @@
             <p class="pricing-tax-note">価格は米ドル表記です。大きく表示したプラン価格は税別で、その下に消費税10%を含む税込価格を併記しています。その他の国・地域では、請求先住所に応じた税が加算される場合があります。</p>
             <p class="stripe-note"><span aria-hidden="true">▣</span> 購入画面で、現在申し込めるプランと最終請求額を決済前に確認できます。決済はStripeで安全に処理されます。</p>
           </div>
-          <a class="button button-dark" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp" aria-label="SIMYのプランを選び、安全なStripe Checkoutへ進む">プランを選ぶ <span aria-hidden="true">↗</span></a>
         </div>
       </section>
 
@@ -946,7 +1018,7 @@
             <a href="#use-cases">ユースケース</a>
             <a href="#how-it-works">仕組み</a>
             <a href="#connected-apps">連携アプリ</a>
-            <a href="#codex-connection">Codex連携</a>
+            <a href="#codex-connection">AIツール</a>
             <a href="#pricing">料金</a>
           </div>
           <div>
@@ -955,6 +1027,18 @@
             <a href="mailto:sales@simy.one?subject=Map%20my%20first%20SIMY%20workflow" data-original-href="mailto:sales@simy.one?subject=Map%20my%20first%20SIMY%20workflow">最初のワークフローを相談</a>
             <a data-existing-account-login href="https://app.simy.one/?lang=ja&amp;locale=ja&amp;region=jp">ログイン</a>
             <a href="mailto:sales@simy.one" data-original-href="mailto:sales@simy.one">営業に相談</a>
+            <a href="/download.html">アプリをダウンロード</a>
+          </div>
+          <div>
+            <span>ガイド</span>
+            <a href="/guides/index.html">ガイド一覧</a>
+            <a href="/guides/claude.html">Claude</a>
+            <a href="/guides/codex.html">OpenAI Codex</a>
+            <a href="/guides/cowork.html">Claude Cowork</a>
+            <a href="/guides/chatgpt.html">ChatGPT</a>
+            <a href="/guides/plaud.html">PLAUD NOTE</a>
+            <a href="/guides/notta.html">Notta</a>
+            <a href="/guides/meeting-notes.html">AI議事録</a>
           </div>
           <div>
             <span>法務情報</span>
@@ -969,5 +1053,6 @@
         </div>
       </footer>
     </main>
-  </body>
+  <script src="/analytics.js" defer></script>
+</body>
 </html>

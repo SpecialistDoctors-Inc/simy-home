@@ -43,7 +43,7 @@
     "You’re using AI.": "AIは使っている。",
     "But the workload hasn’t gone down.": "でも、仕事は\n減っていない。",
     "You’re using AI. But the workload hasn’t gone down.": "AIは使っている。でも、仕事は減っていない。",
-    "Turn chats and conversations into workflows that get work done.": "チャットや会話を、仕事が進む仕組みに変える。",
+    "Chats become workflows.\nAI gets it done.": "チャットや会話を、仕事が進む仕組みに変える。",
     "Turn conversations into workflows that get work done.": "会話を、仕事が進む仕組みに変える。",
     "Bring in the conversations that matter. SIMY learns the checks, priorities, and non-negotiables behind your best work, turns them into focused Workflows, and selects the right one automatically. Autorun takes it from there.": "必要な会話だけをSIMYへ。あなたが良い仕事で欠かさない確認、優先順位、譲れない基準を学び、必要なものだけのワークフローに変えます。新しい仕事が来れば最適なものを自動で選び、その先はAutorunが進めます。",
     "See SIMY at work": "SIMYの動きを見る",
@@ -108,9 +108,10 @@
     "Describe the outcome. SIMY selects the Workflow.": "成果を伝える。SIMYがワークフローを選ぶ。",
     "Autorun moves it forward.": "その先は、Autorunが進める。",
 
-    "Codex, connected": "Codexと連携",
-    "Keep working in Codex. Let SIMY carry the work forward.": "Codexで頼む。その先の仕事はSIMYが動かす。",
-    "Connect the ChatGPT account you already use. Through Codex App Server, SIMY starts and continues Codex sessions for you; usage stays with your ChatGPT plan.": "いつものChatGPTアカウントを接続するだけ。SIMYはCodex App Server経由でCodexセッションを開始・継続し、利用量は現在のChatGPTプランに従います。",
+    "AI tools": "AIツール",
+    "Codex · Claude · Copilot": "Codex · Claude · Copilot",
+    "Ask in Codex, Claude, or Copilot. SIMY moves the work forward.": "Codex・Claude・Copilotで頼む。その先の仕事はSIMYが動かす。",
+    "For Codex, connect the ChatGPT account you already use. Through Codex App Server, SIMY starts and continues Codex sessions for you; usage stays with your ChatGPT plan.": "Codexの場合は、いつものChatGPTアカウントを接続するだけ。SIMYはCodex App Server経由でCodexセッションを開始・継続し、利用量は現在のChatGPTプランに従います。",
     "01 / CONNECT": "01 / 接続",
     "Your ChatGPT account": "あなたのChatGPTアカウント",
     "Connect the account and ChatGPT plan you already use.": "いつも使っているアカウントとChatGPTプランを接続します。",
@@ -209,6 +210,18 @@
     "Recordings · Transcripts": "録画・文字起こし",
     "Pages · Databases": "ページ・データベース",
     "Company documents": "社内文書",
+    "See all integrations": "すべての連携を見る",
+    "5 more available · 6 planned": "ほかに接続可能5件・準備中6件",
+    "Also available to connect": "ほかの接続可能なアプリ",
+    "More apps that connect with SIMY": "SIMYと接続できる追加アプリ",
+    "Official account messages": "公式アカウントのメッセージ",
+    "Posts · Search": "投稿・検索",
+    "Recordings · Captions": "録画・字幕",
+    "Incidents · Monitors": "障害・監視",
+    "Recordings · Transcripts · Notes": "録音・文字起こし・メモ",
+    "Planned integrations": "対応予定の連携",
+    "Integrations not yet available": "今後対応する連携",
+    "Coming soon": "準備中",
     "Context in": "文脈を取り込む",
     "Messages · meetings · files · metrics": "メッセージ・会議・ファイル・指標",
     "Workflow selected": "ワークフローを選択",
@@ -380,6 +393,31 @@
     "Get started": "はじめる",
     "Contact sales": "営業に相談",
     "Legal": "法務情報",
+    "Heard in the field": "現場でよく聞く声",
+    "Everyone already uses AI.": "AIは、もう使っている。",
+    "The work still piles up.": "それでも、仕事は積み上がる。",
+    "What we hear again and again in conversations with sales teams, clinics and manufacturers.": "営業チーム、医療機関、メーカーとの商談で、何度も聞いた言葉です。",
+    "“We keep adding tools, and the work just keeps piling up.”": "「仕事ばっかり増えて、やる事ばっかり増える」",
+    "President, electrical contractor": "電気設備会社 社長",
+    "“I can type prompts in a browser, but that doesn’t turn into better operations.”": "「ブラウザでプロンプトは叩けるけど、業務改善に直結するのは難しい」",
+    "CEO, IT reseller": "IT商社 代表",
+    "“We can’t capture what happens in each doctor visit. It feels like a dead end.”": "「一回一回の面会のデータが取れない。手詰まり感がある」",
+    "Medical rep, pharmaceutical company": "製薬会社 MR",
+    "“The hardest part is getting people to actually run it, every day.”": "「一番難しいのは、運用させること」",
+    "Head office, dental group": "歯科医療法人 本部",
+    "“After an order is won, follow-up depends on each person’s skill.”": "「受注後の管理が、個人のスキル頼みになっている」",
+    "Sales division, packaging manufacturer": "包装資材メーカー 営業部門",
+    "“I built SIMY for people who use AI every day and still don’t have less work.”": "「AIを使っているのに、仕事が減っていない人のために作っています」",
+    "“The last review is always human. Emails stop at a draft.”": "「最後のレビューは人間。メールは間違えるといけないので、下書きまで」",
+    "Tetsuo Shiwaku, Founder": "創業者 塩飽 哲生",
+    "Start from the AI you already use": "いま使っているAIから、ガイドを選ぶ",
+    "Quotes are anonymized from SIMY customer conversations in 2026.": "発言は、2026年のSIMYのお客様との会話から、社名を伏せて掲載しています。",
+    "Download the app": "アプリをダウンロード",
+    "Guides": "ガイド",
+    "All guides": "ガイド一覧",
+    "Download": "ダウンロード",
+    "AI meeting notes": "AI議事録",
+    "Chinese AI compared": "中国のAI比較",
     "Privacy": "プライバシー",
     "Terms": "利用規約",
     "Oakland, California · Built for work that should keep moving.": "米国カリフォルニア州オークランド・止めたくない仕事のために。",
@@ -390,7 +428,7 @@
     "Product principles": "プロダクトの原則",
     "A conversation becoming a working workflow": "会話が実行されるワークフローへ変わる様子",
     "When the conversation ends, SIMY gets to work": "会話が終わるとSIMYが仕事を始める流れ",
-    "ChatGPT account connects to Codex App Server, which powers SIMY workflows and Autorun": "ChatGPTアカウントをCodex App Serverへ接続し、SIMYのワークフローとAutorunを動かす流れ",
+    "Codex connection example: ChatGPT account connects to Codex App Server, which powers SIMY workflows and Autorun": "Codexの接続例：ChatGPTアカウントをCodex App Serverへ接続し、SIMYのワークフローとAutorunを動かす流れ",
     "SIMY monthly plan comparison": "SIMY月額プラン比較",
     "Apps that connect with SIMY": "SIMYと連携できるアプリ",
     "Connected app context flows into SIMY, which selects a workflow, runs Autorun, and returns completed work": "連携アプリの文脈をSIMYへ取り込み、ワークフローを選び、Autorunを実行して、完了した仕事を戻す流れ",
@@ -572,6 +610,19 @@
       }
 
       const localUrl = new URL(originalHref, window.location.href);
+      if (localUrl.origin === window.location.origin) {
+        const code = { en: "en", hi: "hi", es: "es", fr: "fr", "zh-Hans": "zh-hans" }[locale];
+        const guide = localUrl.pathname.match(/^\/guides\/([a-z-]+\.html)$/);
+        if (guide) {
+          link.setAttribute("href", code ? `/guides/${code}/${guide[1]}` : localUrl.pathname);
+          continue;
+        }
+        if (localUrl.pathname === "/download.html") {
+          link.setAttribute("href", code ? `/download/${code}.html` : "/download.html");
+          continue;
+        }
+      }
+
       if (
         localUrl.origin === window.location.origin
         && ["/privacy.html", "/terms.html"].includes(localUrl.pathname)

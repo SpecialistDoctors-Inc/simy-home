@@ -1,0 +1,1656 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="google-site-verification" content="1n6_tVJZRZlQax8luEg5VsuG7gg-kCEam5VFiWIJs3U">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Qwen: Qwen Chat, API, Running Locally and Safety | SIMY</title>
+<meta name="description" content="What is Qwen? Who makes it, how to use Qwen Chat, the Qwen3.8 models, API pricing, running it locally and data handling, as of October 2026.">
+<link rel="canonical" href="https://simy.one/guides/en/qwen.html">
+<link rel="alternate" hreflang="ja" href="https://simy.one/guides/qwen.html">
+<link rel="alternate" hreflang="en" href="https://simy.one/guides/en/qwen.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://simy.one/guides/zh-hans/qwen.html">
+<link rel="alternate" hreflang="es" href="https://simy.one/guides/es/qwen.html">
+<link rel="alternate" hreflang="fr" href="https://simy.one/guides/fr/qwen.html">
+<link rel="alternate" hreflang="hi" href="https://simy.one/guides/hi/qwen.html">
+<link rel="alternate" hreflang="x-default" href="https://simy.one/guides/en/qwen.html">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://simy.one/guides/en/qwen.html">
+<meta property="og:title" content="Qwen's answers shouldn't end in the chat. | SIMY">
+<meta property="og:description" content="What Qwen is, how to use it, the API, running it locally and safety. After Qwen answers, SIMY picks up owners, deadlines, replies and updates from your meetings and chat.">
+<meta property="og:site_name" content="SIMY">
+<meta property="og:image" content="https://simy.one/ogp.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Qwen's answers shouldn't end in the chat. Qwen Guide | SIMY">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-10-01">
+<meta property="article:modified_time" content="2026-10-01">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Qwen's answers shouldn't end in the chat. | SIMY">
+<meta name="twitter:description" content="What Qwen is, how to use it, the API, running it locally and safety. After Qwen answers, SIMY picks up owners, deadlines, replies and updates from your meetings and chat.">
+<meta name="twitter:image" content="https://simy.one/ogp.png">
+<meta name="twitter:image:alt" content="Qwen's answers shouldn't end in the chat. Qwen Guide | SIMY">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#f6f5f4">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png">
+<style>
+:root {
+  --paper: #f6f5f4;
+  --paper-light: #ffffff;
+  --ink: #111111;
+  --ink-soft: #5d5b58;
+  --ink-faint: #6b6865;
+  --line-soft: rgba(17, 17, 17, 0.14);
+  --ui-line: #d9dde2;
+  --blue: #3273d7;
+  --blue-deep: #235db8;
+  --blue-soft: #eef5ff;
+  --mint: #92edce;
+  --coral-soft: #fff1ec;
+  --yellow: #ffd166;
+  --radius: 0.8rem;
+  --radius-sm: 0.5rem;
+  --sans: "Helvetica Neue", Arial, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", Meiryo, sans-serif;
+  --mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  --page: 1180px;
+  --gutter: clamp(16px, 4vw, 40px);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.85;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+a { color: inherit; }
+a:focus-visible, summary:focus-visible {
+  outline: 3px solid rgba(50, 115, 215, 0.45);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+img { max-width: 100%; display: block; }
+
+.wrap { width: min(var(--page), 100% - var(--gutter) * 2); margin: 0 auto; }
+
+.skip {
+  position: absolute; left: -9999px; top: 8px;
+  background: var(--ink); color: #fff; padding: 8px 14px; border-radius: 6px; z-index: 100;
+}
+.skip:focus { left: 8px; }
+
+/* ---------- Header ---------- */
+.site-header {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(246, 245, 244, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--ink);
+}
+.header-inner {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  min-height: 64px;
+}
+.brand {
+  display: inline-flex; align-items: center; gap: 10px;
+  text-decoration: none; font-weight: 800; letter-spacing: 0.01em;
+}
+.brand img { width: 28px; height: 28px; border-radius: 7px; }
+.brand-sub {
+  padding-left: 12px; margin-left: 2px;
+  border-left: 1px solid var(--line-soft);
+  color: var(--ink-soft); font-size: 0.8rem; font-weight: 500;
+}
+.header-actions { display: flex; align-items: center; gap: 6px; }
+.header-link {
+  padding: 8px 10px; font-size: 0.86rem; font-weight: 600; text-decoration: none; color: var(--ink);
+}
+.header-link:hover { color: var(--blue-deep); }
+.header-cta {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px;
+  background: var(--ink); color: #fff; text-decoration: none;
+  font-size: 0.86rem; font-weight: 700; border-radius: 6px;
+  transition: background 0.2s;
+}
+.header-cta:hover { background: var(--blue-deep); }
+
+/* ---------- Hero ---------- */
+.hero {
+  position: relative;
+  border-bottom: 1px solid var(--ink);
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(rgba(17, 17, 17, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(17, 17, 17, 0.045) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-position: -1px -1px;
+}
+.hero-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+  gap: clamp(32px, 5vw, 72px);
+  align-items: center;
+  padding: clamp(40px, 7vw, 96px) 0 clamp(48px, 7vw, 104px);
+}
+
+.crumbs {
+  display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 22px; padding: 0; list-style: none;
+  font-size: 0.78rem; color: var(--ink-soft);
+}
+.crumbs li + li::before { content: "/"; margin-right: 6px; color: var(--ink-faint); }
+.crumbs a { text-decoration: none; }
+.crumbs a:hover { text-decoration: underline; }
+
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin: 0 0 22px; padding: 6px 12px;
+  background: var(--paper-light); border: 1px solid var(--ink); border-radius: 999px;
+  font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.04em;
+}
+.eyebrow::before {
+  content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--blue);
+  box-shadow: 0 0 0 3px var(--blue-soft);
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2rem, 4.6vw, 3.9rem);
+  line-height: 1.16;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+h1 .line { display: block; }
+h1 .hl { color: var(--blue); }
+
+.lead {
+  max-width: 36em;
+  margin: 26px 0 0;
+  font-size: clamp(1rem, 1.35vw, 1.1rem);
+  line-height: 1.95;
+  color: #2c2b29;
+}
+
+.cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 52px; padding: 0 22px;
+  border: 1px solid var(--ink); border-radius: 8px;
+  font-weight: 700; font-size: 0.98rem; text-decoration: none;
+  transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+}
+.btn-primary {
+  background: var(--blue-deep); color: #fff; border-color: var(--ink);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.btn-primary:hover { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 var(--ink); }
+.btn-ghost { background: var(--paper-light); color: var(--ink); }
+.btn-ghost:hover { background: var(--blue-soft); }
+.btn .arrow { font-family: var(--mono); font-size: 0.9em; }
+
+.hero-points {
+  display: flex; flex-wrap: wrap; gap: 8px 18px;
+  margin: 26px 0 0; padding: 0; list-style: none;
+  font-size: 0.84rem; color: var(--ink-soft);
+}
+.hero-points li { display: inline-flex; align-items: center; gap: 7px; }
+.hero-points li::before {
+  content: ""; width: 14px; height: 14px; flex: none;
+  border: 1px solid var(--ink); border-radius: 50%;
+  background: var(--mint) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath d='M3.5 7.2 6 9.5l4.5-5' fill='none' stroke='%23111' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 12px no-repeat;
+}
+
+/* Relay card: the signature visual */
+.relay {
+  position: relative;
+  background: var(--paper-light);
+  border: 1px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: 8px 8px 0 var(--ink);
+  overflow: hidden;
+}
+.relay-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--ink);
+  background: var(--ink); color: #fff;
+  font-family: var(--mono); font-size: 0.78rem;
+}
+.rec { display: inline-flex; align-items: center; gap: 8px; min-width: 0; }
+.rec-dot {
+  width: 9px; height: 9px; border-radius: 50%; background: #ff865f; flex: none;
+  animation: rec 1.6s ease-in-out infinite;
+}
+.rec-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.relay-meta { display: flex; flex-wrap: wrap; gap: 6px; padding: 12px 18px 4px; }
+.chip {
+  display: inline-flex; align-items: center; padding: 2px 9px;
+  border: 1px solid var(--line-soft); border-radius: 999px;
+  font-family: var(--mono); font-size: 0.7rem; color: var(--ink-soft); background: var(--paper);
+}
+.relay-steps { list-style: none; margin: 0; padding: 8px 10px 12px; }
+.step {
+  display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; align-items: center; gap: 10px;
+  padding: 9px 8px;
+  border-radius: 8px;
+  opacity: 0; transform: translateY(6px);
+  animation: rise 0.5s cubic-bezier(.2,.7,.2,1) forwards;
+}
+.step .no { font-family: var(--mono); font-size: 0.72rem; color: var(--ink-faint); }
+.step .what { font-size: 0.9rem; font-weight: 650; line-height: 1.45; }
+.step .what small { display: block; font-weight: 400; font-size: 0.74rem; color: var(--ink-soft); }
+.status {
+  font-family: var(--mono); font-size: 0.68rem; white-space: nowrap;
+  padding: 3px 8px; border-radius: 999px; border: 1px solid var(--ink);
+}
+.s-done { background: var(--paper); }
+.s-plaud .status { border-color: var(--line-soft); color: var(--ink-soft); }
+.s-run { background: var(--blue-soft); }
+.s-run .status { background: var(--blue-deep); color: #fff; }
+.s-next .status { background: var(--paper-light); }
+.s-you { background: #fff8e3; }
+.s-you .status { background: var(--yellow); }
+.bar {
+  grid-column: 2 / 4; height: 4px; margin-top: 6px;
+  background: rgba(50, 115, 215, 0.16); border-radius: 4px; overflow: hidden;
+}
+.bar::after {
+  content: ""; display: block; height: 100%; width: 62%;
+  background: var(--blue); border-radius: 4px;
+  animation: progress 2.8s ease-in-out infinite alternate;
+}
+.handoff {
+  display: flex; align-items: center; gap: 10px;
+  margin: 6px 4px; padding: 8px 0;
+  font-family: var(--mono); font-size: 0.72rem; color: var(--blue-deep);
+  opacity: 0; animation: rise 0.5s ease forwards;
+}
+.handoff::before, .handoff::after { content: ""; flex: 1; border-top: 1.5px dashed var(--blue); }
+.relay-foot {
+  padding: 12px 18px 14px;
+  border-top: 1px solid var(--line-soft);
+  font-size: 0.82rem; color: var(--ink-soft);
+}
+.relay-foot strong { color: var(--ink); }
+.caption { margin: 12px 4px 0; font-size: 0.74rem; color: var(--ink-faint); text-align: right; }
+
+.relay-steps > :nth-child(1) { animation-delay: 0.10s; }
+.relay-steps > :nth-child(2) { animation-delay: 0.22s; }
+.relay-steps > :nth-child(3) { animation-delay: 0.34s; }
+.relay-steps > :nth-child(4) { animation-delay: 0.62s; }
+.relay-steps > :nth-child(5) { animation-delay: 0.86s; }
+.relay-steps > :nth-child(6) { animation-delay: 1.02s; }
+.relay-steps > :nth-child(7) { animation-delay: 1.18s; }
+.relay-steps > :nth-child(8) { animation-delay: 1.34s; }
+
+@keyframes rise { to { opacity: 1; transform: none; } }
+@keyframes rec { 50% { opacity: 0.25; } }
+@keyframes progress { from { width: 34%; } to { width: 88%; } }
+
+/* ---------- Guide layout ---------- */
+.guide {
+  display: grid;
+  grid-template-columns: 232px minmax(0, 1fr);
+  gap: clamp(32px, 5vw, 72px);
+  padding: clamp(40px, 6vw, 80px) 0 clamp(56px, 7vw, 96px);
+}
+.toc { position: sticky; top: 92px; align-self: start; font-size: 0.84rem; }
+.toc-title {
+  margin: 0 0 12px; font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.08em;
+  color: var(--ink-soft);
+}
+.toc ol { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--line-soft); }
+.toc a {
+  display: grid; grid-template-columns: 26px 1fr; gap: 4px;
+  margin-left: -1px; padding: 7px 0 7px 12px;
+  border-left: 2px solid transparent;
+  color: var(--ink-soft); text-decoration: none; line-height: 1.5;
+}
+.toc a span { font-family: var(--mono); font-size: 0.72rem; padding-top: 1px; }
+.toc a:hover { color: var(--ink); }
+.toc a.is-active { color: var(--ink); font-weight: 700; border-left-color: var(--blue); }
+.toc-mobile { display: none; }
+
+.article { min-width: 0; max-width: 800px; }
+.byline {
+  display: flex; flex-wrap: wrap; gap: 4px 16px;
+  margin: 0 0 8px; font-family: var(--mono); font-size: 0.74rem; color: var(--ink-faint);
+}
+
+.sec { padding-top: clamp(40px, 5vw, 64px); }
+.sec:first-of-type { padding-top: 0; }
+.sec-label {
+  display: inline-block; margin: 0 0 12px;
+  font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.06em; color: var(--blue-deep);
+}
+h2 {
+  margin: 0 0 18px;
+  font-size: clamp(1.5rem, 2.8vw, 2.1rem);
+  line-height: 1.35; font-weight: 800; letter-spacing: -0.01em;
+}
+h3 { margin: 32px 0 12px; font-size: 1.15rem; line-height: 1.5; font-weight: 750; }
+.article p { margin: 0 0 16px; }
+.article p a, .plain-list a, .faq a { color: var(--blue-deep); text-decoration: underline; text-underline-offset: 3px; }
+.muted { color: var(--ink-soft); }
+.small { font-size: 0.84rem; }
+
+/* Checklist */
+.checklist { list-style: none; margin: 24px 0 0; padding: 0; display: grid; gap: 12px; }
+.checklist li {
+  display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 16px;
+  padding: 18px 20px;
+  background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.checklist .num {
+  display: grid; place-items: center; width: 44px; height: 44px;
+  border: 1px solid var(--ink); border-radius: 50%;
+  font-family: var(--mono); font-weight: 700;
+}
+.checklist li.hook { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.checklist li.hook .num { background: var(--blue-deep); color: #fff; }
+.checklist h3 { margin: 2px 0 4px; font-size: 1.02rem; }
+.checklist p { margin: 0; font-size: 0.93rem; color: #34322f; }
+
+/* Feature grid */
+.features { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+.feature {
+  padding: 20px; background: var(--paper-light);
+  border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.feature .tag {
+  display: inline-block; margin-bottom: 8px;
+  font-family: var(--mono); font-size: 0.7rem; color: var(--ink-soft);
+}
+.feature h3 { margin: 0 0 6px; font-size: 1.04rem; }
+.feature p { margin: 0; font-size: 0.92rem; color: #34322f; }
+.feature.wide { grid-column: 1 / -1; }
+
+/* Gap section */
+.split { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+.split-col { padding: 22px; border-radius: var(--radius); border: 1px solid var(--ink); }
+.split-col h3 { margin: 0 0 12px; font-size: 1rem; display: flex; align-items: center; gap: 8px; }
+.split-col ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.split-col li { position: relative; padding-left: 22px; font-size: 0.94rem; line-height: 1.6; }
+.split-col li::before { position: absolute; left: 0; top: 0; font-family: var(--mono); }
+.col-plaud { background: var(--paper-light); }
+.col-plaud li { color: var(--ink-soft); }
+.col-plaud li::before { content: "✓"; color: #1b7a58; }
+.col-left { background: var(--coral-soft); box-shadow: 4px 4px 0 var(--ink); }
+.col-left li::before { content: "□"; color: var(--ink); }
+.who {
+  font-family: var(--mono); font-size: 0.68rem; font-weight: 400;
+  padding: 2px 8px; border: 1px solid var(--ink); border-radius: 999px; background: var(--paper-light);
+}
+
+.quote {
+  margin: 28px 0 0; padding: 22px 24px;
+  border-left: 4px solid var(--blue); background: var(--blue-soft); border-radius: 0 var(--radius) var(--radius) 0;
+}
+.quote p { margin: 0; font-size: 1.12rem; font-weight: 750; line-height: 1.7; }
+.quote p + p { margin-top: 8px; font-size: 0.93rem; font-weight: 400; color: #34322f; }
+
+/* Connect */
+.connect {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 310px); gap: 24px;
+  align-items: start; margin-top: 24px;
+}
+.connect-steps { list-style: none; margin: 0; padding: 0; counter-reset: s; display: grid; gap: 10px; }
+.connect-steps li {
+  counter-increment: s; position: relative;
+  padding: 16px 18px 16px 62px;
+  background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.connect-steps li::before {
+  content: counter(s); position: absolute; left: 18px; top: 16px;
+  width: 30px; height: 30px; display: grid; place-items: center;
+  border: 1px solid var(--ink); border-radius: 50%; background: var(--paper);
+  font-family: var(--mono); font-weight: 700; font-size: 0.86rem;
+}
+.connect-steps li.key { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.connect-steps li.key::before { background: var(--blue-deep); color: #fff; }
+.connect-steps b { display: block; font-size: 1rem; line-height: 1.5; }
+.connect-steps span { display: block; margin-top: 4px; font-size: 0.9rem; color: #34322f; line-height: 1.7; }
+
+.mock {
+  padding: 18px; background: var(--paper-light);
+  border: 1px solid var(--ink); border-radius: var(--radius); box-shadow: 6px 6px 0 var(--blue);
+}
+.mock-head { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 12px; align-items: start; }
+.mock-mark {
+  display: grid; place-items: center; width: 44px; height: 44px;
+  border-radius: 10px; background: var(--paper); font-weight: 900; font-size: 1.15rem;
+}
+.mock-title { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 1.05rem; }
+.mock-state {
+  padding: 1px 8px; border-radius: 999px; background: var(--paper);
+  font-size: 0.7rem; font-weight: 500; color: var(--ink-soft);
+}
+.mock-desc { margin: 4px 0 0; font-size: 0.82rem; color: var(--ink-soft); line-height: 1.6; }
+.mock-box {
+  margin: 14px 0 10px; padding: 12px 14px;
+  border: 1px solid var(--ui-line); border-radius: 8px; font-size: 0.86rem; font-weight: 650;
+}
+.mock-btn {
+  display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px;
+  border-radius: 8px; background: var(--blue-deep); color: #fff; font-weight: 700; font-size: 0.92rem;
+}
+.mock-foot { margin-top: 8px; text-align: center; font-size: 0.76rem; color: var(--ink-soft); }
+
+.asks { list-style: none; margin: 12px 0 18px; padding: 0; display: grid; gap: 8px; }
+.asks li {
+  padding: 12px 16px; font-size: 0.94rem; line-height: 1.7;
+  background: var(--blue-soft); border: 1px solid rgba(50, 115, 215, 0.28);
+  border-radius: 12px 12px 12px 3px;
+}
+
+/* Tables */
+.table-wrap {
+  margin: 20px 0 8px; overflow-x: auto; -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--ink); border-radius: var(--radius); background: var(--paper-light);
+}
+table { width: 100%; border-collapse: collapse; font-size: 0.9rem; line-height: 1.6; }
+th, td { padding: 12px 14px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--ui-line); }
+thead th { background: var(--ink); color: #fff; font-weight: 700; font-size: 0.82rem; white-space: nowrap; }
+tbody th { font-weight: 700; white-space: nowrap; background: var(--paper); }
+tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
+td.simy { background: var(--blue-soft); }
+thead th.simy { background: var(--blue-deep); }
+.t-wide { min-width: 640px; }
+.t-models { min-width: 760px; }
+.t-price td:nth-child(2) { white-space: nowrap; }
+.scroll-hint { display: none; margin: 0 0 12px; font-size: 0.76rem; color: var(--ink-faint); }
+
+.note {
+  margin: 16px 0 0; padding: 14px 16px;
+  background: var(--paper-light); border: 1px dashed var(--ink-faint); border-radius: var(--radius-sm);
+  font-size: 0.88rem; color: #34322f;
+}
+.note b { color: var(--ink); }
+
+/* Sample comparison */
+.sample { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 16px; margin-top: 24px; align-items: start; }
+.sheet { padding: 20px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); }
+.sheet-label {
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;
+  font-family: var(--mono); font-size: 0.72rem; color: var(--ink-soft);
+}
+.sheet dl { margin: 0; font-size: 0.88rem; line-height: 1.65; }
+.sheet dt { margin-top: 10px; font-weight: 700; }
+.sheet dt:first-child { margin-top: 0; }
+.sheet dd { margin: 2px 0 0; color: #34322f; }
+.outs { display: grid; gap: 10px; }
+.out { padding: 14px 16px; background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius); }
+.out-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 6px; }
+.out-head b { font-size: 0.92rem; }
+.out p { margin: 0; font-size: 0.86rem; color: #34322f; line-height: 1.7; }
+.out.you { background: #fff8e3; }
+.pill {
+  font-family: var(--mono); font-size: 0.66rem; white-space: nowrap;
+  padding: 2px 8px; border-radius: 999px; border: 1px solid var(--ink); background: var(--paper);
+}
+.pill.run { background: var(--blue-deep); color: #fff; }
+.pill.you { background: var(--yellow); }
+.pill.ok { background: var(--mint); }
+.sample-foot { margin-top: 18px; font-weight: 700; }
+
+/* Use cases */
+.cases { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+.case { padding: 22px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); }
+.case h3 { margin: 0 0 4px; font-size: 1.06rem; }
+.case .device { margin: 0 0 12px; font-family: var(--mono); font-size: 0.72rem; color: var(--blue-deep); }
+.case p { margin: 0 0 8px; font-size: 0.9rem; color: #34322f; }
+.case ul { margin: 0; padding-left: 1.1em; font-size: 0.9rem; line-height: 1.7; }
+
+/* Lists */
+.plain-list { margin: 16px 0 0; padding-left: 1.2em; }
+.plain-list li { margin-bottom: 10px; }
+
+/* FAQ */
+.faq { margin-top: 20px; border-top: 1px solid var(--ink); }
+.faq details { border-bottom: 1px solid var(--ui-line); }
+.faq summary {
+  list-style: none; cursor: pointer;
+  display: grid; grid-template-columns: 28px minmax(0, 1fr) 20px; gap: 10px; align-items: start;
+  padding: 18px 4px; font-weight: 700; line-height: 1.6;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::before { content: "Q"; font-family: var(--mono); color: var(--blue-deep); }
+.faq summary::after {
+  content: "+"; font-family: var(--mono); font-size: 1.1rem; line-height: 1.4; text-align: right;
+  transition: transform 0.2s;
+}
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq .a { padding: 0 4px 18px 42px; font-size: 0.94rem; color: #34322f; }
+.faq .a p { margin: 0; }
+
+/* Closing CTA */
+.closing { background: var(--ink); color: #fff; border-top: 1px solid var(--ink); }
+.closing-inner {
+  display: grid; grid-template-columns: minmax(0, 1.2fr) auto; gap: 32px; align-items: center;
+  padding: clamp(48px, 7vw, 88px) 0;
+}
+.closing h2 { color: #fff; margin: 0 0 12px; font-size: clamp(1.6rem, 3.4vw, 2.5rem); }
+.closing p { margin: 0; color: rgba(255, 255, 255, 0.8); }
+.closing .cta-row { margin-top: 0; }
+.closing .btn-primary { box-shadow: 4px 4px 0 var(--mint); border-color: #fff; }
+.closing .btn-primary:hover { box-shadow: 5px 5px 0 var(--mint); }
+.closing .btn-ghost { background: transparent; color: #fff; border-color: rgba(255, 255, 255, 0.5); }
+.closing .btn-ghost:hover { background: rgba(255, 255, 255, 0.08); }
+
+/* Footer */
+.site-footer { padding: 36px 0 48px; font-size: 0.82rem; color: var(--ink-soft); }
+.footer-links { display: flex; flex-wrap: wrap; gap: 4px 20px; margin: 0 0 18px; padding: 0; list-style: none; }
+.footer-links a { display: inline-block; padding: 6px 0; text-decoration: none; color: var(--ink); }
+.footer-links a:hover { text-decoration: underline; }
+.site-footer p { margin: 0 0 6px; line-height: 1.7; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1080px) {
+  .guide { grid-template-columns: minmax(0, 1fr); }
+  .toc { display: none; }
+  .toc-mobile {
+    display: block; margin: 0 0 32px;
+    background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius);
+  }
+  .toc-mobile summary {
+    cursor: pointer; list-style: none; padding: 14px 18px;
+    font-family: var(--mono); font-size: 0.8rem; display: flex; justify-content: space-between;
+  }
+  .toc-mobile summary::-webkit-details-marker { display: none; }
+  .toc-mobile summary::after { content: "+"; }
+  .toc-mobile[open] summary::after { content: "−"; }
+  .toc-mobile ol { margin: 0; padding: 0 18px 14px 40px; font-size: 0.9rem; }
+  .toc-mobile li { padding: 3px 0; }
+  .toc-mobile a { display: inline-block; padding: 4px 0; text-decoration: none; }
+  .article { max-width: none; }
+}
+
+@media (max-width: 960px) {
+  .hero-inner { grid-template-columns: minmax(0, 1fr); }
+  .hero-visual { max-width: 580px; }
+  .relay { box-shadow: 6px 6px 0 var(--ink); }
+}
+
+@media (max-width: 860px) {
+  .sample { grid-template-columns: minmax(0, 1fr); }
+  .connect { grid-template-columns: minmax(0, 1fr); }
+  .mock { max-width: 360px; }
+  .closing-inner { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 640px) {
+  body { font-size: 15.5px; }
+  .brand-sub, .header-link { display: none; }
+  .header-cta { padding: 0 14px; }
+  .features, .split, .cases { grid-template-columns: minmax(0, 1fr); }
+  .checklist li { grid-template-columns: 40px minmax(0, 1fr); gap: 12px; padding: 16px; }
+  .checklist .num { width: 36px; height: 36px; font-size: 0.86rem; }
+  .connect-steps li { padding-left: 56px; }
+  .connect-steps li::before { left: 14px; }
+  .btn { width: 100%; }
+  .scroll-hint { display: block; }
+  .faq .a { padding-left: 4px; }
+  .step { grid-template-columns: 24px minmax(0, 1fr) auto; gap: 8px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .step, .handoff { animation: none; opacity: 1; transform: none; }
+  .rec-dot, .bar::after { animation: none; }
+  .btn, .header-cta { transition: none; }
+}
+
+/* ---------- Guide v2: scene cards, timeline, folds ---------- */
+.intro { max-width: 34em; margin: 0 0 8px; font-size: 1.02rem; color: #34322f; }
+.scenes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 22px; }
+.scenes.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.scene {
+  position: relative; padding: 22px 20px 20px;
+  background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius);
+  min-height: 168px; display: flex; flex-direction: column; gap: 8px;
+}
+.scene .k { font-family: var(--mono); font-size: 0.7rem; color: var(--ink-faint); letter-spacing: 0.04em; }
+.scene b { display: block; font-size: 1.22rem; line-height: 1.35; letter-spacing: -0.01em; }
+.scene p { margin: 0; font-size: 0.9rem; line-height: 1.65; color: #34322f; }
+.scene .mark {
+  position: absolute; right: 16px; top: 14px;
+  width: 30px; height: 30px; display: grid; place-items: center;
+  border: 1px solid var(--ink); border-radius: 50%; font-family: var(--mono); font-size: 0.9rem; font-weight: 700;
+}
+.scene.pain { background: var(--coral-soft); }
+.scene.pain .mark { background: var(--paper-light); }
+.scene.wish { background: var(--blue-soft); border-color: var(--blue-deep); box-shadow: 4px 4px 0 var(--blue); }
+.scene.wish .mark { background: var(--blue-deep); color: #fff; border-color: var(--blue-deep); }
+.scene.wish.you { background: #fff8e3; border-color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+.scene.wish.you .mark { background: var(--yellow); color: var(--ink); border-color: var(--ink); }
+.scene-foot { margin: 14px 0 0; font-size: 0.9rem; color: var(--ink-soft); }
+.scene-foot b { color: var(--ink); }
+
+/* Timeline */
+.tl-wrap {
+  margin-top: 22px; padding: 22px 20px 18px;
+  background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius);
+}
+.tl-row { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 14px; align-items: center; }
+.tl-row + .tl-row { margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--line-soft); }
+.tl-who {
+  font-family: var(--mono); font-size: 0.72rem; font-weight: 700; text-align: center;
+  padding: 6px 4px; border: 1px solid var(--ink); border-radius: 999px; background: var(--paper);
+}
+.tl-who.simy { background: var(--blue-deep); color: #fff; border-color: var(--blue-deep); }
+.tl-who.you { background: var(--yellow); }
+.tl { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; }
+.tl li {
+  position: relative; min-height: 64px; padding: 10px 8px 8px;
+  border-radius: var(--radius-sm); font-size: 0.8rem; line-height: 1.4; font-weight: 650;
+  display: flex; flex-direction: column; justify-content: flex-start; gap: 4px;
+}
+.tl li small { display: block; font-weight: 400; font-size: 0.7rem; color: var(--ink-soft); }
+.tl li.on { background: var(--paper); border: 1px solid var(--line-soft); color: var(--ink-soft); }
+.tl li.gap { border: 1.5px dashed var(--ink-faint); color: var(--ink-faint); background: transparent; }
+.tl li.gap::after { content: "？"; position: absolute; right: 8px; top: 6px; font-family: var(--mono); }
+.tl li.run { background: var(--blue-soft); border: 1px solid var(--blue-deep); color: var(--ink); }
+.tl li.run::after { content: "✓"; position: absolute; right: 8px; top: 6px; font-family: var(--mono); color: var(--blue-deep); }
+.tl li.you { background: #fff8e3; border: 1px solid var(--ink); color: var(--ink); }
+.tl li.you::after { content: "You"; position: absolute; right: 8px; top: 7px; font-family: var(--mono); font-size: 0.62rem; }
+.tl li.blank { border: 0; background: transparent; }
+.tl-note { margin: 14px 0 0; font-size: 0.86rem; color: #34322f; }
+.tl-note b { color: var(--ink); }
+.three { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 0; padding: 0; list-style: none; }
+.three li {
+  padding: 8px 14px; font-weight: 800; font-size: 1rem;
+  background: var(--ink); color: #fff; border-radius: 999px;
+}
+
+/* 3-step start */
+.steps3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 22px; counter-reset: st; }
+.steps3 li {
+  counter-increment: st; list-style: none; position: relative;
+  padding: 54px 18px 18px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.steps3 li::before {
+  content: counter(st); position: absolute; left: 18px; top: 16px;
+  width: 28px; height: 28px; display: grid; place-items: center;
+  border: 1px solid var(--ink); border-radius: 50%; background: var(--paper);
+  font-family: var(--mono); font-weight: 700; font-size: 0.84rem;
+}
+.steps3 li.key { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.steps3 li.key::before { background: var(--blue-deep); color: #fff; }
+.steps3 b { display: block; font-size: 1.02rem; line-height: 1.45; }
+.steps3 span { display: block; margin-top: 6px; font-size: 0.88rem; color: #34322f; line-height: 1.65; }
+.steps3 { padding: 0; }
+
+/* Industry grid */
+.ind { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 22px; }
+.ind-card { padding: 18px 18px 14px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); }
+.ind-card h3 { margin: 0 0 10px; font-size: 1.04rem; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.ind-card h3 small { font-family: var(--mono); font-size: 0.68rem; font-weight: 400; color: var(--blue-deep); white-space: normal; }
+.ind-card h3 { flex-wrap: wrap; }
+.ind-rows { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+.ind-rows li { display: grid; grid-template-columns: minmax(0, 1fr) 14px minmax(0, 1.4fr); gap: 6px; align-items: center; font-size: 0.86rem; line-height: 1.5; }
+.ind-rows li span:first-child { color: var(--ink-soft); }
+.ind-rows li span:nth-child(2) { font-family: var(--mono); color: var(--blue-deep); text-align: center; }
+.ind-rows li span:last-child { font-weight: 650; }
+
+/* Folded reference */
+.fold { margin-top: 12px; border: 1px solid var(--ui-line); border-radius: var(--radius); background: var(--paper-light); }
+.fold > summary {
+  list-style: none; cursor: pointer; padding: 16px 18px;
+  display: grid; grid-template-columns: minmax(0, 1fr) 20px; gap: 10px; align-items: center;
+  font-weight: 750; font-size: 1.02rem; line-height: 1.5;
+}
+.fold > summary::-webkit-details-marker { display: none; }
+.fold > summary::after { content: "+"; font-family: var(--mono); font-size: 1.1rem; text-align: right; grid-column: 2; grid-row: 1; }
+.fold > summary small { grid-column: 1; }
+.fold[open] > summary::after { content: "−"; }
+.fold > summary small { display: block; margin-top: 2px; font-weight: 400; font-size: 0.82rem; color: var(--ink-soft); }
+.fold-body { padding: 0 18px 18px; font-size: 0.93rem; }
+.fold-body h3 { margin: 18px 0 8px; font-size: 1rem; }
+.fold-body h3:first-child { margin-top: 0; }
+.fold-body p { margin: 0 0 10px; }
+.fold-body .table-wrap { margin: 12px 0 6px; }
+.fold-body .plain-list { margin-top: 8px; }
+.fold-body .plain-list li { margin-bottom: 6px; }
+
+@media (max-width: 960px) {
+  .scenes, .scenes.four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tl { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .tl li.blank { display: none; }
+}
+@media (max-width: 640px) {
+  .scenes, .scenes.four, .steps3, .ind { grid-template-columns: minmax(0, 1fr); }
+  .scene { min-height: 0; }
+  .tl-row { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .tl-who { justify-self: start; }
+  .tl { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ind-rows li { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .ind-rows li span:nth-child(2) { display: none; }
+  .ind-rows li { padding: 6px 0; border-bottom: 1px dashed var(--line-soft); }
+}
+
+/* Next read */
+.next-read { margin-top: clamp(40px, 5vw, 64px); padding-top: 24px; border-top: 1px solid var(--ink); }
+.next-read h2 { font-size: 1.2rem; margin: 0 0 14px; }
+.next-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.next-grid a { display: block; padding: 14px 16px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); text-decoration: none; color: var(--ink); }
+.next-grid a:hover { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.next-grid b { display: block; font-size: 0.96rem; }
+.next-grid span { display: block; margin-top: 4px; font-size: 0.82rem; color: var(--ink-soft); }
+.next-all { display: inline-block; margin-top: 12px; font-weight: 700; color: var(--blue-deep); }
+@media (max-width: 760px) { .next-grid { grid-template-columns: minmax(0, 1fr); } }
+
+.lang-switch { position: relative; }
+.lang-switch > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 10px; border: 1px solid var(--ui-line); border-radius: 999px; background: var(--paper-light); font-size: 0.8rem; font-weight: 700; }
+.lang-switch > summary::-webkit-details-marker { display: none; }
+.lang-switch ul { position: absolute; right: 0; top: calc(100% + 6px); z-index: 30; margin: 0; padding: 6px; list-style: none; min-width: 150px; background: var(--paper-light); border: 1px solid var(--ink); border-radius: 10px; box-shadow: 4px 4px 0 var(--ink); }
+.lang-switch li a { display: block; padding: 8px 10px; border-radius: 6px; color: var(--ink); text-decoration: none; font-size: 0.88rem; }
+.lang-switch li a:hover, .lang-switch li a[aria-current] { background: var(--blue-soft); }
+@media (max-width: 960px) { .brand-sub { display: none; } .header-actions { gap: 4px; } .lang-switch > summary { padding: 0 8px; } }
+@media (max-width: 640px) { .lang-switch .ls-label { display: none; } .lang-switch > summary { padding: 0 10px; } }
+/* Typography: balanced headings, phrase-aware Japanese breaks, tighter mobile headings */
+h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
+:lang(ja) h1, :lang(ja) h2, :lang(ja) h3, :lang(ja) .eyebrow, :lang(ja) .scene b, :lang(ja) .lead { word-break: auto-phrase; }
+.lead, .intro, .scene p { text-wrap: pretty; }
+@media (max-width: 640px) { h2 { font-size: 1.32rem; line-height: 1.4; } .eyebrow { font-size: 0.72rem; } .closing h2 { font-size: 1.5rem; } }
+@media (max-width: 400px) { h2 { font-size: 1.22rem; } .closing h2 { font-size: 1.34rem; } }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://simy.one/guides/en/qwen.html#article",
+      "headline": "Qwen Guide: What Is Qwen? How to Use It, the API, Running It Locally and Safety",
+      "description": "What Qwen is and where it comes from, how to use Qwen Chat, the main models, the API, running it locally, Qwen Code and data handling. Plus how SIMY moves the owners, deadlines, replies and updates left after Qwen answers.",
+      "inLanguage": "en",
+      "datePublished": "2026-10-01",
+      "dateModified": "2026-10-01",
+      "mainEntityOfPage": "https://simy.one/guides/en/qwen.html",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://simy.one/ogp.png",
+        "width": 1200,
+        "height": 630
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "SIMY",
+        "url": "https://simy.one/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "AwakApp Inc.",
+        "url": "https://www.awak.app/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://simy.one/simy-icon-square.png"
+        }
+      },
+      "about": [
+        {
+          "@type": "Thing",
+          "name": "Qwen"
+        },
+        {
+          "@type": "Thing",
+          "name": "Qwen Chat"
+        },
+        {
+          "@type": "Thing",
+          "name": "Large language model"
+        }
+      ],
+      "citation": [
+        "https://qwen.ai/qwenchat",
+        "https://docs.modelstudio.console.alibabacloud.com/en/model-studio/qwen3-8-max",
+        "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+        "https://huggingface.co/Qwen",
+        "https://github.com/QwenLM/qwen-code",
+        "https://qwen.ai/privacypolicy"
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "SIMY",
+          "item": "https://simy.one/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://simy.one/guides/en/index.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Qwen Guide",
+          "item": "https://simy.one/guides/en/qwen.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is Qwen?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Qwen is a family of large language models (LLMs) developed by China's Alibaba Group. You can use it three ways: the free Qwen Chat, the cloud API, and open weights you can run on your own PC."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does the name Qwen stand for?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Qwen is short for its official Chinese name, Tongyi Qianwen."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which country is Qwen from?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "China. It is developed by Alibaba Group. The international Qwen Chat is provided by Alibaba Cloud (Singapore), and its privacy policy says input is processed in Singapore."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Qwen free to use?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Qwen Chat on the web and the mobile app are free. The API is pay-as-you-go, and open-weight models cost nothing to use if you run them on your own PC (hardware and electricity aside)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What languages does Qwen support?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Many. The Qwen3 launch claimed support for 119 languages and dialects. You can ask for translations, summaries and email drafts in a wide range of languages."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I run Qwen locally on my own PC?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. With Ollama, ollama run qwen3.8 runs the 27B model (about 18 GB), and LM Studio can run the published models too. License and memory needs differ by model, so check How to run Qwen locally."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is what I enter in Qwen Chat used to train AI?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It can be. The privacy policy says anonymized content may be used to improve the models, and that you can stop its use for training by request by email (as of October 2026). For confidential work, consider the API, where you can choose the region, or running locally, where data never leaves."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much does the Qwen API cost?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It varies by model and region. As of October 2026, the top model qwen3.8-max costs $1.65 input and $4.951 output per million tokens (Tokyo and others). It's pay-as-you-go on Alibaba Cloud Model Studio and also varies with thinking mode and caching, so check the official pricing page."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is Qwen Code?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "An open-source coding agent published by the Qwen team. It reads and writes code from the terminal and connects to Qwen as well as other providers' models and local models."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How is Qwen different from ChatGPT, Claude and DeepSeek?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The big differences are whether you can run the model on your own PC, and where your data goes. Qwen publishes small and mid-size models as open weights, so you can run them locally. For how it differs from DeepSeek, see Chinese AI models (LLMs) compared."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does SIMY run on Qwen?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. SIMY does not connect to Qwen at this time. It runs on your ChatGPT (Codex) account and on Claude Code on your PC through the SIMY desktop app. You can keep using Qwen for translation and drafts and leave the follow-through on decisions to SIMY."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I have to ask SIMY every time to handle the work after Qwen's answer?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. SIMY picks up decisions, owners and deadlines from meeting records and chats on its own. It learns your way of working from your conversations and returns only what needs your decision."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="/?lang=en">
+      <img src="/simy-icon-56.png" alt="SIMY" width="28" height="28">
+      <span aria-hidden="true">SIMY</span>
+      <span class="brand-sub">Qwen Guide</span>
+    </a>
+    <nav class="header-actions" aria-label="Account">
+      <details class="lang-switch"><summary aria-label="Language: English"><span aria-hidden="true">🌐</span> <span class="ls-label">English</span></summary><ul><li><a href="/guides/qwen.html" hreflang="ja" lang="ja">日本語</a></li><li><a href="/guides/en/qwen.html" hreflang="en" lang="en" aria-current="page">English</a></li><li><a href="/guides/zh-hans/qwen.html" hreflang="zh-Hans" lang="zh-Hans">中文</a></li><li><a href="/guides/es/qwen.html" hreflang="es" lang="es">Español</a></li><li><a href="/guides/fr/qwen.html" hreflang="fr" lang="fr">Français</a></li><li><a href="/guides/hi/qwen.html" hreflang="hi" lang="hi">हिन्दी</a></li></ul></details>
+      <a class="header-link" href="/download/en.html">Download</a>
+      <a class="header-link" href="https://app.simy.one/login?lang=en&amp;locale=en&amp;region=us">Log in</a>
+      <a class="header-cta" href="https://app.simy.one/signup?lang=en&amp;locale=en&amp;region=us&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=qwen_guide_en&amp;utm_content=header">Choose a plan</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" aria-labelledby="page-title">
+    <div class="wrap hero-inner">
+      <div>
+        <ol class="crumbs" aria-label="Breadcrumb">
+          <li><a href="https://simy.one/">SIMY</a></li>
+          <li><a href="/guides/en/index.html">Guides</a></li>
+          <li aria-current="page">Qwen Guide</li>
+        </ol>
+        <p class="eyebrow">A practical guide for people who use Qwen</p>
+        <h1 id="page-title">
+          <span class="line">Qwen's answers</span>
+          <span class="line hl">shouldn't end</span>
+          <span class="line">in the chat.</span>
+        </h1>
+        <p class="lead">Qwen turns out translations, summaries and code fast and cheap. But who does what, and by when, is still left with you. SIMY moves the rest forward.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="https://app.simy.one/signup?lang=en&amp;locale=en&amp;region=us&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=qwen_guide_en&amp;utm_content=hero">Choose a plan <span class="arrow" aria-hidden="true">↗</span></a>
+          <a class="btn btn-ghost" href="#connect">See how it connects <span class="arrow" aria-hidden="true">↓</span></a>
+        </div>
+        <ul class="hero-points">
+          <li>Keep using Qwen for what it does best</li>
+          <li>SIMY picks up work from meetings and chat</li>
+          <li>Runs on your ChatGPT (Codex) account</li>
+        </ul>
+      </div>
+
+      <div class="hero-visual">
+        <div class="relay" role="img" aria-label="Example: Qwen translates and summarizes a meeting with a supplier in China and drafts a reply. SIMY then prepares the list of owners and deadlines, the reply email draft and the internal update, leaving only the decision on the price change to you.">
+          <div class="relay-head" aria-hidden="true">
+            <span class="rec"><span class="rec-dot"></span><span class="rec-name">Weekly_Shenzhen_supplier_1001</span></span>
+            <span>58:04</span>
+          </div>
+          <div class="relay-meta" aria-hidden="true">
+            <span class="chip">Qwen</span>
+            <span class="chip">Chinese → English</span>
+            <span class="chip">4 attendees</span>
+          </div>
+          <ol class="relay-steps" aria-hidden="true">
+            <li class="step s-done s-plaud"><span class="no">01</span><span class="what">Translate<small>Chinese meeting notes into English</small></span><span class="status">Qwen ✓</span></li>
+            <li class="step s-done s-plaud"><span class="no">02</span><span class="what">Summarize<small>Key points and numbers in 3 lines</small></span><span class="status">Qwen ✓</span></li>
+            <li class="step s-done s-plaud"><span class="no">03</span><span class="what">Draft a reply<small>In a polite tone</small></span><span class="status">Qwen ✓</span></li>
+            <li class="handoff">Qwen stops here / SIMY takes over</li>
+            <li class="step s-done"><span class="no">04</span><span class="what">Owners and deadlines<small>Who does what, by when</small></span><span class="status">Done</span></li>
+            <li class="step s-run"><span class="no">05</span><span class="what">Reply email draft<small>Saved to Gmail in your usual style</small></span><span class="status">Autorun</span><span class="bar"></span></li>
+            <li class="step s-next"><span class="no">06</span><span class="what">Internal update<small>Delivery change for purchasing and QA</small></span><span class="status">Next</span></li>
+            <li class="step s-you"><span class="no">07</span><span class="what">Accept the price change?<small>Only the decision is left to you</small></span><span class="status">Your turn</span></li>
+          </ol>
+          <div class="relay-foot" aria-hidden="true"><strong>All you do is decide and send.</strong></div>
+        </div>
+        <p class="caption">* Screen shown for illustration only</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap guide">
+    <nav class="toc" aria-label="Contents">
+      <p class="toc-title">Contents</p>
+      <ol>
+        <li><a href="#scene"><span>01</span>After the answer</a></li>
+        <li><a href="#wish"><span>02</span>What you really wanted</a></li>
+        <li><a href="#gap"><span>03</span>Where Qwen stops</a></li>
+        <li><a href="#connect"><span>04</span>How SIMY connects</a></li>
+        <li><a href="#sample"><span>05</span>One meeting, side by side</a></li>
+        <li><a href="#usecases"><span>06</span>By industry</a></li>
+        <li><a href="#start"><span>07</span>Get started in 3 steps</a></li>
+        <li><a href="#reference"><span>08</span>What Qwen is: usage, API, safety</a></li>
+        <li><a href="#faq"><span>09</span>FAQ</a></li>
+        <li><a href="#sources"><span>10</span>Sources</a></li>
+      </ol>
+    </nav>
+
+    <article class="article">
+      <details class="toc-mobile">
+        <summary>Contents</summary>
+        <ol>
+          <li><a href="#scene">After the answer</a></li>
+          <li><a href="#wish">What you really wanted</a></li>
+          <li><a href="#gap">Where Qwen stops</a></li>
+          <li><a href="#connect">How SIMY connects</a></li>
+          <li><a href="#sample">One meeting, side by side</a></li>
+          <li><a href="#usecases">By industry</a></li>
+          <li><a href="#start">Get started in 3 steps</a></li>
+          <li><a href="#reference">What Qwen is: usage, API, safety</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#sources">Sources</a></li>
+        </ol>
+      </details>
+
+      <p class="byline"><span>Last updated: <time datetime="2026-10-01">October 1, 2026</time></span><span>Published by SIMY (AwakApp Inc.)</span></p>
+
+      <!-- 01 -->
+      <section class="sec" id="scene" aria-labelledby="h-scene">
+        <span class="sec-label">01 / AFTER THE ANSWER</span>
+        <h2 id="h-scene">After Qwen answers: does this sound familiar?</h2>
+        <p class="intro">Qwen produced the translation, summary and draft in seconds. Here's what happens next.</p>
+        <div class="scenes">
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">1</span>
+            <span class="k">The day after translating</span>
+            <b>Who's replying?</b>
+            <p>The Chinese notes got translated. The to-dos and deadlines got buried, and the reply slipped.</p>
+          </div>
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">2</span>
+            <span class="k">A week of mass drafts</span>
+            <b>Which one won?</b>
+            <p>The API produced plenty of options. The decisions stayed scattered across chats and files.</p>
+          </div>
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">3</span>
+            <span class="k">A month of running it locally</span>
+            <b>Only you got faster</b>
+            <p>Qwen on Ollama sped up your own work. Requests from meetings still sit in your notes.</p>
+          </div>
+        </div>
+        <p class="scene-foot">Getting the answer takes Qwen a moment. <b>Whether the work moves is decided after the answer.</b></p>
+      </section>
+
+      <!-- 02 -->
+      <section class="sec" id="wish" aria-labelledby="h-wish">
+        <span class="sec-label">02 / WHAT YOU REALLY WANTED</span>
+        <h2 id="h-wish">What you really wanted after Qwen answers</h2>
+        <p class="intro">Same meeting. Same Qwen. This is what you wanted the moment the answer arrived.</p>
+        <div class="scenes four">
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">When the meeting ends</span>
+            <b>Owners and deadlines listed</b>
+            <p>Qwen still translates and summarizes. Decisions, owners and deadlines are already lined up.</p>
+          </div>
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">Before the deadline</span>
+            <b>Stalled work surfaces</b>
+            <p>SIMY flags work waiting on a reply or close to its deadline before the next meeting.</p>
+          </div>
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">Whichever AI you used</span>
+            <b>Decisions in one place</b>
+            <p>The chosen answer and the next steps stay in one place, across models and chats.</p>
+          </div>
+          <div class="scene wish you">
+            <span class="mark" aria-hidden="true">!</span>
+            <span class="k">What comes back to you</span>
+            <b>Only decisions</b>
+            <p>"Do we accept this price change?" That one question is all that comes back.</p>
+          </div>
+        </div>
+        <p class="scene-foot">This starts <b>from the next meeting after you connect your meetings and chat to SIMY</b>. Keep using Qwen for what it does best.</p>
+      </section>
+
+      <!-- 03 -->
+      <section class="sec" id="gap" aria-labelledby="h-gap">
+        <span class="sec-label">03 / WHERE QWEN STOPS</span>
+        <h2 id="h-gap">Where Qwen's answers stop</h2>
+        <p class="intro">Qwen is great at answering what you ask. Past that point, nobody picks the work up.</p>
+        <div class="tl-wrap" role="img" aria-label="Timeline. Qwen handles the question, translation and summary, and drafts or code. Owners and deadlines, replies, internal updates and follow-up before the next meeting are left blank.">
+          <div class="tl-row">
+            <span class="tl-who">Qwen</span>
+            <ol class="tl">
+              <li class="on">Question<small>You ask</small></li>
+              <li class="on">Translate &amp; summarize<small>Fast, in many languages</small></li>
+              <li class="on">Drafts &amp; code<small>Cheap, at volume</small></li>
+              <li class="gap">Owners &amp; deadlines</li>
+              <li class="gap">Reply</li>
+              <li class="gap">Internal update</li>
+              <li class="gap">Follow-up</li>
+            </ol>
+          </div>
+        </div>
+        <p class="caption">* Flow shown for illustration only</p>
+        <p class="tl-note"><b>Qwen Chat, the API or a local model: it stops in the same place.</b> You can get answers as often as you like. But you do the asking every time, and you check whether it got done.</p>
+      </section>
+
+      <!-- 04 -->
+      <section class="sec" id="connect" aria-labelledby="h-connect">
+        <span class="sec-label">04 / CONNECT</span>
+        <h2 id="h-connect">SIMY connects the rest. Keep Qwen, hand off what follows</h2>
+        <p class="intro">SIMY fills the four blanks. Only the decision comes back to you.</p>
+        <div class="tl-wrap" role="img" aria-label="Timeline. Qwen handles the question, translation and summary, and drafts or code. SIMY moves owners and deadlines, the reply draft, the internal update and follow-up, and only the decision comes back to you.">
+          <div class="tl-row">
+            <span class="tl-who">Qwen</span>
+            <ol class="tl">
+              <li class="on">Question</li>
+              <li class="on">Translate &amp; summarize</li>
+              <li class="on">Drafts &amp; code</li>
+              <li class="blank"></li><li class="blank"></li><li class="blank"></li><li class="blank"></li>
+            </ol>
+          </div>
+          <div class="tl-row">
+            <span class="tl-who simy">SIMY</span>
+            <ol class="tl">
+              <li class="blank"></li><li class="blank"></li><li class="blank"></li>
+              <li class="run">Owners &amp; deadlines<small>From the meeting</small></li>
+              <li class="run">Reply<small>Up to a Gmail draft</small></li>
+              <li class="run">Internal update<small>Posts once you approve</small></li>
+              <li class="you">Decision<small>One question back</small></li>
+            </ol>
+          </div>
+        </div>
+        <p class="caption">* Flow shown for illustration only</p>
+        <ul class="three" aria-label="Three things SIMY does">
+          <li>Picks up work from meetings and chat</li>
+          <li>Does it your way</li>
+          <li>Returns only decisions</li>
+        </ul>
+        <p class="tl-note">SIMY finds the work that follows from your meeting records and chats on its own. It learns the steps and checks you repeat from your conversations, follows the same approach, and lists what's done in My Actions.</p>
+
+        <div class="connect">
+          <ol class="connect-steps">
+            <li><b>Sign up for SIMY and connect ChatGPT (Codex)</b><span>SIMY's cloud runs use your own ChatGPT account. Codex usage falls within your ChatGPT plan.</span></li>
+            <li class="key"><b>Install the SIMY desktop app</b><span>It lets Claude Code on your PC do the work for SIMY. It turns tasks you repeat in Claude Code and Codex chats into "Suggestions from SIMY". Chat content is not stored on our servers. <a href="/download/en.html">Download it here</a></span></li>
+            <li><b>Connect your meeting records</b><span>Connect Plaud or Notion on the integrations screen. Your meeting records become where SIMY picks up work.</span></li>
+          </ol>
+          <div>
+            <div class="mock" role="img" aria-label="Example of SIMY's My Actions. Work picked up from the meeting: the list of owners and deadlines is done, the reply email draft is in progress, and the decision on whether to accept the price change is waiting for you.">
+              <div class="mock-head" aria-hidden="true">
+                <span class="mock-mark">S</span>
+                <div>
+                  <div class="mock-title">My Actions <span class="mock-state">● 1 waiting on you</span></div>
+                  <p class="mock-desc">Work picked up from Weekly_Shenzhen_supplier_1001</p>
+                </div>
+              </div>
+              <div class="mock-box" aria-hidden="true">Owners and deadlines ✓ / Reply email draft (in progress) / Internal update (next)</div>
+              <div class="mock-btn" aria-hidden="true">Decide on the price change</div>
+              <div class="mock-foot" aria-hidden="true">Only what needs your decision comes back to you</div>
+            </div>
+            <p class="caption">* SIMY screen shown for illustration only</p>
+          </div>
+        </div>
+        <p class="note"><b>How SIMY relates to Qwen:</b> SIMY does not connect to Qwen at this time. SIMY itself runs on your ChatGPT (Codex) account and on Claude Code on your PC through the SIMY desktop app. Leave translation, drafts and code to Qwen, and SIMY handles the follow-through on what the meeting decided.</p>
+      </section>
+
+      <!-- 05 -->
+      <section class="sec" id="sample" aria-labelledby="h-sample">
+        <span class="sec-label">05 / SAMPLE</span>
+        <h2 id="h-sample">One meeting, side by side: Qwen's translation and SIMY's next steps</h2>
+        <p class="intro">A sample of a one-hour weekly meeting with a supplier in China, translated and summarized by <a href="/guides/en/qwen-local.html">Qwen running on a company server</a>. Confidential numbers like unit prices stay in a closed environment, not an outside chat. Qwen on the left, SIMY on the right.</p>
+        <div class="sample">
+          <div class="sheet">
+            <div class="sheet-label"><span>Qwen translation and summary (example, company server)</span><span>Chinese → English</span></div>
+            <dl>
+              <dt>Overview</dt>
+              <dd>The supplier wants to raise the unit price of parts by 4% from November shipments.</dd>
+              <dt>Delivery</dt>
+              <dd>The second lot is likely a week late due to port congestion.</dd>
+              <dt>Their requests</dt>
+              <dd>An answer on the price change by October 10, and a check of the new packaging spec.</dd>
+              <dt>Our to-dos</dt>
+              <dd>Reschedule the quality team's inspection.</dd>
+            </dl>
+          </div>
+          <div class="outs">
+            <div class="out">
+              <div class="out-head"><b>Owners and deadlines</b><span class="pill ok">Done</span></div>
+              <p>Answer on price change: you, Oct 10. Check packaging spec: purchasing, Oct 7. Reschedule inspection: QA, Oct 8.</p>
+            </div>
+            <div class="out">
+              <div class="out-head"><b>Reply email draft</b><span class="pill run">Autorun</span></div>
+              <p>Thanks them for the notice, commits to an answer by October 10 and asks for the packaging spec, in your usual wording. Saved as a Gmail draft. Translation into Chinese stays with your in-house Qwen.</p>
+            </div>
+            <div class="out">
+              <div class="out-head"><b>Internal update</b><span class="pill">Next</span></div>
+              <p>"The second lot will be a week late. Please rework the inspection schedule." Posted to chat once you approve.</p>
+            </div>
+            <div class="out you">
+              <div class="out-head"><b>Your decision</b><span class="pill you">Your turn</span></div>
+              <p>Accept the 4% price increase, or negotiate? Only the parts that need your judgment come back to you.</p>
+            </div>
+          </div>
+        </div>
+        <p class="sample-foot">Qwen translates, SIMY moves things forward. The negotiation itself is still where you shine.</p>
+      </section>
+
+      <!-- 06 -->
+      <section class="sec" id="usecases" aria-labelledby="h-usecases">
+        <span class="sec-label">06 / BY INDUSTRY</span>
+        <h2 id="h-usecases">By industry: how people use Qwen, and what SIMY delivers</h2>
+        <p class="intro">What SIMY prepares after Qwen gives the answer. The pattern is the same for individuals and teams.</p>
+        <div class="ind">
+          <div class="ind-card">
+            <h3>Trade &amp; sourcing <small>Qwen: Chinese translation and summaries</small></h3>
+            <ul class="ind-rows">
+              <li><span>Supplier meetings</span><span>→</span><span>Owners, deadlines, reply draft</span></li>
+              <li><span>Price or delivery changes</span><span>→</span><span>Internal update, one decision</span></li>
+              <li><span>Before a reply deadline</span><span>→</span><span>Reminder for work awaiting a reply</span></li>
+            </ul>
+          </div>
+          <div class="ind-card">
+            <h3>Dev teams <small>Qwen: Qwen Code, local LLMs</small></h3>
+            <ul class="ind-rows">
+              <li><span>Design reviews</span><span>→</span><span>Agreed fixes and owners</span></li>
+              <li><span>After writing code</span><span>→</span><span>Next task via Claude Code on your PC</span></li>
+              <li><span>End of the week</span><span>→</span><span>Progress and pending decisions</span></li>
+            </ul>
+          </div>
+          <div class="ind-card">
+            <h3>Marketing &amp; content <small>Qwen: mass drafts via the API</small></h3>
+            <ul class="ind-rows">
+              <li><span>Planning meetings</span><span>→</span><span>Chosen ideas, owners, due dates</span></li>
+              <li><span>Draft reviews</span><span>→</span><span>A request listing the edits</span></li>
+              <li><span>Before publishing</span><span>→</span><span>Pending checks and one decision</span></li>
+            </ul>
+          </div>
+          <div class="ind-card">
+            <h3>Leadership &amp; 1:1s <small>Qwen: summarizing docs, framing issues</small></h3>
+            <ul class="ind-rows">
+              <li><span>Leadership meetings</span><span>→</span><span>Decisions, owners and updates to stakeholders</span></li>
+              <li><span>1:1s</span><span>→</span><span>Progress and pending decisions before you ask "where are we on that?"</span></li>
+              <li><span>End of the week</span><span>→</span><span>A weekly report across meetings</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- 07 -->
+      <section class="sec" id="start" aria-labelledby="h-start">
+        <span class="sec-label">07 / START</span>
+        <h2 id="h-start">Get started in 3 steps, keeping Qwen</h2>
+        <ol class="steps3">
+          <li><b>Keep using Qwen as usual</b><span>Translation, summaries, drafts, code. Qwen Chat, the API or a local model all work.</span></li>
+          <li class="key"><b>Sign up for SIMY and connect ChatGPT</b><span>Cloud runs use your ChatGPT (Codex) account. If you use Claude Code, install the SIMY desktop app too. See <a href="#connect">how to connect</a> above.</span></li>
+          <li><b>Finish one meeting</b><span>Owners and deadlines, a reply draft and an update arrive. You decide and send. That's it.</span></li>
+        </ol>
+        <p class="note"><b>How sign-up works:</b> choose a plan → confirm your email → pay by card (there is no free plan). See <a href="/?lang=en#pricing">pricing</a>, and get the desktop app from the <a href="/download/en.html">download page</a>.</p>
+        <p class="note"><b>Nothing changes in how you use Qwen.</b> SIMY doesn't replace Qwen. It's a separate system that takes on the work after the answer.</p>
+      </section>
+
+      <!-- 08 -->
+      <section class="sec" id="reference" aria-labelledby="h-reference">
+        <span class="sec-label">08 / REFERENCE</span>
+        <h2 id="h-reference">What is Qwen: usage, models, API, running it locally and safety (for the details)</h2>
+        <p class="intro">Open these when you want to check facts about Qwen itself. Model names and specs are as of October 2026.</p>
+
+        <details class="fold">
+          <summary>What is Qwen: the name and where it comes from<small>Short for Tongyi Qianwen. Developed by China's Alibaba Group</small></summary>
+          <div class="fold-body">
+            <h3>The name</h3>
+            <p>Qwen is short for its official Chinese name, Tongyi Qianwen. It names the chat AI and also the whole family of large language models (LLMs) that handle text, images, audio and code.</p>
+            <h3>Where it comes from</h3>
+            <p>Qwen is a Chinese AI, developed by the Qwen team at Alibaba Group. The international Qwen Chat (chat.qwen.ai) is provided by the Singapore company Alibaba Cloud (Singapore), and its privacy policy says input is processed in Singapore. The API is offered through Alibaba Cloud Model Studio, where you can choose from several regions, including Tokyo.</p>
+            <h3>Three ways to use it</h3>
+            <ul class="plain-list">
+              <li><strong>Qwen Chat:</strong> talk to it for free in a browser or mobile app. Good for personal research and translation.</li>
+              <li><strong>API:</strong> build it into your own systems and tools through Alibaba Cloud Model Studio. You pay for what you use.</li>
+              <li><strong>Open weights:</strong> run models (the weight files) published on Hugging Face or ModelScope on your own PC or server. Your data stays in-house.</li>
+            </ul>
+            <h3>What Qwen can do</h3>
+            <ul class="plain-list">
+              <li><strong>Chat:</strong> answering questions, writing, translating and summarizing. Web search and Deep Research too.</li>
+              <li><strong>Images and video:</strong> understanding images and video, and generating and editing images.</li>
+              <li><strong>Audio:</strong> models for speech synthesis and real-time translation.</li>
+              <li><strong>Code:</strong> coding models, and Qwen Code, which runs in the terminal.</li>
+            </ul>
+            <p>Many of its small and mid-size models are open weights you can run on your own PC or server. That is the big difference from ChatGPT and Claude.</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>How to use Qwen Chat: web and mobile app<small>Free. Log in and start talking</small></summary>
+          <div class="fold-body">
+            <ol class="plain-list">
+              <li><strong>Open chat.qwen.ai.</strong> It works in the browser. On a phone, there's a "Qwen" app for iOS and Android.</li>
+              <li><strong>Log in.</strong> Create an account and log in.</li>
+              <li><strong>Pick a model.</strong> Switch models with the model picker. If unsure, keep the default.</li>
+              <li><strong>Start talking.</strong> Ask in English or many other languages. Attach files or images and ask it to "summarize this" or "make a table".</li>
+              <li><strong>Switch features.</strong> Choose web search, Deep Research, image generation, Web Dev (quick web page prototypes) and more.</li>
+            </ol>
+            <p>Qwen Chat is free. As of October 2026, we found no paid personal plan for Qwen Chat like ChatGPT Plus.</p>
+            <h3>Tips for work</h3>
+            <ul class="plain-list">
+              <li><strong>State the role and format first:</strong> say who it's for and what shape you want up front, like "a reply to a supplier, formal, three paragraphs". You'll edit less.</li>
+              <li><strong>Check translations against the original:</strong> for amounts, dates, model numbers and names, compare with the source rather than reading only the translation.</li>
+              <li><strong>Give long documents as files:</strong> attaching a PDF or document keeps tables and headings intact better than pasting.</li>
+              <li><strong>Separate conversations:</strong> start a new chat for each project so earlier topics don't skew the answers.</li>
+            </ul>
+            <p>Turning those answers into who does what by when, and following up, happens outside Qwen Chat. If you're doing that yourself every time, see <a href="#connect">how SIMY connects</a>.</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>Main models: Qwen3.8, Qwen3.5, TTS, Image Edit<small>As of October 2026. Names and generations change often</small></summary>
+          <div class="fold-body">
+            <p class="scroll-hint">Scroll the table sideways →</p>
+            <div class="table-wrap">
+              <table class="t-wide">
+                <thead>
+                  <tr><th scope="col">Model</th><th scope="col">Role</th><th scope="col">Where to use it</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Qwen3.8-Max</th><td>Top of the 3.8 generation. 1M-token context, image and video input, thinking mode</td><td>API</td></tr>
+                  <tr><th scope="row">Qwen3.8-27B</th><td>Mid-size model for text, images and video. Apache 2.0</td><td>Open weights (local)</td></tr>
+                  <tr><th scope="row">Qwen3.8-2.4T-A95B</th><td>The largest open-weight 3.8 model. Custom license</td><td>Open weights (for large servers)</td></tr>
+                  <tr><th scope="row">Qwen3.8-Flash, Omni</th><td>Flash for speed and low cost, Omni for audio and video, real-time translation</td><td>API</td></tr>
+                  <tr><th scope="row">Qwen3.5, Qwen3</th><td>Earlier generations. Many small local models, still widely used</td><td>Open weights, API</td></tr>
+                  <tr><th scope="row">Qwen-VL</th><td>Vision-language model that reads images and documents</td><td>Open weights, API</td></tr>
+                  <tr><th scope="row">Qwen3-Coder</th><td>Specialized in writing and fixing code. Used with Qwen Code</td><td>Open weights, API</td></tr>
+                  <tr><th scope="row">Qwen3-TTS</th><td>Speech synthesis that turns text into natural voice</td><td>API and more</td></tr>
+                  <tr><th scope="row">Qwen-Image, Image Edit</th><td>Image generation and editing by text instruction</td><td>Qwen Chat, open weights, API</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="note"><b>Next generation:</b> at the Apsara Conference on September 22, 2026, Alibaba announced that Qwen 4 is in training (no release date announced). Model names change quickly, so it's enough to remember the roles: "top tier", "mid-size for local use" and "built for speed".</p>
+            <h3>How to use Qwen Image Edit</h3>
+            <p>Attach an image in Qwen Chat and describe the change, like "make the background white" or "translate the sign into English". The open-weight version is often built into image tools such as ComfyUI.</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>Qwen API and pricing: Alibaba Cloud Model Studio<small>OpenAI-compatible. Pricing varies by model and region</small></summary>
+          <div class="fold-body">
+            <ul class="plain-list">
+              <li><strong>Where to start:</strong> get an API key from Alibaba Cloud Model Studio (DashScope). The API is OpenAI-compatible, so existing tools work by switching the endpoint.</li>
+              <li><strong>Regions:</strong> for Qwen3.8-Max you can choose Beijing, Singapore, Frankfurt, Virginia, Tokyo or Hong Kong. Available regions differ by model, and this choice decides where your data is processed.</li>
+              <li><strong>Pricing:</strong> pay per input and output token. As of October 2026, qwen3.8-max is officially listed at $1.65 input and $4.951 output per million tokens (Tokyo and others; Singapore is $2.00 and $6.00). Rates also vary by model, thinking mode and caching, so check the <a href="https://www.alibabacloud.com/help/en/model-studio/model-pricing" target="_blank" rel="noopener">official pricing page</a> for current prices (and for how tax applies).</li>
+              <li><strong>Coding Plan:</strong> a flat-rate plan for using Qwen and other models from coding tools such as Claude Code and Qwen Code. As of October 2026 only Pro ($50 a month) is offered, with request limits per 5 hours, week and month. See the <a href="https://www.alibabacloud.com/help/en/model-studio/coding-plan" target="_blank" rel="noopener">official description</a>.</li>
+            </ul>
+            <h3>Getting started with the API</h3>
+            <ol class="plain-list">
+              <li><strong>Create an Alibaba Cloud account.</strong> Open the Model Studio console and choose your region.</li>
+              <li><strong>Create an API key.</strong> Keep it in an environment variable, never directly in code or shared documents.</li>
+              <li><strong>Point to the OpenAI-compatible endpoint.</strong> With the OpenAI SDK or existing tools, just change the base URL and model name.</li>
+              <li><strong>Start small and watch usage.</strong> Thinking mode and long context use many tokens. Check daily usage in the console before scaling up.</li>
+            </ol>
+            <p class="note"><b>How SIMY relates:</b> SIMY cannot connect to a Qwen API key at this time. SIMY's cloud runs use your ChatGPT (Codex) account.</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>Run Qwen locally: Ollama, LM Studio<small>Keep data in-house. Licenses differ by model</small></summary>
+          <div class="fold-body">
+            <ul class="plain-list">
+              <li><strong>Ollama:</strong> install it and type <code>ollama run qwen3.8</code> in a terminal to run the 27B model (about an 18 GB download, takes text and image input). As a rule of thumb, you need a PC with plenty of memory.</li>
+              <li><strong>LM Studio:</strong> search for and download models from the app. Good if you'd rather avoid the command line.</li>
+              <li><strong>Others:</strong> llama.cpp, Jan, vLLM, SGLang and more. With vLLM or SGLang you can stand up an internal OpenAI-compatible server (an API called the same way as OpenAI's).</li>
+            </ul>
+            <h3>License differences</h3>
+            <p>"Qwen is open source" is too broad. Many small and mid-size models such as Qwen3.8-27B use Apache 2.0, which makes commercial use easy. The largest, Qwen3.8-2.4T-A95B, has a custom license, and API-only models such as Max have no published weights.</p>
+            <h3>Work that suits local models</h3>
+            <p>Local models shine at summarizing internal documents you don't want to send out, working offline, and producing routine drafts in volume every day. Small models are less capable than large ones, though, so use them to make first drafts rather than final versions. Pick one use first, and it's easier to judge what model size is enough.</p>
+            <p>Memory requirements, choosing a quantization and model size guidelines are covered in <a href="/guides/en/qwen-local.html">How to run Qwen locally</a>.</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>Qwen Code: a coding agent in your terminal<small>Open source. Works with models beyond Qwen</small></summary>
+          <div class="fold-body">
+            <p>Qwen Code is an open-source (Apache 2.0) coding agent from the Qwen team. It runs in the terminal, reads and edits code, and runs commands.</p>
+            <ul class="plain-list">
+              <li><strong>Install:</strong> with Node.js 22 or later, run <code>npm i -g @qwen-code/qwen-code@latest</code>. On a Mac you can also use Homebrew.</li>
+              <li><strong>Models it connects to:</strong> Qwen, plus the OpenAI, Anthropic and Gemini APIs, and local models served by Ollama or vLLM.</li>
+              <li><strong>Who it's for:</strong> developers who want a Claude Code or Codex style workflow with Qwen models or their own servers.</li>
+            </ul>
+            <h3>First steps</h3>
+            <ol class="plain-list">
+              <li><strong>Run <code>qwen</code> in the folder you want to work in.</strong> First, choose the model and how to authenticate.</li>
+              <li><strong>Describe what you want in plain language.</strong> Start from the goal, like "explain how this folder is organized" or "find why this test fails".</li>
+              <li><strong>Review changes before accepting.</strong> Approve file edits and commands after reading them. Starting with small fixes is safer.</li>
+            </ol>
+            <p>After you write code with Qwen Code, SIMY picks up the fixes and assignments agreed in review meetings and lists them.</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>Qwen's languages: how far they go<small>Translation, summaries and drafts across many languages</small></summary>
+          <div class="fold-body">
+            <p>The Qwen3 launch claimed support for 119 languages and dialects (the 3.8 model cards don't state a number). Third-party evaluations have also reported strong Japanese performance among models of similar size.</p>
+            <ul class="plain-list">
+              <li><strong>Strengths:</strong> translating between Chinese, English and other languages, summarizing long documents, drafting emails and reports, organizing tables.</li>
+              <li><strong>Watch out for:</strong> local proper nouns, fine distinctions of formality, and statements about local laws and business customs. Check them before use.</li>
+              <li><strong>With small models:</strong> small local models can sound unnatural in long passages. Finish important text with a larger model to be safe.</li>
+            </ul>
+            <p>When working with suppliers in China, you can have Qwen translate the meeting summary and leave the owners, deadlines and reply draft to SIMY. The <a href="#sample">one-meeting comparison</a> above is an example.</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>Data handling and safety: Qwen Chat vs. API vs. local<small>Where your data goes depends on how you use it</small></summary>
+          <div class="fold-body">
+            <p class="scroll-hint">Scroll the table sideways →</p>
+            <div class="table-wrap">
+              <table class="t-wide">
+                <thead>
+                  <tr><th scope="col">How you use it</th><th scope="col">Where data is processed</th><th scope="col">Use for training</th><th scope="col">Best for</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Qwen Chat (web, app)</th><td>Stated as processed in Singapore</td><td>May be anonymized and used for improvement. Stated that you can opt out by email</td><td>Personal research, translating or summarizing public information</td></tr>
+                  <tr><th scope="row">API (Model Studio)</th><td>The region chosen when you sign up (Tokyo and others available)</td><td>Follows your cloud contract terms</td><td>Building into business systems, high-volume processing</td></tr>
+                  <tr><th scope="row">Running locally</th><td>Only inside your own PC or server</td><td>Never leaves</td><td>Confidential documents, offline work</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <ul class="plain-list">
+              <li><strong>Check company rules first:</strong> some companies set which AI services you may use and what you may enter.</li>
+              <li><strong>Keep confidential data out by default:</strong> with any chat AI, think before entering customer data or unpublished figures.</li>
+              <li><strong>Verify the answers:</strong> check translated numbers, proper nouns, and statements about laws or specs against the original before use.</li>
+            </ul>
+            <p class="small muted">Qwen Chat data handling is based on the <a href="https://qwen.ai/privacypolicy" target="_blank" rel="noopener">Qwen privacy policy</a> as of October 1, 2026. How SIMY handles data is published on our <a href="/security.html">Security</a> page and <a href="/privacy.html?lang=en">Privacy Policy</a>.</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>How Qwen compares with ChatGPT, Claude and DeepSeek<small>Not better or worse. Each is strong in different places</small></summary>
+          <div class="fold-body">
+            <p class="scroll-hint">Scroll the table sideways →</p>
+            <div class="table-wrap">
+              <table class="t-wide">
+                <thead>
+                  <tr><th scope="col">Item</th><th scope="col">Qwen</th><th scope="col">ChatGPT</th><th scope="col">Claude</th><th scope="col">DeepSeek</th><th scope="col" class="simy">SIMY</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Developer</th><td>Alibaba Group (China)</td><td>OpenAI (US)</td><td>Anthropic (US)</td><td>DeepSeek (China)</td><td class="simy">AwakApp Inc.</td></tr>
+                  <tr><th scope="row">Strengths</th><td>Many languages, cheap API, runs locally</td><td>Broad use and many add-on features</td><td>Long-form writing, work in Claude Code</td><td>Reasoning and a cheap API</td><td class="simy">Moving the work after the answer</td></tr>
+                  <tr><th scope="row">Run on your own PC</th><td>Yes, small and mid-size models</td><td>ChatGPT itself, no (OpenAI's open models, yes)</td><td>No</td><td>Small versions of older generations</td><td class="simy">Can use Claude Code on your PC to do the work</td></tr>
+                  <tr><th scope="row">Starting point</th><td>You ask</td><td>You ask</td><td>You ask</td><td>You ask</td><td class="simy">SIMY picks it up from meetings and chat</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3>How to choose</h3>
+            <ul class="plain-list">
+              <li><strong>Keep data in-house:</strong> open-weight models you can run yourself, such as Qwen3.8-27B.</li>
+              <li><strong>Run high volumes at low API cost:</strong> the Qwen or DeepSeek API. Compare regions and rates.</li>
+              <li><strong>Value add-on features and familiarity at work:</strong> ChatGPT or Claude. If company rules decide, follow them.</li>
+            </ul>
+            <p class="note"><b>Using them together:</b> any AI, Qwen included, can produce the answers and drafts. If you're tracking owners, deadlines, replies and updates yourself every time, that's where SIMY comes in. For how Chinese AI models differ overall, see <a href="/guides/en/china-llm.html">Chinese AI models (LLMs) compared: DeepSeek, Kimi, GLM and more</a>. For ChatGPT, see the <a href="/guides/en/chatgpt.html">ChatGPT guide</a>.</p>
+          </div>
+        </details>
+      </section>
+
+      <!-- 09 -->
+      <section class="sec" id="faq" aria-labelledby="h-faq">
+        <span class="sec-label">09 / FAQ</span>
+        <h2 id="h-faq">FAQ</h2>
+        <div class="faq">
+          <details>
+            <summary>What is Qwen?</summary>
+            <div class="a"><p>Qwen is a family of large language models (LLMs) developed by China's Alibaba Group. You can use it three ways: the free Qwen Chat, the cloud API, and open weights you can run on your own PC.</p></div>
+          </details>
+          <details>
+            <summary>What does the name Qwen stand for?</summary>
+            <div class="a"><p>Qwen is short for its official Chinese name, Tongyi Qianwen.</p></div>
+          </details>
+          <details>
+            <summary>Which country is Qwen from?</summary>
+            <div class="a"><p>China. It is developed by Alibaba Group. The international Qwen Chat is provided by Alibaba Cloud (Singapore), and its privacy policy says input is processed in Singapore.</p></div>
+          </details>
+          <details>
+            <summary>Is Qwen free to use?</summary>
+            <div class="a"><p>Yes. Qwen Chat on the web and the mobile app are free. The API is pay-as-you-go, and open-weight models cost nothing to use if you run them on your own PC (hardware and electricity aside).</p></div>
+          </details>
+          <details>
+            <summary>What languages does Qwen support?</summary>
+            <div class="a"><p>Many. The Qwen3 launch claimed support for 119 languages and dialects. You can ask for translations, summaries and email drafts in a wide range of languages.</p></div>
+          </details>
+          <details>
+            <summary>Can I run Qwen locally on my own PC?</summary>
+            <div class="a"><p>Yes. With Ollama, <code>ollama run qwen3.8</code> runs the 27B model (about 18 GB), and LM Studio can run the published models too. License and memory needs differ by model, so check <a href="/guides/en/qwen-local.html">How to run Qwen locally</a>.</p></div>
+          </details>
+          <details>
+            <summary>Is what I enter in Qwen Chat used to train AI?</summary>
+            <div class="a"><p>It can be. The privacy policy says anonymized content may be used to improve the models, and that you can stop its use for training by request by email (as of October 2026). For confidential work, consider the API, where you can choose the region, or running locally, where data never leaves.</p></div>
+          </details>
+          <details>
+            <summary>How much does the Qwen API cost?</summary>
+            <div class="a"><p>It varies by model and region. As of October 2026, the top model qwen3.8-max costs $1.65 input and $4.951 output per million tokens (Tokyo and others). It's pay-as-you-go on Alibaba Cloud Model Studio and also varies with thinking mode and caching, so check the official pricing page.</p></div>
+          </details>
+          <details>
+            <summary>What is Qwen Code?</summary>
+            <div class="a"><p>An open-source coding agent published by the Qwen team. It reads and writes code from the terminal and connects to Qwen as well as other providers' models and local models.</p></div>
+          </details>
+          <details>
+            <summary>How is Qwen different from ChatGPT, Claude and DeepSeek?</summary>
+            <div class="a"><p>The big differences are whether you can run the model on your own PC, and where your data goes. Qwen publishes small and mid-size models as open weights, so you can run them locally. For how it differs from DeepSeek, see <a href="/guides/en/china-llm.html">Chinese AI models (LLMs) compared</a>.</p></div>
+          </details>
+          <details>
+            <summary>Does SIMY run on Qwen?</summary>
+            <div class="a"><p>No. SIMY does not connect to Qwen at this time. It runs on your ChatGPT (Codex) account and on Claude Code on your PC through the SIMY desktop app. You can keep using Qwen for translation and drafts and leave the follow-through on decisions to SIMY.</p></div>
+          </details>
+          <details>
+            <summary>Do I have to ask SIMY every time to handle the work after Qwen's answer?</summary>
+            <div class="a"><p>No. SIMY picks up decisions, owners and deadlines from meeting records and chats on its own. It learns your way of working from your conversations and returns only what needs your decision.</p></div>
+          </details>
+        </div>
+      </section>
+
+      <!-- 10 -->
+      <section class="sec" id="sources" aria-labelledby="h-sources">
+        <span class="sec-label">10 / SOURCES</span>
+        <h2 id="h-sources">Sources</h2>
+        <p>We checked Qwen's models, pricing structure, licenses and data handling against the official sources below (checked October 1, 2026). For language performance we also referred to a third-party evaluation. Model names and specs change often, so see each official page for the latest.</p>
+        <ul class="plain-list">
+          <li><a href="https://qwen.ai/qwenchat" target="_blank" rel="noopener">Qwen Chat (Qwen official)</a></li>
+          <li><a href="https://qwen.ai/download" target="_blank" rel="noopener">Download the Qwen app (Qwen official)</a></li>
+          <li><a href="https://qwen.ai/privacypolicy" target="_blank" rel="noopener">Qwen Privacy Policy</a></li>
+          <li><a href="https://docs.modelstudio.console.alibabacloud.com/en/model-studio/qwen3-8-max" target="_blank" rel="noopener">Qwen3.8-Max (Alibaba Cloud Model Studio docs)</a></li>
+          <li><a href="https://www.alibabacloud.com/help/en/model-studio/model-pricing" target="_blank" rel="noopener">Model Studio model pricing (Alibaba Cloud)</a></li>
+          <li><a href="https://www.alibabacloud.com/help/en/model-studio/coding-plan" target="_blank" rel="noopener">Coding Plan (Alibaba Cloud)</a></li>
+          <li><a href="https://docs.qwencloud.com/changelog/models" target="_blank" rel="noopener">QwenCloud model changelog</a></li>
+          <li><a href="https://huggingface.co/Qwen" target="_blank" rel="noopener">Qwen (Hugging Face)</a>, <a href="https://huggingface.co/Qwen/Qwen3.8-27B" target="_blank" rel="noopener">Qwen3.8-27B</a>, <a href="https://huggingface.co/Qwen/Qwen3.8-2.4T-A95B" target="_blank" rel="noopener">Qwen3.8-2.4T-A95B</a></li>
+          <li><a href="https://github.com/QwenLM/qwen-code" target="_blank" rel="noopener">Qwen Code (GitHub)</a></li>
+          <li><a href="https://ollama.com/library/qwen3.8" target="_blank" rel="noopener">qwen3.8 (Ollama library)</a></li>
+          <li><a href="https://www.alizila.com/alibaba-clouds-2026-apsara-conference-full-stack-ai-roadmap-along-with-global-market-expansion-plan/" target="_blank" rel="noopener">2026 Apsara Conference announcements (Alizila)</a></li>
+          <li><a href="https://shisa.ai/posts/qwen3-japanese-performance" target="_blank" rel="noopener">Qwen3 Japanese performance evaluation (Shisa.AI)</a></li>
+        </ul>
+      </section>
+      <aside class="next-read" aria-labelledby="h-next">
+        <h2 id="h-next">Read next</h2>
+        <div class="next-grid"><a href="/guides/en/qwen-local.html"><b>How to run Qwen locally</b><span>Ollama, LM Studio and the memory you need</span></a><a href="/guides/en/china-llm.html"><b>Chinese AI models (LLMs) compared</b><span>How Qwen, DeepSeek, Kimi and GLM differ, and how to choose</span></a><a href="/guides/en/chatgpt.html"><b>ChatGPT Guide</b><span>Stop re-pasting and finishing up by hand every time</span></a></div>
+        <a class="next-all" href="/guides/en/index.html">All guides →</a>
+      </aside>
+    </article>
+  </div>
+
+  <section class="closing" aria-labelledby="h-closing">
+    <div class="wrap closing-inner">
+      <div>
+        <h2 id="h-closing">Once Qwen answers,<br>hand the rest to SIMY.</h2>
+        <p>Keep Qwen for what it does best. SIMY moves the work it picks up from meetings and chat, and returns only decisions. The negotiating is still where you shine.</p>
+      </div>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="https://app.simy.one/signup?lang=en&amp;locale=en&amp;region=us&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=qwen_guide_en&amp;utm_content=closing">Choose a plan <span class="arrow" aria-hidden="true">↗</span></a>
+        <a class="btn btn-ghost" href="mailto:sales@simy.one?subject=Talk%20to%20us%20about%20SIMY">Talk to us</a>
+        <a class="btn btn-ghost" href="/download/en.html">Download the app <span class="arrow" aria-hidden="true">↓</span></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <ul class="footer-links">
+      <li><a href="/?lang=en">Home</a></li>
+      <li><a href="/?lang=en#pricing">Pricing</a></li>
+      <li><a href="/integrations.html">Integrations</a></li>
+      <li><a href="/download/en.html">Download</a></li>
+      <li><a href="/guides/en/index.html">All guides</a></li>
+      <li><a href="/guides/en/claude.html">Claude</a></li>
+      <li><a href="/guides/en/codex.html">Codex</a></li>
+      <li><a href="/guides/en/cowork.html">Cowork</a></li>
+      <li><a href="/guides/en/chatgpt.html">ChatGPT</a></li>
+      <li><a href="/guides/en/plaud.html">PLAUD</a></li>
+      <li><a href="/guides/en/notta.html">Notta</a></li>
+      <li><a href="/guides/en/meeting-notes.html">AI meeting notes</a></li>
+      <li><a href="/guides/en/china-llm.html">Chinese AI compared</a></li>
+      <li><a href="/guides/en/deepseek.html">DeepSeek</a></li>
+      <li><a href="/guides/en/qwen.html" aria-current="page">Qwen</a></li>
+      <li><a href="/guides/en/qwen-local.html">Qwen on your own server</a></li>
+      <li><a href="/security.html">Security</a></li>
+      <li><a href="/privacy.html?lang=en">Privacy Policy</a></li>
+      <li><a href="/terms.html?lang=en">Terms of Use</a></li>
+    </ul>
+    <p>Qwen is a trademark of Alibaba Group or its affiliates. SIMY is an independent product from Qwen.</p>
+    <p>Codex and ChatGPT are products of OpenAI. Other company and product names are trademarks or registered trademarks of their respective owners.</p>
+    <p>&copy; 2026 SIMY by AwakApp Inc.</p>
+  </div>
+</footer>
+<script>
+(function () {
+  var links = Array.prototype.slice.call(document.querySelectorAll('.toc a'));
+  if (!links.length) return;
+  var items = links.map(function (a) {
+    return { link: a, section: document.getElementById(a.getAttribute('href').slice(1)) };
+  }).filter(function (item) { return item.section; });
+  var ticking = false;
+  function update() {
+    ticking = false;
+    var line = window.innerHeight * 0.35;
+    var atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+    var current = null;
+    items.forEach(function (item) {
+      if (item.section.getBoundingClientRect().top <= line) current = item;
+    });
+    if (atBottom) current = items[items.length - 1];
+    items.forEach(function (item) { item.link.classList.toggle('is-active', item === current); });
+  }
+  window.addEventListener('scroll', function () {
+    if (!ticking) { ticking = true; window.requestAnimationFrame(update); }
+  }, { passive: true });
+  update();
+})();
+</script>
+<script src="/analytics.js" defer></script>
+</body>
+</html>

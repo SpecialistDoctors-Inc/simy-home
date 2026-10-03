@@ -301,6 +301,13 @@ function renderPricing() {
   });
 
   pricingPlans.forEach((plan) => {
+    const signupLink = plan.querySelector(".pricing-plan-link");
+    if (signupLink) {
+      const signupUrl = new URL(signupLink.href);
+      signupUrl.searchParams.set("plan", plan.dataset.pricingPlan);
+      signupUrl.searchParams.set("interval", activeBillingCycle);
+      signupLink.href = signupUrl.toString();
+    }
     const basePriceCents = pricingCatalog.priceCents(plan.dataset.pricingPlan, activeBillingCycle);
     const taxInclusivePriceCents = isJapanese
       ? pricingCatalog.grossCents(basePriceCents, pricingCatalog.JAPAN_CONSUMPTION_TAX_BPS)
