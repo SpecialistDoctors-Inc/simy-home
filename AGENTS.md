@@ -36,7 +36,16 @@ simy-home/
 
 ## Commands
 
-No build commands. The site is static HTML/CSS/images.
+The deployed site is static HTML/CSS/images. The five translated homepages are generated from the English homepage and the existing translation dictionaries (Python 3 + Node.js; no package installation).
+
+```bash
+python3 scripts/build-localized-home.py
+python3 scripts/build-localized-home.py --check
+python3 scripts/check-home-seo.py
+node --test tests/*.test.cjs
+```
+
+Edit `site/index.html`, `site/home-i18n.js`, and `site/home-locales.js`; do not edit generated `site/{ja,hi,es,fr,zh-Hans}.html` directly. See `docs/seo/international-seo-2026-10-03.md` for research, URL behavior, and release checks.
 
 ### Terraform
 

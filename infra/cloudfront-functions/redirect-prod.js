@@ -9,7 +9,7 @@ function queryToString(request, additions) {
   var querystring = request.querystring || {};
   var parts = [];
   for (var key in querystring) {
-    if (!querystring.hasOwnProperty(key)) continue;
+    if (!Object.prototype.hasOwnProperty.call(querystring, key)) continue;
     var item = querystring[key];
     if (item.multiValue) {
       for (var i = 0; i < item.multiValue.length; i++) {
@@ -81,7 +81,7 @@ function regionFromAcceptLanguage(acceptLanguage) {
 
 function maybeRedirectWithViewerRegion(request, host, uri) {
   if (queryHas(request, 'region') || queryHas(request, 'lang')) return null;
-  if (!(uri === '/' || uri === '/index.html' || uri === '/compare.html' || uri === '/press-release.html' || uri === '/privacy.html' || uri === '/terms.html')) return null;
+  if (!(uri === '/compare.html' || uri === '/press-release.html' || uri === '/privacy.html' || uri === '/terms.html')) return null;
 
   var countryHeader = request.headers['cloudfront-viewer-country'];
   var languageHeader = request.headers['accept-language'];
@@ -94,6 +94,28 @@ function maybeRedirectWithViewerRegion(request, host, uri) {
     statusCode: 302,
     statusDescription: 'Found',
     headers: { location: { value: 'https://' + host + normalizedUri + queryToString(request, { region: region }) } }
+  };
+}
+
+function homepageLanguageRedirect(request, host, uri) {
+  var homepagePaths = { '/': true, '/index.html': true, '/ja.html': true, '/hi.html': true, '/es.html': true, '/fr.html': true, '/zh-Hans.html': true };
+  if (!homepagePaths[uri]) return null;
+  var item = request.querystring && request.querystring.lang;
+  if (!item) return null;
+  var language = (item.value || '').toLowerCase();
+  var base = language.split('-')[0];
+  var locale = ['en', 'ja', 'hi', 'es', 'fr'].indexOf(base) >= 0 ? base : '';
+  if (['zh', 'zh-cn', 'zh-sg', 'zh-hans'].indexOf(language) >= 0) locale = 'zh-Hans';
+  if (!locale) return null;
+  var remaining = Object.create(null);
+  for (var key in request.querystring) {
+    if (Object.prototype.hasOwnProperty.call(request.querystring, key) && key !== 'lang') remaining[key] = request.querystring[key];
+  }
+  var path = locale === 'en' ? '/' : '/' + locale + '.html';
+  return {
+    statusCode: 301,
+    statusDescription: 'Moved Permanently',
+    headers: { location: { value: 'https://' + host + path + queryToString({ querystring: remaining }, {}) } }
   };
 }
 
@@ -115,6 +137,9 @@ function handler(event) {
   }
 
   var host = request.headers.host ? request.headers.host.value : '';
+  var languageRedirect = homepageLanguageRedirect(request, host, uri);
+  if (languageRedirect) return languageRedirect;
+
   var viewerRegionRedirect = maybeRedirectWithViewerRegion(request, host, uri);
   if (viewerRegionRedirect) return viewerRegionRedirect;
 
@@ -131,7 +156,7 @@ function handler(event) {
     return {
       statusCode: 301,
       statusDescription: 'Moved Permanently',
-      headers: { location: { value: 'https://' + host + '/' } }
+      headers: { location: { value: 'https://' + host + '/' + queryToString(request, {}) } }
     };
   }
 

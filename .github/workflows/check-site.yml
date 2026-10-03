@@ -1,0 +1,40 @@
+name: Check Static Site
+
+on:
+  pull_request:
+    paths:
+      - 'site/**'
+      - 'scripts/**'
+      - 'tests/**'
+      - 'infra/cloudfront-functions/**'
+      - 'infra/terraform/**'
+      - '.github/workflows/check-site.yml'
+      - '.github/workflows/deploy-site.yml'
+  push:
+    branches: [main, dev]
+    paths:
+      - 'site/**'
+      - 'scripts/**'
+      - 'tests/**'
+      - 'infra/cloudfront-functions/**'
+      - 'infra/terraform/**'
+      - '.github/workflows/check-site.yml'
+      - '.github/workflows/deploy-site.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check generated pages, SEO and routing
+        run: |
+          python3 scripts/build-localized-home.py --check
+          python3 scripts/check-home-seo.py
+          node --test tests/*.test.cjs
+          git diff --check

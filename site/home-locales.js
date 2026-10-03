@@ -1,5 +1,15 @@
 (() => {
   const es = Object.freeze({
+    "AI workflow automation, explained": "Automatización de tareas con agentes de IA",
+    "How does SIMY use AI agents to automate workflows?": "¿Cómo automatiza SIMY los flujos de trabajo con agentes de IA?",
+    "Describe the outcome in natural language. SIMY learns your working standards from the conversations you select, chooses a matching workflow, and uses Autorun to move the task forward. Reusable workflows connect your instructions, checks, and next steps.": "Describe el resultado en lenguaje natural. SIMY aprende tus criterios de trabajo de las conversaciones que seleccionas, elige el flujo adecuado y usa Autorun para avanzar. Los flujos reutilizables reúnen instrucciones, comprobaciones y próximos pasos.",
+    "What happens after a meeting or customer conversation?": "¿Qué sucede después de una reunión o conversación con un cliente?",
+    "With consent, SIMY carries meeting context and decisions into follow-up work. Connected apps supply the relevant messages, documents, and business information so you can prepare a customer response, a decision brief, or the next action in context.": "Con consentimiento, SIMY conserva el contexto y las decisiones de la reunión para darles seguimiento. Las aplicaciones conectadas aportan mensajes, documentos e información de negocio para preparar una respuesta al cliente, un informe para tomar decisiones o la siguiente acción.",
+    "How do I stay in control of automated work?": "¿Cómo mantengo el control del trabajo automatizado?",
+    "My Actions shows work in progress, completed work, and items waiting for your input. Review results and provide the decisions or information the work needs. What SIMY can read or do depends on the accounts and permissions you connect.": "My Actions muestra el trabajo en curso, el completado y lo que necesita tu intervención. Revisa los resultados y aporta las decisiones o la información necesarias. El acceso y las acciones de SIMY dependen de las cuentas y los permisos que conectes.",
+    "Explore workflows": "Explorar flujos de trabajo",
+    "See connected apps": "Ver aplicaciones conectadas",
+    "Compare plans": "Comparar planes",
     "Skip to content": "Saltar al contenido",
     "Your Digital Twin": "Tu gemelo digital",
     "Product": "Producto",
@@ -359,6 +369,16 @@
   });
 
   const fr = Object.freeze({
+    "AI workflow automation, explained": "Automatisez vos tâches avec des agents IA",
+    "How does SIMY use AI agents to automate workflows?": "Comment SIMY automatise-t-il les workflows avec des agents IA ?",
+    "Describe the outcome in natural language. SIMY learns your working standards from the conversations you select, chooses a matching workflow, and uses Autorun to move the task forward. Reusable workflows connect your instructions, checks, and next steps.": "Décrivez le résultat en langage naturel. SIMY apprend vos critères de travail à partir des conversations choisies, sélectionne le workflow adapté et le fait avancer avec Autorun. Les workflows réutilisables réunissent consignes, vérifications et prochaines étapes.",
+    "What happens after a meeting or customer conversation?": "Que se passe-t-il après une réunion ou un échange client ?",
+    "With consent, SIMY carries meeting context and decisions into follow-up work. Connected apps supply the relevant messages, documents, and business information so you can prepare a customer response, a decision brief, or the next action in context.": "Avec votre consentement, SIMY reprend le contexte et les décisions de la réunion pour préparer le suivi. Les applications connectées fournissent les messages, documents et informations utiles à une réponse client, une note de décision ou la prochaine action.",
+    "How do I stay in control of automated work?": "Comment garder le contrôle du travail automatisé ?",
+    "My Actions shows work in progress, completed work, and items waiting for your input. Review results and provide the decisions or information the work needs. What SIMY can read or do depends on the accounts and permissions you connect.": "My Actions affiche les tâches en cours, terminées et celles qui attendent votre intervention. Vérifiez les résultats et apportez les décisions ou informations nécessaires. Les accès et actions de SIMY dépendent des comptes et autorisations que vous connectez.",
+    "Explore workflows": "Découvrir les workflows",
+    "See connected apps": "Voir les applications connectées",
+    "Compare plans": "Comparer les offres",
     "Skip to content": "Aller au contenu",
     "Your Digital Twin": "Votre jumeau numérique",
     "Product": "Produit",
@@ -718,6 +738,16 @@
   });
 
   const hi = Object.freeze({
+    "AI workflow automation, explained": "AI एजेंट से वर्कफ़्लो ऑटोमेशन",
+    "How does SIMY use AI agents to automate workflows?": "SIMY, AI एजेंट से वर्कफ़्लो कैसे ऑटोमेट करता है?",
+    "Describe the outcome in natural language. SIMY learns your working standards from the conversations you select, chooses a matching workflow, and uses Autorun to move the task forward. Reusable workflows connect your instructions, checks, and next steps.": "अपनी सामान्य भाषा में बताएं कि आपको क्या परिणाम चाहिए। SIMY आपकी चुनी हुई बातचीत से काम के मानदंड सीखता है, सही वर्कफ़्लो चुनता है और Autorun से काम आगे बढ़ाता है। दोबारा इस्तेमाल होने वाले वर्कफ़्लो में निर्देश, जांच और अगले कदम जुड़े रहते हैं।",
+    "What happens after a meeting or customer conversation?": "मीटिंग या ग्राहक से बातचीत के बाद क्या होता है?",
+    "With consent, SIMY carries meeting context and decisions into follow-up work. Connected apps supply the relevant messages, documents, and business information so you can prepare a customer response, a decision brief, or the next action in context.": "सहमति मिलने पर SIMY मीटिंग का संदर्भ और फैसले आगे के काम से जोड़ता है। जुड़े हुए ऐप से संबंधित संदेश, दस्तावेज़ और व्यावसायिक जानकारी मिलती है, ताकि ग्राहक के लिए जवाब, निर्णय लेने के लिए संक्षिप्त विवरण या अगला कदम तैयार किया जा सके।",
+    "How do I stay in control of automated work?": "ऑटोमेट किए गए काम पर मेरा नियंत्रण कैसे रहता है?",
+    "My Actions shows work in progress, completed work, and items waiting for your input. Review results and provide the decisions or information the work needs. What SIMY can read or do depends on the accounts and permissions you connect.": "My Actions में चल रहा काम, पूरा हुआ काम और आपकी जानकारी की प्रतीक्षा कर रहे काम दिखते हैं। परिणाम देखें और ज़रूरी निर्णय या जानकारी दें। SIMY क्या पढ़ या कर सकता है, यह जुड़े हुए खातों और अनुमतियों पर निर्भर करता है।",
+    "Explore workflows": "वर्कफ़्लो देखें",
+    "See connected apps": "जुड़े हुए ऐप देखें",
+    "Compare plans": "प्लान की तुलना करें",
     "Skip to content": "मुख्य सामग्री पर जाएँ",
     "Your Digital Twin": "आपका डिजिटल ट्विन",
     "Product": "उत्पाद",
@@ -1077,6 +1107,16 @@
   });
 
   const zhHans = Object.freeze({
+    "AI workflow automation, explained": "了解 AI 智能体与工作流自动化",
+    "How does SIMY use AI agents to automate workflows?": "SIMY 如何通过 AI 智能体实现工作流自动化？",
+    "Describe the outcome in natural language. SIMY learns your working standards from the conversations you select, chooses a matching workflow, and uses Autorun to move the task forward. Reusable workflows connect your instructions, checks, and next steps.": "用自然语言描述你想要的结果。SIMY 从你选择的对话中学习工作标准，选择合适的工作流，再由 Autorun 推进任务。可重复使用的工作流将指令、检查事项和后续步骤串联起来。",
+    "What happens after a meeting or customer conversation?": "会议或客户对话结束后，SIMY 会做什么？",
+    "With consent, SIMY carries meeting context and decisions into follow-up work. Connected apps supply the relevant messages, documents, and business information so you can prepare a customer response, a decision brief, or the next action in context.": "征得同意后，SIMY 将会议背景和决定衔接到后续工作。已连接的应用提供相关消息、文档和业务信息，帮助你准备客户回复、决策简报或下一步行动。",
+    "How do I stay in control of automated work?": "如何掌握自动化工作的进展？",
+    "My Actions shows work in progress, completed work, and items waiting for your input. Review results and provide the decisions or information the work needs. What SIMY can read or do depends on the accounts and permissions you connect.": "My Actions 展示进行中、已完成和等待你提供信息的工作。你可以检查结果，补充所需的决定或信息。SIMY 能够读取的内容和执行的操作取决于你连接的账户及其权限。",
+    "Explore workflows": "了解工作流",
+    "See connected apps": "查看已连接的应用",
+    "Compare plans": "比较方案",
     "Skip to content": "跳到主要内容",
     "Your Digital Twin": "你的数字分身",
     "Product": "产品",
