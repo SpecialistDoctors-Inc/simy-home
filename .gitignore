@@ -18,3 +18,7 @@
 proof.json
 proof.json.diagnostics.json
 proof.json.signed.json
+
+# Python site-generation checks
+__pycache__/
+*.pyc

@@ -205,6 +205,9 @@ html[lang="zh-Hans"] .section-heading {
 }
 
 .nav-frame > .brand {
+  min-width: 0;
+  max-width: 100%;
+  padding-right: 0.75rem;
   padding-left: var(--section-x);
 }
 
@@ -231,6 +234,11 @@ html[lang="zh-Hans"] .section-heading {
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.02em;
+}
+
+.nav-frame .brand-tag {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .desktop-nav {
@@ -5965,6 +5973,31 @@ html[lang="zh-Hans"] .storage-dialog-header h2 {
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* FAQ rows share one parent width; longer translations wrap within it. */
+.seo-faq-list { margin-top: 2rem; border-top: 1px solid var(--line); }
+.seo-faq-list details { border-bottom: 1px solid var(--line); }
+.seo-faq-list summary { padding: 1.25rem 0; cursor: pointer; font-weight: 600; line-height: 1.5; overflow-wrap: anywhere; }
+.seo-faq-list p { padding: 0 0 1.5rem; color: var(--ink-soft); line-height: 1.7; }
+.seo-faq-links { display: flex; flex-wrap: wrap; gap: 1rem 1.5rem; margin-top: 1.5rem; }
+.seo-faq-links a { text-decoration: underline; text-underline-offset: 0.2em; }
+
+/* Translated headlines need room for accents and Devanagari vowel marks. */
+html:not([lang="en"]) .hero h1 {
+  max-width: 100%;
+  line-height: 1.12;
+  overflow-wrap: anywhere;
+}
+html[lang="hi"] .hero h1 {
+  font-size: clamp(2.75rem, 5vw, 5.5rem);
+  line-height: 1.3;
+  letter-spacing: 0;
+}
+html[lang="hi"] .section-heading,
+html[lang="hi"] .hero-lead {
+  line-height: 1.3;
+  letter-spacing: 0;
 }
 
 /* Field voices, founder note and tool entry */

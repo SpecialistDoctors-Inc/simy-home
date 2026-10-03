@@ -33,6 +33,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Set up Node for site checks
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Verify localized pages and site behavior
+        run: |
+          python3 scripts/build-localized-home.py --check
+          python3 scripts/check-home-seo.py
+          node --test tests/*.test.cjs
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -92,7 +103,6 @@ jobs:
 
       - name: Update CloudFront Function
         if: github.ref == 'refs/heads/main' || (github.event_name == 'workflow_dispatch' && inputs.environment == 'prod')
-        continue-on-error: true
         run: |
           FUNC_NAME="simy-site-prod-redirect"
           FUNC_CODE_FILE="infra/cloudfront-functions/redirect-prod.js"
