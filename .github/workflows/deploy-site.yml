@@ -101,6 +101,13 @@ jobs:
             --content-type "text/html; charset=utf-8" \
             --cache-control "public, max-age=300"
 
+      # Uploaded HTML and assets need fresh caches even if edge publishing fails.
+      - name: Invalidate CloudFront cache
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ secrets.SITE_CF_DISTRIBUTION_ID }} \
+            --paths "/*"
+
       - name: Update CloudFront Function
         if: github.ref == 'refs/heads/main' || (github.event_name == 'workflow_dispatch' && inputs.environment == 'prod')
         run: |
@@ -128,9 +135,3 @@ jobs:
             --if-match "$UPDATE_ETAG"
 
           echo "CloudFront Function '$FUNC_NAME' updated and published."
-
-      - name: Invalidate CloudFront cache
-        run: |
-          aws cloudfront create-invalidation \
-            --distribution-id ${{ secrets.SITE_CF_DISTRIBUTION_ID }} \
-            --paths "/*"
