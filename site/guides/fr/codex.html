@@ -25,7 +25,7 @@
 <meta property="og:image:alt" content="Embauchez Codex pour toute la journée. Guide OpenAI Codex | SIMY">
 <meta property="og:locale" content="fr_FR">
 <meta property="article:published_time" content="2026-10-01">
-<meta property="article:modified_time" content="2026-10-01">
+<meta property="article:modified_time" content="2026-10-03">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Embauchez Codex pour toute la journée. Ne demandez qu'une fois. | SIMY">
 <meta name="twitter:description" content="Accès, installation, tarifs, limites et comparatifs d'OpenAI Codex sur une page. SIMY capte le travail dans vos réunions et vos chats et le confie à Codex à chaque fois.">
@@ -772,11 +772,11 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
     {
       "@type": "Article",
       "@id": "https://simy.one/guides/fr/codex.html#article",
-      "headline": "Guide OpenAI Codex : utilisation, tarifs et limites, accès par application, CLI et mobile, et usage au-delà du code",
+      "headline": "OpenAI Codex : utilisation, tarifs et limites",
       "description": "Accès à OpenAI Codex (le Codex de ChatGPT), installation, possibilités, tarifs et limites, comparaison et usage combiné avec Claude Code, Cursor et Copilot, sécurité. Comment SIMY capte le travail dans les réunions et les chats et le confie à Codex à chaque fois.",
       "inLanguage": "fr",
       "datePublished": "2026-10-01",
-      "dateModified": "2026-10-01",
+      "dateModified": "2026-10-03",
       "mainEntityOfPage": "https://simy.one/guides/fr/codex.html",
       "image": {
         "@type": "ImageObject",
@@ -849,7 +849,7 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
           "name": "OpenAI Codex est-il gratuit ?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Codex n'est pas disponible avec l'offre ChatGPT gratuite. Il est inclus dans les offres Plus, Pro, Business, Enterprise et Edu, sans inscription supplémentaire. On peut aussi l'utiliser à l'usage avec une clé API (octobre 2026)."
+            "text": "Vérifié le 3 octobre 2026 : Free et Go donnent accès à GPT-6 Luna à vitesse Standard dans l’application de bureau, selon le déploiement. Les interfaces, modèles et limites diffèrent de Plus et des offres supérieures. L’usage par clé API est facturé séparément. Vérifiez séparément les conditions de connexion cloud de SIMY."
           }
         },
         {
@@ -857,7 +857,7 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
           "name": "Combien peut-on utiliser Codex avec ChatGPT Plus ?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Il y a un quota sur 5 heures et un quota hebdomadaire ; le reste s'affiche dans la jauge d'utilisation de l'application. Les modèles puissants et les longues tâches consomment plus vite, et Pro offre un quota plus large que Plus. Les limites exactes changent : vérifiez-les sur la page tarifaire officielle."
+            "text": "Plus et Business standard ont des quotas sur cinq heures ; des limites hebdomadaires peuvent aussi s’appliquer. Pro n’a actuellement pas de limite sur cinq heures. La consommation dépend du modèle et de la tâche : consultez le quota restant et les réinitialisations dans le tableau de bord d’utilisation."
           }
         },
         {
@@ -865,7 +865,7 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
           "name": "Quand l'utilisation de Codex est-elle réinitialisée ?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Le quota sur 5 heures se reconstitue 5 heures après la première utilisation, le quota hebdomadaire 7 jours après. La jauge d'utilisation de l'application affiche la prochaine réinitialisation."
+            "text": "Les réinitialisations dépendent de l’offre et du quota. Consultez le solde et les horaires dans le tableau de bord d’utilisation de Codex ou avec /status dans la CLI. Ne supposez pas que chaque quota repart à un délai fixe après la première utilisation."
           }
         },
         {
@@ -967,15 +967,11 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
           <li aria-current="page">Guide OpenAI Codex</li>
         </ol>
         <p class="eyebrow">Le guide pour les utilisateurs d'OpenAI Codex</p>
-        <h1 id="page-title">
-          <span class="line">Embauchez Codex</span>
-          <span class="line hl">pour toute la journée.</span>
-          <span class="line">Ne demandez qu'une fois.</span>
-        </h1>
+        <h1 id="page-title">OpenAI Codex : utilisation, tarifs et limites</h1>
         <p class="lead">Guide OpenAI Codex : application, CLI, mobile, installation, tarifs, limites, Claude Code. Ce que vous redemandez chaque jour, SIMY le capte.</p>
         <div class="cta-row">
           <a class="btn btn-primary" href="https://app.simy.one/signup?lang=fr&amp;locale=fr&amp;region=fr&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=codex_guide_fr&amp;utm_content=hero">Choisir une offre et commencer <span class="arrow" aria-hidden="true">↗</span></a>
-          <a class="btn btn-ghost" href="#connect">Voir comment connecter <span class="arrow" aria-hidden="true">↓</span></a>
+          <a class="btn btn-ghost" href="#reference">Lire le guide pratique <span class="arrow" aria-hidden="true">↓</span></a>
         </div>
         <ul class="hero-points">
           <li>Codex tourne sur votre compte ChatGPT</li>
@@ -1016,14 +1012,14 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
     <nav class="toc" aria-label="Sommaire">
       <p class="toc-title">Sommaire</p>
       <ol>
-        <li><a href="#scene"><span>01</span>Une journée avec Codex, ça vous parle ?</a></li>
-        <li><a href="#wish"><span>02</span>Ce que vous vouliez vraiment</a></li>
-        <li><a href="#gap"><span>03</span>Là où Codex s'arrête</a></li>
-        <li><a href="#connect"><span>04</span>SIMY fait le lien</a></li>
-        <li><a href="#sample"><span>05</span>Un rendez-vous, deux résultats</a></li>
-        <li><a href="#usecases"><span>06</span>Par fonction : ce que fait Codex</a></li>
-        <li><a href="#start"><span>07</span>Démarrer en 3 étapes</a></li>
-        <li><a href="#reference"><span>08</span>Accès, installation, tarifs, sécurité</a></li>
+        <li><a href="#reference"><span>01</span>Accès, installation, tarifs, sécurité</a></li>
+        <li><a href="#scene"><span>02</span>Une journée avec Codex, ça vous parle ?</a></li>
+        <li><a href="#wish"><span>03</span>Ce que vous vouliez vraiment</a></li>
+        <li><a href="#gap"><span>04</span>Là où Codex s'arrête</a></li>
+        <li><a href="#connect"><span>05</span>SIMY fait le lien</a></li>
+        <li><a href="#sample"><span>06</span>Un rendez-vous, deux résultats</a></li>
+        <li><a href="#usecases"><span>07</span>Par fonction : ce que fait Codex</a></li>
+        <li><a href="#start"><span>08</span>Démarrer en 3 étapes</a></li>
         <li><a href="#faq"><span>09</span>Questions fréquentes</a></li>
         <li><a href="#sources"><span>10</span>Sources</a></li>
       </ol>
@@ -1033,267 +1029,26 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
       <details class="toc-mobile">
         <summary>Sommaire</summary>
         <ol>
-          <li><a href="#scene">Une journée avec Codex, ça vous parle ?</a></li>
-          <li><a href="#wish">Ce que vous vouliez vraiment</a></li>
-          <li><a href="#gap">Là où Codex s'arrête</a></li>
-          <li><a href="#connect">SIMY fait le lien</a></li>
-          <li><a href="#sample">Un rendez-vous, deux résultats</a></li>
-          <li><a href="#usecases">Par fonction : ce que fait Codex</a></li>
-          <li><a href="#start">Démarrer en 3 étapes</a></li>
-          <li><a href="#reference">Accès, installation, tarifs, sécurité</a></li>
-          <li><a href="#faq">Questions fréquentes</a></li>
-          <li><a href="#sources">Sources</a></li>
-        </ol>
+        <li><a href="#reference">Accès, installation, tarifs, sécurité</a></li>
+        <li><a href="#scene">Une journée avec Codex, ça vous parle ?</a></li>
+        <li><a href="#wish">Ce que vous vouliez vraiment</a></li>
+        <li><a href="#gap">Là où Codex s'arrête</a></li>
+        <li><a href="#connect">SIMY fait le lien</a></li>
+        <li><a href="#sample">Un rendez-vous, deux résultats</a></li>
+        <li><a href="#usecases">Par fonction : ce que fait Codex</a></li>
+        <li><a href="#start">Démarrer en 3 étapes</a></li>
+        <li><a href="#faq">Questions fréquentes</a></li>
+        <li><a href="#sources">Sources</a></li>
+      </ol>
       </details>
 
-      <p class="byline"><span>Dernière mise à jour : <time datetime="2026-10-01">1er octobre 2026</time></span><span>Publié par SIMY (AwakApp Inc.)</span></p>
-
-      <!-- 01 -->
-      <section class="sec" id="scene" aria-labelledby="h-scene">
-        <span class="sec-label">01 / AFTER THE TASK</span>
-        <h2 id="h-scene">Une journée avec Codex, ça vous parle ?</h2>
-        <p class="intro">Recherche client, proposition, compte rendu, rapport au manager. Codex a tout fait. Et pourtant, voilà ce qui se passe en fin de journée.</p>
-        <div class="scenes">
-          <div class="scene pain">
-            <span class="mark" aria-hidden="true">1</span>
-            <span class="k">Le lendemain</span>
-            <b>Même consigne, encore</b>
-            <p>Recherche → support → CR → rapport : c'est fait. Mais demain, vous retaperez la même consigne.</p>
-          </div>
-          <div class="scene pain">
-            <span class="mark" aria-hidden="true">2</span>
-            <span class="k">À chaque demande</span>
-            <b>L'œil sur le quota</b>
-            <p>Il reste 84 %. Plus le modèle est fort, plus ça baisse vite : vous hésitez avant de demander.</p>
-          </div>
-          <div class="scene pain">
-            <span class="mark" aria-hidden="true">3</span>
-            <span class="k">Entre deux réunions</span>
-            <b>Vérifier si c'est fini</b>
-            <p>Vous ouvrez la liste des tâches. Ce qui attend votre décision est enfoui sous le chat.</p>
-          </div>
-        </div>
-        <p class="scene-foot">Codex boucle une tâche. <b>« Quoi demander ensuite » et « est-ce fini », c'est encore vous.</b></p>
-      </section>
-
-      <!-- 02 -->
-      <section class="sec" id="wish" aria-labelledby="h-wish">
-        <span class="sec-label">02 / WHAT YOU REALLY WANTED</span>
-        <h2 id="h-wish">Ce que vous vouliez vraiment, après le travail de Codex</h2>
-        <p class="intro">Le même Codex. La même offre ChatGPT. En fin de journée, voilà ce que vous auriez voulu trouver.</p>
-        <div class="scenes four">
-          <div class="scene wish">
-            <span class="mark" aria-hidden="true">✓</span>
-            <span class="k">Sans rien demander</span>
-            <b>Tout est prêt après la réunion</b>
-            <p>CR, rapport, fiche client. En sortant de la salle, les tâches sont déjà lancées.</p>
-          </div>
-          <div class="scene wish">
-            <span class="mark" aria-hidden="true">✓</span>
-            <span class="k">Sans écrire AGENTS.md</span>
-            <b>À votre façon</b>
-            <p>Structure des propositions, niveau de détail des rapports. Appris la première fois, repris ensuite.</p>
-          </div>
-          <div class="scene wish">
-            <span class="mark" aria-hidden="true">✓</span>
-            <span class="k">Le matin</span>
-            <b>Une suggestion</b>
-            <p>« Vous avez fait ceci 3 fois la semaine dernière. On l'automatise ? » SIMY le repère dans l'historique Codex.</p>
-          </div>
-          <div class="scene wish you">
-            <span class="mark" aria-hidden="true">!</span>
-            <span class="k">Ce qui vous revient</span>
-            <b>La décision</b>
-            <p>« Peut-on proposer à ce montant ? » Une seule question, à laquelle vous répondez depuis votre téléphone.</p>
-          </div>
-        </div>
-        <p class="scene-foot">C'est ce qui se passe <b>dès le lendemain de la connexion de votre compte ChatGPT à SIMY</b>.</p>
-      </section>
-
-      <!-- 03 -->
-      <section class="sec" id="gap" aria-labelledby="h-gap">
-        <span class="sec-label">03 / WHERE CODEX STOPS</span>
-        <h2 id="h-gap">Là où OpenAI Codex s'arrête</h2>
-        <p class="intro">Codex excelle à « boucler la tâche demandée ». Avant et après, personne ne prend le relais.</p>
-        <div class="tl-wrap" role="img" aria-label="Frise : demander, exécution par Codex et fin de tâche sont pris en charge par Codex ; trouver le travail suivant, redemander, suivre l'avancement et repérer les décisions en attente restent vides">
-          <div class="tl-row">
-            <span class="tl-who">Codex</span>
-            <ol class="tl">
-              <li class="on">Demander<small>vous tapez</small></li>
-              <li class="on">Codex exécute<small>dans un bac à sable</small></li>
-              <li class="on">Terminé<small>la tâche s'arrête là</small></li>
-              <li class="gap">Trouver la suite</li>
-              <li class="gap">Redemander</li>
-              <li class="gap">Suivre l'avancement</li>
-              <li class="gap">Décisions enfouies</li>
-            </ol>
-          </div>
-        </div>
-        <p class="caption">* Déroulé simplifié, à titre d'illustration</p>
-        <p class="tl-note"><b>Avec la planification ou AGENTS.md, ça s'arrête au même endroit.</b> On répète à heure fixe, on note sa méthode. Mais repérer le « travail né en réunion », c'est toujours vous, et vérifier si c'est fini aussi.</p>
-      </section>
-
-      <!-- 04 -->
-      <section class="sec" id="connect" aria-labelledby="h-connect">
-        <span class="sec-label">04 / CONNECT</span>
-        <h2 id="h-connect">SIMY fait le lien : c'est lui qui pilote Codex, sur votre compte ChatGPT</h2>
-        <p class="intro">SIMY remplit les quatre cases vides. Il décide quoi, quand et jusqu'où demander à Codex ; il ne vous reste qu'une case : la décision.</p>
-        <div class="tl-wrap" role="img" aria-label="Frise : demander, exécuter et terminer restent à Codex ; trouver le travail suivant, demander à votre façon et vérifier l'avancement sont pris en charge par SIMY ; seule la décision vous revient">
-          <div class="tl-row">
-            <span class="tl-who">Codex</span>
-            <ol class="tl">
-              <li class="on">Demander</li>
-              <li class="on">Exécuter</li>
-              <li class="on">Terminé</li>
-              <li class="blank"></li><li class="blank"></li><li class="blank"></li><li class="blank"></li>
-            </ol>
-          </div>
-          <div class="tl-row">
-            <span class="tl-who simy">SIMY</span>
-            <ol class="tl">
-              <li class="blank"></li><li class="blank"></li><li class="blank"></li>
-              <li class="run">Trouver la suite<small>réunions et chats</small></li>
-              <li class="run">Demander à Codex<small>à votre façon</small></li>
-              <li class="run">Vérifier la fin<small>sans aller voir</small></li>
-              <li class="you">Décision<small>depuis le téléphone</small></li>
-            </ol>
-          </div>
-        </div>
-        <p class="caption">* Déroulé simplifié, à titre d'illustration</p>
-        <ul class="three" aria-label="Les trois atouts de SIMY">
-          <li>Capte réunions et chats</li>
-          <li>À votre façon</li>
-          <li>Seule la décision revient</li>
-        </ul>
-        <p class="tl-note">SIMY ne remplace pas Codex : il le pilote, sur votre compte ChatGPT. Il repère le travail suivant dans Slack, Teams et vos réunions, apprend les vérifications et priorités qui font votre bon travail, et fait avancer Codex de la même façon.</p>
-
-        <div class="connect">
-          <ol class="connect-steps">
-            <li><b>Créez un compte SIMY et connectez votre compte ChatGPT</b><span>Il faut une offre Plus ou supérieure, qui inclut Codex. L'usage de Codex reste dans les limites de votre offre.</span></li>
-            <li class="key"><b>Installez l'application de bureau SIMY (ou la CLI)</b><span>Elle lit l'historique Codex de votre ordinateur (90 jours par défaut) et propose les tâches répétées comme « Suggestions de SIMY ». Le contenu n'est pas stocké sur nos serveurs. <a href="/download/fr.html">Télécharger</a></span></li>
-            <li><b>Renvoyez les décisions depuis l'app iOS</b><span>Une suggestion transformée en WorkFlow, et c'est SIMY qui demande à Codex. Les décisions en attente arrivent sur votre téléphone.</span></li>
-          </ol>
-          <div>
-            <div class="mock" role="img" aria-label="Illustration d'une carte « Suggestions de SIMY » : dans l'historique Codex, SIMY a repéré la proposition commerciale préparée après chaque rendez-vous et affiche un bouton pour en faire un WorkFlow">
-              <div class="mock-head" aria-hidden="true">
-                <span class="mock-mark">S</span>
-                <div>
-                  <div class="mock-title">Suggestions de SIMY <span class="mock-state">● 3 nouvelles</span></div>
-                  <p class="mock-desc">Tâches répétées repérées dans votre historique Codex</p>
-                </div>
-              </div>
-              <div class="mock-box" aria-hidden="true">« Proposition » après rendez-vous : 3 fois la semaine dernière, même structure</div>
-              <div class="mock-btn" aria-hidden="true">En faire un WorkFlow</div>
-              <div class="mock-foot" aria-hidden="true">Le contenu des conversations n'est pas stocké</div>
-            </div>
-            <p class="caption">* Illustration de l'écran SIMY</p>
-          </div>
-        </div>
-        <p class="note"><b>Ce qu'il faut :</b> un compte ChatGPT avec Codex (Plus ou supérieur). Aucun nouveau réglage ni clé API côté Codex.</p>
-      </section>
-
-      <!-- 05 -->
-      <section class="sec" id="sample" aria-labelledby="h-sample">
-        <span class="sec-label">05 / SAMPLE</span>
-        <h2 id="h-sample">Un rendez-vous, deux résultats : la tâche de Codex et le lendemain préparé par SIMY</h2>
-        <p class="intro">Exemple : un commercial demande « Proposition client A » dans l'application de bureau Codex. À gauche Codex, à droite SIMY.</p>
-        <div class="sample">
-          <div class="sheet">
-            <div class="sheet-label"><span>Tâche Codex (exemple)</span><span>Terminée</span></div>
-            <dl>
-              <dt>Demande</dt>
-              <dd>Rechercher l'activité et l'actualité du client A, puis faire une proposition dans Slides avec nos références.</dd>
-              <dt>Résultat</dt>
-              <dd>12 slides : présentation, hypothèses de besoins, bénéfices, 3 options tarifaires, prochaines étapes.</dd>
-              <dt>Outils</dt>
-              <dd>Recherche dans Chrome, dossier de références Drive, plugin Slides.</dd>
-              <dt>Reste à faire</dt>
-              <dd>Redemander pour le client B demain et le client C la semaine prochaine. Demander soi-même CR et rapport.</dd>
-            </dl>
-          </div>
-          <div class="outs">
-            <div class="out">
-              <div class="out-head"><b>Proposition client B</b><span class="pill ok">Brouillon prêt</span></div>
-              <p>SIMY a repéré le rendez-vous de demain dans l'agenda et l'a confié à Codex, avec la structure du client A. Références adaptées au secteur du client B.</p>
-            </div>
-            <div class="out">
-              <div class="out-head"><b>CR et rapport au manager</b><span class="pill run">Autorun</span></div>
-              <p>Dix minutes après le rendez-vous A, le CR au niveau de détail habituel. Le rapport attend en brouillon Slack et n'est publié qu'après accord.</p>
-            </div>
-            <div class="out">
-              <div class="out-head"><b>Fiche client</b><span class="pill">Ensuite</span></div>
-              <p>Étape : test dans 3 services. Réserve : intégration au CRM existant. Décision avant la fin de l'exercice, la DSI viendra la prochaine fois.</p>
-            </div>
-            <div class="out you">
-              <div class="out-head"><b>Votre validation</b><span class="pill you">À vous</span></div>
-              <p>Laquelle des 3 options tarifaires proposer au client B. Seul ce qui demande une décision revient sur votre téléphone.</p>
-            </div>
-          </div>
-        </div>
-        <p class="sample-foot">Codex produit, SIMY demande et vérifie. La relation client, elle, reste votre savoir-faire.</p>
-      </section>
-
-      <!-- 06 -->
-      <section class="sec" id="usecases" aria-labelledby="h-usecases">
-        <span class="sec-label">06 / BY ROLE</span>
-        <h2 id="h-usecases">Par fonction : ce que fait Codex, ce que SIMY capte</h2>
-        <p class="intro">Même sans écrire de code, OpenAI Codex peut exécuter. Voici ce que SIMY capte et ce qu'il confie à Codex.</p>
-        <div class="ind">
-          <div class="ind-card">
-            <h3>Commercial <small>Chrome, Slides, brouillons Gmail</small></h3>
-            <ul class="ind-rows">
-              <li><span>CRM en double saisie</span><span>→</span><span>La réunion devient fiche CRM</span></li>
-              <li><span>Retoucher le prompt</span><span>→</span><span>Un suivi par destinataire</span></li>
-              <li><span>Préparation manuelle</span><span>→</span><span>Enjeux et supports prêts</span></li>
-            </ul>
-          </div>
-          <div class="ind-card">
-            <h3>Direction, managers <small>Slack, Sheets, Notion</small></h3>
-            <ul class="ind-rows">
-              <li><span>« Où en est-on ? »</span><span>→</span><span>Seules les décisions remontent</span></li>
-              <li><span>Compiler les rapports</span><span>→</span><span>Un hebdo tiré des décisions</span></li>
-              <li><span>Recopier les chiffres</span><span>→</span><span>Sheets à jour et écarts expliqués</span></li>
-            </ul>
-          </div>
-          <div class="ind-card">
-            <h3>Fonctions support, projets <small>Drive, Sheets, Agenda</small></h3>
-            <ul class="ind-rows">
-              <li><span>Demandes perdues en chat</span><span>→</span><span>Captées et avancées en brouillon</span></li>
-              <li><span>Refaire le support du point</span><span>→</span><span>Même modèle, données à jour</span></li>
-              <li><span>Allers-retours d'agenda</span><span>→</span><span>Créneaux et invitation prêts</span></li>
-            </ul>
-          </div>
-          <div class="ind-card">
-            <h3>Développeurs <small>CLI, VS Code, avec Claude Code</small></h3>
-            <ul class="ind-rows">
-              <li><span>Redemander les correctifs</span><span>→</span><span>Les décisions deviennent tâches Codex</span></li>
-              <li><span>On demande l'avancement</span><span>→</span><span>État des PR, décisions seules</span></li>
-              <li><span>Quota Codex épuisé</span><span>→</span><span>Claude Code prend le relais</span></li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <!-- 07 -->
-      <section class="sec" id="start" aria-labelledby="h-start">
-        <span class="sec-label">07 / START</span>
-        <h2 id="h-start">Démarrer : après un premier essai de Codex, 3 étapes</h2>
-        <ol class="steps3">
-          <li><b>Confiez une tâche à l'application de bureau Codex</b><span>Connectez-vous avec votre compte ChatGPT et demandez simplement : recherche client, proposition ou compte rendu. <a href="/download/fr.html">Télécharger</a></span></li>
-          <li class="key"><b>Connectez votre compte ChatGPT à SIMY</b><span>Rien ne change côté Codex. <a href="#connect">La connexion</a> est décrite plus haut.</span></li>
-          <li><b>Le lendemain, ouvrez les « Suggestions de SIMY »</b><span>Vos tâches répétées arrivent comme propositions. Faites-en un WorkFlow, renvoyez les décisions. C'est tout.</span></li>
-        </ol>
-        <p class="note"><b>Inscription :</b> choix de l'offre → vérification de l'e-mail → paiement par carte. Il n'y a pas d'offre gratuite. <a href="/fr.html#pricing">Voir les tarifs</a>. L'application pour ordinateur est sur la <a href="/download/fr.html">page de téléchargement</a>.</p>
-        <p class="note"><b>Vous utilisez déjà Codex ?</b> Seule l'étape 2 compte. Connectez-vous et installez l'application de bureau SIMY : les suggestions partent de votre historique.</p>
-      </section>
-
-      <!-- 08 -->
+      <p class="byline"><span>Dernière mise à jour : <time datetime="2026-10-03">3 octobre 2026</time></span><span>Publié par SIMY (AwakApp Inc.)</span></p>
       <section class="sec" id="reference" aria-labelledby="h-reference">
-        <span class="sec-label">08 / REFERENCE</span>
+        <span class="sec-label">01 / REFERENCE</span>
         <h2 id="h-reference">OpenAI Codex en détail : installation, tarifs, limites, comparatifs, sécurité</h2>
         <p class="intro">Ouvrez cette partie pour en savoir plus sur Codex lui-même. Rien ici ne change la connexion avec SIMY.</p>
 
-        <details class="fold">
+        <details class="fold" open>
           <summary>OpenAI Codex, c'est quoi : différences avec ChatGPT et avec l'ancien Codex<small>un agent inclus dans les offres ChatGPT</small></summary>
           <div class="fold-body">
             <h3>Ce qu'est Codex</h3>
@@ -1390,7 +1145,7 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
         </details>
 
         <details class="fold">
-          <summary>Tarifs et limites : à partir de Plus, jauge d'utilisation, réinitialisation<small>plus le modèle est fort, plus il consomme ; limites exactes sur la page officielle</small></summary>
+          <summary>Tarifs et limites : Free, Go, offres payantes et réinitialisations<small>plus le modèle est fort, plus il consomme ; limites exactes sur la page officielle</small></summary>
           <div class="fold-body">
             <p class="scroll-hint">Faites défiler le tableau horizontalement →</p>
             <div class="table-wrap">
@@ -1399,8 +1154,8 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
                   <tr><th scope="col">Offre ChatGPT</th><th scope="col">Codex</th><th scope="col">Quota (ordre de grandeur)</th><th scope="col">Connexion à SIMY</th></tr>
                 </thead>
                 <tbody>
-                  <tr><th scope="row">Free, Go</th><td>Non inclus</td><td>—</td><td>Non éligible</td></tr>
-                  <tr><th scope="row">Plus (20 $ US par mois, HT, octobre 2026)</th><td>Inclus</td><td>Quelques tâches par jour pour une personne</td><td>Compatible</td></tr>
+                  <tr><th scope="row">Free, Go</th><td>Déploiement progressif</td><td>Bureau / GPT-6 Luna / vitesse Standard</td><td>Non compatible avec la connexion SIMY</td></tr>
+                  <tr><th scope="row">Plus (20 $ US par mois, HT, octobre 2026)</th><td>Inclus</td><td>Selon le modèle, la tâche et le quota</td><td>Compatible</td></tr>
                   <tr><th scope="row">Pro</th><td>Inclus</td><td>Plus large que Plus. Pour les longues tâches</td><td>Compatible</td></tr>
                   <tr><th scope="row">Business, Enterprise, Edu</th><td>Inclus</td><td>Réglé par l'administrateur. Crédits supplémentaires possibles</td><td>Compatible</td></tr>
                 </tbody>
@@ -1408,14 +1163,14 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
             </div>
             <h3>Comment fonctionnent les limites</h3>
             <ul class="plain-list">
-              <li><strong>Un quota sur 5 heures et un quota hebdomadaire :</strong> tous deux se reconstituent à partir de la première utilisation. La <strong>jauge d'utilisation</strong> de l'application affiche le reste et la prochaine réinitialisation.</li>
+              <li>Plus et Business standard ont des quotas sur cinq heures ; des limites hebdomadaires peuvent aussi s’appliquer. Pro n’a actuellement pas de limite sur cinq heures. La consommation dépend du modèle et de la tâche : consultez le quota restant et les réinitialisations dans le tableau de bord d’utilisation.</li>
               <li><strong>La consommation dépend du modèle et de la tâche :</strong> modèles puissants, longues conversations et gros fichiers consomment plus vite. Le modèle standard suffit souvent ; réservez le modèle supérieur aux recherches difficiles.</li>
               <li><strong>Quota épuisé :</strong> attendre la réinitialisation, passer à Pro, basculer sur une clé API à l'usage, ou utiliser un autre exécutant comme Claude Code.</li>
               <li><strong>Où suivre l'usage :</strong> la jauge dans l'application de bureau et la CLI, et l'usage par offre dans les paramètres ChatGPT.</li>
             </ul>
             <h3>Faire durer son quota</h3>
             <p>Indiquer en une consigne où sont les matériaux et la forme attendue, découper les longues conversations en nouveaux fils, séparer recherche et production. Ces trois gestes réduisent nettement la consommation. Le modèle, c'est le talent du peintre ; le niveau de raisonnement, le temps passé sur la toile. Si le quota vous inquiète, baissez le niveau de raisonnement. Quand SIMY sollicite Codex, il transmet le modèle appris tel quel : moins de reprises, moins de consommation.</p>
-            <p class="small muted">Offres et prix vérifiés sur les informations officielles d'OpenAI le 1er octobre 2026. Les limites chiffrées changent et ne figurent donc pas ici. Vérifiez le prix applicable dans votre pays sur la <a href="https://chatgpt.com/pricing/" target="_blank" rel="noopener">page tarifaire de ChatGPT</a>.</p>
+            <p class="small muted">Offres et prix vérifiés sur les informations officielles d'OpenAI le 3 octobre 2026. Les limites chiffrées changent et ne figurent donc pas ici. Vérifiez le prix applicable dans votre pays sur la <a href="https://developers.openai.com/codex/pricing" target="_blank" rel="noopener">page tarifaire de ChatGPT</a>.</p>
             <p class="note"><b>Avec SIMY :</b> l'usage de Codex reste dans les limites de votre offre ChatGPT. SIMY n'ajoute aucun frais d'utilisation de Codex. Les tarifs de SIMY sont sur la <a href="/fr.html#pricing">page des tarifs</a>.</p>
           </div>
         </details>
@@ -1431,7 +1186,7 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
                 </thead>
                 <tbody>
                   <tr><th scope="row">Éditeur</th><td>OpenAI</td><td>Anthropic</td><td>Anysphere</td><td>GitHub (Microsoft)</td><td class="simy">AwakApp</td></tr>
-                  <tr><th scope="row">Offre requise</th><td>ChatGPT Plus ou plus</td><td>Claude Pro ou plus</td><td>Offre Cursor payante</td><td>Offre Copilot payante</td><td class="simy">Votre offre ChatGPT + SIMY</td></tr>
+                  <tr><th scope="row">Offre requise</th><td>Selon l’offre et l’interface</td><td>Claude Pro ou plus</td><td>Offre Cursor payante</td><td>Offre Copilot payante</td><td class="simy">Votre offre ChatGPT + SIMY</td></tr>
                   <tr><th scope="row">Accès principaux</th><td>Bureau, CLI, IDE, Cloud</td><td>CLI, IDE, bureau (Cowork)</td><td>Éditeur</td><td>Éditeur, GitHub</td><td class="simy">Web, application de bureau, iOS</td></tr>
                   <tr><th scope="row">Travail sans code</th><td>Documents, e-mails, recherche via plugins</td><td>Documents et recherche avec Cowork</td><td>Centré éditeur</td><td>Centré développement</td><td class="simy">Tout le travail né des réunions et chats</td></tr>
                   <tr><th scope="row">Point de départ</th><td>Votre demande / une heure</td><td>Votre demande / une heure</td><td>Votre demande</td><td>Votre demande</td><td class="simy">Capté dans réunions et chats</td></tr>
@@ -1459,23 +1214,246 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
           </div>
         </details>
       </section>
+      <section class="sec" id="scene" aria-labelledby="h-scene">
+        <span class="sec-label">02 / AFTER THE TASK</span>
+        <h2 id="h-scene">Une journée avec Codex, ça vous parle ?</h2>
+        <p class="intro">Recherche client, proposition, compte rendu, rapport au manager. Codex a tout fait. Et pourtant, voilà ce qui se passe en fin de journée.</p>
+        <div class="scenes">
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">1</span>
+            <span class="k">Le lendemain</span>
+            <b>Même consigne, encore</b>
+            <p>Recherche → support → CR → rapport : c'est fait. Mais demain, vous retaperez la même consigne.</p>
+          </div>
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">2</span>
+            <span class="k">À chaque demande</span>
+            <b>L'œil sur le quota</b>
+            <p>Il reste 84 %. Plus le modèle est fort, plus ça baisse vite : vous hésitez avant de demander.</p>
+          </div>
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">3</span>
+            <span class="k">Entre deux réunions</span>
+            <b>Vérifier si c'est fini</b>
+            <p>Vous ouvrez la liste des tâches. Ce qui attend votre décision est enfoui sous le chat.</p>
+          </div>
+        </div>
+        <p class="scene-foot">Codex boucle une tâche. <b>« Quoi demander ensuite » et « est-ce fini », c'est encore vous.</b></p>
+      </section>
+      <section class="sec" id="wish" aria-labelledby="h-wish">
+        <span class="sec-label">03 / WHAT YOU REALLY WANTED</span>
+        <h2 id="h-wish">Ce que vous vouliez vraiment, après le travail de Codex</h2>
+        <p class="intro">Le même Codex. La même offre ChatGPT. En fin de journée, voilà ce que vous auriez voulu trouver.</p>
+        <div class="scenes four">
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">Sans rien demander</span>
+            <b>Tout est prêt après la réunion</b>
+            <p>CR, rapport, fiche client. En sortant de la salle, les tâches sont déjà lancées.</p>
+          </div>
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">Sans écrire AGENTS.md</span>
+            <b>À votre façon</b>
+            <p>Structure des propositions, niveau de détail des rapports. Appris la première fois, repris ensuite.</p>
+          </div>
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">Le matin</span>
+            <b>Une suggestion</b>
+            <p>« Vous avez fait ceci 3 fois la semaine dernière. On l'automatise ? » SIMY le repère dans l'historique Codex.</p>
+          </div>
+          <div class="scene wish you">
+            <span class="mark" aria-hidden="true">!</span>
+            <span class="k">Ce qui vous revient</span>
+            <b>La décision</b>
+            <p>« Peut-on proposer à ce montant ? » Une seule question, à laquelle vous répondez depuis votre téléphone.</p>
+          </div>
+        </div>
+        <p class="scene-foot">C'est ce qui se passe <b>dès le lendemain de la connexion de votre compte ChatGPT à SIMY</b>.</p>
+      </section>
+      <section class="sec" id="gap" aria-labelledby="h-gap">
+        <span class="sec-label">04 / WHERE CODEX STOPS</span>
+        <h2 id="h-gap">Là où OpenAI Codex s'arrête</h2>
+        <p class="intro">Codex excelle à « boucler la tâche demandée ». Avant et après, personne ne prend le relais.</p>
+        <div class="tl-wrap" role="img" aria-label="Frise : demander, exécution par Codex et fin de tâche sont pris en charge par Codex ; trouver le travail suivant, redemander, suivre l'avancement et repérer les décisions en attente restent vides">
+          <div class="tl-row">
+            <span class="tl-who">Codex</span>
+            <ol class="tl">
+              <li class="on">Demander<small>vous tapez</small></li>
+              <li class="on">Codex exécute<small>dans un bac à sable</small></li>
+              <li class="on">Terminé<small>la tâche s'arrête là</small></li>
+              <li class="gap">Trouver la suite</li>
+              <li class="gap">Redemander</li>
+              <li class="gap">Suivre l'avancement</li>
+              <li class="gap">Décisions enfouies</li>
+            </ol>
+          </div>
+        </div>
+        <p class="caption">* Déroulé simplifié, à titre d'illustration</p>
+        <p class="tl-note"><b>Avec la planification ou AGENTS.md, ça s'arrête au même endroit.</b> On répète à heure fixe, on note sa méthode. Mais repérer le « travail né en réunion », c'est toujours vous, et vérifier si c'est fini aussi.</p>
+      </section>
+      <section class="sec" id="connect" aria-labelledby="h-connect">
+        <span class="sec-label">05 / CONNECT</span>
+        <h2 id="h-connect">SIMY fait le lien : c'est lui qui pilote Codex, sur votre compte ChatGPT</h2>
+        <p class="intro">SIMY remplit les quatre cases vides. Il décide quoi, quand et jusqu'où demander à Codex ; il ne vous reste qu'une case : la décision.</p>
+        <div class="tl-wrap" role="img" aria-label="Frise : demander, exécuter et terminer restent à Codex ; trouver le travail suivant, demander à votre façon et vérifier l'avancement sont pris en charge par SIMY ; seule la décision vous revient">
+          <div class="tl-row">
+            <span class="tl-who">Codex</span>
+            <ol class="tl">
+              <li class="on">Demander</li>
+              <li class="on">Exécuter</li>
+              <li class="on">Terminé</li>
+              <li class="blank"></li><li class="blank"></li><li class="blank"></li><li class="blank"></li>
+            </ol>
+          </div>
+          <div class="tl-row">
+            <span class="tl-who simy">SIMY</span>
+            <ol class="tl">
+              <li class="blank"></li><li class="blank"></li><li class="blank"></li>
+              <li class="run">Trouver la suite<small>réunions et chats</small></li>
+              <li class="run">Demander à Codex<small>à votre façon</small></li>
+              <li class="run">Vérifier la fin<small>sans aller voir</small></li>
+              <li class="you">Décision<small>depuis le téléphone</small></li>
+            </ol>
+          </div>
+        </div>
+        <p class="caption">* Déroulé simplifié, à titre d'illustration</p>
+        <ul class="three" aria-label="Les trois atouts de SIMY">
+          <li>Capte réunions et chats</li>
+          <li>À votre façon</li>
+          <li>Seule la décision revient</li>
+        </ul>
+        <p class="tl-note">SIMY ne remplace pas Codex : il le pilote, sur votre compte ChatGPT. Il repère le travail suivant dans Slack, Teams et vos réunions, apprend les vérifications et priorités qui font votre bon travail, et fait avancer Codex de la même façon.</p>
 
-      <!-- 09 -->
+        <div class="connect">
+          <ol class="connect-steps">
+            <li><b>Créez un compte SIMY et connectez votre compte ChatGPT</b><span>Il faut une offre Plus ou supérieure, qui inclut Codex. L'usage de Codex reste dans les limites de votre offre.</span></li>
+            <li class="key"><b>Installez l'application de bureau SIMY (ou la CLI)</b><span>Elle lit l'historique Codex de votre ordinateur (90 jours par défaut) et propose les tâches répétées comme « Suggestions de SIMY ». Le contenu n'est pas stocké sur nos serveurs. <a href="/download/fr.html">Télécharger</a></span></li>
+            <li><b>Renvoyez les décisions depuis l'app iOS</b><span>Une suggestion transformée en WorkFlow, et c'est SIMY qui demande à Codex. Les décisions en attente arrivent sur votre téléphone.</span></li>
+          </ol>
+          <div>
+            <div class="mock" role="img" aria-label="Illustration d'une carte « Suggestions de SIMY » : dans l'historique Codex, SIMY a repéré la proposition commerciale préparée après chaque rendez-vous et affiche un bouton pour en faire un WorkFlow">
+              <div class="mock-head" aria-hidden="true">
+                <span class="mock-mark">S</span>
+                <div>
+                  <div class="mock-title">Suggestions de SIMY <span class="mock-state">● 3 nouvelles</span></div>
+                  <p class="mock-desc">Tâches répétées repérées dans votre historique Codex</p>
+                </div>
+              </div>
+              <div class="mock-box" aria-hidden="true">« Proposition » après rendez-vous : 3 fois la semaine dernière, même structure</div>
+              <div class="mock-btn" aria-hidden="true">En faire un WorkFlow</div>
+              <div class="mock-foot" aria-hidden="true">Le contenu des conversations n'est pas stocké</div>
+            </div>
+            <p class="caption">* Illustration de l'écran SIMY</p>
+          </div>
+        </div>
+        <p class="note"><b>Ce qu'il faut :</b> un compte ChatGPT avec Codex (Plus ou supérieur). Aucun nouveau réglage ni clé API côté Codex.</p>
+      </section>
+      <section class="sec" id="sample" aria-labelledby="h-sample">
+        <span class="sec-label">06 / SAMPLE</span>
+        <h2 id="h-sample">Un rendez-vous, deux résultats : la tâche de Codex et le lendemain préparé par SIMY</h2>
+        <p class="intro">Exemple : un commercial demande « Proposition client A » dans l'application de bureau Codex. À gauche Codex, à droite SIMY.</p>
+        <div class="sample">
+          <div class="sheet">
+            <div class="sheet-label"><span>Tâche Codex (exemple)</span><span>Terminée</span></div>
+            <dl>
+              <dt>Demande</dt>
+              <dd>Rechercher l'activité et l'actualité du client A, puis faire une proposition dans Slides avec nos références.</dd>
+              <dt>Résultat</dt>
+              <dd>12 slides : présentation, hypothèses de besoins, bénéfices, 3 options tarifaires, prochaines étapes.</dd>
+              <dt>Outils</dt>
+              <dd>Recherche dans Chrome, dossier de références Drive, plugin Slides.</dd>
+              <dt>Reste à faire</dt>
+              <dd>Redemander pour le client B demain et le client C la semaine prochaine. Demander soi-même CR et rapport.</dd>
+            </dl>
+          </div>
+          <div class="outs">
+            <div class="out">
+              <div class="out-head"><b>Proposition client B</b><span class="pill ok">Brouillon prêt</span></div>
+              <p>SIMY a repéré le rendez-vous de demain dans l'agenda et l'a confié à Codex, avec la structure du client A. Références adaptées au secteur du client B.</p>
+            </div>
+            <div class="out">
+              <div class="out-head"><b>CR et rapport au manager</b><span class="pill run">Autorun</span></div>
+              <p>Dix minutes après le rendez-vous A, le CR au niveau de détail habituel. Le rapport attend en brouillon Slack et n'est publié qu'après accord.</p>
+            </div>
+            <div class="out">
+              <div class="out-head"><b>Fiche client</b><span class="pill">Ensuite</span></div>
+              <p>Étape : test dans 3 services. Réserve : intégration au CRM existant. Décision avant la fin de l'exercice, la DSI viendra la prochaine fois.</p>
+            </div>
+            <div class="out you">
+              <div class="out-head"><b>Votre validation</b><span class="pill you">À vous</span></div>
+              <p>Laquelle des 3 options tarifaires proposer au client B. Seul ce qui demande une décision revient sur votre téléphone.</p>
+            </div>
+          </div>
+        </div>
+        <p class="sample-foot">Codex produit, SIMY demande et vérifie. La relation client, elle, reste votre savoir-faire.</p>
+      </section>
+      <section class="sec" id="usecases" aria-labelledby="h-usecases">
+        <span class="sec-label">07 / BY ROLE</span>
+        <h2 id="h-usecases">Par fonction : ce que fait Codex, ce que SIMY capte</h2>
+        <p class="intro">Même sans écrire de code, OpenAI Codex peut exécuter. Voici ce que SIMY capte et ce qu'il confie à Codex.</p>
+        <div class="ind">
+          <div class="ind-card">
+            <h3>Commercial <small>Chrome, Slides, brouillons Gmail</small></h3>
+            <ul class="ind-rows">
+              <li><span>CRM en double saisie</span><span>→</span><span>La réunion devient fiche CRM</span></li>
+              <li><span>Retoucher le prompt</span><span>→</span><span>Un suivi par destinataire</span></li>
+              <li><span>Préparation manuelle</span><span>→</span><span>Enjeux et supports prêts</span></li>
+            </ul>
+          </div>
+          <div class="ind-card">
+            <h3>Direction, managers <small>Slack, Sheets, Notion</small></h3>
+            <ul class="ind-rows">
+              <li><span>« Où en est-on ? »</span><span>→</span><span>Seules les décisions remontent</span></li>
+              <li><span>Compiler les rapports</span><span>→</span><span>Un hebdo tiré des décisions</span></li>
+              <li><span>Recopier les chiffres</span><span>→</span><span>Sheets à jour et écarts expliqués</span></li>
+            </ul>
+          </div>
+          <div class="ind-card">
+            <h3>Fonctions support, projets <small>Drive, Sheets, Agenda</small></h3>
+            <ul class="ind-rows">
+              <li><span>Demandes perdues en chat</span><span>→</span><span>Captées et avancées en brouillon</span></li>
+              <li><span>Refaire le support du point</span><span>→</span><span>Même modèle, données à jour</span></li>
+              <li><span>Allers-retours d'agenda</span><span>→</span><span>Créneaux et invitation prêts</span></li>
+            </ul>
+          </div>
+          <div class="ind-card">
+            <h3>Développeurs <small>CLI, VS Code, avec Claude Code</small></h3>
+            <ul class="ind-rows">
+              <li><span>Redemander les correctifs</span><span>→</span><span>Les décisions deviennent tâches Codex</span></li>
+              <li><span>On demande l'avancement</span><span>→</span><span>État des PR, décisions seules</span></li>
+              <li><span>Quota Codex épuisé</span><span>→</span><span>Claude Code prend le relais</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+      <section class="sec" id="start" aria-labelledby="h-start">
+        <span class="sec-label">08 / START</span>
+        <h2 id="h-start">Démarrer : après un premier essai de Codex, 3 étapes</h2>
+        <ol class="steps3">
+          <li><b>Confiez une tâche à l'application de bureau Codex</b><span>Connectez-vous avec votre compte ChatGPT et demandez simplement : recherche client, proposition ou compte rendu. <a href="/download/fr.html">Télécharger</a></span></li>
+          <li class="key"><b>Connectez votre compte ChatGPT à SIMY</b><span>Rien ne change côté Codex. <a href="#connect">La connexion</a> est décrite plus haut.</span></li>
+          <li><b>Le lendemain, ouvrez les « Suggestions de SIMY »</b><span>Vos tâches répétées arrivent comme propositions. Faites-en un WorkFlow, renvoyez les décisions. C'est tout.</span></li>
+        </ol>
+        <p class="note"><b>Inscription :</b> choix de l'offre → vérification de l'e-mail → paiement par carte. Il n'y a pas d'offre gratuite. <a href="/fr.html#pricing">Voir les tarifs</a>. L'application pour ordinateur est sur la <a href="/download/fr.html">page de téléchargement</a>.</p>
+        <p class="note"><b>Vous utilisez déjà Codex ?</b> Seule l'étape 2 compte. Connectez-vous et installez l'application de bureau SIMY : les suggestions partent de votre historique.</p>
+      </section>
       <section class="sec" id="faq" aria-labelledby="h-faq">
         <span class="sec-label">09 / FAQ</span>
         <h2 id="h-faq">Questions fréquentes</h2>
         <div class="faq">
           <details>
             <summary>OpenAI Codex est-il gratuit ?</summary>
-            <div class="a"><p>Codex n'est pas disponible avec l'offre ChatGPT gratuite. Il est inclus dans les offres Plus, Pro, Business, Enterprise et Edu, sans inscription supplémentaire. On peut aussi l'utiliser à l'usage avec une clé API (octobre 2026).</p></div>
+            <div class="a"><p>Vérifié le 3 octobre 2026 : Free et Go donnent accès à GPT-6 Luna à vitesse Standard dans l’application de bureau, selon le déploiement. Les interfaces, modèles et limites diffèrent de Plus et des offres supérieures. L’usage par clé API est facturé séparément. Vérifiez séparément les conditions de connexion cloud de SIMY.</p></div>
           </details>
           <details>
             <summary>Combien peut-on utiliser Codex avec ChatGPT Plus ?</summary>
-            <div class="a"><p>Il y a un quota sur 5 heures et un quota hebdomadaire ; le reste s'affiche dans la jauge d'utilisation de l'application. Les modèles puissants et les longues tâches consomment plus vite, et Pro offre un quota plus large que Plus. Les limites exactes changent : vérifiez-les sur la page tarifaire officielle.</p></div>
+            <div class="a"><p>Plus et Business standard ont des quotas sur cinq heures ; des limites hebdomadaires peuvent aussi s’appliquer. Pro n’a actuellement pas de limite sur cinq heures. La consommation dépend du modèle et de la tâche : consultez le quota restant et les réinitialisations dans le tableau de bord d’utilisation.</p></div>
           </details>
           <details>
             <summary>Quand l'utilisation de Codex est-elle réinitialisée ?</summary>
-            <div class="a"><p>Le quota sur 5 heures se reconstitue 5 heures après la première utilisation, le quota hebdomadaire 7 jours après. La jauge d'utilisation de l'application affiche la prochaine réinitialisation.</p></div>
+            <div class="a"><p>Les réinitialisations dépendent de l’offre et du quota. Consultez le solde et les horaires dans le tableau de bord d’utilisation de Codex ou avec /status dans la CLI. Ne supposez pas que chaque quota repart à un délai fixe après la première utilisation.</p></div>
           </details>
           <details>
             <summary>Claude Code ou Codex : lequel choisir ?</summary>
@@ -1511,12 +1489,10 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
           </details>
         </div>
       </section>
-
-      <!-- 10 -->
       <section class="sec" id="sources" aria-labelledby="h-sources">
         <span class="sec-label">10 / SOURCES</span>
         <h2 id="h-sources">Sources</h2>
-        <p>Fonctions, accès, offres, limites et sécurité d'OpenAI Codex vérifiés sur les sources officielles ci-dessous (le 1er octobre 2026). Les situations décrites s'inspirent de vidéos explicatives sur l'usage de l'IA.</p>
+        <p>Les offres et conditions d’accès ont été vérifiées dans la documentation tarifaire officielle d’OpenAI le 3 octobre 2026. Les références ci-dessous décrivent les autres fonctions et réglages. <a href="https://learn.chatgpt.com/docs/pricing" target="_blank" rel="noopener">OpenAI</a></p>
         <ul class="plain-list">
           <li><a href="https://openai.com/codex/" target="_blank" rel="noopener">OpenAI Codex (page produit)</a></li>
           <li><a href="https://developers.openai.com/codex/" target="_blank" rel="noopener">Documentation Codex (OpenAI Developers : CLI, IDE, Cloud, AGENTS.md, modes d'approbation)</a></li>

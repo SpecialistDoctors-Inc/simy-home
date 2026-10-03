@@ -25,7 +25,7 @@
 <meta property="og:image:alt" content="बाहर न भेजी जा सकने वाली बातचीत, अपने Qwen पर सुरक्षित। Qwen को अपने सर्वर पर चलाने की गाइड | SIMY">
 <meta property="og:locale" content="hi_IN">
 <meta property="article:published_time" content="2026-10-01">
-<meta property="article:modified_time" content="2026-10-02">
+<meta property="article:modified_time" content="2026-10-03">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="बाहर न भेजी जा सकने वाली बातचीत, अपने Qwen पर सुरक्षित | SIMY">
 <meta name="twitter:description" content="Qwen को अपने सर्वर और बंद नेटवर्क में चलाने के स्टेप। vLLM को 127.0.0.1 पर चलाएँ, nginx से ऑथेंटिकेशन करें, बाहर जाने वाला ट्रैफ़िक रोकें। लाइसेंस, स्पेक और चेकलिस्ट भी।">
@@ -869,11 +869,11 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
     {
       "@type": "Article",
       "@id": "https://simy.one/guides/hi/qwen-local.html#article",
-      "headline": "Qwen को लोकल और कंपनी के सर्वर पर कैसे चलाएँ: बंद नेटवर्क में सुरक्षित सेटअप के स्टेप और चेकलिस्ट",
+      "headline": "Qwen को लोकल और कंपनी सर्वर पर कैसे चलाएँ: सुरक्षित लोकल LLM",
       "description": "लोकल LLM क्या है, Qwen क्यों और उसका लाइसेंस, Ollama, llama.cpp, vLLM, SGLang और LM Studio का चुनाव, ज़रूरी GPU मेमोरी, बंद नेटवर्क में सेटअप के स्टेप और 20 पॉइंट की सुरक्षा चेकलिस्ट।",
       "inLanguage": "hi",
       "datePublished": "2026-10-01",
-      "dateModified": "2026-10-02",
+      "dateModified": "2026-10-03",
       "mainEntityOfPage": "https://simy.one/guides/hi/qwen-local.html",
       "image": {
         "@type": "ImageObject",
@@ -1087,15 +1087,11 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
           <li aria-current="page">Qwen को अपने सर्वर पर चलाएँ</li>
         </ol>
         <p class="eyebrow">लोकल LLM और इन-हाउस LLM सेटअप गाइड</p>
-        <h1 id="page-title">
-          <span class="line">गोपनीय बातचीत,</span>
-          <span class="line hl">अपने Qwen पर</span>
-          <span class="line">सुरक्षित रखें।</span>
-        </h1>
+        <h1 id="page-title">Qwen को लोकल और कंपनी सर्वर पर कैसे चलाएँ: सुरक्षित लोकल LLM</h1>
         <p class="lead">Qwen को लोकल या कंपनी के बंद नेटवर्क वाले सर्वर पर सुरक्षित चलाएँ: लोकल LLM क्या है, Ollama या vLLM, ज़रूरी स्पेक, सेटअप स्टेप और 20 पॉइंट की चेकलिस्ट (अक्टूबर 2026)।</p>
         <div class="cta-row">
           <a class="btn btn-primary" href="#build">सेटअप के स्टेप देखें <span class="arrow" aria-hidden="true">↓</span></a>
-          <a class="btn btn-ghost" href="https://app.simy.one/signup?lang=hi&amp;locale=hi&amp;region=in&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=qwen-local_guide_hi&amp;utm_content=hero">SIMY शुरू करें <span class="arrow" aria-hidden="true">↗</span></a>
+          <a class="btn btn-ghost" href="#basics">इस्तेमाल की गाइड पढ़ें <span class="arrow" aria-hidden="true">↓</span></a>
         </div>
         <ul class="hero-points">
           <li>Apache 2.0 वाले मॉडल में से चुनें</li>
@@ -1136,14 +1132,14 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
     <nav class="toc" aria-label="विषय-सूची">
       <p class="toc-title">विषय-सूची</p>
       <ol>
-        <li><a href="#scene"><span>01</span>क्या ऐसा हो रहा है?</a></li>
-        <li><a href="#wish"><span>02</span>असल में यह चाहिए था</a></li>
-        <li><a href="#basics"><span>03</span>लोकल LLM क्या है, Qwen क्यों</a></li>
-        <li><a href="#engines"><span>04</span>इन्फ़रेंस इंजन का चुनाव</a></li>
-        <li><a href="#hardware"><span>05</span>हार्डवेयर का अंदाज़ा</a></li>
-        <li><a href="#build"><span>06</span>बंद नेटवर्क में सेटअप</a></li>
-        <li><a href="#checklist"><span>07</span>सुरक्षा चेकलिस्ट</a></li>
-        <li><a href="#mistakes"><span>08</span>आम ग़लतियाँ</a></li>
+        <li><a href="#basics"><span>01</span>लोकल LLM क्या है, Qwen क्यों</a></li>
+        <li><a href="#engines"><span>02</span>इन्फ़रेंस इंजन का चुनाव</a></li>
+        <li><a href="#hardware"><span>03</span>हार्डवेयर का अंदाज़ा</a></li>
+        <li><a href="#build"><span>04</span>बंद नेटवर्क में सेटअप</a></li>
+        <li><a href="#checklist"><span>05</span>सुरक्षा चेकलिस्ट</a></li>
+        <li><a href="#mistakes"><span>06</span>आम ग़लतियाँ</a></li>
+        <li><a href="#scene"><span>07</span>क्या ऐसा हो रहा है?</a></li>
+        <li><a href="#wish"><span>08</span>असल में यह चाहिए था</a></li>
         <li><a href="#videos"><span>09</span>वीडियो में क्या कहा गया</a></li>
         <li><a href="#simy"><span>10</span>SIMY से संबंध</a></li>
         <li><a href="#faq"><span>11</span>अक्सर पूछे जाने वाले सवाल</a></li>
@@ -1155,89 +1151,24 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
       <details class="toc-mobile">
         <summary>विषय-सूची</summary>
         <ol>
-          <li><a href="#scene">क्या ऐसा हो रहा है?</a></li>
-          <li><a href="#wish">असल में यह चाहिए था</a></li>
-          <li><a href="#basics">लोकल LLM क्या है, Qwen क्यों</a></li>
-          <li><a href="#engines">इन्फ़रेंस इंजन का चुनाव</a></li>
-          <li><a href="#hardware">हार्डवेयर का अंदाज़ा</a></li>
-          <li><a href="#build">बंद नेटवर्क में सेटअप</a></li>
-          <li><a href="#checklist">सुरक्षा चेकलिस्ट</a></li>
-          <li><a href="#mistakes">आम ग़लतियाँ</a></li>
-          <li><a href="#videos">वीडियो में क्या कहा गया</a></li>
-          <li><a href="#simy">SIMY से संबंध</a></li>
-          <li><a href="#faq">अक्सर पूछे जाने वाले सवाल</a></li>
-          <li><a href="#sources">संदर्भ</a></li>
-        </ol>
+        <li><a href="#basics">लोकल LLM क्या है, Qwen क्यों</a></li>
+        <li><a href="#engines">इन्फ़रेंस इंजन का चुनाव</a></li>
+        <li><a href="#hardware">हार्डवेयर का अंदाज़ा</a></li>
+        <li><a href="#build">बंद नेटवर्क में सेटअप</a></li>
+        <li><a href="#checklist">सुरक्षा चेकलिस्ट</a></li>
+        <li><a href="#mistakes">आम ग़लतियाँ</a></li>
+        <li><a href="#scene">क्या ऐसा हो रहा है?</a></li>
+        <li><a href="#wish">असल में यह चाहिए था</a></li>
+        <li><a href="#videos">वीडियो में क्या कहा गया</a></li>
+        <li><a href="#simy">SIMY से संबंध</a></li>
+        <li><a href="#faq">अक्सर पूछे जाने वाले सवाल</a></li>
+        <li><a href="#sources">संदर्भ</a></li>
+      </ol>
       </details>
 
-      <p class="byline"><span>अंतिम अपडेट: <time datetime="2026-10-02">2 अक्टूबर 2026</time></span><span>प्रकाशक: SIMY (AwakApp Inc.)</span></p>
-
-      <!-- 01 -->
-      <section class="sec" id="scene" aria-labelledby="h-scene">
-        <span class="sec-label">01 / CAN'T SEND IT OUT</span>
-        <h2 id="h-scene">बाहरी AI में न डाली जा सकने वाली गोपनीय जानकारी: क्या ऐसा हो रहा है?</h2>
-        <p class="intro">पता है कि AI से काम जल्दी होगा। पर यह बातचीत कंपनी से बाहर नहीं जा सकती।</p>
-        <div class="scenes">
-          <div class="scene pain">
-            <span class="mark" aria-hidden="true">1</span>
-            <span class="k">उदाहरण: निजी जानकारी वाली फ़ाइल</span>
-            <b>3 मिनट बाद फ़ोन आया</b>
-            <p>निजी AI अकाउंट से गुमनाम करवाई, तो सूचना सुरक्षा टीम का कॉल आया। अब रिपोर्ट लिखनी पड़ी।</p>
-          </div>
-          <div class="scene pain">
-            <span class="mark" aria-hidden="true">2</span>
-            <span class="k">उदाहरण: ग्राहक जानकारी वाले दस्तावेज़</span>
-            <b>प्रोजेक्ट छह महीने अटका</b>
-            <p>लीगल ने कहा "बाहरी AI को नहीं भेज सकते"। फ़ायदा पता है, फिर भी काम आगे नहीं बढ़ता।</p>
-          </div>
-          <div class="scene pain">
-            <span class="mark" aria-hidden="true">3</span>
-            <span class="k">डिज़ाइन रिव्यू मीटिंग</span>
-            <b>चल तो गया, पर डर है</b>
-            <p>Ollama से टेस्ट हो गया। पर कौन-कौन जुड़ सकता है, यह समझा नहीं सकते।</p>
-          </div>
-        </div>
-        <p class="scene-foot">बाहर नहीं भेज सकते, इसलिए AI इस्तेमाल नहीं करते। <b>इन दो विकल्पों के बीच एक रास्ता है: "अपने सर्वर पर चलाना"।</b></p>
-        <p class="small muted">* 1 और 2, व्याख्या वीडियो में बताए गए मामलों पर आधारित उदाहरण हैं (<a href="#videos">वीडियो में क्या कहा गया</a>)।</p>
-      </section>
-
-      <!-- 02 -->
-      <section class="sec" id="wish" aria-labelledby="h-wish">
-        <span class="sec-label">02 / WHAT YOU REALLY WANTED</span>
-        <h2 id="h-wish">असल में यह चाहिए था: गोपनीयता बनाए रखते हुए अपने Qwen पर</h2>
-        <p class="intro">वही दस्तावेज़, वही मीटिंग। AI को सौंपें, फिर भी डेटा कंपनी से बाहर न जाए।</p>
-        <div class="scenes four">
-          <div class="scene wish">
-            <span class="mark" aria-hidden="true">✓</span>
-            <span class="k">गोपनीयता बरक़रार</span>
-            <b>सारांश, ड्राफ़्ट AI से</b>
-            <p>डेटा कंपनी के सर्वर से बाहर नहीं जाता। बाहरी AI में पेस्ट करने की ज़रूरत नहीं।</p>
-          </div>
-          <div class="scene wish">
-            <span class="mark" aria-hidden="true">✓</span>
-            <span class="k">IT टीम पूछे तो भी</span>
-            <b>एक पेज में ढाँचा</b>
-            <p>कहाँ सुनता है, ऑथेंटिकेशन, बाहरी ट्रैफ़िक, लॉग। हर जगह कहाँ रोका, दिखा सकते हैं।</p>
-          </div>
-          <div class="scene wish">
-            <span class="mark" aria-hidden="true">✓</span>
-            <span class="k">वर्ज़न बदलते समय भी</span>
-            <b>बिना तोड़े अपडेट</b>
-            <p>डाउनलोड, जाँच, रजिस्टर, प्रोडक्शन। तय क्रम, कोई भी करे तो वही स्टेप।</p>
-          </div>
-          <div class="scene wish you">
-            <span class="mark" aria-hidden="true">!</span>
-            <span class="k">आपके पास लौटता है</span>
-            <b>सिर्फ़ फ़ैसला</b>
-            <p>"क्या इस वर्ज़न पर जाएँ?" पहले-बाद की तुलना तैयार, तय करना बस यही एक सवाल।</p>
-          </div>
-        </div>
-        <p class="scene-foot">यहाँ तक का काम इस पेज के <a href="#build">स्टेप</a> और <a href="#checklist">चेकलिस्ट</a> से बन जाता है। <b>मीटिंग के बाद के काम समेत बँटवारा कैसे करें, यह <a href="#simy">SIMY से संबंध</a> में है।</b></p>
-      </section>
-
-      <!-- 03 -->
+      <p class="byline"><span>अंतिम अपडेट: <time datetime="2026-10-03">3 अक्टूबर 2026</time></span><span>प्रकाशक: SIMY (AwakApp Inc.)</span></p>
       <section class="sec" id="basics" aria-labelledby="h-basics">
-        <span class="sec-label">03 / BASICS</span>
+        <span class="sec-label">01 / BASICS</span>
         <h2 id="h-basics">लोकल LLM क्या है: Qwen को कंपनी के अंदर चलाने की वजह</h2>
         <p class="intro">लोकल LLM का मतलब है, सार्वजनिक रूप से जारी मॉडल के वेट्स को अपने PC या कंपनी के सर्वर पर चलाना। आपका डाला गया टेक्स्ट उस मशीन से बाहर नहीं जाता।</p>
         <div class="table-wrap">
@@ -1292,7 +1223,7 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
         </div>
         <p class="small muted">1 अक्टूबर 2026 को Hugging Face पर Qwen संगठन की मॉडल जानकारी से जाँचा गया। "Qwen है तो सब Apache 2.0" सही नहीं है। व्यावसायिक उपयोग से पहले, जिस मॉडल को इस्तेमाल करेंगे उसकी रिपॉज़िटरी की LICENSE फ़ाइल लीगल टीम के साथ जाँच लें।</p>
 
-        <details class="fold">
+        <details class="fold" open>
           <summary>लोकल LLM के सुझाव: काम के हिसाब से Qwen कैसे चुनें<small>अक्टूबर 2026 तक; उलझन हो तो छोटे से शुरू करें</small></summary>
           <div class="fold-body">
             <ul class="plain-list">
@@ -1306,10 +1237,8 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
           </div>
         </details>
       </section>
-
-      <!-- 04 -->
       <section class="sec" id="engines" aria-labelledby="h-engines">
-        <span class="sec-label">04 / ENGINES</span>
+        <span class="sec-label">02 / ENGINES</span>
         <h2 id="h-engines">इन्फ़रेंस इंजन का चुनाव: Ollama, llama.cpp, vLLM, SGLang, LM Studio</h2>
         <p class="intro">मॉडल को चलाने वाला सॉफ़्टवेयर "इन्फ़रेंस इंजन" कहलाता है। सुरक्षा के लिहाज़ से सबसे बड़ा फ़र्क़ यह है कि कुछ न बदलें तो वह कहाँ सुनता है।</p>
         <p class="scroll-hint">तालिका को बगल में स्क्रॉल कर सकते हैं →</p>
@@ -1335,10 +1264,8 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
         </ul>
         <p class="note"><b>vLLM पर ध्यान दें: </b>आधिकारिक Security पेज बताता है कि <code>--api-key</code> सिर्फ़ <code>/v1</code> जैसे हिस्सों को बचाता है, और <code>/invocations</code> या <code>/pooling</code> जैसे एंडपॉइंट इसके दायरे में नहीं आते। इसीलिए, जिन एंडपॉइंट को खोलना है सिर्फ़ उन्हें पास करने वाली रिवर्स प्रॉक्सी के पीछे रखना, आधिकारिक तौर पर भी सबसे असरदार उपाय माना गया है।</p>
       </section>
-
-      <!-- 05 -->
       <section class="sec" id="hardware" aria-labelledby="h-hardware">
-        <span class="sec-label">05 / HARDWARE</span>
+        <span class="sec-label">03 / HARDWARE</span>
         <h2 id="h-hardware">हार्डवेयर का अंदाज़ा: हर Qwen मॉडल के लिए ज़रूरी GPU मेमोरी</h2>
         <p class="intro">ज़रूरी GPU मेमोरी को तीन चीज़ों का जोड़ मानें।</p>
         <ul class="arch" aria-label="ज़रूरी GPU मेमोरी का बँटवारा">
@@ -1370,10 +1297,8 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
         </ul>
         <p class="note"><b>आकार कैसे तय करें: </b>पहले तय करें कि एक साथ कितने लोग इस्तेमाल करेंगे और एक बार में कितना लंबा दस्तावेज़ पढ़ाया जाएगा। KV कैश इन दोनों के अनुपात में बढ़ता है, इसलिए सिर्फ़ वेट्स के हिसाब से सोचेंगे तो प्रोडक्शन में मेमोरी कम पड़ेगी।</p>
       </section>
-
-      <!-- 06 -->
       <section class="sec" id="build" aria-labelledby="h-build">
-        <span class="sec-label">06 / BUILD</span>
+        <span class="sec-label">04 / BUILD</span>
         <h2 id="h-build">बंद नेटवर्क में सेटअप के स्टेप: Qwen + vLLM कंपनी के सर्वर पर</h2>
         <p class="intro">उदाहरण में Qwen3.8-27B का FP8 वर्ज़न, vLLM (Docker) और Linux सर्वर है। कमांड अक्टूबर 2026 के आधिकारिक डॉक्यूमेंटेशन के मुताबिक़ हैं। GPU मेमोरी कम पड़े तो कॉन्टेक्स्ट की सीमा (<code>--max-model-len</code>) घटाएँ या 4bit वर्ज़न चुनें।</p>
         <div class="tl-wrap" role="img" aria-label="ढाँचे का चित्र। दफ़्तर का PC TLS से गेटवे के nginx से जुड़ता है, और nginx सिर्फ़ ऑथेंटिकेशन और अनुमति-सूची पार करने वाले अनुरोध 127.0.0.1 पर सुन रहे vLLM को देता है। vLLM कंपनी के GPU पर Qwen चलाता है। सर्वर से इंटरनेट का ट्रैफ़िक बंद है। मॉडल और कंटेनर, बाहर से जुड़े लाने वाले टर्मिनल से मीडिया के ज़रिए अंदर लाए जाते हैं">
@@ -1564,10 +1489,8 @@ echo "$(date -I) vllm &lt;पुराना वर्ज़न&gt;→&lt;नय
           </li>
         </ol>
       </section>
-
-      <!-- 07 -->
       <section class="sec" id="checklist" aria-labelledby="h-checklist">
-        <span class="sec-label">07 / CHECKLIST</span>
+        <span class="sec-label">05 / CHECKLIST</span>
         <h2 id="h-checklist">लोकल LLM सुरक्षा चेकलिस्ट: प्रोडक्शन से पहले 20 पॉइंट</h2>
         <p class="intro">सेटअप से पहले और बाद में, ऊपर से क्रम से जाँचें। टिक सिर्फ़ इसी स्क्रीन पर काम करते हैं और कहीं नहीं भेजे जाते।</p>
         <p class="check-progress" aria-live="polite"><b id="check-count">0</b> / 20 जाँचे गए</p>
@@ -1614,10 +1537,8 @@ echo "$(date -I) vllm &lt;पुराना वर्ज़न&gt;→&lt;नय
           </div>
         </div>
       </section>
-
-      <!-- 08 -->
       <section class="sec" id="mistakes" aria-labelledby="h-mistakes">
-        <span class="sec-label">08 / MISTAKES</span>
+        <span class="sec-label">06 / MISTAKES</span>
         <h2 id="h-mistakes">आम ग़लतियाँ: लोकल LLM में "मान लिया था" से बनने वाले छेद</h2>
         <p class="intro">बाईं तरफ़ आम ग़लती, दाईं तरफ़ इस पेज के स्टेप से उसका उपाय।</p>
         <ul class="mistakes">
@@ -1631,8 +1552,65 @@ echo "$(date -I) vllm &lt;पुराना वर्ज़न&gt;→&lt;नय
           <li><div class="ng"><b>अपडेट से टूटना</b>वर्ज़न बढ़ाते ही हटे हुए एनवायरनमेंट वेरिएबल या बदली सीमा से बंद हो जाना।</div><div class="ok"><b>टेस्ट एनवायरनमेंट में पहले-बाद की तुलना</b>रिलीज़ नोट्स से मिलाएँ, किसने अपडेट किया दर्ज करें।</div></li>
         </ul>
       </section>
-
-      <!-- 09 -->
+      <section class="sec" id="scene" aria-labelledby="h-scene">
+        <span class="sec-label">07 / CAN'T SEND IT OUT</span>
+        <h2 id="h-scene">बाहरी AI में न डाली जा सकने वाली गोपनीय जानकारी: क्या ऐसा हो रहा है?</h2>
+        <p class="intro">पता है कि AI से काम जल्दी होगा। पर यह बातचीत कंपनी से बाहर नहीं जा सकती।</p>
+        <div class="scenes">
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">1</span>
+            <span class="k">उदाहरण: निजी जानकारी वाली फ़ाइल</span>
+            <b>3 मिनट बाद फ़ोन आया</b>
+            <p>निजी AI अकाउंट से गुमनाम करवाई, तो सूचना सुरक्षा टीम का कॉल आया। अब रिपोर्ट लिखनी पड़ी।</p>
+          </div>
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">2</span>
+            <span class="k">उदाहरण: ग्राहक जानकारी वाले दस्तावेज़</span>
+            <b>प्रोजेक्ट छह महीने अटका</b>
+            <p>लीगल ने कहा "बाहरी AI को नहीं भेज सकते"। फ़ायदा पता है, फिर भी काम आगे नहीं बढ़ता।</p>
+          </div>
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">3</span>
+            <span class="k">डिज़ाइन रिव्यू मीटिंग</span>
+            <b>चल तो गया, पर डर है</b>
+            <p>Ollama से टेस्ट हो गया। पर कौन-कौन जुड़ सकता है, यह समझा नहीं सकते।</p>
+          </div>
+        </div>
+        <p class="scene-foot">बाहर नहीं भेज सकते, इसलिए AI इस्तेमाल नहीं करते। <b>इन दो विकल्पों के बीच एक रास्ता है: "अपने सर्वर पर चलाना"।</b></p>
+        <p class="small muted">* 1 और 2, व्याख्या वीडियो में बताए गए मामलों पर आधारित उदाहरण हैं (<a href="#videos">वीडियो में क्या कहा गया</a>)।</p>
+      </section>
+      <section class="sec" id="wish" aria-labelledby="h-wish">
+        <span class="sec-label">08 / WHAT YOU REALLY WANTED</span>
+        <h2 id="h-wish">असल में यह चाहिए था: गोपनीयता बनाए रखते हुए अपने Qwen पर</h2>
+        <p class="intro">वही दस्तावेज़, वही मीटिंग। AI को सौंपें, फिर भी डेटा कंपनी से बाहर न जाए।</p>
+        <div class="scenes four">
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">गोपनीयता बरक़रार</span>
+            <b>सारांश, ड्राफ़्ट AI से</b>
+            <p>डेटा कंपनी के सर्वर से बाहर नहीं जाता। बाहरी AI में पेस्ट करने की ज़रूरत नहीं।</p>
+          </div>
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">IT टीम पूछे तो भी</span>
+            <b>एक पेज में ढाँचा</b>
+            <p>कहाँ सुनता है, ऑथेंटिकेशन, बाहरी ट्रैफ़िक, लॉग। हर जगह कहाँ रोका, दिखा सकते हैं।</p>
+          </div>
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">वर्ज़न बदलते समय भी</span>
+            <b>बिना तोड़े अपडेट</b>
+            <p>डाउनलोड, जाँच, रजिस्टर, प्रोडक्शन। तय क्रम, कोई भी करे तो वही स्टेप।</p>
+          </div>
+          <div class="scene wish you">
+            <span class="mark" aria-hidden="true">!</span>
+            <span class="k">आपके पास लौटता है</span>
+            <b>सिर्फ़ फ़ैसला</b>
+            <p>"क्या इस वर्ज़न पर जाएँ?" पहले-बाद की तुलना तैयार, तय करना बस यही एक सवाल।</p>
+          </div>
+        </div>
+        <p class="scene-foot">यहाँ तक का काम इस पेज के <a href="#build">स्टेप</a> और <a href="#checklist">चेकलिस्ट</a> से बन जाता है। <b>मीटिंग के बाद के काम समेत बँटवारा कैसे करें, यह <a href="#simy">SIMY से संबंध</a> में है।</b></p>
+      </section>
       <section class="sec" id="videos" aria-labelledby="h-videos">
         <span class="sec-label">09 / FROM THE VIDEOS</span>
         <h2 id="h-videos">वीडियो में क्या कहा गया: Qwen सेल्फ़-होस्टिंग के असली उदाहरण</h2>
@@ -1664,8 +1642,6 @@ echo "$(date -I) vllm &lt;पुराना वर्ज़न&gt;→&lt;नय
           </div>
         </details>
       </section>
-
-      <!-- 10 -->
       <section class="sec" id="simy" aria-labelledby="h-simy">
         <span class="sec-label">10 / SIMY</span>
         <h2 id="h-simy">SIMY से संबंध: बंद नेटवर्क के अंदर Qwen, बाहर SIMY</h2>
@@ -1705,8 +1681,6 @@ echo "$(date -I) vllm &lt;पुराना वर्ज़न&gt;→&lt;नय
         </ul>
         <p class="note"><b>रेखा कहाँ खींचें: </b>कौन-सी जानकारी बंद नेटवर्क में रहे और कहाँ से बाहरी टूल में संभाली जा सकती है, यह कंपनी के नियम तय करते हैं। SIMY डेटा कैसे संभालता है, यह <a href="/security.html">सुरक्षा</a> और <a href="/privacy.html?lang=hi">गोपनीयता नीति</a> में सार्वजनिक है।</p>
       </section>
-
-      <!-- 11 -->
       <section class="sec" id="faq" aria-labelledby="h-faq">
         <span class="sec-label">11 / FAQ</span>
         <h2 id="h-faq">लोकल LLM और Qwen: अक्सर पूछे जाने वाले सवाल</h2>
@@ -1765,8 +1739,6 @@ echo "$(date -I) vllm &lt;पुराना वर्ज़न&gt;→&lt;नय
           </details>
         </div>
       </section>
-
-      <!-- 12 -->
       <section class="sec" id="sources" aria-labelledby="h-sources">
         <span class="sec-label">12 / SOURCES</span>
         <h2 id="h-sources">संदर्भ</h2>

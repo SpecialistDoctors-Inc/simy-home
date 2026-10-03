@@ -25,7 +25,7 @@
 <meta property="og:image:alt" content="不能外传的对话，交给自家的 Qwen 安全处理。在公司服务器上运行 Qwen 的指南｜SIMY">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-10-01">
-<meta property="article:modified_time" content="2026-10-02">
+<meta property="article:modified_time" content="2026-10-03">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="不能外传的对话，交给自家的 Qwen 安全处理。｜SIMY">
 <meta name="twitter:description" content="在公司服务器和内网中运行 Qwen 的步骤：vLLM 只在 127.0.0.1 启动，由 nginx 做认证，并拒绝出站通信。还有许可证、硬件配置和检查清单。">
@@ -870,11 +870,11 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
     {
       "@type": "Article",
       "@id": "https://simy.one/guides/zh-hans/qwen-local.html#article",
-      "headline": "在本地和公司服务器上运行 Qwen：内网安全搭建步骤与检查清单",
+      "headline": "Qwen 本地部署与私有化部署指南｜内网安全运行本地大模型",
       "description": "本地 LLM 是什么、选择 Qwen 的理由与许可证、Ollama、llama.cpp、vLLM、SGLang、LM Studio 怎么选、所需显存、内网搭建步骤，以及 20 项安全检查清单。",
       "inLanguage": "zh-Hans",
       "datePublished": "2026-10-01",
-      "dateModified": "2026-10-02",
+      "dateModified": "2026-10-03",
       "mainEntityOfPage": "https://simy.one/guides/zh-hans/qwen-local.html",
       "image": {
         "@type": "ImageObject",
@@ -1088,15 +1088,11 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
           <li aria-current="page">在公司服务器上运行 Qwen</li>
         </ol>
         <p class="eyebrow">本地 LLM、私有化大模型搭建指南</p>
-        <h1 id="page-title">
-          <span class="line">机密的对话，</span>
-          <span class="line hl">交给自家的 Qwen</span>
-          <span class="line">安全处理。</span>
-        </h1>
+        <h1 id="page-title">Qwen 本地部署与私有化部署指南｜内网安全运行本地大模型</h1>
         <p class="lead">在本地和公司服务器的内网中安全运行 Qwen 的方法。本地 LLM 是什么、Ollama 与 vLLM 怎么选、所需配置、搭建步骤，以及 20 项检查清单，按 2026 年 10 月的信息整理。</p>
         <div class="cta-row">
           <a class="btn btn-primary" href="#build">查看搭建步骤 <span class="arrow" aria-hidden="true">↓</span></a>
-          <a class="btn btn-ghost" href="https://app.simy.one/signup?lang=zh-Hans&amp;locale=zh-Hans&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=qwen-local_guide_zh-hans&amp;utm_content=hero">开始使用 SIMY <span class="arrow" aria-hidden="true">↗</span></a>
+          <a class="btn btn-ghost" href="#basics">阅读使用指南 <span class="arrow" aria-hidden="true">↓</span></a>
         </div>
         <ul class="hero-points">
           <li>从 Apache 2.0 许可的模型中选</li>
@@ -1137,14 +1133,14 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
     <nav class="toc" aria-label="目录">
       <p class="toc-title">目录</p>
       <ol>
-        <li><a href="#scene"><span>01</span>你是否也这样</a></li>
-        <li><a href="#wish"><span>02</span>其实你想要的是这样</a></li>
-        <li><a href="#basics"><span>03</span>本地 LLM 是什么、为什么选 Qwen</a></li>
-        <li><a href="#engines"><span>04</span>推理引擎怎么选</a></li>
-        <li><a href="#hardware"><span>05</span>硬件参考</a></li>
-        <li><a href="#build"><span>06</span>内网搭建步骤</a></li>
-        <li><a href="#checklist"><span>07</span>安全检查清单</a></li>
-        <li><a href="#mistakes"><span>08</span>常见错误</a></li>
+        <li><a href="#basics"><span>01</span>本地 LLM 是什么、为什么选 Qwen</a></li>
+        <li><a href="#engines"><span>02</span>推理引擎怎么选</a></li>
+        <li><a href="#hardware"><span>03</span>硬件参考</a></li>
+        <li><a href="#build"><span>04</span>内网搭建步骤</a></li>
+        <li><a href="#checklist"><span>05</span>安全检查清单</a></li>
+        <li><a href="#mistakes"><span>06</span>常见错误</a></li>
+        <li><a href="#scene"><span>07</span>你是否也这样</a></li>
+        <li><a href="#wish"><span>08</span>其实你想要的是这样</a></li>
         <li><a href="#videos"><span>09</span>视频里讲了什么</a></li>
         <li><a href="#simy"><span>10</span>与 SIMY 的关系</a></li>
         <li><a href="#faq"><span>11</span>常见问题</a></li>
@@ -1156,89 +1152,24 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
       <details class="toc-mobile">
         <summary>目录</summary>
         <ol>
-          <li><a href="#scene">你是否也这样</a></li>
-          <li><a href="#wish">其实你想要的是这样</a></li>
-          <li><a href="#basics">本地 LLM 是什么、为什么选 Qwen</a></li>
-          <li><a href="#engines">推理引擎怎么选</a></li>
-          <li><a href="#hardware">硬件参考</a></li>
-          <li><a href="#build">内网搭建步骤</a></li>
-          <li><a href="#checklist">安全检查清单</a></li>
-          <li><a href="#mistakes">常见错误</a></li>
-          <li><a href="#videos">视频里讲了什么</a></li>
-          <li><a href="#simy">与 SIMY 的关系</a></li>
-          <li><a href="#faq">常见问题</a></li>
-          <li><a href="#sources">参考资料</a></li>
-        </ol>
+        <li><a href="#basics">本地 LLM 是什么、为什么选 Qwen</a></li>
+        <li><a href="#engines">推理引擎怎么选</a></li>
+        <li><a href="#hardware">硬件参考</a></li>
+        <li><a href="#build">内网搭建步骤</a></li>
+        <li><a href="#checklist">安全检查清单</a></li>
+        <li><a href="#mistakes">常见错误</a></li>
+        <li><a href="#scene">你是否也这样</a></li>
+        <li><a href="#wish">其实你想要的是这样</a></li>
+        <li><a href="#videos">视频里讲了什么</a></li>
+        <li><a href="#simy">与 SIMY 的关系</a></li>
+        <li><a href="#faq">常见问题</a></li>
+        <li><a href="#sources">参考资料</a></li>
+      </ol>
       </details>
 
-      <p class="byline"><span>最后更新：<time datetime="2026-10-02">2026 年 10 月 2 日</time></span><span>发布：SIMY（AwakApp Inc.）</span></p>
-
-      <!-- 01 -->
-      <section class="sec" id="scene" aria-labelledby="h-scene">
-        <span class="sec-label">01 / CAN'T SEND IT OUT</span>
-        <h2 id="h-scene">不能贴进外部 AI 的机密，你是否也这样</h2>
-        <p class="intro">明知道用 AI 会更快，可这些对话不能传到公司外面。</p>
-        <div class="scenes">
-          <div class="scene pain">
-            <span class="mark" aria-hidden="true">1</span>
-            <span class="k">例：含个人信息的文件</span>
-            <b>3 分钟后，电话打来了</b>
-            <p>把文件交给个人订阅的 AI 做匿名化，信息安全部门随即找上门，最后要写检讨报告。</p>
-          </div>
-          <div class="scene pain">
-            <span class="mark" aria-hidden="true">2</span>
-            <span class="k">例：含客户信息的文档</span>
-            <b>项目搁置了半年</b>
-            <p>法务一句“不能发给外部 AI”就叫停了。明知道好用，却推进不了。</p>
-          </div>
-          <div class="scene pain">
-            <span class="mark" aria-hidden="true">3</span>
-            <span class="k">设计评审会</span>
-            <b>跑起来了，却不放心</b>
-            <p>用 Ollama 试成功了，可谁能连上它，说不清楚。</p>
-          </div>
-        </div>
-        <p class="scene-foot">不能外传，所以干脆不用 AI。<b>在这两个极端之间，还有“部署在自己的服务器上”这条路。</b></p>
-        <p class="small muted">※ 1 和 2 是根据讲解视频中介绍的案例改编的示例（<a href="#videos">视频里讲了什么</a>）。</p>
-      </section>
-
-      <!-- 02 -->
-      <section class="sec" id="wish" aria-labelledby="h-wish">
-        <span class="sec-label">02 / WHAT YOU REALLY WANTED</span>
-        <h2 id="h-wish">其实你想要的是：机密不出门，交给内部的 Qwen</h2>
-        <p class="intro">同样的资料、同样的会议。交给 AI 处理，数据也不离开公司。</p>
-        <div class="scenes four">
-          <div class="scene wish">
-            <span class="mark" aria-hidden="true">✓</span>
-            <span class="k">机密不出门</span>
-            <b>摘要和起草都用 AI</b>
-            <p>数据不离开公司内部的服务器，不必再贴进外部的 AI。</p>
-          </div>
-          <div class="scene wish">
-            <span class="mark" aria-hidden="true">✓</span>
-            <span class="k">IT 部门问起时</span>
-            <b>一张图讲清架构</b>
-            <p>监听地址、认证、出站通信、日志。在哪里拦住，一目了然。</p>
-          </div>
-          <div class="scene wish">
-            <span class="mark" aria-hidden="true">✓</span>
-            <span class="k">升级版本时</span>
-            <b>升级不出故障</b>
-            <p>获取、验证、台账、上线。流程固定，谁来做都一样。</p>
-          </div>
-          <div class="scene wish you">
-            <span class="mark" aria-hidden="true">!</span>
-            <span class="k">回到你手上的</span>
-            <b>只有判断</b>
-            <p>“要不要升到这个版本”。前后对比已经备齐，只需决定这一个问题。</p>
-          </div>
-        </div>
-        <p class="scene-foot">以上这些，用本页的<a href="#build">步骤</a>和<a href="#checklist">检查清单</a>就能搭起来。<b>连同会后安排在内的分工方式，整理在<a href="#simy">与 SIMY 的关系</a>中。</b></p>
-      </section>
-
-      <!-- 03 -->
+      <p class="byline"><span>最后更新：<time datetime="2026-10-03">2026年10月3日</time></span><span>发布：SIMY（AwakApp Inc.）</span></p>
       <section class="sec" id="basics" aria-labelledby="h-basics">
-        <span class="sec-label">03 / BASICS</span>
+        <span class="sec-label">01 / BASICS</span>
         <h2 id="h-basics">本地 LLM 是什么：为什么在公司内部运行 Qwen</h2>
         <p class="intro">本地 LLM，是把公开的模型权重放在自己的电脑或公司内部服务器上运行的用法。输入的文字不会离开这台机器。</p>
         <div class="table-wrap">
@@ -1293,7 +1224,7 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
         </div>
         <p class="small muted">2026 年 10 月 1 日依据 Hugging Face 上 Qwen 组织的模型信息确认。并不是“只要是 Qwen 就都是 Apache 2.0”。商用之前，请与法务一起确认所用模型仓库中的 LICENSE。</p>
 
-        <details class="fold">
+        <details class="fold" open>
           <summary>本地 LLM 推荐：按用途选择 Qwen<small>截至 2026 年 10 月。拿不准时先从小的开始</small></summary>
           <div class="fold-body">
             <ul class="plain-list">
@@ -1307,10 +1238,8 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
           </div>
         </details>
       </section>
-
-      <!-- 04 -->
       <section class="sec" id="engines" aria-labelledby="h-engines">
-        <span class="sec-label">04 / ENGINES</span>
+        <span class="sec-label">02 / ENGINES</span>
         <h2 id="h-engines">推理引擎怎么选：Ollama、llama.cpp、vLLM、SGLang、LM Studio</h2>
         <p class="intro">运行模型的软件就是“推理引擎”。从安全角度看，最大的区别在于：什么都不设置时，它在哪里监听。</p>
         <p class="scroll-hint">表格可以横向滚动 →</p>
@@ -1336,10 +1265,8 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
         </ul>
         <p class="note"><b>vLLM 的注意事项：</b>官方的 Security 页面说明，<code>--api-key</code>只保护<code>/v1</code>等端点，<code>/invocations</code>、<code>/pooling</code>等不在保护范围内。正因如此，官方也把“放在只放行需公开端点的反向代理之后”视为最有效的对策。</p>
       </section>
-
-      <!-- 05 -->
       <section class="sec" id="hardware" aria-labelledby="h-hardware">
-        <span class="sec-label">05 / HARDWARE</span>
+        <span class="sec-label">03 / HARDWARE</span>
         <h2 id="h-hardware">硬件参考：各 Qwen 模型所需的显存</h2>
         <p class="intro">所需显存，可以看作三项相加。</p>
         <ul class="arch" aria-label="所需显存的构成">
@@ -1371,10 +1298,8 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
         </ul>
         <p class="note"><b>如何确定规模：</b>请先确定同时使用的人数，以及一次要读入的文档长度。KV 缓存会与这两者成比例增长，只按权重估算的话，上线后就会不够用。</p>
       </section>
-
-      <!-- 06 -->
       <section class="sec" id="build" aria-labelledby="h-build">
-        <span class="sec-label">06 / BUILD</span>
+        <span class="sec-label">04 / BUILD</span>
         <h2 id="h-build">内网搭建步骤：把 Qwen＋vLLM 部署到公司服务器</h2>
         <p class="intro">示例使用 Qwen3.8-27B 的 FP8 版、vLLM（Docker）和 Linux 服务器。命令按 2026 年 10 月的官方文档编写。显存不足时，可降低上下文上限（<code>--max-model-len</code>），或选择 4bit 版本。</p>
         <div class="tl-wrap" role="img" aria-label="架构图。公司内的电脑通过 TLS 连接网关 nginx，nginx 只把通过认证和白名单的请求交给只在 127.0.0.1 监听的 vLLM。vLLM 在公司内的 GPU 上运行 Qwen。服务器拒绝访问互联网。模型和容器由联网的摆渡机获取，再通过介质带入">
@@ -1565,10 +1490,8 @@ echo "$(date -I) vllm &lt;旧版本&gt;→&lt;新版本&gt; 负责人:&lt;姓名
           </li>
         </ol>
       </section>
-
-      <!-- 07 -->
       <section class="sec" id="checklist" aria-labelledby="h-checklist">
-        <span class="sec-label">07 / CHECKLIST</span>
+        <span class="sec-label">05 / CHECKLIST</span>
         <h2 id="h-checklist">本地 LLM 安全检查清单：上线前的 20 项</h2>
         <p class="intro">请在搭建前后从上到下逐项确认。勾选只在本页面内有效，不会发送到任何地方。</p>
         <p class="check-progress" aria-live="polite"><b id="check-count">0</b> / 20 已确认</p>
@@ -1615,10 +1538,8 @@ echo "$(date -I) vllm &lt;旧版本&gt;→&lt;新版本&gt; 负责人:&lt;姓名
           </div>
         </div>
       </section>
-
-      <!-- 08 -->
       <section class="sec" id="mistakes" aria-labelledby="h-mistakes">
-        <span class="sec-label">08 / MISTAKES</span>
+        <span class="sec-label">06 / MISTAKES</span>
         <h2 id="h-mistakes">常见错误：本地 LLM 的“我以为”留下的漏洞</h2>
         <p class="intro">左边是常见的错误，右边是按本页步骤的对策。</p>
         <ul class="mistakes">
@@ -1632,8 +1553,65 @@ echo "$(date -I) vllm &lt;旧版本&gt;→&lt;新版本&gt; 负责人:&lt;姓名
           <li><div class="ng"><b>一更新就出故障</b>升级版本后，因环境变量被删、上限变更而无法运行。</div><div class="ok"><b>在测试环境中做前后对比</b>对照发布说明，并记录是谁升级的。</div></li>
         </ul>
       </section>
-
-      <!-- 09 -->
+      <section class="sec" id="scene" aria-labelledby="h-scene">
+        <span class="sec-label">07 / CAN'T SEND IT OUT</span>
+        <h2 id="h-scene">不能贴进外部 AI 的机密，你是否也这样</h2>
+        <p class="intro">明知道用 AI 会更快，可这些对话不能传到公司外面。</p>
+        <div class="scenes">
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">1</span>
+            <span class="k">例：含个人信息的文件</span>
+            <b>3 分钟后，电话打来了</b>
+            <p>把文件交给个人订阅的 AI 做匿名化，信息安全部门随即找上门，最后要写检讨报告。</p>
+          </div>
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">2</span>
+            <span class="k">例：含客户信息的文档</span>
+            <b>项目搁置了半年</b>
+            <p>法务一句“不能发给外部 AI”就叫停了。明知道好用，却推进不了。</p>
+          </div>
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">3</span>
+            <span class="k">设计评审会</span>
+            <b>跑起来了，却不放心</b>
+            <p>用 Ollama 试成功了，可谁能连上它，说不清楚。</p>
+          </div>
+        </div>
+        <p class="scene-foot">不能外传，所以干脆不用 AI。<b>在这两个极端之间，还有“部署在自己的服务器上”这条路。</b></p>
+        <p class="small muted">※ 1 和 2 是根据讲解视频中介绍的案例改编的示例（<a href="#videos">视频里讲了什么</a>）。</p>
+      </section>
+      <section class="sec" id="wish" aria-labelledby="h-wish">
+        <span class="sec-label">08 / WHAT YOU REALLY WANTED</span>
+        <h2 id="h-wish">其实你想要的是：机密不出门，交给内部的 Qwen</h2>
+        <p class="intro">同样的资料、同样的会议。交给 AI 处理，数据也不离开公司。</p>
+        <div class="scenes four">
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">机密不出门</span>
+            <b>摘要和起草都用 AI</b>
+            <p>数据不离开公司内部的服务器，不必再贴进外部的 AI。</p>
+          </div>
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">IT 部门问起时</span>
+            <b>一张图讲清架构</b>
+            <p>监听地址、认证、出站通信、日志。在哪里拦住，一目了然。</p>
+          </div>
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">升级版本时</span>
+            <b>升级不出故障</b>
+            <p>获取、验证、台账、上线。流程固定，谁来做都一样。</p>
+          </div>
+          <div class="scene wish you">
+            <span class="mark" aria-hidden="true">!</span>
+            <span class="k">回到你手上的</span>
+            <b>只有判断</b>
+            <p>“要不要升到这个版本”。前后对比已经备齐，只需决定这一个问题。</p>
+          </div>
+        </div>
+        <p class="scene-foot">以上这些，用本页的<a href="#build">步骤</a>和<a href="#checklist">检查清单</a>就能搭起来。<b>连同会后安排在内的分工方式，整理在<a href="#simy">与 SIMY 的关系</a>中。</b></p>
+      </section>
       <section class="sec" id="videos" aria-labelledby="h-videos">
         <span class="sec-label">09 / FROM THE VIDEOS</span>
         <h2 id="h-videos">视频里讲了什么：Qwen 自托管的实际案例</h2>
@@ -1665,8 +1643,6 @@ echo "$(date -I) vllm &lt;旧版本&gt;→&lt;新版本&gt; 负责人:&lt;姓名
           </div>
         </details>
       </section>
-
-      <!-- 10 -->
       <section class="sec" id="simy" aria-labelledby="h-simy">
         <span class="sec-label">10 / SIMY</span>
         <h2 id="h-simy">与 SIMY 的关系：内网里用 Qwen，外面用 SIMY</h2>
@@ -1706,8 +1682,6 @@ echo "$(date -I) vllm &lt;旧版本&gt;→&lt;新版本&gt; 负责人:&lt;姓名
         </ul>
         <p class="note"><b>界线怎么划：</b>哪些信息留在内网、从哪里开始可以交给外部工具处理，由公司规章决定。SIMY 的数据处理方式已在<a href="/security.html">安全</a>和<a href="/privacy.html?lang=zh-Hans">隐私政策</a>中公开。</p>
       </section>
-
-      <!-- 11 -->
       <section class="sec" id="faq" aria-labelledby="h-faq">
         <span class="sec-label">11 / FAQ</span>
         <h2 id="h-faq">本地 LLM 与 Qwen 常见问题</h2>
@@ -1766,8 +1740,6 @@ echo "$(date -I) vllm &lt;旧版本&gt;→&lt;新版本&gt; 负责人:&lt;姓名
           </details>
         </div>
       </section>
-
-      <!-- 12 -->
       <section class="sec" id="sources" aria-labelledby="h-sources">
         <span class="sec-label">12 / SOURCES</span>
         <h2 id="h-sources">参考资料</h2>

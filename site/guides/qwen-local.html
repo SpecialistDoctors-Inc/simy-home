@@ -25,7 +25,7 @@
 <meta property="og:image:alt" content="社外に出せない会話を、自社のQwenで安全に扱う。Qwenを自社サーバーで動かすガイド｜SIMY">
 <meta property="og:locale" content="ja_JP">
 <meta property="article:published_time" content="2026-10-01">
-<meta property="article:modified_time" content="2026-10-02">
+<meta property="article:modified_time" content="2026-10-03">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="社外に出せない会話を、自社のQwenで安全に扱う。｜SIMY">
 <meta name="twitter:description" content="Qwenを自社サーバー・閉域網で動かす手順。vLLMは127.0.0.1で起動し、nginxで認証、外向き通信は拒否。ライセンス、スペック、チェックリストまで。">
@@ -869,11 +869,11 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
     {
       "@type": "Article",
       "@id": "https://simy.one/guides/qwen-local.html#article",
-      "headline": "Qwenをローカル・社内サーバーで動かす方法：閉域網で安全に構築する手順とチェックリスト",
+      "headline": "Qwenをローカル・社内サーバーで動かす方法｜ローカルLLMを閉域網で安全に",
       "description": "ローカルLLMとは何か、Qwenを選ぶ理由とライセンス、Ollama・llama.cpp・vLLM・SGLang・LM Studioの選び方、必要なGPUメモリ、閉域網での構築手順、20項目のセキュリティチェックリスト。",
       "inLanguage": "ja",
       "datePublished": "2026-10-01",
-      "dateModified": "2026-10-02",
+      "dateModified": "2026-10-03",
       "mainEntityOfPage": "https://simy.one/guides/qwen-local.html",
       "image": {
         "@type": "ImageObject",
@@ -1087,15 +1087,11 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
           <li aria-current="page">Qwenを自社サーバーで動かす</li>
         </ol>
         <p class="eyebrow">ローカルLLM・社内LLMの構築ガイド</p>
-        <h1 id="page-title">
-          <span class="line">社外秘の会話を、</span>
-          <span class="line hl">自社のQwenで</span>
-          <span class="line">安全に扱う。</span>
-        </h1>
+        <h1 id="page-title">Qwenをローカル・社内サーバーで動かす方法｜ローカルLLMを閉域網で安全に</h1>
         <p class="lead">Qwenをローカル・社内サーバーの閉域網で安全に動かす方法。ローカルLLMとは、Ollama・vLLMの選び方、必要なスペック、構築手順、20項目のチェックリストを2026年10月時点で解説。</p>
         <div class="cta-row">
           <a class="btn btn-primary" href="#build">構築手順を見る <span class="arrow" aria-hidden="true">↓</span></a>
-          <a class="btn btn-ghost" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=qwen-local_guide&amp;utm_content=hero">SIMYをはじめる <span class="arrow" aria-hidden="true">↗</span></a>
+          <a class="btn btn-ghost" href="#basics">使い方・選び方を読む <span class="arrow" aria-hidden="true">↓</span></a>
         </div>
         <ul class="hero-points">
           <li>Apache 2.0のモデルから選ぶ</li>
@@ -1136,14 +1132,14 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
     <nav class="toc" aria-label="目次">
       <p class="toc-title">目次</p>
       <ol>
-        <li><a href="#scene"><span>01</span>こうなっていませんか</a></li>
-        <li><a href="#wish"><span>02</span>本当は、こうしたかった</a></li>
-        <li><a href="#basics"><span>03</span>ローカルLLMとは・Qwenを選ぶ理由</a></li>
-        <li><a href="#engines"><span>04</span>推論エンジンの選び方</a></li>
-        <li><a href="#hardware"><span>05</span>ハードウェアの目安</a></li>
-        <li><a href="#build"><span>06</span>閉域網での構築手順</a></li>
-        <li><a href="#checklist"><span>07</span>セキュリティチェックリスト</a></li>
-        <li><a href="#mistakes"><span>08</span>よくある間違い</a></li>
+        <li><a href="#basics"><span>01</span>ローカルLLMとは・Qwenを選ぶ理由</a></li>
+        <li><a href="#engines"><span>02</span>推論エンジンの選び方</a></li>
+        <li><a href="#hardware"><span>03</span>ハードウェアの目安</a></li>
+        <li><a href="#build"><span>04</span>閉域網での構築手順</a></li>
+        <li><a href="#checklist"><span>05</span>セキュリティチェックリスト</a></li>
+        <li><a href="#mistakes"><span>06</span>よくある間違い</a></li>
+        <li><a href="#scene"><span>07</span>こうなっていませんか</a></li>
+        <li><a href="#wish"><span>08</span>本当は、こうしたかった</a></li>
         <li><a href="#videos"><span>09</span>動画で語られていること</a></li>
         <li><a href="#simy"><span>10</span>SIMYとの関係</a></li>
         <li><a href="#faq"><span>11</span>よくある質問</a></li>
@@ -1155,89 +1151,24 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
       <details class="toc-mobile">
         <summary>目次</summary>
         <ol>
-          <li><a href="#scene">こうなっていませんか</a></li>
-          <li><a href="#wish">本当は、こうしたかった</a></li>
-          <li><a href="#basics">ローカルLLMとは・Qwenを選ぶ理由</a></li>
-          <li><a href="#engines">推論エンジンの選び方</a></li>
-          <li><a href="#hardware">ハードウェアの目安</a></li>
-          <li><a href="#build">閉域網での構築手順</a></li>
-          <li><a href="#checklist">セキュリティチェックリスト</a></li>
-          <li><a href="#mistakes">よくある間違い</a></li>
-          <li><a href="#videos">動画で語られていること</a></li>
-          <li><a href="#simy">SIMYとの関係</a></li>
-          <li><a href="#faq">よくある質問</a></li>
-          <li><a href="#sources">参考情報</a></li>
-        </ol>
+        <li><a href="#basics">ローカルLLMとは・Qwenを選ぶ理由</a></li>
+        <li><a href="#engines">推論エンジンの選び方</a></li>
+        <li><a href="#hardware">ハードウェアの目安</a></li>
+        <li><a href="#build">閉域網での構築手順</a></li>
+        <li><a href="#checklist">セキュリティチェックリスト</a></li>
+        <li><a href="#mistakes">よくある間違い</a></li>
+        <li><a href="#scene">こうなっていませんか</a></li>
+        <li><a href="#wish">本当は、こうしたかった</a></li>
+        <li><a href="#videos">動画で語られていること</a></li>
+        <li><a href="#simy">SIMYとの関係</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#sources">参考情報</a></li>
+      </ol>
       </details>
 
-      <p class="byline"><span>最終更新：<time datetime="2026-10-02">2026年10月2日</time></span><span>発行：SIMY（AwakApp Inc.）</span></p>
-
-      <!-- 01 -->
-      <section class="sec" id="scene" aria-labelledby="h-scene">
-        <span class="sec-label">01 / CAN'T SEND IT OUT</span>
-        <h2 id="h-scene">外部のAIに貼れない社外秘、こうなっていませんか</h2>
-        <p class="intro">AIを使えば早いのは分かっている。でも、その会話は社外に出せない。</p>
-        <div class="scenes">
-          <div class="scene pain">
-            <span class="mark" aria-hidden="true">1</span>
-            <span class="k">例：個人情報入りのファイル</span>
-            <b>3分後に、電話が来た</b>
-            <p>個人契約のAIに渡して匿名化させたら、情報セキュリティ部門から連絡。報告書を書くことに。</p>
-          </div>
-          <div class="scene pain">
-            <span class="mark" aria-hidden="true">2</span>
-            <span class="k">例：顧客情報を含む文書</span>
-            <b>企画が半年止まった</b>
-            <p>「外部のAIには送れない」と法務が止めた。便利さは分かっているのに、進まない。</p>
-          </div>
-          <div class="scene pain">
-            <span class="mark" aria-hidden="true">3</span>
-            <span class="k">設計レビューの会議</span>
-            <b>動いたけれど、不安</b>
-            <p>Ollamaで試せた。でも誰がつなげる状態か、説明できない。</p>
-          </div>
-        </div>
-        <p class="scene-foot">外に出せないから、AIを使わない。<b>その二択の間に、「自社のサーバーで動かす」があります。</b></p>
-        <p class="small muted">※ 1と2は、解説動画で紹介された事例をもとにした例です（<a href="#videos">動画で語られていること</a>）。</p>
-      </section>
-
-      <!-- 02 -->
-      <section class="sec" id="wish" aria-labelledby="h-wish">
-        <span class="sec-label">02 / WHAT YOU REALLY WANTED</span>
-        <h2 id="h-wish">本当は、こうしたかった：社外秘のまま社内のQwenで</h2>
-        <p class="intro">同じ資料、同じ会議。AIに任せても、データが社内から出ない状態。</p>
-        <div class="scenes four">
-          <div class="scene wish">
-            <span class="mark" aria-hidden="true">✓</span>
-            <span class="k">社外秘のまま</span>
-            <b>要約も下書きもAIで</b>
-            <p>データは社内のサーバーから出ない。外部のAIに貼る必要がない。</p>
-          </div>
-          <div class="scene wish">
-            <span class="mark" aria-hidden="true">✓</span>
-            <span class="k">情シスに聞かれても</span>
-            <b>構成を1枚で説明</b>
-            <p>待ち受け先、認証、外への通信、ログ。どこで止めたかを示せる。</p>
-          </div>
-          <div class="scene wish">
-            <span class="mark" aria-hidden="true">✓</span>
-            <span class="k">版を上げるときも</span>
-            <b>壊さずに更新</b>
-            <p>取得、検証、台帳、本番。決まった流れで、誰がやっても同じ手順。</p>
-          </div>
-          <div class="scene wish you">
-            <span class="mark" aria-hidden="true">!</span>
-            <span class="k">あなたに戻るのは</span>
-            <b>判断だけ</b>
-            <p>「この版に上げるか」。前後の比較がそろい、決めるのはその一問。</p>
-          </div>
-        </div>
-        <p class="scene-foot">ここまでは、このページの<a href="#build">手順</a>と<a href="#checklist">チェックリスト</a>で作れます。<b>会議のあとの段取りまで含めた分け方は、<a href="#simy">SIMYとの関係</a>にまとめました。</b></p>
-      </section>
-
-      <!-- 03 -->
+      <p class="byline"><span>最終更新：<time datetime="2026-10-03">2026年10月3日</time></span><span>発行：SIMY（AwakApp Inc.）</span></p>
       <section class="sec" id="basics" aria-labelledby="h-basics">
-        <span class="sec-label">03 / BASICS</span>
+        <span class="sec-label">01 / BASICS</span>
         <h2 id="h-basics">ローカルLLMとは：Qwenを社内で動かす理由</h2>
         <p class="intro">ローカルLLMは、公開されたモデルの重みを、自分のPCや社内のサーバーで動かす使い方です。入力した文章は、そのマシンの外に出ません。</p>
         <div class="table-wrap">
@@ -1292,7 +1223,7 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
         </div>
         <p class="small muted">2026年10月1日にHugging FaceのQwen組織のモデル情報で確認しました。「Qwenならすべて Apache 2.0」ではありません。使うモデルのリポジトリにあるLICENSEを、商用利用の前に法務と確認してください。</p>
 
-        <details class="fold">
+        <details class="fold" open>
           <summary>ローカルLLMのおすすめ：用途別のQwenの選び方<small>2026年10月時点。迷ったら小さく始める</small></summary>
           <div class="fold-body">
             <ul class="plain-list">
@@ -1306,10 +1237,8 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
           </div>
         </details>
       </section>
-
-      <!-- 04 -->
       <section class="sec" id="engines" aria-labelledby="h-engines">
-        <span class="sec-label">04 / ENGINES</span>
+        <span class="sec-label">02 / ENGINES</span>
         <h2 id="h-engines">推論エンジンの選び方：Ollama・llama.cpp・vLLM・SGLang・LM Studio</h2>
         <p class="intro">モデルを動かすソフトが「推論エンジン」です。安全の面で一番の違いは、何もしないとどこで待ち受けるかです。</p>
         <p class="scroll-hint">表は横にスクロールできます →</p>
@@ -1335,10 +1264,8 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
         </ul>
         <p class="note"><b>vLLMの注意：</b>公式のSecurityページは、<code>--api-key</code>で守られるのは<code>/v1</code>などに限られ、<code>/invocations</code>や<code>/pooling</code>などは対象外だと説明しています。だからこそ、公開したいエンドポイントだけを通すリバースプロキシの後ろに置くことを、公式も最も効果的な対策としています。</p>
       </section>
-
-      <!-- 05 -->
       <section class="sec" id="hardware" aria-labelledby="h-hardware">
-        <span class="sec-label">05 / HARDWARE</span>
+        <span class="sec-label">03 / HARDWARE</span>
         <h2 id="h-hardware">ハードウェアの目安：Qwenのモデル別に必要なGPUメモリ</h2>
         <p class="intro">必要なGPUメモリは、3つの足し算で考えます。</p>
         <ul class="arch" aria-label="必要なGPUメモリの内訳">
@@ -1370,10 +1297,8 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
         </ul>
         <p class="note"><b>大きさの決め方：</b>同時に使う人数と、1回に読ませる文書の長さを先に決めてください。KVキャッシュはこの2つに比例して増えるため、重みだけで足りると考えると、本番で足りなくなります。</p>
       </section>
-
-      <!-- 06 -->
       <section class="sec" id="build" aria-labelledby="h-build">
-        <span class="sec-label">06 / BUILD</span>
+        <span class="sec-label">04 / BUILD</span>
         <h2 id="h-build">閉域網での構築手順：Qwen＋vLLMを社内サーバーに置く</h2>
         <p class="intro">例はQwen3.8-27BのFP8版とvLLM（Docker）、Linuxのサーバーです。コマンドは2026年10月時点の公式ドキュメントに合わせています。GPUメモリが足りないときは、文脈の上限（<code>--max-model-len</code>）を下げるか、4bitの版を選びます。</p>
         <div class="tl-wrap" role="img" aria-label="構成図。社内のPCはTLSでゲートウェイのnginxにつなぎ、nginxが認証と許可リストを通した要求だけを127.0.0.1で待ち受けるvLLMに渡す。vLLMは社内のGPUでQwenを動かす。サーバーからインターネットへの通信は拒否する。モデルとコンテナは、外につながる搬入用の端末から媒体で持ち込む">
@@ -1564,10 +1489,8 @@ echo "$(date -I) vllm &lt;旧版&gt;→&lt;新版&gt; 担当:&lt;名前&gt; 検�
           </li>
         </ol>
       </section>
-
-      <!-- 07 -->
       <section class="sec" id="checklist" aria-labelledby="h-checklist">
-        <span class="sec-label">07 / CHECKLIST</span>
+        <span class="sec-label">05 / CHECKLIST</span>
         <h2 id="h-checklist">ローカルLLMのセキュリティチェックリスト：本番前の20項目</h2>
         <p class="intro">構築の前後で、上から順に確かめてください。チェックはこの画面の中だけで使え、どこにも送信されません。</p>
         <p class="check-progress" aria-live="polite"><b id="check-count">0</b> / 20 確認済み</p>
@@ -1614,10 +1537,8 @@ echo "$(date -I) vllm &lt;旧版&gt;→&lt;新版&gt; 担当:&lt;名前&gt; 検�
           </div>
         </div>
       </section>
-
-      <!-- 08 -->
       <section class="sec" id="mistakes" aria-labelledby="h-mistakes">
-        <span class="sec-label">08 / MISTAKES</span>
+        <span class="sec-label">06 / MISTAKES</span>
         <h2 id="h-mistakes">よくある間違い：ローカルLLMの「つもり」が招く穴</h2>
         <p class="intro">左がよくある間違い、右がこのページの手順での対策です。</p>
         <ul class="mistakes">
@@ -1631,8 +1552,65 @@ echo "$(date -I) vllm &lt;旧版&gt;→&lt;新版&gt; 担当:&lt;名前&gt; 検�
           <li><div class="ng"><b>更新で壊れる</b>版を上げたら、消えた環境変数や変わった上限で動かなくなる。</div><div class="ok"><b>検証環境で前後比較</b>リリースノートと照らし、誰が上げたかを残す。</div></li>
         </ul>
       </section>
-
-      <!-- 09 -->
+      <section class="sec" id="scene" aria-labelledby="h-scene">
+        <span class="sec-label">07 / CAN'T SEND IT OUT</span>
+        <h2 id="h-scene">外部のAIに貼れない社外秘、こうなっていませんか</h2>
+        <p class="intro">AIを使えば早いのは分かっている。でも、その会話は社外に出せない。</p>
+        <div class="scenes">
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">1</span>
+            <span class="k">例：個人情報入りのファイル</span>
+            <b>3分後に、電話が来た</b>
+            <p>個人契約のAIに渡して匿名化させたら、情報セキュリティ部門から連絡。報告書を書くことに。</p>
+          </div>
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">2</span>
+            <span class="k">例：顧客情報を含む文書</span>
+            <b>企画が半年止まった</b>
+            <p>「外部のAIには送れない」と法務が止めた。便利さは分かっているのに、進まない。</p>
+          </div>
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">3</span>
+            <span class="k">設計レビューの会議</span>
+            <b>動いたけれど、不安</b>
+            <p>Ollamaで試せた。でも誰がつなげる状態か、説明できない。</p>
+          </div>
+        </div>
+        <p class="scene-foot">外に出せないから、AIを使わない。<b>その二択の間に、「自社のサーバーで動かす」があります。</b></p>
+        <p class="small muted">※ 1と2は、解説動画で紹介された事例をもとにした例です（<a href="#videos">動画で語られていること</a>）。</p>
+      </section>
+      <section class="sec" id="wish" aria-labelledby="h-wish">
+        <span class="sec-label">08 / WHAT YOU REALLY WANTED</span>
+        <h2 id="h-wish">本当は、こうしたかった：社外秘のまま社内のQwenで</h2>
+        <p class="intro">同じ資料、同じ会議。AIに任せても、データが社内から出ない状態。</p>
+        <div class="scenes four">
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">社外秘のまま</span>
+            <b>要約も下書きもAIで</b>
+            <p>データは社内のサーバーから出ない。外部のAIに貼る必要がない。</p>
+          </div>
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">情シスに聞かれても</span>
+            <b>構成を1枚で説明</b>
+            <p>待ち受け先、認証、外への通信、ログ。どこで止めたかを示せる。</p>
+          </div>
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">版を上げるときも</span>
+            <b>壊さずに更新</b>
+            <p>取得、検証、台帳、本番。決まった流れで、誰がやっても同じ手順。</p>
+          </div>
+          <div class="scene wish you">
+            <span class="mark" aria-hidden="true">!</span>
+            <span class="k">あなたに戻るのは</span>
+            <b>判断だけ</b>
+            <p>「この版に上げるか」。前後の比較がそろい、決めるのはその一問。</p>
+          </div>
+        </div>
+        <p class="scene-foot">ここまでは、このページの<a href="#build">手順</a>と<a href="#checklist">チェックリスト</a>で作れます。<b>会議のあとの段取りまで含めた分け方は、<a href="#simy">SIMYとの関係</a>にまとめました。</b></p>
+      </section>
       <section class="sec" id="videos" aria-labelledby="h-videos">
         <span class="sec-label">09 / FROM THE VIDEOS</span>
         <h2 id="h-videos">動画で語られていること：Qwenのセルフホストの実例</h2>
@@ -1664,8 +1642,6 @@ echo "$(date -I) vllm &lt;旧版&gt;→&lt;新版&gt; 担当:&lt;名前&gt; 検�
           </div>
         </details>
       </section>
-
-      <!-- 10 -->
       <section class="sec" id="simy" aria-labelledby="h-simy">
         <span class="sec-label">10 / SIMY</span>
         <h2 id="h-simy">SIMYとの関係：閉域の中はQwen、外はSIMY</h2>
@@ -1705,8 +1681,6 @@ echo "$(date -I) vllm &lt;旧版&gt;→&lt;新版&gt; 担当:&lt;名前&gt; 検�
         </ul>
         <p class="note"><b>線の引き方：</b>どの情報を閉域に残し、どこからを社外のツールで扱ってよいかは、会社の規程が決めます。SIMYのデータの取り扱いは<a href="/security.html">セキュリティ</a>と<a href="/privacy.html">プライバシーポリシー</a>で公開しています。</p>
       </section>
-
-      <!-- 11 -->
       <section class="sec" id="faq" aria-labelledby="h-faq">
         <span class="sec-label">11 / FAQ</span>
         <h2 id="h-faq">ローカルLLM・Qwenのよくある質問</h2>
@@ -1765,8 +1739,6 @@ echo "$(date -I) vllm &lt;旧版&gt;→&lt;新版&gt; 担当:&lt;名前&gt; 検�
           </details>
         </div>
       </section>
-
-      <!-- 12 -->
       <section class="sec" id="sources" aria-labelledby="h-sources">
         <span class="sec-label">12 / SOURCES</span>
         <h2 id="h-sources">参考情報</h2>
