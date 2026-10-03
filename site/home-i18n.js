@@ -612,13 +612,15 @@
       const localUrl = new URL(originalHref, window.location.href);
       if (localUrl.origin === window.location.origin) {
         const code = { en: "en", hi: "hi", es: "es", fr: "fr", "zh-Hans": "zh-hans" }[locale];
-        const guide = localUrl.pathname.match(/^\/guides\/([a-z-]+\.html)$/);
+        const guide = localUrl.pathname.match(/^\/guides\/(?:(?:en|hi|es|fr|zh-hans)\/)?([a-z-]+\.html)$/);
         if (guide) {
-          link.setAttribute("href", code ? `/guides/${code}/${guide[1]}` : localUrl.pathname);
+          localUrl.pathname = code ? `/guides/${code}/${guide[1]}` : `/guides/${guide[1]}`;
+          link.setAttribute("href", `${localUrl.pathname}${localUrl.search}${localUrl.hash}`);
           continue;
         }
-        if (localUrl.pathname === "/download.html") {
-          link.setAttribute("href", code ? `/download/${code}.html` : "/download.html");
+        if (/^\/download(?:\/(?:en|hi|es|fr|zh-hans))?\.html$/.test(localUrl.pathname)) {
+          localUrl.pathname = code ? `/download/${code}.html` : "/download.html";
+          link.setAttribute("href", `${localUrl.pathname}${localUrl.search}${localUrl.hash}`);
           continue;
         }
       }
