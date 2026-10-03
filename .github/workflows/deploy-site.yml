@@ -42,6 +42,7 @@ jobs:
         run: |
           python3 scripts/build-localized-home.py --check
           python3 scripts/check-home-seo.py
+          python3 scripts/check-site-seo.py
           node --test tests/*.test.cjs
 
       - name: Configure AWS credentials

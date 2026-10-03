@@ -21,7 +21,7 @@
   var TWIN_PAGE_LOCALES = SUPPORTED;
   var CACHE = {};
   var CURRENT_LANG = DEFAULT;
-  var I18N_VERSION = '20260712-i18n-keys-7';
+  var I18N_VERSION = '20261003-sitewide-seo-1';
   var BUNDLE_LOADING = {};
 
   /* ── Home (/) React SPA translation bridge ──
@@ -272,6 +272,20 @@
         return href;
       }
       if (isLegalPath(url.pathname)) return href;
+      // Static language URLs already identify their content language. Keep
+      // explicit language-switch links and their attribution parameters intact.
+      if (/^\/(?:ja|hi|es|fr|zh-Hans)\.html$/.test(url.pathname) ||
+          /^\/(?:guides|download)(?:\/|\.html$)/.test(url.pathname)) return href;
+      if (url.pathname === '/' || url.pathname === '/index.html') {
+        var homeLang = url.searchParams.get('lang') || CURRENT_LANG || document.documentElement.lang;
+        var homePaths = { en: '/', ja: '/ja.html', hi: '/hi.html', es: '/es.html', fr: '/fr.html', 'zh-Hans': '/zh-Hans.html' };
+        if (homePaths[homeLang]) {
+          url.pathname = homePaths[homeLang];
+          url.searchParams.delete('lang');
+          url.searchParams.delete('locale');
+          return url.pathname + url.search + url.hash;
+        }
+      }
       var lang = CURRENT_LANG || document.documentElement.lang || detect();
       var region = currentRegionForApp();
       url.searchParams.set('lang', lang);
@@ -289,9 +303,16 @@
     for (var i = 0; i < links.length; i++) {
       var href = links[i].getAttribute('href');
       if (!href) continue;
-      var nextHref = href.indexOf('app.simy.one') !== -1
-        ? decorateAppUrl(href)
-        : decorateSiteUrl(href);
+      // Recompute from the authored URL when a visitor changes language again.
+      // If another component changed the link, use that new destination instead.
+      var previous = links[i].getAttribute('data-i18n-decorated-href');
+      var original = previous === href ? links[i].getAttribute('data-i18n-original-href') : href;
+      original = original || href;
+      var nextHref = original.indexOf('app.simy.one') !== -1
+        ? decorateAppUrl(original)
+        : decorateSiteUrl(original);
+      links[i].setAttribute('data-i18n-original-href', original);
+      links[i].setAttribute('data-i18n-decorated-href', nextHref);
       links[i].setAttribute('href', nextHref);
     }
   }
@@ -695,6 +716,7 @@
   }
 
   function applySEO(lang) {
+    if (document.documentElement.hasAttribute('data-reviewed-seo')) return;
     var data = SEO[lang];
     if (!data) return;
     var key = pageKey();
@@ -715,6 +737,7 @@
   }
 
   function applyDictionarySEO(dict, langCode) {
+    if (document.documentElement.hasAttribute('data-reviewed-seo')) return;
     if (!dict) return;
     if (langCode === DEFAULT) return;
     var key = pageKey();
@@ -1707,28 +1730,8 @@
 
   /* ── Inject hreflang links for SEO ───────────────────────────── */
   function injectHreflang() {
-    // Map our codes to BCP-47 hreflang values
-    var hreflangMap = {
-      'en': 'en', 'ja': 'ja', 'zh-Hans': 'zh-Hans', 'zh-Hant': 'zh-Hant',
-      'fr': 'fr', 'de': 'de', 'es': 'es', 'ar': 'ar', 'it': 'it',
-      'hi': 'hi', 'te': 'te', 'kn': 'kn', 'ko': 'ko', 'vi': 'vi',
-      'th': 'th', 'id': 'id', 'ru': 'ru', 'pt-BR': 'pt-BR'
-    };
-    var base = location.origin + (location.pathname === '/index.html' ? '/' : location.pathname);
-    // x-default (no lang param)
-    var xdef = document.createElement('link');
-    xdef.rel = 'alternate';
-    xdef.hreflang = 'x-default';
-    xdef.href = base;
-    document.head.appendChild(xdef);
-    // Each language
-    pageLocales().forEach(function (code) {
-      var link = document.createElement('link');
-      link.rel = 'alternate';
-      link.hreflang = hreflangMap[code] || code;
-      link.href = base + '?lang=' + code;
-      document.head.appendChild(link);
-    });
+    // Alternate language URLs are authored in HTML only when a crawlable
+    // equivalent exists. Query-driven UI translations are not separate pages.
   }
 
   /* ── Static mobile nav: keep signup reachable when .nav-right is hidden ── */
