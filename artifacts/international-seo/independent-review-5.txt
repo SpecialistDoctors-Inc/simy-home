@@ -1,0 +1,9 @@
+No findings.
+
+Focused scope only: inspected the git diff, `tests/home-localized-links.test.cjs`, and nearby `updateLinks` context. The fix handles localized guide/download inputs, preserves query/hash, and remains idempotent on repeated execution.
+
+Targeted test passed:
+
+`node --test tests/home-localized-links.test.cjs`
+
+Result: 6 tests passed, 0 failed.
