@@ -37,5 +37,6 @@ jobs:
           python3 scripts/build-localized-home.py --check
           python3 scripts/check-home-seo.py
           python3 scripts/check-site-seo.py
+          python3 scripts/organize-guide-intent.py --check
           node --test tests/*.test.cjs
           git diff --check

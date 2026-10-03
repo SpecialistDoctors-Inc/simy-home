@@ -25,7 +25,7 @@
 <meta property="og:image:alt" content="Handle confidential conversations safely with your own Qwen. A guide to running Qwen on your own servers | SIMY">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2026-10-01">
-<meta property="article:modified_time" content="2026-10-02">
+<meta property="article:modified_time" content="2026-10-03">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Handle confidential conversations safely with your own Qwen. | SIMY">
 <meta name="twitter:description" content="How to run Qwen on your own servers in a closed network. Start vLLM on 127.0.0.1, authenticate with nginx and block outbound traffic. Licenses, specs and a checklist.">
@@ -869,11 +869,11 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
     {
       "@type": "Article",
       "@id": "https://simy.one/guides/en/qwen-local.html#article",
-      "headline": "How to run Qwen locally or on internal servers: setting it up securely in a closed network, with a checklist",
+      "headline": "How to Run Qwen Locally on Your Own Server, Securely",
       "description": "What a local LLM is, why choose Qwen and its licenses, how to choose between Ollama, llama.cpp, vLLM, SGLang and LM Studio, GPU memory requirements, setup steps in a closed network and a 20-item security checklist.",
       "inLanguage": "en",
       "datePublished": "2026-10-01",
-      "dateModified": "2026-10-02",
+      "dateModified": "2026-10-03",
       "mainEntityOfPage": "https://simy.one/guides/en/qwen-local.html",
       "image": {
         "@type": "ImageObject",
@@ -1087,15 +1087,11 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
           <li aria-current="page">Run Qwen on your own servers</li>
         </ol>
         <p class="eyebrow">A guide to building a local, in-house LLM</p>
-        <h1 id="page-title">
-          <span class="line">Handle confidential talk</span>
-          <span class="line hl">with your own Qwen,</span>
-          <span class="line">safely.</span>
-        </h1>
+        <h1 id="page-title">How to Run Qwen Locally on Your Own Server, Securely</h1>
         <p class="lead">How to run Qwen locally or on an internal server in a closed network: what a local LLM is, Ollama vs vLLM, GPU specs, setup steps and a 20-item checklist.</p>
         <div class="cta-row">
           <a class="btn btn-primary" href="#build">See the setup steps <span class="arrow" aria-hidden="true">↓</span></a>
-          <a class="btn btn-ghost" href="https://app.simy.one/signup?lang=en&amp;locale=en&amp;region=us&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=qwen-local_guide_en&amp;utm_content=hero">Get started with SIMY <span class="arrow" aria-hidden="true">↗</span></a>
+          <a class="btn btn-ghost" href="#basics">Read the practical guide <span class="arrow" aria-hidden="true">↓</span></a>
         </div>
         <ul class="hero-points">
           <li>Pick from Apache 2.0 models</li>
@@ -1136,14 +1132,14 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
     <nav class="toc" aria-label="Contents">
       <p class="toc-title">Contents</p>
       <ol>
-        <li><a href="#scene"><span>01</span>Sound familiar?</a></li>
-        <li><a href="#wish"><span>02</span>What you really wanted</a></li>
-        <li><a href="#basics"><span>03</span>Local LLMs and why Qwen</a></li>
-        <li><a href="#engines"><span>04</span>Choosing an inference engine</a></li>
-        <li><a href="#hardware"><span>05</span>Hardware guidelines</a></li>
-        <li><a href="#build"><span>06</span>Setup in a closed network</a></li>
-        <li><a href="#checklist"><span>07</span>Security checklist</a></li>
-        <li><a href="#mistakes"><span>08</span>Common mistakes</a></li>
+        <li><a href="#basics"><span>01</span>Local LLMs and why Qwen</a></li>
+        <li><a href="#engines"><span>02</span>Choosing an inference engine</a></li>
+        <li><a href="#hardware"><span>03</span>Hardware guidelines</a></li>
+        <li><a href="#build"><span>04</span>Setup in a closed network</a></li>
+        <li><a href="#checklist"><span>05</span>Security checklist</a></li>
+        <li><a href="#mistakes"><span>06</span>Common mistakes</a></li>
+        <li><a href="#scene"><span>07</span>Sound familiar?</a></li>
+        <li><a href="#wish"><span>08</span>What you really wanted</a></li>
         <li><a href="#videos"><span>09</span>What the videos say</a></li>
         <li><a href="#simy"><span>10</span>Where SIMY fits</a></li>
         <li><a href="#faq"><span>11</span>FAQ</a></li>
@@ -1155,89 +1151,24 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
       <details class="toc-mobile">
         <summary>Contents</summary>
         <ol>
-          <li><a href="#scene">Sound familiar?</a></li>
-          <li><a href="#wish">What you really wanted</a></li>
-          <li><a href="#basics">Local LLMs and why Qwen</a></li>
-          <li><a href="#engines">Choosing an inference engine</a></li>
-          <li><a href="#hardware">Hardware guidelines</a></li>
-          <li><a href="#build">Setup in a closed network</a></li>
-          <li><a href="#checklist">Security checklist</a></li>
-          <li><a href="#mistakes">Common mistakes</a></li>
-          <li><a href="#videos">What the videos say</a></li>
-          <li><a href="#simy">Where SIMY fits</a></li>
-          <li><a href="#faq">FAQ</a></li>
-          <li><a href="#sources">Sources</a></li>
-        </ol>
+        <li><a href="#basics">Local LLMs and why Qwen</a></li>
+        <li><a href="#engines">Choosing an inference engine</a></li>
+        <li><a href="#hardware">Hardware guidelines</a></li>
+        <li><a href="#build">Setup in a closed network</a></li>
+        <li><a href="#checklist">Security checklist</a></li>
+        <li><a href="#mistakes">Common mistakes</a></li>
+        <li><a href="#scene">Sound familiar?</a></li>
+        <li><a href="#wish">What you really wanted</a></li>
+        <li><a href="#videos">What the videos say</a></li>
+        <li><a href="#simy">Where SIMY fits</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#sources">Sources</a></li>
+      </ol>
       </details>
 
-      <p class="byline"><span>Last updated: <time datetime="2026-10-02">October 2, 2026</time></span><span>Published by SIMY (AwakApp Inc.)</span></p>
-
-      <!-- 01 -->
-      <section class="sec" id="scene" aria-labelledby="h-scene">
-        <span class="sec-label">01 / CAN'T SEND IT OUT</span>
-        <h2 id="h-scene">Confidential data you can't paste into an outside AI. Sound familiar?</h2>
-        <p class="intro">You know AI would be faster. But these conversations can't leave the company.</p>
-        <div class="scenes">
-          <div class="scene pain">
-            <span class="mark" aria-hidden="true">1</span>
-            <span class="k">e.g. a file with personal data</span>
-            <b>The call came 3 minutes later</b>
-            <p>Someone had a personal AI account anonymize it. Infosec called, and a report had to be filed.</p>
-          </div>
-          <div class="scene pain">
-            <span class="mark" aria-hidden="true">2</span>
-            <span class="k">e.g. documents with customer data</span>
-            <b>The project stalled for 6 months</b>
-            <p>Legal said "it can't go to an outside AI." Everyone sees the value, yet nothing moves.</p>
-          </div>
-          <div class="scene pain">
-            <span class="mark" aria-hidden="true">3</span>
-            <span class="k">A design review meeting</span>
-            <b>It works, but it's worrying</b>
-            <p>You got it running in Ollama. But you can't say who is able to connect to it.</p>
-          </div>
-        </div>
-        <p class="scene-foot">It can't go out, so you don't use AI. <b>Between those two options lies "run it on your own servers."</b></p>
-        <p class="small muted">* 1 and 2 are examples based on cases described in explainer videos (<a href="#videos">What the videos say</a>).</p>
-      </section>
-
-      <!-- 02 -->
-      <section class="sec" id="wish" aria-labelledby="h-wish">
-        <span class="sec-label">02 / WHAT YOU REALLY WANTED</span>
-        <h2 id="h-wish">What you really wanted: confidential data, with Qwen in-house</h2>
-        <p class="intro">Same documents, same meetings. AI does the work, and the data stays inside the company.</p>
-        <div class="scenes four">
-          <div class="scene wish">
-            <span class="mark" aria-hidden="true">✓</span>
-            <span class="k">Still confidential</span>
-            <b>AI summaries and drafts</b>
-            <p>Data stays on your own servers. No need to paste it into an outside AI.</p>
-          </div>
-          <div class="scene wish">
-            <span class="mark" aria-hidden="true">✓</span>
-            <span class="k">When IT asks</span>
-            <b>Explain it on one page</b>
-            <p>Where it listens, authentication, outbound traffic, logs. Show where each is locked down.</p>
-          </div>
-          <div class="scene wish">
-            <span class="mark" aria-hidden="true">✓</span>
-            <span class="k">When upgrading</span>
-            <b>Update without breaking</b>
-            <p>Fetch, verify, record, deploy. A fixed flow that works the same whoever runs it.</p>
-          </div>
-          <div class="scene wish you">
-            <span class="mark" aria-hidden="true">!</span>
-            <span class="k">What comes back to you</span>
-            <b>Only the decision</b>
-            <p>"Do we move to this version?" The before-and-after comparison is ready; that's the one question.</p>
-          </div>
-        </div>
-        <p class="scene-foot">You can build all of this with the <a href="#build">steps</a> and <a href="#checklist">checklist</a> on this page. <b>How to split the work, including the follow-up after meetings, is covered in <a href="#simy">Where SIMY fits</a>.</b></p>
-      </section>
-
-      <!-- 03 -->
+      <p class="byline"><span>Last updated: <time datetime="2026-10-03">October 3, 2026</time></span><span>Published by SIMY (AwakApp Inc.)</span></p>
       <section class="sec" id="basics" aria-labelledby="h-basics">
-        <span class="sec-label">03 / BASICS</span>
+        <span class="sec-label">01 / BASICS</span>
         <h2 id="h-basics">What is a local LLM? Why run Qwen in-house</h2>
         <p class="intro">A local LLM means running the published weights of a model on your own PC or your company's servers. The text you enter never leaves that machine.</p>
         <div class="table-wrap">
@@ -1292,7 +1223,7 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
         </div>
         <p class="small muted">Checked against the model information in the Qwen organization on Hugging Face on October 1, 2026. Not every Qwen model is Apache 2.0. Before commercial use, check the LICENSE in the repository of the model you use with your legal team.</p>
 
-        <details class="fold">
+        <details class="fold" open>
           <summary>Recommended local LLMs: choosing a Qwen model by use case<small>As of October 2026. When in doubt, start small</small></summary>
           <div class="fold-body">
             <ul class="plain-list">
@@ -1306,10 +1237,8 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
           </div>
         </details>
       </section>
-
-      <!-- 04 -->
       <section class="sec" id="engines" aria-labelledby="h-engines">
-        <span class="sec-label">04 / ENGINES</span>
+        <span class="sec-label">02 / ENGINES</span>
         <h2 id="h-engines">Choosing an inference engine: Ollama, llama.cpp, vLLM, SGLang, LM Studio</h2>
         <p class="intro">The software that runs a model is the "inference engine." For security, the biggest difference is where it listens if you change nothing.</p>
         <p class="scroll-hint">Scroll the table sideways →</p>
@@ -1335,10 +1264,8 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
         </ul>
         <p class="note"><b>A vLLM caveat: </b>the official Security page explains that <code>--api-key</code> only protects endpoints such as <code>/v1</code>, and not <code>/invocations</code>, <code>/pooling</code> and others. That is why the project itself names a reverse proxy that passes only the endpoints you want to expose as the most effective measure.</p>
       </section>
-
-      <!-- 05 -->
       <section class="sec" id="hardware" aria-labelledby="h-hardware">
-        <span class="sec-label">05 / HARDWARE</span>
+        <span class="sec-label">03 / HARDWARE</span>
         <h2 id="h-hardware">Hardware guidelines: GPU memory needed for each Qwen model</h2>
         <p class="intro">Think of the GPU memory you need as the sum of three parts.</p>
         <ul class="arch" aria-label="What makes up the GPU memory you need">
@@ -1370,10 +1297,8 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
         </ul>
         <p class="note"><b>How to size it: </b>decide first how many people will use it at once and how long the documents they feed it will be. The KV cache grows in proportion to both, so if you assume the weights alone are enough, you'll run short in production.</p>
       </section>
-
-      <!-- 06 -->
       <section class="sec" id="build" aria-labelledby="h-build">
-        <span class="sec-label">06 / BUILD</span>
+        <span class="sec-label">04 / BUILD</span>
         <h2 id="h-build">Setup in a closed network: Qwen + vLLM on an internal server</h2>
         <p class="intro">The example uses the FP8 version of Qwen3.8-27B with vLLM (Docker) on a Linux server. Commands match the official documentation as of October 2026. If GPU memory runs short, lower the context limit (<code>--max-model-len</code>) or choose a 4-bit version.</p>
         <div class="tl-wrap" role="img" aria-label="Architecture diagram. Office PCs connect over TLS to the nginx gateway, which passes only requests that clear authentication and the allowlist to vLLM listening on 127.0.0.1. vLLM runs Qwen on the company's own GPU. Traffic from the server to the internet is blocked. Models and containers are brought in on media from a transfer machine that is connected to the outside">
@@ -1564,10 +1489,8 @@ echo "$(date -I) vllm &lt;old version&gt;→&lt;new version&gt; owner:&lt;name&g
           </li>
         </ol>
       </section>
-
-      <!-- 07 -->
       <section class="sec" id="checklist" aria-labelledby="h-checklist">
-        <span class="sec-label">07 / CHECKLIST</span>
+        <span class="sec-label">05 / CHECKLIST</span>
         <h2 id="h-checklist">Local LLM security checklist: 20 items before production</h2>
         <p class="intro">Go through these from top to bottom before and after setup. The checkboxes work only on this screen and nothing is sent anywhere.</p>
         <p class="check-progress" aria-live="polite"><b id="check-count">0</b> / 20 checked</p>
@@ -1614,10 +1537,8 @@ echo "$(date -I) vllm &lt;old version&gt;→&lt;new version&gt; owner:&lt;name&g
           </div>
         </div>
       </section>
-
-      <!-- 08 -->
       <section class="sec" id="mistakes" aria-labelledby="h-mistakes">
-        <span class="sec-label">08 / MISTAKES</span>
+        <span class="sec-label">06 / MISTAKES</span>
         <h2 id="h-mistakes">Common mistakes: the gaps that "I thought it was fine" leaves in a local LLM</h2>
         <p class="intro">Common mistakes on the left, the fix from this page's steps on the right.</p>
         <ul class="mistakes">
@@ -1631,8 +1552,65 @@ echo "$(date -I) vllm &lt;old version&gt;→&lt;new version&gt; owner:&lt;name&g
           <li><div class="ng"><b>Breaking on update</b>After upgrading, removed environment variables or changed limits stop it from running.</div><div class="ok"><b>Compare before and after in a test environment</b>Check against the release notes and record who upgraded it.</div></li>
         </ul>
       </section>
-
-      <!-- 09 -->
+      <section class="sec" id="scene" aria-labelledby="h-scene">
+        <span class="sec-label">07 / CAN'T SEND IT OUT</span>
+        <h2 id="h-scene">Confidential data you can't paste into an outside AI. Sound familiar?</h2>
+        <p class="intro">You know AI would be faster. But these conversations can't leave the company.</p>
+        <div class="scenes">
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">1</span>
+            <span class="k">e.g. a file with personal data</span>
+            <b>The call came 3 minutes later</b>
+            <p>Someone had a personal AI account anonymize it. Infosec called, and a report had to be filed.</p>
+          </div>
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">2</span>
+            <span class="k">e.g. documents with customer data</span>
+            <b>The project stalled for 6 months</b>
+            <p>Legal said "it can't go to an outside AI." Everyone sees the value, yet nothing moves.</p>
+          </div>
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">3</span>
+            <span class="k">A design review meeting</span>
+            <b>It works, but it's worrying</b>
+            <p>You got it running in Ollama. But you can't say who is able to connect to it.</p>
+          </div>
+        </div>
+        <p class="scene-foot">It can't go out, so you don't use AI. <b>Between those two options lies "run it on your own servers."</b></p>
+        <p class="small muted">* 1 and 2 are examples based on cases described in explainer videos (<a href="#videos">What the videos say</a>).</p>
+      </section>
+      <section class="sec" id="wish" aria-labelledby="h-wish">
+        <span class="sec-label">08 / WHAT YOU REALLY WANTED</span>
+        <h2 id="h-wish">What you really wanted: confidential data, with Qwen in-house</h2>
+        <p class="intro">Same documents, same meetings. AI does the work, and the data stays inside the company.</p>
+        <div class="scenes four">
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">Still confidential</span>
+            <b>AI summaries and drafts</b>
+            <p>Data stays on your own servers. No need to paste it into an outside AI.</p>
+          </div>
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">When IT asks</span>
+            <b>Explain it on one page</b>
+            <p>Where it listens, authentication, outbound traffic, logs. Show where each is locked down.</p>
+          </div>
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">When upgrading</span>
+            <b>Update without breaking</b>
+            <p>Fetch, verify, record, deploy. A fixed flow that works the same whoever runs it.</p>
+          </div>
+          <div class="scene wish you">
+            <span class="mark" aria-hidden="true">!</span>
+            <span class="k">What comes back to you</span>
+            <b>Only the decision</b>
+            <p>"Do we move to this version?" The before-and-after comparison is ready; that's the one question.</p>
+          </div>
+        </div>
+        <p class="scene-foot">You can build all of this with the <a href="#build">steps</a> and <a href="#checklist">checklist</a> on this page. <b>How to split the work, including the follow-up after meetings, is covered in <a href="#simy">Where SIMY fits</a>.</b></p>
+      </section>
       <section class="sec" id="videos" aria-labelledby="h-videos">
         <span class="sec-label">09 / FROM THE VIDEOS</span>
         <h2 id="h-videos">What the videos say: real examples of self-hosting Qwen</h2>
@@ -1664,8 +1642,6 @@ echo "$(date -I) vllm &lt;old version&gt;→&lt;new version&gt; owner:&lt;name&g
           </div>
         </details>
       </section>
-
-      <!-- 10 -->
       <section class="sec" id="simy" aria-labelledby="h-simy">
         <span class="sec-label">10 / SIMY</span>
         <h2 id="h-simy">Where SIMY fits: Qwen inside the closed network, SIMY outside</h2>
@@ -1705,8 +1681,6 @@ echo "$(date -I) vllm &lt;old version&gt;→&lt;new version&gt; owner:&lt;name&g
         </ul>
         <p class="note"><b>Where to draw the line: </b>your company's rules decide which information stays in the closed network and what may be handled by outside tools. How SIMY handles data is published in <a href="/security.html">Security</a> and the <a href="/privacy.html?lang=en">Privacy Policy</a>.</p>
       </section>
-
-      <!-- 11 -->
       <section class="sec" id="faq" aria-labelledby="h-faq">
         <span class="sec-label">11 / FAQ</span>
         <h2 id="h-faq">Local LLM and Qwen FAQ</h2>
@@ -1765,8 +1739,6 @@ echo "$(date -I) vllm &lt;old version&gt;→&lt;new version&gt; owner:&lt;name&g
           </details>
         </div>
       </section>
-
-      <!-- 12 -->
       <section class="sec" id="sources" aria-labelledby="h-sources">
         <span class="sec-label">12 / SOURCES</span>
         <h2 id="h-sources">Sources</h2>
