@@ -25,7 +25,7 @@
 <meta property="og:image:alt" content="Lo confidencial, en tu propio Qwen y sin riesgos. Guía para ejecutar Qwen en tu servidor | SIMY">
 <meta property="og:locale" content="es_ES">
 <meta property="article:published_time" content="2026-10-01">
-<meta property="article:modified_time" content="2026-10-02">
+<meta property="article:modified_time" content="2026-10-03">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Lo confidencial, en tu propio Qwen y sin riesgos. | SIMY">
 <meta name="twitter:description" content="Cómo ejecutar Qwen en tu servidor y en red aislada: vLLM en 127.0.0.1, autenticación con nginx y tráfico saliente bloqueado. Licencias, hardware y checklist.">
@@ -869,11 +869,11 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
     {
       "@type": "Article",
       "@id": "https://simy.one/guides/es/qwen-local.html#article",
-      "headline": "Cómo ejecutar Qwen en local o en un servidor interno: pasos y checklist para una red aislada segura",
+      "headline": "Qwen en local y en tu servidor: LLM en red aislada",
       "description": "Qué es un LLM local, por qué Qwen y sus licencias, cómo elegir entre Ollama, llama.cpp, vLLM, SGLang y LM Studio, la memoria de GPU necesaria, los pasos de montaje en red aislada y una checklist de seguridad de 20 puntos.",
       "inLanguage": "es",
       "datePublished": "2026-10-01",
-      "dateModified": "2026-10-02",
+      "dateModified": "2026-10-03",
       "mainEntityOfPage": "https://simy.one/guides/es/qwen-local.html",
       "image": {
         "@type": "ImageObject",
@@ -929,7 +929,7 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
           "@type": "ListItem",
           "position": 1,
           "name": "SIMY",
-          "item": "https://simy.one/"
+          "item": "https://simy.one/es.html"
         },
         {
           "@type": "ListItem",
@@ -1063,7 +1063,7 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
 
 <header class="site-header">
   <div class="wrap header-inner">
-    <a class="brand" href="/?lang=es">
+    <a class="brand" href="/es.html">
       <img src="/simy-icon-56.png" alt="SIMY" width="28" height="28">
       <span aria-hidden="true">SIMY</span>
       <span class="brand-sub">Qwen en tu servidor</span>
@@ -1082,20 +1082,16 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
     <div class="wrap hero-inner">
       <div>
         <ol class="crumbs" aria-label="Ruta de navegación">
-          <li><a href="https://simy.one/">SIMY</a></li>
+          <li><a href="/es.html">SIMY</a></li>
           <li><a href="/guides/es/index.html">Guías</a></li>
           <li aria-current="page">Qwen en tu propio servidor</li>
         </ol>
         <p class="eyebrow">Guía para montar un LLM local o interno</p>
-        <h1 id="page-title">
-          <span class="line">Lo confidencial,</span>
-          <span class="line hl">en tu propio Qwen</span>
-          <span class="line">y sin riesgos.</span>
-        </h1>
-        <p class="lead">Los datos de clientes y los diseños no se pueden pegar en una IA externa. La salida: ejecutar Qwen en un servidor de tu empresa, sin que nada salga. Aquí tienes los pasos y una checklist basados en la documentación oficial.</p>
+        <h1 id="page-title">Qwen en local y en tu servidor: LLM en red aislada</h1>
+        <p class="lead">Cómo ejecutar Qwen en local o en un servidor interno en red aislada: qué es un LLM local, Ollama o vLLM, hardware, pasos y checklist de 20 puntos (oct. 2026).</p>
         <div class="cta-row">
           <a class="btn btn-primary" href="#build">Ver los pasos de montaje <span class="arrow" aria-hidden="true">↓</span></a>
-          <a class="btn btn-ghost" href="https://app.simy.one/signup?lang=es&amp;locale=es&amp;region=es&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=qwen-local_guide_es&amp;utm_content=hero">Empezar con SIMY <span class="arrow" aria-hidden="true">↗</span></a>
+          <a class="btn btn-ghost" href="#basics">Leer la guía práctica <span class="arrow" aria-hidden="true">↓</span></a>
         </div>
         <ul class="hero-points">
           <li>Elige entre modelos Apache 2.0</li>
@@ -1136,14 +1132,14 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
     <nav class="toc" aria-label="Índice">
       <p class="toc-title">Índice</p>
       <ol>
-        <li><a href="#scene"><span>01</span>¿Te pasa esto?</a></li>
-        <li><a href="#wish"><span>02</span>Lo que de verdad querías</a></li>
-        <li><a href="#basics"><span>03</span>LLM local y por qué Qwen</a></li>
-        <li><a href="#engines"><span>04</span>Cómo elegir el motor</a></li>
-        <li><a href="#hardware"><span>05</span>Hardware necesario</a></li>
-        <li><a href="#build"><span>06</span>Montaje en red aislada</a></li>
-        <li><a href="#checklist"><span>07</span>Checklist de seguridad</a></li>
-        <li><a href="#mistakes"><span>08</span>Errores frecuentes</a></li>
+        <li><a href="#basics"><span>01</span>LLM local y por qué Qwen</a></li>
+        <li><a href="#engines"><span>02</span>Cómo elegir el motor</a></li>
+        <li><a href="#hardware"><span>03</span>Hardware necesario</a></li>
+        <li><a href="#build"><span>04</span>Montaje en red aislada</a></li>
+        <li><a href="#checklist"><span>05</span>Checklist de seguridad</a></li>
+        <li><a href="#mistakes"><span>06</span>Errores frecuentes</a></li>
+        <li><a href="#scene"><span>07</span>¿Te pasa esto?</a></li>
+        <li><a href="#wish"><span>08</span>Lo que de verdad querías</a></li>
         <li><a href="#videos"><span>09</span>Lo que cuentan los vídeos</a></li>
         <li><a href="#simy"><span>10</span>Qué papel tiene SIMY</a></li>
         <li><a href="#faq"><span>11</span>Preguntas frecuentes</a></li>
@@ -1155,89 +1151,24 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
       <details class="toc-mobile">
         <summary>Índice</summary>
         <ol>
-          <li><a href="#scene">¿Te pasa esto?</a></li>
-          <li><a href="#wish">Lo que de verdad querías</a></li>
-          <li><a href="#basics">LLM local y por qué Qwen</a></li>
-          <li><a href="#engines">Cómo elegir el motor</a></li>
-          <li><a href="#hardware">Hardware necesario</a></li>
-          <li><a href="#build">Montaje en red aislada</a></li>
-          <li><a href="#checklist">Checklist de seguridad</a></li>
-          <li><a href="#mistakes">Errores frecuentes</a></li>
-          <li><a href="#videos">Lo que cuentan los vídeos</a></li>
-          <li><a href="#simy">Qué papel tiene SIMY</a></li>
-          <li><a href="#faq">Preguntas frecuentes</a></li>
-          <li><a href="#sources">Fuentes</a></li>
-        </ol>
+        <li><a href="#basics">LLM local y por qué Qwen</a></li>
+        <li><a href="#engines">Cómo elegir el motor</a></li>
+        <li><a href="#hardware">Hardware necesario</a></li>
+        <li><a href="#build">Montaje en red aislada</a></li>
+        <li><a href="#checklist">Checklist de seguridad</a></li>
+        <li><a href="#mistakes">Errores frecuentes</a></li>
+        <li><a href="#scene">¿Te pasa esto?</a></li>
+        <li><a href="#wish">Lo que de verdad querías</a></li>
+        <li><a href="#videos">Lo que cuentan los vídeos</a></li>
+        <li><a href="#simy">Qué papel tiene SIMY</a></li>
+        <li><a href="#faq">Preguntas frecuentes</a></li>
+        <li><a href="#sources">Fuentes</a></li>
+      </ol>
       </details>
 
-      <p class="byline"><span>Última actualización: <time datetime="2026-10-02">2 de octubre de 2026</time></span><span>Publicado por: SIMY (AwakApp Inc.)</span></p>
-
-      <!-- 01 -->
-      <section class="sec" id="scene" aria-labelledby="h-scene">
-        <span class="sec-label">01 / CAN'T SEND IT OUT</span>
-        <h2 id="h-scene">Datos que no puedes pegar en una IA externa: ¿te pasa esto?</h2>
-        <p class="intro">Sabes que con IA iría más rápido. Pero esa conversación no puede salir de la empresa.</p>
-        <div class="scenes">
-          <div class="scene pain">
-            <span class="mark" aria-hidden="true">1</span>
-            <span class="k">Ej.: un archivo con datos personales</span>
-            <b>A los 3 minutos, una llamada</b>
-            <p>Lo pasó a una IA de su cuenta personal para anonimizarlo. Llamó Seguridad de la Información y tocó escribir un informe.</p>
-          </div>
-          <div class="scene pain">
-            <span class="mark" aria-hidden="true">2</span>
-            <span class="k">Ej.: documentos con datos de clientes</span>
-            <b>Un proyecto parado medio año</b>
-            <p>Legal lo frenó: «no se puede enviar a una IA externa». Todos ven la utilidad, pero no avanza.</p>
-          </div>
-          <div class="scene pain">
-            <span class="mark" aria-hidden="true">3</span>
-            <span class="k">Una revisión de diseño</span>
-            <b>Funciona, pero inquieta</b>
-            <p>Probaste con Ollama y funcionó. Pero no sabes explicar quién puede conectarse.</p>
-          </div>
-        </div>
-        <p class="scene-foot">Como no puede salir, no se usa IA. <b>Entre esas dos opciones hay una tercera: ejecutarla en tu propio servidor.</b></p>
-        <p class="small muted">* Los casos 1 y 2 se basan en ejemplos contados en vídeos explicativos (<a href="#videos">Lo que cuentan los vídeos</a>).</p>
-      </section>
-
-      <!-- 02 -->
-      <section class="sec" id="wish" aria-labelledby="h-wish">
-        <span class="sec-label">02 / WHAT YOU REALLY WANTED</span>
-        <h2 id="h-wish">Lo que querías: lo confidencial, en el Qwen de tu empresa</h2>
-        <p class="intro">Los mismos documentos, las mismas reuniones. La IA ayuda y los datos no salen de la empresa.</p>
-        <div class="scenes four">
-          <div class="scene wish">
-            <span class="mark" aria-hidden="true">✓</span>
-            <span class="k">Sin dejar de ser confidencial</span>
-            <b>Resúmenes y borradores con IA</b>
-            <p>Los datos no salen del servidor. No hace falta pegarlos en una IA externa.</p>
-          </div>
-          <div class="scene wish">
-            <span class="mark" aria-hidden="true">✓</span>
-            <span class="k">Si TI pregunta</span>
-            <b>La arquitectura en una hoja</b>
-            <p>Dónde escucha, autenticación, tráfico saliente y logs. Puedes mostrar dónde se corta.</p>
-          </div>
-          <div class="scene wish">
-            <span class="mark" aria-hidden="true">✓</span>
-            <span class="k">Al cambiar de versión</span>
-            <b>Actualizar sin romper</b>
-            <p>Descarga, validación, registro y producción. El mismo flujo, lo haga quien lo haga.</p>
-          </div>
-          <div class="scene wish you">
-            <span class="mark" aria-hidden="true">!</span>
-            <span class="k">Lo que vuelve a ti</span>
-            <b>Solo la decisión</b>
-            <p>«¿Subimos a esta versión?». Con la comparación del antes y el después, decides esa única pregunta.</p>
-          </div>
-        </div>
-        <p class="scene-foot">Todo esto se consigue con los <a href="#build">pasos</a> y la <a href="#checklist">checklist</a> de esta página. <b>Cómo repartir también la organización del trabajo tras la reunión está en <a href="#simy">Qué papel tiene SIMY</a>.</b></p>
-      </section>
-
-      <!-- 03 -->
+      <p class="byline"><span>Última actualización: <time datetime="2026-10-03">3 de octubre de 2026</time></span><span>Publicado por: SIMY (AwakApp Inc.)</span></p>
       <section class="sec" id="basics" aria-labelledby="h-basics">
-        <span class="sec-label">03 / BASICS</span>
+        <span class="sec-label">01 / BASICS</span>
         <h2 id="h-basics">Qué es un LLM local y por qué ejecutar Qwen en tu empresa</h2>
         <p class="intro">Un LLM local consiste en ejecutar los pesos publicados de un modelo en tu propio PC o en un servidor de la empresa. El texto que introduces no sale de esa máquina.</p>
         <div class="table-wrap">
@@ -1292,7 +1223,7 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
         </div>
         <p class="small muted">Verificado el 1 de octubre de 2026 en la información de modelos de la organización Qwen en Hugging Face. No es cierto que «todo Qwen sea Apache 2.0». Antes de un uso comercial, revisa con tu equipo legal el archivo LICENSE del repositorio del modelo que vayas a usar.</p>
 
-        <details class="fold">
+        <details class="fold" open>
           <summary>LLM local recomendado: qué Qwen elegir según el uso<small>Octubre de 2026. Si dudas, empieza en pequeño</small></summary>
           <div class="fold-body">
             <ul class="plain-list">
@@ -1306,10 +1237,8 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
           </div>
         </details>
       </section>
-
-      <!-- 04 -->
       <section class="sec" id="engines" aria-labelledby="h-engines">
-        <span class="sec-label">04 / ENGINES</span>
+        <span class="sec-label">02 / ENGINES</span>
         <h2 id="h-engines">Elegir motor: Ollama, llama.cpp, vLLM, SGLang o LM Studio</h2>
         <p class="intro">El software que ejecuta el modelo es el «motor de inferencia». En seguridad, la mayor diferencia es dónde escucha si no tocas nada.</p>
         <p class="scroll-hint">Puedes desplazar la tabla en horizontal →</p>
@@ -1335,10 +1264,8 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
         </ul>
         <p class="note"><b>Ojo con vLLM:</b> su página oficial de Security explica que <code>--api-key</code> solo protege rutas como <code>/v1</code>, y que <code>/invocations</code> o <code>/pooling</code>, entre otras, quedan fuera. Por eso la propia documentación considera que lo más eficaz es ponerlo detrás de un proxy inverso que deje pasar solo los endpoints que quieras publicar.</p>
       </section>
-
-      <!-- 05 -->
       <section class="sec" id="hardware" aria-labelledby="h-hardware">
-        <span class="sec-label">05 / HARDWARE</span>
+        <span class="sec-label">03 / HARDWARE</span>
         <h2 id="h-hardware">Hardware: memoria de GPU necesaria según el modelo de Qwen</h2>
         <p class="intro">La memoria de GPU necesaria se calcula como una suma de tres partes.</p>
         <ul class="arch" aria-label="Desglose de la memoria de GPU necesaria">
@@ -1370,10 +1297,8 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
         </ul>
         <p class="note"><b>Cómo dimensionar:</b> decide primero cuántas personas lo usarán a la vez y qué longitud tendrán los documentos de cada consulta. La caché KV crece en proporción a ambos, así que si solo cuentas los pesos, te quedarás corto en producción.</p>
       </section>
-
-      <!-- 06 -->
       <section class="sec" id="build" aria-labelledby="h-build">
-        <span class="sec-label">06 / BUILD</span>
+        <span class="sec-label">04 / BUILD</span>
         <h2 id="h-build">Montaje en red aislada: Qwen + vLLM en un servidor interno</h2>
         <p class="intro">El ejemplo usa la versión FP8 de Qwen3.8-27B con vLLM (Docker) en un servidor Linux. Los comandos siguen la documentación oficial de octubre de 2026. Si no te llega la memoria de GPU, baja el límite de contexto (<code>--max-model-len</code>) o elige una versión de 4 bits.</p>
         <div class="tl-wrap" role="img" aria-label="Diagrama de arquitectura. Los PC de la empresa se conectan por TLS a nginx en el gateway; nginx pasa solo las peticiones que superan la autenticación y la lista de permitidos a vLLM, que escucha en 127.0.0.1. vLLM ejecuta Qwen en la GPU de la empresa. Se bloquea el tráfico del servidor hacia internet. Los modelos y contenedores se descargan en un equipo de entrada conectado al exterior y se trasladan en un soporte físico">
@@ -1564,10 +1489,8 @@ echo "$(date -I) vllm &lt;versión-anterior&gt;→&lt;versión-nueva&gt; respons
           </li>
         </ol>
       </section>
-
-      <!-- 07 -->
       <section class="sec" id="checklist" aria-labelledby="h-checklist">
-        <span class="sec-label">07 / CHECKLIST</span>
+        <span class="sec-label">05 / CHECKLIST</span>
         <h2 id="h-checklist">Seguridad del LLM local: 20 puntos antes de producción</h2>
         <p class="intro">Revísalos en orden, antes y después del montaje. Las casillas solo funcionan en esta pantalla y no se envían a ninguna parte.</p>
         <p class="check-progress" aria-live="polite"><b id="check-count">0</b> / 20 comprobados</p>
@@ -1614,10 +1537,8 @@ echo "$(date -I) vllm &lt;versión-anterior&gt;→&lt;versión-nueva&gt; respons
           </div>
         </div>
       </section>
-
-      <!-- 08 -->
       <section class="sec" id="mistakes" aria-labelledby="h-mistakes">
-        <span class="sec-label">08 / MISTAKES</span>
+        <span class="sec-label">06 / MISTAKES</span>
         <h2 id="h-mistakes">Errores frecuentes: cuando «creíamos que era seguro»</h2>
         <p class="intro">A la izquierda, el error habitual; a la derecha, la solución con los pasos de esta página.</p>
         <ul class="mistakes">
@@ -1631,8 +1552,65 @@ echo "$(date -I) vllm &lt;versión-anterior&gt;→&lt;versión-nueva&gt; respons
           <li><div class="ng"><b>Se rompe al actualizar</b>Tras subir de versión, deja de funcionar por variables eliminadas o límites cambiados.</div><div class="ok"><b>Comparar en validación</b>Contrasta con las notas de versión y anota quién actualizó.</div></li>
         </ul>
       </section>
-
-      <!-- 09 -->
+      <section class="sec" id="scene" aria-labelledby="h-scene">
+        <span class="sec-label">07 / CAN'T SEND IT OUT</span>
+        <h2 id="h-scene">Datos que no puedes pegar en una IA externa: ¿te pasa esto?</h2>
+        <p class="intro">Sabes que con IA iría más rápido. Pero esa conversación no puede salir de la empresa.</p>
+        <div class="scenes">
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">1</span>
+            <span class="k">Ej.: un archivo con datos personales</span>
+            <b>A los 3 minutos, una llamada</b>
+            <p>Lo pasó a una IA de su cuenta personal para anonimizarlo. Llamó Seguridad de la Información y tocó escribir un informe.</p>
+          </div>
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">2</span>
+            <span class="k">Ej.: documentos con datos de clientes</span>
+            <b>Un proyecto parado medio año</b>
+            <p>Legal lo frenó: «no se puede enviar a una IA externa». Todos ven la utilidad, pero no avanza.</p>
+          </div>
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">3</span>
+            <span class="k">Una revisión de diseño</span>
+            <b>Funciona, pero inquieta</b>
+            <p>Probaste con Ollama y funcionó. Pero no sabes explicar quién puede conectarse.</p>
+          </div>
+        </div>
+        <p class="scene-foot">Como no puede salir, no se usa IA. <b>Entre esas dos opciones hay una tercera: ejecutarla en tu propio servidor.</b></p>
+        <p class="small muted">* Los casos 1 y 2 se basan en ejemplos contados en vídeos explicativos (<a href="#videos">Lo que cuentan los vídeos</a>).</p>
+      </section>
+      <section class="sec" id="wish" aria-labelledby="h-wish">
+        <span class="sec-label">08 / WHAT YOU REALLY WANTED</span>
+        <h2 id="h-wish">Lo que querías: lo confidencial, en el Qwen de tu empresa</h2>
+        <p class="intro">Los mismos documentos, las mismas reuniones. La IA ayuda y los datos no salen de la empresa.</p>
+        <div class="scenes four">
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">Sin dejar de ser confidencial</span>
+            <b>Resúmenes y borradores con IA</b>
+            <p>Los datos no salen del servidor. No hace falta pegarlos en una IA externa.</p>
+          </div>
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">Si TI pregunta</span>
+            <b>La arquitectura en una hoja</b>
+            <p>Dónde escucha, autenticación, tráfico saliente y logs. Puedes mostrar dónde se corta.</p>
+          </div>
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">Al cambiar de versión</span>
+            <b>Actualizar sin romper</b>
+            <p>Descarga, validación, registro y producción. El mismo flujo, lo haga quien lo haga.</p>
+          </div>
+          <div class="scene wish you">
+            <span class="mark" aria-hidden="true">!</span>
+            <span class="k">Lo que vuelve a ti</span>
+            <b>Solo la decisión</b>
+            <p>«¿Subimos a esta versión?». Con la comparación del antes y el después, decides esa única pregunta.</p>
+          </div>
+        </div>
+        <p class="scene-foot">Todo esto se consigue con los <a href="#build">pasos</a> y la <a href="#checklist">checklist</a> de esta página. <b>Cómo repartir también la organización del trabajo tras la reunión está en <a href="#simy">Qué papel tiene SIMY</a>.</b></p>
+      </section>
       <section class="sec" id="videos" aria-labelledby="h-videos">
         <span class="sec-label">09 / FROM THE VIDEOS</span>
         <h2 id="h-videos">Lo que cuentan los vídeos: casos reales de Qwen autoalojado</h2>
@@ -1664,8 +1642,6 @@ echo "$(date -I) vllm &lt;versión-anterior&gt;→&lt;versión-nueva&gt; respons
           </div>
         </details>
       </section>
-
-      <!-- 10 -->
       <section class="sec" id="simy" aria-labelledby="h-simy">
         <span class="sec-label">10 / SIMY</span>
         <h2 id="h-simy">SIMY y Qwen: dentro de la red, Qwen; fuera, SIMY</h2>
@@ -1705,8 +1681,6 @@ echo "$(date -I) vllm &lt;versión-anterior&gt;→&lt;versión-nueva&gt; respons
         </ul>
         <p class="note"><b>Dónde trazar la línea:</b> qué información se queda en la red aislada y qué puede tratarse con herramientas externas lo decide la normativa de tu empresa. Cómo trata SIMY los datos está publicado en <a href="/security.html">Seguridad</a> y en la <a href="/privacy.html?lang=es">Política de privacidad</a>.</p>
       </section>
-
-      <!-- 11 -->
       <section class="sec" id="faq" aria-labelledby="h-faq">
         <span class="sec-label">11 / FAQ</span>
         <h2 id="h-faq">Preguntas frecuentes sobre LLM local y Qwen</h2>
@@ -1765,8 +1739,6 @@ echo "$(date -I) vllm &lt;versión-anterior&gt;→&lt;versión-nueva&gt; respons
           </details>
         </div>
       </section>
-
-      <!-- 12 -->
       <section class="sec" id="sources" aria-labelledby="h-sources">
         <span class="sec-label">12 / SOURCES</span>
         <h2 id="h-sources">Fuentes</h2>
@@ -1813,8 +1785,8 @@ echo "$(date -I) vllm &lt;versión-anterior&gt;→&lt;versión-nueva&gt; respons
 <footer class="site-footer">
   <div class="wrap">
     <ul class="footer-links">
-      <li><a href="/?lang=es">Inicio</a></li>
-      <li><a href="/?lang=es#pricing">Precios</a></li>
+      <li><a href="/es.html">Inicio</a></li>
+      <li><a href="/es.html#pricing">Precios</a></li>
       <li><a href="/integrations.html">Integraciones</a></li>
       <li><a href="/download/es.html">Descargar</a></li>
       <li><a href="/guides/es/index.html">Todas las guías</a></li>

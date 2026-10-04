@@ -25,7 +25,7 @@
 <meta property="og:image:alt" content="GLM 写完之后，别让定下的事停下。GLM（Z.ai）指南｜SIMY">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-10-01">
-<meta property="article:modified_time" content="2026-10-01">
+<meta property="article:modified_time" content="2026-10-03">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="GLM 写完之后，别让定下的事停下。｜SIMY">
 <meta name="twitter:description" content="GLM（Z.ai）是什么？GLM-5.3、GLM Coding Plan、在 Claude Code 中的用法、API 与安全性。用 GLM 写完之后的负责人、期限、联络和分享，由 SIMY 从会议和聊天中接住并推进。">
@@ -772,11 +772,11 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
     {
       "@type": "Article",
       "@id": "https://simy.one/guides/zh-hans/glm.html#article",
-      "headline": "GLM（Z.ai）指南：GLM-5.3 与 GLM Coding Plan 是什么？在 Claude Code 中的用法",
+      "headline": "GLM-5.3 与 GLM Coding Plan 是什么？Claude Code 用法",
       "description": "GLM（Z.ai）是什么、是哪个国家的 AI、GLM-5.3 等主要模型、GLM Coding Plan、通过兼容 Anthropic 的 API 从 Claude Code 使用的方法、API 价格、许可证、本地运行与数据处理。以及由 SIMY 推进用 GLM 写完之后剩下的负责人、期限、联络与分享的机制。",
       "inLanguage": "zh-Hans",
       "datePublished": "2026-10-01",
-      "dateModified": "2026-10-01",
+      "dateModified": "2026-10-03",
       "mainEntityOfPage": "https://simy.one/guides/zh-hans/glm.html",
       "image": {
         "@type": "ImageObject",
@@ -836,7 +836,7 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
           "@type": "ListItem",
           "position": 1,
           "name": "SIMY",
-          "item": "https://simy.one/?lang=zh-Hans"
+          "item": "https://simy.one/zh-Hans.html"
         },
         {
           "@type": "ListItem",
@@ -962,7 +962,7 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
 
 <header class="site-header">
   <div class="wrap header-inner">
-    <a class="brand" href="/?lang=zh-Hans">
+    <a class="brand" href="/zh-Hans.html">
       <img src="/simy-icon-56.png" alt="SIMY" width="28" height="28">
       <span aria-hidden="true">SIMY</span>
       <span class="brand-sub">GLM（Z.ai）指南</span>
@@ -981,20 +981,16 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
     <div class="wrap hero-inner">
       <div>
         <ol class="crumbs" aria-label="面包屑导航">
-          <li><a href="/?lang=zh-Hans">SIMY</a></li>
+          <li><a href="/zh-Hans.html">SIMY</a></li>
           <li><a href="/guides/zh-hans/index.html">指南</a></li>
           <li aria-current="page">GLM（Z.ai）指南</li>
         </ol>
         <p class="eyebrow">写给使用 GLM（Z.ai）的人</p>
-        <h1 id="page-title">
-          <span class="line">GLM 写完之后，</span>
-          <span class="line hl">别让定下的事</span>
-          <span class="line">停下。</span>
-        </h1>
-        <p class="lead">GLM 即使通过 Claude Code，也能又快又便宜地写代码和文字。可是会上定下的负责人、期限，以及给相关人员的联络，仍然留在你手上。之后的部分，由 SIMY 推进。</p>
+        <h1 id="page-title">GLM-5.3 与 GLM Coding Plan 是什么？Claude Code 用法</h1>
+        <p class="lead">GLM-5.3（5.2 的下一代）与 GLM Coding Plan 是什么？Lite 每月 18 美元包月、从 Claude Code 使用的步骤、API 价格、本地运行与数据处理，截至 2026 年 10 月整理。</p>
         <div class="cta-row">
           <a class="btn btn-primary" href="https://app.simy.one/signup?lang=zh-Hans&amp;locale=zh-Hans&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=glm_guide_zh-hans&amp;utm_content=hero">选择方案并开始 <span class="arrow" aria-hidden="true">↗</span></a>
-          <a class="btn btn-ghost" href="#connect">看看怎么连接 <span class="arrow" aria-hidden="true">↓</span></a>
+          <a class="btn btn-ghost" href="#reference">阅读使用指南 <span class="arrow" aria-hidden="true">↓</span></a>
         </div>
         <ul class="hero-points">
           <li>GLM 照旧做它擅长的事</li>
@@ -1035,14 +1031,14 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
     <nav class="toc" aria-label="目录">
       <p class="toc-title">目录</p>
       <ol>
-        <li><a href="#scene"><span>01</span>写完之后，是不是这样？</a></li>
-        <li><a href="#wish"><span>02</span>其实你想要的是这样</a></li>
-        <li><a href="#gap"><span>03</span>GLM 停在这里</a></li>
-        <li><a href="#connect"><span>04</span>SIMY 接上后面的事</a></li>
-        <li><a href="#sample"><span>05</span>用一次会议来对比</a></li>
-        <li><a href="#usecases"><span>06</span>按行业：GLM 的用法与 SIMY 的产出</a></li>
-        <li><a href="#start"><span>07</span>开始使用：3 步</a></li>
-        <li><a href="#reference"><span>08</span>GLM 是什么、Coding Plan、Claude Code、安全性</a></li>
+        <li><a href="#reference"><span>01</span>GLM 是什么、Coding Plan、Claude Code、安全性</a></li>
+        <li><a href="#scene"><span>02</span>写完之后，是不是这样？</a></li>
+        <li><a href="#wish"><span>03</span>其实你想要的是这样</a></li>
+        <li><a href="#gap"><span>04</span>GLM 停在这里</a></li>
+        <li><a href="#connect"><span>05</span>SIMY 接上后面的事</a></li>
+        <li><a href="#sample"><span>06</span>用一次会议来对比</a></li>
+        <li><a href="#usecases"><span>07</span>按行业：GLM 的用法与 SIMY 的产出</a></li>
+        <li><a href="#start"><span>08</span>开始使用：3 步</a></li>
         <li><a href="#faq"><span>09</span>常见问题</a></li>
         <li><a href="#sources"><span>10</span>参考资料</a></li>
       </ol>
@@ -1052,267 +1048,26 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
       <details class="toc-mobile">
         <summary>目录</summary>
         <ol>
-          <li><a href="#scene">写完之后，是不是这样？</a></li>
-          <li><a href="#wish">其实你想要的是这样</a></li>
-          <li><a href="#gap">GLM 停在这里</a></li>
-          <li><a href="#connect">SIMY 接上后面的事</a></li>
-          <li><a href="#sample">用一次会议来对比</a></li>
-          <li><a href="#usecases">按行业：GLM 的用法与 SIMY 的产出</a></li>
-          <li><a href="#start">开始使用：3 步</a></li>
-          <li><a href="#reference">GLM 是什么、Coding Plan、Claude Code、安全性</a></li>
-          <li><a href="#faq">常见问题</a></li>
-          <li><a href="#sources">参考资料</a></li>
-        </ol>
+        <li><a href="#reference">GLM 是什么、Coding Plan、Claude Code、安全性</a></li>
+        <li><a href="#scene">写完之后，是不是这样？</a></li>
+        <li><a href="#wish">其实你想要的是这样</a></li>
+        <li><a href="#gap">GLM 停在这里</a></li>
+        <li><a href="#connect">SIMY 接上后面的事</a></li>
+        <li><a href="#sample">用一次会议来对比</a></li>
+        <li><a href="#usecases">按行业：GLM 的用法与 SIMY 的产出</a></li>
+        <li><a href="#start">开始使用：3 步</a></li>
+        <li><a href="#faq">常见问题</a></li>
+        <li><a href="#sources">参考资料</a></li>
+      </ol>
       </details>
 
-      <p class="byline"><span>最后更新：<time datetime="2026-10-01">2026年10月1日</time></span><span>发布：SIMY（AwakApp Inc.）</span></p>
-
-      <!-- 01 -->
-      <section class="sec" id="scene" aria-labelledby="h-scene">
-        <span class="sec-label">01 / AFTER THE CODE</span>
-        <h2 id="h-scene">用 GLM 写完之后，是不是这样？</h2>
-        <p class="intro">代码和说明，用 GLM 一口气就写好了。可在那之后，发生的却是这些。</p>
-        <div class="scenes">
-          <div class="scene pain">
-            <span class="mark" aria-hidden="true">1</span>
-            <span class="k">用 Coding Plan 写代码的那个月</span>
-            <b>PR 提了，然后呢？</b>
-            <p>实现很快就完成了。评审会上定下的修改由谁负责，没有人写下来。</p>
-          </div>
-          <div class="scene pain">
-            <span class="mark" aria-hidden="true">2</span>
-            <span class="k">用便宜 API 狂跑的一周</span>
-            <b>最后采用了哪个？</b>
-            <p>方案出了一大堆。定下的事，埋在聊天和终端的历史记录里。</p>
-          </div>
-          <div class="scene pain">
-            <span class="mark" aria-hidden="true">3</span>
-            <span class="k">在自己电脑上跑模型的那天</span>
-            <b>只有自己快</b>
-            <p>不出公司就做完了摘要。会上定下的委托，却停在自己的备忘里。</p>
-          </div>
-        </div>
-        <p class="scene-foot">写东西，GLM 一下就完成。<b>工作能不能推进，取决于写完之后。</b></p>
-      </section>
-
-      <!-- 02 -->
-      <section class="sec" id="wish" aria-labelledby="h-wish">
-        <span class="sec-label">02 / WHAT YOU REALLY WANTED</span>
-        <h2 id="h-wish">其实你想要的是这样：用 GLM 写完之后</h2>
-        <p class="intro">同样的会议，同样的 GLM。代码一写好，就希望已经变成这样。</p>
-        <div class="scenes four">
-          <div class="scene wish">
-            <span class="mark" aria-hidden="true">✓</span>
-            <span class="k">会议一结束</span>
-            <b>负责人和期限已列好</b>
-            <p>实现和说明照旧用 GLM 写。定下的修改、负责人和期限，已经排在那里。</p>
-          </div>
-          <div class="scene wish">
-            <span class="mark" aria-hidden="true">✓</span>
-            <span class="k">期限之前</span>
-            <b>卡住的事会送到你面前</b>
-            <p>等回复、快到期的工作，SIMY 会在下次会议前先提醒你。</p>
-          </div>
-          <div class="scene wish">
-            <span class="mark" aria-hidden="true">✓</span>
-            <span class="k">不管用哪个模型写</span>
-            <b>结论都在一处</b>
-            <p>采用的方针和下一步行动，跨越模型和工具，留在同一个地方。</p>
-          </div>
-          <div class="scene wish you">
-            <span class="mark" aria-hidden="true">!</span>
-            <span class="k">回到你手上的</span>
-            <b>只有判断</b>
-            <p>“本周发布吗？”回来的只有这一个问题。</p>
-          </div>
-        </div>
-        <p class="scene-foot">从<b>把会议和聊天接入 SIMY 之后的下一场会议起</b>，就会这样。GLM 照旧用在它擅长的事上。</p>
-      </section>
-
-      <!-- 03 -->
-      <section class="sec" id="gap" aria-labelledby="h-gap">
-        <span class="sec-label">03 / WHERE GLM STOPS</span>
-        <h2 id="h-gap">GLM 的工作，停在这里</h2>
-        <p class="intro">GLM 擅长的是“把你要的东西写出来”。再往后，没有人接手。</p>
-        <div class="tl-wrap" role="img" aria-label="时间线。从指令、实现和修改，到说明和草稿，GLM 都能完成，但负责人与期限、给相关人员的联络、团队同步、下次之前的确认仍然空着">
-          <div class="tl-row">
-            <span class="tl-who">GLM</span>
-            <ol class="tl">
-              <li class="on">指令<small>由你提出</small></li>
-              <li class="on">实现、修改<small>又快又省</small></li>
-              <li class="on">说明、草稿<small>大量产出</small></li>
-              <li class="gap">负责人与期限</li>
-              <li class="gap">联络相关人员</li>
-              <li class="gap">团队同步</li>
-              <li class="gap">下次之前的确认</li>
-            </ol>
-          </div>
-        </div>
-        <p class="caption">※ 流程为示意图</p>
-        <p class="tl-note"><b>无论用 chat.z.ai、经由 Claude Code，还是在本地运行，都停在同一个地方。</b>代码可以写很多遍，可每次“开口要”的是你，去看有没有做完的也是你。</p>
-      </section>
-
-      <!-- 04 -->
-      <section class="sec" id="connect" aria-labelledby="h-connect">
-        <span class="sec-label">04 / CONNECT</span>
-        <h2 id="h-connect">SIMY 接上后面的事。GLM 照旧，写完之后交给 SIMY</h2>
-        <p class="intro">原本空着的 4 格，由 SIMY 填上。回到你手上的，只有判断那 1 格。</p>
-        <div class="tl-wrap" role="img" aria-label="时间线。指令、实现和修改、说明和草稿由 GLM 完成。负责人与期限、给相关人员的联络草稿、团队同步、下次之前的确认由 SIMY 推进，只有判断回到你手上">
-          <div class="tl-row">
-            <span class="tl-who">GLM</span>
-            <ol class="tl">
-              <li class="on">指令</li>
-              <li class="on">实现、修改</li>
-              <li class="on">说明、草稿</li>
-              <li class="blank"></li><li class="blank"></li><li class="blank"></li><li class="blank"></li>
-            </ol>
-          </div>
-          <div class="tl-row">
-            <span class="tl-who simy">SIMY</span>
-            <ol class="tl">
-              <li class="blank"></li><li class="blank"></li><li class="blank"></li>
-              <li class="run">负责人与期限<small>从会议中接住</small></li>
-              <li class="run">联络<small>只存为 Gmail 草稿</small></li>
-              <li class="run">同步<small>批准后发布</small></li>
-              <li class="you">判断<small>只回来 1 个问题</small></li>
-            </ol>
-          </div>
-        </div>
-        <p class="caption">※ 流程为示意图</p>
-        <ul class="three" aria-label="SIMY 的 3 个特点">
-          <li>从会议和聊天中接活</li>
-          <li>按你的做法</li>
-          <li>只把判断交给你</li>
-        </ul>
-        <p class="tl-note">SIMY 会自己从会议记录和聊天中找出“之后的工作”。它从对话中学习你反复执行的步骤和确认事项，按同样的方式推进，并把完成情况列在 My Actions 里。</p>
-
-        <div class="connect">
-          <ol class="connect-steps">
-            <li><b>注册 SIMY，连接 ChatGPT（Codex）</b><span>SIMY 的云端执行使用你自己的 ChatGPT 账户运行。Codex 的用量在你的 ChatGPT 方案范围内。</span></li>
-            <li class="key"><b>安装 SIMY 桌面应用</b><span>可以让电脑上的 Claude Code 担任 SIMY 的执行者。SIMY 会从 Claude Code 和 Codex 的对话中找出重复的工作，变成“来自 SIMY 的建议”。对话正文不保存在服务器上。 <a href="/download/zh-hans.html">前往下载</a></span></li>
-            <li><b>接入会议记录</b><span>在集成页面连接 Plaud、Notion 等。用 GLM 写的摘要和 PR 说明，贴到会议或聊天里，SIMY 也会接住。</span></li>
-          </ol>
-          <div>
-            <div class="mock" role="img" aria-label="SIMY 中 My Actions 的示意图。作为从会议中接住的工作，修改事项与负责人清单已完成，给合作方的联络草稿正在进行，本周是否发布的判断正在等你。">
-              <div class="mock-head" aria-hidden="true">
-                <span class="mock-mark">S</span>
-                <div>
-                  <div class="mock-title">My Actions <span class="mock-state">● 等你处理 1</span></div>
-                  <p class="mock-desc">从 设计评审_支付API_1001 中接住的工作</p>
-                </div>
-              </div>
-              <div class="mock-box" aria-hidden="true">修改与负责人清单 ✓ ／ 给合作方的联络草稿（进行中）／ 同步给 QA（下一步）</div>
-              <div class="mock-btn" aria-hidden="true">决定本周是否发布</div>
-              <div class="mock-foot" aria-hidden="true">只有需要判断的事，才会回到你手上</div>
-            </div>
-            <p class="caption">※ SIMY 界面示意图</p>
-          </div>
-        </div>
-        <p class="note"><b>SIMY 与 GLM 的关系：</b>SIMY 目前不连接 GLM（Z.ai）。SIMY 本身使用你自己的 ChatGPT（Codex）账户和电脑上的 Claude Code 运行。实现、草稿、摘要照旧交给擅长这些的 GLM，把结果带进会议或聊天，之后的事由 SIMY 推进。</p>
-      </section>
-
-      <!-- 05 -->
-      <section class="sec" id="sample" aria-labelledby="h-sample">
-        <span class="sec-label">05 / SAMPLE</span>
-        <h2 id="h-sample">用一次会议来对比：GLM 的摘要，与 SIMY 完成的下一步</h2>
-        <p class="intro">用 GLM 总结支付 API 设计评审（约 50 分钟）会议记录的示例。左边是 GLM，右边是 SIMY。</p>
-        <div class="sample">
-          <div class="sheet">
-            <div class="sheet-label"><span>GLM 的摘要（示例）</span><span>会议记录 → 3 行</span></div>
-            <dl>
-              <dt>概要</dt>
-              <dd>把支付 API 的超时从 30 秒缩短到 10 秒，并加入重试处理。</dd>
-              <dt>影响</dt>
-              <dd>可能影响合作方 A 公司的夜间批处理对接。</dd>
-              <dt>待办</dt>
-              <dd>实现重试处理、压力测试、提前通知 A 公司。</dd>
-              <dt>计划</dt>
-              <dd>候选发布日为 10 月 9 日。看压测结果后最终判断。</dd>
-            </dl>
-          </div>
-          <div class="outs">
-            <div class="out">
-              <div class="out-head"><b>修改事项与负责人清单</b><span class="pill ok">完成</span></div>
-              <p>重试处理：田中，10/6。压力测试：QA，10/8。提前通知 A 公司：你，10/7。</p>
-            </div>
-            <div class="out">
-              <div class="out-head"><b>给合作方的联络草稿</b><span class="pill run">Autorun</span></div>
-              <p>用你惯用的行文，向 A 公司的对接人说明超时变更的计划与影响，以及可以使用测试环境的日期。存为 Gmail 草稿。</p>
-            </div>
-            <div class="out">
-              <div class="out-head"><b>同步给 QA 团队</b><span class="pill">下一步</span></div>
-              <p>“10/9 是候选发布日。请在 10/8 前完成压力测试。”批准后发到聊天中。</p>
-            </div>
-            <div class="out you">
-              <div class="out-head"><b>你的判断</b><span class="pill you">轮到你</span></div>
-              <p>看压测结果，决定本周发布，还是推迟一周。只有需要判断的部分会回到你手上。</p>
-            </div>
-          </div>
-        </div>
-        <p class="sample-foot">GLM 负责写，SIMY 负责推进。发布的判断，依然在你手上。</p>
-      </section>
-
-      <!-- 06 -->
-      <section class="sec" id="usecases" aria-labelledby="h-usecases">
-        <span class="sec-label">06 / BY INDUSTRY</span>
-        <h2 id="h-usecases">按行业：GLM 的用法，与 SIMY 的产出</h2>
-        <p class="intro">用 GLM 写完之后，SIMY 会准备什么。个人也好、团队也好，模式都一样。</p>
-        <div class="ind">
-          <div class="ind-card">
-            <h3>开发团队 <small>GLM：Coding Plan、Claude Code</small></h3>
-            <ul class="ind-rows">
-              <li><span>设计评审会</span><span>→</span><span>确定的修改与负责人清单</span></li>
-              <li><span>写完代码之后</span><span>→</span><span>用电脑上的 Claude Code 做下一步</span></li>
-              <li><span>周末</span><span>→</span><span>进度与待判断事项汇总</span></li>
-            </ul>
-          </div>
-          <div class="ind-card">
-            <h3>外包开发、系统集成商 <small>GLM：用便宜的 API 试做</small></h3>
-            <ul class="ind-rows">
-              <li><span>与客户的例会</span><span>→</span><span>待办与期限清单、回复草稿</span></li>
-              <li><span>规格变更</span><span>→</span><span>内部同步文案、1 个待判断问题</span></li>
-              <li><span>交付之前</span><span>→</span><span>等回复工作的提醒</span></li>
-            </ul>
-          </div>
-          <div class="ind-card">
-            <h3>数据分析、研究 <small>GLM：分析代码与资料摘要</small></h3>
-            <ul class="ind-rows">
-              <li><span>分析汇报会</span><span>→</span><span>追加分析的负责人与截止日期</span></li>
-              <li><span>评审意见</span><span>→</span><span>汇总修改点的委托文案</span></li>
-              <li><span>汇报之前</span><span>→</span><span>待确认清单与 1 个待判断问题</span></li>
-            </ul>
-          </div>
-          <div class="ind-card">
-            <h3>经营会议、1on1 <small>GLM：资料摘要、论点整理</small></h3>
-            <ul class="ind-rows">
-              <li><span>经营会议</span><span>→</span><span>决定事项与负责人清单、同步给相关人员</span></li>
-              <li><span>1on1</span><span>→</span><span>在问“那件事怎么样了”之前，先看到进度和待判断事项</span></li>
-              <li><span>周末</span><span>→</span><span>汇总多场会议的周报</span></li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <!-- 07 -->
-      <section class="sec" id="start" aria-labelledby="h-start">
-        <span class="sec-label">07 / START</span>
-        <h2 id="h-start">开始使用：GLM 照旧，只需 3 步</h2>
-        <ol class="steps3">
-          <li><b>GLM 照常使用</b><span>实现、修改、摘要、草稿。chat.z.ai、Coding Plan、本地运行都可以。</span></li>
-          <li class="key"><b>注册 SIMY，连接 ChatGPT</b><span>云端执行使用你自己的 ChatGPT（Codex）。<a href="#connect">连接方法</a>见上文。在用 Claude Code 的人，也请安装 SIMY 桌面应用。 <a href="/download/zh-hans.html">前往下载</a></span></li>
-          <li><b>开完一场会议</b><span>负责人与期限、联络草稿、同步文案都会送到你面前。你只需决定、发送。</span></li>
-        </ol>
-        <p class="note"><b>注册流程：</b>选择方案 → 邮箱验证 → 银行卡付款（没有免费方案）。<a href="/?lang=zh-Hans#pricing">查看价格</a>／电脑端应用请从<a href="/download/zh-hans.html">下载页面</a>获取。</p>
-        <p class="note"><b>GLM 的用法不变。</b>SIMY 不是 GLM 的替代品，而是负责写完之后那些工作的另一套机制。</p>
-      </section>
-
-      <!-- 08 -->
+      <p class="byline"><span>最后更新：<time datetime="2026-10-03">2026年10月3日</time></span><span>发布：SIMY（AwakApp Inc.）</span></p>
       <section class="sec" id="reference" aria-labelledby="h-reference">
-        <span class="sec-label">08 / REFERENCE</span>
+        <span class="sec-label">01 / REFERENCE</span>
         <h2 id="h-reference">GLM 是什么：模型、GLM Coding Plan、Claude Code、API 与安全性（想深入了解的人）</h2>
         <p class="intro">以下内容，想确认 GLM 本身的情况时再展开。模型名称、价格和规格为截至 2026 年 10 月的信息。</p>
 
-        <details class="fold">
+        <details class="fold" open>
           <summary>GLM 是什么：哪个国家的 AI，与其他“GLM”的区别<small>智谱 AI（Zhipu AI）的 LLM，海外品牌名为 Z.ai</small></summary>
           <div class="fold-body">
             <h3>GLM、Z.ai 与智谱的关系</h3>
@@ -1500,8 +1255,231 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
           </div>
         </details>
       </section>
+      <section class="sec" id="scene" aria-labelledby="h-scene">
+        <span class="sec-label">02 / AFTER THE CODE</span>
+        <h2 id="h-scene">用 GLM 写完之后，是不是这样？</h2>
+        <p class="intro">代码和说明，用 GLM 一口气就写好了。可在那之后，发生的却是这些。</p>
+        <div class="scenes">
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">1</span>
+            <span class="k">用 Coding Plan 写代码的那个月</span>
+            <b>PR 提了，然后呢？</b>
+            <p>实现很快就完成了。评审会上定下的修改由谁负责，没有人写下来。</p>
+          </div>
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">2</span>
+            <span class="k">用便宜 API 狂跑的一周</span>
+            <b>最后采用了哪个？</b>
+            <p>方案出了一大堆。定下的事，埋在聊天和终端的历史记录里。</p>
+          </div>
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">3</span>
+            <span class="k">在自己电脑上跑模型的那天</span>
+            <b>只有自己快</b>
+            <p>不出公司就做完了摘要。会上定下的委托，却停在自己的备忘里。</p>
+          </div>
+        </div>
+        <p class="scene-foot">写东西，GLM 一下就完成。<b>工作能不能推进，取决于写完之后。</b></p>
+      </section>
+      <section class="sec" id="wish" aria-labelledby="h-wish">
+        <span class="sec-label">03 / WHAT YOU REALLY WANTED</span>
+        <h2 id="h-wish">其实你想要的是这样：用 GLM 写完之后</h2>
+        <p class="intro">同样的会议，同样的 GLM。代码一写好，就希望已经变成这样。</p>
+        <div class="scenes four">
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">会议一结束</span>
+            <b>负责人和期限已列好</b>
+            <p>实现和说明照旧用 GLM 写。定下的修改、负责人和期限，已经排在那里。</p>
+          </div>
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">期限之前</span>
+            <b>卡住的事会送到你面前</b>
+            <p>等回复、快到期的工作，SIMY 会在下次会议前先提醒你。</p>
+          </div>
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">不管用哪个模型写</span>
+            <b>结论都在一处</b>
+            <p>采用的方针和下一步行动，跨越模型和工具，留在同一个地方。</p>
+          </div>
+          <div class="scene wish you">
+            <span class="mark" aria-hidden="true">!</span>
+            <span class="k">回到你手上的</span>
+            <b>只有判断</b>
+            <p>“本周发布吗？”回来的只有这一个问题。</p>
+          </div>
+        </div>
+        <p class="scene-foot">从<b>把会议和聊天接入 SIMY 之后的下一场会议起</b>，就会这样。GLM 照旧用在它擅长的事上。</p>
+      </section>
+      <section class="sec" id="gap" aria-labelledby="h-gap">
+        <span class="sec-label">04 / WHERE GLM STOPS</span>
+        <h2 id="h-gap">GLM 的工作，停在这里</h2>
+        <p class="intro">GLM 擅长的是“把你要的东西写出来”。再往后，没有人接手。</p>
+        <div class="tl-wrap" role="img" aria-label="时间线。从指令、实现和修改，到说明和草稿，GLM 都能完成，但负责人与期限、给相关人员的联络、团队同步、下次之前的确认仍然空着">
+          <div class="tl-row">
+            <span class="tl-who">GLM</span>
+            <ol class="tl">
+              <li class="on">指令<small>由你提出</small></li>
+              <li class="on">实现、修改<small>又快又省</small></li>
+              <li class="on">说明、草稿<small>大量产出</small></li>
+              <li class="gap">负责人与期限</li>
+              <li class="gap">联络相关人员</li>
+              <li class="gap">团队同步</li>
+              <li class="gap">下次之前的确认</li>
+            </ol>
+          </div>
+        </div>
+        <p class="caption">※ 流程为示意图</p>
+        <p class="tl-note"><b>无论用 chat.z.ai、经由 Claude Code，还是在本地运行，都停在同一个地方。</b>代码可以写很多遍，可每次“开口要”的是你，去看有没有做完的也是你。</p>
+      </section>
+      <section class="sec" id="connect" aria-labelledby="h-connect">
+        <span class="sec-label">05 / CONNECT</span>
+        <h2 id="h-connect">SIMY 接上后面的事。GLM 照旧，写完之后交给 SIMY</h2>
+        <p class="intro">原本空着的 4 格，由 SIMY 填上。回到你手上的，只有判断那 1 格。</p>
+        <div class="tl-wrap" role="img" aria-label="时间线。指令、实现和修改、说明和草稿由 GLM 完成。负责人与期限、给相关人员的联络草稿、团队同步、下次之前的确认由 SIMY 推进，只有判断回到你手上">
+          <div class="tl-row">
+            <span class="tl-who">GLM</span>
+            <ol class="tl">
+              <li class="on">指令</li>
+              <li class="on">实现、修改</li>
+              <li class="on">说明、草稿</li>
+              <li class="blank"></li><li class="blank"></li><li class="blank"></li><li class="blank"></li>
+            </ol>
+          </div>
+          <div class="tl-row">
+            <span class="tl-who simy">SIMY</span>
+            <ol class="tl">
+              <li class="blank"></li><li class="blank"></li><li class="blank"></li>
+              <li class="run">负责人与期限<small>从会议中接住</small></li>
+              <li class="run">联络<small>只存为 Gmail 草稿</small></li>
+              <li class="run">同步<small>批准后发布</small></li>
+              <li class="you">判断<small>只回来 1 个问题</small></li>
+            </ol>
+          </div>
+        </div>
+        <p class="caption">※ 流程为示意图</p>
+        <ul class="three" aria-label="SIMY 的 3 个特点">
+          <li>从会议和聊天中接活</li>
+          <li>按你的做法</li>
+          <li>只把判断交给你</li>
+        </ul>
+        <p class="tl-note">SIMY 会自己从会议记录和聊天中找出“之后的工作”。它从对话中学习你反复执行的步骤和确认事项，按同样的方式推进，并把完成情况列在 My Actions 里。</p>
 
-      <!-- 09 -->
+        <div class="connect">
+          <ol class="connect-steps">
+            <li><b>注册 SIMY，连接 ChatGPT（Codex）</b><span>SIMY 的云端执行使用你自己的 ChatGPT 账户运行。Codex 的用量在你的 ChatGPT 方案范围内。</span></li>
+            <li class="key"><b>安装 SIMY 桌面应用</b><span>可以让电脑上的 Claude Code 担任 SIMY 的执行者。SIMY 会从 Claude Code 和 Codex 的对话中找出重复的工作，变成“来自 SIMY 的建议”。对话正文不保存在服务器上。 <a href="/download/zh-hans.html">前往下载</a></span></li>
+            <li><b>接入会议记录</b><span>在集成页面连接 Plaud、Notion 等。用 GLM 写的摘要和 PR 说明，贴到会议或聊天里，SIMY 也会接住。</span></li>
+          </ol>
+          <div>
+            <div class="mock" role="img" aria-label="SIMY 中 My Actions 的示意图。作为从会议中接住的工作，修改事项与负责人清单已完成，给合作方的联络草稿正在进行，本周是否发布的判断正在等你。">
+              <div class="mock-head" aria-hidden="true">
+                <span class="mock-mark">S</span>
+                <div>
+                  <div class="mock-title">My Actions <span class="mock-state">● 等你处理 1</span></div>
+                  <p class="mock-desc">从 设计评审_支付API_1001 中接住的工作</p>
+                </div>
+              </div>
+              <div class="mock-box" aria-hidden="true">修改与负责人清单 ✓ ／ 给合作方的联络草稿（进行中）／ 同步给 QA（下一步）</div>
+              <div class="mock-btn" aria-hidden="true">决定本周是否发布</div>
+              <div class="mock-foot" aria-hidden="true">只有需要判断的事，才会回到你手上</div>
+            </div>
+            <p class="caption">※ SIMY 界面示意图</p>
+          </div>
+        </div>
+        <p class="note"><b>SIMY 与 GLM 的关系：</b>SIMY 目前不连接 GLM（Z.ai）。SIMY 本身使用你自己的 ChatGPT（Codex）账户和电脑上的 Claude Code 运行。实现、草稿、摘要照旧交给擅长这些的 GLM，把结果带进会议或聊天，之后的事由 SIMY 推进。</p>
+      </section>
+      <section class="sec" id="sample" aria-labelledby="h-sample">
+        <span class="sec-label">06 / SAMPLE</span>
+        <h2 id="h-sample">用一次会议来对比：GLM 的摘要，与 SIMY 完成的下一步</h2>
+        <p class="intro">用 GLM 总结支付 API 设计评审（约 50 分钟）会议记录的示例。左边是 GLM，右边是 SIMY。</p>
+        <div class="sample">
+          <div class="sheet">
+            <div class="sheet-label"><span>GLM 的摘要（示例）</span><span>会议记录 → 3 行</span></div>
+            <dl>
+              <dt>概要</dt>
+              <dd>把支付 API 的超时从 30 秒缩短到 10 秒，并加入重试处理。</dd>
+              <dt>影响</dt>
+              <dd>可能影响合作方 A 公司的夜间批处理对接。</dd>
+              <dt>待办</dt>
+              <dd>实现重试处理、压力测试、提前通知 A 公司。</dd>
+              <dt>计划</dt>
+              <dd>候选发布日为 10 月 9 日。看压测结果后最终判断。</dd>
+            </dl>
+          </div>
+          <div class="outs">
+            <div class="out">
+              <div class="out-head"><b>修改事项与负责人清单</b><span class="pill ok">完成</span></div>
+              <p>重试处理：田中，10/6。压力测试：QA，10/8。提前通知 A 公司：你，10/7。</p>
+            </div>
+            <div class="out">
+              <div class="out-head"><b>给合作方的联络草稿</b><span class="pill run">Autorun</span></div>
+              <p>用你惯用的行文，向 A 公司的对接人说明超时变更的计划与影响，以及可以使用测试环境的日期。存为 Gmail 草稿。</p>
+            </div>
+            <div class="out">
+              <div class="out-head"><b>同步给 QA 团队</b><span class="pill">下一步</span></div>
+              <p>“10/9 是候选发布日。请在 10/8 前完成压力测试。”批准后发到聊天中。</p>
+            </div>
+            <div class="out you">
+              <div class="out-head"><b>你的判断</b><span class="pill you">轮到你</span></div>
+              <p>看压测结果，决定本周发布，还是推迟一周。只有需要判断的部分会回到你手上。</p>
+            </div>
+          </div>
+        </div>
+        <p class="sample-foot">GLM 负责写，SIMY 负责推进。发布的判断，依然在你手上。</p>
+      </section>
+      <section class="sec" id="usecases" aria-labelledby="h-usecases">
+        <span class="sec-label">07 / BY INDUSTRY</span>
+        <h2 id="h-usecases">按行业：GLM 的用法，与 SIMY 的产出</h2>
+        <p class="intro">用 GLM 写完之后，SIMY 会准备什么。个人也好、团队也好，模式都一样。</p>
+        <div class="ind">
+          <div class="ind-card">
+            <h3>开发团队 <small>GLM：Coding Plan、Claude Code</small></h3>
+            <ul class="ind-rows">
+              <li><span>设计评审会</span><span>→</span><span>确定的修改与负责人清单</span></li>
+              <li><span>写完代码之后</span><span>→</span><span>用电脑上的 Claude Code 做下一步</span></li>
+              <li><span>周末</span><span>→</span><span>进度与待判断事项汇总</span></li>
+            </ul>
+          </div>
+          <div class="ind-card">
+            <h3>外包开发、系统集成商 <small>GLM：用便宜的 API 试做</small></h3>
+            <ul class="ind-rows">
+              <li><span>与客户的例会</span><span>→</span><span>待办与期限清单、回复草稿</span></li>
+              <li><span>规格变更</span><span>→</span><span>内部同步文案、1 个待判断问题</span></li>
+              <li><span>交付之前</span><span>→</span><span>等回复工作的提醒</span></li>
+            </ul>
+          </div>
+          <div class="ind-card">
+            <h3>数据分析、研究 <small>GLM：分析代码与资料摘要</small></h3>
+            <ul class="ind-rows">
+              <li><span>分析汇报会</span><span>→</span><span>追加分析的负责人与截止日期</span></li>
+              <li><span>评审意见</span><span>→</span><span>汇总修改点的委托文案</span></li>
+              <li><span>汇报之前</span><span>→</span><span>待确认清单与 1 个待判断问题</span></li>
+            </ul>
+          </div>
+          <div class="ind-card">
+            <h3>经营会议、1on1 <small>GLM：资料摘要、论点整理</small></h3>
+            <ul class="ind-rows">
+              <li><span>经营会议</span><span>→</span><span>决定事项与负责人清单、同步给相关人员</span></li>
+              <li><span>1on1</span><span>→</span><span>在问“那件事怎么样了”之前，先看到进度和待判断事项</span></li>
+              <li><span>周末</span><span>→</span><span>汇总多场会议的周报</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+      <section class="sec" id="start" aria-labelledby="h-start">
+        <span class="sec-label">08 / START</span>
+        <h2 id="h-start">开始使用：GLM 照旧，只需 3 步</h2>
+        <ol class="steps3">
+          <li><b>GLM 照常使用</b><span>实现、修改、摘要、草稿。chat.z.ai、Coding Plan、本地运行都可以。</span></li>
+          <li class="key"><b>注册 SIMY，连接 ChatGPT</b><span>云端执行使用你自己的 ChatGPT（Codex）。<a href="#connect">连接方法</a>见上文。在用 Claude Code 的人，也请安装 SIMY 桌面应用。 <a href="/download/zh-hans.html">前往下载</a></span></li>
+          <li><b>开完一场会议</b><span>负责人与期限、联络草稿、同步文案都会送到你面前。你只需决定、发送。</span></li>
+        </ol>
+        <p class="note"><b>注册流程：</b>选择方案 → 邮箱验证 → 银行卡付款（没有免费方案）。<a href="/zh-Hans.html#pricing">查看价格</a>／电脑端应用请从<a href="/download/zh-hans.html">下载页面</a>获取。</p>
+        <p class="note"><b>GLM 的用法不变。</b>SIMY 不是 GLM 的替代品，而是负责写完之后那些工作的另一套机制。</p>
+      </section>
       <section class="sec" id="faq" aria-labelledby="h-faq">
         <span class="sec-label">09 / FAQ</span>
         <h2 id="h-faq">常见问题</h2>
@@ -1556,8 +1534,6 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
           </details>
         </div>
       </section>
-
-      <!-- 10 -->
       <section class="sec" id="sources" aria-labelledby="h-sources">
         <span class="sec-label">10 / SOURCES</span>
         <h2 id="h-sources">参考资料</h2>
@@ -1600,8 +1576,8 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
 <footer class="site-footer">
   <div class="wrap">
     <ul class="footer-links">
-      <li><a href="/?lang=zh-Hans">首页</a></li>
-      <li><a href="/?lang=zh-Hans#pricing">价格</a></li>
+      <li><a href="/zh-Hans.html">首页</a></li>
+      <li><a href="/zh-Hans.html#pricing">价格</a></li>
       <li><a href="/integrations.html">集成</a></li>
       <li><a href="/download/zh-hans.html">下载</a></li>
       <li><a href="/guides/zh-hans/index.html">全部指南</a></li>

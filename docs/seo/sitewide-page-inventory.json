@@ -1,0 +1,742 @@
+{
+  "404.html": {
+    "policy": "utility",
+    "language": "en",
+    "topic": "404"
+  },
+  "about.html": {
+    "policy": "index",
+    "language": "en",
+    "topic": "about"
+  },
+  "careers.html": {
+    "policy": "index",
+    "language": "en",
+    "topic": "careers"
+  },
+  "compare/index.html": {
+    "policy": "archive",
+    "language": "en",
+    "topic": "index"
+  },
+  "compare.html": {
+    "policy": "index",
+    "language": "en",
+    "topic": "compare"
+  },
+  "contact.html": {
+    "policy": "index",
+    "language": "en",
+    "topic": "contact"
+  },
+  "demo.html": {
+    "policy": "index",
+    "language": "en",
+    "topic": "demo"
+  },
+  "download/en.html": {
+    "policy": "index",
+    "language": "en",
+    "topic": "en"
+  },
+  "download/es.html": {
+    "policy": "index",
+    "language": "es",
+    "topic": "es"
+  },
+  "download/fr.html": {
+    "policy": "index",
+    "language": "fr",
+    "topic": "fr"
+  },
+  "download/hi.html": {
+    "policy": "index",
+    "language": "hi",
+    "topic": "hi"
+  },
+  "download/zh-hans.html": {
+    "policy": "index",
+    "language": "zh-Hans",
+    "topic": "zh-hans"
+  },
+  "download.html": {
+    "policy": "index",
+    "language": "ja",
+    "topic": "download"
+  },
+  "error.html": {
+    "policy": "utility",
+    "language": "en",
+    "topic": "error"
+  },
+  "es.html": {
+    "policy": "index",
+    "language": "es",
+    "topic": "es"
+  },
+  "founder.html": {
+    "policy": "index",
+    "language": "ja",
+    "topic": "founder"
+  },
+  "fr.html": {
+    "policy": "index",
+    "language": "fr",
+    "topic": "fr"
+  },
+  "google-site-verification-TODO.html": {
+    "policy": "utility",
+    "language": "en",
+    "topic": "google-site-verification-TODO"
+  },
+  "guides/chatgpt.html": {
+    "policy": "index",
+    "language": "ja",
+    "topic": "chatgpt"
+  },
+  "guides/china-llm.html": {
+    "policy": "index",
+    "language": "ja",
+    "topic": "china-llm"
+  },
+  "guides/claude.html": {
+    "policy": "index",
+    "language": "ja",
+    "topic": "claude"
+  },
+  "guides/codex.html": {
+    "policy": "index",
+    "language": "ja",
+    "topic": "codex"
+  },
+  "guides/cowork.html": {
+    "policy": "index",
+    "language": "ja",
+    "topic": "cowork"
+  },
+  "guides/deepseek.html": {
+    "policy": "index",
+    "language": "ja",
+    "topic": "deepseek"
+  },
+  "guides/doubao.html": {
+    "policy": "index",
+    "language": "ja",
+    "topic": "doubao"
+  },
+  "guides/en/chatgpt.html": {
+    "policy": "index",
+    "language": "en",
+    "topic": "chatgpt"
+  },
+  "guides/en/china-llm.html": {
+    "policy": "index",
+    "language": "en",
+    "topic": "china-llm"
+  },
+  "guides/en/claude.html": {
+    "policy": "index",
+    "language": "en",
+    "topic": "claude"
+  },
+  "guides/en/codex.html": {
+    "policy": "index",
+    "language": "en",
+    "topic": "codex"
+  },
+  "guides/en/cowork.html": {
+    "policy": "index",
+    "language": "en",
+    "topic": "cowork"
+  },
+  "guides/en/deepseek.html": {
+    "policy": "index",
+    "language": "en",
+    "topic": "deepseek"
+  },
+  "guides/en/doubao.html": {
+    "policy": "index",
+    "language": "en",
+    "topic": "doubao"
+  },
+  "guides/en/glm.html": {
+    "policy": "index",
+    "language": "en",
+    "topic": "glm"
+  },
+  "guides/en/index.html": {
+    "policy": "index",
+    "language": "en",
+    "topic": "index"
+  },
+  "guides/en/kimi.html": {
+    "policy": "index",
+    "language": "en",
+    "topic": "kimi"
+  },
+  "guides/en/meeting-notes.html": {
+    "policy": "index",
+    "language": "en",
+    "topic": "meeting-notes"
+  },
+  "guides/en/minimax.html": {
+    "policy": "index",
+    "language": "en",
+    "topic": "minimax"
+  },
+  "guides/en/notta.html": {
+    "policy": "index",
+    "language": "en",
+    "topic": "notta"
+  },
+  "guides/en/plaud.html": {
+    "policy": "index",
+    "language": "en",
+    "topic": "plaud"
+  },
+  "guides/en/qwen-local.html": {
+    "policy": "index",
+    "language": "en",
+    "topic": "qwen-local"
+  },
+  "guides/en/qwen.html": {
+    "policy": "index",
+    "language": "en",
+    "topic": "qwen"
+  },
+  "guides/es/chatgpt.html": {
+    "policy": "index",
+    "language": "es",
+    "topic": "chatgpt"
+  },
+  "guides/es/china-llm.html": {
+    "policy": "index",
+    "language": "es",
+    "topic": "china-llm"
+  },
+  "guides/es/claude.html": {
+    "policy": "index",
+    "language": "es",
+    "topic": "claude"
+  },
+  "guides/es/codex.html": {
+    "policy": "index",
+    "language": "es",
+    "topic": "codex"
+  },
+  "guides/es/cowork.html": {
+    "policy": "index",
+    "language": "es",
+    "topic": "cowork"
+  },
+  "guides/es/deepseek.html": {
+    "policy": "index",
+    "language": "es",
+    "topic": "deepseek"
+  },
+  "guides/es/doubao.html": {
+    "policy": "index",
+    "language": "es",
+    "topic": "doubao"
+  },
+  "guides/es/glm.html": {
+    "policy": "index",
+    "language": "es",
+    "topic": "glm"
+  },
+  "guides/es/index.html": {
+    "policy": "index",
+    "language": "es",
+    "topic": "index"
+  },
+  "guides/es/kimi.html": {
+    "policy": "index",
+    "language": "es",
+    "topic": "kimi"
+  },
+  "guides/es/meeting-notes.html": {
+    "policy": "index",
+    "language": "es",
+    "topic": "meeting-notes"
+  },
+  "guides/es/minimax.html": {
+    "policy": "index",
+    "language": "es",
+    "topic": "minimax"
+  },
+  "guides/es/notta.html": {
+    "policy": "index",
+    "language": "es",
+    "topic": "notta"
+  },
+  "guides/es/plaud.html": {
+    "policy": "index",
+    "language": "es",
+    "topic": "plaud"
+  },
+  "guides/es/qwen-local.html": {
+    "policy": "index",
+    "language": "es",
+    "topic": "qwen-local"
+  },
+  "guides/es/qwen.html": {
+    "policy": "index",
+    "language": "es",
+    "topic": "qwen"
+  },
+  "guides/fr/chatgpt.html": {
+    "policy": "index",
+    "language": "fr",
+    "topic": "chatgpt"
+  },
+  "guides/fr/china-llm.html": {
+    "policy": "index",
+    "language": "fr",
+    "topic": "china-llm"
+  },
+  "guides/fr/claude.html": {
+    "policy": "index",
+    "language": "fr",
+    "topic": "claude"
+  },
+  "guides/fr/codex.html": {
+    "policy": "index",
+    "language": "fr",
+    "topic": "codex"
+  },
+  "guides/fr/cowork.html": {
+    "policy": "index",
+    "language": "fr",
+    "topic": "cowork"
+  },
+  "guides/fr/deepseek.html": {
+    "policy": "index",
+    "language": "fr",
+    "topic": "deepseek"
+  },
+  "guides/fr/doubao.html": {
+    "policy": "index",
+    "language": "fr",
+    "topic": "doubao"
+  },
+  "guides/fr/glm.html": {
+    "policy": "index",
+    "language": "fr",
+    "topic": "glm"
+  },
+  "guides/fr/index.html": {
+    "policy": "index",
+    "language": "fr",
+    "topic": "index"
+  },
+  "guides/fr/kimi.html": {
+    "policy": "index",
+    "language": "fr",
+    "topic": "kimi"
+  },
+  "guides/fr/meeting-notes.html": {
+    "policy": "index",
+    "language": "fr",
+    "topic": "meeting-notes"
+  },
+  "guides/fr/minimax.html": {
+    "policy": "index",
+    "language": "fr",
+    "topic": "minimax"
+  },
+  "guides/fr/notta.html": {
+    "policy": "index",
+    "language": "fr",
+    "topic": "notta"
+  },
+  "guides/fr/plaud.html": {
+    "policy": "index",
+    "language": "fr",
+    "topic": "plaud"
+  },
+  "guides/fr/qwen-local.html": {
+    "policy": "index",
+    "language": "fr",
+    "topic": "qwen-local"
+  },
+  "guides/fr/qwen.html": {
+    "policy": "index",
+    "language": "fr",
+    "topic": "qwen"
+  },
+  "guides/glm.html": {
+    "policy": "index",
+    "language": "ja",
+    "topic": "glm"
+  },
+  "guides/hi/chatgpt.html": {
+    "policy": "index",
+    "language": "hi",
+    "topic": "chatgpt"
+  },
+  "guides/hi/china-llm.html": {
+    "policy": "index",
+    "language": "hi",
+    "topic": "china-llm"
+  },
+  "guides/hi/claude.html": {
+    "policy": "index",
+    "language": "hi",
+    "topic": "claude"
+  },
+  "guides/hi/codex.html": {
+    "policy": "index",
+    "language": "hi",
+    "topic": "codex"
+  },
+  "guides/hi/cowork.html": {
+    "policy": "index",
+    "language": "hi",
+    "topic": "cowork"
+  },
+  "guides/hi/deepseek.html": {
+    "policy": "index",
+    "language": "hi",
+    "topic": "deepseek"
+  },
+  "guides/hi/doubao.html": {
+    "policy": "index",
+    "language": "hi",
+    "topic": "doubao"
+  },
+  "guides/hi/glm.html": {
+    "policy": "index",
+    "language": "hi",
+    "topic": "glm"
+  },
+  "guides/hi/index.html": {
+    "policy": "index",
+    "language": "hi",
+    "topic": "index"
+  },
+  "guides/hi/kimi.html": {
+    "policy": "index",
+    "language": "hi",
+    "topic": "kimi"
+  },
+  "guides/hi/meeting-notes.html": {
+    "policy": "index",
+    "language": "hi",
+    "topic": "meeting-notes"
+  },
+  "guides/hi/minimax.html": {
+    "policy": "index",
+    "language": "hi",
+    "topic": "minimax"
+  },
+  "guides/hi/notta.html": {
+    "policy": "index",
+    "language": "hi",
+    "topic": "notta"
+  },
+  "guides/hi/plaud.html": {
+    "policy": "index",
+    "language": "hi",
+    "topic": "plaud"
+  },
+  "guides/hi/qwen-local.html": {
+    "policy": "index",
+    "language": "hi",
+    "topic": "qwen-local"
+  },
+  "guides/hi/qwen.html": {
+    "policy": "index",
+    "language": "hi",
+    "topic": "qwen"
+  },
+  "guides/index.html": {
+    "policy": "index",
+    "language": "ja",
+    "topic": "index"
+  },
+  "guides/kimi.html": {
+    "policy": "index",
+    "language": "ja",
+    "topic": "kimi"
+  },
+  "guides/meeting-notes.html": {
+    "policy": "index",
+    "language": "ja",
+    "topic": "meeting-notes"
+  },
+  "guides/minimax.html": {
+    "policy": "index",
+    "language": "ja",
+    "topic": "minimax"
+  },
+  "guides/notta.html": {
+    "policy": "index",
+    "language": "ja",
+    "topic": "notta"
+  },
+  "guides/plaud.html": {
+    "policy": "index",
+    "language": "ja",
+    "topic": "plaud"
+  },
+  "guides/qwen-local.html": {
+    "policy": "index",
+    "language": "ja",
+    "topic": "qwen-local"
+  },
+  "guides/qwen.html": {
+    "policy": "index",
+    "language": "ja",
+    "topic": "qwen"
+  },
+  "guides/zh-hans/chatgpt.html": {
+    "policy": "index",
+    "language": "zh-Hans",
+    "topic": "chatgpt"
+  },
+  "guides/zh-hans/china-llm.html": {
+    "policy": "index",
+    "language": "zh-Hans",
+    "topic": "china-llm"
+  },
+  "guides/zh-hans/claude.html": {
+    "policy": "index",
+    "language": "zh-Hans",
+    "topic": "claude"
+  },
+  "guides/zh-hans/codex.html": {
+    "policy": "index",
+    "language": "zh-Hans",
+    "topic": "codex"
+  },
+  "guides/zh-hans/cowork.html": {
+    "policy": "index",
+    "language": "zh-Hans",
+    "topic": "cowork"
+  },
+  "guides/zh-hans/deepseek.html": {
+    "policy": "index",
+    "language": "zh-Hans",
+    "topic": "deepseek"
+  },
+  "guides/zh-hans/doubao.html": {
+    "policy": "index",
+    "language": "zh-Hans",
+    "topic": "doubao"
+  },
+  "guides/zh-hans/glm.html": {
+    "policy": "index",
+    "language": "zh-Hans",
+    "topic": "glm"
+  },
+  "guides/zh-hans/index.html": {
+    "policy": "index",
+    "language": "zh-Hans",
+    "topic": "index"
+  },
+  "guides/zh-hans/kimi.html": {
+    "policy": "index",
+    "language": "zh-Hans",
+    "topic": "kimi"
+  },
+  "guides/zh-hans/meeting-notes.html": {
+    "policy": "index",
+    "language": "zh-Hans",
+    "topic": "meeting-notes"
+  },
+  "guides/zh-hans/minimax.html": {
+    "policy": "index",
+    "language": "zh-Hans",
+    "topic": "minimax"
+  },
+  "guides/zh-hans/notta.html": {
+    "policy": "index",
+    "language": "zh-Hans",
+    "topic": "notta"
+  },
+  "guides/zh-hans/plaud.html": {
+    "policy": "index",
+    "language": "zh-Hans",
+    "topic": "plaud"
+  },
+  "guides/zh-hans/qwen-local.html": {
+    "policy": "index",
+    "language": "zh-Hans",
+    "topic": "qwen-local"
+  },
+  "guides/zh-hans/qwen.html": {
+    "policy": "index",
+    "language": "zh-Hans",
+    "topic": "qwen"
+  },
+  "hi.html": {
+    "policy": "index",
+    "language": "hi",
+    "topic": "hi"
+  },
+  "how-it-works.html": {
+    "policy": "index",
+    "language": "en",
+    "topic": "how-it-works"
+  },
+  "index.html": {
+    "policy": "index",
+    "language": "en",
+    "topic": "index"
+  },
+  "integrations.html": {
+    "policy": "index",
+    "language": "en",
+    "topic": "integrations"
+  },
+  "ja.html": {
+    "policy": "index",
+    "language": "ja",
+    "topic": "ja"
+  },
+  "legal.html": {
+    "policy": "index",
+    "language": "ja",
+    "topic": "legal"
+  },
+  "old/404.html": {
+    "policy": "archive",
+    "language": "en",
+    "topic": "archive"
+  },
+  "old/about.html": {
+    "policy": "archive",
+    "language": "en",
+    "topic": "archive"
+  },
+  "old/careers.html": {
+    "policy": "archive",
+    "language": "en",
+    "topic": "archive"
+  },
+  "old/compare/index.html": {
+    "policy": "archive",
+    "language": "en",
+    "topic": "archive"
+  },
+  "old/compare.html": {
+    "policy": "archive",
+    "language": "en",
+    "topic": "archive"
+  },
+  "old/contact.html": {
+    "policy": "archive",
+    "language": "en",
+    "topic": "archive"
+  },
+  "old/demo.html": {
+    "policy": "archive",
+    "language": "en",
+    "topic": "archive"
+  },
+  "old/error.html": {
+    "policy": "archive",
+    "language": "en",
+    "topic": "archive"
+  },
+  "old/how-it-works.html": {
+    "policy": "archive",
+    "language": "en",
+    "topic": "archive"
+  },
+  "old/index.html": {
+    "policy": "archive",
+    "language": "en",
+    "topic": "archive"
+  },
+  "old/integrations.html": {
+    "policy": "archive",
+    "language": "en",
+    "topic": "archive"
+  },
+  "old/press-release.html": {
+    "policy": "archive",
+    "language": "en",
+    "topic": "archive"
+  },
+  "old/press.html": {
+    "policy": "archive",
+    "language": "en",
+    "topic": "archive"
+  },
+  "old/pricing.html": {
+    "policy": "archive",
+    "language": "en",
+    "topic": "archive"
+  },
+  "old/privacy.html": {
+    "policy": "archive",
+    "language": "en",
+    "topic": "archive"
+  },
+  "old/security.html": {
+    "policy": "archive",
+    "language": "en",
+    "topic": "archive"
+  },
+  "old/status.html": {
+    "policy": "archive",
+    "language": "en",
+    "topic": "archive"
+  },
+  "old/terms.html": {
+    "policy": "archive",
+    "language": "en",
+    "topic": "archive"
+  },
+  "old.html": {
+    "policy": "redirect",
+    "language": "en",
+    "topic": "old"
+  },
+  "press-release.html": {
+    "policy": "index",
+    "language": "en",
+    "topic": "press-release"
+  },
+  "press.html": {
+    "policy": "redirect",
+    "language": "en",
+    "topic": "press"
+  },
+  "pricing.html": {
+    "policy": "redirect",
+    "language": "en",
+    "topic": "pricing"
+  },
+  "privacy.html": {
+    "policy": "index",
+    "language": "en",
+    "topic": "privacy"
+  },
+  "security.html": {
+    "policy": "index",
+    "language": "en",
+    "topic": "security"
+  },
+  "seller-info.html": {
+    "policy": "index",
+    "language": "ja",
+    "topic": "seller-info"
+  },
+  "status.html": {
+    "policy": "utility",
+    "language": "en",
+    "topic": "status"
+  },
+  "terms.html": {
+    "policy": "index",
+    "language": "en",
+    "topic": "terms"
+  },
+  "zh-Hans.html": {
+    "policy": "index",
+    "language": "zh-Hans",
+    "topic": "zh-Hans"
+  }
+}

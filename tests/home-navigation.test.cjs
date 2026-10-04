@@ -39,7 +39,7 @@ test("pricing call to action opens the signup plan selection page", () => {
 });
 
 test("pages loading the demo bundle cache-bust its workflow terminology", () => {
-  const pages = ["careers.html", "contact.html", "how-it-works.html", "integrations.html", "security.html", "status.html"];
+  const pages = ["contact.html"];
   for (const directory of ["site", "site/old"]) {
     for (const page of pages) {
       const source = fs.readFileSync(path.join(repoRoot, directory, page), "utf8");

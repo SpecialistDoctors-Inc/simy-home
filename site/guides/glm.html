@@ -25,7 +25,7 @@
 <meta property="og:image:alt" content="GLMが書いたあと、決まったことを止めない。GLM（Z.ai）ガイド｜SIMY">
 <meta property="og:locale" content="ja_JP">
 <meta property="article:published_time" content="2026-10-01">
-<meta property="article:modified_time" content="2026-10-01">
+<meta property="article:modified_time" content="2026-10-03">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="GLMが書いたあと、決まったことを止めない。｜SIMY">
 <meta name="twitter:description" content="GLM（Z.ai）とは？GLM-5.3・GLM Coding Plan・Claude Codeでの使い方・API・安全性。GLMで書いたあとの担当・期限・連絡・共有は、SIMYが会議とチャットから拾って進めます。">
@@ -772,11 +772,11 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
     {
       "@type": "Article",
       "@id": "https://simy.one/guides/glm.html#article",
-      "headline": "GLM（Z.ai）ガイド：GLM-5.3とGLM Coding Planとは？Claude Codeでの使い方",
+      "headline": "GLM-5.3とGLM Coding Planとは？Claude Codeでの使い方",
       "description": "GLM（Z.ai）とは何か、どこの国のAIか、GLM-5.3などの主なモデル、GLM Coding Plan、Claude CodeからAnthropic互換APIで使う方法、API料金、ライセンス、ローカル実行、データの扱い。GLMで書いたあとに残る担当・期限・連絡・共有をSIMYが進める仕組み。",
       "inLanguage": "ja",
       "datePublished": "2026-10-01",
-      "dateModified": "2026-10-01",
+      "dateModified": "2026-10-03",
       "mainEntityOfPage": "https://simy.one/guides/glm.html",
       "image": {
         "@type": "ImageObject",
@@ -836,7 +836,7 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
           "@type": "ListItem",
           "position": 1,
           "name": "SIMY",
-          "item": "https://simy.one/"
+          "item": "https://simy.one/ja.html"
         },
         {
           "@type": "ListItem",
@@ -962,7 +962,7 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
 
 <header class="site-header">
   <div class="wrap header-inner">
-    <a class="brand" href="/?lang=ja">
+    <a class="brand" href="/ja.html">
       <img src="/simy-icon-56.png" alt="SIMY" width="28" height="28">
       <span aria-hidden="true">SIMY</span>
       <span class="brand-sub">GLM（Z.ai）ガイド</span>
@@ -981,20 +981,16 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
     <div class="wrap hero-inner">
       <div>
         <ol class="crumbs" aria-label="パンくずリスト">
-          <li><a href="https://simy.one/">SIMY</a></li>
+          <li><a href="/ja.html">SIMY</a></li>
           <li><a href="/guides/index.html">ガイド</a></li>
           <li aria-current="page">GLM（Z.ai）ガイド</li>
         </ol>
         <p class="eyebrow">GLM（Z.ai）ユーザーのための活用ガイド</p>
-        <h1 id="page-title">
-          <span class="line">GLMが書いたあと、</span>
-          <span class="line hl">決まったことを</span>
-          <span class="line">止めない。</span>
-        </h1>
-        <p class="lead">GLMは、Claude Codeからでも安く速くコードと文章を書いてくれる。でも会議で決まった担当や期限、関係者への連絡は、まだあなたの手元に残る。その先をSIMYが進めます。</p>
+        <h1 id="page-title">GLM-5.3とGLM Coding Planとは？Claude Codeでの使い方</h1>
+        <p class="lead">GLM-5.3（5.2の次の世代）とGLM Coding Planとは？Lite月18ドルの定額でClaude Codeから使う手順、API料金、ローカル実行、データの扱いを2026年10月時点で整理。</p>
         <div class="cta-row">
           <a class="btn btn-primary" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=glm_guide&amp;utm_content=hero">プランを選んではじめる <span class="arrow" aria-hidden="true">↗</span></a>
-          <a class="btn btn-ghost" href="#connect">つなぎ方を見る <span class="arrow" aria-hidden="true">↓</span></a>
+          <a class="btn btn-ghost" href="#reference">使い方・選び方を読む <span class="arrow" aria-hidden="true">↓</span></a>
         </div>
         <ul class="hero-points">
           <li>GLMは、得意な仕事にそのまま</li>
@@ -1035,14 +1031,14 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
     <nav class="toc" aria-label="目次">
       <p class="toc-title">目次</p>
       <ol>
-        <li><a href="#scene"><span>01</span>書いたあと、こうなっていませんか</a></li>
-        <li><a href="#wish"><span>02</span>本当は、こうしたかった</a></li>
-        <li><a href="#gap"><span>03</span>GLMはここで止まる</a></li>
-        <li><a href="#connect"><span>04</span>SIMYがつなぐ</a></li>
-        <li><a href="#sample"><span>05</span>会議1件で比較</a></li>
-        <li><a href="#usecases"><span>06</span>業種別：GLMの使い方とSIMYが出すもの</a></li>
-        <li><a href="#start"><span>07</span>はじめ方：3ステップ</a></li>
-        <li><a href="#reference"><span>08</span>GLMとは・Coding Plan・Claude Code・安全性</a></li>
+        <li><a href="#reference"><span>01</span>GLMとは・Coding Plan・Claude Code・安全性</a></li>
+        <li><a href="#scene"><span>02</span>書いたあと、こうなっていませんか</a></li>
+        <li><a href="#wish"><span>03</span>本当は、こうしたかった</a></li>
+        <li><a href="#gap"><span>04</span>GLMはここで止まる</a></li>
+        <li><a href="#connect"><span>05</span>SIMYがつなぐ</a></li>
+        <li><a href="#sample"><span>06</span>会議1件で比較</a></li>
+        <li><a href="#usecases"><span>07</span>業種別：GLMの使い方とSIMYが出すもの</a></li>
+        <li><a href="#start"><span>08</span>はじめ方：3ステップ</a></li>
         <li><a href="#faq"><span>09</span>よくある質問</a></li>
         <li><a href="#sources"><span>10</span>参考情報</a></li>
       </ol>
@@ -1052,267 +1048,26 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
       <details class="toc-mobile">
         <summary>目次</summary>
         <ol>
-          <li><a href="#scene">書いたあと、こうなっていませんか</a></li>
-          <li><a href="#wish">本当は、こうしたかった</a></li>
-          <li><a href="#gap">GLMはここで止まる</a></li>
-          <li><a href="#connect">SIMYがつなぐ</a></li>
-          <li><a href="#sample">会議1件で比較</a></li>
-          <li><a href="#usecases">業種別：GLMの使い方とSIMYが出すもの</a></li>
-          <li><a href="#start">はじめ方：3ステップ</a></li>
-          <li><a href="#reference">GLMとは・Coding Plan・Claude Code・安全性</a></li>
-          <li><a href="#faq">よくある質問</a></li>
-          <li><a href="#sources">参考情報</a></li>
-        </ol>
+        <li><a href="#reference">GLMとは・Coding Plan・Claude Code・安全性</a></li>
+        <li><a href="#scene">書いたあと、こうなっていませんか</a></li>
+        <li><a href="#wish">本当は、こうしたかった</a></li>
+        <li><a href="#gap">GLMはここで止まる</a></li>
+        <li><a href="#connect">SIMYがつなぐ</a></li>
+        <li><a href="#sample">会議1件で比較</a></li>
+        <li><a href="#usecases">業種別：GLMの使い方とSIMYが出すもの</a></li>
+        <li><a href="#start">はじめ方：3ステップ</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#sources">参考情報</a></li>
+      </ol>
       </details>
 
-      <p class="byline"><span>最終更新：<time datetime="2026-10-01">2026年10月1日</time></span><span>発行：SIMY（AwakApp Inc.）</span></p>
-
-      <!-- 01 -->
-      <section class="sec" id="scene" aria-labelledby="h-scene">
-        <span class="sec-label">01 / AFTER THE CODE</span>
-        <h2 id="h-scene">GLMで書いたあと、こうなっていませんか</h2>
-        <p class="intro">コードも説明文も、GLMで一気に書けた。それでも、そのあとに起きていること。</p>
-        <div class="scenes">
-          <div class="scene pain">
-            <span class="mark" aria-hidden="true">1</span>
-            <span class="k">Coding Planで書いた月</span>
-            <b>PRは出た、次は？</b>
-            <p>実装は早く終わった。レビュー会議で決まった修正の担当は、誰も書いていない。</p>
-          </div>
-          <div class="scene pain">
-            <span class="mark" aria-hidden="true">2</span>
-            <span class="k">安いAPIで回した週</span>
-            <b>どれを採用した？</b>
-            <p>案は大量に出た。決まったことは、チャットとターミナルの履歴に埋もれる。</p>
-          </div>
-          <div class="scene pain">
-            <span class="mark" aria-hidden="true">3</span>
-            <span class="k">手元のPCで動かした日</span>
-            <b>自分だけ速い</b>
-            <p>社外に出さずに要約できた。会議で決まった依頼は、自分のメモ止まり。</p>
-          </div>
-        </div>
-        <p class="scene-foot">書くのは、GLMで一瞬で終わる。<b>仕事が進むかどうかは、書いたあとで決まっています。</b></p>
-      </section>
-
-      <!-- 02 -->
-      <section class="sec" id="wish" aria-labelledby="h-wish">
-        <span class="sec-label">02 / WHAT YOU REALLY WANTED</span>
-        <h2 id="h-wish">本当は、こうしたかった：GLMで書いたあと</h2>
-        <p class="intro">同じ会議。同じGLM。コードが書けた瞬間に、こうなっていてほしかった。</p>
-        <div class="scenes four">
-          <div class="scene wish">
-            <span class="mark" aria-hidden="true">✓</span>
-            <span class="k">会議が終わったら</span>
-            <b>担当と期限が一覧に</b>
-            <p>実装と説明文はGLMのまま。決まった修正と担当・期限は、もう並んでいる。</p>
-          </div>
-          <div class="scene wish">
-            <span class="mark" aria-hidden="true">✓</span>
-            <span class="k">期限の前に</span>
-            <b>止まった仕事が届く</b>
-            <p>返事待ち・期限間近の仕事を、次の会議の前にSIMYが先に知らせてくれる。</p>
-          </div>
-          <div class="scene wish">
-            <span class="mark" aria-hidden="true">✓</span>
-            <span class="k">どのモデルで書いても</span>
-            <b>結論は一か所に</b>
-            <p>採用した方針と次の行動が、モデルやツールをまたいで1つに残っている。</p>
-          </div>
-          <div class="scene wish you">
-            <span class="mark" aria-hidden="true">!</span>
-            <span class="k">あなたに戻るのは</span>
-            <b>判断だけ</b>
-            <p>「今週リリースするか」。戻ってくるのはその一問だけ。</p>
-          </div>
-        </div>
-        <p class="scene-foot">これは、<b>SIMYに会議とチャットをつないだ次の会議から</b>起きることです。GLMは、得意な仕事にそのまま使えます。</p>
-      </section>
-
-      <!-- 03 -->
-      <section class="sec" id="gap" aria-labelledby="h-gap">
-        <span class="sec-label">03 / WHERE GLM STOPS</span>
-        <h2 id="h-gap">GLMの仕事は、ここで止まる</h2>
-        <p class="intro">GLMが得意なのは「頼まれたものを書く」まで。その先は、誰も拾っていません。</p>
-        <div class="tl-wrap" role="img" aria-label="タイムライン。指示、実装と修正、説明文や下書きまではGLMが終えるが、担当と期限、関係者への連絡、チームへの共有、次回までの確認は空白のまま残る">
-          <div class="tl-row">
-            <span class="tl-who">GLM</span>
-            <ol class="tl">
-              <li class="on">指示<small>あなたが頼む</small></li>
-              <li class="on">実装・修正<small>速く安く</small></li>
-              <li class="on">説明文・下書き<small>大量に</small></li>
-              <li class="gap">担当と期限</li>
-              <li class="gap">関係者への連絡</li>
-              <li class="gap">チームへの共有</li>
-              <li class="gap">次回までの確認</li>
-            </ol>
-          </div>
-        </div>
-        <p class="caption">※ 流れは説明用のイメージです</p>
-        <p class="tl-note"><b>chat.z.aiでも、Claude Code経由でも、ローカルでも、同じところで止まります。</b>コードは何度でも書ける。でも「頼む」のは毎回あなたで、終わったかを見に行くのもあなたです。</p>
-      </section>
-
-      <!-- 04 -->
-      <section class="sec" id="connect" aria-labelledby="h-connect">
-        <span class="sec-label">04 / CONNECT</span>
-        <h2 id="h-connect">SIMYがつなぐ。GLMはそのまま、書いたあとを任せる</h2>
-        <p class="intro">空白だった4つを、SIMYが埋めます。あなたに戻るのは、判断の1マスだけ。</p>
-        <div class="tl-wrap" role="img" aria-label="タイムライン。指示、実装と修正、説明文や下書きはGLM。担当と期限、関係者への連絡の下書き、チームへの共有、次回までの確認はSIMYが進め、判断だけがあなたに戻る">
-          <div class="tl-row">
-            <span class="tl-who">GLM</span>
-            <ol class="tl">
-              <li class="on">指示</li>
-              <li class="on">実装・修正</li>
-              <li class="on">説明文・下書き</li>
-              <li class="blank"></li><li class="blank"></li><li class="blank"></li><li class="blank"></li>
-            </ol>
-          </div>
-          <div class="tl-row">
-            <span class="tl-who simy">SIMY</span>
-            <ol class="tl">
-              <li class="blank"></li><li class="blank"></li><li class="blank"></li>
-              <li class="run">担当と期限<small>会議から拾う</small></li>
-              <li class="run">連絡<small>Gmailに下書きまで</small></li>
-              <li class="run">共有<small>承認したら投稿</small></li>
-              <li class="you">判断<small>1問だけ戻る</small></li>
-            </ol>
-          </div>
-        </div>
-        <p class="caption">※ 流れは説明用のイメージです</p>
-        <ul class="three" aria-label="SIMYの3つの特徴">
-          <li>会議・チャットから拾う</li>
-          <li>あなたのやり方で</li>
-          <li>判断だけ返す</li>
-        </ul>
-        <p class="tl-note">SIMYは、会議の記録やチャットから「そのあとの仕事」を自分で見つけます。あなたが繰り返している手順と確認事項を会話から学び、同じやり方で進め、終わったかをMy Actionsに並べます。</p>
-
-        <div class="connect">
-          <ol class="connect-steps">
-            <li><b>SIMYに登録し、ChatGPT（Codex）を接続する</b><span>SIMYのクラウド実行は、お使いのChatGPTアカウントで動きます。Codexの利用は、お使いのChatGPTプランの範囲です。</span></li>
-            <li class="key"><b>SIMYデスクトップアプリを入れる</b><span>PC上のClaude Codeを、SIMYの実行役にできます。Claude CodeやCodexの会話から、繰り返している仕事を「SIMYからの提案」にします。会話本文はサーバーに保存しません。 <a href="/download.html">ダウンロードはこちら</a></span></li>
-            <li><b>会議の記録をつなぐ</b><span>連携画面でPlaudやNotionなどを接続します。GLMで書いた要約やPRの説明も、会議やチャットに貼ればSIMYが拾います。</span></li>
-          </ol>
-          <div>
-            <div class="mock" role="img" aria-label="SIMYのMy Actionsのイメージ。会議から拾った仕事として、決まった修正と担当の一覧が完了、取引先への連絡の下書きが進行中、今週リリースするかの判断があなた待ちとして並んでいます。">
-              <div class="mock-head" aria-hidden="true">
-                <span class="mock-mark">S</span>
-                <div>
-                  <div class="mock-title">My Actions <span class="mock-state">● あなた待ち 1</span></div>
-                  <p class="mock-desc">設計レビュー_決済API_1001 から拾った仕事</p>
-                </div>
-              </div>
-              <div class="mock-box" aria-hidden="true">修正と担当の一覧 ✓ ／ 取引先への連絡の下書き（進行中）／ QAへの共有（次）</div>
-              <div class="mock-btn" aria-hidden="true">今週リリースするか決める</div>
-              <div class="mock-foot" aria-hidden="true">判断が必要なものだけ、あなたに戻ります</div>
-            </div>
-            <p class="caption">※ SIMYの画面のイメージです</p>
-          </div>
-        </div>
-        <p class="note"><b>SIMYとGLMの関係：</b>SIMYは現時点ではGLM（Z.ai）には接続しません。SIMY自身は、お使いのChatGPT（Codex）アカウントと、PC上のClaude Codeで動きます。実装・下書き・要約はGLMの得意な仕事としてそのまま使い、その結果を会議やチャットに持ち込めば、そのあとをSIMYが進めます。</p>
-      </section>
-
-      <!-- 05 -->
-      <section class="sec" id="sample" aria-labelledby="h-sample">
-        <span class="sec-label">05 / SAMPLE</span>
-        <h2 id="h-sample">会議1件で比較：GLMの要約と、SIMYが仕上げる次の一手</h2>
-        <p class="intro">決済APIの設計レビュー（約50分）の議事メモを、GLMで要約した場合のサンプルです。左がGLM、右がSIMY。</p>
-        <div class="sample">
-          <div class="sheet">
-            <div class="sheet-label"><span>GLMの要約（例）</span><span>議事メモ → 3行</span></div>
-            <dl>
-              <dt>概要</dt>
-              <dd>決済APIのタイムアウトを30秒から10秒に短くし、リトライ処理を加える。</dd>
-              <dt>影響</dt>
-              <dd>取引先A社の夜間バッチ連携に影響が出る可能性がある。</dd>
-              <dt>宿題</dt>
-              <dd>リトライ処理の実装、負荷試験、A社への事前連絡。</dd>
-              <dt>予定</dt>
-              <dd>リリース候補は10月9日。負荷試験の結果を見て最終判断。</dd>
-            </dl>
-          </div>
-          <div class="outs">
-            <div class="out">
-              <div class="out-head"><b>決まった修正と担当の一覧</b><span class="pill ok">完了</span></div>
-              <p>リトライ処理：田中・10/6。負荷試験：QA・10/8。A社への事前連絡：あなた・10/7。</p>
-            </div>
-            <div class="out">
-              <div class="out-head"><b>取引先への連絡の下書き</b><span class="pill run">Autorun</span></div>
-              <p>A社のご担当者へ、タイムアウト変更の予定と影響、検証環境を使える日を、あなたのいつもの文面で。Gmailに下書きとして保存。</p>
-            </div>
-            <div class="out">
-              <div class="out-head"><b>QAチームへの共有</b><span class="pill">次</span></div>
-              <p>「10/9リリース候補です。負荷試験を10/8までにお願いします」。承認したらチャットに投稿。</p>
-            </div>
-            <div class="out you">
-              <div class="out-head"><b>あなたの判断</b><span class="pill you">あなたの番</span></div>
-              <p>負荷試験の結果を見て、今週リリースするか、1週延ばすか。判断が必要なところだけが、あなたに戻ってきます。</p>
-            </div>
-          </div>
-        </div>
-        <p class="sample-foot">GLMが書き、SIMYが動かす。リリースの判断は、あなたのままです。</p>
-      </section>
-
-      <!-- 06 -->
-      <section class="sec" id="usecases" aria-labelledby="h-usecases">
-        <span class="sec-label">06 / BY INDUSTRY</span>
-        <h2 id="h-usecases">業種別：GLMの使い方と、SIMYが出すもの</h2>
-        <p class="intro">GLMで書いたあと、SIMYが何を用意するか。個人でもチームでも、型は同じです。</p>
-        <div class="ind">
-          <div class="ind-card">
-            <h3>開発チーム <small>GLM：Coding Plan・Claude Code</small></h3>
-            <ul class="ind-rows">
-              <li><span>設計レビューの会議</span><span>→</span><span>決まった修正と担当の一覧</span></li>
-              <li><span>コードを書いたあと</span><span>→</span><span>PCのClaude Codeで次の作業</span></li>
-              <li><span>週の終わり</span><span>→</span><span>進捗と判断待ちのまとめ</span></li>
-            </ul>
-          </div>
-          <div class="ind-card">
-            <h3>受託開発・SIer <small>GLM：安いAPIで試作</small></h3>
-            <ul class="ind-rows">
-              <li><span>顧客との定例</span><span>→</span><span>宿題と期限の一覧・返信の下書き</span></li>
-              <li><span>仕様の変更</span><span>→</span><span>社内共有の文面・判断の1問</span></li>
-              <li><span>納期の前</span><span>→</span><span>返事待ちの仕事のリマインド</span></li>
-            </ul>
-          </div>
-          <div class="ind-card">
-            <h3>データ分析・研究 <small>GLM：分析コードと資料の要約</small></h3>
-            <ul class="ind-rows">
-              <li><span>分析の報告会</span><span>→</span><span>追加分析の担当と締め切り</span></li>
-              <li><span>レビューの指摘</span><span>→</span><span>修正点をまとめた依頼文</span></li>
-              <li><span>報告の前</span><span>→</span><span>確認待ちの一覧と判断の1問</span></li>
-            </ul>
-          </div>
-          <div class="ind-card">
-            <h3>経営会議・1on1 <small>GLM：資料の要約・論点整理</small></h3>
-            <ul class="ind-rows">
-              <li><span>経営会議</span><span>→</span><span>決定事項と担当者の一覧・関係者への共有</span></li>
-              <li><span>1on1</span><span>→</span><span>「あれどうなった」を聞く前に、進捗と判断待ち</span></li>
-              <li><span>週の終わり</span><span>→</span><span>複数の会議をまとめた週次報告</span></li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <!-- 07 -->
-      <section class="sec" id="start" aria-labelledby="h-start">
-        <span class="sec-label">07 / START</span>
-        <h2 id="h-start">はじめ方：GLMはそのまま、3ステップ</h2>
-        <ol class="steps3">
-          <li><b>GLMは、いつもどおり使う</b><span>実装、修正、要約、下書き。chat.z.aiでも、Coding Planでも、ローカルでも構いません。</span></li>
-          <li class="key"><b>SIMYに登録し、ChatGPTを接続する</b><span>クラウド実行はお使いのChatGPT（Codex）。<a href="#connect">つなぎ方</a>は上のとおりです。Claude Codeを使っている人は、SIMYデスクトップアプリも。 <a href="/download.html">ダウンロードはこちら</a></span></li>
-          <li><b>会議を1件、終える</b><span>担当と期限、連絡の下書き、共有の文面が届きます。決めて、送る。それだけです。</span></li>
-        </ol>
-        <p class="note"><b>登録の流れ：</b>プランを選ぶ → メールで本人確認 → カードで決済（無料プランはありません）。<a href="/?lang=ja#pricing">料金を見る</a>／PCで使うアプリは<a href="/download.html">ダウンロードページ</a>から。</p>
-        <p class="note"><b>GLMの使い方は変わりません。</b>SIMYはGLMを置き換えるものではなく、書いたあとの仕事を受け持つ別の仕組みです。</p>
-      </section>
-
-      <!-- 08 -->
+      <p class="byline"><span>最終更新：<time datetime="2026-10-03">2026年10月3日</time></span><span>発行：SIMY（AwakApp Inc.）</span></p>
       <section class="sec" id="reference" aria-labelledby="h-reference">
-        <span class="sec-label">08 / REFERENCE</span>
+        <span class="sec-label">01 / REFERENCE</span>
         <h2 id="h-reference">GLMとは：モデル・GLM Coding Plan・Claude Code・API・安全性（詳しく知りたい人向け）</h2>
         <p class="intro">ここから下は、GLM本体のことを確かめたいときに開いてください。モデル名・料金・仕様は2026年10月時点の情報です。</p>
 
-        <details class="fold">
+        <details class="fold" open>
           <summary>GLMとは：どこの国のAIか、ほかの「GLM」との違い<small>Zhipu AI（智譜）のLLM。海外向けの名前がZ.ai</small></summary>
           <div class="fold-body">
             <h3>GLMとZ.ai、Zhipuの関係</h3>
@@ -1500,8 +1255,231 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
           </div>
         </details>
       </section>
+      <section class="sec" id="scene" aria-labelledby="h-scene">
+        <span class="sec-label">02 / AFTER THE CODE</span>
+        <h2 id="h-scene">GLMで書いたあと、こうなっていませんか</h2>
+        <p class="intro">コードも説明文も、GLMで一気に書けた。それでも、そのあとに起きていること。</p>
+        <div class="scenes">
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">1</span>
+            <span class="k">Coding Planで書いた月</span>
+            <b>PRは出た、次は？</b>
+            <p>実装は早く終わった。レビュー会議で決まった修正の担当は、誰も書いていない。</p>
+          </div>
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">2</span>
+            <span class="k">安いAPIで回した週</span>
+            <b>どれを採用した？</b>
+            <p>案は大量に出た。決まったことは、チャットとターミナルの履歴に埋もれる。</p>
+          </div>
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">3</span>
+            <span class="k">手元のPCで動かした日</span>
+            <b>自分だけ速い</b>
+            <p>社外に出さずに要約できた。会議で決まった依頼は、自分のメモ止まり。</p>
+          </div>
+        </div>
+        <p class="scene-foot">書くのは、GLMで一瞬で終わる。<b>仕事が進むかどうかは、書いたあとで決まっています。</b></p>
+      </section>
+      <section class="sec" id="wish" aria-labelledby="h-wish">
+        <span class="sec-label">03 / WHAT YOU REALLY WANTED</span>
+        <h2 id="h-wish">本当は、こうしたかった：GLMで書いたあと</h2>
+        <p class="intro">同じ会議。同じGLM。コードが書けた瞬間に、こうなっていてほしかった。</p>
+        <div class="scenes four">
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">会議が終わったら</span>
+            <b>担当と期限が一覧に</b>
+            <p>実装と説明文はGLMのまま。決まった修正と担当・期限は、もう並んでいる。</p>
+          </div>
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">期限の前に</span>
+            <b>止まった仕事が届く</b>
+            <p>返事待ち・期限間近の仕事を、次の会議の前にSIMYが先に知らせてくれる。</p>
+          </div>
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">どのモデルで書いても</span>
+            <b>結論は一か所に</b>
+            <p>採用した方針と次の行動が、モデルやツールをまたいで1つに残っている。</p>
+          </div>
+          <div class="scene wish you">
+            <span class="mark" aria-hidden="true">!</span>
+            <span class="k">あなたに戻るのは</span>
+            <b>判断だけ</b>
+            <p>「今週リリースするか」。戻ってくるのはその一問だけ。</p>
+          </div>
+        </div>
+        <p class="scene-foot">これは、<b>SIMYに会議とチャットをつないだ次の会議から</b>起きることです。GLMは、得意な仕事にそのまま使えます。</p>
+      </section>
+      <section class="sec" id="gap" aria-labelledby="h-gap">
+        <span class="sec-label">04 / WHERE GLM STOPS</span>
+        <h2 id="h-gap">GLMの仕事は、ここで止まる</h2>
+        <p class="intro">GLMが得意なのは「頼まれたものを書く」まで。その先は、誰も拾っていません。</p>
+        <div class="tl-wrap" role="img" aria-label="タイムライン。指示、実装と修正、説明文や下書きまではGLMが終えるが、担当と期限、関係者への連絡、チームへの共有、次回までの確認は空白のまま残る">
+          <div class="tl-row">
+            <span class="tl-who">GLM</span>
+            <ol class="tl">
+              <li class="on">指示<small>あなたが頼む</small></li>
+              <li class="on">実装・修正<small>速く安く</small></li>
+              <li class="on">説明文・下書き<small>大量に</small></li>
+              <li class="gap">担当と期限</li>
+              <li class="gap">関係者への連絡</li>
+              <li class="gap">チームへの共有</li>
+              <li class="gap">次回までの確認</li>
+            </ol>
+          </div>
+        </div>
+        <p class="caption">※ 流れは説明用のイメージです</p>
+        <p class="tl-note"><b>chat.z.aiでも、Claude Code経由でも、ローカルでも、同じところで止まります。</b>コードは何度でも書ける。でも「頼む」のは毎回あなたで、終わったかを見に行くのもあなたです。</p>
+      </section>
+      <section class="sec" id="connect" aria-labelledby="h-connect">
+        <span class="sec-label">05 / CONNECT</span>
+        <h2 id="h-connect">SIMYがつなぐ。GLMはそのまま、書いたあとを任せる</h2>
+        <p class="intro">空白だった4つを、SIMYが埋めます。あなたに戻るのは、判断の1マスだけ。</p>
+        <div class="tl-wrap" role="img" aria-label="タイムライン。指示、実装と修正、説明文や下書きはGLM。担当と期限、関係者への連絡の下書き、チームへの共有、次回までの確認はSIMYが進め、判断だけがあなたに戻る">
+          <div class="tl-row">
+            <span class="tl-who">GLM</span>
+            <ol class="tl">
+              <li class="on">指示</li>
+              <li class="on">実装・修正</li>
+              <li class="on">説明文・下書き</li>
+              <li class="blank"></li><li class="blank"></li><li class="blank"></li><li class="blank"></li>
+            </ol>
+          </div>
+          <div class="tl-row">
+            <span class="tl-who simy">SIMY</span>
+            <ol class="tl">
+              <li class="blank"></li><li class="blank"></li><li class="blank"></li>
+              <li class="run">担当と期限<small>会議から拾う</small></li>
+              <li class="run">連絡<small>Gmailに下書きまで</small></li>
+              <li class="run">共有<small>承認したら投稿</small></li>
+              <li class="you">判断<small>1問だけ戻る</small></li>
+            </ol>
+          </div>
+        </div>
+        <p class="caption">※ 流れは説明用のイメージです</p>
+        <ul class="three" aria-label="SIMYの3つの特徴">
+          <li>会議・チャットから拾う</li>
+          <li>あなたのやり方で</li>
+          <li>判断だけ返す</li>
+        </ul>
+        <p class="tl-note">SIMYは、会議の記録やチャットから「そのあとの仕事」を自分で見つけます。あなたが繰り返している手順と確認事項を会話から学び、同じやり方で進め、終わったかをMy Actionsに並べます。</p>
 
-      <!-- 09 -->
+        <div class="connect">
+          <ol class="connect-steps">
+            <li><b>SIMYに登録し、ChatGPT（Codex）を接続する</b><span>SIMYのクラウド実行は、お使いのChatGPTアカウントで動きます。Codexの利用は、お使いのChatGPTプランの範囲です。</span></li>
+            <li class="key"><b>SIMYデスクトップアプリを入れる</b><span>PC上のClaude Codeを、SIMYの実行役にできます。Claude CodeやCodexの会話から、繰り返している仕事を「SIMYからの提案」にします。会話本文はサーバーに保存しません。 <a href="/download.html">ダウンロードはこちら</a></span></li>
+            <li><b>会議の記録をつなぐ</b><span>連携画面でPlaudやNotionなどを接続します。GLMで書いた要約やPRの説明も、会議やチャットに貼ればSIMYが拾います。</span></li>
+          </ol>
+          <div>
+            <div class="mock" role="img" aria-label="SIMYのMy Actionsのイメージ。会議から拾った仕事として、決まった修正と担当の一覧が完了、取引先への連絡の下書きが進行中、今週リリースするかの判断があなた待ちとして並んでいます。">
+              <div class="mock-head" aria-hidden="true">
+                <span class="mock-mark">S</span>
+                <div>
+                  <div class="mock-title">My Actions <span class="mock-state">● あなた待ち 1</span></div>
+                  <p class="mock-desc">設計レビュー_決済API_1001 から拾った仕事</p>
+                </div>
+              </div>
+              <div class="mock-box" aria-hidden="true">修正と担当の一覧 ✓ ／ 取引先への連絡の下書き（進行中）／ QAへの共有（次）</div>
+              <div class="mock-btn" aria-hidden="true">今週リリースするか決める</div>
+              <div class="mock-foot" aria-hidden="true">判断が必要なものだけ、あなたに戻ります</div>
+            </div>
+            <p class="caption">※ SIMYの画面のイメージです</p>
+          </div>
+        </div>
+        <p class="note"><b>SIMYとGLMの関係：</b>SIMYは現時点ではGLM（Z.ai）には接続しません。SIMY自身は、お使いのChatGPT（Codex）アカウントと、PC上のClaude Codeで動きます。実装・下書き・要約はGLMの得意な仕事としてそのまま使い、その結果を会議やチャットに持ち込めば、そのあとをSIMYが進めます。</p>
+      </section>
+      <section class="sec" id="sample" aria-labelledby="h-sample">
+        <span class="sec-label">06 / SAMPLE</span>
+        <h2 id="h-sample">会議1件で比較：GLMの要約と、SIMYが仕上げる次の一手</h2>
+        <p class="intro">決済APIの設計レビュー（約50分）の議事メモを、GLMで要約した場合のサンプルです。左がGLM、右がSIMY。</p>
+        <div class="sample">
+          <div class="sheet">
+            <div class="sheet-label"><span>GLMの要約（例）</span><span>議事メモ → 3行</span></div>
+            <dl>
+              <dt>概要</dt>
+              <dd>決済APIのタイムアウトを30秒から10秒に短くし、リトライ処理を加える。</dd>
+              <dt>影響</dt>
+              <dd>取引先A社の夜間バッチ連携に影響が出る可能性がある。</dd>
+              <dt>宿題</dt>
+              <dd>リトライ処理の実装、負荷試験、A社への事前連絡。</dd>
+              <dt>予定</dt>
+              <dd>リリース候補は10月9日。負荷試験の結果を見て最終判断。</dd>
+            </dl>
+          </div>
+          <div class="outs">
+            <div class="out">
+              <div class="out-head"><b>決まった修正と担当の一覧</b><span class="pill ok">完了</span></div>
+              <p>リトライ処理：田中・10/6。負荷試験：QA・10/8。A社への事前連絡：あなた・10/7。</p>
+            </div>
+            <div class="out">
+              <div class="out-head"><b>取引先への連絡の下書き</b><span class="pill run">Autorun</span></div>
+              <p>A社のご担当者へ、タイムアウト変更の予定と影響、検証環境を使える日を、あなたのいつもの文面で。Gmailに下書きとして保存。</p>
+            </div>
+            <div class="out">
+              <div class="out-head"><b>QAチームへの共有</b><span class="pill">次</span></div>
+              <p>「10/9リリース候補です。負荷試験を10/8までにお願いします」。承認したらチャットに投稿。</p>
+            </div>
+            <div class="out you">
+              <div class="out-head"><b>あなたの判断</b><span class="pill you">あなたの番</span></div>
+              <p>負荷試験の結果を見て、今週リリースするか、1週延ばすか。判断が必要なところだけが、あなたに戻ってきます。</p>
+            </div>
+          </div>
+        </div>
+        <p class="sample-foot">GLMが書き、SIMYが動かす。リリースの判断は、あなたのままです。</p>
+      </section>
+      <section class="sec" id="usecases" aria-labelledby="h-usecases">
+        <span class="sec-label">07 / BY INDUSTRY</span>
+        <h2 id="h-usecases">業種別：GLMの使い方と、SIMYが出すもの</h2>
+        <p class="intro">GLMで書いたあと、SIMYが何を用意するか。個人でもチームでも、型は同じです。</p>
+        <div class="ind">
+          <div class="ind-card">
+            <h3>開発チーム <small>GLM：Coding Plan・Claude Code</small></h3>
+            <ul class="ind-rows">
+              <li><span>設計レビューの会議</span><span>→</span><span>決まった修正と担当の一覧</span></li>
+              <li><span>コードを書いたあと</span><span>→</span><span>PCのClaude Codeで次の作業</span></li>
+              <li><span>週の終わり</span><span>→</span><span>進捗と判断待ちのまとめ</span></li>
+            </ul>
+          </div>
+          <div class="ind-card">
+            <h3>受託開発・SIer <small>GLM：安いAPIで試作</small></h3>
+            <ul class="ind-rows">
+              <li><span>顧客との定例</span><span>→</span><span>宿題と期限の一覧・返信の下書き</span></li>
+              <li><span>仕様の変更</span><span>→</span><span>社内共有の文面・判断の1問</span></li>
+              <li><span>納期の前</span><span>→</span><span>返事待ちの仕事のリマインド</span></li>
+            </ul>
+          </div>
+          <div class="ind-card">
+            <h3>データ分析・研究 <small>GLM：分析コードと資料の要約</small></h3>
+            <ul class="ind-rows">
+              <li><span>分析の報告会</span><span>→</span><span>追加分析の担当と締め切り</span></li>
+              <li><span>レビューの指摘</span><span>→</span><span>修正点をまとめた依頼文</span></li>
+              <li><span>報告の前</span><span>→</span><span>確認待ちの一覧と判断の1問</span></li>
+            </ul>
+          </div>
+          <div class="ind-card">
+            <h3>経営会議・1on1 <small>GLM：資料の要約・論点整理</small></h3>
+            <ul class="ind-rows">
+              <li><span>経営会議</span><span>→</span><span>決定事項と担当者の一覧・関係者への共有</span></li>
+              <li><span>1on1</span><span>→</span><span>「あれどうなった」を聞く前に、進捗と判断待ち</span></li>
+              <li><span>週の終わり</span><span>→</span><span>複数の会議をまとめた週次報告</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+      <section class="sec" id="start" aria-labelledby="h-start">
+        <span class="sec-label">08 / START</span>
+        <h2 id="h-start">はじめ方：GLMはそのまま、3ステップ</h2>
+        <ol class="steps3">
+          <li><b>GLMは、いつもどおり使う</b><span>実装、修正、要約、下書き。chat.z.aiでも、Coding Planでも、ローカルでも構いません。</span></li>
+          <li class="key"><b>SIMYに登録し、ChatGPTを接続する</b><span>クラウド実行はお使いのChatGPT（Codex）。<a href="#connect">つなぎ方</a>は上のとおりです。Claude Codeを使っている人は、SIMYデスクトップアプリも。 <a href="/download.html">ダウンロードはこちら</a></span></li>
+          <li><b>会議を1件、終える</b><span>担当と期限、連絡の下書き、共有の文面が届きます。決めて、送る。それだけです。</span></li>
+        </ol>
+        <p class="note"><b>登録の流れ：</b>プランを選ぶ → メールで本人確認 → カードで決済（無料プランはありません）。<a href="/ja.html#pricing">料金を見る</a>／PCで使うアプリは<a href="/download.html">ダウンロードページ</a>から。</p>
+        <p class="note"><b>GLMの使い方は変わりません。</b>SIMYはGLMを置き換えるものではなく、書いたあとの仕事を受け持つ別の仕組みです。</p>
+      </section>
       <section class="sec" id="faq" aria-labelledby="h-faq">
         <span class="sec-label">09 / FAQ</span>
         <h2 id="h-faq">よくある質問</h2>
@@ -1556,8 +1534,6 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
           </details>
         </div>
       </section>
-
-      <!-- 10 -->
       <section class="sec" id="sources" aria-labelledby="h-sources">
         <span class="sec-label">10 / SOURCES</span>
         <h2 id="h-sources">参考情報</h2>
@@ -1600,8 +1576,8 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
 <footer class="site-footer">
   <div class="wrap">
     <ul class="footer-links">
-      <li><a href="/?lang=ja">ホーム</a></li>
-      <li><a href="/?lang=ja#pricing">料金</a></li>
+      <li><a href="/ja.html">ホーム</a></li>
+      <li><a href="/ja.html#pricing">料金</a></li>
       <li><a href="/integrations.html">連携</a></li>
       <li><a href="/download.html">ダウンロード</a></li>
       <li><a href="/guides/index.html">ガイド一覧</a></li>
