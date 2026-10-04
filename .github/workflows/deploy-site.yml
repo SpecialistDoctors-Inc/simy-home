@@ -7,7 +7,6 @@ on:
       - dev
     paths:
       - 'site/**'
-      - 'infra/cloudfront-functions/**'
       - 'scripts/publish-occupation-pages.sh'
       - '.github/workflows/deploy-site.yml'
   workflow_dispatch:
