@@ -179,3 +179,37 @@ issues. See `review-release-followup.md`. Final pre-publication checks: 1,143 No
 tests passed; both generators, homepage/sitewide SEO, Terraform formatting, YAML
 parsing and diff whitespace checks passed. Browser evidence covers 22 views and
 six example interactions; real-device/Safari/Firefox coverage remains unverified.
+
+## Recovery using the established publication path — 2026-10-04
+
+The user asked to find the previously used AWS publishing method. GitHub Actions
+run 37002533319 (2026-10-02, commit 309480d) succeeded with S3 publication and cache
+invalidation. Its edge-update step had `continue-on-error: true`; this was removed
+in the Oct 3 SEO work. PR #105 then put that required step before normal HTML
+publication, exposing the existing GetFunction permission gap as a site blocker.
+The Oct 2 run log also confirms GetFunction AccessDenied (11:44:28 UTC), despite
+the overall successful run. The authenticated local `simy` profile also lacks
+GetFunction / GetPolicy access.
+No credential or IAM change is needed to reuse the established static path.
+
+`/old/` is already served using an S3 object whose literal key is `old/`; an HTTP
+check returned 200. Occupation publication now uses the same convention. The
+preparation step uploads index files and assets, then creates `for/<occupation>/`
+objects with HTML content type and short cache. The asset sync excludes `for/*/`
+so it cannot delete those keys after preparation. The checked-in index.html files
+remain available for future edge rewrites and local static previews.
+
+Normal deployment publishes static pages and invalidates caches. CloudFront
+function publication is an explicit production workflow-dispatch option,
+`publish_edge_function`, default false, after site publication. When requested,
+its failures still fail the run; errors are not suppressed. Administrators must
+apply the already-declared Terraform permissions before choosing this option.
+The Terraform/function code remains ready for that separate operation.
+
+Canonical `/for/engineers/` and `/for/en/engineers/` work without edge modification.
+Legacy HTML aliases use their existing noindex meta-refresh fallback. HTTP 301
+normalization is not part of the restored static release and must not be reported
+as live. Rollback of this recovery should preserve serving directory objects until
+links are rolled back; the site bucket retains object versions. Retiring a future
+occupation requires explicit removal of its preserved slash key as well as its
+index page.

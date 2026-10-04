@@ -1,0 +1,5 @@
+No findings.
+
+The latest runtime/workflow code change is exactly the intended deletion: `infra/cloudfront-functions/**` was removed from the push path triggers in [.github/workflows/deploy-site.yml](/Users/t.shiwaku/.codex/worktrees/engineer-delivery-experience/simy-home/.github/workflows/deploy-site.yml:8). The CloudFront Function publication remains manual-only via `workflow_dispatch`, `environment == 'prod'`, and `publish_edge_function` at [.github/workflows/deploy-site.yml](/Users/t.shiwaku/.codex/worktrees/engineer-delivery-experience/simy-home/.github/workflows/deploy-site.yml:132).
+
+This resolves the prior Low finding: an edge-only path change should no longer trigger a normal static deploy/invalidation that skips edge publication. I don’t see a concrete regression in the reviewed trigger behavior. Scope was limited to `git show HEAD`, workflow triggers, and the manual edge-publication condition. I did not re-review site content, shell logic, tests, or run AWS operations/mutations.
