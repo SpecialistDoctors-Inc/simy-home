@@ -1,0 +1,296 @@
+{
+  "ja": {
+    "path": "engineers.html",
+    "other": "engineers-en.html",
+    "otherlabel": "English",
+    "home": "/ja.html",
+    "download": "/download.html",
+    "title": "SIMY — AIに、開発と品質チェックを任せる。",
+    "description": "つくりたいものを伝えると、AIが実装・テスト・修正を進める。SQMは過去の不具合から作ったルールで、次の変更をチェックします。",
+    "skip": "本文へ移動",
+    "nav": "できること",
+    "start": "使い始める",
+    "install": "SIMYをダウンロード",
+    "eyebrow": "エンジニアのためのSIMY",
+    "headline": [
+      "AIに、開発と",
+      "品質チェックを任せる。"
+    ],
+    "lead": "つくりたいものを伝えると、AIが実装・テスト・修正を進めます。",
+    "sublead": "過去の不具合も、次の変更をチェックする知識に。",
+    "secondary": "依頼と成果の例を見る",
+    "provider": "Codex・Claudeと連携",
+    "exampleLabel": "依頼と成果の例",
+    "exampleNote": "説明用のサンプルです。実際の開発や検査は実行しません。",
+    "choicesLabel": "依頼の例を選択",
+    "requestLabel": "あなたの依頼",
+    "returnLabel": "SIMYが用意するもの",
+    "returnNote": "確認結果を見て、変更を公開するかはあなたが判断。",
+    "examples": [
+      {
+        "label": "機能をつくる",
+        "request": "「検索フォームを追加して」",
+        "hint": "ほしい機能を、普段の言葉で。",
+        "outputs": [
+          "検索フォームのコード",
+          "入力・エラーのテスト結果",
+          "別のAIによるレビュー結果"
+        ],
+        "benefit": "実装から確認まで、ひとつの依頼で進める。"
+      },
+      {
+        "label": "バグを直す",
+        "request": "「保存ボタンの二重送信を直して」",
+        "hint": "困っている動作を伝える。",
+        "outputs": [
+          "問題を修正したコード",
+          "再現と修正確認の結果",
+          "残っている注意点"
+        ],
+        "benefit": "問題の調査・修正・再確認をつなげる。"
+      },
+      {
+        "label": "品質をチェック",
+        "request": "「過去と同じバグがないかチェックして」",
+        "hint": "SQMを有効にして、変更を確認。",
+        "outputs": [
+          "適用した再発防止ルール",
+          "指摘と該当する変更箇所",
+          "確認できなかった範囲"
+        ],
+        "benefit": "登録されたルールで、同じミスにつながる変更を探す。"
+      }
+    ],
+    "howTitle": "開発を進める。<br>過去のミスを、次に活かす。",
+    "loopTitle": "つくる・確かめる・直す。<br>AIが開発を進める。",
+    "loopBody": "依頼した目的に沿って実装。テストと別のAIによるレビューで指摘が出たら、修正して再確認します。",
+    "loopSteps": [
+      "実装",
+      "テスト",
+      "レビュー",
+      "修正"
+    ],
+    "loopFoot": "判断が必要なときは、あなたに確認します。",
+    "sqmTitle": "直したバグを、<br>次のチェックに使う。",
+    "sqmBody": "不具合の記録から再発防止ルールを管理。次の変更に当てはまるルールで、同じ問題につながる箇所をチェックします。",
+    "sqmSteps": [
+      "過去の不具合",
+      "再発防止ルール",
+      "次の変更をチェック"
+    ],
+    "sqmFoot": "SQMを有効にした場合、登録された適用ルールの範囲で確認します。",
+    "detailsTitle": "気になることだけ、詳しく。",
+    "scopeQuestion": "SQMで、何を確認できますか？",
+    "scopeAnswer": "過去の不具合から登録した再発防止ルールに沿って、変更箇所をチェックできます。確認結果に加え、実画面の操作や公開後の確認など、次に確認することもわかります。",
+    "controlQuestion": "勝手にマージ・公開されますか？",
+    "controlAnswer": "マージ・公開には、許可した範囲と必要な承認が適用されます。作業が進められないときや同じ失敗が続くときは、制限なく繰り返さず、停止して判断を求めます。",
+    "levelQuestion": "どこまで詳しく検証しますか？",
+    "levelIntro": "変更のリスクに応じて、5段階の検証水準を選びます。レベル5が最も手厚い検証です。どのレベルも、必須チェックと承認を省略しません。",
+    "levelNote": "所要時間は、変更範囲・環境・承認待ちによって変わります。",
+    "default": "基本水準",
+    "ctaTitle": "最初の仕事を、AIに任せる。",
+    "setup": [
+      [
+        "SIMYをインストール",
+        "利用環境に合うアプリをダウンロード。"
+      ],
+      [
+        "AIを接続",
+        "利用するCodexまたはClaudeを接続。"
+      ],
+      [
+        "つくりたいものを伝える",
+        "目的と確認してほしいことを共有。"
+      ]
+    ],
+    "pricing": "料金を見る",
+    "availability": "利用できる機能は、バージョン・プラン・組織設定によって異なります。",
+    "back": "SIMYホーム",
+    "footerNote": "機能説明は2026年10月3日の開発ソースに基づきます。",
+    "nojs": "下の例はそのまま読めます。他の例への切り替えにはJavaScriptが必要です。",
+    "levels": [
+      [
+        "5",
+        "最も手厚く",
+        "認証・決済・機密情報など",
+        "関連する境界、失敗・回復、ロールバックまで確認。設計・実装範囲・最終結果を、それぞれ独立してレビューします。",
+        "確認範囲が最も広く、準備と検証に時間をかけます。"
+      ],
+      [
+        "4",
+        "境界を守る",
+        "保存・共有API・外部への作用",
+        "保存結果、再試行、重複防止、他システムとの整合を確認。設計と最終結果を独立してレビューします。",
+        "複数の境界や運用まで確認する分、検証が増えます。"
+      ],
+      [
+        "3",
+        "バランスよく",
+        "通常の機能追加・不具合修正",
+        "影響する動作と主なユーザー体験、必要な静的チェックを確認。最終候補を独立してレビューします。",
+        "範囲の明確な、元に戻せる変更に適した基本水準です。"
+      ],
+      [
+        "2",
+        "小さな変更に",
+        "限定された、元に戻せるUI変更",
+        "直接影響する動作と回帰を確認。リポジトリの方針や不確実性に応じて、独立レビューを行います。",
+        "対象を絞って進めます。保存や権限に影響する変更には使えません。"
+      ],
+      [
+        "1",
+        "軽微な更新に",
+        "文言・ドキュメント・メタデータ",
+        "成果物、最終差分、リンクなどを確認。リポジトリが必須とするチェックやレビューを守ります。",
+        "実行時の動作・データ・セキュリティに影響しない変更が対象です。"
+      ]
+    ]
+  },
+  "en": {
+    "path": "engineers-en.html",
+    "other": "engineers.html",
+    "otherlabel": "日本語",
+    "home": "/",
+    "download": "/download/en.html",
+    "title": "SIMY — Let AI build, test, and check your code.",
+    "description": "Describe what you want. SIMY connects implementation, testing and fixes, while SQM checks your next change using rules developed from past incidents.",
+    "skip": "Skip to content",
+    "nav": "What it does",
+    "start": "Get started",
+    "install": "Download SIMY",
+    "eyebrow": "SIMY FOR ENGINEERS",
+    "headline": [
+      "Let AI build, test,",
+      "and check your code."
+    ],
+    "lead": "Describe what you want. AI handles implementation, testing, and fixes.",
+    "sublead": "Turn past bugs into checks for your next change.",
+    "secondary": "See what you get",
+    "provider": "Works with Codex and Claude",
+    "exampleLabel": "Example requests and results",
+    "exampleNote": "Illustrative examples. This page does not run development tasks or checks.",
+    "choicesLabel": "Choose an example request",
+    "requestLabel": "YOU ASK",
+    "returnLabel": "SIMY PREPARES",
+    "returnNote": "Review the results. You decide whether to release the change.",
+    "examples": [
+      {
+        "label": "Build a feature",
+        "request": "“Add a search form.”",
+        "hint": "Describe the feature in your own words.",
+        "outputs": [
+          "Code for the search form",
+          "Input and error test results",
+          "A separate AI review"
+        ],
+        "benefit": "One request connects implementation and verification."
+      },
+      {
+        "label": "Fix a bug",
+        "request": "“Fix duplicate submissions on save.”",
+        "hint": "Describe the behavior that is going wrong.",
+        "outputs": [
+          "Code with the fix",
+          "Reproduction and verification results",
+          "Remaining issues to consider"
+        ],
+        "benefit": "Connect investigation, repair, and verification."
+      },
+      {
+        "label": "Check quality",
+        "request": "“Check for bugs we have seen before.”",
+        "hint": "Enable SQM to check the change.",
+        "outputs": [
+          "The safeguards applied",
+          "Findings and affected changes",
+          "What could not be checked"
+        ],
+        "benefit": "Use registered rules to find changes that could repeat a mistake."
+      }
+    ],
+    "howTitle": "Keep building.<br>Put past lessons to work.",
+    "loopTitle": "Build. Test. Fix.<br>AI moves the work forward.",
+    "loopBody": "Implement the requested outcome. If tests or a separate AI review find a problem, repair it and check again.",
+    "loopSteps": [
+      "Build",
+      "Test",
+      "Review",
+      "Fix"
+    ],
+    "loopFoot": "When a decision needs you, the work pauses for your input.",
+    "sqmTitle": "Turn a fixed bug<br>into a future check.",
+    "sqmBody": "Manage safeguards based on incident records. Apply the relevant rules to your next change to find conditions that could repeat a problem.",
+    "sqmSteps": [
+      "Past incident",
+      "Safeguard",
+      "Check the next change"
+    ],
+    "sqmFoot": "When enabled, SQM checks within the scope of registered, applicable rules.",
+    "detailsTitle": "More detail, when you need it.",
+    "scopeQuestion": "What can SQM check?",
+    "scopeAnswer": "SQM checks your changes against applicable safeguards registered from past incidents. Alongside the results, it identifies follow-up checks, such as testing the actual interface or verifying behavior after release.",
+    "controlQuestion": "Will it merge or release without me?",
+    "controlAnswer": "Merge and release follow the permissions and approvals you have granted. Human blockers and repeated failures pause the work instead of triggering unlimited retries.",
+    "levelQuestion": "How thorough is the verification?",
+    "levelIntro": "Choose from five assurance levels according to the risk of the change. Level 5 is the most thorough. Every level preserves required checks and approvals.",
+    "levelNote": "Duration depends on scope, environment, and approval waits.",
+    "default": "DEFAULT",
+    "ctaTitle": "Give AI its first task.",
+    "setup": [
+      [
+        "Install SIMY",
+        "Download the app for your environment."
+      ],
+      [
+        "Connect your AI",
+        "Connect the Codex or Claude provider you use."
+      ],
+      [
+        "Describe what to build",
+        "Share the outcome and the checks that matter."
+      ]
+    ],
+    "pricing": "See pricing",
+    "availability": "Availability depends on version, plan, and organization settings.",
+    "back": "SIMY home",
+    "footerNote": "Feature overview based on development sources inspected October 3, 2026.",
+    "nojs": "This example remains readable. Enable JavaScript to switch to another example.",
+    "levels": [
+      [
+        "5",
+        "Maximum assurance",
+        "Authentication, payments, sensitive data",
+        "Check adjacent boundaries, failure, recovery and rollback. Independently review design, implementation boundaries and final results.",
+        "The broadest scope, with more preparation and verification."
+      ],
+      [
+        "4",
+        "Protected",
+        "Persistence, shared APIs, external effects",
+        "Verify stored results, retries, idempotency and integration boundaries. Independently review design and final results.",
+        "More verification across shared boundaries and operations."
+      ],
+      [
+        "3",
+        "Balanced",
+        "Normal features and bug fixes",
+        "Verify affected behavior, the main user journey and applicable static checks. Independently review the final candidate.",
+        "The default for bounded, reversible changes."
+      ],
+      [
+        "2",
+        "Focused",
+        "Small, isolated, reversible UI changes",
+        "Verify the direct path and regression. Use independent review when repository policy or material uncertainty calls for it.",
+        "A narrower scope; not for changes to persistence or permissions."
+      ],
+      [
+        "1",
+        "Lightweight",
+        "Copy, documentation and metadata",
+        "Check the artifact, final diff and links. Preserve all repository-required checks and reviews.",
+        "For changes without runtime, data or security impact."
+      ]
+    ]
+  }
+}
