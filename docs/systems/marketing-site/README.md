@@ -30,3 +30,32 @@ Observed repair basis: on 2026-10-04, `openssl s_client -connect simy.one:443 -s
 Requested/effective level 4, `assurance-ascending-v2`, floor 4 (external publication). Direct current instruction preserves selection and publication authority, conditional on frozen holds. L5: 5–9 execution hours, adjacent failure/recovery/rollback plus separate reviews; available. L4: 3–6 hours, both evidence layers, Chrome journeys, independent boundary/final review, SQM and CI; recommended/selected. L3: 3–5 hours, focused regressions/runtime/final review; unavailable for this external-publication scope. L2: 2.5–4.5 hours, direct regression/path/diff review; unavailable. L1: 2.5–4 hours, artifact/link checks plus mandatory gates; unavailable. Estimates concern the same remaining repair-to-production endpoint, based on existing implementation, six download locales, 18 security dictionaries, whole-site checks and preserved reviews. Mandatory gates explain overlap. Confidence low–medium. CI/review and external reader, product-plan, security-owner and Ahrefs waits are unbounded; elapsed time is execution plus that wait, not a finite promise.
 
 PR #108 must remain Draft while first-reader, product-plan, Ahrefs or security-owner evidence is missing. No merge/deploy or Ready transition is allowed to force green. Production topology is `main` → `.github/workflows/deploy-site.yml` → S3/CloudFront → `https://simy.one` (AGENTS.md). After gates, verify deploy workflow SHA and live bytes against the exact candidate, then Chrome UX-01/05/06. Rollback is a reviewed revert via the same workflow on broken route, wrong locale or misleading claim. No CloudFront/IAM change. Search Console by page/country at 28 days belongs to site owner; no monitor has been scheduled.
+
+## Latest repair and public evidence index
+
+[Review notes and evidence boundaries](review-notes.md) cover the full PR scope,
+including current source removals, canonical Chinese recovery and stacked mobile
+TOCs. Raw artifacts remain private and ignored; no screenshots or account records
+are committed. The notes distinguish connected Chrome Extension observations from
+historical diagnostic Playwright captures. PR #108 remains Draft.
+
+Additional observable refinements, under the same frozen acceptance IDs:
+
+- **UX-05-locale recovery (AC-5):** a Chinese visitor whose Windows installation
+  stops at a warning chooses the visible web-login alternative. The destination
+  retains `lang=zh-Hans&locale=zh-Hans`; no warning bypass or automatic submission
+  occurs. Web account/plan failure remains the separate UX-07 handoff. Oracle:
+  inspect and follow the warning link, compare query to the page's authored login
+  convention, and test all six locale links. OS installation is still unobserved.
+- **UX-06-numbered navigation (AC-6):** a mobile reader reaches any generated
+  page's TOC and selects a numbered section. Each choice occupies its own row,
+  preserves list order and reaches the matching section by pointer or keyboard.
+  Returning to the hub and switching topic language retain their existing links.
+  Oracle: at 390px inspect item rectangles for separate rows and common left edge;
+  at 1440px verify sidebar layout, valid anchors and no horizontal overflow.
+- **SEO-01-claim boundary (AC-8):** an anonymous visitor opens security or changes
+  locale. They receive only the website-scoped HTTPS explanation, policy/terms
+  links and disclosure contact. Choosing a policy opens the published policy;
+  choosing email opens the mail client without sending. Mailbox delivery, product
+  controls and compliance are unknown. Oracle: rendered 18-locale content and
+  source/bundle/metadata regression checks; owner evidence remains a release hold.

@@ -33,6 +33,10 @@ test('UX-04/05 / AC-4/5: six download FAQs agree with visible trial wording and 
     assert.doesNotMatch(answer, /^There is no free plan|^無料プランはありません/);
     const win = html.match(/data-install="win"([\s\S]*?)<\/ol>/)[1];
     assert.match(win, /https:\/\/app\.simy\.one\/login\?lang=/, file + ' no actionable recovery');
+    const expectedLocale = file === 'site/download.html' ? 'ja' : path.basename(file, '.html').replace('zh-hans', 'zh-Hans');
+    const recovery = new URL(win.match(/href="(https:\/\/app\.simy\.one\/login[^"]*)"/)[1].replaceAll('&amp;', '&'));
+    assert.equal(recovery.searchParams.get('lang'), expectedLocale, file + ' recovery language');
+    if (expectedLocale === 'zh-Hans') assert.equal(recovery.searchParams.get('locale'), expectedLocale);
   }
 });
 
@@ -63,4 +67,28 @@ assert {(r['market'],r['intent']) for r in extra} == {(m,i) for m in ['Spain','M
 assert all(r['page_specific_status'] == 'Ahrefs credit-limit pending' for r in extra)
 assert all((Path('site')/r['existing_route'].lstrip('/')).is_file() for r in extra)
 `], { cwd: root });
+});
+
+test('SEO-01 / AC-8: unsubstantiated security promises cannot return through locale sources or SEO metadata', () => {
+  const html = read('site/security.html');
+  const prohibited = /AES-256|AWS\/GCP|RBAC|SAML|HIPAA|SOC\s?2|GDPR|CCPA|24 hours|72 hours/;
+  assert.doesNotMatch(html, prohibited);
+  assert.match(html, /href="mailto:security@simy\.one"[^>]*>security@simy\.one<\/a>/);
+  for (const policy of ['privacy', 'terms']) {
+    assert.match(html, new RegExp(`href="/${policy}\\.html" data-i18n="footer\\.legal\\.${policy}"`));
+  }
+  const code = read('site/i18n.js');
+  const start = code.indexOf('  var SEO = {');
+  const end = code.indexOf('\n  function pageKey()', start);
+  const context = {};
+  vm.runInNewContext(code.slice(start, end), context);
+  for (const file of fs.readdirSync(path.join(root, 'site/lang')).filter(f => f.endsWith('.json'))) {
+    const dict = JSON.parse(read('site/lang/' + file));
+    const retired = Object.keys(dict).filter(k => /^sec\.(rest|cloud|access|data|dt|comp|heroP|reportP)/.test(k));
+    assert.deepEqual(retired, [], file + ' unsupported security claims');
+    const meta = context.SEO[file.slice(0, -5)].p.security;
+    assert.doesNotMatch(meta.t + meta.d, prohibited, file + ' security metadata');
+    assert.equal(meta.d, dict['sec.transitP'], file + ' metadata scope');
+    if (dict['home.faq.a4']) assert.equal(dict['home.faq.a4'], dict['sec.transitP'], file + ' FAQ scope');
+  }
 });

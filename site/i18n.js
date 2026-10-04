@@ -458,7 +458,7 @@
         "how-it-works": { t: "How SIMY Works — From Conversations to Workflows That Run", d: "SIMY picks up work from meetings and chats, learns how you do it, runs it as a Workflow on your own ChatGPT account, and returns only the decisions to you." },
         "contact": { t: "Talk to SIMY — Demos and Questions", d: "Ask about SIMY, book a screen-share demo, or map your first Workflow with our team." },
         "integrations": { t: "Integrations — SIMY | Slack, Google, Notion, PLAUD, ChatGPT", d: "Connect SIMY to the tools your team already uses. SIMY carries work from conversations into Slack, Google Workspace, Notion, PLAUD and your ChatGPT account." },
-        "security": { t: "Security — SIMY | How Your Data Is Handled", d: "How SIMY handles meeting and chat data: emails stop at drafts, posts wait for your approval, and work runs on your own ChatGPT account." },
+        "security": {"t": "Security at SIMY | HTTPS", "d": "Connections to this website use HTTPS encryption. The TLS version depends on the client and endpoint; this is not a guarantee about every product or third-party connection."},
         "about": { t: "About AwakApp Inc. — The Company Behind SIMY", d: "AwakApp Inc. builds SIMY, which turns conversations into workflows that get work done." }
       }
     },
@@ -474,7 +474,7 @@
         "how-it-works": { t: "仕組み — SIMY | 会話を、仕事が進むワークフローに", d: "SIMYは会議とチャットから仕事を拾い、あなたのやり方を学び、お使いのChatGPTアカウントでワークフローとして進め、判断だけを返します。" },
         "contact": { t: "相談・デモ — SIMY", d: "SIMYについての相談、画面共有でのデモ、最初のワークフローづくりをご相談いただけます。" },
         "integrations": { t: "連携 — SIMY | Slack・Google・Notion・PLAUD・ChatGPT", d: "いつものツールのままSIMYにつなげます。会話から生まれた仕事を、Slack、Google Workspace、Notion、PLAUD、ChatGPTアカウントへ運びます。" },
-        "security": { t: "セキュリティ — SIMY | データの取り扱い", d: "会議とチャットのデータをSIMYがどう扱うか。メールは下書きまで、投稿は承認してから、実行はお使いのChatGPTアカウントで。" },
+        "security": {"t": "SIMYのセキュリティ | HTTPS", "d": "このWebサイトへの接続はHTTPSで暗号化されます。TLSのバージョンはクライアントと接続先によって異なります。製品やサードパーティのすべての接続を保証するものではありません。"},
         "about": { t: "会社概要 — AwakApp Inc.（SIMY運営元）", d: "SIMYを開発するAwakApp Inc.。会話を、仕事が進むワークフローに変えます。" }
       }
     },
@@ -487,7 +487,7 @@
         "how-it-works": { t: "工作原理 — SIMY | 把对话变成能推进的工作流", d: "SIMY 从会议和聊天中拾取工作，学习你的做法，在你自己的 ChatGPT 账户上以工作流推进，只把需要判断的事交还给你。" },
         "contact": { t: "咨询与演示 — SIMY", d: "咨询 SIMY、预约屏幕共享演示，或与我们一起设计第一个工作流。" },
         "integrations": { t: "集成 — SIMY | Slack、Google、Notion、PLAUD、ChatGPT", d: "连接你团队已在使用的工具。SIMY 把对话中产生的工作带到 Slack、Google Workspace、Notion、PLAUD 和你的 ChatGPT 账户。" },
-        "security": { t: "安全 — SIMY | 数据如何处理", d: "SIMY 如何处理会议和聊天数据：邮件只到草稿，发布需你批准，执行使用你自己的 ChatGPT 账户。" },
+        "security": {"t": "SIMY 的安全性 | HTTPS", "d": "本网站的连接使用 HTTPS 加密。TLS 版本取决于客户端和连接端点；这不代表对产品或第三方所有连接的保证。"},
         "about": { t: "关于 AwakApp Inc. — SIMY 的开发公司", d: "AwakApp Inc. 开发 SIMY，把对话变成能推进工作的工作流。" }
       }
     },
@@ -500,7 +500,7 @@
         "how-it-works": { t: "使用方式 — SIMY | 4步從會議生成程式碼", d: "了解SIMY如何透過4步將會議轉化為GitHub拉取請求：錄製、AI處理、程式碼生成、PR發布。" },
         "contact": { t: "申請示範 — SIMY | AI程式碼生成平台", d: "申請SIMY示範。從會議生成程式碼的AI — 預約示範、免費試用或諮詢企業版。" },
         "integrations": { t: "整合 — SIMY | GitHub、Slack、Zoom、Google Workspace", d: "將SIMY與GitHub、Slack、Zoom和Google Workspace整合。" },
-        "security": { t: "安全 — SIMY | 企業級AI編程、HIPAA與SOC2", d: "SIMY企業級AI程式碼生成，配備HIPAA和SOC2合規路線圖。" },
+        "security": {"t": "SIMY 的安全性 | HTTPS", "d": "本網站的連線使用 HTTPS 加密。TLS 版本取決於用戶端和連線端點；這不代表對產品或第三方所有連線的保證。"},
         "about": { t: "關於 AwakApp Inc. — SIMY AI編程代理的製造商", d: "AwakApp Inc.，SIMY背後的公司——從會議生成程式碼的AI編程代理。" }
       }
     },
@@ -513,7 +513,7 @@
         "how-it-works": { t: "Fonctionnement — SIMY | Des conversations aux workflows", d: "SIMY récupère le travail issu des réunions et des chats, apprend votre façon de faire, l’exécute en workflow sur votre propre compte ChatGPT et ne vous renvoie que les décisions." },
         "contact": { t: "Nous contacter — SIMY | Démo et questions", d: "Posez vos questions sur SIMY, réservez une démo en partage d’écran ou concevez votre premier workflow avec nous." },
         "integrations": { t: "Intégrations — SIMY | Slack, Google, Notion, PLAUD, ChatGPT", d: "Connectez SIMY aux outils que votre équipe utilise déjà : Slack, Google Workspace, Notion, PLAUD et votre compte ChatGPT." },
-        "security": { t: "Sécurité — SIMY | Traitement de vos données", d: "Comment SIMY traite les données de réunions et de chats : e-mails en brouillon, publications après votre accord, exécution sur votre compte ChatGPT." },
+        "security": {"t": "Sécurité chez SIMY | HTTPS", "d": "Les connexions à ce site Web sont chiffrées par HTTPS. La version TLS dépend du client et du point de connexion ; cela ne garantit pas toutes les connexions du produit ou de tiers."},
         "about": { t: "À propos d’AwakApp Inc. — L’entreprise derrière SIMY", d: "AwakApp Inc. développe SIMY, qui transforme les conversations en workflows qui font avancer le travail." }
       }
     },
@@ -526,7 +526,7 @@
         "how-it-works": { t: "Funktionsweise — SIMY | Vom Meeting zum Code in 4 Schritten", d: "So verwandelt SIMY Meetings in 4 Schritten in GitHub Pull Requests." },
         "contact": { t: "Demo anfordern — SIMY | KI-Codegenerierung", d: "Fordern Sie eine SIMY-Demo an. KI-Codegenerierung aus Meetings." },
         "integrations": { t: "Integrationen — SIMY | GitHub, Slack, Zoom, Google Workspace", d: "Verbinden Sie SIMY mit GitHub, Slack, Zoom und Google Workspace." },
-        "security": { t: "Sicherheit — SIMY | Enterprise-KI-Codegenerierung, HIPAA & SOC2", d: "Enterprise-KI-Codegenerierung mit HIPAA- und SOC2-Roadmap." },
+        "security": {"t": "Sicherheit bei SIMY | HTTPS", "d": "Verbindungen zu dieser Website werden über HTTPS verschlüsselt. Die TLS-Version hängt vom Client und Endpunkt ab; dies ist keine Garantie für jede Produkt- oder Drittanbieterverbindung."},
         "about": { t: "Über AwakApp Inc. — Hersteller von SIMY", d: "AwakApp Inc., das Unternehmen hinter SIMY." }
       }
     },
@@ -539,7 +539,7 @@
         "how-it-works": { t: "Cómo funciona — SIMY | De conversaciones a flujos de trabajo", d: "SIMY recoge el trabajo de reuniones y chats, aprende cómo lo haces, lo ejecuta como flujo en tu propia cuenta de ChatGPT y solo te devuelve las decisiones." },
         "contact": { t: "Hablemos — SIMY | Demos y preguntas", d: "Consulta sobre SIMY, reserva una demo compartiendo pantalla o diseña tu primer flujo con nuestro equipo." },
         "integrations": { t: "Integraciones — SIMY | Slack, Google, Notion, PLAUD, ChatGPT", d: "Conecta SIMY con las herramientas que tu equipo ya usa: Slack, Google Workspace, Notion, PLAUD y tu cuenta de ChatGPT." },
-        "security": { t: "Seguridad — SIMY | Cómo se tratan tus datos", d: "Cómo trata SIMY los datos de reuniones y chats: los correos quedan en borrador, las publicaciones esperan tu aprobación y todo se ejecuta en tu cuenta de ChatGPT." },
+        "security": {"t": "Seguridad en SIMY | HTTPS", "d": "Las conexiones a este sitio web usan cifrado HTTPS. La versión de TLS depende del cliente y del destino; esto no garantiza todas las conexiones del producto ni de terceros."},
         "about": { t: "Acerca de AwakApp Inc. — La empresa detrás de SIMY", d: "AwakApp Inc. desarrolla SIMY, que convierte conversaciones en flujos de trabajo que avanzan." }
       }
     },
@@ -552,7 +552,7 @@
         "how-it-works": { t: "كيف يعمل SIMY — من الاجتماع إلى الكود في 4 خطوات", d: "شاهد كيف يحول SIMY الاجتماعات إلى طلبات سحب GitHub في 4 خطوات." },
         "contact": { t: "اطلب عرضًا — SIMY | منصة توليد الكود", d: "اطلب عرض SIMY." },
         "integrations": { t: "التكاملات — SIMY | GitHub و Slack و Zoom و Google Workspace", d: "اربط SIMY بـ GitHub و Slack و Zoom و Google Workspace." },
-        "security": { t: "الأمان — SIMY | HIPAA و SOC2 للمؤسسات", d: "توليد كود بالذكاء الاصطناعي بمستوى المؤسسات." },
+        "security": {"t": "الأمان في SIMY | HTTPS", "d": "تستخدم الاتصالات بهذا الموقع تشفير HTTPS. يعتمد إصدار TLS على العميل ونقطة الاتصال؛ وهذا ليس ضمانًا لكل اتصال بالمنتج أو بخدمات الجهات الخارجية."},
         "about": { t: "حول AwakApp Inc. — صانعو SIMY", d: "AwakApp Inc.، الشركة وراء SIMY." }
       }
     },
@@ -565,7 +565,7 @@
         "how-it-works": { t: "Come funziona — SIMY | Dalla riunione al codice in 4 passaggi", d: "Scopri come SIMY trasforma le riunioni in pull request GitHub in 4 passaggi." },
         "contact": { t: "Richiedi una demo — SIMY | IA generazione codice", d: "Richiedi una demo SIMY." },
         "integrations": { t: "Integrazioni — SIMY | GitHub, Slack, Zoom, Google Workspace", d: "Collega SIMY a GitHub, Slack, Zoom e Google Workspace." },
-        "security": { t: "Sicurezza — SIMY | Codifica IA Enterprise, HIPAA e SOC2", d: "Generazione di codice IA enterprise con roadmap HIPAA e SOC2." },
+        "security": {"t": "Sicurezza in SIMY | HTTPS", "d": "Le connessioni a questo sito web sono crittografate tramite HTTPS. La versione TLS dipende dal client e dalla destinazione; ciò non garantisce tutte le connessioni del prodotto o di terze parti."},
         "about": { t: "Chi siamo: AwakApp Inc. — Creatori di SIMY", d: "AwakApp Inc., l'azienda dietro SIMY." }
       }
     },
@@ -578,7 +578,7 @@
         "how-it-works": { t: "SIMY कैसे काम करता है — बातचीत से चलने वाले वर्कफ़्लो तक", d: "SIMY मीटिंग और चैट से काम उठाता है, आपका तरीका सीखता है, आपके अपने ChatGPT खाते पर वर्कफ़्लो के रूप में चलाता है और सिर्फ़ फ़ैसले आपको लौटाता है।" },
         "contact": { t: "संपर्क करें — SIMY | डेमो और सवाल", d: "SIMY के बारे में पूछें, स्क्रीन-शेयर डेमो बुक करें या हमारे साथ अपना पहला वर्कफ़्लो बनाएँ।" },
         "integrations": { t: "इंटीग्रेशन — SIMY | Slack, Google, Notion, PLAUD, ChatGPT", d: "SIMY को उन टूल्स से जोड़ें जिन्हें आपकी टीम पहले से इस्तेमाल करती है: Slack, Google Workspace, Notion, PLAUD और आपका ChatGPT खाता।" },
-        "security": { t: "सुरक्षा — SIMY | आपका डेटा कैसे संभाला जाता है", d: "SIMY मीटिंग और चैट डेटा कैसे संभालता है: ईमेल ड्राफ़्ट तक, पोस्ट आपकी मंज़ूरी के बाद, और काम आपके अपने ChatGPT खाते पर।" },
+        "security": {"t": "SIMY में सुरक्षा | HTTPS", "d": "इस वेबसाइट के कनेक्शन HTTPS से एन्क्रिप्ट होते हैं। TLS का संस्करण क्लाइंट और कनेक्शन के गंतव्य पर निर्भर करता है; यह उत्पाद या तृतीय पक्ष के हर कनेक्शन की गारंटी नहीं है।"},
         "about": { t: "AwakApp Inc. के बारे में — SIMY के पीछे की कंपनी", d: "AwakApp Inc. SIMY बनाती है, जो बातचीत को काम आगे बढ़ाने वाले वर्कफ़्लो में बदलता है।" }
       }
     },
@@ -591,7 +591,7 @@
         "how-it-works": { t: "ఎలా పనిచేస్తుంది — SIMY | 4 దశల్లో", d: "SIMY మీటింగ్‌లను 4 దశల్లో GitHub పుల్ రిక్వెస్ట్‌లుగా మారుస్తుంది." },
         "contact": { t: "డెమో అభ్యర్థన — SIMY", d: "SIMY డెమో అభ్యర్థించండి." },
         "integrations": { t: "ఇంటిగ్రేషన్‌లు — SIMY | GitHub, Slack, Zoom", d: "SIMYను GitHub, Slack, Zoom, Google Workspaceతో కనెక్ట్ చేయండి." },
-        "security": { t: "భద్రత — SIMY | HIPAA & SOC2", d: "HIPAA మరియు SOC2తో ఎంటర్‌ప్రైజ్ AI." },
+        "security": {"t": "SIMY లో భద్రత | HTTPS", "d": "ఈ వెబ్‌సైట్‌కు కనెక్షన్‌లు HTTPS ఎన్‌క్రిప్షన్‌ను ఉపయోగిస్తాయి. TLS వెర్షన్ క్లయింట్ మరియు కనెక్షన్ గమ్యస్థానంపై ఆధారపడి ఉంటుంది; ఇది ఉత్పత్తి లేదా మూడవ పక్షం యొక్క ప్రతి కనెక్షన్‌కు హామీ కాదు."},
         "about": { t: "AwakApp Inc. గురించి", d: "AwakApp Inc., SIMY వెనుక ఉన్న సంస్థ." }
       }
     },
@@ -604,7 +604,7 @@
         "how-it-works": { t: "ಹೇಗೆ ಕಾರ್ಯನಿರ್ವಹಿಸುತ್ತದೆ — SIMY", d: "SIMY ಮೀಟಿಂಗ್‌ಗಳನ್ನು 4 ಹಂತಗಳಲ್ಲಿ GitHub ಪುಲ್ ರಿಕ್ವೆಸ್ಟ್‌ಗಳಾಗಿ ಮಾರ್ಪಡಿಸುತ್ತದೆ." },
         "contact": { t: "ಡೆಮೊ ವಿನಂತಿ — SIMY", d: "SIMY ಡೆಮೊಗೆ ವಿನಂತಿಸಿ." },
         "integrations": { t: "ಸಂಯೋಜನೆ — SIMY | GitHub, Slack, Zoom", d: "SIMY ಅನ್ನು GitHub, Slack, Zoom, Google Workspace ಗೆ ಸಂಪರ್ಕಿಸಿ." },
-        "security": { t: "ಭದ್ರತೆ — SIMY | HIPAA & SOC2", d: "HIPAA ಮತ್ತು SOC2ನೊಂದಿಗೆ ಎಂಟರ್‌ಪ್ರೈಸ್ AI." },
+        "security": {"t": "SIMY ನಲ್ಲಿ ಭದ್ರತೆ | HTTPS", "d": "ಈ ವೆಬ್‌ಸೈಟ್‌ಗೆ ಸಂಪರ್ಕಗಳು HTTPS ಎನ್‌ಕ್ರಿಪ್ಶನ್ ಬಳಸುತ್ತವೆ. TLS ಆವೃತ್ತಿ ಕ್ಲೈಂಟ್ ಮತ್ತು ಸಂಪರ್ಕದ ತುದಿಯನ್ನು ಅವಲಂಬಿಸಿದೆ; ಇದು ಉತ್ಪನ್ನ ಅಥವಾ ಮೂರನೇ ವ್ಯಕ್ತಿಯ ಪ್ರತಿಯೊಂದು ಸಂಪರ್ಕಕ್ಕೆ ಖಾತರಿಯಲ್ಲ."},
         "about": { t: "AwakApp Inc. ಬಗ್ಗೆ", d: "AwakApp Inc., SIMY ಹಿಂದಿನ ಕಂಪನಿ." }
       }
     },
@@ -617,7 +617,7 @@
         "how-it-works": { t: "사용 방법 — SIMY | 4단계로 회의에서 코드", d: "SIMY가 4단계로 회의를 GitHub 풀 리퀘스트로 변환합니다." },
         "contact": { t: "데모 요청 — SIMY | AI 코드 생성", d: "SIMY 데모를 요청하세요." },
         "integrations": { t: "통합 — SIMY | GitHub, Slack, Zoom, Google Workspace", d: "SIMY를 GitHub, Slack, Zoom, Google Workspace와 연결하세요." },
-        "security": { t: "보안 — SIMY | HIPAA & SOC2", d: "HIPAA 및 SOC2 로드맵을 갖춘 엔터프라이즈급 AI." },
+        "security": {"t": "SIMY 보안 | HTTPS", "d": "이 웹사이트 연결은 HTTPS로 암호화됩니다. TLS 버전은 클라이언트와 연결 대상에 따라 다르며, 모든 제품 또는 타사 연결을 보장하는 것은 아닙니다."},
         "about": { t: "AwakApp Inc. 소개", d: "SIMY의 개발사 AwakApp Inc." }
       }
     },
@@ -630,7 +630,7 @@
         "how-it-works": { t: "Cách hoạt động — SIMY | Từ cuộc họp đến mã trong 4 bước", d: "Xem SIMY biến cuộc họp thành pull request GitHub trong 4 bước." },
         "contact": { t: "Yêu cầu demo — SIMY | Nền tảng tạo mã AI", d: "Yêu cầu demo SIMY." },
         "integrations": { t: "Tích hợp — SIMY | GitHub, Slack, Zoom", d: "Kết nối SIMY với GitHub, Slack, Zoom và Google Workspace." },
-        "security": { t: "Bảo mật — SIMY | HIPAA & SOC2", d: "Tạo mã AI cấp doanh nghiệp với lộ trình HIPAA và SOC2." },
+        "security": {"t": "Bảo mật tại SIMY | HTTPS", "d": "Kết nối đến trang web này được mã hóa bằng HTTPS. Phiên bản TLS tùy thuộc vào máy khách và điểm kết nối; điều này không bảo đảm mọi kết nối của sản phẩm hoặc bên thứ ba."},
         "about": { t: "Về AwakApp Inc.", d: "AwakApp Inc., công ty đứng sau SIMY." }
       }
     },
@@ -643,7 +643,7 @@
         "how-it-works": { t: "วิธีการทำงาน — SIMY | 4 ขั้นตอน", d: "ดูว่า SIMY เปลี่ยนการประชุมเป็น pull request GitHub ใน 4 ขั้นตอนอย่างไร" },
         "contact": { t: "ขอเดโม — SIMY", d: "ขอเดโม SIMY" },
         "integrations": { t: "การผสานการทำงาน — SIMY | GitHub, Slack, Zoom", d: "เชื่อมต่อ SIMY กับ GitHub, Slack, Zoom และ Google Workspace" },
-        "security": { t: "ความปลอดภัย — SIMY | HIPAA & SOC2", d: "การสร้างโค้ด AI ระดับองค์กรพร้อม HIPAA และ SOC2 roadmap" },
+        "security": {"t": "ความปลอดภัยที่ SIMY | HTTPS", "d": "การเชื่อมต่อกับเว็บไซต์นี้เข้ารหัสด้วย HTTPS เวอร์ชัน TLS ขึ้นอยู่กับไคลเอนต์และปลายทาง ซึ่งไม่ได้รับประกันการเชื่อมต่อทั้งหมดของผลิตภัณฑ์หรือบุคคลที่สาม"},
         "about": { t: "เกี่ยวกับ AwakApp Inc.", d: "AwakApp Inc. บริษัทผู้สร้าง SIMY" }
       }
     },
@@ -656,7 +656,7 @@
         "how-it-works": { t: "Cara kerja — SIMY | Dari rapat ke kode dalam 4 langkah", d: "Lihat bagaimana SIMY mengubah rapat menjadi pull request GitHub dalam 4 langkah." },
         "contact": { t: "Minta demo — SIMY | Platform pembuatan kode AI", d: "Minta demo SIMY." },
         "integrations": { t: "Integrasi — SIMY | GitHub, Slack, Zoom, Google Workspace", d: "Hubungkan SIMY dengan GitHub, Slack, Zoom, dan Google Workspace." },
-        "security": { t: "Keamanan — SIMY | HIPAA & SOC2", d: "Pembuatan kode AI dengan roadmap HIPAA dan SOC2." },
+        "security": {"t": "Keamanan di SIMY | HTTPS", "d": "Koneksi ke situs web ini menggunakan enkripsi HTTPS. Versi TLS bergantung pada klien dan tujuan koneksi; ini bukan jaminan untuk setiap koneksi produk atau pihak ketiga."},
         "about": { t: "Tentang AwakApp Inc.", d: "AwakApp Inc., perusahaan di balik SIMY." }
       }
     },
@@ -669,7 +669,7 @@
         "how-it-works": { t: "Как работает SIMY — от встречи к коду за 4 шага", d: "Узнайте, как SIMY превращает встречи в GitHub pull request за 4 шага." },
         "contact": { t: "Запросить демо — SIMY | Платформа генерации кода", d: "Запросите демо SIMY." },
         "integrations": { t: "Интеграции — SIMY | GitHub, Slack, Zoom, Google Workspace", d: "Подключите SIMY к GitHub, Slack, Zoom и Google Workspace." },
-        "security": { t: "Безопасность — SIMY | HIPAA & SOC2", d: "Корпоративная генерация кода ИИ с HIPAA и SOC2." },
+        "security": {"t": "Безопасность в SIMY | HTTPS", "d": "Соединения с этим сайтом шифруются с помощью HTTPS. Версия TLS зависит от клиента и конечной точки; это не гарантия для всех соединений продукта или сторонних сервисов."},
         "about": { t: "О AwakApp Inc.", d: "AwakApp Inc., компания, стоящая за SIMY." }
       }
     },
@@ -682,7 +682,7 @@
         "how-it-works": { t: "Como funciona — SIMY | Da reunião ao código em 4 passos", d: "Veja como o SIMY transforma reuniões em pull requests do GitHub em 4 passos." },
         "contact": { t: "Solicitar demo — SIMY", d: "Solicite uma demo SIMY." },
         "integrations": { t: "Integrações — SIMY | GitHub, Slack, Zoom, Google Workspace", d: "Conecte o SIMY ao GitHub, Slack, Zoom e Google Workspace." },
-        "security": { t: "Segurança — SIMY | HIPAA & SOC2", d: "Geração de código IA empresarial com roadmap HIPAA e SOC2." },
+        "security": {"t": "Segurança no SIMY | HTTPS", "d": "As conexões com este site usam criptografia HTTPS. A versão TLS depende do cliente e do destino; isso não garante todas as conexões do produto ou de terceiros."},
         "about": { t: "Sobre a AwakApp Inc.", d: "AwakApp Inc., a empresa por trás do SIMY." }
       }
     }

@@ -39,7 +39,7 @@ translation consistency does not substantiate them.
 
 Owner action: site/security/product owner must supply current architecture,
 operational/plan evidence and approved policy wording before these claims can be
-certified. An SEO metadata pass does not make them true. The remaining claims stay pending; changing security policy/configuration is
+certified. An SEO metadata pass does not make them true. The owner attestations remain pending; changing security policy/configuration is
 outside level 4 authority. No security configuration, authentication, IAM or
 legal policy was edited.
 
@@ -73,3 +73,39 @@ Canonical interaction specification: immutable preimplementation-spec.md supplie
 with this run, hash 19abec2955fdfaa150d167348e2835cfffb1e38655ae996b91a7e418405e8fe9.
 No acceptance obligation is replaced by this compact audit. Required first-read
 observations remain pending; automation does not establish comprehension.
+
+## Current source disposition after independent boundary review
+
+The historical claims above are an audit inventory, not retained public assurances.
+The current `security.html` removes unsubstantiated at-rest/backups, AWS/GCP
+controls, RBAC/MFA, plan training/feature checkmarks, GDPR/CCPA active status,
+SOC2/HIPAA/ISO target years and 24h/72h disclosure promises. The blanket hero
+assurance is removed. All 18 current locale dictionaries and their generated
+bundle remove corresponding keys. Their old home FAQ security summary now uses
+the same existing website-only HTTPS description. All 18 security SEO entries in
+`site/i18n.js` also use that scope (the current page's `data-reviewed-seo` guard
+already prevents runtime metadata replacement, but stale source promises are removed).
+Localized policy/terms links and a directly usable security email link remain.
+Removal does not establish product security, plan entitlement, compliance or
+mailbox delivery. Those owner attestations still block release.
+
+Independent gpt-5.5/xhigh boundary review conditionally approved source removal
+and identified stale SEO/FAQ sources and untranslated added prose. Those findings
+were addressed before freezing the candidate. An earlier delegated reviewer
+edited prematurely; its result is not used as independent approval. A fresh
+read-only review supplied the boundary findings; final candidate review is a
+separate gate. No infrastructure, authentication or legal policy changed.
+
+Whole-site term inventory also identifies security references in third-party
+PLAUD/Notta/ChatGPT guides and Qwen deployment examples, plus legacy `/old/`
+content. A sample TLS configuration is not a claim that SIMY enforces TLS1.3.
+Third-party claims and legacy content are not certified by this source repair;
+the whole-site claims gate remains pending for source/owner validation. Legal
+policy text remains authoritative policy text, not observed operational proof.
+
+Latest observed public installer metadata on 2026-10-04 at 06:24 UTC was 0.5.67.
+Mac and Windows artifact HEAD responses were 200 and lengths matched their
+manifests (50,730,192 / 28,843,766 bytes). Mac manifest declared signed/notarized;
+Windows declared unsigned. These are publisher metadata, not locally verified
+signatures. The dated 0.5.65 fallback remained available (50,726,752 / 28,840,453
+bytes); it is intentionally not labelled latest. Recheck at the release gate.
