@@ -648,6 +648,8 @@
         }
         if (["/for/", "/for/en/"].includes(localUrl.pathname)) {
           localUrl.pathname = locale === "ja" ? "/for/" : "/for/en/";
+          link.setAttribute("href", `${localUrl.pathname}${localUrl.search}${localUrl.hash}`);
+          continue;
         }
         if (["/for/engineers/", "/for/en/engineers/"].includes(localUrl.pathname)) {
           localUrl.pathname = locale === "ja" ? "/for/engineers/" : "/for/en/engineers/";

@@ -61,6 +61,8 @@ for (const [name, source] of [['production', production], ['Terraform', terrafor
   });
   test(`${name}: occupation URLs normalize once and preserve campaign parameters`, () => {
     for (const [legacy, canonical] of [
+      ['/for', '/for/'], ['/for.html', '/for/'], ['/for/index.html', '/for/'],
+      ['/for/en', '/for/en/'], ['/for/en/index.html', '/for/en/'],
       ['/engineers.html', '/for/engineers/'], ['/engineers-en.html', '/for/en/engineers/'],
       ['/for/engineers', '/for/engineers/'], ['/for/engineers.html', '/for/engineers/'],
       ['/for/engineers/index.html', '/for/engineers/'],

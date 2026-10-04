@@ -68,6 +68,7 @@ def section(s, lang):
 def render(p, lang):
     c, labels = p[lang], LABELS[lang]
     title = c['title'].removesuffix(' | SIMY')
+    headline = c.get('headline', title)
     url = BASE + p['paths'][lang]
     is_guide = p['kind'] == 'guide'
     schema = {'@context': 'https://schema.org', '@graph': [
@@ -114,7 +115,7 @@ def render(p, lang):
 <header class="header"><div class="shell header-inner"><a class="brand" href="{labels['home']}">SIMY</a><nav aria-label="{'ナビゲーション' if lang == 'ja' else 'Navigation'}"><a href="{labels['hub']}">{labels['nav']}</a><a href="{labels['guides']}">{labels['guide']}</a><a href="{p['paths'][other]}" lang="{other}" hreflang="{other}">{'English' if other == 'en' else '日本語'}</a></nav></div></header>
 <main class="shell" id="main">
 <ol class="crumbs"><li><a href="{labels['home']}">SIMY</a></li><li aria-hidden="true">/</li><li>{labels['guide'] if is_guide else labels['nav']}</li></ol>
-<div class="hero"><p class="eyebrow">{'GUIDE' if is_guide else 'SIMY FOR YOUR WORK'}</p><h1>{esc(title)}</h1><p class="lead">{esc(c['lead'])}</p><p class="byline">SIMY · {labels['updated']} <time datetime="{DATA['updated']}">{DATA['updated']}</time></p></div>
+<div class="hero"><p class="eyebrow">{'GUIDE' if is_guide else 'SIMY FOR YOUR WORK'}</p><h1>{esc(headline)}</h1><p class="lead">{esc(c['lead'])}</p><p class="byline">SIMY · {labels['updated']} <time datetime="{DATA['updated']}">{DATA['updated']}</time></p></div>
 <div class="layout"><nav class="toc" aria-label="{labels['toc']}"><p>{labels['toc']}</p><ol>{toc}</ol></nav><div class="reading">{''.join(section(s, lang) for s in sections)}</div></div>
 <aside class="next"><h2>{labels['next']}</h2><p>{labels['availability']}</p><div class="actions"><a class="button" href="{labels['download']}">{labels['start']} ↗</a><a href="{labels['home']}#pricing">{labels['pricing']}</a></div></aside>
 </main><footer class="shell footer"><a href="{labels['home']}">{labels['back']}</a><span>© 2026 SIMY</span></footer>

@@ -41,7 +41,8 @@
               ]
             ]
           }
-        ]
+        ],
+        "headline": "あなたの仕事から、SIMYの活用を探す。"
       },
       "en": {
         "title": "SIMY for Your Work: Sales and Engineering | SIMY",
@@ -72,7 +73,8 @@
               ]
             ]
           }
-        ]
+        ],
+        "headline": "Make room for the work that matters."
       }
     },
     {
@@ -146,7 +148,8 @@
               ]
             ]
           }
-        ]
+        ],
+        "headline": "商談の準備と、その後の仕事を。"
       },
       "en": {
         "title": "SIMY for Sales: Meeting Prep and Follow-up | SIMY",
@@ -208,7 +211,8 @@
               ]
             ]
           }
-        ]
+        ],
+        "headline": "Prepare the conversation. Follow through on the promise."
       }
     },
     {
@@ -377,7 +381,7 @@
             "id": "checks",
             "title": "止まったときと、受け取るとき",
             "p": [
-              "判断待ちには必要な情報を伝え、/continueで続行します。一時停止は/pause、再開は/resume、選択した実行の停止は/stopです。承認が必要なときは、変更と判断内容を確認してから操作してください。",
+              "判断待ちには、/continueの後に必要な情報を書いて続行します。例：/continue 送信処理を変えずに進めてください。一時停止は/pause、再開は/resume、選択した実行の停止は/stopです。承認が必要なときは、変更と判断内容を確認してから操作してください。",
               "最後は、差分、実行したテスト、独立レビュー、残っている確認事項を見ます。PRの作成、マージ、公開、公開後の動作確認は別々の状態です。必要な到達点まで確認できているかを確かめます。"
             ]
           }
@@ -425,7 +429,7 @@
             "id": "checks",
             "title": "Respond to pauses and inspect the final result",
             "p": [
-              "Provide the missing decision or information and use /continue for a waiting run. Use /pause to pause, /resume to resume, and /stop to stop the selected run. Read the proposed action before giving any required approval.",
+              "Use /continue <guidance> for a waiting run, including the missing decision or information. For example: /continue Proceed without changing submission logic. Use /pause to pause, /resume to resume, and /stop to stop the selected run. Read the proposed action before giving any required approval.",
               "Inspect the diff, actual test results, independent review and outstanding checks. Creating a PR, merging, publishing and verifying production are distinct states. Confirm that the work reached the delivery boundary you requested."
             ]
           }
@@ -463,9 +467,10 @@
             "p": [
               "CLIを利用できるリポジトリのルートで、まず差分の事前確認、その後に本チェックを実行します。次はmacOS/Linuxの例です。origin/mainは実際のPRの基準ブランチに置き換えます。証跡の保存先はリポジトリの外に作っておきます。"
             ],
-            "code": "mkdir -p /tmp/simy-sqm-proof\nsimy sqm min-check --base origin/main --output /tmp/simy-sqm-proof/min.json\nsimy sqm check --base origin/main --min-result /tmp/simy-sqm-proof/min.json --proof /tmp/simy-sqm-proof/proof.json --signed-evidence /tmp/simy-sqm-proof/proof.signed.json",
+            "code": "mkdir -p /tmp/simy-sqm-proof\nsimy sqm min-check --base origin/main --output /tmp/simy-sqm-proof/min.json\nsimy sqm check --base origin/main --min-result /tmp/simy-sqm-proof/min.json --proof /tmp/simy-sqm-proof/proof.json --signed-evidence /tmp/simy-sqm-proof/proof.signed.json --no-upload",
             "pAfter": [
-              "二つのコマンドの間では、対象のファイルを変更しません。変更すると事前確認と本チェックの対象がずれ、証跡をそのまま使えなくなります。利用中のバージョンでsimy sqm --helpも確認してください。"
+              "二つのコマンドの間では、対象のファイルを変更しません。変更すると事前確認と本チェックの対象がずれ、証跡をそのまま使えなくなります。利用中のバージョンでsimy sqm --helpも確認してください。",
+              "この例では--no-uploadで実行証跡のクラウド送信を止めています。通常は証跡が送信されるため、共有先を確認して使い分けてください。"
             ]
           },
           {
@@ -510,9 +515,10 @@
             "p": [
               "From the repository root, run the preflight and then the full check. This macOS/Linux example writes evidence outside the repository. Replace origin/main with the actual PR base branch and make sure it resolves locally."
             ],
-            "code": "mkdir -p /tmp/simy-sqm-proof\nsimy sqm min-check --base origin/main --output /tmp/simy-sqm-proof/min.json\nsimy sqm check --base origin/main --min-result /tmp/simy-sqm-proof/min.json --proof /tmp/simy-sqm-proof/proof.json --signed-evidence /tmp/simy-sqm-proof/proof.signed.json",
+            "code": "mkdir -p /tmp/simy-sqm-proof\nsimy sqm min-check --base origin/main --output /tmp/simy-sqm-proof/min.json\nsimy sqm check --base origin/main --min-result /tmp/simy-sqm-proof/min.json --proof /tmp/simy-sqm-proof/proof.json --signed-evidence /tmp/simy-sqm-proof/proof.signed.json --no-upload",
             "pAfter": [
-              "Do not edit the candidate between these commands. An edit changes the identity the preflight and full check must share. Use simy sqm --help to confirm the options in your installed version."
+              "Do not edit the candidate between these commands. An edit changes the identity the preflight and full check must share. Use simy sqm --help to confirm the options in your installed version.",
+              "This example uses --no-upload to disable cloud evidence upload. Evidence is uploaded by default, so check the destination and sharing scope before omitting that option."
             ]
           },
           {
