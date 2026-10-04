@@ -62,7 +62,7 @@ These checks support the existing bounded content, not customer outcomes.
 AC-1/UX-01: six generated homes expose the existing occupation hub before the
 long hero copy, retaining direct engineering navigation. AC-2/3/4: JA/EN sales
 pages add an illustrative source→draft→unknowns→human-review example. AC-5: six
-download pages retain a dated 0.5.64 fallback with explicit reload/account recovery;
+download pages retain a dated 0.5.65 fallback with explicit reload/account recovery;
 shared script selects matching platform/architecture only and validates URL and
 version before replacing the fallback. AC-7: getting-started pages explicitly
 separate an illustrative request from a verified product result. AC-6: all 14

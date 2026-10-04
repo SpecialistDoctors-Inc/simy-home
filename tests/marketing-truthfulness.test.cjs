@@ -45,3 +45,22 @@ test('UX-02/03 / AC-2/3: synthetic note produces draft, internal checks and next
   assert.match(en, /Nothing has been sent or attached/);
   assert.match(ja, /送信や添付はまだ行っていない/);
 });
+
+test('SEO-01 / AC-8: frozen forty pairs and three additional historical markets retain pending research', () => {
+  execFileSync('python3', ['-c', `
+import csv
+from pathlib import Path
+root = Path('docs/systems/marketing-site')
+rows = list(csv.DictReader((root/'market-route-ledger.csv').open()))
+assert len(rows) == 40
+assert len({(r['route'],r['market']) for r in rows}) == 40
+assert {r['market'] for r in rows} == {'Japan','United States','United Kingdom','India','Singapore'}
+for market in {r['market'] for r in rows}:
+    assert len([r for r in rows if r['market'] == market]) == 8
+assert all(r['page_specific_status'] == 'Ahrefs credit-limit pending' for r in rows)
+extra = list(csv.DictReader((root/'existing-market-ledger.csv').open()))
+assert {(r['market'],r['intent']) for r in extra} == {(m,i) for m in ['Spain','Mexico','France'] for i in ['home','guide hub','download']}
+assert all(r['page_specific_status'] == 'Ahrefs credit-limit pending' for r in extra)
+assert all((Path('site')/r['existing_route'].lstrip('/')).is_file() for r in extra)
+`], { cwd: root });
+});
