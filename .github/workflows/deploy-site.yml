@@ -8,6 +8,7 @@ on:
     paths:
       - 'site/**'
       - 'infra/cloudfront-functions/**'
+      - 'scripts/publish-occupation-pages.sh'
       - '.github/workflows/deploy-site.yml'
   workflow_dispatch:
     inputs:
@@ -19,6 +20,10 @@ on:
         options:
           - prod
           - dev
+      publish_edge_function:
+        description: 'Also publish CloudFront routing (requires separate function permissions)'
+        type: boolean
+        default: false
 
 permissions:
   id-token: write
@@ -51,8 +56,8 @@ jobs:
           role-to-assume: ${{ secrets.AWS_SITE_DEPLOY_ROLE_ARN }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      # Prepare new directory routes and their assets before the edge exposes them.
-      # Keep homepage HTML publication after the function succeeds.
+      # Publish directory keys directly, like old/, before exposing homepage links.
+      # Both existing pass-through routing and future index rewrites can serve them.
       - name: Prepare occupation pages and assets
         run: |
           aws s3 sync site/for/ s3://${{ secrets.SITE_S3_BUCKET }}/for/ \
@@ -61,34 +66,7 @@ jobs:
             aws s3 cp "site/$asset" "s3://${{ secrets.SITE_S3_BUCKET }}/$asset" \
               --cache-control "public, max-age=86400"
           done
-
-      - name: Update CloudFront Function
-        if: github.ref == 'refs/heads/main' || (github.event_name == 'workflow_dispatch' && inputs.environment == 'prod')
-        run: |
-          FUNC_NAME="simy-site-prod-redirect"
-          FUNC_CODE_FILE="infra/cloudfront-functions/redirect-prod.js"
-
-          # Get current ETag
-          ETAG=$(aws cloudfront get-function \
-            --name "$FUNC_NAME" \
-            --query 'ETag' \
-            --output text \
-            /tmp/current-function-code.js)
-
-          # Update function code
-          UPDATE_ETAG=$(aws cloudfront update-function \
-            --name "$FUNC_NAME" \
-            --function-config '{"Comment":"URL normalization + redirects","Runtime":"cloudfront-js-2.0"}' \
-            --function-code "fileb://${FUNC_CODE_FILE}" \
-            --if-match "$ETAG" \
-            --query 'ETag' --output text)
-
-          # Publish function to LIVE stage
-          aws cloudfront publish-function \
-            --name "$FUNC_NAME" \
-            --if-match "$UPDATE_ETAG"
-
-          echo "CloudFront Function '$FUNC_NAME' updated and published."
+          bash scripts/publish-occupation-pages.sh "${{ secrets.SITE_S3_BUCKET }}"
 
       # downloads/ belongs to the CLI release publisher. Exclude it from
       # every root sync so --delete cannot remove installers or manifests.
@@ -121,6 +99,7 @@ jobs:
             --exclude "lang/*" \
             --exclude "downloads/*" \
             --exclude ".well-known/apple-app-site-association" \
+            --exclude "for/*/" \
             --cache-control "public, max-age=86400"
 
       - name: Publish apple-app-site-association (application/json, no redirect)
@@ -141,9 +120,39 @@ jobs:
             --content-type "text/html; charset=utf-8" \
             --cache-control "public, max-age=300"
 
-      # Refresh cached HTML and assets after both routing and site publication succeed.
+      # Refresh uploaded HTML, directory keys and assets.
       - name: Invalidate CloudFront cache
         run: |
           aws cloudfront create-invalidation \
             --distribution-id ${{ secrets.SITE_CF_DISTRIBUTION_ID }} \
             --paths "/*"
+
+      # Edge normalization is independent of serving the static site. Explicit
+      # edge publication still fails visibly if its permissions are missing.
+      - name: Update CloudFront Function
+        if: github.event_name == 'workflow_dispatch' && inputs.environment == 'prod' && inputs.publish_edge_function
+        run: |
+          FUNC_NAME="simy-site-prod-redirect"
+          FUNC_CODE_FILE="infra/cloudfront-functions/redirect-prod.js"
+
+          # Get current ETag
+          ETAG=$(aws cloudfront get-function \
+            --name "$FUNC_NAME" \
+            --query 'ETag' \
+            --output text \
+            /tmp/current-function-code.js)
+
+          # Update function code
+          UPDATE_ETAG=$(aws cloudfront update-function \
+            --name "$FUNC_NAME" \
+            --function-config '{"Comment":"URL normalization + redirects","Runtime":"cloudfront-js-2.0"}' \
+            --function-code "fileb://${FUNC_CODE_FILE}" \
+            --if-match "$ETAG" \
+            --query 'ETag' --output text)
+
+          # Publish function to LIVE stage
+          aws cloudfront publish-function \
+            --name "$FUNC_NAME" \
+            --if-match "$UPDATE_ETAG"
+
+          echo "CloudFront Function '$FUNC_NAME' updated and published."
