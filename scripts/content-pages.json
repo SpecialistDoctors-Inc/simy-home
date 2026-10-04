@@ -1,0 +1,802 @@
+{
+  "updated": "2026-10-04",
+  "pages": [
+    {
+      "id": "occupations",
+      "kind": "hub",
+      "paths": {
+        "ja": "/for/",
+        "en": "/for/en/"
+      },
+      "related": [
+        "simy-getting-started",
+        "simy-delivery-loop"
+      ],
+      "ja": {
+        "title": "職業別のSIMY活用｜営業・エンジニア | SIMY",
+        "description": "営業の商談準備・フォローアップからエンジニアの開発・品質確認まで、職業別にSIMYの活用方法を紹介。仕事の成果から選び、具体的な依頼例と始め方を確認できます。",
+        "lead": "あなたの仕事から、任せたいことを選ぶ。商談の準備も、開発の確認も、まずは一つの成果を決めるところから。",
+        "sections": [
+          {
+            "id": "reference",
+            "title": "どの仕事を進めたいですか？",
+            "p": [
+              "営業なら、顧客との次の会話に備える。エンジニアなら、変更を作って動作を確かめる。職業別ページでは、仕事の前後に残る作業と、AIに渡す情報、受け取りたい成果を具体例で紹介します。"
+            ],
+            "cards": [
+              "sales",
+              "engineers"
+            ]
+          },
+          {
+            "id": "choose",
+            "title": "仕事の成果と、道具の使い方から選べます",
+            "p": [
+              "何を任せたいか考えたいときは職業別ページへ。SIMYの設定や、Claude Code・Conductorなどの操作方法を知りたいときはガイドへ進んでください。まず一つの仕事で、結果を自分で確認できる範囲から始められます。"
+            ],
+            "links": [
+              [
+                "/guides/index.html",
+                "ツール・操作別のガイド一覧"
+              ]
+            ]
+          }
+        ]
+      },
+      "en": {
+        "title": "SIMY for Your Work: Sales and Engineering | SIMY",
+        "description": "Explore SIMY for sales preparation, follow-up, software development and quality checks. Choose a role, see a concrete task and learn how to get started.",
+        "lead": "Start with the work you want to move forward. Prepare for your next customer conversation, or build and verify your next software change.",
+        "sections": [
+          {
+            "id": "reference",
+            "title": "What work do you want to move forward?",
+            "p": [
+              "Sales teams need a useful next conversation. Engineers need a change they can inspect and verify. Each role page explains the inputs to share, an example request and the outputs to review."
+            ],
+            "cards": [
+              "sales",
+              "engineers"
+            ]
+          },
+          {
+            "id": "choose",
+            "title": "Choose an outcome, then learn the steps",
+            "p": [
+              "Use a role page to decide what to delegate. Open a guide when you need setup instructions or a workflow for SIMY, Claude Code or Conductor. Begin with a small task whose result you can check yourself."
+            ],
+            "links": [
+              [
+                "/guides/en/index.html",
+                "Browse the tool and workflow guides"
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales",
+      "kind": "role",
+      "paths": {
+        "ja": "/for/sales/",
+        "en": "/for/en/sales/"
+      },
+      "related": [
+        "simy-getting-started",
+        "occupations"
+      ],
+      "ja": {
+        "title": "営業向けSIMY｜商談準備とフォローアップ | SIMY",
+        "description": "営業の商談準備、顧客メモ、フォローアップメールの下書きをSIMYで進める活用例。渡す情報、依頼のしかた、送信前に人が確認するポイントまで具体的に紹介します。",
+        "lead": "商談の前に知りたいことを整理し、商談の後に約束したことを次の行動へ。顧客との会話に集中するための準備を、SIMYと進める。",
+        "sections": [
+          {
+            "id": "reference",
+            "title": "次の商談に必要な、一枚をつくる",
+            "p": [
+              "過去の顧客メモ、前回の議事録、今回の提案条件をもとに、相手の課題、未回答の質問、次に確認することをまとめます。情報源を添えて依頼すれば、営業担当者が元の発言や条件に戻って確認しやすくなります。"
+            ],
+            "list": [
+              "商談前：前回の約束と今回の確認事項を整理する。",
+              "商談後：決定事項、担当者、期限、まだ決まっていないことを分ける。",
+              "フォローアップ：回答と資料案内を含むメールの下書きをつくる。"
+            ]
+          },
+          {
+            "id": "scene",
+            "title": "たとえば、商談後のフォローアップ",
+            "example": "この商談メモから、お客様に送るメールの下書きを作って。会話中に回答したことは繰り返さず、未回答の質問、送る資料、次の予定をまとめて。根拠がない金額や日付は補わず、確認事項として残して。送信はまだしないで。",
+            "p": [
+              "返してもらうのは、メールの下書き、社内で確認する項目、次回までの行動リストです。相手の名前や立場、約束した内容を確認してから、普段のメール環境で送信します。この例は依頼の設計例で、実際の顧客事例や時間削減の測定結果ではありません。"
+            ]
+          },
+          {
+            "id": "inputs",
+            "title": "最初に渡すと、手戻りを減らせる情報",
+            "list": [
+              "商談の目的と、相手に次に判断してほしいこと。",
+              "利用してよい議事録や資料と、その更新日。",
+              "送信先、文体、長さ、必ず回答する質問。",
+              "値引き、納期、契約条件など、自分で決めずに確認する項目。"
+            ],
+            "p": [
+              "顧客情報は業務上利用してよい範囲に絞ってください。名前の置換だけでは特定できることもあるため、初回は架空の顧客メモでも流れを試せます。"
+            ]
+          },
+          {
+            "id": "checks",
+            "title": "下書きができたら、ここを確認",
+            "p": [
+              "顧客の発言と営業側の推測が分かれているか。回答済みの質問を再び尋ねていないか。担当者と期限が元の記録に合っているか。提案条件を勝手に増やしていないか。この四点を確認してから次の行動に進みます。",
+              "CRMへの自動登録やメールの自動送信が、このページの例だけで有効になるわけではありません。実際に使える接続先、権限、プランを確認し、最初はレビューできる下書きから始めてください。"
+            ],
+            "links": [
+              [
+                "/guides/meeting-notes.html",
+                "AI議事録から仕事を進める"
+              ],
+              [
+                "/guides/plaud.html",
+                "PLAUDの記録を活用する"
+              ],
+              [
+                "/guides/notta.html",
+                "Nottaの議事録を活用する"
+              ]
+            ]
+          }
+        ]
+      },
+      "en": {
+        "title": "SIMY for Sales: Meeting Prep and Follow-up | SIMY",
+        "description": "Use SIMY to prepare for sales meetings, organize customer notes and draft follow-up emails. See example inputs, a clear request and what to review before sending.",
+        "lead": "Prepare for the next conversation. Turn the promises from your last meeting into clear follow-up, with a draft you can review before it reaches a customer.",
+        "sections": [
+          {
+            "id": "reference",
+            "title": "Prepare one useful brief for your next meeting",
+            "p": [
+              "Bring together the previous meeting notes, the customer's open questions and the current proposal terms. Ask for a brief with source references so you can return to the original statement when something needs checking."
+            ],
+            "list": [
+              "Before the meeting: summarize previous commitments and questions to ask.",
+              "After the meeting: separate decisions, owners, dates and unresolved points.",
+              "For follow-up: draft the answers, relevant material and next step in one email."
+            ]
+          },
+          {
+            "id": "scene",
+            "title": "An example: follow up after a sales meeting",
+            "example": "Draft a customer follow-up email from these meeting notes. Do not repeat questions answered during the call. Include outstanding answers, the material we promised and the next meeting. Leave unsupported dates or prices as points to confirm. Do not send it yet.",
+            "p": [
+              "Ask for an email draft, internal questions to resolve and an action list. Check names, roles and commitments before sending through your normal email workflow. This is an illustrative request, not a measured customer case or a claim about time saved."
+            ]
+          },
+          {
+            "id": "inputs",
+            "title": "Share the inputs that prevent rework",
+            "list": [
+              "The purpose of the meeting and the next decision you want the customer to make.",
+              "The notes and material the AI may use, including their dates.",
+              "The recipient, tone, length and questions that must be answered.",
+              "Terms that need your approval, such as discounts, delivery dates or contract changes."
+            ],
+            "p": [
+              "Use only customer information you are allowed to process. For your first run, a fictional account and a short sample transcript are enough to test whether the workflow is useful."
+            ]
+          },
+          {
+            "id": "checks",
+            "title": "Review the draft before taking action",
+            "p": [
+              "Separate the customer's words from your assumptions. Check that answered questions are not asked again, that owners and dates match the notes, and that the draft has not added proposal terms. Review these points before you take the next step.",
+              "This example does not enable automatic CRM updates or email sending. Check available connections, permissions and your plan. Begin with drafts that you can inspect."
+            ],
+            "links": [
+              [
+                "/guides/en/meeting-notes.html",
+                "Work from AI meeting notes"
+              ],
+              [
+                "/guides/en/plaud.html",
+                "Use PLAUD recordings"
+              ],
+              [
+                "/guides/en/notta.html",
+                "Use Notta meeting notes"
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "simy-getting-started",
+      "kind": "guide",
+      "paths": {
+        "ja": "/guides/simy-getting-started.html",
+        "en": "/guides/en/simy-getting-started.html"
+      },
+      "related": [
+        "occupations",
+        "simy-delivery-loop",
+        "simy-sqm"
+      ],
+      "ja": {
+        "title": "SIMYの始め方｜最初の仕事を依頼するまで | SIMY",
+        "description": "SIMYを始めるための準備、アプリのダウンロード、利用するAIの接続、最初の仕事の頼み方を紹介。小さな依頼で成果を確認し、次の仕事へ広げる手順をまとめました。",
+        "lead": "最初から仕事を全部任せる必要はありません。自分で結果を確認できる一つの依頼から、SIMYを仕事に取り入れましょう。",
+        "sections": [
+          {
+            "id": "reference",
+            "title": "始める前に用意するもの",
+            "p": [
+              "SIMYを利用するアカウントと、使いたいAIの利用環境を確認します。アプリの対応環境はダウンロードページで確認し、所属組織で利用する場合は許可された接続先やプランを確認してください。利用できる機能はバージョン、プラン、組織設定によって異なります。"
+            ],
+            "list": [
+              "任せたい仕事を一つ決める。",
+              "参照してよい資料と、出来上がりの形式を用意する。",
+              "自分が確認することと、AIに実行してほしい範囲を分ける。"
+            ],
+            "links": [
+              [
+                "/download.html",
+                "対応環境とダウンロードを見る"
+              ]
+            ]
+          },
+          {
+            "id": "setup",
+            "title": "アプリとAIの接続を確認する",
+            "p": [
+              "公式ダウンロードページから自分の環境に合うSIMYをインストールし、画面の案内でアカウントを接続します。使いたいCodexまたはClaudeの環境を接続し、現在のアカウントや組織が意図したものか確認してください。",
+              "接続が完了しないときは、接続先、ログイン状態、案内されている有効時間を確認してから再接続します。接続画面が開いただけで作業開始とは判断せず、SIMY側の接続状態を確認します。"
+            ]
+          },
+          {
+            "id": "scene",
+            "title": "最初の依頼は、短い資料の整理から",
+            "example": "このメモだけを使って、決定事項、まだ決まっていないこと、次にすることを整理して。担当者や期限が書かれていなければ、不明と書いて。外部には送らず、私が確認できる下書きにして。",
+            "p": [
+              "この依頼例なら、原文と出力を見比べて確認できます。抜けている項目や推測された内容があれば、その箇所と期待する扱いを伝えます。仕事の目的と完成条件を最初に書くと、修正の基準も共有できます。"
+            ]
+          },
+          {
+            "id": "checks",
+            "title": "終わったかを、成果で確かめる",
+            "p": [
+              "出力が届いたら、依頼した形式になっているか、元の資料で裏づけられるか、未確認のことが見分けられるかを確認します。下書き作成と送信、コード変更と公開は別の成果です。どこまで実行したかが分かる結果を受け取ってください。",
+              "一つの依頼がうまくいったら、次は商談準備や開発など、あなたの仕事に近い例へ進みます。連携先の権限を増やす前に、今の範囲で成果を確認できることを大切にしてください。"
+            ]
+          }
+        ]
+      },
+      "en": {
+        "title": "Getting Started with SIMY: Your First Task | SIMY",
+        "description": "Prepare your account, install SIMY, connect your AI and write your first request. Start with a small task, inspect the result and expand into your everyday work.",
+        "lead": "Start with one useful result you can check yourself. A small, clear request makes it easier to learn what to share, what to expect and how to review the work.",
+        "sections": [
+          {
+            "id": "reference",
+            "title": "Prepare your account and your first task",
+            "p": [
+              "Check your SIMY account and the AI environment you want to use. The download page lists supported environments. If you work within an organization, confirm the permitted connections and plan. Feature availability depends on the version, plan and organization settings."
+            ],
+            "list": [
+              "Choose one task with a result you can inspect.",
+              "Prepare the permitted source material and the output format.",
+              "Separate what the AI should do from what you want to review yourself."
+            ],
+            "links": [
+              [
+                "/download/en.html",
+                "Check supported environments and download SIMY"
+              ]
+            ]
+          },
+          {
+            "id": "setup",
+            "title": "Install the app and check the connection",
+            "p": [
+              "Install the appropriate SIMY app from the official download page. Follow the account connection instructions, connect the Codex or Claude environment you use, and check that the account and organization are the ones you intend.",
+              "If connection does not complete, check the destination, sign-in state and any connection expiry shown before reconnecting. Opening the sign-in window is not proof of a completed connection. Verify the connection state in SIMY."
+            ]
+          },
+          {
+            "id": "scene",
+            "title": "Try organizing a short note",
+            "example": "Use only this note to separate decisions, unresolved questions and next actions. If the owner or date is missing, mark it unknown. Do not send anything externally. Give me a draft I can review.",
+            "p": [
+              "Compare the output with the original note. If an item is missing or an assumption has become a fact, point to that item and explain the correction. State the purpose and acceptance criteria at the start so the revision has a clear target."
+            ]
+          },
+          {
+            "id": "checks",
+            "title": "Check the outcome before expanding the task",
+            "p": [
+              "Does the result use the requested format? Can you trace its statements to the source? Are unknowns visible? Drafting and sending are different outcomes, as are changing code and publishing it. Ask for a result that makes the completed boundary clear.",
+              "Once one request works well, choose a sales or engineering example close to your everyday work. Confirm useful results within your current access before adding more connected services or permissions."
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "simy-delivery-loop",
+      "kind": "guide",
+      "paths": {
+        "ja": "/guides/simy-delivery-loop.html",
+        "en": "/guides/en/simy-delivery-loop.html"
+      },
+      "related": [
+        "engineers",
+        "simy-sqm",
+        "claude-code",
+        "conductor"
+      ],
+      "ja": {
+        "title": "SIMY Delivery Loopの使い方｜CLIで開発を進める | SIMY",
+        "description": "SIMY CLIのAgentic Loopで開発を依頼する手順。リポジトリとブランチの選択、完成条件の伝え方、検証レベル、レビュー、停止・再開まで具体的に解説します。",
+        "lead": "つくる、確かめる、直す。その流れを一つの依頼として進め、変更内容と検証結果を確認できる状態で受け取ります。",
+        "sections": [
+          {
+            "id": "reference",
+            "title": "SIMY CLIから始める",
+            "p": [
+              "SIMY CLIを利用でき、アカウントと実行するAIの接続が済んだ環境で、ターミナルからsimyを起動します。表示されるAgentic Loopのコンソールで、新しい開発依頼を作成できます。ここではCLIの操作を紹介します。"
+            ],
+            "code": "simy\n# 以下はSIMYコンソール内で入力\n/new\n/repos\n/branch main\n/executor codex",
+            "pAfter": [
+              "/reposで利用を許可したローカルリポジトリを選びます。mainは例なので、そのプロジェクトの正しい基準ブランチに置き換えてください。Claudeを利用する場合は/executor claudeを選びます。/helpで現在のコマンドを確認できます。"
+            ]
+          },
+          {
+            "id": "scene",
+            "title": "完成条件を含めて依頼する",
+            "example": "問い合わせページの送信完了表示を改善して。利用者が送信できたことと次の案内を理解できるように。既存の送信処理は変えず、スマートフォンでも確認し、変更内容と検証結果を示して。マージと本番公開は確認後に行って。",
+            "p": [
+              "これは依頼文の例です。誰のどんな困りごとを解決するか、変えてはいけないこと、必要な検証、公開まで任せるかを指定します。リポジトリの必須チェックや権限は、依頼文を書いたことだけでは省略できません。"
+            ]
+          },
+          {
+            "id": "levels",
+            "title": "変更のリスクに合わせて検証の深さを選ぶ",
+            "list": [
+              "レベル5：認証、決済、機密情報など。周辺の境界や失敗からの復旧まで広く確認。",
+              "レベル4：保存処理や共有APIなど。連携先、再試行、運用への影響を確認。",
+              "レベル3：通常の機能追加・修正。主な利用動線と独立レビューを確認。",
+              "レベル2：小さく元に戻せる表示変更。直接の動作と回帰を確認。",
+              "レベル1：文言・資料・メタデータ。成果物と差分・リンクを確認。"
+            ],
+            "p": [
+              "開始時に作業に合うレベルを選びます。リスクによって選べる最低水準が変わり、どのレベルでもプロジェクトの必須確認や承認は残ります。所要時間は変更範囲や外部の待ち時間で変わります。"
+            ]
+          },
+          {
+            "id": "checks",
+            "title": "止まったときと、受け取るとき",
+            "p": [
+              "判断待ちには必要な情報を伝え、/continueで続行します。一時停止は/pause、再開は/resume、選択した実行の停止は/stopです。承認が必要なときは、変更と判断内容を確認してから操作してください。",
+              "最後は、差分、実行したテスト、独立レビュー、残っている確認事項を見ます。PRの作成、マージ、公開、公開後の動作確認は別々の状態です。必要な到達点まで確認できているかを確かめます。"
+            ]
+          }
+        ]
+      },
+      "en": {
+        "title": "SIMY Delivery Loop: Build with the CLI | SIMY",
+        "description": "Start a development task in the SIMY CLI Agentic Loop. Select the repository and base branch, define acceptance criteria, choose assurance and review the result.",
+        "lead": "Build, check and repair within one task. Receive a change with evidence you can inspect, and make the intended delivery boundary clear from the start.",
+        "sections": [
+          {
+            "id": "reference",
+            "title": "Start from the SIMY CLI",
+            "p": [
+              "In an environment with SIMY CLI installed and your account and AI executor connected, run simy in a terminal. Its Agentic Loop console lets you create a development request. These steps describe the CLI console."
+            ],
+            "code": "simy\n# Enter the following inside the SIMY console\n/new\n/repos\n/branch main\n/executor codex",
+            "pAfter": [
+              "Use /repos to select an authorized local repository. Replace main with the correct base branch for your project. Use /executor claude if that is your connected provider. Enter /help to check the commands available in your version."
+            ]
+          },
+          {
+            "id": "scene",
+            "title": "Describe the result and its acceptance criteria",
+            "example": "Improve the contact form's success message so users understand that the request was sent and what happens next. Preserve the submission logic. Check the mobile experience and show the changes and verification results. Wait for my review before merging or publishing.",
+            "p": [
+              "This is an example request. Explain who benefits, what must remain intact, the evidence you need and whether delivery includes publishing. The request does not waive repository checks or grant permissions that you have not authorized."
+            ]
+          },
+          {
+            "id": "levels",
+            "title": "Choose assurance for the risk of the change",
+            "list": [
+              "Level 5: authentication, payments or sensitive information; inspect adjacent boundaries and recovery.",
+              "Level 4: persistence or shared APIs; inspect integrations, retries and operational effects.",
+              "Level 3: ordinary features and fixes; verify the main journey and independent review.",
+              "Level 2: small reversible presentation changes; check the direct behavior and regression.",
+              "Level 1: copy, documentation or metadata; verify artifacts, the diff and links."
+            ],
+            "p": [
+              "Choose a level at the start of the work. Risk determines the minimum suitable level. Every level preserves repository requirements and approvals. Duration depends on scope and external waiting, not a universal time per level."
+            ]
+          },
+          {
+            "id": "checks",
+            "title": "Respond to pauses and inspect the final result",
+            "p": [
+              "Provide the missing decision or information and use /continue for a waiting run. Use /pause to pause, /resume to resume, and /stop to stop the selected run. Read the proposed action before giving any required approval.",
+              "Inspect the diff, actual test results, independent review and outstanding checks. Creating a PR, merging, publishing and verifying production are distinct states. Confirm that the work reached the delivery boundary you requested."
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "simy-sqm",
+      "kind": "guide",
+      "paths": {
+        "ja": "/guides/simy-sqm.html",
+        "en": "/guides/en/simy-sqm.html"
+      },
+      "related": [
+        "engineers",
+        "simy-delivery-loop",
+        "simy-getting-started"
+      ],
+      "ja": {
+        "title": "SIMY SQMの使い方｜変更を確認し品質証跡を残す | SIMY",
+        "description": "SIMY SQMで過去の問題に基づく適用ルールを確認する方法。min-checkから本チェック、品質証跡の読み方、対象ルールなしの扱い、再実行の条件まで紹介します。",
+        "lead": "直した不具合を、次の変更で確認するためのルールへ。SQMの結果は、何を確かめ、何がまだ分からないかまで読んで使います。",
+        "sections": [
+          {
+            "id": "reference",
+            "title": "SQMが確認する範囲",
+            "p": [
+              "SQM（Software Quality Monitor）は、登録された防止策のうち、変更に適用されるルールを確認します。利用には接続と組織側の権限・設定を確認してください。ルールが適用されなかった結果と、ルールを実際に評価して合格した結果は区別します。",
+              "画面操作や公開後の動作をすべて自動で証明するものではありません。プロジェクトのテスト、利用者の動線確認、独立レビューとあわせて使います。"
+            ]
+          },
+          {
+            "id": "run",
+            "title": "同じ差分で、二段階の確認を実行",
+            "p": [
+              "CLIを利用できるリポジトリのルートで、まず差分の事前確認、その後に本チェックを実行します。次はmacOS/Linuxの例です。origin/mainは実際のPRの基準ブランチに置き換えます。証跡の保存先はリポジトリの外に作っておきます。"
+            ],
+            "code": "mkdir -p /tmp/simy-sqm-proof\nsimy sqm min-check --base origin/main --output /tmp/simy-sqm-proof/min.json\nsimy sqm check --base origin/main --min-result /tmp/simy-sqm-proof/min.json --proof /tmp/simy-sqm-proof/proof.json --signed-evidence /tmp/simy-sqm-proof/proof.signed.json",
+            "pAfter": [
+              "二つのコマンドの間では、対象のファイルを変更しません。変更すると事前確認と本チェックの対象がずれ、証跡をそのまま使えなくなります。利用中のバージョンでsimy sqm --helpも確認してください。"
+            ]
+          },
+          {
+            "id": "scene",
+            "title": "結果を見るときの例",
+            "example": "この変更にSQMを使って。適用されたルール、実行したシナリオ、合否の理由を示して。対象ルールがなかった場合は、そのことと、別に実行した回帰テストを分けて報告して。",
+            "p": [
+              "outcome.statusがpassedでも、それだけで機能全体の品質を証明したとは言えません。no_applicable_rulesや評価件数ゼロなら、今回の差分に適用された評価がないことを明示します。失敗や利用不可も合格として扱いません。"
+            ]
+          },
+          {
+            "id": "checks",
+            "title": "レビューに渡す前に確認すること",
+            "list": [
+              "対象のリポジトリ、基準ブランチ、HEAD、作業ツリーが実際の候補と一致している。",
+              "署名と証跡の対応をSQMの検証機能で確認できている。",
+              "適用モジュール、ルール件数、シナリオ結果が分かり、必須と参考の結果を分けている。",
+              "チェック後に差分や基準が変わったら、最新の状態で再実行している。"
+            ],
+            "p": [
+              "証跡にはリポジトリや変更の情報が含まれます。保管先と共有範囲を確認し、公開資料に内部の情報をそのまま貼り付けないようにします。レビューには、その変更に対応する証跡と実際のテスト結果を渡してください。"
+            ]
+          }
+        ]
+      },
+      "en": {
+        "title": "Using SIMY SQM: Check Changes and Keep Evidence | SIMY",
+        "description": "Run SIMY SQM preflight and full checks, read applicable rules and signed evidence, distinguish no applicable rules from coverage, and know when to rerun.",
+        "lead": "Put lessons from previous failures to work on the next change. Read the result for what it evaluated, what passed and what still needs separate verification.",
+        "sections": [
+          {
+            "id": "reference",
+            "title": "Understand the scope of SQM",
+            "p": [
+              "SQM, the Software Quality Monitor, checks registered safeguards applicable to your change. Confirm the connection, organization permissions and settings before use. A result with no applicable rules is different from a result that evaluated rules and passed.",
+              "SQM does not establish that every interface interaction or deployed behavior works. Use it alongside project tests, checks of the real user journey and an independent review."
+            ]
+          },
+          {
+            "id": "run",
+            "title": "Run both phases against the same change",
+            "p": [
+              "From the repository root, run the preflight and then the full check. This macOS/Linux example writes evidence outside the repository. Replace origin/main with the actual PR base branch and make sure it resolves locally."
+            ],
+            "code": "mkdir -p /tmp/simy-sqm-proof\nsimy sqm min-check --base origin/main --output /tmp/simy-sqm-proof/min.json\nsimy sqm check --base origin/main --min-result /tmp/simy-sqm-proof/min.json --proof /tmp/simy-sqm-proof/proof.json --signed-evidence /tmp/simy-sqm-proof/proof.signed.json",
+            "pAfter": [
+              "Do not edit the candidate between these commands. An edit changes the identity the preflight and full check must share. Use simy sqm --help to confirm the options in your installed version."
+            ]
+          },
+          {
+            "id": "scene",
+            "title": "Ask for an interpretable result",
+            "example": "Use SQM for this change. Report applicable rules, evaluated scenarios and the reasons for the outcome. If there are no applicable rules, say so and separately report the regression tests that were run.",
+            "p": [
+              "An outcome.status of passed alone is not proof of complete feature quality. If the result says no_applicable_rules or has zero evaluations, state that no applicable evaluation covered this diff. Never treat a failed or unavailable check as a pass."
+            ]
+          },
+          {
+            "id": "checks",
+            "title": "Verify evidence before handing it to a reviewer",
+            "list": [
+              "Match the repository, base, HEAD and working tree to the candidate under review.",
+              "Verify the signature binding with SQM verification tooling.",
+              "Report matched modules, rule counts and scenario results, separating blocking and advisory results.",
+              "Rerun when the candidate or its base changes after the check."
+            ],
+            "p": [
+              "Evidence can contain repository and change information. Choose its storage and sharing scope deliberately. Provide the matching evidence and actual test results to reviewers without copying internal information into public material."
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "conductor",
+      "kind": "guide",
+      "paths": {
+        "ja": "/guides/conductor.html",
+        "en": "/guides/en/conductor.html"
+      },
+      "sources": [
+        [
+          "https://www.conductor.build/",
+          "Conductor"
+        ],
+        [
+          "https://code.claude.com/docs/en/overview",
+          "Claude Code documentation"
+        ]
+      ],
+      "related": [
+        "claude-code",
+        "simy-delivery-loop",
+        "engineers"
+      ],
+      "ja": {
+        "title": "Conductorの使い方｜AI開発を並行して進める | SIMY",
+        "description": "ConductorでAIによる開発を並行して進めるための考え方。作業の分け方、変更の確認、テストと統合の注意点を整理し、SIMYの開発・品質確認との役割も紹介します。",
+        "lead": "複数のAIに仕事を頼むとき、先に決めるのは「誰が何を変更するか」。Conductorの作業環境と、変更を安全に合わせるための手順を整理します。",
+        "sections": [
+          {
+            "id": "reference",
+            "title": "Conductorとは",
+            "p": [
+              "ここで紹介するのはconductor.buildのAI開発サービスです。公式サイトでは、クラウド上の分離された作業環境でClaude Code、Codex、Cursor、OpenCodeなどのエージェントを利用する機能を案内しています。同じ名称のSEOサービスとは別のサービスです。",
+              "利用可能なエージェント、接続方法、料金は公式サイトで最新情報を確認してください。このページでは、特定のプランやすべての機能が利用できることは前提にしません。"
+            ],
+            "links": [
+              [
+                "https://www.conductor.build/",
+                "Conductor公式サイトを開く"
+              ]
+            ]
+          },
+          {
+            "id": "workflow",
+            "title": "並行する前に、作業の境界を決める",
+            "list": [
+              "扱うリポジトリと基準ブランチを確認し、小さく完了できる課題を選ぶ。",
+              "作業ごとに、変更してよい範囲と期待する成果を決める。",
+              "共通の設定やデータ構造を変更する仕事は、順番と担当を決める。",
+              "各作業の差分を確認し、組み合わせた状態でもテストする。"
+            ],
+            "p": [
+              "分離された作業環境でも、最後に同じブランチへ統合すれば競合や仕様の食い違いは起こり得ます。環境が分かれていることと、変更が独立していることは別です。並行化するほど速いとは限らないため、依存が少ない仕事から始めます。"
+            ]
+          },
+          {
+            "id": "scene",
+            "title": "二つに分けやすい依頼の例",
+            "example": "作業A：問い合わせページの文言を改善する。作業B：既存の料金ページのリンク切れを調べる。どちらも共通ナビゲーションや送信処理は変更せず、変更したファイルと確認結果を示す。",
+            "p": [
+              "これは作業分解の例です。二つの変更をまとめる前に、それぞれの目的が達成されたかを確認します。同じ共通部品の改修を二つの作業へ同時に任せる場合は、先に統合の順番を決めてください。"
+            ]
+          },
+          {
+            "id": "checks",
+            "title": "SIMYとあわせて考える確認項目",
+            "p": [
+              "Conductorのガイドでは、複数の開発作業の扱い方を中心に説明しています。SIMYのDelivery Loopでは実装・検証・修正の流れ、SQMでは登録された適用ルールによる品質確認を扱います。目的に合わせ、それぞれの結果をどう確認するかを決めます。",
+              "SIMYとConductorの専用連携や、自動的な証跡の引き継ぎを確認したわけではありません。組み合わせる場合も、対象リポジトリと差分を確かめ、統合後のテスト結果を別に残してください。"
+            ]
+          }
+        ]
+      },
+      "en": {
+        "title": "Conductor Guide: Coordinate Parallel AI Development | SIMY",
+        "description": "Plan parallel AI development with Conductor. Define task boundaries, inspect changes and test the combined result, with links to SIMY delivery and quality guides.",
+        "lead": "Before assigning work to multiple agents, decide who changes what. Understand Conductor's workspaces and plan how to bring the results together.",
+        "sections": [
+          {
+            "id": "reference",
+            "title": "What is Conductor?",
+            "p": [
+              "This guide covers the AI development service at conductor.build, rather than the similarly named SEO service. Its official site describes isolated cloud workspaces with agents including Claude Code, Codex, Cursor and OpenCode.",
+              "Check the official site for current agent availability, connection steps and pricing. This guide does not assume that every feature is available on every plan."
+            ],
+            "links": [
+              [
+                "https://www.conductor.build/",
+                "Open the official Conductor site"
+              ]
+            ]
+          },
+          {
+            "id": "workflow",
+            "title": "Define boundaries before running tasks in parallel",
+            "list": [
+              "Confirm the repository and base branch, then choose a small, finishable task.",
+              "Give each task an allowed change scope and a clear result.",
+              "Assign ownership and an order for shared configuration or data structure changes.",
+              "Review each diff, then test the combined result."
+            ],
+            "p": [
+              "Isolated environments do not remove conflicts when changes meet on the same branch. Environment separation is different from change independence. Start with tasks that have few dependencies rather than assuming more parallel work always saves time."
+            ]
+          },
+          {
+            "id": "scene",
+            "title": "An example of separable work",
+            "example": "Task A: improve the contact page copy. Task B: check existing pricing page links. Neither task should change shared navigation or submission logic. Report the files changed and the checks performed.",
+            "p": [
+              "This is an example of task decomposition. Check each task's intended outcome before combining the changes. If both tasks must modify a shared component, decide the integration order before they start."
+            ]
+          },
+          {
+            "id": "checks",
+            "title": "Plan verification when using SIMY as well",
+            "p": [
+              "The Conductor guide focuses on coordinating multiple development tasks. SIMY Delivery Loop covers implementation, verification and repair; SQM evaluates applicable registered safeguards. Decide which evidence you need for each part of your workflow.",
+              "We have not verified a dedicated SIMY–Conductor integration or automatic evidence transfer. If you use both, confirm the repository and diff at each handoff and retain separate test results for the integrated change."
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "claude-code",
+      "kind": "guide",
+      "paths": {
+        "ja": "/guides/claude-code.html",
+        "en": "/guides/en/claude-code.html"
+      },
+      "sources": [
+        [
+          "https://code.claude.com/docs/en/overview",
+          "Claude Code overview"
+        ],
+        [
+          "https://code.claude.com/docs/en/quickstart",
+          "Claude Code quickstart"
+        ]
+      ],
+      "related": [
+        "simy-delivery-loop",
+        "simy-sqm",
+        "conductor",
+        "engineers"
+      ],
+      "ja": {
+        "title": "Claude Codeの使い方｜導入から変更の確認まで | SIMY",
+        "description": "Claude Codeで開発を始める手順と、コードを変更する前後の確認事項を紹介。ClaudeやCoworkとの違い、最初の依頼例、テスト・差分レビューの進め方を解説します。",
+        "lead": "コードを読んでもらうところから、変更を確かめるところまで。最初の一件を、小さくレビューできる形で進めましょう。",
+        "sections": [
+          {
+            "id": "reference",
+            "title": "Claude Codeは何に使う？",
+            "p": [
+              "Claude Codeは、コードを調べ、変更し、コマンドを実行する開発向けのAIツールです。公式ドキュメントではターミナル、IDE、デスクトップ、Webなどの利用方法を案内しています。このガイドはターミナルで始める流れを中心に扱います。",
+              "一般的なClaudeの会話や、Coworkを使う仕事の整理とは目的が異なります。開発対象のファイルや実行するコマンドを理解しながら使ってください。"
+            ],
+            "links": [
+              [
+                "/guides/claude.html",
+                "Claude全般の活用ガイド"
+              ],
+              [
+                "/guides/cowork.html",
+                "Coworkの活用ガイド"
+              ]
+            ]
+          },
+          {
+            "id": "setup",
+            "title": "公式の手順で導入し、対象を確認",
+            "p": [
+              "公式QuickstartでOSに合うインストール方法と利用条件を確認し、案内に従って認証します。契約や利用上限は接続先によって異なるため、現在の公式案内を参照してください。",
+              "インストール後はclaude --versionを確認し、作業したいプロジェクトのディレクトリで起動します。作業中の変更を保護し、プロジェクトに作業ブランチやworktreeの決まりがある場合はそれに従います。"
+            ],
+            "code": "claude --version\ncd /path/to/your/project\ngit status --short\nclaude",
+            "links": [
+              [
+                "https://code.claude.com/docs/en/quickstart",
+                "公式Quickstartを読む"
+              ]
+            ]
+          },
+          {
+            "id": "scene",
+            "title": "まず、コードを読んでもらう",
+            "example": "このプロジェクトの問い合わせ送信の流れを調べて。入力チェック、送信処理、完了表示がどのファイルにあるか、根拠となる箇所と一緒に説明して。まだファイルは変更しないで。",
+            "p": [
+              "説明されたファイルを確認し、次に一つの変更を依頼します。たとえば完了メッセージだけを改善するなら、送信処理は変えないこと、実際の画面で確認することを伝えます。調査の説明と、変更を実行した結果を区別して受け取ります。"
+            ]
+          },
+          {
+            "id": "checks",
+            "title": "コマンドと差分を確認してから次へ",
+            "p": [
+              "ツールが求める許可は、対象ファイルやコマンド、外部への影響を見て判断します。結果はテストの成功だけでなく、依頼した動作、失敗した場合の表示、変えてはいけない処理が保たれているかで確認します。",
+              "Gitの差分で意図しない変更がないことを確かめ、必要なテストとレビューを行ってください。SIMYで開発を進めたい場合はDelivery Loopのガイド、登録された防止策で差分を確認したい場合はSQMのガイドへ進めます。"
+            ]
+          }
+        ]
+      },
+      "en": {
+        "title": "Claude Code Guide: Setup, First Task and Review | SIMY",
+        "description": "Start using Claude Code for development. Follow official setup steps, inspect your project, make a small change and review the diff, permissions and test results.",
+        "lead": "Start by understanding the code, then make one reviewable change. Keep the task small enough to inspect the result and verify the behavior yourself.",
+        "sections": [
+          {
+            "id": "reference",
+            "title": "What is Claude Code for?",
+            "p": [
+              "Claude Code is an AI development tool for inspecting code, editing files and running commands. The official documentation describes terminal, IDE, desktop and web surfaces. This guide focuses on getting started from a terminal.",
+              "Its purpose differs from a general Claude conversation or organizing office work with Cowork. Keep track of the files and commands involved in the development task."
+            ],
+            "links": [
+              [
+                "/guides/en/claude.html",
+                "Read the general Claude guide"
+              ],
+              [
+                "/guides/en/cowork.html",
+                "Read the Cowork guide"
+              ]
+            ]
+          },
+          {
+            "id": "setup",
+            "title": "Follow official setup and confirm the project",
+            "p": [
+              "Use the official Quickstart for your operating system and follow its authentication steps. Account requirements and limits depend on the connection you use, so check the current official instructions.",
+              "After installation, check claude --version and start it from the intended project directory. Protect existing edits and follow the project's branch or worktree policy."
+            ],
+            "code": "claude --version\ncd /path/to/your/project\ngit status --short\nclaude",
+            "links": [
+              [
+                "https://code.claude.com/docs/en/quickstart",
+                "Read the official Quickstart"
+              ]
+            ]
+          },
+          {
+            "id": "scene",
+            "title": "Ask it to explain the code first",
+            "example": "Investigate how contact form submission works in this project. Identify the files for validation, submission and the success message, with references to the code. Do not edit files yet.",
+            "p": [
+              "Inspect the files in the explanation, then request one bounded change. For a success-message improvement, preserve submission logic and ask for a check of the actual screen. Distinguish a description of the code from evidence that a change was made."
+            ]
+          },
+          {
+            "id": "checks",
+            "title": "Review commands and the diff before proceeding",
+            "p": [
+              "Judge permission requests by the files, commands and external effects involved. Inspect the requested behavior, failure states and preserved logic as well as the test result.",
+              "Use the Git diff to look for unintended changes and complete the required tests and review. Continue to the SIMY Delivery Loop guide for a coordinated development workflow, or the SQM guide to check a diff against registered safeguards."
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

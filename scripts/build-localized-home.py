@@ -92,6 +92,9 @@ class Localize(HTMLParser):
                 if guide:
                     target = f'/guides/{code}/{guide[1]}' if code else f'/guides/{guide[1]}'
                     a['href'] = urlunsplit(url._replace(path=target))
+                elif url.path in ('/for/', '/for/en/'):
+                    target = '/for/' if self.locale == 'ja' else '/for/en/'
+                    a['href'] = urlunsplit(url._replace(path=target))
                 elif url.path in ('/for/engineers/', '/for/en/engineers/'):
                     target = '/for/engineers/' if self.locale == 'ja' else '/for/en/engineers/'
                     a['href'] = urlunsplit(url._replace(path=target))
