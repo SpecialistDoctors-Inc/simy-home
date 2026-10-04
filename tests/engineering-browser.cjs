@@ -260,7 +260,8 @@ const report = { views: [], scenarios: 0, errors: [], theme: {} };
             link.href,
           );
       }
-      await page.locator(".language").click();
+      await page.locator(".sh-language > summary").click();
+      await page.locator(`[data-sh-link="locale-${lang === "ja" ? "en" : "ja"}"]`).click();
       assert.equal(
         await page.locator("html").getAttribute("lang"),
         lang === "ja" ? "en" : "ja",
@@ -279,8 +280,8 @@ const report = { views: [], scenarios: 0, errors: [], theme: {} };
         const result = await page.evaluate(() => ({
           width: innerWidth,
           scrollWidth: document.documentElement.scrollWidth,
-          header: [...document.querySelectorAll(".nav-frame > *")]
-            .filter((el) => el.getClientRects().length)
+          header: [...document.querySelectorAll(".sh-brand,.sh-desktop > *,.sh-actions > *")]
+            .filter((el) => el.checkVisibility() && el.getBoundingClientRect().width)
             .map((el) => {
               let r = el.getBoundingClientRect();
               return { x: r.x, right: r.right };

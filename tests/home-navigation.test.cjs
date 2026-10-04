@@ -8,25 +8,19 @@ const homeScript = fs.readFileSync(path.join(repoRoot, "site/home.js"), "utf8");
 const homeHtml = fs.readFileSync(path.join(repoRoot, "site/index.html"), "utf8");
 const homeCss = fs.readFileSync(path.join(repoRoot, "site/home.css"), "utf8");
 
-test("mobile navigation closes from blank and outside clicks", () => {
-  assert.match(
-    homeScript,
-    /mobileMenu\.addEventListener\("click", \(event\) => \{\s*if \(event\.target === mobileMenu\) setMenuOpen\(false\);\s*\}\);/s,
-    "clicking the empty mobile-menu surface must dismiss the menu"
-  );
-  assert.match(
-    homeScript,
-    /document\.addEventListener\("pointerdown", \(event\) => \{[\s\S]*?menuButton\.contains\(event\.target\)[\s\S]*?mobileMenu\.contains\(event\.target\)[\s\S]*?setMenuOpen\(false\);\s*\}\);/,
-    "clicking outside the menu and its toggle must dismiss the menu"
-  );
+test("shared navigation owns outside-click dismissal", () => {
+  const shared = fs.readFileSync(path.join(repoRoot, "site/shared-header.js"), "utf8");
+  assert.match(shared, /document.addEventListener\('pointerdown'/);
+  assert.match(shared, /!details.contains\(event.target\)/);
+  assert.doesNotMatch(homeScript, /data-menu-button|data-language-picker/);
 });
 
 test("homepage cache-busts the current home assets", () => {
   assert.match(homeHtml, /home\.css\?v=20261004-theme-1/);
   assert.match(homeHtml, /home-locales\.js\?v=20261004-url-plan-1/);
-  assert.match(homeHtml, /home-i18n\.js\?v=20261004-url-plan-1/);
+  assert.match(homeHtml, /home-i18n\.js\?v=20261004-shared-header-1/);
   assert.match(homeHtml, /pricing-catalog\.js\?v=20260907-industry-realtime-pricing-3/);
-  assert.match(homeHtml, /home\.js\?v=20261002-production-plan-handoff-1/);
+  assert.match(homeHtml, /home\.js\?v=20261004-shared-header-1/);
 });
 
 test("pricing call to action opens the signup plan selection page", () => {
@@ -102,17 +96,9 @@ test("homepage omits the redundant learning-control cards", () => {
   assert.doesNotMatch(homeHtml, /Set the guardrails once\./);
 });
 
-test("language picker follows its responsive grid and closes when focus leaves", () => {
-  assert.match(
-    homeScript,
-    /const columns = window\.matchMedia\("\(max-width: 620px\)"\)\.matches \? 3 : 2;/,
-    "arrow navigation must follow the rendered two- or three-column language grid"
-  );
-  assert.match(homeScript, /event\.key === 'ArrowDown' && index \+ columns < languageOptions\.length/);
-  assert.match(homeScript, /event\.key === 'ArrowRight' && index % columns < columns - 1/);
-  assert.match(
-    homeScript,
-    /languagePicker\.addEventListener\("focusout", \(\) => \{[\s\S]*?!languagePicker\.contains\(document\.activeElement\)[\s\S]*?setLanguagePickerOpen\(false\)/,
-    "moving focus to the next header action must dismiss the language panel"
-  );
+test("shared disclosure restores focus on Escape and closes when focus leaves", () => {
+  const shared = fs.readFileSync(path.join(repoRoot, "site/shared-header.js"), "utf8");
+  assert.match(shared, /event.key === 'Escape'/);
+  assert.match(shared, /close\(details, true\)/);
+  assert.match(shared, /!details.contains\(document.activeElement\)/);
 });

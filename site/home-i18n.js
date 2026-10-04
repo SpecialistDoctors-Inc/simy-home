@@ -553,7 +553,7 @@
     const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
     let node = walker.nextNode();
     while (node && document.documentElement.dataset.renderedLocale === "en") {
-      if (!node.parentElement?.hasAttribute("data-current-year")) {
+      if (!node.parentElement?.closest(".simy-header") && !node.parentElement?.hasAttribute("data-current-year")) {
         const value = node.nodeValue || "";
         const core = value.trim();
         if (core) {
@@ -569,6 +569,7 @@
     }
 
     for (const element of document.querySelectorAll("[aria-label], [title], [placeholder], [alt]")) {
+      if (element.closest(".simy-header")) continue;
       if (document.documentElement.dataset.renderedLocale !== "en") continue;
       for (const name of ["aria-label", "title", "placeholder", "alt"]) {
         if (!element.hasAttribute(name)) continue;
@@ -577,6 +578,7 @@
     }
 
     for (const link of document.querySelectorAll("a[href]")) {
+      if (link.closest?.(".simy-header")) continue;
       link.dataset.originalHref = link.dataset.originalHref || link.getAttribute("href") || "";
     }
   }
@@ -626,6 +628,7 @@
     }[locale];
 
     for (const link of document.querySelectorAll("a[href]")) {
+      if (link.closest?.(".simy-header")) continue;
       const originalHref = link.dataset.originalHref || link.getAttribute("href") || "";
       if (originalHref.startsWith("https://app.simy.one/")) {
         const url = new URL(originalHref);
@@ -653,6 +656,11 @@
         }
         if (["/for/engineers/", "/for/en/engineers/"].includes(localUrl.pathname)) {
           localUrl.pathname = locale === "ja" ? "/for/engineers/" : "/for/en/engineers/";
+          link.setAttribute("href", `${localUrl.pathname}${localUrl.search}${localUrl.hash}`);
+          continue;
+        }
+        if (["/for/sales/", "/for/en/sales/"].includes(localUrl.pathname)) {
+          localUrl.pathname = locale === "ja" ? "/for/sales/" : "/for/en/sales/";
           link.setAttribute("href", `${localUrl.pathname}${localUrl.search}${localUrl.hash}`);
           continue;
         }

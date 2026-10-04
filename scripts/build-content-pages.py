@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Build the declared JA/EN occupation and workflow pages; --check is read-only."""
 import argparse
+from shared_header import apply as shared_header
 import importlib.util
 import json
 from html import escape as esc
@@ -122,7 +123,8 @@ def render(p, lang):
 <script src="/analytics.js" defer></script>
 </body></html>
 '''
-    return intent.organize(html, p['id']) if is_guide else html
+    html = intent.organize(html, p['id']) if is_guide else html
+    return shared_header(html, p['paths'][lang].lstrip('/') + ('index.html' if p['paths'][lang].endswith('/') else ''))
 
 
 def main():
