@@ -14,7 +14,7 @@ const server=http.createServer((req,res)=>{
  if(!file.startsWith(site+path.sep)){res.writeHead(403).end();return;}
  fs.readFile(file,(err,data)=>{if(err){res.writeHead(404).end();return;}res.writeHead(200,{'Content-Type':types[path.extname(file)]||'application/octet-stream'}).end(data);});
 });
-const report={views:[],operations:[],screenshots:[],consoleErrors:[],pageErrors:[],networkFailures:[],externalRequests:[],fixtureRequests:[],environment:{releaseManifests:'synthetic null response; installer publication is a separate publisher',externalServices:'inert 204; no third-party execution or live account writes'},cleanupResidualCount:null};
+const report={views:[],operations:[],screenshots:[],consoleErrors:[],pageErrors:[],networkFailures:[],responseFailures:[],faviconCancellations:[],externalRequests:[],fixtureRequests:[],environment:{releaseManifests:'synthetic null response; installer publication is a separate publisher',externalServices:'inert 204; no third-party execution or live account writes'},cleanupResidualCount:null};
 const widths=[360,390,768,1024,1280,1440,1920];
 const locales=['en','ja','hi','es','fr','zh-Hans'];
 const home=l=>l==='en'?'/':`/${l}.html`;
@@ -42,10 +42,18 @@ function geometry(){
  const page=await context.newPage();
  page.on('pageerror',err=>report.pageErrors.push({url:page.url(),message:err.message}));
  page.on('console',msg=>{if(msg.type()==='error')report.consoleErrors.push({url:page.url(),message:msg.text()});});
- page.on('requestfailed',req=>report.networkFailures.push({url:req.url(),error:req.failure()}));
+ page.on('requestfailed',req=>{
+  const entry={url:req.url(),error:req.failure(),page:page.url()};const url=new URL(req.url());
+  // Chromium may cancel its background tab-icon fetch during navigation. Keep
+  // only this exact cancellation separate; independently verify these bytes below.
+  if(url.origin===origin&&url.pathname==='/favicon-32.png'&&entry.error?.errorText==='net::ERR_ABORTED')report.faviconCancellations.push(entry);
+  else report.networkFailures.push(entry);
+ });
+ page.on('response',response=>{if(new URL(response.url()).origin===origin&&response.status()>=400)report.responseFailures.push({url:response.url(),status:response.status()});});
  for(const route of routes){
   await page.goto(origin+route,{waitUntil:'networkidle'});
   assert.equal(await page.locator('.simy-header').count(),1,route);
+  assert.ok(await page.locator('.sh-brand img').evaluate(async img=>{await img.decode();return img.naturalWidth>0;}),`${route} logo decodes`);
   for(const width of widths){
    await page.setViewportSize({width,height:900});
    await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
@@ -116,6 +124,9 @@ function geometry(){
  await page.goto(origin+'/ja.html',{waitUntil:'networkidle'});const language=page.locator('.sh-language > summary');await language.focus();await language.press('Enter');await page.locator('.sh-language a').first().focus();await page.keyboard.press('Escape');assert.ok(await language.evaluate(el=>el===document.activeElement));
  await language.press('Space');await page.locator('.sh-signup').focus();await page.waitForTimeout(50);assert.equal(await page.locator('.sh-language').getAttribute('open'),null);
  await page.setViewportSize({width:720,height:450});assert.deepEqual((await page.evaluate(geometry)).clipped,[]);report.operations.push({operation:'200-percent-equivalent-viewport',width:720});
+ const iconResponse=await page.request.get(origin+'/favicon-32.png');assert.equal(iconResponse.status(),200);
+ const iconSize=await page.evaluate(async()=>{const img=new Image();img.src='/favicon-32.png';await img.decode();return [img.naturalWidth,img.naturalHeight];});assert.deepEqual(iconSize,[32,32]);
+ report.operations.push({operation:'favicon-runtime',status:iconResponse.status(),dimensions:iconSize});
  await context.close();
  const nojs=await browser.newContext({javaScriptEnabled:false,viewport:{width:390,height:900}});const np=await nojs.newPage();
  for(const route of ['/ja.html','/guides/en/codex.html','/download/fr.html','/for/engineers/','/privacy.html','/error.html']){
@@ -126,7 +137,7 @@ function geometry(){
   assert.equal(await np.locator('html').getAttribute('lang'),'en');report.operations.push({operation:'no-js',source:route,destination:new URL(np.url()).pathname});
  }
  await nojs.close();report.cleanupResidualCount=0;
- assert.deepEqual(report.pageErrors,[]);assert.deepEqual(report.consoleErrors,[]);assert.deepEqual(report.networkFailures,[]);
+ assert.deepEqual(report.pageErrors,[]);assert.deepEqual(report.consoleErrors,[]);assert.deepEqual(report.networkFailures,[]);assert.deepEqual(report.responseFailures,[]);
  report.status='passed';
  }catch(e){report.status='failed';report.failure=e.stack;throw e;}finally{await browser.close();server.close();fs.writeFileSync(path.join(output,'report.json'),JSON.stringify(report,null,2));}
  console.log(JSON.stringify({status:report.status,views:report.views.length,operations:report.operations.length,screenshots:report.screenshots.length}));
