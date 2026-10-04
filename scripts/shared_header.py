@@ -188,7 +188,11 @@ def apply(source, path):
     # Obsolete duplicate legal toolbar; actual legal body links are retained.
     source = re.sub(r'\s*<nav class="legal-mobile-toolbar"[^>]*>.*?</nav>', '', source, flags=re.S)
     # Existing scroll callbacks must tolerate replacement of their old nav.
-    source = source.replace("var nav = document.getElementById('staticNav');", "var nav = document.getElementById('staticNav');\n      if (!nav) return;") if "if (!nav) return;" not in source else source
+    for variable in ('nav', 'n'):
+        lookup = f"var {variable} = document.getElementById('staticNav');"
+        guard = f"if (!{variable}) return;"
+        if guard not in source:
+            source = source.replace(lookup, lookup + '\n      ' + guard)
     assets = ASSETS
     inline = path.startswith(('guides/', 'download/')) or path == 'download.html'
     source = re.sub(r'<style data-sh-style>.*?</style>\n?', '', source, flags=re.S)

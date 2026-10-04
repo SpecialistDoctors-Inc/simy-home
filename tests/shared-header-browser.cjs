@@ -20,7 +20,7 @@ const locales=['en','ja','hi','es','fr','zh-Hans'];
 const home=l=>l==='en'?'/':`/${l}.html`;
 const guide=l=>`/guides/${l==='ja'?'':l.toLowerCase()+'/'}codex.html`;
 const download=l=>l==='ja'?'/download.html':`/download/${l.toLowerCase()}.html`;
-const routes=[...locales.flatMap(l=>[home(l),guide(l),download(l)]),'/for/engineers/','/for/en/engineers/','/for/','/for/en/sales/','/guides/simy-getting-started.html','/about.html','/contact.html','/privacy.html','/legal.html','/seller-info.html','/old/about.html','/old/index.html','/error.html','/404.html'];
+const routes=[...locales.flatMap(l=>[home(l),guide(l),download(l)]),'/for/engineers/','/for/en/engineers/','/for/','/for/en/sales/','/guides/simy-getting-started.html','/about.html','/contact.html','/privacy.html','/legal.html','/seller-info.html','/old/about.html','/old/index.html','/error.html','/404.html','/demo.html','/old/demo.html'];
 function geometry(){
  const header=document.querySelector('.simy-header'),row=header.querySelector('.sh-row');
  const r=row.getBoundingClientRect();
@@ -54,6 +54,13 @@ function geometry(){
   await page.goto(origin+route,{waitUntil:'networkidle'});
   assert.equal(await page.locator('.simy-header').count(),1,route);
   assert.ok(await page.locator('.sh-brand img').evaluate(async img=>{await img.decode();return img.naturalWidth>0;}),`${route} logo decodes`);
+  if(route.endsWith('/demo.html')){
+   await page.evaluate(()=>window.scrollTo(0,300));await page.waitForFunction(()=>scrollY>10);
+   await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(resolve)));
+   assert.deepEqual(report.pageErrors,[],`${route} legacy scroll handler`);
+   report.operations.push({operation:'legacy-scroll',route,scrollY:await page.evaluate(()=>scrollY)});
+   await page.evaluate(()=>window.scrollTo(0,0));await page.waitForFunction(()=>scrollY===0);
+  }
   for(const width of widths){
    await page.setViewportSize({width,height:900});
    await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));

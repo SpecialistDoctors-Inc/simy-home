@@ -3,6 +3,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const {execFileSync} = require('node:child_process');
+const vm = require('node:vm');
 const root = path.resolve(__dirname, '..');
 const site = path.join(root, 'site');
 const locales = ['en', 'ja', 'hi', 'es', 'fr', 'zh-Hans'];
@@ -36,6 +37,16 @@ for (const file of files(site)) {
   });
 }
 test('AC-3 all shared raw headers are reproducible',()=>execFileSync('python3',['scripts/build-shared-header.py','--check'],{cwd:root,stdio:'pipe'}));
+test('AC-1 legacy scroll callbacks tolerate the replaced navigation',()=>{
+ let exercised=0;
+ for(const file of files(site))for(const match of fs.readFileSync(file,'utf8').matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/g)){
+  if(!match[1].includes("document.getElementById('staticNav')"))continue;
+  const callbacks=[];
+  vm.runInNewContext(match[1],{window:{scrollY:300,addEventListener:(event,callback)=>{if(event==='scroll')callbacks.push(callback);}},document:{getElementById:()=>null}});
+  for(const callback of callbacks){assert.doesNotThrow(()=>callback(),path.relative(site,file));exercised++;}
+ }
+ assert.ok(exercised>0,'Existing legacy scroll callbacks must actually be exercised');
+});
 test('AC-3 assets precede HTML and occupation slash publication',()=>{
  const workflow=fs.readFileSync(path.join(root,'.github/workflows/deploy-site.yml'),'utf8');
  assert.ok(workflow.indexOf('Prepare shared navigation assets') < workflow.indexOf('Prepare occupation pages and assets'));

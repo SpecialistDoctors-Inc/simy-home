@@ -666,6 +666,7 @@
   <script>
     window.addEventListener('scroll', function(){
       var n = document.getElementById('staticNav');
+      if (!n) return;
       if (window.scrollY > 10) n.classList.add('scrolled'); else n.classList.remove('scrolled');
     });
   </script>
