@@ -961,15 +961,17 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
               <span class="you-badge">Tu equipo</span>
               <span class="os">macOS · Apple silicon (M1 o posterior)</span>
               <h3>Mac</h3>
-              <a class="btn btn-primary" data-dl="mac" href="https://simy.one/downloads/simy-cli/0.5.45/SIMY-CLI-0.5.45-macos-arm64.dmg">Descargar para Mac <span class="arrow" aria-hidden="true">↓</span></a>
-              <span class="dl-meta" data-meta="mac">.dmg</span>
+              <a class="btn btn-primary" data-dl="mac" href="https://simy.one/downloads/simy-cli/0.5.64/SIMY-CLI-0.5.64-macos-arm64.dmg">Descargar para Mac <span class="arrow" aria-hidden="true">↓</span></a>
+              <span class="dl-meta" data-meta="mac">v0.5.64 · .dmg</span>
+              <span class="dl-meta" role="status" data-release-status="mac" data-release-current="Última versión confirmada con la información de publicación.">No se ha confirmado la última versión. Este enlace es para v0.5.64, comprobada el 4 de octubre de 2026. Revisa la conexión y recarga la página, o consulta las descargas en tu cuenta.</span>
             </div>
             <div class="dl-card" data-os="win">
               <span class="you-badge">Tu equipo</span>
               <span class="os">Windows · x64</span>
               <h3>Windows</h3>
-              <a class="btn btn-primary" data-dl="win" href="https://simy.one/downloads/simy-cli/windows/0.5.45/SIMY-CLI-0.5.45-windows-x64-setup.exe">Descargar para Windows <span class="arrow" aria-hidden="true">↓</span></a>
-              <span class="dl-meta" data-meta="win">.exe</span>
+              <a class="btn btn-primary" data-dl="win" href="https://simy.one/downloads/simy-cli/windows/0.5.64/SIMY-CLI-0.5.64-windows-x64-setup.exe">Descargar para Windows <span class="arrow" aria-hidden="true">↓</span></a>
+              <span class="dl-meta" data-meta="win">v0.5.64 · .exe</span>
+              <span class="dl-meta" role="status" data-release-status="win" data-release-current="Última versión confirmada con la información de publicación.">No se ha confirmado la última versión. Este enlace es para v0.5.64, comprobada el 4 de octubre de 2026. Revisa la conexión y recarga la página, o consulta las descargas en tu cuenta.</span>
             </div>
             <div class="dl-card" data-os="ios">
               <span class="you-badge">Tu dispositivo</span>
@@ -1135,24 +1137,10 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
       else { location.href = 'mailto:?subject=' + encodeURIComponent('Descargar SIMY') + '&body=' + encodeURIComponent(url); }
     });
   }
-  function mb(n) { return n ? (n / 1048576).toFixed(0) + 'MB' : ''; }
-  function apply(key, manifest, ext) {
-    if (!manifest || !manifest.artifacts || !manifest.artifacts.length) return;
-    var a = manifest.artifacts[0];
-    var link = document.querySelector('[data-dl="' + key + '"]');
-    var meta = document.querySelector('[data-meta="' + key + '"]');
-    if (link && a.url) link.href = a.url;
-    if (meta) meta.textContent = 'v' + manifest.version + ' · ' + ext + (a.size ? ' · ' + mb(a.size) : '');
-  }
-  function load(path, key, ext) {
-    if (!window.fetch) return;
-    fetch(path, { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : null; })
-      .then(function (m) { apply(key, m, ext); }).catch(function () {});
-  }
-  load('/downloads/simy-cli/latest.json', 'mac', '.dmg');
-  load('/downloads/simy-cli/windows/latest.json', 'win', '.exe');
+
 })();
 </script>
+<script src="/download-release.js" defer></script>
 <script src="/analytics.js" defer></script>
 </body>
 </html>

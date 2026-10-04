@@ -114,6 +114,14 @@
             ]
           },
           {
+            "id": "output",
+            "title": "受け取る下書きの例",
+            "p": [
+              "架空のメモ：サンプル社は導入範囲を検討中。資料を送る約束をしたが、担当者と期限は未定。",
+              "メール案：「本日はありがとうございました。導入範囲の検討用資料について、内容を確認のうえご案内します。」確認事項：送付する資料、担当者、期限。レビュー：元のメモにない価格・日付・添付を足していないか。これは説明用の例で、SIMYでの実行結果ではありません。"
+            ]
+          },
+          {
             "id": "inputs",
             "title": "最初に渡すと、手戻りを減らせる情報",
             "list": [
@@ -174,6 +182,14 @@
             "example": "Draft a customer follow-up email from these meeting notes. Do not repeat questions answered during the call. Include outstanding answers, the material we promised and the next meeting. Leave unsupported dates or prices as points to confirm. Do not send it yet.",
             "p": [
               "Ask for an email draft, internal questions to resolve and an action list. Check names, roles and commitments before sending through your normal email workflow. This is an illustrative request, not a measured customer case or a claim about time saved."
+            ]
+          },
+          {
+            "id": "output",
+            "title": "An example of a reviewable draft",
+            "p": [
+              "Synthetic note: Example Company is considering the scope of an introduction. We promised to share material, but the owner and date are not yet agreed.",
+              "Draft: “Thank you for meeting today. I will confirm the material for your scope discussion before sharing it.” Open checks: which material, who owns it and when it is due. Review: no invented price, date or attachment. This is an illustration, not an observed SIMY task result."
             ]
           },
           {
@@ -263,7 +279,8 @@
             "title": "最初の依頼は、短い資料の整理から",
             "example": "このメモだけを使って、決定事項、まだ決まっていないこと、次にすることを整理して。担当者や期限が書かれていなければ、不明と書いて。外部には送らず、私が確認できる下書きにして。",
             "p": [
-              "この依頼例なら、原文と出力を見比べて確認できます。抜けている項目や推測された内容があれば、その箇所と期待する扱いを伝えます。仕事の目的と完成条件を最初に書くと、修正の基準も共有できます。"
+              "この依頼例なら、原文と出力を見比べて確認できます。抜けている項目や推測された内容があれば、その箇所と期待する扱いを伝えます。仕事の目的と完成条件を最初に書くと、修正の基準も共有できます。",
+              "このページの依頼文は説明用の例です。利用中のアカウントで最初の仕事が完了することを、この例だけで保証するものではありません。接続できない場合は元のメモを手元に残し、接続状態を確認してから同じ小さな依頼を試してください。"
             ]
           },
           {
@@ -312,7 +329,8 @@
             "title": "Try organizing a short note",
             "example": "Use only this note to separate decisions, unresolved questions and next actions. If the owner or date is missing, mark it unknown. Do not send anything externally. Give me a draft I can review.",
             "p": [
-              "Compare the output with the original note. If an item is missing or an assumption has become a fact, point to that item and explain the correction. State the purpose and acceptance criteria at the start so the revision has a clear target."
+              "Compare the output with the original note. If an item is missing or an assumption has become a fact, point to that item and explain the correction. State the purpose and acceptance criteria at the start so the revision has a clear target.",
+              "The request on this page is illustrative. It does not establish that a first task will complete in your account. If the connection is unavailable, keep your original note and retry the same small request after confirming the connection state."
             ]
           },
           {
