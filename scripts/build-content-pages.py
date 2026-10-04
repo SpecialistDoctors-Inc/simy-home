@@ -49,7 +49,7 @@ def cards(ids, lang):
 
 def section(s, lang):
     def paragraphs(key):
-        return ''.join(f'<p>{esc(p)}</p>' for p in s.get(key, []))
+        return ''.join('<p>' + esc(p).replace('\n', '<br>') + '</p>' for p in s.get(key, []))
     body = paragraphs('p')
     if s.get('list'):
         body += '<ul>' + ''.join(f'<li>{esc(t)}</li>' for t in s['list']) + '</ul>'

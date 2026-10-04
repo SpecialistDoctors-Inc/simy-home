@@ -222,7 +222,7 @@
   "sec.heroP": "Your code and conversations are protected by design, not afterthought.",
   "sec.infraH2": "Infrastructure & Encryption",
   "sec.transit": "Encryption in Transit",
-  "sec.transitP": "All data is encrypted using TLS 1.3 during transmission between your devices, our servers, and third-party integrations.",
+  "sec.transitP": "Connections to this website use HTTPS encryption. The TLS version depends on the client and endpoint; this is not a guarantee about every product or third-party connection.",
   "sec.rest": "Encryption at Rest",
   "sec.restP": "Data stored on our servers is encrypted using AES-256. Database backups are also encrypted.",
   "sec.cloud": "Cloud Infrastructure",

@@ -1,0 +1,21 @@
+# Current acceptance results
+
+2026-10-04 repair checkpoint; the current source revision is the Git commit containing this record. Final exact-head evidence belongs to the ignored runtime matrix, not this summary. All nine outcomes remain pending. This is the shared specification's results view, not a substitute for the controller-owned machine checklist.
+
+| # | ご依頼 | 現状 | 判定 |
+| ---: | --- | --- | :---: |
+| AC-1 / UX-01 | Home/search → occupation → hub | Entry repair exists; fresh-human first-click/return evidence unavailable. Technical browser checks do not prove understanding. | 🟡 |
+| AC-2 / UX-02 | Identify input, output and human review | Complete synthetic sales draft, questions and actions added in JA/EN; independent reader answers pending. | 🟡 |
+| AC-3 / UX-03 | Adapt a safe request | Selectable source example retains unknowns and approval boundary; human adapted request pending. | 🟡 |
+| AC-4 / UX-04 | Distinguish draft/send, code/publish, SQM scope and plan | Download FAQ separates advertised trial from permanent free plan; comprehension and entitlement evidence pending. | 🟡 |
+| AC-5 / UX-05 | Start/download and recover | Six locale warning-stop/web recovery paths repaired. Actual OS install, account/setup and UX-05 release oracle remain pending. | 🟡 |
+| AC-6 / UX-06 | Topic/locale/anchors/metadata/local/live paths | Local verification must bind current head; candidate not deployed, live candidate paths pending. | 🟡 |
+| AC-7 / UX-07 | Observe synthetic product result | Earlier authorized task was plan-blocked; no output. No new plan/access evidence, purchase or repeat job. Honest illustration boundary retained. | 🟡 |
+| AC-8 / SEO-01 | Eight markets, 40 pending rows, whole-site claims | Frozen ledger and ES/MX/FR existing-path supplement shared; website TLS claim corrected. Page demand and product/security/compliance evidence unavailable. | 🟡 |
+| AC-9 / REL-01 | Current CI/SQM/review, production and live journeys | Draft PR #108 remains partial artifact. Exact new-head checks must be recollected; release held by preceding outcomes. | 🟡 |
+
+Counts: 0 green / 9 yellow / 0 red at this checkpoint. Highest proven state: prior draft candidate with technical checks; source repairs are not yet final-head proof. Disposition: unfinished, release held. Historical product failure is retained in runtime evidence; its criterion remains pending under the explicit access-failure contract.
+
+Both user and system layers are required for every AC. User-layer gaps: fresh reader (AC-1–4), real setup/product (AC-5/7), candidate live journey (AC-6/9), demand/claim validation (AC-8). System-layer gaps: candidate-bound collection, downstream product integration, page-demand and owner controls, release identity. No gap is marked not applicable. Runtime `.artifacts/matrix.json` and generated `.artifacts/checklist.md` record current commands, hashes, observations and validator status.
+
+Owners/resumption: requester supplies fresh-reader observations and existing eligible product access; product/security owner supplies operational, entitlement and compliance evidence; SEO owner obtains actual page reports when allowance returns (no upgrade); executor then revalidates changed inputs and frozen endpoint gates. No unscheduled follow-up is promised.
