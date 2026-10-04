@@ -111,6 +111,15 @@ This does not correct the currently deployed URL until a reviewed release is
 made and its live response is checked. Other legacy pages remain outside this
 specific redirect repair and the whole-site claims gate remains pending.
 
+The legacy React home bundle and its archived copy also embedded assertions
+about physical database isolation, end-to-end encryption and zero training.
+Those direct assertions have been replaced with neutral pointers in the shipped
+assets, and the corresponding stale translation entries have been removed from
+both active and `/old/` home dictionaries and the generated bundle. This is
+source containment, not proof of the product's security architecture. Other
+legacy pricing, press and policy assertions still require owner-backed review
+before the whole-site claims gate can pass.
+
 Latest observed public installer metadata on 2026-10-04 at 06:24 UTC was 0.5.67.
 Mac and Windows artifact HEAD responses were 200 and lengths matched their
 manifests (50,730,192 / 28,843,766 bytes). Mac manifest declared signed/notarized;

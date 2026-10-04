@@ -92,3 +92,28 @@ test('SEO-01 / AC-8: unsubstantiated security promises cannot return through loc
     if (dict['home.faq.a4']) assert.equal(dict['home.faq.a4'], dict['sec.transitP'], file + ' FAQ scope');
   }
 });
+
+test('SEO-01 / AC-8: legacy home assets and their translations omit unsupported isolation and encryption promises', () => {
+  const retired = /Enterprise-grade trust\.|By design\.|Physical DB Isolation|End-to-End Encrypted|Zero Training Guarantee|Your data\. Your instance\. No shared tenants\.|Channel-Based Access|Only participants of the original thread can access\.|Every organisation gets a dedicated, isolated database instance\.|Enterprise data never trains global models\./;
+  const scoped = JSON.parse(read('site/lang/en.json'))['sec.transitP'];
+  for (const asset of [
+    'site/assets/index-DnVveaIK.js',
+    'site/assets/index-DnVveaIK.js.bak',
+    'site/old/assets/index-DnVveaIK.js',
+    'site/old/assets/index-DnVveaIK.js.bak',
+    'site/lang/home-dom-bundle.js',
+  ]) assert.doesNotMatch(read(asset), retired, asset);
+  for (const folder of ['site/lang/home-dom', 'site/old/lang/home-dom']) {
+    for (const file of fs.readdirSync(path.join(root, folder)).filter(f => f.endsWith('.json'))) {
+      const text = read(`${folder}/${file}`);
+      assert.doesNotMatch(text, retired, `${folder}/${file}`);
+      const locale = file.slice(0, -5);
+      const dict = JSON.parse(text);
+      const source = JSON.parse(read(`site/lang/${file}`));
+      assert.equal(dict['Security at SIMY'], source['sec.h1'], `${folder}/${file} security heading`);
+      assert.equal(dict[scoped], source['sec.transitP'], `${folder}/${file} scoped copy`);
+    }
+  }
+  const current = Object.fromEntries(fs.readdirSync(path.join(root, 'site/lang/home-dom')).filter(f => f.endsWith('.json')).sort().map(f => [f.slice(0, -5), JSON.parse(read(`site/lang/home-dom/${f}`))]));
+  assert.equal(read('site/lang/home-dom-bundle.js'), `window.SIMY_HOME_DOM_BUNDLE = ${JSON.stringify(current, null, 2)};\n`);
+});
