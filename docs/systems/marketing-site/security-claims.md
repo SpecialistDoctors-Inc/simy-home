@@ -103,6 +103,14 @@ Third-party claims and legacy content are not certified by this source repair;
 the whole-site claims gate remains pending for source/owner validation. Legal
 policy text remains authoritative policy text, not observed operational proof.
 
+The publicly reachable `/old/security.html` also contained the contradicted
+TLS 1.3 assertion and other unverified claims. Its proposed source now forwards
+visitors to the reviewed `/security.html`, preserving the query and fragment when
+JavaScript runs; a visible link and HTML refresh provide fallback navigation.
+This does not correct the currently deployed URL until a reviewed release is
+made and its live response is checked. Other legacy pages remain outside this
+specific redirect repair and the whole-site claims gate remains pending.
+
 Latest observed public installer metadata on 2026-10-04 at 06:24 UTC was 0.5.67.
 Mac and Windows artifact HEAD responses were 200 and lengths matched their
 manifests (50,730,192 / 28,843,766 bytes). Mac manifest declared signed/notarized;
