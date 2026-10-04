@@ -63,6 +63,8 @@ class Page(HTMLParser):
 
 
 def canonical_url(name):
+    if name.startswith('for/') and name.endswith('/index.html'):
+        return BASE + '/' + name[:-len('index.html')]
     return BASE + ('/' if name == 'index.html' else '/' + name)
 
 
@@ -114,6 +116,8 @@ def main():
             check(alts.get(lang) == canonical_url(name), f'{name}: missing self alternate')
         for code, href in alts.items():
             target_name = urlsplit(href).path.lstrip('/') or 'index.html'
+            if target_name.endswith('/'):
+                target_name += 'index.html'
             target = pages.get(target_name)
             check(target_name in public, f'{name}: alternate not indexable: {href}')
             if target:
@@ -132,7 +136,7 @@ def main():
                 continue  # Installers are published by a separate release workflow.
             target_file = SITE / path
             if target_file.is_dir():
-                path += '/index.html'
+                path = path.rstrip('/') + '/index.html'
                 target_file = SITE / path
             check(target_file.exists(), f'{name}: broken internal URL {href}')
             target = pages.get(path)

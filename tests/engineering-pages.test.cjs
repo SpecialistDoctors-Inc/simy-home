@@ -22,8 +22,8 @@ test("every raw homepage exposes a working engineering destination in its suppor
       "utf8",
     );
     const destination =
-      locale === "ja" ? "engineers.html" : "engineers-en.html";
-    const links = [...home.matchAll(/href="(\/engineers(?:-en)?\.html)"/g)].map(
+      locale === "ja" ? "for/engineers/" : "for/en/engineers/";
+    const links = [...home.matchAll(/href="(\/for\/(?:en\/)?engineers\/)"/g)].map(
       (match) => match[1],
     );
     assert.ok(
@@ -31,7 +31,7 @@ test("every raw homepage exposes a working engineering destination in its suppor
       `${locale} has navigation, feature and footer entry points`,
     );
     assert.ok(links.every((href) => href === `/${destination}`));
-    const page = fs.readFileSync(path.join(root, "site", destination), "utf8");
+    const page = fs.readFileSync(path.join(root, "site", destination, "index.html"), "utf8");
     assert.match(
       page,
       new RegExp(`<html lang="${locale === "ja" ? "ja" : "en"}">`),

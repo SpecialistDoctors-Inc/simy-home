@@ -23,7 +23,7 @@ const server = http.createServer((req, res) => {
   const file = path.resolve(
     site,
     "." +
-      (url.pathname === "/" ? "/index.html" : decodeURIComponent(url.pathname)),
+      (decodeURIComponent(url.pathname) + (url.pathname.endsWith("/") ? "index.html" : "")),
   );
   if (!file.startsWith(site + path.sep)) {
     res.writeHead(403).end();
@@ -53,7 +53,7 @@ const report = { views: [], scenarios: 0, errors: [], theme: {} };
     fs.mkdirSync(output, { recursive: true });
     // The shared theme must look the same across the homepage/detail-page boundary.
     const themePage = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
-    for (const route of ["/ja.html", "/engineers.html", "/engineers-en.html"]) {
+    for (const route of ["/ja.html", "/for/engineers/", "/for/en/engineers/"]) {
       await themePage.goto(origin + route);
       report.theme[route] = await themePage.evaluate(() => {
         const body = getComputedStyle(document.body);
@@ -63,8 +63,13 @@ const report = { views: [], scenarios: 0, errors: [], theme: {} };
             border: button.borderColor, radius: button.borderRadius, weight: button.fontWeight } };
       });
     }
-    assert.deepEqual(report.theme["/engineers.html"], report.theme["/ja.html"], "Japanese page uses the homepage theme");
-    assert.deepEqual(report.theme["/engineers-en.html"], report.theme["/ja.html"], "English page uses the homepage theme");
+    assert.deepEqual(report.theme["/for/engineers/"], report.theme["/ja.html"], "Japanese page uses the homepage theme");
+    assert.deepEqual(report.theme["/for/en/engineers/"], report.theme["/ja.html"], "English page uses the homepage theme");
+    for (const [alias, target] of [["/engineers.html", "/for/engineers/"], ["/engineers-en.html", "/for/en/engineers/"]]) {
+      await themePage.goto(origin + alias);
+      await themePage.waitForURL(origin + target);
+      assert.equal(await themePage.locator("h1").count(), 1);
+    }
     await themePage.close();
     for (const lang of ["ja", "en"]) {
       const page = await browser.newPage({
@@ -79,7 +84,7 @@ const report = { views: [], scenarios: 0, errors: [], theme: {} };
         if (response.status() >= 400)
           report.errors.push(`${response.status()} ${response.url()}`);
       });
-      const route = lang === "ja" ? "/engineers.html" : "/engineers-en.html";
+      const route = lang === "ja" ? "/for/engineers/" : "/for/en/engineers/";
       await page.goto(origin + route);
       await page.keyboard.press("Tab");
       assert.ok(await page.locator(".skip").evaluate((link) => {
@@ -292,7 +297,7 @@ const report = { views: [], scenarios: 0, errors: [], theme: {} };
           );
         report.views.push({ home: locale, ...result });
       }
-      const target = locale === "ja" ? "/engineers.html" : "/engineers-en.html";
+      const target = locale === "ja" ? "/for/engineers/" : "/for/en/engineers/";
       assert.equal(
         await page.locator(".engineering-home-link").getAttribute("href"),
         target,
@@ -311,7 +316,7 @@ const report = { views: [], scenarios: 0, errors: [], theme: {} };
       viewport: { width: 390, height: 844 },
     });
     const page = await noJs.newPage();
-    await page.goto(origin + "/engineers.html");
+    await page.goto(origin + "/for/engineers/");
     assert.ok(await page.locator("noscript").isVisible());
     assert.ok(!(await page.locator("[data-example]").first().isVisible()));
     await page.locator("#levels > summary").click();
@@ -320,7 +325,7 @@ const report = { views: [], scenarios: 0, errors: [], theme: {} };
     await page.goto(origin + "/ja.html");
     assert.equal(
       await page.locator(".engineering-home-link").getAttribute("href"),
-      "/engineers.html",
+      "/for/engineers/",
     );
     await noJs.close();
     assert.deepEqual(report.errors, []);

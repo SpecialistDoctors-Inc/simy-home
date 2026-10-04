@@ -141,3 +141,41 @@ above the header and added a real first-Tab hit-test regression check. See
 Focused separate re-review confirmed the skip-link correction with no findings
 (`review-theme-followup.md`). The root session reran browser verification after
 the fix: all 22 viewport/locale checks and first-Tab visibility passed.
+
+## Publication and occupation URL policy — 2026-10-04
+
+The user approved production publication and plans to expand occupation-specific
+license use cases. `/for/engineers/` (Japanese) and `/for/en/engineers/` (English)
+are canonical. Reserve `/guides/` for task/how-to content and `/for/<occupation>/`
+for benefits, examples, relevant licensed capabilities and links to those guides.
+Keep plan names out of paths so plan changes do not break incoming links. Do not
+create empty pages for future professions or claim unverified license entitlements.
+Current homepage pricing uses Starter / SIMY by Industry; the user's term Pro does
+not by itself establish a new pricing contract, and this release leaves the
+approved page's version/plan/organization availability language intact.
+
+Legacy `/engineers.html` and `/engineers-en.html` return 301 at CloudFront, retaining
+query parameters. Local static HTML fallbacks are noindex redirects. Edge routing
+maps canonical occupation directories to index.html, with matching Terraform
+source; no Terraform apply is needed. Homepage navigation, language switch,
+canonical/hreflang, social tags, page schema, sitemap and SEO inventory use the
+canonical URLs. Both generators and static browser server support this layout.
+
+Latest main (096623e) was merged before release to preserve new guide/SEO work.
+Release through the existing GitHub Actions main deployment, with CI checks first.
+Rollback: revert this feature's merge commit and redeploy through the same workflow,
+including the prior CloudFront function. Verify production 200s, alias 301s,
+canonical metadata, CSS/JS, homepage navigation and language switch after deployment.
+
+Release review found an edge/HTML ordering risk. The workflow now uploads new
+occupation pages and their CSS/JS first, publishes the edge function second,
+then publishes homepage HTML and invalidates the distribution. Thus the new
+routes have origin objects before they are exposed; failure to publish the
+function stops before homepage links change. The review's untracked-file warning
+is addressed by including both generated canonical pages in the release commit.
+
+Focused independent release follow-up (gpt-5.5 / xhigh) found no actionable
+issues. See `review-release-followup.md`. Final pre-publication checks: 1,143 Node
+tests passed; both generators, homepage/sitewide SEO, Terraform formatting, YAML
+parsing and diff whitespace checks passed. Browser evidence covers 22 views and
+six example interactions; real-device/Safari/Firefox coverage remains unverified.

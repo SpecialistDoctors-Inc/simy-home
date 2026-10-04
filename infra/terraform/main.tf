@@ -377,6 +377,23 @@ resource "aws_cloudfront_function" "redirect" {
         };
       }
 
+      // Occupation pages have stable directory URLs, independent of plan names.
+      var occupationAliases = { '/engineers.html': '/for/engineers/', '/engineers-en.html': '/for/en/engineers/' };
+      var occupationPath = occupationAliases[uri];
+      var occupation = uri.match(/^\/for\/(?:en\/)?[a-z][a-z0-9-]*(?:\/index\.html|\.html|\/)?$/);
+      if (occupation) occupationPath = uri.replace(/(?:\/index\.html|\.html|\/)$/, '') + '/';
+      if (occupationPath) {
+        if (uri !== occupationPath) {
+          return {
+            statusCode: 301,
+            statusDescription: 'Moved Permanently',
+            headers: { location: { value: 'https://' + host + occupationPath + queryToString(request, {}) } }
+          };
+        }
+        request.uri = occupationPath + 'index.html';
+        return request;
+      }
+
       // Remove trailing slash (except root /)
       // e.g. /about/ -> /about.html
       if (uri !== '/' && uri.endsWith('/')) {

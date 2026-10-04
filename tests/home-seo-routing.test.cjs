@@ -59,6 +59,32 @@ for (const [name, source] of [['production', production], ['Terraform', terrafor
     assert.equal(run({request:request('/',query)}).headers.location.value,
       'https://simy.one/ja.html?hasOwnProperty=campaign&__proto__=source');
   });
+  test(`${name}: occupation URLs normalize once and preserve campaign parameters`, () => {
+    for (const [legacy, canonical] of [
+      ['/engineers.html', '/for/engineers/'], ['/engineers-en.html', '/for/en/engineers/'],
+      ['/for/engineers', '/for/engineers/'], ['/for/engineers.html', '/for/engineers/'],
+      ['/for/engineers/index.html', '/for/engineers/'],
+      ['/for/en/engineers', '/for/en/engineers/'], ['/for/en/engineers/index.html', '/for/en/engineers/'],
+    ]) {
+      const query = {utm_source: {value:'release mail'}, tag:{multiValue:[{value:'a'},{value:'b'}]}};
+      const result = run({request: request(legacy, query)});
+      assert.equal(result.statusCode, 301);
+      assert.equal(result.headers.location.value, `https://simy.one${canonical}?utm_source=release%20mail&tag=a&tag=b`);
+      const next = request(canonical, query);
+      assert.equal(run({request: next}), next);
+      assert.equal(next.uri, canonical + 'index.html');
+      assert.equal(next.querystring, query);
+    }
+  });
+  test(`${name}: occupation routing preserves assets and dev authentication`, () => {
+    for (const uri of ['/for/engineers/screen.png', '/guides/codex.html', '/site-theme.css']) {
+      const req = request(uri);
+      assert.equal(run({request:req}), req);
+      assert.equal(req.uri, uri);
+    }
+    const protectedRun = handler(source.replace('var BASIC_AUTH_ENABLED = false;', 'var BASIC_AUTH_ENABLED = true;'));
+    assert.equal(protectedRun({request:request('/for/engineers/')} ).statusCode, 401);
+  });
   test(`${name}: dev authentication still precedes language redirects`, () => {
     const authRun = handler(source.replace('var BASIC_AUTH_ENABLED = false;', 'var BASIC_AUTH_ENABLED = true;'));
     assert.equal(authRun({request:request('/',{lang:{value:'ja'}})}).statusCode,401);
