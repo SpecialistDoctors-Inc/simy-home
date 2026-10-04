@@ -11,6 +11,7 @@
   });
 
   const JA_COPY = Object.freeze({
+    "Explore SIMY for your work": "あなたの職業からSIMYの活用を探す",
     "Let AI build, test,": "AIに、開発と",
     "and check your code.": "品質チェックを任せる。",
     "Describe what you want. AI handles implementation, testing, and fixes. SQM checks changes using rules developed from past bugs.": "つくりたいものを伝えると、AIが実装・テスト・修正を進めます。SQMは過去の不具合から作ったルールで、次の変更をチェックします。",
@@ -642,6 +643,11 @@
         const guide = localUrl.pathname.match(/^\/guides\/(?:(?:en|hi|es|fr|zh-hans)\/)?([a-z-]+\.html)$/);
         if (guide) {
           localUrl.pathname = code ? `/guides/${code}/${guide[1]}` : `/guides/${guide[1]}`;
+          link.setAttribute("href", `${localUrl.pathname}${localUrl.search}${localUrl.hash}`);
+          continue;
+        }
+        if (["/for/", "/for/en/"].includes(localUrl.pathname)) {
+          localUrl.pathname = locale === "ja" ? "/for/" : "/for/en/";
           link.setAttribute("href", `${localUrl.pathname}${localUrl.search}${localUrl.hash}`);
           continue;
         }

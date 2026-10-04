@@ -19,6 +19,12 @@ def render(c, lang):
       <summary><span class="level-number">{l[0]}</span><strong>{e(l[1])}{f'<small>{e(c["default"])}</small>' if i == 2 else ''}</strong><span class="level-use">{e(l[2])}</span><span class="toggle" aria-hidden="true">+</span></summary>
       <div class="level-detail"><p>{e(l[3])}</p><p>{e(l[4])}</p></div>
     </details>''' for i,l in enumerate(c['levels']))
+    prefix = '/guides/' if lang == 'ja' else '/guides/en/'
+    related = ''.join(f'<li><a href="{prefix}{slug}.html">{label}</a></li>' for slug,label in [
+        ('simy-getting-started', 'SIMYの始め方' if lang == 'ja' else 'Getting started with SIMY'),
+        ('simy-delivery-loop', 'Delivery Loopの使い方' if lang == 'ja' else 'Using Delivery Loop'),
+        ('simy-sqm', 'SQMの使い方' if lang == 'ja' else 'Using SQM'),
+        ('claude-code', 'Claude Code'), ('conductor', 'Conductor')])
     data = json.dumps(c['examples'],ensure_ascii=False).replace('<','\\u003c')
     headline = ''.join(f'<span>{e(line)}</span>' for line in c['headline'])
     schema = json.dumps({"@context": "https://schema.org", "@type": "WebPage", "name": c['title'], "description": c['description'], "url": 'https://simy.one/' + c['path'], "inLanguage": lang, "isPartOf": {"@type": "WebSite", "name": "SIMY", "url": "https://simy.one/"}}, ensure_ascii=False).replace('<', '\\u003c')
@@ -104,6 +110,7 @@ def render(c, lang):
     <div class="start-actions"><a class="button button-primary primary" href="{c['download']}">{c['install']} <span aria-hidden="true">↗</span></a><a class="secondary" href="{c['home']}#pricing">{c['pricing']} <span aria-hidden="true">→</span></a></div>
     <p class="availability">{c['availability']}</p>
   </div></section>
+  <section class="section frame" aria-labelledby="related-title"><h2 id="related-title">{'具体的な手順を読む' if lang == 'ja' else 'Read the practical steps'}</h2><ul>{related}</ul><p><a href="{'/for/' if lang == 'ja' else '/for/en/'}">{'職業別の活用を見る' if lang == 'ja' else 'Explore SIMY for your work'}</a></p></section>
 </main>
 <footer class="site-shell"><div class="frame footer"><a class="brand" href="{c['home']}"><b>SIMY</b><span>{c['back']} ↗</span></a><p>{c['footerNote']}</p><span>© 2026 SIMY</span></div></footer>
 <script type="application/json" id="engineering-data">{data}</script>

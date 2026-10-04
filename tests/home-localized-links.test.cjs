@@ -29,3 +29,19 @@ for (const locale of ['en', 'ja', 'hi', 'es', 'fr', 'zh-Hans']) {
     links.forEach((link, i) => assert.equal(link.href, (i < 3 ? guide : download) + suffix));
   });
 }
+
+test('occupation hub links follow repeated language changes while preserving attribution', () => {
+  const suffix = '?utm_source=seo%20check&tag=one&tag=two#reference';
+  const links = ['/for/', '/for/en/'].map(href => ({
+    dataset: {}, href: href + suffix,
+    getAttribute() { return this.href; },
+    setAttribute(name, value) { assert.equal(name, 'href'); this.href = value; }
+  }));
+  const context = { URL, window: { location: { href: 'https://simy.one/', origin: 'https://simy.one' } },
+    document: { querySelectorAll() { return links; } } };
+  vm.runInNewContext(source.slice(start, end), context);
+  for (const locale of ['ja', 'en', 'fr', 'es', 'hi', 'zh-Hans', 'ja']) {
+    context.updateLinks(locale);
+    for (const link of links) assert.equal(link.href, (locale === 'ja' ? '/for/' : '/for/en/') + suffix);
+  }
+});

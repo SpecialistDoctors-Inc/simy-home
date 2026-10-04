@@ -11,6 +11,7 @@ Run from the repository root: python3 scripts/finalize-guides.py
 """
 import os
 import re
+import json
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "site")
 LANGS = [("ja", "ja", "日本語"), ("en", "en", "English"), ("zh-hans", "zh-Hans", "中文"),
@@ -55,10 +56,15 @@ def footer(code, current):
 
 
 def main():
+    # New workflow guides own their complete HTML in build-content-pages.py.
+    manifest = json.load(open(os.path.join(ROOT, '..', 'scripts', 'content-pages.json'), encoding='utf-8'))
+    generated = {p['id'] for p in manifest['pages'] if p['kind'] == 'guide'}
     names = sorted(f[:-5] for f in os.listdir(os.path.join(ROOT, "guides")) if f.endswith(".html")) + ["download"]
     touched = 0
     sitemap_urls = []
     for name in names:
+        if name in generated:
+            continue
         available = [(c, h, l) for c, h, l in LANGS if exists(name, c)]
         for code, hl, label in available:
             f = os.path.join(ROOT, page_path(name, code).lstrip("/"))

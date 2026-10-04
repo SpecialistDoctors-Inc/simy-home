@@ -1,5 +1,6 @@
 (() => {
   const es = Object.freeze({
+    "Explore SIMY for your work": "Explorar SIMY por profesión (en inglés)",
     "Let AI build, test,": "Deja que la IA programe,",
     "and check your code.": "pruebe y revise tu código.",
     "Describe what you want. AI handles implementation, testing, and fixes. SQM checks changes using rules developed from past bugs.": "Describe lo que necesitas. La IA implementa, prueba y corrige. SQM revisa cambios con reglas creadas a partir de errores anteriores.",
@@ -434,6 +435,7 @@
   });
 
   const fr = Object.freeze({
+    "Explore SIMY for your work": "Découvrir SIMY par métier (en anglais)",
     "Let AI build, test,": "Confiez à l’IA le code,",
     "and check your code.": "les tests et les vérifications.",
     "Describe what you want. AI handles implementation, testing, and fixes. SQM checks changes using rules developed from past bugs.": "Décrivez votre besoin. L’IA implémente, teste et corrige. SQM vérifie les changements avec des règles issues des bugs passés.",
@@ -868,6 +870,7 @@
   });
 
   const hi = Object.freeze({
+    "Explore SIMY for your work": "अपने काम के लिए SIMY देखें (अंग्रेज़ी में)",
     "Let AI build, test,": "AI को कोड बनाने, जाँचने",
     "and check your code.": "और सुधारने का काम दें।",
     "Describe what you want. AI handles implementation, testing, and fixes. SQM checks changes using rules developed from past bugs.": "बताएँ कि आपको क्या चाहिए। AI कार्यान्वयन, परीक्षण और सुधार करता है। SQM पिछली समस्याओं से बने नियमों से बदलाव की जाँच करता है।",
@@ -1302,6 +1305,7 @@
   });
 
   const zhHans = Object.freeze({
+    "Explore SIMY for your work": "按职业了解 SIMY（英文）",
     "Let AI build, test,": "把开发和质量检查，",
     "and check your code.": "交给 AI。",
     "Describe what you want. AI handles implementation, testing, and fixes. SQM checks changes using rules developed from past bugs.": "说出你想做什么，AI 推进实现、测试与修复。SQM 使用从过去故障中建立的规则检查下一次变更。",

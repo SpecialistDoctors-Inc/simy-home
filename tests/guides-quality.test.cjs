@@ -8,6 +8,11 @@ const path = require("node:path");
 const siteRoot = path.join(__dirname, "..", "site");
 const LANGS = ["ja", "en", "zh-hans", "es", "fr", "hi"];
 const HTML_LANG = { ja: "ja", en: "en", "zh-hans": "zh-Hans", es: "es", fr: "fr", hi: "hi" };
+const authored = require('../scripts/content-pages.json').pages.filter(p => p.kind === 'guide');
+const guideLanguages = (name) => {
+  const page = authored.find(p => path.basename(p.paths.ja) === name);
+  return page ? Object.keys(page.paths) : LANGS;
+};
 
 const decode = (s) =>
   s.replace(/&nbsp;/g, " ").replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">")
@@ -106,7 +111,8 @@ for (const lang of LANGS) {
     test(`${rel}: hreflang alternates cover every language and point back`, () => {
       const alts = [...head.matchAll(/<link rel="alternate" hreflang="([^"]+)" href="([^"]+)">/g)];
       const langs = alts.map((m) => m[1]);
-      for (const l of ["ja", "en", "zh-Hans", "es", "fr", "hi", "x-default"]) assert.ok(langs.includes(l), `missing hreflang ${l}`);
+      const expected = [...guideLanguages(path.basename(file)).map(l => HTML_LANG[l]), 'x-default'];
+      assert.deepEqual([...langs].sort(), [...expected].sort());
       const self = alts.find((m) => m[1] === HTML_LANG[lang]);
       assert.equal(self && self[2], urlOf(file));
       for (const [, , href] of alts) {
@@ -145,6 +151,7 @@ for (const lang of LANGS) {
 test("every Japanese guide exists in every language", () => {
   for (const lang of LANGS.filter((l) => l !== "ja")) {
     for (const name of jaNames) {
+      if (!guideLanguages(name).includes(lang)) continue;
       assert.ok(fs.existsSync(path.join(siteRoot, "guides", lang, name)), `missing ${lang}/${name}`);
     }
   }

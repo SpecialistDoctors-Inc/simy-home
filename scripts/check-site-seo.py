@@ -70,6 +70,9 @@ def canonical_url(name):
 
 def main():
     inventory = json.loads((ROOT / 'docs/seo/sitewide-page-inventory.json').read_text())
+    content = json.loads((ROOT / 'scripts/content-pages.json').read_text())
+    translated = {url.lstrip('/') + ('index.html' if url.endswith('/') else ''): set(p['paths']) | {'x-default'}
+                  for p in content['pages'] for url in p['paths'].values()}
     files = {str(p.relative_to(SITE)): p for p in SITE.rglob('*.html')}
     errors = []
     def check(ok, message):
@@ -110,7 +113,9 @@ def main():
         lang = page.attrs('html')[0].get('lang')
         check(lang == inventory[name]['language'], f'{name}: inventory language mismatch')
         alts = page.alternates
-        if name.startswith(('guides/', 'download/')) or name in ['index.html','ja.html','hi.html','fr.html','es.html','zh-Hans.html','download.html']:
+        if name in translated:
+            check(set(alts) == translated[name], f'{name}: incomplete declared alternates')
+        elif name.startswith(('guides/', 'download/')) or name in ['index.html','ja.html','hi.html','fr.html','es.html','zh-Hans.html','download.html']:
             check(set(alts) == {'en','ja','hi','es','fr','zh-Hans','x-default'}, f'{name}: incomplete alternates')
         if alts:
             check(alts.get(lang) == canonical_url(name), f'{name}: missing self alternate')
