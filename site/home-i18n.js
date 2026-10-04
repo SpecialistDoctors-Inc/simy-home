@@ -11,6 +11,33 @@
   });
 
   const JA_COPY = Object.freeze({
+    "Let AI build, test,": "AIに、開発と",
+    "and check your code.": "品質チェックを任せる。",
+    "Describe what you want. AI handles implementation, testing, and fixes. SQM checks changes using rules developed from past bugs.": "つくりたいものを伝えると、AIが実装・テスト・修正を進めます。SQMは過去の不具合から作ったルールで、次の変更をチェックします。",
+    "See what SIMY can do": "SIMYにできることを見る",
+    "Build a feature · Fix a bug · Check quality": "機能をつくる · バグを直す · 品質をチェック",
+    "Your request": "あなたの依頼",
+    "“Add a search form.”": "「検索フォームを追加して」",
+    "SIMY prepares": "SIMYが用意するもの",
+    "Code for the feature": "機能のコード",
+    "Test results": "テスト結果",
+    "A separate AI review": "別のAIによるレビュー",
+    "Illustrative example. You decide whether to release.": "説明用の例です。変更を公開するかはあなたが判断します。",
+
+    "FOR ENGINEERS": "FOR ENGINEERS",
+    "Build. Verify.": "つくる。確かめる。",
+    "Move forward.": "開発を、前へ。",
+    "Connect implementation, verification, and independent review with Delivery Loop. Use SQM to bring lessons from past incidents into checks on your next change.": "Delivery Loopで実装・検証・独立レビューをつなぐ。SQMで過去の不具合から得た知識を、次の変更のチェックに活かす。",
+    "Explore the engineering experience": "エンジニアの開発体験を見る",
+    "Interactive walkthrough · Delivery Loop + SQM": "操作できるデモ · Delivery Loop + SQM",
+    "CONCEPT": "概念図",
+    "Agree on the outcome": "目的と完了条件をそろえる",
+    "Implement and verify": "実装して、検証する",
+    "Review, repair, recheck": "レビュー・修正・再確認",
+    "Hand over for a decision": "判断できる形で引き渡す",
+    "Past incidents. Knowledge for the next change.": "過去の不具合を、次の開発を守る知識に。",
+    "For engineers": "エンジニア向け",
+
     "AI workflow automation, explained": "AIエージェントによる業務自動化とは",
     "How does SIMY use AI agents to automate workflows?": "SIMYのAIエージェントは、どう業務を自動化しますか？",
     "Describe the outcome in natural language. SIMY learns your working standards from the conversations you select, chooses a matching workflow, and uses Autorun to move the task forward. Reusable workflows connect your instructions, checks, and next steps.": "実現したい成果を、普段の言葉で伝えます。SIMYは選択した会話から仕事の基準を学び、合うワークフローを選んでAutorunで進めます。繰り返し使えるワークフローに、指示・確認事項・次の行動をまとめられます。",
@@ -615,6 +642,11 @@
         const guide = localUrl.pathname.match(/^\/guides\/(?:(?:en|hi|es|fr|zh-hans)\/)?([a-z-]+\.html)$/);
         if (guide) {
           localUrl.pathname = code ? `/guides/${code}/${guide[1]}` : `/guides/${guide[1]}`;
+          link.setAttribute("href", `${localUrl.pathname}${localUrl.search}${localUrl.hash}`);
+          continue;
+        }
+        if (["/for/engineers/", "/for/en/engineers/"].includes(localUrl.pathname)) {
+          localUrl.pathname = locale === "ja" ? "/for/engineers/" : "/for/en/engineers/";
           link.setAttribute("href", `${localUrl.pathname}${localUrl.search}${localUrl.hash}`);
           continue;
         }

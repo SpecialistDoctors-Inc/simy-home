@@ -1,32 +1,3 @@
-:root {
-  --paper: #f6f5f4;
-  --paper-light: #ffffff;
-  --ink: #111111;
-  --ink-soft: #5d5b58;
-  --line: #202020;
-  --line-soft: rgba(17, 17, 17, 0.15);
-  --ui-line: #d9dde2;
-  --blue: #3273d7;
-  --blue-deep: #235db8;
-  --blue-soft: #eef5ff;
-  --lime: #92edce;
-  --coral: #ff865f;
-  --yellow: #ffd166;
-  --sienna: #b85b3f;
-  --mint: #92edce;
-  --mint-soft: #ecfbf6;
-  --radius-sm: 0.5rem;
-  --radius-md: 0.8rem;
-  --radius-lg: 1.1rem;
-  --page-width: 1360px;
-  --section-x: clamp(1.35rem, 4vw, 4.75rem);
-  --section-y: clamp(5rem, 9vw, 9rem);
-  --type-section-heading: clamp(2.7rem, 5.2vw, 5.5rem);
-  --display: "Helvetica Neue", "Arial Nova", Helvetica, Arial, sans-serif;
-  --body: Inter, "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
-}
-
 *,
 *::before,
 *::after {
@@ -464,50 +435,6 @@ html[lang="zh-Hans"] .section-heading {
 
 .mobile-auth-actions {
   display: none;
-}
-
-.button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  min-height: 3.25rem;
-  padding: 0.85rem 1.15rem;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-sm);
-  font-size: 0.84rem;
-  font-weight: 850;
-  letter-spacing: -0.01em;
-  text-decoration: none;
-  transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
-}
-
-.button:hover {
-  transform: translate(-3px, -3px);
-  box-shadow: 5px 5px 0 var(--ink);
-}
-
-.button-small {
-  min-height: 2.7rem;
-  padding: 0.65rem 0.9rem;
-  font-size: 0.75rem;
-}
-
-.button-dark {
-  background: var(--ink);
-  color: #fff;
-}
-
-.button-primary {
-  min-width: 12.75rem;
-  background: var(--blue);
-  color: #fff;
-}
-
-.button-light {
-  min-width: 15rem;
-  background: var(--paper-light);
-  color: var(--ink);
 }
 
 .text-link {
