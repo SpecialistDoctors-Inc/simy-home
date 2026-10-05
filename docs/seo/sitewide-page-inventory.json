@@ -830,11 +830,21 @@
     "topic": "zh-Hans"
   },
   "news/ai-mentor-20261005.html": {
-    "policy": "index",
+    "policy": "redirect",
     "language": "ja",
     "topic": "ai-mentor-results"
   },
   "news/ai-mentor-20261005-en.html": {
+    "policy": "redirect",
+    "language": "en",
+    "topic": "ai-mentor-results"
+  },
+  "news/20261005.html": {
+    "policy": "index",
+    "language": "ja",
+    "topic": "ai-mentor-results"
+  },
+  "news/20261005-en.html": {
     "policy": "index",
     "language": "en",
     "topic": "ai-mentor-results"
