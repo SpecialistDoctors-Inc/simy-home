@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Build static engineering pages from engineering-copy.json; --check rejects stale output."""
+from site_header import apply as apply_header
 import argparse
 import json
 from html import escape as e
@@ -123,7 +124,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     for lang,c in COPY.items():
         path = ROOT/'site'/c['path']/'index.html'
-        output = render(c,lang)+'\n'
+        output = apply_header(render(c,lang)+'\n', path)
         if args.check:
             if not path.exists() or path.read_text() != output:
                 raise SystemExit(f'Stale engineering page: {path.name}')

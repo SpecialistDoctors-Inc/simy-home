@@ -301,6 +301,7 @@
     var scope = root && root.querySelectorAll ? root : document;
     var links = scope.querySelectorAll('a[href]');
     for (var i = 0; i < links.length; i++) {
+      if (links[i].getAttribute('data-locale-option')) continue;
       var href = links[i].getAttribute('href');
       if (!href) continue;
       // Recompute from the authored URL when a visitor changes language again.
@@ -344,6 +345,7 @@
         target = target.parentNode;
       }
       if (!target || target === document || !target.getAttribute) return;
+      if (target.getAttribute('data-locale-option')) return;
       var href = target.getAttribute('href');
       if (!href) return;
       var nextHref = href.indexOf('app.simy.one') !== -1

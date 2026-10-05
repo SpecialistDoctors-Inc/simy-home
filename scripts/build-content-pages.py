@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Build the declared JA/EN occupation and workflow pages; --check is read-only."""
+from site_header import apply as apply_header
 import argparse
 import importlib.util
 import json
@@ -133,7 +134,7 @@ def main():
     for p in PAGES.values():
         for lang, url in p['paths'].items():
             path = ROOT / 'site' / (url.lstrip('/') + ('index.html' if url.endswith('/') else ''))
-            output = render(p, lang)
+            output = apply_header(render(p, lang), path)
             if args.check:
                 if not path.exists() or path.read_text() != output:
                     raise SystemExit(f'Stale content page: {path.relative_to(ROOT)}')
