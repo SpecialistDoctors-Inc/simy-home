@@ -71,7 +71,7 @@ for locale in home.LOCALES:
     assert schema['url'] == expected_url and schema['description'] == desc, filename
     alternates = {a['hreflang']:a['href'] for a in page.attrs('link', rel='alternate')}
     assert alternates == {**{lang:home.BASE+home.home_path(lang) for lang in home.LOCALES},'x-default':home.BASE+'/'}, filename
-    options = {a['data-locale-option']:a for _,a in page.elements if 'data-locale-option' in a}
+    options = {a['data-sh-link'].removeprefix('locale-'):a for _,a in page.elements if a.get('data-sh-link', '').startswith('locale-')}
     assert set(options) == set(home.LOCALES), filename
     for lang,a in options.items():
         assert a['href'] == home.home_path(lang), filename

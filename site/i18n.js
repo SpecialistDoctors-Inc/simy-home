@@ -275,7 +275,8 @@
       // Static language URLs already identify their content language. Keep
       // explicit language-switch links and their attribution parameters intact.
       if (/^\/(?:ja|hi|es|fr|zh-Hans)\.html$/.test(url.pathname) ||
-          /^\/(?:guides|download)(?:\/|\.html$)/.test(url.pathname)) return href;
+          /^\/(?:guides|download)(?:\/|\.html$)/.test(url.pathname) ||
+          /^\/for(?:\/|$)/.test(url.pathname)) return href;
       if (url.pathname === '/' || url.pathname === '/index.html') {
         var homeLang = url.searchParams.get('lang') || CURRENT_LANG || document.documentElement.lang;
         var homePaths = { en: '/', ja: '/ja.html', hi: '/hi.html', es: '/es.html', fr: '/fr.html', 'zh-Hans': '/zh-Hans.html' };
@@ -301,6 +302,7 @@
     var scope = root && root.querySelectorAll ? root : document;
     var links = scope.querySelectorAll('a[href]');
     for (var i = 0; i < links.length; i++) {
+      if (links[i].closest && links[i].closest('.simy-header')) continue;
       var href = links[i].getAttribute('href');
       if (!href) continue;
       // Recompute from the authored URL when a visitor changes language again.
@@ -344,6 +346,7 @@
         target = target.parentNode;
       }
       if (!target || target === document || !target.getAttribute) return;
+      if (target.closest && target.closest('.simy-header')) return;
       var href = target.getAttribute('href');
       if (!href) return;
       var nextHref = href.indexOf('app.simy.one') !== -1
@@ -1468,6 +1471,7 @@
 
   /* ── Language switcher ─────────────────────────────────────── */
   function buildSwitcher() {
+    if (document.querySelector('.simy-header')) return;
     // Already injected (e.g. React re-render) — skip
     if (document.getElementById('langBtn')) return;
 

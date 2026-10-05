@@ -44,6 +44,7 @@ jobs:
 
       - name: Verify localized pages and site behavior
         run: |
+          python3 scripts/build-shared-header.py --check
           python3 scripts/build-localized-home.py --check
           python3 scripts/check-home-seo.py
           python3 scripts/check-site-seo.py
@@ -54,6 +55,14 @@ jobs:
         with:
           role-to-assume: ${{ secrets.AWS_SITE_DEPLOY_ROLE_ARN }}
           aws-region: ${{ secrets.AWS_REGION }}
+
+      # Shared assets must exist before any new HTML or occupation slash key.
+      - name: Prepare shared navigation assets
+        run: |
+          for asset in shared-header.css shared-header.js i18n.js home-i18n.js home.js; do
+            aws s3 cp "site/$asset" "s3://${{ secrets.SITE_S3_BUCKET }}/$asset" \
+              --cache-control "public, max-age=300"
+          done
 
       # Publish directory keys directly, like old/, before exposing homepage links.
       # Both existing pass-through routing and future index rewrites can serve them.

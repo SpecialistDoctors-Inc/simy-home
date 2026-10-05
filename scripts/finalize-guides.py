@@ -10,6 +10,7 @@ For each page that exists in site/guides (Japanese source) and its translations:
 Run from the repository root: python3 scripts/finalize-guides.py
 """
 import os
+from shared_header import apply as shared_header
 import re
 import json
 
@@ -91,7 +92,7 @@ def main():
             m = re.search(r'<ul class="footer-links">[\s\S]*?</ul>', s)
             if m:
                 s = s[:m.start()] + footer(code, page_path(name, code)) + s[m.end():]
-            open(f, "w", encoding="utf-8").write(s)
+            open(f, "w", encoding="utf-8").write(shared_header(s, page_path(name, code).lstrip("/")))
             touched += 1
             sitemap_urls.append("https://simy.one" + page_path(name, code))
     # sitemap
