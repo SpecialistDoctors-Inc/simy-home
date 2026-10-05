@@ -2839,7 +2839,12 @@ window.SIMY_I18N_BUNDLE = {
     "home.output.care.item4.k": "Privacy control",
     "home.output.care.item4.v": "Positions sensitive conversations for controlled, Enterprise use.",
     "home.output.care.action": "Important dialogue becomes record, coordination, and next support.",
-    "newcompare.quote": "Meeting ends. Your Twin starts working."
+    "newcompare.quote": "Meeting ends. Your Twin starts working.",
+    "newpress.latest.category": "AI Mentor · Youth support",
+    "newpress.latest.title": "Four in five young people with money worries chose a next step after AI consultation",
+    "newpress.latest.summary": "AwakApp reports that 52 of 65 participants with concerns about tuition, living costs or household finances chose an action. Findings from the 507-person youth pilot and all 30 report slides are available.",
+    "newpress.latest.read": "Read the findings and report →",
+    "newpress.latest.other": "Japanese report →"
   },
   "es": {
     "_meta": {
@@ -3756,7 +3761,12 @@ window.SIMY_I18N_BUNDLE = {
     "newpress.about.h": "Acerca de SIMY",
     "newpress.about.p": "SIMY está construyendo un Intelligence Twin para el trabajo del conocimiento moderno. Your Twin ayuda a los equipos a pasar del contexto de la reunión al seguimiento, la propuesta, las notas de los clientes, las actualizaciones del equipo y los próximos pasos, para que las personas puedan dedicar más tiempo a los clientes, la estrategia, las relaciones y el trabajo que solo los humanos pueden realizar.",
     "newpress.avail.contact": "Para obtener más información, visite <a href=\"/\">simy.one</a> o comuníquese con <a href=\"mailto:sales@simy.one\">sales@simy.one</a>.",
-    "newcompare.quote": "La reunión termina. Tu Twin empieza a trabajar."
+    "newcompare.quote": "La reunión termina. Tu Twin empieza a trabajar.",
+    "newpress.latest.category": "AI Mentor · Apoyo a jóvenes",
+    "newpress.latest.title": "Cuatro de cada cinco jóvenes con preocupaciones económicas eligieron un siguiente paso tras consultar a la IA",
+    "newpress.latest.summary": "AwakApp informa que 52 de los 65 participantes preocupados por la matrícula, el coste de vida o las finanzas del hogar eligieron una acción. Están disponibles los resultados del estudio piloto con 507 jóvenes y las 30 diapositivas del informe.",
+    "newpress.latest.read": "Leer los resultados y el informe en inglés →",
+    "newpress.latest.other": "Informe en japonés →"
   },
   "fr": {
     "_meta": {
@@ -4673,7 +4683,12 @@ window.SIMY_I18N_BUNDLE = {
     "newpress.about.h": "À propos de SIMY",
     "newpress.about.p": "SIMY construit un Intelligence Twin pour le travail de connaissances moderne. Votre Twin aide les équipes à passer du contexte de la réunion au suivi, à la proposition, aux notes clients, aux mises à jour de l'équipe et aux prochaines étapes, afin que les gens puissent consacrer plus de temps aux clients, à la stratégie, aux relations et au travail que seuls les humains peuvent effectuer.",
     "newpress.avail.contact": "Pour plus d'informations, visitez <a href=\"/\">simy.one</a> ou contactez <a href=\"mailto:sales@simy.one\">sales@simy.one</a>.",
-    "newcompare.quote": "La réunion se termine. Votre Twin se met au travail."
+    "newcompare.quote": "La réunion se termine. Votre Twin se met au travail.",
+    "newpress.latest.category": "AI Mentor · Soutien aux jeunes",
+    "newpress.latest.title": "Quatre jeunes sur cinq préoccupés par leurs finances ont choisi une prochaine étape après une consultation avec l’IA",
+    "newpress.latest.summary": "Selon AwakApp, 52 des 65 participants préoccupés par les frais de scolarité, le coût de la vie ou les finances du foyer ont choisi une action. Les résultats du projet pilote auprès de 507 jeunes et les 30 diapositives du rapport sont disponibles.",
+    "newpress.latest.read": "Lire les résultats et le rapport en anglais →",
+    "newpress.latest.other": "Rapport en japonais →"
   },
   "hi": {
     "_meta": {
@@ -5590,7 +5605,12 @@ window.SIMY_I18N_BUNDLE = {
     "newpress.about.h": "सिमी के बारे में",
     "newpress.about.p": "SIMY आधुनिक ज्ञान कार्य के लिए इंटेलिजेंस ट्विन का निर्माण कर रहा है। आपका ट्विन टीमों को बैठक के संदर्भ से लेकर फॉलो-अप, प्रस्ताव, ग्राहक नोट्स, टीम अपडेट और अगले चरणों तक जाने में मदद करता है, ताकि लोग ग्राहकों, रणनीति, रिश्तों और उस काम पर अधिक समय व्यतीत कर सकें जो केवल मनुष्य ही कर सकते हैं।",
     "newpress.avail.contact": "अधिक जानकारी के लिए, <a href='/'>simy.one</a> पर जाएँ या <a href='mailto:sales@simy.one'>sales@simy.one</a> से संपर्क करें।",
-    "newcompare.quote": "मीटिंग खत्म होती है। आपका Twin काम शुरू करता है।"
+    "newcompare.quote": "मीटिंग खत्म होती है। आपका Twin काम शुरू करता है।",
+    "newpress.latest.category": "AI Mentor · युवाओं के लिए सहायता",
+    "newpress.latest.title": "पैसों की चिंता वाले हर पाँच में से चार युवाओं ने AI से परामर्श के बाद अगला कदम चुना",
+    "newpress.latest.summary": "AwakApp के अनुसार, पढ़ाई की फीस, जीवन-यापन या घरेलू खर्चों को लेकर चिंतित 65 प्रतिभागियों में से 52 ने कोई कदम चुना। 507 युवाओं के पायलट अध्ययन के निष्कर्ष और रिपोर्ट की सभी 30 स्लाइड उपलब्ध हैं।",
+    "newpress.latest.read": "निष्कर्ष और रिपोर्ट अंग्रेज़ी में पढ़ें →",
+    "newpress.latest.other": "जापानी रिपोर्ट →"
   },
   "id": {
     "_meta": {
@@ -8432,7 +8452,12 @@ window.SIMY_I18N_BUNDLE = {
     "home.output.care.item4.k": "プライバシー管理",
     "home.output.care.item4.v": "機微な対話は、管理されたEnterprise利用として位置づける。",
     "home.output.care.action": "重要な対話が、記録、連携、次回支援へつながる。",
-    "newcompare.quote": "会議は終了します。ツインが仕事を始めます。"
+    "newcompare.quote": "会議は終了します。ツインが仕事を始めます。",
+    "newpress.latest.category": "AI Mentor · 若者支援",
+    "newpress.latest.title": "お金の不安がある若者、5人に4人がAI相談後に「今日の一歩」を選んだ",
+    "newpress.latest.summary": "一般社団法人AwakAppによる507人の利用実証。学費・生活費・家計に不安がある65人のうち52人が行動を選択。実証結果と成果報告スライド全30枚を公開。",
+    "newpress.latest.read": "実証結果・成果報告を見る →",
+    "newpress.latest.other": "English report →"
   },
   "kn": {
     "_meta": {
@@ -15768,7 +15793,12 @@ window.SIMY_I18N_BUNDLE = {
     "newpress.about.h": "关于SIMY",
     "newpress.about.p": "SIMY 正在为现代知识工作构建智能双胞胎。你的双胞胎可以帮助团队从会议背景转向后续行动、提案、客户注释、团队更新和后续步骤，这样人们就可以将更多时间花在客户、战略、关系和只有人类才能承担的工作上。",
     "newpress.avail.contact": "有关更多信息，请访问 <a href=\"/\">simy.one</a> 或联系 <a href=\"mailto:sales@simy.one\">sales@simy.one</a>。",
-    "newcompare.quote": "会议结束。你的 Twin 开始工作。"
+    "newcompare.quote": "会议结束。你的 Twin 开始工作。",
+    "newpress.latest.category": "AI Mentor · 青年支持",
+    "newpress.latest.title": "有经济担忧的青年中，五分之四在 AI 咨询后选择了下一步行动",
+    "newpress.latest.summary": "AwakApp 报告称，在担忧学费、生活费或家庭财务的65名参与者中，有52人选择了行动。现已公开507名青年参与的试点结果及全部30页报告幻灯片。",
+    "newpress.latest.read": "阅读英文结果与报告 →",
+    "newpress.latest.other": "日文报告 →"
   },
   "zh-Hant": {
     "_meta": {
