@@ -49,3 +49,13 @@
 @media (max-width: 960px) {
   .simy-header .sh-stores { order: 4; flex-basis: 100%; justify-content: center; }
 }
+
+/* A single scroll offset follows the rendered sticky header on every page. */
+html:root { scroll-padding-top: var(--simy-header-offset, 202px); }
+/* Long filenames in guide examples should wrap inside their grid track. */
+.mock-head > div { min-width: 0; }
+.mock-desc { overflow-wrap: anywhere; }
+
+.simy-header .sh-stores { padding-bottom: 16px; }
+.simy-header .sh-google-play { position: relative; }
+.simy-header .sh-google-play small { position: absolute; top: 100%; left: 0; width: 100%; text-align: center; font-size: 11px; line-height: 16px; font-weight: 500; }

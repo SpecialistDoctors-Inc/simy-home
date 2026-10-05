@@ -18,7 +18,7 @@ def header(locale, source, path):
     groups = {
         "Product": [("Overview", base + "#product"), ("How it works", base + "#how-it-works"), ("Apps & integrations", "/integrations.html"), ("Download", "/download.html" if locale == "ja" else f"/download/{locale.lower()}.html")],
         "Solutions": [("For your work", ("/for/" if locale == "ja" else "/for/en/")), ("For engineers", ("/for/engineers/" if locale == "ja" else "/for/en/engineers/")), ("Use cases", base + "#use-cases")],
-        "Resources": [("Guides", f"/guides/{suffix}"), ("Compare", "/compare.html"), ("News", "/press-release.html"), ("About SIMY", "/about.html"), ("Security", "/security.html"), ("Contact", "/contact.html")],
+        "Resources": [("Guides", f"/guides/{suffix}index.html"), ("Compare", "/compare.html"), ("News", "/press-release.html"), ("About SIMY", "/about.html"), ("Security", "/security.html"), ("Contact", "/contact.html"), ("Legal & service information", "/legal.html"), ("Seller information", "/seller-info.html")],
     }
     def link(label, href):
         if href.endswith(".html") and href in ["/integrations.html", "/compare.html", "/press-release.html", "/about.html", "/security.html", "/contact.html"]:
@@ -41,7 +41,7 @@ def header(locale, source, path):
     <div class="sh-account"><details class="sh-dropdown sh-language"><summary aria-label="Language: {LOCALES[locale]}"><span aria-hidden="true">🌐</span> {code}</summary><div class="sh-panel">{options}</div></details><a data-existing-account-login href="https://app.simy.one/">Log in</a><a data-new-account-signup class="sh-signup" href="https://app.simy.one/signup?{params}">Sign up</a></div>
     <div class="sh-stores" role="group" aria-label="Mobile apps">
       <a class="sh-store" href="https://apps.apple.com/app/id6745385262"><img src="/assets/store-badges/app-store.svg" width="120" height="40" alt="Download on the App Store"></a>
-      <span class="sh-store sh-google-play"><img src="/assets/store-badges/google-play.png" width="155" height="60" alt="Get it on Google Play"></span>
+      <a class="sh-store sh-google-play" href="{("/download.html" if locale == "ja" else f"/download/{locale.lower()}.html")}#android" aria-label="Android availability"><img src="/assets/store-badges/google-play.png" width="155" height="60" alt="Google Play"><small>Android availability</small></a>
     </div>
   </div>
 </header>'''
@@ -84,7 +84,8 @@ def apply(source, path):
     else: source = re.sub(r'(<body[^>]*>)', lambda m: m[1] + markup, source, count=1)
     source = re.sub(r'[ \t]*<nav class="legal-mobile-toolbar".*?</nav>', '', source, flags=re.S)
     if '/site-header.css?' not in source:
-        source = source.replace('</head>', '<link rel="stylesheet" href="/site-header.css?v=20261005-1">\n<script src="/site-header.js?v=20261005-1" defer></script>\n</head>')
+        source = source.replace('</head>', '<link rel="stylesheet" href="/site-header.css?v=20261005-2">\n<script src="/site-header.js?v=20261005-2" defer></script>\n</head>')
+    source = source.replace("/site-header.css?v=20261005-1", "/site-header.css?v=20261005-2").replace("/site-header.js?v=20261005-1", "/site-header.js?v=20261005-2")
     return source
 
 if __name__ == "__main__":
