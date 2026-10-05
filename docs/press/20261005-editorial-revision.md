@@ -31,3 +31,15 @@ Static site deployment through the existing main-branch workflow. Revert this on
 ## Remaining editorial limits
 
 No follow-up evidence of actual action or persistence, consented participant interview, independent expert endorsement, or unverified availability/safety claims were invented. These require project-owner confirmation before being offered to reporters. DreamNews remains a saved draft, without a distribution application.
+
+## Reader-focused follow-up
+
+- Reordered both articles: result, anonymous participant response, consultation design, household results, SIMY.
+- Checked the already-published tuition/student-affairs example against the delivered workbook. No age, gender, location or new identifying details added; no actual execution claimed.
+- Main copy focuses on 342/507 and 108/158. Supplemental figures remain in an accessible native details element and the full report.
+- Clarified that 342 is a post-consultation count, not a count of changes from undecided beforehand. Consolidated repeated caveats.
+- Matched metadata to headlines, named the existing business media contact, and protected key Japanese headline phrases from awkward wrapping.
+- Current youth-specific access/fees remain unconfirmed. No new availability promises added.
+- Independent editorial review found no required changes. GPT-5.5/xhigh remains unavailable; separate available-model review used.
+- Verified Japanese and English at 390px, Japanese at 1710px, aligned figure edges and no horizontal overflow. Detailed results opens with native controls.
+- Rollback: revert the follow-up commit. Report images/PDFs and gallery logic unchanged.
