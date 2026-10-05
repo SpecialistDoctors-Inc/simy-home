@@ -6,7 +6,7 @@ const site = path.join(__dirname, '..', 'site');
 for (const language of ['ja', 'en']) {
   test(`${language} report has 30 complete slides and bilingual discovery`, () => {
     const suffix = language === 'en' ? '-en' : '';
-    const content = fs.readFileSync(path.join(site, `news/ai-mentor-20261005${suffix}.html`), 'utf8');
+    const content = fs.readFileSync(path.join(site, `news/20261005${suffix}.html`), 'utf8');
     assert.equal((content.match(/<figure id="slide-/g) || []).length, 30);
     assert.equal((content.match(/class="slide-text"/g) || []).length, 30);
     assert.match(content, /hreflang="ja"/);
