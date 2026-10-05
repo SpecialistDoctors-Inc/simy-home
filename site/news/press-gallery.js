@@ -22,7 +22,7 @@
     caption.textContent = figures[index].querySelector('h3').textContent;
   }
   figures.forEach((figure, i) => {
-    figure.querySelectorAll('a[href$=".webp"]').forEach(link => {
+    [...figure.querySelectorAll('a[href]')].filter(link => new URL(link.href).pathname.endsWith('.webp')).forEach(link => {
       link.removeAttribute('target');
       if (!link.hasAttribute('aria-hidden')) link.setAttribute('aria-label', en ? `Enlarge slide ${i + 1}` : `スライド${i + 1}を拡大`);
       link.addEventListener('click', event => {
