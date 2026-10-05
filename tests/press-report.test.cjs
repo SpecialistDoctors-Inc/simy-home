@@ -11,7 +11,7 @@ for (const language of ['ja', 'en']) {
     assert.equal((content.match(/class="slide-text"/g) || []).length, 30);
     assert.match(content, /hreflang="ja"/);
     assert.match(content, /hreflang="en"/);
-    assert.match(content, /src="\/news\/press-gallery.js" defer/);
+    assert.match(content, /src="\/news\/press-gallery.js\?v=20261005-r2" defer/);
     for (let i = 1; i <= 30; i++) {
       const n = String(i).padStart(2, '0');
       for (const size of ['', '-800']) {
@@ -20,6 +20,6 @@ for (const language of ['ja', 'en']) {
         assert.ok(fs.statSync(path.join(site, asset)).size > 1000, `missing image ${asset}`);
       }
     }
-    if (language === 'en') assert.match(content, /money worries remained<\/h3>/);
+    if (language === 'en') assert.match(content, /Fewer selected anxiety or ability concerns after consultation<\/h3>/);
   });
 }
