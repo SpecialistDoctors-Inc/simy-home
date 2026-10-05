@@ -143,7 +143,7 @@ for (const lang of LANGS) {
       const blocking = [...html.matchAll(/<script\b[^>]*\bsrc="([^"]+)"[^>]*>/g)]
         .filter((m) => !/\b(defer|async)\b/.test(m[0]) || /^(https?:)?\/\//.test(m[1]));
       assert.deepEqual(blocking.map((m) => m[0]), []);
-      assert.doesNotMatch(html, /<link[^>]+rel="stylesheet"/);
+      assert.doesNotMatch(html.replace(/<link rel="stylesheet" href="\/site-header\.css\?v=[^"]+">/g, ""), /<link[^>]+rel="stylesheet"/);
     });
   }
 }

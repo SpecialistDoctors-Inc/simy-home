@@ -4,6 +4,7 @@
 Run with --check in CI to reject stale artifacts. Edit index.html and its locale
 sources, never the generated locale HTML files.
 """
+from site_header import apply as apply_header
 import argparse
 import json
 import re
@@ -169,7 +170,7 @@ def generate():
         urlset.insert(index, entry)
     ET.indent(tree, space='  ')
     outputs[SITE / 'sitemap.xml'] = '<?xml version="1.0" encoding="UTF-8"?>\n' + ET.tostring(urlset, encoding='unicode') + '\n'
-    return outputs
+    return {path: apply_header(content, path) if path.suffix == ".html" else content for path, content in outputs.items()}
 
 if __name__ == '__main__':
     args = argparse.ArgumentParser(description=__doc__)

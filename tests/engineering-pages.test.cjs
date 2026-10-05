@@ -27,8 +27,8 @@ test("every raw homepage exposes a working engineering destination in its suppor
       (match) => match[1],
     );
     assert.ok(
-      links.length >= 3,
-      `${locale} has navigation, feature and footer entry points`,
+      links.length >= 2,
+      `${locale} has shared navigation and content entry points`,
     );
     assert.ok(links.every((href) => href === `/${destination}`));
     const page = fs.readFileSync(path.join(root, "site", destination, "index.html"), "utf8");

@@ -553,7 +553,7 @@
     const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
     let node = walker.nextNode();
     while (node && document.documentElement.dataset.renderedLocale === "en") {
-      if (!node.parentElement?.hasAttribute("data-current-year")) {
+      if (!node.parentElement?.hasAttribute("data-current-year") && !node.parentElement?.closest(".simy-header")) {
         const value = node.nodeValue || "";
         const core = value.trim();
         if (core) {
@@ -569,7 +569,7 @@
     }
 
     for (const element of document.querySelectorAll("[aria-label], [title], [placeholder], [alt]")) {
-      if (document.documentElement.dataset.renderedLocale !== "en") continue;
+      if (document.documentElement.dataset.renderedLocale !== "en" || element.closest(".simy-header")) continue;
       for (const name of ["aria-label", "title", "placeholder", "alt"]) {
         if (!element.hasAttribute(name)) continue;
         attributeRecords.push({ element, name, value: element.getAttribute(name) || "" });
