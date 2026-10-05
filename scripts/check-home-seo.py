@@ -83,7 +83,7 @@ for locale in home.LOCALES:
     guide_links = [a['href'] for a in page.attrs('a') if a.get('href', '').startswith('/guides/')]
     download_links = [a['href'] for a in page.attrs('a') if a.get('href', '').startswith('/download')]
     assert guide_links and all(h.startswith(guide_prefix) and '/' not in h[len(guide_prefix):] for h in guide_links), filename
-    assert download_links and all(h == download_path for h in download_links), filename
+    assert download_links and all(h.split("#", 1)[0] == download_path for h in download_links), filename
     # Real localized answers must exist in raw HTML, not just in a JS dictionary.
     for key in ['AI workflow automation, explained','How does SIMY use AI agents to automate workflows?',
                 'What happens after a meeting or customer conversation?','How do I stay in control of automated work?']:

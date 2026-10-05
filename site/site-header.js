@@ -13,6 +13,7 @@
       if (link.lang === locale) link.setAttribute('aria-current', 'page');
       else link.removeAttribute('aria-current');
     });
+    header.querySelector('.sh-google-play').href = (locale === 'ja' ? '/download.html' : `/download/${locale.toLowerCase()}.html`) + '#android';
     const home = locale === 'en' ? '/' : `/${locale}.html`;
     header.querySelector('.sh-brand').href = home;
     header.querySelector('.sh-pricing').href = home + '#pricing';
@@ -20,12 +21,24 @@
       const url = new URL(link.href);
       if (url.hash) url.pathname = home;
       else if (url.pathname.startsWith('/for/')) url.pathname = (locale === 'ja' ? '/for/' : '/for/en/') + (url.pathname.includes('engineers') ? 'engineers/' : '');
-      else if (url.pathname.startsWith('/guides/')) url.pathname = locale === 'ja' ? '/guides/' : `/guides/${locale.toLowerCase()}/`;
+      else if (url.pathname.startsWith('/guides/')) url.pathname = locale === 'ja' ? '/guides/index.html' : `/guides/${locale.toLowerCase()}/index.html`;
       else if (url.pathname.startsWith('/download')) url.pathname = locale === 'ja' ? '/download.html' : `/download/${locale.toLowerCase()}.html`;
       if (url.searchParams.has('lang')) url.searchParams.set('lang', locale);
       link.href = url.pathname + url.search + url.hash;
     });
   };
+  // Sticky headers wrap as the viewport or text size changes.
+  const updateOffset = () => document.documentElement.style.setProperty('--simy-header-offset', `${Math.ceil(header.getBoundingClientRect().height) + 16}px`);
+  updateOffset();
+  new ResizeObserver(updateOffset).observe(header);
+  window.addEventListener('load', () => {
+    updateOffset();
+    if (location.hash) {
+      let id;
+      try { id = decodeURIComponent(location.hash.slice(1)); } catch { return; }
+      document.getElementById(id)?.scrollIntoView();
+    }
+  }, {once: true});
   syncLocale();
   new MutationObserver(syncLocale).observe(document.documentElement, {attributes: true, attributeFilter: ['lang']});
   const menus = [...header.querySelectorAll('details')];

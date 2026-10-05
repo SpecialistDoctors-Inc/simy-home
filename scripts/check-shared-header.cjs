@@ -36,6 +36,42 @@ const { chromium } = require('playwright');
         assert.ok(!await page.getByRole('link', {name: 'Overview', exact: true}).isVisible());
       }
     }
+    // Follow the actual menu link; directory indexes can work locally and 404 on S3.
+    for (const locale of ['en', 'ja', 'hi', 'es', 'fr', 'zh-Hans']) {
+      await page.goto(base + '/about.html?lang=' + locale);
+      await page.waitForFunction(locale => document.documentElement.lang === locale, locale);
+      await page.locator('.sh-navigation summary').nth(2).click();
+      const guides = page.locator('.sh-navigation').getByRole('link', {name:'Guides', exact:true});
+      assert.ok((await guides.getAttribute('href')).endsWith('/index.html'));
+      await guides.click();
+      assert.equal(await page.locator('h1').count(), 1);
+      assert.notEqual(await page.locator('h1').innerText(), '404');
+    }
+    await page.setViewportSize({width:320,height:900});
+    const fs = require('node:fs');
+    const path = require('node:path');
+    const site = path.join(__dirname, '../site');
+    const pages = fs.readdirSync(site, {recursive:true}).filter(file => file.endsWith('.html') && fs.readFileSync(path.join(site,file),'utf8').includes('class="simy-header"'));
+    for (const file of pages) {
+      await page.goto(base + '/' + file);
+      await page.evaluate(() => document.fonts.ready);
+      const size = await page.evaluate(() => ({width:innerWidth,content:document.documentElement.scrollWidth}));
+      assert.ok(size.content <= size.width, `${file}: body overflow ${size.content}/${size.width}`);
+    }
+    for (const width of [320,390,720,1250,1440]) {
+      await page.setViewportSize({width,height:900});
+      await page.goto(base + '/guides/codex.html');
+      await page.getByRole('link',{name:'使い方・選び方を読む',exact:true}).click();
+      await page.waitForFunction(() => document.querySelector('#reference').getBoundingClientRect().top <= document.querySelector('.simy-header').getBoundingClientRect().bottom + 18);
+      assert.ok(await page.evaluate(() => document.querySelector('#reference h2').getBoundingClientRect().top >= document.querySelector('.simy-header').getBoundingClientRect().bottom));
+      await page.goto(base + '/download/en.html#android');
+      await page.waitForFunction(() => document.querySelector('#android').getBoundingClientRect().top <= document.querySelector('.simy-header').getBoundingClientRect().bottom + 18);
+      assert.ok(await page.evaluate(() => document.querySelector('#android h2').getBoundingClientRect().top >= document.querySelector('.simy-header').getBoundingClientRect().bottom));
+    }
+    await page.goto(base + '/');
+    await page.locator('.sh-navigation summary').nth(2).click();
+    await page.getByRole('link',{name:'Seller information',exact:true}).click();
+    assert.ok((await page.locator('main').innerText()).includes('塩飽 哲生'));
     await page.goto(base + '/about.html?lang=ja');
     await page.waitForFunction(() => document.querySelector('.sh-language summary').textContent.includes('JA'));
     await page.locator('.sh-language summary').click();
@@ -48,7 +84,7 @@ const { chromium } = require('playwright');
     await noJS.locator('.sh-navigation summary').first().click();
     assert.ok(await noJS.getByRole('link', { name: 'Overview', exact: true }).isVisible());
     assert.deepEqual(errors, []);
-    console.log('PASS: 42 responsive layouts, aligned menu centers, dropdown/Escape, same-page language navigation, and no-JS navigation.');
+    console.log(`PASS: ${pages.length} pages without mobile body overflow; 6 Guides menu destinations; 10 anchor states; legal navigation; 42 responsive layouts, aligned menu centers, dropdown/Escape, same-page language navigation, and no-JS navigation.`);
   } finally {
     await browser.close();
   }
