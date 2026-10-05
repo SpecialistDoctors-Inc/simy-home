@@ -16,10 +16,15 @@ const locales = ['en','ja','hi','es','fr','zh-Hans'];
    await page.setViewportSize({width,height:1000});
    for (const locale of locales) {
     const dict = JSON.parse(fs.readFileSync(path.join(site,`lang/${locale}.json`)));
-    for (const file of ['404.html','integrations.html','privacy.html']) {
+    for (const file of ['404.html','error.html','integrations.html','privacy.html']) {
      await page.goto(`${base}/${file}?lang=${locale}`);
-     const key = file==='404.html'?'e404.guides':file==='integrations.html'?'int.plaudGuide':'privacy.google.h';
+     const key = file==='404.html'?'e404.guides':file==='error.html'?'e404.p':file==='integrations.html'?'int.plaudGuide':'privacy.google.h';
      await page.waitForFunction(({key,value}) => document.querySelector(`[data-i18n="${key}"]`).textContent===value, {key,value:dict[key]});
+     if (file==='404.html'||file==='error.html') {
+      const geometry=await page.evaluate(()=>{const h=document.querySelector('.simy-header').getBoundingClientRect(),m=document.querySelector('main.container').getBoundingClientRect();return {top:h.top,left:h.left,right:h.right,bottom:h.bottom,mainTop:m.top,width:innerWidth}});
+      assert.ok(Math.abs(geometry.top)<=1 && Math.abs(geometry.left)<=1 && Math.abs(geometry.right-geometry.width)<=1,`${file}: full-width header at top`);
+      assert.ok(geometry.mainTop>=geometry.bottom,`${file}: content below header`);
+     }
      const copy = await page.locator('[data-i18n]').evaluateAll(nodes => nodes.filter(n=>n.getBoundingClientRect().height>0 && /^(e404\.(guides|download)$|int\.(plaud|pl[1-4]|allGuides)|privacy\.google\.)/.test(n.getAttribute('data-i18n'))).map(n=>({key:n.getAttribute('data-i18n')||n.getAttribute('data-i18n-html'),text:n.textContent})));
      for (const item of copy) assert.equal(item.text.trim(),dict[item.key].trim(),`${file} ${locale}: ${item.key}`);
      assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),`${file} ${locale} ${width}: overflow`);
