@@ -43,3 +43,12 @@ No follow-up evidence of actual action or persistence, consented participant int
 - Independent editorial review found no required changes. GPT-5.5/xhigh remains unavailable; separate available-model review used.
 - Verified Japanese and English at 390px, Japanese at 1710px, aligned figure edges and no horizontal overflow. Detailed results opens with native controls.
 - Rollback: revert the follow-up commit. Report images/PDFs and gallery logic unchanged.
+
+## Media kit and financial-concern focus
+
+- Recomputed SC6_3=1: 65 participants; Q4 options 1–9 among them: 52. Headline highlights this subgroup; subtitle and lead state denominators and full-sample 342/507. This is not a low-income classification or causal effect.
+- Added six bilingual reporter Q&As, source-screen links, PDFs and standalone text fact sheets with absolute slide references. No live demo or interview access promised.
+- Current SIMY description follows its public official homepage; youth-specific availability remains unconfirmed.
+- Same independent editorial rubric scores this 82/100 (18/18/18/12/16), not 95. Remaining gaps are real interview/demo/third-party material.
+- Corrected standalone fact-sheet references found by independent review. Browser-checked 1710px two-column edges and 390px single-column edges (20px/370px), no overflow; native FAQ opening verified.
+- Deployment via existing workflow; rollback by reverting this revision. No changes to the 60 slide images or PDF contents.
