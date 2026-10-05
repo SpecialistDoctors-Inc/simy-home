@@ -21,7 +21,7 @@
   var TWIN_PAGE_LOCALES = SUPPORTED;
   var CACHE = {};
   var CURRENT_LANG = DEFAULT;
-  var I18N_VERSION = '20261005-news-1';
+  var I18N_VERSION = '20261005-locale-audit-1';
   var BUNDLE_LOADING = {};
 
   /* ── Home (/) React SPA translation bridge ──
@@ -1418,6 +1418,18 @@
     var display = document.getElementById('langDisplay');
     if (display && meta.name) {
       display.textContent = meta.name;
+    }
+
+    // Content shortcuts use the same six authored guide/download locales as the header.
+    var contentLocale = ['en', 'ja', 'hi', 'es', 'fr', 'zh-Hans'].indexOf(meta.code) !== -1 ? meta.code : 'en';
+    var guidePrefix = contentLocale === 'ja' ? '/guides/' : '/guides/' + contentLocale.toLowerCase() + '/';
+    var guideShortcuts = document.querySelectorAll('[data-localized-guide]');
+    for (var g = 0; g < guideShortcuts.length; g++) {
+      guideShortcuts[g].href = guidePrefix + guideShortcuts[g].getAttribute('data-localized-guide');
+    }
+    var downloadShortcuts = document.querySelectorAll('[data-localized-download]');
+    for (var d = 0; d < downloadShortcuts.length; d++) {
+      downloadShortcuts[d].href = contentLocale === 'ja' ? '/download.html' : '/download/' + contentLocale.toLowerCase() + '.html';
     }
 
     // The latest announcement follows the selected UI locale; reports exist in JA/EN.
