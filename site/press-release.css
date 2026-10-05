@@ -1,0 +1,12 @@
+/* Keep the news index compact and aligned with the announcement below it. */
+.press-release-page .latest-release { padding-top: 40px; padding-bottom: 32px; border-bottom: 1px solid var(--line); }
+.press-release-page .latest-release h2 { margin: 16px 0; max-width: 36ch; font-size: clamp(1.5rem, 2.8vw, 2rem); line-height: 1.25; }
+.press-release-page .latest-release p { max-width: 76ch; line-height: 1.7; color: var(--muted); }
+.press-release-page .latest-release-links { display: flex; flex-wrap: wrap; gap: 12px 24px; margin-bottom: 0; }
+.press-release-page .page-hero { padding: 40px 0 32px; }
+.press-release-page .article { max-width: 1180px; padding-top: 40px; }
+.press-release-page h1 { max-width: 26ch; font-size: clamp(2.2rem, 4vw, 3.5rem); line-height: 1.12; overflow-wrap: anywhere; }
+@media (max-width: 720px) {
+  .press-release-page .latest-release { padding-top: 24px; padding-bottom: 24px; }
+  .press-release-page .page-hero { padding-top: 28px; }
+}

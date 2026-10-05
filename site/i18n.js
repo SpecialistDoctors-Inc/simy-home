@@ -21,7 +21,7 @@
   var TWIN_PAGE_LOCALES = SUPPORTED;
   var CACHE = {};
   var CURRENT_LANG = DEFAULT;
-  var I18N_VERSION = '20261005-site-audit-1';
+  var I18N_VERSION = '20261005-news-1';
   var BUNDLE_LOADING = {};
 
   /* ── Home (/) React SPA translation bridge ──
@@ -275,7 +275,8 @@
       // Static language URLs already identify their content language. Keep
       // explicit language-switch links and their attribution parameters intact.
       if (/^\/(?:ja|hi|es|fr|zh-Hans)\.html$/.test(url.pathname) ||
-          /^\/(?:guides|download)(?:\/|\.html$)/.test(url.pathname)) return href;
+          /^\/(?:guides|download)(?:\/|\.html$)/.test(url.pathname) ||
+          /^\/news\/20261005(?:-en)?\.html$/.test(url.pathname)) return href;
       if (url.pathname === '/' || url.pathname === '/index.html') {
         var homeLang = url.searchParams.get('lang') || CURRENT_LANG || document.documentElement.lang;
         var homePaths = { en: '/', ja: '/ja.html', hi: '/hi.html', es: '/es.html', fr: '/fr.html', 'zh-Hans': '/zh-Hans.html' };
@@ -1417,6 +1418,18 @@
     var display = document.getElementById('langDisplay');
     if (display && meta.name) {
       display.textContent = meta.name;
+    }
+
+    // The latest announcement follows the selected UI locale; reports exist in JA/EN.
+    var latestRelease = document.getElementById('latestRelease');
+    if (latestRelease) {
+      var reportIsJa = meta.code === 'ja';
+      latestRelease.lang = dict['newpress.latest.title'] ? meta.code : 'en';
+      var latestLinks = latestRelease.querySelectorAll('[data-latest-report]');
+      for (var n = 0; n < latestLinks.length; n++) {
+        latestLinks[n].href = reportIsJa ? '/news/20261005.html' : '/news/20261005-en.html';
+      }
+      latestRelease.querySelector('[data-other-report]').href = reportIsJa ? '/news/20261005-en.html' : '/news/20261005.html';
     }
 
     // Press release: swap to the polished hand-written JA article when lang=ja,

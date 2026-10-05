@@ -23,3 +23,18 @@ for (const language of ['ja', 'en']) {
     if (language === 'en') assert.match(content, /Fewer selected anxiety or ability concerns after consultation<\/h3>/);
   });
 }
+
+test('news index localizes the latest announcement instead of embedding Japanese copy', () => {
+  const content = fs.readFileSync(path.join(site,'press-release.html'),'utf8');
+  assert.match(content, /id="latestRelease" lang="en"/);
+  assert.doesNotMatch(content, /<section class="article" lang="ja"/);
+  const keys=['category','title','summary','read','other'].map(key=>'newpress.latest.'+key);
+  const bundle=JSON.parse(fs.readFileSync(path.join(site,'lang/i18n-bundle.js'),'utf8').replace(/^window\.SIMY_I18N_BUNDLE\s*=\s*/,'').replace(/;\s*$/,''));
+  for(const locale of ['en','ja','es','fr','hi','zh-Hans']) {
+    const dict=JSON.parse(fs.readFileSync(path.join(site,`lang/${locale}.json`),'utf8'));
+    for(const key of keys){assert.ok(dict[key]);assert.equal(bundle[locale][key],dict[key]);assert.ok(content.includes(`data-i18n="${key}"`));}
+  }
+  const en=JSON.parse(fs.readFileSync(path.join(site,'lang/en.json'),'utf8'));
+  assert.match(en['newpress.latest.title'],/Four in five/);
+  assert.match(en['newpress.latest.summary'],/52 of 65/);
+});
