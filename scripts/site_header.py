@@ -25,7 +25,12 @@ def header(locale, source, path):
         if href.endswith(".html") and href in ["/integrations.html", "/compare.html", "/press-release.html", "/about.html", "/security.html", "/contact.html"]:
             href += "?lang=" + locale
         return f'<a href="{html.escape(href, quote=True)}">{label}</a>'
-    menus = "".join(f'<details class="sh-dropdown"><summary>{name}<span aria-hidden="true">⌄</span></summary><div class="sh-panel">' + "".join(link(label, href) for label, href in items) + '</div></details>' for name, items in groups.items())
+    download = "/download.html" if locale == "ja" else f"/download/{locale.lower()}.html"
+    stores = f'''<div class="sh-stores" role="group" aria-label="Mobile apps">
+      <a class="sh-store" href="https://apps.apple.com/app/id6745385262"><img src="/assets/store-badges/app-store.svg" width="120" height="40" alt="Download on the App Store"></a>
+      <a class="sh-store sh-google-play" href="{download}#android" aria-label="Android availability"><img src="/assets/store-badges/google-play.png" width="155" height="60" alt="Google Play"><small>Android availability</small></a>
+    </div>'''
+    menus = "".join(f'<details class="sh-dropdown"><summary>{name}<span aria-hidden="true">⌄</span></summary><div class="sh-panel">' + "".join(link(label, href) for label, href in items) + (stores if name == "Product" else "") + '</div></details>' for name, items in groups.items())
     # Prefer an existing translated counterpart; otherwise use the localized home.
     alternatives = dict(re.findall(r'<link[^>]*hreflang="([^" ]+)"[^>]*href="https://simy.one([^" ]*)"', source))
     if re.search(r'<script[^>]+src="(?:/|(?:\.\./)*)i18n\.js', source):
@@ -37,13 +42,9 @@ def header(locale, source, path):
     code = "ZH" if locale == "zh-Hans" else locale.upper()
     return f'''<header class="simy-header" translate="no" data-simy-no-translate>
   <div class="sh-frame">
-    <a class="sh-brand" href="{base}" aria-label="SIMY home">SIMY</a>
-    <div class="sh-navigation" role="navigation" aria-label="Primary navigation">{menus}<a class="sh-pricing" href="{base}#pricing">Pricing</a></div>
-    <div class="sh-account"><details class="sh-dropdown sh-language"><summary aria-label="Language: {LOCALES[locale]}"><span aria-hidden="true">🌐</span> {code}</summary><div class="sh-panel">{options}</div></details><a data-existing-account-login href="https://app.simy.one/">Log in</a><a data-new-account-signup class="sh-signup" href="https://app.simy.one/signup?{params}">Sign up</a></div>
-    <div class="sh-stores" role="group" aria-label="Mobile apps">
-      <a class="sh-store" href="https://apps.apple.com/app/id6745385262"><img src="/assets/store-badges/app-store.svg" width="120" height="40" alt="Download on the App Store"></a>
-      <a class="sh-store sh-google-play" href="{("/download.html" if locale == "ja" else f"/download/{locale.lower()}.html")}#android" aria-label="Android availability"><img src="/assets/store-badges/google-play.png" width="155" height="60" alt="Google Play"><small>Android availability</small></a>
-    </div>
+    <a class="sh-brand" href="{base}" aria-label="SIMY home"><img src="/simy-icon-56.png" width="32" height="32" alt=""><span>SIMY</span></a>
+    <details class="sh-menu"><summary class="sh-menu-toggle" aria-label="Navigation menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></summary><div class="sh-menu-panel"><div class="sh-navigation" role="navigation" aria-label="Primary navigation">{menus}<a class="sh-pricing" href="{base}#pricing">Pricing</a></div><a class="sh-login" data-existing-account-login href="https://app.simy.one/">Log in</a></div></details>
+    <div class="sh-account"><details class="sh-dropdown sh-language"><summary aria-label="Language: {LOCALES[locale]}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/></svg> {code}</summary><div class="sh-panel">{options}</div></details><a data-new-account-signup class="sh-signup" href="https://app.simy.one/signup?{params}">Sign up</a></div>
   </div>
 </header>'''
 
@@ -92,11 +93,10 @@ def apply(source, path):
     if parser.end is not None: source = source[:parser.start] + markup + source[parser.end:]
     else: source = re.sub(r'(<body[^>]*>)', lambda m: m[1] + markup, source, count=1)
     source = re.sub(r'[ \t]*<nav class="legal-mobile-toolbar".*?</nav>', '', source, flags=re.S)
+    assets = '<link rel="stylesheet" href="/site-header.css?v=20261006-compact-1">\n<script src="/site-header.js?v=20261006-compact-1" defer></script>\n'
     if '/site-header.css?' not in source:
-        source = source.replace('</head>', '<link rel="stylesheet" href="/site-header.css?v=20261006-fp-2">\n<script src="/site-header.js?v=20261006-fp-2" defer></script>\n</head>')
-    source = source.replace("/site-header.css?v=20261005-1", "/site-header.css?v=20261006-fp-2").replace("/site-header.js?v=20261005-1", "/site-header.js?v=20261006-fp-2")
-    source = source.replace("/site-header.css?v=20261005-2", "/site-header.css?v=20261006-fp-2").replace("/site-header.js?v=20261006-locales-1", "/site-header.js?v=20261006-fp-2")
-    source = source.replace("20261006-fp-1", "20261006-fp-2")
+        source = source.replace('</head>', assets + '</head>')
+    source = re.sub(r'(/site-header\.(?:css|js)\?v=)[^"\s]+', r'\g<1>20261006-compact-1', source)
     return source
 
 if __name__ == "__main__":

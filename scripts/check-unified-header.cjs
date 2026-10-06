@@ -27,9 +27,12 @@ fs.mkdirSync(out,{recursive:true});
  const rect=e=>{const r=e.getBoundingClientRect(),s=getComputedStyle(e);return {left:r.left,right:r.right,top:r.top,height:r.height,font:s.font,color:s.color,background:s.backgroundColor,border:s.borderBottom,textAlign:s.textAlign,letterSpacing:s.letterSpacing,textTransform:s.textTransform};};
  return {header:rect(h),items:[...h.querySelectorAll('.sh-brand,.sh-navigation>*,.sh-account>*,.sh-stores>*')].map(rect),count:document.querySelectorAll('.simy-header').length};});
  const locale=await page.locator('html').getAttribute('lang');const reference=references[locale]||references.en;
- try{assert.equal(state.count,1);assert.equal(state.header.left,0);assert.equal(state.header.right,width);assert.deepEqual(state,reference);}catch(e){report.errors.push({file,width,state,expected:reference,message:e.message.slice(0,200)});}
+ try{assert.ok(state.header.height<=80,`${file}: compact closed header`);assert.equal(state.count,1);assert.equal(state.header.left,0);assert.equal(state.header.right,width);assert.deepEqual(state,reference);}catch(e){report.errors.push({file,width,state,expected:reference,message:e.message.slice(0,200)});}
  if(['index.html','old/about.html','old/404.html','for/en/financial-planners/index.html'].includes(file)&&[390,1440].includes(width))await page.screenshot({path:path.join(out,file.replaceAll('/','-')+'-'+width+'.png')});
+ if(width<=960) await page.locator('.sh-menu-toggle').click();
  await page.locator('.sh-navigation summary').first().click();assert.ok(await page.locator('.simy-header').getByRole('link',{name:'Overview',exact:true}).isVisible());await page.keyboard.press('Escape');assert.ok(!await page.locator('.simy-header').getByRole('link',{name:'Overview',exact:true}).isVisible(),'Escape closes the menu');
+ if(width<=960){assert.ok(await page.locator('.sh-menu').getAttribute('open')!==null);await page.keyboard.press('Escape');assert.equal(await page.locator('.sh-menu').getAttribute('open'),null);}
+ assert.ok(await page.locator('.sh-brand img').evaluate(img=>img.complete&&img.naturalWidth>0),'SIMY icon loaded');
  await page.evaluate(()=>window.scrollTo(0,600));
  report.checks.push({file,width});
  }

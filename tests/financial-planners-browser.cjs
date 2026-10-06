@@ -116,7 +116,7 @@ fs.mkdirSync(out,{recursive:true});fs.mkdirSync(assets,{recursive:true});
   const talk=p.locator('[data-demo="roleplay"] [data-step="1"]');await talk.focus();await p.keyboard.press('Enter');assert.equal(await talk.getAttribute('aria-pressed'),'true');
   await p.locator('.availability summary').click();assert.equal(await p.locator('.availability').getAttribute('open'),'');
   const other=lang==='ja'?'en':'ja';await p.locator('.sh-language summary').click();await p.locator(`.sh-language [data-locale-option="${other}"]`).click();assert.equal(new URL(p.url()).pathname,`/for/${other==='ja'?'':other.toLowerCase()+'/'}financial-planners/`);
-  await p.goto(base+(lang==='en'?'/':`/${lang}.html`));await p.locator('.sh-navigation details').nth(1).locator('summary').click();const nav=p.locator('.sh-navigation a', {hasText:'For financial planners'});assert.equal(new URL(await nav.getAttribute('href'),base).pathname,route);await nav.click();assert.equal(new URL(p.url()).pathname,route);
+  await p.goto(base+(lang==='en'?'/':`/${lang}.html`));if(await p.locator('.sh-menu-toggle').isVisible())await p.locator('.sh-menu-toggle').click();await p.locator('.sh-navigation details').nth(1).locator('summary').click();const nav=p.locator('.sh-navigation a', {hasText:'For financial planners'});assert.equal(new URL(await nav.getAttribute('href'),base).pathname,route);await nav.click();assert.equal(new URL(p.url()).pathname,route);
   await p.close();
   const nojs=await browser.newPage({javaScriptEnabled:false,viewport:{width:390,height:844}});await nojs.goto(base+route);assert.equal(await nojs.locator('[data-panel]:visible').count(),6);assert.equal(await nojs.locator('[data-controls]:visible').count(),0);await nojs.close();
  }
