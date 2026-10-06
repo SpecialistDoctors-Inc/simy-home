@@ -529,7 +529,7 @@ window.SIMY_HOME_DOM_BUNDLE = {
     "The Product Manager": "مدير المنتج",
     "at a 150-person": "في 150 شخص",
     "tech company.": "شركة التكنولوجيا.",
-    "This is her SIMY.": "هذه هي SIMY الخاصة بها.",
+    "This is her SIMY.": "تعرّف على كيفية استخدامها لـ SIMY.",
     "She's persona #4 on the Home page — the PM whose planning sessions used to end with hours of manual roadmap wrangling. Press play and watch what her SIMY looks like on a normal Tuesday: one meeting, one dashboard, one digital twin.": "إنها الشخصية رقم 4 على الصفحة الرئيسية - رئيس الوزراء الذي اعتادت جلسات التخطيط أن تنتهي بساعات من الجدل حول خارطة الطريق اليدوية. اضغط على زر التشغيل وشاهد كيف تبدو بطاقة SIMY الخاصة بها في يوم الثلاثاء العادي: اجتماع واحد، ولوحة تحكم واحدة، وتوأم رقمي واحد.",
     "Play the demo": "تشغيل العرض التوضيحي",
     "How SIMY works": "كيف يعمل سيمي",
@@ -838,7 +838,8 @@ window.SIMY_HOME_DOM_BUNDLE = {
     "Company name": "اسم الشركة",
     "Tell us about your team, your workflows, and what you're hoping to achieve with SIMY.": "أخبرنا عن فريقك وسير العمل وما تريد تحقيقه مع SIMY.",
     "Meet a product manager at a 150-person tech company.": "مديرة منتج في شركة تقنية تضم 150 موظفًا.",
-    "Meeting ends. Roadmap ready.": "ينتهي الاجتماع. تصبح خارطة الطريق جاهزة."
+    "Meeting ends. Roadmap ready.": "ينتهي الاجتماع. تصبح خارطة الطريق جاهزة.",
+    "See how she uses SIMY.": "تعرّف على كيفية استخدامها لـ SIMY."
   },
   "de": {
     "_meta": {
@@ -1370,7 +1371,7 @@ window.SIMY_HOME_DOM_BUNDLE = {
     "The Product Manager": "Der Produktmanager",
     "at a 150-person": "bei 150 Personen",
     "tech company.": "Technologieunternehmen.",
-    "This is her SIMY.": "Das ist ihr SIMY.",
+    "This is her SIMY.": "So nutzt sie SIMY.",
     "She's persona #4 on the Home page — the PM whose planning sessions used to end with hours of manual roadmap wrangling. Press play and watch what her SIMY looks like on a normal Tuesday: one meeting, one dashboard, one digital twin.": "Sie ist Persona Nr. 4 auf der Startseite – die Premierministerin, deren Planungssitzungen früher mit stundenlangem manuellen Roadmap-Gerangel endeten. Drücken Sie Play und sehen Sie, wie ihr SIMY an einem normalen Dienstag aussieht: ein Meeting, ein Dashboard, ein digitaler Zwilling.",
     "Play the demo": "Spielen Sie die Demo",
     "How SIMY works": "So funktioniert SIMY",
@@ -1679,7 +1680,8 @@ window.SIMY_HOME_DOM_BUNDLE = {
     "Company name": "Name des Unternehmens",
     "Tell us about your team, your workflows, and what you're hoping to achieve with SIMY.": "Beschreiben Sie Ihr Team, Ihre Arbeitsabläufe und was Sie mit SIMY erreichen möchten.",
     "Meet a product manager at a 150-person tech company.": "Eine Produktmanagerin in einem Technologieunternehmen mit 150 Mitarbeitenden.",
-    "Meeting ends. Roadmap ready.": "Das Meeting endet. Die Roadmap ist bereit."
+    "Meeting ends. Roadmap ready.": "Das Meeting endet. Die Roadmap ist bereit.",
+    "See how she uses SIMY.": "So nutzt sie SIMY."
   },
   "en": {
     "_meta": {
@@ -2028,7 +2030,7 @@ window.SIMY_HOME_DOM_BUNDLE = {
     "The Product Manager": "The Product Manager",
     "at a 150-person": "at a 150-person",
     "tech company.": "tech company.",
-    "This is her SIMY.": "This is her SIMY.",
+    "This is her SIMY.": "See how she uses SIMY.",
     "She's persona #4 on the Home page — the PM whose planning sessions used to end with hours of manual roadmap wrangling. Press play and watch what her SIMY looks like on a normal Tuesday: one meeting, one dashboard, one digital twin.": "She's persona #4 on the Home page — the PM whose planning sessions used to end with hours of manual roadmap wrangling. Press play and watch what her SIMY looks like on a normal Tuesday: one meeting, one dashboard, one digital twin.",
     "Play the demo": "Play the demo",
     "How SIMY works": "How SIMY works",
@@ -2348,7 +2350,8 @@ window.SIMY_HOME_DOM_BUNDLE = {
     "SIMY gets the management work done before it piles up.": "SIMY gets the management work done before it piles up.",
     "Tell us what you need.": "Tell us what you need.",
     "Meet a product manager at a 150-person tech company.": "Meet a product manager at a 150-person tech company.",
-    "Meeting ends. Roadmap ready.": "Meeting ends. Roadmap ready."
+    "Meeting ends. Roadmap ready.": "Meeting ends. Roadmap ready.",
+    "See how she uses SIMY.": "See how she uses SIMY."
   },
   "es": {
     "_meta": {
@@ -2880,7 +2883,7 @@ window.SIMY_HOME_DOM_BUNDLE = {
     "The Product Manager": "El gerente de producto",
     "at a 150-person": "a 150 personas",
     "tech company.": "empresa de tecnología.",
-    "This is her SIMY.": "Esta es su SIMY.",
+    "This is her SIMY.": "Así utiliza SIMY.",
     "She's persona #4 on the Home page — the PM whose planning sessions used to end with hours of manual roadmap wrangling. Press play and watch what her SIMY looks like on a normal Tuesday: one meeting, one dashboard, one digital twin.": "Ella es la persona número 4 en la página de inicio: la PM cuyas sesiones de planificación solían terminar con horas de discusión manual sobre la hoja de ruta. Presione reproducir y observe cómo se ve su SIMY en un martes normal: una reunión, un tablero, un gemelo digital.",
     "Play the demo": "Juega la demostración",
     "How SIMY works": "Cómo funciona SIMY",
@@ -3189,7 +3192,8 @@ window.SIMY_HOME_DOM_BUNDLE = {
     "Company name": "Nombre de la empresa",
     "Tell us about your team, your workflows, and what you're hoping to achieve with SIMY.": "Cuéntanos sobre tu equipo, sus flujos de trabajo y lo que quieres lograr con SIMY.",
     "Meet a product manager at a 150-person tech company.": "Una responsable de producto en una empresa tecnológica de 150 personas.",
-    "Meeting ends. Roadmap ready.": "Termina la reunión. La hoja de ruta queda lista."
+    "Meeting ends. Roadmap ready.": "Termina la reunión. La hoja de ruta queda lista.",
+    "See how she uses SIMY.": "Así utiliza SIMY."
   },
   "fr": {
     "_meta": {
@@ -3721,7 +3725,7 @@ window.SIMY_HOME_DOM_BUNDLE = {
     "The Product Manager": "Le chef de produit",
     "at a 150-person": "chez 150 personnes",
     "tech company.": "entreprise technologique.",
-    "This is her SIMY.": "C'est sa SIMY.",
+    "This is her SIMY.": "Découvrez comment elle utilise SIMY.",
     "She's persona #4 on the Home page — the PM whose planning sessions used to end with hours of manual roadmap wrangling. Press play and watch what her SIMY looks like on a normal Tuesday: one meeting, one dashboard, one digital twin.": "Elle est le personnage n°4 sur la page d'accueil – le PM dont les sessions de planification se terminaient par des heures de discussions manuelles sur la feuille de route. Appuyez sur play et regardez à quoi ressemble son SIMY un mardi normal : une réunion, un tableau de bord, un jumeau numérique.",
     "Play the demo": "Jouer la démo",
     "How SIMY works": "Comment fonctionne SIMY",
@@ -4030,7 +4034,8 @@ window.SIMY_HOME_DOM_BUNDLE = {
     "Company name": "Nom de l’entreprise",
     "Tell us about your team, your workflows, and what you're hoping to achieve with SIMY.": "Décrivez votre équipe, vos flux de travail et ce que vous voulez accomplir avec SIMY.",
     "Meet a product manager at a 150-person tech company.": "Une cheffe de produit dans une entreprise technologique de 150 personnes.",
-    "Meeting ends. Roadmap ready.": "La réunion se termine. La feuille de route est prête."
+    "Meeting ends. Roadmap ready.": "La réunion se termine. La feuille de route est prête.",
+    "See how she uses SIMY.": "Découvrez comment elle utilise SIMY."
   },
   "hi": {
     "_meta": {
@@ -4562,7 +4567,7 @@ window.SIMY_HOME_DOM_BUNDLE = {
     "The Product Manager": "उत्पाद प्रबंधक",
     "at a 150-person": "150 व्यक्ति पर",
     "tech company.": "तकनीकी कंपनी.",
-    "This is her SIMY.": "यह उसका SIMY है.",
+    "This is her SIMY.": "देखिए, वह SIMY का उपयोग कैसे करती है।",
     "She's persona #4 on the Home page — the PM whose planning sessions used to end with hours of manual roadmap wrangling. Press play and watch what her SIMY looks like on a normal Tuesday: one meeting, one dashboard, one digital twin.": "होम पेज पर उनका व्यक्तित्व #4 है - प्रधानमंत्री जिनके योजना सत्र घंटों मैन्युअल रोडमैप तकरार के साथ समाप्त होते थे। प्ले दबाएँ और देखें कि सामान्य मंगलवार को उसकी SIMY कैसी दिखती है: एक मीटिंग, एक डैशबोर्ड, एक डिजिटल ट्विन।",
     "Play the demo": "डेमो चलायें",
     "How SIMY works": "SIMY कैसे काम करता है",
@@ -4871,7 +4876,8 @@ window.SIMY_HOME_DOM_BUNDLE = {
     "Company name": "कंपनी का नाम",
     "Tell us about your team, your workflows, and what you're hoping to achieve with SIMY.": "अपनी टीम, काम के तरीके और SIMY से आप क्या हासिल करना चाहते हैं, बताएं.",
     "Meet a product manager at a 150-person tech company.": "150 लोगों वाली टेक कंपनी की एक प्रोडक्ट मैनेजर से मिलिए।",
-    "Meeting ends. Roadmap ready.": "मीटिंग खत्म। रोडमैप तैयार।"
+    "Meeting ends. Roadmap ready.": "मीटिंग खत्म। रोडमैप तैयार।",
+    "See how she uses SIMY.": "देखिए, वह SIMY का उपयोग कैसे करती है।"
   },
   "id": {
     "_meta": {
@@ -5403,7 +5409,7 @@ window.SIMY_HOME_DOM_BUNDLE = {
     "The Product Manager": "Manajer Produk",
     "at a 150-person": "pada 150 orang",
     "tech company.": "perusahaan teknologi.",
-    "This is her SIMY.": "Ini SIMY-nya.",
+    "This is her SIMY.": "Lihat cara ia menggunakan SIMY.",
     "She's persona #4 on the Home page — the PM whose planning sessions used to end with hours of manual roadmap wrangling. Press play and watch what her SIMY looks like on a normal Tuesday: one meeting, one dashboard, one digital twin.": "Dia adalah orang #4 di halaman Beranda — PM yang sesi perencanaannya biasanya diakhiri dengan perdebatan peta jalan manual selama berjam-jam. Tekan putar dan lihat tampilan SIMY-nya pada hari Selasa biasa: satu rapat, satu dasbor, satu kembaran digital.",
     "Play the demo": "Mainkan demonya",
     "How SIMY works": "Bagaimana SIMY bekerja",
@@ -5712,7 +5718,8 @@ window.SIMY_HOME_DOM_BUNDLE = {
     "Company name": "Nama perusahaan",
     "Tell us about your team, your workflows, and what you're hoping to achieve with SIMY.": "Ceritakan tentang tim Anda, alur kerja, dan tujuan Anda dengan SIMY.",
     "Meet a product manager at a 150-person tech company.": "Kenali seorang manajer produk di perusahaan teknologi dengan 150 karyawan.",
-    "Meeting ends. Roadmap ready.": "Rapat selesai. Roadmap siap dibagikan."
+    "Meeting ends. Roadmap ready.": "Rapat selesai. Roadmap siap dibagikan.",
+    "See how she uses SIMY.": "Lihat cara ia menggunakan SIMY."
   },
   "it": {
     "_meta": {
@@ -6244,7 +6251,7 @@ window.SIMY_HOME_DOM_BUNDLE = {
     "The Product Manager": "Il responsabile del prodotto",
     "at a 150-person": "a 150 persone",
     "tech company.": "azienda tecnologica.",
-    "This is her SIMY.": "Questa è la sua SIMY.",
+    "This is her SIMY.": "Scopri come usa SIMY.",
     "She's persona #4 on the Home page — the PM whose planning sessions used to end with hours of manual roadmap wrangling. Press play and watch what her SIMY looks like on a normal Tuesday: one meeting, one dashboard, one digital twin.": "È la persona n. 4 nella home page: il Primo Ministro le cui sessioni di pianificazione terminavano con ore di discussioni manuali sulla tabella di marcia. Premi play e guarda come appare la sua SIMY in un normale martedì: una riunione, una dashboard, un gemello digitale.",
     "Play the demo": "Gioca alla demo",
     "How SIMY works": "Come funziona SIMY",
@@ -6553,7 +6560,8 @@ window.SIMY_HOME_DOM_BUNDLE = {
     "Company name": "Nome dell’azienda",
     "Tell us about your team, your workflows, and what you're hoping to achieve with SIMY.": "Raccontaci il tuo team, i flussi di lavoro e cosa vuoi ottenere con SIMY.",
     "Meet a product manager at a 150-person tech company.": "Una product manager in un’azienda tecnologica di 150 persone.",
-    "Meeting ends. Roadmap ready.": "La riunione finisce. La roadmap è pronta."
+    "Meeting ends. Roadmap ready.": "La riunione finisce. La roadmap è pronta.",
+    "See how she uses SIMY.": "Scopri come usa SIMY."
   },
   "ja": {
     "_meta": {
@@ -7085,7 +7093,7 @@ window.SIMY_HOME_DOM_BUNDLE = {
     "The Product Manager": "プロダクトマネージャー",
     "at a 150-person": "150人規模の場合",
     "tech company.": "テクノロジー企業。",
-    "This is her SIMY.": "これが彼女のSIMYです。",
+    "This is her SIMY.": "SIMYの活用例をご紹介します。",
     "She's persona #4 on the Home page — the PM whose planning sessions used to end with hours of manual roadmap wrangling. Press play and watch what her SIMY looks like on a normal Tuesday: one meeting, one dashboard, one digital twin.": "ホームページのペルソナ04、計画会議のあと何時間もロードマップ整理に追われていたPMの例です。再生すると、いつもの火曜日にSIMYがどう動くかが分かります。1つの会議、1つのダッシュボード、1つのデジタルツインです。",
     "Play the demo": "デモをプレイする",
     "How SIMY works": "SIMYの仕組み",
@@ -7396,7 +7404,8 @@ window.SIMY_HOME_DOM_BUNDLE = {
     "Company name": "株式会社○○",
     "Tell us about your team, your workflows, and what you're hoping to achieve with SIMY.": "チームの状況、進めたい業務、SIMYで実現したいことをご記入ください。",
     "Meet a product manager at a 150-person tech company.": "150人のテック企業で働くプロダクトマネージャー。",
-    "Meeting ends. Roadmap ready.": "会議が終わる。ロードマップが整う。"
+    "Meeting ends. Roadmap ready.": "会議が終わる。ロードマップが整う。",
+    "See how she uses SIMY.": "SIMYの活用例をご紹介します。"
   },
   "kn": {
     "_meta": {
@@ -7928,7 +7937,7 @@ window.SIMY_HOME_DOM_BUNDLE = {
     "The Product Manager": "ಉತ್ಪನ್ನ ನಿರ್ವಾಹಕ",
     "at a 150-person": "150 ವ್ಯಕ್ತಿಗಳಲ್ಲಿ",
     "tech company.": "ಟೆಕ್ ಕಂಪನಿ.",
-    "This is her SIMY.": "ಇದು ಅವಳ SIMY ಆಗಿದೆ.",
+    "This is her SIMY.": "ಅವರು SIMY ಅನ್ನು ಹೇಗೆ ಬಳಸುತ್ತಾರೆ ಎಂಬುದನ್ನು ನೋಡಿ.",
     "She's persona #4 on the Home page — the PM whose planning sessions used to end with hours of manual roadmap wrangling. Press play and watch what her SIMY looks like on a normal Tuesday: one meeting, one dashboard, one digital twin.": "ಮುಖಪುಟದಲ್ಲಿ ಅವರು #4 ವ್ಯಕ್ತಿಯಾಗಿದ್ದಾರೆ — ಅವರ ಯೋಜನಾ ಅವಧಿಗಳು ಗಂಟೆಗಳ ಹಸ್ತಚಾಲಿತ ಮಾರ್ಗಸೂಚಿ ಜಗಳದೊಂದಿಗೆ ಕೊನೆಗೊಳ್ಳುತ್ತಿದ್ದ PM. ಪ್ಲೇ ಒತ್ತಿರಿ ಮತ್ತು ಸಾಮಾನ್ಯ ಮಂಗಳವಾರದಂದು ಅವಳ SIMY ಹೇಗಿರುತ್ತದೆ ಎಂಬುದನ್ನು ವೀಕ್ಷಿಸಿ: ಒಂದು ಸಭೆ, ಒಂದು ಡ್ಯಾಶ್‌ಬೋರ್ಡ್, ಒಂದು ಡಿಜಿಟಲ್ ಅವಳಿ.",
     "Play the demo": "ಡೆಮೊ ಪ್ಲೇ ಮಾಡಿ",
     "How SIMY works": "SIMY ಹೇಗೆ ಕೆಲಸ ಮಾಡುತ್ತದೆ",
@@ -8237,7 +8246,8 @@ window.SIMY_HOME_DOM_BUNDLE = {
     "Company name": "ಕಂಪನಿಯ ಹೆಸರು",
     "Tell us about your team, your workflows, and what you're hoping to achieve with SIMY.": "ನಿಮ್ಮ ತಂಡ, ಕೆಲಸದ ಹರಿವುಗಳು ಮತ್ತು SIMY ಮೂಲಕ ಸಾಧಿಸಲು ಬಯಸುವುದನ್ನು ತಿಳಿಸಿ.",
     "Meet a product manager at a 150-person tech company.": "150 ಜನರ ತಂತ್ರಜ್ಞಾನ ಕಂಪನಿಯ ಪ್ರಾಡಕ್ಟ್ ಮ್ಯಾನೇಜರ್‌ರನ್ನು ಪರಿಚಯಿಸಿಕೊಳ್ಳಿ.",
-    "Meeting ends. Roadmap ready.": "ಸಭೆ ಮುಗಿಯುತ್ತದೆ. ರೋಡ್‌ಮ್ಯಾಪ್ ಸಿದ್ಧವಾಗುತ್ತದೆ."
+    "Meeting ends. Roadmap ready.": "ಸಭೆ ಮುಗಿಯುತ್ತದೆ. ರೋಡ್‌ಮ್ಯಾಪ್ ಸಿದ್ಧವಾಗುತ್ತದೆ.",
+    "See how she uses SIMY.": "ಅವರು SIMY ಅನ್ನು ಹೇಗೆ ಬಳಸುತ್ತಾರೆ ಎಂಬುದನ್ನು ನೋಡಿ."
   },
   "ko": {
     "_meta": {
@@ -8769,7 +8779,7 @@ window.SIMY_HOME_DOM_BUNDLE = {
     "The Product Manager": "제품 관리자",
     "at a 150-person": "150명에서",
     "tech company.": "기술 회사.",
-    "This is her SIMY.": "이것은 그녀의 SIMY입니다.",
+    "This is her SIMY.": "SIMY 활용 사례를 살펴보세요.",
     "She's persona #4 on the Home page — the PM whose planning sessions used to end with hours of manual roadmap wrangling. Press play and watch what her SIMY looks like on a normal Tuesday: one meeting, one dashboard, one digital twin.": "그녀는 홈 페이지의 페르소나 #4입니다. PM은 계획 세션이 몇 시간에 걸친 수동 로드맵 논의로 끝나곤 했습니다. 재생을 누르고 평범한 화요일에 그녀의 SIMY가 어떤 모습인지 살펴보세요. 회의 1회, 대시보드 1회, 디지털 트윈 1회.",
     "Play the demo": "데모 플레이",
     "How SIMY works": "SIMY 작동 방식",
@@ -9078,7 +9088,8 @@ window.SIMY_HOME_DOM_BUNDLE = {
     "Company name": "회사명",
     "Tell us about your team, your workflows, and what you're hoping to achieve with SIMY.": "팀, 업무 흐름, SIMY로 이루고 싶은 일을 알려주세요.",
     "Meet a product manager at a 150-person tech company.": "직원 150명 규모의 기술 기업에서 일하는 프로덕트 매니저를 만나보세요.",
-    "Meeting ends. Roadmap ready.": "회의가 끝나면 로드맵이 준비됩니다."
+    "Meeting ends. Roadmap ready.": "회의가 끝나면 로드맵이 준비됩니다.",
+    "See how she uses SIMY.": "SIMY 활용 사례를 살펴보세요."
   },
   "pt-BR": {
     "_meta": {
@@ -9610,7 +9621,7 @@ window.SIMY_HOME_DOM_BUNDLE = {
     "The Product Manager": "O Gerente de Produto",
     "at a 150-person": "em 150 pessoas",
     "tech company.": "empresa de tecnologia.",
-    "This is her SIMY.": "Este é o SIMY dela.",
+    "This is her SIMY.": "Veja como ela usa o SIMY.",
     "She's persona #4 on the Home page — the PM whose planning sessions used to end with hours of manual roadmap wrangling. Press play and watch what her SIMY looks like on a normal Tuesday: one meeting, one dashboard, one digital twin.": "Ela é a quarta pessoa na página inicial – a PM cujas sessões de planejamento costumavam terminar com horas de discussão manual do roteiro. Aperte o play e veja como é o SIMY dela em uma terça-feira normal: uma reunião, um painel, um gêmeo digital.",
     "Play the demo": "Jogue a demonstração",
     "How SIMY works": "Como funciona o SIMY",
@@ -9919,7 +9930,8 @@ window.SIMY_HOME_DOM_BUNDLE = {
     "Company name": "Nome da empresa",
     "Tell us about your team, your workflows, and what you're hoping to achieve with SIMY.": "Conte sobre sua equipe, seus fluxos de trabalho e o que espera alcançar com o SIMY.",
     "Meet a product manager at a 150-person tech company.": "Conheça uma gerente de produto em uma empresa de tecnologia com 150 pessoas.",
-    "Meeting ends. Roadmap ready.": "A reunião termina. O roteiro fica pronto."
+    "Meeting ends. Roadmap ready.": "A reunião termina. O roteiro fica pronto.",
+    "See how she uses SIMY.": "Veja como ela usa o SIMY."
   },
   "ru": {
     "_meta": {
@@ -10451,7 +10463,7 @@ window.SIMY_HOME_DOM_BUNDLE = {
     "The Product Manager": "Менеджер по продукту",
     "at a 150-person": "на 150 человек",
     "tech company.": "технологическая компания.",
-    "This is her SIMY.": "Это ее СИМИ.",
+    "This is her SIMY.": "Посмотрите, как она использует SIMY.",
     "She's persona #4 on the Home page — the PM whose planning sessions used to end with hours of manual roadmap wrangling. Press play and watch what her SIMY looks like on a normal Tuesday: one meeting, one dashboard, one digital twin.": "Она — персонаж №4 на главной странице — премьер-министр, чьи сеансы планирования заканчивались часами ручного составления дорожных карт. Нажмите кнопку воспроизведения и посмотрите, как выглядит ее SIMY в обычный вторник: одна встреча, одна панель управления, один цифровой двойник.",
     "Play the demo": "Воспроизвести демо",
     "How SIMY works": "Как работает SIMY",
@@ -10760,7 +10772,8 @@ window.SIMY_HOME_DOM_BUNDLE = {
     "Company name": "Название компании",
     "Tell us about your team, your workflows, and what you're hoping to achieve with SIMY.": "Расскажите о команде, рабочих процессах и том, чего хотите добиться с SIMY.",
     "Meet a product manager at a 150-person tech company.": "Знакомьтесь: продакт-менеджер технологической компании со штатом 150 человек.",
-    "Meeting ends. Roadmap ready.": "Встреча заканчивается. Дорожная карта готова."
+    "Meeting ends. Roadmap ready.": "Встреча заканчивается. Дорожная карта готова.",
+    "See how she uses SIMY.": "Посмотрите, как она использует SIMY."
   },
   "te": {
     "_meta": {
@@ -11292,7 +11305,7 @@ window.SIMY_HOME_DOM_BUNDLE = {
     "The Product Manager": "ఉత్పత్తి మేనేజర్",
     "at a 150-person": "150 మంది వ్యక్తుల వద్ద",
     "tech company.": "సాంకేతిక సంస్థ.",
-    "This is her SIMY.": "ఇది ఆమె SIMY.",
+    "This is her SIMY.": "ఆమె SIMYని ఎలా ఉపయోగిస్తుందో చూడండి.",
     "She's persona #4 on the Home page — the PM whose planning sessions used to end with hours of manual roadmap wrangling. Press play and watch what her SIMY looks like on a normal Tuesday: one meeting, one dashboard, one digital twin.": "హోమ్ పేజీలో ఆమె #4 వ్యక్తిత్వం — PM దీని ప్లానింగ్ సెషన్‌లు గంటల కొద్దీ మాన్యువల్ రోడ్‌మ్యాప్ గొడవలతో ముగిసేవి. ప్లే నొక్కి, సాధారణ మంగళవారం నాడు ఆమె SIMY ఎలా ఉంటుందో చూడండి: ఒక సమావేశం, ఒక డ్యాష్‌బోర్డ్, ఒక డిజిటల్ జంట.",
     "Play the demo": "డెమో ప్లే చేయండి",
     "How SIMY works": "SIMY ఎలా పని చేస్తుంది",
@@ -11601,7 +11614,8 @@ window.SIMY_HOME_DOM_BUNDLE = {
     "Company name": "కంపెనీ పేరు",
     "Tell us about your team, your workflows, and what you're hoping to achieve with SIMY.": "మీ టీమ్, పని విధానం, SIMYతో సాధించాలనుకునేది వివరించండి.",
     "Meet a product manager at a 150-person tech company.": "150 మంది ఉన్న టెక్ కంపెనీలోని ప్రొడక్ట్ మేనేజర్‌ను కలవండి.",
-    "Meeting ends. Roadmap ready.": "సమావేశం ముగుస్తుంది. రోడ్‌మ్యాప్ సిద్ధంగా ఉంటుంది."
+    "Meeting ends. Roadmap ready.": "సమావేశం ముగుస్తుంది. రోడ్‌మ్యాప్ సిద్ధంగా ఉంటుంది.",
+    "See how she uses SIMY.": "ఆమె SIMYని ఎలా ఉపయోగిస్తుందో చూడండి."
   },
   "th": {
     "_meta": {
@@ -12133,7 +12147,7 @@ window.SIMY_HOME_DOM_BUNDLE = {
     "The Product Manager": "ผู้จัดการผลิตภัณฑ์",
     "at a 150-person": "จำนวน 150 คน",
     "tech company.": "บริษัทเทคโนโลยี",
-    "This is her SIMY.": "นี่คือซิมมี่ของเธอ",
+    "This is her SIMY.": "ดูว่าเธอใช้ SIMY อย่างไร",
     "She's persona #4 on the Home page — the PM whose planning sessions used to end with hours of manual roadmap wrangling. Press play and watch what her SIMY looks like on a normal Tuesday: one meeting, one dashboard, one digital twin.": "เธอเป็นบุคคลที่ 4 ในหน้าแรก — นายกฯ ซึ่งเซสชันการวางแผนเคยจบลงด้วยการโต้เถียงแผนงานด้วยตนเองหลายชั่วโมง กดเล่นและดูว่า SIMY ของเธอจะเป็นอย่างไรในวันอังคารปกติ: การประชุมหนึ่งรายการ, แผงหน้าปัดหนึ่งรายการ, หนึ่งแฝดดิจิทัล",
     "Play the demo": "เล่นการสาธิต",
     "How SIMY works": "SIMY ทำงานอย่างไร",
@@ -12442,7 +12456,8 @@ window.SIMY_HOME_DOM_BUNDLE = {
     "Company name": "ชื่อบริษัท",
     "Tell us about your team, your workflows, and what you're hoping to achieve with SIMY.": "บอกเราเกี่ยวกับทีม เวิร์กโฟลว์ และสิ่งที่อยากทำให้สำเร็จด้วย SIMY",
     "Meet a product manager at a 150-person tech company.": "พบกับผู้จัดการผลิตภัณฑ์ในบริษัทเทคโนโลยีที่มีพนักงาน 150 คน",
-    "Meeting ends. Roadmap ready.": "ประชุมจบ แผนงานพร้อมใช้"
+    "Meeting ends. Roadmap ready.": "ประชุมจบ แผนงานพร้อมใช้",
+    "See how she uses SIMY.": "ดูว่าเธอใช้ SIMY อย่างไร"
   },
   "vi": {
     "_meta": {
@@ -12974,7 +12989,7 @@ window.SIMY_HOME_DOM_BUNDLE = {
     "The Product Manager": "Người quản lý sản phẩm",
     "at a 150-person": "ở mức 150 người",
     "tech company.": "công ty công nghệ.",
-    "This is her SIMY.": "Đây là SIMY của cô ấy.",
+    "This is her SIMY.": "Xem cách cô ấy sử dụng SIMY.",
     "She's persona #4 on the Home page — the PM whose planning sessions used to end with hours of manual roadmap wrangling. Press play and watch what her SIMY looks like on a normal Tuesday: one meeting, one dashboard, one digital twin.": "Cô ấy là nhân vật số 4 trên Trang chủ - Thủ tướng có các phiên lập kế hoạch thường kết thúc với hàng giờ tranh cãi về lộ trình thủ công. Nhấn play và xem SIMY của cô ấy trông như thế nào vào một ngày Thứ Ba bình thường: một cuộc họp, một trang tổng quan, một bản song sinh kỹ thuật số.",
     "Play the demo": "Chơi bản demo",
     "How SIMY works": "SIMY hoạt động như thế nào",
@@ -13283,7 +13298,8 @@ window.SIMY_HOME_DOM_BUNDLE = {
     "Company name": "Tên công ty",
     "Tell us about your team, your workflows, and what you're hoping to achieve with SIMY.": "Cho chúng tôi biết về đội ngũ, quy trình làm việc và điều bạn muốn đạt được với SIMY.",
     "Meet a product manager at a 150-person tech company.": "Gặp một quản lý sản phẩm tại công ty công nghệ có 150 nhân viên.",
-    "Meeting ends. Roadmap ready.": "Cuộc họp kết thúc. Lộ trình đã sẵn sàng."
+    "Meeting ends. Roadmap ready.": "Cuộc họp kết thúc. Lộ trình đã sẵn sàng.",
+    "See how she uses SIMY.": "Xem cách cô ấy sử dụng SIMY."
   },
   "zh-Hans": {
     "_meta": {
@@ -13815,7 +13831,7 @@ window.SIMY_HOME_DOM_BUNDLE = {
     "The Product Manager": "产品经理",
     "at a 150-person": "以150人为单位",
     "tech company.": "科技公司。",
-    "This is her SIMY.": "这是她的SIMY。",
+    "This is her SIMY.": "看看她如何使用 SIMY。",
     "She's persona #4 on the Home page — the PM whose planning sessions used to end with hours of manual roadmap wrangling. Press play and watch what her SIMY looks like on a normal Tuesday: one meeting, one dashboard, one digital twin.": "她是主页上的第四号人物——这位产品经理，她的规划会议常常以数小时的手动路线图争论结束。按播放键，观看她的 SIMY 在正常的星期二是什么样子：一场会议、一个仪表板、一个数字孪生。",
     "Play the demo": "播放演示",
     "How SIMY works": "SIMY 的工作原理",
@@ -14125,7 +14141,8 @@ window.SIMY_HOME_DOM_BUNDLE = {
     "Company name": "公司名称",
     "Tell us about your team, your workflows, and what you're hoping to achieve with SIMY.": "请说明你的团队、工作流程，以及希望通过 SIMY 实现什么。",
     "Meet a product manager at a 150-person tech company.": "认识一位在150人规模科技公司工作的产品经理。",
-    "Meeting ends. Roadmap ready.": "会议结束，路线图就绪。"
+    "Meeting ends. Roadmap ready.": "会议结束，路线图就绪。",
+    "See how she uses SIMY.": "看看她如何使用 SIMY。"
   },
   "zh-Hant": {
     "_meta": {
@@ -14657,7 +14674,7 @@ window.SIMY_HOME_DOM_BUNDLE = {
     "The Product Manager": "產品經理",
     "at a 150-person": "以150人為單位",
     "tech company.": "科技公司。",
-    "This is her SIMY.": "這是她的SIMY。",
+    "This is her SIMY.": "看看她如何使用 SIMY。",
     "She's persona #4 on the Home page — the PM whose planning sessions used to end with hours of manual roadmap wrangling. Press play and watch what her SIMY looks like on a normal Tuesday: one meeting, one dashboard, one digital twin.": "她是主頁上的第四號人物——這位產品經理，她的規劃會議常常以數小時的手動路線圖爭論結束。按下播放鍵，觀看她的 SIMY 在正常的星期二是什麼樣子：一場會議、一個儀表板、一個數位孿生。",
     "Play the demo": "播放示範",
     "How SIMY works": "SIMY 的工作原理",
@@ -14966,6 +14983,7 @@ window.SIMY_HOME_DOM_BUNDLE = {
     "Company name": "公司名稱",
     "Tell us about your team, your workflows, and what you're hoping to achieve with SIMY.": "請說明您的團隊、工作流程，以及希望透過 SIMY 達成什麼。",
     "Meet a product manager at a 150-person tech company.": "認識一位在150人規模科技公司工作的產品經理。",
-    "Meeting ends. Roadmap ready.": "會議結束，路線圖就緒。"
+    "Meeting ends. Roadmap ready.": "會議結束，路線圖就緒。",
+    "See how she uses SIMY.": "看看她如何使用 SIMY。"
   }
 };

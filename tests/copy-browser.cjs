@@ -20,7 +20,7 @@ const server = http.createServer((req,res)=>{
   if (!file.startsWith(site+path.sep)) return res.writeHead(403).end();
   fs.readFile(file,(error,data)=>error?res.writeHead(404).end():res.writeHead(200,{'Content-Type':types[path.extname(file)]||'application/octet-stream'}).end(data));
 });
-const report = {locales:Object.keys(dicts),contactStates:[],demoStates:[],errors:[],checks:[]};
+const report = {locales:Object.keys(dicts),contactStates:[],demoStates:[],aboutStates:[],errors:[],checks:[]};
 (async()=>{
   fs.mkdirSync(output,{recursive:true});
   await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
@@ -85,9 +85,23 @@ const report = {locales:Object.keys(dicts),contactStates:[],demoStates:[],errors
         await page.waitForFunction(value=>document.querySelector('h1')?.textContent.includes(value),dict[demoKey]);
         await page.waitForFunction(value=>document.body.textContent.includes(value),dict['Meeting ends. Roadmap ready.']);
         await page.waitForFunction(value=>document.body.textContent.includes(value),dict['Before standup']);
+        await page.waitForFunction(value=>document.querySelector('h1 .accent')?.textContent===value,dict['See how she uses SIMY.']);
         assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),`Demo overflow ${locale} ${width}`);
         report.demoStates.push({locale,width});
         if(locale==='ja'&&width===1440) await page.screenshot({path:path.join(output,'demo-ja-1440.png'),fullPage:true});
+      }
+    }
+    for(const width of [1440,390]) {
+      await page.setViewportSize({width,height:1000});
+      for(const locale of Object.keys(dicts)) {
+        const copy=JSON.parse(fs.readFileSync(path.join(site,'lang',locale+'.json')));
+        await page.goto(`${origin}/about.html?lang=${locale}`);
+        for(const key of ['about.challenge.p2','about.solution.p3','about.valB.h','about.valB.p2']) {
+          await page.waitForFunction(({key,value})=>document.querySelector(`[data-i18n="${key}"]`)?.textContent===value,{key,value:copy[key]});
+        }
+        assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),`About overflow ${locale} ${width}`);
+        report.aboutStates.push({locale,width});
+        if(locale==='ja'&&width===390) await page.screenshot({path:path.join(output,'about-ja-390.png'),fullPage:true});
       }
     }
     for(const [file,key] of [['about.html','about.valB.h'],['careers.html','careers.perk3H'],['how-it-works.html','how.step4H']]) {
@@ -98,6 +112,6 @@ const report = {locales:Object.keys(dicts),contactStates:[],demoStates:[],errors
     }
     assert.deepEqual(report.errors,[]);
     fs.writeFileSync(path.join(output,'browser-results.json'),JSON.stringify(report,null,2)+'\n');
-    console.log(`PASS: ${report.contactStates.length} contact and ${report.demoStates.length} demo states; locale switching, keyboard labels and failure/reload recovery; no page errors`);
+    console.log(`PASS: ${report.contactStates.length} contact and ${report.demoStates.length} demo and ${report.aboutStates.length} about states; locale switching, keyboard labels and failure/reload recovery; no page errors`);
   } finally {await browser.close();await new Promise(resolve=>server.close(resolve));}
 })().catch(error=>{console.error(error);server.close();process.exitCode=1});

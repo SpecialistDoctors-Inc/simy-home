@@ -36,7 +36,7 @@ test('Japanese recording-app copy is consistent between the static footer and Re
 
 test('the demo uses the updated runtime and raw English fallback', () => {
   const demo = fs.readFileSync(path.join(root, 'site/demo.html'), 'utf8');
-  assert.match(demo, /i18n\.js\?v=20261006-copy-clarity-1/);
+  assert.match(demo, /i18n\.js\?v=20261006-copy-clarity-2/);
   assert.match(demo, /Meeting ends\. Roadmap ready\./);
   assert.doesNotMatch(demo, /Meeting ends\. Roadmap ships\./);
 });

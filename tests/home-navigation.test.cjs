@@ -45,7 +45,7 @@ test("contact pages cache-bust the updated localized contact component", () => {
       const source = fs.readFileSync(path.join(repoRoot, directory, page), "utf8");
       assert.match(
         source,
-        /\/assets\/index-DnVveaIK\.js\?v=20261006-copy-clarity-1/,
+        /\/assets\/index-DnVveaIK\.js\?v=20261006-copy-clarity-2/,
         `${directory}/${page} must load the updated localized contact component`
       );
     }
