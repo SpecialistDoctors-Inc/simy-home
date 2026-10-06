@@ -287,7 +287,10 @@ test("pricing decision copy remains visibly larger than disclaimer typography", 
 
 test("header exposes login and signup at every viewport without duplication", () => {
   const header = homeHtml.match(/<header class="simy-header"[\s\S]*?<\/header>/)[0];
-  assert.match(header, /class="sh-account"[\s\S]*data-existing-account-login[\s\S]*data-new-account-signup/);
+  assert.match(header, /data-existing-account-login/);
+  assert.equal((header.match(/data-existing-account-login/g) || []).length, 1);
+  assert.match(header, /class="sh-account"[\s\S]*data-new-account-signup/);
+  assert.match(header, /class="sh-brand"[\s\S]*src="\/simy-icon-56.png"/);
   assert.equal((header.match(/data-new-account-signup/g) || []).length, 1);
   assert.match(header, /https:\/\/app\.simy\.one\/signup\?lang=en&amp;locale=en&amp;region=us/);
 });
