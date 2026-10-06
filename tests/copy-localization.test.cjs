@@ -26,6 +26,14 @@ test('both file-preview bundles match their source dictionaries', () => {
   execFileSync('python3', ['scripts/build-i18n-bundle.py', '--check'], { cwd: root });
 });
 
+test('Japanese recording-app copy is consistent between the static footer and React bridge', () => {
+  const siteCopy = JSON.parse(fs.readFileSync(path.join(root, 'site/lang/ja.json')));
+  const appLabel = dictionaries.ja['iPhone recording companion app'];
+  assert.equal(siteCopy['footer.companion'], appLabel);
+  const billingKey = Object.keys(dictionaries.ja).find(key => key.startsWith('Create a free account — no credit card required.'));
+  assert.ok(dictionaries.ja[billingKey].includes(appLabel));
+});
+
 test('the demo uses the updated runtime and raw English fallback', () => {
   const demo = fs.readFileSync(path.join(root, 'site/demo.html'), 'utf8');
   assert.match(demo, /i18n\.js\?v=20261006-copy-clarity-1/);

@@ -6749,7 +6749,7 @@ window.SIMY_HOME_DOM_BUNDLE = {
     "How does SIMY protect my data?": "データはどのように保護されますか?",
     "Every organisation gets a dedicated, isolated database instance. On the Enterprise plan, your proprietary data is never used for training global models. SIMY uses end-to-end encryption and physical database isolation.": "各組織に専用の分離されたデータベースインスタンスを提供します。エンタープライズプランでは、お客様のデータがグローバルモデルの学習に使われることはありません。SIMYはエンドツーエンド暗号化と物理的なDB分離を採用しています。",
     "How does the 10,000-winner lottery work?": "契約とアプリの役割はどう分かれますか?",
-    "Create a free account — no credit card required. Every account is automatically entered into the lottery. We'll select 10,000 Founding Partners who'll get $5 in SIMY credits, 1:1 onboarding, and direct priority support. Winners are notified exclusively within the app.": "契約・請求・プラン管理はWebで行います。決済完了後にワークスペースを作成し、必要な人だけiPhone録音コンパニオンアプリを接続します。",
+    "Create a free account — no credit card required. Every account is automatically entered into the lottery. We'll select 10,000 Founding Partners who'll get $5 in SIMY credits, 1:1 onboarding, and direct priority support. Winners are notified exclusively within the app.": "契約・請求・プラン管理はWebで行います。決済完了後にワークスペースを作成し、必要な人だけiPhone用の録音アプリを接続します。",
     "Now Accepting Applications": "Web契約受付中",
     "AI execution starts": "AI実行は",
     "the moment you join.": "参加した瞬間から始まる。",
