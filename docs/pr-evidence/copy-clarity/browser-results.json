@@ -1,0 +1,502 @@
+{
+  "locales": [
+    "ar",
+    "de",
+    "en",
+    "es",
+    "fr",
+    "hi",
+    "id",
+    "it",
+    "ja",
+    "kn",
+    "ko",
+    "pt-BR",
+    "ru",
+    "te",
+    "th",
+    "vi",
+    "zh-Hans",
+    "zh-Hant"
+  ],
+  "contactStates": [
+    {
+      "locale": "ar",
+      "width": 1440,
+      "heading": "كيف يمكننا مساعدتك؟",
+      "labels": 5
+    },
+    {
+      "locale": "de",
+      "width": 1440,
+      "heading": "Wie können wir Ihnen helfen?",
+      "labels": 5
+    },
+    {
+      "locale": "en",
+      "width": 1440,
+      "heading": "Tell us what you need.",
+      "labels": 5
+    },
+    {
+      "locale": "es",
+      "width": 1440,
+      "heading": "Cuéntanos qué necesitas.",
+      "labels": 5
+    },
+    {
+      "locale": "fr",
+      "width": 1440,
+      "heading": "Comment pouvons-nous vous aider ?",
+      "labels": 5
+    },
+    {
+      "locale": "hi",
+      "width": 1440,
+      "heading": "बताइए, हम कैसे मदद करें?",
+      "labels": 5
+    },
+    {
+      "locale": "id",
+      "width": 1440,
+      "heading": "Apa yang bisa kami bantu?",
+      "labels": 5
+    },
+    {
+      "locale": "it",
+      "width": 1440,
+      "heading": "Come possiamo aiutarti?",
+      "labels": 5
+    },
+    {
+      "locale": "ja",
+      "width": 1440,
+      "heading": "SIMYについて、ご相談ください。",
+      "labels": 5
+    },
+    {
+      "locale": "kn",
+      "width": 1440,
+      "heading": "ನಾವು ನಿಮಗೆ ಹೇಗೆ ಸಹಾಯ ಮಾಡಬಹುದು?",
+      "labels": 5
+    },
+    {
+      "locale": "ko",
+      "width": 1440,
+      "heading": "SIMY에 대해 문의해 주세요.",
+      "labels": 5
+    },
+    {
+      "locale": "pt-BR",
+      "width": 1440,
+      "heading": "Como podemos ajudar?",
+      "labels": 5
+    },
+    {
+      "locale": "ru",
+      "width": 1440,
+      "heading": "Чем мы можем вам помочь?",
+      "labels": 5
+    },
+    {
+      "locale": "te",
+      "width": 1440,
+      "heading": "మేము మీకు ఎలా సహాయపడగలం?",
+      "labels": 5
+    },
+    {
+      "locale": "th",
+      "width": 1440,
+      "heading": "ให้เราช่วยคุณเรื่องอะไรดี",
+      "labels": 5
+    },
+    {
+      "locale": "vi",
+      "width": 1440,
+      "heading": "Chúng tôi có thể giúp gì cho bạn?",
+      "labels": 5
+    },
+    {
+      "locale": "zh-Hans",
+      "width": 1440,
+      "heading": "关于 SIMY，欢迎咨询。",
+      "labels": 5
+    },
+    {
+      "locale": "zh-Hant",
+      "width": 1440,
+      "heading": "關於 SIMY，歡迎洽詢。",
+      "labels": 5
+    },
+    {
+      "locale": "ar",
+      "width": 390,
+      "heading": "كيف يمكننا مساعدتك؟",
+      "labels": 5
+    },
+    {
+      "locale": "de",
+      "width": 390,
+      "heading": "Wie können wir Ihnen helfen?",
+      "labels": 5
+    },
+    {
+      "locale": "en",
+      "width": 390,
+      "heading": "Tell us what you need.",
+      "labels": 5
+    },
+    {
+      "locale": "es",
+      "width": 390,
+      "heading": "Cuéntanos qué necesitas.",
+      "labels": 5
+    },
+    {
+      "locale": "fr",
+      "width": 390,
+      "heading": "Comment pouvons-nous vous aider ?",
+      "labels": 5
+    },
+    {
+      "locale": "hi",
+      "width": 390,
+      "heading": "बताइए, हम कैसे मदद करें?",
+      "labels": 5
+    },
+    {
+      "locale": "id",
+      "width": 390,
+      "heading": "Apa yang bisa kami bantu?",
+      "labels": 5
+    },
+    {
+      "locale": "it",
+      "width": 390,
+      "heading": "Come possiamo aiutarti?",
+      "labels": 5
+    },
+    {
+      "locale": "ja",
+      "width": 390,
+      "heading": "SIMYについて、ご相談ください。",
+      "labels": 5
+    },
+    {
+      "locale": "kn",
+      "width": 390,
+      "heading": "ನಾವು ನಿಮಗೆ ಹೇಗೆ ಸಹಾಯ ಮಾಡಬಹುದು?",
+      "labels": 5
+    },
+    {
+      "locale": "ko",
+      "width": 390,
+      "heading": "SIMY에 대해 문의해 주세요.",
+      "labels": 5
+    },
+    {
+      "locale": "pt-BR",
+      "width": 390,
+      "heading": "Como podemos ajudar?",
+      "labels": 5
+    },
+    {
+      "locale": "ru",
+      "width": 390,
+      "heading": "Чем мы можем вам помочь?",
+      "labels": 5
+    },
+    {
+      "locale": "te",
+      "width": 390,
+      "heading": "మేము మీకు ఎలా సహాయపడగలం?",
+      "labels": 5
+    },
+    {
+      "locale": "th",
+      "width": 390,
+      "heading": "ให้เราช่วยคุณเรื่องอะไรดี",
+      "labels": 5
+    },
+    {
+      "locale": "vi",
+      "width": 390,
+      "heading": "Chúng tôi có thể giúp gì cho bạn?",
+      "labels": 5
+    },
+    {
+      "locale": "zh-Hans",
+      "width": 390,
+      "heading": "关于 SIMY，欢迎咨询。",
+      "labels": 5
+    },
+    {
+      "locale": "zh-Hant",
+      "width": 390,
+      "heading": "關於 SIMY，歡迎洽詢。",
+      "labels": 5
+    },
+    {
+      "locale": "ar",
+      "width": 320,
+      "heading": "كيف يمكننا مساعدتك؟",
+      "labels": 5
+    },
+    {
+      "locale": "de",
+      "width": 320,
+      "heading": "Wie können wir Ihnen helfen?",
+      "labels": 5
+    },
+    {
+      "locale": "en",
+      "width": 320,
+      "heading": "Tell us what you need.",
+      "labels": 5
+    },
+    {
+      "locale": "es",
+      "width": 320,
+      "heading": "Cuéntanos qué necesitas.",
+      "labels": 5
+    },
+    {
+      "locale": "fr",
+      "width": 320,
+      "heading": "Comment pouvons-nous vous aider ?",
+      "labels": 5
+    },
+    {
+      "locale": "hi",
+      "width": 320,
+      "heading": "बताइए, हम कैसे मदद करें?",
+      "labels": 5
+    },
+    {
+      "locale": "id",
+      "width": 320,
+      "heading": "Apa yang bisa kami bantu?",
+      "labels": 5
+    },
+    {
+      "locale": "it",
+      "width": 320,
+      "heading": "Come possiamo aiutarti?",
+      "labels": 5
+    },
+    {
+      "locale": "ja",
+      "width": 320,
+      "heading": "SIMYについて、ご相談ください。",
+      "labels": 5
+    },
+    {
+      "locale": "kn",
+      "width": 320,
+      "heading": "ನಾವು ನಿಮಗೆ ಹೇಗೆ ಸಹಾಯ ಮಾಡಬಹುದು?",
+      "labels": 5
+    },
+    {
+      "locale": "ko",
+      "width": 320,
+      "heading": "SIMY에 대해 문의해 주세요.",
+      "labels": 5
+    },
+    {
+      "locale": "pt-BR",
+      "width": 320,
+      "heading": "Como podemos ajudar?",
+      "labels": 5
+    },
+    {
+      "locale": "ru",
+      "width": 320,
+      "heading": "Чем мы можем вам помочь?",
+      "labels": 5
+    },
+    {
+      "locale": "te",
+      "width": 320,
+      "heading": "మేము మీకు ఎలా సహాయపడగలం?",
+      "labels": 5
+    },
+    {
+      "locale": "th",
+      "width": 320,
+      "heading": "ให้เราช่วยคุณเรื่องอะไรดี",
+      "labels": 5
+    },
+    {
+      "locale": "vi",
+      "width": 320,
+      "heading": "Chúng tôi có thể giúp gì cho bạn?",
+      "labels": 5
+    },
+    {
+      "locale": "zh-Hans",
+      "width": 320,
+      "heading": "关于 SIMY，欢迎咨询。",
+      "labels": 5
+    },
+    {
+      "locale": "zh-Hant",
+      "width": 320,
+      "heading": "關於 SIMY，歡迎洽詢。",
+      "labels": 5
+    }
+  ],
+  "demoStates": [
+    {
+      "locale": "ar",
+      "width": 1440
+    },
+    {
+      "locale": "de",
+      "width": 1440
+    },
+    {
+      "locale": "en",
+      "width": 1440
+    },
+    {
+      "locale": "es",
+      "width": 1440
+    },
+    {
+      "locale": "fr",
+      "width": 1440
+    },
+    {
+      "locale": "hi",
+      "width": 1440
+    },
+    {
+      "locale": "id",
+      "width": 1440
+    },
+    {
+      "locale": "it",
+      "width": 1440
+    },
+    {
+      "locale": "ja",
+      "width": 1440
+    },
+    {
+      "locale": "kn",
+      "width": 1440
+    },
+    {
+      "locale": "ko",
+      "width": 1440
+    },
+    {
+      "locale": "pt-BR",
+      "width": 1440
+    },
+    {
+      "locale": "ru",
+      "width": 1440
+    },
+    {
+      "locale": "te",
+      "width": 1440
+    },
+    {
+      "locale": "th",
+      "width": 1440
+    },
+    {
+      "locale": "vi",
+      "width": 1440
+    },
+    {
+      "locale": "zh-Hans",
+      "width": 1440
+    },
+    {
+      "locale": "zh-Hant",
+      "width": 1440
+    },
+    {
+      "locale": "ar",
+      "width": 390
+    },
+    {
+      "locale": "de",
+      "width": 390
+    },
+    {
+      "locale": "en",
+      "width": 390
+    },
+    {
+      "locale": "es",
+      "width": 390
+    },
+    {
+      "locale": "fr",
+      "width": 390
+    },
+    {
+      "locale": "hi",
+      "width": 390
+    },
+    {
+      "locale": "id",
+      "width": 390
+    },
+    {
+      "locale": "it",
+      "width": 390
+    },
+    {
+      "locale": "ja",
+      "width": 390
+    },
+    {
+      "locale": "kn",
+      "width": 390
+    },
+    {
+      "locale": "ko",
+      "width": 390
+    },
+    {
+      "locale": "pt-BR",
+      "width": 390
+    },
+    {
+      "locale": "ru",
+      "width": 390
+    },
+    {
+      "locale": "te",
+      "width": 390
+    },
+    {
+      "locale": "th",
+      "width": 390
+    },
+    {
+      "locale": "vi",
+      "width": 390
+    },
+    {
+      "locale": "zh-Hans",
+      "width": 390
+    },
+    {
+      "locale": "zh-Hant",
+      "width": 390
+    }
+  ],
+  "errors": [],
+  "checks": [
+    "JA→FR→EN→AR→JA preserves typed input and translated hints; labels and keyboard focus work",
+    "HTTP 503 dictionary failure shows English fallback; reload restores French",
+    "about.html: Japanese editorial copy rendered",
+    "careers.html: Japanese editorial copy rendered",
+    "how-it-works.html: Japanese editorial copy rendered"
+  ]
+}
