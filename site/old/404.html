@@ -12,10 +12,10 @@
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   background: #0a0a1a; color: #f0f0f8;
-  min-height: 100vh; display: flex; align-items: center; justify-content: center;
-  text-align: center; padding: 40px;
+  min-height: 100vh; display: flex; flex-direction: column;
+  text-align: center;
 }
-.container { max-width: 480px; }
+.container { max-width: 480px; margin: auto; padding: 40px; }
 .code {
   font-size: clamp(4rem, 12vw, 8rem); font-weight: 900;
   background: linear-gradient(135deg, #7EEDC6, #4A9FE8);
@@ -47,8 +47,20 @@ function loadGA(){
 if(localStorage.getItem('simy-cookies')==='1') loadGA();
 </script>
 <link rel="stylesheet" href="/responsive.css">
+<link rel="stylesheet" href="/site-header.css?v=20261006-fp-2">
+<script src="/site-header.js?v=20261006-fp-2" defer></script>
 </head>
-<body>
+<body><header class="simy-header" translate="no" data-simy-no-translate>
+  <div class="sh-frame">
+    <a class="sh-brand" href="/" aria-label="SIMY home">SIMY</a>
+    <div class="sh-navigation" role="navigation" aria-label="Primary navigation"><details class="sh-dropdown"><summary>Product<span aria-hidden="true">⌄</span></summary><div class="sh-panel"><a href="/#product">Overview</a><a href="/#how-it-works">How it works</a><a href="/integrations.html?lang=en">Apps & integrations</a><a href="/download/en.html">Download</a></div></details><details class="sh-dropdown"><summary>Solutions<span aria-hidden="true">⌄</span></summary><div class="sh-panel"><a href="/for/en/">For your work</a><a href="/for/en/engineers/">For engineers</a><a href="/for/en/financial-planners/">For financial planners</a><a href="/#use-cases">Use cases</a></div></details><details class="sh-dropdown"><summary>Resources<span aria-hidden="true">⌄</span></summary><div class="sh-panel"><a href="/guides/en/index.html">Guides</a><a href="/compare.html?lang=en">Compare</a><a href="/press-release.html?lang=en">News</a><a href="/about.html?lang=en">About SIMY</a><a href="/security.html?lang=en">Security</a><a href="/contact.html?lang=en">Contact</a><a href="/legal.html">Legal & service information</a><a href="/seller-info.html">Seller information</a></div></details><a class="sh-pricing" href="/#pricing">Pricing</a></div>
+    <div class="sh-account"><details class="sh-dropdown sh-language"><summary aria-label="Language: English"><span aria-hidden="true">🌐</span> EN</summary><div class="sh-panel"><a href="/old/404.html?lang=en" lang="en" hreflang="en" data-locale-option="en" aria-current="page">English</a><a href="/old/404.html?lang=ja" lang="ja" hreflang="ja" data-locale-option="ja">日本語</a><a href="/old/404.html?lang=hi" lang="hi" hreflang="hi" data-locale-option="hi">हिन्दी</a><a href="/old/404.html?lang=es" lang="es" hreflang="es" data-locale-option="es">Español</a><a href="/old/404.html?lang=fr" lang="fr" hreflang="fr" data-locale-option="fr">Français</a><a href="/old/404.html?lang=zh-Hans" lang="zh-Hans" hreflang="zh-Hans" data-locale-option="zh-Hans">简体中文</a></div></details><a data-existing-account-login href="https://app.simy.one/">Log in</a><a data-new-account-signup class="sh-signup" href="https://app.simy.one/signup?lang=en&amp;locale=en&amp;region=us">Sign up</a></div>
+    <div class="sh-stores" role="group" aria-label="Mobile apps">
+      <a class="sh-store" href="https://apps.apple.com/app/id6745385262"><img src="/assets/store-badges/app-store.svg" width="120" height="40" alt="Download on the App Store"></a>
+      <a class="sh-store sh-google-play" href="/download/en.html#android" aria-label="Android availability"><img src="/assets/store-badges/google-play.png" width="155" height="60" alt="Google Play"><small>Android availability</small></a>
+    </div>
+  </div>
+</header>
 <div class="container">
   <div class="code">404</div>
   <h1 data-i18n="e404.h1">Page Not Found</h1>

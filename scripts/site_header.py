@@ -4,6 +4,7 @@ from pathlib import Path
 from html.parser import HTMLParser
 import html
 import re
+import argparse
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "site"
@@ -27,7 +28,7 @@ def header(locale, source, path):
     menus = "".join(f'<details class="sh-dropdown"><summary>{name}<span aria-hidden="true">⌄</span></summary><div class="sh-panel">' + "".join(link(label, href) for label, href in items) + '</div></details>' for name, items in groups.items())
     # Prefer an existing translated counterpart; otherwise use the localized home.
     alternatives = dict(re.findall(r'<link[^>]*hreflang="([^" ]+)"[^>]*href="https://simy.one([^" ]*)"', source))
-    if re.search(r'<script[^>]+src="(?:\.\./|/)?i18n\.js', source):
+    if re.search(r'<script[^>]+src="(?:/|(?:\.\./)*)i18n\.js', source):
         page_url = "/" + str(path.relative_to(SITE))
         alternatives = {code: page_url + "?lang=" + code for code in LOCALES}
     options = "".join(f'<a href="{html.escape(alternatives.get(code, home(code)), quote=True)}" lang="{code}" hreflang="{code}" data-locale-option="{code}"' + (' aria-current="page"' if code == locale else '') + f'>{label}</a>' for code, label in LOCALES.items())
@@ -72,8 +73,16 @@ class HeaderParser(HTMLParser):
             self.depth -= 1
             if self.depth == 0: self.end = self.source.index(">", self.position()) + 1
 
+def needs_header(source, path):
+    # The authentication return page has a focused, security-sensitive purpose.
+    # Redirect aliases and verification tokens never render site navigation.
+    return (path.name != "auth-callback.html"
+            and not re.search(r'http-equiv=["\']refresh', source, re.I)
+            and "<body" in source.lower())
+
+
 def apply(source, path):
-    if re.search(r'http-equiv=["\']refresh', source, re.I) or "<body" not in source.lower(): return source
+    if not needs_header(source, path): return source
     locale_match = re.search(r'<html[^>]*lang="([^" ]+)"', source)
     locale = locale_match.group(1) if locale_match else "en"
     if locale not in LOCALES: locale = "en"
@@ -91,12 +100,17 @@ def apply(source, path):
     return source
 
 if __name__ == "__main__":
-    count = 0
-    for path in SITE.rglob("*.html"):
-        if "old" in path.relative_to(SITE).parts or path.name == "old.html": continue
+    cli = argparse.ArgumentParser(description=__doc__)
+    cli.add_argument("--check", action="store_true", help="Fail when a rendered page differs from the shared header")
+    args = cli.parse_args()
+    changed = []
+    for path in sorted(SITE.rglob("*.html")):
         source = path.read_text()
         output = apply(source, path)
         if source != output:
-            path.write_text(output)
-            count += 1
-    print(f"Updated {count} pages")
+            changed.append(str(path.relative_to(SITE)))
+            if not args.check:
+                path.write_text(output)
+    if args.check and changed:
+        raise SystemExit("Shared header differs: " + ", ".join(changed))
+    print(f"{'Checked' if args.check else 'Updated'} shared headers; {len(changed)} pages {'differ' if args.check else 'updated'}")
