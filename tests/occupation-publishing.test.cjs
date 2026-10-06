@@ -75,6 +75,48 @@ test('new locale pages remain reachable through the older edge redirects', () =>
   assert.ok(preparation.indexOf('done') < pageUpload, 'all CSS/JS uploads must finish before existing pages change');
 }));
 
+test('FP locale compatibility keys survive publication under the live older router', () => fixture((dir, env) => {
+  const locales=['es','fr','hi','zh-hans'];
+  for (const locale of locales) {
+    const page=path.join(dir,'site/for',locale,'financial-planners/index.html');
+    fs.mkdirSync(path.dirname(page),{recursive:true});
+    fs.writeFileSync(page,`<html lang="${locale}"><h1>${locale} FP</h1></html>`);
+  }
+  const result=spawnSync('bash',[script,'test-site-bucket'],{cwd:dir,env,encoding:'utf8'});
+  assert.equal(result.status,0,result.stderr);
+  const calls=fs.readFileSync(env.UPLOAD_LOG,'utf8').trim().split('\n').map(JSON.parse);
+  const value=(args,flag)=>args[args.indexOf(flag)+1];
+  const source=fs.readFileSync(path.resolve(__dirname,'../infra/cloudfront-functions/redirect-prod.js'),'utf8');
+  const context={};vm.runInNewContext(source.replace('(?:en|es|fr|hi|zh-hans)','en'),context);
+  for (const locale of locales) {
+    const response=context.handler({request:{uri:`/for/${locale}/financial-planners/`,headers:{host:{value:'simy.one'}},querystring:{}}});
+    const key=new URL(response.headers.location.value).pathname.slice(1);
+    const upload=calls.find(args=>value(args,'--key')===key);
+    assert.ok(upload,`live redirect destination is published: ${key}`);
+    assert.equal(value(upload,'--body'),`site/for/${locale}/financial-planners/index.html`);
+  }
+  const workflow=fs.readFileSync(path.resolve(__dirname,'../.github/workflows/deploy-site.yml'),'utf8');
+  const htmlSync=workflow.split('- name: Sync HTML files (short cache)')[1].split('- name:')[0];
+  assert.match(htmlSync,/--exclude "for\/\*\/financial-planners\.html"/);
+  const preparation=workflow.split('- name: Prepare occupation pages and assets')[1].split('- name:')[0];
+  assert.ok(preparation.indexOf('aws s3 sync site/assets/fp-experience/')<preparation.indexOf('aws s3 sync site/for/'));
+  assert.match(preparation,/financial-planners\.css financial-planners\.js site-header\.css site-header\.js/);
+}));
+
+test('deleting HTML sync executes with both locale compatibility exclusions', () => fixture((dir, env) => {
+  const workflow=fs.readFileSync(path.resolve(__dirname,'../.github/workflows/deploy-site.yml'),'utf8');
+  const step=workflow.split('- name: Sync HTML files (short cache)')[1].split('- name:')[0];
+  const commands=step.split('run: |\n')[1].replace(/^          /gm,'').replace(/\$\{\{ secrets\.SITE_S3_BUCKET \}\}/g,'test-site-bucket');
+  const result=spawnSync('bash',['-e','-u','-o','pipefail','-c',commands],{cwd:dir,env,encoding:'utf8'});
+  assert.equal(result.status,0,result.stderr);
+  const calls=fs.readFileSync(env.UPLOAD_LOG,'utf8').trim().split('\n').map(JSON.parse);
+  assert.equal(calls.length,1);
+  const args=calls[0];
+  const exclusions=args.flatMap((arg,i)=>arg==='--exclude'?[args[i+1]]:[]);
+  assert.ok(exclusions.includes('for/*/engineers.html'));
+  assert.ok(exclusions.includes('for/*/financial-planners.html'));
+}));
+
 test('the later deleting asset sync preserves the root hub slash object too', () => {
   const workflow = fs.readFileSync(path.resolve(__dirname, '../.github/workflows/deploy-site.yml'), 'utf8');
   const assets = workflow.split('- name: Sync static assets (long cache)')[1].split('- name:')[0];

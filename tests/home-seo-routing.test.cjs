@@ -82,6 +82,26 @@ for (const [name, source] of [['production', production], ['Terraform', terrafor
       assert.equal(next.querystring, query);
     }
   });
+  test(`${name}: all FP locale URLs normalize to their own directory page`, () => {
+    for (const locale of ['ja','en','es','fr','hi','zh-hans']) {
+      const canonical = `/for/${locale==='ja'?'':locale+'/'}financial-planners/`;
+      const query = {utm_source:{value:'fp campaign'}, tag:{multiValue:[{value:'a'},{value:'b'}]}};
+      for (const alias of [canonical.slice(0,-1), canonical.slice(0,-1)+'.html', canonical+'index.html']) {
+        const response = run({request:request(alias,query)});
+        assert.equal(response.statusCode,301);
+        assert.equal(response.headers.location.value,`https://simy.one${canonical}?utm_source=fp%20campaign&tag=a&tag=b`);
+      }
+      const req=request(canonical,query);
+      assert.equal(run({request:req}),req);
+      assert.equal(req.uri,canonical+'index.html');
+      assert.equal(req.querystring,query);
+      const image=request(canonical+'screen.png');
+      assert.equal(run({request:image}),image);
+      assert.equal(image.uri,canonical+'screen.png');
+      const protectedRun=handler(source.replace('var BASIC_AUTH_ENABLED = false;', 'var BASIC_AUTH_ENABLED = true;'));
+      assert.equal(protectedRun({request:request(canonical)}).statusCode,401);
+    }
+  });
   test(`${name}: occupation routing preserves assets and dev authentication`, () => {
     for (const uri of ['/for/engineers/screen.png', '/guides/codex.html', '/site-theme.css']) {
       const req = request(uri);

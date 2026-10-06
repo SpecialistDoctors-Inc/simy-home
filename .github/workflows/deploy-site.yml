@@ -61,7 +61,9 @@ jobs:
         run: |
           aws s3 sync site/assets/engineer-experience/ s3://${{ secrets.SITE_S3_BUCKET }}/assets/engineer-experience/ \
             --cache-control "public, max-age=86400"
-          for asset in site-theme.css engineers.css engineers.js engineers-experience.css engineers-experience.js; do
+          aws s3 sync site/assets/fp-experience/ "s3://${{ secrets.SITE_S3_BUCKET }}/assets/fp-experience/" \
+            --cache-control "public, max-age=86400"
+          for asset in site-theme.css engineers.css engineers.js engineers-experience.css engineers-experience.js financial-planners.css financial-planners.js site-header.css site-header.js; do
             aws s3 cp "site/$asset" "s3://${{ secrets.SITE_S3_BUCKET }}/$asset" \
               --cache-control "public, max-age=86400"
           done
@@ -79,6 +81,7 @@ jobs:
             --include "*.html" \
             --exclude "downloads/*" \
             --exclude "for/*/engineers.html" \
+            --exclude "for/*/financial-planners.html" \
             --cache-control "public, max-age=300"
 
       - name: Sync i18n runtime + translation JSON (short cache)

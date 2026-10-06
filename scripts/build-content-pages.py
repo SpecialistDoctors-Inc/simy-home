@@ -32,6 +32,10 @@ LABELS = {
 
 
 def ref(ident, lang):
+    if ident == 'financial-planners':
+        return ('/for/financial-planners/' if lang == 'ja' else '/for/en/financial-planners/',
+                'ファイナンシャルプランナー向けSIMY' if lang == 'ja' else 'SIMY for financial planners',
+                '面談の整理、iOSでの音声ロールプレイ、チームの経験を次の相談へ。' if lang == 'ja' else 'Meeting follow-up, voice role-play on iOS and shared experience for your next consultation.')
     if ident == 'engineers':
         return ('/for/engineers/' if lang == 'ja' else '/for/en/engineers/',
                 'エンジニア向けSIMY' if lang == 'ja' else 'SIMY for engineers',
