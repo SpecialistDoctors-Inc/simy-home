@@ -57,13 +57,6 @@
     menu.addEventListener('toggle', () => {
       if (menu.open) closeOthers(menu);
     });
-    menu.addEventListener('keydown', event => {
-      if (event.key === 'Escape' && menu.open) {
-        menu.open = false;
-        menu.querySelector('summary').focus();
-        event.stopPropagation();
-      }
-    });
     menu.addEventListener('focusout', () => {
       setTimeout(() => {
         if (!menu.contains(document.activeElement)) menu.open = false;
@@ -74,13 +67,20 @@
     if (!header.contains(event.target)) { closeOthers(); if (mobile.matches) menu.open = false; }
   });
   menu.addEventListener('toggle', () => { if (mobile.matches) closeOthers(); });
-  menu.addEventListener('keydown', event => {
-    if (event.key === 'Escape' && mobile.matches && menu.open) {
+  // Escape closes the innermost header menu regardless of where focus moved.
+  document.addEventListener('keydown', event => {
+    if (event.key !== 'Escape') return;
+    const opened = header.querySelector('.sh-dropdown[open]');
+    if (opened) {
+      opened.open = false;
+      opened.querySelector('summary').focus();
+    } else if (mobile.matches && menu.open) {
       menu.open = false;
       menu.querySelector('.sh-menu-toggle').focus();
-      event.stopPropagation();
-    }
-  });
+    } else return;
+    event.preventDefault();
+    event.stopPropagation();
+  }, true);
   menu.addEventListener('focusout', () => {
     setTimeout(() => { if (mobile.matches && !menu.contains(document.activeElement)) menu.open = false; });
   });
