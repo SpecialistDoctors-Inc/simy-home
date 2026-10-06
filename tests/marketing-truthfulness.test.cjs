@@ -117,3 +117,16 @@ test('SEO-01 / AC-8: legacy home assets and their translations omit unsupported 
   const current = Object.fromEntries(fs.readdirSync(path.join(root, 'site/lang/home-dom')).filter(f => f.endsWith('.json')).sort().map(f => [f.slice(0, -5), JSON.parse(read(`site/lang/home-dom/${f}`))]));
   assert.equal(read('site/lang/home-dom-bundle.js'), `window.SIMY_HOME_DOM_BUNDLE = ${JSON.stringify(current, null, 2)};\n`);
 });
+
+
+test('UX-02/03/07: first-task reference keeps unknowns and separates illustration from product evidence', () => {
+  const page = JSON.parse(read('scripts/content-pages.json')).pages.find(p => p.id === 'simy-getting-started');
+  for (const lang of ['ja', 'en']) {
+    const scene = page[lang].sections.find(s => s.id === 'scene');
+    const rendered = read('site' + page.paths[lang]);
+    for (const text of [scene.p[0], scene.example, ...scene.pAfter]) assert.ok(rendered.includes(text), lang);
+    assert.match(scene.example, lang === 'ja' ? /担当者や期限.*不明.*外部には送らず/ : /owner or date.*unknown.*Do not send/);
+    assert.match(scene.pAfter.join(' '), lang === 'ja' ? /金額や日付を補わない/ : /do not add a price or date/);
+    assert.match(scene.pAfter.join(' '), lang === 'ja' ? /SIMYでの実行結果ではありません/ : /not an observed SIMY task result/);
+  }
+});

@@ -287,8 +287,13 @@
             "title": "最初の依頼は、短い資料の整理から",
             "example": "このメモだけを使って、決定事項、まだ決まっていないこと、次にすることを整理して。担当者や期限が書かれていなければ、不明と書いて。外部には送らず、私が確認できる下書きにして。",
             "p": [
+              "最初に渡す架空のメモ：サンプル社との打合せで、次回までに導入範囲を整理すると決めた。料金は未合意。担当者と期限は未定。",
               "この依頼例なら、原文と出力を見比べて確認できます。抜けている項目や推測された内容があれば、その箇所と期待する扱いを伝えます。仕事の目的と完成条件を最初に書くと、修正の基準も共有できます。",
               "このページの依頼文は説明用の例です。利用中のアカウントで最初の仕事が完了することを、この例だけで保証するものではありません。接続できない場合は元のメモを手元に残し、接続状態を確認してから同じ小さな依頼を試してください。"
+            ],
+            "pAfter": [
+              "照合用の整理例：決定事項＝次回までに導入範囲を整理する。未決事項＝料金、担当者、期限。次の行動＝担当者と期限を確認する。担当者・期限は不明のままにし、金額や日付を補わない。",
+              "これは説明用の架空メモと整理例で、SIMYでの実行結果ではありません。メモと依頼文を一緒に渡し、返ってきた結果で料金が合意済みになっていないか、担当者や期限を勝手に決めていないかを確認してください。"
             ]
           },
           {
@@ -337,8 +342,13 @@
             "title": "Try organizing a short note",
             "example": "Use only this note to separate decisions, unresolved questions and next actions. If the owner or date is missing, mark it unknown. Do not send anything externally. Give me a draft I can review.",
             "p": [
+              "Synthetic note to try first: In a meeting with Example Company, we decided to outline the scope before the next meeting. No price was agreed. The owner and deadline are not decided.",
               "Compare the output with the original note. If an item is missing or an assumption has become a fact, point to that item and explain the correction. State the purpose and acceptance criteria at the start so the revision has a clear target.",
               "The request on this page is illustrative. It does not establish that a first task will complete in your account. If the connection is unavailable, keep your original note and retry the same small request after confirming the connection state."
+            ],
+            "pAfter": [
+              "Reference outline: Decision = outline the scope before the next meeting. Unresolved = price, owner and deadline. Next action = confirm the owner and deadline. Keep the owner and deadline unknown; do not add a price or date.",
+              "This is a synthetic note and reference outline, not an observed SIMY task result. Submit the note with the request, then check that the returned result does not treat pricing as agreed or invent an owner or deadline."
             ]
           },
           {
