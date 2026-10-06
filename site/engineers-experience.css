@@ -868,3 +868,20 @@ h4 {
     height: 102px;
   }
 }
+
+/* Let the longest translated caption size the stage without shifting on a step change. */
+.demo-stage {
+  display: grid;
+}
+.demo-frame {
+  grid-area: 1 / 1;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-width: 0;
+}
+.demo-frame[hidden] {
+  /* Override the shared [hidden] display rule only to reserve layout space. */
+  display: grid !important;
+  visibility: hidden;
+  pointer-events: none;
+}

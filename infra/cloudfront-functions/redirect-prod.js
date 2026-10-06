@@ -205,7 +205,7 @@ function handler(event) {
   // Occupation pages have stable directory URLs, independent of plan names.
   var occupationAliases = { '/engineers.html': '/for/engineers/', '/engineers-en.html': '/for/en/engineers/', '/for': '/for/', '/for/': '/for/', '/for.html': '/for/', '/for/index.html': '/for/' };
   var occupationPath = occupationAliases[uri];
-  var occupation = uri.match(/^\/for\/(?:en\/)?[a-z][a-z0-9-]*(?:\/index\.html|\.html|\/)?$/);
+  var occupation = uri.match(/^\/for\/(?:(?:en|es|fr|hi|zh-hans)\/)?[a-z][a-z0-9-]*(?:\/index\.html|\.html|\/)?$/);
   if (occupation && !occupationPath) occupationPath = uri.replace(/(?:\/index\.html|\.html|\/)$/, '') + '/';
   if (occupationPath) {
     if (uri !== occupationPath) {

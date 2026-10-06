@@ -651,8 +651,8 @@
           link.setAttribute("href", `${localUrl.pathname}${localUrl.search}${localUrl.hash}`);
           continue;
         }
-        if (["/for/engineers/", "/for/en/engineers/"].includes(localUrl.pathname)) {
-          localUrl.pathname = locale === "ja" ? "/for/engineers/" : "/for/en/engineers/";
+        if (/^\/for\/(?:(?:en|hi|es|fr|zh-hans)\/)?engineers\/$/.test(localUrl.pathname)) {
+          localUrl.pathname = locale === "ja" ? "/for/engineers/" : `/for/${code}/engineers/`;
           link.setAttribute("href", `${localUrl.pathname}${localUrl.search}${localUrl.hash}`);
           continue;
         }

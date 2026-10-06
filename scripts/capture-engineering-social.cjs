@@ -7,14 +7,14 @@ const path = require("node:path");
     process.env.ENGINEERING_PREVIEW_ORIGIN || "http://127.0.0.1:8766";
   const browser = await chromium.launch({ channel: "chrome" });
   try {
-    for (const lang of ["ja", "en"]) {
+    for (const lang of ["ja", "en", "es", "fr", "hi", "zh-Hans"]) {
       const page = await browser.newPage({
         viewport: { width: 1200, height: 800 },
         deviceScaleFactor: 1,
         reducedMotion: "reduce",
       });
       await page.goto(
-        origin + (lang === "ja" ? "/for/engineers/" : "/for/en/engineers/"),
+        origin + (lang === "ja" ? "/for/engineers/" : `/for/${lang.toLowerCase()}/engineers/`),
       );
       await page.addStyleTag({
         content: `
@@ -23,7 +23,7 @@ const path = require("node:path");
         .hero .frame { width:1100px; max-width:none; }
         .hero-layout { grid-template-columns:1fr 1fr; gap:44px; }
         .hero h1 { font-size:40px; }
-        .hero-copy::before { content:'SIMY / FOR ENGINEERS'; display:block; font-size:18px; font-weight:700; margin-bottom:30px; }
+        .hero-copy::before { content:'SIMY'; display:block; font-size:18px; font-weight:700; margin-bottom:30px; }
         .hero-actions,.hero .provider { display:none; }
         .hero-lead { font-size:16px; }
         .mission-bar { padding:16px 24px; }

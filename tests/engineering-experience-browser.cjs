@@ -45,8 +45,8 @@ const report = { viewports: [], frames: [], checks: [], errors: [] };
   });
   fs.mkdirSync(output, { recursive: true });
   try {
-    for (const lang of ["ja", "en"]) {
-      const route = lang === "ja" ? "/for/engineers/" : "/for/en/engineers/";
+    for (const lang of ["ja", "en", "es", "fr", "hi", "zh-Hans"]) {
+      const route = lang === "ja" ? "/for/engineers/" : `/for/${lang.toLowerCase()}/engineers/`;
       const p = await browser.newPage({
         viewport: { width: 1440, height: 1000 },
         reducedMotion: "reduce",
@@ -58,6 +58,20 @@ const report = { viewports: [], frames: [], checks: [], errors: [] };
       p.on("response", (r) => {
         if (r.status() >= 400) report.errors.push(`${r.status()} ${r.url()}`);
       });
+      const home = lang === 'en' ? '/' : `/${lang}.html`;
+      await p.goto(origin + home);
+      const engineeringLink = p.locator('.sh-navigation a').filter({ hasText: 'For engineers' });
+      assert.equal(await engineeringLink.getAttribute('href'), route);
+      await p.locator('.sh-navigation summary').nth(1).click();
+      await engineeringLink.click();
+      await p.waitForURL(origin + route);
+      assert.equal(await p.locator('html').getAttribute('lang'), lang);
+      const nextLang = ['ja', 'en', 'es', 'fr', 'hi', 'zh-Hans'][(['ja', 'en', 'es', 'fr', 'hi', 'zh-Hans'].indexOf(lang) + 1) % 6];
+      const nextRoute = nextLang === 'ja' ? '/for/engineers/' : `/for/${nextLang.toLowerCase()}/engineers/`;
+      await p.locator('.sh-language summary').click();
+      await p.locator(`.sh-language a[lang="${nextLang}"]`).click();
+      await p.waitForURL(origin + nextRoute);
+      assert.equal(await p.locator('html').getAttribute('lang'), nextLang);
       await p.goto(origin + route);
       await p.locator(".hero .secondary").click();
       const entry = await p.evaluate(() => ({
@@ -98,6 +112,7 @@ const report = { viewports: [], frames: [], checks: [], errors: [] };
             await demo.locator(`[data-step="${i}"]`).focus();
             await p.keyboard.press(i % 2 ? "Space" : "Enter");
             assert.equal(await demo.locator(".demo-frame:visible").count(), 1);
+            assert.equal(await demo.locator('.demo-frame[hidden]').evaluateAll(frames => frames.every(f => getComputedStyle(f).visibility === 'hidden')), true);
             assert.equal(
               await demo
                 .locator(`[data-step="${i}"]`)
@@ -106,6 +121,14 @@ const report = { viewports: [], frames: [], checks: [], errors: [] };
             );
             const frame = demo.locator(`[data-frame="${i}"]`);
             await frame.locator("img").evaluate((i) => i.decode());
+            const image = await frame.locator("img").evaluate(i => ({
+              src: i.getAttribute("src"), width: i.naturalWidth, height: i.naturalHeight,
+              declaredWidth: Number(i.getAttribute("width")), declaredHeight: Number(i.getAttribute("height")),
+            }));
+            assert.ok(image.src.endsWith(lang === "ja" ? ".png" : `-${lang}.png`));
+            assert.equal(image.width, image.declaredWidth);
+            assert.equal(image.height, image.declaredHeight);
+            assert.equal(await frame.locator(".capture-zoom").getAttribute("href"), image.src);
             heights.push(
               await demo
                 .locator(".demo-stage")
@@ -350,7 +373,8 @@ const report = { viewports: [], frames: [], checks: [], errors: [] };
       javaScriptEnabled: false,
       viewport: { width: 390, height: 844 },
     });
-    await noJs.goto(origin + "/for/engineers/");
+    for (const lang of ['ja', 'en', 'es', 'fr', 'hi', 'zh-Hans']) {
+    await noJs.goto(origin + (lang === 'ja' ? '/for/engineers/' : `/for/${lang.toLowerCase()}/engineers/`));
     assert.equal(await noJs.locator(".experience-story:visible").count(), 3);
     assert.equal(await noJs.locator("[data-motion]:visible").count(), 0);
     for (const id of ["build", "progress", "knowledge"]) {
@@ -360,8 +384,9 @@ const report = { viewports: [], frames: [], checks: [], errors: [] };
         3,
       );
     }
+    }
     report.checks.push(
-      "No-JS all three stories and all nine stage transcripts/links; clipboard success/fallback; deep links; keyboard",
+      "Six locale homepage entries and language switches; no-JS all three stories and all nine stage transcripts/links; clipboard success/fallback; deep links; keyboard",
     );
     await noJs.close();
     assert.deepEqual(report.errors, []);

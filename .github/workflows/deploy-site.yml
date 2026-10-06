@@ -59,12 +59,14 @@ jobs:
       # Both existing pass-through routing and future index rewrites can serve them.
       - name: Prepare occupation pages and assets
         run: |
-          aws s3 sync site/for/ s3://${{ secrets.SITE_S3_BUCKET }}/for/ \
-            --cache-control "public, max-age=300"
-          for asset in site-theme.css engineers.css engineers.js; do
+          aws s3 sync site/assets/engineer-experience/ s3://${{ secrets.SITE_S3_BUCKET }}/assets/engineer-experience/ \
+            --cache-control "public, max-age=86400"
+          for asset in site-theme.css engineers.css engineers.js engineers-experience.css engineers-experience.js; do
             aws s3 cp "site/$asset" "s3://${{ secrets.SITE_S3_BUCKET }}/$asset" \
               --cache-control "public, max-age=86400"
           done
+          aws s3 sync site/for/ s3://${{ secrets.SITE_S3_BUCKET }}/for/ \
+            --cache-control "public, max-age=300"
           bash scripts/publish-occupation-pages.sh "${{ secrets.SITE_S3_BUCKET }}"
 
       # downloads/ belongs to the CLI release publisher. Exclude it from
@@ -76,6 +78,7 @@ jobs:
             --exclude "*" \
             --include "*.html" \
             --exclude "downloads/*" \
+            --exclude "for/*/engineers.html" \
             --cache-control "public, max-age=300"
 
       - name: Sync i18n runtime + translation JSON (short cache)

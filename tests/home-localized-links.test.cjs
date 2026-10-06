@@ -45,3 +45,21 @@ test('occupation hub links follow repeated language changes while preserving att
     for (const link of links) assert.equal(link.href, (locale === 'ja' ? '/for/' : '/for/en/') + suffix);
   }
 });
+
+test('engineering links follow all six languages through repeated switches', () => {
+  const suffix = '?utm_source=guide&tag=one&tag=two#scene-knowledge';
+  const inputs = ['/for/engineers/', '/for/en/engineers/', '/for/fr/engineers/', '/for/zh-hans/engineers/'];
+  const links = inputs.map(href => ({
+    dataset: {}, href: href + suffix,
+    getAttribute() { return this.href; },
+    setAttribute(name, value) { assert.equal(name, 'href'); this.href = value; }
+  }));
+  const context = { URL, window: { location: { href: 'https://simy.one/', origin: 'https://simy.one' } },
+    document: { querySelectorAll() { return links; } } };
+  vm.runInNewContext(source.slice(start, end), context);
+  for (const locale of ['ja', 'en', 'fr', 'es', 'hi', 'zh-Hans', 'ja']) {
+    context.updateLinks(locale);
+    const route = locale === 'ja' ? '/for/engineers/' : `/for/${locale.toLowerCase()}/engineers/`;
+    for (const link of links) assert.equal(link.href, route + suffix);
+  }
+});

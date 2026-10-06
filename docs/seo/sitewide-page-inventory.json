@@ -109,6 +109,21 @@
     "language": "ja",
     "topic": "for-engineers"
   },
+  "for/es/engineers/index.html": {
+    "policy": "index",
+    "language": "es",
+    "topic": "for-engineers"
+  },
+  "for/fr/engineers/index.html": {
+    "policy": "index",
+    "language": "fr",
+    "topic": "for-engineers"
+  },
+  "for/hi/engineers/index.html": {
+    "policy": "index",
+    "language": "hi",
+    "topic": "for-engineers"
+  },
   "for/index.html": {
     "policy": "index",
     "language": "ja",
@@ -118,6 +133,11 @@
     "policy": "index",
     "language": "ja",
     "topic": "sales"
+  },
+  "for/zh-hans/engineers/index.html": {
+    "policy": "index",
+    "language": "zh-Hans",
+    "topic": "for-engineers"
   },
   "founder.html": {
     "policy": "index",
@@ -694,6 +714,26 @@
     "language": "ja",
     "topic": "legal"
   },
+  "news/20261005-en.html": {
+    "policy": "index",
+    "language": "en",
+    "topic": "ai-mentor-results"
+  },
+  "news/20261005.html": {
+    "policy": "index",
+    "language": "ja",
+    "topic": "ai-mentor-results"
+  },
+  "news/ai-mentor-20261005-en.html": {
+    "policy": "redirect",
+    "language": "en",
+    "topic": "ai-mentor-results"
+  },
+  "news/ai-mentor-20261005.html": {
+    "policy": "redirect",
+    "language": "ja",
+    "topic": "ai-mentor-results"
+  },
   "old.html": {
     "policy": "redirect",
     "language": "en",
@@ -833,25 +873,5 @@
     "policy": "index",
     "language": "zh-Hans",
     "topic": "zh-Hans"
-  },
-  "news/ai-mentor-20261005.html": {
-    "policy": "redirect",
-    "language": "ja",
-    "topic": "ai-mentor-results"
-  },
-  "news/ai-mentor-20261005-en.html": {
-    "policy": "redirect",
-    "language": "en",
-    "topic": "ai-mentor-results"
-  },
-  "news/20261005.html": {
-    "policy": "index",
-    "language": "ja",
-    "topic": "ai-mentor-results"
-  },
-  "news/20261005-en.html": {
-    "policy": "index",
-    "language": "en",
-    "topic": "ai-mentor-results"
   }
 }
