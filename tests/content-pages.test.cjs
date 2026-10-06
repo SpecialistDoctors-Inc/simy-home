@@ -40,6 +40,20 @@ test('legacy guide topics keep all six translations', () => {
   }
 });
 
+test('UX-06: unavailable content translations explicitly preserve the same topic in English', () => {
+  for (const page of pages) {
+    for (const url of Object.values(page.paths)) {
+      const html = read(url);
+      const panel = html.match(/<details class="sh-dropdown sh-language">[\s\S]*?<\/details>/)[0];
+      const options = [...panel.matchAll(/<a href="([^"]+)"[^>]*>([^<]+)<\/a>/g)];
+      assert.equal(options.length, 6, url);
+      assert.equal(options.filter(([, href]) => href === page.paths.ja).length, 1, url);
+      assert.equal(options.filter(([, href]) => href === page.paths.en).length, 5, url);
+      assert.equal(options.filter(([, href, label]) => href === page.paths.en && label.endsWith('English fallback')).length, 4, url);
+    }
+  }
+});
+
 test('role URLs stay separate from instructional guide URLs', () => {
   for (const p of pages) {
     for (const url of Object.values(p.paths)) {
