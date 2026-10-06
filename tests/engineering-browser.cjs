@@ -9,7 +9,7 @@ const root = path.resolve(__dirname, "..");
 const site = path.join(root, "site");
 const output =
   process.env.ENGINEERING_EVIDENCE_DIR ||
-  path.join(root, "docs/engineering-experience/screenshots");
+  path.join(root, "docs/engineer-wow/legacy-checks");
 const contentTypes = {
   ".html": "text/html",
   ".css": "text/css",
@@ -23,7 +23,8 @@ const server = http.createServer((req, res) => {
   const file = path.resolve(
     site,
     "." +
-      (decodeURIComponent(url.pathname) + (url.pathname.endsWith("/") ? "index.html" : "")),
+      (decodeURIComponent(url.pathname) +
+        (url.pathname.endsWith("/") ? "index.html" : "")),
   );
   if (!file.startsWith(site + path.sep)) {
     res.writeHead(403).end();
@@ -52,20 +53,44 @@ const report = { views: [], scenarios: 0, errors: [], theme: {} };
   try {
     fs.mkdirSync(output, { recursive: true });
     // The shared theme must look the same across the homepage/detail-page boundary.
-    const themePage = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
+    const themePage = await browser.newPage({
+      viewport: { width: 1440, height: 1000 },
+    });
     for (const route of ["/ja.html", "/for/engineers/", "/for/en/engineers/"]) {
       await themePage.goto(origin + route);
       report.theme[route] = await themePage.evaluate(() => {
         const body = getComputedStyle(document.body);
-        const button = getComputedStyle(document.querySelector(".hero .button-primary"));
-        return { background: body.backgroundColor, color: body.color, font: body.fontFamily,
-          button: { background: button.backgroundColor, color: button.color,
-            border: button.borderColor, radius: button.borderRadius, weight: button.fontWeight } };
+        const button = getComputedStyle(
+          document.querySelector(".hero .button-primary"),
+        );
+        return {
+          background: body.backgroundColor,
+          color: body.color,
+          font: body.fontFamily,
+          button: {
+            background: button.backgroundColor,
+            color: button.color,
+            border: button.borderColor,
+            radius: button.borderRadius,
+            weight: button.fontWeight,
+          },
+        };
       });
     }
-    assert.deepEqual(report.theme["/for/engineers/"], report.theme["/ja.html"], "Japanese page uses the homepage theme");
-    assert.deepEqual(report.theme["/for/en/engineers/"], report.theme["/ja.html"], "English page uses the homepage theme");
-    for (const [alias, target] of [["/engineers.html", "/for/engineers/"], ["/engineers-en.html", "/for/en/engineers/"]]) {
+    assert.deepEqual(
+      report.theme["/for/engineers/"],
+      report.theme["/ja.html"],
+      "Japanese page uses the homepage theme",
+    );
+    assert.deepEqual(
+      report.theme["/for/en/engineers/"],
+      report.theme["/ja.html"],
+      "English page uses the homepage theme",
+    );
+    for (const [alias, target] of [
+      ["/engineers.html", "/for/engineers/"],
+      ["/engineers-en.html", "/for/en/engineers/"],
+    ]) {
       await themePage.goto(origin + alias);
       await themePage.waitForURL(origin + target);
       assert.equal(await themePage.locator("h1").count(), 1);
@@ -87,74 +112,39 @@ const report = { views: [], scenarios: 0, errors: [], theme: {} };
       const route = lang === "ja" ? "/for/engineers/" : "/for/en/engineers/";
       await page.goto(origin + route);
       await page.keyboard.press("Tab");
-      assert.ok(await page.locator(".skip").evaluate((link) => {
-        const r = link.getBoundingClientRect();
-        const front = document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2);
-        return document.activeElement === link && (front === link || link.contains(front));
-      }), "First Tab exposes skip link above sticky header");
+      assert.ok(
+        await page.locator(".skip").evaluate((link) => {
+          const r = link.getBoundingClientRect();
+          const front = document.elementFromPoint(
+            r.x + r.width / 2,
+            r.y + r.height / 2,
+          );
+          return (
+            document.activeElement === link &&
+            (front === link || link.contains(front))
+          );
+        }),
+        "First Tab exposes skip link above sticky header",
+      );
       assert.equal(await page.locator("h1").count(), 1);
       const headline = await page.locator("h1").textContent();
       assert.match(
         headline,
         lang === "ja"
-          ? /AIに、開発と品質チェックを任せる/
-          : /Let AI build, test,and check your code/,
+          ? /機能の実装から、テスト・修正までAIに。/
+          : /Ask AI to build it.Get the code and checks./,
       );
-      assert.equal(
-        await page.locator(".faq[open]").count(),
-        0,
-        "Details do not compete with the primary promise",
-      );
-      const data = await page
-        .locator("#engineering-data")
-        .textContent()
-        .then(JSON.parse);
-      for (let example = 0; example < 3; example++) {
-        await page.locator(`[data-example="${example}"]`).click();
-        assert.equal(
-          await page.locator("[data-request]").textContent(),
-          data[example].request,
-        );
-        assert.deepEqual(
-          await page.locator("[data-output]").allTextContents(),
-          data[example].outputs,
-        );
-        assert.equal(
-          await page.locator('[data-example][aria-pressed="true"]').count(),
-          1,
-        );
-        assert.ok(
-          (await page.locator("[data-announcement]").textContent()).includes(
-            data[example].request,
-          ),
-        );
-        report.scenarios++;
-      }
-      await page.locator('[data-example="0"]').focus();
+      assert.equal(await page.locator(".closing-details[open]").count(), 0);
+      await page.locator("#before-start > summary").focus();
       await page.keyboard.press("Enter");
-      assert.equal(
-        await page.locator('[data-example="0"]').getAttribute("aria-pressed"),
-        "true",
-      );
-      await page.locator('[data-example="2"]').focus();
-      await page.keyboard.press("Space");
-      assert.equal(
-        await page.locator('[data-example="2"]').getAttribute("aria-pressed"),
-        "true",
-      );
-      await page.locator("#levels > summary").focus();
-      await page.keyboard.press("Enter");
-      assert.ok(await page.locator(".level-list").isVisible());
-      await page.locator(".level > summary").first().focus();
-      await page.keyboard.press("Enter");
-      assert.ok(await page.locator(".level-detail").first().isVisible());
-      await page.locator("#levels > summary").click();
+      assert.ok(await page.locator(".closing-notes").isVisible());
+      await page.locator("#before-start > summary").click();
       for (const width of [360, 390, 768, 1440, 720]) {
         await page.setViewportSize({
           width,
           height: width === 720 ? 500 : 1000,
         });
-        await page.locator('[data-example="0"]').click();
+
         await page.evaluate(() =>
           window.scrollTo({ top: 0, behavior: "instant" }),
         );
@@ -163,25 +153,25 @@ const report = { views: [], scenarios: 0, errors: [], theme: {} };
             const r = element.getBoundingClientRect();
             return { x: r.x, y: r.y, right: r.right, bottom: r.bottom };
           };
-          const peers = [".capabilities", ".setup", ".example-grid"].map(
-            (selector) => {
-              const items = [...document.querySelector(selector).children].map(
-                rect,
-              );
-              const sameRow = items.every(
-                (item) => Math.abs(item.y - items[0].y) <= 1,
-              );
-              return {
-                selector,
-                sameRow,
-                delta: sameRow
-                  ? Math.max(...items.map((i) => i.bottom)) -
-                    Math.min(...items.map((i) => i.bottom))
-                  : 0,
-              };
-            },
-          );
-          const outside = [...document.querySelectorAll("main a,main button,header a")]
+          const peers = [".closing-guides", ".demo-steps"].map((selector) => {
+            const items = [...document.querySelector(selector).children].map(
+              rect,
+            );
+            const sameRow = items.every(
+              (item) => Math.abs(item.y - items[0].y) <= 1,
+            );
+            return {
+              selector,
+              sameRow,
+              delta: sameRow
+                ? Math.max(...items.map((i) => i.bottom)) -
+                  Math.min(...items.map((i) => i.bottom))
+                : 0,
+            };
+          });
+          const outside = [
+            ...document.querySelectorAll("main a,main button,header a"),
+          ]
             .filter((element) => element.getClientRects().length)
             .filter((element) => {
               const r = rect(element);
@@ -196,7 +186,7 @@ const report = { views: [], scenarios: 0, errors: [], theme: {} };
             outside,
             headlineBottom: rect(document.querySelector("h1")).bottom,
             ctaBottom: rect(document.querySelector(".hero .primary")).bottom,
-            outputsBottom: rect(document.querySelector(".result")).bottom,
+            outputsBottom: rect(document.querySelector(".mission")).bottom,
           };
         });
         assert.ok(
@@ -209,7 +199,11 @@ const report = { views: [], scenarios: 0, errors: [], theme: {} };
           `${lang} ${width} clipped controls`,
         );
         for (const rail of geometry.rails) {
-          assert.ok(Math.abs(rail.x - geometry.rails[0].x) <= 1 && Math.abs(rail.right - geometry.rails[0].right) <= 1, "Header, main and footer rails align");
+          assert.ok(
+            Math.abs(rail.x - geometry.rails[0].x) <= 1 &&
+              Math.abs(rail.right - geometry.rails[0].right) <= 1,
+            "Header, main and footer rails align",
+          );
         }
         geometry.peers.forEach((group) =>
           assert.ok(
@@ -220,11 +214,11 @@ const report = { views: [], scenarios: 0, errors: [], theme: {} };
         if (width === 1440)
           assert.ok(
             geometry.outputsBottom <= 1000,
-            "Desktop shows request and outputs in the first viewport",
+            "Desktop shows the goal and progress preview in the first viewport",
           );
         if (width <= 390)
           assert.ok(
-            geometry.ctaBottom <= 540,
+            geometry.ctaBottom <= 620,
             "Mobile shows the promise and primary action without a long scroll",
           );
         report.views.push({ lang, ...geometry });
@@ -239,10 +233,6 @@ const report = { views: [], scenarios: 0, errors: [], theme: {} };
         }
       }
       await page.setViewportSize({ width: 1440, height: 1000 });
-      await page.locator('[data-example="2"]').click();
-      await page
-        .locator(".example")
-        .screenshot({ path: path.join(output, `${lang}-quality-example.png`) });
       const links = await page
         .locator("a")
         .evaluateAll((links) =>
@@ -260,7 +250,10 @@ const report = { views: [], scenarios: 0, errors: [], theme: {} };
             link.href,
           );
       }
-      await page.locator(".language").click();
+      await page.locator(".sh-language > summary").click();
+      await page
+        .locator(`[data-locale-option="${lang === "ja" ? "en" : "ja"}"]`)
+        .click();
       assert.equal(
         await page.locator("html").getAttribute("lang"),
         lang === "ja" ? "en" : "ja",
@@ -317,11 +310,10 @@ const report = { views: [], scenarios: 0, errors: [], theme: {} };
     });
     const page = await noJs.newPage();
     await page.goto(origin + "/for/engineers/");
-    assert.ok(await page.locator("noscript").isVisible());
-    assert.ok(!(await page.locator("[data-example]").first().isVisible()));
-    await page.locator("#levels > summary").click();
-    await page.locator(".level summary").first().click();
-    assert.ok(await page.locator(".level-detail").first().isVisible());
+    assert.equal(await page.locator(".experience-story:visible").count(), 3);
+    assert.ok(!(await page.locator("[data-motion]").first().isVisible()));
+    await page.locator("#before-start > summary").click();
+    assert.ok(await page.locator(".closing-notes").isVisible());
     await page.goto(origin + "/ja.html");
     assert.equal(
       await page.locator(".engineering-home-link").getAttribute("href"),
@@ -334,7 +326,7 @@ const report = { views: [], scenarios: 0, errors: [], theme: {} };
       JSON.stringify(report, null, 2) + "\n",
     );
     console.log(
-      `PASS: ${report.scenarios} request/output examples, ${report.views.length} viewport/locale checks, keyboard, no-JS, local links and aligned geometry.`,
+      `PASS: ${report.views.length} viewport/locale checks, keyboard, no-JS, local links and aligned geometry.`,
     );
   } finally {
     await browser.close();
