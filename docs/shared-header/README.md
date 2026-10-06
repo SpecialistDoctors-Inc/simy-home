@@ -25,3 +25,10 @@ These cover six languages, desktop/mobile, JavaScript/no-JavaScript, actual sale
 navigation and legacy locale changes. External services are inert; no authentication
 or account writes are exercised. This follow-up stops at a Draft PR: merge/deploy
 and production checks are not authorized. SQM未実施：SIMY CLIのバグ修正後に別途実施予定。
+
+Japanese header labels and accessible control names are rendered directly in the
+shared HTML and synchronized on legacy language changes. English remains unchanged;
+other locales keep the existing English navigation. No new menus, layout or page
+content are introduced. The browser contract checks visible signup text and menu
+accessible names in Japanese/English, including no-JavaScript and repeated locale
+changes. Original AC-2.work/language/layout/account boundaries still apply.

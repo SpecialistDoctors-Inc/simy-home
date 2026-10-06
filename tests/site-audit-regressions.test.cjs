@@ -15,7 +15,7 @@ test('every shared header exposes deployable guide and legal destinations', () =
     assert.ok(header, `${file}: every rendered public page needs the shared header`);
     assert.equal((source.match(/<header class="simy-header"/g) || []).length, 1, `${file}: one shared header`);
     checked++;
-    const href = header.match(/href="([^"]+)">Guides<\/a>/)?.[1];
+    const href = header.match(/href="([^"]+)"><span data-header-label data-label-en="Guides"[^>]*>[^<]+<\/span><\/a>/)?.[1];
     assert.ok(href?.endsWith('/index.html'), `${file}: Guides must target a real S3 object`);
     assert.ok(fs.existsSync(path.join(site,href)), `${file}: Guides destination exists`);
     for (const target of ['/legal.html', '/seller-info.html']) assert.ok(header.includes(`href="${target}"`), `${file}: ${target} is reachable`);

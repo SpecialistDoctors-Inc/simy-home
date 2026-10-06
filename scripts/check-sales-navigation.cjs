@@ -24,9 +24,13 @@ const fs=require('node:fs'),path=require('node:path'),http=require('node:http'),
    await page.route('**/*',r=>new URL(r.request().url()).origin===base?r.continue():r.fulfill({status:204,body:''}));
    for(const locale of ['ja','en','fr','es','hi','zh-Hans']){
     await page.goto(base+(locale==='en'?'/':`/${locale}.html`));
+    assert.equal(await page.locator('.sh-language summary').getAttribute('aria-label'),`${locale==='ja'?'言語':'Language'}: ${{ja:'日本語',en:'English',fr:'Français',es:'Español',hi:'हिन्दी','zh-Hans':'简体中文'}[locale]}`);
+    assert.equal(await page.locator('.sh-store:not(.sh-google-play)').getAttribute('aria-label'),locale==='ja'?'App Storeでダウンロード':'Download on the App Store');
+    assert.equal(await page.locator('.sh-signup').textContent(),locale==='ja'?'新規登録':'Sign up');
+    assert.equal(await page.locator('.sh-menu-toggle').getAttribute('aria-label'),locale==='ja'?'メニュー':'Navigation menu');
     if(await page.locator('.sh-menu-toggle').isVisible())await page.locator('.sh-menu-toggle').click();
     await page.locator('.sh-navigation summary').nth(1).click();
-    const sales=page.locator('.sh-navigation').getByRole('link',{name:/^For sales/});
+    const sales=page.locator('.sh-navigation').locator('a[href*="/sales/"]');
     assert.ok(await sales.isVisible());
     const box=await sales.boundingBox();assert.ok(box.x>=0&&box.x+box.width<=width);
     if(out&&locale==='ja'){fs.mkdirSync(out,{recursive:true});await page.screenshot({path:path.join(out,`sales-ja-${width}-${js?'js':'nojs'}.png`)});}
@@ -40,9 +44,11 @@ const fs=require('node:fs'),path=require('node:path'),http=require('node:http'),
     for(const locale of ['fr','ja','en']){
      if(await page.locator('html').getAttribute('lang')!==locale){await page.locator('.sh-language summary').click();await page.locator(`[data-locale-option="${locale}"]`).click();}
      await page.waitForFunction(l=>document.documentElement.lang===l,locale);
+     await page.waitForFunction(l=>document.querySelector('.sh-signup').textContent===(l==='ja'?'新規登録':'Sign up'),locale);
+     assert.equal(await page.locator('.sh-menu-toggle').getAttribute('aria-label'),locale==='ja'?'メニュー':'Navigation menu');
      const link=page.locator('.sh-navigation a[href*="/sales/"]');assert.equal(await link.count(),1);
      assert.equal(new URL(await link.getAttribute('href'),base).pathname,locale==='ja'?'/for/sales/':'/for/en/sales/');
-     assert.equal(await link.textContent(),['ja','en'].includes(locale)?'For sales':'For sales (English)');
+     assert.equal(await link.textContent(),locale==='ja'?'営業':(locale==='en'?'For sales':'For sales (English)'));
     }
    }
    await page.close();

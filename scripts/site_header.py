@@ -10,6 +10,19 @@ ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "site"
 LOCALES = {"en": "English", "ja": "日本語", "hi": "हिन्दी", "es": "Español", "fr": "Français", "zh-Hans": "简体中文"}
 
+JA_LABELS = {
+    "Product": "プロダクト", "Solutions": "職業別", "Resources": "ガイド・情報",
+    "Overview": "できること", "How it works": "仕組み", "Apps & integrations": "連携アプリ",
+    "Download": "ダウンロード", "For your work": "職業から探す", "For engineers": "エンジニア",
+    "For financial planners": "ファイナンシャルプランナー", "For sales": "営業", "Use cases": "活用例",
+    "Guides": "ガイド", "Compare": "他サービスとの比較", "News": "お知らせ", "About SIMY": "SIMYについて",
+    "Security": "セキュリティ", "Contact": "お問い合わせ", "Legal & service information": "規約・サービス情報",
+    "Seller information": "特定商取引法に基づく表記", "Pricing": "料金", "Log in": "ログイン", "Sign up": "新規登録",
+    "Android availability": "Android版の提供状況", "Navigation menu": "メニュー", "Primary navigation": "メインナビゲーション",
+    "Download on the App Store": "App Storeでダウンロード",
+    "Mobile apps": "モバイルアプリ", "SIMY home": "SIMYホーム", "Language": "言語",
+}
+
 def home(locale):
     return "/" if locale == "en" else f"/{locale}.html"
 
@@ -21,30 +34,38 @@ def header(locale, source, path):
         "Solutions": [("For your work", ("/for/" if locale == "ja" else "/for/en/")), ("For engineers", ("/for/engineers/" if locale == "ja" else f"/for/{locale.lower()}/engineers/")), ("For financial planners", ("/for/financial-planners/" if locale == "ja" else f"/for/{locale.lower()}/financial-planners/")), ("For sales" if locale in ("ja", "en") else "For sales (English)", "/for/sales/" if locale == "ja" else "/for/en/sales/"), ("Use cases", base + "#use-cases")],
         "Resources": [("Guides", f"/guides/{suffix}index.html"), ("Compare", "/compare.html"), ("News", "/press-release.html"), ("About SIMY", "/about.html"), ("Security", "/security.html"), ("Contact", "/contact.html"), ("Legal & service information", "/legal.html"), ("Seller information", "/seller-info.html")],
     }
-    def link(label, href):
+    def label(text):
+        japanese = JA_LABELS.get(text, text)
+        visible = japanese if locale == "ja" else text
+        return f'<span data-header-label data-label-en="{html.escape(text, quote=True)}" data-label-ja="{html.escape(japanese, quote=True).encode("ascii", "xmlcharrefreplace").decode("ascii")}">{html.escape(visible)}</span>'
+    def accessible(text):
+        japanese = JA_LABELS.get(text, text)
+        visible = japanese if locale == "ja" else text
+        return f'aria-label="{visible}" data-aria-en="{text}" data-aria-ja="{html.escape(japanese, quote=True).encode("ascii", "xmlcharrefreplace").decode("ascii")}"'
+    def link(text, href):
         if href.endswith(".html") and href in ["/integrations.html", "/compare.html", "/press-release.html", "/about.html", "/security.html", "/contact.html"]:
             href += "?lang=" + locale
-        return f'<a href="{html.escape(href, quote=True)}">{label}</a>'
+        return f'<a href="{html.escape(href, quote=True)}">{label(text)}</a>'
     download = "/download.html" if locale == "ja" else f"/download/{locale.lower()}.html"
-    stores = f'''<div class="sh-stores" role="group" aria-label="Mobile apps">
-      <a class="sh-store" href="https://apps.apple.com/app/id6745385262"><img src="/assets/store-badges/app-store.svg" width="120" height="40" alt="Download on the App Store"></a>
-      <a class="sh-store sh-google-play" href="{download}#android" aria-label="Android availability"><img src="/assets/store-badges/google-play.png" width="155" height="60" alt="Google Play"><small>Android availability</small></a>
+    stores = f'''<div class="sh-stores" role="group" {accessible("Mobile apps")}>
+      <a class="sh-store" href="https://apps.apple.com/app/id6745385262" {accessible("Download on the App Store")}><img src="/assets/store-badges/app-store.svg" width="120" height="40" alt=""></a>
+      <a class="sh-store sh-google-play" href="{download}#android" {accessible("Android availability")}><img src="/assets/store-badges/google-play.png" width="155" height="60" alt="Google Play"><small>{label("Android availability")}</small></a>
     </div>'''
-    menus = "".join(f'<details class="sh-dropdown"><summary>{name}<span aria-hidden="true">⌄</span></summary><div class="sh-panel">' + "".join(link(label, href) for label, href in items) + (stores if name == "Product" else "") + '</div></details>' for name, items in groups.items())
+    menus = "".join(f'<details class="sh-dropdown"><summary>{label(name)}<span aria-hidden="true">⌄</span></summary><div class="sh-panel">' + "".join(link(label, href) for label, href in items) + (stores if name == "Product" else "") + '</div></details>' for name, items in groups.items())
     # Prefer an existing translated counterpart; otherwise use the localized home.
     alternatives = dict(re.findall(r'<link[^>]*hreflang="([^" ]+)"[^>]*href="https://simy.one([^" ]*)"', source))
     if re.search(r'<script[^>]+src="(?:/|(?:\.\./)*)i18n\.js', source):
         page_url = "/" + str(path.relative_to(SITE))
         alternatives = {code: page_url + "?lang=" + code for code in LOCALES}
-    options = "".join(f'<a href="{html.escape(alternatives.get(code, home(code)), quote=True)}" lang="{code}" hreflang="{code}" data-locale-option="{code}"' + (' aria-current="page"' if code == locale else '') + f'>{label}</a>' for code, label in LOCALES.items())
+    options = "".join(f'<a href="{html.escape(alternatives.get(code, home(code)), quote=True)}" lang="{code}" hreflang="{code}" data-locale-option="{code}"' + (' aria-current="page"' if code == locale else '') + f'>{language_name}</a>' for code, language_name in LOCALES.items())
     region = {"en": "us", "ja": "jp", "hi": "in", "es": "es", "fr": "fr"}.get(locale)
     params = f"lang={locale}&amp;locale={locale}" + (f"&amp;region={region}" if region else "")
     code = "ZH" if locale == "zh-Hans" else locale.upper()
     return f'''<header class="simy-header" translate="no" data-simy-no-translate>
   <div class="sh-frame">
-    <a class="sh-brand" href="{base}" aria-label="SIMY home"><img src="/simy-icon-56.png" width="32" height="32" alt=""><span>SIMY</span></a>
-    <details class="sh-menu"><summary class="sh-menu-toggle" aria-label="Navigation menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></summary><div class="sh-menu-panel"><div class="sh-navigation" role="navigation" aria-label="Primary navigation">{menus}<a class="sh-pricing" href="{base}#pricing">Pricing</a></div><a class="sh-login" data-existing-account-login href="https://app.simy.one/">Log in</a></div></details>
-    <div class="sh-account"><details class="sh-dropdown sh-language"><summary aria-label="Language: {LOCALES[locale]}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/></svg> {code}</summary><div class="sh-panel">{options}</div></details><a data-new-account-signup class="sh-signup" href="https://app.simy.one/signup?{params}">Sign up</a></div>
+    <a class="sh-brand" href="{base}" {accessible("SIMY home")}><img src="/simy-icon-56.png" width="32" height="32" alt=""><span>SIMY</span></a>
+    <details class="sh-menu"><summary class="sh-menu-toggle" {accessible("Navigation menu")}><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></summary><div class="sh-menu-panel"><div class="sh-navigation" role="navigation" {accessible("Primary navigation")}>{menus}<a class="sh-pricing" href="{base}#pricing">{label("Pricing")}</a></div><a class="sh-login" data-existing-account-login href="https://app.simy.one/">{label("Log in")}</a></div></details>
+    <div class="sh-account"><details class="sh-dropdown sh-language"><summary aria-label="{JA_LABELS["Language"] if locale == "ja" else "Language"}: {LOCALES[locale]}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/></svg> {code}</summary><div class="sh-panel">{options}</div></details><a data-new-account-signup class="sh-signup" href="https://app.simy.one/signup?{params}">{label("Sign up")}</a></div>
   </div>
 </header>'''
 
@@ -93,10 +114,10 @@ def apply(source, path):
     if parser.end is not None: source = source[:parser.start] + markup + source[parser.end:]
     else: source = re.sub(r'(<body[^>]*>)', lambda m: m[1] + markup, source, count=1)
     source = re.sub(r'[ \t]*<nav class="legal-mobile-toolbar".*?</nav>', '', source, flags=re.S)
-    assets = '<link rel="stylesheet" href="/site-header.css?v=20261006-sales-1">\n<script src="/site-header.js?v=20261006-sales-1" defer></script>\n'
+    assets = '<link rel="stylesheet" href="/site-header.css?v=20261006-ja-labels-1">\n<script src="/site-header.js?v=20261006-ja-labels-1" defer></script>\n'
     if '/site-header.css?' not in source:
         source = source.replace('</head>', assets + '</head>')
-    source = re.sub(r'(/site-header\.(?:css|js)\?v=)[^"\s]+', r'\g<1>20261006-sales-1', source)
+    source = re.sub(r'(/site-header\.(?:css|js)\?v=)[^"\s]+', r'\g<1>20261006-ja-labels-1', source)
     return source
 
 if __name__ == "__main__":

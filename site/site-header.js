@@ -12,8 +12,14 @@
   const syncLocale = () => {
     const locale = document.documentElement.lang;
     if (!labels[locale]) return;
+    header.querySelectorAll('[data-header-label]').forEach(label => {
+      label.textContent = locale === 'ja' ? label.dataset.labelJa : label.dataset.labelEn;
+    });
+    header.querySelectorAll('[data-aria-en]').forEach(control => {
+      control.setAttribute('aria-label', locale === 'ja' ? control.dataset.ariaJa : control.dataset.ariaEn);
+    });
     const summary = header.querySelector('.sh-language summary');
-    summary.setAttribute('aria-label', `Language: ${labels[locale]}`);
+    summary.setAttribute('aria-label', `${locale === 'ja' ? '言語' : 'Language'}: ${labels[locale]}`);
     summary.lastChild.textContent = ` ${locale === 'zh-Hans' ? 'ZH' : locale.toUpperCase()}`;
     header.querySelectorAll('.sh-language a').forEach(link => {
       if (link.lang === locale) link.setAttribute('aria-current', 'page');
@@ -31,7 +37,8 @@
       else if (url.pathname.includes('/financial-planners/')) url.pathname = locale === 'ja' ? '/for/financial-planners/' : `/for/${locale.toLowerCase()}/financial-planners/`;
       else if (url.pathname.includes('/sales/')) {
         url.pathname = locale === 'ja' ? '/for/sales/' : '/for/en/sales/';
-        link.textContent = ['ja', 'en'].includes(locale) ? 'For sales' : 'For sales (English)';
+        const label = link.querySelector('[data-header-label]');
+        label.textContent = locale === 'ja' ? '営業' : (locale === 'en' ? 'For sales' : 'For sales (English)');
       }
       else if (url.pathname.startsWith('/for/')) url.pathname = url.pathname.includes('engineers') ? (locale === 'ja' ? '/for/engineers/' : `/for/${locale.toLowerCase()}/engineers/`) : (locale === 'ja' ? '/for/' : '/for/en/');
       else if (url.pathname.startsWith('/guides/')) url.pathname = locale === 'ja' ? '/guides/index.html' : `/guides/${locale.toLowerCase()}/index.html`;
