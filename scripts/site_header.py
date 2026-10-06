@@ -17,7 +17,7 @@ def header(locale, source, path):
     suffix = "" if locale == "ja" else f"{locale.lower()}/"
     groups = {
         "Product": [("Overview", base + "#product"), ("How it works", base + "#how-it-works"), ("Apps & integrations", "/integrations.html"), ("Download", "/download.html" if locale == "ja" else f"/download/{locale.lower()}.html")],
-        "Solutions": [("For your work", ("/for/" if locale == "ja" else "/for/en/")), ("For engineers", ("/for/engineers/" if locale == "ja" else "/for/en/engineers/")), ("For financial planners", ("/for/financial-planners/" if locale == "ja" else f"/for/{locale.lower()}/financial-planners/")), ("Use cases", base + "#use-cases")],
+        "Solutions": [("For your work", ("/for/" if locale == "ja" else "/for/en/")), ("For engineers", ("/for/engineers/" if locale == "ja" else f"/for/{locale.lower()}/engineers/")), ("For financial planners", ("/for/financial-planners/" if locale == "ja" else f"/for/{locale.lower()}/financial-planners/")), ("Use cases", base + "#use-cases")],
         "Resources": [("Guides", f"/guides/{suffix}index.html"), ("Compare", "/compare.html"), ("News", "/press-release.html"), ("About SIMY", "/about.html"), ("Security", "/security.html"), ("Contact", "/contact.html"), ("Legal & service information", "/legal.html"), ("Seller information", "/seller-info.html")],
     }
     def link(label, href):
@@ -86,7 +86,7 @@ def apply(source, path):
     if '/site-header.css?' not in source:
         source = source.replace('</head>', '<link rel="stylesheet" href="/site-header.css?v=20261006-fp-2">\n<script src="/site-header.js?v=20261006-fp-2" defer></script>\n</head>')
     source = source.replace("/site-header.css?v=20261005-1", "/site-header.css?v=20261006-fp-2").replace("/site-header.js?v=20261005-1", "/site-header.js?v=20261006-fp-2")
-    source = source.replace("/site-header.js?v=20261005-2", "/site-header.js?v=20261006-fp-2").replace("/site-header.css?v=20261005-2", "/site-header.css?v=20261006-fp-2")
+    source = source.replace("/site-header.css?v=20261005-2", "/site-header.css?v=20261006-fp-2").replace("/site-header.js?v=20261006-locales-1", "/site-header.js?v=20261006-fp-2")
     source = source.replace("20261006-fp-1", "20261006-fp-2")
     return source
 

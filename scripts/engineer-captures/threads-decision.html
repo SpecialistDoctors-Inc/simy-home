@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="ja" data-sm-hidden="false">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SIMY Threads 設計プレビュー</title>
+<link rel="stylesheet" href="threads.css">
+</head>
+<body>
+<header class="topbar">
+<span class="brand">SIMY</span>
+<button>SIMYチーム ▾</button>
+<span class="small">このMac · 14:32 更新</span>
+</header>
+<div class="app">
+<aside class="sidebar">
+<div class="sidebarhead">
+<h1>Threads</h1>
+<span class="small">6</span>
+</div>
+<button class="searchline">⌕　検索</button>
+<div class="threadlist">
+<button class="threadrow selected sm-press" title="Claude Code" aria-current="true">
+<span class="threadtitle">
+<i class="dot ask">
+</i>フォーム改善</span>
+<span class="threadmeta">
+<span class="provider">経過 10h 20m</span>
+<span class="state ask">要確認</span>
+</span>
+</button>
+<button class="threadrow sm-press" title="Codex" aria-current="false">
+<span class="threadtitle">
+<span class="sm-status" data-sm-state="safe" data-sm-variant="dot" role="img" data-sm-observed="true" data-sm-offscreen="false">
+<span class="sm-icon" aria-hidden="true">
+<i class="sm-core">
+</i>
+<i class="sm-halo">
+</i>
+</span>
+</span>通知の重複修正</span>
+<span class="threadmeta">
+<span class="provider">経過 5h 10m</span>
+<span class="state ok">進行中</span>
+</span>
+</button>
+<button class="threadrow sm-press" title="Codex" aria-current="false">
+<span class="threadtitle">
+<span class="sm-status" data-sm-state="safe" data-sm-variant="dot" role="img" data-sm-observed="true" data-sm-offscreen="false">
+<span class="sm-icon" aria-hidden="true">
+<i class="sm-core">
+</i>
+<i class="sm-halo">
+</i>
+</span>
+</span>配信条件の見直し</span>
+<span class="threadmeta">
+<span class="provider">経過 18m</span>
+<span class="state ok">進行中</span>
+</span>
+</button>
+<button class="threadrow sm-press" title="Claude Code" aria-current="false">
+<span class="threadtitle">
+<i class="dot error">
+</i>会議一覧の高速化</span>
+<span class="threadmeta">
+<span class="provider">経過 2h 14m</span>
+<span class="state error">要対応</span>
+</span>
+</button>
+<button class="threadrow sm-press" title="Codex" aria-current="false">
+<span class="threadtitle">
+<i class="dot ">
+</i>検索結果の整理</span>
+<span class="threadmeta">
+<span class="provider">経過 46m</span>
+<span class="state ">停止</span>
+</span>
+</button>
+<button class="threadrow sm-press" title="Claude Code" aria-current="false">
+<span class="threadtitle">
+<i class="dot unknown">
+</i>レポート出力</span>
+<span class="threadmeta">
+<span class="provider">経過 3h 8m</span>
+<span class="state unknown">接続不明</span>
+</span>
+</button>
+</div>
+<div class="sidenote">
+<button class="linkbutton sm-press">完了済み</button>
+<button class="linkbutton sm-press">設定</button>
+<button class="linkbutton motion-shortcut sm-press" aria-pressed="false">動きを止める</button>
+</div>
+</aside>
+<main class="content">
+<nav class="crumb">
+<ol>
+<li>
+<button class="linkbutton sm-press">Threads</button>
+</li>
+<li>
+<span class="crumb-separator" aria-hidden="true">›</span>
+<span aria-current="page">フォーム改善</span>
+</li>
+</ol>
+</nav>
+<div class="compactrow">
+<h1>フォーム改善</h1>
+<span class="small">
+<button class="linkbutton sm-press">情報</button>　<button class="linkbutton sm-press">チャット ↗</button>
+</span>
+</div>
+<p class="goalshort">迷わず、申込みを完了できるように。</p>
+<div class="thread-facts">
+<div>
+<span class="fact-label">開始から</span>
+<strong class="elapsed-value">10時間20分</strong>
+<span class="fact-note">10/5 04:12 開始 · JST</span>
+</div>
+<div>
+<span class="fact-label">最後の進展</span>
+<strong>4分前</strong>
+<span class="fact-note">
+<button class="linkbutton sm-press">更新を見る →</button>
+</span>
+</div>
+<div>
+<span class="fact-label">完了条件</span>
+<strong>1 / 4</strong>
+<span class="fact-note">
+<button class="linkbutton sm-press">確認する →</button>
+</span>
+</div>
+</div>
+<section class="decisionbox">
+<div class="compactrow">
+<span class="state ask">● 要確認</span>
+<span class="small">確認待ち 3分</span>
+</div>
+<h2>既存の入力内容を引き継ぎますか？</h2>
+<p>再送時の扱いを選んでください。</p>
+<div class="choices">
+<div class="choice">
+<h3>引き継ぐ <span class="badge-muted">推奨</span>
+</h3>
+<p>入力し直す手間を減らします。</p>
+<button class="btn primary sm-press">引き継いで進める</button>
+</div>
+<div class="choice">
+<h3>毎回リセット</h3>
+<p>再送時は空の状態から入力します。</p>
+<button class="btn sm-press">リセットで進める</button>
+</div>
+</div>
+<div class="actions">
+<button class="linkbutton sm-press">別の回答を入力</button>
+</div>
+</section>
+<div class="continuing">
+<span class="state ok">● 進行中</span>
+<span>入力案内の確認は続行しています。</span>
+</div>
+<div class="split">
+<section>
+<div class="compactrow">
+<h3>次のステップ</h3>
+<button class="linkbutton sm-press">条件 →</button>
+</div>
+<div class="lineitem">
+<span class="state ok">●</span>二重送信の修正</div>
+<div class="lineitem">
+<span class="muted">2</span>操作・エラー復帰の確認</div>
+<div class="lineitem">
+<span class="muted">3</span>レビュー・PRの仕上げ</div>
+</section>
+<section>
+<div class="compactrow">
+<h3>更新</h3>
+<button class="linkbutton sm-press">すべて →</button>
+</div>
+<div class="lineitem">
+<time>14:28</time>
+<span>修正方法を変更</span>
+</div>
+<div class="lineitem">
+<time>14:23</time>
+<span>入力案内を更新</span>
+</div>
+<div class="lineitem">
+<time>14:16</time>
+<span>二重送信を再現</span>
+</div>
+</section>
+</div>
+<div class="compactinfo compactrow">
+<span>
+<strong>SQMチェック</strong>　<span class="small">再検証待ち</span>
+</span>
+<span class="small">
+<button class="linkbutton sm-press">知識 2件・結果 →</button>
+</span>
+</div>
+<section class="activity">
+<div class="activity-head">
+<div class="activity-link">
+<h3>稼働</h3>
+<button class="linkbutton sm-press">履歴 →</button>
+</div>
+<div class="range-controls">
+<button aria-pressed="true">全期間</button>
+<button aria-pressed="false">直近</button>
+<select id="range-size">
+<option value="15">15分</option>
+<option value="60" selected="">1時間</option>
+<option value="360">6時間</option>
+</select>
+</div>
+</div>
+<div class="activity-summary">
+<span>経過<b>10h 20m</b>
+</span>
+<span>実働<b>8h 46m</b>
+</span>
+<span>稼働率<b>85%</b>
+</span>
+<span class="scope">全期間の集計</span>
+</div>
+<div class="activity-bars" style="grid-template-columns:repeat(62,minmax(0,1fr))">
+<button class="activity-bin " data-bin="0" data-bin-end="10" style="background:linear-gradient(to right,var(--brand-mint) 0% 10%,var(--brand-mint) 10% 20%,var(--brand-mint) 20% 30%,var(--brand-mint) 30% 40%,var(--brand-mint) 40% 50%,var(--brand-mint) 50% 60%,var(--brand-mint) 60% 70%,var(--brand-mint) 70% 80%,var(--brand-mint) 80% 90%,var(--brand-mint) 90% 100%);border-color:var(--success)" title="04:12–04:22 · 実働 10m">
+</button>
+<button class="activity-bin " data-bin="10" data-bin-end="20" style="background:linear-gradient(to right,var(--brand-mint) 0% 10%,var(--brand-mint) 10% 20%,var(--brand-mint) 20% 30%,var(--brand-mint) 30% 40%,var(--brand-mint) 40% 50%,var(--brand-mint) 50% 60%,var(--brand-mint) 60% 70%,var(--brand-mint) 70% 80%,var(--brand-mint) 80% 90%,var(--brand-mint) 90% 100%);border-color:var(--success)" title="04:22–04:32 · 実働 10m">
+</button>
+<button class="activity-bin " data-bin="20" data-bin-end="30" style="background:linear-gradient(to right,var(--brand-mint) 0% 10%,var(--brand-mint) 10% 20%,var(--brand-mint) 20% 30%,var(--brand-mint) 30% 40%,var(--brand-mint) 40% 50%,var(--brand-mint) 50% 60%,var(--brand-mint) 60% 70%,var(--brand-mint) 70% 80%,var(--brand-mint) 80% 90%,var(--brand-mint) 90% 100%);border-color:var(--success)" title="04:32–04:42 · 実働 10m">
+</button>
+<button class="activity-bin " data-bin="30" data-bin-end="40" style="background:linear-gradient(to right,var(--brand-mint) 0% 10%,var(--brand-mint) 10% 20%,var(--brand-mint) 20% 30%,var(--brand-mint) 30% 40%,var(--brand-mint) 40% 50%,var(--brand-mint) 50% 60%,var(--brand-mint) 60% 70%,var(--brand-mint) 70% 80%,var(--brand-mint) 80% 90%,var(--brand-mint) 90% 100%);border-color:var(--success)" title="04:42–04:52 · 実働 10m">
+</button>
+<button class="activity-bin " data-bin="40" data-bin-end="50" style="background:linear-gradient(to right,var(--bg) 0% 10%,var(--bg) 10% 20%,var(--bg) 20% 30%,var(--bg) 30% 40%,var(--bg) 40% 50%,var(--bg) 50% 60%,var(--bg) 60% 70%,var(--bg) 70% 80%,var(--bg) 80% 90%,var(--bg) 90% 100%);border-color:var(--muted)" title="04:52–05:02 · 実働 0m">
+</button>
+<button class="activity-bin " data-bin="50" data-bin-end="60" style="background:linear-gradient(to right,var(--bg) 0% 10%,var(--bg) 10% 20%,var(--bg) 20% 30%,var(--bg) 30% 40%,var(--bg) 40% 50%,var(--brand-mint) 50% 60%,var(--brand-mint) 60% 70%,var(--brand-mint) 70% 80%,var(--brand-mint) 80% 90%,var(--brand-mint) 90% 100%);border-color:var(--success)" title="05:02–05:12 · 実働 5m">
+</button>
+<button class="activity-bin " data-bin="60" data-bin-end="70" style="background:linear-gradient(to right,var(--brand-mint) 0% 10%,var(--brand-mint) 10% 20%,var(--brand-mint) 20% 30%,var(--brand-mint) 30% 40%,var(--brand-mint) 40% 50%,var(--brand-mint) 50% 60%,var(--brand-mint) 60% 70%,var(--brand-mint) 70% 80%,var(--brand-mint) 80% 90%,var(--brand-mint) 90% 100%);border-color:var(--success)" title="05:12–05:22 · 実働 10m">
+</button>
+<button class="activity-bin " data-bin="70" data-bin-end="80" style="background:linear-gradient(to right,var(--brand-mint) 0% 10%,var(--brand-mint) 10% 20%,var(--brand-mint) 20% 30%,var(--brand-mint) 30% 40%,var(--brand-mint) 40% 50%,var(--brand-mint) 50% 60%,var(--brand-mint) 60% 70%,var(--brand-mint) 70% 80%,var(--brand-mint) 80% 90%,var(--brand-mint) 90% 100%);border-color:var(--success)" title="05:22–05:32 · 実働 10m">
+</button>
+<button class="activity-bin " data-bin="80" data-bin-end="90" style="background:linear-gradient(to right,var(--brand-mint) 0% 10%,var(--brand-mint) 10% 20%,var(--brand-mint) 20% 30%,var(--brand-mint) 30% 40%,var(--brand-mint) 40% 50%,var(--brand-mint) 50% 60%,var(--brand-mint) 60% 70%,var(--brand-mint) 70% 80%,var(--brand-mint) 80% 90%,var(--brand-mint) 90% 100%);border-color:var(--success)" title="05:32–05:42 · 実働 10m">
+</button>
+<button class="activity-bin " data-bin="90" data-bin-end="100" style="background:linear-gradient(to right,var(--brand-mint) 0% 10%,var(--brand-mint) 10% 20%,var(--brand-mint) 20% 30%,var(--brand-mint) 30% 40%,var(--brand-mint) 40% 50%,var(--brand-mint) 50% 60%,var(--brand-mint) 60% 70%,var(--brand-mint) 70% 80%,var(--brand-mint) 80% 90%,var(--brand-mint) 90% 100%);border-color:var(--success)" title="05:42–05:52 · 実働 10m">
+</button>
+<button class="activity-bin " data-bin="100" data-bin-end="110" style="background:linear-gradient(to right,var(--brand-mint) 0% 10%,var(--brand-mint) 10% 20%,var(--brand-mint) 20% 30%,var(--brand-mint) 30% 40%,var(--brand-mint) 40% 50%,var(--brand-mint) 50% 60%,var(--brand-mint) 60% 70%,var(--brand-mint) 70% 80%,var(--brand-mint) 80% 90%,var(--brand-mint) 90% 100%);border-color:var(--success)" title="05:52–06:02 · 実働 10m">
+</button>
+<button class="activity-bin " data-bin="110" data-bin-end="120" style="background:linear-gradient(to right,var(--brand-mint) 0% 10%,var(--brand-mint) 10% 20%,var(--brand-mint) 20% 30%,var(--brand-mint) 30% 40%,var(--brand-mint) 40% 50%,var(--brand-mint) 50% 60%,var(--brand-mint) 60% 70%,var(--brand-mint) 70% 80%,var(--brand-mint) 80% 90%,var(--brand-mint) 90% 100%);border-color:var(--success)" title="06:02–06:12 · 実働 10m">
+</button>
+<button class="activity-bin " data-bin="120" data-bin-end="130" style="background:linear-gradient(to right,var(--bg) 0% 10%,var(--bg) 10% 20%,var(--bg) 20% 30%,var(--bg) 30% 40%,var(--bg) 40% 50%,var(--bg) 50% 60%,var(--bg) 60% 70%,var(--bg) 70% 80%,var(--bg) 80% 90%,var(--bg) 90% 100%);border-color:var(--muted)" title="06:12–06:22 · 実働 0m">
+</button>
+<button class="activity-bin " data-bin="130" data-bin-end="140" style="background:linear-gradient(to right,var(--bg) 0% 10%,var(--bg) 10% 20%,var(--bg) 20% 30%,var(--bg) 30% 40%,var(--bg) 40% 50%,var(--bg) 50% 60%,var(--bg) 60% 70%,var(--bg) 70% 80%,var(--bg) 80% 90%,var(--bg) 90% 100%);border-color:var(--muted)" title="06:22–06:32 · 実働 0m">
+</button>
+<button class="activity-bin " data-bin="140" data-bin-end="150" style="background:linear-gradient(to right,var(--brand-mint) 0% 10%,var(--brand-mint) 10% 20%,var(--brand-mint) 20% 30%,var(--brand-mint) 30% 40%,var(--brand-mint) 40% 50%,var(--brand-mint) 50% 60%,var(--brand-mint) 60% 70%,var(--brand-mint) 70% 80%,var(--brand-mint) 80% 90%,var(--brand-mint) 90% 100%);border-color:var(--success)" title="06:32–06:42 · 実働 10m">
+</button>
+<button class="activity-bin " data-bin="150" data-bin-end="160" style="background:linear-gradient(to right,var(--brand-mint) 0% 10%,var(--brand-mint) 10% 20%,var(--brand-mint) 20% 30%,var(--brand-mint) 30% 40%,var(--brand-mint) 40% 50%,var(--brand-mint) 50% 60%,var(--brand-mint) 60% 70%,var(--brand-mint) 70% 80%,var(--brand-mint) 80% 90%,var(--brand-mint) 90% 100%);border-color:var(--success)" title="06:42–06:52 · 実働 10m">
+</button>
+<button class="activity-bin " data-bin="160" data-bin-end="170" style="background:linear-gradient(to right,var(--brand-mint) 0% 10%,var(--brand-mint) 10% 20%,var(--brand-mint) 20% 30%,var(--brand-mint) 30% 40%,var(--brand-mint) 40% 50%,var(--brand-mint) 50% 60%,var(--brand-mint) 60% 70%,var(--brand-mint) 70% 80%,var(--brand-mint) 80% 90%,var(--brand-mint) 90% 100%);border-color:var(--success)" title="06:52–07:02 · 実働 10m">
+</button>
+<button class="activity-bin " data-bin="170" data-bin-end="180" style="background:linear-gradient(to right,var(--brand-mint) 0% 10%,var(--brand-mint) 10% 20%,var(--brand-mint) 20% 30%,var(--brand-mint) 30% 40%,var(--brand-mint) 40% 50%,var(--brand-mint) 50% 60%,var(--brand-mint) 60% 70%,var(--brand-mint) 70% 80%,var(--brand-mint) 80% 90%,var(--brand-mint) 90% 100%);border-color:var(--success)" title="07:02–07:12 · 実働 10m">
+</button>
+<button class="activity-bin " data-bin="180" data-bin-end="190" style="background:linear-gradient(to right,var(--brand-mint) 0% 10%,var(--brand-mint) 10% 20%,var(--brand-mint) 20% 30%,var(--brand-mint) 30% 40%,var(--brand-mint) 40% 50%,var(--brand-mint) 50% 60%,var(--brand-mint) 60% 70%,var(--brand-mint) 70% 80%,var(--brand-mint) 80% 90%,var(--brand-mint) 90% 100%);border-color:var(--success)" title="07:12–07:22 · 実働 10m">
+</button>
+<button class="activity-bin " data-bin="190" data-bin-end="200" style="background:linear-gradient(to right,var(--brand-mint) 0% 10%,var(--brand-mint) 10% 20%,var(--brand-mint) 20% 30%,var(--brand-mint) 30% 40%,var(--brand-mint) 40% 50%,var(--brand-mint) 50% 60%,var(--brand-mint) 60% 70%,var(--brand-mint) 70% 80%,var(--brand-mint) 80% 90%,var(--brand-mint) 90% 100%);border-color:var(--success)" title="07:22–07:32 · 実働 10m">
+</button>
+<button class="activity-bin " data-bin="200" data-bin-end="210" style="background:linear-gradient(to right,var(--brand-mint) 0% 10%,var(--brand-mint) 10% 20%,var(--brand-mint) 20% 30%,var(--brand-mint) 30% 40%,var(--brand-mint) 40% 50%,var(--brand-mint) 50% 60%,var(--brand-mint) 60% 70%,var(--brand-mint) 70% 80%,var(--brand-mint) 80% 90%,var(--brand-mint) 90% 100%);border-color:var(--success)" title="07:32–07:42 · 実働 10m">
+</button>
+<button class="activity-bin " data-bin="210" data-bin-end="220" style="background:linear-gradient(to right,var(--brand-mint) 0% 10%,var(--brand-mint) 10% 20%,var(--brand-mint) 20% 30%,var(--brand-mint) 30% 40%,var(--brand-mint) 40% 50%,var(--brand-mint) 50% 60%,var(--brand-mint) 60% 70%,var(--brand-mint) 70% 80%,var(--brand-mint) 80% 90%,var(--brand-mint) 90% 100%);border-color:var(--success)" title="07:42–07:52 · 実働 10m">
+</button>
+<button class="activity-bin " data-bin="220" data-bin-end="230" style="background:linear-gradient(to right,var(--brand-mint) 0% 10%,var(--brand-mint) 10% 20%,var(--brand-mint) 20% 30%,var(--brand-mint) 30% 40%,var(--brand-mint) 40% 50%,var(--brand-mint) 50% 60%,var(--brand-mint) 60% 70%,var(--brand-mint) 70% 80%,var(--brand-mint) 80% 90%,var(--brand-mint) 90% 100%);border-color:var(--success)" title="07:52–08:02 · 実働 10m">
+</button>
+<button class="activity-bin " data-bin="230" data-bin-end="240" style="background:linear-gradient(to right,var(--brand-mint) 0% 10%,var(--brand-mint) 10% 20%,var(--brand-mint) 20% 30%,var(--brand-mint) 30% 40%,var(--brand-mint) 40% 50%,var(--brand-mint) 50% 60%,var(--brand-mint) 60% 70%,var(--brand-mint) 70% 80%,var(--brand-mint) 80% 90%,var(--brand-mint) 90% 100%);border-color:var(--success)" title="08:02–08:12 · 実働 10m">
+</button>
+<button class="activity-bin " data-bin="240" data-bin-end="250" style="background:linear-gradient(to right,var(--bg) 0% 10%,var(--bg) 10% 20%,var(--bg) 20% 30%,var(--bg) 30% 40%,var(--bg) 40% 50%,var(--bg) 50% 60%,var(--bg) 60% 70%,var(--bg) 70% 80%,var(--bg) 80% 90%,var(--bg) 90% 100%);border-color:var(--muted)" title="08:12–08:22 · 実働 0m">
+</button>
+<button class="activity-bin " data-bin="250" data-bin-end="260" style="background:linear-gradient(to right,var(--bg) 0% 10%,var(--bg) 10% 20%,var(--bg) 20% 30%,var(--bg) 30% 40%,var(--bg) 40% 50%,var(--bg) 50% 60%,var(--bg) 60% 70%,var(--bg) 70% 80%,var(--bg) 80% 90%,var(--bg) 90% 100%);border-color:var(--muted)" title="08:22–08:32 · 実働 0m">
+</button>
+<button class="activity-bin " data-bin="260" data-bin-end="270" style="background:linear-gradient(to right,var(--bg) 0% 10%,var(--bg) 10% 20%,var(--bg) 20% 30%,var(--bg) 30% 40%,var(--bg) 40% 50%,var(--bg) 50% 60%,var(--bg) 60% 70%,var(--bg) 70% 80%,var(--bg) 80% 90%,var(--bg) 90% 100%);border-color:var(--muted)" title="08:32–08:42 · 実働 0m">
+</button>
+<button class="activity-bin " data-bin="270" data-bin-end="280" style="background:linear-gradient(to right,var(--brand-mint) 0% 10%,var(--brand-mint) 10% 20%,var(--brand-mint) 20% 30%,var(--brand-mint) 30% 40%,var(--brand-mint) 40% 50%,var(--brand-mint) 50% 60%,var(--brand-mint) 60% 70%,var(--brand-mint) 70% 80%,var(--brand-mint) 80% 90%,var(--brand-mint) 90% 100%);border-color:var(--success)" title="08:42–08:52 · 実働 10m">
+</button>
+<button class="activity-bin " data-bin="280" data-bin-end="290" style="background:linear-gradient(to right,var(--brand-mint) 0% 10%,var(--brand-mint) 10% 20%,var(--brand-mint) 20% 30%,var(--brand-mint) 30% 40%,var(--brand-mint) 40% 50%,var(--brand-mint) 50% 60%,var(--brand-mint) 60% 70%,var(--brand-mint) 70% 80%,var(--brand-mint) 80% 90%,var(--brand-mint) 90% 100%);border-color:var(--success)" title="08:52–09:02 · 実働 10m">
+</button>
+<button class="activity-bin " data-bin="290" data-bin-end="300" style="background:linear-gradient(to right,var(--brand-mint) 0% 10%,var(--brand-mint) 10% 20%,var(--brand-mint) 20% 30%,var(--brand-mint) 30% 40%,var(--brand-mint) 40% 50%,var(--brand-mint) 50% 60%,var(--brand-mint) 60% 70%,var(--brand-mint) 70% 80%,var(--brand-mint) 80% 90%,var(--brand-mint) 90% 100%);border-color:var(--success)" title="09:02–09:12 · 実働 10m">
+</button>
+<button class="activity-bin " data-bin="300" data-bin-end="310" style="background:linear-gradient(to right,var(--brand-mint) 0% 10%,var(--brand-mint) 10% 20%,var(--brand-mint) 20% 30%,var(--brand-mint) 30% 40%,var(--brand-mint) 40% 50%,var(--brand-mint) 50% 60%,var(--brand-mint) 60% 70%,var(--brand-mint) 70% 80%,var(--brand-mint) 80% 90%,var(--brand-mint) 90% 100%);border-color:var(--success)" title="09:12–09:22 · 実働 10m">
+</button>
+<button class="activity-bin " data-bin="310" data-bin-end="320" style="background:linear-gradient(to right,var(--brand-mint) 0% 10%,var(--brand-mint) 10% 20%,var(--brand-mint) 20% 30%,var(--brand-mint) 30% 40%,var(--brand-mint) 40% 50%,var(--brand-mint) 50% 60%,var(--brand-mint) 60% 70%,var(--brand-mint) 70% 80%,var(--brand-mint) 80% 90%,var(--brand-mint) 90% 100%);border-color:var(--success)" title="09:22–09:32 · 実働 10m">
+</button>
+<button class="activity-bin " data-bin="320" data-bin-end="330" style="background:linear-gradient(to right,var(--brand-mint) 0% 10%,var(--brand-mint) 10% 20%,var(--brand-mint) 20% 30%,var(--brand-mint) 30% 40%,var(--brand-mint) 40% 50%,var(--brand-mint) 50% 60%,var(--brand-mint) 60% 70%,var(--brand-mint) 70% 80%,var(--brand-mint) 80% 90%,var(--brand-mint) 90% 100%);border-color:var(--success)" title="09:32–09:42 · 実働 10m">
+</button>
+<button class="activity-bin " data-bin="330" data-bin-end="340" style="background:linear-gradient(to right,var(--brand-mint) 0% 10%,var(--brand-mint) 10% 20%,var(--brand-mint) 20% 30%,var(--brand-mint) 30% 40%,var(--brand-mint) 40% 50%,var(--brand-mint) 50% 60%,var(--brand-mint) 60% 70%,var(--brand-mint) 70% 80%,var(--brand-mint) 80% 90%,var(--brand-mint) 90% 100%);border-color:var(--success)" title="09:42–09:52 · 実働 10m">
+</button>
+<button class="activity-bin " data-bin="340" data-bin-end="350" style="background:linear-gradient(to right,var(--brand-mint) 0% 10%,var(--brand-mint) 10% 20%,var(--brand-mint) 20% 30%,var(--brand-mint) 30% 40%,var(--brand-mint) 40% 50%,var(--brand-mint) 50% 60%,var(--brand-mint) 60% 70%,var(--brand-mint) 70% 80%,var(--brand-mint) 80% 90%,var(--brand-mint) 90% 100%);border-color:var(--success)" title="09:52–10:02 · 実働 10m">
+</button>
+<button class="activity-bin " data-bin="350" data-bin-end="360" style="background:linear-gradient(to right,var(--brand-mint) 0% 10%,var(--brand-mint) 10% 20%,var(--brand-mint) 20% 30%,var(--brand-mint) 30% 40%,var(--brand-mint) 40% 50%,var(--brand-mint) 50% 60%,var(--brand-mint) 60% 70%,var(--brand-mint) 70% 80%,var(--brand-mint) 80% 90%,var(--brand-mint) 90% 100%);border-color:var(--success)" title="10:02–10:12 · 実働 10m">
+</button>
+<button class="activity-bin " data-bin="360" data-bin-end="370" style="background:linear-gradient(to right,var(--brand-mint) 0% 10%,var(--brand-mint) 10% 20%,var(--brand-mint) 20% 30%,var(--brand-mint) 30% 40%,var(--brand-mint) 40% 50%,var(--brand-mint) 50% 60%,var(--brand-mint) 60% 70%,var(--brand-mint) 70% 80%,var(--brand-mint) 80% 90%,var(--brand-mint) 90% 100%);border-color:var(--success)" title="10:12–10:22 · 実働 10m">
+</button>
+<button class="activity-bin " data-bin="370" data-bin-end="380" style="background:linear-gradient(to right,var(--brand-mint) 0% 10%,var(--brand-mint) 10% 20%,var(--brand-mint) 20% 30%,var(--brand-mint) 30% 40%,var(--brand-mint) 40% 50%,var(--brand-mint) 50% 60%,var(--brand-mint) 60% 70%,var(--brand-mint) 70% 80%,var(--brand-mint) 80% 90%,var(--brand-mint) 90% 100%);border-color:var(--success)" title="10:22–10:32 · 実働 10m">
+</button>
+<button class="activity-bin " data-bin="380" data-bin-end="390" style="background:linear-gradient(to right,var(--brand-mint) 0% 10%,var(--brand-mint) 10% 20%,var(--brand-mint) 20% 30%,var(--brand-mint) 30% 40%,var(--brand-mint) 40% 50%,var(--brand-mint) 50% 60%,var(--brand-mint) 60% 70%,var(--brand-mint) 70% 80%,var(--brand-mint) 80% 90%,var(--brand-mint) 90% 100%);border-color:var(--success)" title="10:32–10:42 · 実働 10m">
+</button>
+<button class="activity-bin " data-bin="390" data-bin-end="400" style="background:linear-gradient(to right,var(--brand-mint) 0% 10%,var(--brand-mint) 10% 20%,var(--brand-mint) 20% 30%,var(--brand-mint) 30% 40%,var(--brand-mint) 40% 50%,var(--brand-mint) 50% 60%,var(--brand-mint) 60% 70%,var(--brand-mint) 70% 80%,var(--brand-mint) 80% 90%,var(--brand-mint) 90% 100%);border-color:var(--success)" title="10:42–10:52 · 実働 10m">
+</button>
+<button class="activity-bin " data-bin="400" data-bin-end="410" style="background:linear-gradient(to right,var(--brand-mint) 0% 10%,var(--brand-mint) 10% 20%,var(--brand-mint) 20% 30%,var(--brand-mint) 30% 40%,var(--brand-mint) 40% 50%,var(--brand-mint) 50% 60%,var(--brand-mint) 60% 70%,var(--brand-mint) 70% 80%,var(--brand-mint) 80% 90%,var(--brand-mint) 90% 100%);border-color:var(--success)" title="10:52–11:02 · 実働 10m">
+</button>
+<button class="activity-bin " data-bin="410" data-bin-end="420" style="background:linear-gradient(to right,var(--brand-mint) 0% 10%,var(--brand-mint) 10% 20%,var(--brand-mint) 20% 30%,var(--brand-mint) 30% 40%,var(--brand-mint) 40% 50%,var(--brand-mint) 50% 60%,var(--brand-mint) 60% 70%,var(--brand-mint) 70% 80%,var(--brand-mint) 80% 90%,var(--brand-mint) 90% 100%);border-color:var(--success)" title="11:02–11:12 · 実働 10m">
+</button>
+<button class="activity-bin " data-bin="420" data-bin-end="430" style="background:linear-gradient(to right,var(--brand-mint) 0% 10%,var(--brand-mint) 10% 20%,var(--brand-mint) 20% 30%,var(--brand-mint) 30% 40%,var(--brand-mint) 40% 50%,var(--brand-mint) 50% 60%,var(--brand-mint) 60% 70%,var(--brand-mint) 70% 80%,var(--brand-mint) 80% 90%,var(--brand-mint) 90% 100%);border-color:var(--success)" title="11:12–11:22 · 実働 10m">
+</button>
+<button class="activity-bin " data-bin="430" data-bin-end="440" style="background:linear-gradient(to right,var(--brand-mint) 0% 10%,var(--brand-mint) 10% 20%,var(--brand-mint) 20% 30%,var(--brand-mint) 30% 40%,var(--brand-mint) 40% 50%,var(--brand-mint) 50% 60%,var(--brand-mint) 60% 70%,var(--brand-mint) 70% 80%,var(--brand-mint) 80% 90%,var(--brand-mint) 90% 100%);border-color:var(--success)" title="11:22–11:32 · 実働 10m">
+</button>
+<button class="activity-bin " data-bin="440" data-bin-end="450" style="background:linear-gradient(to right,var(--brand-mint) 0% 10%,var(--brand-mint) 10% 20%,var(--brand-mint) 20% 30%,var(--brand-mint) 30% 40%,var(--brand-mint) 40% 50%,var(--bg) 50% 60%,var(--bg) 60% 70%,var(--bg) 70% 80%,var(--bg) 80% 90%,var(--bg) 90% 100%);border-color:var(--success)" title="11:32–11:42 · 実働 5m · 対応履歴あり">
+<i class="event-dot">
+</i>
+</button>
+<button class="activity-bin " data-bin="450" data-bin-end="460" style="background:linear-gradient(to right,var(--bg) 0% 10%,var(--bg) 10% 20%,var(--bg) 20% 30%,var(--bg) 30% 40%,var(--bg) 40% 50%,var(--bg) 50% 60%,var(--bg) 60% 70%,var(--bg) 70% 80%,var(--bg) 80% 90%,var(--bg) 90% 100%);border-color:var(--muted)" title="11:42–11:52 · 実働 0m">
+</button>
+<button class="activity-bin " data-bin="460" data-bin-end="470" style="background:linear-gradient(to right,var(--bg) 0% 10%,var(--bg) 10% 20%,var(--bg) 20% 30%,var(--bg) 30% 40%,var(--bg) 40% 50%,var(--bg) 50% 60%,var(--bg) 60% 70%,var(--bg) 70% 80%,var(--bg) 80% 90%,var(--bg) 90% 100%);border-color:var(--muted)" title="11:52–12:02 · 実働 0m">
+</button>
+<button class="activity-bin " data-bin="470" data-bin-end="480" style="background:linear-gradient(to right,var(--bg) 0% 10%,var(--bg) 10% 20%,var(--bg) 20% 30%,var(--bg) 30% 40%,var(--brand-mint) 40% 50%,var(--brand-mint) 50% 60%,var(--brand-mint) 60% 70%,var(--brand-mint) 70% 80%,var(--brand-mint) 80% 90%,var(--brand-mint) 90% 100%);border-color:var(--success)" title="12:02–12:12 · 実働 6m">
+</button>
+<button class="activity-bin " data-bin="480" data-bin-end="490" style="background:linear-gradient(to right,var(--brand-mint) 0% 10%,var(--brand-mint) 10% 20%,var(--brand-mint) 20% 30%,var(--brand-mint) 30% 40%,var(--brand-mint) 40% 50%,var(--brand-mint) 50% 60%,var(--brand-mint) 60% 70%,var(--brand-mint) 70% 80%,var(--brand-mint) 80% 90%,var(--brand-mint) 90% 100%);border-color:var(--success)" title="12:12–12:22 · 実働 10m">
+</button>
+<button class="activity-bin " data-bin="490" data-bin-end="500" style="background:linear-gradient(to right,var(--brand-mint) 0% 10%,var(--brand-mint) 10% 20%,var(--brand-mint) 20% 30%,var(--brand-mint) 30% 40%,var(--brand-mint) 40% 50%,var(--brand-mint) 50% 60%,var(--brand-mint) 60% 70%,var(--brand-mint) 70% 80%,var(--brand-mint) 80% 90%,var(--brand-mint) 90% 100%);border-color:var(--success)" title="12:22–12:32 · 実働 10m">
+</button>
+<button class="activity-bin " data-bin="500" data-bin-end="510" style="background:linear-gradient(to right,var(--brand-mint) 0% 10%,var(--brand-mint) 10% 20%,var(--brand-mint) 20% 30%,var(--brand-mint) 30% 40%,var(--brand-mint) 40% 50%,var(--brand-mint) 50% 60%,var(--brand-mint) 60% 70%,var(--brand-mint) 70% 80%,var(--brand-mint) 80% 90%,var(--brand-mint) 90% 100%);border-color:var(--success)" title="12:32–12:42 · 実働 10m">
+</button>
+<button class="activity-bin " data-bin="510" data-bin-end="520" style="background:linear-gradient(to right,var(--brand-mint) 0% 10%,var(--brand-mint) 10% 20%,var(--brand-mint) 20% 30%,var(--brand-mint) 30% 40%,var(--brand-mint) 40% 50%,var(--brand-mint) 50% 60%,var(--brand-mint) 60% 70%,var(--brand-mint) 70% 80%,var(--brand-mint) 80% 90%,var(--brand-mint) 90% 100%);border-color:var(--success)" title="12:42–12:52 · 実働 10m">
+</button>
+<button class="activity-bin " data-bin="520" data-bin-end="530" style="background:linear-gradient(to right,var(--brand-mint) 0% 10%,var(--brand-mint) 10% 20%,var(--brand-mint) 20% 30%,var(--brand-mint) 30% 40%,var(--brand-mint) 40% 50%,var(--brand-mint) 50% 60%,var(--brand-mint) 60% 70%,var(--brand-mint) 70% 80%,var(--brand-mint) 80% 90%,var(--brand-mint) 90% 100%);border-color:var(--success)" title="12:52–13:02 · 実働 10m">
+</button>
+<button class="activity-bin " data-bin="530" data-bin-end="540" style="background:linear-gradient(to right,var(--brand-mint) 0% 10%,var(--brand-mint) 10% 20%,var(--brand-mint) 20% 30%,var(--brand-mint) 30% 40%,var(--brand-mint) 40% 50%,var(--brand-mint) 50% 60%,var(--brand-mint) 60% 70%,var(--brand-mint) 70% 80%,var(--brand-mint) 80% 90%,var(--brand-mint) 90% 100%);border-color:var(--success)" title="13:02–13:12 · 実働 10m">
+</button>
+<button class="activity-bin " data-bin="540" data-bin-end="550" style="background:linear-gradient(to right,var(--brand-mint) 0% 10%,var(--brand-mint) 10% 20%,var(--brand-mint) 20% 30%,var(--brand-mint) 30% 40%,var(--brand-mint) 40% 50%,var(--brand-mint) 50% 60%,var(--brand-mint) 60% 70%,var(--brand-mint) 70% 80%,var(--brand-mint) 80% 90%,var(--brand-mint) 90% 100%);border-color:var(--success)" title="13:12–13:22 · 実働 10m">
+</button>
+<button class="activity-bin " data-bin="550" data-bin-end="560" style="background:linear-gradient(to right,var(--brand-mint) 0% 10%,var(--brand-mint) 10% 20%,var(--brand-mint) 20% 30%,var(--brand-mint) 30% 40%,var(--brand-mint) 40% 50%,var(--brand-mint) 50% 60%,var(--brand-mint) 60% 70%,var(--brand-mint) 70% 80%,var(--brand-mint) 80% 90%,var(--brand-mint) 90% 100%);border-color:var(--success)" title="13:22–13:32 · 実働 10m">
+</button>
+<button class="activity-bin " data-bin="560" data-bin-end="570" style="background:linear-gradient(to right,var(--brand-mint) 0% 10%,var(--brand-mint) 10% 20%,var(--brand-mint) 20% 30%,var(--brand-mint) 30% 40%,var(--brand-mint) 40% 50%,var(--brand-mint) 50% 60%,var(--brand-mint) 60% 70%,var(--brand-mint) 70% 80%,var(--brand-mint) 80% 90%,var(--brand-mint) 90% 100%);border-color:var(--success)" title="13:32–13:42 · 実働 10m">
+</button>
+<button class="activity-bin " data-bin="570" data-bin-end="580" style="background:linear-gradient(to right,var(--brand-mint) 0% 10%,var(--brand-mint) 10% 20%,var(--brand-mint) 20% 30%,var(--brand-mint) 30% 40%,var(--brand-mint) 40% 50%,var(--brand-mint) 50% 60%,var(--brand-mint) 60% 70%,var(--brand-mint) 70% 80%,var(--brand-mint) 80% 90%,var(--brand-mint) 90% 100%);border-color:var(--success)" title="13:42–13:52 · 実働 10m">
+</button>
+<button class="activity-bin " data-bin="580" data-bin-end="590" style="background:linear-gradient(to right,var(--brand-mint) 0% 10%,var(--brand-mint) 10% 20%,var(--brand-mint) 20% 30%,var(--brand-mint) 30% 40%,var(--brand-mint) 40% 50%,var(--brand-mint) 50% 60%,var(--brand-mint) 60% 70%,var(--brand-mint) 70% 80%,var(--brand-mint) 80% 90%,var(--brand-mint) 90% 100%);border-color:var(--success)" title="13:52–14:02 · 実働 10m">
+</button>
+<button class="activity-bin " data-bin="590" data-bin-end="600" style="background:linear-gradient(to right,var(--brand-mint) 0% 10%,var(--brand-mint) 10% 20%,var(--brand-mint) 20% 30%,var(--brand-mint) 30% 40%,var(--brand-mint) 40% 50%,var(--brand-mint) 50% 60%,var(--brand-mint) 60% 70%,var(--brand-mint) 70% 80%,var(--brand-mint) 80% 90%,var(--brand-mint) 90% 100%);border-color:var(--success)" title="14:02–14:12 · 実働 10m">
+</button>
+<button class="activity-bin " data-bin="600" data-bin-end="610" style="background:linear-gradient(to right,var(--brand-mint) 0% 10%,var(--brand-mint) 10% 20%,var(--brand-mint) 20% 30%,var(--brand-mint) 30% 40%,var(--brand-mint) 40% 50%,var(--brand-mint) 50% 60%,var(--brand-mint) 60% 70%,var(--brand-mint) 70% 80%,var(--brand-mint) 80% 90%,var(--brand-mint) 90% 100%);border-color:var(--success)" title="14:12–14:22 · 実働 10m">
+</button>
+<button class="activity-bin " data-bin="610" data-bin-end="620" style="background:linear-gradient(to right,var(--brand-mint) 0% 10%,var(--brand-mint) 10% 20%,var(--brand-mint) 20% 30%,var(--brand-mint) 30% 40%,var(--brand-mint) 40% 50%,var(--brand-mint) 50% 60%,var(--brand-mint) 60% 70%,var(--brand-mint) 70% 80%,var(--brand-mint) 80% 90%,var(--brand-mint) 90% 100%);border-color:var(--success)" title="14:22–14:32 · 実働 10m">
+</button>
+</div>
+<div class="axis">
+<span>04:12</span>
+<span>09:22</span>
+<span>14:32 現在</span>
+</div>
+<div class="activity-foot">
+<div class="activity-legend">
+<span>
+<i class="swatch">
+</i>実働</span>
+<span>
+<i class="swatch wait">
+</i>待機</span>
+<span>
+<i class="swatch issue">
+</i>対応履歴</span>
+</div>
+<span>10分単位 · 区間を選んで拡大</span>
+</div>
+</section>
+<footer class="bottomactions">
+<span class="footnote">設計プレビュー · サンプルデータ<br>
+<button class="linkbutton sm-press">ページ一覧</button>
+</span>
+<span>
+<button class="btn sm-press">条件</button>　<button class="btn sm-press">一時停止</button>
+</span>
+</footer>
+</main>
+</div>
+<div id="toast" role="status">
+</div>
+</body>
+</html>

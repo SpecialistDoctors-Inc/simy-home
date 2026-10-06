@@ -97,7 +97,7 @@ class Localize(HTMLParser):
                     target = '/for/' if self.locale == 'ja' else '/for/en/'
                     a['href'] = urlunsplit(url._replace(path=target))
                 elif url.path in ('/for/engineers/', '/for/en/engineers/'):
-                    target = '/for/engineers/' if self.locale == 'ja' else '/for/en/engineers/'
+                    target = '/for/engineers/' if self.locale == 'ja' else f'/for/{self.locale.lower()}/engineers/'
                     a['href'] = urlunsplit(url._replace(path=target))
                 elif url.path in ('/download.html', '/download/en.html'):
                     target = f'/download/{code}.html' if code else '/download.html'

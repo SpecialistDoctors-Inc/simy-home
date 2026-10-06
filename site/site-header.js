@@ -21,7 +21,7 @@
       const url = new URL(link.href);
       if (url.hash) url.pathname = home;
       else if (url.pathname.includes('/financial-planners/')) url.pathname = locale === 'ja' ? '/for/financial-planners/' : `/for/${locale.toLowerCase()}/financial-planners/`;
-      else if (url.pathname.startsWith('/for/')) url.pathname = (locale === 'ja' ? '/for/' : '/for/en/') + (url.pathname.includes('engineers') ? 'engineers/' : '');
+      else if (url.pathname.startsWith('/for/')) url.pathname = url.pathname.includes('engineers') ? (locale === 'ja' ? '/for/engineers/' : `/for/${locale.toLowerCase()}/engineers/`) : (locale === 'ja' ? '/for/' : '/for/en/');
       else if (url.pathname.startsWith('/guides/')) url.pathname = locale === 'ja' ? '/guides/index.html' : `/guides/${locale.toLowerCase()}/index.html`;
       else if (url.pathname.startsWith('/download')) url.pathname = locale === 'ja' ? '/download.html' : `/download/${locale.toLowerCase()}.html`;
       if (url.searchParams.has('lang')) url.searchParams.set('lang', locale);

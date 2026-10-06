@@ -3,13 +3,30 @@
 const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const path=require('node:path');
+const http=require('node:http');
 const {chromium}=require('playwright');
 const root=path.resolve(__dirname,'..');
 const out=path.join(root,'docs/financial-planners/screenshots');
 const assets=path.join(root,'site/assets/fp-experience');
-const base=process.env.SITE_URL || 'http://127.0.0.1:8765';
+let base=process.env.SITE_URL;
+let server;
 fs.mkdirSync(out,{recursive:true});fs.mkdirSync(assets,{recursive:true});
 (async()=>{
+ if(!base) {
+  const site=path.join(root,'site');
+  const types={'.html':'text/html; charset=utf-8','.css':'text/css','.js':'application/javascript','.png':'image/png','.svg':'image/svg+xml','.json':'application/json'};
+  server=http.createServer((req,res)=>{
+   const url=new URL(req.url,'http://localhost');
+   const file=path.resolve(site,'.'+decodeURIComponent(url.pathname)+(url.pathname.endsWith('/')?'index.html':''));
+   if(!file.startsWith(site+path.sep)){res.writeHead(403).end();return;}
+   fs.readFile(file,(err,data)=>{
+    if(err){res.writeHead(404).end();return;}
+    res.writeHead(200,{'Content-Type':types[path.extname(file)]||'application/octet-stream'}).end(data);
+   });
+  });
+  await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
+  base=`http://127.0.0.1:${server.address().port}`;
+ }
  const browser=await chromium.launch({channel:'chrome'});
  const report={checks:[],errors:[]};
  try {
@@ -106,5 +123,5 @@ fs.mkdirSync(out,{recursive:true});fs.mkdirSync(assets,{recursive:true});
  assert.deepEqual(report.errors,[]);
  fs.writeFileSync(path.join(out,'verification.json'),JSON.stringify(report,null,2)+'\n');
  console.log(JSON.stringify(report,null,2));
- } finally {await browser.close();}
+ } finally {await browser.close();if(server)await new Promise(resolve=>server.close(resolve));}
 })().catch(e=>{console.error(e);process.exitCode=1;});
