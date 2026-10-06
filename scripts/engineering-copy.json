@@ -72,7 +72,7 @@
     "pricing": "See pricing",
     "availability": "Availability depends on version, plan, and organization settings.",
     "back": "SIMY home",
-    "footerNote": "Threads: design previews. Quality Monitor: implementation captures with synthetic test data.",
+    "footerNote": "Threads: localized design previews. Quality Monitor: localized illustrations based on synthetic implementation test captures.",
     "startBody": "Download SIMY and connect Codex or Claude.",
     "guidesLabel": "How-to guides",
     "guides": [
@@ -92,5 +92,201 @@
     "beforeStart": "About these previews and availability",
     "controlLabel": "Merge and release approvals",
     "previewLabel": "The screens shown here"
+  },
+  "es": {
+    "path": "for/es/engineers/",
+    "other": "for/en/engineers/",
+    "otherlabel": "English",
+    "home": "/es.html",
+    "download": "/download/es.html",
+    "title": "SIMY para ingenieros — Código, pruebas y correcciones con IA.",
+    "description": "Delega la corrección de errores hasta las pruebas y la revisión. Sigue el progreso y las decisiones de la IA. Convierte errores anteriores en reglas de prevención. Explora tres ejemplos animados.",
+    "skip": "Ir al contenido",
+    "nav": "Qué puedes hacer",
+    "start": "Empezar",
+    "install": "Descargar SIMY",
+    "eyebrow": "SIMY PARA INGENIEROS",
+    "headline": [
+      "Pide a la IA que lo desarrolle.",
+      "Recibe el código y las comprobaciones."
+    ],
+    "lead": "«Corrige los envíos duplicados del formulario de registro».",
+    "sublead": "Revisa juntos los cambios de código, los resultados de las pruebas y la revisión.",
+    "secondary": "Ver las tres experiencias",
+    "provider": "Compatible con Codex y Claude",
+    "controlAnswer": "La integración y la publicación respetan los permisos y aprobaciones que has concedido. Los bloqueos que requieren intervención humana y los fallos repetidos pausan el trabajo, sin reintentos ilimitados.",
+    "ctaTitle": "Empieza con un error que quieras corregir.",
+    "pricing": "Ver precios",
+    "availability": "La disponibilidad depende de la versión, el plan y la configuración de la organización.",
+    "back": "Inicio de SIMY",
+    "footerNote": "Threads: vistas previas de diseño localizadas. Monitor de calidad: ilustraciones localizadas basadas en capturas de pruebas de implementación con datos sintéticos.",
+    "startBody": "Descarga SIMY y conecta Codex o Claude.",
+    "guidesLabel": "Guías de uso",
+    "guides": [
+      [
+        "simy-getting-started",
+        "Empezar con SIMY"
+      ],
+      [
+        "simy-delivery-loop",
+        "Delegar una tarea de desarrollo"
+      ],
+      [
+        "simy-sqm",
+        "Realizar comprobaciones de calidad"
+      ]
+    ],
+    "beforeStart": "Sobre estas vistas previas y la disponibilidad",
+    "controlLabel": "Aprobaciones para integrar y publicar",
+    "previewLabel": "Las pantallas que se muestran aquí",
+    "socialAlt": "Ejemplo ilustrativo del envío antes y después de la corrección",
+    "guideLanguageSuffix": " (en inglés)"
+  },
+  "fr": {
+    "path": "for/fr/engineers/",
+    "other": "for/en/engineers/",
+    "otherlabel": "English",
+    "home": "/fr.html",
+    "download": "/download/fr.html",
+    "title": "SIMY pour les ingénieurs — Code, tests et corrections avec l’IA.",
+    "description": "Déléguez les corrections jusqu’aux tests et à la revue. Suivez la progression et les décisions de l’IA. Transformez les bugs passés en règles de prévention. Découvrez trois exemples animés.",
+    "skip": "Aller au contenu",
+    "nav": "Fonctionnalités",
+    "start": "Commencer",
+    "install": "Télécharger SIMY",
+    "eyebrow": "SIMY POUR LES INGÉNIEURS",
+    "headline": [
+      "Confiez le développement à l’IA.",
+      "Recevez le code et les vérifications."
+    ],
+    "lead": "«Corrige les envois en double du formulaire d’inscription.»",
+    "sublead": "Examinez ensemble les modifications du code, les résultats des tests et de la revue.",
+    "secondary": "Voir les trois expériences",
+    "provider": "Fonctionne avec Codex et Claude",
+    "controlAnswer": "La fusion et la publication respectent les permissions et validations accordées. Les blocages nécessitant une intervention humaine et les échecs répétés suspendent le travail au lieu de provoquer des tentatives illimitées.",
+    "ctaTitle": "Commencez par un bug à corriger.",
+    "pricing": "Voir les tarifs",
+    "availability": "La disponibilité dépend de la version, de l’offre et des paramètres de l’organisation.",
+    "back": "Accueil SIMY",
+    "footerNote": "Threads : aperçus de conception traduits. Moniteur de qualité : illustrations traduites à partir de captures de tests d’implémentation avec des données synthétiques.",
+    "startBody": "Téléchargez SIMY et connectez Codex ou Claude.",
+    "guidesLabel": "Guides pratiques",
+    "guides": [
+      [
+        "simy-getting-started",
+        "Premiers pas avec SIMY"
+      ],
+      [
+        "simy-delivery-loop",
+        "Déléguer une tâche de développement"
+      ],
+      [
+        "simy-sqm",
+        "Exécuter les contrôles qualité"
+      ]
+    ],
+    "beforeStart": "À propos des aperçus et de la disponibilité",
+    "controlLabel": "Validations de fusion et de publication",
+    "previewLabel": "Les écrans présentés ici",
+    "socialAlt": "Exemple illustratif de l’envoi avant et après correction",
+    "guideLanguageSuffix": " (en anglais)"
+  },
+  "hi": {
+    "path": "for/hi/engineers/",
+    "other": "for/en/engineers/",
+    "otherlabel": "English",
+    "home": "/hi.html",
+    "download": "/download/hi.html",
+    "title": "इंजीनियरों के लिए SIMY — AI से कोड, परीक्षण और सुधार।",
+    "description": "बग सुधार से लेकर परीक्षण और समीक्षा तक काम सौंपें। AI की प्रगति और निर्णय देखें। पुराने बग से रोकथाम के नियम बनाएं। तीन एनिमेटेड उदाहरण देखें।",
+    "skip": "मुख्य सामग्री पर जाएं",
+    "nav": "क्या कर सकते हैं",
+    "start": "शुरू करें",
+    "install": "SIMY डाउनलोड करें",
+    "eyebrow": "इंजीनियरों के लिए SIMY",
+    "headline": [
+      "AI को बनाने के लिए कहें।",
+      "कोड और जांच के नतीजे पाएं।"
+    ],
+    "lead": "“पंजीकरण फ़ॉर्म में दोहरे सबमिशन ठीक करो।”",
+    "sublead": "कोड के बदलाव, परीक्षण के नतीजे और समीक्षा के निष्कर्ष एक साथ देखें।",
+    "secondary": "तीनों अनुभव देखें",
+    "provider": "Codex और Claude के साथ काम करता है",
+    "controlAnswer": "मर्ज और रिलीज़ आपके दिए गए अधिकारों और मंज़ूरियों के अनुसार होते हैं। इंसानी निर्णय की ज़रूरत या बार-बार विफलता होने पर काम रुकता है; अनगिनत कोशिशें नहीं होतीं।",
+    "ctaTitle": "जिस बग को ठीक करना है, उससे शुरू करें।",
+    "pricing": "कीमतें देखें",
+    "availability": "उपलब्धता संस्करण, प्लान और संगठन की सेटिंग पर निर्भर करती है।",
+    "back": "SIMY होम",
+    "footerNote": "Threads: अनूदित डिज़ाइन प्रीव्यू। गुणवत्ता मॉनिटर: कृत्रिम डेटा वाले कार्यान्वयन परीक्षण के स्क्रीनशॉट पर आधारित अनूदित चित्र।",
+    "startBody": "SIMY डाउनलोड करें और Codex या Claude जोड़ें।",
+    "guidesLabel": "उपयोग की गाइड",
+    "guides": [
+      [
+        "simy-getting-started",
+        "SIMY से शुरुआत करें"
+      ],
+      [
+        "simy-delivery-loop",
+        "विकास का काम सौंपें"
+      ],
+      [
+        "simy-sqm",
+        "गुणवत्ता जांच करें"
+      ]
+    ],
+    "beforeStart": "इन प्रीव्यू और उपलब्धता के बारे में",
+    "controlLabel": "मर्ज और रिलीज़ की मंज़ूरी",
+    "previewLabel": "यहां दिखाई गई स्क्रीन",
+    "socialAlt": "सुधार से पहले और बाद के सबमिशन का उदाहरण",
+    "guideLanguageSuffix": " (अंग्रेज़ी)"
+  },
+  "zh-Hans": {
+    "path": "for/zh-hans/engineers/",
+    "other": "for/en/engineers/",
+    "otherlabel": "English",
+    "home": "/zh-Hans.html",
+    "download": "/download/zh-hans.html",
+    "title": "SIMY 工程师版 — 用 AI 编写代码、测试并修复问题。",
+    "description": "将问题修复、测试和审查交给 AI。查看进度和待决事项。把过去的问题变成预防规则。通过三个动画示例了解完整体验。",
+    "skip": "跳转到正文",
+    "nav": "功能介绍",
+    "start": "开始使用",
+    "install": "下载 SIMY",
+    "eyebrow": "为工程师打造的 SIMY",
+    "headline": [
+      "让 AI 完成开发。",
+      "拿到代码与验证结果。"
+    ],
+    "lead": "“修复注册表单的重复提交问题。”",
+    "sublead": "一起查看代码变更、测试结果和审查结论。",
+    "secondary": "查看三种体验",
+    "provider": "与 Codex 和 Claude 配合使用",
+    "controlAnswer": "合并与发布遵循您授予的权限和批准。遇到需要人工处理的阻碍或反复失败时，工作会暂停，不会无限重试。",
+    "ctaTitle": "先从一个想修复的问题开始。",
+    "pricing": "查看价格",
+    "availability": "可用功能取决于版本、套餐和组织设置。",
+    "back": "SIMY 首页",
+    "footerNote": "Threads：本地化设计预览。质量监控：基于合成数据实现测试截图制作的本地化示意图。",
+    "startBody": "下载 SIMY 并连接 Codex 或 Claude。",
+    "guidesLabel": "使用指南",
+    "guides": [
+      [
+        "simy-getting-started",
+        "开始使用 SIMY"
+      ],
+      [
+        "simy-delivery-loop",
+        "委托开发任务"
+      ],
+      [
+        "simy-sqm",
+        "执行质量检查"
+      ]
+    ],
+    "beforeStart": "关于预览和功能可用性",
+    "controlLabel": "合并与发布批准",
+    "previewLabel": "这里展示的界面",
+    "socialAlt": "修复前后提交行为的示例",
+    "guideLanguageSuffix": "（英文）"
   }
 }

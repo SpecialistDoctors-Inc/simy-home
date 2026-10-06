@@ -67,6 +67,10 @@ for (const [name, source] of [['production', production], ['Terraform', terrafor
       ['/for/engineers', '/for/engineers/'], ['/for/engineers.html', '/for/engineers/'],
       ['/for/engineers/index.html', '/for/engineers/'],
       ['/for/en/engineers', '/for/en/engineers/'], ['/for/en/engineers/index.html', '/for/en/engineers/'],
+      ...['es', 'fr', 'hi', 'zh-hans'].flatMap(locale =>
+        ['', '.html', '/index.html'].map(suffix => [
+          `/for/${locale}/engineers${suffix}`, `/for/${locale}/engineers/`,
+        ])),
     ]) {
       const query = {utm_source: {value:'release mail'}, tag:{multiValue:[{value:'a'},{value:'b'}]}};
       const result = run({request: request(legacy, query)});
