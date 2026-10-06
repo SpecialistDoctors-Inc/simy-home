@@ -61,10 +61,12 @@ jobs:
         run: |
           aws s3 sync site/for/ s3://${{ secrets.SITE_S3_BUCKET }}/for/ \
             --cache-control "public, max-age=300"
-          for asset in site-theme.css engineers.css engineers.js; do
+          for asset in site-theme.css engineers.css engineers.js financial-planners.css financial-planners.js site-header.css site-header.js; do
             aws s3 cp "site/$asset" "s3://${{ secrets.SITE_S3_BUCKET }}/$asset" \
               --cache-control "public, max-age=86400"
           done
+          aws s3 sync site/assets/fp-experience/ "s3://${{ secrets.SITE_S3_BUCKET }}/assets/fp-experience/" \
+            --cache-control "public, max-age=86400"
           bash scripts/publish-occupation-pages.sh "${{ secrets.SITE_S3_BUCKET }}"
 
       # downloads/ belongs to the CLI release publisher. Exclude it from

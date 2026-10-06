@@ -11,6 +11,8 @@
 .simy-header .sh-navigation, .simy-header .sh-account { display: flex; align-items: center; gap: 28px; }
 .simy-header .sh-account { margin-left: auto; gap: 20px; }
 .simy-header .sh-dropdown { position: relative; margin: 0; padding: 0; border: 0; background: transparent; }
+/* Open menus must stay above the store row when the header wraps. */
+.simy-header .sh-dropdown[open] { z-index: 2; }
 .simy-header summary { list-style: none; }
 .simy-header summary::-webkit-details-marker { display: none; }
 .simy-header summary::after { content: none; }
