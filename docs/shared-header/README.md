@@ -11,3 +11,17 @@ Run rendered verification with `NODE_PATH=<Playwright installation> node scripts
 The requested GPT-5.5/xhigh model is unavailable. A separate available-model agent reviewed the implementation and regression script; all findings were corrected and re-reviewed. Physical-device Safari testing is not part of this verification.
 
 Release through the existing main-branch S3/CloudFront workflow. After deployment, verify published header HTML, resources and representative desktop/mobile interactions. Rollback: revert this PR and deploy through the same workflow; no data or infrastructure migration. A published page missing the shared header, broken menu destinations or failed header assets warrants rollback.
+
+## Sales navigation follow-up
+
+AC-2.work: the shared Solutions menu includes the existing Japanese sales page and
+English sales page. Other languages explicitly label the English fallback; legacy
+same-page language changes retain the sales destination and update that label.
+Only header markup and its asset version change on the 171 generated pages.
+Run `node --test tests/header-sales.test.cjs` for all-page destination and repeated
+locale-transition contracts. Rendered checks:
+`NODE_PATH=<Playwright installation> HEADER_REPORT_DIR=<external directory> node scripts/check-sales-navigation.cjs`.
+These cover six languages, desktop/mobile, JavaScript/no-JavaScript, actual sales
+navigation and legacy locale changes. External services are inert; no authentication
+or account writes are exercised. This follow-up stops at a Draft PR: merge/deploy
+and production checks are not authorized. SQM未実施：SIMY CLIのバグ修正後に別途実施予定。
