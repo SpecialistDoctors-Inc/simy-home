@@ -26,8 +26,11 @@ account screenshot is published. The PR body identifies the final revision and
 which observations were recollected for it.
 
 Independent final review must inspect the exact committed candidate, source diff,
-acceptance gaps, current checks and raw browser observations. Signed SQM must state
-actual evaluated-rule coverage; a zero-rule pass is not feature coverage. CI must
+acceptance gaps, current checks and raw browser observations. For this
+2026-10-06 continuation, the user explicitly excluded SQM execution and removed
+it as a commit/push/Draft-PR gate. SQM未実施：SIMY CLIのバグ修正後に別途実施予定。
+Older zero-rule SQM receipts are historical evidence, not acceptance of this
+candidate. CI must
 match the PR head and disclose skips. These are required gates, not assertions
 that this document itself proves them.
 

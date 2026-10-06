@@ -21,7 +21,7 @@
   var TWIN_PAGE_LOCALES = SUPPORTED;
   var CACHE = {};
   var CURRENT_LANG = DEFAULT;
-  var I18N_VERSION = '20261003-sitewide-seo-1';
+  var I18N_VERSION = '20261005-locale-audit-1';
   var BUNDLE_LOADING = {};
 
   /* ── Home (/) React SPA translation bridge ──
@@ -275,7 +275,8 @@
       // Static language URLs already identify their content language. Keep
       // explicit language-switch links and their attribution parameters intact.
       if (/^\/(?:ja|hi|es|fr|zh-Hans)\.html$/.test(url.pathname) ||
-          /^\/(?:guides|download)(?:\/|\.html$)/.test(url.pathname)) return href;
+          /^\/(?:guides|download)(?:\/|\.html$)/.test(url.pathname) ||
+          /^\/news\/20261005(?:-en)?\.html$/.test(url.pathname)) return href;
       if (url.pathname === '/' || url.pathname === '/index.html') {
         var homeLang = url.searchParams.get('lang') || CURRENT_LANG || document.documentElement.lang;
         var homePaths = { en: '/', ja: '/ja.html', hi: '/hi.html', es: '/es.html', fr: '/fr.html', 'zh-Hans': '/zh-Hans.html' };
@@ -301,6 +302,7 @@
     var scope = root && root.querySelectorAll ? root : document;
     var links = scope.querySelectorAll('a[href]');
     for (var i = 0; i < links.length; i++) {
+      if (links[i].getAttribute('data-locale-option')) continue;
       var href = links[i].getAttribute('href');
       if (!href) continue;
       // Recompute from the authored URL when a visitor changes language again.
@@ -344,6 +346,7 @@
         target = target.parentNode;
       }
       if (!target || target === document || !target.getAttribute) return;
+      if (target.getAttribute('data-locale-option')) return;
       var href = target.getAttribute('href');
       if (!href) return;
       var nextHref = href.indexOf('app.simy.one') !== -1
@@ -1415,6 +1418,30 @@
     var display = document.getElementById('langDisplay');
     if (display && meta.name) {
       display.textContent = meta.name;
+    }
+
+    // Content shortcuts use the same six authored guide/download locales as the header.
+    var contentLocale = ['en', 'ja', 'hi', 'es', 'fr', 'zh-Hans'].indexOf(meta.code) !== -1 ? meta.code : 'en';
+    var guidePrefix = contentLocale === 'ja' ? '/guides/' : '/guides/' + contentLocale.toLowerCase() + '/';
+    var guideShortcuts = document.querySelectorAll('[data-localized-guide]');
+    for (var g = 0; g < guideShortcuts.length; g++) {
+      guideShortcuts[g].href = guidePrefix + guideShortcuts[g].getAttribute('data-localized-guide');
+    }
+    var downloadShortcuts = document.querySelectorAll('[data-localized-download]');
+    for (var d = 0; d < downloadShortcuts.length; d++) {
+      downloadShortcuts[d].href = contentLocale === 'ja' ? '/download.html' : '/download/' + contentLocale.toLowerCase() + '.html';
+    }
+
+    // The latest announcement follows the selected UI locale; reports exist in JA/EN.
+    var latestRelease = document.getElementById('latestRelease');
+    if (latestRelease) {
+      var reportIsJa = meta.code === 'ja';
+      latestRelease.lang = dict['newpress.latest.title'] ? meta.code : 'en';
+      var latestLinks = latestRelease.querySelectorAll('[data-latest-report]');
+      for (var n = 0; n < latestLinks.length; n++) {
+        latestLinks[n].href = reportIsJa ? '/news/20261005.html' : '/news/20261005-en.html';
+      }
+      latestRelease.querySelector('[data-other-report]').href = reportIsJa ? '/news/20261005-en.html' : '/news/20261005.html';
     }
 
     // Press release: swap to the polished hand-written JA article when lang=ja,

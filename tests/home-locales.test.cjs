@@ -83,31 +83,12 @@ test("Hindi, Spanish, French, and Simplified Chinese cover all homepage copy", (
   }
 });
 
-test("homepage exposes every supported language in one responsive, no-JS-safe picker", () => {
+test("homepage exposes all languages as native links", () => {
+  const header = homeHtml.match(/<header class="simy-header"[\s\S]*?<\/header>/)[0];
   for (const locale of ["en", "ja", "hi", "es", "fr", "zh-Hans"]) {
-    assert.equal(
-      homeHtml.match(new RegExp(`data-locale-option="${locale}"`, "g"))?.length,
-      1,
-      `${locale} must appear once in the responsive language picker`
-    );
-    assert.match(homeHtml, new RegExp(`hreflang="${locale}"`), `${locale} must have an hreflang link`);
+    assert.match(header, new RegExp(`lang="${locale}" hreflang="${locale}"`));
   }
-  assert.match(homeHtml, /<details class="language-picker"[^>]*data-language-picker>/);
-  assert.match(homeHtml, /<summary class="language-trigger"[^>]*aria-label="Language: English"[^>]*data-language-trigger/);
-  assert.doesNotMatch(homeHtml, /<summary class="language-trigger"[^>]*aria-expanded=/);
-  assert.doesNotMatch(homeHtml, /data-language-panel[^>]*hidden/);
-  assert.doesNotMatch(homeHtml, /data-locale-select/);
-  assert.match(i18nSource, /option\.setAttribute\("aria-current", "true"\)/);
-  assert.match(i18nSource, /trigger\.setAttribute\("aria-label", `\$\{translate\("Language"\)\}: \$\{presentation\.label\}`\)/);
-  assert.match(homeCss, /\.language-trigger\s*\{[^}]*min-height:\s*2\.75rem/s);
-  assert.match(
-    homeCss,
-    /@media \(max-width: 620px\)[\s\S]*?\.language-option-grid\s*\{[^}]*grid-template-columns:\s*repeat\(3,\s*minmax\(0,\s*1fr\)\)/s
-  );
-  assert.match(
-    homeCss,
-    /@media \(max-width: 620px\)[\s\S]*?\.language-option\s*\{[^}]*min-height:\s*3\.25rem/s
-  );
+  assert.match(header, /<details class="sh-dropdown sh-language">/);
 });
 
 test("locale bundle loads before the homepage translation runtime", () => {
@@ -120,7 +101,7 @@ test("locale bundle loads before the homepage translation runtime", () => {
 test("existing-account login links open the SIMY app home", () => {
   const loginLinks = [...homeHtml.matchAll(/<a\b[^>]*data-existing-account-login[^>]*>/g)];
 
-  assert.equal(loginLinks.length, 4, "desktop header, mobile header, final CTA, and footer must expose login");
+  assert.equal(loginLinks.length, 3, "shared header, final CTA, and footer must expose login");
   for (const [link] of loginLinks) {
     assert.match(link, /href="https:\/\/app\.simy\.one\/"/);
   }
@@ -304,32 +285,14 @@ test("pricing decision copy remains visibly larger than disclaimer typography", 
   assert.doesNotMatch(homeHtml, /pricing-enterprise-badge/, "Enterprise must not show a redundant inquiry badge above its heading");
 });
 
-test("header exposes direct login and signup actions outside the mobile menu", () => {
-  assert.match(
-    homeHtml,
-    /<div class="nav-actions">[\s\S]*?data-existing-account-login[\s\S]*?data-new-account-signup[\s\S]*?<\/div>/,
-    "login and signup must remain visible in the page header"
-  );
-  assert.match(
-    homeHtml,
-    /<div class="site-frame mobile-auth-actions"[^>]*>[\s\S]*?data-existing-account-login[\s\S]*?data-new-account-signup[\s\S]*?<\/div>/,
-    "mobile login and signup must follow the menu button in logical focus order"
-  );
-  const signupLinks = [...homeHtml.matchAll(/<a\b[^>]*data-new-account-signup[^>]*>/g)];
-  assert.equal(signupLinks.length, 2, "desktop and mobile headers must expose signup");
-  for (const [link] of signupLinks) {
-    assert.match(link, /href="https:\/\/app\.simy\.one\/signup\?lang=en&amp;locale=en&amp;region=us"/);
-  }
-  assert.doesNotMatch(
-    homeHtml,
-    /<nav class="mobile-menu"[\s\S]*?(?:data-existing-account-login|data-new-account-signup)[\s\S]*?<\/nav>/,
-    "auth actions must not be duplicated behind the hamburger menu"
-  );
-  assert.match(
-    homeCss,
-    /@media \(max-width: 620px\)[\s\S]*?\.mobile-auth-actions\s*\{[^}]*display:\s*grid;[^}]*grid-template-columns:\s*repeat\(2,\s*minmax\(0,\s*1fr\)\);/s,
-    "narrow screens must show login and signup in a full-width header row"
-  );
+test("header exposes login and signup at every viewport without duplication", () => {
+  const header = homeHtml.match(/<header class="simy-header"[\s\S]*?<\/header>/)[0];
+  assert.match(header, /data-existing-account-login/);
+  assert.equal((header.match(/data-existing-account-login/g) || []).length, 1);
+  assert.match(header, /class="sh-account"[\s\S]*data-new-account-signup/);
+  assert.match(header, /class="sh-brand"[\s\S]*src="\/simy-icon-56.png"/);
+  assert.equal((header.match(/data-new-account-signup/g) || []).length, 1);
+  assert.match(header, /https:\/\/app\.simy\.one\/signup\?lang=en&amp;locale=en&amp;region=us/);
 });
 
 test("connected apps feature the three AI coding tools without disturbing the work-apps grid", () => {

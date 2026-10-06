@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Build the declared JA/EN occupation and workflow pages; --check is read-only."""
+from site_header import apply as apply_header
 import argparse
 import importlib.util
 import json
@@ -31,6 +32,10 @@ LABELS = {
 
 
 def ref(ident, lang):
+    if ident == 'financial-planners':
+        return ('/for/financial-planners/' if lang == 'ja' else '/for/en/financial-planners/',
+                'ファイナンシャルプランナー向けSIMY' if lang == 'ja' else 'SIMY for financial planners',
+                '面談の整理、iOSでの音声ロールプレイ、チームの経験を次の相談へ。' if lang == 'ja' else 'Meeting follow-up, voice role-play on iOS and shared experience for your next consultation.')
     if ident == 'engineers':
         return ('/for/engineers/' if lang == 'ja' else '/for/en/engineers/',
                 'エンジニア向けSIMY' if lang == 'ja' else 'SIMY for engineers',
@@ -133,7 +138,7 @@ def main():
     for p in PAGES.values():
         for lang, url in p['paths'].items():
             path = ROOT / 'site' / (url.lstrip('/') + ('index.html' if url.endswith('/') else ''))
-            output = render(p, lang)
+            output = apply_header(render(p, lang), path)
             if args.check:
                 if not path.exists() or path.read_text() != output:
                     raise SystemExit(f'Stale content page: {path.relative_to(ROOT)}')

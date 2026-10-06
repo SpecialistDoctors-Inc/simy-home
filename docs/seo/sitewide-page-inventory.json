@@ -9,6 +9,11 @@
     "language": "en",
     "topic": "about"
   },
+  "auth-callback.html": {
+    "policy": "utility",
+    "language": "ja",
+    "topic": "auth-callback"
+  },
   "careers.html": {
     "policy": "index",
     "language": "en",
@@ -104,6 +109,21 @@
     "language": "ja",
     "topic": "for-engineers"
   },
+  "for/es/engineers/index.html": {
+    "policy": "index",
+    "language": "es",
+    "topic": "for-engineers"
+  },
+  "for/fr/engineers/index.html": {
+    "policy": "index",
+    "language": "fr",
+    "topic": "for-engineers"
+  },
+  "for/hi/engineers/index.html": {
+    "policy": "index",
+    "language": "hi",
+    "topic": "for-engineers"
+  },
   "for/index.html": {
     "policy": "index",
     "language": "ja",
@@ -113,6 +133,11 @@
     "policy": "index",
     "language": "ja",
     "topic": "sales"
+  },
+  "for/zh-hans/engineers/index.html": {
+    "policy": "index",
+    "language": "zh-Hans",
+    "topic": "for-engineers"
   },
   "founder.html": {
     "policy": "index",
@@ -689,6 +714,26 @@
     "language": "ja",
     "topic": "legal"
   },
+  "news/20261005-en.html": {
+    "policy": "index",
+    "language": "en",
+    "topic": "ai-mentor-results"
+  },
+  "news/20261005.html": {
+    "policy": "index",
+    "language": "ja",
+    "topic": "ai-mentor-results"
+  },
+  "news/ai-mentor-20261005-en.html": {
+    "policy": "redirect",
+    "language": "en",
+    "topic": "ai-mentor-results"
+  },
+  "news/ai-mentor-20261005.html": {
+    "policy": "redirect",
+    "language": "ja",
+    "topic": "ai-mentor-results"
+  },
   "old.html": {
     "policy": "redirect",
     "language": "en",
@@ -828,5 +873,35 @@
     "policy": "index",
     "language": "zh-Hans",
     "topic": "zh-Hans"
+  },
+  "for/financial-planners/index.html": {
+    "policy": "index",
+    "language": "ja",
+    "topic": "financial-planners"
+  },
+  "for/en/financial-planners/index.html": {
+    "policy": "index",
+    "language": "en",
+    "topic": "financial-planners"
+  },
+  "for/es/financial-planners/index.html": {
+    "policy": "index",
+    "language": "es",
+    "topic": "financial-planners"
+  },
+  "for/fr/financial-planners/index.html": {
+    "policy": "index",
+    "language": "fr",
+    "topic": "financial-planners"
+  },
+  "for/hi/financial-planners/index.html": {
+    "policy": "index",
+    "language": "hi",
+    "topic": "financial-planners"
+  },
+  "for/zh-hans/financial-planners/index.html": {
+    "policy": "index",
+    "language": "zh-Hans",
+    "topic": "financial-planners"
   }
 }

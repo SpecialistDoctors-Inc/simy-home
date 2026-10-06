@@ -1,0 +1,139 @@
+{
+  "viewports": [
+    {
+      "lang": "ja",
+      "scrollWidth": 360,
+      "width": 360,
+      "overflow": [],
+      "borders": [
+        "1px",
+        "1px",
+        "1px"
+      ]
+    },
+    {
+      "lang": "ja",
+      "scrollWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "borders": [
+        "1px",
+        "1px",
+        "1px"
+      ]
+    },
+    {
+      "lang": "ja",
+      "scrollWidth": 768,
+      "width": 768,
+      "overflow": [],
+      "borders": [
+        "1px",
+        "1px",
+        "1px"
+      ]
+    },
+    {
+      "lang": "ja",
+      "scrollWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "borders": [
+        "1px",
+        "1px",
+        "1px"
+      ]
+    },
+    {
+      "lang": "ja",
+      "scrollWidth": 720,
+      "width": 720,
+      "overflow": [],
+      "borders": [
+        "1px",
+        "1px",
+        "1px"
+      ]
+    },
+    {
+      "lang": "en",
+      "scrollWidth": 360,
+      "width": 360,
+      "overflow": [],
+      "borders": [
+        "1px",
+        "1px",
+        "1px"
+      ]
+    },
+    {
+      "lang": "en",
+      "scrollWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "borders": [
+        "1px",
+        "1px",
+        "1px"
+      ]
+    },
+    {
+      "lang": "en",
+      "scrollWidth": 768,
+      "width": 768,
+      "overflow": [],
+      "borders": [
+        "1px",
+        "1px",
+        "1px"
+      ]
+    },
+    {
+      "lang": "en",
+      "scrollWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "borders": [
+        "1px",
+        "1px",
+        "1px"
+      ]
+    },
+    {
+      "lang": "en",
+      "scrollWidth": 720,
+      "width": 720,
+      "overflow": [],
+      "borders": [
+        "1px",
+        "1px",
+        "1px"
+      ]
+    }
+  ],
+  "frames": [
+    "ja:build:0",
+    "ja:build:1",
+    "ja:build:2",
+    "ja:progress:0",
+    "ja:progress:1",
+    "ja:progress:2",
+    "ja:knowledge:0",
+    "ja:knowledge:1",
+    "ja:knowledge:2",
+    "en:build:0",
+    "en:build:1",
+    "en:build:2",
+    "en:progress:0",
+    "en:progress:1",
+    "en:progress:2",
+    "en:knowledge:0",
+    "en:knowledge:1",
+    "en:knowledge:2"
+  ],
+  "checks": [
+    "Timed progression, pause/resume, offscreen suspension, live reduced-motion and focus pause",
+    "No-JS all three stories and all nine stage transcripts/links; clipboard success/fallback; deep links; keyboard"
+  ],
+  "errors": []
+}
