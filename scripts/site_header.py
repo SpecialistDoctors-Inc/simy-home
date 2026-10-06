@@ -44,7 +44,7 @@ def header(locale, source, path):
             target_code = 'en'
             href = alternatives['en']
             label += ' — English fallback'
-        return f'<a href="{html.escape(href, quote=True)}" lang="{target_code}" hreflang="{target_code}" data-locale-option="{target_code}"' + (' aria-current="page"' if code == locale else '') + f'>{label}</a>'
+        return f'<a href="{html.escape(href, quote=True)}" lang="{code}" hreflang="{target_code}" data-locale-option="{target_code}"' + (' aria-current="page"' if code == locale else '') + f'>{label}</a>'
     options = "".join(language_option(code, label) for code, label in LOCALES.items())
     region = {"en": "us", "ja": "jp", "hi": "in", "es": "es", "fr": "fr"}.get(locale)
     params = f"lang={locale}&amp;locale={locale}" + (f"&amp;region={region}" if region else "")

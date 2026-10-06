@@ -62,3 +62,28 @@ test('role URLs stay separate from instructional guide URLs', () => {
     }
   }
 });
+
+
+test('UX-06: runtime header marks only the actual language option current', () => {
+  const vm = require('node:vm');
+  const runtime = fs.readFileSync(path.join(__dirname, '../site/site-header.js'), 'utf8');
+  const sync = runtime.slice(runtime.indexOf('  const syncLocale ='), runtime.indexOf('  // Sticky headers'));
+  for (const page of pages) {
+    for (const [locale, url] of Object.entries(page.paths)) {
+      const panel = read(url).match(/<details class="sh-dropdown sh-language">[\s\S]*?<\/details>/)[0];
+      const links = [...panel.matchAll(/<a href="([^"]+)" lang="([^"]+)"[^>]*>/g)].map(([, href, lang]) => ({
+        href, lang, attrs: {}, setAttribute(k, v) { this.attrs[k] = v; }, removeAttribute(k) { delete this.attrs[k]; }
+      }));
+      const summary = {setAttribute() {}, lastChild: {}};
+      const header = {
+        querySelector: selector => selector === '.sh-language summary' ? summary : {},
+        querySelectorAll: selector => selector === '.sh-language a' ? links : []
+      };
+      vm.runInNewContext(sync + '\nsyncLocale();', {header, labels: {[locale]: locale}, document: {documentElement: {lang: locale}}});
+      const current = links.filter(link => link.attrs['aria-current'] === 'page');
+      assert.equal(current.length, 1, url);
+      assert.equal(current[0].lang, locale, url);
+      assert.equal(current[0].href, url, url);
+    }
+  }
+});
