@@ -1,4 +1,4 @@
-# Current acceptance results
+# Acceptance results — historical checkpoint and current revision
 
 2026-10-04 repair checkpoint; the current source revision is the Git commit containing this record. Final exact-head evidence belongs to the ignored runtime matrix, not this summary. All nine outcomes remain pending. This is the shared specification's results view, not a substitute for the controller-owned machine checklist.
 
@@ -19,3 +19,8 @@ Counts: 0 green / 9 yellow / 0 red at this checkpoint. Highest proven state: Dra
 Both user and system layers are required for every AC. User-layer gaps: fresh reader (AC-1–4), real setup/product (AC-5/7), candidate live journey (AC-6/9), demand/claim validation (AC-8). System-layer gaps: candidate-bound collection, downstream product integration, page-demand and owner controls, release identity. No gap is marked not applicable. Runtime `.artifacts/matrix.json` and generated `.artifacts/checklist.md` record current commands, hashes, observations and validator status.
 
 Owners/resumption: requester supplies fresh-reader observations and existing eligible product access; product/security owner supplies operational, entitlement and compliance evidence; SEO owner obtains actual page reports when allowance returns (no upgrade); executor then revalidates changed inputs and frozen endpoint gates. No unscheduled follow-up is promised.
+
+
+## Current direct revision — 7 October 2026
+
+Website candidate c621d00 has 1,303 passing tests, successful exact-head CI and completed separate gpt-5.5/xhigh delta review. The [direct acceptance frontier](direct-acceptance.md) records current page evidence, owner dependencies and the later Loop/SQM revocation. Historical version numbers and controller requirements above are retained as history; current authored download fallback is v0.6.6, not the earlier v0.5.65. No product acceptance is promoted: 0 complete / 9 pending. The process withdrawal removes restoration and new SQM evaluation as prerequisites, while keeping the original human/product/demand/claims/live oracles.
