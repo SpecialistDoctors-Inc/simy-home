@@ -249,3 +249,7 @@ wrong/missing content, adapter execution for one missing image out of four,
 local adapter failure, repeat collection without duplicate dispatch, source
 binding rejection, and path/ID boundaries. These synthetic collector tests do
 not establish physical-device, authentication or shared CLI recovery coverage.
+
+## Narrow zoom reflow
+
+At container widths of 300 CSS pixels or less, the brand/menu and language/signup controls wrap into two rows. This keeps the existing controls reachable at 390px with 200% CSS zoom. CSS zoom fixtures are distinct from native browser zoom and physical-device acceptance.

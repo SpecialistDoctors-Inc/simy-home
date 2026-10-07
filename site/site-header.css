@@ -59,6 +59,18 @@
   .simy-header .sh-account { gap: 8px; }
   .simy-header .sh-signup { padding-inline: 12px; }
 }
+
+/* Preserve all controls when zoom narrows the header below a single row. */
+@container simy-header (max-width: 300px) {
+  .simy-header .sh-frame { flex-wrap: wrap; }
+  .simy-header .sh-brand { flex: 1; }
+  .simy-header .sh-menu { order: 2; }
+  .simy-header .sh-account { order: 3; width: 100%; justify-content: flex-end; }
+  .simy-header .sh-language { position: static; }
+  .simy-header .sh-language .sh-panel { left: 12px; right: 12px; min-width: 0; }
+  .simy-header .sh-navigation a, .simy-header .sh-navigation summary { white-space: normal; overflow-wrap: anywhere; }
+}
+
 html:root { scroll-padding-top: var(--simy-header-offset, 92px); }
 .mock-head > div { min-width: 0; }
 .mock-desc { overflow-wrap: anywhere; }
