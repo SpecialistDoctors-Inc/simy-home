@@ -18,7 +18,8 @@ PANELS = [
 
 def manga(lang):
     if lang != 'ja':
-        return ''
+        from engineering_manga_locales import render
+        return render(lang, PANELS)
     panels = []
     transcript = []
     for i, (x, y, w, h, title, description) in enumerate(PANELS, 1):
