@@ -108,3 +108,22 @@ owner must provide legitimate original-device recovery or a server-backed same-r
 transfer with old-writer fencing and preserved attempts/budgets; the static site
 cannot supply that authority. Installed-source behavior was compared, while the
 running daemon is an older version, so its exact loaded implementation is unknown.
+
+
+## Public fallback refresh — observed 7 October 2026 JST
+
+Read-only public Mac/Windows manifests both return0.6.10. The selected artifact
+URLs pass the existing platform/arch/origin/version/extension checks and HEAD200;
+Content-Length matches each manifest size. The six no-JavaScript fallback links
+and displayed versions now use those observed URLs, dated7October. They retain
+latest-version uncertainty and reload/account recovery rather than claiming a
+future lookup or installation succeeded. Public metadata marks Mac signed and
+notarized and Windows unsigned; no binary was downloaded or signature verified.
+GitHub v0.6.10 release-tag lookup returned404 and is not independent attestation.
+
+A separate task-owned HTTP server delivered the unchanged script and injected
+real502, body stall and incomplete Content-Length connection termination.
+Ten Chrome390/1440 cases passed with bounded OS-independent requests; separate
+Sol/medium evidence review found no actionable findings. Earlier protocol-routing
+timeouts remain unexplained historical fixture observations. These local tests
+and the public metadata check do not satisfy full AC-5 install/setup acceptance.

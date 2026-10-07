@@ -103,3 +103,19 @@ test('body transport failure retries once while JSON syntax failure stays termin
   await invalid.flush();await invalid.tick(250);
   assert.equal(invalid.requests.length,2);assert.equal(invalid.timers.size,0);
  });
+
+test('six no-JavaScript fallbacks agree with checked public release paths and retain uncertainty',()=>{
+ const files=['site/download.html',...['en','hi','es','fr','zh-hans'].map(l=>`site/download/${l}.html`)];
+ for(const file of files){
+  const html=fs.readFileSync(file,'utf8');
+  for(const [key,url,ext] of [
+   ['mac','https://simy.one/downloads/simy-cli/0.6.10/SIMY-CLI-0.6.10-macos-arm64.dmg','.dmg'],
+   ['win','https://simy.one/downloads/simy-cli/windows/0.6.10/SIMY-CLI-0.6.10-windows-x64-setup.exe','.exe']]){
+   assert.ok(html.includes(`data-dl="${key}" href="${url}"`),file+' '+key+' fallback URL');
+   assert.ok(html.includes(`data-meta="${key}">v0.6.10 · ${ext}`),file+' '+key+' version');
+   const notice=html.match(new RegExp(`data-release-status="${key}"[^>]*>([^<]+)`));
+   assert.ok(notice&&notice[1].includes('v0.6.10'),file+' '+key+' dated uncertainty');
+  }
+  assert.ok(!html.includes('0.6.6'),file+' stale fallback');
+ }
+});
