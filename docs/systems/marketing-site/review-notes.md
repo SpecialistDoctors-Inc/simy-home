@@ -50,6 +50,45 @@ skips.
   zero matching modules and zero executions (`no_applicable_rules`). Recollect
   proof after any committed change; current identities belong in the PR.
 
+## Level-3 local mobile checkpoint — 7 October 2026
+
+The user's “Sol レベル３でやって” changes requested/effective assurance to 3 for
+bounded local static-site work, with the unchanged acceptance and Draft endpoint
+in [the delivery decision](README.md#delivery-decision-and-release). It does not
+restore the historical CLI run or approve its stale completion report.
+
+Connected Chrome Extension operated the actual source site at 390 × 844 through
+a localhost HTTP server without manifest interception. Runtime sources are
+unchanged from `42b0b3d8e7a9f5e459442b8d1e90a760307ff3bc`; this checkpoint adds
+documentation only. The earlier Japanese click timeout remains historical; the
+following observations supersede it for the tested local path:
+
+- Japanese home → occupation hub → sales page → output TOC click reached
+  `#output`. After smooth scrolling settled, section top was 81.84 px, below the
+  sticky header bottom of 65.20 px. Six TOC rows had a common 40 px left edge and
+  separate ordered rectangles. The visible note, unsent email draft, questions
+  and actions retained their synthetic labels and unknown dates/price.
+- Sales → getting-started guide → keyboard Enter on the first-task TOC reached
+  `#scene`; settled section top was 82.05 px, below the same header. Same-topic
+  language switching reached English and returned to Japanese. Only the actual
+  Japanese or English topic link was marked `aria-current="page"` in its menu.
+- English mobile first-task TOC click reached the English `#scene`; settled
+  section top was 82.18 px, below the same header. All five guide TOC rows in each
+  language were separate and aligned. No horizontal page overflow or captured
+  console warnings/errors were observed on these guide paths.
+- Guide → Japanese download page exposed the warning-stop instruction and web
+  alternative, without bypassing a warning or launching an installer. The
+  fallback honestly reported that the latest manifest was unverified (the plain
+  local server has no release manifest). The web-login destination was inspected;
+  account access and actual Windows installation were not exercised.
+
+Raw screenshots and DOM observations remain outside the committed diff. These
+are technical operation/result observations, not fresh-human comprehension,
+product completion, a current controller minimum-completion pass or deployment
+proof. Generator checks, home SEO validation and all 1,302 Node tests passed for
+these unchanged runtime sources; independent final review, fresh signed SQM and
+CI must bind the resulting documentation commit before any new proof is claimed.
+
 PR #108 remains Draft. Fresh-reader evidence (AC-1–4), authorized setup/product
 results (AC-5/7), page-specific Ahrefs research and security/product owner evidence
 (AC-8), and reviewed production/live identity (AC-6/9) are unresolved. Ahrefs
