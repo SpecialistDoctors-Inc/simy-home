@@ -252,4 +252,5 @@ not establish physical-device, authentication or shared CLI recovery coverage.
 
 ## Narrow zoom reflow
 
-At container widths of 600 CSS pixels or less, the brand/menu and language/signup controls wrap into two rows. This keeps the existing controls reachable at 390px with 200% CSS zoom. The wider compact range also covers Safari reporting the unscaled container width under CSS zoom. Compact spacing keeps both rows within the available width. CSS zoom fixtures are distinct from native browser zoom and physical-device acceptance.
+In the compact layout, controls wrap when they cannot fit the available row. The brand/menu stay together and language/signup move to the next row only when needed. Tight spacing and the language panel's header-relative anchor preserve reachability in the 390px / 200% CSS zoom fixture. Intrinsic wrapping avoids relying on identical zoomed container-query measurements in Chrome and Safari. The visual order follows the DOM order (brand, menu, account). CSS zoom fixtures are distinct from native browser zoom and physical-device acceptance.
+Forward Tab from an open mobile menu toggle explicitly focuses the first navigation item, because Safari can skip nested native summaries. Backward Tab, closed menus, desktop controls and unrelated focus retain native navigation.

@@ -97,8 +97,15 @@
     if (!header.contains(event.target)) { closeOthers(); if (isMobile()) menu.open = false; }
   });
   menu.addEventListener('toggle', () => { if (isMobile()) closeOthers(); });
-  // Escape closes the innermost header menu regardless of where focus moved.
+  // Keep navigation reachable and close the innermost menu with Escape.
   document.addEventListener('keydown', event => {
+    // Safari can skip nested native summaries when tabbing from the outer one.
+    if (event.key === 'Tab' && !event.shiftKey && isMobile() && menu.open
+        && event.target === menu.querySelector('.sh-menu-toggle')) {
+      const first = header.querySelector('.sh-navigation summary, .sh-navigation a');
+      if (first) { first.focus(); event.preventDefault(); }
+      return;
+    }
     if (event.key !== 'Escape') return;
     const opened = header.querySelector('.sh-dropdown[open]');
     if (opened) {

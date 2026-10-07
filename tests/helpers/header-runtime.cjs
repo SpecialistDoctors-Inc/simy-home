@@ -2,7 +2,7 @@
 const vm = require('node:vm');
 module.exports = function headerRuntime(source, initialMobile = false) {
   const media = { matches: initialMobile, listeners: {}, addEventListener(name, fn) { this.listeners[name] = fn; } };
-  const document = { activeElement: null, documentElement: { lang: 'fixture', style: { setProperty() {} } }, addEventListener() {} };
+  const document = { activeElement: null, documentElement: { lang: 'fixture', style: { setProperty() {} } }, listeners: {}, addEventListener(name, fn) { this.listeners[name] = fn; } };
   function control(name) { return { name, focuses: 0, focus() { if (([first, link].includes(this) && !menu.open) || (this === toggle && header.clientWidth > 960)) return; this.focuses++; document.activeElement = this; } }; }
   const body = control('body'), toggle = control('menu toggle'), first = control('first navigation summary'), link = control('menu link'), language = control('language');
   document.activeElement = body;

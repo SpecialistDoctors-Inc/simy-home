@@ -61,11 +61,11 @@
 }
 
 /* Preserve all controls when zoom narrows the header below a single row. */
-@container simy-header (max-width: 600px) {
+@container simy-header (max-width: 960px) {
   .simy-header .sh-frame { flex-wrap: wrap; padding-inline: 12px; gap: 8px; }
   .simy-header .sh-brand { flex: 1; }
   .simy-header .sh-menu { order: 2; }
-  .simy-header .sh-account { order: 3; width: 100%; justify-content: flex-end; gap: 8px; }
+  .simy-header .sh-account { order: 3; width: auto; justify-content: flex-end; gap: 8px; }
   .simy-header .sh-signup { padding-inline: 12px; }
   .simy-header .sh-language { position: static; }
   .simy-header .sh-language .sh-panel { left: 12px; right: 12px; min-width: 0; }

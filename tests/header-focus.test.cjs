@@ -48,3 +48,20 @@ test('CSS layout signal stays authoritative under zoom-out and fractional widths
   ui.header.clientWidth = 960; ui.resize(); assert.equal(ui.menu.open, false);
   assert.equal(ui.document.activeElement, ui.toggle);
 });
+
+
+test('forward Tab from an open mobile toggle reaches navigation even if native details skip it', () => {
+  const ui = runtime(source, true); ui.menu.open = true; ui.toggle.focus();
+  let prevented = false;
+  ui.document.listeners.keydown({key: 'Tab', shiftKey: false, target: ui.toggle, preventDefault() { prevented = true; }});
+  assert.equal(ui.document.activeElement, ui.first); assert.equal(prevented, true);
+});
+test('Tab recovery preserves backward, closed, desktop and unrelated focus navigation', () => {
+  for (const state of ['backward', 'closed', 'desktop', 'unrelated']) {
+    const ui = runtime(source, state !== 'desktop'); ui.menu.open = state !== 'closed'; ui.toggle.focus();
+    if (state === 'unrelated') ui.language.focus();
+    const before = ui.document.activeElement; let prevented = false;
+    ui.document.listeners.keydown({key: 'Tab', shiftKey: state === 'backward', target: before, preventDefault() { prevented = true; }});
+    assert.equal(ui.document.activeElement, before); assert.equal(prevented, false);
+  }
+});
