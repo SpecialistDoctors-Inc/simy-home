@@ -29,29 +29,30 @@ def home(locale):
 def header(locale, source, path):
     base = home(locale)
     suffix = "" if locale == "ja" else f"{locale.lower()}/"
+    sales_visible = None if locale in ("ja", "en") else "For sales (English)"
     groups = {
         "Product": [("Overview", base + "#product"), ("How it works", base + "#how-it-works"), ("Apps & integrations", "/integrations.html"), ("Download", "/download.html" if locale == "ja" else f"/download/{locale.lower()}.html")],
-        "Solutions": [("For your work", ("/for/" if locale == "ja" else "/for/en/")), ("For engineers", ("/for/engineers/" if locale == "ja" else f"/for/{locale.lower()}/engineers/")), ("For financial planners", ("/for/financial-planners/" if locale == "ja" else f"/for/{locale.lower()}/financial-planners/")), ("For sales" if locale in ("ja", "en") else "For sales (English)", "/for/sales/" if locale == "ja" else "/for/en/sales/"), ("Use cases", base + "#use-cases")],
+        "Solutions": [("For your work", ("/for/" if locale == "ja" else "/for/en/")), ("For engineers", ("/for/engineers/" if locale == "ja" else f"/for/{locale.lower()}/engineers/")), ("For financial planners", ("/for/financial-planners/" if locale == "ja" else f"/for/{locale.lower()}/financial-planners/")), ("For sales", "/for/sales/" if locale == "ja" else "/for/en/sales/", sales_visible), ("Use cases", base + "#use-cases")],
         "Resources": [("Guides", f"/guides/{suffix}index.html"), ("Compare", "/compare.html"), ("News", "/press-release.html"), ("About SIMY", "/about.html"), ("Security", "/security.html"), ("Contact", "/contact.html"), ("Legal & service information", "/legal.html"), ("Seller information", "/seller-info.html")],
     }
-    def label(text):
+    def label(text, visible_override=None):
         japanese = JA_LABELS.get(text, text)
-        visible = japanese if locale == "ja" else text
+        visible = visible_override if visible_override is not None else japanese if locale == "ja" else text
         return f'<span data-header-label data-label-en="{html.escape(text, quote=True)}" data-label-ja="{html.escape(japanese, quote=True).encode("ascii", "xmlcharrefreplace").decode("ascii")}">{html.escape(visible)}</span>'
     def accessible(text):
         japanese = JA_LABELS.get(text, text)
         visible = japanese if locale == "ja" else text
         return f'aria-label="{visible}" data-aria-en="{text}" data-aria-ja="{html.escape(japanese, quote=True).encode("ascii", "xmlcharrefreplace").decode("ascii")}"'
-    def link(text, href):
+    def link(text, href, visible_override=None):
         if href.endswith(".html") and href in ["/integrations.html", "/compare.html", "/press-release.html", "/about.html", "/security.html", "/contact.html"]:
             href += "?lang=" + locale
-        return f'<a href="{html.escape(href, quote=True)}">{label(text)}</a>'
+        return f'<a href="{html.escape(href, quote=True)}">{label(text, visible_override)}</a>'
     download = "/download.html" if locale == "ja" else f"/download/{locale.lower()}.html"
     stores = f'''<div class="sh-stores" role="group" {accessible("Mobile apps")}>
       <a class="sh-store" href="https://apps.apple.com/app/id6745385262" {accessible("Download on the App Store")}><img src="/assets/store-badges/app-store.svg" width="120" height="40" alt=""></a>
       <a class="sh-store sh-google-play" href="{download}#android" {accessible("Android availability")}><img src="/assets/store-badges/google-play.png" width="155" height="60" alt="Google Play"><small>{label("Android availability")}</small></a>
     </div>'''
-    menus = "".join(f'<details class="sh-dropdown"><summary>{label(name)}<span aria-hidden="true">⌄</span></summary><div class="sh-panel">' + "".join(link(label, href) for label, href in items) + (stores if name == "Product" else "") + '</div></details>' for name, items in groups.items())
+    menus = "".join(f'<details class="sh-dropdown"><summary>{label(name)}<span aria-hidden="true">⌄</span></summary><div class="sh-panel">' + "".join(link(*item) for item in items) + (stores if name == "Product" else "") + '</div></details>' for name, items in groups.items())
     # Prefer an existing translated counterpart; otherwise use the localized home.
     alternatives = dict(re.findall(r'<link[^>]*hreflang="([^" ]+)"[^>]*href="https://simy.one([^" ]*)"', source))
     if re.search(r'<script[^>]+src="(?:/|(?:\.\./)*)i18n\.js', source):

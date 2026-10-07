@@ -15,8 +15,12 @@ fs.mkdirSync(out,{recursive:true});
  const page=await browser.newPage({reducedMotion:'reduce'});
  // The header uses bundled assets and system fonts. Third-party analytics and
  // status widgets do not belong to this geometry audit and may be unavailable.
- await page.route('**/*',route=>new URL(route.request().url()).origin===new URL(base).origin?route.continue():route.abort());const report={base,checks:[],errors:[],pageErrors:[]};
+ const inertLocal=pathname=>pathname.includes('%VITE_ANALYTICS_ENDPOINT%')||/^\/downloads\/simy-cli\/(?:windows\/)?latest\.json$/.test(pathname);
+ await page.route('**/*',route=>{const url=new URL(route.request().url());return url.origin===new URL(base).origin&&!inertLocal(url.pathname)?route.continue():route.fulfill({status:204,body:''});});const report={base,checks:[],errors:[],pageErrors:[],consoleErrors:[],networkFailures:[]};
  page.on('pageerror',e=>report.pageErrors.push({url:page.url(),message:e.message}));
+ page.on('console',m=>{if(m.type()==='error')report.consoleErrors.push({url:page.url(),text:m.text()});});
+ page.on('requestfailed',r=>{const error=r.failure()?.errorText||'unknown';if(new URL(r.url()).origin===new URL(base).origin&&error!=='net::ERR_ABORTED')report.networkFailures.push({url:r.url(),error});});
+ page.on('response',r=>{if(new URL(r.url()).origin===new URL(base).origin&&r.status()>=400)report.networkFailures.push({url:r.url(),error:`HTTP ${r.status()}`});});
  const files=fs.readdirSync(site,{recursive:true}).filter(f=>f.endsWith('.html')&&fs.readFileSync(path.join(site,f),'utf8').includes('class="simy-header"')).sort();
  for(const width of [320,390,960,1440]){
  await page.setViewportSize({width,height:900});const references={};
@@ -41,5 +45,7 @@ fs.mkdirSync(out,{recursive:true});
  console.log(JSON.stringify({checks:report.checks.length,errors:report.errors.length,pageErrors:report.pageErrors},null,2));
  assert.equal(report.errors.length,0,'Header differences: see the saved report');
  assert.deepEqual(report.pageErrors,[]);
+ assert.deepEqual(report.consoleErrors,[]);
+ assert.deepEqual(report.networkFailures,[]);
  }finally{if(browser)await browser.close();server.close();}
 })().catch(e=>{console.error(e);process.exitCode=1;});

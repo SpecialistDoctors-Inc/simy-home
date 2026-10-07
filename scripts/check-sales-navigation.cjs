@@ -15,12 +15,15 @@ const fs=require('node:fs'),path=require('node:path'),http=require('node:http'),
  });
  await new Promise(r=>server.listen(0,'127.0.0.1',r));
  const base=`http://127.0.0.1:${server.address().port}`;
- let browser;const errors=[],checks=[];
+ let browser;const errors=[],consoleErrors=[],networkFailures=[],checks=[];
  try{
   browser=await chromium.launch({channel:'chrome'});
   for(const js of [true,false])for(const width of [390,1440]){
    const page=await browser.newPage({javaScriptEnabled:js,viewport:{width,height:900}});
    page.on('pageerror',e=>errors.push(e.message));
+   page.on('console',m=>{if(m.type()==='error')consoleErrors.push({url:page.url(),text:m.text()});});
+   page.on('requestfailed',r=>{const error=r.failure()?.errorText||'unknown';if(new URL(r.url()).origin===base&&error!=='net::ERR_ABORTED')networkFailures.push({url:r.url(),error});});
+   page.on('response',r=>{if(new URL(r.url()).origin===base&&r.status()>=400)networkFailures.push({url:r.url(),error:`HTTP ${r.status()}`});});
    await page.route('**/*',r=>new URL(r.request().url()).origin===base?r.continue():r.fulfill({status:204,body:''}));
    for(const locale of ['ja','en','fr','es','hi','zh-Hans']){
     await page.goto(base+(locale==='en'?'/':`/${locale}.html`));
@@ -29,9 +32,21 @@ const fs=require('node:fs'),path=require('node:path'),http=require('node:http'),
     assert.equal(await page.locator('.sh-signup').textContent(),locale==='ja'?'新規登録':'Sign up');
     assert.equal(await page.locator('.sh-menu-toggle').getAttribute('aria-label'),locale==='ja'?'メニュー':'Navigation menu');
     if(await page.locator('.sh-menu-toggle').isVisible())await page.locator('.sh-menu-toggle').click();
+    const expectedNames=locale==='ja'?{navigation:'メインナビゲーション',product:'プロダクト',solutions:'職業別',login:'ログイン',signup:'新規登録'}:{navigation:'Primary navigation',product:'Product',solutions:'Solutions',login:'Log in',signup:'Sign up'};
+    assert.equal(await page.locator('.sh-navigation').getAttribute('aria-label'),expectedNames.navigation);
+    const productAria=(await page.locator('.sh-navigation summary').nth(0).ariaSnapshot()).split('\n')[0];
+    const solutionsAria=(await page.locator('.sh-navigation summary').nth(1).ariaSnapshot()).split('\n')[0];
+    assert.equal(productAria,`- text: ${expectedNames.product}`);
+    assert.equal(solutionsAria,`- text: ${expectedNames.solutions}`);
+    assert.equal(await page.locator('.simy-header').getByRole('link',{name:expectedNames.login,exact:true}).count(),1);
+    assert.equal(await page.locator('.simy-header').getByRole('link',{name:expectedNames.signup,exact:true}).count(),1);
     await page.locator('.sh-navigation summary').nth(1).click();
     const sales=page.locator('.sh-navigation').locator('a[href*="/sales/"]');
     assert.ok(await sales.isVisible());
+    const salesName=locale==='ja'?'営業':(locale==='en'?'For sales':'For sales (English)');
+    assert.equal((await sales.innerText()).trim(),salesName);
+    const salesAria=(await sales.ariaSnapshot()).split('\n')[0];
+    assert.ok(salesAria.includes(`"${salesName}"`),salesAria);
     const box=await sales.boundingBox();assert.ok(box.x>=0&&box.x+box.width<=width);
     if(out&&locale==='ja'){fs.mkdirSync(out,{recursive:true});await page.screenshot({path:path.join(out,`sales-ja-${width}-${js?'js':'nojs'}.png`)});}
     const expected=locale==='ja'?'/for/sales/':'/for/en/sales/';
@@ -53,8 +68,8 @@ const fs=require('node:fs'),path=require('node:path'),http=require('node:http'),
    }
    await page.close();
   }
-  assert.deepEqual(errors,[]);
-  if(out)fs.writeFileSync(path.join(out,'sales-navigation.json'),JSON.stringify({checks,errors},null,2));
+  assert.deepEqual(errors,[]);assert.deepEqual(consoleErrors,[]);assert.deepEqual(networkFailures,[]);
+  if(out)fs.writeFileSync(path.join(out,'sales-navigation.json'),JSON.stringify({checks,errors,consoleErrors,networkFailures},null,2));
   console.log(`PASS ${checks.length} sales navigation flows; JS/no-JS, six locales, desktop/mobile, legacy language switching`);
  }finally{if(browser)await browser.close();await new Promise(r=>server.close(r));}
 })().catch(e=>{console.error(e);process.exitCode=1;});

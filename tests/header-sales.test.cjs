@@ -9,6 +9,7 @@ test('every rendered shared header links to an existing sales page with honest f
   const sales=header.match(/<a href="([^\"]*\/sales\/)">([\s\S]*?)<\/a>/);
   assert.ok(sales,file);assert.equal(sales[1],locale==='ja'?'/for/sales/':'/for/en/sales/',file);
   assert.equal(sales[2].replace(/<[^>]*>/g,''),locale==='ja'?'営業':(locale==='en'?'For sales':'For sales (English)'),file);
+  assert.match(sales[2],/data-label-en="For sales" data-label-ja="(?:営業|&#21942;&#26989;)"/,file);
   assert.ok(fs.existsSync(path.join(root,'site',sales[1],'index.html')),file);
  }
 });
