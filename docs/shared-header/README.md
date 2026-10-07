@@ -8,7 +8,7 @@ The current 155 pages already used the shared header. The 16 non-redirect legacy
 
 Run rendered verification with `NODE_PATH=<Playwright installation> node scripts/check-unified-header.cjs`. `SITE_URL` optionally checks production; `HEADER_REPORT_DIR` optionally directs reports outside the repository. The audit compares 171 pages at 320, 390, 960 and 1440 CSS pixels with each locale's homepage header, checking geometry, fonts, colors, dropdown opening, Escape closing and scrolling without JavaScript exceptions. Third-party analytics, fonts and status widgets are blocked to keep this specifically a bundled-header test; the header uses system fonts. This does not claim validation of legacy page content or those external services.
 
-The requested GPT-5.5/xhigh model is unavailable. A separate available-model agent reviewed the implementation and regression script; all findings were corrected and re-reviewed. Physical-device Safari testing is not part of this verification.
+For the initial sitewide unification, GPT-5.5/xhigh was unavailable and a separate available-model agent reviewed the change. The subsequent sales/JA follow-up received separate independent reviews; the no-JS language/App Store accessible-name findings were fixed and re-reviewed without remaining findings. Physical-device Safari testing is not part of this verification.
 
 Release through the existing main-branch S3/CloudFront workflow. After deployment, verify published header HTML, resources and representative desktop/mobile interactions. Rollback: revert this PR and deploy through the same workflow; no data or infrastructure migration. A published page missing the shared header, broken menu destinations or failed header assets warrants rollback.
 
@@ -24,7 +24,10 @@ locale-transition contracts. Rendered checks:
 These cover six languages, desktop/mobile, JavaScript/no-JavaScript, actual sales
 navigation and legacy locale changes. External services are inert; no authentication
 or account writes are exercised. This follow-up stops at a Draft PR: merge/deploy
-and production checks are not authorized. SQM未実施：SIMY CLIのバグ修正後に別途実施予定。
+and production checks are not authorized. SQM was deferred on 2026-10-06. The
+2026-10-07 request explicitly requires SQM: run min-check and full check against
+origin/main, keep proof/signature outside Git, and verify current repository/base/HEAD/diff
+identity before updating PR evidence. A no-applicable-rules pass is not feature coverage.
 
 Japanese header labels and accessible control names are rendered directly in the
 shared HTML and synchronized on legacy language changes. English remains unchanged;
