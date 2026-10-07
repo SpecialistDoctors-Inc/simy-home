@@ -5,6 +5,9 @@ from html.parser import HTMLParser
 import html
 import re
 import argparse
+import json
+import subprocess
+from functools import lru_cache
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "site"
@@ -82,6 +85,10 @@ def needs_header(source, path):
             and "<body" in source.lower())
 
 
+@lru_cache(maxsize=1)
+def homepage_content():
+    return json.loads(subprocess.check_output(["node", str(ROOT / "scripts/home-content.cjs")], text=True))
+
 def apply(source, path):
     if not needs_header(source, path): return source
     locale_match = re.search(r'<html[^>]*lang="([^" ]+)"', source)
@@ -97,6 +104,9 @@ def apply(source, path):
     if '/site-header.css?' not in source:
         source = source.replace('</head>', assets + '</head>')
     source = re.sub(r'(/site-header\.(?:css|js)\?v=)[^"\s]+', r'\g<1>20261006-compact-1', source)
+    if "data-story-scene" in source:
+        from home_manga_locales import localized_header
+        source = localized_header(source, locale, homepage_content())
     return source
 
 if __name__ == "__main__":

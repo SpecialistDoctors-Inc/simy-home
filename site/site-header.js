@@ -9,11 +9,12 @@
   syncMenu();
   mobile.addEventListener('change', syncMenu);
   const labels = {en: 'English', ja: '日本語', hi: 'हिन्दी', es: 'Español', fr: 'Français', 'zh-Hans': '简体中文'};
+  const languageLabels = {en: 'Language', ja: '言語', es: 'Idioma', fr: 'Langue', hi: 'भाषा', 'zh-Hans': '语言'};
   const syncLocale = () => {
     const locale = document.documentElement.lang;
     if (!labels[locale]) return;
     const summary = header.querySelector('.sh-language summary');
-    summary.setAttribute('aria-label', `Language: ${labels[locale]}`);
+    summary.setAttribute('aria-label', `${languageLabels[locale]}: ${labels[locale]}`);
     summary.lastChild.textContent = ` ${locale === 'zh-Hans' ? 'ZH' : locale.toUpperCase()}`;
     header.querySelectorAll('.sh-language a').forEach(link => {
       if (link.lang === locale) link.setAttribute('aria-current', 'page');

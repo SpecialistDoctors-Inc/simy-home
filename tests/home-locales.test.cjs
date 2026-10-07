@@ -103,7 +103,11 @@ test("existing-account login links open the SIMY app home", () => {
 
   assert.equal(loginLinks.length, 3, "shared header, final CTA, and footer must expose login");
   for (const [link] of loginLinks) {
-    assert.match(link, /href="https:\/\/app\.simy\.one\/"/);
+    const href = link.match(/href="([^"]+)"/)[1].replaceAll('&amp;', '&');
+    const url = new URL(href);
+    assert.equal(url.origin, 'https://app.simy.one');
+    assert.equal(url.pathname, '/');
+    assert.equal(url.searchParams.get('lang') || 'en', 'en');
   }
   assert.doesNotMatch(homeHtml, /https:\/\/app\.simy\.one\/login(?:[?"'])/);
 });
@@ -354,43 +358,10 @@ test("all section-level messages share one responsive typography role", () => {
   assert.doesNotMatch(homeCss, /\.final-copy h2\s*\{[^}]*font-size:/s);
 });
 
-test("use-case metrics size themselves from the card instead of the viewport", () => {
-  assert.match(homeCss, /\.use-case-card\s*\{[^}]*container-type:\s*inline-size/s);
-  assert.match(
-    homeCss,
-    /\.case-metric\s*>\s*div\s*\{[^}]*grid-template-columns:\s*repeat\(3,\s*max-content\)[^}]*gap:\s*clamp\([^;]*cqi/s
-  );
-  assert.match(
-    homeCss,
-    /\.case-metric b,\s*\.case-metric strong\s*\{[^}]*font-size:\s*clamp\([^;]*cqi/s
-  );
-  assert.equal(
-    homeHtml.match(/class="case-metric case-metric-wide"/g)?.length,
-    2,
-    "the two copy-dense metrics must use the compact, container-aware size"
-  );
-  const metricPattern = (className, metric) => new RegExp(
-    `<div class="${className}">\\s*<span class="sr-only">[\\s\\S]*?</span>\\s*<div aria-hidden="true"><b>${metric.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}</b>`
-  );
-  for (const metric of ["60m", "3.5–4d"]) {
-    assert.match(
-      homeHtml,
-      metricPattern("case-metric case-metric-wide", metric),
-      `${metric} must use the copy-dense metric treatment`
-    );
-  }
-  for (const metric of ["1/5", "1.0×"]) {
-    assert.match(
-      homeHtml,
-      metricPattern("case-metric", metric),
-      `${metric} must retain the large metric treatment`
-    );
-  }
-  assert.doesNotMatch(
-    homeCss,
-    /\.case-metric (?:b|strong)[^{]*\{[^}]*font-size:\s*clamp\([^;]*vw/s,
-    "metric values must not grow from the full viewport width"
-  );
+test("homepage avoids unsupported outcome metrics", () => {
+  assert.doesNotMatch(homeHtml, /class="case-metric/);
+  assert.match(homeHtml, /You decide before anything is sent/);
+  assert.match(homeHtml, /Reuse checks on similar tasks/);
 });
 
 test("keeps Traditional Chinese distinct and omits unsupported China region", () => {
@@ -399,44 +370,17 @@ test("keeps Traditional Chinese distinct and omits unsupported China region", ()
   assert.doesNotMatch(i18nSource, /region: "cn"/);
 });
 
-test("protects the global editorial message in every locale", () => {
-  const locales = { ja: extractJapaneseCopy(), ...loadAdditionalLocales() };
-  const editorialKeys = [
-    "Bring in the conversations that matter. SIMY learns the checks, priorities, and non-negotiables behind your best work, turns them into focused Workflows, and selects the right one automatically. Autorun takes it from there.",
-    "Choose the conversations that reveal your checks, priorities, and non-negotiables. SIMY extracts the patterns that repeat, separates them from one-off detail, and ignores the rest.",
-    "Your conversations become the way work gets done.",
-    "SIMY finds the missing inputs, the right people, and the next move. Autorun handles the sequence, so the work keeps moving until your attention is actually needed.",
-    "General agents complete tasks.",
-    "SIMY preserves your way of working.",
-    "Quality checks shaped around your profession.",
-    "Tell SIMY what needs to move.",
-    "Autorun takes it from there."
-  ];
-
-  for (const key of editorialKeys) {
-    assert.ok(homeHtml.includes(key), `live HTML must include the editorial message: ${key}`);
-    assert.ok(i18nSource.includes(JSON.stringify(key)), `JA_COPY must include the editorial message: ${key}`);
-    for (const [locale, copy] of Object.entries(locales)) {
-      assert.ok(copy[key]?.trim(), `${locale} must include the editorial message: ${key}`);
-      assert.notEqual(copy[key], key, `${locale} must localize the editorial message: ${key}`);
+test("manga editorial copy is complete in every locale", () => {
+  const dictionary = JSON.parse(fs.readFileSync(path.join(repoRoot, 'scripts/home-manga-preview-locales.json'), 'utf8'));
+  const keys = ['いつもの仕事を任せて、あなたは必要な判断に集中。', '一度伝えた確認を、次にも活かす。', '次の仕事、ひとりで抱えなくていい。'];
+  for (const [locale, copy] of Object.entries(dictionary)) {
+    const html = fs.readFileSync(path.join(repoRoot, 'site', locale === 'en' ? 'index.html' : locale + '.html'), 'utf8');
+    for (const key of keys) {
+      assert.ok(copy[key]?.trim(), locale + ': missing editorial translation');
+      assert.ok(html.includes(copy[key]), locale + ': missing published editorial copy');
     }
   }
-
-  for (const retired of [
-    "No agent or pipeline to choose",
-    "You ask. SIMY selects the pipeline. Autorun gets to work.",
-    "No agent or workflow to choose",
-    "You ask. SIMY selects the workflow. Autorun gets to work.",
-    "A general agent can do the task.",
-    "Put a Quality Loop around every Autorun.",
-    "Choose the conversations that reveal your standards. SIMY extracts the patterns that repeat, separates them from one-off detail, and ignores the rest."
-  ]) {
-    assert.ok(!homeHtml.includes(retired), `live HTML must retire: ${retired}`);
-    assert.ok(!i18nSource.includes(JSON.stringify(retired)), `JA_COPY must retire: ${retired}`);
-    assert.ok(!localesSource.includes(JSON.stringify(retired)), `locale copy must retire: ${retired}`);
-  }
 });
-
 test("all published product copy calls pipelines workflows", () => {
   const legacyTerms = /\bpipelines?\b|パイプライン|पाइपलाइन|管线|流水线|流水線|파이프라인|خط أنابيب|ಪೈಪ್‌ಲೈನ್|పైప్‌లైన్|ท่อส่ง|Конвейер/iu;
   const copySources = {
