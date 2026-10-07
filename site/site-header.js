@@ -24,17 +24,21 @@
   syncMenu();
   mobile.addEventListener('change', syncMenu);
   const labels = {en: 'English', ja: '日本語', hi: 'हिन्दी', es: 'Español', fr: 'Français', 'zh-Hans': '简体中文'};
+  const languageLabels = {en: 'Language', ja: '言語', es: 'Idioma', fr: 'Langue', hi: 'भाषा', 'zh-Hans': '语言'};
+  const initialLocale = document.documentElement.lang;
+  const initialLabels = new Map([...header.querySelectorAll('[data-header-label]')].map(label => [label, label.textContent]));
+  const initialAria = new Map([...header.querySelectorAll('[data-aria-en]')].map(control => [control, control.getAttribute('aria-label')]));
   const syncLocale = () => {
     const locale = document.documentElement.lang;
     if (!labels[locale]) return;
     header.querySelectorAll('[data-header-label]').forEach(label => {
-      label.textContent = locale === 'ja' ? label.dataset.labelJa : label.dataset.labelEn;
+      label.textContent = locale === initialLocale ? initialLabels.get(label) : locale === 'ja' ? label.dataset.labelJa : label.dataset.labelEn;
     });
     header.querySelectorAll('[data-aria-en]').forEach(control => {
-      control.setAttribute('aria-label', locale === 'ja' ? control.dataset.ariaJa : control.dataset.ariaEn);
+      control.setAttribute('aria-label', locale === initialLocale ? initialAria.get(control) : locale === 'ja' ? control.dataset.ariaJa : control.dataset.ariaEn);
     });
     const summary = header.querySelector('.sh-language summary');
-    summary.setAttribute('aria-label', `${locale === 'ja' ? '言語' : 'Language'}: ${labels[locale]}`);
+    summary.setAttribute('aria-label', `${languageLabels[locale]}: ${labels[locale]}`);
     summary.lastChild.textContent = ` ${locale === 'zh-Hans' ? 'ZH' : locale.toUpperCase()}`;
     header.querySelectorAll('.sh-language a').forEach(link => {
       if (link.lang === locale) link.setAttribute('aria-current', 'page');
