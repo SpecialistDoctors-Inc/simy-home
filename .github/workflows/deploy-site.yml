@@ -59,6 +59,12 @@ jobs:
       # Both existing pass-through routing and future index rewrites can serve them.
       - name: Prepare occupation pages and assets
         run: |
+          aws s3 sync site/assets/home-manga-preview/ s3://${{ secrets.SITE_S3_BUCKET }}/assets/home-manga-preview/ \
+            --cache-control "public, max-age=86400"
+          for asset in home-manga-preview.css home-manga-preview.js; do
+            aws s3 cp "site/$asset" "s3://${{ secrets.SITE_S3_BUCKET }}/$asset" \
+              --cache-control "public, max-age=86400"
+          done
           aws s3 sync site/assets/engineer-experience/ s3://${{ secrets.SITE_S3_BUCKET }}/assets/engineer-experience/ \
             --cache-control "public, max-age=86400"
           aws s3 sync site/assets/engineer-manga/ s3://${{ secrets.SITE_S3_BUCKET }}/assets/engineer-manga/ \
