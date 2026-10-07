@@ -122,3 +122,8 @@ At termination, distinguish locally collected PR evidence from product completio
 closed review findings and no uncollected owned jobs. The document is not proof
 that a validator enforces that formula. Release, rollback and post-release
 measurement remain the previously documented, separately authorized operations.
+
+
+## Later user revision — resumed with CLI Agentic and SQM
+
+The latest explicit instruction supersedes the direct-only/withdrawn-process policy above. Implementation and separate review now use gpt-6.1-sol / medium; requested CLI Agentic level3 and SQM are restored requirements. See [download fault recovery](download-recovery.md) for the bounded AC-5 implementation and actual CLI recovery limits. Historical receipts and all AC-1..9 remain; no new Ready/merge/deploy authority.

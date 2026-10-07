@@ -24,3 +24,8 @@ Owners/resumption: requester supplies fresh-reader observations and existing eli
 ## Current direct revision — 7 October 2026
 
 Website candidate c621d00 has 1,303 passing tests, successful exact-head CI and completed separate gpt-5.5/xhigh delta review. The [direct acceptance frontier](direct-acceptance.md) records current page evidence, owner dependencies and the later Loop/SQM revocation. Historical version numbers and controller requirements above are retained as history; current authored download fallback is v0.6.6, not the earlier v0.5.65. No product acceptance is promoted: 0 complete / 9 pending. The process withdrawal removes restoration and new SQM evaluation as prerequisites, while keeping the original human/product/demand/claims/live oracles.
+
+
+## Later user revision — resumed with CLI Agentic and SQM
+
+The latest explicit instruction supersedes the direct-only/withdrawn-process policy above. Implementation and separate review now use gpt-6.1-sol / medium; requested CLI Agentic level3 and SQM are restored requirements. See [download fault recovery](download-recovery.md) for the bounded AC-5 implementation and actual CLI recovery limits. Historical receipts and all AC-1..9 remain; no new Ready/merge/deploy authority.

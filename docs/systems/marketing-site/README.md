@@ -100,3 +100,8 @@ Historical incident coverage: the SQM UI's `KM-AI-4F1E923C33F04275A801132F` (Hom
 ## Latest direct execution revision — 7 October 2026
 
 The latest user instruction withdraws Delivery Loop and SQM execution for this task. Use the [direct acceptance frontier](direct-acceptance.md): Loop=direct, SQM=revoked_by_user. This revision supersedes earlier restoration/recheck process requirements above; their receipts remain historical. No Loop/SQM start, resume, reset, check or checkpoint is authorized. All AC-1..9 product outcomes, Sol level3, ordinary checks and separate gpt-5.5/xhigh review remain. Draft PR108 is a partial artifact, with no Ready/merge/deploy permission.
+
+
+## Later user revision — resumed with CLI Agentic and SQM
+
+The latest explicit instruction supersedes the direct-only/withdrawn-process policy above. Implementation and separate review now use gpt-6.1-sol / medium; requested CLI Agentic level3 and SQM are restored requirements. See [download fault recovery](download-recovery.md) for the bounded AC-5 implementation and actual CLI recovery limits. Historical receipts and all AC-1..9 remain; no new Ready/merge/deploy authority.
