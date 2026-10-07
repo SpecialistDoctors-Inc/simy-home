@@ -15,7 +15,8 @@ test('every rendered shared header links to an existing sales page with honest f
 });
 test('repeated locale changes retain the sales destination instead of occupation index',()=>{
  const source=fs.readFileSync(path.join(root,'site/site-header.js'),'utf8');
- const body=source.slice(source.indexOf('    header.querySelectorAll(\'.sh-navigation a:not(.sh-store)\')'),source.indexOf('\n  };'));
+ const start=source.indexOf('    header.querySelectorAll(\'.sh-navigation a:not(.sh-store)\')');
+ const body=source.slice(start,source.indexOf('\n  };',start));
  const label={textContent:''};const link={href:'https://simy.one/for/sales/',querySelector:()=>label};
  const header={querySelectorAll:()=>({forEach:fn=>fn(link)})};
  for(const locale of ['fr','ja','en','hi','zh-Hans','es','ja']){

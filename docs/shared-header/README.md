@@ -38,7 +38,7 @@ Unknown or deliberately unclaimed:
 
 - Production behavior is not observed by this Draft-only task. Local external requests are blocked or made inert, so authentication, App Store availability and third-party services are not verified.
 - Physical Safari/iPhone behavior is unobserved.
-- When a viewport crosses the desktop/mobile breakpoint while keyboard focus is inside a menu that becomes closed, the code changes the outer `open` state but has no separately approved focus-transfer rule. This edge is not promoted into a requirement; it remains an `AC-2.layout` evidence gap pending a product/accessibility decision if coverage is desired.
+- Breakpoint focus recovery follows the conservative keyboard contract below. Physical-device and external-service guarantees remain separate.
 - The current SQM knowledge bundle has zero applicable `simy-home` rules. A signed `no_applicable_rules` result establishes proof integrity, not feature or incident coverage.
 
 ## Observable interaction contract
@@ -66,7 +66,7 @@ Unknown or deliberately unclaimed:
 - System response/transition: one inner dropdown may be open at a time. Escape restores focus to the summary it closed. JavaScript sets the outer menu open on desktop and closed on mobile.
 - Usable outcome/postcondition: controls remain within the viewport, shared edges differ by no more than 1 CSS pixel where the layout defines alignment, and the visitor can reach or dismiss navigation.
 - Next/handoff: selecting a link continues to `AC-2.work`, `AC-2.language` or `AC-2.account`; dismissing returns to the current page.
-- Alternative/failure/recovery: without JavaScript, native details remain the recovery path. Script exceptions, overflow, inconsistent geometry, an undismissable panel or missing focus restoration on tested Escape paths fail acceptance. Breakpoint-resize focus transfer remains the explicit unknown above.
+- Alternative/failure/recovery: without JavaScript, native details remain the recovery path. Script exceptions, overflow, inconsistent geometry, an undismissable panel or missing focus restoration on tested Escape paths fail acceptance. Layout follows the header container width, including 200% CSS zoom where viewport media queries remain desktop. On desktop→mobile, focus inside the menu moves to its visible outer toggle before closure. On mobile→desktop, focus on the hidden outer toggle moves to the first primary navigation summary. Focus outside these affected controls is retained. A header ResizeObserver repeats this synchronization if the media-query notification is missed; repeated same-layout events do not close a manually opened mobile menu.
 - Oracle/provenance: `site/site-header.css`, menu-state code in `site/site-header.js`, rendered checks at 320/390/960/1440 CSS pixels, keyboard checks and viewed screenshots in the final evidence root.
 
 ### AC-2.language — locale selection and synchronized labels
@@ -134,7 +134,7 @@ Unknown or deliberately unclaimed:
 | focus leaves inner/mobile menu | menu open | deferred containment check runs | applicable menu closes if focus is outside |
 | pointer outside header | menus open | all inner menus and mobile outer menu close | current page remains usable |
 | activate header link | menus open | menus close before navigation | destination receives control |
-| cross breakpoint | outer state may differ | media-query listener sets desktop open/mobile closed | focus-transfer behavior is currently unknown and unclaimed |
+| cross breakpoint | focused control may become hidden | media-query listener, with ResizeObserver fallback, sets desktop open/mobile closed | focus transfers only from an affected hidden control; repeated notifications retain user-opened state |
 
 ## Label and route data contract
 

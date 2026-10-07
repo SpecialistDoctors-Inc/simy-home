@@ -1,6 +1,7 @@
 /* One compact brand/navigation bar across all public pages. */
 .simy-header {
   all: initial; display: block; position: sticky; top: 0; z-index: 1000;
+  container: simy-header / inline-size;
   box-sizing: border-box; width: 100%; background: #f8f6ef; color: #17252a;
   border-bottom: 1px solid #cdd0ca; font: 500 15px/1.4 system-ui, sans-serif;
 }
@@ -34,12 +35,12 @@
 .simy-header .sh-store { display: flex; flex-direction: column; align-items: center; gap: 0; padding: 0; }
 .simy-header .sh-store img { display: block; max-width: none; margin: 0; border: 0; border-radius: 0; object-fit: contain; }
 .simy-header .sh-google-play small { font-size: 12px; line-height: 18px; font-weight: 500; }
-@media (min-width: 961px) {
+@container simy-header (width > 960px) {
   .simy-header[data-enhanced] .sh-menu-toggle { display: none; }
   /* Native, accessible fallback when JavaScript is unavailable. */
   .simy-header:not([data-enhanced]) .sh-menu-panel { position: absolute; top: 100%; left: 0; right: 0; padding: 16px 32px; background: #f8f6ef; border-bottom: 1px solid #cdd0ca; }
 }
-@media (max-width: 960px) {
+@container simy-header (max-width: 960px) {
   .simy-header .sh-frame { gap: 12px; min-height: 64px; padding: 8px 16px; }
   .simy-header .sh-brand { font-size: 23px; letter-spacing: -.6px; }
   .simy-header .sh-brand img { width: 28px; height: 28px; border-radius: 7px; }
@@ -53,7 +54,7 @@
   .simy-header .sh-login { margin: 12px 0 0; }
   .simy-header .sh-signup { padding-inline: 14px; }
 }
-@media (max-width: 380px) {
+@container simy-header (max-width: 380px) {
   .simy-header .sh-frame { padding-inline: 12px; gap: 8px; }
   .simy-header .sh-account { gap: 8px; }
   .simy-header .sh-signup { padding-inline: 12px; }

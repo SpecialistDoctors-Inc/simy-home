@@ -4,7 +4,22 @@
   if (!header) return;
   const menu = header.querySelector('.sh-menu');
   const mobile = window.matchMedia('(max-width: 960px)');
-  const syncMenu = () => { menu.open = !mobile.matches; };
+  // Read the rendered CSS layout, including zoom and fractional container widths.
+  const isMobile = () => getComputedStyle(menu.querySelector('.sh-menu-toggle')).display !== 'none';
+  let lastMobile = null;
+  const syncMenu = () => {
+    const compact = isMobile();
+    if (lastMobile === compact) return;
+    const toggle = menu.querySelector('.sh-menu-toggle');
+    const focused = document.activeElement;
+    // Move focus before closing/hiding its control; never steal focus from the page.
+    if (compact && menu.contains(focused) && focused !== toggle) toggle.focus();
+    menu.open = !compact;
+    if (!compact && focused === toggle) {
+      header.querySelector('.sh-navigation summary, .sh-navigation a')?.focus();
+    }
+    lastMobile = compact;
+  };
   header.dataset.enhanced = '';
   syncMenu();
   mobile.addEventListener('change', syncMenu);
@@ -49,7 +64,11 @@
   // Sticky headers wrap as the viewport or text size changes.
   const updateOffset = () => document.documentElement.style.setProperty('--simy-header-offset', `${Math.ceil(header.getBoundingClientRect().height) + 16}px`);
   updateOffset();
-  new ResizeObserver(updateOffset).observe(header);
+  new ResizeObserver(() => {
+    updateOffset();
+    // A missed media-query notification must not leave keyboard focus hidden.
+    if (lastMobile !== isMobile()) syncMenu();
+  }).observe(header);
   window.addEventListener('load', () => {
     updateOffset();
     if (location.hash) {
@@ -75,9 +94,9 @@
     });
   });
   document.addEventListener('pointerdown', event => {
-    if (!header.contains(event.target)) { closeOthers(); if (mobile.matches) menu.open = false; }
+    if (!header.contains(event.target)) { closeOthers(); if (isMobile()) menu.open = false; }
   });
-  menu.addEventListener('toggle', () => { if (mobile.matches) closeOthers(); });
+  menu.addEventListener('toggle', () => { if (isMobile()) closeOthers(); });
   // Escape closes the innermost header menu regardless of where focus moved.
   document.addEventListener('keydown', event => {
     if (event.key !== 'Escape') return;
@@ -85,7 +104,7 @@
     if (opened) {
       opened.open = false;
       opened.querySelector('summary').focus();
-    } else if (mobile.matches && menu.open) {
+    } else if (isMobile() && menu.open) {
       menu.open = false;
       menu.querySelector('.sh-menu-toggle').focus();
     } else return;
@@ -93,9 +112,9 @@
     event.stopPropagation();
   }, true);
   menu.addEventListener('focusout', () => {
-    setTimeout(() => { if (mobile.matches && !menu.contains(document.activeElement)) menu.open = false; });
+    setTimeout(() => { if (isMobile() && !menu.contains(document.activeElement)) menu.open = false; });
   });
   header.addEventListener('click', event => {
-    if (event.target.closest('a')) { closeOthers(); if (mobile.matches) menu.open = false; }
+    if (event.target.closest('a')) { closeOthers(); if (isMobile()) menu.open = false; }
   });
 })();
