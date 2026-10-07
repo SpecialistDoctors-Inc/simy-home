@@ -72,6 +72,11 @@ test('new locale pages remain reachable through the older edge redirects', () =>
   assert.match(preparation, /engineers-experience\.css engineers-experience\.js/);
   const pageUpload = preparation.indexOf('aws s3 sync site/for/');
   assert.ok(preparation.indexOf('aws s3 sync site/assets/engineer-experience/') < pageUpload);
+  for (const dir of ['engineer-manga', 'engineer-mechanism']) {
+    assert.ok(preparation.indexOf(`aws s3 sync site/assets/${dir}/`) >= 0);
+    assert.ok(preparation.indexOf(`aws s3 sync site/assets/${dir}/`) < pageUpload);
+  }
+  assert.match(preparation, /engineers-manga\.css/);
   assert.ok(preparation.indexOf('done') < pageUpload, 'all CSS/JS uploads must finish before existing pages change');
 }));
 
