@@ -93,6 +93,26 @@ test('SEO-01 / AC-8: unsubstantiated security promises cannot return through loc
   }
 });
 
+test('SEO-01 / AC-8: orphaned pricing and press security promises stay absent from dictionaries and consumers', () => {
+  const retired = ['pricing.secP', 'pr.p15'];
+  for (const folder of ['site/lang', 'site/old/lang']) {
+    for (const file of fs.readdirSync(path.join(root, folder)).filter(f => f.endsWith('.json'))) {
+      const dict = JSON.parse(read(`${folder}/${file}`));
+      for (const key of retired) assert.ok(!Object.hasOwn(dict, key), `${folder}/${file}: ${key}`);
+    }
+  }
+  function checkConsumers(folder) {
+    for (const entry of fs.readdirSync(path.join(root, folder), { withFileTypes: true })) {
+      const file = `${folder}/${entry.name}`;
+      if (entry.isDirectory()) checkConsumers(file);
+      else if (/\.(?:html|js|cjs|mjs|py)$/.test(entry.name)) {
+        for (const key of retired) assert.ok(!read(file).includes(key), `${file}: retired key ${key}`);
+      }
+    }
+  }
+  for (const folder of ['site', 'scripts']) checkConsumers(folder);
+});
+
 test('SEO-01 / AC-8: legacy home assets and their translations omit unsupported isolation and encryption promises', () => {
   const retired = /Enterprise-grade trust\.|By design\.|Physical DB Isolation|End-to-End Encrypted|Zero Training Guarantee|Your data\. Your instance\. No shared tenants\.|Channel-Based Access|Only participants of the original thread can access\.|Every organisation gets a dedicated, isolated database instance\.|Enterprise data never trains global models\./;
   const scoped = JSON.parse(read('site/lang/en.json'))['sec.transitP'];

@@ -126,3 +126,15 @@ manifests (50,730,192 / 28,843,766 bytes). Mac manifest declared signed/notarize
 Windows declared unsigned. These are publisher metadata, not locally verified
 signatures. The dated 0.5.65 fallback remained available (50,726,752 / 28,840,453
 bytes); it is intentionally not labelled latest. Recheck at the release gate.
+
+2026-10-07 follow-up: removed the orphaned `pricing.secP` and `pr.p15` entries
+from all 18 active and 18 archived locale dictionaries, then regenerated the
+active i18n bundle. Their physical database isolation, end-to-end encryption and
+zero-training promises lacked supporting evidence. No references to either key
+were found in site HTML or site/scripts JavaScript and Python; inspection of the
+active and archived dictionary lookup paths found no dynamic construction of
+these keys. A regression checks their absence from dictionaries and consumers.
+This removes unused source claims only. Other compiled legacy pricing/press
+strings and the comparison's zero-training row remain pending rendered-surface
+and owner review; other product and third-party semantic claims also remain
+unverified. This does not close the whole-site claims gate.
