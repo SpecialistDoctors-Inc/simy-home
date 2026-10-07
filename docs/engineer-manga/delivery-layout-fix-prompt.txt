@@ -1,0 +1,8 @@
+Use case: text-localization. Edit target is original SIMY dark UI screenshot. STRICT TEXT-ONLY EDIT. Preserve EXACT original single-column layout, dimensions 1456x1080, typography sizes, section positions, divider lines, margins, blue numbered markers, toggle, charts, utilization section, footer action section. Do NOT add any form, illustration, checklist, second column, new panel, icons, or redesign. Replace ONLY the following text in its existing location, with similar font sizes and wrapping within original areas:
+Title T21 総合受入を検証 -> 申込みフォームの二重送信を修正
+会話の状態を確認中 -> 再送時の動作を確認中
+Long description -> 通信エラー後の再送で、同じ申込みが2件登録される不具合を調査。重複登録を防ぐ修正を行い、連打と再送のテストを進めています。
+会話: T21 総合受入を検証 · simy-web -> 会話：申込みフォームの二重送信を修正
+SIMY はまだ目標を確認できていません。 -> 同じ申込みは1件だけ登録され、失敗しても再試行できる。
+次のチェックで残りの作業を確認します。 -> 再送・連打のテスト結果を確認し、別のAIにレビューを依頼します。
+Keep AIの利用状況 section and its actual charts visually unchanged; replace ONLY four large metric VALUES with — so no invented numeric outcome is shown. Preserve metric LABELS and heatmap and timeline layout. In bottom existing action status text replace 一致する Action が見つかりません with 説明用に内容を編集した画面例です. Original layout preservation is the primary requirement. No other changes.

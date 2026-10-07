@@ -74,6 +74,11 @@ const report = { viewports: [], frames: [], checks: [], errors: [] };
       assert.equal(await p.locator('html').getAttribute('lang'), nextLang);
       await p.goto(origin + route);
       await p.locator(".hero .secondary").click();
+      {
+        await p.locator('.manga-more > summary').click();
+        await p.locator('#scene-build').scrollIntoViewIfNeeded();
+        await p.evaluate(() => document.querySelector('#scene-build').scrollIntoView());
+      }
       const entry = await p.evaluate(() => ({
         story: document.querySelector("#scene-build").getBoundingClientRect()
           .top,
@@ -87,24 +92,6 @@ const report = { viewports: [], frames: [], checks: [], errors: [] };
       assert.equal(await p.locator(".experience-story:visible").count(), 3);
       for (const width of [360, 390, 768, 1440, 720]) {
         await p.setViewportSize({ width, height: width === 720 ? 500 : 1000 });
-        const heroGeometry = await p
-          .locator("[data-hero-demo]")
-          .evaluate((hero) =>
-            [...hero.querySelectorAll(".mini-receipt")].map((e) => {
-              const r = e.getBoundingClientRect(),
-                parent = e.parentElement.getBoundingClientRect();
-              return {
-                fits:
-                  e.scrollWidth <= e.clientWidth + 1 &&
-                  r.bottom <= parent.bottom + 1,
-              };
-            }),
-          );
-        assert.ok(
-          heroGeometry.every((r) => r.fits),
-          `${lang} ${width} hero receipts fit`,
-        );
-        assert.equal(await p.locator("[data-hero-replay]").isVisible(), false);
         for (const id of ["build", "progress", "knowledge"]) {
           const demo = p.locator(`[data-demo="${id}"]`);
           const heights = [];
@@ -175,9 +162,6 @@ const report = { viewports: [], frames: [], checks: [], errors: [] };
         assert.deepEqual(geometry.borders, ["1px", "1px", "1px"]);
         report.viewports.push({ lang, ...geometry });
         if ([390, 1440].includes(width)) {
-          await p.locator("[data-hero-demo]").screenshot({
-            path: path.join(output, `${lang}-${width}-hero-demo.png`),
-          });
           await p.locator(".engineer-close").screenshot({
             path: path.join(output, `${lang}-${width}-closing.png`),
           });
@@ -190,20 +174,6 @@ const report = { viewports: [], frames: [], checks: [], errors: [] };
             fullPage: true,
           });
         }
-      }
-      for (const width of [414, 430, 851, 900]) {
-        await p.setViewportSize({ width, height: 1000 });
-        const fit = await p
-          .locator("[data-hero-demo]")
-          .evaluate((hero) =>
-            [...hero.querySelectorAll(".mini-receipt")].every(
-              (e) =>
-                e.scrollWidth <= e.clientWidth + 1 &&
-                e.getBoundingClientRect().bottom <=
-                  e.parentElement.getBoundingClientRect().bottom + 1,
-            ),
-          );
-        assert.ok(fit, `${lang} ${width} hero receipt fits`);
       }
       await p.goto(origin + route + "?private=not-shared#scene-knowledge");
       await p.evaluate(() =>
@@ -262,51 +232,9 @@ const report = { viewports: [], frames: [], checks: [], errors: [] };
       viewport: { width: 390, height: 700 },
       reducedMotion: "no-preference",
     });
-    await p.goto(origin + "/for/engineers/");
+    await p.goto(origin + "/for/en/engineers/");
+    await p.locator(".manga-more > summary").click();
     await p.bringToFront();
-    const hero = p.locator("[data-hero-demo]");
-    await p
-      .locator(".hero-comparison")
-      .evaluate((e) =>
-        scrollTo(0, e.getBoundingClientRect().top + scrollY - innerHeight + 10),
-      );
-    await p.evaluate(
-      () =>
-        new Promise((r) =>
-          requestAnimationFrame(() => requestAnimationFrame(r)),
-        ),
-    );
-    assert.notEqual(
-      await hero.getAttribute("data-hero-running"),
-      "true",
-      "Does not spend animation when only the top edge is visible",
-    );
-    await p.locator(".hero-comparison").scrollIntoViewIfNeeded();
-    await p.waitForFunction(
-      () =>
-        document.querySelector("[data-hero-demo]").dataset.heroRunning ===
-        "true",
-    );
-    await p.waitForFunction(
-      () =>
-        document.querySelector("[data-hero-demo]").dataset.heroRunning ===
-        "false",
-    );
-
-    await p.locator("[data-hero-replay]").focus();
-    await p.keyboard.press("Enter");
-    assert.equal(await hero.getAttribute("data-hero-running"), "true");
-    await p.waitForFunction(
-      () =>
-        document.querySelector("[data-hero-demo]").dataset.heroRunning ===
-        "false",
-      null,
-      { timeout: 4000 },
-    );
-    await p.emulateMedia({ reducedMotion: "reduce" });
-    await p.locator("[data-hero-replay]").waitFor({ state: "hidden" });
-    await p.emulateMedia({ reducedMotion: "no-preference" });
-    await p.setViewportSize({ width: 1440, height: 1000 });
     const demo = p.locator('[data-demo="build"]');
     await demo.scrollIntoViewIfNeeded();
     await p.waitForFunction(
@@ -366,7 +294,7 @@ const report = { viewports: [], frames: [], checks: [], errors: [] };
     await demo.locator(".demo-frame:visible a").focus();
     assert.equal(await demo.getAttribute("data-playing"), "false");
     report.checks.push(
-      "Timed progression, pause/resume, offscreen suspension, live reduced-motion and focus pause",
+      "Scene progression, pause/resume, offscreen suspension, live reduced-motion and focus pause",
     );
     await p.close();
     const noJs = await browser.newPage({
@@ -375,6 +303,7 @@ const report = { viewports: [], frames: [], checks: [], errors: [] };
     });
     for (const lang of ['ja', 'en', 'es', 'fr', 'hi', 'zh-Hans']) {
     await noJs.goto(origin + (lang === 'ja' ? '/for/engineers/' : `/for/${lang.toLowerCase()}/engineers/`));
+    await noJs.locator('.manga-more > summary').click();
     assert.equal(await noJs.locator(".experience-story:visible").count(), 3);
     assert.equal(await noJs.locator("[data-motion]:visible").count(), 0);
     for (const id of ["build", "progress", "knowledge"]) {
