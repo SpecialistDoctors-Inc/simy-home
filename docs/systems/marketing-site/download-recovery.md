@@ -15,7 +15,7 @@ a stalled response/body never settled. This is a source-level and injected
 failure observation, not a claim about an observed production outage.
 
 Each read now has a five-second deadline covering response headers and body.
-A network error, deadline or server5xx without Retry-After receives one retry
+A network error (including a body-read TypeError), deadline or server5xx without Retry-After receives one retry
 following250ms. Permanent HTTP failure,429, a server-directed Retry-After,
 invalid JSON and invalid artifact metadata are not automatically retried.
 Existing platform, architecture, origin, version and file-extension validation
@@ -86,3 +86,25 @@ A separate CLI review requested exactly `gpt-6.1-sol / medium`, session
 “The 'gpt-6.1-sol' model is not supported when using Codex with a ChatGPT account.”
 No other model was substituted. Independent review is **not completed** and
 remains a final gate; code self-inspection and local tests do not replace it.
+
+
+## App review correction
+
+The formal app review in a separate `gpt-6.1-sol / medium` context found a body
+transport gap in candidate6d18151: a200 response followed by a failed body stream
+was not retried. The correction classifies body TypeError as retryable, preserving
+terminal JSON SyntaxError and the two-request bound. A standard Response and
+erroring ReadableStream regression verifies recovery, persistent failure and
+invalid JSON. Focused9 checks pass. The historical CLI HTTP400 remains recorded;
+repeat app review, current-candidate CI and SQM receipts belong in the PR evidence.
+
+Read-only recovery comparison covers six isolated cases: the same actor resolves
+both primary checkout and dedicated worktree, including a stale local path with
+valid cwd; missing repository is rejected and a different actor is rejected
+before repository resolution. Both original saved runs differ from the current
+session's device binding. Changing cwd alone cannot repair that mismatch. This
+comparison dispatches no workers and changes no identities. The common CLI/auth
+owner must provide legitimate original-device recovery or a server-backed same-run
+transfer with old-writer fencing and preserved attempts/budgets; the static site
+cannot supply that authority. Installed-source behavior was compared, while the
+running daemon is an older version, so its exact loaded implementation is unknown.

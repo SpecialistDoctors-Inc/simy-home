@@ -26,7 +26,11 @@
           !(r.headers && r.headers.get('Retry-After'));
         throw error;
       }
-      return r.json();
+      return r.json().catch(function (error) {
+        // Body transport/decoding failures are transient; invalid JSON is not.
+        if (error && error.name === 'TypeError') error.retryable = true;
+        throw error;
+      });
     });
     return Promise.race([read, expired]).then(function (manifest) {
       clearTimeout(timer);

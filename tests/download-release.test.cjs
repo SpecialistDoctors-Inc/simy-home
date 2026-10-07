@@ -81,5 +81,25 @@ test('persistent hangs exhaust the bound and retain clickable fallback; a later 
 });
 test('all six authored download pages use the recovery script cache revision',()=>{
  for(const file of ['site/download.html',...['en','hi','es','fr','zh-hans'].map(l=>`site/download/${l}.html`)])
-  assert.match(fs.readFileSync(file,'utf8'),/src="\/download-release\.js\?v=20261007-bounded-recovery-1"/);
+  assert.match(fs.readFileSync(file,'utf8'),/src="\/download-release\.js\?v=20261007-bounded-recovery-2"/);
 });
+
+test('body transport failure retries once while JSON syntax failure stays terminal',async()=>{
+  const counts={mac:0,win:0};
+  const h=harness(async url=>{
+   const key=url.includes('/windows/')?'win':'mac';counts[key]++;
+   if(key==='mac'&&counts[key]===1)return new Response(new ReadableStream({start(c){c.error(new TypeError('connection terminated'));}}));
+   return new Response(JSON.stringify(good));
+  });
+  await h.flush();await h.tick(250);
+  assert.deepEqual(counts,{mac:2,win:1});
+  assert.equal(h.nodes['[data-release-status="mac"]'].textContent,'Latest confirmed');
+  assert.equal(h.timers.size,0);
+  const persistent=harness(async()=>new Response(new ReadableStream({start(c){c.error(new TypeError('connection terminated'));}})));
+  await persistent.flush();await persistent.tick(250);await persistent.tick(250);
+  assert.equal(persistent.requests.length,4);assert.equal(persistent.timers.size,0);
+  assert.equal(persistent.nodes['[data-dl="mac"]'].href,'pinned-0.5.65');
+  const invalid=harness(async()=>new Response('{invalid'));
+  await invalid.flush();await invalid.tick(250);
+  assert.equal(invalid.requests.length,2);assert.equal(invalid.timers.size,0);
+ });
