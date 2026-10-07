@@ -115,10 +115,10 @@ def apply(source, path):
     if parser.end is not None: source = source[:parser.start] + markup + source[parser.end:]
     else: source = re.sub(r'(<body[^>]*>)', lambda m: m[1] + markup, source, count=1)
     source = re.sub(r'[ \t]*<nav class="legal-mobile-toolbar".*?</nav>', '', source, flags=re.S)
-    assets = '<link rel="stylesheet" href="/site-header.css?v=20261008-narrow-1">\n<script src="/site-header.js?v=20261008-narrow-1" defer></script>\n'
+    assets = '<link rel="stylesheet" href="/site-header.css?v=20261008-narrow-2">\n<script src="/site-header.js?v=20261008-narrow-2" defer></script>\n'
     if '/site-header.css?' not in source:
         source = source.replace('</head>', assets + '</head>')
-    source = re.sub(r'(/site-header\.(?:css|js)\?v=)[^"\s]+', r'\g<1>20261008-narrow-1', source)
+    source = re.sub(r'(/site-header\.(?:css|js)\?v=)[^"\s]+', r'\g<1>20261008-narrow-2', source)
     return source
 
 if __name__ == "__main__":

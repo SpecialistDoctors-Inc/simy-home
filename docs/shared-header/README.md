@@ -252,4 +252,4 @@ not establish physical-device, authentication or shared CLI recovery coverage.
 
 ## Narrow zoom reflow
 
-At container widths of 300 CSS pixels or less, the brand/menu and language/signup controls wrap into two rows. This keeps the existing controls reachable at 390px with 200% CSS zoom. CSS zoom fixtures are distinct from native browser zoom and physical-device acceptance.
+At container widths of 600 CSS pixels or less, the brand/menu and language/signup controls wrap into two rows. This keeps the existing controls reachable at 390px with 200% CSS zoom. The wider compact range also covers Safari reporting the unscaled container width under CSS zoom. Compact spacing keeps both rows within the available width. CSS zoom fixtures are distinct from native browser zoom and physical-device acceptance.
