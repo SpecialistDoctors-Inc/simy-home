@@ -114,7 +114,7 @@ test('SEO-01 / AC-8: orphaned pricing and press security promises stay absent fr
 });
 
 test('SEO-01 / AC-8: legacy home assets and their translations omit unsupported isolation and encryption promises', () => {
-  const retired = /Enterprise-grade trust\.|By design\.|Physical DB Isolation|End-to-End Encrypted|Zero Training Guarantee|Your data\. Your instance\. No shared tenants\.|Channel-Based Access|Only participants of the original thread can access\.|Every organisation gets a dedicated, isolated database instance\.|Enterprise data never trains global models\./;
+  const retired = /Enterprise-grade trust\.|By design\.|Physical DB Isolation|End-to-End Encrypted|Zero Training Guarantee|Physical database isolation|Physically isolated database instances|end-to-end encryption|zero-training guarantees?|Your data\. Your instance\. No shared tenants\.|Channel-Based Access|Only participants of the original thread can access\.|Every organisation gets a dedicated, isolated database instance\.|Enterprise data never trains global models\./;
   const scoped = JSON.parse(read('site/lang/en.json'))['sec.transitP'];
   for (const asset of [
     'site/assets/index-DnVveaIK.js',
@@ -123,6 +123,11 @@ test('SEO-01 / AC-8: legacy home assets and their translations omit unsupported 
     'site/old/assets/index-DnVveaIK.js.bak',
     'site/lang/home-dom-bundle.js',
   ]) assert.doesNotMatch(read(asset), retired, asset);
+  for (const page of ['site/contact.html', 'site/index.html.bak', ...['status', 'integrations', 'how-it-works', 'careers', 'contact'].map(name => `site/old/${name}.html`)]) {
+    const script = read(page).match(/<script[^>]+src="(\/assets\/index-DnVveaIK\.js[^"]*)"/);
+    assert.ok(script, page + ' retained compiled consumer');
+    assert.doesNotMatch(script[1], /v=20261004-security-copy-1/, page + ' stale browser cache identity');
+  }
   for (const folder of ['site/lang/home-dom', 'site/old/lang/home-dom']) {
     for (const file of fs.readdirSync(path.join(root, folder)).filter(f => f.endsWith('.json'))) {
       const text = read(`${folder}/${file}`);

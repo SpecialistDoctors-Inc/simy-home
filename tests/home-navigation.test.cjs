@@ -45,14 +45,14 @@ test("pages loading the demo bundle fetch the corrected security copy", () => {
       const source = fs.readFileSync(path.join(repoRoot, directory, page), "utf8");
       assert.match(
         source,
-        /\/assets\/index-DnVveaIK\.js\?v=20261004-security-copy-1/,
+        /\/assets\/index-DnVveaIK\.js\?v=20261007-legacy-claims-1/,
         `${directory}/${page} must load the corrected security-copy bundle`
       );
     }
   }
 
   const publishedBackup = fs.readFileSync(path.join(repoRoot, "site/index.html.bak"), "utf8");
-  assert.match(publishedBackup, /\/assets\/index-DnVveaIK\.js\?v=20261004-security-copy-1/);
+  assert.match(publishedBackup, /\/assets\/index-DnVveaIK\.js\?v=20261007-legacy-claims-1/);
 });
 
 test("Realtime add-on keeps the currency symbol in the price line", () => {
