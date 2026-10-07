@@ -211,3 +211,41 @@ Third-party analytics, fonts, status widgets and external account/store requests
 PR #131 remains Draft. Release is through the existing `main` S3/CloudFront workflow only after separate authorization. After deployment, read back the published revision/header assets and repeat representative desktop/mobile and locale interactions. Rollback is a revert of this coherent PR followed by the existing authorized deployment process; no data or infrastructure migration exists. A missing header, broken required destination, incorrect language/accessibility name, layout overflow or failed asset is a release stop/rollback signal.
 
 SQM uses an exact-revision min/full check with proof and signature outside Git. The downloaded bundle includes `simy-home` in system scope but currently matches zero modules/rules/executions; concrete repository and browser regressions remain the functional assurance. Sanitized local delivery evidence may be prepared for `simy sqm submit-evidence --dry-run`, but no new knowledge upload or rule publication is authorized.
+
+## Recovering header evidence references (design C17)
+
+`scripts/reconcile-header-evidence.cjs` consumes the existing external
+`matrix.json` (`results[].layers.*.evidence`) and writes a separate report.
+Supply only authorized evidence roots; directories are bounded and symlinks are
+not traversed. A matching SHA-256 can repair a relocated reference. A different
+image or absent content remains incomplete. Only the explicit historical
+`AC-2.work/language/layout/account` alias maps to `AC-2`; unknown and duplicate
+IDs remain unresolved. Original statuses, residual risks and source revisions
+are preserved. Reference verification is not visual or current-candidate
+approval and never declares the original HP purpose complete.
+
+```sh
+node scripts/reconcile-header-evidence.cjs \
+  --matrix /absolute/evidence/matrix.json \
+  --root /absolute/evidence \
+  --output /absolute/evidence/new-reference-report.json
+node --test tests/header-evidence.test.cjs
+```
+
+The exported `reconcileEvidence` consumer also accepts a caller-owned `recover`
+adapter. It requests only missing/mismatched content, once per expected hash per
+collection. The adapter can collect an existing completed job or perform a
+permitted, narrowly scoped reacquisition; it returns `path`, `jobId` and matching
+`sourceRevisions`. The consumer validates the file within allowed roots and its
+expected hash before adoption. Failure remains local while other evidence is
+processed. No manifest-provided command executes, no worker is launched by this
+consumer, and no global retry/continuation controller is introduced. CLI
+`--receipts` accepts an optional hash-keyed receipt map for collection, not an
+instruction to rerun a job. Original receipts and existing reports cannot be
+overwritten by the CLI.
+
+Regression fixtures compare path-only failure, hash-based repair, reinjected
+wrong/missing content, adapter execution for one missing image out of four,
+local adapter failure, repeat collection without duplicate dispatch, source
+binding rejection, and path/ID boundaries. These synthetic collector tests do
+not establish physical-device, authentication or shared CLI recovery coverage.
