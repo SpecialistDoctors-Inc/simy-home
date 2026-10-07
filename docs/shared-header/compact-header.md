@@ -1,5 +1,7 @@
 # Compact branded header — 2026-10-06
 
+This document is the compact-layout baseline merged as `main@4b121bf146a7331ae31f43c93818de8a73c655af`. The later Japanese-label and sales-navigation contract is canonical in `README.md`; it advances the generated asset key to `20261006-ja-labels-1` without changing the compact geometry.
+
 Purpose: restore SIMY's existing icon and keep the site navigation from crowding the first screen. The supplied production screenshot exposed a three-row mobile header with oversized emphasis on store badges. Uniform markup alone did not deliver the intended visual experience.
 
 All 171 rendered public pages now share a one-row header: the existing `simy-icon-56.png` plus SIMY wordmark, language selector and signup. At widths up to 960px, a native navigation-menu disclosure contains Product, Solutions, Resources, Pricing and login. Desktop shows the same navigation inline. Store badges retain their official artwork and explained Android destination inside Product; they no longer add a persistent row above the content. Mobile closed height is 65px including its border, versus the previous approximately 202px. Desktop height is 77px.
