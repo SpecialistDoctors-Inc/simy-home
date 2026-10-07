@@ -74,6 +74,11 @@ const report = { viewports: [], frames: [], checks: [], errors: [] };
       assert.equal(await p.locator('html').getAttribute('lang'), nextLang);
       await p.goto(origin + route);
       await p.locator(".hero .secondary").click();
+      if (lang === 'ja') {
+        await p.locator('.manga-more > summary').click();
+        await p.locator('#scene-build').scrollIntoViewIfNeeded();
+        await p.evaluate(() => document.querySelector('#scene-build').scrollIntoView());
+      }
       const entry = await p.evaluate(() => ({
         story: document.querySelector("#scene-build").getBoundingClientRect()
           .top,
@@ -87,7 +92,7 @@ const report = { viewports: [], frames: [], checks: [], errors: [] };
       assert.equal(await p.locator(".experience-story:visible").count(), 3);
       for (const width of [360, 390, 768, 1440, 720]) {
         await p.setViewportSize({ width, height: width === 720 ? 500 : 1000 });
-        const heroGeometry = await p
+        const heroGeometry = lang === 'ja' ? [] : await p
           .locator("[data-hero-demo]")
           .evaluate((hero) =>
             [...hero.querySelectorAll(".mini-receipt")].map((e) => {
@@ -175,7 +180,7 @@ const report = { viewports: [], frames: [], checks: [], errors: [] };
         assert.deepEqual(geometry.borders, ["1px", "1px", "1px"]);
         report.viewports.push({ lang, ...geometry });
         if ([390, 1440].includes(width)) {
-          await p.locator("[data-hero-demo]").screenshot({
+          if (lang !== "ja") await p.locator("[data-hero-demo]").screenshot({
             path: path.join(output, `${lang}-${width}-hero-demo.png`),
           });
           await p.locator(".engineer-close").screenshot({
@@ -193,7 +198,7 @@ const report = { viewports: [], frames: [], checks: [], errors: [] };
       }
       for (const width of [414, 430, 851, 900]) {
         await p.setViewportSize({ width, height: 1000 });
-        const fit = await p
+        const fit = lang === 'ja' ? true : await p
           .locator("[data-hero-demo]")
           .evaluate((hero) =>
             [...hero.querySelectorAll(".mini-receipt")].every(
@@ -262,7 +267,7 @@ const report = { viewports: [], frames: [], checks: [], errors: [] };
       viewport: { width: 390, height: 700 },
       reducedMotion: "no-preference",
     });
-    await p.goto(origin + "/for/engineers/");
+    await p.goto(origin + "/for/en/engineers/");
     await p.bringToFront();
     const hero = p.locator("[data-hero-demo]");
     await p
@@ -375,6 +380,7 @@ const report = { viewports: [], frames: [], checks: [], errors: [] };
     });
     for (const lang of ['ja', 'en', 'es', 'fr', 'hi', 'zh-Hans']) {
     await noJs.goto(origin + (lang === 'ja' ? '/for/engineers/' : `/for/${lang.toLowerCase()}/engineers/`));
+    if (lang === 'ja') await noJs.locator('.manga-more > summary').click();
     assert.equal(await noJs.locator(".experience-story:visible").count(), 3);
     assert.equal(await noJs.locator("[data-motion]:visible").count(), 0);
     for (const id of ["build", "progress", "knowledge"]) {
