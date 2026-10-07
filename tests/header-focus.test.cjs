@@ -65,3 +65,20 @@ test('Tab recovery preserves backward, closed, desktop and unrelated focus navig
     assert.equal(ui.document.activeElement, before); assert.equal(prevented, false);
   }
 });
+
+test('delayed outer close preserves a newly opened language menu and closes its own dropdown', () => {
+  const ui = runtime(source, true);
+  ui.navigationDropdown.open = true; ui.languageDropdown.open = true;
+  ui.menu.listeners.toggle();
+  assert.equal(ui.navigationDropdown.open, false);
+  assert.equal(ui.languageDropdown.open, true);
+});
+test('opening the mobile menu closes other dropdowns while desktop toggle leaves them intact', () => {
+  for (const mobile of [true, false]) {
+    const ui = runtime(source, mobile); ui.menu.open = true;
+    ui.navigationDropdown.open = true; ui.languageDropdown.open = true;
+    ui.menu.listeners.toggle();
+    assert.equal(ui.navigationDropdown.open, !mobile);
+    assert.equal(ui.languageDropdown.open, !mobile);
+  }
+});

@@ -96,7 +96,13 @@
   document.addEventListener('pointerdown', event => {
     if (!header.contains(event.target)) { closeOthers(); if (isMobile()) menu.open = false; }
   });
-  menu.addEventListener('toggle', () => { if (isMobile()) closeOthers(); });
+  menu.addEventListener('toggle', () => {
+    if (!isMobile()) return;
+    // A delayed close event must not dismiss a newly opened language menu.
+    menus.forEach(dropdown => {
+      if (menu.open || menu.contains(dropdown)) dropdown.open = false;
+    });
+  });
   // Keep navigation reachable and close the innermost menu with Escape.
   document.addEventListener('keydown', event => {
     // Safari can skip nested native summaries when tabbing from the outer one.

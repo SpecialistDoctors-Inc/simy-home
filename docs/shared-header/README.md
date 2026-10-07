@@ -254,3 +254,5 @@ not establish physical-device, authentication or shared CLI recovery coverage.
 
 In the compact layout, controls wrap when they cannot fit the available row. The brand/menu stay together and language/signup move to the next row only when needed. Tight spacing and the language panel's header-relative anchor preserve reachability in the 390px / 200% CSS zoom fixture. Intrinsic wrapping avoids relying on identical zoomed container-query measurements in Chrome and Safari. The visual order follows the DOM order (brand, menu, account). CSS zoom fixtures are distinct from native browser zoom and physical-device acceptance.
 Forward Tab from an open mobile menu toggle explicitly focuses the first navigation item, because Safari can skip nested native summaries. Backward Tab, closed menus, desktop controls and unrelated focus retain native navigation.
+
+Closing the compact outer menu dismisses only its nested dropdowns. A delayed native `toggle` event must preserve a language menu opened immediately after Escape; opening the outer menu still closes all competing dropdowns.
