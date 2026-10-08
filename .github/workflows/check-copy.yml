@@ -1,0 +1,22 @@
+name: Check localized copy
+on:
+  pull_request:
+    branches: [dev]
+    paths:
+      - 'site/**'
+      - 'scripts/build-i18n-bundle.py'
+      - 'tests/**'
+      - '.github/workflows/check-copy.yml'
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: python3 scripts/build-i18n-bundle.py --check
+      - run: node --test tests/copy-localization.test.cjs tests/home-navigation.test.cjs tests/home-locales.test.cjs tests/auth-callback.test.cjs
+      - run: git diff --check
