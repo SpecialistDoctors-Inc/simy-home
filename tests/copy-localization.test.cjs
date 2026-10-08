@@ -65,7 +65,7 @@ test('input hints switch languages, survive rerenders and fall back without chan
   const context = {
     document: { getElementById: () => element }, ROOT_NODE_MAP: new WeakMap(),
     ROOT_PLACEHOLDER_MAP: new WeakMap(), ROOT_APPLYING: false,
-    HOME_DOM_CACHE: dictionaries, captureRootOriginals() {}, injectScreenStudio() {},
+    HOME_DOM_CACHE: { ...dictionaries }, captureRootOriginals() {}, injectScreenStudio() {},
     loadHomeDom(lang, cb) { this.HOME_DOM_CACHE[lang] = {}; cb(); }
   };
   context.ROOT_NODE_MAP._list = [heading];
@@ -87,4 +87,31 @@ test('input hints switch languages, survive rerenders and fall back without chan
   assert.equal(heading.nodeValue, 'Tell us what you need.');
   assert.equal(fields[0].placeholder, 'Your name');
   assert.equal(fields[1].placeholder, 'Company name');
+});
+
+
+test('demo footers use the shared translation key, including the archived page', () => {
+  for (const page of ['demo.html', 'old/demo.html']) {
+    const html = fs.readFileSync(path.join(root, 'site', page), 'utf8');
+    assert.match(html, /data-i18n="footer.tagline">Record\. Move work forward\. Done\.<\/div>/, page);
+  }
+});
+
+test('archived React entrypoints request the same contact bundle and runtime as contact', () => {
+  const contact = fs.readFileSync(path.join(root, 'site/contact.html'), 'utf8');
+  const bundle = contact.match(/index-DnVveaIK\.js\?v=([^" ]+)/)[1];
+  const runtime = contact.match(/i18n\.js\?v=([^" ]+)/)[1];
+  for (const page of ['careers', 'security', 'status', 'integrations', 'how-it-works']) {
+    const html = fs.readFileSync(path.join(root, 'site/old', page + '.html'), 'utf8');
+    assert.equal(html.match(/index-DnVveaIK\.js\?v=([^" ]+)/)[1], bundle, page);
+    assert.equal(html.match(/i18n\.js\?v=([^" ]+)/)[1], runtime, page);
+  }
+});
+
+
+test('shared footers retain the refined copy in all 18 locales', () => {
+  for (const [locale, dict] of Object.entries(dictionaries)) {
+    const shared = JSON.parse(fs.readFileSync(path.join(root, 'site/lang', locale + '.json')));
+    assert.equal(shared['footer.tagline'], dict['Record. Ship. Done.'], locale);
+  }
 });

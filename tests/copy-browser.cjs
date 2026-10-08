@@ -87,6 +87,8 @@ const report = {locales:Object.keys(dicts),contactStates:[],demoStates:[],aboutS
         await page.waitForFunction(value=>document.body.textContent.includes(value),dict['Before standup']);
         await page.waitForFunction(value=>document.querySelector('h1 .accent')?.textContent===value,dict['See how she uses SIMY.']);
         assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),`Demo overflow ${locale} ${width}`);
+        const copy=JSON.parse(fs.readFileSync(path.join(site,'lang',locale+'.json')));
+        await page.waitForFunction(value=>document.querySelector('[data-i18n="footer.tagline"]')?.textContent===value,copy['footer.tagline']);
         report.demoStates.push({locale,width});
         if(locale==='ja'&&width===1440) await page.screenshot({path:path.join(output,'demo-ja-1440.png'),fullPage:true});
       }
@@ -109,6 +111,13 @@ const report = {locales:Object.keys(dicts),contactStates:[],demoStates:[],aboutS
       const dict=JSON.parse(fs.readFileSync(path.join(site,'lang/ja.json')));
       await page.waitForFunction(({key,value})=>document.querySelector(`[data-i18n="${key}"]`)?.textContent===value,{key,value:dict[key]});
       report.checks.push(`${file}: Japanese editorial copy rendered`);
+    }
+    for(const locale of ['en','ja']) {
+      await page.goto(`${origin}/old/demo.html?lang=${locale}`);
+      const copy=JSON.parse(fs.readFileSync(path.join(site,'lang',locale+'.json')));
+      await page.waitForFunction(value=>document.querySelector('[data-i18n="footer.tagline"]')?.textContent===value,copy['footer.tagline']);
+      report.checks.push(`old/demo.html: ${locale} shared footer rendered`);
+      await page.screenshot({path:path.join(output,`old-demo-${locale}.png`),fullPage:true});
     }
     assert.deepEqual(report.errors,[]);
     fs.writeFileSync(path.join(output,'browser-results.json'),JSON.stringify(report,null,2)+'\n');
