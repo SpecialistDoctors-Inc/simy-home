@@ -38,15 +38,15 @@ test("pricing call to action opens the signup plan selection page", () => {
   assert.equal((homeHtml.match(/href="https:\/\/app\.simy\.one\/signup\/\?plan=(starter|quality)&amp;interval=annual&amp;lang=en&amp;locale=en&amp;region=us" aria-label="Choose a plan"/g) || []).length, 2);
 });
 
-test("pages loading the demo bundle cache-bust its workflow terminology", () => {
+test("contact pages cache-bust the updated localized contact component", () => {
   const pages = ["contact.html"];
   for (const directory of ["site", "site/old"]) {
     for (const page of pages) {
       const source = fs.readFileSync(path.join(repoRoot, directory, page), "utf8");
       assert.match(
         source,
-        /\/assets\/index-DnVveaIK\.js\?v=20260915-workflow-terminology-1/,
-        `${directory}/${page} must load the updated workflow terminology bundle`
+        /\/assets\/index-DnVveaIK\.js\?v=20261006-copy-clarity-2/,
+        `${directory}/${page} must load the updated localized contact component`
       );
     }
   }
