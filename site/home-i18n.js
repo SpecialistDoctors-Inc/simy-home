@@ -11,6 +11,8 @@
   });
 
   const JA_COPY = Object.freeze({
+    "SIMY by Industry includes the existing SIMY Quality (SQM), adapted to your field’s terminology, workflow, and review criteria.": "SIMY by Industryは、既存のSIMY Quality（SQM）を、業種ごとの用語、業務フロー、確認基準に合わせて最適化します。",
+    "Online signup is available for Starter and Industry (IT Engineer, Financial Planner and Pharmaceutical MR). Please contact us about Dental Clinic, Realtime and additional storage.": "オンライン申込みはStarterとIndustry（ITエンジニア・FP・製薬MR）に対応しています。歯科クリニック・Realtime・追加ストレージについてはお問い合わせください。",
     "Skip to content": "本文へ移動",
     "Your Digital Twin": "あなたのデジタルツイン",
     "Product": "プロダクト",
