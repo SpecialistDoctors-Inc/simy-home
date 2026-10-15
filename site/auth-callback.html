@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="referrer" content="no-referrer">
+    <meta name="robots" content="noindex, nofollow">
+    <title>SIMY アプリに戻る</title>
+    <style>
+      :root { color-scheme: light; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      * { box-sizing: border-box; }
+      body { align-items: center; background: #f5f7fb; color: #172033; display: flex; justify-content: center; margin: 0; min-height: 100vh; padding: 24px; }
+      main { background: #fff; border: 1px solid #dfe5ef; border-radius: 20px; box-shadow: 0 16px 48px rgba(28, 42, 70, .10); max-width: 540px; padding: 38px; text-align: center; width: 100%; }
+      .mark { background: #eaf1ff; border-radius: 14px; color: #245cc6; display: inline-block; font-size: 24px; font-weight: 700; margin-bottom: 18px; padding: 10px 16px; }
+      h1 { font-size: 25px; line-height: 1.35; margin: 0 0 14px; }
+      p { color: #536176; line-height: 1.65; margin: 0 auto 24px; max-width: 430px; }
+      .button { background: #2167d6; border: 0; border-radius: 10px; color: #fff; cursor: pointer; display: inline-block; font: inherit; font-weight: 700; padding: 14px 22px; text-decoration: none; width: 100%; }
+      .button:hover, .button:focus { background: #1856b7; }
+      .links { margin-top: 20px; }
+      .links a { color: #245cc6; }
+      .quiet { font-size: 13px; margin-top: 24px; }
+      [hidden] { display: none; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="mark" aria-hidden="true">SIMY</div>
+      <h1 id="title">SIMY アプリに戻ります</h1>
+      <p id="message">認証はまだ完了していません。SIMY アプリを開いて、このリンクを安全に確認してください。</p>
+      <a class="button" id="open-app" href="simy://oauth-callback" rel="noreferrer">アプリで開く</a>
+      <div class="links" id="store-link">
+        <a href="https://apps.apple.com/app/id6745385262" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">SIMY を App Store から入手</a>
+      </div>
+      <div class="links" id="retry-links" hidden>
+        <a href="https://app.simy.one/login" rel="noreferrer" referrerpolicy="no-referrer">ログインする</a>
+        <span aria-hidden="true"> · </span>
+        <a href="https://app.simy.one/signup" rel="noreferrer" referrerpolicy="no-referrer">再登録する</a>
+      </div>
+      <p class="quiet">このリンクを開いた端末でアプリを開いてください。別の端末では認証を完了できない場合があります。アプリ内で確認が完了するまで、アカウントへのログインは完了しません。</p>
+    </main>
+    <script>
+      (function () {
+        var path = window.location.pathname.replace(/\/$/, '');
+        var callbackEnvironments = {
+          '/app/auth/callback': 'prod',
+          '/dev-app/auth/callback': 'dev',
+          '/stg-app/auth/callback': 'stg'
+        };
+        var environment = callbackEnvironments[path];
+        if (!environment) {
+          document.getElementById('title').textContent = 'この認証リンクは使えません';
+          document.getElementById('message').textContent = 'メールに記載されたリンクを開き直してください。';
+          document.getElementById('open-app').hidden = true;
+          document.getElementById('store-link').hidden = true;
+          window.history.replaceState(null, document.title, window.location.pathname);
+          return;
+        }
+        var scheme = environment === 'dev' ? 'simy.dev://oauth-callback'
+          : environment === 'stg' ? 'simy.stg://oauth-callback' : 'simy://oauth-callback';
+        var appOrigin = environment === 'dev' ? 'https://app-dev.simy.one'
+          : environment === 'stg' ? 'https://app-stg.simy.one' : 'https://app.simy.one';
+        var params = new URLSearchParams(window.location.search);
+        var fragmentParams = new URLSearchParams(window.location.hash.slice(1));
+        var errorKeys = ['error', 'error_code', 'error_description'];
+        var hasError = errorKeys.some(function (key) {
+          return params.has(key) || fragmentParams.has(key);
+        });
+        var error = errorKeys.map(function (key) {
+          return (params.get(key) || '') + ' ' + (fragmentParams.get(key) || '');
+        }).join(' ').toLowerCase();
+        var expiredOrUsed = /expired|used|invalid|consumed/.test(error);
+
+        document.getElementById('open-app').href = scheme + window.location.search + window.location.hash;
+        if (hasError) {
+          document.getElementById('title').textContent = expiredOrUsed ? 'この認証リンクは使えません' : '認証を完了できませんでした';
+          document.getElementById('message').textContent = expiredOrUsed
+            ? 'リンクの有効期限が切れたか、すでに使用されています。もう一度ログインまたは登録をしてください。'
+            : 'もう一度ログインまたは登録をして、新しい認証リンクを受け取ってください。';
+          document.getElementById('open-app').hidden = true;
+          document.getElementById('store-link').hidden = true;
+          document.getElementById('retry-links').hidden = false;
+        }
+        if (environment !== 'prod') document.getElementById('store-link').hidden = true;
+        document.querySelector('#retry-links a[href$="/login"]').href = appOrigin + '/login';
+        document.querySelector('#retry-links a[href$="/signup"]').href = appOrigin + '/signup';
+
+        // Do not leave an auth code or fragment in browser history after it has
+        // been copied only to the user-initiated app link above.
+        window.history.replaceState(null, document.title, window.location.pathname);
+      }());
+    </script>
+  </body>
+</html>

@@ -1,0 +1,1639 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="google-site-verification" content="1n6_tVJZRZlQax8luEg5VsuG7gg-kCEam5VFiWIJs3U">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notta（ノッタ）の使い方｜料金・無料プラン・安全性と議事録の先 | SIMY</title>
+<meta name="description" content="Notta（ノッタ）の使い方ガイド。料金と無料プランの制限、ログイン、Notta Memo、PLAUDとの違い、安全性を2026年10月時点で整理。議事録の先のフォローメールや共有は、文字起こしを渡せばSIMYが進めます。">
+<link rel="canonical" href="https://simy.one/guides/notta.html">
+<link rel="alternate" hreflang="ja" href="https://simy.one/guides/notta.html">
+<link rel="alternate" hreflang="en" href="https://simy.one/guides/en/notta.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://simy.one/guides/zh-hans/notta.html">
+<link rel="alternate" hreflang="es" href="https://simy.one/guides/es/notta.html">
+<link rel="alternate" hreflang="fr" href="https://simy.one/guides/fr/notta.html">
+<link rel="alternate" hreflang="hi" href="https://simy.one/guides/hi/notta.html">
+<link rel="alternate" hreflang="x-default" href="https://simy.one/guides/en/notta.html">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://simy.one/guides/notta.html">
+<meta property="og:title" content="Nottaの議事録を、次の一手に変える。｜SIMY">
+<meta property="og:description" content="Nottaはそのまま。文字起こしをTXTかWordで渡せば、フォローメールの下書き、社内共有、顧客メモの更新をSIMYが進め、判断だけを返します。料金・無料プラン・安全性も整理。">
+<meta property="og:site_name" content="SIMY">
+<meta property="og:image" content="https://simy.one/ogp.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Nottaの議事録を、次の一手に変える。Notta 活用ガイド｜SIMY">
+<meta property="og:locale" content="ja_JP">
+<meta property="article:published_time" content="2026-10-02">
+<meta property="article:modified_time" content="2026-10-02">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Nottaの議事録を、次の一手に変える。｜SIMY">
+<meta name="twitter:description" content="Nottaはそのまま。文字起こしをTXTかWordで渡せば、フォローメールの下書き、社内共有、顧客メモの更新をSIMYが進め、判断だけを返します。料金・無料プラン・安全性も整理。">
+<meta name="twitter:image" content="https://simy.one/ogp.png">
+<meta name="twitter:image:alt" content="Nottaの議事録を、次の一手に変える。Notta 活用ガイド｜SIMY">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#f6f5f4">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png">
+<style>
+:root {
+  --paper: #f6f5f4;
+  --paper-light: #ffffff;
+  --ink: #111111;
+  --ink-soft: #5d5b58;
+  --ink-faint: #6b6865;
+  --line-soft: rgba(17, 17, 17, 0.14);
+  --ui-line: #d9dde2;
+  --blue: #3273d7;
+  --blue-deep: #235db8;
+  --blue-soft: #eef5ff;
+  --mint: #92edce;
+  --coral-soft: #fff1ec;
+  --yellow: #ffd166;
+  --radius: 0.8rem;
+  --radius-sm: 0.5rem;
+  --sans: "Helvetica Neue", Arial, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", Meiryo, sans-serif;
+  --mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  --page: 1180px;
+  --gutter: clamp(16px, 4vw, 40px);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.85;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+a { color: inherit; }
+a:focus-visible, summary:focus-visible {
+  outline: 3px solid rgba(50, 115, 215, 0.45);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+img { max-width: 100%; display: block; }
+
+.wrap { width: min(var(--page), 100% - var(--gutter) * 2); margin: 0 auto; }
+
+.skip {
+  position: absolute; left: -9999px; top: 8px;
+  background: var(--ink); color: #fff; padding: 8px 14px; border-radius: 6px; z-index: 100;
+}
+.skip:focus { left: 8px; }
+
+/* ---------- Header ---------- */
+.site-header {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(246, 245, 244, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--ink);
+}
+.header-inner {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  min-height: 64px;
+}
+.brand {
+  display: inline-flex; align-items: center; gap: 10px;
+  text-decoration: none; font-weight: 800; letter-spacing: 0.01em;
+}
+.brand img { width: 28px; height: 28px; border-radius: 7px; }
+.brand-sub {
+  padding-left: 12px; margin-left: 2px;
+  border-left: 1px solid var(--line-soft);
+  color: var(--ink-soft); font-size: 0.8rem; font-weight: 500;
+}
+.header-actions { display: flex; align-items: center; gap: 6px; }
+.header-link {
+  padding: 8px 10px; font-size: 0.86rem; font-weight: 600; text-decoration: none; color: var(--ink);
+}
+.header-link:hover { color: var(--blue-deep); }
+.header-cta {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px;
+  background: var(--ink); color: #fff; text-decoration: none;
+  font-size: 0.86rem; font-weight: 700; border-radius: 6px;
+  transition: background 0.2s;
+}
+.header-cta:hover { background: var(--blue-deep); }
+
+/* ---------- Hero ---------- */
+.hero {
+  position: relative;
+  border-bottom: 1px solid var(--ink);
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(rgba(17, 17, 17, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(17, 17, 17, 0.045) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-position: -1px -1px;
+}
+.hero-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+  gap: clamp(32px, 5vw, 72px);
+  align-items: center;
+  padding: clamp(40px, 7vw, 96px) 0 clamp(48px, 7vw, 104px);
+}
+
+.crumbs {
+  display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 22px; padding: 0; list-style: none;
+  font-size: 0.78rem; color: var(--ink-soft);
+}
+.crumbs li + li::before { content: "/"; margin-right: 6px; color: var(--ink-faint); }
+.crumbs a { text-decoration: none; }
+.crumbs a:hover { text-decoration: underline; }
+
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin: 0 0 22px; padding: 6px 12px;
+  background: var(--paper-light); border: 1px solid var(--ink); border-radius: 999px;
+  font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.04em;
+}
+.eyebrow::before {
+  content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--blue);
+  box-shadow: 0 0 0 3px var(--blue-soft);
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2rem, 4.6vw, 3.9rem);
+  line-height: 1.16;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+h1 .line { display: block; }
+h1 .hl { color: var(--blue); }
+
+.lead {
+  max-width: 36em;
+  margin: 26px 0 0;
+  font-size: clamp(1rem, 1.35vw, 1.1rem);
+  line-height: 1.95;
+  color: #2c2b29;
+}
+
+.cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 52px; padding: 0 22px;
+  border: 1px solid var(--ink); border-radius: 8px;
+  font-weight: 700; font-size: 0.98rem; text-decoration: none;
+  transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+}
+.btn-primary {
+  background: var(--blue-deep); color: #fff; border-color: var(--ink);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.btn-primary:hover { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 var(--ink); }
+.btn-ghost { background: var(--paper-light); color: var(--ink); }
+.btn-ghost:hover { background: var(--blue-soft); }
+.btn .arrow { font-family: var(--mono); font-size: 0.9em; }
+
+.hero-points {
+  display: flex; flex-wrap: wrap; gap: 8px 18px;
+  margin: 26px 0 0; padding: 0; list-style: none;
+  font-size: 0.84rem; color: var(--ink-soft);
+}
+.hero-points li { display: inline-flex; align-items: center; gap: 7px; }
+.hero-points li::before {
+  content: ""; width: 14px; height: 14px; flex: none;
+  border: 1px solid var(--ink); border-radius: 50%;
+  background: var(--mint) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath d='M3.5 7.2 6 9.5l4.5-5' fill='none' stroke='%23111' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 12px no-repeat;
+}
+
+/* Relay card: the signature visual */
+.relay {
+  position: relative;
+  background: var(--paper-light);
+  border: 1px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: 8px 8px 0 var(--ink);
+  overflow: hidden;
+}
+.relay-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--ink);
+  background: var(--ink); color: #fff;
+  font-family: var(--mono); font-size: 0.78rem;
+}
+.rec { display: inline-flex; align-items: center; gap: 8px; min-width: 0; }
+.rec-dot {
+  width: 9px; height: 9px; border-radius: 50%; background: #ff865f; flex: none;
+  animation: rec 1.6s ease-in-out infinite;
+}
+.rec-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.relay-meta { display: flex; flex-wrap: wrap; gap: 6px; padding: 12px 18px 4px; }
+.chip {
+  display: inline-flex; align-items: center; padding: 2px 9px;
+  border: 1px solid var(--line-soft); border-radius: 999px;
+  font-family: var(--mono); font-size: 0.7rem; color: var(--ink-soft); background: var(--paper);
+}
+.relay-steps { list-style: none; margin: 0; padding: 8px 10px 12px; }
+.step {
+  display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; align-items: center; gap: 10px;
+  padding: 9px 8px;
+  border-radius: 8px;
+  opacity: 0; transform: translateY(6px);
+  animation: rise 0.5s cubic-bezier(.2,.7,.2,1) forwards;
+}
+.step .no { font-family: var(--mono); font-size: 0.72rem; color: var(--ink-faint); }
+.step .what { font-size: 0.9rem; font-weight: 650; line-height: 1.45; }
+.step .what small { display: block; font-weight: 400; font-size: 0.74rem; color: var(--ink-soft); }
+.status {
+  font-family: var(--mono); font-size: 0.68rem; white-space: nowrap;
+  padding: 3px 8px; border-radius: 999px; border: 1px solid var(--ink);
+}
+.s-done { background: var(--paper); }
+.s-plaud .status { border-color: var(--line-soft); color: var(--ink-soft); }
+.s-run { background: var(--blue-soft); }
+.s-run .status { background: var(--blue-deep); color: #fff; }
+.s-next .status { background: var(--paper-light); }
+.s-you { background: #fff8e3; }
+.s-you .status { background: var(--yellow); }
+.bar {
+  grid-column: 2 / 4; height: 4px; margin-top: 6px;
+  background: rgba(50, 115, 215, 0.16); border-radius: 4px; overflow: hidden;
+}
+.bar::after {
+  content: ""; display: block; height: 100%; width: 62%;
+  background: var(--blue); border-radius: 4px;
+  animation: progress 2.8s ease-in-out infinite alternate;
+}
+.handoff {
+  display: flex; align-items: center; gap: 10px;
+  margin: 6px 4px; padding: 8px 0;
+  font-family: var(--mono); font-size: 0.72rem; color: var(--blue-deep);
+  opacity: 0; animation: rise 0.5s ease forwards;
+}
+.handoff::before, .handoff::after { content: ""; flex: 1; border-top: 1.5px dashed var(--blue); }
+.relay-foot {
+  padding: 12px 18px 14px;
+  border-top: 1px solid var(--line-soft);
+  font-size: 0.82rem; color: var(--ink-soft);
+}
+.relay-foot strong { color: var(--ink); }
+.caption { margin: 12px 4px 0; font-size: 0.74rem; color: var(--ink-faint); text-align: right; }
+
+.relay-steps > :nth-child(1) { animation-delay: 0.10s; }
+.relay-steps > :nth-child(2) { animation-delay: 0.22s; }
+.relay-steps > :nth-child(3) { animation-delay: 0.34s; }
+.relay-steps > :nth-child(4) { animation-delay: 0.62s; }
+.relay-steps > :nth-child(5) { animation-delay: 0.86s; }
+.relay-steps > :nth-child(6) { animation-delay: 1.02s; }
+.relay-steps > :nth-child(7) { animation-delay: 1.18s; }
+.relay-steps > :nth-child(8) { animation-delay: 1.34s; }
+
+@keyframes rise { to { opacity: 1; transform: none; } }
+@keyframes rec { 50% { opacity: 0.25; } }
+@keyframes progress { from { width: 34%; } to { width: 88%; } }
+
+/* ---------- Guide layout ---------- */
+.guide {
+  display: grid;
+  grid-template-columns: 232px minmax(0, 1fr);
+  gap: clamp(32px, 5vw, 72px);
+  padding: clamp(40px, 6vw, 80px) 0 clamp(56px, 7vw, 96px);
+}
+.toc { position: sticky; top: 92px; align-self: start; font-size: 0.84rem; }
+.toc-title {
+  margin: 0 0 12px; font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.08em;
+  color: var(--ink-soft);
+}
+.toc ol { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--line-soft); }
+.toc a {
+  display: grid; grid-template-columns: 26px 1fr; gap: 4px;
+  margin-left: -1px; padding: 7px 0 7px 12px;
+  border-left: 2px solid transparent;
+  color: var(--ink-soft); text-decoration: none; line-height: 1.5;
+}
+.toc a span { font-family: var(--mono); font-size: 0.72rem; padding-top: 1px; }
+.toc a:hover { color: var(--ink); }
+.toc a.is-active { color: var(--ink); font-weight: 700; border-left-color: var(--blue); }
+.toc-mobile { display: none; }
+
+.article { min-width: 0; max-width: 800px; }
+.byline {
+  display: flex; flex-wrap: wrap; gap: 4px 16px;
+  margin: 0 0 8px; font-family: var(--mono); font-size: 0.74rem; color: var(--ink-faint);
+}
+
+.sec { padding-top: clamp(40px, 5vw, 64px); }
+.sec:first-of-type { padding-top: 0; }
+.sec-label {
+  display: inline-block; margin: 0 0 12px;
+  font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.06em; color: var(--blue-deep);
+}
+h2 {
+  margin: 0 0 18px;
+  font-size: clamp(1.5rem, 2.8vw, 2.1rem);
+  line-height: 1.35; font-weight: 800; letter-spacing: -0.01em;
+}
+h3 { margin: 32px 0 12px; font-size: 1.15rem; line-height: 1.5; font-weight: 750; }
+.article p { margin: 0 0 16px; }
+.article p a, .plain-list a, .faq a { color: var(--blue-deep); text-decoration: underline; text-underline-offset: 3px; }
+.muted { color: var(--ink-soft); }
+.small { font-size: 0.84rem; }
+
+/* Checklist */
+.checklist { list-style: none; margin: 24px 0 0; padding: 0; display: grid; gap: 12px; }
+.checklist li {
+  display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 16px;
+  padding: 18px 20px;
+  background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.checklist .num {
+  display: grid; place-items: center; width: 44px; height: 44px;
+  border: 1px solid var(--ink); border-radius: 50%;
+  font-family: var(--mono); font-weight: 700;
+}
+.checklist li.hook { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.checklist li.hook .num { background: var(--blue-deep); color: #fff; }
+.checklist h3 { margin: 2px 0 4px; font-size: 1.02rem; }
+.checklist p { margin: 0; font-size: 0.93rem; color: #34322f; }
+
+/* Feature grid */
+.features { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+.feature {
+  padding: 20px; background: var(--paper-light);
+  border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.feature .tag {
+  display: inline-block; margin-bottom: 8px;
+  font-family: var(--mono); font-size: 0.7rem; color: var(--ink-soft);
+}
+.feature h3 { margin: 0 0 6px; font-size: 1.04rem; }
+.feature p { margin: 0; font-size: 0.92rem; color: #34322f; }
+.feature.wide { grid-column: 1 / -1; }
+
+/* Gap section */
+.split { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+.split-col { padding: 22px; border-radius: var(--radius); border: 1px solid var(--ink); }
+.split-col h3 { margin: 0 0 12px; font-size: 1rem; display: flex; align-items: center; gap: 8px; }
+.split-col ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.split-col li { position: relative; padding-left: 22px; font-size: 0.94rem; line-height: 1.6; }
+.split-col li::before { position: absolute; left: 0; top: 0; font-family: var(--mono); }
+.col-plaud { background: var(--paper-light); }
+.col-plaud li { color: var(--ink-soft); }
+.col-plaud li::before { content: "✓"; color: #1b7a58; }
+.col-left { background: var(--coral-soft); box-shadow: 4px 4px 0 var(--ink); }
+.col-left li::before { content: "□"; color: var(--ink); }
+.who {
+  font-family: var(--mono); font-size: 0.68rem; font-weight: 400;
+  padding: 2px 8px; border: 1px solid var(--ink); border-radius: 999px; background: var(--paper-light);
+}
+
+.quote {
+  margin: 28px 0 0; padding: 22px 24px;
+  border-left: 4px solid var(--blue); background: var(--blue-soft); border-radius: 0 var(--radius) var(--radius) 0;
+}
+.quote p { margin: 0; font-size: 1.12rem; font-weight: 750; line-height: 1.7; }
+.quote p + p { margin-top: 8px; font-size: 0.93rem; font-weight: 400; color: #34322f; }
+
+/* Connect */
+.connect {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 310px); gap: 24px;
+  align-items: start; margin-top: 24px;
+}
+.connect-steps { list-style: none; margin: 0; padding: 0; counter-reset: s; display: grid; gap: 10px; }
+.connect-steps li {
+  counter-increment: s; position: relative;
+  padding: 16px 18px 16px 62px;
+  background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.connect-steps li::before {
+  content: counter(s); position: absolute; left: 18px; top: 16px;
+  width: 30px; height: 30px; display: grid; place-items: center;
+  border: 1px solid var(--ink); border-radius: 50%; background: var(--paper);
+  font-family: var(--mono); font-weight: 700; font-size: 0.86rem;
+}
+.connect-steps li.key { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.connect-steps li.key::before { background: var(--blue-deep); color: #fff; }
+.connect-steps b { display: block; font-size: 1rem; line-height: 1.5; }
+.connect-steps span { display: block; margin-top: 4px; font-size: 0.9rem; color: #34322f; line-height: 1.7; }
+
+.mock {
+  padding: 18px; background: var(--paper-light);
+  border: 1px solid var(--ink); border-radius: var(--radius); box-shadow: 6px 6px 0 var(--blue);
+}
+.mock-head { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 12px; align-items: start; }
+.mock-mark {
+  display: grid; place-items: center; width: 44px; height: 44px;
+  border-radius: 10px; background: var(--paper); font-weight: 900; font-size: 1.15rem;
+}
+.mock-title { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 1.05rem; }
+.mock-state {
+  padding: 1px 8px; border-radius: 999px; background: var(--paper);
+  font-size: 0.7rem; font-weight: 500; color: var(--ink-soft);
+}
+.mock-desc { margin: 4px 0 0; font-size: 0.82rem; color: var(--ink-soft); line-height: 1.6; }
+.mock-box {
+  margin: 14px 0 10px; padding: 12px 14px;
+  border: 1px solid var(--ui-line); border-radius: 8px; font-size: 0.86rem; font-weight: 650;
+}
+.mock-btn {
+  display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px;
+  border-radius: 8px; background: var(--blue-deep); color: #fff; font-weight: 700; font-size: 0.92rem;
+}
+.mock-foot { margin-top: 8px; text-align: center; font-size: 0.76rem; color: var(--ink-soft); }
+
+.asks { list-style: none; margin: 12px 0 18px; padding: 0; display: grid; gap: 8px; }
+.asks li {
+  padding: 12px 16px; font-size: 0.94rem; line-height: 1.7;
+  background: var(--blue-soft); border: 1px solid rgba(50, 115, 215, 0.28);
+  border-radius: 12px 12px 12px 3px;
+}
+
+/* Tables */
+.table-wrap {
+  margin: 20px 0 8px; overflow-x: auto; -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--ink); border-radius: var(--radius); background: var(--paper-light);
+}
+table { width: 100%; border-collapse: collapse; font-size: 0.9rem; line-height: 1.6; }
+th, td { padding: 12px 14px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--ui-line); }
+thead th { background: var(--ink); color: #fff; font-weight: 700; font-size: 0.82rem; white-space: nowrap; }
+tbody th { font-weight: 700; white-space: nowrap; background: var(--paper); }
+tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
+td.simy { background: var(--blue-soft); }
+thead th.simy { background: var(--blue-deep); }
+.t-wide { min-width: 640px; }
+.t-models { min-width: 760px; }
+.t-price td:nth-child(2) { white-space: nowrap; }
+.scroll-hint { display: none; margin: 0 0 12px; font-size: 0.76rem; color: var(--ink-faint); }
+
+.note {
+  margin: 16px 0 0; padding: 14px 16px;
+  background: var(--paper-light); border: 1px dashed var(--ink-faint); border-radius: var(--radius-sm);
+  font-size: 0.88rem; color: #34322f;
+}
+.note b { color: var(--ink); }
+
+/* Sample comparison */
+.sample { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 16px; margin-top: 24px; align-items: start; }
+.sheet { padding: 20px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); }
+.sheet-label {
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;
+  font-family: var(--mono); font-size: 0.72rem; color: var(--ink-soft);
+}
+.sheet dl { margin: 0; font-size: 0.88rem; line-height: 1.65; }
+.sheet dt { margin-top: 10px; font-weight: 700; }
+.sheet dt:first-child { margin-top: 0; }
+.sheet dd { margin: 2px 0 0; color: #34322f; }
+.outs { display: grid; gap: 10px; }
+.out { padding: 14px 16px; background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius); }
+.out-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 6px; }
+.out-head b { font-size: 0.92rem; }
+.out p { margin: 0; font-size: 0.86rem; color: #34322f; line-height: 1.7; }
+.out.you { background: #fff8e3; }
+.pill {
+  font-family: var(--mono); font-size: 0.66rem; white-space: nowrap;
+  padding: 2px 8px; border-radius: 999px; border: 1px solid var(--ink); background: var(--paper);
+}
+.pill.run { background: var(--blue-deep); color: #fff; }
+.pill.you { background: var(--yellow); }
+.pill.ok { background: var(--mint); }
+.sample-foot { margin-top: 18px; font-weight: 700; }
+
+/* Use cases */
+.cases { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+.case { padding: 22px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); }
+.case h3 { margin: 0 0 4px; font-size: 1.06rem; }
+.case .device { margin: 0 0 12px; font-family: var(--mono); font-size: 0.72rem; color: var(--blue-deep); }
+.case p { margin: 0 0 8px; font-size: 0.9rem; color: #34322f; }
+.case ul { margin: 0; padding-left: 1.1em; font-size: 0.9rem; line-height: 1.7; }
+
+/* Lists */
+.plain-list { margin: 16px 0 0; padding-left: 1.2em; }
+.plain-list li { margin-bottom: 10px; }
+
+/* FAQ */
+.faq { margin-top: 20px; border-top: 1px solid var(--ink); }
+.faq details { border-bottom: 1px solid var(--ui-line); }
+.faq summary {
+  list-style: none; cursor: pointer;
+  display: grid; grid-template-columns: 28px minmax(0, 1fr) 20px; gap: 10px; align-items: start;
+  padding: 18px 4px; font-weight: 700; line-height: 1.6;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::before { content: "Q"; font-family: var(--mono); color: var(--blue-deep); }
+.faq summary::after {
+  content: "+"; font-family: var(--mono); font-size: 1.1rem; line-height: 1.4; text-align: right;
+  transition: transform 0.2s;
+}
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq .a { padding: 0 4px 18px 42px; font-size: 0.94rem; color: #34322f; }
+.faq .a p { margin: 0; }
+
+/* Closing CTA */
+.closing { background: var(--ink); color: #fff; border-top: 1px solid var(--ink); }
+.closing-inner {
+  display: grid; grid-template-columns: minmax(0, 1.2fr) auto; gap: 32px; align-items: center;
+  padding: clamp(48px, 7vw, 88px) 0;
+}
+.closing h2 { color: #fff; margin: 0 0 12px; font-size: clamp(1.6rem, 3.4vw, 2.5rem); }
+.closing p { margin: 0; color: rgba(255, 255, 255, 0.8); }
+.closing .cta-row { margin-top: 0; }
+.closing .btn-primary { box-shadow: 4px 4px 0 var(--mint); border-color: #fff; }
+.closing .btn-primary:hover { box-shadow: 5px 5px 0 var(--mint); }
+.closing .btn-ghost { background: transparent; color: #fff; border-color: rgba(255, 255, 255, 0.5); }
+.closing .btn-ghost:hover { background: rgba(255, 255, 255, 0.08); }
+
+/* Footer */
+.site-footer { padding: 36px 0 48px; font-size: 0.82rem; color: var(--ink-soft); }
+.footer-links { display: flex; flex-wrap: wrap; gap: 4px 20px; margin: 0 0 18px; padding: 0; list-style: none; }
+.footer-links a { display: inline-block; padding: 6px 0; text-decoration: none; color: var(--ink); }
+.footer-links a:hover { text-decoration: underline; }
+.site-footer p { margin: 0 0 6px; line-height: 1.7; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1080px) {
+  .guide { grid-template-columns: minmax(0, 1fr); }
+  .toc { display: none; }
+  .toc-mobile {
+    display: block; margin: 0 0 32px;
+    background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius);
+  }
+  .toc-mobile summary {
+    cursor: pointer; list-style: none; padding: 14px 18px;
+    font-family: var(--mono); font-size: 0.8rem; display: flex; justify-content: space-between;
+  }
+  .toc-mobile summary::-webkit-details-marker { display: none; }
+  .toc-mobile summary::after { content: "+"; }
+  .toc-mobile[open] summary::after { content: "−"; }
+  .toc-mobile ol { margin: 0; padding: 0 18px 14px 40px; font-size: 0.9rem; }
+  .toc-mobile li { padding: 3px 0; }
+  .toc-mobile a { display: inline-block; padding: 4px 0; text-decoration: none; }
+  .article { max-width: none; }
+}
+
+@media (max-width: 960px) {
+  .hero-inner { grid-template-columns: minmax(0, 1fr); }
+  .hero-visual { max-width: 580px; }
+  .relay { box-shadow: 6px 6px 0 var(--ink); }
+}
+
+@media (max-width: 860px) {
+  .sample { grid-template-columns: minmax(0, 1fr); }
+  .connect { grid-template-columns: minmax(0, 1fr); }
+  .mock { max-width: 360px; }
+  .closing-inner { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 640px) {
+  body { font-size: 15.5px; }
+  .brand-sub, .header-link { display: none; }
+  .header-cta { padding: 0 14px; }
+  .features, .split, .cases { grid-template-columns: minmax(0, 1fr); }
+  .checklist li { grid-template-columns: 40px minmax(0, 1fr); gap: 12px; padding: 16px; }
+  .checklist .num { width: 36px; height: 36px; font-size: 0.86rem; }
+  .connect-steps li { padding-left: 56px; }
+  .connect-steps li::before { left: 14px; }
+  .btn { width: 100%; }
+  .scroll-hint { display: block; }
+  .faq .a { padding-left: 4px; }
+  .step { grid-template-columns: 24px minmax(0, 1fr) auto; gap: 8px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .step, .handoff { animation: none; opacity: 1; transform: none; }
+  .rec-dot, .bar::after { animation: none; }
+  .btn, .header-cta { transition: none; }
+}
+
+/* ---------- Guide v2: scene cards, timeline, folds ---------- */
+.intro { max-width: 34em; margin: 0 0 8px; font-size: 1.02rem; color: #34322f; }
+.scenes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 22px; }
+.scenes.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.scene {
+  position: relative; padding: 22px 20px 20px;
+  background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius);
+  min-height: 168px; display: flex; flex-direction: column; gap: 8px;
+}
+.scene .k { font-family: var(--mono); font-size: 0.7rem; color: var(--ink-faint); letter-spacing: 0.04em; }
+.scene b { display: block; font-size: 1.22rem; line-height: 1.35; letter-spacing: -0.01em; }
+.scene p { margin: 0; font-size: 0.9rem; line-height: 1.65; color: #34322f; }
+.scene .mark {
+  position: absolute; right: 16px; top: 14px;
+  width: 30px; height: 30px; display: grid; place-items: center;
+  border: 1px solid var(--ink); border-radius: 50%; font-family: var(--mono); font-size: 0.9rem; font-weight: 700;
+}
+.scene.pain { background: var(--coral-soft); }
+.scene.pain .mark { background: var(--paper-light); }
+.scene.wish { background: var(--blue-soft); border-color: var(--blue-deep); box-shadow: 4px 4px 0 var(--blue); }
+.scene.wish .mark { background: var(--blue-deep); color: #fff; border-color: var(--blue-deep); }
+.scene.wish.you { background: #fff8e3; border-color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+.scene.wish.you .mark { background: var(--yellow); color: var(--ink); border-color: var(--ink); }
+.scene-foot { margin: 14px 0 0; font-size: 0.9rem; color: var(--ink-soft); }
+.scene-foot b { color: var(--ink); }
+
+/* Timeline */
+.tl-wrap {
+  margin-top: 22px; padding: 22px 20px 18px;
+  background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius);
+}
+.tl-row { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 14px; align-items: center; }
+.tl-row + .tl-row { margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--line-soft); }
+.tl-who {
+  font-family: var(--mono); font-size: 0.72rem; font-weight: 700; text-align: center;
+  padding: 6px 4px; border: 1px solid var(--ink); border-radius: 999px; background: var(--paper);
+}
+.tl-who.simy { background: var(--blue-deep); color: #fff; border-color: var(--blue-deep); }
+.tl-who.you { background: var(--yellow); }
+.tl { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; }
+.tl li {
+  position: relative; min-height: 64px; padding: 10px 8px 8px;
+  border-radius: var(--radius-sm); font-size: 0.8rem; line-height: 1.4; font-weight: 650;
+  display: flex; flex-direction: column; justify-content: flex-start; gap: 4px;
+}
+.tl li small { display: block; font-weight: 400; font-size: 0.7rem; color: var(--ink-soft); }
+.tl li.on { background: var(--paper); border: 1px solid var(--line-soft); color: var(--ink-soft); }
+.tl li.gap { border: 1.5px dashed var(--ink-faint); color: var(--ink-faint); background: transparent; }
+.tl li.gap::after { content: "？"; position: absolute; right: 8px; top: 6px; font-family: var(--mono); }
+.tl li.run { background: var(--blue-soft); border: 1px solid var(--blue-deep); color: var(--ink); }
+.tl li.run::after { content: "✓"; position: absolute; right: 8px; top: 6px; font-family: var(--mono); color: var(--blue-deep); }
+.tl li.you { background: #fff8e3; border: 1px solid var(--ink); color: var(--ink); }
+.tl li.you::after { content: "あなた"; position: absolute; right: 8px; top: 7px; font-family: var(--mono); font-size: 0.62rem; }
+.tl li.blank { border: 0; background: transparent; }
+.tl-note { margin: 14px 0 0; font-size: 0.86rem; color: #34322f; }
+.tl-note b { color: var(--ink); }
+.three { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 0; padding: 0; list-style: none; }
+.three li {
+  padding: 8px 14px; font-weight: 800; font-size: 1rem;
+  background: var(--ink); color: #fff; border-radius: 999px;
+}
+
+/* 3-step start */
+.steps3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 22px; counter-reset: st; }
+.steps3 li {
+  counter-increment: st; list-style: none; position: relative;
+  padding: 54px 18px 18px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.steps3 li::before {
+  content: counter(st); position: absolute; left: 18px; top: 16px;
+  width: 28px; height: 28px; display: grid; place-items: center;
+  border: 1px solid var(--ink); border-radius: 50%; background: var(--paper);
+  font-family: var(--mono); font-weight: 700; font-size: 0.84rem;
+}
+.steps3 li.key { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.steps3 li.key::before { background: var(--blue-deep); color: #fff; }
+.steps3 b { display: block; font-size: 1.02rem; line-height: 1.45; }
+.steps3 span { display: block; margin-top: 6px; font-size: 0.88rem; color: #34322f; line-height: 1.65; }
+.steps3 { padding: 0; }
+
+/* Industry grid */
+.ind { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 22px; }
+.ind-card { padding: 18px 18px 14px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); }
+.ind-card h3 { margin: 0 0 10px; font-size: 1.04rem; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.ind-card h3 small { font-family: var(--mono); font-size: 0.68rem; font-weight: 400; color: var(--blue-deep); white-space: normal; }
+.ind-card h3 { flex-wrap: wrap; }
+.ind-rows { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+.ind-rows li { display: grid; grid-template-columns: minmax(0, 1fr) 14px minmax(0, 1.4fr); gap: 6px; align-items: center; font-size: 0.86rem; line-height: 1.5; }
+.ind-rows li span:first-child { color: var(--ink-soft); }
+.ind-rows li span:nth-child(2) { font-family: var(--mono); color: var(--blue-deep); text-align: center; }
+.ind-rows li span:last-child { font-weight: 650; }
+
+/* Folded reference */
+.fold { margin-top: 12px; border: 1px solid var(--ui-line); border-radius: var(--radius); background: var(--paper-light); }
+.fold > summary {
+  list-style: none; cursor: pointer; padding: 16px 18px;
+  display: grid; grid-template-columns: minmax(0, 1fr) 20px; gap: 10px; align-items: center;
+  font-weight: 750; font-size: 1.02rem; line-height: 1.5;
+}
+.fold > summary::-webkit-details-marker { display: none; }
+.fold > summary::after { content: "+"; font-family: var(--mono); font-size: 1.1rem; text-align: right; grid-column: 2; grid-row: 1; }
+.fold > summary small { grid-column: 1; }
+.fold[open] > summary::after { content: "−"; }
+.fold > summary small { display: block; margin-top: 2px; font-weight: 400; font-size: 0.82rem; color: var(--ink-soft); }
+.fold-body { padding: 0 18px 18px; font-size: 0.93rem; }
+.fold-body h3 { margin: 18px 0 8px; font-size: 1rem; }
+.fold-body h3:first-child { margin-top: 0; }
+.fold-body p { margin: 0 0 10px; }
+.fold-body .table-wrap { margin: 12px 0 6px; }
+.fold-body .plain-list { margin-top: 8px; }
+.fold-body .plain-list li { margin-bottom: 6px; }
+
+@media (max-width: 960px) {
+  .scenes, .scenes.four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tl { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .tl li.blank { display: none; }
+}
+@media (max-width: 640px) {
+  .scenes, .scenes.four, .steps3, .ind { grid-template-columns: minmax(0, 1fr); }
+  .scene { min-height: 0; }
+  .tl-row { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .tl-who { justify-self: start; }
+  .tl { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ind-rows li { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .ind-rows li span:nth-child(2) { display: none; }
+  .ind-rows li { padding: 6px 0; border-bottom: 1px dashed var(--line-soft); }
+}
+
+/* Next read */
+.next-read { margin-top: clamp(40px, 5vw, 64px); padding-top: 24px; border-top: 1px solid var(--ink); }
+.next-read h2 { font-size: 1.2rem; margin: 0 0 14px; }
+.next-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.next-grid a { display: block; padding: 14px 16px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); text-decoration: none; color: var(--ink); }
+.next-grid a:hover { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.next-grid b { display: block; font-size: 0.96rem; }
+.next-grid span { display: block; margin-top: 4px; font-size: 0.82rem; color: var(--ink-soft); }
+.next-all { display: inline-block; margin-top: 12px; font-weight: 700; color: var(--blue-deep); }
+@media (max-width: 760px) { .next-grid { grid-template-columns: minmax(0, 1fr); } }
+
+.lang-switch { position: relative; }
+.lang-switch > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 10px; border: 1px solid var(--ui-line); border-radius: 999px; background: var(--paper-light); font-size: 0.8rem; font-weight: 700; }
+.lang-switch > summary::-webkit-details-marker { display: none; }
+.lang-switch ul { position: absolute; right: 0; top: calc(100% + 6px); z-index: 30; margin: 0; padding: 6px; list-style: none; min-width: 150px; background: var(--paper-light); border: 1px solid var(--ink); border-radius: 10px; box-shadow: 4px 4px 0 var(--ink); }
+.lang-switch li a { display: block; padding: 8px 10px; border-radius: 6px; color: var(--ink); text-decoration: none; font-size: 0.88rem; }
+.lang-switch li a:hover, .lang-switch li a[aria-current] { background: var(--blue-soft); }
+@media (max-width: 960px) { .brand-sub { display: none; } .header-actions { gap: 4px; } .lang-switch > summary { padding: 0 8px; } }
+@media (max-width: 640px) { .lang-switch .ls-label { display: none; } .lang-switch > summary { padding: 0 10px; } }
+/* Typography: balanced headings, phrase-aware Japanese breaks, tighter mobile headings */
+h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
+:lang(ja) h1, :lang(ja) h2, :lang(ja) h3, :lang(ja) .eyebrow, :lang(ja) .scene b, :lang(ja) .lead { word-break: auto-phrase; }
+.lead, .intro, .scene p { text-wrap: pretty; }
+@media (max-width: 640px) { h2 { font-size: 1.32rem; line-height: 1.4; } .eyebrow { font-size: 0.72rem; } .closing h2 { font-size: 1.5rem; } }
+@media (max-width: 400px) { h2 { font-size: 1.22rem; } .closing h2 { font-size: 1.34rem; } }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://simy.one/guides/notta.html#article",
+      "headline": "Notta（ノッタ）活用ガイド：使い方・料金と無料プラン・議事録の先",
+      "description": "Notta（ノッタ）の使い方、料金と無料プランの制限、ボットなし録音、文字起こしのダウンロード、安全性を整理し、議事録の先の仕事をSIMYに渡す方法を解説します。",
+      "inLanguage": "ja",
+      "datePublished": "2026-10-02",
+      "dateModified": "2026-10-02",
+      "mainEntityOfPage": "https://simy.one/guides/notta.html",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://simy.one/ogp.png",
+        "width": 1200,
+        "height": 630
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "SIMY",
+        "url": "https://simy.one/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "AwakApp Inc.",
+        "url": "https://www.awak.app/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://simy.one/simy-icon-square.png"
+        }
+      },
+      "about": [
+        {
+          "@type": "Thing",
+          "name": "Notta"
+        },
+        {
+          "@type": "Thing",
+          "name": "AI文字起こし"
+        },
+        {
+          "@type": "Thing",
+          "name": "議事録"
+        }
+      ],
+      "citation": [
+        "https://www.notta.ai/pricing",
+        "https://www.notta.ai/desktop",
+        "https://www.notta.ai/security",
+        "https://www.notta.ai/terms",
+        "https://www.notta.ai/company"
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "SIMY",
+          "item": "https://simy.one/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "ガイド",
+          "item": "https://simy.one/guides/index.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Notta 活用ガイド",
+          "item": "https://simy.one/guides/notta.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Nottaの料金はいくらですか？無料で何ができますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "2026年10月時点で、プレミアムは月払い1,980円（年払いなら月1,185円）、ビジネスは月払い4,180円（年払いなら1アカウント月2,508円）で、いずれも税込です。フリープランは月120分まで文字起こしできますが、1回の録音は3分までで、文字起こしのダウンロードはできません。最新の料金はNottaの料金ページで確認してください。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Nottaは安全ですか？どこの国の会社ですか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nottaを運営するNotta株式会社は、2022年に設立され、東京都千代田区に本社を置く日本の会社で、ISO 27001とSOC 2 Type IIを取得し、データは日本国内に保管すると案内しています。一方で、利用規約の第10条第4項には、プランに応じて音声データがパートナー企業の音声認識のトレーニングに使われる場合があると定められています。料金表で「AI学習なし」が付くのはエンタープライズプランです。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Notta Memoとは何ですか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nottaが販売するAIボイスレコーダーです。2026年10月時点の価格は25,500円（税込、Type-Cケース付き）で、通話録音とオフライン録音に対応しています。上位モデルのNotta Memo Proもあります（価格は公式サイトで確認してください）。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "NottaとPLAUDの違いは何ですか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nottaはボットやデスクトップ版でオンライン会議を記録するのが中心で、PLAUDは対面の会話を専用のボイスレコーダーで録るのが中心です。NottaにもNotta Memoがあり、PLAUDにもボットなしで会議を録るPlaud Desktopがあるので、違いは得意な場面です。SIMYはPlaudアカウントとは接続でき、Nottaとは文字起こしのファイルで受け渡しします。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "SIMYはNottaと連携していますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "いいえ。SIMYにNotta専用の連携（コネクタ）はなく、Nottaから文字起こしをTXTかWordでダウンロードしてSIMYのチャットに渡すか、フリープランなら文字起こしをコピーして貼り付けます。音声をMP3で渡せば、SIMYが自分で文字起こしすることもできます。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Nottaの無料プランのままでもSIMYを使えますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "使えます。フリープランは文字起こしをダウンロードできないので、Nottaの画面で文字起こしをコピーし、SIMYのチャットに貼り付けて渡します。ただしフリープランは1回の録音が3分までなので、会議を丸ごと残すならプレミアム以上が現実的です。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "会議にボットを入れたくありません。どうすればいいですか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nottaのデスクトップ版（WindowsとmacOS）はPCの音声を拾って記録するので、参加者リストにボットは出ず、プレミアム以上なら追加料金なしで使えます。PCの中で文字起こしするプライバシーモードもありますが、2026年10月時点ではベータ版で、AI要約は使えません。ボットが見えなくても、録音することは参加者に伝えて同意を取ってください。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Nottaの文字起こしは、どの形式で書き出せばいいですか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "TXTかWordを選んでください。字幕用のSRT形式はSIMYで読み込めません。音声や動画（MP3やMP4）を渡した場合は、SIMYがあらためて文字起こしします。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Nottaもフォローメールを作れます。SIMYと何が違いますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "NottaはテンプレートでフォローメールやCRM更新用のデータを作れ、SalesforceやHubSpotへの同期も用意しています（料金表ではビジネス以上）。SIMYは渡された会議を前後のメールややりとりとつなぎ、Gmailの下書き、承認してからのSlack投稿とNotion更新まで進めて、判断が要るところだけをMy Actionsで返します。会議1件の出力で終わらず、案件が片付くまで追いかけるのがSIMYの役割です。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "SIMYを使うと、AIの利用料が別にかかりますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "SIMYのクラウド実行は、お使いのChatGPTアカウントのCodexで行われ、Codexの利用はお使いのChatGPTプランの範囲です。SIMY自体の料金は料金ページをご覧ください。Nottaの料金は、いまのNottaのプランのまま変わりません。"
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">本文へスキップ</a>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="/?lang=ja">
+      <img src="/simy-icon-56.png" alt="SIMY" width="28" height="28">
+      <span aria-hidden="true">SIMY</span>
+      <span class="brand-sub">Notta 活用ガイド</span>
+    </a>
+    <nav class="header-actions" aria-label="アカウント">
+      <details class="lang-switch"><summary aria-label="Language: 日本語"><span aria-hidden="true">🌐</span> <span class="ls-label">日本語</span></summary><ul><li><a href="/guides/notta.html" hreflang="ja" lang="ja" aria-current="page">日本語</a></li><li><a href="/guides/en/notta.html" hreflang="en" lang="en">English</a></li><li><a href="/guides/zh-hans/notta.html" hreflang="zh-Hans" lang="zh-Hans">中文</a></li><li><a href="/guides/es/notta.html" hreflang="es" lang="es">Español</a></li><li><a href="/guides/fr/notta.html" hreflang="fr" lang="fr">Français</a></li><li><a href="/guides/hi/notta.html" hreflang="hi" lang="hi">हिन्दी</a></li></ul></details>
+      <a class="header-link" href="/download.html">ダウンロード</a>
+      <a class="header-link" href="https://app.simy.one/login?lang=ja&amp;locale=ja&amp;region=jp">ログイン</a>
+      <a class="header-cta" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=notta_guide&amp;utm_content=header">プランを選んではじめる</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" aria-labelledby="page-title">
+    <div class="wrap hero-inner">
+      <div>
+        <ol class="crumbs" aria-label="パンくずリスト">
+          <li><a href="https://simy.one/">SIMY</a></li>
+          <li><a href="/guides/index.html">ガイド</a></li>
+          <li aria-current="page">Notta 活用ガイド</li>
+        </ol>
+        <p class="eyebrow">Notta（ノッタ）ユーザーのための活用ガイド</p>
+        <h1 id="page-title">
+          <span class="line">Nottaの議事録を、</span>
+          <span class="line hl">次の一手に変える。</span>
+        </h1>
+        <p class="lead">Notta（ノッタ）は、文字起こしと要約にそのまま使ってください。会議のあとのフォローメール、社内共有、顧客メモはSIMYが進め、あなたには判断だけを返します。</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=notta_guide&amp;utm_content=hero">プランを選んではじめる <span class="arrow" aria-hidden="true">↗</span></a>
+          <a class="btn btn-ghost" href="#connect">渡し方を見る <span class="arrow" aria-hidden="true">↓</span></a>
+        </div>
+        <ul class="hero-points">
+          <li>Nottaは乗り換えずにそのまま</li>
+          <li>文字起こしをTXTかWordで渡す</li>
+          <li>メールは下書き、投稿は承認してから</li>
+        </ul>
+      </div>
+
+      <div class="hero-visual">
+        <div class="relay" role="img" aria-label="例：Zoomの商談をNottaが文字起こしして要約し、その文字起こしをWordで受け取ったSIMYが、決定事項と宿題の抽出、Gmailへのフォローメールの下書き、Slackの社内共有の文面、Notionの顧客メモの更新案を用意し、判断2つだけがあなたに残る流れ">
+          <div class="relay-head" aria-hidden="true">
+            <span class="rec"><span class="rec-dot"></span><span class="rec-name">A社_商談_Zoom_1002</span></span>
+            <span>48:10</span>
+          </div>
+          <div class="relay-meta" aria-hidden="true">
+            <span class="chip">Notta Bot</span>
+            <span class="chip">日本語</span>
+            <span class="chip">話者 3名</span>
+          </div>
+          <ol class="relay-steps" aria-hidden="true">
+            <li class="step s-done s-plaud"><span class="no">01</span><span class="what">録音・文字起こし<small>Zoomの商談を話者ごとに</small></span><span class="status">Notta ✓</span></li>
+            <li class="step s-done s-plaud"><span class="no">02</span><span class="what">要約・議事録<small>テンプレート「商談」</small></span><span class="status">Notta ✓</span></li>
+            <li class="handoff">Wordで書き出してSIMYへ ／ ここからSIMY</li>
+            <li class="step s-done"><span class="no">03</span><span class="what">決定事項と宿題を抜き出す<small>誰が・いつまでに</small></span><span class="status">完了</span></li>
+            <li class="step s-done"><span class="no">04</span><span class="what">フォローメール<small>Gmailに下書き保存</small></span><span class="status">下書き済</span></li>
+            <li class="step s-run"><span class="no">05</span><span class="what">Slackの社内共有<small>見積もりの前提を技術チームへ</small></span><span class="status">承認待ち</span><span class="bar"></span></li>
+            <li class="step s-next"><span class="no">06</span><span class="what">Notionの顧客メモ<small>懸念と決裁時期を追記</small></span><span class="status">次</span></li>
+            <li class="step s-you"><span class="no">07</span><span class="what">判断が2つ<small>再提示の金額と、返す日程</small></span><span class="status">あなたの番</span></li>
+          </ol>
+          <div class="relay-foot" aria-hidden="true"><strong>あなたがやるのは、2つ決めて、レビューすることだけ。</strong></div>
+        </div>
+        <p class="caption">※ 画面は説明用のイメージです</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap guide">
+    <nav class="toc" aria-label="目次">
+      <p class="toc-title">目次</p>
+      <ol>
+        <li><a href="#scene"><span>01</span>会議のあと、こうなっていませんか</a></li>
+        <li><a href="#wish"><span>02</span>本当は、こうしたかった</a></li>
+        <li><a href="#gap"><span>03</span>Nottaは会議1件で区切られる</a></li>
+        <li><a href="#connect"><span>04</span>SIMYが引き継ぐ</a></li>
+        <li><a href="#sample"><span>05</span>商談1件で比較</a></li>
+        <li><a href="#usecases"><span>06</span>職種別：会議とSIMYが出すもの</a></li>
+        <li><a href="#start"><span>07</span>はじめ方：3ステップ</a></li>
+        <li><a href="#reference"><span>08</span>使い方・料金・安全性</a></li>
+        <li><a href="#faq"><span>09</span>よくある質問</a></li>
+        <li><a href="#sources"><span>10</span>参考情報</a></li>
+      </ol>
+    </nav>
+
+    <article class="article">
+      <details class="toc-mobile">
+        <summary>目次</summary>
+        <ol>
+          <li><a href="#scene">会議のあと、こうなっていませんか</a></li>
+          <li><a href="#wish">本当は、こうしたかった</a></li>
+          <li><a href="#gap">Nottaは会議1件で区切られる</a></li>
+          <li><a href="#connect">SIMYが引き継ぐ</a></li>
+          <li><a href="#sample">商談1件で比較</a></li>
+          <li><a href="#usecases">職種別：会議とSIMYが出すもの</a></li>
+          <li><a href="#start">はじめ方：3ステップ</a></li>
+          <li><a href="#reference">使い方・料金・安全性</a></li>
+          <li><a href="#faq">よくある質問</a></li>
+          <li><a href="#sources">参考情報</a></li>
+        </ol>
+      </details>
+
+      <p class="byline"><span>最終更新：<time datetime="2026-10-02">2026年10月2日</time></span><span>発行：SIMY（AwakApp Inc.）</span></p>
+
+      <!-- 01 -->
+      <section class="sec" id="scene" aria-labelledby="h-scene">
+        <span class="sec-label">01 / AFTER THE MEETING</span>
+        <h2 id="h-scene">会議のあと、こうなっていませんか</h2>
+        <p class="intro">Nottaの文字起こしも要約も、もう届いている。それでも、会議のあとに起きていること。</p>
+        <div class="scenes">
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">1</span>
+            <span class="k">会議の直後</span>
+            <b>で、誰が送る？</b>
+            <p>要約もフォロー文の案もある。宛先と日程を確かめて送るのは、結局自分。</p>
+          </div>
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">2</span>
+            <span class="k">その日のうちに</span>
+            <b>話が散らばる</b>
+            <p>文字起こしはNotta、やりとりはメール、相談はSlack。全体像は頭の中だけ。</p>
+          </div>
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">3</span>
+            <span class="k">会議のたびに</span>
+            <b>コピーして、貼る</b>
+            <p>TXTを書き出し、ChatGPTに貼り、うちの型に直してSlackへ。毎回同じ手順。</p>
+          </div>
+        </div>
+        <p class="scene-foot">記録と要約は、Nottaで終わっている。<b>案件が前に進むかどうかは、そのあとの仕事で決まります。</b></p>
+      </section>
+
+      <!-- 02 -->
+      <section class="sec" id="wish" aria-labelledby="h-wish">
+        <span class="sec-label">02 / WHAT YOU REALLY WANTED</span>
+        <h2 id="h-wish">本当は、こうしたかった：Nottaの議事録のあと</h2>
+        <p class="intro">同じ会議。同じNotta。会議が終わったときに、こうなっていてほしかった。</p>
+        <div class="scenes four">
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">会議が終わったら</span>
+            <b>次が動いている</b>
+            <p>フォローメールの下書きと社内共有の文面が、もう用意されている。</p>
+          </div>
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">前回の続きから</span>
+            <b>顧客ごとに積み上がる</b>
+            <p>前回の商談、メール、見積もりの前提が、ひとつの流れでつながっている。</p>
+          </div>
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">頼まなくても</span>
+            <b>うちの型で、毎回</b>
+            <p>報告も顧客メモも、いつもの書式。同じ指示を打ち直さない。</p>
+          </div>
+          <div class="scene wish you">
+            <span class="mark" aria-hidden="true">!</span>
+            <span class="k">あなたに戻るのは</span>
+            <b>判断だけ</b>
+            <p>「この金額で再提示するか」「どの日程で返すか」。決めるのはそこだけ。</p>
+          </div>
+        </div>
+        <p class="scene-foot">これは、<b>Nottaの文字起こしをSIMYに渡したその会議から</b>起きることです。</p>
+      </section>
+
+      <!-- 03 -->
+      <section class="sec" id="gap" aria-labelledby="h-gap">
+        <span class="sec-label">03 / WHERE IT ENDS</span>
+        <h2 id="h-gap">Nottaの文字起こしと議事録は、会議1件で区切られる</h2>
+        <p class="intro">Nottaが得意なのは、1つの会議をきれいに記録して、まとめるところまで。案件は、その会議の外に続いています。</p>
+        <div class="tl-wrap" role="img" aria-label="タイムライン。録音、文字起こし、要約と議事録、フォロー文の案まではNottaが用意するが、過去のメールとの照合、社内への相談、顧客メモへの積み上げ、次回まで追いかけることは空白のまま残る">
+          <div class="tl-row">
+            <span class="tl-who">Notta</span>
+            <ol class="tl">
+              <li class="on">録音<small>ボットかアプリで</small></li>
+              <li class="on">文字起こし<small>話者を分けて</small></li>
+              <li class="on">議事録<small>テンプレートで</small></li>
+              <li class="gap">前のメールと照合</li>
+              <li class="gap">社内に相談</li>
+              <li class="gap">顧客メモに積む</li>
+              <li class="gap">次回まで追う</li>
+            </ol>
+          </div>
+        </div>
+        <p class="caption">※ 流れは説明用のイメージです</p>
+        <p class="tl-note"><b>Nottaも、フォローメールの案やCRM（顧客管理システム）更新用のデータまでテンプレートで作れます。</b>SalesforceやHubSpotへの同期もあります（料金表ではビジネス以上）。ただ、それは会議1件ぶんの出力で、前のメールや社内の相談とつないで動かし続けるのは、まだあなたです。</p>
+      </section>
+
+      <!-- 04 -->
+      <section class="sec" id="connect" aria-labelledby="h-connect">
+        <span class="sec-label">04 / HAND OFF</span>
+        <h2 id="h-connect">SIMYが引き継ぐ。Nottaの文字起こしをファイルで渡す</h2>
+        <p class="intro">空白だった4つを、SIMYが埋めます。あなたに戻るのは、判断の1マスだけ。</p>
+        <div class="tl-wrap" role="img" aria-label="タイムライン。録音、文字起こし、議事録はNotta。前のメールとの照合、社内共有の文面、顧客メモの更新はSIMYが進め、再提示の金額と日程の判断だけがあなたに戻る">
+          <div class="tl-row">
+            <span class="tl-who">Notta</span>
+            <ol class="tl">
+              <li class="on">録音</li>
+              <li class="on">文字起こし</li>
+              <li class="on">議事録</li>
+              <li class="blank"></li><li class="blank"></li><li class="blank"></li><li class="blank"></li>
+            </ol>
+          </div>
+          <div class="tl-row">
+            <span class="tl-who simy">SIMY</span>
+            <ol class="tl">
+              <li class="blank"></li><li class="blank"></li><li class="blank"></li>
+              <li class="run">メールと照合<small>候補日をGmailの下書きに</small></li>
+              <li class="run">社内共有<small>Slackへは承認して投稿</small></li>
+              <li class="run">顧客メモ<small>Notionへは承認して更新</small></li>
+              <li class="you">金額と日程<small>判断だけ戻る</small></li>
+            </ol>
+          </div>
+        </div>
+        <p class="caption">※ 流れは説明用のイメージです</p>
+        <ul class="three" aria-label="SIMYの3つの特徴">
+          <li>会議から拾う</li>
+          <li>あなたのやり方で</li>
+          <li>判断だけ返す</li>
+        </ul>
+        <p class="tl-note">SIMYは、渡された会議とそのあとのチャットから、次にやる仕事を自分で見つけます。あなたとの会話からやり方を覚え、判断が要るものだけをMy Actionsに並べて、案件が片付くまで追いかけます。</p>
+
+        <div class="connect">
+          <ol class="connect-steps">
+            <li><b>Nottaで、会議の文字起こしを開く</b><span>Web版でもアプリでも同じです。話者名を直しておくと、宿題の担当がはっきりします。</span></li>
+            <li class="key"><b>TXTかWordでダウンロードして、SIMYに渡す</b><span>SIMYのチャットにファイルを落とし、「A社の商談です」とひとこと添えるだけ。ダウンロードはNottaのプレミアム以上で使えます。</span></li>
+            <li><b>フリープランなら、コピーして貼る</b><span>文字起こしの本文をコピーして、SIMYのチャットに貼り付けます。音声をMP3で渡せば、SIMYが自分で文字起こしすることもできます。</span></li>
+          </ol>
+          <div>
+            <div class="mock" role="img" aria-label="SIMYのチャットに、Nottaから書き出したWordファイルを添付しているところのイメージ。ひとこと添えて送ると、会議のあとの仕事をSIMYが進めます。">
+              <div class="mock-head" aria-hidden="true">
+                <span class="mock-mark">S</span>
+                <div>
+                  <div class="mock-title">SIMY <span class="mock-state">● チャット</span></div>
+                  <p class="mock-desc">会議の文字起こしを渡すと、そのあとの仕事を進めます</p>
+                </div>
+              </div>
+              <div class="mock-box" aria-hidden="true">📄 A社_商談_1002.docx<br><span class="muted">A社の商談です。</span></div>
+              <div class="mock-btn" aria-hidden="true">送信</div>
+              <div class="mock-foot" aria-hidden="true">TXT・Word・MP3を受け付けます</div>
+            </div>
+            <p class="caption">※ SIMYのチャット画面のイメージです</p>
+          </div>
+        </div>
+        <p class="note"><b>正直に書くと：</b>SIMYにNotta専用の連携（コネクタ）はありません。受け渡しはファイルか貼り付けです。字幕用のSRT形式は読み込めないので、TXTかWordを選んでください。</p>
+      </section>
+
+      <!-- 05 -->
+      <section class="sec" id="sample" aria-labelledby="h-sample">
+        <span class="sec-label">05 / SAMPLE</span>
+        <h2 id="h-sample">商談1件で比較：Nottaの要約と、SIMYが進めたこと</h2>
+        <p class="intro">Zoomの商談をNottaで記録し、文字起こしをWordでSIMYに渡した場合のサンプルです。左がNotta、右がSIMY。</p>
+        <div class="sample">
+          <div class="sheet">
+            <div class="sheet-label"><span>Nottaの要約（例）</span><span>商談テンプレート</span></div>
+            <dl>
+              <dt>概要</dt>
+              <dd>勤怠管理システムの入れ替えを検討中。現行システムの契約は来年3月まで。</dd>
+              <dt>決定事項</dt>
+              <dd>来週中に再見積もりを提出する。次回は経理部長も同席する。</dd>
+              <dt>課題</dt>
+              <dd>初期費用が予算を上回っている。給与ソフトとの連携方法が未確認。</dd>
+              <dt>ネクストアクション</dt>
+              <dd>再見積もり（自社）。次回の日程調整（双方）。</dd>
+            </dl>
+          </div>
+          <div class="outs">
+            <div class="out">
+              <div class="out-head"><b>決定事項と宿題</b><span class="pill ok">抽出済み</span></div>
+              <p>再見積もり：自社・来週中。給与ソフト連携の確認：自社の技術チーム。日程調整：先方の経理部長の都合待ち。</p>
+            </div>
+            <div class="out">
+              <div class="out-head"><b>フォローメール</b><span class="pill ok">Gmailに下書き</span></div>
+              <p>件名「本日のお打ち合わせのお礼と、再お見積もりについて」。前回のメールにあった候補日を本文に添えて、あなたのいつもの文面で。送るのはあなたです。</p>
+            </div>
+            <div class="out">
+              <div class="out-head"><b>Slackの社内共有</b><span class="pill run">承認待ち</span></div>
+              <p>「A社、初期費用がネックです。給与ソフトとの連携可否を、金曜までに確認させてください。」承認すると投稿します。</p>
+            </div>
+            <div class="out">
+              <div class="out-head"><b>Notionの顧客メモ</b><span class="pill">承認して更新</span></div>
+              <p>懸念：初期費用。決裁：経理部長が同席する次回。期限：現行契約は3月まで。</p>
+            </div>
+            <div class="out you">
+              <div class="out-head"><b>あなたの判断（My Actions）</b><span class="pill you">2つだけ</span></div>
+              <p>①初期費用をどこまで下げて再提示するか。②候補日のどちらで返すか。</p>
+            </div>
+          </div>
+        </div>
+        <p class="sample-foot">Nottaが記録し、SIMYが動かす。値引きの線引きは、あなたが決めるところのままです。</p>
+      </section>
+
+      <!-- 06 -->
+      <section class="sec" id="usecases" aria-labelledby="h-usecases">
+        <span class="sec-label">06 / BY ROLE</span>
+        <h2 id="h-usecases">職種別：Nottaで記録する会議と、SIMYが出すもの</h2>
+        <p class="intro">Nottaで記録した会話から、SIMYが何を用意するか。会議の種類が違っても、渡し方は同じです。</p>
+        <div class="ind">
+          <div class="ind-card">
+            <h3>営業・インサイドセールス <small>Notta Bot（Zoom・Teams）</small></h3>
+            <ul class="ind-rows">
+              <li><span>初回商談</span><span>→</span><span>お礼メールの下書き・論点メモ</span></li>
+              <li><span>見積もり前の打ち合わせ</span><span>→</span><span>前提の社内共有・顧客メモの更新案</span></li>
+              <li><span>保留になった商談</span><span>→</span><span>次に連絡する時期と確認事項</span></li>
+            </ul>
+          </div>
+          <div class="ind-card">
+            <h3>カスタマーサクセス <small>デスクトップ版（ボットなし）</small></h3>
+            <ul class="ind-rows">
+              <li><span>定例ミーティング</span><span>→</span><span>要望の整理・対応の担当案</span></li>
+              <li><span>解約の相談</span><span>→</span><span>社内へのエスカレーションの文面</span></li>
+              <li><span>四半期レビュー</span><span>→</span><span>複数回をまとめた経過メモ</span></li>
+            </ul>
+          </div>
+          <div class="ind-card">
+            <h3>採用・人事 <small>Notta Bot／スマホアプリ</small></h3>
+            <ul class="ind-rows">
+              <li><span>面接</span><span>→</span><span>評価メモの下書き・次の面接官への申し送り</span></li>
+              <li><span>1on1</span><span>→</span><span>宿題と次回の論点</span></li>
+              <li><span>候補者への連絡</span><span>→</span><span>お礼と次の選考案内の下書き</span></li>
+            </ul>
+            <p class="small muted" style="margin:10px 0 0">候補者の同意と社内のルールに沿って記録してください。</p>
+          </div>
+          <div class="ind-card">
+            <h3>海外との会議 <small>2か国語の文字起こし・翻訳</small></h3>
+            <ul class="ind-rows">
+              <li><span>英語の定例</span><span>→</span><span>日本語の社内共有</span></li>
+              <li><span>海外パートナーとの商談</span><span>→</span><span>英語のフォローメールの下書き</span></li>
+              <li><span>多言語の会議</span><span>→</span><span>決定事項と担当者の一覧</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- 07 -->
+      <section class="sec" id="start" aria-labelledby="h-start">
+        <span class="sec-label">07 / START</span>
+        <h2 id="h-start">はじめ方：Nottaユーザーは3ステップ</h2>
+        <ol class="steps3">
+          <li><b>Nottaで、いつもどおり記録する</b><span>ボットでも、デスクトップ版でも、スマホアプリでも。録り方は変えなくて大丈夫です。</span></li>
+          <li class="key"><b>文字起こしをSIMYに渡す</b><span>TXTかWordで書き出して、チャットに落とす。<a href="#connect">渡し方</a>は上のとおりです。</span></li>
+          <li><b>返ってきた判断に答える</b><span>下書きをレビューして、判断が要るところだけ決める。それだけです。</span></li>
+        </ol>
+        <p class="note"><b>登録の流れ：</b>プランを選ぶ → メールで本人確認 → カードで決済。無料プランはありません。<a href="/?lang=ja#pricing">料金を見る</a>。PCで使うアプリは<a href="/download.html">ダウンロードページ</a>から。</p>
+        <p class="note"><b>Nottaのプランは今のままで：</b>プレミアム以上ならファイルで、フリープランならコピーして貼る。どちらでもSIMYに渡せます。</p>
+      </section>
+
+      <!-- 08 -->
+      <section class="sec" id="reference" aria-labelledby="h-reference">
+        <span class="sec-label">08 / REFERENCE</span>
+        <h2 id="h-reference">Nottaの使い方・料金と無料プラン・安全性（詳しく知りたい人向け）</h2>
+        <p class="intro">ここから下は、Notta本体のことを確かめたいときに開いてください。内容は2026年10月時点の公式情報です。</p>
+
+        <details class="fold">
+          <summary>Nottaの使い方：はじめての会議を記録するまで<small>ログイン・Web版・アプリ・デスクトップ版・Chrome拡張・Notta Bot</small></summary>
+          <div class="fold-body">
+            <h3>Nottaとは</h3>
+            <p>Notta（読み方は「ノッタ」）は、会議や会話を録音して文字起こしし、AIで要約まで作る議事録ツールです。Web版、iPhoneとAndroidのスマホアプリ、WindowsとmacOSのデスクトップ版、Chrome拡張があり、どこで記録しても同じアカウントに保存されます。公式サイトは、累計ユーザー1500万人、導入企業5,000社超と案内しています（2026年10月時点の公式の主張）。</p>
+            <h3>ログインの場所</h3>
+            <p>Web版は、公式サイトの「ログイン」から入ります（app.notta.ai）。スマホアプリとデスクトップ版も、同じアカウントでログインします。</p>
+            <h3>はじめての記録まで</h3>
+            <ol class="plain-list">
+              <li><strong>アカウントを作り、使う場所を決める。</strong>オンライン会議が中心ならWeb版かデスクトップ版、対面の会議ならスマホアプリが手軽です。</li>
+              <li><strong>カレンダーと会議ツールをつなぐ。</strong>GoogleカレンダーやOutlookカレンダーと連携すると、予定に入ったZoom、Google Meet、Microsoft Teams、WebexにNotta Botが参加して記録します。</li>
+              <li><strong>要約のテンプレートを選ぶ。</strong>商談、定例、面接など会議の型に合わせて選ぶと、議事録の項目がそろいます。フリープランでもカスタムテンプレートを5個まで作れます。</li>
+              <li><strong>単語登録と話者名を整える。</strong>社名や製品名を単語登録しておくと、文字起こしの誤変換が減ります。話者識別はフリープランから使えます。</li>
+              <li><strong>録音済みのファイルを取り込む。</strong>手元の音声や動画をインポートして文字起こしすることもできます。月に取り込める数はプランで変わります。</li>
+            </ol>
+            <h3>スマホアプリとChrome拡張</h3>
+            <p>スマホアプリは、対面の会議や面談をその場で録音して文字起こしするのに向いています。Chrome拡張は、ブラウザで開いたオンライン会議を記録するときに使えます。どの方法で録っても、文字起こしと要約は同じNottaアカウントにまとまります。</p>
+            <h3>Nottaで議事録を作る流れ</h3>
+            <ol class="plain-list">
+              <li><strong>会議の前：</strong>カレンダー連携で、Notta Botが参加する会議を確かめます。テンプレートと単語登録はここで整えておきます。</li>
+              <li><strong>会議の最中：</strong>ボット、デスクトップ版、スマホアプリのどれかで記録します。録音することは、始める前に参加者へ伝えます。</li>
+              <li><strong>会議のあと：</strong>AI要約を確かめ、話者名や固有名詞の誤りを直します。共有やダウンロードはこの段階で行います。</li>
+              <li><strong>その先：</strong>フォローメール、社内共有、顧客メモの更新が残ります。文字起こしをSIMYに渡すと、ここをSIMYが進めます。</li>
+            </ol>
+            <h3>文字起こしの精度を上げるコツ</h3>
+            <p>Nottaは、発言が明瞭な場面で98.86%以上の精度があると案内しています（公式の主張）。精度は収音環境に左右されるので、マイクに近い位置で話す、雑音の多い場所を避ける、発言が重ならないように進める、が基本です。対面の会議では、スマホを机の中央に置くか、PCに会議用マイクをつなぐと録りやすくなります。</p>
+            <h3>文字起こしのダウンロード</h3>
+            <p>文字起こしは、TXT、Word、PDF、XLSX、SRTの形式でダウンロードできます。音声と動画は、MP3、WAV、MP4で書き出せます。Web版は最大10件をまとめてダウンロードでき、文字起こしのダウンロードはプレミアム以上のプランの機能です。</p>
+            <h3>文字起こしができない・途中で止まるとき</h3>
+            <ul class="plain-list">
+              <li><strong>フリープランの上限：</strong>1回の録音は3分まで、文字起こしは月120分までです。上限に達していないか確かめてください。</li>
+              <li><strong>Zoomの録音許可：</strong>Notta BotがZoomで記録するには、ホストによる録音の許可が必要です。</li>
+              <li><strong>音が拾えていない：</strong>デスクトップ版はPCのシステム音声を拾います。スピーカーやマイクの設定と、収音の環境を確かめてください。</li>
+              <li><strong>ファイルの取り込み：</strong>月に取り込めるファイル数はプランで決まっています（フリーは月50個）。</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>録音のしかた：ボットあり・ボットなし・プライバシーモード<small>Notta Botの入室、デスクトップ版のボットなし録音、録音の同意</small></summary>
+          <div class="fold-body">
+            <h3>Notta Bot：会議に参加者として入る</h3>
+            <p>Notta Botは、Zoom、Google Meet、Microsoft Teams、Webexの会議に参加者として入室し、文字起こしします。参加者リストにボットが表示されるので、録っていることが相手にも見えます。Zoomではホストによる録音の許可が必要で、Nottaも事前の告知を勧めています。</p>
+            <h3>デスクトップ版：ボットなしで録る</h3>
+            <p>WindowsとmacOSのデスクトップ版は、PCのシステム音声を拾って記録するので、会議にボットは入りません。プレミアム以上のプランなら、追加料金なしで使えます。ボットなしで録った音声も、文字起こしは通常どおりオンラインで処理されます。</p>
+            <h3>プライバシーモード（ベータ）</h3>
+            <p>デスクトップ版には、PCの中で文字起こしするプライバシーモードがあります。2026年10月時点ではベータ版で、AI要約は使えません。社外に音声を出したくない会議の記録に向いた選択肢です。</p>
+            <h3>録音の同意</h3>
+            <p>ボットが見えない録り方でも、録音することは参加者に伝えて同意を取ってください。Nottaの公式FAQも、法令や社内ポリシーに従って必要な告知と同意を行うよう案内しています。SIMYの<a href="/terms.html">利用規約</a>でも、録音の同意の取得はお客さまの責任としています。</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>料金プランの比較と、無料プランでできること<small>フリー・プレミアム・ビジネス、無料トライアルと学割（2026年10月時点・税込）</small></summary>
+          <div class="fold-body">
+            <p class="scroll-hint">表は横にスクロールできます →</p>
+            <div class="table-wrap">
+              <table class="t-wide t-models">
+                <thead>
+                  <tr><th scope="col">項目</th><th scope="col">フリー</th><th scope="col">プレミアム</th><th scope="col">ビジネス</th><th scope="col">エンタープライズ</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">月払い（月額・税込）</th><td>0円</td><td>月1,980円</td><td>月4,180円</td><td>要相談</td></tr>
+                  <tr><th scope="row">年払い（税込）</th><td>0円</td><td>月1,185円（年14,220円）</td><td>1アカウント月2,508円（年30,096円）</td><td>要相談</td></tr>
+                  <tr><th scope="row">文字起こし時間</th><td>月120分</td><td>月1,800分</td><td>無制限</td><td>カスタマイズ</td></tr>
+                  <tr><th scope="row">1回あたりの上限</th><td>3分</td><td>5時間</td><td>5時間</td><td>5時間</td></tr>
+                  <tr><th scope="row">AI要約</th><td>月10回</td><td>月100回</td><td>月200回</td><td>無制限</td></tr>
+                  <tr><th scope="row">ファイルの取り込み</th><td>月50個</td><td>月100個</td><td>月200個</td><td>無制限</td></tr>
+                  <tr><th scope="row">文字起こしのダウンロード</th><td>×</td><td>○</td><td>○</td><td>○</td></tr>
+                  <tr><th scope="row">Web会議の録画</th><td>×</td><td>×</td><td>○</td><td>○</td></tr>
+                  <tr><th scope="row">AI学習なし</th><td>×</td><td>×</td><td>×</td><td>○</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3>無料プランは何分まで？できること、できないこと</h3>
+            <p>フリープランでも、月120分の文字起こし、月10回のAI要約、話者識別、カスタムテンプレート5個が使えます。ただし<strong>1回の録音は3分まで</strong>で、文字起こしのダウンロードはできません。会議を丸ごと議事録にしたいなら、プレミアム以上が現実的です。</p>
+            <h3>学割・特別プランとアドオン</h3>
+            <p>学生と教職員には50%の割引（学割）があります。医療向けと士業向けには、ビジネス相当の特別プランがあり、士業向けには「AI学習なし」が付きます。プレミアム以上では、リアルタイム翻訳や2か国語の文字起こし・翻訳を有料のアドオンで追加でき、どのプランにも月に数回の無料枠があります。</p>
+            <h3>3日間の無料トライアル</h3>
+            <p>Web版にログインすると、プレミアムプランの3日間無料トライアルを始められます。終了後はプレミアムの年間プランに自動で更新されるので、続けないなら72時間以内に解約してください。期間内の解約なら請求は発生しないと、公式は案内しています。</p>
+            <h3>解約について</h3>
+            <p>有料プランの解約や更新の手順は、Nottaのヘルプセンターで確認してください。プランを下げる前に、残しておきたい文字起こしはTXTかWordで書き出しておくと安心です。</p>
+            <p class="note"><b>選び方：</b>1回3分を超える会議を記録するならプレミアム、チームでCRM同期やWeb会議の録画まで使うならビジネスです。英語版の料金表は米ドル建てで、プレミアムに当たるプランの名前はProです。</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>文字起こしと議事録の機能：58言語・Notta Brain・Sales Agent<small>Notta自身も「要約の先」に手を伸ばしている</small></summary>
+          <div class="fold-body">
+            <h3>58言語の文字起こしと翻訳</h3>
+            <p>Nottaの文字起こしは58言語に対応しています。古い記事には140言語と書かれていることがありますが、2026年10月時点の公式サイトとアプリストアの表記は58言語です。日本語と英語が混ざる会議では、2か国語の文字起こし・翻訳のアドオンが使えます。</p>
+            <h3>AI要約と議事録テンプレート</h3>
+            <p>会議が終わると、テンプレートに沿ってAI要約が作られます。公式サイトは「会議後の資料づくりを3時間から3分へ」とうたい、議事録に加えてフォローメールやCRM更新用のデータもテンプレートで作り、確認して共有・送信・システム連携まで進める流れを案内しています。</p>
+            <h3>Notta Brain</h3>
+            <p>Notta Brainは、Nottaに入ったAIエージェントです。複数の会議をまたいだ分析、PowerPoint・Word・Excelの資料づくり、画像の生成、複数のファイルをまたいだ検索ができます。どのプランにも月1,000クレジットが付き、足りない分は追加購入できます。</p>
+            <h3>Sales Agent（営業向けのChrome拡張）</h3>
+            <p>Sales Agentは、会議中に回答の候補やNGワードを出すライブナビ、SalesforceやHubSpotへのCRM同期、放置リスクや提案漏れを知らせるレポートを持つ営業向けの機能です。ライブナビはGoogle Meet、Zoom、Teamsで使えます。</p>
+            <h3>エクスポートと連携（プラン別）</h3>
+            <ul class="plain-list">
+              <li><strong>全プラン：</strong>Zoom、Googleカレンダー、Outlookカレンダー、Notion、Slack、Microsoft Teams、Webex。</li>
+              <li><strong>プレミアム以上：</strong>Box、Google Drive、SharePoint、Dropbox、OneDrive。</li>
+              <li><strong>ビジネス以上：</strong>Zapier、CRM（Salesforce、HubSpot、Pipedrive、Zoho CRM、Zendesk Sell、Salesflare、Freshsales）。</li>
+            </ul>
+            <p class="small muted">連携の割り当ては料金表の表記によるもので、日本語版と英語版でも一部異なります。最新の内容はNottaの料金ページで確認してください。</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>Notta Memoとは：NottaのAIボイスレコーダー<small>通話録音・オフライン録音に対応したハードウェア</small></summary>
+          <div class="fold-body">
+            <p>Notta Memoは、Nottaが販売するAIボイスレコーダーです。2026年10月時点の価格は25,500円（税込、Type-Cケース付き）で、通話録音とオフライン録音に対応しています。上位モデルのNotta Memo Proもあります（価格は公式サイトで確認してください）。</p>
+            <p>オンライン会議が中心ならNotta Botやデスクトップ版で足り、対面の会議もスマホアプリとPC用の会議マイクで記録できます。レコーダーが活きるのは、スマホを出しにくい対面の面談や、電話での商談を多く録る場面です。</p>
+            <p>Notta Memoで録った会議も、Nottaの文字起こしをTXTかWordで書き出せば、ほかの会議と同じようにSIMYへ渡せます。</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>Nottaが向いている人・向いていない場面<small>会議ツールの混在、2か国語の会議、ボットへの抵抗感</small></summary>
+          <div class="fold-body">
+            <h3>向いている人</h3>
+            <ul class="plain-list">
+              <li><strong>会議ツールが混在している会社：</strong>Zoom、Google Meet、Microsoft Teams、Webexのどれにも同じNotta Botで入れるので、取引先ごとに会議ツールが違っても記録の方法をそろえられます。</li>
+              <li><strong>日本語と英語が混ざる会議が多い人：</strong>2か国語の文字起こし・翻訳のアドオンで、日本語だけの参加者と英語だけの参加者が同じ議事録を読めます。</li>
+              <li><strong>Notionを使っていないチーム：</strong>文字起こしと要約がNottaの中にまとまるので、議事録の置き場所を新しく決めなくても始められます。</li>
+              <li><strong>まず精度を確かめたい人：</strong>フリープランで短い会話を試し、精度に納得してからプレミアムに上げる、という順番がとれます。</li>
+            </ul>
+            <h3>向いていない場面と、その対処</h3>
+            <ul class="plain-list">
+              <li><strong>顧客との会議にボットを入れにくい：</strong>デスクトップ版のボットなし録音を使います（プレミアム以上）。録音の告知と同意は、ボットの有無にかかわらず必要です。</li>
+              <li><strong>音声を社外に出したくない：</strong>PC内で文字起こしするプライバシーモードがありますが、2026年10月時点ではベータで要約は使えません。AI学習なしが必要なら、エンタープライズか士業向けの特別プランが対象です。</li>
+              <li><strong>無料で長い会議を記録したい：</strong>フリープランは1回3分までなので、長い会議の記録には向きません。</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>NottaとPLAUDの違い<small>得意な場面が違う（2026年10月時点）</small></summary>
+          <div class="fold-body">
+            <p class="scroll-hint">表は横にスクロールできます →</p>
+            <div class="table-wrap">
+              <table class="t-wide">
+                <thead>
+                  <tr><th scope="col">比較項目</th><th scope="col">Notta</th><th scope="col">PLAUD</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">得意な場面</th><td>オンライン会議（ボット・デスクトップ版）</td><td>対面の会話（専用のボイスレコーダー）</td></tr>
+                  <tr><th scope="row">ボットなしの録音</th><td>デスクトップ版（プレミアム以上）</td><td>Plaud Desktop</td></tr>
+                  <tr><th scope="row">専用の録音機</th><td>Notta Memo（25,500円・税込）</td><td>PLAUD NOTE、NotePinなど</td></tr>
+                  <tr><th scope="row">無料プラン</th><td>月120分・1回3分まで</td><td>Starter・月300分</td></tr>
+                  <tr><th scope="row">SIMYへの渡し方</th><td>TXTかWordのファイル、または貼り付け</td><td>Plaudアカウントを接続</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>PLAUDの料金と機能は<a href="/guides/plaud.html">PLAUD活用ガイド</a>にまとめています。どちらで録っても、要約のあとに残る仕事は同じで、そこをSIMYが受け持ちます。</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>Notta・Notta Brain・SIMYの違い<small>どれが良い悪いではなく、受け持つ範囲が違う</small></summary>
+          <div class="fold-body">
+            <p class="scroll-hint">表は横にスクロールできます →</p>
+            <div class="table-wrap">
+              <table class="t-wide">
+                <thead>
+                  <tr><th scope="col">比較項目</th><th scope="col">Nottaの要約・テンプレート</th><th scope="col">Notta Brain</th><th scope="col" class="simy">SIMY</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">起点</th><td>会議が終わると自動で</td><td>あなたが依頼する</td><td class="simy">会議とチャットから、SIMYが拾う</td></tr>
+                  <tr><th scope="row">見る範囲</th><td>その会議1件</td><td>Nottaに入った会議とファイル</td><td class="simy">渡された会議と、前後のメールややりとり</td></tr>
+                  <tr><th scope="row">あなたのやり方</th><td>テンプレートで調整</td><td>依頼の内容で伝える</td><td class="simy">会話から学び、毎回は頼まない</td></tr>
+                  <tr><th scope="row">返ってくるもの</th><td>議事録・フォロー文の案</td><td>分析と資料</td><td class="simy">Gmailの下書き、承認待ちの共有と更新、判断の問い</td></tr>
+                  <tr><th scope="row">終わるところ</th><td>会議の記録</td><td>依頼への回答</td><td class="simy">案件が片付くまで（My Actions）</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="note"><b>選び方：</b>会議を記録してまとめるのはNottaがいちばん手早い道具です。そのあとの仕事が毎回同じ型で残るなら、SIMYを足す価値があります。</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>Nottaは安全？危険性・情報漏洩の心配と運営会社<small>どこの国の会社か、認証、データの保管場所、利用規約の学習条項</small></summary>
+          <div class="fold-body">
+            <h3>運営会社</h3>
+            <p>Nottaを運営するのは、東京都千代田区神田神保町に本社を置くNotta株式会社です。設立は2022年5月25日で、従業員はグローバルで約150名（2026年8月時点）と公表しています。App Storeでのアプリの提供元の表記はMindCruiserです。</p>
+            <h3>認証とデータの保管場所</h3>
+            <ul class="plain-list">
+              <li><strong>取得している認証：</strong>ISO 27001とSOC 2 Type IIを取得し、GDPR、HIPAA、個人情報保護法（APPI）、CCPAへの対応を公開しています。</li>
+              <li><strong>データの保管場所：</strong>公式サイトのFAQで、すべてのデータは日本国内に保管すると案内しています。</li>
+              <li><strong>管理機能：</strong>料金表では、外部共有の制限、ロールと権限、IPアドレスの制限などがビジネス以上、SAML SSO、操作ログ、データの自動削除がエンタープライズの機能とされています。</li>
+            </ul>
+            <h3>AI学習の扱い</h3>
+            <p>Nottaの音声認識は、第三者のパートナー企業のAPIで処理されます。利用規約の第10条第4項には、パートナー企業が、利用しているプランに応じて音声データを音声認識のトレーニングに使う場合があると定められています。料金表で「AI学習なし」が付くのはエンタープライズプランで、士業向けの特別プランにも含まれます。</p>
+            <h3>SIMYに渡すときのデータ</h3>
+            <p>Nottaから書き出したファイルは、SIMYのチャットに添付した時点でSIMYが扱うデータになります。SIMYでのデータの取り扱いは、<a href="/security.html">セキュリティ</a>と<a href="/privacy.html">プライバシーポリシー</a>で公開しています。</p>
+          </div>
+        </details>
+      </section>
+
+      <!-- 09 -->
+      <section class="sec" id="faq" aria-labelledby="h-faq">
+        <span class="sec-label">09 / FAQ</span>
+        <h2 id="h-faq">よくある質問</h2>
+        <div class="faq">
+          <details>
+            <summary>Nottaの料金はいくらですか？無料で何ができますか？</summary>
+            <div class="a"><p>2026年10月時点で、プレミアムは月払い1,980円（年払いなら月1,185円）、ビジネスは月払い4,180円（年払いなら1アカウント月2,508円）で、いずれも税込です。フリープランは月120分まで文字起こしできますが、1回の録音は3分までで、文字起こしのダウンロードはできません。最新の料金はNottaの料金ページで確認してください。</p></div>
+          </details>
+          <details>
+            <summary>Nottaは安全ですか？どこの国の会社ですか？</summary>
+            <div class="a"><p>Nottaを運営するNotta株式会社は、2022年に設立され、東京都千代田区に本社を置く日本の会社で、ISO 27001とSOC 2 Type IIを取得し、データは日本国内に保管すると案内しています。一方で、利用規約の第10条第4項には、プランに応じて音声データがパートナー企業の音声認識のトレーニングに使われる場合があると定められています。料金表で「AI学習なし」が付くのはエンタープライズプランです。</p></div>
+          </details>
+          <details>
+            <summary>Notta Memoとは何ですか？</summary>
+            <div class="a"><p>Nottaが販売するAIボイスレコーダーです。2026年10月時点の価格は25,500円（税込、Type-Cケース付き）で、通話録音とオフライン録音に対応しています。上位モデルのNotta Memo Proもあります（価格は公式サイトで確認してください）。</p></div>
+          </details>
+          <details>
+            <summary>NottaとPLAUDの違いは何ですか？</summary>
+            <div class="a"><p>Nottaはボットやデスクトップ版でオンライン会議を記録するのが中心で、PLAUDは対面の会話を専用のボイスレコーダーで録るのが中心です。NottaにもNotta Memoがあり、PLAUDにもボットなしで会議を録るPlaud Desktopがあるので、違いは得意な場面です。SIMYはPlaudアカウントとは接続でき、Nottaとは文字起こしのファイルで受け渡しします。</p></div>
+          </details>
+          <details>
+            <summary>SIMYはNottaと連携していますか？</summary>
+            <div class="a"><p>いいえ。SIMYにNotta専用の連携（コネクタ）はなく、Nottaから文字起こしをTXTかWordでダウンロードしてSIMYのチャットに渡すか、フリープランなら文字起こしをコピーして貼り付けます。音声をMP3で渡せば、SIMYが自分で文字起こしすることもできます。</p></div>
+          </details>
+          <details>
+            <summary>Nottaの無料プランのままでもSIMYを使えますか？</summary>
+            <div class="a"><p>使えます。フリープランは文字起こしをダウンロードできないので、Nottaの画面で文字起こしをコピーし、SIMYのチャットに貼り付けて渡します。ただしフリープランは1回の録音が3分までなので、会議を丸ごと残すならプレミアム以上が現実的です。</p></div>
+          </details>
+          <details>
+            <summary>会議にボットを入れたくありません。どうすればいいですか？</summary>
+            <div class="a"><p>Nottaのデスクトップ版（WindowsとmacOS）はPCの音声を拾って記録するので、参加者リストにボットは出ず、プレミアム以上なら追加料金なしで使えます。PCの中で文字起こしするプライバシーモードもありますが、2026年10月時点ではベータ版で、AI要約は使えません。ボットが見えなくても、録音することは参加者に伝えて同意を取ってください。</p></div>
+          </details>
+          <details>
+            <summary>Nottaの文字起こしは、どの形式で書き出せばいいですか？</summary>
+            <div class="a"><p>TXTかWordを選んでください。字幕用のSRT形式はSIMYで読み込めません。音声や動画（MP3やMP4）を渡した場合は、SIMYがあらためて文字起こしします。</p></div>
+          </details>
+          <details>
+            <summary>Nottaもフォローメールを作れます。SIMYと何が違いますか？</summary>
+            <div class="a"><p>NottaはテンプレートでフォローメールやCRM更新用のデータを作れ、SalesforceやHubSpotへの同期も用意しています（料金表ではビジネス以上）。SIMYは渡された会議を前後のメールややりとりとつなぎ、Gmailの下書き、承認してからのSlack投稿とNotion更新まで進めて、判断が要るところだけをMy Actionsで返します。会議1件の出力で終わらず、案件が片付くまで追いかけるのがSIMYの役割です。</p></div>
+          </details>
+          <details>
+            <summary>SIMYを使うと、AIの利用料が別にかかりますか？</summary>
+            <div class="a"><p>SIMYのクラウド実行は、お使いのChatGPTアカウントのCodexで行われ、Codexの利用はお使いのChatGPTプランの範囲です。SIMY自体の料金は<a href="/?lang=ja#pricing">料金ページ</a>をご覧ください。Nottaの料金は、いまのNottaのプランのまま変わりません。</p></div>
+          </details>
+        </div>
+      </section>
+
+      <!-- 10 -->
+      <section class="sec" id="sources" aria-labelledby="h-sources">
+        <span class="sec-label">10 / SOURCES</span>
+        <h2 id="h-sources">参考情報</h2>
+        <p>Nottaの料金、機能、セキュリティ、運営会社は、次の公式情報で確認しました（確認日：2026年10月2日）。会議のあとに残る仕事の場面は、日本のAI活用系YouTubeチャンネルの解説動画を参考にしています。</p>
+        <ul class="plain-list">
+          <li><a href="https://www.notta.ai/pricing" target="_blank" rel="noopener">Notta 料金プラン（日本語・税込）</a></li>
+          <li><a href="https://www.notta.ai/en/pricing" target="_blank" rel="noopener">Notta Pricing（英語版・米ドル）</a></li>
+          <li><a href="https://www.notta.ai/" target="_blank" rel="noopener">Notta 公式サイト（製品とよくある質問）</a></li>
+          <li><a href="https://www.notta.ai/desktop" target="_blank" rel="noopener">Notta デスクトップ版（ボットなし録音・プライバシーモード）</a></li>
+          <li><a href="https://www.notta.ai/brain" target="_blank" rel="noopener">Notta Brain</a></li>
+          <li><a href="https://www.notta.ai/agent/sales" target="_blank" rel="noopener">Notta Sales Agent</a></li>
+          <li><a href="https://www.notta.ai/hardware/memo-pro" target="_blank" rel="noopener">Notta Memo Pro</a></li>
+          <li><a href="https://support.notta.ai/hc/ja/articles/18646233394075" target="_blank" rel="noopener">Notta ヘルプセンター（ダウンロードできる形式）</a></li>
+          <li><a href="https://www.notta.ai/security" target="_blank" rel="noopener">Notta セキュリティ</a></li>
+          <li><a href="https://www.notta.ai/terms" target="_blank" rel="noopener">Notta 利用規約</a></li>
+          <li><a href="https://www.notta.ai/privacy" target="_blank" rel="noopener">Notta プライバシーポリシー</a></li>
+          <li><a href="https://www.notta.ai/company" target="_blank" rel="noopener">Notta株式会社 会社概要</a></li>
+          <li><a href="https://apps.apple.com/jp/app/id1480649572" target="_blank" rel="noopener">Notta（App Store）</a></li>
+        </ul>
+      </section>
+      <aside class="next-read" aria-labelledby="h-next">
+        <h2 id="h-next">次に読む</h2>
+        <div class="next-grid"><a href="/guides/meeting-notes.html"><b>AI議事録ツールの選び方</b><span>どのツールでも残る、共有とToDo</span></a><a href="/guides/plaud.html"><b>PLAUD NOTE 活用ガイド</b><span>対面の録音から、要約の先まで</span></a><a href="/guides/chatgpt.html"><b>ChatGPT 活用ガイド</b><span>貼り直しと仕上げを、毎回やらない</span></a></div>
+        <a class="next-all" href="/guides/index.html">ガイド一覧へ →</a>
+      </aside>
+    </article>
+  </div>
+
+  <section class="closing" aria-labelledby="h-closing">
+    <div class="wrap closing-inner">
+      <div>
+        <h2 id="h-closing">次の会議が終わったら、<br>議事録を読み返す前にSIMYへ。</h2>
+        <p>Nottaはそのまま、文字起こしを渡したその会議から使えます。SIMYが返すのは判断だけで、商談はあなたの腕の見せ所のままです。</p>
+      </div>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=notta_guide&amp;utm_content=closing">プランを選んではじめる <span class="arrow" aria-hidden="true">↗</span></a>
+        <a class="btn btn-ghost" href="mailto:sales@simy.one?subject=Notta%E3%81%A8%E3%81%AE%E4%BD%B5%E7%94%A8%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%E7%9B%B8%E8%AB%87%E3%81%97%E3%81%9F%E3%81%84">相談する</a>
+        <a class="btn btn-ghost" href="/download.html">アプリをダウンロード <span class="arrow" aria-hidden="true">↓</span></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <ul class="footer-links">
+      <li><a href="/?lang=ja">ホーム</a></li>
+      <li><a href="/?lang=ja#pricing">料金</a></li>
+      <li><a href="/integrations.html">連携</a></li>
+      <li><a href="/download.html">ダウンロード</a></li>
+      <li><a href="/guides/index.html">ガイド一覧</a></li>
+      <li><a href="/guides/claude.html">Claude</a></li>
+      <li><a href="/guides/codex.html">Codex</a></li>
+      <li><a href="/guides/cowork.html">Cowork</a></li>
+      <li><a href="/guides/chatgpt.html">ChatGPT</a></li>
+      <li><a href="/guides/plaud.html">PLAUD</a></li>
+      <li><a href="/guides/notta.html" aria-current="page">Notta</a></li>
+      <li><a href="/guides/meeting-notes.html">AI議事録</a></li>
+      <li><a href="/guides/china-llm.html">中国のAI比較</a></li>
+      <li><a href="/guides/deepseek.html">DeepSeek</a></li>
+      <li><a href="/guides/qwen.html">Qwen</a></li>
+      <li><a href="/guides/qwen-local.html">Qwenを自社サーバーで</a></li>
+      <li><a href="/security.html">セキュリティ</a></li>
+      <li><a href="/privacy.html">プライバシーポリシー</a></li>
+      <li><a href="/terms.html">利用規約</a></li>
+    </ul>
+    <p>Notta、Notta Memo、Notta Brainは、各権利者の商標または登録商標です。SIMYはNottaから独立した製品であり、Nottaによる提携や承認を受けたものではありません。</p>
+    <p>CodexとChatGPTはOpenAIの製品です。その他の社名・製品名は、各社の商標または登録商標です。</p>
+    <p>&copy; 2026 SIMY by AwakApp Inc.</p>
+  </div>
+</footer>
+<script>
+(function () {
+  var links = Array.prototype.slice.call(document.querySelectorAll('.toc a'));
+  if (!links.length) return;
+  var items = links.map(function (a) {
+    return { link: a, section: document.getElementById(a.getAttribute('href').slice(1)) };
+  }).filter(function (item) { return item.section; });
+  var ticking = false;
+  function update() {
+    ticking = false;
+    var line = window.innerHeight * 0.35;
+    var atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+    var current = null;
+    items.forEach(function (item) {
+      if (item.section.getBoundingClientRect().top <= line) current = item;
+    });
+    if (atBottom) current = items[items.length - 1];
+    items.forEach(function (item) { item.link.classList.toggle('is-active', item === current); });
+  }
+  window.addEventListener('scroll', function () {
+    if (!ticking) { ticking = true; window.requestAnimationFrame(update); }
+  }, { passive: true });
+  update();
+})();
+</script>
+<script src="/analytics.js" defer></script>
+</body>
+</html>

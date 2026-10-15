@@ -1,5 +1,7 @@
 (() => {
   const es = Object.freeze({
+    "SIMY by Industry includes the existing SIMY Quality (SQM), adapted to your field’s terminology, workflow, and review criteria.": "SIMY by Industry incluye SIMY Quality (SQM), adaptado a la terminología, los procesos y los criterios de revisión de tu sector.",
+    "Online signup is available for Starter and Industry (IT Engineer, Financial Planner and Pharmaceutical MR). Please contact us about Dental Clinic, Realtime and additional storage.": "La contratación en línea está disponible para Starter e Industry (ingeniería informática, planificación financiera y representantes farmacéuticos). Consúltenos sobre clínicas dentales, Realtime y almacenamiento adicional.",
     "Skip to content": "Saltar al contenido",
     "Your Digital Twin": "Tu gemelo digital",
     "Product": "Producto",
@@ -364,6 +366,7 @@
     "All guides": "Todas las guías",
     "Download": "Descargar",
     "AI meeting notes": "Actas con IA",
+    "Chinese AI compared": "IA china comparada",
     "Privacy": "Privacidad",
     "Terms": "Condiciones",
     "Oakland, California · Built for work that should keep moving.": "Oakland, California · Creado para el trabajo que debe seguir avanzando.",
@@ -383,6 +386,8 @@
   });
 
   const fr = Object.freeze({
+    "SIMY by Industry includes the existing SIMY Quality (SQM), adapted to your field’s terminology, workflow, and review criteria.": "SIMY by Industry inclut SIMY Quality (SQM), adapté à la terminologie, aux processus et aux critères de contrôle de votre métier.",
+    "Online signup is available for Starter and Industry (IT Engineer, Financial Planner and Pharmaceutical MR). Please contact us about Dental Clinic, Realtime and additional storage.": "L’inscription en ligne est disponible pour Starter et Industry (ingénierie informatique, conseil financier et visiteurs médicaux). Contactez-nous pour les cliniques dentaires, Realtime et le stockage supplémentaire.",
     "Skip to content": "Aller au contenu",
     "Your Digital Twin": "Votre jumeau numérique",
     "Product": "Produit",
@@ -747,6 +752,7 @@
     "All guides": "Tous les guides",
     "Download": "Télécharger",
     "AI meeting notes": "Comptes rendus IA",
+    "Chinese AI compared": "IA chinoises comparées",
     "Privacy": "Confidentialité",
     "Terms": "Conditions",
     "Oakland, California · Built for work that should keep moving.": "Oakland, Californie · Conçu pour le travail qui doit continuer d’avancer.",
@@ -766,6 +772,8 @@
   });
 
   const hi = Object.freeze({
+    "SIMY by Industry includes the existing SIMY Quality (SQM), adapted to your field’s terminology, workflow, and review criteria.": "SIMY by Industry में मौजूदा SIMY Quality (SQM) शामिल है, जो आपके क्षेत्र की शब्दावली, कार्यप्रवाह और समीक्षा मानदंडों के अनुरूप है।",
+    "Online signup is available for Starter and Industry (IT Engineer, Financial Planner and Pharmaceutical MR). Please contact us about Dental Clinic, Realtime and additional storage.": "ऑनलाइन पंजीकरण Starter और Industry (IT इंजीनियर, वित्तीय योजनाकार और फार्मास्यूटिकल MR) के लिए उपलब्ध है। डेंटल क्लिनिक, Realtime और अतिरिक्त स्टोरेज के लिए हमसे संपर्क करें।",
     "Skip to content": "मुख्य सामग्री पर जाएँ",
     "Your Digital Twin": "आपका डिजिटल ट्विन",
     "Product": "उत्पाद",
@@ -1130,6 +1138,7 @@
     "All guides": "सभी गाइड",
     "Download": "डाउनलोड",
     "AI meeting notes": "AI मीटिंग नोट्स",
+    "Chinese AI compared": "चीनी AI की तुलना",
     "Privacy": "गोपनीयता",
     "Terms": "शर्तें",
     "Oakland, California · Built for work that should keep moving.": "ओकलैंड, कैलिफ़ोर्निया · उस काम के लिए बनाया गया जिसे आगे बढ़ते रहना चाहिए।",
@@ -1149,6 +1158,8 @@
   });
 
   const zhHans = Object.freeze({
+    "SIMY by Industry includes the existing SIMY Quality (SQM), adapted to your field’s terminology, workflow, and review criteria.": "SIMY by Industry包含现有SIMY Quality（SQM），并根据您所在行业的术语、工作流程和审核标准进行优化。",
+    "Online signup is available for Starter and Industry (IT Engineer, Financial Planner and Pharmaceutical MR). Please contact us about Dental Clinic, Realtime and additional storage.": "在线申请支持Starter和Industry（IT工程师、财务规划师和医药代表）。牙科诊所、Realtime及额外存储空间请联系我们。",
     "Skip to content": "跳到主要内容",
     "Your Digital Twin": "你的数字分身",
     "Product": "产品",
@@ -1513,6 +1524,7 @@
     "All guides": "全部指南",
     "Download": "下载",
     "AI meeting notes": "AI 会议纪要",
+    "Chinese AI compared": "中国 AI 对比",
     "Privacy": "隐私",
     "Terms": "条款",
     "Oakland, California · Built for work that should keep moving.": "美国加利福尼亚州奥克兰 · 为需要持续推进的工作而打造。",

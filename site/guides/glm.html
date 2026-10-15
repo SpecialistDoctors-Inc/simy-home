@@ -1,0 +1,1655 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="google-site-verification" content="1n6_tVJZRZlQax8luEg5VsuG7gg-kCEam5VFiWIJs3U">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GLM-5.3とGLM Coding Planとは？Claude Codeでの使い方 | SIMY</title>
+<meta name="description" content="GLM-5.3（5.2の次の世代）とGLM Coding Planとは？Lite月18ドルの定額でClaude Codeから使う手順、API料金、ローカル実行、データの扱いを2026年10月時点で整理。">
+<link rel="canonical" href="https://simy.one/guides/glm.html">
+<link rel="alternate" hreflang="ja" href="https://simy.one/guides/glm.html">
+<link rel="alternate" hreflang="en" href="https://simy.one/guides/en/glm.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://simy.one/guides/zh-hans/glm.html">
+<link rel="alternate" hreflang="es" href="https://simy.one/guides/es/glm.html">
+<link rel="alternate" hreflang="fr" href="https://simy.one/guides/fr/glm.html">
+<link rel="alternate" hreflang="hi" href="https://simy.one/guides/hi/glm.html">
+<link rel="alternate" hreflang="x-default" href="https://simy.one/guides/en/glm.html">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://simy.one/guides/glm.html">
+<meta property="og:title" content="GLMが書いたあと、決まったことを止めない。｜SIMY">
+<meta property="og:description" content="GLM（Z.ai）とは？GLM-5.3・GLM Coding Plan・Claude Codeでの使い方・API・安全性。GLMで書いたあとの担当・期限・連絡・共有は、SIMYが会議とチャットから拾って進めます。">
+<meta property="og:site_name" content="SIMY">
+<meta property="og:image" content="https://simy.one/ogp.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="GLMが書いたあと、決まったことを止めない。GLM（Z.ai）ガイド｜SIMY">
+<meta property="og:locale" content="ja_JP">
+<meta property="article:published_time" content="2026-10-01">
+<meta property="article:modified_time" content="2026-10-01">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="GLMが書いたあと、決まったことを止めない。｜SIMY">
+<meta name="twitter:description" content="GLM（Z.ai）とは？GLM-5.3・GLM Coding Plan・Claude Codeでの使い方・API・安全性。GLMで書いたあとの担当・期限・連絡・共有は、SIMYが会議とチャットから拾って進めます。">
+<meta name="twitter:image" content="https://simy.one/ogp.png">
+<meta name="twitter:image:alt" content="GLMが書いたあと、決まったことを止めない。GLM（Z.ai）ガイド｜SIMY">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#f6f5f4">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png">
+<style>
+:root {
+  --paper: #f6f5f4;
+  --paper-light: #ffffff;
+  --ink: #111111;
+  --ink-soft: #5d5b58;
+  --ink-faint: #6b6865;
+  --line-soft: rgba(17, 17, 17, 0.14);
+  --ui-line: #d9dde2;
+  --blue: #3273d7;
+  --blue-deep: #235db8;
+  --blue-soft: #eef5ff;
+  --mint: #92edce;
+  --coral-soft: #fff1ec;
+  --yellow: #ffd166;
+  --radius: 0.8rem;
+  --radius-sm: 0.5rem;
+  --sans: "Helvetica Neue", Arial, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", Meiryo, sans-serif;
+  --mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  --page: 1180px;
+  --gutter: clamp(16px, 4vw, 40px);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.85;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+a { color: inherit; }
+a:focus-visible, summary:focus-visible {
+  outline: 3px solid rgba(50, 115, 215, 0.45);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+img { max-width: 100%; display: block; }
+
+.wrap { width: min(var(--page), 100% - var(--gutter) * 2); margin: 0 auto; }
+
+.skip {
+  position: absolute; left: -9999px; top: 8px;
+  background: var(--ink); color: #fff; padding: 8px 14px; border-radius: 6px; z-index: 100;
+}
+.skip:focus { left: 8px; }
+
+/* ---------- Header ---------- */
+.site-header {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(246, 245, 244, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--ink);
+}
+.header-inner {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  min-height: 64px;
+}
+.brand {
+  display: inline-flex; align-items: center; gap: 10px;
+  text-decoration: none; font-weight: 800; letter-spacing: 0.01em;
+}
+.brand img { width: 28px; height: 28px; border-radius: 7px; }
+.brand-sub {
+  padding-left: 12px; margin-left: 2px;
+  border-left: 1px solid var(--line-soft);
+  color: var(--ink-soft); font-size: 0.8rem; font-weight: 500;
+}
+.header-actions { display: flex; align-items: center; gap: 6px; }
+.header-link {
+  padding: 8px 10px; font-size: 0.86rem; font-weight: 600; text-decoration: none; color: var(--ink);
+}
+.header-link:hover { color: var(--blue-deep); }
+.header-cta {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px;
+  background: var(--ink); color: #fff; text-decoration: none;
+  font-size: 0.86rem; font-weight: 700; border-radius: 6px;
+  transition: background 0.2s;
+}
+.header-cta:hover { background: var(--blue-deep); }
+
+/* ---------- Hero ---------- */
+.hero {
+  position: relative;
+  border-bottom: 1px solid var(--ink);
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(rgba(17, 17, 17, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(17, 17, 17, 0.045) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-position: -1px -1px;
+}
+.hero-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+  gap: clamp(32px, 5vw, 72px);
+  align-items: center;
+  padding: clamp(40px, 7vw, 96px) 0 clamp(48px, 7vw, 104px);
+}
+
+.crumbs {
+  display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 22px; padding: 0; list-style: none;
+  font-size: 0.78rem; color: var(--ink-soft);
+}
+.crumbs li + li::before { content: "/"; margin-right: 6px; color: var(--ink-faint); }
+.crumbs a { text-decoration: none; }
+.crumbs a:hover { text-decoration: underline; }
+
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin: 0 0 22px; padding: 6px 12px;
+  background: var(--paper-light); border: 1px solid var(--ink); border-radius: 999px;
+  font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.04em;
+}
+.eyebrow::before {
+  content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--blue);
+  box-shadow: 0 0 0 3px var(--blue-soft);
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2rem, 4.6vw, 3.9rem);
+  line-height: 1.16;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+h1 .line { display: block; }
+h1 .hl { color: var(--blue); }
+
+.lead {
+  max-width: 36em;
+  margin: 26px 0 0;
+  font-size: clamp(1rem, 1.35vw, 1.1rem);
+  line-height: 1.95;
+  color: #2c2b29;
+}
+
+.cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 52px; padding: 0 22px;
+  border: 1px solid var(--ink); border-radius: 8px;
+  font-weight: 700; font-size: 0.98rem; text-decoration: none;
+  transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+}
+.btn-primary {
+  background: var(--blue-deep); color: #fff; border-color: var(--ink);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.btn-primary:hover { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 var(--ink); }
+.btn-ghost { background: var(--paper-light); color: var(--ink); }
+.btn-ghost:hover { background: var(--blue-soft); }
+.btn .arrow { font-family: var(--mono); font-size: 0.9em; }
+
+.hero-points {
+  display: flex; flex-wrap: wrap; gap: 8px 18px;
+  margin: 26px 0 0; padding: 0; list-style: none;
+  font-size: 0.84rem; color: var(--ink-soft);
+}
+.hero-points li { display: inline-flex; align-items: center; gap: 7px; }
+.hero-points li::before {
+  content: ""; width: 14px; height: 14px; flex: none;
+  border: 1px solid var(--ink); border-radius: 50%;
+  background: var(--mint) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath d='M3.5 7.2 6 9.5l4.5-5' fill='none' stroke='%23111' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 12px no-repeat;
+}
+
+/* Relay card: the signature visual */
+.relay {
+  position: relative;
+  background: var(--paper-light);
+  border: 1px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: 8px 8px 0 var(--ink);
+  overflow: hidden;
+}
+.relay-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--ink);
+  background: var(--ink); color: #fff;
+  font-family: var(--mono); font-size: 0.78rem;
+}
+.rec { display: inline-flex; align-items: center; gap: 8px; min-width: 0; }
+.rec-dot {
+  width: 9px; height: 9px; border-radius: 50%; background: #ff865f; flex: none;
+  animation: rec 1.6s ease-in-out infinite;
+}
+.rec-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.relay-meta { display: flex; flex-wrap: wrap; gap: 6px; padding: 12px 18px 4px; }
+.chip {
+  display: inline-flex; align-items: center; padding: 2px 9px;
+  border: 1px solid var(--line-soft); border-radius: 999px;
+  font-family: var(--mono); font-size: 0.7rem; color: var(--ink-soft); background: var(--paper);
+}
+.relay-steps { list-style: none; margin: 0; padding: 8px 10px 12px; }
+.step {
+  display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; align-items: center; gap: 10px;
+  padding: 9px 8px;
+  border-radius: 8px;
+  opacity: 0; transform: translateY(6px);
+  animation: rise 0.5s cubic-bezier(.2,.7,.2,1) forwards;
+}
+.step .no { font-family: var(--mono); font-size: 0.72rem; color: var(--ink-faint); }
+.step .what { font-size: 0.9rem; font-weight: 650; line-height: 1.45; }
+.step .what small { display: block; font-weight: 400; font-size: 0.74rem; color: var(--ink-soft); }
+.status {
+  font-family: var(--mono); font-size: 0.68rem; white-space: nowrap;
+  padding: 3px 8px; border-radius: 999px; border: 1px solid var(--ink);
+}
+.s-done { background: var(--paper); }
+.s-plaud .status { border-color: var(--line-soft); color: var(--ink-soft); }
+.s-run { background: var(--blue-soft); }
+.s-run .status { background: var(--blue-deep); color: #fff; }
+.s-next .status { background: var(--paper-light); }
+.s-you { background: #fff8e3; }
+.s-you .status { background: var(--yellow); }
+.bar {
+  grid-column: 2 / 4; height: 4px; margin-top: 6px;
+  background: rgba(50, 115, 215, 0.16); border-radius: 4px; overflow: hidden;
+}
+.bar::after {
+  content: ""; display: block; height: 100%; width: 62%;
+  background: var(--blue); border-radius: 4px;
+  animation: progress 2.8s ease-in-out infinite alternate;
+}
+.handoff {
+  display: flex; align-items: center; gap: 10px;
+  margin: 6px 4px; padding: 8px 0;
+  font-family: var(--mono); font-size: 0.72rem; color: var(--blue-deep);
+  opacity: 0; animation: rise 0.5s ease forwards;
+}
+.handoff::before, .handoff::after { content: ""; flex: 1; border-top: 1.5px dashed var(--blue); }
+.relay-foot {
+  padding: 12px 18px 14px;
+  border-top: 1px solid var(--line-soft);
+  font-size: 0.82rem; color: var(--ink-soft);
+}
+.relay-foot strong { color: var(--ink); }
+.caption { margin: 12px 4px 0; font-size: 0.74rem; color: var(--ink-faint); text-align: right; }
+
+.relay-steps > :nth-child(1) { animation-delay: 0.10s; }
+.relay-steps > :nth-child(2) { animation-delay: 0.22s; }
+.relay-steps > :nth-child(3) { animation-delay: 0.34s; }
+.relay-steps > :nth-child(4) { animation-delay: 0.62s; }
+.relay-steps > :nth-child(5) { animation-delay: 0.86s; }
+.relay-steps > :nth-child(6) { animation-delay: 1.02s; }
+.relay-steps > :nth-child(7) { animation-delay: 1.18s; }
+.relay-steps > :nth-child(8) { animation-delay: 1.34s; }
+
+@keyframes rise { to { opacity: 1; transform: none; } }
+@keyframes rec { 50% { opacity: 0.25; } }
+@keyframes progress { from { width: 34%; } to { width: 88%; } }
+
+/* ---------- Guide layout ---------- */
+.guide {
+  display: grid;
+  grid-template-columns: 232px minmax(0, 1fr);
+  gap: clamp(32px, 5vw, 72px);
+  padding: clamp(40px, 6vw, 80px) 0 clamp(56px, 7vw, 96px);
+}
+.toc { position: sticky; top: 92px; align-self: start; font-size: 0.84rem; }
+.toc-title {
+  margin: 0 0 12px; font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.08em;
+  color: var(--ink-soft);
+}
+.toc ol { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--line-soft); }
+.toc a {
+  display: grid; grid-template-columns: 26px 1fr; gap: 4px;
+  margin-left: -1px; padding: 7px 0 7px 12px;
+  border-left: 2px solid transparent;
+  color: var(--ink-soft); text-decoration: none; line-height: 1.5;
+}
+.toc a span { font-family: var(--mono); font-size: 0.72rem; padding-top: 1px; }
+.toc a:hover { color: var(--ink); }
+.toc a.is-active { color: var(--ink); font-weight: 700; border-left-color: var(--blue); }
+.toc-mobile { display: none; }
+
+.article { min-width: 0; max-width: 800px; }
+.byline {
+  display: flex; flex-wrap: wrap; gap: 4px 16px;
+  margin: 0 0 8px; font-family: var(--mono); font-size: 0.74rem; color: var(--ink-faint);
+}
+
+.sec { padding-top: clamp(40px, 5vw, 64px); }
+.sec:first-of-type { padding-top: 0; }
+.sec-label {
+  display: inline-block; margin: 0 0 12px;
+  font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.06em; color: var(--blue-deep);
+}
+h2 {
+  margin: 0 0 18px;
+  font-size: clamp(1.5rem, 2.8vw, 2.1rem);
+  line-height: 1.35; font-weight: 800; letter-spacing: -0.01em;
+}
+h3 { margin: 32px 0 12px; font-size: 1.15rem; line-height: 1.5; font-weight: 750; }
+.article p { margin: 0 0 16px; }
+.article p a, .plain-list a, .faq a { color: var(--blue-deep); text-decoration: underline; text-underline-offset: 3px; }
+.muted { color: var(--ink-soft); }
+.small { font-size: 0.84rem; }
+
+/* Checklist */
+.checklist { list-style: none; margin: 24px 0 0; padding: 0; display: grid; gap: 12px; }
+.checklist li {
+  display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 16px;
+  padding: 18px 20px;
+  background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.checklist .num {
+  display: grid; place-items: center; width: 44px; height: 44px;
+  border: 1px solid var(--ink); border-radius: 50%;
+  font-family: var(--mono); font-weight: 700;
+}
+.checklist li.hook { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.checklist li.hook .num { background: var(--blue-deep); color: #fff; }
+.checklist h3 { margin: 2px 0 4px; font-size: 1.02rem; }
+.checklist p { margin: 0; font-size: 0.93rem; color: #34322f; }
+
+/* Feature grid */
+.features { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+.feature {
+  padding: 20px; background: var(--paper-light);
+  border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.feature .tag {
+  display: inline-block; margin-bottom: 8px;
+  font-family: var(--mono); font-size: 0.7rem; color: var(--ink-soft);
+}
+.feature h3 { margin: 0 0 6px; font-size: 1.04rem; }
+.feature p { margin: 0; font-size: 0.92rem; color: #34322f; }
+.feature.wide { grid-column: 1 / -1; }
+
+/* Gap section */
+.split { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+.split-col { padding: 22px; border-radius: var(--radius); border: 1px solid var(--ink); }
+.split-col h3 { margin: 0 0 12px; font-size: 1rem; display: flex; align-items: center; gap: 8px; }
+.split-col ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.split-col li { position: relative; padding-left: 22px; font-size: 0.94rem; line-height: 1.6; }
+.split-col li::before { position: absolute; left: 0; top: 0; font-family: var(--mono); }
+.col-plaud { background: var(--paper-light); }
+.col-plaud li { color: var(--ink-soft); }
+.col-plaud li::before { content: "✓"; color: #1b7a58; }
+.col-left { background: var(--coral-soft); box-shadow: 4px 4px 0 var(--ink); }
+.col-left li::before { content: "□"; color: var(--ink); }
+.who {
+  font-family: var(--mono); font-size: 0.68rem; font-weight: 400;
+  padding: 2px 8px; border: 1px solid var(--ink); border-radius: 999px; background: var(--paper-light);
+}
+
+.quote {
+  margin: 28px 0 0; padding: 22px 24px;
+  border-left: 4px solid var(--blue); background: var(--blue-soft); border-radius: 0 var(--radius) var(--radius) 0;
+}
+.quote p { margin: 0; font-size: 1.12rem; font-weight: 750; line-height: 1.7; }
+.quote p + p { margin-top: 8px; font-size: 0.93rem; font-weight: 400; color: #34322f; }
+
+/* Connect */
+.connect {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 310px); gap: 24px;
+  align-items: start; margin-top: 24px;
+}
+.connect-steps { list-style: none; margin: 0; padding: 0; counter-reset: s; display: grid; gap: 10px; }
+.connect-steps li {
+  counter-increment: s; position: relative;
+  padding: 16px 18px 16px 62px;
+  background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.connect-steps li::before {
+  content: counter(s); position: absolute; left: 18px; top: 16px;
+  width: 30px; height: 30px; display: grid; place-items: center;
+  border: 1px solid var(--ink); border-radius: 50%; background: var(--paper);
+  font-family: var(--mono); font-weight: 700; font-size: 0.86rem;
+}
+.connect-steps li.key { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.connect-steps li.key::before { background: var(--blue-deep); color: #fff; }
+.connect-steps b { display: block; font-size: 1rem; line-height: 1.5; }
+.connect-steps span { display: block; margin-top: 4px; font-size: 0.9rem; color: #34322f; line-height: 1.7; }
+
+.mock {
+  padding: 18px; background: var(--paper-light);
+  border: 1px solid var(--ink); border-radius: var(--radius); box-shadow: 6px 6px 0 var(--blue);
+}
+.mock-head { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 12px; align-items: start; }
+.mock-mark {
+  display: grid; place-items: center; width: 44px; height: 44px;
+  border-radius: 10px; background: var(--paper); font-weight: 900; font-size: 1.15rem;
+}
+.mock-title { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 1.05rem; }
+.mock-state {
+  padding: 1px 8px; border-radius: 999px; background: var(--paper);
+  font-size: 0.7rem; font-weight: 500; color: var(--ink-soft);
+}
+.mock-desc { margin: 4px 0 0; font-size: 0.82rem; color: var(--ink-soft); line-height: 1.6; }
+.mock-box {
+  margin: 14px 0 10px; padding: 12px 14px;
+  border: 1px solid var(--ui-line); border-radius: 8px; font-size: 0.86rem; font-weight: 650;
+}
+.mock-btn {
+  display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px;
+  border-radius: 8px; background: var(--blue-deep); color: #fff; font-weight: 700; font-size: 0.92rem;
+}
+.mock-foot { margin-top: 8px; text-align: center; font-size: 0.76rem; color: var(--ink-soft); }
+
+.asks { list-style: none; margin: 12px 0 18px; padding: 0; display: grid; gap: 8px; }
+.asks li {
+  padding: 12px 16px; font-size: 0.94rem; line-height: 1.7;
+  background: var(--blue-soft); border: 1px solid rgba(50, 115, 215, 0.28);
+  border-radius: 12px 12px 12px 3px;
+}
+
+/* Tables */
+.table-wrap {
+  margin: 20px 0 8px; overflow-x: auto; -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--ink); border-radius: var(--radius); background: var(--paper-light);
+}
+table { width: 100%; border-collapse: collapse; font-size: 0.9rem; line-height: 1.6; }
+th, td { padding: 12px 14px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--ui-line); }
+thead th { background: var(--ink); color: #fff; font-weight: 700; font-size: 0.82rem; white-space: nowrap; }
+tbody th { font-weight: 700; white-space: nowrap; background: var(--paper); }
+tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
+td.simy { background: var(--blue-soft); }
+thead th.simy { background: var(--blue-deep); }
+.t-wide { min-width: 640px; }
+.t-models { min-width: 760px; }
+.t-price td:nth-child(2) { white-space: nowrap; }
+.scroll-hint { display: none; margin: 0 0 12px; font-size: 0.76rem; color: var(--ink-faint); }
+
+.note {
+  margin: 16px 0 0; padding: 14px 16px;
+  background: var(--paper-light); border: 1px dashed var(--ink-faint); border-radius: var(--radius-sm);
+  font-size: 0.88rem; color: #34322f;
+}
+.note b { color: var(--ink); }
+
+/* Sample comparison */
+.sample { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 16px; margin-top: 24px; align-items: start; }
+.sheet { padding: 20px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); }
+.sheet-label {
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;
+  font-family: var(--mono); font-size: 0.72rem; color: var(--ink-soft);
+}
+.sheet dl { margin: 0; font-size: 0.88rem; line-height: 1.65; }
+.sheet dt { margin-top: 10px; font-weight: 700; }
+.sheet dt:first-child { margin-top: 0; }
+.sheet dd { margin: 2px 0 0; color: #34322f; }
+.outs { display: grid; gap: 10px; }
+.out { padding: 14px 16px; background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius); }
+.out-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 6px; }
+.out-head b { font-size: 0.92rem; }
+.out p { margin: 0; font-size: 0.86rem; color: #34322f; line-height: 1.7; }
+.out.you { background: #fff8e3; }
+.pill {
+  font-family: var(--mono); font-size: 0.66rem; white-space: nowrap;
+  padding: 2px 8px; border-radius: 999px; border: 1px solid var(--ink); background: var(--paper);
+}
+.pill.run { background: var(--blue-deep); color: #fff; }
+.pill.you { background: var(--yellow); }
+.pill.ok { background: var(--mint); }
+.sample-foot { margin-top: 18px; font-weight: 700; }
+
+/* Use cases */
+.cases { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+.case { padding: 22px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); }
+.case h3 { margin: 0 0 4px; font-size: 1.06rem; }
+.case .device { margin: 0 0 12px; font-family: var(--mono); font-size: 0.72rem; color: var(--blue-deep); }
+.case p { margin: 0 0 8px; font-size: 0.9rem; color: #34322f; }
+.case ul { margin: 0; padding-left: 1.1em; font-size: 0.9rem; line-height: 1.7; }
+
+/* Lists */
+.plain-list { margin: 16px 0 0; padding-left: 1.2em; }
+.plain-list li { margin-bottom: 10px; }
+
+/* FAQ */
+.faq { margin-top: 20px; border-top: 1px solid var(--ink); }
+.faq details { border-bottom: 1px solid var(--ui-line); }
+.faq summary {
+  list-style: none; cursor: pointer;
+  display: grid; grid-template-columns: 28px minmax(0, 1fr) 20px; gap: 10px; align-items: start;
+  padding: 18px 4px; font-weight: 700; line-height: 1.6;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::before { content: "Q"; font-family: var(--mono); color: var(--blue-deep); }
+.faq summary::after {
+  content: "+"; font-family: var(--mono); font-size: 1.1rem; line-height: 1.4; text-align: right;
+  transition: transform 0.2s;
+}
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq .a { padding: 0 4px 18px 42px; font-size: 0.94rem; color: #34322f; }
+.faq .a p { margin: 0; }
+
+/* Closing CTA */
+.closing { background: var(--ink); color: #fff; border-top: 1px solid var(--ink); }
+.closing-inner {
+  display: grid; grid-template-columns: minmax(0, 1.2fr) auto; gap: 32px; align-items: center;
+  padding: clamp(48px, 7vw, 88px) 0;
+}
+.closing h2 { color: #fff; margin: 0 0 12px; font-size: clamp(1.6rem, 3.4vw, 2.5rem); }
+.closing p { margin: 0; color: rgba(255, 255, 255, 0.8); }
+.closing .cta-row { margin-top: 0; }
+.closing .btn-primary { box-shadow: 4px 4px 0 var(--mint); border-color: #fff; }
+.closing .btn-primary:hover { box-shadow: 5px 5px 0 var(--mint); }
+.closing .btn-ghost { background: transparent; color: #fff; border-color: rgba(255, 255, 255, 0.5); }
+.closing .btn-ghost:hover { background: rgba(255, 255, 255, 0.08); }
+
+/* Footer */
+.site-footer { padding: 36px 0 48px; font-size: 0.82rem; color: var(--ink-soft); }
+.footer-links { display: flex; flex-wrap: wrap; gap: 4px 20px; margin: 0 0 18px; padding: 0; list-style: none; }
+.footer-links a { display: inline-block; padding: 6px 0; text-decoration: none; color: var(--ink); }
+.footer-links a:hover { text-decoration: underline; }
+.site-footer p { margin: 0 0 6px; line-height: 1.7; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1080px) {
+  .guide { grid-template-columns: minmax(0, 1fr); }
+  .toc { display: none; }
+  .toc-mobile {
+    display: block; margin: 0 0 32px;
+    background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius);
+  }
+  .toc-mobile summary {
+    cursor: pointer; list-style: none; padding: 14px 18px;
+    font-family: var(--mono); font-size: 0.8rem; display: flex; justify-content: space-between;
+  }
+  .toc-mobile summary::-webkit-details-marker { display: none; }
+  .toc-mobile summary::after { content: "+"; }
+  .toc-mobile[open] summary::after { content: "−"; }
+  .toc-mobile ol { margin: 0; padding: 0 18px 14px 40px; font-size: 0.9rem; }
+  .toc-mobile li { padding: 3px 0; }
+  .toc-mobile a { display: inline-block; padding: 4px 0; text-decoration: none; }
+  .article { max-width: none; }
+}
+
+@media (max-width: 960px) {
+  .hero-inner { grid-template-columns: minmax(0, 1fr); }
+  .hero-visual { max-width: 580px; }
+  .relay { box-shadow: 6px 6px 0 var(--ink); }
+}
+
+@media (max-width: 860px) {
+  .sample { grid-template-columns: minmax(0, 1fr); }
+  .connect { grid-template-columns: minmax(0, 1fr); }
+  .mock { max-width: 360px; }
+  .closing-inner { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 640px) {
+  body { font-size: 15.5px; }
+  .brand-sub, .header-link { display: none; }
+  .header-cta { padding: 0 14px; }
+  .features, .split, .cases { grid-template-columns: minmax(0, 1fr); }
+  .checklist li { grid-template-columns: 40px minmax(0, 1fr); gap: 12px; padding: 16px; }
+  .checklist .num { width: 36px; height: 36px; font-size: 0.86rem; }
+  .connect-steps li { padding-left: 56px; }
+  .connect-steps li::before { left: 14px; }
+  .btn { width: 100%; }
+  .scroll-hint { display: block; }
+  .faq .a { padding-left: 4px; }
+  .step { grid-template-columns: 24px minmax(0, 1fr) auto; gap: 8px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .step, .handoff { animation: none; opacity: 1; transform: none; }
+  .rec-dot, .bar::after { animation: none; }
+  .btn, .header-cta { transition: none; }
+}
+
+/* ---------- Guide v2: scene cards, timeline, folds ---------- */
+.intro { max-width: 34em; margin: 0 0 8px; font-size: 1.02rem; color: #34322f; }
+.scenes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 22px; }
+.scenes.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.scene {
+  position: relative; padding: 22px 20px 20px;
+  background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius);
+  min-height: 168px; display: flex; flex-direction: column; gap: 8px;
+}
+.scene .k { font-family: var(--mono); font-size: 0.7rem; color: var(--ink-faint); letter-spacing: 0.04em; }
+.scene b { display: block; font-size: 1.22rem; line-height: 1.35; letter-spacing: -0.01em; }
+.scene p { margin: 0; font-size: 0.9rem; line-height: 1.65; color: #34322f; }
+.scene .mark {
+  position: absolute; right: 16px; top: 14px;
+  width: 30px; height: 30px; display: grid; place-items: center;
+  border: 1px solid var(--ink); border-radius: 50%; font-family: var(--mono); font-size: 0.9rem; font-weight: 700;
+}
+.scene.pain { background: var(--coral-soft); }
+.scene.pain .mark { background: var(--paper-light); }
+.scene.wish { background: var(--blue-soft); border-color: var(--blue-deep); box-shadow: 4px 4px 0 var(--blue); }
+.scene.wish .mark { background: var(--blue-deep); color: #fff; border-color: var(--blue-deep); }
+.scene.wish.you { background: #fff8e3; border-color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+.scene.wish.you .mark { background: var(--yellow); color: var(--ink); border-color: var(--ink); }
+.scene-foot { margin: 14px 0 0; font-size: 0.9rem; color: var(--ink-soft); }
+.scene-foot b { color: var(--ink); }
+
+/* Timeline */
+.tl-wrap {
+  margin-top: 22px; padding: 22px 20px 18px;
+  background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius);
+}
+.tl-row { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 14px; align-items: center; }
+.tl-row + .tl-row { margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--line-soft); }
+.tl-who {
+  font-family: var(--mono); font-size: 0.72rem; font-weight: 700; text-align: center;
+  padding: 6px 4px; border: 1px solid var(--ink); border-radius: 999px; background: var(--paper);
+}
+.tl-who.simy { background: var(--blue-deep); color: #fff; border-color: var(--blue-deep); }
+.tl-who.you { background: var(--yellow); }
+.tl { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; }
+.tl li {
+  position: relative; min-height: 64px; padding: 10px 8px 8px;
+  border-radius: var(--radius-sm); font-size: 0.8rem; line-height: 1.4; font-weight: 650;
+  display: flex; flex-direction: column; justify-content: flex-start; gap: 4px;
+}
+.tl li small { display: block; font-weight: 400; font-size: 0.7rem; color: var(--ink-soft); }
+.tl li.on { background: var(--paper); border: 1px solid var(--line-soft); color: var(--ink-soft); }
+.tl li.gap { border: 1.5px dashed var(--ink-faint); color: var(--ink-faint); background: transparent; }
+.tl li.gap::after { content: "？"; position: absolute; right: 8px; top: 6px; font-family: var(--mono); }
+.tl li.run { background: var(--blue-soft); border: 1px solid var(--blue-deep); color: var(--ink); }
+.tl li.run::after { content: "✓"; position: absolute; right: 8px; top: 6px; font-family: var(--mono); color: var(--blue-deep); }
+.tl li.you { background: #fff8e3; border: 1px solid var(--ink); color: var(--ink); }
+.tl li.you::after { content: "あなた"; position: absolute; right: 8px; top: 7px; font-family: var(--mono); font-size: 0.62rem; }
+.tl li.blank { border: 0; background: transparent; }
+.tl-note { margin: 14px 0 0; font-size: 0.86rem; color: #34322f; }
+.tl-note b { color: var(--ink); }
+.three { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 0; padding: 0; list-style: none; }
+.three li {
+  padding: 8px 14px; font-weight: 800; font-size: 1rem;
+  background: var(--ink); color: #fff; border-radius: 999px;
+}
+
+/* 3-step start */
+.steps3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 22px; counter-reset: st; }
+.steps3 li {
+  counter-increment: st; list-style: none; position: relative;
+  padding: 54px 18px 18px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.steps3 li::before {
+  content: counter(st); position: absolute; left: 18px; top: 16px;
+  width: 28px; height: 28px; display: grid; place-items: center;
+  border: 1px solid var(--ink); border-radius: 50%; background: var(--paper);
+  font-family: var(--mono); font-weight: 700; font-size: 0.84rem;
+}
+.steps3 li.key { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.steps3 li.key::before { background: var(--blue-deep); color: #fff; }
+.steps3 b { display: block; font-size: 1.02rem; line-height: 1.45; }
+.steps3 span { display: block; margin-top: 6px; font-size: 0.88rem; color: #34322f; line-height: 1.65; }
+.steps3 { padding: 0; }
+
+/* Industry grid */
+.ind { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 22px; }
+.ind-card { padding: 18px 18px 14px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); }
+.ind-card h3 { margin: 0 0 10px; font-size: 1.04rem; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.ind-card h3 small { font-family: var(--mono); font-size: 0.68rem; font-weight: 400; color: var(--blue-deep); white-space: normal; }
+.ind-card h3 { flex-wrap: wrap; }
+.ind-rows { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+.ind-rows li { display: grid; grid-template-columns: minmax(0, 1fr) 14px minmax(0, 1.4fr); gap: 6px; align-items: center; font-size: 0.86rem; line-height: 1.5; }
+.ind-rows li span:first-child { color: var(--ink-soft); }
+.ind-rows li span:nth-child(2) { font-family: var(--mono); color: var(--blue-deep); text-align: center; }
+.ind-rows li span:last-child { font-weight: 650; }
+
+/* Folded reference */
+.fold { margin-top: 12px; border: 1px solid var(--ui-line); border-radius: var(--radius); background: var(--paper-light); }
+.fold > summary {
+  list-style: none; cursor: pointer; padding: 16px 18px;
+  display: grid; grid-template-columns: minmax(0, 1fr) 20px; gap: 10px; align-items: center;
+  font-weight: 750; font-size: 1.02rem; line-height: 1.5;
+}
+.fold > summary::-webkit-details-marker { display: none; }
+.fold > summary::after { content: "+"; font-family: var(--mono); font-size: 1.1rem; text-align: right; grid-column: 2; grid-row: 1; }
+.fold > summary small { grid-column: 1; }
+.fold[open] > summary::after { content: "−"; }
+.fold > summary small { display: block; margin-top: 2px; font-weight: 400; font-size: 0.82rem; color: var(--ink-soft); }
+.fold-body { padding: 0 18px 18px; font-size: 0.93rem; }
+.fold-body h3 { margin: 18px 0 8px; font-size: 1rem; }
+.fold-body h3:first-child { margin-top: 0; }
+.fold-body p { margin: 0 0 10px; }
+.fold-body .table-wrap { margin: 12px 0 6px; }
+.fold-body .plain-list { margin-top: 8px; }
+.fold-body .plain-list li { margin-bottom: 6px; }
+
+@media (max-width: 960px) {
+  .scenes, .scenes.four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tl { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .tl li.blank { display: none; }
+}
+@media (max-width: 640px) {
+  .scenes, .scenes.four, .steps3, .ind { grid-template-columns: minmax(0, 1fr); }
+  .scene { min-height: 0; }
+  .tl-row { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .tl-who { justify-self: start; }
+  .tl { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ind-rows li { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .ind-rows li span:nth-child(2) { display: none; }
+  .ind-rows li { padding: 6px 0; border-bottom: 1px dashed var(--line-soft); }
+}
+
+/* Next read */
+.next-read { margin-top: clamp(40px, 5vw, 64px); padding-top: 24px; border-top: 1px solid var(--ink); }
+.next-read h2 { font-size: 1.2rem; margin: 0 0 14px; }
+.next-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.next-grid a { display: block; padding: 14px 16px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); text-decoration: none; color: var(--ink); }
+.next-grid a:hover { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.next-grid b { display: block; font-size: 0.96rem; }
+.next-grid span { display: block; margin-top: 4px; font-size: 0.82rem; color: var(--ink-soft); }
+.next-all { display: inline-block; margin-top: 12px; font-weight: 700; color: var(--blue-deep); }
+@media (max-width: 760px) { .next-grid { grid-template-columns: minmax(0, 1fr); } }
+
+.lang-switch { position: relative; }
+.lang-switch > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 10px; border: 1px solid var(--ui-line); border-radius: 999px; background: var(--paper-light); font-size: 0.8rem; font-weight: 700; }
+.lang-switch > summary::-webkit-details-marker { display: none; }
+.lang-switch ul { position: absolute; right: 0; top: calc(100% + 6px); z-index: 30; margin: 0; padding: 6px; list-style: none; min-width: 150px; background: var(--paper-light); border: 1px solid var(--ink); border-radius: 10px; box-shadow: 4px 4px 0 var(--ink); }
+.lang-switch li a { display: block; padding: 8px 10px; border-radius: 6px; color: var(--ink); text-decoration: none; font-size: 0.88rem; }
+.lang-switch li a:hover, .lang-switch li a[aria-current] { background: var(--blue-soft); }
+@media (max-width: 960px) { .brand-sub { display: none; } .header-actions { gap: 4px; } .lang-switch > summary { padding: 0 8px; } }
+@media (max-width: 640px) { .lang-switch .ls-label { display: none; } .lang-switch > summary { padding: 0 10px; } }
+/* Typography: balanced headings, phrase-aware Japanese breaks, tighter mobile headings */
+h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
+:lang(ja) h1, :lang(ja) h2, :lang(ja) h3, :lang(ja) .eyebrow, :lang(ja) .scene b, :lang(ja) .lead { word-break: auto-phrase; }
+.lead, .intro, .scene p { text-wrap: pretty; }
+@media (max-width: 640px) { h2 { font-size: 1.32rem; line-height: 1.4; } .eyebrow { font-size: 0.72rem; } .closing h2 { font-size: 1.5rem; } }
+@media (max-width: 400px) { h2 { font-size: 1.22rem; } .closing h2 { font-size: 1.34rem; } }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://simy.one/guides/glm.html#article",
+      "headline": "GLM（Z.ai）ガイド：GLM-5.3とGLM Coding Planとは？Claude Codeでの使い方",
+      "description": "GLM（Z.ai）とは何か、どこの国のAIか、GLM-5.3などの主なモデル、GLM Coding Plan、Claude CodeからAnthropic互換APIで使う方法、API料金、ライセンス、ローカル実行、データの扱い。GLMで書いたあとに残る担当・期限・連絡・共有をSIMYが進める仕組み。",
+      "inLanguage": "ja",
+      "datePublished": "2026-10-01",
+      "dateModified": "2026-10-01",
+      "mainEntityOfPage": "https://simy.one/guides/glm.html",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://simy.one/ogp.png",
+        "width": 1200,
+        "height": 630
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "SIMY",
+        "url": "https://simy.one/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "AwakApp Inc.",
+        "url": "https://www.awak.app/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://simy.one/simy-icon-square.png"
+        }
+      },
+      "about": [
+        {
+          "@type": "Thing",
+          "name": "GLM"
+        },
+        {
+          "@type": "Thing",
+          "name": "Z.ai"
+        },
+        {
+          "@type": "Thing",
+          "name": "Zhipu AI"
+        },
+        {
+          "@type": "Thing",
+          "name": "GLM Coding Plan"
+        },
+        {
+          "@type": "Thing",
+          "name": "大規模言語モデル"
+        }
+      ],
+      "citation": [
+        "https://docs.z.ai/guides/overview/pricing",
+        "https://docs.z.ai/devpack/overview",
+        "https://docs.z.ai/devpack/tool/claude",
+        "https://huggingface.co/zai-org/GLM-5.3",
+        "https://ollama.com/library/glm-4.7-flash",
+        "https://docs.z.ai/legal-agreement/privacy-policy"
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "SIMY",
+          "item": "https://simy.one/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "ガイド",
+          "item": "https://simy.one/guides/index.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "GLM（Z.ai）ガイド",
+          "item": "https://simy.one/guides/glm.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "GLMとは何ですか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "GLMは、中国のZhipu AI（智譜）が開発する大規模言語モデル（LLM）のシリーズです。海外向けにはZ.aiの名前で、チャット、API、コーディング向けの定額プランを提供しています。統計の「一般化線形モデル」もGLMと略されますが、別のものです。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "GLM（Z.ai）はどこの国のAIですか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "開発元のZhipu AIは中国・北京の会社です。海外向けのZ.aiはシンガポールの法人が運営し、個人データは原則としてシンガポールで処理するとプライバシーポリシーで案内されています。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "GLMの最新モデルは何ですか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "2026年10月時点の主力は、GLM-5.3と、軽くて速いGLM-5.3-Flashです。モデル名は数か月ごとに変わるので、公式の一覧で確認してください。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "GLM-5.2はまだ使えますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "使えます。2026年10月時点で、Z.aiのAPI料金表にGLM-5.2がGLM-5.3と同じ単価で載っています。GLM Coding PlanでGLM-5.2を指定すると、GLM-5.3に振り替えられます。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "GLM Coding Planとは何ですか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Claude CodeやCline、OpenCodeなどのコーディングツールからGLMを月額の定額で使うプランです。2026年10月時点で、いちばん小さいLiteは月18米ドルと公式ページに掲載されています。上位のProとMaxの価格は公式ページで確認してください。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Claude CodeでGLMは使えますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "使えます。Z.aiはAnthropic互換のAPIを用意しており、Claude Codeの接続先とAPIキーを環境変数で差し替えると、Claude CodeからGLMを呼び出せます。手順はZ.aiの公式ドキュメントに載っています。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "GLMは無料で使えますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Webのチャットchat.z.aiで試せます。APIでは、2026年10月時点でGLM-4.7-FlashとGLM-4.5-Flashが無料と公式の料金ページに掲載されています。GLM-5.3などの主力モデルは従量課金です。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "GLMはローカル（自分のPC）で動かせますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "一部のモデルは動かせます。OllamaのGLM-4.7-Flashは、量子化版で約19GBあり、メモリに余裕のあるPCで動きます。GLM-5.3とGLM-5.3-FlashはOllamaではクラウド実行のタグだけで、手元のPCでは動きません。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "GLMのライセンスは商用利用できますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "GLM-5.3-FlashはMITライセンスです。GLM-5.3は独自のライセンスで、基本は自由に使えますが、売上規模の大きいAPI提供事業者には商用利用前の審査の条件があります。業務で使う前に、各モデルのライセンス本文を確認してください。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "GLMは日本語に対応していますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "日本語で質問すれば日本語で答えますが、公式のモデルカードに書かれている言語は英語と中国語です。大事な文面は、実際の業務の文書で品質を確かめてから使ってください。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "SIMYはGLMで動きますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "いいえ、SIMYは現時点ではGLM（Z.ai）には接続しません。SIMYはお使いのChatGPT（Codex）アカウントと、PC上のClaude Codeで動きます。GLMで書いたコードや下書きは、そのまま会議やチャットに持ち込めます。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "GLMで書いたあとの仕事は、毎回SIMYに頼む必要がありますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "いいえ。SIMYは会議の記録やチャットから、決まったことと担当・期限を自分で拾います。あなたのやり方を会話から学び、判断が必要なところだけをあなたに返します。"
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">本文へスキップ</a>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="/?lang=ja">
+      <img src="/simy-icon-56.png" alt="SIMY" width="28" height="28">
+      <span aria-hidden="true">SIMY</span>
+      <span class="brand-sub">GLM（Z.ai）ガイド</span>
+    </a>
+    <nav class="header-actions" aria-label="アカウント">
+      <details class="lang-switch"><summary aria-label="Language: 日本語"><span aria-hidden="true">🌐</span> <span class="ls-label">日本語</span></summary><ul><li><a href="/guides/glm.html" hreflang="ja" lang="ja" aria-current="page">日本語</a></li><li><a href="/guides/en/glm.html" hreflang="en" lang="en">English</a></li><li><a href="/guides/zh-hans/glm.html" hreflang="zh-Hans" lang="zh-Hans">中文</a></li><li><a href="/guides/es/glm.html" hreflang="es" lang="es">Español</a></li><li><a href="/guides/fr/glm.html" hreflang="fr" lang="fr">Français</a></li><li><a href="/guides/hi/glm.html" hreflang="hi" lang="hi">हिन्दी</a></li></ul></details>
+      <a class="header-link" href="/download.html">ダウンロード</a>
+      <a class="header-link" href="https://app.simy.one/login?lang=ja&amp;locale=ja&amp;region=jp">ログイン</a>
+      <a class="header-cta" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=glm_guide&amp;utm_content=header">プランを選んではじめる</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" aria-labelledby="page-title">
+    <div class="wrap hero-inner">
+      <div>
+        <ol class="crumbs" aria-label="パンくずリスト">
+          <li><a href="https://simy.one/">SIMY</a></li>
+          <li><a href="/guides/index.html">ガイド</a></li>
+          <li aria-current="page">GLM（Z.ai）ガイド</li>
+        </ol>
+        <p class="eyebrow">GLM（Z.ai）ユーザーのための活用ガイド</p>
+        <h1 id="page-title">
+          <span class="line">GLMが書いたあと、</span>
+          <span class="line hl">決まったことを</span>
+          <span class="line">止めない。</span>
+        </h1>
+        <p class="lead">GLMは、Claude Codeからでも安く速くコードと文章を書いてくれる。でも会議で決まった担当や期限、関係者への連絡は、まだあなたの手元に残る。その先をSIMYが進めます。</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=glm_guide&amp;utm_content=hero">プランを選んではじめる <span class="arrow" aria-hidden="true">↗</span></a>
+          <a class="btn btn-ghost" href="#connect">つなぎ方を見る <span class="arrow" aria-hidden="true">↓</span></a>
+        </div>
+        <ul class="hero-points">
+          <li>GLMは、得意な仕事にそのまま</li>
+          <li>SIMYは会議とチャットから拾う</li>
+          <li>お使いのChatGPT（Codex）で動く</li>
+        </ul>
+      </div>
+
+      <div class="hero-visual">
+        <div class="relay" role="img" aria-label="例：GLMが設計レビューのあとの実装、テストの修正、プルリクエストの説明文までを書き、その先の決まった修正と担当の一覧、取引先への仕様変更の連絡の下書き、QAチームへの共有をSIMYが用意し、今週リリースするかどうかの判断だけがあなたに残る流れ">
+          <div class="relay-head" aria-hidden="true">
+            <span class="rec"><span class="rec-dot"></span><span class="rec-name">設計レビュー_決済API_1001</span></span>
+            <span>47:12</span>
+          </div>
+          <div class="relay-meta" aria-hidden="true">
+            <span class="chip">GLM Coding Plan</span>
+            <span class="chip">Claude Code</span>
+            <span class="chip">参加 5名</span>
+          </div>
+          <ol class="relay-steps" aria-hidden="true">
+            <li class="step s-done s-plaud"><span class="no">01</span><span class="what">実装<small>タイムアウトとリトライ処理</small></span><span class="status">GLM ✓</span></li>
+            <li class="step s-done s-plaud"><span class="no">02</span><span class="what">テストの修正<small>落ちていた3件を直す</small></span><span class="status">GLM ✓</span></li>
+            <li class="step s-done s-plaud"><span class="no">03</span><span class="what">PRの説明文<small>変更点と影響範囲</small></span><span class="status">GLM ✓</span></li>
+            <li class="handoff">GLMはここまで ／ ここからSIMY</li>
+            <li class="step s-done"><span class="no">04</span><span class="what">決まった修正と担当<small>誰が・いつまでに・何を</small></span><span class="status">完了</span></li>
+            <li class="step s-run"><span class="no">05</span><span class="what">取引先への連絡の下書き<small>あなたの文面の癖でGmailに保存</small></span><span class="status">Autorun</span><span class="bar"></span></li>
+            <li class="step s-next"><span class="no">06</span><span class="what">QAチームへの共有<small>負荷試験の依頼と期限</small></span><span class="status">次</span></li>
+            <li class="step s-you"><span class="no">07</span><span class="what">今週リリースするか<small>判断だけがあなたに残る</small></span><span class="status">あなたの番</span></li>
+          </ol>
+          <div class="relay-foot" aria-hidden="true"><strong>あなたがやるのは、決めて、送ることだけ。</strong></div>
+        </div>
+        <p class="caption">※ 画面は説明用のイメージです</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap guide">
+    <nav class="toc" aria-label="目次">
+      <p class="toc-title">目次</p>
+      <ol>
+        <li><a href="#scene"><span>01</span>書いたあと、こうなっていませんか</a></li>
+        <li><a href="#wish"><span>02</span>本当は、こうしたかった</a></li>
+        <li><a href="#gap"><span>03</span>GLMはここで止まる</a></li>
+        <li><a href="#connect"><span>04</span>SIMYがつなぐ</a></li>
+        <li><a href="#sample"><span>05</span>会議1件で比較</a></li>
+        <li><a href="#usecases"><span>06</span>業種別：GLMの使い方とSIMYが出すもの</a></li>
+        <li><a href="#start"><span>07</span>はじめ方：3ステップ</a></li>
+        <li><a href="#reference"><span>08</span>GLMとは・Coding Plan・Claude Code・安全性</a></li>
+        <li><a href="#faq"><span>09</span>よくある質問</a></li>
+        <li><a href="#sources"><span>10</span>参考情報</a></li>
+      </ol>
+    </nav>
+
+    <article class="article">
+      <details class="toc-mobile">
+        <summary>目次</summary>
+        <ol>
+          <li><a href="#scene">書いたあと、こうなっていませんか</a></li>
+          <li><a href="#wish">本当は、こうしたかった</a></li>
+          <li><a href="#gap">GLMはここで止まる</a></li>
+          <li><a href="#connect">SIMYがつなぐ</a></li>
+          <li><a href="#sample">会議1件で比較</a></li>
+          <li><a href="#usecases">業種別：GLMの使い方とSIMYが出すもの</a></li>
+          <li><a href="#start">はじめ方：3ステップ</a></li>
+          <li><a href="#reference">GLMとは・Coding Plan・Claude Code・安全性</a></li>
+          <li><a href="#faq">よくある質問</a></li>
+          <li><a href="#sources">参考情報</a></li>
+        </ol>
+      </details>
+
+      <p class="byline"><span>最終更新：<time datetime="2026-10-01">2026年10月1日</time></span><span>発行：SIMY（AwakApp Inc.）</span></p>
+
+      <!-- 01 -->
+      <section class="sec" id="scene" aria-labelledby="h-scene">
+        <span class="sec-label">01 / AFTER THE CODE</span>
+        <h2 id="h-scene">GLMで書いたあと、こうなっていませんか</h2>
+        <p class="intro">コードも説明文も、GLMで一気に書けた。それでも、そのあとに起きていること。</p>
+        <div class="scenes">
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">1</span>
+            <span class="k">Coding Planで書いた月</span>
+            <b>PRは出た、次は？</b>
+            <p>実装は早く終わった。レビュー会議で決まった修正の担当は、誰も書いていない。</p>
+          </div>
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">2</span>
+            <span class="k">安いAPIで回した週</span>
+            <b>どれを採用した？</b>
+            <p>案は大量に出た。決まったことは、チャットとターミナルの履歴に埋もれる。</p>
+          </div>
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">3</span>
+            <span class="k">手元のPCで動かした日</span>
+            <b>自分だけ速い</b>
+            <p>社外に出さずに要約できた。会議で決まった依頼は、自分のメモ止まり。</p>
+          </div>
+        </div>
+        <p class="scene-foot">書くのは、GLMで一瞬で終わる。<b>仕事が進むかどうかは、書いたあとで決まっています。</b></p>
+      </section>
+
+      <!-- 02 -->
+      <section class="sec" id="wish" aria-labelledby="h-wish">
+        <span class="sec-label">02 / WHAT YOU REALLY WANTED</span>
+        <h2 id="h-wish">本当は、こうしたかった：GLMで書いたあと</h2>
+        <p class="intro">同じ会議。同じGLM。コードが書けた瞬間に、こうなっていてほしかった。</p>
+        <div class="scenes four">
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">会議が終わったら</span>
+            <b>担当と期限が一覧に</b>
+            <p>実装と説明文はGLMのまま。決まった修正と担当・期限は、もう並んでいる。</p>
+          </div>
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">期限の前に</span>
+            <b>止まった仕事が届く</b>
+            <p>返事待ち・期限間近の仕事を、次の会議の前にSIMYが先に知らせてくれる。</p>
+          </div>
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">どのモデルで書いても</span>
+            <b>結論は一か所に</b>
+            <p>採用した方針と次の行動が、モデルやツールをまたいで1つに残っている。</p>
+          </div>
+          <div class="scene wish you">
+            <span class="mark" aria-hidden="true">!</span>
+            <span class="k">あなたに戻るのは</span>
+            <b>判断だけ</b>
+            <p>「今週リリースするか」。戻ってくるのはその一問だけ。</p>
+          </div>
+        </div>
+        <p class="scene-foot">これは、<b>SIMYに会議とチャットをつないだ次の会議から</b>起きることです。GLMは、得意な仕事にそのまま使えます。</p>
+      </section>
+
+      <!-- 03 -->
+      <section class="sec" id="gap" aria-labelledby="h-gap">
+        <span class="sec-label">03 / WHERE GLM STOPS</span>
+        <h2 id="h-gap">GLMの仕事は、ここで止まる</h2>
+        <p class="intro">GLMが得意なのは「頼まれたものを書く」まで。その先は、誰も拾っていません。</p>
+        <div class="tl-wrap" role="img" aria-label="タイムライン。指示、実装と修正、説明文や下書きまではGLMが終えるが、担当と期限、関係者への連絡、チームへの共有、次回までの確認は空白のまま残る">
+          <div class="tl-row">
+            <span class="tl-who">GLM</span>
+            <ol class="tl">
+              <li class="on">指示<small>あなたが頼む</small></li>
+              <li class="on">実装・修正<small>速く安く</small></li>
+              <li class="on">説明文・下書き<small>大量に</small></li>
+              <li class="gap">担当と期限</li>
+              <li class="gap">関係者への連絡</li>
+              <li class="gap">チームへの共有</li>
+              <li class="gap">次回までの確認</li>
+            </ol>
+          </div>
+        </div>
+        <p class="caption">※ 流れは説明用のイメージです</p>
+        <p class="tl-note"><b>chat.z.aiでも、Claude Code経由でも、ローカルでも、同じところで止まります。</b>コードは何度でも書ける。でも「頼む」のは毎回あなたで、終わったかを見に行くのもあなたです。</p>
+      </section>
+
+      <!-- 04 -->
+      <section class="sec" id="connect" aria-labelledby="h-connect">
+        <span class="sec-label">04 / CONNECT</span>
+        <h2 id="h-connect">SIMYがつなぐ。GLMはそのまま、書いたあとを任せる</h2>
+        <p class="intro">空白だった4つを、SIMYが埋めます。あなたに戻るのは、判断の1マスだけ。</p>
+        <div class="tl-wrap" role="img" aria-label="タイムライン。指示、実装と修正、説明文や下書きはGLM。担当と期限、関係者への連絡の下書き、チームへの共有、次回までの確認はSIMYが進め、判断だけがあなたに戻る">
+          <div class="tl-row">
+            <span class="tl-who">GLM</span>
+            <ol class="tl">
+              <li class="on">指示</li>
+              <li class="on">実装・修正</li>
+              <li class="on">説明文・下書き</li>
+              <li class="blank"></li><li class="blank"></li><li class="blank"></li><li class="blank"></li>
+            </ol>
+          </div>
+          <div class="tl-row">
+            <span class="tl-who simy">SIMY</span>
+            <ol class="tl">
+              <li class="blank"></li><li class="blank"></li><li class="blank"></li>
+              <li class="run">担当と期限<small>会議から拾う</small></li>
+              <li class="run">連絡<small>Gmailに下書きまで</small></li>
+              <li class="run">共有<small>承認したら投稿</small></li>
+              <li class="you">判断<small>1問だけ戻る</small></li>
+            </ol>
+          </div>
+        </div>
+        <p class="caption">※ 流れは説明用のイメージです</p>
+        <ul class="three" aria-label="SIMYの3つの特徴">
+          <li>会議・チャットから拾う</li>
+          <li>あなたのやり方で</li>
+          <li>判断だけ返す</li>
+        </ul>
+        <p class="tl-note">SIMYは、会議の記録やチャットから「そのあとの仕事」を自分で見つけます。あなたが繰り返している手順と確認事項を会話から学び、同じやり方で進め、終わったかをMy Actionsに並べます。</p>
+
+        <div class="connect">
+          <ol class="connect-steps">
+            <li><b>SIMYに登録し、ChatGPT（Codex）を接続する</b><span>SIMYのクラウド実行は、お使いのChatGPTアカウントで動きます。Codexの利用は、お使いのChatGPTプランの範囲です。</span></li>
+            <li class="key"><b>SIMYデスクトップアプリを入れる</b><span>PC上のClaude Codeを、SIMYの実行役にできます。Claude CodeやCodexの会話から、繰り返している仕事を「SIMYからの提案」にします。会話本文はサーバーに保存しません。 <a href="/download.html">ダウンロードはこちら</a></span></li>
+            <li><b>会議の記録をつなぐ</b><span>連携画面でPlaudやNotionなどを接続します。GLMで書いた要約やPRの説明も、会議やチャットに貼ればSIMYが拾います。</span></li>
+          </ol>
+          <div>
+            <div class="mock" role="img" aria-label="SIMYのMy Actionsのイメージ。会議から拾った仕事として、決まった修正と担当の一覧が完了、取引先への連絡の下書きが進行中、今週リリースするかの判断があなた待ちとして並んでいます。">
+              <div class="mock-head" aria-hidden="true">
+                <span class="mock-mark">S</span>
+                <div>
+                  <div class="mock-title">My Actions <span class="mock-state">● あなた待ち 1</span></div>
+                  <p class="mock-desc">設計レビュー_決済API_1001 から拾った仕事</p>
+                </div>
+              </div>
+              <div class="mock-box" aria-hidden="true">修正と担当の一覧 ✓ ／ 取引先への連絡の下書き（進行中）／ QAへの共有（次）</div>
+              <div class="mock-btn" aria-hidden="true">今週リリースするか決める</div>
+              <div class="mock-foot" aria-hidden="true">判断が必要なものだけ、あなたに戻ります</div>
+            </div>
+            <p class="caption">※ SIMYの画面のイメージです</p>
+          </div>
+        </div>
+        <p class="note"><b>SIMYとGLMの関係：</b>SIMYは現時点ではGLM（Z.ai）には接続しません。SIMY自身は、お使いのChatGPT（Codex）アカウントと、PC上のClaude Codeで動きます。実装・下書き・要約はGLMの得意な仕事としてそのまま使い、その結果を会議やチャットに持ち込めば、そのあとをSIMYが進めます。</p>
+      </section>
+
+      <!-- 05 -->
+      <section class="sec" id="sample" aria-labelledby="h-sample">
+        <span class="sec-label">05 / SAMPLE</span>
+        <h2 id="h-sample">会議1件で比較：GLMの要約と、SIMYが仕上げる次の一手</h2>
+        <p class="intro">決済APIの設計レビュー（約50分）の議事メモを、GLMで要約した場合のサンプルです。左がGLM、右がSIMY。</p>
+        <div class="sample">
+          <div class="sheet">
+            <div class="sheet-label"><span>GLMの要約（例）</span><span>議事メモ → 3行</span></div>
+            <dl>
+              <dt>概要</dt>
+              <dd>決済APIのタイムアウトを30秒から10秒に短くし、リトライ処理を加える。</dd>
+              <dt>影響</dt>
+              <dd>取引先A社の夜間バッチ連携に影響が出る可能性がある。</dd>
+              <dt>宿題</dt>
+              <dd>リトライ処理の実装、負荷試験、A社への事前連絡。</dd>
+              <dt>予定</dt>
+              <dd>リリース候補は10月9日。負荷試験の結果を見て最終判断。</dd>
+            </dl>
+          </div>
+          <div class="outs">
+            <div class="out">
+              <div class="out-head"><b>決まった修正と担当の一覧</b><span class="pill ok">完了</span></div>
+              <p>リトライ処理：田中・10/6。負荷試験：QA・10/8。A社への事前連絡：あなた・10/7。</p>
+            </div>
+            <div class="out">
+              <div class="out-head"><b>取引先への連絡の下書き</b><span class="pill run">Autorun</span></div>
+              <p>A社のご担当者へ、タイムアウト変更の予定と影響、検証環境を使える日を、あなたのいつもの文面で。Gmailに下書きとして保存。</p>
+            </div>
+            <div class="out">
+              <div class="out-head"><b>QAチームへの共有</b><span class="pill">次</span></div>
+              <p>「10/9リリース候補です。負荷試験を10/8までにお願いします」。承認したらチャットに投稿。</p>
+            </div>
+            <div class="out you">
+              <div class="out-head"><b>あなたの判断</b><span class="pill you">あなたの番</span></div>
+              <p>負荷試験の結果を見て、今週リリースするか、1週延ばすか。判断が必要なところだけが、あなたに戻ってきます。</p>
+            </div>
+          </div>
+        </div>
+        <p class="sample-foot">GLMが書き、SIMYが動かす。リリースの判断は、あなたのままです。</p>
+      </section>
+
+      <!-- 06 -->
+      <section class="sec" id="usecases" aria-labelledby="h-usecases">
+        <span class="sec-label">06 / BY INDUSTRY</span>
+        <h2 id="h-usecases">業種別：GLMの使い方と、SIMYが出すもの</h2>
+        <p class="intro">GLMで書いたあと、SIMYが何を用意するか。個人でもチームでも、型は同じです。</p>
+        <div class="ind">
+          <div class="ind-card">
+            <h3>開発チーム <small>GLM：Coding Plan・Claude Code</small></h3>
+            <ul class="ind-rows">
+              <li><span>設計レビューの会議</span><span>→</span><span>決まった修正と担当の一覧</span></li>
+              <li><span>コードを書いたあと</span><span>→</span><span>PCのClaude Codeで次の作業</span></li>
+              <li><span>週の終わり</span><span>→</span><span>進捗と判断待ちのまとめ</span></li>
+            </ul>
+          </div>
+          <div class="ind-card">
+            <h3>受託開発・SIer <small>GLM：安いAPIで試作</small></h3>
+            <ul class="ind-rows">
+              <li><span>顧客との定例</span><span>→</span><span>宿題と期限の一覧・返信の下書き</span></li>
+              <li><span>仕様の変更</span><span>→</span><span>社内共有の文面・判断の1問</span></li>
+              <li><span>納期の前</span><span>→</span><span>返事待ちの仕事のリマインド</span></li>
+            </ul>
+          </div>
+          <div class="ind-card">
+            <h3>データ分析・研究 <small>GLM：分析コードと資料の要約</small></h3>
+            <ul class="ind-rows">
+              <li><span>分析の報告会</span><span>→</span><span>追加分析の担当と締め切り</span></li>
+              <li><span>レビューの指摘</span><span>→</span><span>修正点をまとめた依頼文</span></li>
+              <li><span>報告の前</span><span>→</span><span>確認待ちの一覧と判断の1問</span></li>
+            </ul>
+          </div>
+          <div class="ind-card">
+            <h3>経営会議・1on1 <small>GLM：資料の要約・論点整理</small></h3>
+            <ul class="ind-rows">
+              <li><span>経営会議</span><span>→</span><span>決定事項と担当者の一覧・関係者への共有</span></li>
+              <li><span>1on1</span><span>→</span><span>「あれどうなった」を聞く前に、進捗と判断待ち</span></li>
+              <li><span>週の終わり</span><span>→</span><span>複数の会議をまとめた週次報告</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- 07 -->
+      <section class="sec" id="start" aria-labelledby="h-start">
+        <span class="sec-label">07 / START</span>
+        <h2 id="h-start">はじめ方：GLMはそのまま、3ステップ</h2>
+        <ol class="steps3">
+          <li><b>GLMは、いつもどおり使う</b><span>実装、修正、要約、下書き。chat.z.aiでも、Coding Planでも、ローカルでも構いません。</span></li>
+          <li class="key"><b>SIMYに登録し、ChatGPTを接続する</b><span>クラウド実行はお使いのChatGPT（Codex）。<a href="#connect">つなぎ方</a>は上のとおりです。Claude Codeを使っている人は、SIMYデスクトップアプリも。 <a href="/download.html">ダウンロードはこちら</a></span></li>
+          <li><b>会議を1件、終える</b><span>担当と期限、連絡の下書き、共有の文面が届きます。決めて、送る。それだけです。</span></li>
+        </ol>
+        <p class="note"><b>登録の流れ：</b>プランを選ぶ → メールで本人確認 → カードで決済（無料プランはありません）。<a href="/?lang=ja#pricing">料金を見る</a>／PCで使うアプリは<a href="/download.html">ダウンロードページ</a>から。</p>
+        <p class="note"><b>GLMの使い方は変わりません。</b>SIMYはGLMを置き換えるものではなく、書いたあとの仕事を受け持つ別の仕組みです。</p>
+      </section>
+
+      <!-- 08 -->
+      <section class="sec" id="reference" aria-labelledby="h-reference">
+        <span class="sec-label">08 / REFERENCE</span>
+        <h2 id="h-reference">GLMとは：モデル・GLM Coding Plan・Claude Code・API・安全性（詳しく知りたい人向け）</h2>
+        <p class="intro">ここから下は、GLM本体のことを確かめたいときに開いてください。モデル名・料金・仕様は2026年10月時点の情報です。</p>
+
+        <details class="fold">
+          <summary>GLMとは：どこの国のAIか、ほかの「GLM」との違い<small>Zhipu AI（智譜）のLLM。海外向けの名前がZ.ai</small></summary>
+          <div class="fold-body">
+            <h3>GLMとZ.ai、Zhipuの関係</h3>
+            <p>GLMは、中国・北京のZhipu AI（智譜）が開発する大規模言語モデル（LLM）のシリーズです。中国国内向けのサービスはZhipuが運営し、海外向けには「Z.ai」の名前で、チャット（chat.z.ai）、API、コーディング向けの定額プランを提供しています。海外向けのZ.aiを運営するのは、シンガポールの法人（JINGSHENG HENGXING TECHNOLOGY PTE. LTD.）です。</p>
+            <p>Hugging Faceでは「zai-org」という組織名でモデルを公開しています。ニュースや記事では「Zhipu」「智譜」「Z.ai」「GLM」が混ざって使われますが、指しているのは同じ会社のモデルとサービスです。</p>
+            <h3>ほかの「GLM」との違い</h3>
+            <p>「GLM」という略語は、AIのモデル以外でも使われます。検索するときは、次のどれを探しているかで言葉を足すと見つけやすくなります。</p>
+            <ul class="plain-list">
+              <li><strong>一般化線形モデル（Generalized Linear Model）：</strong>統計学の手法の名前です。ロジスティック回帰やポアソン回帰をまとめた考え方で、RやPythonの統計の解説でよく出てきます。このページのGLMとは無関係です。</li>
+              <li><strong>自動車の分野のGLM：</strong>自動車の会社名や型式の略称として使われることがあります。こちらも、このページのGLMとは別のものです。</li>
+              <li><strong>AIのGLM：</strong>Zhipu AIのモデル名です。「GLM-5.3」「GLM-4.7-Flash」のように、世代番号や「Flash」などの種類がつきます。</li>
+            </ul>
+            <h3>GLMでできること</h3>
+            <ul class="plain-list">
+              <li><strong>チャット：</strong>質問への回答、文章の作成、翻訳、要約。</li>
+              <li><strong>コーディング：</strong>Claude CodeやCline、OpenCodeなどのツールから呼び出して、コードを書く・直す・説明する。</li>
+              <li><strong>画像の理解・文字の読み取り：</strong>GLM-5.3-Flashは画像も入力できるマルチモーダルのモデルです。書類の文字を読み取るGLM-OCRもあります。</li>
+            </ul>
+            <p>主力に近いモデルの重みを公開していて、条件を満たせば自分のサーバーやPCで動かせることが、ChatGPTやClaudeの主力モデルとの違いです。</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>主なモデル：GLM-5.3・5.3-Flash・5.2・4.7-Flash<small>2026年10月時点。名前と世代は数か月ごとに変わる</small></summary>
+          <div class="fold-body">
+            <p class="scroll-hint">表は横にスクロールできます →</p>
+            <div class="table-wrap">
+              <table class="t-wide">
+                <thead>
+                  <tr><th scope="col">モデル</th><th scope="col">役割</th><th scope="col">使える場所</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">GLM-5.3</th><td>2026年8月末公開の主力。753B、100万トークンの長い文脈。独自ライセンス</td><td>API、Coding Plan、オープンウェイト（大規模サーバー向け）</td></tr>
+                  <tr><th scope="row">GLM-5.3-Flash</th><td>速さと安さ重視。321B（推論時に動くのは約18B）、画像も入力できる。MITライセンス</td><td>API、Coding Plan、オープンウェイト（大規模サーバー向け）</td></tr>
+                  <tr><th scope="row">GLM-5.2</th><td>ひとつ前の世代。APIの料金表にGLM-5.3と同じ単価で載っている</td><td>API（Coding PlanではGLM-5.3に振り替え）</td></tr>
+                  <tr><th scope="row">GLM-4.7-Flash</th><td>30B級の小型モデル。量子化版で約19GBで、手元のPCで動かせる。APIは無料</td><td>API（無料）、Ollamaでローカル実行</td></tr>
+                  <tr><th scope="row">GLM-OCR</th><td>書類や画像から文字を読み取る</td><td>公式ドキュメントで確認</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="note"><b>「GLM-5.2」で探している人へ：</b>2026年10月時点の主力はGLM-5.3です。GLM-5.2はAPIで引き続き指定できますが、GLM Coding PlanでGLM-5.2を指定するとGLM-5.3に振り替えられます。古い記事の手順は、モデル名をGLM-5.3に読み替えて公式ドキュメントで確かめてください。</p>
+            <p>モデル名はすぐに変わるので、「主力」「速さ重視のFlash」「手元で動く小型」という役割で覚えておけば足ります。</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>GLM Coding Plan：コーディングツールから定額で使う<small>Liteは月18米ドル（2026年10月時点・公式）</small></summary>
+          <div class="fold-body">
+            <p>GLM Coding Planは、Claude Code、Cline、OpenCodeなどのコーディングツールからGLMを定額で使うためのプランです。トークンごとに支払うAPIと違い、月額の範囲で使えるので、毎日コードを書く人は費用の見通しが立てやすくなります。</p>
+            <ul class="plain-list">
+              <li><strong>Lite：</strong>月18米ドル（2026年10月時点、公式ページの表示。税の扱いは購入画面で確認してください）。</li>
+              <li><strong>上位プラン：</strong>使える量の多いプランがあります。内容と価格は<a href="https://docs.z.ai/devpack/overview" target="_blank" rel="noopener">公式の説明</a>と<a href="https://z.ai/subscribe" target="_blank" rel="noopener">購入ページ</a>で確認してください。</li>
+              <li><strong>使える量：</strong>5時間ごとと週ごとに、プランに応じた利用枠（クレジット）があります。</li>
+              <li><strong>使えるモデル：</strong>GLM-5.3とGLM-5.3-Flash。GLM-5.2を指定するとGLM-5.3に、GLM-4.7を指定するとGLM-5.3-Flashに振り替えられます。</li>
+              <li><strong>使えるツール：</strong>Claude Code、Cline、OpenCodeなど、接続先を差し替えられるコーディングツール。</li>
+            </ul>
+            <h3>APIの従量課金と、どちらを選ぶか</h3>
+            <ul class="plain-list">
+              <li><strong>Coding Planが向いている：</strong>毎日コーディングツールを使う個人の開発者。月の支出を一定にしたい人。</li>
+              <li><strong>APIが向いている：</strong>自社のシステムに組み込む、夜間にまとめて処理する、使う量が月によって大きく変わる場合。</li>
+            </ul>
+            <p>どちらも、書いたコードのあとの「誰がレビューするか」「いつ出すか」は受け持ちません。そこを毎回自分で追っているなら、<a href="#connect">SIMYのつなぎ方</a>を見てください。</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>Claude CodeでGLMを使う：Anthropic互換API<small>接続先とAPIキーを環境変数で差し替える</small></summary>
+          <div class="fold-body">
+            <p>Z.aiはAnthropic互換のAPI（<code>https://api.z.ai/api/anthropic</code>）を用意しています。Claude Codeは接続先を環境変数で変えられるので、Claude Codeの使い方はそのままに、裏で動くモデルをGLMにできます。</p>
+            <ol class="plain-list">
+              <li><strong>Z.aiでAPIキーを発行する。</strong>Coding Planを使う場合は、プランに入ってからキーを作ります。</li>
+              <li><strong>環境変数を設定する。</strong><code>ANTHROPIC_BASE_URL</code>に上のURLを、<code>ANTHROPIC_AUTH_TOKEN</code>にAPIキーを入れます。キーはコードや共有ドキュメントに直接書かないでください。</li>
+              <li><strong>Claude Codeを起動する。</strong>公式の案内では、Claude CodeのOpus・Sonnet相当の呼び出しがGLM-5.3に、Haiku相当がGLM-5.3-Flashに対応します。対応は環境変数で変えられます。</li>
+              <li><strong>小さな作業で試す。</strong>モデルが変わると、得意な書き方や指示の通り方も変わります。最初はテストの修正などの小さな作業から始めると安心です。</li>
+            </ol>
+            <p>細かい設定値は変わることがあるので、<a href="https://docs.z.ai/devpack/tool/claude" target="_blank" rel="noopener">Z.aiの公式手順</a>に従ってください。ClineやOpenCodeでも、同じように接続先とキーを設定して使えます。</p>
+            <p class="note"><b>SIMYとの関係：</b>SIMYは現時点ではGLM（Z.ai）のAPIキーを接続しません。SIMYのクラウド実行は、お使いのChatGPT（Codex）アカウントで動きます。</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>GLMのAPI：料金と使い始め方<small>100万トークンあたりの米ドル建て。小型のFlashは無料</small></summary>
+          <div class="fold-body">
+            <p class="scroll-hint">表は横にスクロールできます →</p>
+            <div class="table-wrap">
+              <table class="t-wide">
+                <thead>
+                  <tr><th scope="col">モデル</th><th scope="col">入力</th><th scope="col">キャッシュ入力</th><th scope="col">出力</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">GLM-5.3</th><td>1.40ドル</td><td>0.26ドル</td><td>4.40ドル</td></tr>
+                  <tr><th scope="row">GLM-5.3-Flash</th><td>0.15ドル</td><td>0.03ドル</td><td>0.50ドル</td></tr>
+                  <tr><th scope="row">GLM-4.7-Flash・GLM-4.5-Flash</th><td colspan="3">無料</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="small muted">100万トークンあたり・米ドル。2026年10月時点で<a href="https://docs.z.ai/guides/overview/pricing" target="_blank" rel="noopener">Z.aiの公式料金ページ</a>に掲載されている金額です。税の扱いと最新の金額は公式ページで確認してください。</p>
+            <h3>APIを使い始める手順</h3>
+            <ol class="plain-list">
+              <li><strong>Z.aiのアカウントを作る。</strong>海外向けの窓口はシンガポールの法人です。利用規約とプライバシーポリシーを先に読んでおきます。</li>
+              <li><strong>APIキーを発行する。</strong>キーは環境変数に入れて管理します。</li>
+              <li><strong>OpenAI互換かAnthropic互換の接続先に向ける。</strong>既存のSDKやツールなら、接続先のURLとモデル名を差し替えて呼び出せます。</li>
+              <li><strong>無料のFlashで試してから広げる。</strong>GLM-4.7-Flashで流れを確かめ、品質が必要なところだけGLM-5.3に切り替えると、費用を抑えられます。</li>
+            </ol>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>ライセンスとローカル実行：OllamaでGLM-4.7-Flash<small>MITのFlashと、独自ライセンスのGLM-5.3</small></summary>
+          <div class="fold-body">
+            <h3>ライセンスの違い</h3>
+            <p>「GLMはオープンソース」と一括りにはできません。GLM-5.3-Flashは、商用利用もしやすいMITライセンスです。GLM-5.3は独自の「GLM-5.3 License」で、MITに近い自由な許諾ですが、モデルをAPIとして提供する事業で売上がとても大きい事業者は、商用利用の前にZ.AIのセキュリティ審査を受ける条件があります。ふつうの会社が社内で使う分には影響しないことが多いものの、業務で使う前に<a href="https://huggingface.co/zai-org/GLM-5.3/raw/main/LICENSE" target="_blank" rel="noopener">ライセンス本文</a>を確認してください。</p>
+            <h3>手元のPCで動かす</h3>
+            <ul class="plain-list">
+              <li><strong>GLM-4.7-Flash：</strong>Ollamaで<code>ollama run glm-4.7-flash</code>。量子化版（q4_K_M）で約19GBあり、メモリに余裕のあるPCで動きます。</li>
+              <li><strong>GLM-5.3・GLM-5.3-Flash：</strong>Ollamaの公式ライブラリでは「cloud」タグだけです。これはOllamaのクラウドで動く版で、手元のPCで動くわけではありません。</li>
+              <li><strong>自社のサーバーで動かす：</strong>GLM-5.3の重みはHugging Faceで公開されていますが、数百Bの大きさなので、複数の大型GPUを前提に考える必要があります。</li>
+            </ul>
+            <p class="note"><b>「ローカル＝外に出ない」の注意：</b>データを社外に出さないことが目的なら、cloudタグのモデルは当てはまりません。手元で動くのはGLM-4.7-Flashのような小型のモデルです。</p>
+            <h3>ローカル実行が向いている仕事</h3>
+            <p>社外に出したくない文書の要約、オフラインでの作業、毎日大量に回す定型の下書きは、ローカル実行の得意分野です。小型のモデルは大きなモデルほど賢くはないため、最終版ではなく「たたき台」を作る役として使うと、期待とのずれが少なくなります。</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>GLMの日本語：どこまで使えるか<small>日本語で頼めるが、公式に書かれた言語は英語と中国語</small></summary>
+          <div class="fold-body">
+            <p>GLMに日本語で質問すれば、日本語で答えます。ただし、Hugging Faceの公式モデルカードに書かれている言語は英語と中国語だけで、日本語の品質を公式に保証しているわけではありません。</p>
+            <ul class="plain-list">
+              <li><strong>向いていること：</strong>コードの生成と修正、英語や中国語の資料の要約、技術的な説明の下書き。</li>
+              <li><strong>確かめたいこと：</strong>敬語の使い分け、日本の固有名詞、日本の法令や商習慣の記述。社外に出す日本語の文面は、必ず読み直してください。</li>
+              <li><strong>小さなモデルの場合：</strong>ローカルで動かす小型のモデルは、長い日本語で言い回しが不自然になることがあります。</li>
+            </ul>
+            <p>日本語の品質は、実際の業務の文書で数件試して確かめるのがいちばん確実です。</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>データの扱いと安全性：保存先・契約・公的な措置<small>海外向けZ.aiはシンガポール法人。開発元は米国のエンティティリストに掲載</small></summary>
+          <div class="fold-body">
+            <p class="scroll-hint">表は横にスクロールできます →</p>
+            <div class="table-wrap">
+              <table class="t-wide">
+                <thead>
+                  <tr><th scope="col">使い方</th><th scope="col">データの処理場所</th><th scope="col">契約・学習の扱い</th><th scope="col">向いている用途</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">chat.z.ai・海外向けサービス</th><td>原則としてシンガポールで処理すると案内</td><td>チャット入力を学習に使うかは、ポリシーに明記がない</td><td>公開情報の調べもの、試用</td></tr>
+                  <tr><th scope="row">API・Coding Plan</th><td>Z.ai（シンガポール法人）が処理。詳細はデータ処理契約で確認</td><td>API利用者には別のデータ処理契約（DPA）が適用され、Z.aiはデータ処理者</td><td>開発、業務システムへの組み込み</td></tr>
+                  <tr><th scope="row">ローカル実行</th><td>自分のPCやサーバーの中だけ</td><td>外に出ない</td><td>社外秘の文書、オフラインでの作業</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3>公的な措置について</h3>
+            <p>米国商務省産業安全保障局（BIS）は2025年1月16日、Zhipu AI（北京智譜華章科技）と関連会社をエンティティリストに追加しました。米国の輸出管理規則の対象となる製品や技術をこれらの会社へ輸出するには、許可が必要になる措置です。業務で使ってよいかは、所属先や取引先のルールに沿って判断してください。</p>
+            <ul class="plain-list">
+              <li><strong>社内ルールを先に確認する：</strong>生成AIの利用ルールで、使えるサービスや入力してよい情報が決まっている会社もあります。</li>
+              <li><strong>機密は入れない、が基本：</strong>どのAIでも、顧客情報や未公開の数字は入力前に考えてください。</li>
+              <li><strong>外に出したくないならローカル：</strong>データを社外に出さずに使いたい場合は、手元で動くモデルを選びます。</li>
+            </ul>
+            <p class="small muted">データの扱いは、2026年10月1日時点の<a href="https://docs.z.ai/legal-agreement/privacy-policy" target="_blank" rel="noopener">Z.aiのプライバシーポリシー</a>の記載に基づきます。SIMYでのデータの取り扱いは、<a href="/security.html">セキュリティ</a>と<a href="/privacy.html">プライバシーポリシー</a>で公開しています。</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>Kimi・DeepSeek・Qwen・Doubaoとの違い<small>どれが良い悪いではなく、入口とライセンスが違う</small></summary>
+          <div class="fold-body">
+            <p class="scroll-hint">表は横にスクロールできます →</p>
+            <div class="table-wrap">
+              <table class="t-wide">
+                <thead>
+                  <tr><th scope="col">比較項目</th><th scope="col">GLM（Z.ai）</th><th scope="col">Kimi</th><th scope="col">DeepSeek</th><th scope="col">Qwen</th><th scope="col" class="simy">SIMY</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">開発元</th><td>Zhipu AI（北京）</td><td>Moonshot AI（北京）</td><td>DeepSeek（杭州）</td><td>Alibabaグループ（杭州）</td><td class="simy">AwakApp Inc.</td></tr>
+                  <tr><th scope="row">Claude Codeから使う</th><td>Anthropic互換APIあり</td><td>Anthropic互換APIあり</td><td>Anthropic互換APIあり</td><td>Coding Plan経由</td><td class="simy">PCのClaude Codeを実行役にできる</td></tr>
+                  <tr><th scope="row">コーディングの定額</th><td>GLM Coding Plan</td><td>Kimi Code＋会員</td><td>なし</td><td>Coding Plan</td><td class="simy">—</td></tr>
+                  <tr><th scope="row">手元のPCで動く版</th><td>GLM-4.7-Flash（約19GB）</td><td>なし（cloudのみ）</td><td>旧世代の小型版</td><td>Qwen3.8-27B（約18GB）</td><td class="simy">—</td></tr>
+                  <tr><th scope="row">起点</th><td>あなたが頼む</td><td>あなたが頼む</td><td>あなたが頼む</td><td>あなたが頼む</td><td class="simy">会議・チャットから、SIMYが拾う</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>ByteDanceのDoubao（豆包）は、主力のSeedモデルの重みを公開しておらず、APIも中国向けのVolcano Engineと海外向けのBytePlusに分かれています。詳しくは<a href="/guides/doubao.html">Doubao（豆包）ガイド</a>をご覧ください。</p>
+            <p class="note"><b>使い分け：</b>コードや下書きを書くのは、GLMを含むどのAIでも構いません。そのあとの担当、期限、連絡、共有を毎回自分で追っているなら、SIMYの出番です。各社の比較は<a href="/guides/china-llm.html">中国発のLLMの比較</a>、個別には<a href="/guides/kimi.html">Kimiのガイド</a>・<a href="/guides/deepseek.html">DeepSeekのガイド</a>・<a href="/guides/qwen.html">Qwenのガイド</a>・<a href="/guides/minimax.html">MiniMaxのガイド</a>にまとめています。</p>
+          </div>
+        </details>
+      </section>
+
+      <!-- 09 -->
+      <section class="sec" id="faq" aria-labelledby="h-faq">
+        <span class="sec-label">09 / FAQ</span>
+        <h2 id="h-faq">よくある質問</h2>
+        <div class="faq">
+          <details>
+            <summary>GLMとは何ですか？</summary>
+            <div class="a"><p>GLMは、中国のZhipu AI（智譜）が開発する大規模言語モデル（LLM）のシリーズです。海外向けにはZ.aiの名前で、チャット、API、コーディング向けの定額プランを提供しています。統計の「一般化線形モデル」もGLMと略されますが、別のものです。</p></div>
+          </details>
+          <details>
+            <summary>GLM（Z.ai）はどこの国のAIですか？</summary>
+            <div class="a"><p>開発元のZhipu AIは中国・北京の会社です。海外向けのZ.aiはシンガポールの法人が運営し、個人データは原則としてシンガポールで処理するとプライバシーポリシーで案内されています。</p></div>
+          </details>
+          <details>
+            <summary>GLMの最新モデルは何ですか？</summary>
+            <div class="a"><p>2026年10月時点の主力は、GLM-5.3と、軽くて速いGLM-5.3-Flashです。モデル名は数か月ごとに変わるので、公式の一覧で確認してください。</p></div>
+          </details>
+          <details>
+            <summary>GLM-5.2はまだ使えますか？</summary>
+            <div class="a"><p>使えます。2026年10月時点で、Z.aiのAPI料金表にGLM-5.2がGLM-5.3と同じ単価で載っています。GLM Coding PlanでGLM-5.2を指定すると、GLM-5.3に振り替えられます。</p></div>
+          </details>
+          <details>
+            <summary>GLM Coding Planとは何ですか？</summary>
+            <div class="a"><p>Claude CodeやCline、OpenCodeなどのコーディングツールからGLMを月額の定額で使うプランです。2026年10月時点で、いちばん小さいLiteは月18米ドルと公式ページに掲載されています。上位のProとMaxの価格は公式ページで確認してください。</p></div>
+          </details>
+          <details>
+            <summary>Claude CodeでGLMは使えますか？</summary>
+            <div class="a"><p>使えます。Z.aiはAnthropic互換のAPIを用意しており、Claude Codeの接続先とAPIキーを環境変数で差し替えると、Claude CodeからGLMを呼び出せます。手順はZ.aiの公式ドキュメントに載っています。</p></div>
+          </details>
+          <details>
+            <summary>GLMは無料で使えますか？</summary>
+            <div class="a"><p>Webのチャットchat.z.aiで試せます。APIでは、2026年10月時点でGLM-4.7-FlashとGLM-4.5-Flashが無料と公式の料金ページに掲載されています。GLM-5.3などの主力モデルは従量課金です。</p></div>
+          </details>
+          <details>
+            <summary>GLMはローカル（自分のPC）で動かせますか？</summary>
+            <div class="a"><p>一部のモデルは動かせます。OllamaのGLM-4.7-Flashは、量子化版で約19GBあり、メモリに余裕のあるPCで動きます。GLM-5.3とGLM-5.3-FlashはOllamaではクラウド実行のタグだけで、手元のPCでは動きません。</p></div>
+          </details>
+          <details>
+            <summary>GLMのライセンスは商用利用できますか？</summary>
+            <div class="a"><p>GLM-5.3-FlashはMITライセンスです。GLM-5.3は独自のライセンスで、基本は自由に使えますが、売上規模の大きいAPI提供事業者には商用利用前の審査の条件があります。業務で使う前に、各モデルのライセンス本文を確認してください。</p></div>
+          </details>
+          <details>
+            <summary>GLMは日本語に対応していますか？</summary>
+            <div class="a"><p>日本語で質問すれば日本語で答えますが、公式のモデルカードに書かれている言語は英語と中国語です。大事な文面は、実際の業務の文書で品質を確かめてから使ってください。</p></div>
+          </details>
+          <details>
+            <summary>SIMYはGLMで動きますか？</summary>
+            <div class="a"><p>いいえ、SIMYは現時点ではGLM（Z.ai）には接続しません。SIMYはお使いのChatGPT（Codex）アカウントと、PC上のClaude Codeで動きます。GLMで書いたコードや下書きは、そのまま会議やチャットに持ち込めます。</p></div>
+          </details>
+          <details>
+            <summary>GLMで書いたあとの仕事は、毎回SIMYに頼む必要がありますか？</summary>
+            <div class="a"><p>いいえ。SIMYは会議の記録やチャットから、決まったことと担当・期限を自分で拾います。あなたのやり方を会話から学び、判断が必要なところだけをあなたに返します。</p></div>
+          </details>
+        </div>
+      </section>
+
+      <!-- 10 -->
+      <section class="sec" id="sources" aria-labelledby="h-sources">
+        <span class="sec-label">10 / SOURCES</span>
+        <h2 id="h-sources">参考情報</h2>
+        <p>GLMのモデル、料金、ライセンス、データの扱いは、次の公式情報で確認しました（確認日：2026年10月1日）。米国の輸出規制については米国の官報（Federal Register）を参照しました。モデル名と料金は頻繁に変わるため、最新の情報は各公式ページをご確認ください。</p>
+        <ul class="plain-list">
+          <li><a href="https://chat.z.ai" target="_blank" rel="noopener">Z.ai Chat（Z.ai公式）</a></li>
+          <li><a href="https://docs.z.ai/guides/overview/pricing" target="_blank" rel="noopener">料金（Z.ai ドキュメント）</a></li>
+          <li><a href="https://docs.z.ai/devpack/overview" target="_blank" rel="noopener">GLM Coding Plan（Z.ai ドキュメント）</a></li>
+          <li><a href="https://docs.z.ai/devpack/tool/claude" target="_blank" rel="noopener">Claude Codeで使う（Z.ai ドキュメント）</a></li>
+          <li><a href="https://docs.z.ai/guides/llm/glm-5.3" target="_blank" rel="noopener">GLM-5.3</a>、<a href="https://docs.z.ai/guides/llm/glm-5.2" target="_blank" rel="noopener">GLM-5.2</a>（Z.ai ドキュメント）</li>
+          <li><a href="https://huggingface.co/zai-org" target="_blank" rel="noopener">zai-org（Hugging Face）</a>、<a href="https://huggingface.co/zai-org/GLM-5.3" target="_blank" rel="noopener">GLM-5.3</a>、<a href="https://huggingface.co/zai-org/GLM-5.3-Flash" target="_blank" rel="noopener">GLM-5.3-Flash</a></li>
+          <li><a href="https://huggingface.co/zai-org/GLM-5.3/raw/main/LICENSE" target="_blank" rel="noopener">GLM-5.3 License（Hugging Face）</a></li>
+          <li><a href="https://ollama.com/library/glm-4.7-flash" target="_blank" rel="noopener">glm-4.7-flash（Ollama ライブラリ）</a></li>
+          <li><a href="https://docs.z.ai/legal-agreement/privacy-policy" target="_blank" rel="noopener">Z.ai プライバシーポリシー</a></li>
+          <li><a href="https://www.federalregister.gov/documents/2025/01/16/2025-00704/addition-of-entities-to-and-revision-of-entry-on-the-entity-list" target="_blank" rel="noopener">エンティティリストへの追加（米国官報 Federal Register、2025年1月16日）</a>、<a href="https://www.bloomberg.com/news/articles/2025-01-16/us-blacklists-tencent-backed-ai-startup-as-tech-curbs-deepen" target="_blank" rel="noopener">報道（Bloomberg）</a></li>
+        </ul>
+      </section>
+      <aside class="next-read" aria-labelledby="h-next">
+        <h2 id="h-next">次に読む</h2>
+        <div class="next-grid"><a href="/guides/china-llm.html"><b>中国発のLLMの比較</b><span>GLM・Kimi・DeepSeek・Qwenの違いと使い分け</span></a><a href="/guides/kimi.html"><b>Kimi 活用ガイド</b><span>Kimi K3とKimi Code、Claude Codeでの使い方</span></a><a href="/guides/qwen.html"><b>Qwen 活用ガイド</b><span>Qwen Chat・API・ローカル実行と安全性</span></a></div>
+        <a class="next-all" href="/guides/index.html">ガイド一覧へ →</a>
+      </aside>
+    </article>
+  </div>
+
+  <section class="closing" aria-labelledby="h-closing">
+    <div class="wrap closing-inner">
+      <div>
+        <h2 id="h-closing">GLMで書き終えたら、<br>そのあとはSIMYへ。</h2>
+        <p>GLMは、得意な仕事にそのまま。会議とチャットから拾った仕事をSIMYが進め、返すのは判断だけ。リリースの判断は、あなたのままです。</p>
+      </div>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="https://app.simy.one/signup?lang=ja&amp;locale=ja&amp;region=jp&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=glm_guide&amp;utm_content=closing">プランを選んではじめる <span class="arrow" aria-hidden="true">↗</span></a>
+        <a class="btn btn-ghost" href="mailto:sales@simy.one?subject=SIMY%E3%81%AE%E5%B0%8E%E5%85%A5%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%E7%9B%B8%E8%AB%87%E3%81%97%E3%81%9F%E3%81%84">相談する</a>
+        <a class="btn btn-ghost" href="/download.html">アプリをダウンロード <span class="arrow" aria-hidden="true">↓</span></a>
+      </div>
+    </div>
+  </section>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <ul class="footer-links">
+      <li><a href="/?lang=ja">ホーム</a></li>
+      <li><a href="/?lang=ja#pricing">料金</a></li>
+      <li><a href="/integrations.html">連携</a></li>
+      <li><a href="/download.html">ダウンロード</a></li>
+      <li><a href="/guides/index.html">ガイド一覧</a></li>
+      <li><a href="/guides/claude.html">Claude</a></li>
+      <li><a href="/guides/codex.html">Codex</a></li>
+      <li><a href="/guides/cowork.html">Cowork</a></li>
+      <li><a href="/guides/chatgpt.html">ChatGPT</a></li>
+      <li><a href="/guides/plaud.html">PLAUD</a></li>
+      <li><a href="/guides/notta.html">Notta</a></li>
+      <li><a href="/guides/meeting-notes.html">AI議事録</a></li>
+      <li><a href="/guides/china-llm.html">中国のAI比較</a></li>
+      <li><a href="/guides/deepseek.html">DeepSeek</a></li>
+      <li><a href="/guides/qwen.html">Qwen</a></li>
+      <li><a href="/guides/qwen-local.html">Qwenを自社サーバーで</a></li>
+      <li><a href="/security.html">セキュリティ</a></li>
+      <li><a href="/privacy.html">プライバシーポリシー</a></li>
+      <li><a href="/terms.html">利用規約</a></li>
+    </ul>
+    <p>GLMおよびZ.aiは、各権利者の商標または登録商標です。SIMYはZ.ai・Zhipu AIとは独立した製品です。</p>
+    <p>CodexとChatGPTはOpenAIの製品です。Claude CodeはAnthropicの製品です。その他の社名・製品名は、各社の商標または登録商標です。</p>
+    <p>&copy; 2026 SIMY by AwakApp Inc.</p>
+  </div>
+</footer>
+<script>
+(function () {
+  var links = Array.prototype.slice.call(document.querySelectorAll('.toc a'));
+  if (!links.length) return;
+  var items = links.map(function (a) {
+    return { link: a, section: document.getElementById(a.getAttribute('href').slice(1)) };
+  }).filter(function (item) { return item.section; });
+  var ticking = false;
+  function update() {
+    ticking = false;
+    var line = window.innerHeight * 0.35;
+    var atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+    var current = null;
+    items.forEach(function (item) {
+      if (item.section.getBoundingClientRect().top <= line) current = item;
+    });
+    if (atBottom) current = items[items.length - 1];
+    items.forEach(function (item) { item.link.classList.toggle('is-active', item === current); });
+  }
+  window.addEventListener('scroll', function () {
+    if (!ticking) { ticking = true; window.requestAnimationFrame(update); }
+  }, { passive: true });
+  update();
+})();
+</script>
+<script src="/analytics.js" defer></script>
+</body>
+</html>

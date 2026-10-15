@@ -21,7 +21,7 @@
   var TWIN_PAGE_LOCALES = SUPPORTED;
   var CACHE = {};
   var CURRENT_LANG = DEFAULT;
-  var I18N_VERSION = '20260712-i18n-keys-7';
+  var I18N_VERSION = '20261006-copy-clarity-2';
   var BUNDLE_LOADING = {};
 
   /* ── Home (/) React SPA translation bridge ──
@@ -34,6 +34,7 @@
      pages #root is absent, so this bridge is a no-op. */
   var HOME_DOM_CACHE = {};     // { [lang]: { [enSource]: translated } }
   var ROOT_NODE_MAP = null;    // WeakMap<Text, string> — trimmed English source per text node
+  var ROOT_PLACEHOLDER_MAP = new WeakMap(); // Preserve originals across locale changes and React renders.
   var STATIC_NODE_MAP = null;  // WeakMap<Text, string> — trimmed static home source per text node
   var STATIC_HEAD_MAP = null;  // Map<Element|Document, { attr, source }>
   var ROOT_OBSERVER = null;
@@ -968,7 +969,7 @@
     captureRootOriginals(root);
     if (!ROOT_NODE_MAP || !ROOT_NODE_MAP._list) return;
     // Ensure the language dict is loaded — lazy-load on demand if not.
-    if (!HOME_DOM_CACHE[langCode] && langCode !== DEFAULT) {
+    if (!HOME_DOM_CACHE[langCode]) {
       loadHomeDom(langCode, function () { applyRoot(langCode); });
       return;
     }
@@ -995,6 +996,18 @@
         if (node.nodeValue !== next) node.nodeValue = next;
       }
       ROOT_NODE_MAP._list = alive;
+      // The compiled React pages have no data-i18n-placeholder attributes.
+      // Translate hints using their original copy, never the user's entered values.
+      var fields = root.querySelectorAll('input[placeholder], textarea[placeholder]');
+      for (var f = 0; f < fields.length; f++) {
+        var field = fields[f];
+        if (!ROOT_PLACEHOLDER_MAP.has(field)) {
+          ROOT_PLACEHOLDER_MAP.set(field, field.getAttribute('placeholder'));
+        }
+        var original = ROOT_PLACEHOLDER_MAP.get(field);
+        var hint = dict[original] || original;
+        if (field.getAttribute('placeholder') !== hint) field.setAttribute('placeholder', hint);
+      }
       // Inject the Screen Studio animated demo above the "What is SIMY" section.
       // Idempotent and guarded by ROOT_APPLYING so the observer ignores it.
       injectScreenStudio(root);
@@ -1306,7 +1319,9 @@
     ROOT_OBSERVER.observe(root, {
       childList: true,
       subtree: true,
-      characterData: true
+      characterData: true,
+      attributes: true,
+      attributeFilter: ['placeholder']
     });
   }
 

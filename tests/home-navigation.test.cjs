@@ -22,11 +22,11 @@ test("mobile navigation closes from blank and outside clicks", () => {
 });
 
 test("homepage cache-busts the current home assets", () => {
-  assert.match(homeHtml, /home\.css\?v=20261001-field-voices-1/);
-  assert.match(homeHtml, /home-locales\.js\?v=20261001-guides-voices-1/);
-  assert.match(homeHtml, /home-i18n\.js\?v=20261001-dev-signup-1/);
+  assert.match(homeHtml, /home\.css\?v=20261001-nav-fit-1/);
+  assert.match(homeHtml, /home-locales\.js\?v=20261012-purchase-availability-1/);
+  assert.match(homeHtml, /home-i18n\.js\?v=20261016-dev-handoff-1/);
   assert.match(homeHtml, /pricing-catalog\.js\?v=20260907-industry-realtime-pricing-3/);
-  assert.match(homeHtml, /home\.js\?v=20261001-plan-handoff-1/);
+  assert.match(homeHtml, /home\.js\?v=20261016-dev-handoff-1/);
 });
 
 test("pricing call to action opens the signup plan selection page", () => {
@@ -38,15 +38,15 @@ test("pricing call to action opens the signup plan selection page", () => {
   assert.equal((homeHtml.match(/href="https:\/\/app\.simy\.one\/signup\/\?plan=(starter|quality)&amp;interval=annual&amp;lang=en&amp;locale=en&amp;region=us" aria-label="Choose a plan"/g) || []).length, 2);
 });
 
-test("pages loading the demo bundle cache-bust its workflow terminology", () => {
+test("pages loading the contact bundle cache-bust its localization", () => {
   const pages = ["careers.html", "contact.html", "how-it-works.html", "integrations.html", "security.html", "status.html"];
   for (const directory of ["site", "site/old"]) {
     for (const page of pages) {
       const source = fs.readFileSync(path.join(repoRoot, directory, page), "utf8");
       assert.match(
         source,
-        /\/assets\/index-DnVveaIK\.js\?v=20260915-workflow-terminology-1/,
-        `${directory}/${page} must load the updated workflow terminology bundle`
+        /\/assets\/index-DnVveaIK\.js\?v=20261006-copy-clarity-2/,
+        `${directory}/${page} must load the updated localized contact component`
       );
     }
   }

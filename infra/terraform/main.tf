@@ -305,6 +305,17 @@ resource "aws_cloudfront_function" "redirect" {
       var viewerRegionRedirect = maybeRedirectWithViewerRegion(request, host, uri);
       if (viewerRegionRedirect) return viewerRegionRedirect;
 
+      // Keep the Universal Link callback URL stable for iOS while serving the
+      // Safari fallback page when the app is not installed. This is an internal
+      // rewrite, so its query string remains available to the user-initiated
+      // custom-scheme link in the page.
+      if (uri === '/app/auth/callback' || uri === '/app/auth/callback/' ||
+          uri === '/dev-app/auth/callback' || uri === '/dev-app/auth/callback/' ||
+          uri === '/stg-app/auth/callback' || uri === '/stg-app/auth/callback/') {
+        request.uri = '/auth-callback.html';
+        return request;
+      }
+
       if (uri === '/test' || uri === '/test/' || uri.startsWith('/test/')) {
         return {
           statusCode: 301,

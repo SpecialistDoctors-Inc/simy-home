@@ -15,3 +15,12 @@ Purpose: preserve the existing offer and carry the chosen plan, billing period a
 ![English annual pricing, 1280px](desktop-annual.jpg)
 
 Release: merge to Dev after companion signup flow is verified. Production is outside this release. Rollback: revert the handoff changes; no pricing/catalog data changed.
+
+## Review refresh — 2026-10-16
+
+- Integrated current `dev` (`4c638c3`), retaining its purchase-availability copy and pricing selection implementation. The remaining runtime delta selects the Dev application host and preserves locale updates for links already rewritten by deployment.
+- Re-ran all Node tests: 1,105 passed, zero skipped. The localized bundle check and `git diff --check` passed.
+- Chromium: seven cases passed. Four cover Japanese/English at 390/1280px with both billing intervals and both plans; one covers monthly selection through a locale change; two serve local repository files under simulated production/Dev hostnames and switch through all six locales. These host tests make no external application requests.
+- Executed the workflow's exact Dev HTML transform in a temporary site copy and checked that production app links were absent afterward. The production source remained unchanged.
+- The existing CI workflow now runs all Node tests and the pricing handoff Chromium suite. Current CI results are recorded on the PR after pushing.
+- The screenshots above are historical October 1 evidence. No layout or prices changed in this refresh. This still does not establish provider login, real Stripe Checkout, entitlement delivery or deployed acceptance.

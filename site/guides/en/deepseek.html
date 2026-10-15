@@ -1,0 +1,1667 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="google-site-verification" content="1n6_tVJZRZlQax8luEg5VsuG7gg-kCEam5VFiWIJs3U">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What Is DeepSeek? How to Use It, API and Safety | SIMY</title>
+<meta name="description" content="What is DeepSeek and where is it from? The DeepSeek shock, how to use it, API pricing, V4 models, Japan's warnings and a work checklist. As of Oct 2026.">
+<link rel="canonical" href="https://simy.one/guides/en/deepseek.html">
+<link rel="alternate" hreflang="ja" href="https://simy.one/guides/deepseek.html">
+<link rel="alternate" hreflang="en" href="https://simy.one/guides/en/deepseek.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://simy.one/guides/zh-hans/deepseek.html">
+<link rel="alternate" hreflang="es" href="https://simy.one/guides/es/deepseek.html">
+<link rel="alternate" hreflang="fr" href="https://simy.one/guides/fr/deepseek.html">
+<link rel="alternate" hreflang="hi" href="https://simy.one/guides/hi/deepseek.html">
+<link rel="alternate" hreflang="x-default" href="https://simy.one/guides/en/deepseek.html">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://simy.one/guides/en/deepseek.html">
+<meta property="og:title" content="DeepSeek is cheap and smart. Who takes it from there? | SIMY">
+<meta property="og:description" content="What is DeepSeek? How to use it, the API and safety. After DeepSeek answers, SIMY picks up owners, deadlines, reports and updates from your meetings and chat.">
+<meta property="og:site_name" content="SIMY">
+<meta property="og:image" content="https://simy.one/ogp.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="DeepSeek is cheap and smart. Who takes it from there? DeepSeek Guide | SIMY">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-10-01">
+<meta property="article:modified_time" content="2026-10-01">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="DeepSeek is cheap and smart. Who takes it from there? | SIMY">
+<meta name="twitter:description" content="What is DeepSeek? How to use it, the API and safety. After DeepSeek answers, SIMY picks up owners, deadlines, reports and updates from your meetings and chat.">
+<meta name="twitter:image" content="https://simy.one/ogp.png">
+<meta name="twitter:image:alt" content="DeepSeek is cheap and smart. Who takes it from there? DeepSeek Guide | SIMY">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#f6f5f4">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png">
+<style>
+:root {
+  --paper: #f6f5f4;
+  --paper-light: #ffffff;
+  --ink: #111111;
+  --ink-soft: #5d5b58;
+  --ink-faint: #6b6865;
+  --line-soft: rgba(17, 17, 17, 0.14);
+  --ui-line: #d9dde2;
+  --blue: #3273d7;
+  --blue-deep: #235db8;
+  --blue-soft: #eef5ff;
+  --mint: #92edce;
+  --coral-soft: #fff1ec;
+  --yellow: #ffd166;
+  --radius: 0.8rem;
+  --radius-sm: 0.5rem;
+  --sans: "Helvetica Neue", Arial, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", Meiryo, sans-serif;
+  --mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  --page: 1180px;
+  --gutter: clamp(16px, 4vw, 40px);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.85;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+a { color: inherit; }
+a:focus-visible, summary:focus-visible {
+  outline: 3px solid rgba(50, 115, 215, 0.45);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+img { max-width: 100%; display: block; }
+
+.wrap { width: min(var(--page), 100% - var(--gutter) * 2); margin: 0 auto; }
+
+.skip {
+  position: absolute; left: -9999px; top: 8px;
+  background: var(--ink); color: #fff; padding: 8px 14px; border-radius: 6px; z-index: 100;
+}
+.skip:focus { left: 8px; }
+
+/* ---------- Header ---------- */
+.site-header {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(246, 245, 244, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--ink);
+}
+.header-inner {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  min-height: 64px;
+}
+.brand {
+  display: inline-flex; align-items: center; gap: 10px;
+  text-decoration: none; font-weight: 800; letter-spacing: 0.01em;
+}
+.brand img { width: 28px; height: 28px; border-radius: 7px; }
+.brand-sub {
+  padding-left: 12px; margin-left: 2px;
+  border-left: 1px solid var(--line-soft);
+  color: var(--ink-soft); font-size: 0.8rem; font-weight: 500;
+}
+.header-actions { display: flex; align-items: center; gap: 6px; }
+.header-link {
+  padding: 8px 10px; font-size: 0.86rem; font-weight: 600; text-decoration: none; color: var(--ink);
+}
+.header-link:hover { color: var(--blue-deep); }
+.header-cta {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px;
+  background: var(--ink); color: #fff; text-decoration: none;
+  font-size: 0.86rem; font-weight: 700; border-radius: 6px;
+  transition: background 0.2s;
+}
+.header-cta:hover { background: var(--blue-deep); }
+
+/* ---------- Hero ---------- */
+.hero {
+  position: relative;
+  border-bottom: 1px solid var(--ink);
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(rgba(17, 17, 17, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(17, 17, 17, 0.045) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-position: -1px -1px;
+}
+.hero-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+  gap: clamp(32px, 5vw, 72px);
+  align-items: center;
+  padding: clamp(40px, 7vw, 96px) 0 clamp(48px, 7vw, 104px);
+}
+
+.crumbs {
+  display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 22px; padding: 0; list-style: none;
+  font-size: 0.78rem; color: var(--ink-soft);
+}
+.crumbs li + li::before { content: "/"; margin-right: 6px; color: var(--ink-faint); }
+.crumbs a { text-decoration: none; }
+.crumbs a:hover { text-decoration: underline; }
+
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin: 0 0 22px; padding: 6px 12px;
+  background: var(--paper-light); border: 1px solid var(--ink); border-radius: 999px;
+  font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.04em;
+}
+.eyebrow::before {
+  content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--blue);
+  box-shadow: 0 0 0 3px var(--blue-soft);
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2rem, 4.6vw, 3.9rem);
+  line-height: 1.16;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+h1 .line { display: block; }
+h1 .hl { color: var(--blue); }
+
+.lead {
+  max-width: 36em;
+  margin: 26px 0 0;
+  font-size: clamp(1rem, 1.35vw, 1.1rem);
+  line-height: 1.95;
+  color: #2c2b29;
+}
+
+.cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 52px; padding: 0 22px;
+  border: 1px solid var(--ink); border-radius: 8px;
+  font-weight: 700; font-size: 0.98rem; text-decoration: none;
+  transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+}
+.btn-primary {
+  background: var(--blue-deep); color: #fff; border-color: var(--ink);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.btn-primary:hover { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 var(--ink); }
+.btn-ghost { background: var(--paper-light); color: var(--ink); }
+.btn-ghost:hover { background: var(--blue-soft); }
+.btn .arrow { font-family: var(--mono); font-size: 0.9em; }
+
+.hero-points {
+  display: flex; flex-wrap: wrap; gap: 8px 18px;
+  margin: 26px 0 0; padding: 0; list-style: none;
+  font-size: 0.84rem; color: var(--ink-soft);
+}
+.hero-points li { display: inline-flex; align-items: center; gap: 7px; }
+.hero-points li::before {
+  content: ""; width: 14px; height: 14px; flex: none;
+  border: 1px solid var(--ink); border-radius: 50%;
+  background: var(--mint) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath d='M3.5 7.2 6 9.5l4.5-5' fill='none' stroke='%23111' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 12px no-repeat;
+}
+
+/* Relay card: the signature visual */
+.relay {
+  position: relative;
+  background: var(--paper-light);
+  border: 1px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: 8px 8px 0 var(--ink);
+  overflow: hidden;
+}
+.relay-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--ink);
+  background: var(--ink); color: #fff;
+  font-family: var(--mono); font-size: 0.78rem;
+}
+.rec { display: inline-flex; align-items: center; gap: 8px; min-width: 0; }
+.rec-dot {
+  width: 9px; height: 9px; border-radius: 50%; background: #ff865f; flex: none;
+  animation: rec 1.6s ease-in-out infinite;
+}
+.rec-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.relay-meta { display: flex; flex-wrap: wrap; gap: 6px; padding: 12px 18px 4px; }
+.chip {
+  display: inline-flex; align-items: center; padding: 2px 9px;
+  border: 1px solid var(--line-soft); border-radius: 999px;
+  font-family: var(--mono); font-size: 0.7rem; color: var(--ink-soft); background: var(--paper);
+}
+.relay-steps { list-style: none; margin: 0; padding: 8px 10px 12px; }
+.step {
+  display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; align-items: center; gap: 10px;
+  padding: 9px 8px;
+  border-radius: 8px;
+  opacity: 0; transform: translateY(6px);
+  animation: rise 0.5s cubic-bezier(.2,.7,.2,1) forwards;
+}
+.step .no { font-family: var(--mono); font-size: 0.72rem; color: var(--ink-faint); }
+.step .what { font-size: 0.9rem; font-weight: 650; line-height: 1.45; }
+.step .what small { display: block; font-weight: 400; font-size: 0.74rem; color: var(--ink-soft); }
+.status {
+  font-family: var(--mono); font-size: 0.68rem; white-space: nowrap;
+  padding: 3px 8px; border-radius: 999px; border: 1px solid var(--ink);
+}
+.s-done { background: var(--paper); }
+.s-plaud .status { border-color: var(--line-soft); color: var(--ink-soft); }
+.s-run { background: var(--blue-soft); }
+.s-run .status { background: var(--blue-deep); color: #fff; }
+.s-next .status { background: var(--paper-light); }
+.s-you { background: #fff8e3; }
+.s-you .status { background: var(--yellow); }
+.bar {
+  grid-column: 2 / 4; height: 4px; margin-top: 6px;
+  background: rgba(50, 115, 215, 0.16); border-radius: 4px; overflow: hidden;
+}
+.bar::after {
+  content: ""; display: block; height: 100%; width: 62%;
+  background: var(--blue); border-radius: 4px;
+  animation: progress 2.8s ease-in-out infinite alternate;
+}
+.handoff {
+  display: flex; align-items: center; gap: 10px;
+  margin: 6px 4px; padding: 8px 0;
+  font-family: var(--mono); font-size: 0.72rem; color: var(--blue-deep);
+  opacity: 0; animation: rise 0.5s ease forwards;
+}
+.handoff::before, .handoff::after { content: ""; flex: 1; border-top: 1.5px dashed var(--blue); }
+.relay-foot {
+  padding: 12px 18px 14px;
+  border-top: 1px solid var(--line-soft);
+  font-size: 0.82rem; color: var(--ink-soft);
+}
+.relay-foot strong { color: var(--ink); }
+.caption { margin: 12px 4px 0; font-size: 0.74rem; color: var(--ink-faint); text-align: right; }
+
+.relay-steps > :nth-child(1) { animation-delay: 0.10s; }
+.relay-steps > :nth-child(2) { animation-delay: 0.22s; }
+.relay-steps > :nth-child(3) { animation-delay: 0.34s; }
+.relay-steps > :nth-child(4) { animation-delay: 0.62s; }
+.relay-steps > :nth-child(5) { animation-delay: 0.86s; }
+.relay-steps > :nth-child(6) { animation-delay: 1.02s; }
+.relay-steps > :nth-child(7) { animation-delay: 1.18s; }
+.relay-steps > :nth-child(8) { animation-delay: 1.34s; }
+
+@keyframes rise { to { opacity: 1; transform: none; } }
+@keyframes rec { 50% { opacity: 0.25; } }
+@keyframes progress { from { width: 34%; } to { width: 88%; } }
+
+/* ---------- Guide layout ---------- */
+.guide {
+  display: grid;
+  grid-template-columns: 232px minmax(0, 1fr);
+  gap: clamp(32px, 5vw, 72px);
+  padding: clamp(40px, 6vw, 80px) 0 clamp(56px, 7vw, 96px);
+}
+.toc { position: sticky; top: 92px; align-self: start; font-size: 0.84rem; }
+.toc-title {
+  margin: 0 0 12px; font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.08em;
+  color: var(--ink-soft);
+}
+.toc ol { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--line-soft); }
+.toc a {
+  display: grid; grid-template-columns: 26px 1fr; gap: 4px;
+  margin-left: -1px; padding: 7px 0 7px 12px;
+  border-left: 2px solid transparent;
+  color: var(--ink-soft); text-decoration: none; line-height: 1.5;
+}
+.toc a span { font-family: var(--mono); font-size: 0.72rem; padding-top: 1px; }
+.toc a:hover { color: var(--ink); }
+.toc a.is-active { color: var(--ink); font-weight: 700; border-left-color: var(--blue); }
+.toc-mobile { display: none; }
+
+.article { min-width: 0; max-width: 800px; }
+.byline {
+  display: flex; flex-wrap: wrap; gap: 4px 16px;
+  margin: 0 0 8px; font-family: var(--mono); font-size: 0.74rem; color: var(--ink-faint);
+}
+
+.sec { padding-top: clamp(40px, 5vw, 64px); }
+.sec:first-of-type { padding-top: 0; }
+.sec-label {
+  display: inline-block; margin: 0 0 12px;
+  font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.06em; color: var(--blue-deep);
+}
+h2 {
+  margin: 0 0 18px;
+  font-size: clamp(1.5rem, 2.8vw, 2.1rem);
+  line-height: 1.35; font-weight: 800; letter-spacing: -0.01em;
+}
+h3 { margin: 32px 0 12px; font-size: 1.15rem; line-height: 1.5; font-weight: 750; }
+.article p { margin: 0 0 16px; }
+.article p a, .plain-list a, .faq a { color: var(--blue-deep); text-decoration: underline; text-underline-offset: 3px; }
+.muted { color: var(--ink-soft); }
+.small { font-size: 0.84rem; }
+
+/* Checklist */
+.checklist { list-style: none; margin: 24px 0 0; padding: 0; display: grid; gap: 12px; }
+.checklist li {
+  display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 16px;
+  padding: 18px 20px;
+  background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.checklist .num {
+  display: grid; place-items: center; width: 44px; height: 44px;
+  border: 1px solid var(--ink); border-radius: 50%;
+  font-family: var(--mono); font-weight: 700;
+}
+.checklist li.hook { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.checklist li.hook .num { background: var(--blue-deep); color: #fff; }
+.checklist h3 { margin: 2px 0 4px; font-size: 1.02rem; }
+.checklist p { margin: 0; font-size: 0.93rem; color: #34322f; }
+
+/* Feature grid */
+.features { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+.feature {
+  padding: 20px; background: var(--paper-light);
+  border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.feature .tag {
+  display: inline-block; margin-bottom: 8px;
+  font-family: var(--mono); font-size: 0.7rem; color: var(--ink-soft);
+}
+.feature h3 { margin: 0 0 6px; font-size: 1.04rem; }
+.feature p { margin: 0; font-size: 0.92rem; color: #34322f; }
+.feature.wide { grid-column: 1 / -1; }
+
+/* Gap section */
+.split { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+.split-col { padding: 22px; border-radius: var(--radius); border: 1px solid var(--ink); }
+.split-col h3 { margin: 0 0 12px; font-size: 1rem; display: flex; align-items: center; gap: 8px; }
+.split-col ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.split-col li { position: relative; padding-left: 22px; font-size: 0.94rem; line-height: 1.6; }
+.split-col li::before { position: absolute; left: 0; top: 0; font-family: var(--mono); }
+.col-plaud { background: var(--paper-light); }
+.col-plaud li { color: var(--ink-soft); }
+.col-plaud li::before { content: "✓"; color: #1b7a58; }
+.col-left { background: var(--coral-soft); box-shadow: 4px 4px 0 var(--ink); }
+.col-left li::before { content: "□"; color: var(--ink); }
+.who {
+  font-family: var(--mono); font-size: 0.68rem; font-weight: 400;
+  padding: 2px 8px; border: 1px solid var(--ink); border-radius: 999px; background: var(--paper-light);
+}
+
+.quote {
+  margin: 28px 0 0; padding: 22px 24px;
+  border-left: 4px solid var(--blue); background: var(--blue-soft); border-radius: 0 var(--radius) var(--radius) 0;
+}
+.quote p { margin: 0; font-size: 1.12rem; font-weight: 750; line-height: 1.7; }
+.quote p + p { margin-top: 8px; font-size: 0.93rem; font-weight: 400; color: #34322f; }
+
+/* Connect */
+.connect {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 310px); gap: 24px;
+  align-items: start; margin-top: 24px;
+}
+.connect-steps { list-style: none; margin: 0; padding: 0; counter-reset: s; display: grid; gap: 10px; }
+.connect-steps li {
+  counter-increment: s; position: relative;
+  padding: 16px 18px 16px 62px;
+  background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.connect-steps li::before {
+  content: counter(s); position: absolute; left: 18px; top: 16px;
+  width: 30px; height: 30px; display: grid; place-items: center;
+  border: 1px solid var(--ink); border-radius: 50%; background: var(--paper);
+  font-family: var(--mono); font-weight: 700; font-size: 0.86rem;
+}
+.connect-steps li.key { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.connect-steps li.key::before { background: var(--blue-deep); color: #fff; }
+.connect-steps b { display: block; font-size: 1rem; line-height: 1.5; }
+.connect-steps span { display: block; margin-top: 4px; font-size: 0.9rem; color: #34322f; line-height: 1.7; }
+
+.mock {
+  padding: 18px; background: var(--paper-light);
+  border: 1px solid var(--ink); border-radius: var(--radius); box-shadow: 6px 6px 0 var(--blue);
+}
+.mock-head { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 12px; align-items: start; }
+.mock-mark {
+  display: grid; place-items: center; width: 44px; height: 44px;
+  border-radius: 10px; background: var(--paper); font-weight: 900; font-size: 1.15rem;
+}
+.mock-title { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 1.05rem; }
+.mock-state {
+  padding: 1px 8px; border-radius: 999px; background: var(--paper);
+  font-size: 0.7rem; font-weight: 500; color: var(--ink-soft);
+}
+.mock-desc { margin: 4px 0 0; font-size: 0.82rem; color: var(--ink-soft); line-height: 1.6; }
+.mock-box {
+  margin: 14px 0 10px; padding: 12px 14px;
+  border: 1px solid var(--ui-line); border-radius: 8px; font-size: 0.86rem; font-weight: 650;
+}
+.mock-btn {
+  display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px;
+  border-radius: 8px; background: var(--blue-deep); color: #fff; font-weight: 700; font-size: 0.92rem;
+}
+.mock-foot { margin-top: 8px; text-align: center; font-size: 0.76rem; color: var(--ink-soft); }
+
+.asks { list-style: none; margin: 12px 0 18px; padding: 0; display: grid; gap: 8px; }
+.asks li {
+  padding: 12px 16px; font-size: 0.94rem; line-height: 1.7;
+  background: var(--blue-soft); border: 1px solid rgba(50, 115, 215, 0.28);
+  border-radius: 12px 12px 12px 3px;
+}
+
+/* Tables */
+.table-wrap {
+  margin: 20px 0 8px; overflow-x: auto; -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--ink); border-radius: var(--radius); background: var(--paper-light);
+}
+table { width: 100%; border-collapse: collapse; font-size: 0.9rem; line-height: 1.6; }
+th, td { padding: 12px 14px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--ui-line); }
+thead th { background: var(--ink); color: #fff; font-weight: 700; font-size: 0.82rem; white-space: nowrap; }
+tbody th { font-weight: 700; white-space: nowrap; background: var(--paper); }
+tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
+td.simy { background: var(--blue-soft); }
+thead th.simy { background: var(--blue-deep); }
+.t-wide { min-width: 640px; }
+.t-models { min-width: 760px; }
+.t-price td:nth-child(2) { white-space: nowrap; }
+.scroll-hint { display: none; margin: 0 0 12px; font-size: 0.76rem; color: var(--ink-faint); }
+
+.note {
+  margin: 16px 0 0; padding: 14px 16px;
+  background: var(--paper-light); border: 1px dashed var(--ink-faint); border-radius: var(--radius-sm);
+  font-size: 0.88rem; color: #34322f;
+}
+.note b { color: var(--ink); }
+
+/* Sample comparison */
+.sample { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 16px; margin-top: 24px; align-items: start; }
+.sheet { padding: 20px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); }
+.sheet-label {
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;
+  font-family: var(--mono); font-size: 0.72rem; color: var(--ink-soft);
+}
+.sheet dl { margin: 0; font-size: 0.88rem; line-height: 1.65; }
+.sheet dt { margin-top: 10px; font-weight: 700; }
+.sheet dt:first-child { margin-top: 0; }
+.sheet dd { margin: 2px 0 0; color: #34322f; }
+.outs { display: grid; gap: 10px; }
+.out { padding: 14px 16px; background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius); }
+.out-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 6px; }
+.out-head b { font-size: 0.92rem; }
+.out p { margin: 0; font-size: 0.86rem; color: #34322f; line-height: 1.7; }
+.out.you { background: #fff8e3; }
+.pill {
+  font-family: var(--mono); font-size: 0.66rem; white-space: nowrap;
+  padding: 2px 8px; border-radius: 999px; border: 1px solid var(--ink); background: var(--paper);
+}
+.pill.run { background: var(--blue-deep); color: #fff; }
+.pill.you { background: var(--yellow); }
+.pill.ok { background: var(--mint); }
+.sample-foot { margin-top: 18px; font-weight: 700; }
+
+/* Use cases */
+.cases { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+.case { padding: 22px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); }
+.case h3 { margin: 0 0 4px; font-size: 1.06rem; }
+.case .device { margin: 0 0 12px; font-family: var(--mono); font-size: 0.72rem; color: var(--blue-deep); }
+.case p { margin: 0 0 8px; font-size: 0.9rem; color: #34322f; }
+.case ul { margin: 0; padding-left: 1.1em; font-size: 0.9rem; line-height: 1.7; }
+
+/* Lists */
+.plain-list { margin: 16px 0 0; padding-left: 1.2em; }
+.plain-list li { margin-bottom: 10px; }
+
+/* FAQ */
+.faq { margin-top: 20px; border-top: 1px solid var(--ink); }
+.faq details { border-bottom: 1px solid var(--ui-line); }
+.faq summary {
+  list-style: none; cursor: pointer;
+  display: grid; grid-template-columns: 28px minmax(0, 1fr) 20px; gap: 10px; align-items: start;
+  padding: 18px 4px; font-weight: 700; line-height: 1.6;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::before { content: "Q"; font-family: var(--mono); color: var(--blue-deep); }
+.faq summary::after {
+  content: "+"; font-family: var(--mono); font-size: 1.1rem; line-height: 1.4; text-align: right;
+  transition: transform 0.2s;
+}
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq .a { padding: 0 4px 18px 42px; font-size: 0.94rem; color: #34322f; }
+.faq .a p { margin: 0; }
+
+/* Closing CTA */
+.closing { background: var(--ink); color: #fff; border-top: 1px solid var(--ink); }
+.closing-inner {
+  display: grid; grid-template-columns: minmax(0, 1.2fr) auto; gap: 32px; align-items: center;
+  padding: clamp(48px, 7vw, 88px) 0;
+}
+.closing h2 { color: #fff; margin: 0 0 12px; font-size: clamp(1.6rem, 3.4vw, 2.5rem); }
+.closing p { margin: 0; color: rgba(255, 255, 255, 0.8); }
+.closing .cta-row { margin-top: 0; }
+.closing .btn-primary { box-shadow: 4px 4px 0 var(--mint); border-color: #fff; }
+.closing .btn-primary:hover { box-shadow: 5px 5px 0 var(--mint); }
+.closing .btn-ghost { background: transparent; color: #fff; border-color: rgba(255, 255, 255, 0.5); }
+.closing .btn-ghost:hover { background: rgba(255, 255, 255, 0.08); }
+
+/* Footer */
+.site-footer { padding: 36px 0 48px; font-size: 0.82rem; color: var(--ink-soft); }
+.footer-links { display: flex; flex-wrap: wrap; gap: 4px 20px; margin: 0 0 18px; padding: 0; list-style: none; }
+.footer-links a { display: inline-block; padding: 6px 0; text-decoration: none; color: var(--ink); }
+.footer-links a:hover { text-decoration: underline; }
+.site-footer p { margin: 0 0 6px; line-height: 1.7; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1080px) {
+  .guide { grid-template-columns: minmax(0, 1fr); }
+  .toc { display: none; }
+  .toc-mobile {
+    display: block; margin: 0 0 32px;
+    background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius);
+  }
+  .toc-mobile summary {
+    cursor: pointer; list-style: none; padding: 14px 18px;
+    font-family: var(--mono); font-size: 0.8rem; display: flex; justify-content: space-between;
+  }
+  .toc-mobile summary::-webkit-details-marker { display: none; }
+  .toc-mobile summary::after { content: "+"; }
+  .toc-mobile[open] summary::after { content: "−"; }
+  .toc-mobile ol { margin: 0; padding: 0 18px 14px 40px; font-size: 0.9rem; }
+  .toc-mobile li { padding: 3px 0; }
+  .toc-mobile a { display: inline-block; padding: 4px 0; text-decoration: none; }
+  .article { max-width: none; }
+}
+
+@media (max-width: 960px) {
+  .hero-inner { grid-template-columns: minmax(0, 1fr); }
+  .hero-visual { max-width: 580px; }
+  .relay { box-shadow: 6px 6px 0 var(--ink); }
+}
+
+@media (max-width: 860px) {
+  .sample { grid-template-columns: minmax(0, 1fr); }
+  .connect { grid-template-columns: minmax(0, 1fr); }
+  .mock { max-width: 360px; }
+  .closing-inner { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 640px) {
+  body { font-size: 15.5px; }
+  .brand-sub, .header-link { display: none; }
+  .header-cta { padding: 0 14px; }
+  .features, .split, .cases { grid-template-columns: minmax(0, 1fr); }
+  .checklist li { grid-template-columns: 40px minmax(0, 1fr); gap: 12px; padding: 16px; }
+  .checklist .num { width: 36px; height: 36px; font-size: 0.86rem; }
+  .connect-steps li { padding-left: 56px; }
+  .connect-steps li::before { left: 14px; }
+  .btn { width: 100%; }
+  .scroll-hint { display: block; }
+  .faq .a { padding-left: 4px; }
+  .step { grid-template-columns: 24px minmax(0, 1fr) auto; gap: 8px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .step, .handoff { animation: none; opacity: 1; transform: none; }
+  .rec-dot, .bar::after { animation: none; }
+  .btn, .header-cta { transition: none; }
+}
+
+/* ---------- Guide v2: scene cards, timeline, folds ---------- */
+.intro { max-width: 34em; margin: 0 0 8px; font-size: 1.02rem; color: #34322f; }
+.scenes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 22px; }
+.scenes.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.scene {
+  position: relative; padding: 22px 20px 20px;
+  background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius);
+  min-height: 168px; display: flex; flex-direction: column; gap: 8px;
+}
+.scene .k { font-family: var(--mono); font-size: 0.7rem; color: var(--ink-faint); letter-spacing: 0.04em; }
+.scene b { display: block; font-size: 1.22rem; line-height: 1.35; letter-spacing: -0.01em; }
+.scene p { margin: 0; font-size: 0.9rem; line-height: 1.65; color: #34322f; }
+.scene .mark {
+  position: absolute; right: 16px; top: 14px;
+  width: 30px; height: 30px; display: grid; place-items: center;
+  border: 1px solid var(--ink); border-radius: 50%; font-family: var(--mono); font-size: 0.9rem; font-weight: 700;
+}
+.scene.pain { background: var(--coral-soft); }
+.scene.pain .mark { background: var(--paper-light); }
+.scene.wish { background: var(--blue-soft); border-color: var(--blue-deep); box-shadow: 4px 4px 0 var(--blue); }
+.scene.wish .mark { background: var(--blue-deep); color: #fff; border-color: var(--blue-deep); }
+.scene.wish.you { background: #fff8e3; border-color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+.scene.wish.you .mark { background: var(--yellow); color: var(--ink); border-color: var(--ink); }
+.scene-foot { margin: 14px 0 0; font-size: 0.9rem; color: var(--ink-soft); }
+.scene-foot b { color: var(--ink); }
+
+/* Timeline */
+.tl-wrap {
+  margin-top: 22px; padding: 22px 20px 18px;
+  background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius);
+}
+.tl-row { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 14px; align-items: center; }
+.tl-row + .tl-row { margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--line-soft); }
+.tl-who {
+  font-family: var(--mono); font-size: 0.72rem; font-weight: 700; text-align: center;
+  padding: 6px 4px; border: 1px solid var(--ink); border-radius: 999px; background: var(--paper);
+}
+.tl-who.simy { background: var(--blue-deep); color: #fff; border-color: var(--blue-deep); }
+.tl-who.you { background: var(--yellow); }
+.tl { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; }
+.tl li {
+  position: relative; min-height: 64px; padding: 10px 8px 8px;
+  border-radius: var(--radius-sm); font-size: 0.8rem; line-height: 1.4; font-weight: 650;
+  display: flex; flex-direction: column; justify-content: flex-start; gap: 4px;
+}
+.tl li small { display: block; font-weight: 400; font-size: 0.7rem; color: var(--ink-soft); }
+.tl li.on { background: var(--paper); border: 1px solid var(--line-soft); color: var(--ink-soft); }
+.tl li.gap { border: 1.5px dashed var(--ink-faint); color: var(--ink-faint); background: transparent; }
+.tl li.gap::after { content: "？"; position: absolute; right: 8px; top: 6px; font-family: var(--mono); }
+.tl li.run { background: var(--blue-soft); border: 1px solid var(--blue-deep); color: var(--ink); }
+.tl li.run::after { content: "✓"; position: absolute; right: 8px; top: 6px; font-family: var(--mono); color: var(--blue-deep); }
+.tl li.you { background: #fff8e3; border: 1px solid var(--ink); color: var(--ink); }
+.tl li.you::after { content: "You"; position: absolute; right: 8px; top: 7px; font-family: var(--mono); font-size: 0.62rem; }
+.tl li.blank { border: 0; background: transparent; }
+.tl-note { margin: 14px 0 0; font-size: 0.86rem; color: #34322f; }
+.tl-note b { color: var(--ink); }
+.three { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 0; padding: 0; list-style: none; }
+.three li {
+  padding: 8px 14px; font-weight: 800; font-size: 1rem;
+  background: var(--ink); color: #fff; border-radius: 999px;
+}
+
+/* 3-step start */
+.steps3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 22px; counter-reset: st; }
+.steps3 li {
+  counter-increment: st; list-style: none; position: relative;
+  padding: 54px 18px 18px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.steps3 li::before {
+  content: counter(st); position: absolute; left: 18px; top: 16px;
+  width: 28px; height: 28px; display: grid; place-items: center;
+  border: 1px solid var(--ink); border-radius: 50%; background: var(--paper);
+  font-family: var(--mono); font-weight: 700; font-size: 0.84rem;
+}
+.steps3 li.key { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.steps3 li.key::before { background: var(--blue-deep); color: #fff; }
+.steps3 b { display: block; font-size: 1.02rem; line-height: 1.45; }
+.steps3 span { display: block; margin-top: 6px; font-size: 0.88rem; color: #34322f; line-height: 1.65; }
+.steps3 { padding: 0; }
+
+/* Industry grid */
+.ind { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 22px; }
+.ind-card { padding: 18px 18px 14px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); }
+.ind-card h3 { margin: 0 0 10px; font-size: 1.04rem; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.ind-card h3 small { font-family: var(--mono); font-size: 0.68rem; font-weight: 400; color: var(--blue-deep); white-space: normal; }
+.ind-card h3 { flex-wrap: wrap; }
+.ind-rows { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+.ind-rows li { display: grid; grid-template-columns: minmax(0, 1fr) 14px minmax(0, 1.4fr); gap: 6px; align-items: center; font-size: 0.86rem; line-height: 1.5; }
+.ind-rows li span:first-child { color: var(--ink-soft); }
+.ind-rows li span:nth-child(2) { font-family: var(--mono); color: var(--blue-deep); text-align: center; }
+.ind-rows li span:last-child { font-weight: 650; }
+
+/* Folded reference */
+.fold { margin-top: 12px; border: 1px solid var(--ui-line); border-radius: var(--radius); background: var(--paper-light); }
+.fold > summary {
+  list-style: none; cursor: pointer; padding: 16px 18px;
+  display: grid; grid-template-columns: minmax(0, 1fr) 20px; gap: 10px; align-items: center;
+  font-weight: 750; font-size: 1.02rem; line-height: 1.5;
+}
+.fold > summary::-webkit-details-marker { display: none; }
+.fold > summary::after { content: "+"; font-family: var(--mono); font-size: 1.1rem; text-align: right; grid-column: 2; grid-row: 1; }
+.fold > summary small { grid-column: 1; }
+.fold[open] > summary::after { content: "−"; }
+.fold > summary small { display: block; margin-top: 2px; font-weight: 400; font-size: 0.82rem; color: var(--ink-soft); }
+.fold-body { padding: 0 18px 18px; font-size: 0.93rem; }
+.fold-body h3 { margin: 18px 0 8px; font-size: 1rem; }
+.fold-body h3:first-child { margin-top: 0; }
+.fold-body p { margin: 0 0 10px; }
+.fold-body .table-wrap { margin: 12px 0 6px; }
+.fold-body .plain-list { margin-top: 8px; }
+.fold-body .plain-list li { margin-bottom: 6px; }
+
+@media (max-width: 960px) {
+  .scenes, .scenes.four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tl { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .tl li.blank { display: none; }
+}
+@media (max-width: 640px) {
+  .scenes, .scenes.four, .steps3, .ind { grid-template-columns: minmax(0, 1fr); }
+  .scene { min-height: 0; }
+  .tl-row { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .tl-who { justify-self: start; }
+  .tl { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ind-rows li { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .ind-rows li span:nth-child(2) { display: none; }
+  .ind-rows li { padding: 6px 0; border-bottom: 1px dashed var(--line-soft); }
+}
+
+/* Next read */
+.next-read { margin-top: clamp(40px, 5vw, 64px); padding-top: 24px; border-top: 1px solid var(--ink); }
+.next-read h2 { font-size: 1.2rem; margin: 0 0 14px; }
+.next-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.next-grid a { display: block; padding: 14px 16px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); text-decoration: none; color: var(--ink); }
+.next-grid a:hover { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.next-grid b { display: block; font-size: 0.96rem; }
+.next-grid span { display: block; margin-top: 4px; font-size: 0.82rem; color: var(--ink-soft); }
+.next-all { display: inline-block; margin-top: 12px; font-weight: 700; color: var(--blue-deep); }
+@media (max-width: 760px) { .next-grid { grid-template-columns: minmax(0, 1fr); } }
+
+.lang-switch { position: relative; }
+.lang-switch > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 10px; border: 1px solid var(--ui-line); border-radius: 999px; background: var(--paper-light); font-size: 0.8rem; font-weight: 700; }
+.lang-switch > summary::-webkit-details-marker { display: none; }
+.lang-switch ul { position: absolute; right: 0; top: calc(100% + 6px); z-index: 30; margin: 0; padding: 6px; list-style: none; min-width: 150px; background: var(--paper-light); border: 1px solid var(--ink); border-radius: 10px; box-shadow: 4px 4px 0 var(--ink); }
+.lang-switch li a { display: block; padding: 8px 10px; border-radius: 6px; color: var(--ink); text-decoration: none; font-size: 0.88rem; }
+.lang-switch li a:hover, .lang-switch li a[aria-current] { background: var(--blue-soft); }
+@media (max-width: 960px) { .brand-sub { display: none; } .header-actions { gap: 4px; } .lang-switch > summary { padding: 0 8px; } }
+@media (max-width: 640px) { .lang-switch .ls-label { display: none; } .lang-switch > summary { padding: 0 10px; } }
+/* Typography: balanced headings, phrase-aware Japanese breaks, tighter mobile headings */
+h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
+:lang(ja) h1, :lang(ja) h2, :lang(ja) h3, :lang(ja) .eyebrow, :lang(ja) .scene b, :lang(ja) .lead { word-break: auto-phrase; }
+.lead, .intro, .scene p { text-wrap: pretty; }
+@media (max-width: 640px) { h2 { font-size: 1.32rem; line-height: 1.4; } .eyebrow { font-size: 0.72rem; } .closing h2 { font-size: 1.5rem; } }
+@media (max-width: 400px) { h2 { font-size: 1.22rem; } .closing h2 { font-size: 1.34rem; } }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://simy.one/guides/en/deepseek.html#article",
+      "headline": "DeepSeek Guide: What Is DeepSeek? How to Use It, API, Languages and Safety",
+      "description": "What DeepSeek is, which country it's from, the DeepSeek shock, how to use it, models, the API, running it locally, languages, safety and Japan's warnings. How SIMY moves the owners, deadlines, reports and updates left after the answer.",
+      "inLanguage": "en",
+      "datePublished": "2026-10-01",
+      "dateModified": "2026-10-01",
+      "mainEntityOfPage": "https://simy.one/guides/en/deepseek.html",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://simy.one/ogp.png",
+        "width": 1200,
+        "height": 630
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "SIMY",
+        "url": "https://simy.one/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "AwakApp Inc.",
+        "url": "https://www.awak.app/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://simy.one/simy-icon-square.png"
+        }
+      },
+      "about": [
+        {
+          "@type": "Thing",
+          "name": "DeepSeek"
+        },
+        {
+          "@type": "Thing",
+          "name": "DeepSeek-V4"
+        },
+        {
+          "@type": "Thing",
+          "name": "Large language model"
+        }
+      ],
+      "citation": [
+        "https://api-docs.deepseek.com/",
+        "https://api-docs.deepseek.com/quick_start/pricing",
+        "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash",
+        "https://cdn.deepseek.com/policies/en-US/deepseek-privacy-policy.html",
+        "https://www.ppc.go.jp/news/careful_information/250203_alert_deepseek/",
+        "https://internet.watch.impress.co.jp/docs/news/1660903.html",
+        "https://www.forbes.com.au/news/investing/who-is-behind-deepseek-what-to-know-about-liang-wenfeng"
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "SIMY",
+          "item": "https://simy.one/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://simy.one/guides/en/index.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "DeepSeek Guide",
+          "item": "https://simy.one/guides/en/deepseek.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is DeepSeek?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "DeepSeek is a family of large language models (LLMs) and a chat service built by DeepSeek in Hangzhou, China. You can use it three ways: free chat, a low-cost API, and open-weight models whose weights are public."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which country is DeepSeek from?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "China. The operator is a company based in Hangzhou, and its privacy policy says collected information is stored on servers in the People's Republic of China."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Who founded DeepSeek?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Liang Wenfeng founded it in 2023. According to reports, he is a co-founder of the Chinese investment firm High-Flyer."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What was the DeepSeek shock?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It was the worldwide stir after the reasoning model DeepSeek-R1 was released in January 2025 as a cheaply built, high-performing model. Chip-related stocks fell sharply, and authorities in several countries began issuing warnings about how it handles data."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is DeepSeek free?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. The web chat and mobile app are free. The API is pay-as-you-go. If you run the open-weight models on your own hardware, there is no fee for the model (hardware and electricity are separate)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does DeepSeek work in languages other than English?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. There is no official list of supported languages, but you can ask questions and get answers in other languages, such as Japanese. For important text, check names and formal wording before using it."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much does the DeepSeek API cost?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It is pay-as-you-go, priced in US dollars per million tokens. Weekday peak hours cost twice the off-peak rate. Rates change often, so check the official DeepSeek pricing page."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I use the DeepSeek API?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Create an API key, then swap the endpoint and model name in the tools you already use. The OpenAI-compatible endpoint is https://api.deepseek.com, the Anthropic-compatible one is https://api.deepseek.com/anthropic, and model names include deepseek-flash (as of October 2026)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I run DeepSeek locally on my own PC?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Small versions of R1 and similar models run in Ollama. The latest V4.1-Flash has only cloud tags in Ollama and does not run locally, and running it in-house requires large GPU servers."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is DeepSeek banned in Japan?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. As of October 2026, no law or order bars individuals from using it. In February 2025, Japan's Personal Information Protection Commission published information on DeepSeek, and Japan's Digital Agency (the secretariat of the Digital Society Promotion Council) issued a caution to government agencies, noting that data is stored on servers in China and is subject to Chinese law."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is what I enter into DeepSeek used for training?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It can be. The privacy policy states your right to refuse use for training, and you can turn it off in the app settings (labeled \"Improve the model for everyone\" at the time of writing). Even with it off, data is stored on servers in China, so as a rule, keep confidential information out."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does SIMY run on DeepSeek?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. At this time, SIMY runs on your ChatGPT (Codex) account and Claude Code on your PC. You can bring answers and drafts you made in DeepSeek straight into your meetings and chat."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I have to ask SIMY every time to handle the work after a DeepSeek answer?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. SIMY picks up decisions, owners and deadlines from your meeting notes and chat on its own. It learns your way of working from your conversations and returns only the parts that need your decision."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="/?lang=en">
+      <img src="/simy-icon-56.png" alt="SIMY" width="28" height="28">
+      <span aria-hidden="true">SIMY</span>
+      <span class="brand-sub">DeepSeek Guide</span>
+    </a>
+    <nav class="header-actions" aria-label="Account">
+      <details class="lang-switch"><summary aria-label="Language: English"><span aria-hidden="true">🌐</span> <span class="ls-label">English</span></summary><ul><li><a href="/guides/deepseek.html" hreflang="ja" lang="ja">日本語</a></li><li><a href="/guides/en/deepseek.html" hreflang="en" lang="en" aria-current="page">English</a></li><li><a href="/guides/zh-hans/deepseek.html" hreflang="zh-Hans" lang="zh-Hans">中文</a></li><li><a href="/guides/es/deepseek.html" hreflang="es" lang="es">Español</a></li><li><a href="/guides/fr/deepseek.html" hreflang="fr" lang="fr">Français</a></li><li><a href="/guides/hi/deepseek.html" hreflang="hi" lang="hi">हिन्दी</a></li></ul></details>
+      <a class="header-link" href="/download/en.html">Download</a>
+      <a class="header-link" href="https://app.simy.one/login?lang=en&amp;locale=en&amp;region=us">Log in</a>
+      <a class="header-cta" href="https://app.simy.one/signup?lang=en&amp;locale=en&amp;region=us&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=deepseek_guide_en&amp;utm_content=header">Choose a plan</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" aria-labelledby="page-title">
+    <div class="wrap hero-inner">
+      <div>
+        <ol class="crumbs" aria-label="Breadcrumb">
+          <li><a href="https://simy.one/">SIMY</a></li>
+          <li><a href="/guides/en/index.html">Guides</a></li>
+          <li aria-current="page">DeepSeek Guide</li>
+        </ol>
+        <p class="eyebrow">A practical guide for people who use DeepSeek</p>
+        <h1 id="page-title">
+          <span class="line">DeepSeek is</span>
+          <span class="line hl">cheap and smart.</span>
+          <span class="line">Then who?</span>
+        </h1>
+        <p class="lead">DeepSeek gives you research, drafts and code for free or through a cheap API. But who does what by when is still on your plate. SIMY takes it from there.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="https://app.simy.one/signup?lang=en&amp;locale=en&amp;region=us&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=deepseek_guide_en&amp;utm_content=hero">Choose a plan <span class="arrow" aria-hidden="true">↗</span></a>
+          <a class="btn btn-ghost" href="#reference">What is DeepSeek? <span class="arrow" aria-hidden="true">↓</span></a>
+        </div>
+        <ul class="hero-points">
+          <li>Keep DeepSeek for what it does best</li>
+          <li>SIMY picks up work from meetings and chat</li>
+          <li>Runs on your ChatGPT (Codex) account</li>
+        </ul>
+      </div>
+
+      <div class="hero-visual">
+        <div class="relay" role="img" aria-label="Example: DeepSeek researches public information, drafts a comparison table and writes prototype code. SIMY then prepares the list of owners and deadlines, the report email draft and the internal update, leaving only the choice of which option to pursue to you.">
+          <div class="relay-head" aria-hidden="true">
+            <span class="rec"><span class="rec-dot"></span><span class="rec-name">New feature review (Oct 1)</span></span>
+            <span>46:12</span>
+          </div>
+          <div class="relay-meta" aria-hidden="true">
+            <span class="chip">DeepSeek</span>
+            <span class="chip">Public info only</span>
+            <span class="chip">5 attendees</span>
+          </div>
+          <ol class="relay-steps" aria-hidden="true">
+            <li class="step s-done s-plaud"><span class="no">01</span><span class="what">Research public info<small>Competitor features and prices</small></span><span class="status">DeepSeek ✓</span></li>
+            <li class="step s-done s-plaud"><span class="no">02</span><span class="what">Draft a comparison table<small>Pros and cons of 3 options</small></span><span class="status">DeepSeek ✓</span></li>
+            <li class="step s-done s-plaud"><span class="no">03</span><span class="what">Prototype code<small>Test it through the API</small></span><span class="status">DeepSeek ✓</span></li>
+            <li class="handoff">DeepSeek stops here / SIMY takes over</li>
+            <li class="step s-done"><span class="no">04</span><span class="what">Owners and deadlines<small>Who does what by when</small></span><span class="status">Done</span></li>
+            <li class="step s-run"><span class="no">05</span><span class="what">Draft the report email<small>Saved to Gmail in your usual tone</small></span><span class="status">Autorun</span><span class="bar"></span></li>
+            <li class="step s-next"><span class="no">06</span><span class="what">Internal update<small>Results to dev and sales</small></span><span class="status">Next</span></li>
+            <li class="step s-you"><span class="no">07</span><span class="what">Pick the option to pursue<small>Only the decision is left to you</small></span><span class="status">Your turn</span></li>
+          </ol>
+          <div class="relay-foot" aria-hidden="true"><strong>All you do is decide and send.</strong></div>
+        </div>
+        <p class="caption">* Screen shown for illustration only</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap guide">
+    <nav class="toc" aria-label="Table of contents">
+      <p class="toc-title">Contents</p>
+      <ol>
+        <li><a href="#scene"><span>01</span>After the answer</a></li>
+        <li><a href="#wish"><span>02</span>What you really wanted</a></li>
+        <li><a href="#gap"><span>03</span>Where DeepSeek stops</a></li>
+        <li><a href="#connect"><span>04</span>SIMY connects the rest</a></li>
+        <li><a href="#sample"><span>05</span>One meeting, compared</a></li>
+        <li><a href="#usecases"><span>06</span>By team: DeepSeek and SIMY</a></li>
+        <li><a href="#start"><span>07</span>Get started in 3 steps</a></li>
+        <li><a href="#reference"><span>08</span>DeepSeek: basics, API, safety</a></li>
+        <li><a href="#faq"><span>09</span>FAQ</a></li>
+        <li><a href="#sources"><span>10</span>Sources</a></li>
+      </ol>
+    </nav>
+
+    <article class="article">
+      <details class="toc-mobile">
+        <summary>Contents</summary>
+        <ol>
+          <li><a href="#scene">After the answer</a></li>
+          <li><a href="#wish">What you really wanted</a></li>
+          <li><a href="#gap">Where DeepSeek stops</a></li>
+          <li><a href="#connect">SIMY connects the rest</a></li>
+          <li><a href="#sample">One meeting, compared</a></li>
+          <li><a href="#usecases">By team: DeepSeek and SIMY</a></li>
+          <li><a href="#start">Get started in 3 steps</a></li>
+          <li><a href="#reference">DeepSeek: basics, API, safety</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#sources">Sources</a></li>
+        </ol>
+      </details>
+
+      <p class="byline"><span>Last updated: <time datetime="2026-10-01">October 1, 2026</time></span><span>Published by SIMY (AwakApp Inc.)</span></p>
+
+      <!-- 01 -->
+      <section class="sec" id="scene" aria-labelledby="h-scene">
+        <span class="sec-label">01 / AFTER THE ANSWER</span>
+        <h2 id="h-scene">After DeepSeek answers, does this happen?</h2>
+        <p class="intro">DeepSeek gave you the research and the draft, cheap and fast. Here is what happens next.</p>
+        <div class="scenes">
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">1</span>
+            <span class="k">The day after research</span>
+            <b>So who does it?</b>
+            <p>The comparison table looks great. The to-dos from the meeting are in nobody's notes.</p>
+          </div>
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">2</span>
+            <span class="k">A week of API runs</span>
+            <b>Results scattered</b>
+            <p>The cheap API produced plenty of ideas. The chosen one and the next steps got lost in logs and chat.</p>
+          </div>
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">3</span>
+            <span class="k">Rolling it out at work</span>
+            <b>Stuck waiting on IT</b>
+            <p>Someone was going to ask IT what's allowed. Nobody is sure the request went out.</p>
+          </div>
+        </div>
+        <p class="scene-foot">DeepSeek gets you the answer in seconds. <b>Whether the work moves is decided after the answer.</b></p>
+      </section>
+
+      <!-- 02 -->
+      <section class="sec" id="wish" aria-labelledby="h-wish">
+        <span class="sec-label">02 / WHAT YOU REALLY WANTED</span>
+        <h2 id="h-wish">What you really wanted after DeepSeek answers</h2>
+        <p class="intro">Same meeting. Same DeepSeek. The moment the answer came out, you wanted this.</p>
+        <div class="scenes four">
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">When the meeting ends</span>
+            <b>Owners and dates, listed</b>
+            <p>Research and drafts stay in DeepSeek. Decisions, owners and deadlines are already lined up.</p>
+          </div>
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">Before the deadline</span>
+            <b>Stalled work surfaces</b>
+            <p>SIMY flags work that's waiting or due soon, before the next meeting.</p>
+          </div>
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">Whichever AI you used</span>
+            <b>One place for decisions</b>
+            <p>What you chose and what comes next stay in one place, across models and chats.</p>
+          </div>
+          <div class="scene wish you">
+            <span class="mark" aria-hidden="true">!</span>
+            <span class="k">What comes back to you</span>
+            <b>Only the decision</b>
+            <p>"Do we go with this option?" That one question is all that comes back.</p>
+          </div>
+        </div>
+        <p class="scene-foot">This starts <b>from the next meeting after you connect your meetings and chat to SIMY</b>. Keep using DeepSeek for what it does best.</p>
+      </section>
+
+      <!-- 03 -->
+      <section class="sec" id="gap" aria-labelledby="h-gap">
+        <span class="sec-label">03 / WHERE DEEPSEEK STOPS</span>
+        <h2 id="h-gap">Where DeepSeek's answer stops</h2>
+        <p class="intro">DeepSeek is great at answering what you ask. Nobody picks up what comes after.</p>
+        <div class="tl-wrap" role="img" aria-label="Timeline. DeepSeek handles the question, research and summary, and drafts or code. Owners and deadlines, the report, the internal update and the check before next time are left blank.">
+          <div class="tl-row">
+            <span class="tl-who">DeepSeek</span>
+            <ol class="tl">
+              <li class="on">Question<small>You ask</small></li>
+              <li class="on">Research<small>Thinks it through</small></li>
+              <li class="on">Drafts, code<small>Cheap, at volume</small></li>
+              <li class="gap">Owners, dates</li>
+              <li class="gap">Report</li>
+              <li class="gap">Team update</li>
+              <li class="gap">Follow-up check</li>
+            </ol>
+          </div>
+        </div>
+        <p class="caption">* Flow shown for illustration only</p>
+        <p class="tl-note"><b>App, API or local, it stops in the same place.</b> You can get answers as often as you like. But you're the one who asks every time, and the one who checks whether it got done.</p>
+      </section>
+
+      <!-- 04 -->
+      <section class="sec" id="connect" aria-labelledby="h-connect">
+        <span class="sec-label">04 / CONNECT</span>
+        <h2 id="h-connect">SIMY connects the rest. Keep DeepSeek, hand off what follows</h2>
+        <p class="intro">SIMY fills the four blanks. Only the decision comes back to you.</p>
+        <div class="tl-wrap" role="img" aria-label="Timeline. DeepSeek handles the question, research and summary, and drafts or code. SIMY handles owners and deadlines, the report draft, the internal update and the check before next time, and only the decision comes back to you.">
+          <div class="tl-row">
+            <span class="tl-who">DeepSeek</span>
+            <ol class="tl">
+              <li class="on">Question</li>
+              <li class="on">Research</li>
+              <li class="on">Drafts, code</li>
+              <li class="blank"></li><li class="blank"></li><li class="blank"></li><li class="blank"></li>
+            </ol>
+          </div>
+          <div class="tl-row">
+            <span class="tl-who simy">SIMY</span>
+            <ol class="tl">
+              <li class="blank"></li><li class="blank"></li><li class="blank"></li>
+              <li class="run">Owners, dates<small>From the meeting</small></li>
+              <li class="run">Report<small>Gmail draft only</small></li>
+              <li class="run">Team update<small>Posts once approved</small></li>
+              <li class="you">Decision<small>One question back</small></li>
+            </ol>
+          </div>
+        </div>
+        <p class="caption">* Flow shown for illustration only</p>
+        <ul class="three" aria-label="Three things that set SIMY apart">
+          <li>Picks up from meetings and chat</li>
+          <li>Does it your way</li>
+          <li>Returns only decisions</li>
+        </ul>
+        <p class="tl-note">SIMY finds the follow-up work in your meeting notes and chat on its own. It learns the steps and checks you repeat from your conversations, does the work the same way, and lists what's done in My Actions.</p>
+
+        <div class="connect">
+          <ol class="connect-steps">
+            <li><b>Sign up for SIMY and connect ChatGPT (Codex)</b><span>SIMY's cloud runs use your own ChatGPT account. Codex usage stays within your ChatGPT plan.</span></li>
+            <li class="key"><b>Install the SIMY desktop app</b><span>It can use Claude Code on your PC to do the work. It turns work you repeat in Claude Code and Codex chats into "Suggestions from SIMY". Chat content is not stored on our servers. <a href="/download/en.html">Download it here</a></span></li>
+            <li><b>Connect your meeting notes</b><span>Connect Plaud, Notion and more on the integrations screen. Paste what you worked out in DeepSeek into a meeting or chat, and SIMY picks it up.</span></li>
+          </ol>
+          <div>
+            <div class="mock" role="img" aria-label="Mock-up of SIMY's My Actions. Work picked up from the meeting is listed: the owners and deadlines list is done, the report email draft is in progress, and choosing which option to pursue is waiting on you.">
+              <div class="mock-head" aria-hidden="true">
+                <span class="mock-mark">S</span>
+                <div>
+                  <div class="mock-title">My Actions <span class="mock-state">● 1 waiting on you</span></div>
+                  <p class="mock-desc">Picked up from New feature review (Oct 1)</p>
+                </div>
+              </div>
+              <div class="mock-box" aria-hidden="true">Owners and deadlines ✓ / Report email draft (in progress) / Team update (next)</div>
+              <div class="mock-btn" aria-hidden="true">Decide which option to pursue</div>
+              <div class="mock-foot" aria-hidden="true">Only items that need your decision come back to you</div>
+            </div>
+            <p class="caption">* SIMY screen shown for illustration only</p>
+          </div>
+        </div>
+        <p class="note"><b>How SIMY relates to DeepSeek:</b> SIMY does not connect to DeepSeek at this time. SIMY itself runs on your ChatGPT (Codex) account and Claude Code on your PC. Keep using DeepSeek for research, drafts and code. Bring its answers into your meetings or chat, and SIMY takes it from there.</p>
+      </section>
+
+      <!-- 05 -->
+      <section class="sec" id="sample" aria-labelledby="h-sample">
+        <span class="sec-label">05 / SAMPLE</span>
+        <h2 id="h-sample">One meeting, compared: DeepSeek's summary and SIMY's next steps</h2>
+        <p class="intro">A sample of a 40-minute review on adding a summary feature to an internal tool, organized with DeepSeek. DeepSeek on the left, SIMY on the right.</p>
+        <div class="sample">
+          <div class="sheet">
+            <div class="sheet-label"><span>DeepSeek summary (example)</span><span>Public info only</span></div>
+            <dl>
+              <dt>Overview</dt>
+              <dd>Add a summary feature to the internal tool. Try it on a cheap API first, then decide on production.</dd>
+              <dt>Open questions</dt>
+              <dd>What data can be sent to the API. Fit with internal policy.</dd>
+              <dt>To-dos</dt>
+              <dd>Check with IT. Estimate monthly usage and cost.</dd>
+              <dt>Deadline</dt>
+              <dd>By the next review (October 15).</dd>
+            </dl>
+          </div>
+          <div class="outs">
+            <div class="out">
+              <div class="out-head"><b>Owners and deadlines</b><span class="pill ok">Done</span></div>
+              <p>Check with IT: you, Oct 8. Cost estimate: dev, Oct 10. Pick test data: planning, Oct 14.</p>
+            </div>
+            <div class="out">
+              <div class="out-head"><b>Draft email to IT</b><span class="pill run">Autorun</span></div>
+              <p>The feature to test, the types of data you plan to send, the external API provider and where data is stored, in your usual wording. Saved as a Gmail draft.</p>
+            </div>
+            <div class="out">
+              <div class="out-head"><b>Team update</b><span class="pill">Next</span></div>
+              <p>"We'll test the summary feature with public info only. Results at the review on the 15th." Posts to chat once you approve.</p>
+            </div>
+            <div class="out you">
+              <div class="out-head"><b>Your decision</b><span class="pill you">Your turn</span></div>
+              <p>Run a trial with public info only, or wait for a setup that runs in-house. Only the parts that need your judgment come back to you.</p>
+            </div>
+          </div>
+        </div>
+        <p class="sample-foot">DeepSeek thinks, SIMY acts. You still make the call.</p>
+      </section>
+
+      <!-- 06 -->
+      <section class="sec" id="usecases" aria-labelledby="h-usecases">
+        <span class="sec-label">06 / BY INDUSTRY</span>
+        <h2 id="h-usecases">By team: how you use DeepSeek, and what SIMY delivers</h2>
+        <p class="intro">What SIMY prepares after DeepSeek answers. Solo or as a team, the pattern is the same.</p>
+        <div class="ind">
+          <div class="ind-card">
+            <h3>Engineering <small>DeepSeek: API, prototypes</small></h3>
+            <ul class="ind-rows">
+              <li><span>Design review</span><span>→</span><span>Agreed fixes and owners</span></li>
+              <li><span>After coding</span><span>→</span><span>Next task in Claude Code on your PC</span></li>
+              <li><span>End of week</span><span>→</span><span>Progress and pending decisions</span></li>
+            </ul>
+          </div>
+          <div class="ind-card">
+            <h3>Planning, research <small>DeepSeek: public info</small></h3>
+            <ul class="ind-rows">
+              <li><span>Review meeting</span><span>→</span><span>Chosen option, owners, due dates</span></li>
+              <li><span>Research report</span><span>→</span><span>Report email draft to stakeholders</span></li>
+              <li><span>Before next time</span><span>→</span><span>To-do status and one decision</span></li>
+            </ul>
+          </div>
+          <div class="ind-card">
+            <h3>Marketing, content <small>DeepSeek: drafts at volume</small></h3>
+            <ul class="ind-rows">
+              <li><span>Planning meeting</span><span>→</span><span>Chosen idea, owners, due dates</span></li>
+              <li><span>Draft review</span><span>→</span><span>Request with all edits listed</span></li>
+              <li><span>Before publishing</span><span>→</span><span>Pending checks and one decision</span></li>
+            </ul>
+          </div>
+          <div class="ind-card">
+            <h3>IT, operations <small>DeepSeek: usage rules</small></h3>
+            <ul class="ind-rows">
+              <li><span>AI policy meeting</span><span>→</span><span>Agreed rules and who announces them</span></li>
+              <li><span>Questions from teams</span><span>→</span><span>Reply drafts and pending checks</span></li>
+              <li><span>Quarterly review</span><span>→</span><span>Key issues and one decision</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- 07 -->
+      <section class="sec" id="start" aria-labelledby="h-start">
+        <span class="sec-label">07 / START</span>
+        <h2 id="h-start">Get started: keep DeepSeek, 3 steps</h2>
+        <ol class="steps3">
+          <li><b>Use DeepSeek as usual</b><span>Research, drafts, code. App, API or local. Follow your company's rules on what you put in.</span></li>
+          <li class="key"><b>Sign up for SIMY, connect ChatGPT, install simy</b><span>Cloud runs use your ChatGPT (Codex) account. <a href="#connect">How to connect</a> is above. If you use Claude Code, add the SIMY desktop app too. <a href="/download/en.html">Download it here</a></span></li>
+          <li><b>Finish one meeting</b><span>Owners and deadlines, a report draft and an update message arrive. Decide and send. That's it.</span></li>
+        </ol>
+        <p class="note"><b>Sign-up flow:</b> Choose a plan → verify your email → pay by card (there is no free plan). <a href="/?lang=en#pricing">See pricing</a> / Get the desktop app from the <a href="/download/en.html">download page</a>.</p>
+        <p class="note"><b>The way you use DeepSeek doesn't change.</b> SIMY doesn't replace DeepSeek. It is a separate system that handles the work after the answer.</p>
+      </section>
+
+      <!-- 08 -->
+      <section class="sec" id="reference" aria-labelledby="h-reference">
+        <span class="sec-label">08 / REFERENCE</span>
+        <h2 id="h-reference">What is DeepSeek: how to use it, models, API, languages and safety</h2>
+        <p class="intro">Open these when you want details on DeepSeek itself. Model names and specs are as of October 2026.</p>
+
+        <details class="fold">
+          <summary>What is DeepSeek: where it's from and who made it<small>An LLM built by a company in Hangzhou, China</small></summary>
+          <div class="fold-body">
+            <h3>What is DeepSeek</h3>
+            <p>DeepSeek is the name of the large language models (LLMs) and chat service built by DeepSeek (legal name: Hangzhou DeepSeek Artificial Intelligence Co., Ltd.), headquartered in Hangzhou, China. You can use it three ways: free chat (web and mobile app), a low-cost API, and open-weight models whose weights are public.</p>
+            <h3>Which country is it from</h3>
+            <p>It is a Chinese AI. Its privacy policy says the operator is a Hangzhou-based company and that information collected from users is stored on servers in the People's Republic of China. The app is also available on Japan's App Store.</p>
+            <h3>Who founded it</h3>
+            <p>DeepSeek was founded in 2023 by Liang Wenfeng. According to Forbes and other reports, he is a co-founder of the Chinese investment firm High-Flyer. Since R1, the company has been known for publishing its model weights.</p>
+            <h3>Three ways to use it</h3>
+            <ul class="plain-list">
+              <li><strong>Chat (web and app):</strong> Talk to it for free at chat.deepseek.com or in the mobile app.</li>
+              <li><strong>API:</strong> Build DeepSeek's API into your own systems or developer tools. You pay for what you use.</li>
+              <li><strong>Open weights:</strong> Run the models published on Hugging Face on your own servers or PC. Your data stays inside.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>The DeepSeek shock: what happened<small>January 2025. A cheaply built, high-performing model stunned the world</small></summary>
+          <div class="fold-body">
+            <p>"The DeepSeek shock" refers to the stir after DeepSeek released its reasoning model DeepSeek-R1 in January 2025. Performance close to top US models was available in a free app, and it was reported to have been built with little money and compute. It climbed to the top of the App Store in both Japan and the US.</p>
+            <ul class="plain-list">
+              <li><strong>Markets:</strong> The assumption that powerful AI needs huge chip investment was shaken, and shares of NVIDIA and other chip-related companies fell sharply.</li>
+              <li><strong>Technology:</strong> The weights were released under the MIT license, so they were built into other companies' services and research, and reasoning models suddenly became accessible.</li>
+              <li><strong>Regulation:</strong> At the same time, where data is stored and how it answers political topics became issues, and authorities in several countries issued warnings or restrictions (see "Safety" below).</li>
+            </ul>
+            <p>Because the API is cheap and the weights are open, DeepSeek is built into other services, and some people use it indirectly without knowing. It's worth checking which model your work tools run, and where.</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>How to use DeepSeek: web and mobile app<small>Free. Log in and start talking</small></summary>
+          <div class="fold-body">
+            <ol class="plain-list">
+              <li><strong>Open chat.deepseek.com.</strong> It works in your browser. On mobile, there is a "DeepSeek" app for iOS and Android.</li>
+              <li><strong>Log in.</strong> With an account, your chat history is saved.</li>
+              <li><strong>Start talking.</strong> Attach files or images and ask it to "summarize this" or "make this a table".</li>
+              <li><strong>Pick a mode.</strong> Toggles for a deeper thinking mode or web search may appear near the input box (labels change over time).</li>
+              <li><strong>Check the training setting.</strong> Turning off "Improve the model for everyone" in settings (the label at the time of writing) asks DeepSeek not to use your input to train its models.</li>
+            </ol>
+            <p>As of October 2026, we could not find a paid personal plan for DeepSeek chat.</p>
+            <h3>Tips for using it at work</h3>
+            <ul class="plain-list">
+              <li><strong>Decide what goes in first:</strong> Start with public information and general questions, and decide up front that confidential material stays out (see the checklist below).</li>
+              <li><strong>State the audience and format first:</strong> Saying who it's for and what you need up front, such as "for the leadership meeting, in 3 lines, with sources", cuts down on rework.</li>
+              <li><strong>Check the answers:</strong> Verify numbers, names, and statements about laws or specs against the original sources before using them.</li>
+            </ul>
+            <p>Turning those answers into who does what by when, and following up, happens outside DeepSeek. If you're doing that by hand every time, see <a href="#connect">how SIMY connects</a>.</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>What is DeepSeek V4: V4.1-Flash, V4-Pro and R1<small>As of October 2026. Names and generations change often</small></summary>
+          <div class="fold-body">
+            <p class="scroll-hint">Scroll the table sideways →</p>
+            <div class="table-wrap">
+              <table class="t-wide">
+                <thead>
+                  <tr><th scope="col">Model</th><th scope="col">Role</th><th scope="col">Where to use it</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">DeepSeek-V4.1-Flash</th><td>The main model, released September 10, 2026. Handles a 1-million-token context (tokens are the unit models use to measure text) and accepts images and other inputs. MIT license</td><td>API (<code>deepseek-flash</code>), open weights</td></tr>
+                  <tr><th scope="row">DeepSeek-V4-Pro</th><td>The top model (generally available August 2026). Choose from three levels of thinking depth. MIT license</td><td>API (<code>deepseek-v4-pro</code>), open weights (for large servers)</td></tr>
+                  <tr><th scope="row">DeepSeek-V4</th><td>Released April 2026. The first V4 generation, launched as two lines, Pro and Flash</td><td>Replaced by newer models in the API</td></tr>
+                  <tr><th scope="row">DeepSeek-R1</th><td>Reasoning model released January 2025. The trigger for the "DeepSeek shock". Many small distilled versions exist</td><td>Open weights (small versions run on a PC)</td></tr>
+                  <tr><th scope="row">DeepSeek-V3 family</th><td>General-purpose models that predate R1</td><td>Open weights (for large servers)</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="note"><b>API model names:</b> The older <code>deepseek-chat</code> and <code>deepseek-reasoner</code> have been announced for retirement, and users are asked to switch to the new model names. If you have existing code, check the <a href="https://api-docs.deepseek.com/updates" target="_blank" rel="noopener">official change log</a>.</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>The DeepSeek API: OpenAI and Anthropic compatible<small>Prices change by time of day. See the official page for rates</small></summary>
+          <div class="fold-body">
+            <ul class="plain-list">
+              <li><strong>OpenAI compatible:</strong> Set the endpoint to <code>https://api.deepseek.com</code> and call it from the OpenAI SDK or existing tools. The official change log also mentions support for the Responses API and Codex.</li>
+              <li><strong>Anthropic compatible:</strong> With <code>https://api.deepseek.com/anthropic</code>, you can point Anthropic-format tools (such as Claude Code) at DeepSeek.</li>
+              <li><strong>How pricing works:</strong> Pay-as-you-go in US dollars per million tokens. Input that reuses the same prefix as a previous request (a cache hit) is very cheap, and output costs more than input.</li>
+              <li><strong>Peak hours cost double:</strong> During weekday peak hours (UTC 01:00–04:00 and 06:00–10:00, excluding Chinese public holidays), rates are twice the off-peak rate. Check how these map to your working hours; moving bulk jobs off-peak keeps costs down.</li>
+            </ul>
+            <p>Rates change often, so check the <a href="https://api-docs.deepseek.com/quick_start/pricing" target="_blank" rel="noopener">official DeepSeek pricing page</a>.</p>
+            <h3>Getting started with the API</h3>
+            <ol class="plain-list">
+              <li><strong>Create an account on the DeepSeek API platform and top up your balance.</strong></li>
+              <li><strong>Create an API key.</strong> Keep the key in an environment variable, never directly in code or shared documents.</li>
+              <li><strong>Swap the endpoint and model name.</strong> In OpenAI format, set the endpoint URL and a model name such as <code>deepseek-flash</code>.</li>
+              <li><strong>Decide what data to send before scaling up.</strong> What you send to the API is also handled under the privacy policy. Check it against your internal rules before moving to production volumes.</li>
+            </ol>
+            <p class="note"><b>How SIMY relates:</b> SIMY does not connect DeepSeek API keys at this time. SIMY's cloud runs use your ChatGPT (Codex) account.</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>Running DeepSeek locally: Ollama and vLLM<small>Small R1 versions run on a PC. V4.1-Flash is cloud-only in Ollama</small></summary>
+          <div class="fold-body">
+            <ul class="plain-list">
+              <li><strong>What runs on a PC:</strong> Ollama's <code>deepseek-r1</code> comes in sizes from 1.5B to 671B, and the 7B version is about 4.7 GB. Run it with a size, such as <code>ollama run deepseek-r1:7b</code>.</li>
+              <li><strong>What's cloud-only in Ollama:</strong> <code>deepseek-v4.1-flash</code> and <code>deepseek-v4-pro</code> have only cloud tags in Ollama's official library. They run in Ollama's cloud, so they don't stay entirely on your PC.</li>
+              <li><strong>Running the latest in-house:</strong> V4.1-Flash weights are on Hugging Face and run with vLLM or SGLang, but you need large GPU servers.</li>
+            </ul>
+            <p>If the goal is keeping data inside, only running the weights on your own PC or servers qualifies. Cloud-tagged models don't serve that goal, even if their names appear in Ollama. The <a href="/guides/en/china-llm.html">Chinese AI (LLM) comparison</a> explains why in "Being in Ollama doesn't mean it runs locally".</p>
+            <p>For memory requirements and choosing a quantization, see also <a href="/guides/en/qwen-local.html">How to run a local LLM (Qwen)</a>.</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>DeepSeek in other languages: how far it goes<small>Questions, summaries and drafts work beyond English</small></summary>
+          <div class="fold-body">
+            <p>DeepSeek's model cards don't list supported languages, but in practice you can ask questions and get answers in languages such as Japanese. The app is also available on Japan's App Store.</p>
+            <ul class="plain-list">
+              <li><strong>Strengths:</strong> Answering questions, summarizing long documents, drafting emails and reports, and explaining code.</li>
+              <li><strong>Watch out for:</strong> Local names, fine points of formal or polite language, and statements about local laws and business customs. Check them before use.</li>
+              <li><strong>Small models:</strong> The small R1 versions you run locally can produce unnatural text, or show their thinking in English or Chinese.</li>
+            </ul>
+            <p>The surest way to judge quality in your language is a small test with real work documents.</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>Is DeepSeek safe: warnings in Japan and other countries<small>Not a ban, but a call for risk-aware decisions</small></summary>
+          <div class="fold-body">
+            <h3>Where data is stored and training</h3>
+            <p>DeepSeek's privacy policy (updated February 10, 2026) says the information it collects is stored on servers in the People's Republic of China. It also states your right to refuse the use of your input for model training, which you can turn off in the app settings. Turning it off doesn't change where data is stored.</p>
+            <h3>Warnings from Japanese authorities</h3>
+            <ul class="plain-list">
+              <li><strong>Japan's Personal Information Protection Commission (February 3, 2025, updated March 5):</strong> Published "Information on DeepSeek". It notes that data including personal information collected by DeepSeek is stored on servers in China and is subject to Chinese laws (such as the Personal Information Protection Law, the Data Security Law and the National Intelligence Law).</li>
+              <li><strong>Japan's Digital Agency (February 6, 2025):</strong> The secretariat of the Digital Society Promotion Council issued a notice to government agencies, "Caution on the business use of generative AI such as DeepSeek". According to reports, it cites DeepSeek as an example of the same risks, says confidential information should not be handled as a rule, and asks agencies that use it to assess the risks first. It is not a blanket ban.</li>
+            </ul>
+            <p>As of October 2026, no law or order in Japan bars individuals from using DeepSeek. If your employer or clients have their own usage rules, follow those.</p>
+            <h3>Actions in other countries (reported)</h3>
+            <ul class="plain-list">
+              <li><strong>Italy:</strong> In January 2025, the data protection authority made the app unavailable.</li>
+              <li><strong>Australia:</strong> In February 2025, it banned use on government devices.</li>
+              <li><strong>South Korea:</strong> In February 2025, new app downloads were suspended under a measure by its Personal Information Protection Commission.</li>
+              <li><strong>Germany:</strong> In June 2025, a data protection authority asked Apple and Google to remove the app from their stores.</li>
+            </ul>
+            <p>Most of these concern government devices or the handling of personal data, and the reasons differ by country. Some also point out that its answers lean one way on political topics, so it's safer to use several sources when researching them.</p>
+            <p class="small muted">Actions in other countries are summarized from news reports. Check each authority's announcements for the latest. How SIMY handles data is published in <a href="/security.html">Security</a> and our <a href="/privacy.html?lang=en">Privacy Policy</a>.</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>Using it at work: what to put in, what to keep out<small>The line depends on how you use it (app, API or in-house)</small></summary>
+          <div class="fold-body">
+            <p class="scroll-hint">Scroll the table sideways →</p>
+            <div class="table-wrap">
+              <table class="t-wide">
+                <thead>
+                  <tr><th scope="col">Type of information</th><th scope="col">App, web</th><th scope="col">API</th><th scope="col">Weights run in-house</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Public info, general questions</th><td>OK</td><td>OK</td><td>OK</td></tr>
+                  <tr><th scope="row">Your own text, to be published</th><td>Within company rules</td><td>Within company rules</td><td>OK</td></tr>
+                  <tr><th scope="row">Internal meeting notes, unpublished plans</th><td>Avoid</td><td>After checking policy and contracts</td><td>Within company rules</td></tr>
+                  <tr><th scope="row">Personal data of customers or staff</th><td>Avoid</td><td>Avoid</td><td>Follow your personal data policy</td></tr>
+                  <tr><th scope="row">Client secrets (under NDA)</th><td>Avoid</td><td>Avoid</td><td>After checking the contract</td></tr>
+                  <tr><th scope="row">Passwords, API keys, credentials</th><td>Never</td><td>Never</td><td>Never</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <ul class="plain-list">
+              <li><strong>Check company rules first:</strong> Some companies' generative AI policies set which services you may use and what you may enter.</li>
+              <li><strong>Check client requirements too:</strong> Government clients and those in data-sensitive industries may set conditions on the AI provider and where data is stored.</li>
+              <li><strong>When in doubt, keep it inside:</strong> If you must test with internal information, consider running the weights in-house.</li>
+            </ul>
+            <p class="small muted">This table is a general guide, not legal advice. For the final call, follow your employer's policies and the responsible department.</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>DeepSeek vs ChatGPT, Claude and Qwen<small>Not better or worse, just strong in different places</small></summary>
+          <div class="fold-body">
+            <p class="scroll-hint">Scroll the table sideways →</p>
+            <div class="table-wrap">
+              <table class="t-wide">
+                <thead>
+                  <tr><th scope="col">Item</th><th scope="col">DeepSeek</th><th scope="col">ChatGPT</th><th scope="col">Claude</th><th scope="col">Qwen</th><th scope="col" class="simy">SIMY</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Developer</th><td>DeepSeek (China)</td><td>OpenAI (US)</td><td>Anthropic (US)</td><td>Alibaba Group (China)</td><td class="simy">AwakApp Inc.</td></tr>
+                  <tr><th scope="row">Strengths</th><td>Reasoning and a cheap API</td><td>Broad uses and extra features</td><td>Long text, and work in Claude Code</td><td>Many languages, cheap API, local runs</td><td class="simy">Moves the work after the answer</td></tr>
+                  <tr><th scope="row">Run on your own PC</th><td>Small older versions</td><td>Some models</td><td>No</td><td>Many models</td><td class="simy">Can use Claude Code on your PC to do the work</td></tr>
+                  <tr><th scope="row">Who starts</th><td>You ask</td><td>You ask</td><td>You ask</td><td>You ask</td><td class="simy">SIMY picks it up from meetings and chat</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="note"><b>Which to use:</b> Any AI, DeepSeek included, can produce the answer or draft. If you're tracking owners, deadlines, reports and updates by hand every time after that, that's where SIMY comes in. See the <a href="/guides/en/china-llm.html">Chinese AI (LLM) comparison</a> for the main Chinese AIs, and the <a href="/guides/en/qwen.html">Qwen Guide</a> for Qwen.</p>
+          </div>
+        </details>
+      </section>
+
+      <!-- 09 -->
+      <section class="sec" id="faq" aria-labelledby="h-faq">
+        <span class="sec-label">09 / FAQ</span>
+        <h2 id="h-faq">Frequently asked questions</h2>
+        <div class="faq">
+          <details>
+            <summary>What is DeepSeek?</summary>
+            <div class="a"><p>DeepSeek is a family of large language models (LLMs) and a chat service built by DeepSeek in Hangzhou, China. You can use it three ways: free chat, a low-cost API, and open-weight models whose weights are public.</p></div>
+          </details>
+          <details>
+            <summary>Which country is DeepSeek from?</summary>
+            <div class="a"><p>China. The operator is a company based in Hangzhou, and its privacy policy says collected information is stored on servers in the People's Republic of China.</p></div>
+          </details>
+          <details>
+            <summary>Who founded DeepSeek?</summary>
+            <div class="a"><p>Liang Wenfeng founded it in 2023. According to reports, he is a co-founder of the Chinese investment firm High-Flyer.</p></div>
+          </details>
+          <details>
+            <summary>What was the DeepSeek shock?</summary>
+            <div class="a"><p>It was the worldwide stir after the reasoning model DeepSeek-R1 was released in January 2025 as a cheaply built, high-performing model. Chip-related stocks fell sharply, and authorities in several countries began issuing warnings about how it handles data.</p></div>
+          </details>
+          <details>
+            <summary>Is DeepSeek free?</summary>
+            <div class="a"><p>Yes. The web chat and mobile app are free. The API is pay-as-you-go. If you run the open-weight models on your own hardware, there is no fee for the model (hardware and electricity are separate).</p></div>
+          </details>
+          <details>
+            <summary>Does DeepSeek work in languages other than English?</summary>
+            <div class="a"><p>Yes. There is no official list of supported languages, but you can ask questions and get answers in other languages, such as Japanese. For important text, check names and formal wording before using it.</p></div>
+          </details>
+          <details>
+            <summary>How much does the DeepSeek API cost?</summary>
+            <div class="a"><p>It is pay-as-you-go, priced in US dollars per million tokens. Weekday peak hours cost twice the off-peak rate. Rates change often, so check the <a href="https://api-docs.deepseek.com/quick_start/pricing" target="_blank" rel="noopener">official DeepSeek pricing page</a>.</p></div>
+          </details>
+          <details>
+            <summary>How do I use the DeepSeek API?</summary>
+            <div class="a"><p>Create an API key, then swap the endpoint and model name in the tools you already use. The OpenAI-compatible endpoint is <code>https://api.deepseek.com</code>, the Anthropic-compatible one is <code>https://api.deepseek.com/anthropic</code>, and model names include <code>deepseek-flash</code> (as of October 2026).</p></div>
+          </details>
+          <details>
+            <summary>Can I run DeepSeek locally on my own PC?</summary>
+            <div class="a"><p>Small versions of R1 and similar models run in Ollama. The latest V4.1-Flash has only cloud tags in Ollama and does not run locally, and running it in-house requires large GPU servers.</p></div>
+          </details>
+          <details>
+            <summary>Is DeepSeek banned in Japan?</summary>
+            <div class="a"><p>No. As of October 2026, no law or order bars individuals from using it. In February 2025, Japan's Personal Information Protection Commission published information on DeepSeek, and Japan's Digital Agency (the secretariat of the Digital Society Promotion Council) issued a caution to government agencies, noting that data is stored on servers in China and is subject to Chinese law.</p></div>
+          </details>
+          <details>
+            <summary>Is what I enter into DeepSeek used for training?</summary>
+            <div class="a"><p>It can be. The privacy policy states your right to refuse use for training, and you can turn it off in the app settings (labeled "Improve the model for everyone" at the time of writing). Even with it off, data is stored on servers in China, so as a rule, keep confidential information out.</p></div>
+          </details>
+          <details>
+            <summary>Does SIMY run on DeepSeek?</summary>
+            <div class="a"><p>No. At this time, SIMY runs on your ChatGPT (Codex) account and Claude Code on your PC. You can bring answers and drafts you made in DeepSeek straight into your meetings and chat.</p></div>
+          </details>
+          <details>
+            <summary>Do I have to ask SIMY every time to handle the work after a DeepSeek answer?</summary>
+            <div class="a"><p>No. SIMY picks up decisions, owners and deadlines from your meeting notes and chat on its own. It learns your way of working from your conversations and returns only the parts that need your decision.</p></div>
+          </details>
+        </div>
+      </section>
+
+      <!-- 10 -->
+      <section class="sec" id="sources" aria-labelledby="h-sources">
+        <span class="sec-label">10 / SOURCES</span>
+        <h2 id="h-sources">Sources</h2>
+        <p>We checked DeepSeek's models, pricing structure, data handling and the Japanese authorities' warnings against the official sources below (checked October 1, 2026). The founder's background, details of the Digital Agency notice and actions in other countries are based on news reports. Model names and specs change often, so check each official page for the latest.</p>
+        <ul class="plain-list">
+          <li><a href="https://api-docs.deepseek.com/" target="_blank" rel="noopener">DeepSeek API documentation</a></li>
+          <li><a href="https://api-docs.deepseek.com/quick_start/pricing" target="_blank" rel="noopener">DeepSeek API pricing (DeepSeek official)</a></li>
+          <li><a href="https://api-docs.deepseek.com/updates" target="_blank" rel="noopener">DeepSeek API change log</a></li>
+          <li><a href="https://api-docs.deepseek.com/news/news260910" target="_blank" rel="noopener">DeepSeek-V4.1-Flash release (DeepSeek official)</a></li>
+          <li><a href="https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash" target="_blank" rel="noopener">DeepSeek-V4.1-Flash (Hugging Face)</a></li>
+          <li><a href="https://cdn.deepseek.com/policies/en-US/deepseek-privacy-policy.html" target="_blank" rel="noopener">DeepSeek Privacy Policy</a></li>
+          <li><a href="https://ollama.com/library/deepseek-r1" target="_blank" rel="noopener">deepseek-r1 (Ollama library)</a>, <a href="https://ollama.com/search?q=deepseek" target="_blank" rel="noopener">DeepSeek models (Ollama)</a></li>
+          <li><a href="https://www.ppc.go.jp/news/careful_information/250203_alert_deepseek/" target="_blank" rel="noopener">Information on DeepSeek (Japan's Personal Information Protection Commission, February 3, 2025, updated March 5; in Japanese)</a></li>
+          <li><a href="https://internet.watch.impress.co.jp/docs/news/1660903.html" target="_blank" rel="noopener">Report on the government notice on business use of generative AI such as DeepSeek (INTERNET Watch; in Japanese)</a></li>
+          <li><a href="https://www.forbes.com.au/news/investing/who-is-behind-deepseek-what-to-know-about-liang-wenfeng" target="_blank" rel="noopener">Founder Liang Wenfeng's background (Forbes, January 29, 2025)</a></li>
+          <li><a href="https://www.aljazeera.com/news/2025/2/6/which-countries-have-banned-deepseek-and-why" target="_blank" rel="noopener">Actions by country (Al Jazeera)</a>, <a href="https://finance.yahoo.com/news/factbox-governments-regulators-increase-scrutiny-095326244.html" target="_blank" rel="noopener">Moves by regulators (Reuters Factbox)</a></li>
+        </ul>
+      </section>
+      <aside class="next-read" aria-labelledby="h-next">
+        <h2 id="h-next">Read next</h2>
+        <div class="next-grid"><a href="/guides/en/china-llm.html"><b>Chinese AI (LLM) comparison</b><span>DeepSeek, Qwen, Kimi and more: differences and how to choose</span></a><a href="/guides/en/qwen.html"><b>Qwen Guide</b><span>An LLM strong in many languages and local runs</span></a><a href="/guides/en/qwen-local.html"><b>How to run a local LLM</b><span>Ollama, LM Studio and the memory you need</span></a></div>
+        <a class="next-all" href="/guides/en/index.html">All guides →</a>
+      </aside>
+    </article>
+  </div>
+
+  <section class="closing" aria-labelledby="h-closing">
+    <div class="wrap closing-inner">
+      <div>
+        <h2 id="h-closing">Once DeepSeek answers,<br>hand the rest to SIMY.</h2>
+        <p>Keep DeepSeek for what it does best. SIMY moves the work it picks up from meetings and chat, and returns only decisions. You still make the call.</p>
+      </div>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="https://app.simy.one/signup?lang=en&amp;locale=en&amp;region=us&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=deepseek_guide_en&amp;utm_content=closing">Choose a plan <span class="arrow" aria-hidden="true">↗</span></a>
+        <a class="btn btn-ghost" href="mailto:sales@simy.one?subject=Talk%20to%20us%20about%20SIMY">Talk to us</a>
+        <a class="btn btn-ghost" href="/download/en.html">Download the app <span class="arrow" aria-hidden="true">↓</span></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <ul class="footer-links">
+      <li><a href="/?lang=en">Home</a></li>
+      <li><a href="/?lang=en#pricing">Pricing</a></li>
+      <li><a href="/integrations.html">Integrations</a></li>
+      <li><a href="/download/en.html">Download</a></li>
+      <li><a href="/guides/en/index.html">All guides</a></li>
+      <li><a href="/guides/en/claude.html">Claude</a></li>
+      <li><a href="/guides/en/codex.html">Codex</a></li>
+      <li><a href="/guides/en/cowork.html">Cowork</a></li>
+      <li><a href="/guides/en/chatgpt.html">ChatGPT</a></li>
+      <li><a href="/guides/en/plaud.html">PLAUD</a></li>
+      <li><a href="/guides/en/notta.html">Notta</a></li>
+      <li><a href="/guides/en/meeting-notes.html">AI meeting notes</a></li>
+      <li><a href="/guides/en/china-llm.html">Chinese AI compared</a></li>
+      <li><a href="/guides/en/deepseek.html" aria-current="page">DeepSeek</a></li>
+      <li><a href="/guides/en/qwen.html">Qwen</a></li>
+      <li><a href="/guides/en/qwen-local.html">Qwen on your own server</a></li>
+      <li><a href="/security.html">Security</a></li>
+      <li><a href="/privacy.html?lang=en">Privacy Policy</a></li>
+      <li><a href="/terms.html?lang=en">Terms of Use</a></li>
+    </ul>
+    <p>DeepSeek is a trademark of Hangzhou DeepSeek Artificial Intelligence Co., Ltd. SIMY is an independent product, separate from DeepSeek.</p>
+    <p>Codex and ChatGPT are products of OpenAI. Other company and product names are trademarks or registered trademarks of their respective owners.</p>
+    <p>&copy; 2026 SIMY by AwakApp Inc.</p>
+  </div>
+</footer>
+<script>
+(function () {
+  var links = Array.prototype.slice.call(document.querySelectorAll('.toc a'));
+  if (!links.length) return;
+  var items = links.map(function (a) {
+    return { link: a, section: document.getElementById(a.getAttribute('href').slice(1)) };
+  }).filter(function (item) { return item.section; });
+  var ticking = false;
+  function update() {
+    ticking = false;
+    var line = window.innerHeight * 0.35;
+    var atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+    var current = null;
+    items.forEach(function (item) {
+      if (item.section.getBoundingClientRect().top <= line) current = item;
+    });
+    if (atBottom) current = items[items.length - 1];
+    items.forEach(function (item) { item.link.classList.toggle('is-active', item === current); });
+  }
+  window.addEventListener('scroll', function () {
+    if (!ticking) { ticking = true; window.requestAnimationFrame(update); }
+  }, { passive: true });
+  update();
+})();
+</script>
+<script src="/analytics.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,1672 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="google-site-verification" content="1n6_tVJZRZlQax8luEg5VsuG7gg-kCEam5VFiWIJs3U">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kimi K3 : utiliser Kimi (Moonshot AI), API et Kimi Code | SIMY</title>
+<meta name="description" content="Kimi K3, c'est quoi ? Origine de Kimi (Moonshot AI), différences avec K2, chat et Kimi Code, API utilisable depuis Claude Code, tarifs, licence et données (octobre 2026).">
+<link rel="canonical" href="https://simy.one/guides/fr/kimi.html">
+<link rel="alternate" hreflang="ja" href="https://simy.one/guides/kimi.html">
+<link rel="alternate" hreflang="en" href="https://simy.one/guides/en/kimi.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://simy.one/guides/zh-hans/kimi.html">
+<link rel="alternate" hreflang="es" href="https://simy.one/guides/es/kimi.html">
+<link rel="alternate" hreflang="fr" href="https://simy.one/guides/fr/kimi.html">
+<link rel="alternate" hreflang="hi" href="https://simy.one/guides/hi/kimi.html">
+<link rel="alternate" hreflang="x-default" href="https://simy.one/guides/en/kimi.html">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://simy.one/guides/fr/kimi.html">
+<meta property="og:title" content="Kimi a fini d'écrire ? Ne laissez pas la suite en plan | SIMY">
+<meta property="og:description" content="Kimi K3, c'est quoi ? Utilisation, API, Kimi Code, licence et données. Après Kimi, SIMY capte dans vos réunions et vos chats les responsables, les échéances, les demandes de relecture et les partages, et fait avancer le travail.">
+<meta property="og:site_name" content="SIMY">
+<meta property="og:image" content="https://simy.one/ogp.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Kimi a fini d'écrire ? Ne laissez pas la suite en plan. Guide Kimi | SIMY">
+<meta property="og:locale" content="fr_FR">
+<meta property="article:published_time" content="2026-10-01">
+<meta property="article:modified_time" content="2026-10-01">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Kimi a fini d'écrire ? Ne laissez pas la suite en plan | SIMY">
+<meta name="twitter:description" content="Kimi K3, c'est quoi ? Utilisation, API, Kimi Code et données. Après Kimi, SIMY capte le travail dans vos réunions et vos chats et le fait avancer.">
+<meta name="twitter:image" content="https://simy.one/ogp.png">
+<meta name="twitter:image:alt" content="Kimi a fini d'écrire ? Ne laissez pas la suite en plan. Guide Kimi | SIMY">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#f6f5f4">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png">
+<style>
+:root {
+  --paper: #f6f5f4;
+  --paper-light: #ffffff;
+  --ink: #111111;
+  --ink-soft: #5d5b58;
+  --ink-faint: #6b6865;
+  --line-soft: rgba(17, 17, 17, 0.14);
+  --ui-line: #d9dde2;
+  --blue: #3273d7;
+  --blue-deep: #235db8;
+  --blue-soft: #eef5ff;
+  --mint: #92edce;
+  --coral-soft: #fff1ec;
+  --yellow: #ffd166;
+  --radius: 0.8rem;
+  --radius-sm: 0.5rem;
+  --sans: "Helvetica Neue", Arial, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", Meiryo, sans-serif;
+  --mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  --page: 1180px;
+  --gutter: clamp(16px, 4vw, 40px);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.85;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+a { color: inherit; }
+a:focus-visible, summary:focus-visible {
+  outline: 3px solid rgba(50, 115, 215, 0.45);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+img { max-width: 100%; display: block; }
+
+.wrap { width: min(var(--page), 100% - var(--gutter) * 2); margin: 0 auto; }
+
+.skip {
+  position: absolute; left: -9999px; top: 8px;
+  background: var(--ink); color: #fff; padding: 8px 14px; border-radius: 6px; z-index: 100;
+}
+.skip:focus { left: 8px; }
+
+/* ---------- Header ---------- */
+.site-header {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(246, 245, 244, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--ink);
+}
+.header-inner {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  min-height: 64px;
+}
+.brand {
+  display: inline-flex; align-items: center; gap: 10px;
+  text-decoration: none; font-weight: 800; letter-spacing: 0.01em;
+}
+.brand img { width: 28px; height: 28px; border-radius: 7px; }
+.brand-sub {
+  padding-left: 12px; margin-left: 2px;
+  border-left: 1px solid var(--line-soft);
+  color: var(--ink-soft); font-size: 0.8rem; font-weight: 500;
+}
+.header-actions { display: flex; align-items: center; gap: 6px; }
+.header-link {
+  padding: 8px 10px; font-size: 0.86rem; font-weight: 600; text-decoration: none; color: var(--ink);
+}
+.header-link:hover { color: var(--blue-deep); }
+.header-cta {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px;
+  background: var(--ink); color: #fff; text-decoration: none;
+  font-size: 0.86rem; font-weight: 700; border-radius: 6px;
+  transition: background 0.2s;
+}
+.header-cta:hover { background: var(--blue-deep); }
+
+/* ---------- Hero ---------- */
+.hero {
+  position: relative;
+  border-bottom: 1px solid var(--ink);
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(rgba(17, 17, 17, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(17, 17, 17, 0.045) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-position: -1px -1px;
+}
+.hero-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+  gap: clamp(32px, 5vw, 72px);
+  align-items: center;
+  padding: clamp(40px, 7vw, 96px) 0 clamp(48px, 7vw, 104px);
+}
+
+.crumbs {
+  display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 22px; padding: 0; list-style: none;
+  font-size: 0.78rem; color: var(--ink-soft);
+}
+.crumbs li + li::before { content: "/"; margin-right: 6px; color: var(--ink-faint); }
+.crumbs a { text-decoration: none; }
+.crumbs a:hover { text-decoration: underline; }
+
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin: 0 0 22px; padding: 6px 12px;
+  background: var(--paper-light); border: 1px solid var(--ink); border-radius: 999px;
+  font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.04em;
+}
+.eyebrow::before {
+  content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--blue);
+  box-shadow: 0 0 0 3px var(--blue-soft);
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2rem, 4.6vw, 3.9rem);
+  line-height: 1.16;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+h1 .line { display: block; }
+h1 .hl { color: var(--blue); }
+
+.lead {
+  max-width: 36em;
+  margin: 26px 0 0;
+  font-size: clamp(1rem, 1.35vw, 1.1rem);
+  line-height: 1.95;
+  color: #2c2b29;
+}
+
+.cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 52px; padding: 0 22px;
+  border: 1px solid var(--ink); border-radius: 8px;
+  font-weight: 700; font-size: 0.98rem; text-decoration: none;
+  transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+}
+.btn-primary {
+  background: var(--blue-deep); color: #fff; border-color: var(--ink);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.btn-primary:hover { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 var(--ink); }
+.btn-ghost { background: var(--paper-light); color: var(--ink); }
+.btn-ghost:hover { background: var(--blue-soft); }
+.btn .arrow { font-family: var(--mono); font-size: 0.9em; }
+
+.hero-points {
+  display: flex; flex-wrap: wrap; gap: 8px 18px;
+  margin: 26px 0 0; padding: 0; list-style: none;
+  font-size: 0.84rem; color: var(--ink-soft);
+}
+.hero-points li { display: inline-flex; align-items: center; gap: 7px; }
+.hero-points li::before {
+  content: ""; width: 14px; height: 14px; flex: none;
+  border: 1px solid var(--ink); border-radius: 50%;
+  background: var(--mint) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath d='M3.5 7.2 6 9.5l4.5-5' fill='none' stroke='%23111' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 12px no-repeat;
+}
+
+/* Relay card: the signature visual */
+.relay {
+  position: relative;
+  background: var(--paper-light);
+  border: 1px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: 8px 8px 0 var(--ink);
+  overflow: hidden;
+}
+.relay-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--ink);
+  background: var(--ink); color: #fff;
+  font-family: var(--mono); font-size: 0.78rem;
+}
+.rec { display: inline-flex; align-items: center; gap: 8px; min-width: 0; }
+.rec-dot {
+  width: 9px; height: 9px; border-radius: 50%; background: #ff865f; flex: none;
+  animation: rec 1.6s ease-in-out infinite;
+}
+.rec-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.relay-meta { display: flex; flex-wrap: wrap; gap: 6px; padding: 12px 18px 4px; }
+.chip {
+  display: inline-flex; align-items: center; padding: 2px 9px;
+  border: 1px solid var(--line-soft); border-radius: 999px;
+  font-family: var(--mono); font-size: 0.7rem; color: var(--ink-soft); background: var(--paper);
+}
+.relay-steps { list-style: none; margin: 0; padding: 8px 10px 12px; }
+.step {
+  display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; align-items: center; gap: 10px;
+  padding: 9px 8px;
+  border-radius: 8px;
+  opacity: 0; transform: translateY(6px);
+  animation: rise 0.5s cubic-bezier(.2,.7,.2,1) forwards;
+}
+.step .no { font-family: var(--mono); font-size: 0.72rem; color: var(--ink-faint); }
+.step .what { font-size: 0.9rem; font-weight: 650; line-height: 1.45; }
+.step .what small { display: block; font-weight: 400; font-size: 0.74rem; color: var(--ink-soft); }
+.status {
+  font-family: var(--mono); font-size: 0.68rem; white-space: nowrap;
+  padding: 3px 8px; border-radius: 999px; border: 1px solid var(--ink);
+}
+.s-done { background: var(--paper); }
+.s-plaud .status { border-color: var(--line-soft); color: var(--ink-soft); }
+.s-run { background: var(--blue-soft); }
+.s-run .status { background: var(--blue-deep); color: #fff; }
+.s-next .status { background: var(--paper-light); }
+.s-you { background: #fff8e3; }
+.s-you .status { background: var(--yellow); }
+.bar {
+  grid-column: 2 / 4; height: 4px; margin-top: 6px;
+  background: rgba(50, 115, 215, 0.16); border-radius: 4px; overflow: hidden;
+}
+.bar::after {
+  content: ""; display: block; height: 100%; width: 62%;
+  background: var(--blue); border-radius: 4px;
+  animation: progress 2.8s ease-in-out infinite alternate;
+}
+.handoff {
+  display: flex; align-items: center; gap: 10px;
+  margin: 6px 4px; padding: 8px 0;
+  font-family: var(--mono); font-size: 0.72rem; color: var(--blue-deep);
+  opacity: 0; animation: rise 0.5s ease forwards;
+}
+.handoff::before, .handoff::after { content: ""; flex: 1; border-top: 1.5px dashed var(--blue); }
+.relay-foot {
+  padding: 12px 18px 14px;
+  border-top: 1px solid var(--line-soft);
+  font-size: 0.82rem; color: var(--ink-soft);
+}
+.relay-foot strong { color: var(--ink); }
+.caption { margin: 12px 4px 0; font-size: 0.74rem; color: var(--ink-faint); text-align: right; }
+
+.relay-steps > :nth-child(1) { animation-delay: 0.10s; }
+.relay-steps > :nth-child(2) { animation-delay: 0.22s; }
+.relay-steps > :nth-child(3) { animation-delay: 0.34s; }
+.relay-steps > :nth-child(4) { animation-delay: 0.62s; }
+.relay-steps > :nth-child(5) { animation-delay: 0.86s; }
+.relay-steps > :nth-child(6) { animation-delay: 1.02s; }
+.relay-steps > :nth-child(7) { animation-delay: 1.18s; }
+.relay-steps > :nth-child(8) { animation-delay: 1.34s; }
+
+@keyframes rise { to { opacity: 1; transform: none; } }
+@keyframes rec { 50% { opacity: 0.25; } }
+@keyframes progress { from { width: 34%; } to { width: 88%; } }
+
+/* ---------- Guide layout ---------- */
+.guide {
+  display: grid;
+  grid-template-columns: 232px minmax(0, 1fr);
+  gap: clamp(32px, 5vw, 72px);
+  padding: clamp(40px, 6vw, 80px) 0 clamp(56px, 7vw, 96px);
+}
+.toc { position: sticky; top: 92px; align-self: start; font-size: 0.84rem; }
+.toc-title {
+  margin: 0 0 12px; font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.08em;
+  color: var(--ink-soft);
+}
+.toc ol { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--line-soft); }
+.toc a {
+  display: grid; grid-template-columns: 26px 1fr; gap: 4px;
+  margin-left: -1px; padding: 7px 0 7px 12px;
+  border-left: 2px solid transparent;
+  color: var(--ink-soft); text-decoration: none; line-height: 1.5;
+}
+.toc a span { font-family: var(--mono); font-size: 0.72rem; padding-top: 1px; }
+.toc a:hover { color: var(--ink); }
+.toc a.is-active { color: var(--ink); font-weight: 700; border-left-color: var(--blue); }
+.toc-mobile { display: none; }
+
+.article { min-width: 0; max-width: 800px; }
+.byline {
+  display: flex; flex-wrap: wrap; gap: 4px 16px;
+  margin: 0 0 8px; font-family: var(--mono); font-size: 0.74rem; color: var(--ink-faint);
+}
+
+.sec { padding-top: clamp(40px, 5vw, 64px); }
+.sec:first-of-type { padding-top: 0; }
+.sec-label {
+  display: inline-block; margin: 0 0 12px;
+  font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.06em; color: var(--blue-deep);
+}
+h2 {
+  margin: 0 0 18px;
+  font-size: clamp(1.5rem, 2.8vw, 2.1rem);
+  line-height: 1.35; font-weight: 800; letter-spacing: -0.01em;
+}
+h3 { margin: 32px 0 12px; font-size: 1.15rem; line-height: 1.5; font-weight: 750; }
+.article p { margin: 0 0 16px; }
+.article p a, .plain-list a, .faq a { color: var(--blue-deep); text-decoration: underline; text-underline-offset: 3px; }
+.muted { color: var(--ink-soft); }
+.small { font-size: 0.84rem; }
+
+/* Checklist */
+.checklist { list-style: none; margin: 24px 0 0; padding: 0; display: grid; gap: 12px; }
+.checklist li {
+  display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 16px;
+  padding: 18px 20px;
+  background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.checklist .num {
+  display: grid; place-items: center; width: 44px; height: 44px;
+  border: 1px solid var(--ink); border-radius: 50%;
+  font-family: var(--mono); font-weight: 700;
+}
+.checklist li.hook { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.checklist li.hook .num { background: var(--blue-deep); color: #fff; }
+.checklist h3 { margin: 2px 0 4px; font-size: 1.02rem; }
+.checklist p { margin: 0; font-size: 0.93rem; color: #34322f; }
+
+/* Feature grid */
+.features { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+.feature {
+  padding: 20px; background: var(--paper-light);
+  border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.feature .tag {
+  display: inline-block; margin-bottom: 8px;
+  font-family: var(--mono); font-size: 0.7rem; color: var(--ink-soft);
+}
+.feature h3 { margin: 0 0 6px; font-size: 1.04rem; }
+.feature p { margin: 0; font-size: 0.92rem; color: #34322f; }
+.feature.wide { grid-column: 1 / -1; }
+
+/* Gap section */
+.split { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+.split-col { padding: 22px; border-radius: var(--radius); border: 1px solid var(--ink); }
+.split-col h3 { margin: 0 0 12px; font-size: 1rem; display: flex; align-items: center; gap: 8px; }
+.split-col ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.split-col li { position: relative; padding-left: 22px; font-size: 0.94rem; line-height: 1.6; }
+.split-col li::before { position: absolute; left: 0; top: 0; font-family: var(--mono); }
+.col-plaud { background: var(--paper-light); }
+.col-plaud li { color: var(--ink-soft); }
+.col-plaud li::before { content: "✓"; color: #1b7a58; }
+.col-left { background: var(--coral-soft); box-shadow: 4px 4px 0 var(--ink); }
+.col-left li::before { content: "□"; color: var(--ink); }
+.who {
+  font-family: var(--mono); font-size: 0.68rem; font-weight: 400;
+  padding: 2px 8px; border: 1px solid var(--ink); border-radius: 999px; background: var(--paper-light);
+}
+
+.quote {
+  margin: 28px 0 0; padding: 22px 24px;
+  border-left: 4px solid var(--blue); background: var(--blue-soft); border-radius: 0 var(--radius) var(--radius) 0;
+}
+.quote p { margin: 0; font-size: 1.12rem; font-weight: 750; line-height: 1.7; }
+.quote p + p { margin-top: 8px; font-size: 0.93rem; font-weight: 400; color: #34322f; }
+
+/* Connect */
+.connect {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 310px); gap: 24px;
+  align-items: start; margin-top: 24px;
+}
+.connect-steps { list-style: none; margin: 0; padding: 0; counter-reset: s; display: grid; gap: 10px; }
+.connect-steps li {
+  counter-increment: s; position: relative;
+  padding: 16px 18px 16px 62px;
+  background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.connect-steps li::before {
+  content: counter(s); position: absolute; left: 18px; top: 16px;
+  width: 30px; height: 30px; display: grid; place-items: center;
+  border: 1px solid var(--ink); border-radius: 50%; background: var(--paper);
+  font-family: var(--mono); font-weight: 700; font-size: 0.86rem;
+}
+.connect-steps li.key { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.connect-steps li.key::before { background: var(--blue-deep); color: #fff; }
+.connect-steps b { display: block; font-size: 1rem; line-height: 1.5; }
+.connect-steps span { display: block; margin-top: 4px; font-size: 0.9rem; color: #34322f; line-height: 1.7; }
+
+.mock {
+  padding: 18px; background: var(--paper-light);
+  border: 1px solid var(--ink); border-radius: var(--radius); box-shadow: 6px 6px 0 var(--blue);
+}
+.mock-head { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 12px; align-items: start; }
+.mock-mark {
+  display: grid; place-items: center; width: 44px; height: 44px;
+  border-radius: 10px; background: var(--paper); font-weight: 900; font-size: 1.15rem;
+}
+.mock-title { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 1.05rem; }
+.mock-state {
+  padding: 1px 8px; border-radius: 999px; background: var(--paper);
+  font-size: 0.7rem; font-weight: 500; color: var(--ink-soft);
+}
+.mock-desc { margin: 4px 0 0; font-size: 0.82rem; color: var(--ink-soft); line-height: 1.6; }
+.mock-box {
+  margin: 14px 0 10px; padding: 12px 14px;
+  border: 1px solid var(--ui-line); border-radius: 8px; font-size: 0.86rem; font-weight: 650;
+}
+.mock-btn {
+  display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px;
+  border-radius: 8px; background: var(--blue-deep); color: #fff; font-weight: 700; font-size: 0.92rem;
+}
+.mock-foot { margin-top: 8px; text-align: center; font-size: 0.76rem; color: var(--ink-soft); }
+
+.asks { list-style: none; margin: 12px 0 18px; padding: 0; display: grid; gap: 8px; }
+.asks li {
+  padding: 12px 16px; font-size: 0.94rem; line-height: 1.7;
+  background: var(--blue-soft); border: 1px solid rgba(50, 115, 215, 0.28);
+  border-radius: 12px 12px 12px 3px;
+}
+
+/* Tables */
+.table-wrap {
+  margin: 20px 0 8px; overflow-x: auto; -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--ink); border-radius: var(--radius); background: var(--paper-light);
+}
+table { width: 100%; border-collapse: collapse; font-size: 0.9rem; line-height: 1.6; }
+th, td { padding: 12px 14px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--ui-line); }
+thead th { background: var(--ink); color: #fff; font-weight: 700; font-size: 0.82rem; white-space: nowrap; }
+tbody th { font-weight: 700; white-space: nowrap; background: var(--paper); }
+tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
+td.simy { background: var(--blue-soft); }
+thead th.simy { background: var(--blue-deep); }
+.t-wide { min-width: 640px; }
+.t-models { min-width: 760px; }
+.t-price td:nth-child(2) { white-space: nowrap; }
+.scroll-hint { display: none; margin: 0 0 12px; font-size: 0.76rem; color: var(--ink-faint); }
+
+.note {
+  margin: 16px 0 0; padding: 14px 16px;
+  background: var(--paper-light); border: 1px dashed var(--ink-faint); border-radius: var(--radius-sm);
+  font-size: 0.88rem; color: #34322f;
+}
+.note b { color: var(--ink); }
+
+/* Sample comparison */
+.sample { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 16px; margin-top: 24px; align-items: start; }
+.sheet { padding: 20px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); }
+.sheet-label {
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;
+  font-family: var(--mono); font-size: 0.72rem; color: var(--ink-soft);
+}
+.sheet dl { margin: 0; font-size: 0.88rem; line-height: 1.65; }
+.sheet dt { margin-top: 10px; font-weight: 700; }
+.sheet dt:first-child { margin-top: 0; }
+.sheet dd { margin: 2px 0 0; color: #34322f; }
+.outs { display: grid; gap: 10px; }
+.out { padding: 14px 16px; background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius); }
+.out-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 6px; }
+.out-head b { font-size: 0.92rem; }
+.out p { margin: 0; font-size: 0.86rem; color: #34322f; line-height: 1.7; }
+.out.you { background: #fff8e3; }
+.pill {
+  font-family: var(--mono); font-size: 0.66rem; white-space: nowrap;
+  padding: 2px 8px; border-radius: 999px; border: 1px solid var(--ink); background: var(--paper);
+}
+.pill.run { background: var(--blue-deep); color: #fff; }
+.pill.you { background: var(--yellow); }
+.pill.ok { background: var(--mint); }
+.sample-foot { margin-top: 18px; font-weight: 700; }
+
+/* Use cases */
+.cases { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+.case { padding: 22px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); }
+.case h3 { margin: 0 0 4px; font-size: 1.06rem; }
+.case .device { margin: 0 0 12px; font-family: var(--mono); font-size: 0.72rem; color: var(--blue-deep); }
+.case p { margin: 0 0 8px; font-size: 0.9rem; color: #34322f; }
+.case ul { margin: 0; padding-left: 1.1em; font-size: 0.9rem; line-height: 1.7; }
+
+/* Lists */
+.plain-list { margin: 16px 0 0; padding-left: 1.2em; }
+.plain-list li { margin-bottom: 10px; }
+
+/* FAQ */
+.faq { margin-top: 20px; border-top: 1px solid var(--ink); }
+.faq details { border-bottom: 1px solid var(--ui-line); }
+.faq summary {
+  list-style: none; cursor: pointer;
+  display: grid; grid-template-columns: 28px minmax(0, 1fr) 20px; gap: 10px; align-items: start;
+  padding: 18px 4px; font-weight: 700; line-height: 1.6;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::before { content: "Q"; font-family: var(--mono); color: var(--blue-deep); }
+.faq summary::after {
+  content: "+"; font-family: var(--mono); font-size: 1.1rem; line-height: 1.4; text-align: right;
+  transition: transform 0.2s;
+}
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq .a { padding: 0 4px 18px 42px; font-size: 0.94rem; color: #34322f; }
+.faq .a p { margin: 0; }
+
+/* Closing CTA */
+.closing { background: var(--ink); color: #fff; border-top: 1px solid var(--ink); }
+.closing-inner {
+  display: grid; grid-template-columns: minmax(0, 1.2fr) auto; gap: 32px; align-items: center;
+  padding: clamp(48px, 7vw, 88px) 0;
+}
+.closing h2 { color: #fff; margin: 0 0 12px; font-size: clamp(1.6rem, 3.4vw, 2.5rem); }
+.closing p { margin: 0; color: rgba(255, 255, 255, 0.8); }
+.closing .cta-row { margin-top: 0; }
+.closing .btn-primary { box-shadow: 4px 4px 0 var(--mint); border-color: #fff; }
+.closing .btn-primary:hover { box-shadow: 5px 5px 0 var(--mint); }
+.closing .btn-ghost { background: transparent; color: #fff; border-color: rgba(255, 255, 255, 0.5); }
+.closing .btn-ghost:hover { background: rgba(255, 255, 255, 0.08); }
+
+/* Footer */
+.site-footer { padding: 36px 0 48px; font-size: 0.82rem; color: var(--ink-soft); }
+.footer-links { display: flex; flex-wrap: wrap; gap: 4px 20px; margin: 0 0 18px; padding: 0; list-style: none; }
+.footer-links a { display: inline-block; padding: 6px 0; text-decoration: none; color: var(--ink); }
+.footer-links a:hover { text-decoration: underline; }
+.site-footer p { margin: 0 0 6px; line-height: 1.7; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1080px) {
+  .guide { grid-template-columns: minmax(0, 1fr); }
+  .toc { display: none; }
+  .toc-mobile {
+    display: block; margin: 0 0 32px;
+    background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius);
+  }
+  .toc-mobile summary {
+    cursor: pointer; list-style: none; padding: 14px 18px;
+    font-family: var(--mono); font-size: 0.8rem; display: flex; justify-content: space-between;
+  }
+  .toc-mobile summary::-webkit-details-marker { display: none; }
+  .toc-mobile summary::after { content: "+"; }
+  .toc-mobile[open] summary::after { content: "−"; }
+  .toc-mobile ol { margin: 0; padding: 0 18px 14px 40px; font-size: 0.9rem; }
+  .toc-mobile li { padding: 3px 0; }
+  .toc-mobile a { display: inline-block; padding: 4px 0; text-decoration: none; }
+  .article { max-width: none; }
+}
+
+@media (max-width: 960px) {
+  .hero-inner { grid-template-columns: minmax(0, 1fr); }
+  .hero-visual { max-width: 580px; }
+  .relay { box-shadow: 6px 6px 0 var(--ink); }
+}
+
+@media (max-width: 860px) {
+  .sample { grid-template-columns: minmax(0, 1fr); }
+  .connect { grid-template-columns: minmax(0, 1fr); }
+  .mock { max-width: 360px; }
+  .closing-inner { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 640px) {
+  body { font-size: 15.5px; }
+  .brand-sub, .header-link { display: none; }
+  .header-cta { padding: 0 14px; }
+  .features, .split, .cases { grid-template-columns: minmax(0, 1fr); }
+  .checklist li { grid-template-columns: 40px minmax(0, 1fr); gap: 12px; padding: 16px; }
+  .checklist .num { width: 36px; height: 36px; font-size: 0.86rem; }
+  .connect-steps li { padding-left: 56px; }
+  .connect-steps li::before { left: 14px; }
+  .btn { width: 100%; }
+  .scroll-hint { display: block; }
+  .faq .a { padding-left: 4px; }
+  .step { grid-template-columns: 24px minmax(0, 1fr) auto; gap: 8px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .step, .handoff { animation: none; opacity: 1; transform: none; }
+  .rec-dot, .bar::after { animation: none; }
+  .btn, .header-cta { transition: none; }
+}
+
+/* ---------- Guide v2: scene cards, timeline, folds ---------- */
+.intro { max-width: 34em; margin: 0 0 8px; font-size: 1.02rem; color: #34322f; }
+.scenes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 22px; }
+.scenes.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.scene {
+  position: relative; padding: 22px 20px 20px;
+  background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius);
+  min-height: 168px; display: flex; flex-direction: column; gap: 8px;
+}
+.scene .k { font-family: var(--mono); font-size: 0.7rem; color: var(--ink-faint); letter-spacing: 0.04em; }
+.scene b { display: block; font-size: 1.22rem; line-height: 1.35; letter-spacing: -0.01em; }
+.scene p { margin: 0; font-size: 0.9rem; line-height: 1.65; color: #34322f; }
+.scene .mark {
+  position: absolute; right: 16px; top: 14px;
+  width: 30px; height: 30px; display: grid; place-items: center;
+  border: 1px solid var(--ink); border-radius: 50%; font-family: var(--mono); font-size: 0.9rem; font-weight: 700;
+}
+.scene.pain { background: var(--coral-soft); }
+.scene.pain .mark { background: var(--paper-light); }
+.scene.wish { background: var(--blue-soft); border-color: var(--blue-deep); box-shadow: 4px 4px 0 var(--blue); }
+.scene.wish .mark { background: var(--blue-deep); color: #fff; border-color: var(--blue-deep); }
+.scene.wish.you { background: #fff8e3; border-color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+.scene.wish.you .mark { background: var(--yellow); color: var(--ink); border-color: var(--ink); }
+.scene-foot { margin: 14px 0 0; font-size: 0.9rem; color: var(--ink-soft); }
+.scene-foot b { color: var(--ink); }
+
+/* Timeline */
+.tl-wrap {
+  margin-top: 22px; padding: 22px 20px 18px;
+  background: var(--paper-light); border: 1px solid var(--ink); border-radius: var(--radius);
+}
+.tl-row { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 14px; align-items: center; }
+.tl-row + .tl-row { margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--line-soft); }
+.tl-who {
+  font-family: var(--mono); font-size: 0.72rem; font-weight: 700; text-align: center;
+  padding: 6px 4px; border: 1px solid var(--ink); border-radius: 999px; background: var(--paper);
+}
+.tl-who.simy { background: var(--blue-deep); color: #fff; border-color: var(--blue-deep); }
+.tl-who.you { background: var(--yellow); }
+.tl { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; }
+.tl li {
+  position: relative; min-height: 64px; padding: 10px 8px 8px;
+  border-radius: var(--radius-sm); font-size: 0.8rem; line-height: 1.4; font-weight: 650;
+  display: flex; flex-direction: column; justify-content: flex-start; gap: 4px;
+}
+.tl li small { display: block; font-weight: 400; font-size: 0.7rem; color: var(--ink-soft); }
+.tl li.on { background: var(--paper); border: 1px solid var(--line-soft); color: var(--ink-soft); }
+.tl li.gap { border: 1.5px dashed var(--ink-faint); color: var(--ink-faint); background: transparent; }
+.tl li.gap::after { content: "？"; position: absolute; right: 8px; top: 6px; font-family: var(--mono); }
+.tl li.run { background: var(--blue-soft); border: 1px solid var(--blue-deep); color: var(--ink); }
+.tl li.run::after { content: "✓"; position: absolute; right: 8px; top: 6px; font-family: var(--mono); color: var(--blue-deep); }
+.tl li.you { background: #fff8e3; border: 1px solid var(--ink); color: var(--ink); }
+.tl li.you::after { content: "vous"; position: absolute; right: 8px; top: 7px; font-family: var(--mono); font-size: 0.62rem; }
+.tl li.blank { border: 0; background: transparent; }
+.tl-note { margin: 14px 0 0; font-size: 0.86rem; color: #34322f; }
+.tl-note b { color: var(--ink); }
+.three { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 0; padding: 0; list-style: none; }
+.three li {
+  padding: 8px 14px; font-weight: 800; font-size: 1rem;
+  background: var(--ink); color: #fff; border-radius: 999px;
+}
+
+/* 3-step start */
+.steps3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 22px; counter-reset: st; }
+.steps3 li {
+  counter-increment: st; list-style: none; position: relative;
+  padding: 54px 18px 18px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius);
+}
+.steps3 li::before {
+  content: counter(st); position: absolute; left: 18px; top: 16px;
+  width: 28px; height: 28px; display: grid; place-items: center;
+  border: 1px solid var(--ink); border-radius: 50%; background: var(--paper);
+  font-family: var(--mono); font-weight: 700; font-size: 0.84rem;
+}
+.steps3 li.key { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.steps3 li.key::before { background: var(--blue-deep); color: #fff; }
+.steps3 b { display: block; font-size: 1.02rem; line-height: 1.45; }
+.steps3 span { display: block; margin-top: 6px; font-size: 0.88rem; color: #34322f; line-height: 1.65; }
+.steps3 { padding: 0; }
+
+/* Industry grid */
+.ind { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 22px; }
+.ind-card { padding: 18px 18px 14px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); }
+.ind-card h3 { margin: 0 0 10px; font-size: 1.04rem; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.ind-card h3 small { font-family: var(--mono); font-size: 0.68rem; font-weight: 400; color: var(--blue-deep); white-space: normal; }
+.ind-card h3 { flex-wrap: wrap; }
+.ind-rows { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+.ind-rows li { display: grid; grid-template-columns: minmax(0, 1fr) 14px minmax(0, 1.4fr); gap: 6px; align-items: center; font-size: 0.86rem; line-height: 1.5; }
+.ind-rows li span:first-child { color: var(--ink-soft); }
+.ind-rows li span:nth-child(2) { font-family: var(--mono); color: var(--blue-deep); text-align: center; }
+.ind-rows li span:last-child { font-weight: 650; }
+
+/* Folded reference */
+.fold { margin-top: 12px; border: 1px solid var(--ui-line); border-radius: var(--radius); background: var(--paper-light); }
+.fold > summary {
+  list-style: none; cursor: pointer; padding: 16px 18px;
+  display: grid; grid-template-columns: minmax(0, 1fr) 20px; gap: 10px; align-items: center;
+  font-weight: 750; font-size: 1.02rem; line-height: 1.5;
+}
+.fold > summary::-webkit-details-marker { display: none; }
+.fold > summary::after { content: "+"; font-family: var(--mono); font-size: 1.1rem; text-align: right; grid-column: 2; grid-row: 1; }
+.fold > summary small { grid-column: 1; }
+.fold[open] > summary::after { content: "−"; }
+.fold > summary small { display: block; margin-top: 2px; font-weight: 400; font-size: 0.82rem; color: var(--ink-soft); }
+.fold-body { padding: 0 18px 18px; font-size: 0.93rem; }
+.fold-body h3 { margin: 18px 0 8px; font-size: 1rem; }
+.fold-body h3:first-child { margin-top: 0; }
+.fold-body p { margin: 0 0 10px; }
+.fold-body .table-wrap { margin: 12px 0 6px; }
+.fold-body .plain-list { margin-top: 8px; }
+.fold-body .plain-list li { margin-bottom: 6px; }
+
+@media (max-width: 960px) {
+  .scenes, .scenes.four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tl { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .tl li.blank { display: none; }
+}
+@media (max-width: 640px) {
+  .scenes, .scenes.four, .steps3, .ind { grid-template-columns: minmax(0, 1fr); }
+  .scene { min-height: 0; }
+  .tl-row { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .tl-who { justify-self: start; }
+  .tl { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ind-rows li { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .ind-rows li span:nth-child(2) { display: none; }
+  .ind-rows li { padding: 6px 0; border-bottom: 1px dashed var(--line-soft); }
+}
+
+/* Next read */
+.next-read { margin-top: clamp(40px, 5vw, 64px); padding-top: 24px; border-top: 1px solid var(--ink); }
+.next-read h2 { font-size: 1.2rem; margin: 0 0 14px; }
+.next-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.next-grid a { display: block; padding: 14px 16px; background: var(--paper-light); border: 1px solid var(--ui-line); border-radius: var(--radius); text-decoration: none; color: var(--ink); }
+.next-grid a:hover { border-color: var(--ink); box-shadow: 4px 4px 0 var(--blue); }
+.next-grid b { display: block; font-size: 0.96rem; }
+.next-grid span { display: block; margin-top: 4px; font-size: 0.82rem; color: var(--ink-soft); }
+.next-all { display: inline-block; margin-top: 12px; font-weight: 700; color: var(--blue-deep); }
+@media (max-width: 760px) { .next-grid { grid-template-columns: minmax(0, 1fr); } }
+
+.lang-switch { position: relative; }
+.lang-switch > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 10px; border: 1px solid var(--ui-line); border-radius: 999px; background: var(--paper-light); font-size: 0.8rem; font-weight: 700; }
+.lang-switch > summary::-webkit-details-marker { display: none; }
+.lang-switch ul { position: absolute; right: 0; top: calc(100% + 6px); z-index: 30; margin: 0; padding: 6px; list-style: none; min-width: 150px; background: var(--paper-light); border: 1px solid var(--ink); border-radius: 10px; box-shadow: 4px 4px 0 var(--ink); }
+.lang-switch li a { display: block; padding: 8px 10px; border-radius: 6px; color: var(--ink); text-decoration: none; font-size: 0.88rem; }
+.lang-switch li a:hover, .lang-switch li a[aria-current] { background: var(--blue-soft); }
+@media (max-width: 960px) { .brand-sub { display: none; } .header-actions { gap: 4px; } .lang-switch > summary { padding: 0 8px; } }
+@media (max-width: 640px) { .lang-switch .ls-label { display: none; } .lang-switch > summary { padding: 0 10px; } }
+/* Typography: balanced headings, phrase-aware Japanese breaks, tighter mobile headings */
+h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
+:lang(ja) h1, :lang(ja) h2, :lang(ja) h3, :lang(ja) .eyebrow, :lang(ja) .scene b, :lang(ja) .lead { word-break: auto-phrase; }
+.lead, .intro, .scene p { text-wrap: pretty; }
+@media (max-width: 640px) { h2 { font-size: 1.32rem; line-height: 1.4; } .eyebrow { font-size: 0.72rem; } .closing h2 { font-size: 1.5rem; } }
+@media (max-width: 400px) { h2 { font-size: 1.22rem; } .closing h2 { font-size: 1.34rem; } }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://simy.one/guides/fr/kimi.html#article",
+      "headline": "Guide Kimi : Kimi K3, c'est quoi ? Utiliser Kimi (Moonshot AI), API et Kimi Code",
+      "description": "Kimi (Moonshot AI) : pays d'origine, différences entre Kimi K3 et K2, utilisation du chat, Kimi Code CLI, API compatible Anthropic, licence, exécution locale et lieu de stockage des données. Comment SIMY fait avancer ce qui reste après la réponse de Kimi : responsables, échéances et partages.",
+      "inLanguage": "fr",
+      "datePublished": "2026-10-01",
+      "dateModified": "2026-10-01",
+      "mainEntityOfPage": "https://simy.one/guides/fr/kimi.html",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://simy.one/ogp.png",
+        "width": 1200,
+        "height": 630
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "SIMY",
+        "url": "https://simy.one/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "AwakApp Inc.",
+        "url": "https://www.awak.app/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://simy.one/simy-icon-square.png"
+        }
+      },
+      "about": [
+        {
+          "@type": "Thing",
+          "name": "Kimi"
+        },
+        {
+          "@type": "Thing",
+          "name": "Moonshot AI"
+        },
+        {
+          "@type": "Thing",
+          "name": "Kimi K3"
+        },
+        {
+          "@type": "Thing",
+          "name": "Grand modèle de langage"
+        }
+      ],
+      "citation": [
+        "https://huggingface.co/moonshotai/Kimi-K3",
+        "https://huggingface.co/moonshotai/Kimi-K3/blob/main/LICENSE",
+        "https://platform.kimi.ai/docs/pricing/chat",
+        "https://platform.kimi.ai/docs/agreement/userprivacy",
+        "https://www.kimi.com/help/others/data-usage",
+        "https://github.com/MoonshotAI/kimi-code"
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "SIMY",
+          "item": "https://simy.one/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://simy.one/guides/fr/index.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Guide Kimi",
+          "item": "https://simy.one/guides/fr/kimi.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Qu'est-ce que Kimi ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Kimi est l'IA conversationnelle et la famille de grands modèles de langage (LLM) développées par l'entreprise chinoise Moonshot AI (Yuezhi Anmian). On l'utilise de trois façons : le chat sur kimi.com ou l'appli, l'API, et les poids publiés des modèles."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Kimi est une IA de quel pays ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "C'est une IA chinoise. Elle est développée par Moonshot AI (Yuezhi Anmian), à Pékin ; la version chinoise de Kimi est exploitée par une société pékinoise, et l'API internationale est fournie par MOONSHOT AI PTE. LTD., une société de Singapour."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Qu'est-ce que Kimi K3 ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Kimi K3 est la dernière génération de modèles de Moonshot AI, publiée en juillet 2026 (octobre 2026). Il gère un contexte d'un million de jetons, accepte images et vidéos en plus du texte, et ses poids sont publiés sous sa propre licence, la Kimi K3 License."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Quelle différence entre Kimi K3 et Kimi K2 ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "K3 est le modèle phare actuel, avec longs contextes et entrée image et vidéo, publié sous la Kimi K3 License. La famille K2 est la génération précédente ; son modèle dédié au code, k2.7-code, a un prix d'API inférieur à celui de K3."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Kimi est-il gratuit ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Le chat sur kimi.com et l'appli se commencent gratuitement. Des abonnements payants augmentent les quotas, et l'API est facturée à l'usage."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Qu'est-ce que Kimi Code ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Un agent de code qui tourne dans le terminal, publié par Moonshot AI sous licence MIT. On s'y connecte avec un compte Kimi Code ou une clé API, et il s'utilise aussi avec le quota de l'abonnement."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Peut-on utiliser les modèles Kimi depuis Claude Code ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Oui. L'API Kimi a un endpoint compatible Anthropic, et la procédure pour remplacer la destination et la clé API de Claude Code est décrite officiellement."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Peut-on faire tourner Kimi en local, sur son ordinateur ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Faire tourner le dernier Kimi K3 sur un ordinateur personnel n'est pas réaliste. Dans la bibliothèque officielle d'Ollama, Kimi porte le tag cloud et tourne sur le cloud d'Ollama. Pour l'héberger soi-même, il faut exploiter les poids publiés sur des serveurs GPU haut de gamme."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Où sont stockées les données saisies dans Kimi ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Selon les explications officielles, le chat Kimi (aide en chinois) stocke les données sur des serveurs en Chine, et l'API internationale sur des serveurs à Singapour. Pour des données confidentielles, vérifiez vos règles internes et le texte de chaque politique."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Kimi fonctionne-t-il en français ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "On peut l'interroger en français et recevoir ses réponses en français. Mais la fiche officielle du modèle ne précise pas les langues prises en charge : vérifiez la qualité sur vos documents de travail avant usage."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "SIMY fonctionne-t-il avec Kimi ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Non. Pour l'instant, SIMY ne se connecte pas à Kimi : il tourne sur votre compte ChatGPT (Codex) et sur Claude Code installé sur votre ordinateur. Les points clés et le code produits avec Kimi peuvent être apportés tels quels en réunion ou dans un chat."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Faut-il demander à SIMY, à chaque fois, de prendre la suite de ce que Kimi a écrit ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Non. SIMY capte lui-même, dans vos comptes rendus et vos chats, ce qui a été décidé, avec responsables et échéances. Il apprend votre façon de faire dans vos conversations et ne vous renvoie que ce qui demande une décision."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Aller au contenu</a>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="/?lang=fr">
+      <img src="/simy-icon-56.png" alt="SIMY" width="28" height="28">
+      <span aria-hidden="true">SIMY</span>
+      <span class="brand-sub">Guide Kimi</span>
+    </a>
+    <nav class="header-actions" aria-label="Compte">
+      <details class="lang-switch"><summary aria-label="Language: Français"><span aria-hidden="true">🌐</span> <span class="ls-label">Français</span></summary><ul><li><a href="/guides/kimi.html" hreflang="ja" lang="ja">日本語</a></li><li><a href="/guides/en/kimi.html" hreflang="en" lang="en">English</a></li><li><a href="/guides/zh-hans/kimi.html" hreflang="zh-Hans" lang="zh-Hans">中文</a></li><li><a href="/guides/es/kimi.html" hreflang="es" lang="es">Español</a></li><li><a href="/guides/fr/kimi.html" hreflang="fr" lang="fr" aria-current="page">Français</a></li><li><a href="/guides/hi/kimi.html" hreflang="hi" lang="hi">हिन्दी</a></li></ul></details>
+      <a class="header-link" href="/download/fr.html">Télécharger</a>
+      <a class="header-link" href="https://app.simy.one/login?lang=fr&amp;locale=fr&amp;region=fr">Connexion</a>
+      <a class="header-cta" href="https://app.simy.one/signup?lang=fr&amp;locale=fr&amp;region=fr&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=kimi_guide_fr&amp;utm_content=header">Choisir une offre</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" aria-labelledby="page-title">
+    <div class="wrap hero-inner">
+      <div>
+        <ol class="crumbs" aria-label="Fil d'Ariane">
+          <li><a href="https://simy.one/">SIMY</a></li>
+          <li><a href="/guides/fr/index.html">Guides</a></li>
+          <li aria-current="page">Guide Kimi</li>
+        </ol>
+        <p class="eyebrow">Le guide pour celles et ceux qui utilisent Kimi (Moonshot AI)</p>
+        <h1 id="page-title">
+          <span class="line">Kimi a fini d'écrire ?</span>
+          <span class="line hl">Ne laissez pas</span>
+          <span class="line">la suite en plan.</span>
+        </h1>
+        <p class="lead">Kimi K3 lit les longs documents et écrit du code. Mais « qui relit, et qui prévient qui, quand » reste entre vos mains. SIMY prend la suite.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="https://app.simy.one/signup?lang=fr&amp;locale=fr&amp;region=fr&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=kimi_guide_fr&amp;utm_content=hero">Choisir une offre et commencer <span class="arrow" aria-hidden="true">↗</span></a>
+          <a class="btn btn-ghost" href="#connect">Voir comment connecter <span class="arrow" aria-hidden="true">↓</span></a>
+        </div>
+        <ul class="hero-points">
+          <li>Kimi garde les tâches où il excelle</li>
+          <li>SIMY capte réunions et chats</li>
+          <li>Tourne sur votre ChatGPT (Codex)</li>
+        </ul>
+      </div>
+
+      <div class="hero-visual">
+        <div class="relay" role="img" aria-label="Exemple : avant une revue de conception, Kimi lit un long cahier des charges, structure les points à trancher et écrit le code du correctif ; ensuite SIMY prépare la liste des corrections décidées et des responsables, la demande de relecture et le brouillon du point d'avancement pour le client, et seule la décision de livrer cette semaine vous revient">
+          <div class="relay-head" aria-hidden="true">
+            <span class="rec"><span class="rec-dot"></span><span class="rec-name">Revue_Ecran-paiement_1001</span></span>
+            <span>46:12</span>
+          </div>
+          <div class="relay-meta" aria-hidden="true">
+            <span class="chip">Kimi K3</span>
+            <span class="chip">Kimi Code</span>
+            <span class="chip">5 participants</span>
+          </div>
+          <ol class="relay-steps" aria-hidden="true">
+            <li class="step s-done s-plaud"><span class="no">01</span><span class="what">Lecture du cahier des charges<small>le document entier, d'un coup</small></span><span class="status">Kimi ✓</span></li>
+            <li class="step s-done s-plaud"><span class="no">02</span><span class="what">Points à trancher<small>changements et impacts en tableau</small></span><span class="status">Kimi ✓</span></li>
+            <li class="step s-done s-plaud"><span class="no">03</span><span class="what">Code du correctif<small>avec Kimi Code, dans le dépôt local</small></span><span class="status">Kimi ✓</span></li>
+            <li class="handoff">Kimi s'arrête ici / SIMY prend le relais</li>
+            <li class="step s-done"><span class="no">04</span><span class="what">Corrections et responsables<small>qui, quoi, pour quand</small></span><span class="status">Fait</span></li>
+            <li class="step s-run"><span class="no">05</span><span class="what">Demande de relecture<small>publiée dans le chat après accord</small></span><span class="status">Autorun</span><span class="bar"></span></li>
+            <li class="step s-next"><span class="no">06</span><span class="what">Point d'avancement client<small>brouillon Gmail, dans votre style</small></span><span class="status">Ensuite</span></li>
+            <li class="step s-you"><span class="no">07</span><span class="what">Livrer cette semaine ?<small>seule la décision vous revient</small></span><span class="status">À vous</span></li>
+          </ol>
+          <div class="relay-foot" aria-hidden="true"><strong>À vous de décider et d'envoyer. C'est tout.</strong></div>
+        </div>
+        <p class="caption">* Écran fictif, à titre d'illustration</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap guide">
+    <nav class="toc" aria-label="Sommaire">
+      <p class="toc-title">Sommaire</p>
+      <ol>
+        <li><a href="#scene"><span>01</span>Une fois le texte écrit, ça se passe comme ça ?</a></li>
+        <li><a href="#wish"><span>02</span>Ce que vous vouliez vraiment</a></li>
+        <li><a href="#gap"><span>03</span>Là où Kimi s'arrête</a></li>
+        <li><a href="#connect"><span>04</span>SIMY fait le lien</a></li>
+        <li><a href="#sample"><span>05</span>Une réunion, deux résultats</a></li>
+        <li><a href="#usecases"><span>06</span>Par métier : Kimi et ce que SIMY produit</a></li>
+        <li><a href="#start"><span>07</span>Démarrer en 3 étapes</a></li>
+        <li><a href="#reference"><span>08</span>Kimi, K3, API, Kimi Code</a></li>
+        <li><a href="#faq"><span>09</span>Questions fréquentes</a></li>
+        <li><a href="#sources"><span>10</span>Sources</a></li>
+      </ol>
+    </nav>
+
+    <article class="article">
+      <details class="toc-mobile">
+        <summary>Sommaire</summary>
+        <ol>
+          <li><a href="#scene">Une fois le texte écrit, ça se passe comme ça ?</a></li>
+          <li><a href="#wish">Ce que vous vouliez vraiment</a></li>
+          <li><a href="#gap">Là où Kimi s'arrête</a></li>
+          <li><a href="#connect">SIMY fait le lien</a></li>
+          <li><a href="#sample">Une réunion, deux résultats</a></li>
+          <li><a href="#usecases">Par métier : Kimi et ce que SIMY produit</a></li>
+          <li><a href="#start">Démarrer en 3 étapes</a></li>
+          <li><a href="#reference">Kimi, K3, API, Kimi Code</a></li>
+          <li><a href="#faq">Questions fréquentes</a></li>
+          <li><a href="#sources">Sources</a></li>
+        </ol>
+      </details>
+
+      <p class="byline"><span>Dernière mise à jour : <time datetime="2026-10-01">1er octobre 2026</time></span><span>Publié par SIMY (AwakApp Inc.)</span></p>
+
+      <!-- 01 -->
+      <section class="sec" id="scene" aria-labelledby="h-scene">
+        <span class="sec-label">01 / AFTER THE ANSWER</span>
+        <h2 id="h-scene">Quand Kimi a fini d'écrire, ça se passe comme ça ?</h2>
+        <p class="intro">Lire de longs documents, corriger du code : Kimi a tout bouclé d'un trait. Et pourtant, voici ce qui arrive ensuite.</p>
+        <div class="scenes">
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">1</span>
+            <span class="k">Le lendemain de la lecture</span>
+            <b>On a conclu quoi ?</b>
+            <p>Les points clés du long document sont sortis. Mais ce qui a été décidé en réunion dort dans une autre note.</p>
+          </div>
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">2</span>
+            <span class="k">Le soir du correctif</span>
+            <b>Qui relit ?</b>
+            <p>Le correctif est commité. La demande de relecture et le message au client, personne ne les a écrits.</p>
+          </div>
+          <div class="scene pain">
+            <span class="mark" aria-hidden="true">3</span>
+            <span class="k">La semaine d'après</span>
+            <b>Où en est-on ?</b>
+            <p>Responsables et délais ont été fixés à l'oral. Au final, c'est toujours vous qui vérifiez.</p>
+          </div>
+        </div>
+        <p class="scene-foot">Lire et écrire, Kimi le fait d'un trait. <b>Que le travail avance ou non se joue une fois le texte écrit.</b></p>
+      </section>
+
+      <!-- 02 -->
+      <section class="sec" id="wish" aria-labelledby="h-wish">
+        <span class="sec-label">02 / WHAT YOU REALLY WANTED</span>
+        <h2 id="h-wish">Ce que vous vouliez vraiment, quand Kimi a fini d'écrire</h2>
+        <p class="intro">Même réunion, même Kimi. Mais dès le texte écrit, vous auriez voulu ceci.</p>
+        <div class="scenes four">
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">À la fin de la réunion</span>
+            <b>Corrections et responsables</b>
+            <p>Lecture et code restent à Kimi. Corrections décidées, responsables et échéances sont déjà alignés.</p>
+          </div>
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">Une fois le code écrit</span>
+            <b>Demandes déjà rédigées</b>
+            <p>La demande de relecture et le point d'avancement client sont prêts, dans votre style.</p>
+          </div>
+          <div class="scene wish">
+            <span class="mark" aria-hidden="true">✓</span>
+            <span class="k">Avant l'échéance</span>
+            <b>Les blocages signalés</b>
+            <p>Réponses et relectures attendues : SIMY vous prévient avant la réunion suivante.</p>
+          </div>
+          <div class="scene wish you">
+            <span class="mark" aria-hidden="true">!</span>
+            <span class="k">Ce qui vous revient</span>
+            <b>La décision, rien d'autre</b>
+            <p>« Livre-t-on cette semaine ? » Une seule question vous revient.</p>
+          </div>
+        </div>
+        <p class="scene-foot">C'est ce qui se passe <b>dès la réunion qui suit la connexion de vos réunions et chats à SIMY</b>. Kimi continue de faire ce qu'il fait le mieux.</p>
+      </section>
+
+      <!-- 03 -->
+      <section class="sec" id="gap" aria-labelledby="h-gap">
+        <span class="sec-label">03 / WHERE KIMI STOPS</span>
+        <h2 id="h-gap">Là où la réponse de Kimi s'arrête</h2>
+        <p class="intro">Kimi excelle à « lire et écrire ce qu'on lui demande ». La suite, personne ne la prend en charge.</p>
+        <div class="tl-wrap" role="img" aria-label="Frise : Kimi gère la question, la lecture de longs documents, puis le code ou le brouillon ; responsables et échéances, demande de relecture, point d'avancement et suivi avant la prochaine réunion restent vides">
+          <div class="tl-row">
+            <span class="tl-who">Kimi</span>
+            <ol class="tl">
+              <li class="on">Question<small>vous demandez</small></li>
+              <li class="on">Lecture de longs textes<small>le document entier</small></li>
+              <li class="on">Code, brouillon<small>aussi avec Kimi Code</small></li>
+              <li class="gap">Qui, pour quand</li>
+              <li class="gap">Demande de relecture</li>
+              <li class="gap">Point d'avancement</li>
+              <li class="gap">Suivi d'ici la prochaine fois</li>
+            </ol>
+          </div>
+        </div>
+        <p class="caption">* Déroulé simplifié, à titre d'illustration</p>
+        <p class="tl-note"><b>Chat Kimi, API ou Kimi Code : ça s'arrête au même endroit.</b> Les réponses, on peut en obtenir autant qu'on veut. Mais c'est toujours vous qui demandez, et vous qui vérifiez que c'est fait.</p>
+      </section>
+
+      <!-- 04 -->
+      <section class="sec" id="connect" aria-labelledby="h-connect">
+        <span class="sec-label">04 / CONNECT</span>
+        <h2 id="h-connect">SIMY fait le lien : gardez Kimi, confiez la suite</h2>
+        <p class="intro">SIMY remplit les quatre cases vides. Une seule vous revient : la décision.</p>
+        <div class="tl-wrap" role="img" aria-label="Frise : question, lecture de longs textes, code ou brouillon restent à Kimi ; SIMY prend en charge responsables et échéances, demande de relecture et point d'avancement, et seule la décision vous revient">
+          <div class="tl-row">
+            <span class="tl-who">Kimi</span>
+            <ol class="tl">
+              <li class="on">Question</li>
+              <li class="on">Lecture de longs textes</li>
+              <li class="on">Code, brouillon</li>
+              <li class="blank"></li><li class="blank"></li><li class="blank"></li><li class="blank"></li>
+            </ol>
+          </div>
+          <div class="tl-row">
+            <span class="tl-who simy">SIMY</span>
+            <ol class="tl">
+              <li class="blank"></li><li class="blank"></li><li class="blank"></li>
+              <li class="run">Qui, pour quand<small>capté en réunion</small></li>
+              <li class="run">Demande de relecture<small>publiée après accord</small></li>
+              <li class="run">Point d'avancement<small>jusqu'au brouillon Gmail</small></li>
+              <li class="you">Décision<small>une seule question</small></li>
+            </ol>
+          </div>
+        </div>
+        <p class="caption">* Déroulé simplifié, à titre d'illustration</p>
+        <ul class="three" aria-label="Les trois atouts de SIMY">
+          <li>Capte réunions et chats</li>
+          <li>À votre façon</li>
+          <li>Seule la décision revient</li>
+        </ul>
+        <p class="tl-note">SIMY repère lui-même, dans vos comptes rendus et vos chats, le travail qui vient après. Il apprend de vos conversations les étapes et les vérifications que vous répétez, avance de la même façon et affiche dans My Actions ce qui est fait.</p>
+
+        <div class="connect">
+          <ol class="connect-steps">
+            <li><b>Inscrivez-vous à SIMY et connectez ChatGPT (Codex)</b><span>L'exécution cloud de SIMY tourne sur votre compte ChatGPT. L'usage de Codex reste dans les limites de votre offre ChatGPT.</span></li>
+            <li class="key"><b>Installez l'application de bureau SIMY</b><span>Claude Code, sur votre ordinateur, peut devenir l'exécutant de SIMY. Vos conversations Claude Code et Codex deviennent des « Suggestions de SIMY » pour le travail que vous répétez. Le contenu des conversations n'est pas stocké sur nos serveurs. <a href="/download/fr.html">Télécharger l'application</a></span></li>
+            <li><b>Connectez vos comptes rendus de réunion</b><span>Connectez Plaud, Notion ou d'autres depuis l'écran des intégrations. Les points clés résumés par Kimi, collez-les dans une réunion ou un chat : SIMY les capte.</span></li>
+          </ol>
+          <div>
+            <div class="mock" role="img" aria-label="Illustration de My Actions dans SIMY : parmi le travail capté en réunion, la liste des corrections décidées et des responsables est faite, la demande de relecture est en cours, et la décision de livrer cette semaine vous attend.">
+              <div class="mock-head" aria-hidden="true">
+                <span class="mock-mark">S</span>
+                <div>
+                  <div class="mock-title">My Actions <span class="mock-state">● 1 en attente de vous</span></div>
+                  <p class="mock-desc">Travail capté dans Revue_Ecran-paiement_1001</p>
+                </div>
+              </div>
+              <div class="mock-box" aria-hidden="true">Corrections et responsables ✓ / Demande de relecture (en cours) / Point d'avancement client (ensuite)</div>
+              <div class="mock-btn" aria-hidden="true">Décider : livrer cette semaine ?</div>
+              <div class="mock-foot" aria-hidden="true">Seul ce qui demande une décision vous revient</div>
+            </div>
+            <p class="caption">* Illustration de l'écran SIMY</p>
+          </div>
+        </div>
+        <p class="note"><b>SIMY et Kimi :</b> pour l'instant, SIMY ne se connecte pas à Kimi. SIMY lui-même tourne sur votre compte ChatGPT (Codex) et sur Claude Code installé sur votre ordinateur. Gardez Kimi pour la lecture, les brouillons et le code ; apportez ses résultats en réunion ou dans un chat, et SIMY fait avancer la suite.</p>
+      </section>
+
+      <!-- 05 -->
+      <section class="sec" id="sample" aria-labelledby="h-sample">
+        <span class="sec-label">05 / SAMPLE</span>
+        <h2 id="h-sample">Une réunion, deux résultats : la synthèse de Kimi et la suite préparée par SIMY</h2>
+        <p class="intro">Exemple : une revue de conception de 45 minutes sur la refonte de l'écran de paiement, synthétisée par Kimi. À gauche Kimi, à droite SIMY.</p>
+        <div class="sample">
+          <div class="sheet">
+            <div class="sheet-label"><span>Synthèse de Kimi (exemple)</span><span>Cahier des charges + notes de réunion</span></div>
+            <dl>
+              <dt>Conclusion</dt>
+              <dd>Remplacer le champ de saisie de carte par le nouveau SDK de paiement. L'ancien écran coexiste pendant un mois.</dd>
+              <dt>Impacts</dt>
+              <dd>Trois endroits : l'API de validation de commande, l'e-mail de reçu et le remboursement dans l'interface d'administration.</dd>
+              <dt>À trancher</dt>
+              <dd>Livrer à la fin de cette semaine, ou après la réunion d'équipe de la semaine prochaine.</dd>
+              <dt>À faire</dt>
+              <dd>Créer les clés de l'environnement de test, annoncer la date de bascule au client.</dd>
+            </dl>
+          </div>
+          <div class="outs">
+            <div class="out">
+              <div class="out-head"><b>Corrections et responsables</b><span class="pill ok">Fait</span></div>
+              <p>Remplacement du SDK : Martin, 6/10. Vérification des remboursements : Bernard, 7/10. Clés de test : infra, 3/10.</p>
+            </div>
+            <div class="out">
+              <div class="out-head"><b>Demande de relecture</b><span class="pill run">Autorun</span></div>
+              <p>« Voici la PR qui remplace le SDK de paiement. Merci de regarder en priorité l'impact sur les remboursements. » Publiée dans le chat après votre accord.</p>
+            </div>
+            <div class="out">
+              <div class="out-head"><b>Point d'avancement client</b><span class="pill">Ensuite</span></div>
+              <p>Dates de bascule possibles et maintien de l'ancien écran pendant un mois, dans votre style habituel. Enregistré en brouillon dans Gmail.</p>
+            </div>
+            <div class="out you">
+              <div class="out-head"><b>Votre décision</b><span class="pill you">À vous</span></div>
+              <p>Livrer à la fin de cette semaine, ou décaler à la semaine prochaine ? Seul ce qui demande une décision vous revient.</p>
+            </div>
+          </div>
+        </div>
+        <p class="sample-foot">Kimi lit et écrit, SIMY fait avancer. Livrer ou non, c'est toujours vous qui décidez.</p>
+      </section>
+
+      <!-- 06 -->
+      <section class="sec" id="usecases" aria-labelledby="h-usecases">
+        <span class="sec-label">06 / BY INDUSTRY</span>
+        <h2 id="h-usecases">Par métier : comment utiliser Kimi, et ce que SIMY produit</h2>
+        <p class="intro">Ce que SIMY prépare une fois que Kimi a lu et écrit. Seul ou en équipe, le principe est le même.</p>
+        <div class="ind">
+          <div class="ind-card">
+            <h3>Équipe de développement <small>Kimi : Kimi Code, génération de code</small></h3>
+            <ul class="ind-rows">
+              <li><span>Revue de conception</span><span>→</span><span>Corrections décidées et responsables</span></li>
+              <li><span>Une fois le code écrit</span><span>→</span><span>Demande de relecture</span></li>
+              <li><span>Fin de semaine</span><span>→</span><span>Avancement et décisions en attente</span></li>
+            </ul>
+          </div>
+          <div class="ind-card">
+            <h3>Études et recherche <small>Kimi : lecture de longs documents</small></h3>
+            <ul class="ind-rows">
+              <li><span>Lecture d'un rapport</span><span>→</span><span>Points retenus en réunion et responsables</span></li>
+              <li><span>Restitution d'étude</span><span>→</span><span>Demande d'étude complémentaire et délai</span></li>
+              <li><span>Avant la date limite</span><span>→</span><span>Rappel des réponses attendues</span></li>
+            </ul>
+          </div>
+          <div class="ind-card">
+            <h3>Conseil et stratégie <small>Kimi : première version des propositions</small></h3>
+            <ul class="ind-rows">
+              <li><span>Rendez-vous client</span><span>→</span><span>Liste des tâches, brouillon de remerciement</span></li>
+              <li><span>Réunion de planification</span><span>→</span><span>Option retenue, responsables, dates</span></li>
+              <li><span>La veille de la proposition</span><span>→</span><span>Validations en attente, une décision</span></li>
+            </ul>
+          </div>
+          <div class="ind-card">
+            <h3>Comité de direction et 1:1 <small>Kimi : résumé des documents, enjeux</small></h3>
+            <ul class="ind-rows">
+              <li><span>Comité de direction</span><span>→</span><span>Décisions, responsables, partage aux personnes concernées</span></li>
+              <li><span>1:1</span><span>→</span><span>Avancement et décisions en attente, avant de demander « où en est-on ? »</span></li>
+              <li><span>Fin de semaine</span><span>→</span><span>Rapport hebdo couvrant plusieurs réunions</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- 07 -->
+      <section class="sec" id="start" aria-labelledby="h-start">
+        <span class="sec-label">07 / START</span>
+        <h2 id="h-start">Démarrer : gardez Kimi, 3 étapes</h2>
+        <ol class="steps3">
+          <li><b>Utilisez Kimi comme d'habitude</b><span>Lecture, brouillons, code. Chat Kimi, API ou Kimi Code : peu importe.</span></li>
+          <li class="key"><b>Inscrivez-vous à SIMY, connectez ChatGPT, installez simy</b><span>L'exécution cloud tourne sur votre ChatGPT (Codex). <a href="#connect">La connexion</a> est décrite plus haut. Si vous utilisez Claude Code, installez aussi l'application de bureau SIMY. <a href="/download/fr.html">Télécharger l'application</a></span></li>
+          <li><b>Terminez une réunion</b><span>Responsables et échéances, demandes rédigées et brouillon de partage arrivent. Vous décidez, vous envoyez. C'est tout.</span></li>
+        </ol>
+        <p class="note"><b>Inscription :</b> choix de l'offre → vérification de l'e-mail → paiement par carte. Il n'y a pas d'offre gratuite. <a href="/?lang=fr#pricing">Voir les tarifs</a>. L'application pour ordinateur est sur la <a href="/download/fr.html">page de téléchargement</a>.</p>
+        <p class="note"><b>Votre usage de Kimi ne change pas.</b> SIMY ne remplace pas Kimi : c'est un système distinct qui prend en charge le travail une fois le texte écrit.</p>
+      </section>
+
+      <!-- 08 -->
+      <section class="sec" id="reference" aria-labelledby="h-reference">
+        <span class="sec-label">08 / REFERENCE</span>
+        <h2 id="h-reference">Kimi et Kimi K3, c'est quoi : utilisation, API, Kimi Code, données (pour aller plus loin)</h2>
+        <p class="intro">Ouvrez les sections ci-dessous pour vérifier un point sur Kimi lui-même. Noms de modèles et caractéristiques : informations d'octobre 2026.</p>
+
+        <details class="fold">
+          <summary>Kimi, c'est quoi : une IA de quel pays (Moonshot AI) ?<small>Une IA développée par Moonshot AI, à Pékin</small></summary>
+          <div class="fold-body">
+            <h3>L'éditeur de Kimi</h3>
+            <p>Kimi désigne l'IA conversationnelle et la famille de grands modèles de langage (LLM) développées par Moonshot AI (Yuezhi Anmian), une entreprise d'IA basée à Pékin. La version chinoise de Kimi est exploitée par une société pékinoise ; l'API internationale (Kimi Open Platform) est fournie par MOONSHOT AI PTE. LTD., une société de Singapour.</p>
+            <h3>Trois façons de l'utiliser</h3>
+            <ul class="plain-list">
+              <li><strong>Le chat Kimi :</strong> sur kimi.com et l'application mobile. On démarre gratuitement, avec des abonnements payants en option.</li>
+              <li><strong>API :</strong> via Kimi Open Platform, à intégrer dans vos systèmes et outils de développement. Vous payez ce que vous consommez.</li>
+              <li><strong>Poids ouverts :</strong> les poids publiés sur Hugging Face tournent sur vos serveurs. Sous conditions de licence.</li>
+            </ul>
+            <h3>Ce qui distingue Kimi</h3>
+            <p>Il gère de très longs contextes d'un seul tenant et dispose d'outils pensés pour le code. Le dernier modèle, Kimi K3, traite un contexte d'un million de jetons et accepte texte, images et vidéos. Kimi Code CLI, qui tourne dans le terminal, est aussi publié.</p>
+            <p class="small muted">En cherchant « Kimi », on tombe aussi sur des homonymes, comme le pilote de F1 Andrea Kimi Antonelli. Cette page parle du Kimi de Moonshot AI.</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>Utiliser le chat Kimi : web et application<small>Gratuit pour commencer. L'abonnement augmente les quotas</small></summary>
+          <div class="fold-body">
+            <ol class="plain-list">
+              <li><strong>Ouvrez kimi.com.</strong> Tout se fait dans le navigateur. Une application mobile existe aussi.</li>
+              <li><strong>Connectez-vous.</strong> Avec un compte, l'historique des conversations est conservé.</li>
+              <li><strong>Posez votre question.</strong> En français, sans souci. Joignez un PDF ou une image et demandez « mets les points clés en tableau » ou « explique ce schéma ».</li>
+              <li><strong>Donnez les longs documents d'un coup.</strong> Lire plusieurs fichiers à la fois pour les comparer ou les résumer, c'est le point fort de Kimi.</li>
+            </ol>
+            <h3>Les abonnements payants</h3>
+            <p>L'abonnement Kimi fonctionne avec des crédits ; l'aide officielle présente quatre niveaux d'abonnement mensuel (octobre 2026). Tous donnent accès à Kimi K3 et incluent un quota pour Kimi Code. Les prix s'affichent selon la région et la devise : vérifiez-les sur la <a href="https://www.kimi.com/en/help/membership/membership-pricing" target="_blank" rel="noopener">page officielle des abonnements</a>.</p>
+            <h3>Conseils pour un usage professionnel</h3>
+            <ul class="plain-list">
+              <li><strong>Posez la question avant de donner le document :</strong> « Dans ce contrat, extrais seulement les conditions de résiliation et les pénalités ». Annoncer l'objectif d'abord stabilise les réponses, même sur un long document.</li>
+              <li><strong>Demandez où c'est écrit :</strong> avant d'utiliser un chiffre ou une condition du résumé, demandez « à quelle page, à quel endroit ? ».</li>
+              <li><strong>Une conversation par dossier :</strong> cela évite les réponses influencées par le document précédent.</li>
+            </ul>
+            <p>Transformer ces points clés en « qui fait quoi, et pour quand », puis en assurer le suivi, se passe hors de Kimi. Si vous le faites encore à la main à chaque fois, voyez <a href="#connect">comment connecter SIMY</a>.</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>Ce que Kimi sait faire au travail<small>Longs documents, fichiers multiples, code. Commencez par ses points forts</small></summary>
+          <div class="fold-body">
+            <ul class="plain-list">
+              <li><strong>Lecture de longs documents :</strong> contrats, cahiers des charges, rapports d'étude, lus d'un coup pour en extraire conditions et enjeux.</li>
+              <li><strong>Comparaison de documents :</strong> plusieurs devis ou propositions, avec les différences mises en tableau.</li>
+              <li><strong>Compréhension d'images et de vidéos :</strong> captures d'écran, schémas ou courtes vidéos, expliqués.</li>
+              <li><strong>Code :</strong> depuis Kimi Code ou l'éditeur, lecture, correction et ajout de tests.</li>
+              <li><strong>Brouillons :</strong> premières versions de rapports, d'e-mails, de notes de réunion.</li>
+            </ul>
+            <h3>Par quoi commencer</h3>
+            <p>Prenez d'abord un long document que vous avez sous la main et demandez « cite les trois décisions à prendre dans ce document » : vous verrez vite où Kimi excelle. Ensuite, passez à la comparaison de documents ou au code.</p>
+            <p>Quel que soit l'usage, Kimi s'arrête à la « réponse » ou au « brouillon ». Les responsables et délais fixés ensuite en réunion, et les messages aux personnes concernées, <a href="#connect">SIMY les capte dans vos réunions et vos chats</a> et les fait avancer.</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>Kimi K3, c'est quoi : différences avec K2 et principaux modèles<small>Octobre 2026. Noms et générations changent souvent</small></summary>
+          <div class="fold-body">
+            <p>Kimi K3 est la dernière génération de modèles Kimi, publiée en juillet 2026 (octobre 2026). Il compte 2 800 milliards de paramètres au total, dont seulement 104 milliards sont utilisés à chaque traitement : c'est un MoE (une architecture qui alterne entre de petits modèles spécialisés). Il gère un contexte d'un million de jetons (le jeton est une unité proche du nombre de caractères) et accepte texte, images et vidéos.</p>
+            <p class="scroll-hint">Faites défiler le tableau horizontalement →</p>
+            <div class="table-wrap">
+              <table class="t-wide">
+                <thead>
+                  <tr><th scope="col">Modèle</th><th scope="col">Rôle</th><th scope="col">Licence</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Kimi K3</th><td>Le modèle phare actuel. Longs contextes, entrée image et vidéo, travail de type agent</td><td>Kimi K3 License (propre)</td></tr>
+                  <tr><th scope="row">kimi-k2.7-code</th><td>Modèle de la famille K2 spécialisé dans le code. Prix d'API inférieur à K3 (0,95 $ en entrée, 4,00 $ en sortie par million de jetons, hors taxes)</td><td>Fourni via l'API</td></tr>
+                  <tr><th scope="row">Kimi K2.6 et antérieurs</th><td>Génération précédente. Toujours utilisée via l'API et en poids ouverts</td><td>Modified MIT</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3>K3 ou K2 ?</h3>
+            <ul class="plain-list">
+              <li><strong>K3 :</strong> pour lire de longs documents, traiter aussi images et vidéos, ou confier des tâches difficiles.</li>
+              <li><strong>Famille K2 :</strong> pour générer du code en masse à moindre coût. Les modèles publiés jusqu'à K2.6 ont aussi une licence plus souple que K3.</li>
+            </ul>
+            <p class="note"><b>Pour s'y retrouver :</b> les noms des modèles Kimi changent tous les quelques mois. Retenez les rôles : « le modèle phare (K3) » et « le modèle code bon marché (k2.7-code) ».</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>Kimi Code CLI : un agent de code dans le terminal<small>Open source (MIT). Utilisable aussi avec le quota de l'abonnement</small></summary>
+          <div class="fold-body">
+            <p>Kimi Code CLI est un agent de code publié par Moonshot AI sous licence MIT. Il tourne dans le terminal, lit et corrige le code, et exécute des commandes. Il prend en charge MCP (le standard commun pour se connecter à des outils et données externes) et, via ACP (le protocole qui permet d'appeler un agent depuis l'éditeur), s'utilise aussi depuis des éditeurs comme Zed ou JetBrains. L'ancien kimi-cli en Python a été archivé et remplacé par celui-ci.</p>
+            <ul class="plain-list">
+              <li><strong>Installation :</strong> par le script d'installation officiel, ou via npm. Les étapes sont sur la <a href="https://github.com/MoonshotAI/kimi-code" target="_blank" rel="noopener">page GitHub</a>.</li>
+              <li><strong>Connexion :</strong> lancez-le, exécutez <code>/login</code>, puis choisissez un compte Kimi Code ou une clé API Kimi Open Platform. Les abonnés l'utilisent avec le quota de leur offre.</li>
+              <li><strong>Pour qui :</strong> les développeurs qui veulent travailler comme avec Claude Code ou Codex, mais avec les modèles Kimi.</li>
+            </ul>
+            <h3>Prise en main</h3>
+            <ol class="plain-list">
+              <li><strong>Lancez Kimi Code dans le dossier de travail.</strong> Choisissez d'abord le mode de connexion.</li>
+              <li><strong>Décrivez ce que vous voulez, en français.</strong> Partez de l'objectif : « explique la structure de ce dépôt », « corrige les tests qui échouent ».</li>
+              <li><strong>Validez les changements après lecture.</strong> Modifications de fichiers et commandes s'autorisent après vérification.</li>
+            </ol>
+            <p>Après le code écrit avec Kimi Code, SIMY capte en réunion les corrections décidées en revue et la répartition des tâches, et les met en liste.</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>L'API Kimi : compatible Anthropic, utilisable depuis Claude Code<small>Compatible OpenAI et Anthropic. Prix en dollars par million de jetons</small></summary>
+          <div class="fold-body">
+            <ul class="plain-list">
+              <li><strong>Point d'entrée :</strong> créez une clé API sur Kimi Open Platform (platform.kimi.ai). Le fournisseur est une société de Singapour.</li>
+              <li><strong>Compatibilité :</strong> des endpoints compatibles OpenAI et Anthropic. Il suffit de changer la destination dans le SDK OpenAI ou dans les outils qui parlent le format Anthropic.</li>
+              <li><strong>Depuis Claude Code :</strong> en remplaçant la destination de Claude Code (<code>ANTHROPIC_BASE_URL</code>) et la clé API par celles de Kimi, vous appelez les modèles Kimi depuis l'interface de Claude Code. La procédure est décrite dans la documentation officielle.</li>
+              <li><strong>Tarifs :</strong> en octobre 2026, Kimi K3 coûte 3,00 $ en entrée et 15,00 $ en sortie par million de jetons (hors taxes). Le cache, qui réutilise un même préfixe, ne coûte que 0,30 $ en lecture ; l'écriture est facturée à part selon la durée de conservation. Prix à jour sur la <a href="https://platform.kimi.ai/docs/pricing/chat" target="_blank" rel="noopener">page tarifaire officielle</a>.</li>
+            </ul>
+            <h3>Premiers pas avec l'API</h3>
+            <ol class="plain-list">
+              <li><strong>Créez un compte Kimi Open Platform.</strong> Dans la console, approvisionnez votre solde ou réglez le moyen de paiement.</li>
+              <li><strong>Générez une clé API.</strong> Placez-la dans une variable d'environnement, jamais en clair dans le code ou un document partagé.</li>
+              <li><strong>Changez la destination de vos outils habituels.</strong> Choisissez le format OpenAI ou Anthropic, puis remplacez l'URL et le nom du modèle.</li>
+              <li><strong>Testez petit et surveillez la consommation.</strong> Les longs contextes consomment beaucoup de jetons. Suivez l'usage quotidien avant de passer aux volumes réels.</li>
+            </ol>
+            <p class="note"><b>SIMY et Kimi :</b> pour l'instant, SIMY ne se connecte pas à une clé API Kimi. L'exécution cloud de SIMY tourne sur votre compte ChatGPT (Codex).</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>Poids ouverts et licence : K3 sous conditions<small>Ne pas tout ranger sous « open source »</small></summary>
+          <div class="fold-body">
+            <p>Les poids de Kimi K3 sont publiés sur Hugging Face, mais sous une licence propre, la « Kimi K3 License ». Utilisation, modification et redistribution sont permises, avec des conditions liées à la taille de l'activité.</p>
+            <ul class="plain-list">
+              <li><strong>Activités qui fournissent le modèle :</strong> si vous proposez K3 comme service et que votre chiffre d'affaires des 12 derniers mois dépasse 20 millions de dollars, un contrat commercial séparé avec Moonshot AI est nécessaire.</li>
+              <li><strong>Gros produits :</strong> au-delà de 100 millions d'utilisateurs mensuels ou de 20 millions de dollars de chiffre d'affaires mensuel, le produit doit afficher « Kimi K3 » à l'écran.</li>
+              <li><strong>K2.6 et antérieurs :</strong> sous licence Modified MIT, plus souple que celle de K3.</li>
+            </ul>
+            <p>Pour la plupart des entreprises, ces conditions pèsent peu tant que l'usage reste interne. Mais pour l'intégrer à un produit, lisez le <a href="https://huggingface.co/moonshotai/Kimi-K3/blob/main/LICENSE" target="_blank" rel="noopener">texte de la licence</a>.</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>Faire tourner Kimi en local ? Sur Ollama, c'est le tag cloud<small>« Disponible sur Ollama » ne veut pas forcément dire « tourne sur votre ordinateur »</small></summary>
+          <div class="fold-body">
+            <p>Dans la bibliothèque officielle d'Ollama, kimi-k3, kimi-k2.7-code et kimi-k2.6 portent tous le tag « cloud » en octobre 2026. Ils tournent donc sur le cloud d'Ollama, pas sur votre ordinateur, et vos saisies sont envoyées aux serveurs d'Ollama.</p>
+            <ul class="plain-list">
+              <li><strong>Sur vos propres serveurs :</strong> les poids publiés tournent avec vLLM ou SGLang. K3 est une configuration géante de 2 800 milliards de paramètres, pensée pour des serveurs dotés de plusieurs GPU haut de gamme.</li>
+              <li><strong>Sur un ordinateur personnel :</strong> les derniers modèles Kimi ne sont pas réalistes. Parmi les modèles chinois qui tournent en local, les modèles petits et moyens de <a href="/guides/fr/qwen.html">Qwen</a> sont une option.</li>
+            </ul>
+            <p>Si le but est que les données ne sortent pas, les modèles au tag cloud ne conviennent pas. Exécutez les poids sur vos propres serveurs, ou choisissez un modèle assez petit pour tourner chez vous.</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>Usage en entreprise : lieu de stockage et entraînement<small>Selon le point d'entrée, les données ne vont pas au même endroit</small></summary>
+          <div class="fold-body">
+            <p class="scroll-hint">Faites défiler le tableau horizontalement →</p>
+            <div class="table-wrap">
+              <table class="t-wide">
+                <thead>
+                  <tr><th scope="col">Usage</th><th scope="col">Exploitant, fournisseur</th><th scope="col">Lieu de stockage</th><th scope="col">Entraînement</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Chat Kimi (selon l'aide officielle en chinois)</th><td>Société basée à Pékin</td><td>Serveurs en Chine</td><td>Peut servir, anonymisé, à l'entraînement. Désactivable sur demande au support (5 à 7 jours ouvrés)</td></tr>
+                  <tr><th scope="row">API (Kimi Open Platform)</th><td>MOONSHOT AI PTE. LTD. (Singapour)</td><td>Serveurs à Singapour</td><td>Mentionne l'usage des saisies pour « l'optimisation des modèles ». Voir le texte pour le détail</td></tr>
+                  <tr><th scope="row">Poids ouverts exploités en interne</th><td>Votre entreprise</td><td>Uniquement sur vos serveurs</td><td>Rien ne sort</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <ul class="plain-list">
+              <li><strong>Vérifiez d'abord les règles internes :</strong> certaines entreprises fixent par écrit les services d'IA générative autorisés et les informations qu'on peut y saisir.</li>
+              <li><strong>Si vous utilisez le chat hors de Chine :</strong> vérifiez les conditions applicables et le lieu de stockage dans l'interface, une fois connecté, et dans l'aide. Le tableau ci-dessus résume telles quelles les explications officielles.</li>
+              <li><strong>Pas de confidentiel, par principe :</strong> quelle que soit l'IA, réfléchissez avant d'y saisir des données clients ou des chiffres non publiés.</li>
+              <li><strong>Regardez aussi les exigences des clients :</strong> certains fixent par contrat le pays où les données peuvent être stockées.</li>
+            </ul>
+            <p class="small muted">Le traitement des données est décrit d'après les <a href="https://www.kimi.com/help/others/data-usage" target="_blank" rel="noopener">explications de Kimi sur l'utilisation des données</a> et la <a href="https://platform.kimi.ai/docs/agreement/userprivacy" target="_blank" rel="noopener">politique de confidentialité de Kimi Open Platform</a> au 1er octobre 2026. Le traitement des données par SIMY est décrit dans les pages <a href="/security.html">Sécurité</a> et <a href="/privacy.html?lang=fr">Politique de confidentialité</a>.</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>Kimi en français : jusqu'où ?<small>On peut lui écrire en français, mais aucune langue n'est officiellement listée</small></summary>
+          <div class="fold-body">
+            <p>On peut écrire au chat Kimi en français et recevoir des réponses en français. Mais en octobre 2026, la fiche du modèle K3 ne précise pas les langues prises en charge. La qualité en français n'est pas garantie officiellement : testez-la sur vos vrais documents de travail.</p>
+            <ul class="plain-list">
+              <li><strong>Faciles à tester :</strong> résumer un document en français, synthétiser en français un document anglais ou chinois, se faire expliquer du code en français.</li>
+              <li><strong>Points de vigilance :</strong> nuances de registre (tutoiement, vouvoiement, formules de politesse), noms propres locaux, références juridiques et usages commerciaux : vérifiez avant d'utiliser.</li>
+            </ul>
+            <p>Pour un petit test, donnez-lui un rapport que vous avez vous-même écrit en français et demandez un résumé et une reformulation. Comme vous connaissez le texte d'origine, vous jugerez plus facilement la qualité.</p>
+            <p>On peut répartir ainsi : Kimi lit les longs documents en anglais, SIMY prend en charge responsables, échéances et message de partage en français pour ce qui a été décidé en réunion.</p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>Kimi face aux autres LLM chinois<small>Pas de meilleur ou de pire : chacun a son terrain</small></summary>
+          <div class="fold-body">
+            <p class="scroll-hint">Faites défiler le tableau horizontalement →</p>
+            <div class="table-wrap">
+              <table class="t-wide">
+                <thead>
+                  <tr><th scope="col">Critère</th><th scope="col">Kimi</th><th scope="col">Qwen</th><th scope="col">MiniMax</th><th scope="col">DeepSeek</th><th scope="col" class="simy">SIMY</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Éditeur</th><td>Moonshot AI (Pékin)</td><td>Groupe Alibaba (Hangzhou)</td><td>MiniMax (Shanghai)</td><td>DeepSeek (Hangzhou)</td><td class="simy">AwakApp Inc.</td></tr>
+                  <tr><th scope="row">Points forts</th><td>Longs contextes, code</td><td>Multilingue, exécution locale</td><td>API bon marché, vidéo et audio</td><td>Raisonnement, API bon marché</td><td class="simy">Faire avancer le travail après la réponse</td></tr>
+                  <tr><th scope="row">CLI de code maison</th><td>Kimi Code</td><td>Qwen Code</td><td>MiniMax Code</td><td>Aucun</td><td class="simy">Claude Code sur le poste comme exécutant</td></tr>
+                  <tr><th scope="row">Point de départ</th><td>Vous demandez</td><td>Vous demandez</td><td>Vous demandez</td><td>Vous demandez</td><td class="simy">SIMY capte dans réunions et chats</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3>Repères pour choisir</h3>
+            <ul class="plain-list">
+              <li><strong>Lire de longs documents d'un coup :</strong> Kimi K3. Son prix est plutôt élevé pour un modèle chinois, proche de celui des grands modèles occidentaux.</li>
+              <li><strong>Réduire le coût de l'API :</strong> <a href="/guides/fr/deepseek.html">DeepSeek</a> ou <a href="/guides/fr/minimax.html">MiniMax</a>.</li>
+              <li><strong>Faire tourner sur votre ordinateur :</strong> les petits modèles de <a href="/guides/fr/qwen.html">Qwen</a> ou de <a href="/guides/fr/glm.html">GLM</a>.</li>
+            </ul>
+            <p class="note"><b>Répartition :</b> pour les réponses et les brouillons, n'importe quelle IA convient, Kimi compris. Si vous suivez encore à la main responsables, échéances, demandes et partages, c'est là que SIMY intervient. Les différences entre éditeurs sont dans le <a href="/guides/fr/china-llm.html">comparatif des LLM chinois</a>, et les modèles de ByteDance dans le <a href="/guides/fr/doubao.html">guide Doubao</a>.</p>
+          </div>
+        </details>
+      </section>
+
+      <!-- 09 -->
+      <section class="sec" id="faq" aria-labelledby="h-faq">
+        <span class="sec-label">09 / FAQ</span>
+        <h2 id="h-faq">Questions fréquentes</h2>
+        <div class="faq">
+          <details>
+            <summary>Qu'est-ce que Kimi ?</summary>
+            <div class="a"><p>Kimi est l'IA conversationnelle et la famille de grands modèles de langage (LLM) développées par l'entreprise chinoise Moonshot AI (Yuezhi Anmian). On l'utilise de trois façons : le chat sur kimi.com ou l'appli, l'API, et les poids publiés des modèles.</p></div>
+          </details>
+          <details>
+            <summary>Kimi est une IA de quel pays ?</summary>
+            <div class="a"><p>C'est une IA chinoise. Elle est développée par Moonshot AI (Yuezhi Anmian), à Pékin ; la version chinoise de Kimi est exploitée par une société pékinoise, et l'API internationale est fournie par MOONSHOT AI PTE. LTD., une société de Singapour.</p></div>
+          </details>
+          <details>
+            <summary>Qu'est-ce que Kimi K3 ?</summary>
+            <div class="a"><p>Kimi K3 est la dernière génération de modèles de Moonshot AI, publiée en juillet 2026 (octobre 2026). Il gère un contexte d'un million de jetons, accepte images et vidéos en plus du texte, et ses poids sont publiés sous sa propre licence, la Kimi K3 License.</p></div>
+          </details>
+          <details>
+            <summary>Quelle différence entre Kimi K3 et Kimi K2 ?</summary>
+            <div class="a"><p>K3 est le modèle phare actuel, avec longs contextes et entrée image et vidéo, publié sous la Kimi K3 License. La famille K2 est la génération précédente ; son modèle dédié au code, k2.7-code, a un prix d'API inférieur à celui de K3.</p></div>
+          </details>
+          <details>
+            <summary>Kimi est-il gratuit ?</summary>
+            <div class="a"><p>Le chat sur kimi.com et l'appli se commencent gratuitement. Des abonnements payants augmentent les quotas, et l'API est facturée à l'usage.</p></div>
+          </details>
+          <details>
+            <summary>Qu'est-ce que Kimi Code ?</summary>
+            <div class="a"><p>Un agent de code qui tourne dans le terminal, publié par Moonshot AI sous licence MIT. On s'y connecte avec un compte Kimi Code ou une clé API, et il s'utilise aussi avec le quota de l'abonnement.</p></div>
+          </details>
+          <details>
+            <summary>Peut-on utiliser les modèles Kimi depuis Claude Code ?</summary>
+            <div class="a"><p>Oui. L'API Kimi a un endpoint compatible Anthropic, et la procédure pour remplacer la destination et la clé API de Claude Code est décrite officiellement.</p></div>
+          </details>
+          <details>
+            <summary>Peut-on faire tourner Kimi en local, sur son ordinateur ?</summary>
+            <div class="a"><p>Faire tourner le dernier Kimi K3 sur un ordinateur personnel n'est pas réaliste. Dans la bibliothèque officielle d'Ollama, Kimi porte le tag cloud et tourne sur le cloud d'Ollama. Pour l'héberger soi-même, il faut exploiter les poids publiés sur des serveurs GPU haut de gamme.</p></div>
+          </details>
+          <details>
+            <summary>Où sont stockées les données saisies dans Kimi ?</summary>
+            <div class="a"><p>Selon les explications officielles, le chat Kimi (aide en chinois) stocke les données sur des serveurs en Chine, et l'API internationale sur des serveurs à Singapour. Pour des données confidentielles, vérifiez vos règles internes et le texte de chaque politique.</p></div>
+          </details>
+          <details>
+            <summary>Kimi fonctionne-t-il en français ?</summary>
+            <div class="a"><p>On peut l'interroger en français et recevoir ses réponses en français. Mais la fiche officielle du modèle ne précise pas les langues prises en charge : vérifiez la qualité sur vos documents de travail avant usage.</p></div>
+          </details>
+          <details>
+            <summary>SIMY fonctionne-t-il avec Kimi ?</summary>
+            <div class="a"><p>Non. Pour l'instant, SIMY ne se connecte pas à Kimi : il tourne sur votre compte ChatGPT (Codex) et sur Claude Code installé sur votre ordinateur. Les points clés et le code produits avec Kimi peuvent être apportés tels quels en réunion ou dans un chat.</p></div>
+          </details>
+          <details>
+            <summary>Faut-il demander à SIMY, à chaque fois, de prendre la suite de ce que Kimi a écrit ?</summary>
+            <div class="a"><p>Non. SIMY capte lui-même, dans vos comptes rendus et vos chats, ce qui a été décidé, avec responsables et échéances. Il apprend votre façon de faire dans vos conversations et ne vous renvoie que ce qui demande une décision.</p></div>
+          </details>
+        </div>
+      </section>
+
+      <!-- 10 -->
+      <section class="sec" id="sources" aria-labelledby="h-sources">
+        <span class="sec-label">10 / SOURCES</span>
+        <h2 id="h-sources">Sources</h2>
+        <p>Modèles, mode de tarification, licences et traitement des données de Kimi vérifiés sur les sources officielles ci-dessous (le 1er octobre 2026). Noms de modèles et caractéristiques changent souvent : consultez chaque page officielle pour les informations à jour.</p>
+        <ul class="plain-list">
+          <li><a href="https://huggingface.co/moonshotai/Kimi-K3" target="_blank" rel="noopener">Fiche du modèle Kimi K3 (Hugging Face)</a>, <a href="https://huggingface.co/moonshotai" target="_blank" rel="noopener">Moonshot AI (Hugging Face)</a></li>
+          <li><a href="https://huggingface.co/moonshotai/Kimi-K3/blob/main/LICENSE" target="_blank" rel="noopener">Kimi K3 License</a></li>
+          <li><a href="https://platform.kimi.ai/docs/pricing/chat" target="_blank" rel="noopener">Tarifs de Kimi Open Platform (modèles de chat)</a></li>
+          <li><a href="https://platform.kimi.ai/docs/agreement/userprivacy" target="_blank" rel="noopener">Politique de confidentialité de Kimi Open Platform</a></li>
+          <li><a href="https://www.kimi.com/help/others/data-usage" target="_blank" rel="noopener">Utilisation des données par Kimi (aide Kimi)</a></li>
+          <li><a href="https://www.kimi.com/en/help/membership/membership-pricing" target="_blank" rel="noopener">Abonnements Kimi (aide Kimi)</a></li>
+          <li><a href="https://github.com/MoonshotAI/kimi-code" target="_blank" rel="noopener">Kimi Code CLI (GitHub)</a></li>
+          <li><a href="https://ollama.com/search?q=kimi" target="_blank" rel="noopener">Modèles Kimi (bibliothèque Ollama)</a></li>
+        </ul>
+      </section>
+      <aside class="next-read" aria-labelledby="h-next">
+        <h2 id="h-next">À lire ensuite</h2>
+        <div class="next-grid"><a href="/guides/fr/china-llm.html"><b>Comparatif des LLM chinois</b><span>Kimi, Qwen, DeepSeek : différences et usages</span></a><a href="/guides/fr/minimax.html"><b>Guide MiniMax</b><span>M3, IA vidéo et audio, logique tarifaire</span></a><a href="/guides/fr/qwen.html"><b>Guide Qwen</b><span>Un LLM chinois qui tourne sur votre ordinateur</span></a></div>
+        <a class="next-all" href="/guides/fr/index.html">Tous les guides →</a>
+      </aside>
+    </article>
+  </div>
+
+  <section class="closing" aria-labelledby="h-closing">
+    <div class="wrap closing-inner">
+      <div>
+        <h2 id="h-closing">Kimi a fini d'écrire ?<br>La suite, c'est SIMY.</h2>
+        <p>Kimi garde les tâches où il excelle. SIMY fait avancer le travail capté dans vos réunions et vos chats, et ne vous renvoie que les décisions. Livrer ou non, c'est toujours vous qui décidez.</p>
+      </div>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="https://app.simy.one/signup?lang=fr&amp;locale=fr&amp;region=fr&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=kimi_guide_fr&amp;utm_content=closing">Choisir une offre et commencer <span class="arrow" aria-hidden="true">↗</span></a>
+        <a class="btn btn-ghost" href="mailto:sales@simy.one?subject=%C3%89changer%20sur%20la%20mise%20en%20place%20de%20SIMY">Nous contacter</a>
+        <a class="btn btn-ghost" href="/download/fr.html">Télécharger l'application <span class="arrow" aria-hidden="true">↓</span></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <ul class="footer-links">
+      <li><a href="/?lang=fr">Accueil</a></li>
+      <li><a href="/?lang=fr#pricing">Tarifs</a></li>
+      <li><a href="/integrations.html">Intégrations</a></li>
+      <li><a href="/download/fr.html">Télécharger</a></li>
+      <li><a href="/guides/fr/index.html">Tous les guides</a></li>
+      <li><a href="/guides/fr/claude.html">Claude</a></li>
+      <li><a href="/guides/fr/codex.html">Codex</a></li>
+      <li><a href="/guides/fr/cowork.html">Cowork</a></li>
+      <li><a href="/guides/fr/chatgpt.html">ChatGPT</a></li>
+      <li><a href="/guides/fr/plaud.html">PLAUD</a></li>
+      <li><a href="/guides/fr/notta.html">Notta</a></li>
+      <li><a href="/guides/fr/meeting-notes.html">Comptes rendus IA</a></li>
+      <li><a href="/guides/fr/china-llm.html">IA chinoises comparées</a></li>
+      <li><a href="/guides/fr/deepseek.html">DeepSeek</a></li>
+      <li><a href="/guides/fr/qwen.html">Qwen</a></li>
+      <li><a href="/guides/fr/qwen-local.html">Qwen sur votre serveur</a></li>
+      <li><a href="/security.html">Sécurité</a></li>
+      <li><a href="/privacy.html?lang=fr">Politique de confidentialité</a></li>
+      <li><a href="/terms.html?lang=fr">Conditions d’utilisation</a></li>
+    </ul>
+    <p>Kimi est une marque de Moonshot AI ou de ses sociétés affiliées. SIMY est un produit indépendant de Kimi.</p>
+    <p>Codex et ChatGPT sont des produits d'OpenAI. Les autres noms de sociétés et de produits sont des marques ou marques déposées de leurs détenteurs respectifs.</p>
+    <p>&copy; 2026 SIMY by AwakApp Inc.</p>
+  </div>
+</footer>
+<script>
+(function () {
+  var links = Array.prototype.slice.call(document.querySelectorAll('.toc a'));
+  if (!links.length) return;
+  var items = links.map(function (a) {
+    return { link: a, section: document.getElementById(a.getAttribute('href').slice(1)) };
+  }).filter(function (item) { return item.section; });
+  var ticking = false;
+  function update() {
+    ticking = false;
+    var line = window.innerHeight * 0.35;
+    var atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+    var current = null;
+    items.forEach(function (item) {
+      if (item.section.getBoundingClientRect().top <= line) current = item;
+    });
+    if (atBottom) current = items[items.length - 1];
+    items.forEach(function (item) { item.link.classList.toggle('is-active', item === current); });
+  }
+  window.addEventListener('scroll', function () {
+    if (!ticking) { ticking = true; window.requestAnimationFrame(update); }
+  }, { passive: true });
+  update();
+})();
+</script>
+<script src="/analytics.js" defer></script>
+</body>
+</html>
