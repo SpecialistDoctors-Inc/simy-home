@@ -37,7 +37,7 @@ jobs:
       - run: node --test scripts/fp-sample-auth.test.cjs
       - name: Render both sample dashboards in an isolated browser
         run: |
-          npm install --prefix "$RUNNER_TEMP/fp-browser" --no-package-lock playwright
+          npm install --prefix "$RUNNER_TEMP/fp-browser" --no-package-lock @playwright/test
           "$RUNNER_TEMP/fp-browser/node_modules/.bin/playwright" install --with-deps chromium
           mkdir -p "$RUNNER_TEMP/fp-baseline/samples/fp-management"
           for asset in index.html app.js app.css; do
@@ -48,7 +48,7 @@ jobs:
           python3 -m http.server 8347 --bind 127.0.0.1 > /tmp/fp-sample-server.log 2>&1 &
           SAMPLE_PID=$!
           trap 'kill $SAMPLE_PID $BASELINE_PID' EXIT
-          FP_SAMPLE_PLAYWRIGHT="$RUNNER_TEMP/fp-browser/node_modules/playwright" node tests/fp-sample-browser.cjs
+          FP_SAMPLE_PLAYWRIGHT="$RUNNER_TEMP/fp-browser/node_modules/@playwright/test" node tests/fp-sample-browser.cjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:

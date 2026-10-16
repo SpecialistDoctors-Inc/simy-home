@@ -51,7 +51,7 @@ const fs = require('node:fs');
       await target.waitForTimeout(2000);
     }
     assert.equal(await page.getByTestId('sony-workbench').innerText(),await baseline.getByTestId('sony-workbench').innerText(),'Sales branch filtering must match baseline');
-    assert.ok((await page.screenshot({path:'artifacts/fp-sample/sales-branch.png',fullPage:true,animations:'disabled'})).equals(await baseline.screenshot({fullPage:true,animations:'disabled'})),'Filtered sales charts must match baseline');
+    assert.ok((await page.screenshot({path:'artifacts/fp-sample/sales-branch.png',fullPage:true,animations:'disabled'})).equals(await baseline.screenshot({path:'artifacts/fp-sample/sales-branch-baseline.png',fullPage:true,animations:'disabled'})),'Filtered sales charts must match baseline');
     for (const target of [baseline,page]) await target.getByRole('combobox',{name:'表示する支社'}).selectOption({index:0});
     const salesActions = page.getByRole('button',{name:'内容を見て対応する',exact:true});
     const baselineActions = baseline.getByRole('button',{name:'内容を見て対応する',exact:true});
@@ -59,7 +59,10 @@ const fs = require('node:fs');
     for (let index=0; index<await salesActions.count(); index++) {
       await baselineActions.nth(index).click();
       await salesActions.nth(index).click();
-      assert.equal(await page.getByRole('dialog').innerText(),await baseline.getByRole('dialog').innerText(),'Sales case details must match baseline');
+      const currentDetail = await page.getByRole('dialog').innerText();
+      const baselineDetail = await baseline.getByRole('dialog').innerText();
+      fs.writeFileSync(`artifacts/fp-sample/sales-case-${index}.json`,JSON.stringify({baseline:baselineDetail,current:currentDetail},null,2));
+      assert.equal(currentDetail,baselineDetail,'Sales case details must match baseline');
       await baseline.keyboard.press('Escape');
       await page.keyboard.press('Escape');
     }
