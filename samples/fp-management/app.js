@@ -157,23 +157,23 @@ Answer: {choice}`,"chat.pipelineStage1.sendSelectedChoices":"Send selected answe
     margin-right: `).concat(r,"px ").concat(a,`;
     `),i==="padding"&&"padding-right: ".concat(r,"px ").concat(a,";")].filter(Boolean).join(""),`
   }
-  
+
   .`).concat(Da,` {
     right: `).concat(r,"px ").concat(a,`;
   }
-  
+
   .`).concat(Ma,` {
     margin-right: `).concat(r,"px ").concat(a,`;
   }
-  
+
   .`).concat(Da," .").concat(Da,` {
     right: 0 `).concat(a,`;
   }
-  
+
   .`).concat(Ma," .").concat(Ma,` {
     margin-right: 0 `).concat(a,`;
   }
-  
+
   body[`).concat(qo,`] {
     `).concat(Tu,": ").concat(r,`px;
   }

@@ -42,6 +42,8 @@ await build({
     },
   }],
 });
+const javascript = resolve(output, "app.js");
+await writeFile(javascript, (await readFile(javascript, "utf8")).split("\n").map(line => line.trimEnd()).join("\n"));
 const css = await postcss([tailwind({ base: root, optimize: true })]).process(
   await readFile(resolve(root, "src/app/globals.css"), "utf8"),
   { from: resolve(root, "src/app/globals.css"), to: resolve(output, "app.css") },
