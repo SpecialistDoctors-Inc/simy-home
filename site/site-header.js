@@ -4,15 +4,39 @@
   if (!header) return;
   const menu = header.querySelector('.sh-menu');
   const mobile = window.matchMedia('(max-width: 960px)');
-  const syncMenu = () => { menu.open = !mobile.matches; };
+  // Read the rendered CSS layout, including zoom and fractional container widths.
+  const isMobile = () => getComputedStyle(menu.querySelector('.sh-menu-toggle')).display !== 'none';
+  let lastMobile = null;
+  const syncMenu = () => {
+    const compact = isMobile();
+    if (lastMobile === compact) return;
+    const toggle = menu.querySelector('.sh-menu-toggle');
+    const focused = document.activeElement;
+    // Move focus before closing/hiding its control; never steal focus from the page.
+    if (compact && menu.contains(focused) && focused !== toggle) toggle.focus();
+    menu.open = !compact;
+    if (!compact && focused === toggle) {
+      header.querySelector('.sh-navigation summary, .sh-navigation a')?.focus();
+    }
+    lastMobile = compact;
+  };
   header.dataset.enhanced = '';
   syncMenu();
   mobile.addEventListener('change', syncMenu);
   const labels = {en: 'English', ja: '日本語', hi: 'हिन्दी', es: 'Español', fr: 'Français', 'zh-Hans': '简体中文'};
   const languageLabels = {en: 'Language', ja: '言語', es: 'Idioma', fr: 'Langue', hi: 'भाषा', 'zh-Hans': '语言'};
+  const initialLocale = document.documentElement.lang;
+  const initialLabels = new Map([...header.querySelectorAll('[data-header-label]')].map(label => [label, label.textContent]));
+  const initialAria = new Map([...header.querySelectorAll('[data-aria-en]')].map(control => [control, control.getAttribute('aria-label')]));
   const syncLocale = () => {
     const locale = document.documentElement.lang;
     if (!labels[locale]) return;
+    header.querySelectorAll('[data-header-label]').forEach(label => {
+      label.textContent = locale === initialLocale ? initialLabels.get(label) : locale === 'ja' ? label.dataset.labelJa : label.dataset.labelEn;
+    });
+    header.querySelectorAll('[data-aria-en]').forEach(control => {
+      control.setAttribute('aria-label', locale === initialLocale ? initialAria.get(control) : locale === 'ja' ? control.dataset.ariaJa : control.dataset.ariaEn);
+    });
     const summary = header.querySelector('.sh-language summary');
     summary.setAttribute('aria-label', `${languageLabels[locale]}: ${labels[locale]}`);
     summary.lastChild.textContent = ` ${locale === 'zh-Hans' ? 'ZH' : locale.toUpperCase()}`;
@@ -30,6 +54,11 @@
       if (url.pathname.startsWith('/download')) url.pathname = locale === 'ja' ? '/download.html' : `/download/${locale.toLowerCase()}.html`;
       else if (url.hash) url.pathname = home;
       else if (url.pathname.includes('/financial-planners/')) url.pathname = locale === 'ja' ? '/for/financial-planners/' : `/for/${locale.toLowerCase()}/financial-planners/`;
+      else if (url.pathname.includes('/sales/')) {
+        url.pathname = locale === 'ja' ? '/for/sales/' : '/for/en/sales/';
+        const label = link.querySelector('[data-header-label]');
+        label.textContent = locale === 'ja' ? '営業' : (locale === 'en' ? 'For sales' : 'For sales (English)');
+      }
       else if (url.pathname.startsWith('/for/')) url.pathname = url.pathname.includes('engineers') ? (locale === 'ja' ? '/for/engineers/' : `/for/${locale.toLowerCase()}/engineers/`) : (locale === 'ja' ? '/for/' : '/for/en/');
       else if (url.pathname.startsWith('/guides/')) url.pathname = locale === 'ja' ? '/guides/index.html' : `/guides/${locale.toLowerCase()}/index.html`;
       if (url.searchParams.has('lang')) url.searchParams.set('lang', locale);
@@ -39,7 +68,11 @@
   // Sticky headers wrap as the viewport or text size changes.
   const updateOffset = () => document.documentElement.style.setProperty('--simy-header-offset', `${Math.ceil(header.getBoundingClientRect().height) + 16}px`);
   updateOffset();
-  new ResizeObserver(updateOffset).observe(header);
+  new ResizeObserver(() => {
+    updateOffset();
+    // A missed media-query notification must not leave keyboard focus hidden.
+    if (lastMobile !== isMobile()) syncMenu();
+  }).observe(header);
   window.addEventListener('load', () => {
     updateOffset();
     if (location.hash) {
@@ -65,17 +98,30 @@
     });
   });
   document.addEventListener('pointerdown', event => {
-    if (!header.contains(event.target)) { closeOthers(); if (mobile.matches) menu.open = false; }
+    if (!header.contains(event.target)) { closeOthers(); if (isMobile()) menu.open = false; }
   });
-  menu.addEventListener('toggle', () => { if (mobile.matches) closeOthers(); });
-  // Escape closes the innermost header menu regardless of where focus moved.
+  menu.addEventListener('toggle', () => {
+    if (!isMobile()) return;
+    // A delayed close event must not dismiss a newly opened language menu.
+    menus.forEach(dropdown => {
+      if (menu.open || menu.contains(dropdown)) dropdown.open = false;
+    });
+  });
+  // Keep navigation reachable and close the innermost menu with Escape.
   document.addEventListener('keydown', event => {
+    // Safari can skip nested native summaries when tabbing from the outer one.
+    if (event.key === 'Tab' && !event.shiftKey && isMobile() && menu.open
+        && event.target === menu.querySelector('.sh-menu-toggle')) {
+      const first = header.querySelector('.sh-navigation summary, .sh-navigation a');
+      if (first) { first.focus(); event.preventDefault(); }
+      return;
+    }
     if (event.key !== 'Escape') return;
     const opened = header.querySelector('.sh-dropdown[open]');
     if (opened) {
       opened.open = false;
       opened.querySelector('summary').focus();
-    } else if (mobile.matches && menu.open) {
+    } else if (isMobile() && menu.open) {
       menu.open = false;
       menu.querySelector('.sh-menu-toggle').focus();
     } else return;
@@ -83,9 +129,9 @@
     event.stopPropagation();
   }, true);
   menu.addEventListener('focusout', () => {
-    setTimeout(() => { if (mobile.matches && !menu.contains(document.activeElement)) menu.open = false; });
+    setTimeout(() => { if (isMobile() && !menu.contains(document.activeElement)) menu.open = false; });
   });
   header.addEventListener('click', event => {
-    if (event.target.closest('a')) { closeOthers(); if (mobile.matches) menu.open = false; }
+    if (event.target.closest('a')) { closeOthers(); if (isMobile()) menu.open = false; }
   });
 })();

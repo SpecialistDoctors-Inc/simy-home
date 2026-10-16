@@ -42,3 +42,35 @@ jobs:
           python3 scripts/organize-guide-intent.py --check
           node --test tests/*.test.cjs
           git diff --check
+
+  header-browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install isolated browser test runtime
+        run: |
+          npm install --prefix "$RUNNER_TEMP/header-browser" --no-package-lock --no-save playwright@1.64.1
+          "$RUNNER_TEMP/header-browser/node_modules/.bin/playwright" install --with-deps chromium
+      - name: Check header navigation and responsive keyboard access sequentially
+        env:
+          NODE_PATH: ${{ runner.temp }}/header-browser/node_modules
+          HEADER_BUNDLED_CHROMIUM: '1'
+          HEADER_REPORT_DIR: artifacts/header-browser
+        run: |
+          git rev-parse HEAD > header-head.txt
+          export GITHUB_SHA="$(git rev-parse HEAD)"
+          node scripts/check-compact-header.cjs
+          node scripts/check-header-responsive.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: header-browser-${{ github.event.pull_request.head.sha || github.sha }}
+          path: |
+            header-head.txt
+            artifacts/header-browser/

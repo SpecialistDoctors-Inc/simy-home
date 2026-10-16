@@ -39,9 +39,9 @@ const { chromium } = require('playwright');
         await page.waitForFunction(() => [...document.querySelectorAll('.sh-stores img')].every(image => image.complete && image.naturalWidth > 0));
         assert.ok(await page.locator('.sh-stores img').evaluateAll(images => images.every(image => image.complete && image.naturalWidth > 0)), `${path}: store badge assets`);
 
-        assert.ok(await page.getByRole('link', {name: 'Overview', exact: true}).isVisible());
+        assert.ok(await page.locator('a[href$="#product"]').isVisible());
         await page.keyboard.press('Escape');
-        assert.ok(!await page.locator('.simy-header').getByRole('link', {name: 'Overview', exact: true}).isVisible(), `${path}/${width}: Escape, focus=`+await page.evaluate(()=>document.activeElement.outerHTML.slice(0,180)));
+        assert.ok(!await page.locator('.simy-header').locator('a[href$="#product"]').isVisible(), `${path}/${width}: Escape, focus=`+await page.evaluate(()=>document.activeElement.outerHTML.slice(0,180)));
       }
     }
     // Follow the actual menu link; directory indexes can work locally and 404 on S3.
@@ -55,7 +55,7 @@ const { chromium } = require('playwright');
       assert.equal(new URL(await page.locator('.sh-google-play').getAttribute('href'),base).hash, '#android');
       await openNavigation();
     await page.locator('.sh-navigation summary').nth(2).click();
-      const guides = page.locator('.sh-navigation').getByRole('link', {name:'Guides', exact:true});
+      const guides = page.locator('.sh-navigation').locator('a[href*="/guides/"]');
       assert.ok((await guides.getAttribute('href')).endsWith('/index.html'));
       await guides.click();
       assert.equal(await page.locator('h1').count(), 1);
