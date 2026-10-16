@@ -48,6 +48,7 @@ const fs = require('node:fs');
     assert.ok(sales.equals(baselineSales), 'Sales screenshot must exactly match approved baseline');
     for (const target of [baseline,page]) {
       await target.getByRole('combobox',{name:'表示する支社'}).selectOption({index:1});
+      await target.mouse.move(0,0);
       await target.waitForTimeout(2000);
     }
     assert.equal(await page.getByTestId('sony-workbench').innerText(),await baseline.getByTestId('sony-workbench').innerText(),'Sales branch filtering must match baseline');
@@ -135,6 +136,7 @@ const fs = require('node:fs');
     await expect(dialog.getByLabel('顧客の返答・残る不安',{exact:true})).toHaveValue('費用の違いがまだ分からない。');
     await page.keyboard.press('Escape');
     await page.getByRole('button',{name:'営業を前に進める',exact:true}).click();
+    await page.mouse.move(0,0);
     await page.evaluate(()=>scrollTo(0,0));
     await page.waitForTimeout(2000);
     assert.equal(await page.getByTestId('sony-workbench').innerText(),baselineText);
@@ -145,6 +147,9 @@ const fs = require('node:fs');
       const boxes = await board.getByTestId('quality-review-metrics').locator(':scope > *').evaluateAll(nodes=>nodes.map(n=>{const r=n.getBoundingClientRect();return {left:r.left,right:r.right,top:r.top,bottom:r.bottom};}));
       assert.equal(boxes.length,3);
       for (const edge of width===1440?['top','bottom']:['left','right']) assert.ok(Math.max(...boxes.map(b=>b[edge]))-Math.min(...boxes.map(b=>b[edge]))<=1);
+      const topicEdges = await board.getByTestId('quality-topic-bars').locator('button > div:first-child').evaluateAll(nodes=>nodes.map(n=>({labelRight:n.children[0].getBoundingClientRect().right,countLeft:n.children[1].getBoundingClientRect().left})));
+      assert.ok(topicEdges.length>=16);
+      for (const edge of topicEdges) assert.ok(edge.labelRight<=edge.countLeft-1,'Quality topic labels and counts must not overlap');
     }
     await page.setViewportSize({width:390,height:844});
     await page.screenshot({path:'artifacts/fp-sample/quality-mobile.png',fullPage:true});
