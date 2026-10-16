@@ -33,11 +33,19 @@ const http = require('node:http');
       const errors = [];
       page.on('pageerror', error => errors.push(error.message));
       await page.route('**/*', route => new URL(route.request().url()).origin === base ? route.continue() : route.fulfill({ status: 204, body: '' }));
+      // Serve the zoom override as CSS: style injection waits on page events
+      // that are disabled in a genuinely JavaScript-disabled context.
+      await page.route('**/site-header.css?*', route => route.fulfill({
+        contentType: 'text/css',
+        body: fs.readFileSync(path.join(site, 'site-header.css'), 'utf8') + `\nhtml { zoom: ${zoom}; }`
+      }));
       try {
         console.log(`${id}: navigate`);
         await page.goto(base + (locale === 'ja' ? '/ja.html' : '/'));
-        console.log(`${id}: set zoom`);
-        await page.addStyleTag({ content: `html { zoom: ${zoom}; }` });
+        if (js) {
+          const decline = page.locator('#simy-consent button').first();
+          if (await decline.isVisible()) await decline.click();
+        }
         const header = page.locator('.simy-header');
         if (js) await page.waitForFunction(() => document.querySelector('.simy-header').hasAttribute('data-enhanced'));
         const toggle = page.locator('.sh-menu-toggle');
