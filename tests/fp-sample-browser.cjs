@@ -56,8 +56,10 @@ const fs = require('node:fs');
     for (const target of [baseline,page]) await target.getByRole('combobox',{name:'表示する支社'}).selectOption({index:0});
     const salesActions = page.getByRole('button',{name:'内容を見て対応する',exact:true});
     const baselineActions = baseline.getByRole('button',{name:'内容を見て対応する',exact:true});
-    assert.equal(await salesActions.count(),await baselineActions.count());
-    for (let index=0; index<await salesActions.count(); index++) {
+    const salesActionCount = await salesActions.count();
+    assert.ok(salesActionCount>0);
+    assert.equal(salesActionCount,await baselineActions.count());
+    for (let index=0; index<salesActionCount; index++) {
       await baselineActions.nth(index).click();
       await salesActions.nth(index).click();
       const currentDetail = await page.getByRole('dialog').innerText();
