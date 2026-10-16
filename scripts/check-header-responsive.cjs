@@ -27,11 +27,16 @@ const http = require('node:http');
     for (const js of [true, false]) for (const locale of ['ja', 'en']) for (const width of [390, 1280]) for (const zoom of [1, 2]) {
       const id = `${locale}-${width}-${zoom}-${js ? 'js' : 'nojs'}`;
       const page = await browser.newPage({ javaScriptEnabled: js, viewport: { width, height: 900 } });
+      page.setDefaultTimeout(15000);
+      page.setDefaultNavigationTimeout(15000);
+      console.log(`START ${id}`);
       const errors = [];
       page.on('pageerror', error => errors.push(error.message));
       await page.route('**/*', route => new URL(route.request().url()).origin === base ? route.continue() : route.fulfill({ status: 204, body: '' }));
       try {
+        console.log(`${id}: navigate`);
         await page.goto(base + (locale === 'ja' ? '/ja.html' : '/'));
+        console.log(`${id}: set zoom`);
         await page.addStyleTag({ content: `html { zoom: ${zoom}; }` });
         const header = page.locator('.simy-header');
         if (js) await page.waitForFunction(() => document.querySelector('.simy-header').hasAttribute('data-enhanced'));
@@ -44,6 +49,7 @@ const http = require('node:http');
             assert.equal(await page.locator('.sh-navigation summary').first().evaluate(el => el === document.activeElement), true, id);
           }
         }
+        console.log(`${id}: menu open`);
         const groups = page.locator('.sh-navigation > *');
         const boxes = await groups.evaluateAll(nodes => nodes.map(node => { const r = node.getBoundingClientRect(); return { left: r.left, right: r.right }; }));
         if (width / zoom <= 960) for (const box of boxes) {
@@ -53,6 +59,7 @@ const http = require('node:http');
         const sales = page.locator('.sh-navigation a[href*="/sales/"]');
         assert.equal(await sales.innerText(), locale === 'ja' ? '営業' : 'For sales');
         assert.equal(await sales.getAttribute('href'), locale === 'ja' ? '/for/sales/' : '/for/en/sales/');
+        console.log(`${id}: menu screenshot`);
         await page.screenshot({ path: path.join(out, `${id}-menu.png`) });
         if (js) {
           await page.keyboard.press('Escape');
@@ -72,9 +79,11 @@ const http = require('node:http');
         }
         await page.screenshot({ path: path.join(out, `${id}-language.png`) });
         assert.deepEqual(errors, []);
+        console.log(`PASS ${id}`);
         results.push({ id, navigationEdges: boxes, languageBounds: bounds, passed: true });
       } catch (error) {
-        await page.screenshot({ path: path.join(out, `${id}-failure.png`) });
+        console.error(`${id}: ${error.stack}`);
+        await page.screenshot({ path: path.join(out, `${id}-failure.png`), timeout: 5000 }).catch(() => {});
         throw error;
       } finally { await page.close(); }
     }
