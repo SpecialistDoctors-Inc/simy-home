@@ -7,7 +7,7 @@ const http = require('node:http');
 const { chromium } = require('playwright');
 const root = path.resolve(__dirname, '..');
 const site = path.join(root, 'site');
-const output = path.join(root, 'docs/pr-evidence/copy-clarity');
+const output = process.env.COPY_BROWSER_OUTPUT || path.join(root, 'docs/pr-evidence/copy-clarity');
 const dicts = Object.fromEntries(fs.readdirSync(path.join(site, 'lang/home-dom')).filter(f=>f.endsWith('.json'))
   .map(f=>[f.slice(0,-5),JSON.parse(fs.readFileSync(path.join(site,'lang/home-dom',f)))]));
 const types = {'.html':'text/html','.js':'application/javascript','.css':'text/css','.json':'application/json','.png':'image/png','.svg':'image/svg+xml'};
@@ -25,13 +25,13 @@ const report = {locales:Object.keys(dicts),contactStates:[],demoStates:[],aboutS
   fs.mkdirSync(output,{recursive:true});
   await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
   const origin = `http://127.0.0.1:${server.address().port}`;
-  const browser = await chromium.launch({channel:'chrome'});
+  const browser = await chromium.launch(process.env.CI ? {} : {channel:'chrome'});
   try {
     const page = await browser.newPage();
     page.on('pageerror',error=>report.errors.push(error.message));
     await page.route('**/*',route=>{
       const url = route.request().url();
-      if(url.startsWith(origin)||url.startsWith('data:')||/\.woff2?(\?|$)/.test(url)) return route.continue();
+      if(url.startsWith(origin)||url.startsWith('data:')) return route.continue();
       return route.abort();
     });
     for (const width of [1440,390,320]) {

@@ -115,3 +115,33 @@ test('shared footers retain the refined copy in all 18 locales', () => {
     assert.equal(shared['footer.tagline'], dict['Record. Ship. Done.'], locale);
   }
 });
+
+
+test('a delayed dictionary cannot overwrite the currently selected contact language', () => {
+  const field = {
+    placeholder: 'Your name', value: 'Synthetic visitor',
+    getAttribute() { return this.placeholder; },
+    setAttribute(name, value) { this.placeholder = value; }
+  };
+  const heading = { nodeValue: 'Tell us what you need.', isConnected: true };
+  let finishFrench;
+  const context = {
+    CURRENT_LANG: 'fr',
+    document: { getElementById: () => ({ querySelectorAll: () => [field] }) },
+    ROOT_NODE_MAP: new WeakMap(), ROOT_PLACEHOLDER_MAP: new WeakMap(), ROOT_APPLYING: false,
+    HOME_DOM_CACHE: { ja: dictionaries.ja }, captureRootOriginals() {}, injectScreenStudio() {},
+    loadHomeDom(lang, cb) { assert.equal(lang, 'fr'); finishFrench = cb; }
+  };
+  context.ROOT_NODE_MAP._list = [heading];
+  context.ROOT_NODE_MAP.set(heading, heading.nodeValue);
+  const start = source.indexOf('  function applyRoot(');
+  vm.runInNewContext(source.slice(start, source.indexOf('\n  /*', start)), context);
+  context.applyRoot('fr');
+  context.CURRENT_LANG = 'ja';
+  context.applyRoot('ja');
+  context.HOME_DOM_CACHE.fr = dictionaries.fr;
+  finishFrench();
+  assert.equal(heading.nodeValue, dictionaries.ja['Tell us what you need.']);
+  assert.equal(field.placeholder, dictionaries.ja['Your name']);
+  assert.equal(field.value, 'Synthetic visitor');
+});

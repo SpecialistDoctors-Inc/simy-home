@@ -996,7 +996,9 @@
     if (!ROOT_NODE_MAP || !ROOT_NODE_MAP._list) return;
     // Ensure the language dict is loaded — lazy-load on demand if not.
     if (!HOME_DOM_CACHE[langCode]) {
-      loadHomeDom(langCode, function () { applyRoot(langCode); });
+      loadHomeDom(langCode, function () {
+        if (langCode === CURRENT_LANG) applyRoot(langCode);
+      });
       return;
     }
     var dict = HOME_DOM_CACHE[langCode] || {};
