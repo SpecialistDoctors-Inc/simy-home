@@ -9,6 +9,8 @@ import { execFileSync } from "node:child_process";
 const home = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 if (!process.argv[2]) throw new Error("Pass the simy-web checkout containing the approved Sony sample.");
 const root = resolve(process.argv[2]);
+const approvedSalesCommit = "f1dad0e6cec0847cf948b37a8508667e1a740916";
+const approvedSalesData = execFileSync("git", ["show", `${approvedSalesCommit}:src/app/e2e/fp-dashboard/sony-experience-data.ts`], { cwd: root, encoding: "utf8" });
 const exportHead = execFileSync("git", ["rev-parse", "HEAD"], { cwd: root, encoding: "utf8" }).trim();
 const trackedChanges = execFileSync("git", ["status", "--porcelain", "--untracked-files=normal"], { cwd: root, encoding: "utf8" }).trim();
 if (trackedChanges) throw new Error("Export requires a clean, committed simy-web checkout.");
@@ -36,11 +38,24 @@ await build({
   plugins: [{
     name: "standalone-sample-copy",
     setup(builder) {
+      builder.onResolve({ filter: /^approved-sales-insight$/ }, () => ({ path: "approved-sales-insight", namespace: "approved-sales" }));
+      builder.onLoad({ filter: /.*/, namespace: "approved-sales" }, () => ({ contents: approvedSalesData, loader: "ts" }));
+      builder.onLoad({ filter: /sony-experience\.tsx$/ }, async ({ path }) => {
+        const source = await readFile(path, "utf8");
+        const signature = 'export function CaseExperience({ item }: { item: DemoCase })';
+        const selection = 'const s = insight(item),';
+        if (!source.includes(signature) || !source.includes(selection)) throw new Error("Review the sales case detail adapter before exporting.");
+        return { contents: 'import { insight as approvedSalesInsight } from "approved-sales-insight";\n' + source
+          .replace(signature, 'export function CaseExperience({ item, sales = false }: { item: DemoCase; sales?: boolean })')
+          .replace(selection, 'const s = sales ? approvedSalesInsight(item) : insight(item),'), loader: "tsx" };
+      });
       builder.onLoad({ filter: /sony-workbench\.tsx$/ }, async ({ path }) => {
         const source = await readFile(path, "utf8");
         const archive = /        <Button variant="ghost" className="mt-3 justify-start text-xs lg:mt-7" onClick=\{onArchive\}>[\s\S]*?<\/Button>/;
         if (!archive.test(source)) throw new Error("Review the archive link before exporting.");
-        return { contents: source.replace(archive, "").replace("ローカル体験用", "サンプル体験用（このブラウザー内に保存）"), loader: "tsx" };
+        const caseDetail = '<CaseExperience item={selected} />';
+        if (!source.includes(caseDetail)) throw new Error("Review the sales/quality case detail boundary before exporting.");
+        return { contents: source.replace(archive, "").replace(caseDetail, '<CaseExperience item={selected} sales={mode === "sales"} />').replace("ローカル体験用", "サンプル体験用（このブラウザー内に保存）"), loader: "tsx" };
       });
     },
   }],
@@ -61,6 +76,7 @@ await writeFile(resolve(output, "source.json"), JSON.stringify({
   repository: "SpecialistDoctors-Inc/simy-web",
   commit: exportHead,
   component: "src/app/e2e/fp-dashboard/sony-workbench.tsx",
+  approvedSalesCommit,
   data: "synthetic-only",
   persistence: "browser-local-only",
 }, null, 2) + "\n");
