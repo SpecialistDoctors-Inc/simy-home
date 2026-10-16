@@ -159,8 +159,11 @@
     const target = aliases[location.hash];
     if (target) {
       history.replaceState(null, "", target);
-      document.querySelector(target)?.scrollIntoView();
     }
+    const scene = document.getElementById((target || location.hash).slice(1));
+    const folded = scene?.closest("details.manga-more");
+    if (folded) folded.open = true;
+    if (target || folded) scene?.scrollIntoView();
   }
   restoreAlias();
   window.addEventListener("hashchange", restoreAlias);

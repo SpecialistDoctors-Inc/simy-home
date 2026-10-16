@@ -22,7 +22,7 @@ test("mobile navigation closes from blank and outside clicks", () => {
 });
 
 test("homepage cache-busts the current home assets", () => {
-  assert.match(homeHtml, /home\.css\?v=20261004-theme-1/);
+  assert.match(homeHtml, /home\.css\?v=20261016-occupation-entry-1/);
   assert.match(homeHtml, /home-locales\.js\?v=20261004-url-plan-1/);
   assert.match(homeHtml, /home-i18n\.js\?v=20261006-engineer-locales-1/);
   assert.match(homeHtml, /pricing-catalog\.js\?v=20260907-industry-realtime-pricing-3/);

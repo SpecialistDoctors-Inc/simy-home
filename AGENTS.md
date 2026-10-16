@@ -45,7 +45,7 @@ python3 scripts/check-home-seo.py
 node --test tests/*.test.cjs
 ```
 
-Edit `site/index.html`, `site/home-i18n.js`, and `site/home-locales.js`; do not edit generated `site/{ja,hi,es,fr,zh-Hans}.html` directly. See `docs/seo/international-seo-2026-10-03.md` for research, URL behavior, and release checks.
+Edit `scripts/home-ja-manga.html`, `scripts/home-manga-preview-locales.json`, `site/home-i18n.js`, and `site/home-locales.js`; do not edit generated `site/index.html` or `site/{ja,hi,es,fr,zh-Hans}.html` directly. See `docs/seo/international-seo-2026-10-03.md` for research, URL behavior, and release checks.
 
 ### Terraform
 

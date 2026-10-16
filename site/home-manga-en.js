@@ -1,0 +1,10 @@
+/* Preview stories reuse the existing accessible tab controls. */
+Object.assign(scenarios, {
+ codex:{source:"Request a customer reply",prompt:"Prepare a reply to the customer. Check the facts against our documents and show me before sending.",acknowledgement:"I've checked the sources and prepared a draft reply. Please review it.",workflow:"Prepare a customer reply",steps:[["Check facts against sources",'Done'],["Draft the reply",'Done'],["You review the content",'Waiting'],["Apply changes",'Next']],output:"Review the draft's facts and wording. Nothing has been sent."},
+ claude:{source:"Organize the next steps after the meeting",prompt:"Summarize the decisions and who does what next. Flag anything unclear.",acknowledgement:"Decisions and owners are organized. Please review tasks without an owner.",workflow:"Organize meeting follow-up",steps:[["Review meeting notes",'Done'],["Organize decisions and next steps",'Done'],["Confirm unassigned owners",'Waiting'],["Apply requested changes",'Next']],output:"Review the unassigned owners and next steps."},
+ cowork:{source:"Prepare the next customer reply",prompt:"Prepare the next customer reply with the same checks.",acknowledgement:"The draft is ready with fact checks and a review before sending.",workflow:"Reuse your checks next time",steps:[["Choose steps for similar work",'Done'],["Check facts and draft",'Done'],["You review the content",'Waiting'],["Apply requested changes",'Next']],output:"The same checks are included. Please review the draft."}
+});
+for(const [key,label] of Object.entries({codex:"Customer reply",claude:"Meeting follow-up",cowork:"The next similar task"}))document.querySelector(`[data-scenario="${key}"]`).textContent=label;
+const baseRender=renderScenario;
+renderScenario=function(name){baseRender(name);document.querySelectorAll("[data-step-status]").forEach(e=>{e.textContent=({done:"Complete",waiting:"Waiting for you",next:"After review",ready:"After review"})[e.dataset.status]||e.textContent});document.querySelector(".demo-workflow-head>.status").textContent="Awaiting review"};
+renderScenario("codex");

@@ -84,3 +84,20 @@ test("localized illustrations preserve provenance, sample-data limits and asset 
   }
   assert.equal(manifest.filter(asset => /^(threads|quality)-.+-(en|es|fr|hi|zh-Hans)\.png$/.test(asset.file)).length, 25);
 });
+
+test('manga and mechanism images use dedicated assets in every translated page', () => {
+  const manifest = JSON.parse(fs.readFileSync(path.join(root, 'scripts/engineering-manga-assets.json'), 'utf8'));
+  for (const lang of ['en','es','fr','hi','zh-Hans']) {
+    const html = fs.readFileSync(path.join(root,'site/for',lang.toLowerCase(),'engineers/index.html'),'utf8');
+    assert.equal((html.match(/class="manga-panel"/g)||[]).length,8);
+    assert.equal((html.match(/class="mechanism-image"/g)||[]).length,3);
+    assert.ok(html.includes('class="manga-more"'));
+    for (const asset of Object.values(manifest[lang])) {
+      assert.ok(asset.url.endsWith(`-${lang}.webp`));
+      assert.ok(html.includes(asset.url));
+      assert.ok(html.includes(`width="${asset.width}" height="${asset.height}"`));
+      assert.ok(fs.statSync(path.join(root,'site',asset.url)).size > 10000);
+    }
+    assert.doesNotMatch(html, /release-crew-ja\.webp|delivery-team\.webp|rules-application\.webp|systems-application\.webp/);
+  }
+});

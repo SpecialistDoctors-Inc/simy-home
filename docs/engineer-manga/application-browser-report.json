@@ -1,0 +1,66 @@
+{
+  "geometry": [
+    {
+      "width": 1440,
+      "overflow": false,
+      "panels": [
+        {
+          "left": 160,
+          "right": 1280
+        },
+        {
+          "left": 160,
+          "right": 1280
+        },
+        {
+          "left": 160,
+          "right": 1280
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "overflow": false,
+      "panels": [
+        {
+          "left": 37,
+          "right": 353
+        },
+        {
+          "left": 37,
+          "right": 353
+        },
+        {
+          "left": 37,
+          "right": 353
+        }
+      ]
+    },
+    {
+      "width": 320,
+      "overflow": false,
+      "panels": [
+        {
+          "left": 37,
+          "right": 283
+        },
+        {
+          "left": 37,
+          "right": 283
+        },
+        {
+          "left": 37,
+          "right": 283
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "checks": [
+    "eight panels",
+    "no redundant demos",
+    "keyboard details",
+    "no-JS details",
+    "manga link"
+  ]
+}

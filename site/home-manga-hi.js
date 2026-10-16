@@ -1,0 +1,10 @@
+/* Preview stories reuse the existing accessible tab controls. */
+Object.assign(scenarios, {
+ codex:{source:"ग्राहक के जवाब का अनुरोध",prompt:"ग्राहक के लिए जवाब तैयार करो। दस्तावेज़ों से तथ्य जाँचो और भेजने से पहले मुझे दिखाओ।",acknowledgement:"स्रोत जाँचकर जवाब का मसौदा तैयार किया है। कृपया सामग्री जाँचें।",workflow:"ग्राहक का जवाब तैयार करें",steps:[["स्रोतों से तथ्य जाँचें",'Done'],["जवाब का मसौदा बनाएँ",'Done'],["आप सामग्री की जाँच करते हैं",'Waiting'],["बदलाव लागू करें",'Next']],output:"मसौदे के तथ्य और भाषा जाँचें। अभी कुछ भेजा नहीं गया है।"},
+ claude:{source:"बैठक के बाद के अगले कदम व्यवस्थित करें",prompt:"फैसले और अगला काम किसे करना है, व्यवस्थित करो। अस्पष्ट बातों को चिह्नित करो।",acknowledgement:"फैसले और जिम्मेदार लोग व्यवस्थित हैं। बिना जिम्मेदार व्यक्ति वाले काम देखें।",workflow:"बैठक के बाद के काम व्यवस्थित करें",steps:[["बैठक के नोट्स देखें",'Done'],["फैसले और अगले कदम व्यवस्थित करें",'Done'],["बाकी जिम्मेदार लोग तय करें",'Waiting'],["जरूरी बदलाव लागू करें",'Next']],output:"बाकी जिम्मेदार लोगों और अगले कदमों की पुष्टि करें।"},
+ cowork:{source:"अगले ग्राहक का जवाब तैयार करें",prompt:"अगले ग्राहक का जवाब भी इन्हीं जांचों के साथ तैयार करो।",acknowledgement:"तथ्य जांच और भेजने से पहले समीक्षा के साथ मसौदा तैयार है।",workflow:"अगली बार भी वही जांचें",steps:[["मिलते-जुलते काम के चरण चुनें",'Done'],["तथ्य जांचें और मसौदा बनाएं",'Done'],["आप सामग्री की जाँच करते हैं",'Waiting'],["जरूरी बदलाव लागू करें",'Next']],output:"पिछली बार वाली जांचें शामिल हैं। कृपया मसौदा देखें।"}
+});
+for(const [key,label] of Object.entries({codex:"ग्राहक का जवाब",claude:"बैठक का फ़ॉलो-अप",cowork:"अगला मिलता-जुलता काम"}))document.querySelector(`[data-scenario="${key}"]`).textContent=label;
+const baseRender=renderScenario;
+renderScenario=function(name){baseRender(name);document.querySelectorAll("[data-step-status]").forEach(e=>{e.textContent=({done:"पूरा",waiting:"आपकी प्रतीक्षा में",next:"जाँच के बाद",ready:"जाँच के बाद"})[e.dataset.status]||e.textContent});document.querySelector(".demo-workflow-head>.status").textContent="जाँच का इंतज़ार"};
+renderScenario("codex");

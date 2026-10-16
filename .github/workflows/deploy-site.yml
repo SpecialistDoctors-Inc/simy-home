@@ -59,11 +59,21 @@ jobs:
       # Both existing pass-through routing and future index rewrites can serve them.
       - name: Prepare occupation pages and assets
         run: |
+          aws s3 sync site/assets/home-manga-preview/ s3://${{ secrets.SITE_S3_BUCKET }}/assets/home-manga-preview/ \
+            --cache-control "public, max-age=86400"
+          for asset in home-manga-preview.css home-manga-preview.js home-manga-{en,ja,es,fr,hi,zh-Hans}.js; do
+            aws s3 cp "site/$asset" "s3://${{ secrets.SITE_S3_BUCKET }}/$asset" \
+              --cache-control "public, max-age=86400"
+          done
           aws s3 sync site/assets/engineer-experience/ s3://${{ secrets.SITE_S3_BUCKET }}/assets/engineer-experience/ \
+            --cache-control "public, max-age=86400"
+          aws s3 sync site/assets/engineer-manga/ s3://${{ secrets.SITE_S3_BUCKET }}/assets/engineer-manga/ \
+            --cache-control "public, max-age=86400"
+          aws s3 sync site/assets/engineer-mechanism/ s3://${{ secrets.SITE_S3_BUCKET }}/assets/engineer-mechanism/ \
             --cache-control "public, max-age=86400"
           aws s3 sync site/assets/fp-experience/ "s3://${{ secrets.SITE_S3_BUCKET }}/assets/fp-experience/" \
             --cache-control "public, max-age=86400"
-          for asset in site-theme.css engineers.css engineers.js engineers-experience.css engineers-experience.js financial-planners.css financial-planners.js site-header.css site-header.js; do
+          for asset in site-theme.css engineers.css engineers.js engineers-experience.css engineers-experience.js engineers-manga.css financial-planners.css financial-planners.js site-header.css site-header.js; do
             aws s3 cp "site/$asset" "s3://${{ secrets.SITE_S3_BUCKET }}/$asset" \
               --cache-control "public, max-age=86400"
           done
@@ -80,6 +90,7 @@ jobs:
             --exclude "*" \
             --include "*.html" \
             --exclude "downloads/*" \
+            --exclude "samples/*" \
             --exclude "for/*/engineers.html" \
             --exclude "for/*/financial-planners.html" \
             --cache-control "public, max-age=300"
@@ -103,6 +114,7 @@ jobs:
             --exclude "i18n.js" \
             --exclude "lang/*" \
             --exclude "downloads/*" \
+            --exclude "samples/*" \
             --exclude ".well-known/apple-app-site-association" \
             --exclude "for/" \
             --exclude "for/*/" \
