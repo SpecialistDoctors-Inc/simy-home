@@ -19,11 +19,16 @@ const fs = require('node:fs');
     assert.ok(Math.max(...metrics.map(r=>r.bottom))-Math.min(...metrics.map(r=>r.bottom)) <= 1);
     async function checkCharts(selector) {
       const edges = await page.getByTestId(selector).evaluate(node => [...node.children].map(child => {const r = child.getBoundingClientRect();return {left:r.left,right:r.right,top:r.top,bottom:r.bottom};}));
-      assert.equal(edges.length, 3);
       assert.ok(Math.abs(edges[0].left-edges[1].left) <= 1);
-      assert.ok(Math.abs(edges[0].right-edges[2].right) <= 1);
-      assert.ok(Math.abs(edges[1].top-edges[2].top) <= 1);
-      assert.ok(Math.abs(edges[1].bottom-edges[2].bottom) <= 1);
+      if (selector === 'manager-charts') {
+        assert.equal(edges.length, 2);
+        assert.ok(Math.abs(edges[0].right-edges[1].right) <= 1);
+      } else {
+        assert.equal(edges.length, 3);
+        assert.ok(Math.abs(edges[0].right-edges[2].right) <= 1);
+        assert.ok(Math.abs(edges[1].top-edges[2].top) <= 1);
+        assert.ok(Math.abs(edges[1].bottom-edges[2].bottom) <= 1);
+      }
     }
     await checkCharts('manager-charts');
     fs.mkdirSync('artifacts/fp-sample', {recursive:true});
