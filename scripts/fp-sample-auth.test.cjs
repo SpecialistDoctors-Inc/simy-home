@@ -5,6 +5,7 @@ const vm = require('node:vm');
 const crypto = require('node:crypto');
 
 const source = fs.readFileSync('infra/cloudfront-functions/redirect-prod.js', 'utf8');
+assert.ok(source.includes(fs.readFileSync('infra/cloudfront-functions/fp-sample-auth.js', 'utf8').trim()), 'Deployment guard and tested router must match');
 const context = { require, SAMPLE_AUTH_SHA256: '' };
 vm.createContext(context);
 vm.runInContext(source, context);
