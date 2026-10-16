@@ -64,6 +64,8 @@ const fs = require('node:fs');
       const baselineDetail = await baseline.getByRole('dialog').innerText();
       fs.writeFileSync(`artifacts/fp-sample/sales-case-${index}.json`,JSON.stringify({baseline:baselineDetail,current:currentDetail},null,2));
       assert.equal(currentDetail,baselineDetail,'Sales case details must match baseline');
+      const fields = target=>target.getByRole('dialog').locator('input,textarea,select').evaluateAll(nodes=>nodes.map(n=>({tag:n.tagName,type:n.type,value:n.value})));
+      assert.deepEqual(await fields(page),await fields(baseline),'Sales form defaults and options must match baseline');
       await baseline.keyboard.press('Escape');
       await page.keyboard.press('Escape');
     }
@@ -141,6 +143,19 @@ const fs = require('node:fs');
     await page.waitForTimeout(2000);
     assert.equal(await page.getByTestId('sony-workbench').innerText(),baselineText);
     assert.ok((await page.screenshot({path:'artifacts/fp-sample/sales-after-quality.png',fullPage:true,animations:'disabled'})).equals(baselineSales),'Quality saves must preserve sales display');
+    for (const target of [baseline,page]) {
+      await target.getByRole('button',{name:'内容を見て対応する',exact:true}).first().click();
+      await target.getByLabel('対応結果',{exact:true}).fill('架空の営業検証：全体像を説明し次回の確認を約束した。');
+      await target.getByRole('button',{name:'対応の実施を記録',exact:true}).click();
+      await expect(target.getByRole('status')).toContainText('このブラウザーに保存');
+      await target.reload();
+      await target.locator('[data-testid="sony-workbench"][data-ready="true"]').waitFor();
+      await target.mouse.move(0,0);
+      await target.evaluate(()=>scrollTo(0,0));
+      await target.waitForTimeout(2000);
+    }
+    assert.equal(await page.getByTestId('sony-workbench').innerText(),await baseline.getByTestId('sony-workbench').innerText(),'Sales save/reload must match baseline');
+    assert.ok((await page.screenshot({path:'artifacts/fp-sample/sales-after-save.png',fullPage:true,animations:'disabled'})).equals(await baseline.screenshot({path:'artifacts/fp-sample/sales-after-save-baseline.png',fullPage:true,animations:'disabled'})),'Sales save/reload charts must match baseline');
     await page.getByRole('button',{name:'顧客体験と募集品質',exact:true}).click();
     for (const width of [1440,390]) {
       await page.setViewportSize({width,height:1000});
