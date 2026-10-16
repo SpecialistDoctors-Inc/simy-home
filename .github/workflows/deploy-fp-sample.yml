@@ -14,6 +14,8 @@ on:
       - 'infra/cloudfront-functions/redirect-prod.js'
       - 'scripts/fp-sample-auth.test.cjs'
       - 'tests/fp-sample-browser.cjs'
+      - 'scripts/build-fp-sample.mjs'
+      - 'scripts/build-fp-vercel.mjs'
       - '.github/workflows/deploy-fp-sample.yml'
   workflow_dispatch:
 permissions:
@@ -27,6 +29,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
@@ -35,8 +39,15 @@ jobs:
         run: |
           npm install --prefix "$RUNNER_TEMP/fp-browser" --no-package-lock playwright
           "$RUNNER_TEMP/fp-browser/node_modules/.bin/playwright" install --with-deps chromium
+          mkdir -p "$RUNNER_TEMP/fp-baseline/samples/fp-management"
+          for asset in index.html app.js app.css; do
+            git show "c8df78d7477cd927e13514b8ea05c8c7f39c9986:samples/fp-management/$asset" > "$RUNNER_TEMP/fp-baseline/samples/fp-management/$asset"
+          done
+          python3 -m http.server 8348 --bind 127.0.0.1 --directory "$RUNNER_TEMP/fp-baseline" > /tmp/fp-baseline-server.log 2>&1 &
+          BASELINE_PID=$!
           python3 -m http.server 8347 --bind 127.0.0.1 > /tmp/fp-sample-server.log 2>&1 &
-          trap 'kill $!' EXIT
+          SAMPLE_PID=$!
+          trap 'kill $SAMPLE_PID $BASELINE_PID' EXIT
           FP_SAMPLE_PLAYWRIGHT="$RUNNER_TEMP/fp-browser/node_modules/playwright" node tests/fp-sample-browser.cjs
       - uses: actions/upload-artifact@v4
         if: always()
