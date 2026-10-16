@@ -90,6 +90,7 @@ jobs:
             --exclude "*" \
             --include "*.html" \
             --exclude "downloads/*" \
+            --exclude "samples/*" \
             --exclude "for/*/engineers.html" \
             --exclude "for/*/financial-planners.html" \
             --cache-control "public, max-age=300"
@@ -113,6 +114,7 @@ jobs:
             --exclude "i18n.js" \
             --exclude "lang/*" \
             --exclude "downloads/*" \
+            --exclude "samples/*" \
             --exclude ".well-known/apple-app-site-association" \
             --exclude "for/" \
             --exclude "for/*/" \
