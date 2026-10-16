@@ -5951,3 +5951,7 @@ html[lang="hi"] .hero-lead {
 @media (min-width: 1440px) and (max-width: 1799px) {
   .desktop-nav a { padding-inline: 0.75rem; }
 }
+
+/* Keep the occupation choice visible before the long introductory copy. */
+.hero-work-entry { margin-bottom: 20px; font-weight: 700; }
+.hero-work-entry a { display: inline-block; padding: 8px 0; text-underline-offset: .25em; }

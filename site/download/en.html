@@ -834,7 +834,7 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
           "name": "Can I try it for free?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "There is no free plan. Choose a monthly plan and sign up to use both the app and the web. See pricing on the home page."
+            "text": "The home page advertises one month free, which is different from an ongoing free plan. Check eligibility, the price after the free period, the billing start date and cancellation terms in pricing and at sign-up. Available features depend on your subscription."
           }
         },
         {
@@ -945,7 +945,7 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
           <p>Logging in to the app requires a SIMY account. Create it first and you can use the app as soon as you open it.</p>
           <ul class="need">
             <li>An email address (no password needed)</li>
-            <li>A credit card (monthly plan; there is no free plan)</li>
+            <li>Payment details (check required information and free-period terms at sign-up)</li>
           </ul>
           <a class="btn btn-primary" href="https://app.simy.one/signup?lang=en&amp;locale=en&amp;region=us&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=download_en&amp;utm_content=account_first">Choose a plan and create an account <span class="arrow" aria-hidden="true">↗</span></a>
           <span class="dl-meta">You can also download the app from the screen after sign-up / <a href="/#pricing">See pricing</a></span>
@@ -958,15 +958,17 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
               <span class="you-badge">Your computer</span>
               <span class="os">macOS · Apple silicon (M1 or later)</span>
               <h3>Mac</h3>
-              <a class="btn btn-primary" data-dl="mac" href="https://simy.one/downloads/simy-cli/0.5.45/SIMY-CLI-0.5.45-macos-arm64.dmg">Download for Mac <span class="arrow" aria-hidden="true">↓</span></a>
-              <span class="dl-meta" data-meta="mac">.dmg</span>
+              <a class="btn btn-primary" data-dl="mac" href="https://simy.one/downloads/simy-cli/0.6.10/SIMY-CLI-0.6.10-macos-arm64.dmg">Download for Mac <span class="arrow" aria-hidden="true">↓</span></a>
+              <span class="dl-meta" data-meta="mac">v0.6.10 · .dmg</span>
+              <span class="dl-meta" role="status" data-release-status="mac" data-release-current="Latest version confirmed from the published release information.">The latest version is not confirmed. This link is v0.6.10, checked on 7 October 2026. Check your connection and reload this page, or check downloads in your account.</span>
             </div>
             <div class="dl-card" data-os="win">
               <span class="you-badge">Your computer</span>
               <span class="os">Windows · x64</span>
               <h3>Windows</h3>
-              <a class="btn btn-primary" data-dl="win" href="https://simy.one/downloads/simy-cli/windows/0.5.45/SIMY-CLI-0.5.45-windows-x64-setup.exe">Download for Windows <span class="arrow" aria-hidden="true">↓</span></a>
-              <span class="dl-meta" data-meta="win">.exe</span>
+              <a class="btn btn-primary" data-dl="win" href="https://simy.one/downloads/simy-cli/windows/0.6.10/SIMY-CLI-0.6.10-windows-x64-setup.exe">Download for Windows <span class="arrow" aria-hidden="true">↓</span></a>
+              <span class="dl-meta" data-meta="win">v0.6.10 · .exe</span>
+              <span class="dl-meta" role="status" data-release-status="win" data-release-current="Latest version confirmed from the published release information.">The latest version is not confirmed. This link is v0.6.10, checked on 7 October 2026. Check your connection and reload this page, or check downloads in your account.</span>
             </div>
             <div class="dl-card" data-os="ios">
               <span class="you-badge">Your device</span>
@@ -999,8 +1001,8 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
           <h3>Windows <small>.exe</small></h3>
           <ol class="plain-list">
             <li>Open the downloaded .exe</li>
-            <li>If a blue protection screen appears, click "More info" → "Run anyway"</li>
-            <li>Open SIMY and click "Log in"</li>
+            <li>If Windows displays a protection warning, stop the installation. Do not bypass the warning. Verify the download source and publisher; if you cannot, use the web version or contact support. <a href="https://app.simy.one/login?lang=en">Log in on the web</a></li>
+            <li>Only after installation completes successfully, open SIMY and click "Log in"</li>
           </ol>
         </div>
       </div>
@@ -1039,7 +1041,7 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
       <div class="faq">
         <details>
           <summary>Can I try it for free?</summary>
-          <div class="a"><p>There is no free plan. Choose a monthly plan and sign up to use both the app and the web. See pricing on the home page.</p></div>
+          <div class="a"><p>The home page advertises one month free, which is different from an ongoing free plan. Check eligibility, the price after the free period, the billing start date and cancellation terms in pricing and at sign-up. Available features depend on your subscription.</p></div>
         </details>
         <details>
           <summary>Can I install the app before creating an account?</summary>
@@ -1134,24 +1136,10 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
       else { location.href = 'mailto:?subject=' + encodeURIComponent('Download SIMY') + '&body=' + encodeURIComponent(url); }
     });
   }
-  function mb(n) { return n ? (n / 1048576).toFixed(0) + 'MB' : ''; }
-  function apply(key, manifest, ext) {
-    if (!manifest || !manifest.artifacts || !manifest.artifacts.length) return;
-    var a = manifest.artifacts[0];
-    var link = document.querySelector('[data-dl="' + key + '"]');
-    var meta = document.querySelector('[data-meta="' + key + '"]');
-    if (link && a.url) link.href = a.url;
-    if (meta) meta.textContent = 'v' + manifest.version + ' · ' + ext + (a.size ? ' · ' + mb(a.size) : '');
-  }
-  function load(path, key, ext) {
-    if (!window.fetch) return;
-    fetch(path, { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : null; })
-      .then(function (m) { apply(key, m, ext); }).catch(function () {});
-  }
-  load('/downloads/simy-cli/latest.json', 'mac', '.dmg');
-  load('/downloads/simy-cli/windows/latest.json', 'win', '.exe');
+
 })();
 </script>
+<script src="/download-release.js?v=20261007-bounded-recovery-2" defer></script>
 <script src="/analytics.js" defer></script>
 </body>
 </html>

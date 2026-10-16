@@ -33,4 +33,17 @@ for (const locale of ['en', 'ja', 'es', 'fr', 'hi', 'zh-Hans']) {
     assert.match(source, new RegExp(`/home-manga-${locale}\\.js`));
     assert.doesNotMatch(source, /href="[^\"]*home-manga-preview\.html/);
   });
+  test(`${locale}: occupation discovery survives manga regeneration before the heading`, () => {
+    const file = locale === 'en' ? 'index.html' : locale + '.html';
+    const source = fs.readFileSync(path.join(root, 'site', file), 'utf8');
+    const hero = source.match(/<section[^>]*id="top"[^>]*>([\s\S]*?)<\/section>/)[1];
+    const entry = hero.match(/<p class="hero-work-entry"><a href="([^"]+)">([^<]+)/);
+    assert.ok(entry, 'visible occupation link missing');
+    assert.equal(entry[1], locale === 'ja' ? '/for/' : '/for/en/');
+    assert.ok(hero.indexOf('hero-work-entry') < hero.indexOf('<h1'));
+    if (!['en', 'ja'].includes(locale)) {
+      assert.match(entry[2], /inglés|anglais|अंग्रेज़ी|英文/, 'English fallback must be disclosed');
+    }
+    assert.equal((hero.match(/data-story-scene="hero"/g) || []).length, 1);
+  });
 }
