@@ -7,6 +7,14 @@ on:
       - 'infra/cloudfront-functions/fp-sample-auth.js'
       - 'scripts/publish-fp-sample.py'
       - '.github/workflows/deploy-fp-sample.yml'
+  pull_request:
+    paths:
+      - 'samples/fp-management/**'
+      - 'infra/cloudfront-functions/fp-sample-auth.js'
+      - 'infra/cloudfront-functions/redirect-prod.js'
+      - 'scripts/fp-sample-auth.test.cjs'
+      - 'tests/fp-sample-browser.cjs'
+      - '.github/workflows/deploy-fp-sample.yml'
   workflow_dispatch:
 permissions:
   id-token: write
@@ -15,9 +23,8 @@ concurrency:
   group: protected-fp-sample-prod
   cancel-in-progress: false
 jobs:
-  publish:
+  validate:
     runs-on: ubuntu-latest
-    environment: prod
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -36,6 +43,13 @@ jobs:
         with:
           name: fp-sample-render
           path: artifacts/fp-sample/
+  publish:
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    needs: validate
+    runs-on: ubuntu-latest
+    environment: prod
+    steps:
+      - uses: actions/checkout@v4
       - uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.AWS_SITE_DEPLOY_ROLE_ARN }}
