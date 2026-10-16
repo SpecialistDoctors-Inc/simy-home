@@ -1,0 +1,61 @@
+name: Deploy protected FP sample
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'samples/fp-management/**'
+      - 'infra/cloudfront-functions/fp-sample-auth.js'
+      - 'scripts/publish-fp-sample.py'
+      - '.github/workflows/deploy-fp-sample.yml'
+  pull_request:
+    paths:
+      - 'samples/fp-management/**'
+      - 'infra/cloudfront-functions/fp-sample-auth.js'
+      - 'infra/cloudfront-functions/redirect-prod.js'
+      - 'scripts/fp-sample-auth.test.cjs'
+      - 'tests/fp-sample-browser.cjs'
+      - '.github/workflows/deploy-fp-sample.yml'
+  workflow_dispatch:
+permissions:
+  id-token: write
+  contents: read
+concurrency:
+  group: protected-fp-sample-prod
+  cancel-in-progress: false
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --test scripts/fp-sample-auth.test.cjs
+      - name: Render both sample dashboards in an isolated browser
+        run: |
+          npm install --prefix "$RUNNER_TEMP/fp-browser" --no-package-lock playwright
+          "$RUNNER_TEMP/fp-browser/node_modules/.bin/playwright" install --with-deps chromium
+          python3 -m http.server 8347 --bind 127.0.0.1 > /tmp/fp-sample-server.log 2>&1 &
+          trap 'kill $!' EXIT
+          FP_SAMPLE_PLAYWRIGHT="$RUNNER_TEMP/fp-browser/node_modules/playwright" node tests/fp-sample-browser.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: fp-sample-render
+          path: artifacts/fp-sample/
+  publish:
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    needs: validate
+    runs-on: ubuntu-latest
+    environment: prod
+    steps:
+      - uses: actions/checkout@v4
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_SITE_DEPLOY_ROLE_ARN }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      - name: Protect folder before publishing sample objects
+        env:
+          SITE_S3_BUCKET: ${{ secrets.SITE_S3_BUCKET }}
+          SITE_CF_DISTRIBUTION_ID: ${{ secrets.SITE_CF_DISTRIBUTION_ID }}
+        run: python3 scripts/publish-fp-sample.py
