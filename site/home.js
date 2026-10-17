@@ -386,40 +386,4 @@ window.addEventListener("resize", () => {
   centerFeaturedPricingPlan();
 });
 
-const storageDialog = document.querySelector("[data-storage-dialog]");
-const storageDialogOpenButtons = Array.from(document.querySelectorAll("[data-storage-dialog-open]"));
-const storageDialogCloseButton = storageDialog?.querySelector("[data-storage-dialog-close]");
-let storageDialogReturnFocus = null;
-
-function closeStorageDialog() {
-  if (!storageDialog?.open) return;
-  storageDialog.close();
-}
-
-if (storageDialog) {
-  storageDialogOpenButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      storageDialogReturnFocus = button;
-      if (!storageDialog.open) storageDialog.showModal();
-      document.body.classList.add("dialog-open");
-      storageDialogCloseButton?.focus();
-    });
-  });
-
-  storageDialogCloseButton?.addEventListener("click", closeStorageDialog);
-  storageDialog.addEventListener("click", (event) => {
-    if (event.target === storageDialog) closeStorageDialog();
-  });
-  storageDialog.addEventListener("keydown", (event) => {
-    if (event.key !== "Escape") return;
-    event.preventDefault();
-    closeStorageDialog();
-  });
-  storageDialog.addEventListener("close", () => {
-    document.body.classList.remove("dialog-open");
-    storageDialogReturnFocus?.focus();
-    storageDialogReturnFocus = null;
-  });
-}
-
 renderScenario("codex");

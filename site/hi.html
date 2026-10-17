@@ -35,8 +35,8 @@
 <meta content="https://simy.one/assets/home-manga-preview/hero-hi.webp" name="twitter:image">
 <meta content="आप AI का उपयोग कर रहे हैं। लेकिन काम का बोझ कम नहीं हुआ। चैट और बातचीत को काम पूरा करने वाले वर्कफ़्लो में बदलें।" name="twitter:image:alt">
 <link href="site-theme.css?v=20261004-theme-1" rel="stylesheet">
-<link href="home.css?v=20261004-theme-1" rel="stylesheet">
-<link href="engineering-home.css?v=20261004-theme-1" rel="stylesheet">
+<link href="home.css?v=20261017-storage-1tb" rel="stylesheet">
+<link href="engineering-home.css?v=20261017-storage-1tb" rel="stylesheet">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -56,8 +56,8 @@
 </script>
 <script defer src="home-locales.js?v=20261004-url-plan-1"></script>
 <script defer src="home-i18n.js?v=20261006-engineer-locales-1"></script>
-<script defer src="pricing-catalog.js?v=20260907-industry-realtime-pricing-3"></script>
-<script defer src="home.js?v=20261002-production-plan-handoff-1"></script>
+<script defer src="pricing-catalog.js?v=20261017-storage-1tb"></script>
+<script defer src="home.js?v=20261017-storage-1tb"></script>
 <link href="/site-header.css?v=20261006-compact-1" rel="stylesheet">
 <script defer src="/site-header.js?v=20261008-locale-1"></script>
 <style>
@@ -592,10 +592,10 @@
 <th scope="row">
 <span class="pricing-feature-with-action">
 <span>स्टोरेज</span>
-<button class="pricing-info-button" data-storage-dialog-open aria-controls="storage-pricing-dialog" aria-haspopup="dialog" aria-label="अतिरिक्त स्टोरेज की कीमतें देखें" type="button">
+<a class="pricing-info-button" href="#storage-pricing">
 <span class="pricing-info-icon" aria-hidden="true">i</span>
 <span>अतिरिक्त स्टोरेज की कीमतें</span>
-</button>
+</a>
 </span>
 </th>
 <td><strong class="pricing-value">10 GB</strong></td>
@@ -677,24 +677,13 @@
 <span data-tax-included-price-detail hidden><span>कर सहित</span> <strong data-realtime-tax-included-price>$33</strong> / <span>माह</span></span>
 </div>
 </aside>
-<div class="pricing-foot" id="pricing-note">
-<div class="pricing-foot-copy">
-<p><sup>*</sup> ≤3% त्रुटि दर तब का लक्ष्य है जब SIMY द्वारा तय परीक्षण और सत्यापन मानदंड पूरे हों। यह गारंटीकृत नतीजा नहीं है।</p>
-<p class="pricing-tax-note">कीमतें USD में दिखाई गई हैं। हर प्लान की मुख्य कीमत कर से पहले की है। जापानी पेज पर 10% उपभोग कर सहित कीमत भी अलग से दिखाई जाती है। अन्य देशों और क्षेत्रों में बिलिंग पते के आधार पर कर लग सकता है।</p>
-<p class="stripe-note"><span aria-hidden="true">▣</span> खरीद पेज भुगतान से पहले उपलब्ध प्लान और अंतिम कुल राशि दिखाता है। Stripe भुगतान को सुरक्षित रूप से संसाधित करता है।</p>
-</div>
-</div>
-</section>
-<dialog class="storage-dialog" data-storage-dialog aria-describedby="storage-dialog-description" aria-labelledby="storage-dialog-title" id="storage-pricing-dialog">
+<aside class="storage-pricing" aria-describedby="storage-dialog-description" aria-labelledby="storage-dialog-title" id="storage-pricing">
 <div class="storage-dialog-card">
 <header class="storage-dialog-header">
 <div>
 <p class="section-kicker">स्टोरेज ऐड-ऑन</p>
 <h2 id="storage-dialog-title">अतिरिक्त स्टोरेज की कीमतें</h2>
 </div>
-<button class="storage-dialog-close" data-storage-dialog-close aria-label="अतिरिक्त स्टोरेज की कीमतें बंद करें" type="button">
-<span aria-hidden="true">×</span>
-</button>
 </header>
 <p class="storage-dialog-description" id="storage-dialog-description">अपनी ज़रूरत की क्षमता चुनें। कीमतों का बिल हर महीने लिया जाता है।</p>
 <div class="storage-addon-table-wrap">
@@ -708,27 +697,32 @@
 </thead>
 <tbody>
 <tr>
-<td data-storage-capacity="30 GB"><strong data-storage-price-amount>$10</strong> <small><span>प्रति माह</span> · <span data-tax-mode="exclusive">लागू करों से पहले</span><span data-tax-mode="inclusive" hidden>कर सहित</span></small></td>
+<td data-storage-capacity="30 GB"><strong data-storage-price-amount>$30</strong> <small><span>प्रति माह</span> · <span data-tax-mode="exclusive">लागू करों से पहले</span><span data-tax-mode="inclusive" hidden>कर सहित</span></small></td>
 <td><strong>30 GB</strong></td>
 </tr>
 <tr>
-<td data-storage-capacity="200 GB"><strong data-storage-price-amount>$40</strong> <small><span>प्रति माह</span> · <span data-tax-mode="exclusive">लागू करों से पहले</span><span data-tax-mode="inclusive" hidden>कर सहित</span></small></td>
+<td data-storage-capacity="200 GB"><strong data-storage-price-amount>$200</strong> <small><span>प्रति माह</span> · <span data-tax-mode="exclusive">लागू करों से पहले</span><span data-tax-mode="inclusive" hidden>कर सहित</span></small></td>
 <td><strong>200 GB</strong></td>
 </tr>
 <tr>
-<td data-storage-capacity="1 TB"><strong data-storage-price-amount>$100</strong> <small><span>प्रति माह</span> · <span data-tax-mode="exclusive">लागू करों से पहले</span><span data-tax-mode="inclusive" hidden>कर सहित</span></small></td>
+<td data-storage-capacity="1 TB"><strong data-storage-price-amount>$1,000</strong> <small><span>प्रति माह</span> · <span data-tax-mode="exclusive">लागू करों से पहले</span><span data-tax-mode="inclusive" hidden>कर सहित</span></small></td>
 <td><strong>1 TB</strong></td>
-</tr>
-<tr>
-<td data-storage-capacity="5 TB"><strong data-storage-price-amount>$500</strong> <small><span>प्रति माह</span> · <span data-tax-mode="exclusive">लागू करों से पहले</span><span data-tax-mode="inclusive" hidden>कर सहित</span></small></td>
-<td><strong>5 TB</strong></td>
 </tr>
 </tbody>
 </table>
 </div>
 <p class="storage-dialog-note">कीमतें USD में दिखाई गई हैं। जापानी भाषा में कीमतों में 10% उपभोग कर शामिल है। अन्य स्थानों पर चेकआउट के समय कर लग सकता है।</p>
 </div>
-</dialog>
+</aside>
+<div class="pricing-foot" id="pricing-note">
+<div class="pricing-foot-copy">
+<p><sup>*</sup> ≤3% त्रुटि दर तब का लक्ष्य है जब SIMY द्वारा तय परीक्षण और सत्यापन मानदंड पूरे हों। यह गारंटीकृत नतीजा नहीं है।</p>
+<p class="pricing-tax-note">कीमतें USD में दिखाई गई हैं। हर प्लान की मुख्य कीमत कर से पहले की है। जापानी पेज पर 10% उपभोग कर सहित कीमत भी अलग से दिखाई जाती है। अन्य देशों और क्षेत्रों में बिलिंग पते के आधार पर कर लग सकता है।</p>
+<p class="stripe-note"><span aria-hidden="true">▣</span> खरीद पेज भुगतान से पहले उपलब्ध प्लान और अंतिम कुल राशि दिखाता है। Stripe भुगतान को सुरक्षित रूप से संसाधित करता है।</p>
+</div>
+</div>
+</section>
+
 <section class="seo-faq section-pad" aria-labelledby="workflow-faq-title" id="workflow-faq">
 <div class="section-intro">
 <p class="section-kicker">SIMY</p>

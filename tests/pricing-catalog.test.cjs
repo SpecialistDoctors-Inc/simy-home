@@ -43,10 +43,9 @@ test('Japan keeps the headline price tax-exclusive and adds 10% tax-inclusive de
   assert.equal(annual.realtimeAddOnAmount, '$30');
   assert.equal(annual.realtimeAddOnTaxInclusiveAmount, '$33');
   assert.deepEqual(annual.storageAmounts, {
-    '30 GB': '$11',
-    '200 GB': '$44',
-    '1 TB': '$110',
-    '5 TB': '$550'
+    '30 GB': '$33',
+    '200 GB': '$220',
+    '1 TB': '$1,100'
   });
   assert.match(annual.taxNote, /プラン価格は税別/);
   assert.match(annual.taxNote, /税込価格を別に併記/);
@@ -66,8 +65,9 @@ test('tax and price arithmetic stays in integer cents', () => {
   assert.equal(pricing.priceCents('starter', 'monthly'), 3580);
   assert.equal(pricing.grossCents(2980, 1000), 3278);
   assert.equal(pricing.grossCents(1000, 1000), 1100);
-  assert.equal(pricing.storagePriceCents('30 GB'), 1000);
-  assert.equal(pricing.storagePriceCents('5 TB'), 50000);
+  assert.equal(pricing.storagePriceCents('30 GB'), 3000);
+  assert.equal(pricing.storagePriceCents('1 TB'), 100000);
+  assert.throws(() => pricing.storagePriceCents('5 TB'), /unknown storage capacity/);
   assert.equal(pricing.realtimeAddOnPriceCents(), 3000);
   assert.throws(() => pricing.priceCents('unknown', 'annual'), /unknown pricing plan/);
   assert.throws(() => pricing.storagePriceCents('unknown'), /unknown storage capacity/);
@@ -82,7 +82,7 @@ test('homepage storage rows use catalog capacity keys instead of duplicated pric
   assert.doesNotMatch(html, /data-storage-price=/);
   assert.deepEqual(
     [...html.matchAll(/data-storage-capacity="([^"]+)"/g)].map((match) => match[1]),
-    ['30 GB', '200 GB', '1 TB', '5 TB']
+    ['30 GB', '200 GB', '1 TB']
   );
   assert.match(runtime, /pricingCatalog\.storagePriceCents\(cell\.dataset\.storageCapacity\)/);
 });
@@ -112,4 +112,20 @@ test('homepage pricing bundles do not ship the retired Starter Autorun cap', () 
     const source = fs.readFileSync(path.join(root, 'site', file), 'utf8');
     assert.doesNotMatch(source, /"100 runs"\s*:/, `${file} must not retain the old Starter cap`);
   });
+});
+
+test('storage prices are visible without opening a dialog', () => {
+  const html = fs.readFileSync(path.join(__dirname, '../site/index.html'), 'utf8');
+  assert.match(html, /<aside class="storage-pricing"[^>]*id="storage-pricing"/);
+  assert.match(html, /href="#storage-pricing"/);
+  assert.doesNotMatch(html, /<dialog|data-storage-dialog/);
+});
+
+test('all six published locales expose the same three storage tiers inline', () => {
+  for (const file of ['index.html','ja.html','hi.html','es.html','fr.html','zh-Hans.html']) {
+    const html = fs.readFileSync(path.join(__dirname, '../site', file), 'utf8');
+    assert.deepEqual([...html.matchAll(/data-storage-capacity="([^"]+)"/g)].map(m=>m[1]), ['30 GB','200 GB','1 TB'], file);
+    assert.match(html, /<aside class="storage-pricing"[^>]*id="storage-pricing"/);
+    assert.doesNotMatch(html, /data-storage-dialog|5 TB/);
+  }
 });

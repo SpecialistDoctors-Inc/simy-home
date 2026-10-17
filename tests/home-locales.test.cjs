@@ -163,7 +163,7 @@ test("pricing gives Starter unlimited Autorun, free trials, and a truthful Enter
   assert.match(pricingSection, /Enterprise rollout/);
   assert.match(pricingSection, /Security and rollout support/);
   assert.doesNotMatch(pricingSection, /pricing-value pricing-value-custom">Contact us/);
-  const pricingRows = [...pricingSection.matchAll(/<tbody>[\s\S]*?<\/tbody>/g)]
+  const pricingRows = [...pricingSection.matchAll(/<tbody>[\s\S]*?<\/tbody>/g)].slice(0, 1)
     .flatMap(([body]) => [...body.matchAll(/<tr>([\s\S]*?)<\/tr>/g)])
     .map(([, row]) => row);
   assert.ok(pricingRows.length > 0, "pricing comparison must keep its feature rows");
