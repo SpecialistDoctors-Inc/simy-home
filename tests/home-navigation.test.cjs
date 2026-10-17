@@ -24,9 +24,9 @@ test("mobile navigation closes from blank and outside clicks", () => {
 test("homepage cache-busts the current home assets", () => {
   assert.match(homeHtml, /home\.css\?v=20261001-nav-fit-1/);
   assert.match(homeHtml, /home-locales\.js\?v=20261012-purchase-availability-1/);
-  assert.match(homeHtml, /home-i18n\.js\?v=20261012-purchase-availability-1/);
+  assert.match(homeHtml, /home-i18n\.js\?v=20261016-dev-handoff-1/);
   assert.match(homeHtml, /pricing-catalog\.js\?v=20260907-industry-realtime-pricing-3/);
-  assert.match(homeHtml, /home\.js\?v=20261012-purchase-availability-1/);
+  assert.match(homeHtml, /home\.js\?v=20261016-dev-handoff-1/);
 });
 
 test("pricing call to action opens the signup plan selection page", () => {
