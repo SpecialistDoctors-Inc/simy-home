@@ -40,5 +40,27 @@ jobs:
           python3 scripts/check-home-seo.py
           python3 scripts/check-site-seo.py
           python3 scripts/organize-guide-intent.py --check
-          node --test tests/*.test.cjs
+          node --test --test-concurrency=1 tests/*.test.cjs
           git diff --check
+
+  copy-browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install isolated browser test runtime
+        run: |
+          npm install --prefix "$RUNNER_TEMP/copy-browser" --no-package-lock --ignore-scripts playwright@1.56.1
+          "$RUNNER_TEMP/copy-browser/node_modules/.bin/playwright" install --with-deps chromium
+      - name: Verify 18-language copy on loopback
+        env:
+          COPY_BROWSER_OUTPUT: ${{ runner.temp }}/copy-browser-results
+        run: NODE_PATH="$RUNNER_TEMP/copy-browser/node_modules" node tests/copy-browser.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: copy-browser-results
+          path: ${{ runner.temp }}/copy-browser-results
