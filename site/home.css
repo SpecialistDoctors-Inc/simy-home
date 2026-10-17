@@ -5951,3 +5951,12 @@ html[lang="hi"] .hero-lead {
 @media (min-width: 1440px) and (max-width: 1799px) {
   .desktop-nav a { padding-inline: 0.75rem; }
 }
+
+.storage-pricing {
+  width: 100%;
+  margin-top: 2rem;
+  scroll-margin-top: 7rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: #fff;
+}

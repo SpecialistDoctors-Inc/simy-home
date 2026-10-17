@@ -12,10 +12,9 @@
   });
   var REALTIME_ADD_ON_CENTS = 3000;
   var STORAGE_ADD_ON_CENTS = Object.freeze({
-    '30 GB': 1000,
-    '200 GB': 4000,
-    '1 TB': 10000,
-    '5 TB': 50000
+    '30 GB': 3000,
+    '200 GB': 20000,
+    '1 TB': 100000
   });
 
   function grossCents(baseCents, taxBasisPoints) {

@@ -593,10 +593,10 @@
 <th scope="row">
 <span class="pricing-feature-with-action">
 <span>ストレージ</span>
-<button class="pricing-info-button" data-storage-dialog-open aria-controls="storage-pricing-dialog" aria-haspopup="dialog" aria-label="追加ストレージ料金を見る" type="button">
+<a class="pricing-info-button" href="#storage-pricing">
 <span class="pricing-info-icon" aria-hidden="true">i</span>
 <span>追加ストレージ料金</span>
-</button>
+</a>
 </span>
 </th>
 <td><strong class="pricing-value">10 GB</strong></td>
@@ -678,24 +678,13 @@
 <span data-tax-included-price-detail hidden><span>税込</span> <strong data-realtime-tax-included-price>$33</strong> / <span>月</span></span>
 </div>
 </aside>
-<div class="pricing-foot" id="pricing-note">
-<div class="pricing-foot-copy">
-<p><sup>*</sup> ≤3%のエラー率は、SIMYが定めるテスト・検証基準を満たした場合の目標値であり、結果を保証するものではありません。</p>
-<p class="pricing-tax-note">価格は米ドル表記です。大きく表示したプラン価格は税別で、その下に消費税10%を含む税込価格を併記しています。その他の国・地域では、請求先住所に応じた税が加算される場合があります。</p>
-<p class="stripe-note"><span aria-hidden="true">▣</span> 購入画面で、現在申し込めるプランと最終請求額を決済前に確認できます。決済はStripeで安全に処理されます。</p>
-</div>
-</div>
-</section>
-<dialog class="storage-dialog" data-storage-dialog aria-describedby="storage-dialog-description" aria-labelledby="storage-dialog-title" id="storage-pricing-dialog">
+<aside class="storage-pricing" aria-describedby="storage-dialog-description" aria-labelledby="storage-dialog-title" id="storage-pricing">
 <div class="storage-dialog-card">
 <header class="storage-dialog-header">
 <div>
 <p class="section-kicker">ストレージ追加オプション</p>
 <h2 id="storage-dialog-title">追加ストレージ料金</h2>
 </div>
-<button class="storage-dialog-close" data-storage-dialog-close aria-label="追加ストレージ料金を閉じる" type="button">
-<span aria-hidden="true">×</span>
-</button>
 </header>
 <p class="storage-dialog-description" id="storage-dialog-description">必要な容量を選べます。料金は月額です。</p>
 <div class="storage-addon-table-wrap">
@@ -709,27 +698,32 @@
 </thead>
 <tbody>
 <tr>
-<td data-storage-capacity="30 GB"><strong data-storage-price-amount>$10</strong> <small><span>月額</span> · <span data-tax-mode="exclusive">税別</span><span data-tax-mode="inclusive" hidden>税込</span></small></td>
+<td data-storage-capacity="30 GB"><strong data-storage-price-amount>$30</strong> <small><span>月額</span> · <span data-tax-mode="exclusive">税別</span><span data-tax-mode="inclusive" hidden>税込</span></small></td>
 <td><strong>30 GB</strong></td>
 </tr>
 <tr>
-<td data-storage-capacity="200 GB"><strong data-storage-price-amount>$40</strong> <small><span>月額</span> · <span data-tax-mode="exclusive">税別</span><span data-tax-mode="inclusive" hidden>税込</span></small></td>
+<td data-storage-capacity="200 GB"><strong data-storage-price-amount>$200</strong> <small><span>月額</span> · <span data-tax-mode="exclusive">税別</span><span data-tax-mode="inclusive" hidden>税込</span></small></td>
 <td><strong>200 GB</strong></td>
 </tr>
 <tr>
-<td data-storage-capacity="1 TB"><strong data-storage-price-amount>$100</strong> <small><span>月額</span> · <span data-tax-mode="exclusive">税別</span><span data-tax-mode="inclusive" hidden>税込</span></small></td>
+<td data-storage-capacity="1 TB"><strong data-storage-price-amount>$1,000</strong> <small><span>月額</span> · <span data-tax-mode="exclusive">税別</span><span data-tax-mode="inclusive" hidden>税込</span></small></td>
 <td><strong>1 TB</strong></td>
-</tr>
-<tr>
-<td data-storage-capacity="5 TB"><strong data-storage-price-amount>$500</strong> <small><span>月額</span> · <span data-tax-mode="exclusive">税別</span><span data-tax-mode="inclusive" hidden>税込</span></small></td>
-<td><strong>5 TB</strong></td>
 </tr>
 </tbody>
 </table>
 </div>
 <p class="storage-dialog-note">価格は米ドル表記です。日本語表示の価格は消費税10%込みです。その他の国・地域では、決済時に税が加算される場合があります。</p>
 </div>
-</dialog>
+</aside>
+<div class="pricing-foot" id="pricing-note">
+<div class="pricing-foot-copy">
+<p><sup>*</sup> ≤3%のエラー率は、SIMYが定めるテスト・検証基準を満たした場合の目標値であり、結果を保証するものではありません。</p>
+<p class="pricing-tax-note">価格は米ドル表記です。大きく表示したプラン価格は税別で、その下に消費税10%を含む税込価格を併記しています。その他の国・地域では、請求先住所に応じた税が加算される場合があります。</p>
+<p class="stripe-note"><span aria-hidden="true">▣</span> 購入画面で、現在申し込めるプランと最終請求額を決済前に確認できます。決済はStripeで安全に処理されます。</p>
+</div>
+</div>
+</section>
+
 <section class="seo-faq section-pad" aria-labelledby="workflow-faq-title" id="workflow-faq">
 <div class="section-intro">
 <p class="section-kicker">SIMY</p>
