@@ -783,10 +783,10 @@ AI gets it done.</p>
                 <th scope="row">
                   <span class="pricing-feature-with-action">
                     <span>Storage</span>
-                    <button class="pricing-info-button" type="button" data-storage-dialog-open aria-haspopup="dialog" aria-controls="storage-pricing-dialog" aria-label="View additional storage pricing">
+                    <a class="pricing-info-button" href="#storage-pricing">
                       <span class="pricing-info-icon" aria-hidden="true">i</span>
                       <span>Additional storage pricing</span>
-                    </button>
+                    </a>
                   </span>
                 </th>
                 <td><strong class="pricing-value">10 GB</strong></td>
@@ -870,6 +870,44 @@ AI gets it done.</p>
           </div>
         </aside>
 
+        <aside class="storage-pricing" id="storage-pricing" aria-labelledby="storage-dialog-title" aria-describedby="storage-dialog-description">
+          <div class="storage-dialog-card">
+            <header class="storage-dialog-header">
+              <div>
+                <p class="section-kicker">Storage add-ons</p>
+                <h2 id="storage-dialog-title">Additional storage pricing</h2>
+              </div>
+            </header>
+            <p class="storage-dialog-description" id="storage-dialog-description">Choose the capacity you need. Prices are billed monthly.</p>
+            <div class="storage-addon-table-wrap">
+              <table class="storage-addon-table">
+                <caption class="sr-only">Additional storage monthly pricing</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Monthly price</th>
+                    <th scope="col">Additional storage</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td data-storage-capacity="30 GB"><strong data-storage-price-amount>$30</strong> <small><span>per month</span> · <span data-tax-mode="exclusive">before applicable taxes</span><span data-tax-mode="inclusive" hidden>tax included</span></small></td>
+                    <td><strong>30 GB</strong></td>
+                  </tr>
+                  <tr>
+                    <td data-storage-capacity="200 GB"><strong data-storage-price-amount>$200</strong> <small><span>per month</span> · <span data-tax-mode="exclusive">before applicable taxes</span><span data-tax-mode="inclusive" hidden>tax included</span></small></td>
+                    <td><strong>200 GB</strong></td>
+                  </tr>
+                  <tr>
+                    <td data-storage-capacity="1 TB"><strong data-storage-price-amount>$1,000</strong> <small><span>per month</span> · <span data-tax-mode="exclusive">before applicable taxes</span><span data-tax-mode="inclusive" hidden>tax included</span></small></td>
+                    <td><strong>1 TB</strong></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="storage-dialog-note">Prices are shown in USD. Japanese prices include 10% consumption tax. Elsewhere, taxes may apply at checkout.</p>
+          </div>
+        </aside>
+
         <div class="pricing-foot" id="pricing-note">
           <div class="pricing-foot-copy">
             <p><sup>*</sup> The ≤3% error rate is a target when SIMY&rsquo;s defined testing and verification criteria are met. It is not a guaranteed result.</p>
@@ -878,51 +916,6 @@ AI gets it done.</p>
           </div>
         </div>
       </section>
-
-      <dialog class="storage-dialog" id="storage-pricing-dialog" data-storage-dialog aria-labelledby="storage-dialog-title" aria-describedby="storage-dialog-description">
-        <div class="storage-dialog-card">
-          <header class="storage-dialog-header">
-            <div>
-              <p class="section-kicker">Storage add-ons</p>
-              <h2 id="storage-dialog-title">Additional storage pricing</h2>
-            </div>
-            <button class="storage-dialog-close" type="button" data-storage-dialog-close aria-label="Close additional storage pricing">
-              <span aria-hidden="true">×</span>
-            </button>
-          </header>
-          <p class="storage-dialog-description" id="storage-dialog-description">Choose the capacity you need. Prices are billed monthly.</p>
-          <div class="storage-addon-table-wrap">
-            <table class="storage-addon-table">
-              <caption class="sr-only">Additional storage monthly pricing</caption>
-              <thead>
-                <tr>
-                  <th scope="col">Monthly price</th>
-                  <th scope="col">Additional storage</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td data-storage-capacity="30 GB"><strong data-storage-price-amount>$10</strong> <small><span>per month</span> · <span data-tax-mode="exclusive">before applicable taxes</span><span data-tax-mode="inclusive" hidden>tax included</span></small></td>
-                  <td><strong>30 GB</strong></td>
-                </tr>
-                <tr>
-                  <td data-storage-capacity="200 GB"><strong data-storage-price-amount>$40</strong> <small><span>per month</span> · <span data-tax-mode="exclusive">before applicable taxes</span><span data-tax-mode="inclusive" hidden>tax included</span></small></td>
-                  <td><strong>200 GB</strong></td>
-                </tr>
-                <tr>
-                  <td data-storage-capacity="1 TB"><strong data-storage-price-amount>$100</strong> <small><span>per month</span> · <span data-tax-mode="exclusive">before applicable taxes</span><span data-tax-mode="inclusive" hidden>tax included</span></small></td>
-                  <td><strong>1 TB</strong></td>
-                </tr>
-                <tr>
-                  <td data-storage-capacity="5 TB"><strong data-storage-price-amount>$500</strong> <small><span>per month</span> · <span data-tax-mode="exclusive">before applicable taxes</span><span data-tax-mode="inclusive" hidden>tax included</span></small></td>
-                  <td><strong>5 TB</strong></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <p class="storage-dialog-note">Prices are shown in USD. Japanese prices include 10% consumption tax. Elsewhere, taxes may apply at checkout.</p>
-        </div>
-      </dialog>
 
       <section class="final-cta" aria-labelledby="final-title">
         <div class="final-copy">

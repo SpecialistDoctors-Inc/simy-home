@@ -3915,24 +3915,6 @@ body.dialog-open {
   overflow: hidden;
 }
 
-.storage-dialog {
-  width: min(calc(100% - 2rem), 34rem);
-  max-width: none;
-  max-height: calc(100dvh - 2rem);
-  padding: 0;
-  overflow: auto;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  background: #fff;
-  color: var(--ink);
-  box-shadow: 0 2rem 6rem rgba(17, 17, 17, 0.3);
-}
-
-.storage-dialog::backdrop {
-  background: rgba(17, 17, 17, 0.58);
-  backdrop-filter: blur(0.2rem);
-}
-
 .storage-dialog-card {
   display: grid;
   gap: 1.25rem;
@@ -3957,29 +3939,6 @@ body.dialog-open {
 html[lang="ja"] .storage-dialog-header h2,
 html[lang="zh-Hans"] .storage-dialog-header h2 {
   white-space: nowrap;
-}
-
-.storage-dialog-close {
-  display: inline-grid;
-  width: 2.6rem;
-  height: 2.6rem;
-  flex: 0 0 2.6rem;
-  place-items: center;
-  border: 1px solid var(--line);
-  border-radius: 50%;
-  background: #fff;
-  color: var(--ink);
-  font-size: 1.4rem;
-  cursor: pointer;
-}
-
-.storage-dialog-close:hover {
-  background: #f2f4f6;
-}
-
-.storage-dialog-close:focus-visible {
-  outline: 2px solid var(--blue);
-  outline-offset: 0.2rem;
 }
 
 .storage-dialog-description {
@@ -5700,11 +5659,6 @@ html[lang="zh-Hans"] .storage-dialog-header h2 {
     width: 100%;
   }
 
-  .storage-dialog {
-    width: calc(100% - 1rem);
-    max-height: calc(100dvh - 1rem);
-  }
-
   .storage-dialog-card {
     gap: 1rem;
     padding: 1.2rem;
@@ -5854,4 +5808,14 @@ html[lang="zh-Hans"] .storage-dialog-header h2 {
 }
 @media (min-width: 1440px) and (max-width: 1799px) {
   .desktop-nav a { padding-inline: 0.75rem; }
+}
+
+/* Keep optional storage prices visible within the plan comparison. */
+.storage-pricing {
+  width: 100%;
+  margin-top: 2rem;
+  scroll-margin-top: 7rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: #fff;
 }
