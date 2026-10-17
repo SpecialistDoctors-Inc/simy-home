@@ -15,6 +15,7 @@ on:
       - 'scripts/fp-sample-auth.test.cjs'
       - 'tests/fp-sample-browser.cjs'
       - 'scripts/build-fp-sample.mjs'
+      - 'scripts/fp-feedback-sample.tsx'
       - 'scripts/build-fp-vercel.mjs'
       - '.github/workflows/deploy-fp-sample.yml'
   workflow_dispatch:

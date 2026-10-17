@@ -38,6 +38,14 @@ await build({
   plugins: [{
     name: "standalone-sample-copy",
     setup(builder) {
+      builder.onResolve({ filter: /^sample-feedback-review$/ }, () => ({ path: "sample-feedback-review", namespace: "sample-feedback" }));
+      builder.onLoad({ filter: /.*/, namespace: "sample-feedback" }, async () => ({ contents: await readFile(resolve(home, "scripts/fp-feedback-sample.tsx"), "utf8"), loader: "tsx", resolveDir: root }));
+      builder.onLoad({ filter: /quality-review-board\.tsx$/ }, async ({ path }) => {
+        const source = await readFile(path, "utf8");
+        const marker = '      <div className="grid gap-4 sm:grid-cols-3" data-testid="quality-review-metrics">';
+        if (!source.includes(marker)) throw new Error("Review the sample feedback insertion point before exporting.");
+        return { contents: 'import { SampleFeedbackReview } from "sample-feedback-review";\n' + source.replace(marker, '      {sample && <SampleFeedbackReview />}\n' + marker), loader: "tsx" };
+      });
       builder.onResolve({ filter: /^approved-sales-insight$/ }, () => ({ path: "approved-sales-insight", namespace: "approved-sales" }));
       builder.onLoad({ filter: /.*/, namespace: "approved-sales" }, () => ({ contents: approvedSalesData, loader: "ts" }));
       builder.onLoad({ filter: /sony-experience\.tsx$/ }, async ({ path }) => {
@@ -63,7 +71,7 @@ await build({
 const javascript = resolve(output, "app.js");
 await writeFile(javascript, (await readFile(javascript, "utf8")).split("\n").map(line => line.trimEnd()).join("\n"));
 const css = await postcss([tailwind({ base: root, optimize: true })]).process(
-  await readFile(resolve(root, "src/app/globals.css"), "utf8"),
+  `@source "${resolve(home, "scripts/fp-feedback-sample.tsx")}";\n` + await readFile(resolve(root, "src/app/globals.css"), "utf8"),
   { from: resolve(root, "src/app/globals.css"), to: resolve(output, "app.css") },
 );
 await writeFile(resolve(output, "app.css"), css.css);
