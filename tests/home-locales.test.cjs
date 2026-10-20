@@ -372,7 +372,7 @@ test("keeps Traditional Chinese distinct and omits unsupported China region", ()
 
 test("manga editorial copy is complete in every locale", () => {
   const dictionary = JSON.parse(fs.readFileSync(path.join(repoRoot, 'scripts/home-manga-preview-locales.json'), 'utf8'));
-  const keys = ['いつもの仕事を任せて、あなたは必要な判断に集中。', '一度伝えた確認を、次にも活かす。', '次の仕事、ひとりで抱えなくていい。'];
+  const keys = ['チャットや会話を、仕事が進む仕組みに変える。', '一度伝えた確認を、次にも活かす。', '次の仕事、ひとりで抱えなくていい。'];
   for (const [locale, copy] of Object.entries(dictionary)) {
     const html = fs.readFileSync(path.join(repoRoot, 'site', locale === 'en' ? 'index.html' : locale + '.html'), 'utf8');
     for (const key of keys) {
