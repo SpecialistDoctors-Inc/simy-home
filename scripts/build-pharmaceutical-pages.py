@@ -6,6 +6,7 @@ import json
 import re
 from pathlib import Path
 from site_header import apply as apply_header
+from pharmaceutical_manga_art import render_artwork
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / 'site'
@@ -16,7 +17,7 @@ TEMPLATE = (ROOT / 'scripts/pharmaceutical-ja.html').read_text()
 def route(locale):
     return '/for/' + ('' if locale == 'ja' else locale.lower() + '/') + 'pharmaceutical-companies/'
 
-def render(locale):
+def render(locale, require_manga_art=False):
     source = TEMPLATE
     if locale != 'ja':
         dictionary = COPY[locale]
@@ -56,6 +57,7 @@ def render(locale):
         source = source.replace('href="/for/"', 'href="/for/en/"')
         source = source.replace('href="/for/engineers/"', f'href="/for/{locale.lower()}/engineers/"')
         source = source.replace('/contact.html?lang=ja', f'/contact.html?lang={locale}')
+    source = render_artwork(source, required=require_manga_art)
     title = html.unescape(re.search(r'<title>(.*?)</title>', source)[1])
     schema = {'@context': 'https://schema.org', '@type': 'WebPage', 'name': title,
               'url': 'https://simy.one' + route(locale), 'inLanguage': locale,
@@ -67,10 +69,12 @@ def render(locale):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--check', action='store_true')
+    parser.add_argument('--require-manga-art', action='store_true',
+                        help='Require and validate all eight distinct full-scene illustrations')
     args = parser.parse_args()
     for locale in LOCALES:
         path = SITE / (route(locale).lstrip('/') + 'index.html')
-        output = render(locale)
+        output = render(locale, require_manga_art=args.require_manga_art)
         if args.check:
             if not path.exists() or path.read_text() != output:
                 raise SystemExit(f'Stale pharmaceutical page: {path}')
