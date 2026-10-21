@@ -10,7 +10,7 @@ const siteRoot = path.join(repoRoot, "site");
 const html = fs.readFileSync(path.join(siteRoot, "guides", "plaud.html"), "utf8");
 
 const CANONICAL = "https://simy.one/guides/plaud.html";
-const OG_IMAGE = "https://simy.one/ogp-plaud.png";
+const OG_IMAGE = "https://simy.one/assets/social/cards/guides-plaud-v1.png";
 
 // ---------- helpers ----------
 const decode = (s) =>
@@ -181,7 +181,7 @@ test("B6 og:image is page-specific and a real 1200x630 PNG", () => {
   assert.equal(meta("og:image"), OG_IMAGE);
   assert.equal(meta("og:image:width"), "1200");
   assert.equal(meta("og:image:height"), "630");
-  const file = path.join(siteRoot, "ogp-plaud.png");
+  const file = path.join(siteRoot, "assets/social/cards/guides-plaud-v1.png");
   assert.ok(fs.existsSync(file), "site/ogp-plaud.png is missing");
   const png = fs.readFileSync(file);
   assert.equal(png.toString("ascii", 1, 4), "PNG");
