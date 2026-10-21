@@ -12,7 +12,7 @@ Eight new full-scene originals were generated on Mac with the built-in `image_ge
 
 All eight outputs were inspected individually. Scenes 1/6 return to the same physician and hospital room, with a reverse camera and a new hospital-roles question. Scenes 4/5 keep the evening workspace and simulated doctor inside the phone, changing the MR's raised-folder, anxious posture to a relaxed question with the folder laid down. Scene 7 carries the hospital roles diagram into the updated practice card. Scene 8 connects that topic to coaching with the round-glasses colleague. The colleague also accompanies the real meetings. Images are newly generated compositions, not crops from the engineering comic.
 
-Dialogue, narration, speaker names, and the AI-doctor distinction remain accessible localized HTML in all six languages; no translated dialogue is baked into the art. The existing hero promise remains unchanged.
+Dialogue, narration, speaker names, and the AI-doctor distinction remain accessible localized HTML in all six languages; no translated dialogue is baked into the art. Following the user’s correction, the hero and explanation now make the purpose explicit: use the rehearsed questions and explanations in the next real meeting. Practice is preparation for that conversation.
 
 ## Reproduction and verification
 

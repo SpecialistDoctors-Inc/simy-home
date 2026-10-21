@@ -5,7 +5,7 @@
 - Eight separate built-in image generation calls produced new 1536×1024 PNG masters. Each output was visually inspected in the generation result; all accepted outputs are preserved outside `site/`.
 - Eight distinct WebP exports total 2,275,144 bytes. File hashes and paths are in `art-manifest.json`.
 - Japanese, English, Spanish, French, Hindi and Simplified Chinese generated pages contain the eight scene images and retain localized HTML dialogue and narration. Repeated cropped portraits are removed.
-- The original hero promise is retained. No new provider subscription or API-key substitution was performed.
+- The initial artwork release retained the original hero. A subsequent user correction changed the hero and related copy to focus on using the preparation in the next real meeting. No new provider subscription or API-key substitution was performed.
 
 ## Automated source checks
 
@@ -29,3 +29,11 @@ Screenshots and detailed reports are saved in `output/pharmaceutical-manga-qa/`.
 ## Release
 
 PR #147 and production deployment are checked separately from local tests. Final commit, CI, merge/deploy results and public readback are reported in the delivery message and PR record.
+
+## Next-meeting purpose correction
+
+The user identified that the explanation made practice appear to be the end goal. The Japanese source and all five translations now make the next real meeting the purpose: review the last conversation, rehearse questions and explanations, use them with the doctor, then reflect on the response to prepare the following visit.
+
+The hero, comic heading and scene 6 dialogue, explanation heading and steps, takeaways card, quality explanation and consultation CTA were updated. The next real meeting explicitly reuses the question from scene 5. Characters, the eight artwork files and the fictional-example boundaries are retained.
+
+Final local checks passed: all 1,314 Node tests; required-art generated-page reproducibility; localized home generation; homepage and site SEO; git diff whitespace check. Browser checks covered all six languages at 1440/390/320/720px for manga layout and at 1440/390/320px for the changed hero, explanation, step labels and cards. No horizontal overflow or clipped text was found. The changed sections and real-meeting scene were captured and inspected. `purpose-layout-report.json` records all 18 section-layout checks.

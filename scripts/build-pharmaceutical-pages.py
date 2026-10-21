@@ -41,9 +41,9 @@ def render(locale, require_manga_art=False):
     if locale == 'ja':
         # Keep the two short phrases intact on narrow screens.
         source = source.replace(
-            '<em>その先生に合わせて、練習する。</em>',
-            '<em><span class="headline-part">その先生に合わせて、</span><wbr>'
-            '<span class="headline-part">練習する。</span></em>')
+            '<em>練習を、次の面談に活かす。</em>',
+            '<em><span class="headline-part">練習を、</span><wbr>'
+            '<span class="headline-part">次の面談に活かす。</span></em>')
     if locale not in ('ja', 'zh-Hans'):
         source = source.replace('</span><wbr>', '</span> <wbr>')
     source = source.replace('<html lang="ja"', f'<html lang="{locale}"')
