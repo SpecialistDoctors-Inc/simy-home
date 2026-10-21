@@ -57,6 +57,7 @@ def render(locale, require_manga_art=False):
         source = source.replace('href="/for/"', 'href="/for/en/"')
         source = source.replace('href="/for/engineers/"', f'href="/for/{locale.lower()}/engineers/"')
         source = source.replace('/contact.html?lang=ja', f'/contact.html?lang={locale}')
+    source = source.replace("/social/next-meeting-ja-v1.png", f"/social/next-meeting-{locale}-v1.png")
     source = render_artwork(source, required=require_manga_art)
     title = html.unescape(re.search(r'<title>(.*?)</title>', source)[1])
     schema = {'@context': 'https://schema.org', '@type': 'WebPage', 'name': title,

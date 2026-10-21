@@ -31,3 +31,11 @@ The artwork guard rejects missing or byte-identical images. Its fixture test ren
 `tests/pharmaceutical-manga-browser.cjs` checks six languages at 1440, 390, 320 and 720 CSS pixels (the latter also models the effective width of a 1440px desktop at 200% zoom). It decodes all eight images, checks horizontal overflow and panel edges within 1px, and captures desktop/mobile evidence. `PHARMA_BASE` selects local or production origin; `PHARMA_EVIDENCE` selects the evidence directory. Browser screenshots verify simulated viewport behavior, not physical phone acceptance.
 
 The initial NVIDIA authentication blocker and original handoff are historical context in `mac-handoff.md`; the Mac built-in tool resolved that blocker. Current verification and publication evidence is recorded in `verification.md`.
+
+## Link-preview thumbnail
+
+The sharing image uses a new illustration of the MR applying a rehearsed question in a real meeting, with a large localized outcome headline. It replaces the previous management-screen thumbnail. The new art was generated with the built-in image tool; the exact brief is `social-thumbnail-prompt.txt`. The PNG master is retained outside deployment at `output/imagegen/pharma-social-v1/meeting.png`.
+
+`node scripts/capture-pharmaceutical-social.cjs` renders six 1200×630 PNG cards from the common illustration and `scripts/pharmaceutical-social-copy.json`. It checks that the localized label and title fit their column. The final images are `site/assets/pharmaceutical-companies/social/next-meeting-{locale}-v1.png`. Open Graph and Twitter metadata reference each page's language, specify PNG/1200×630, and provide localized alternative text. Versioned filenames give the replacement image a new URL.
+
+All six cards were visually inspected at full size. The Node tests check the actual PNG signature/dimensions and each locale's metadata URL. Public metadata/image readback is separate from Apple Messages or other services fetching a fresh preview; no message was sent and cached third-party previews are not claimed to have refreshed.

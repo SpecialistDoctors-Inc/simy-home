@@ -20,6 +20,18 @@ for (const locale of locales) {
       assert.ok(source.includes(`hreflang="${language}" href="https://simy.one${route(language)}"`));
       assert.ok(header.includes(`href="${route(language)}" lang="${language}"`));
     }
+    const socialImage = `/assets/pharmaceutical-companies/social/next-meeting-${locale}-v1.png`;
+    assert.ok(source.includes(`property="og:image" content="https://simy.one${socialImage}"`));
+    assert.ok(source.includes(`name="twitter:image" content="https://simy.one${socialImage}"`));
+    assert.ok(source.includes('property="og:image:width" content="1200"'));
+    assert.ok(source.includes('property="og:image:height" content="630"'));
+    assert.ok(source.includes('property="og:image:type" content="image/png"'));
+    assert.ok(source.includes('property="og:image:alt" content="'));
+    assert.ok(source.includes('name="twitter:image:alt" content="'));
+    const png = fs.readFileSync(path.join(root, 'site', socialImage));
+    assert.equal(png.subarray(0, 8).toString('hex'), '89504e470d0a1a0a');
+    assert.equal(png.readUInt32BE(16), 1200);
+    assert.equal(png.readUInt32BE(20), 630);
     assert.equal((source.match(/class="panel"/g) || []).length, 8);
     assert.equal((source.match(/class="screen"/g) || []).length, 4);
     const main = source.match(/<main[\s\S]*?<\/main>/)[0];
