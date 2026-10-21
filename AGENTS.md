@@ -42,10 +42,13 @@ The deployed site is static HTML/CSS/images. The five translated homepages are g
 python3 scripts/build-localized-home.py
 python3 scripts/build-localized-home.py --check
 python3 scripts/check-home-seo.py
+python3 scripts/build-pharmaceutical-pages.py --check
 node --test tests/*.test.cjs
 ```
 
 Edit `scripts/home-ja-manga.html`, `scripts/home-manga-preview-locales.json`, `site/home-i18n.js`, and `site/home-locales.js`; do not edit generated `site/index.html` or `site/{ja,hi,es,fr,zh-Hans}.html` directly. See `docs/seo/international-seo-2026-10-03.md` for research, URL behavior, and release checks.
+
+The six pharmaceutical pages are generated with `python3 scripts/build-pharmaceutical-pages.py`. Edit `scripts/pharmaceutical-ja.html` and `scripts/pharmaceutical-locales.json`; do not edit their generated HTML directly.
 
 ### Terraform
 

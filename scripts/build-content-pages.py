@@ -32,6 +32,10 @@ LABELS = {
 
 
 def ref(ident, lang):
+    if ident == 'pharmaceutical-companies':
+        return ('/for/pharmaceutical-companies/' if lang == 'ja' else '/for/en/pharmaceutical-companies/',
+                '製薬企業向けSIMY' if lang == 'ja' else 'SIMY for pharmaceutical companies',
+                '医師別のMR・MSLロールプレイから面談品質の確認、支店・全社の育成管理へ。' if lang == 'ja' else 'Doctor-specific MR/MSL roleplay, meeting quality review and organization-wide training.')
     if ident == 'financial-planners':
         return ('/for/financial-planners/' if lang == 'ja' else '/for/en/financial-planners/',
                 'ファイナンシャルプランナー向けSIMY' if lang == 'ja' else 'SIMY for financial planners',

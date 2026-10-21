@@ -120,6 +120,8 @@ test('deleting HTML sync executes with both locale compatibility exclusions', ()
   const exclusions=args.flatMap((arg,i)=>arg==='--exclude'?[args[i+1]]:[]);
   assert.ok(exclusions.includes('for/*/engineers.html'));
   assert.ok(exclusions.includes('for/*/financial-planners.html'));
+  assert.ok(exclusions.includes('for/pharmaceutical-companies.html'));
+  assert.ok(exclusions.includes('for/*/pharmaceutical-companies.html'));
 }));
 
 test('the later deleting asset sync preserves the root hub slash object too', () => {
@@ -129,3 +131,24 @@ test('the later deleting asset sync preserves the root hub slash object too', ()
   assert.match(assets, /--exclude "for\/"/); // for/*/ does not match for/ itself.
   assert.match(assets, /--exclude "for\/\*\/"/);
 });
+
+test('pharma pages publish both slash keys and legacy .html keys in every language', () => fixture((dir, env) => {
+  const route = locale => `for/${locale === 'ja' ? '' : locale + '/'}pharmaceutical-companies/`;
+  for (const locale of ['ja', 'en', 'es', 'fr', 'hi', 'zh-hans']) {
+    const file = path.join(dir, 'site', route(locale), 'index.html');
+    fs.mkdirSync(path.dirname(file), {recursive:true});
+    fs.writeFileSync(file, `<html lang="${locale}"></html>`);
+  }
+  const result = spawnSync('bash', [script, 'test-site-bucket'], {cwd:dir, env, encoding:'utf8'});
+  assert.equal(result.status, 0, result.stderr);
+  const calls = fs.readFileSync(env.UPLOAD_LOG, 'utf8').trim().split('\n').map(JSON.parse);
+  const value = (args, flag) => args[args.indexOf(flag) + 1];
+  for (const locale of ['ja', 'en', 'es', 'fr', 'hi', 'zh-hans']) {
+    for (const key of [route(locale), route(locale).slice(0, -1) + '.html']) {
+      const call = calls.find(args => value(args, '--key') === key);
+      assert.ok(call, key);
+      assert.equal(value(call, '--body'), `site/${route(locale)}index.html`);
+      assert.equal(value(call, '--content-type'), 'text/html; charset=utf-8');
+    }
+  }
+}));
