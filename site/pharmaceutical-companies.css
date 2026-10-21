@@ -14,3 +14,13 @@ html[lang="hi"] #simy-consent{font-family:PharmaDevanagari,Arial,sans-serif!impo
 
 /* The main promise belongs to the blue display heading, at the same size and weight. */
 .hero h1 em{display:block;text-wrap:balance;line-break:strict}
+
+/* Full-scene manga: retain the localized dialogue beneath each new original. */
+.panel:has(.manga-art){padding:0;overflow:hidden;background:#fff}
+.panel:has(.manga-art)>.number{padding:18px 20px}
+.manga-art{margin:0;border-block:1px solid #171a20;background:#eaf0fa}
+.manga-art img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:contain}
+.panel:has(.manga-art) .dialogue{margin:20px;display:block}
+.panel:has(.manga-art) .bubble{width:100%;font-size:17px}
+.panel:has(.manga-art)>p{margin:0;padding:0 20px 22px}
+@media(max-width:700px){.panel:has(.manga-art)>.number{padding:14px 16px}.panel:has(.manga-art) .dialogue{margin:16px}.panel:has(.manga-art) .bubble{font-size:16px}.panel:has(.manga-art)>p{padding:0 16px 18px}}
