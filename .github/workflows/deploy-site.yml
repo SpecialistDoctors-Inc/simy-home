@@ -46,6 +46,7 @@ jobs:
         run: |
           python3 scripts/build-localized-home.py --check
           python3 scripts/check-home-seo.py
+          python3 scripts/build-pharmaceutical-pages.py --check
           python3 scripts/check-site-seo.py
           node --test tests/*.test.cjs
 
@@ -73,10 +74,12 @@ jobs:
             --cache-control "public, max-age=86400"
           aws s3 sync site/assets/fp-experience/ "s3://${{ secrets.SITE_S3_BUCKET }}/assets/fp-experience/" \
             --cache-control "public, max-age=86400"
-          for asset in site-theme.css engineers.css engineers.js engineers-experience.css engineers-experience.js engineers-manga.css financial-planners.css financial-planners.js site-header.css site-header.js; do
+          for asset in pharmaceutical-companies.css site-theme.css engineers.css engineers.js engineers-experience.css engineers-experience.js engineers-manga.css financial-planners.css financial-planners.js site-header.css site-header.js; do
             aws s3 cp "site/$asset" "s3://${{ secrets.SITE_S3_BUCKET }}/$asset" \
               --cache-control "public, max-age=86400"
           done
+          aws s3 sync site/assets/pharmaceutical-companies/ "s3://${{ secrets.SITE_S3_BUCKET }}/assets/pharmaceutical-companies/" \
+            --cache-control "public, max-age=86400"
           aws s3 sync site/for/ s3://${{ secrets.SITE_S3_BUCKET }}/for/ \
             --cache-control "public, max-age=300"
           bash scripts/publish-occupation-pages.sh "${{ secrets.SITE_S3_BUCKET }}"
@@ -93,6 +96,8 @@ jobs:
             --exclude "samples/*" \
             --exclude "for/*/engineers.html" \
             --exclude "for/*/financial-planners.html" \
+            --exclude "for/pharmaceutical-companies.html" \
+            --exclude "for/*/pharmaceutical-companies.html" \
             --cache-control "public, max-age=300"
 
       - name: Sync i18n runtime + translation JSON (short cache)
