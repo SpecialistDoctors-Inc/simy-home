@@ -11,3 +11,6 @@
 @font-face{font-family:PharmaDevanagari;font-style:normal;font-weight:700 900;font-display:swap;src:url('/assets/pharmaceutical-companies/noto-sans-devanagari-700.ttf') format('truetype')}
 html[lang="hi"] body{font-family:PharmaDevanagari,Arial,sans-serif}html[lang="hi"] h1{line-height:1.5}
 html[lang="hi"] #simy-consent{font-family:PharmaDevanagari,Arial,sans-serif!important}
+
+/* The main promise belongs to the blue display heading, at the same size and weight. */
+.hero h1 em{display:block;text-wrap:balance;line-break:strict}

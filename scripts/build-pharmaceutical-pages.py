@@ -37,6 +37,14 @@ def render(locale):
                 raise ValueError(f'{locale}: Missing attribute translation: {value}')
             return match[1] + html.escape(dictionary[value], quote=True) + '"'
         source = re.sub(r'((?:alt|content)=")([^"]*)"', attribute, source)
+    if locale == 'ja':
+        # Keep Japanese phrases together in the large hero on narrow screens.
+        source = source.replace(
+            '<em>関心や判断基準を踏まえた、その先生のための面談練習。</em>',
+            '<em><span class="headline-part">関心や判断基準を</span><wbr>'
+            '<span class="headline-part">踏まえた、</span><wbr>'
+            '<span class="headline-part">その先生のための</span><wbr>'
+            '<span class="headline-part">面談練習。</span></em>')
     if locale not in ('ja', 'zh-Hans'):
         source = source.replace('</span><wbr>', '</span> <wbr>')
     source = source.replace('<html lang="ja"', f'<html lang="{locale}"')
