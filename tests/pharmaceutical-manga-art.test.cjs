@@ -39,7 +39,8 @@ print('Asset completeness and duplication guards verified')
 
 test('full-scene layout retains all six localized dialogues and removes portrait reuse', () => {
   const output = execFileSync('python3', ['-c', `
-import sys, tempfile, shutil, re
+import sys, tempfile, shutil, re, runpy
+from unittest.mock import patch
 from pathlib import Path
 sys.path.insert(0, 'scripts')
 from pharmaceutical_manga_art import render_artwork
@@ -52,9 +53,12 @@ with tempfile.TemporaryDirectory() as temporary:
     directory = Path(temporary)
     for index, reference in enumerate(references[:8], 1):
         shutil.copyfile(reference, directory / f'scene-{index:02}.webp')
+    # Render the maintained localized template before art injection; released
+    # pages already contain artwork and must not be injected a second time.
+    with patch('pharmaceutical_manga_art.render_artwork', side_effect=lambda source, **kwargs: source):
+        builder = runpy.run_path('scripts/build-pharmaceutical-pages.py')
     for language in ['ja', 'en', 'es', 'fr', 'hi', 'zh-Hans']:
-        route = 'for/' + ('' if language == 'ja' else language.lower() + '/') + 'pharmaceutical-companies/index.html'
-        source = (Path('site') / route).read_text()
+        source = builder['render'](language)
         result = render_artwork(source, directory, required=True)
         assert result.count('class="manga-art"') == 8
         assert result.count('class="dialogue"') == 8
