@@ -7,6 +7,7 @@ import re
 import argparse
 import json
 import subprocess
+from social_preview import apply as apply_social_preview
 from functools import lru_cache
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -109,7 +110,7 @@ def apply(source, path):
     if "data-story-scene" in source:
         from home_manga_locales import localized_header
         source = localized_header(source, locale, homepage_content())
-    return source
+    return apply_social_preview(source, path)
 
 if __name__ == "__main__":
     cli = argparse.ArgumentParser(description=__doc__)
