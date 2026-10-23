@@ -304,6 +304,7 @@ function renderPricing() {
     const signupLink = plan.querySelector(".pricing-plan-link");
     if (signupLink) {
       const signupUrl = new URL(signupLink.href);
+      if (["dev.simy.one", "localhost", "127.0.0.1"].includes(window.location.hostname)) signupUrl.hostname = "app-dev.simy.one";
       signupUrl.searchParams.set("plan", plan.dataset.pricingPlan);
       signupUrl.searchParams.set("interval", activeBillingCycle);
       signupLink.href = signupUrl.toString();
