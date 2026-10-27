@@ -103,6 +103,24 @@
  #main .risk-explainer{margin-inline:24px}
 }
 
+/* Clinic live reports share one readable content column. */
+#main .diagnosis-state{scroll-margin-top:100px;padding:clamp(20px,4vw,48px);background:#f0f5fa;border:1px solid #bbcbdc}
+#diagnosis-results{display:grid;gap:18px;margin:24px 0}
+#main .live-finding,#main .live-limits{min-width:0;padding:24px;background:white;border:1px solid #bacbd9;border-radius:12px;overflow-wrap:anywhere}
+#main .live-finding.urgent{border-left:5px solid #ba4e23}
+#main .live-finding.review{border-left:5px solid #b48726}
+#main .live-label{display:inline-block;font-size:14px;font-weight:700;color:#93401f;background:#fff0e7;padding:4px 10px;border-radius:5px;margin-bottom:10px}
+#main .live-finding h3,#main .live-limits h3{font-size:21px;line-height:1.6;margin:0 0 12px}
+#main .live-finding p,#main .live-limits p{font-size:16px;line-height:1.9;margin:10px 0}
+#main .live-action{padding:15px;background:#f1f5fa;font-weight:600}
+#main .live-finding summary{cursor:pointer;font-size:16px;font-weight:600;padding:8px 0}
+#main .live-finding pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px;line-height:1.8;padding:15px;background:#f4f6f8}
+#main .live-limits{background:#19394e;color:#fff}
+#main .live-limits p{color:#e2edf5}
+#main .live-limits h3{color:white}
+#main button:disabled{opacity:.65;cursor:wait}
+@media(max-width:600px){#main .live-finding,#main .live-limits{padding:18px}#main .live-finding h3,#main .live-limits h3{font-size:19px}}
+
 /* Notification sample uses one aligned definition grid. */
 #main .patch-notice{display:grid;grid-template-columns:1fr 1.25fr;gap:36px;margin:54px 0;align-items:start}
 #main .patch-notice h2{font-size:clamp(24px,2.4vw,32px);line-height:1.6}
