@@ -28,3 +28,17 @@ find site/for -type f -name index.html -print0 |
         ;;
     esac
   done
+
+# Service landing pages and industry children, including pre-routing .html aliases.
+if [ -d site/hp-management ]; then
+  find site/hp-management -type f -name index.html -print0 |
+    while IFS= read -r -d '' html; do
+      key="${html#site/}"
+      key="${key%index.html}"
+      for alias in "$key" "${key%/}.html"; do
+        aws s3api put-object --bucket "$bucket" --key "$alias" --body "$html" \
+          --content-type "text/html; charset=utf-8" --cache-control "public, max-age=300" \
+          --query ETag --output text
+      done
+    done
+fi

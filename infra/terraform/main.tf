@@ -389,6 +389,22 @@ resource "aws_cloudfront_function" "redirect" {
         };
       }
 
+      // HP management is a service; industry pages belong beneath it.
+      var hpLegacy = /^\/for\/clinic(?:\/index\.html|\.html|\/)?$/.test(uri);
+      var hpMatch = uri.match(/^\/hp-management(\/clinic)?(?:\/index\.html|\.html|\/)?$/);
+      if (hpLegacy || hpMatch) {
+        var hpPath = hpLegacy ? '/hp-management/clinic/' : '/hp-management' + (hpMatch[1] || '') + '/';
+        if (uri !== hpPath) {
+          return {
+            statusCode: 301,
+            statusDescription: 'Moved Permanently',
+            headers: { location: { value: 'https://' + host + hpPath + queryToString(request, {}) } }
+          };
+        }
+        request.uri = hpPath + 'index.html';
+        return request;
+      }
+
       // Occupation pages have stable directory URLs, independent of plan names.
       var occupationAliases = { '/engineers.html': '/for/engineers/', '/engineers-en.html': '/for/en/engineers/', '/for': '/for/', '/for/': '/for/', '/for.html': '/for/', '/for/index.html': '/for/' };
       var occupationPath = occupationAliases[uri];
