@@ -62,13 +62,14 @@ const releaseReferences = {
 };
 // Compare only complete numeric release versions; do not guess prerelease or partial versions.
 function compareReleaseVersions(current, latest) {
-  const parse=value=>typeof value==='string' && /^v?\d+\.\d+\.\d+$/.test(value) ? value.replace(/^v/,'').split('.').map(Number) : null;
+  const parse=value=>typeof value==='string' && /^v?\d+\.\d+\.\d+(?:\.\d+)?$/.test(value) ? value.replace(/^v/,'').split('.').map(Number) : null;
   const a=parse(current),b=parse(latest);if(!a||!b)return null;
-  for(let i=0;i<3;i++){if(a[i]<b[i])return -1;if(a[i]>b[i])return 1;}return 0;
+  for(let i=0;i<Math.max(a.length,b.length);i++){if((a[i]||0)<(b[i]||0))return -1;if((a[i]||0)>(b[i]||0))return 1;}return 0;
 }
 function renderEvaluationTable(report) {
   const rows = new Map();
   const add = (name, version, issues, assessment, fix) => {
+    name = ({nextjs:'Next.js',next:'Next.js',rails:'Ruby on Rails',moment:'moment.js'}[name.toLowerCase()] || name);
     const key = name.toLowerCase() + ':' + (version || '');
     const previous = rows.get(key);
     rows.set(key, {name: previous?.name || ({jquery: 'jQuery', swiper: 'Swiper'}[name.toLowerCase()] || name), version, issues: [...(previous?.issues || []), ...(issues || [])], assessment: assessment || previous?.assessment || '', fix: fix || previous?.fix || ''});
@@ -93,20 +94,20 @@ function renderEvaluationTable(report) {
   for (const label of ['言語・部品','現在のバージョン','最新バージョン','必要な対応']) {const th=element('th',label);th.scope='col';tr.append(th);}head.append(tr);table.append(head);
   const body = element('tbody','');
   for (const row of rows.values()) {
-    const ref = releaseReferences[row.name.toLowerCase()];
+    const ref = report.releaseInfo?.[row.name.toLowerCase()] || releaseReferences[row.name.toLowerCase()];
     const ended = /サポート終了/.test(row.assessment);
     const issue = row.issues.length > 0;
     const comparison = ref ? compareReleaseVersions(row.version,ref.version) : null;
     const outdated = comparison === -1;
     const state = ended ? 'SIMYに対応版への更新を相談' : issue ? 'SIMYに修正版への更新を相談' : !row.version ? 'SIMYに使用中の版を確認' : outdated ? 'SIMYに更新を相談' : comparison === 0 ? '更新不要・定期確認を継続' : 'SIMYに最新の公式情報と照合を依頼';
-    const line = element('tr','');const name=element('th',row.name);name.scope='row';const purpose={php:'サーバーの動作基盤',jquery:'画面の動きを作る部品',swiper:'写真を切り替える部品',wordpress:'ページを管理する仕組み'}[row.name.toLowerCase()];if(purpose)name.append(element('small',purpose));const current=element('td','');current.append(element('strong',row.version || '不明',outdated?'version-outdated':''));if(outdated)current.append(element('small','旧バージョン','version-outdated-label'));line.append(name,current);
+    const line = element('tr','');const name=element('th',row.name);name.scope='row';const purpose={php:'サーバーの動作基盤',jquery:'画面の動きを作る部品',swiper:'写真を切り替える部品',wordpress:'ページを管理する仕組み'}[row.name.toLowerCase()];if(purpose)name.append(element('small',purpose));const current=element('td','');current.append(element('strong',row.version || 'バージョン未確認',outdated?'version-outdated':''));if(outdated)current.append(element('small','旧バージョン','version-outdated-label'));const released=ref?.dates?.[row.version];current.append(element('small',released?'公開日 '+released.replace(/-/g,'/'):'公開日未確認'));if(!row.version&&/Ruby|Rails/.test(row.name))name.append(element('small','利用の手掛かりあり（推定）'));line.append(name,current);
     const official=element('td','');
-    if(ref){const a=element('a',ref.version);a.href=ref.url;a.target='_blank';a.rel='noopener';official.append(a,element('small','2026年10月27日確認'));}
+    if(ref){const a=element('a',ref.version);a.href=ref.url;a.target='_blank';a.rel='noopener';official.append(a,element('small',(ref.checkedAt || '2026-10-27').replace(/-/g,'/')+'確認'));}
     else official.append(element('span','公式情報を別途確認'));
     const status=element('td','');status.append(element('span',state,ended||issue||outdated?'evaluation-badge urgent':'evaluation-badge'));
     if(ended||issue)status.append(element('small',ended?'開発元のサポート終了':'既知の問題に関係する版'));else if(outdated)status.append(element('small','動作確認のうえ更新。旧版だけで危険とは判定しません。'));else if(comparison===0)status.append(element('small','確認日の公式版と一致。安全性全体の保証ではありません。'));line.append(official,status);body.append(line);
   }
-  table.append(body);wrap.append(table);section.append(wrap,element('p','公開情報による判定です。実際の版・修正状況はSIMYに確認してください。最新バージョンは記載日に確認した公式情報です。旧版というだけで脆弱性があるとは限りません。','evaluation-note'));
+  table.append(body);wrap.append(table);section.append(wrap,element('p','公開日は検出した版の配布元の記録です。版や日付が不明なものは未確認と表示します。最新の版は記載日の確認情報です。旧版だけで脆弱性があるとは限りません。実際の版・修正状況はSIMYへご相談ください。','evaluation-note'));
   results.append(section);
 }
 
