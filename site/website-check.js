@@ -51,7 +51,9 @@ function card(level, heading, risk, action, evidence) {
 }
 // Official releases checked on 2026-10-27. These are dated references, not live latest-version guarantees.
 const releaseReferences = {
-  php: { version: '8.5系', url: 'https://www.php.net/supported-versions.php' },
+  'jquery-ui': { version: '1.14.2', url: 'https://jqueryui.com/download/all/' },
+  wordpress: { version: '7.1.3', url: 'https://wordpress.org/download/releases/' },
+  php: { version: '8.5.12', url: 'https://www.php.net/downloads.php' },
   jquery: { version: '4.0.0', url: 'https://blog.jquery.com/2026/01/17/jquery-4-0-0/' },
   swiper: { version: '14.3.0', url: 'https://github.com/nolimits4web/swiper/releases/tag/v14.3.0' }
 };
@@ -67,7 +69,7 @@ function renderEvaluationTable(report) {
   }
   for (const l of report.scripts.libraries) add(l.name, l.version, l.issues);
   const section = element('section', '', 'evaluation-section');
-  section.append(element('h3', '使用部品のチェック結果'));
+  section.append(element('h3', '言語・システム・ライブラリのバージョン比較'));
   if (!rows.size) {
     section.append(element('p', '公開情報から部品の版を特定できませんでした。安全という判定ではありません。制作会社に構成と更新状況の確認が必要です。'));
     results.append(section); return;
@@ -76,7 +78,7 @@ function renderEvaluationTable(report) {
   const table = element('table', '', 'evaluation-table');
   table.append(element('caption', '使用部品・検出した版・公式情報・評価・対応'));
   const head = element('thead',''); const tr = element('tr','');
-  for (const label of ['部品','使用中の版','公式の公開版','判定']) {const th=element('th',label);th.scope='col';tr.append(th);}head.append(tr);table.append(head);
+  for (const label of ['言語・部品','現在のバージョン','最新バージョン','判定']) {const th=element('th',label);th.scope='col';tr.append(th);}head.append(tr);table.append(head);
   const body = element('tbody','');
   for (const row of rows.values()) {
     const ref = releaseReferences[row.name.toLowerCase()];
@@ -90,7 +92,7 @@ function renderEvaluationTable(report) {
     const status=element('td','');status.append(element('span',state,ended||issue?'evaluation-badge urgent':'evaluation-badge'));
     if(ended||issue)status.append(element('small',ended?'開発元のサポート終了':'既知の問題に関係する版'));line.append(official,status);body.append(line);
   }
-  table.append(body);wrap.append(table);section.append(wrap,element('p','公開情報による判定です。実際の版・修正状況は制作会社に確認してください。公式版は記載日の情報です。','evaluation-note'));
+  table.append(body);wrap.append(table);section.append(wrap,element('p','公開情報による判定です。実際の版・修正状況は制作会社に確認してください。最新バージョンは記載日に確認した公式情報です。旧版というだけで脆弱性があるとは限りません。','evaluation-note'));
   results.append(section);
 }
 
@@ -103,6 +105,7 @@ function renderReport(report) {
   title.textContent = technologies.length || libraries.length || patches.length ? '放置せず、制作会社へ確認してください。' : reviews.length ? '保護設定に、見直したい点があります。' : '今回の範囲で、状態を確認しました。';
   message.textContent = '確認日時：' + new Date(report.checkedAt).toLocaleString('ja-JP') + '。公開ページと関連するプログラムを調べた結果です。';
   title.textContent = technologies.length || libraries.length || patches.length ? '更新・修正の確認が必要です' : reviews.length ? '設定の確認が必要です' : '今回の範囲では、問題を特定できませんでした';
+  renderEvaluationTable(report);
   if(report.crawl){
     const c=report.crawl;const scope=element('div','','crawl-summary');
     scope.append(element('strong','同じサイト内の '+c.checked+' ページを確認（上限 '+c.maxPages+' ページ）'));
@@ -114,14 +117,17 @@ function renderReport(report) {
   const next=element('div','','report-next');
   next.append(element('strong',document.querySelector('#diagnosis-form')?.dataset.nextLabel || '院長先生が次にすること'),element('p',technologies.length || libraries.length || patches.length || reviews.length ? 'この結果を制作会社へ送り、対応が必要か確認してください。' : '今の管理体制を継続し、定期的に更新状況を確認してください。'));
   results.append(next);
-  renderEvaluationTable(report);
-  if(reviews.length){const concise=element('details','','report-settings');concise.append(element('summary','保護設定で確認したい点（'+reviews.length+'件）'));const list=element('ul','');reviews.forEach(f=>list.append(element('li',f.title)));concise.append(list);results.append(concise);}
   reportDetails=element('details','','report-technical');reportDetails.append(element('summary','制作会社向けの詳細・確認範囲を見る'));
 
   for (const t of technologies.filter(t => !libraries.some(l => l.name.toLowerCase() === t.name.toLowerCase()))) card('urgent', t.name === 'PHP' ? 'ホームページの土台に、古いPHPの表記があります' : t.name + 'に更新の確認が必要です', t.name === 'PHP' ? '開発元のサポートが終了した系列です。新しい問題が見つかっても、開発元から修正が提供されません。表記だけでは実際の修正状況までは分かりません。' : '既知の問題に関係する版の手掛かりがあります。実際の導入版と修正状況を確認する必要があります。', t.fix, t.evidence.join('\n') + '\n' + t.assessment);
   for (const l of libraries) card('urgent', l.name + ' ' + l.version + '：既知の問題に関係する部品です', '画面の動きに使う部品です。使い方によっては不正な処理につながるおそれがあります。侵入や漏えいが起きたと判定したものではありません。', '制作会社に実際の版・個別修正を確認し、画面やフォームの動作を検証して修正版へ更新してください。', '検出方法：' + ({url:'URLの表記から推定',body:'公開ファイルの内容',hash:'ファイルの照合',sourcemap:'公開された元ソース情報'}[l.basis] || l.basis) + '\n取得元：' + l.resource + '\n' + l.issues.flatMap(i => i.ids).join('、'));
   for (const c of patches) card('urgent', '修正前のプログラムに似た特徴があります', '版の番号だけでなく、公開コードにも確認が必要な特徴があります。実際に攻撃できるかは調べていません。', '制作会社へコードの修正適用状況を確認してください。', JSON.stringify(c, null, 2));
+  const technical=reportDetails;
+  reportDetails=element('section','','report-other-issues');
+  reportDetails.append(element('h3','その他の確認・改善点（'+reviews.length+'件）'));
+  if(!reviews.length)reportDetails.append(element('p','今回の確認範囲では、追加の改善点は特定できませんでした。'));
   for (const f of reviews) card('review', f.title, f.summary, f.fix, f.evidence);
+  results.append(reportDetails);reportDetails=technical;
   const verified = report.findings.filter(f => f.state === 'observed');
   if (verified.length) { const d=element('details','','live-finding'); d.append(element('summary','今回確認できた設定を見る（' + verified.length + '項目）')); verified.forEach(f=>{d.append(element('h3',f.title),element('p',f.evidence));}); reportDetails.append(d); }
   const scope = element('aside', '', 'live-limits');
