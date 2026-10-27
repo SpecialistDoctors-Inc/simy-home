@@ -42,7 +42,7 @@ const element = (tag, text, className) => {
   return node;
 };
 function simyAction(action) {
-  return String(action || '').replace(/制作会社(?:・管理者)?/g, 'SIMY');
+  return String(action || '').replace(/制作会社(?:・管理者)?/g, 'SIMY').replace(/管理者([へに])/g, 'SIMY$1');
 }
 let reportDetails;
 function card(level, heading, risk, action, evidence) {
