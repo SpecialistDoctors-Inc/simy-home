@@ -131,12 +131,13 @@ diagnosisForm.addEventListener('submit', async event => {
   catch { diagnosisInput.setCustomValidity('認証情報や「?」「#」以降を含まない公開URLを入力してください。');diagnosisInput.reportValidity();return; }
   results.replaceChildren(); diagnosisState.hidden=false; document.querySelector('#diagnosis-target').textContent='医院ホームページの診断結果';
   title.textContent='公開ホームページを確認しています'; message.textContent='最大約1分かかります。ページの保護設定・使用部品・公開プログラムを確認しています。';
-  diagnosisState.focus({preventScroll:true}); diagnosisState.scrollIntoView({block:'start',behavior:'smooth'});
+  const progress = document.querySelector('#scan-progress');
+  if(progress){progress.hidden=false;progress.textContent='診断中です。公開ページと使用部品を確認しています（最大約1分）。';}
   if(urlInput) urlInput.value=target.href; clearDraft();
   if(!diagnosisEndpoint){title.textContent='診断サービスは接続準備中です';message.textContent='まだ診断は実行していません。公開設定の確認後にご利用いただけます。';return;}
-  busy=true;const button=diagnosisForm.querySelector('button');button.disabled=true;diagnosisInput.disabled=true;
-  try { const response=await fetch(diagnosisEndpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url:target.href,behavior:false}),signal:AbortSignal.timeout(80000)}); const data=await response.json(); if(!response.ok)throw Error(data.error||'診断結果を取得できませんでした。'); renderReport(data); }
+  busy=true;const button=diagnosisForm.querySelector('button');const label=button.querySelector('.button-label');const originalLabel=label?.textContent;if(label)label.textContent='診断中…';button.disabled=true;diagnosisInput.disabled=true;diagnosisForm.setAttribute('aria-busy','true');
+  try { const response=await fetch(diagnosisEndpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url:target.href,behavior:false}),signal:AbortSignal.timeout(80000)}); const data=await response.json(); if(!response.ok)throw Error(data.error||'診断結果を取得できませんでした。'); renderReport(data); if(progress)progress.textContent='診断が完了しました。結果をご確認ください。'; diagnosisState.focus({preventScroll:true});diagnosisState.scrollIntoView({block:'start',behavior:'smooth'}); }
   catch(error){results.replaceChildren();title.textContent='診断を完了できませんでした';message.textContent=error.name==='TimeoutError'?'時間内に応答がありませんでした。少し待って再度お試しください。':error.message==='Failed to fetch'?'診断サービスに接続できませんでした。少し待って再度お試しください。':error.message;}
-  finally{busy=false;button.disabled=false;diagnosisInput.disabled=false;}
+  finally{busy=false;button.disabled=false;diagnosisInput.disabled=false;diagnosisForm.removeAttribute('aria-busy');if(label)label.textContent=originalLabel;if(title.textContent==='診断を完了できませんでした' && progress)progress.textContent=message.textContent;}
 });
 document.querySelector('.edit-url').addEventListener('click',()=>{if(!busy){diagnosisState.hidden=true;diagnosisInput.focus();}});
