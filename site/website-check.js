@@ -2,7 +2,8 @@
 const form = document.querySelector('#consultation');
 const urlInput = document.querySelector('#url');
 const draft = document.querySelector('#draft');
-const clearDraft = () => { draft.hidden = true; document.querySelector('#email-link').removeAttribute('href'); };
+const clearDraft = () => { if (!draft) return; draft.hidden = true; document.querySelector('#email-link').removeAttribute('href'); };
+if (form) {
 form.addEventListener('input', clearDraft);
 urlInput.addEventListener('input', () => urlInput.setCustomValidity(''));
 document.querySelectorAll('[data-plan]').forEach(link => link.addEventListener('click', () => {
@@ -23,6 +24,8 @@ form.addEventListener('submit', event => {
   draft.hidden = false;
   draft.scrollIntoView({block:'nearest'});
 });
+
+}
 
 const diagnosisForm = document.querySelector('#diagnosis-form');
 const diagnosisInput = document.querySelector('#diagnosis-url');
@@ -129,7 +132,7 @@ diagnosisForm.addEventListener('submit', async event => {
   results.replaceChildren(); diagnosisState.hidden=false; document.querySelector('#diagnosis-target').textContent='医院ホームページの診断結果';
   title.textContent='公開ホームページを確認しています'; message.textContent='最大約1分かかります。ページの保護設定・使用部品・公開プログラムを確認しています。';
   diagnosisState.focus({preventScroll:true}); diagnosisState.scrollIntoView({block:'start',behavior:'smooth'});
-  urlInput.value=target.href; clearDraft();
+  if(urlInput) urlInput.value=target.href; clearDraft();
   if(!diagnosisEndpoint){title.textContent='診断サービスは接続準備中です';message.textContent='まだ診断は実行していません。公開設定の確認後にご利用いただけます。';return;}
   busy=true;const button=diagnosisForm.querySelector('button');button.disabled=true;diagnosisInput.disabled=true;
   try { const response=await fetch(diagnosisEndpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url:target.href,behavior:false}),signal:AbortSignal.timeout(80000)}); const data=await response.json(); if(!response.ok)throw Error(data.error||'診断結果を取得できませんでした。'); renderReport(data); }
