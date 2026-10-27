@@ -1,0 +1,3 @@
+const {test}=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
+const s=fs.readFileSync('site/website-check.js','utf8'),c={};vm.runInNewContext(s.slice(s.indexOf('const releaseReferences'),s.indexOf('function renderEvaluationTable'))+';globalThis.refs=releaseReferences;',c);
+test('Vue, Handlebars and Axios retain dates and comparisons even without API release metadata',()=>{for(const [name,version,date,comparison]of [['vue','2.6.12','2020-08-20',-1],['handlebars','4.7.7','2021-02-15',-1],['axios','1.21.0','2026-10-27',0]]){const ref=c.refs[name];assert.equal(ref.dates[version],date);assert.equal(c.compareReleaseVersions(version,ref.version),comparison);assert.match(ref.url,/npmjs.com/);}});
