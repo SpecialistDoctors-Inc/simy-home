@@ -103,6 +103,14 @@ function renderReport(report) {
   title.textContent = technologies.length || libraries.length || patches.length ? '放置せず、制作会社へ確認してください。' : reviews.length ? '保護設定に、見直したい点があります。' : '今回の範囲で、状態を確認しました。';
   message.textContent = '確認日時：' + new Date(report.checkedAt).toLocaleString('ja-JP') + '。公開ページと関連するプログラムを調べた結果です。';
   title.textContent = technologies.length || libraries.length || patches.length ? '更新・修正の確認が必要です' : reviews.length ? '設定の確認が必要です' : '今回の範囲では、問題を特定できませんでした';
+  if(report.crawl){
+    const c=report.crawl;const scope=element('div','','crawl-summary');
+    scope.append(element('strong','同じサイト内の '+c.checked+' ページを確認（上限 '+c.maxPages+' ページ）'));
+    if(c.limited||c.pages.some(p=>p.status!=='checked'||p.truncated)||c.scriptLimitReached)scope.append(element('p','上限・接続状況などにより、一部は未確認です。'));
+    const details=element('details','');details.append(element('summary','調べたページを見る'));
+    for(const page of c.pages)details.append(element('p',(page.status==='checked'?'確認':'未確認')+'：'+page.url+' — '+page.reason));
+    scope.append(details);results.append(scope);
+  }
   const next=element('div','','report-next');
   next.append(element('strong','院長先生が次にすること'),element('p',technologies.length || libraries.length || patches.length || reviews.length ? 'この結果を制作会社へ送り、対応が必要か確認してください。' : '今の管理体制を継続し、定期的に更新状況を確認してください。'));
   results.append(next);
@@ -143,7 +151,7 @@ function scanProgress(stage, detail) {
     const status=element('p','診断サービスに接続しています','scan-live-detail');status.setAttribute('role','status');
     const track=element('div','','scan-track');track.setAttribute('aria-hidden','true');track.append(element('span',''));
     const list=element('ol','','scan-steps');
-    for(const [id,label] of [['page','ページ取得'],['scripts','部品の照合'],['browser','追加読込の確認'],['report','結果の整理']]){const li=element('li',label);li.dataset.stage=id;list.append(li);}
+    for(const [id,label] of [['page','ページ取得'],['scripts','部品の照合'],['browser','追加読込の確認'],['crawl','配下ページの確認'],['report','結果の整理']]){const li=element('li',label);li.dataset.stage=id;list.append(li);}
     panel.append(header,status,track,list);const started=Date.now();scanClock=setInterval(()=>{const elapsed=panel.querySelector('.scan-elapsed');if(elapsed)elapsed.textContent=Math.floor((Date.now()-started)/1000)+'秒';},1000);return;
   }
   const text=panel.querySelector('.scan-live-detail');if(text)text.textContent=detail;
@@ -152,7 +160,7 @@ function scanProgress(stage, detail) {
     const heading=panel.querySelector('strong');if(heading)heading.textContent=stage==='done'?'診断が完了しました':'診断を完了できませんでした';
     panel.querySelectorAll('.scan-steps li').forEach(li=>{li.removeAttribute('aria-current');li.classList.remove('active');});return;
   }
-  const ids=['page','scripts','browser','report'];const current=ids.indexOf(stage);
+  const ids=['page','scripts','browser','crawl','report'];const current=ids.indexOf(stage);
   panel.querySelectorAll('.scan-steps li').forEach((li,i)=>{li.classList.toggle('active',i===current);li.classList.toggle('processed',i<current);if(i===current)li.setAttribute('aria-current','step');else li.removeAttribute('aria-current');});
 }
 async function readScanResponse(response){
@@ -172,12 +180,12 @@ diagnosisForm.addEventListener('submit', async event => {
   try { const value=diagnosisInput.value.trim(); target=new URL(/^[a-z][a-z\d+.-]*:/i.test(value)?value:'https://'+value); if(!['https:','http:'].includes(target.protocol)||target.username||target.password||target.port||target.search||target.hash||!target.hostname.includes('.')||/\s/.test(value)) throw Error(); }
   catch { diagnosisInput.setCustomValidity('認証情報や「?」「#」以降を含まない公開URLを入力してください。');diagnosisInput.reportValidity();return; }
   results.replaceChildren(); diagnosisState.hidden=false; document.querySelector('#diagnosis-target').textContent='医院ホームページの診断結果';
-  title.textContent='公開ホームページを確認しています'; message.textContent='最大約1分かかります。ページの保護設定・使用部品・公開プログラムを確認しています。';
+  title.textContent='公開ホームページを確認しています'; message.textContent='最大約3分かかります。ページの保護設定・使用部品・公開プログラムを確認しています。';
   scanProgress('start');
   if(urlInput) urlInput.value=target.href; clearDraft();
   if(!diagnosisEndpoint){title.textContent='診断サービスは接続準備中です';message.textContent='まだ診断は実行していません。公開設定の確認後にご利用いただけます。';return;}
   busy=true;const button=diagnosisForm.querySelector('button');const label=button.querySelector('.button-label');const originalLabel=label?.textContent;if(label)label.textContent='診断中…';button.disabled=true;diagnosisInput.disabled=true;diagnosisForm.setAttribute('aria-busy','true');
-  try { const response=await fetch(diagnosisEndpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url:target.href,behavior:false,stream:true}),signal:AbortSignal.timeout(80000)}); const data=await readScanResponse(response); renderReport(data); scanProgress('done','下に結果を表示しました。'); diagnosisState.focus({preventScroll:true});diagnosisState.scrollIntoView({block:'start',behavior:'smooth'}); }
+  try { const response=await fetch(diagnosisEndpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url:target.href,behavior:false,stream:true}),signal:AbortSignal.timeout(185000)}); const data=await readScanResponse(response); renderReport(data); scanProgress('done','下に結果を表示しました。'); diagnosisState.focus({preventScroll:true});diagnosisState.scrollIntoView({block:'start',behavior:'smooth'}); }
   catch(error){results.replaceChildren();title.textContent='診断を完了できませんでした';message.textContent=error.name==='TimeoutError'?'時間内に応答がありませんでした。少し待って再度お試しください。':error.message==='Failed to fetch'?'診断サービスに接続できませんでした。少し待って再度お試しください。':error.message;}
   finally{busy=false;button.disabled=false;diagnosisInput.disabled=false;diagnosisForm.removeAttribute('aria-busy');if(label)label.textContent=originalLabel;if(title.textContent==='診断を完了できませんでした')scanProgress('error',message.textContent);}
 });
