@@ -63,7 +63,7 @@ function renderEvaluationTable(report) {
     rows.set(key, {name: previous?.name || ({jquery: 'jQuery', swiper: 'Swiper'}[name.toLowerCase()] || name), version, issues: [...(previous?.issues || []), ...(issues || [])], assessment: assessment || previous?.assessment || '', fix: fix || previous?.fix || ''});
   };
   for (const t of report.technologies.filter(t => t.status !== 'unknown')) {
-    for (const version of t.versions?.length ? t.versions : ['']) add(t.name, version, t.issues, t.assessment, t.fix);
+    for (const version of t.versions?.length ? t.versions : ['']) add(t.name, version, t.versions?.length === 1 ? t.issues : report.scripts.libraries.filter(l=>l.name.toLowerCase()===t.name.toLowerCase() && l.version===version).flatMap(l=>l.issues || []), t.assessment, t.fix);
   }
   for (const l of report.scripts.libraries) add(l.name, l.version, l.issues);
   const section = element('section', '', 'evaluation-section');
