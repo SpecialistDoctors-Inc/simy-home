@@ -41,22 +41,21 @@ const element = (tag, text, className) => {
   if (className) node.className = className;
   return node;
 };
-function appendEmailReceipt(report) {
+function appendEmailReceipt(report, snapshot, onSaved) {
   const section=element('section','','report-email report-next');
-  section.append(element('h3','結果をメールで受け取る'),element('p','メールアドレスを入力して、結果の送付をお申し込みください。'));
+  section.append(element('h3','診断結果の続きを見る'),element('p','メールアドレスを登録すると、この画面ですべての結果をご覧いただけます。'));
   const receiptForm=element('form','','report-email-form');
   const label=element('label','メールアドレス（必須）');label.htmlFor='report-email-address';
   const email=element('input','');email.id='report-email-address';email.name='email';email.type='email';email.autocomplete='email';email.placeholder='you@example.jp';email.required=true;email.maxLength=254;
   const consentLabel=element('label','','report-email-consent');
   const consent=element('input','');consent.type='checkbox';consent.name='consent';consent.required=true;
-  const consentText='診断結果の送付とお問い合わせ対応のため、SIMYがメールアドレス・対象URL・診断結果を保存・利用することに同意します。';
+  const consentText='全結果の閲覧・保存とお問い合わせ対応のため、SIMYがメールアドレス・対象URL・診断結果を保存・利用することに同意します。';
   consentLabel.append(consent,element('span',consentText));
   const privacy=element('a','個人情報の取り扱い');privacy.href='/privacy.html?lang=ja';privacy.target='_blank';privacy.rel='noopener';
-  const submit=element('button','結果のメール送付を申し込む','button button-primary');submit.type='submit';
-  const note=element('p','現在はメール送付の受付・保存のみ行っています。自動送信は準備中です。','report-email-note');
+  const submit=element('button','登録してすべての結果を見る','button button-primary');submit.type='submit';
+  const note=element('p','登録無料・この画面ですぐに表示します。メールの自動送信は行いません。','report-email-note');
   const status=element('p','','report-email-status');status.setAttribute('role','status');status.setAttribute('aria-live','polite');
   receiptForm.append(label,email,consentLabel,privacy,note,submit,status);section.append(receiptForm);
-  const snapshot=title.textContent+'\n'+report.url+'\n'+message.textContent+'\n'+results.textContent;
   let requestId=crypto.randomUUID(),submitting=false;
   receiptForm.addEventListener('input',()=>{if(!submitting){requestId=crypto.randomUUID();status.textContent='';}});
   receiptForm.addEventListener('submit',async event=>{
@@ -64,9 +63,10 @@ function appendEmailReceipt(report) {
     submitting=true;submit.disabled=true;email.disabled=true;consent.disabled=true;status.textContent='保存しています…';
     const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),20000);
     try{
-      const response=await fetch(new URL('/api/report-email',diagnosisEndpoint),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:requestId,email:email.value.trim(),consent:consent.checked,consentVersion:'2026-10-28-v1',url:report.url,checkedAt:report.checkedAt,reportText:snapshot}),signal:controller.signal});
+      const response=await fetch(new URL('/api/report-email',diagnosisEndpoint),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:requestId,email:email.value.trim(),consent:consent.checked,consentVersion:'2026-10-28-v2',url:report.url,checkedAt:report.checkedAt,reportText:snapshot}),signal:controller.signal});
       const body=await response.json();if(!response.ok)throw Error(body.error||'保存できませんでした。');
-      status.textContent=body.message;submit.textContent='受付済み';
+      if(body.receiptId!==requestId||body.status!=='registered')throw Error('保存結果を確認できませんでした。もう一度お試しください。');
+      status.textContent='登録が完了しました。すべての結果を表示しました。';submit.textContent='登録済み';onSaved();
     }catch(error){status.textContent=error.name==='AbortError'?'受付結果を確認できませんでした。もう一度押すと、重複せずに確認できます。':error.message||'保存できませんでした。再度お試しください。';submit.disabled=false;email.disabled=false;consent.disabled=false;submitting=false;}
     finally{clearTimeout(timer);}
   });
@@ -225,9 +225,38 @@ function renderReport(report) {
   reportDetails.append(coverage,scope);
   results.append(element('p','侵入・漏えいの有無は、この診断では分かりません。','report-boundary'),reportDetails);
   reportDetails=null;
-  appendEmailReceipt(report);
   const save=element('button','結果を保存','button button-primary');save.type='button';save.addEventListener('click',()=>{const blob=new Blob([title.textContent+'\n'+report.url+'\n'+message.textContent+'\n'+results.textContent+'\n\n詳細な取得根拠\n'+JSON.stringify(report,null,2)],{type:'text/plain;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=(document.querySelector('#diagnosis-form')?.dataset.reportLabel || '医院ホームページ')+'診断.txt';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);});results.append(save);
+  gateReport(report);
 }
+// This is a presentation gate, not an authentication boundary. Full details stay
+// detached from the visible DOM until the consent record is saved successfully.
+function gateReport(report) {
+  const full=element('div','','report-full');
+  while(results.firstChild)full.append(results.firstChild);
+  const snapshot=title.textContent+'\n'+report.url+'\n'+message.textContent+'\n'+full.textContent;
+  const preview=element('section','','report-preview');
+  preview.append(element('p','診断結果の一部を表示しています','report-preview-label'));
+  const table=full.querySelector('table');
+  if(table){
+    const sample=table.cloneNode(true);const rows=sample.querySelectorAll('tbody tr');
+    rows.forEach((row,i)=>{if(i>0)row.remove();});
+    const wrap=element('div','','evaluation-scroll');wrap.append(sample);preview.append(wrap);
+  }else{
+    const finding=full.querySelector('.report-other-issues article');
+    if(finding)preview.append(finding.cloneNode(true));else preview.append(element('p','公開情報では使用部品の版を特定できませんでした。確認範囲と次の対応は、全結果でご覧いただけます。'));
+  }
+  const veil=element('div','','report-mosaic');veil.setAttribute('aria-hidden','true');veil.inert=true;
+  const blurred=full.cloneNode(true);blurred.className='report-mosaic-content';
+  blurred.querySelectorAll('[id]').forEach(n=>n.removeAttribute('id'));
+  veil.append(blurred);preview.append(veil);results.append(preview);
+  appendEmailReceipt(report,snapshot,()=>{
+    if(!preview.isConnected)return; // Ignore a late response after a new diagnosis.
+    results.replaceChildren(full);
+    const confirmed=element('p','登録ありがとうございます。すべての診断結果を表示しました。','report-unlocked');confirmed.setAttribute('role','status');results.prepend(confirmed);
+    diagnosisState.focus({preventScroll:true});diagnosisState.scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+  });
+}
+
 let scanClock;
 function scanProgress(stage, detail) {
   const panel=document.querySelector('#scan-progress'); if(!panel)return;
