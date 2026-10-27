@@ -136,3 +136,5 @@
 #main .plans .price span{white-space:nowrap}
 @media(max-width:900px){#main .patch-notice{grid-template-columns:1fr;gap:24px}}
 @media(max-width:600px){#main .patch-message{padding:20px}#main .patch-message h3{font-size:20px}}
+
+.clinic-partner{font-size:14px;font-weight:600;line-height:1.8;color:#45667d;margin:0 0 20px}.clinic-assurance{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:36px;align-items:center;border-top:1px solid #c5d2dc}.clinic-assurance h2{font-size:clamp(23px,3vw,34px);overflow-wrap:anywhere}.clinic-assurance img{width:100%;height:auto;background:white}.clinic-assurance p{line-height:1.9}@media(max-width:720px){.clinic-assurance{grid-template-columns:1fr}.clinic-assurance img{max-width:320px}}
