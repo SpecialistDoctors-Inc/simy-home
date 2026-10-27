@@ -102,3 +102,19 @@
  #main .entry-benefits{text-align:left}
  #main .risk-explainer{margin-inline:24px}
 }
+
+/* Notification sample uses one aligned definition grid. */
+#main .patch-notice{display:grid;grid-template-columns:1fr 1.25fr;gap:36px;margin:54px 0;align-items:start}
+#main .patch-notice h2{font-size:clamp(24px,2.4vw,32px);line-height:1.6}
+#main .patch-notice p{font-size:16px;line-height:1.9}
+#main .patch-message{min-width:0;padding:28px;border:1px solid #b9cbdc;border-radius:14px;background:white}
+#main .patch-message h3{font-size:22px;line-height:1.6;margin:16px 0}
+#main .patch-message dl{margin:20px 0}
+#main .patch-message dl>div{border-top:1px solid #dbe4ed;padding:16px 0}
+#main .patch-message dt{font-size:16px;font-weight:700;color:#235aa4;margin-bottom:8px}
+#main .patch-message dd{margin:0;font-size:16px;line-height:1.9}
+#main .patch-message summary{font-size:16px;cursor:pointer;font-weight:600}
+#main .patch-message .small{font-size:14px}
+#main .plans .price span{white-space:nowrap}
+@media(max-width:900px){#main .patch-notice{grid-template-columns:1fr;gap:24px}}
+@media(max-width:600px){#main .patch-message{padding:20px}#main .patch-message h3{font-size:20px}}
