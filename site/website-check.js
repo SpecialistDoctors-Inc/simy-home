@@ -41,6 +41,37 @@ const element = (tag, text, className) => {
   if (className) node.className = className;
   return node;
 };
+function appendEmailReceipt(report) {
+  const section=element('section','','report-email report-next');
+  section.append(element('h3','結果をメールで受け取る'),element('p','メールアドレスを入力して、結果の送付をお申し込みください。'));
+  const receiptForm=element('form','','report-email-form');
+  const label=element('label','メールアドレス（必須）');label.htmlFor='report-email-address';
+  const email=element('input','');email.id='report-email-address';email.name='email';email.type='email';email.autocomplete='email';email.placeholder='you@example.jp';email.required=true;email.maxLength=254;
+  const consentLabel=element('label','','report-email-consent');
+  const consent=element('input','');consent.type='checkbox';consent.name='consent';consent.required=true;
+  const consentText='診断結果の送付とお問い合わせ対応のため、SIMYがメールアドレス・対象URL・診断結果を保存・利用することに同意します。';
+  consentLabel.append(consent,element('span',consentText));
+  const privacy=element('a','個人情報の取り扱い');privacy.href='/privacy.html?lang=ja';privacy.target='_blank';privacy.rel='noopener';
+  const submit=element('button','結果のメール送付を申し込む','button button-primary');submit.type='submit';
+  const note=element('p','現在はメール送付の受付・保存のみ行っています。自動送信は準備中です。','report-email-note');
+  const status=element('p','','report-email-status');status.setAttribute('role','status');status.setAttribute('aria-live','polite');
+  receiptForm.append(label,email,consentLabel,privacy,note,submit,status);section.append(receiptForm);
+  const snapshot=title.textContent+'\n'+report.url+'\n'+message.textContent+'\n'+results.textContent;
+  let requestId=crypto.randomUUID(),submitting=false;
+  receiptForm.addEventListener('input',()=>{if(!submitting){requestId=crypto.randomUUID();status.textContent='';}});
+  receiptForm.addEventListener('submit',async event=>{
+    event.preventDefault();if(submitting||!receiptForm.reportValidity())return;
+    submitting=true;submit.disabled=true;email.disabled=true;consent.disabled=true;status.textContent='保存しています…';
+    const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),20000);
+    try{
+      const response=await fetch(new URL('/api/report-email',diagnosisEndpoint),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:requestId,email:email.value.trim(),consent:consent.checked,consentVersion:'2026-10-28-v1',url:report.url,checkedAt:report.checkedAt,reportText:snapshot}),signal:controller.signal});
+      const body=await response.json();if(!response.ok)throw Error(body.error||'保存できませんでした。');
+      status.textContent=body.message;submit.textContent='受付済み';
+    }catch(error){status.textContent=error.name==='AbortError'?'受付結果を確認できませんでした。もう一度押すと、重複せずに確認できます。':error.message||'保存できませんでした。再度お試しください。';submit.disabled=false;email.disabled=false;consent.disabled=false;submitting=false;}
+    finally{clearTimeout(timer);}
+  });
+  results.append(section);
+}
 function simyAction(action) {
   return String(action || '').replace(/制作会社(?:・管理者)?/g, 'SIMY').replace(/管理者([へに])/g, 'SIMY$1');
 }
@@ -191,6 +222,7 @@ function renderReport(report) {
   reportDetails.append(coverage,scope);
   results.append(element('p','侵入・漏えいの有無は、この診断では分かりません。','report-boundary'),reportDetails);
   reportDetails=null;
+  appendEmailReceipt(report);
   const save=element('button','結果を保存','button button-primary');save.type='button';save.addEventListener('click',()=>{const blob=new Blob([title.textContent+'\n'+report.url+'\n'+message.textContent+'\n'+results.textContent+'\n\n詳細な取得根拠\n'+JSON.stringify(report,null,2)],{type:'text/plain;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=(document.querySelector('#diagnosis-form')?.dataset.reportLabel || '医院ホームページ')+'診断.txt';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);});results.append(save);
 }
 let scanClock;
