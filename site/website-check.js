@@ -45,6 +45,52 @@ function card(level, heading, risk, action, evidence) {
   if (evidence) { const details = element('details', ''); details.append(element('summary', '制作会社に伝える根拠を見る'), element('pre', evidence)); article.append(details); }
   results.append(article);
 }
+// Official releases checked on 2026-10-27. These are dated references, not live latest-version guarantees.
+const releaseReferences = {
+  php: { version: '8.5系', url: 'https://www.php.net/supported-versions.php' },
+  jquery: { version: '4.0.0', url: 'https://blog.jquery.com/2026/01/17/jquery-4-0-0/' },
+  swiper: { version: '14.3.0', url: 'https://github.com/nolimits4web/swiper/releases/tag/v14.3.0' }
+};
+function renderEvaluationTable(report) {
+  const rows = new Map();
+  const add = (name, version, issues, assessment, fix) => {
+    const key = name.toLowerCase() + ':' + (version || '');
+    const previous = rows.get(key);
+    rows.set(key, {name: previous?.name || ({jquery: 'jQuery', swiper: 'Swiper'}[name.toLowerCase()] || name), version, issues: [...(previous?.issues || []), ...(issues || [])], assessment: assessment || previous?.assessment || '', fix: fix || previous?.fix || ''});
+  };
+  for (const t of report.technologies.filter(t => t.status !== 'unknown')) {
+    for (const version of t.versions?.length ? t.versions : ['']) add(t.name, version, t.issues, t.assessment, t.fix);
+  }
+  for (const l of report.scripts.libraries) add(l.name, l.version, l.issues);
+  const section = element('section', '', 'evaluation-section');
+  section.append(element('h3', '入力したホームページの評価'), element('p', '公開情報から検出した部品と、更新・確認が必要な点です。'));
+  if (!rows.size) {
+    section.append(element('p', '公開情報から部品の版を特定できませんでした。安全という判定ではありません。制作会社に構成と更新状況の確認が必要です。'));
+    results.append(section); return;
+  }
+  const wrap = element('div', '', 'evaluation-scroll'); wrap.tabIndex = 0; wrap.setAttribute('role','region'); wrap.setAttribute('aria-label','使用部品の評価表。画面が狭い場合は横にスクロールできます');
+  const table = element('table', '', 'evaluation-table');
+  table.append(element('caption', '使用部品・検出した版・公式情報・評価・対応'));
+  const head = element('thead',''); const tr = element('tr','');
+  for (const label of ['見つかった部品','検出した版','公式の公開版（参考）','評価','必要な対応']) {const th=element('th',label);th.scope='col';tr.append(th);}head.append(tr);table.append(head);
+  const body = element('tbody','');
+  for (const row of rows.values()) {
+    const ref = releaseReferences[row.name.toLowerCase()];
+    const ended = /サポート終了/.test(row.assessment);
+    const issue = row.issues.length > 0;
+    const state = ended ? 'サポート終了の系列' : issue ? '既知の問題に関係する版' : !row.version ? '版を特定できず' : ref && row.version !== ref.version && row.name.toLowerCase() !== 'php' ? '更新状況の確認が必要' : '安全性は未判定';
+    const line = element('tr','');const name=element('th',row.name);name.scope='row';line.append(name,element('td',row.version || '不明'));
+    const official=element('td','');
+    if(ref){const a=element('a',ref.version);a.href=ref.url;a.target='_blank';a.rel='noopener';official.append(a,element('small','2026年10月27日確認'));}
+    else official.append(element('span','公式情報を別途確認'));
+    const status=element('td','');status.append(element('span',state,ended||issue?'evaluation-badge urgent':'evaluation-badge'));
+    const action=ended?'制作会社・サーバー会社に延長保守や個別修正の有無を確認し、保守対象の系列へ移行。':issue?'実際の導入版と修正状況を確認し、画面・フォームの動作を検証して更新。':!row.version?'制作会社に使用部品と導入版を確認。':'公式の修正情報と実際の構成を照合。互換性を確認して更新を判断。';
+    line.append(official,status,element('td',action));body.append(line);
+  }
+  table.append(body);wrap.append(table);section.append(wrap,element('p','公式の公開版は上記確認日時点の参考情報です。最新の修正版はリンク先で確認してください。新しい版との差だけで脆弱性や侵入を断定しません。検出した版は公開情報の手掛かりであり、実際の導入版・個別修正は制作会社への確認が必要です。','evaluation-note'));
+  results.append(section);
+}
+
 function renderReport(report) {
   if (!Array.isArray(report.findings) || !Array.isArray(report.technologies) || !Array.isArray(report.scripts?.libraries)) throw Error('結果の形式を確認できませんでした。時間をおいて再度お試しください。');
   const technologies = report.technologies.filter(t => t.status === 'review');
@@ -53,6 +99,7 @@ function renderReport(report) {
   const patches = (report.scripts.comparisons || []).filter(c => ['legacy','mixed'].includes(c.patch?.state));
   title.textContent = technologies.length || libraries.length || patches.length ? '放置せず、制作会社へ確認してください。' : reviews.length ? '保護設定に、見直したい点があります。' : '今回の範囲で、状態を確認しました。';
   message.textContent = '確認日時：' + new Date(report.checkedAt).toLocaleString('ja-JP') + '。公開ページと関連するプログラムを調べた結果です。';
+  renderEvaluationTable(report);
   for (const t of technologies.filter(t => !libraries.some(l => l.name.toLowerCase() === t.name.toLowerCase()))) card('urgent', t.name === 'PHP' ? 'ホームページの土台に、古いPHPの表記があります' : t.name + 'に更新の確認が必要です', t.name === 'PHP' ? '開発元のサポートが終了した系列です。新しい問題が見つかっても、開発元から修正が提供されません。表記だけでは実際の修正状況までは分かりません。' : '既知の問題に関係する版の手掛かりがあります。実際の導入版と修正状況を確認する必要があります。', t.fix, t.evidence.join('\n') + '\n' + t.assessment);
   for (const l of libraries) card('urgent', l.name + ' ' + l.version + '：既知の問題に関係する部品です', '画面の動きに使う部品です。使い方によっては不正な処理につながるおそれがあります。侵入や漏えいが起きたと判定したものではありません。', '制作会社に実際の版・個別修正を確認し、画面やフォームの動作を検証して修正版へ更新してください。', '検出方法：' + ({url:'URLの表記から推定',body:'公開ファイルの内容',hash:'ファイルの照合',sourcemap:'公開された元ソース情報'}[l.basis] || l.basis) + '\n取得元：' + l.resource + '\n' + l.issues.flatMap(i => i.ids).join('、'));
   for (const c of patches) card('urgent', '修正前のプログラムに似た特徴があります', '版の番号だけでなく、公開コードにも確認が必要な特徴があります。実際に攻撃できるかは調べていません。', '制作会社へコードの修正適用状況を確認してください。', JSON.stringify(c, null, 2));
@@ -79,7 +126,7 @@ diagnosisForm.addEventListener('submit', async event => {
   let target;
   try { const value=diagnosisInput.value.trim(); target=new URL(/^[a-z][a-z\d+.-]*:/i.test(value)?value:'https://'+value); if(!['https:','http:'].includes(target.protocol)||target.username||target.password||target.port||target.search||target.hash||!target.hostname.includes('.')||/\s/.test(value)) throw Error(); }
   catch { diagnosisInput.setCustomValidity('認証情報や「?」「#」以降を含まない公開URLを入力してください。');diagnosisInput.reportValidity();return; }
-  results.replaceChildren(); diagnosisState.hidden=false; document.querySelector('#diagnosis-target').textContent=target.href;
+  results.replaceChildren(); diagnosisState.hidden=false; document.querySelector('#diagnosis-target').textContent='医院ホームページの診断結果';
   title.textContent='公開ホームページを確認しています'; message.textContent='最大約1分かかります。ページの保護設定・使用部品・公開プログラムを確認しています。';
   diagnosisState.focus({preventScroll:true}); diagnosisState.scrollIntoView({block:'start',behavior:'smooth'});
   urlInput.value=target.href; clearDraft();
