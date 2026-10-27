@@ -53,7 +53,7 @@ function appendEmailReceipt(report, snapshot, onSaved) {
   consentLabel.append(consent,element('span',consentText));
   const privacy=element('a','個人情報の取り扱い');privacy.href='/privacy.html?lang=ja';privacy.target='_blank';privacy.rel='noopener';
   const submit=element('button','登録してすべての結果を見る','button button-primary');submit.type='submit';
-  const note=element('p','登録無料・この画面ですぐに表示します。メールの自動送信は行いません。','report-email-note');
+  const note=element('p','登録無料・この画面ですぐに表示します。メールの自動送信は行いません。保存期間は原則90日。削除のご希望は sales@simy.one へ。','report-email-note');
   const status=element('p','','report-email-status');status.setAttribute('role','status');status.setAttribute('aria-live','polite');
   receiptForm.append(label,email,consentLabel,privacy,note,submit,status);section.append(receiptForm);
   let requestId=crypto.randomUUID(),submitting=false;
@@ -151,7 +151,7 @@ function renderEvaluationTable(report) {
   const table = element('table', '', 'evaluation-table');
   table.append(element('caption', '使用部品・検出した版・公式情報・評価・対応'));
   const head = element('thead',''); const tr = element('tr','');
-  for (const label of ['言語・部品','現在のバージョン','最新バージョン','必要な対応']) {const th=element('th',label);th.scope='col';tr.append(th);}head.append(tr);table.append(head);
+  for (const label of ['言語・部品','現在のバージョン','その版の公開日','最新安定版','必要な対応']) {const th=element('th',label);th.scope='col';tr.append(th);}head.append(tr);table.append(head);
   const body = element('tbody','');
   for (const row of rows.values()) {
     const fallback=releaseReferences[row.name.toLowerCase()];const reported=report.releaseInfo?.[row.name.toLowerCase()];
@@ -161,9 +161,9 @@ function renderEvaluationTable(report) {
     const comparison = ref ? compareReleaseVersions(row.version,ref.version) : null;
     const outdated = comparison === -1;
     const state = row.name.toLowerCase()==='jquery-migrate' && outdated && !issue ? 'SIMYにjQueryとセットで更新を相談' : ended ? 'SIMYに対応版への更新を相談' : issue ? 'SIMYに修正版への更新を相談' : !row.version ? 'SIMYに使用中の版を確認' : outdated ? 'SIMYに更新を相談' : comparison === 0 ? '更新不要・定期確認を継続' : 'SIMYに最新の公式情報と照合を依頼';
-    const line = element('tr','');const name=element('th',row.name);name.scope='row';const purpose={php:'サーバーの動作基盤',jquery:'画面の動きを作る部品',swiper:'写真を切り替える部品',wordpress:'ページを管理する仕組み','jquery-migrate':'jQuery更新時の互換性を補う部品'}[row.name.toLowerCase()];if(purpose)name.append(element('small',purpose));const current=element('td','');current.append(element('strong',row.version || 'バージョン未確認',outdated?'version-outdated':''));if(outdated)current.append(element('small','旧バージョン','version-outdated-label'));const released=ref?.dates?.[row.version];current.append(element('small',released?'公開日 '+released.replace(/-/g,'/'):'公開日未確認'));if(!row.version&&/Ruby|Rails/.test(row.name))name.append(element('small','利用の手掛かりあり（推定）'));line.append(name,current);
+    const line = element('tr','');const name=element('th',row.name);name.scope='row';const purpose={php:'サーバーの動作基盤',jquery:'画面の動きを作る部品',swiper:'写真を切り替える部品',wordpress:'ページを管理する仕組み','jquery-migrate':'jQuery更新時の互換性を補う部品'}[row.name.toLowerCase()];if(purpose)name.append(element('small',purpose));const current=element('td','');current.append(element('strong',row.version || 'バージョン未確認',outdated?'version-outdated':''));if(outdated)current.append(element('small','旧バージョン','version-outdated-label'));const released=ref?.dates?.[row.version];const releaseCell=element('td',released?released.replace(/-/g,'/'):'公開日未確認');const evidence=report.scripts.libraries.filter(l=>l.name.toLowerCase()===row.name.toLowerCase()&&l.version===row.version);if(evidence.length&&evidence.every(l=>l.basis==='url')){current.append(element('small','URL表記から推定'));releaseCell.append(element('small','推定した版の公開日'));}if(!row.version&&/Ruby|Rails/.test(row.name))name.append(element('small','利用の手掛かりあり（推定）'));line.append(name,current,releaseCell);
     const official=element('td','');
-    if(ref){const a=element('a',ref.version);a.href=ref.url;a.target='_blank';a.rel='noopener';official.append(a,element('small',(ref.checkedAt || '2026-10-27').replace(/-/g,'/')+'確認'));}
+    if(ref){const a=element('a',ref.version);a.href=ref.url;a.target='_blank';a.rel='noopener';official.append(a,element('small',new Date(ref.checkedAt || '2026-10-27').toLocaleDateString('ja-JP')+'確認'));}
     else official.append(element('span','公式情報を別途確認'));
     const status=element('td','');status.append(element('span',state,ended||issue||outdated?'evaluation-badge urgent':'evaluation-badge'));
     if(!row.version&&row.name.toLowerCase()==='wordpress')status.append(element('small','公開情報では版を特定できません。SIMYに管理画面・構成情報の確認をご相談ください。'));
@@ -171,6 +171,32 @@ function renderEvaluationTable(report) {
     if(ended||issue)status.append(element('small',ended?'開発元のサポート終了':'既知の問題に関係する版'));else if(outdated&&row.name.toLowerCase()!=='jquery-migrate')status.append(element('small','動作確認のうえ更新。旧版だけで危険とは判定しません。'));else if(comparison===0)status.append(element('small','確認日の公式版と一致。安全性全体の保証ではありません。'));appendIssueEvidence(status,row.issues);line.append(official,status);body.append(line);
   }
   table.append(body);wrap.append(table);section.append(wrap,element('p','公開日は検出した版の配布元の記録です。版や日付が不明なものは未確認と表示します。最新の版は記載日の確認情報です。旧版だけで脆弱性があるとは限りません。実際の版・修正状況はSIMYへご相談ください。','evaluation-note'));
+  results.append(section);
+}
+
+
+function renderSummary(report){
+  const aliases=n=>({nextjs:'next.js',next:'next.js',rails:'ruby on rails'}[n.toLowerCase()]||n.toLowerCase());
+  const updates=new Set();
+  for(const l of report.scripts.libraries){const key=aliases(l.name),ref=report.releaseInfo?.[key]||releaseReferences[key];if(l.issues.length||(ref&&compareReleaseVersions(l.version,ref.version)===-1))updates.add(key+':'+l.version);}
+  for(const t of report.technologies){const key=aliases(t.name),ref=report.releaseInfo?.[key]||releaseReferences[key];for(const v of t.versions||[])if(t.status==='review'||(ref&&compareReleaseVersions(v,ref.version)===-1))updates.add(key+':'+v);}
+  const urgent=report.findings.filter(f=>['private-key','form-http','directory','public-config'].includes(f.id)&&f.state==='review').length;
+  const unknown=new Set(report.technologies.filter(t=>!t.versions?.length).map(t=>aliases(t.name)));
+  for(const f of report.findings.filter(f=>f.state==='unknown'))unknown.add('setting:'+f.id);
+  for(const p of report.crawl?.pages||[])if(p.status!=='checked')unknown.add('page:'+p.url);
+  for(const r of report.scripts.resources||[])if(r.status!=='checked')unknown.add('asset:'+r.url);
+  const counts=element('div','','report-counts');
+  for(const [label,value,style] of [['優先して対応',urgent,'priority'],['更新を確認',updates.size,'update'],['外からは確認できない',unknown.size,'unknown']]){const box=element('div','',style);box.append(element('strong',String(value)),element('span',label));counts.append(box);}
+  results.append(counts);
+  for(const warning of report.sourceWarnings||[])results.append(element('p',warning,'source-warning'));
+}
+function renderConnections(report){
+  if(!Array.isArray(report.integrations))return;
+  const section=element('details','','report-technical');section.append(element('summary','外部サービスとの接続先（'+report.integrations.length+'件）'));
+  section.append(element('p','公開ページの記載です。リンクの存在だけでは、患者情報の送信や提供会社内部の保存は確認できません。'));
+  if(!report.integrations.length)section.append(element('p','取得したHTMLでは接続先を検出できませんでした。未使用という判定ではありません。'));
+  for(const x of report.integrations){const row=element('div','','connection-row');row.append(element('strong',x.category+' · '+x.domain),element('p',({link:'リンク',embed:'埋め込み',script:'プログラム読込',form:'フォーム送信先'}[x.kind]||x.kind)+' / '+(x.protocol==='https:'?'HTTPS':'HTTP')));const detail=element('details','');detail.append(element('summary','設置場所・根拠'),element('p',x.page),element('p',x.destination),element('p',x.basis));if(x.fields?.length)detail.append(element('p','コード上の項目名：'+x.fields.join('、')+'（値は取得せず、送信も行っていません）'));row.append(detail);section.append(row);}
+  const observed=report.scripts.browserEvidence?.connections||[];if(observed.length){const d=element('details','');d.append(element('summary','通常表示で観測した通信（'+observed.length+'件）'));for(const x of observed)d.append(element('p',x.type+' / '+x.destination));d.append(element('p','患者情報は入力していません。提供会社内部の保存・削除・権限は未確認です。'));section.append(d);}
   results.append(section);
 }
 
@@ -183,14 +209,16 @@ function renderReport(report) {
   title.textContent = technologies.length || libraries.length || patches.length ? '放置せず、SIMYへ確認してください。' : reviews.length ? '保護設定に、見直したい点があります。' : '今回の範囲で、状態を確認しました。';
   message.textContent = '確認日時：' + new Date(report.checkedAt).toLocaleString('ja-JP') + '。公開ページと関連するプログラムを調べた結果です。';
   title.textContent = technologies.length || libraries.length || patches.length ? '更新・修正の確認が必要です' : reviews.length ? '設定の確認が必要です' : '今回の範囲では、問題を特定できませんでした';
+  renderSummary(report);
   renderEvaluationTable(report);
+  renderConnections(report);
   if(report.crawl){
     const c=report.crawl;const scope=element('div','','crawl-summary');
     scope.append(element('strong','同じサイト内の '+c.checked+' ページを確認（上限 '+c.maxPages+' ページ）'));
     if(c.limited||c.pages.some(p=>p.status!=='checked'||p.truncated)||c.scriptLimitReached)scope.append(element('p','上限・接続状況などにより、一部は未確認です。'));
     const details=element('details','');details.append(element('summary','調べたページを見る'));
     for(const page of c.pages)details.append(element('p',(page.status==='checked'?'確認':'未確認')+'：'+page.url+' — '+page.reason));
-    scope.append(details);results.append(scope);
+    if(report.scope)scope.append(element('p','発見した候補 '+report.scope.discoveredPages+'件 / 対象外 '+report.scope.excludedPages+'件 / 取得失敗 '+report.scope.failedPages+'件。サイト全体の網羅率ではありません。'));scope.append(details);results.append(scope);
   }
   const next=element('div','','report-next');
   next.append(element('strong',document.querySelector('#diagnosis-form')?.dataset.nextLabel || '院長先生が次にすること'),element('p',technologies.length || libraries.length || patches.length || reviews.length ? 'この結果をSIMYへ送り、対応が必要か確認してください。' : '今の管理体制を継続し、定期的に更新状況を確認してください。'));
@@ -222,6 +250,8 @@ function renderReport(report) {
   for(const t of report.technologies.filter(t=>t.status!=='unknown')) coverage.append(element('p',t.name + '：' + (t.versions.join(' / ') || '版は未確認') + '。' + t.assessment));
   for(const resource of report.scripts.resources || []) coverage.append(element('p',resource.url + '：' + resource.reason));
   for(const analysis of report.scripts.analysis || []) coverage.append(element('p','プログラム解析：' + analysis.url + ' / ' + analysis.reason));
+  if(report.hostCandidates){const candidates=element('details','');candidates.append(element('summary','関連ホストの候補（未検査）'),element('p',report.hostCandidates.reason));for(const host of report.hostCandidates.hosts||[])candidates.append(element('p',host));reportDetails.append(candidates);}
+  if(report.exploitation?.length){const exploitation=element('details','');exploitation.append(element('summary','公開された悪用情報・EPSS'));for(const item of report.exploitation)exploitation.append(element('p',item.cve+'：'+(item.knownExploited===true?'CISAで悪用情報あり':item.knownExploited===false?'今回のCISA照合では掲載なし':'CISA情報未確認')+' / '+(item.epss===null?'EPSS未確認':'EPSS '+(item.epss*100).toFixed(2)+'%（'+item.epssDate+'）')+'。対象サイトでの侵入・攻撃成立を示しません。'));reportDetails.append(exploitation);}
   reportDetails.append(coverage,scope);
   results.append(element('p','侵入・漏えいの有無は、この診断では分かりません。','report-boundary'),reportDetails);
   reportDetails=null;
@@ -233,9 +263,10 @@ function renderReport(report) {
 function gateReport(report) {
   const full=element('div','','report-full');
   while(results.firstChild)full.append(results.firstChild);
-  const snapshot=title.textContent+'\n'+report.url+'\n'+message.textContent+'\n'+full.textContent;
+  const snapshot=title.textContent+'\n'+report.url+'\n'+message.textContent+'\n'+full.textContent+'\n\n診断記録\n'+JSON.stringify({diagnosisId:report.diagnosisId,checkedAt:report.checkedAt,scope:report.scope,releaseInfo:report.releaseInfo,technologies:report.technologies,findings:report.findings,integrations:report.integrations,advisories:report.advisories});
   const preview=element('section','','report-preview');
   preview.append(element('p','診断結果の一部を表示しています','report-preview-label'));
+  const summary=full.querySelector('.report-counts');if(summary)preview.append(summary.cloneNode(true));
   const table=full.querySelector('table');
   if(table){
     const sample=table.cloneNode(true);const rows=sample.querySelectorAll('tbody tr');
