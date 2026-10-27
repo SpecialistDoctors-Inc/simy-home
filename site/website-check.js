@@ -41,12 +41,15 @@ const element = (tag, text, className) => {
   if (className) node.className = className;
   return node;
 };
+function simyAction(action) {
+  return String(action || '').replace(/制作会社(?:・管理者)?/g, 'SIMY');
+}
 let reportDetails;
 function card(level, heading, risk, action, evidence) {
   const article = element('article', '', 'live-finding ' + level);
   article.append(element('span', level === 'urgent' ? '早めに対応' : level === 'review' ? '確認が必要' : '今回確認できたこと', 'live-label'), element('h3', heading), element('p', risk));
-  if (action) article.append(element('p', '次にすること：' + action, 'live-action'));
-  if (evidence) { const details = element('details', ''); details.append(element('summary', '制作会社に伝える根拠を見る'), element('pre', evidence)); article.append(details); }
+  if (action) article.append(element('p', '次にすること：' + simyAction(action), 'live-action'));
+  if (evidence) { const details = element('details', ''); details.append(element('summary', 'SIMYに伝える根拠を見る'), element('pre', evidence)); article.append(details); }
   (reportDetails || results).append(article);
 }
 // Official releases checked on 2026-10-27. These are dated references, not live latest-version guarantees.
@@ -77,10 +80,10 @@ function renderEvaluationTable(report) {
   const section = element('section', '', 'evaluation-section');
   section.append(element('h3', '言語・システム・ライブラリのバージョン比較'));
   if (!rows.size) {
-    section.append(element('p', '公開情報から部品の版を特定できませんでした。安全という判定ではありません。制作会社に構成と更新状況の確認が必要です。'));
+    section.append(element('p', '公開情報から部品の版を特定できませんでした。安全という判定ではありません。SIMYに構成と更新状況の確認をご相談ください。'));
     const missed=[...new Map((report.scripts.resources||[]).filter(r=>r.status==='failed'||r.status==='skipped').map(r=>[r.url,r])).values()];
     if(missed.length){const reasons=[...new Set(missed.map(r=>r.reason))];section.append(element('p','版を特定できなかった理由：'+reasons.join('／'),'evaluation-note'));}
-    section.append(element('p','次にすること：制作会社に、言語・システム・ライブラリの名前とバージョン一覧を依頼してください。'));
+    section.append(element('p','次にすること：SIMYに、使われている部品とバージョンの調査をご相談ください。'));
     results.append(section); return;
   }
   const wrap = element('div', '', 'evaluation-scroll'); wrap.tabIndex = 0; wrap.setAttribute('role','region'); wrap.setAttribute('aria-label','使用部品の評価表。画面が狭い場合は横にスクロールできます');
@@ -95,7 +98,7 @@ function renderEvaluationTable(report) {
     const issue = row.issues.length > 0;
     const comparison = ref ? compareReleaseVersions(row.version,ref.version) : null;
     const outdated = comparison === -1;
-    const state = ended ? '保守中の版へ更新を依頼' : issue ? '修正版への更新を依頼' : !row.version ? '制作会社に使用中の版を確認' : outdated ? '制作会社に更新を相談' : comparison === 0 ? '更新不要・定期確認を継続' : '制作会社に最新の公式情報と照合を依頼';
+    const state = ended ? 'SIMYに対応版への更新を相談' : issue ? 'SIMYに修正版への更新を相談' : !row.version ? 'SIMYに使用中の版を確認' : outdated ? 'SIMYに更新を相談' : comparison === 0 ? '更新不要・定期確認を継続' : 'SIMYに最新の公式情報と照合を依頼';
     const line = element('tr','');const name=element('th',row.name);name.scope='row';const purpose={php:'サーバーの動作基盤',jquery:'画面の動きを作る部品',swiper:'写真を切り替える部品',wordpress:'ページを管理する仕組み'}[row.name.toLowerCase()];if(purpose)name.append(element('small',purpose));const current=element('td','');current.append(element('strong',row.version || '不明',outdated?'version-outdated':''));if(outdated)current.append(element('small','旧バージョン','version-outdated-label'));line.append(name,current);
     const official=element('td','');
     if(ref){const a=element('a',ref.version);a.href=ref.url;a.target='_blank';a.rel='noopener';official.append(a,element('small','2026年10月27日確認'));}
@@ -103,7 +106,7 @@ function renderEvaluationTable(report) {
     const status=element('td','');status.append(element('span',state,ended||issue||outdated?'evaluation-badge urgent':'evaluation-badge'));
     if(ended||issue)status.append(element('small',ended?'開発元のサポート終了':'既知の問題に関係する版'));else if(outdated)status.append(element('small','動作確認のうえ更新。旧版だけで危険とは判定しません。'));else if(comparison===0)status.append(element('small','確認日の公式版と一致。安全性全体の保証ではありません。'));line.append(official,status);body.append(line);
   }
-  table.append(body);wrap.append(table);section.append(wrap,element('p','公開情報による判定です。実際の版・修正状況は制作会社に確認してください。最新バージョンは記載日に確認した公式情報です。旧版というだけで脆弱性があるとは限りません。','evaluation-note'));
+  table.append(body);wrap.append(table);section.append(wrap,element('p','公開情報による判定です。実際の版・修正状況はSIMYに確認してください。最新バージョンは記載日に確認した公式情報です。旧版というだけで脆弱性があるとは限りません。','evaluation-note'));
   results.append(section);
 }
 
@@ -113,7 +116,7 @@ function renderReport(report) {
   const libraries = report.scripts.libraries.filter(l => l.issues.length);
   const reviews = report.findings.filter(f => f.state === 'review');
   const patches = (report.scripts.comparisons || []).filter(c => ['legacy','mixed'].includes(c.patch?.state));
-  title.textContent = technologies.length || libraries.length || patches.length ? '放置せず、制作会社へ確認してください。' : reviews.length ? '保護設定に、見直したい点があります。' : '今回の範囲で、状態を確認しました。';
+  title.textContent = technologies.length || libraries.length || patches.length ? '放置せず、SIMYへ確認してください。' : reviews.length ? '保護設定に、見直したい点があります。' : '今回の範囲で、状態を確認しました。';
   message.textContent = '確認日時：' + new Date(report.checkedAt).toLocaleString('ja-JP') + '。公開ページと関連するプログラムを調べた結果です。';
   title.textContent = technologies.length || libraries.length || patches.length ? '更新・修正の確認が必要です' : reviews.length ? '設定の確認が必要です' : '今回の範囲では、問題を特定できませんでした';
   renderEvaluationTable(report);
@@ -126,13 +129,16 @@ function renderReport(report) {
     scope.append(details);results.append(scope);
   }
   const next=element('div','','report-next');
-  next.append(element('strong',document.querySelector('#diagnosis-form')?.dataset.nextLabel || '院長先生が次にすること'),element('p',technologies.length || libraries.length || patches.length || reviews.length ? 'この結果を制作会社へ送り、対応が必要か確認してください。' : '今の管理体制を継続し、定期的に更新状況を確認してください。'));
+  next.append(element('strong',document.querySelector('#diagnosis-form')?.dataset.nextLabel || '院長先生が次にすること'),element('p',technologies.length || libraries.length || patches.length || reviews.length ? 'この結果をSIMYへ送り、対応が必要か確認してください。' : '今の管理体制を継続し、定期的に更新状況を確認してください。'));
+  const contact=element('a','SIMYに診断結果を相談する ↗','button button-primary');
+  contact.href='mailto:sales@simy.one?subject='+encodeURIComponent('ホームページの診断結果について相談')+'&body='+encodeURIComponent('診断したURL：'+report.url+'\n'+message.textContent+'\n\nこの診断結果について、必要な対応を相談したいです。\n診断結果は「結果を保存」から保存して添付できます。');
+  next.append(contact);
   results.append(next);
-  reportDetails=element('details','','report-technical');reportDetails.append(element('summary','制作会社向けの詳細・確認範囲を見る'));
+  reportDetails=element('details','','report-technical');reportDetails.append(element('summary','SIMY向けの詳細・確認範囲を見る'));
 
   for (const t of technologies.filter(t => !libraries.some(l => l.name.toLowerCase() === t.name.toLowerCase()))) card('urgent', t.name === 'PHP' ? 'ホームページの土台に、古いPHPの表記があります' : t.name + 'に更新の確認が必要です', t.name === 'PHP' ? '開発元のサポートが終了した系列です。新しい問題が見つかっても、開発元から修正が提供されません。表記だけでは実際の修正状況までは分かりません。' : '既知の問題に関係する版の手掛かりがあります。実際の導入版と修正状況を確認する必要があります。', t.fix, t.evidence.join('\n') + '\n' + t.assessment);
-  for (const l of libraries) card('urgent', l.name + ' ' + l.version + '：既知の問題に関係する部品です', '画面の動きに使う部品です。使い方によっては不正な処理につながるおそれがあります。侵入や漏えいが起きたと判定したものではありません。', '制作会社に実際の版・個別修正を確認し、画面やフォームの動作を検証して修正版へ更新してください。', '検出方法：' + ({url:'URLの表記から推定',body:'公開ファイルの内容',hash:'ファイルの照合',sourcemap:'公開された元ソース情報'}[l.basis] || l.basis) + '\n取得元：' + l.resource + '\n' + l.issues.flatMap(i => i.ids).join('、'));
-  for (const c of patches) card('urgent', '修正前のプログラムに似た特徴があります', '版の番号だけでなく、公開コードにも確認が必要な特徴があります。実際に攻撃できるかは調べていません。', '制作会社へコードの修正適用状況を確認してください。', JSON.stringify(c, null, 2));
+  for (const l of libraries) card('urgent', l.name + ' ' + l.version + '：既知の問題に関係する部品です', '画面の動きに使う部品です。使い方によっては不正な処理につながるおそれがあります。侵入や漏えいが起きたと判定したものではありません。', 'SIMYに、使用中の版の確認と修正版への更新をご相談ください。', '検出方法：' + ({url:'URLの表記から推定',body:'公開ファイルの内容',hash:'ファイルの照合',sourcemap:'公開された元ソース情報'}[l.basis] || l.basis) + '\n取得元：' + l.resource + '\n' + l.issues.flatMap(i => i.ids).join('、'));
+  for (const c of patches) card('urgent', '修正前のプログラムに似た特徴があります', '版の番号だけでなく、公開コードにも確認が必要な特徴があります。実際に攻撃できるかは調べていません。', 'SIMYへコードの修正適用状況を確認してください。', JSON.stringify(c, null, 2));
   const technical=reportDetails;
   reportDetails=element('section','','report-other-issues');
   reportDetails.append(element('h3','その他の確認・改善点（'+reviews.length+'件）'));
@@ -155,7 +161,7 @@ function renderReport(report) {
   reportDetails.append(coverage,scope);
   results.append(element('p','侵入・漏えいの有無は、この診断では分かりません。','report-boundary'),reportDetails);
   reportDetails=null;
-  const save=element('button','制作会社に渡す結果を保存','button button-primary');save.type='button';save.addEventListener('click',()=>{const blob=new Blob([title.textContent+'\n'+report.url+'\n'+message.textContent+'\n'+results.textContent+'\n\n詳細な取得根拠\n'+JSON.stringify(report,null,2)],{type:'text/plain;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=(document.querySelector('#diagnosis-form')?.dataset.reportLabel || '医院ホームページ')+'診断.txt';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);});results.append(save);
+  const save=element('button','結果を保存','button button-primary');save.type='button';save.addEventListener('click',()=>{const blob=new Blob([title.textContent+'\n'+report.url+'\n'+message.textContent+'\n'+results.textContent+'\n\n詳細な取得根拠\n'+JSON.stringify(report,null,2)],{type:'text/plain;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=(document.querySelector('#diagnosis-form')?.dataset.reportLabel || '医院ホームページ')+'診断.txt';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);});results.append(save);
 }
 let scanClock;
 function scanProgress(stage, detail) {
