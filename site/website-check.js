@@ -197,12 +197,30 @@ async function readScanResponse(response){
   if(!report)throw Error('診断結果の受信が途中で止まりました。もう一度お試しください。');return report;
 }
 
+// Advertising identifiers do not select a page. Remove only known tracking keys;
+// preserve page-selecting queries by rejecting them rather than diagnosing another page.
+function normalizeDiagnosisUrl(input) {
+  const value=input.trim();let url;
+  try{url=new URL(/^[a-z][a-z\d+.-]*:/i.test(value)?value:'https://'+value);}catch{throw Error('ホームページのURLを入力してください。');}
+  if(!['https:','http:'].includes(url.protocol)||url.username||url.password||url.port||!url.hostname.includes('.')||/\s/.test(value))throw Error('認証情報を含まない、http:// または https:// の公開URLを入力してください。');
+  const tracking=/^(?:utm_.+|gclid|dclid|gbraid|wbraid|gad_source|gad_campaignid|gclsrc|fbclid|msclkid|yclid|twclid|ttclid|srsltid|mc_cid|mc_eid|campaignid|adgroupid|creative|matchtype|network|device|keyword)$/i;
+  for(const key of [...url.searchParams.keys()])if(tracking.test(key))url.searchParams.delete(key);
+  url.hash='';
+  if(url.search)throw Error('広告用の追跡情報は自動で除けます。このURLにはページ指定などの情報もあるため、サイトのトップページURLを入力してください。');
+  return url;
+}
+
 diagnosisInput.addEventListener('input', () => { diagnosisInput.setCustomValidity(''); if(!busy) diagnosisState.hidden = true; });
 diagnosisForm.addEventListener('submit', async event => {
   event.preventDefault(); if(busy) return;
   let target;
-  try { const value=diagnosisInput.value.trim(); target=new URL(/^[a-z][a-z\d+.-]*:/i.test(value)?value:'https://'+value); if(!['https:','http:'].includes(target.protocol)||target.username||target.password||target.port||target.search||target.hash||!target.hostname.includes('.')||/\s/.test(value)) throw Error(); }
-  catch { diagnosisInput.setCustomValidity('認証情報や「?」「#」以降を含まない公開URLを入力してください。');diagnosisInput.reportValidity();return; }
+  try { target=normalizeDiagnosisUrl(diagnosisInput.value); }
+  catch(error) { diagnosisInput.setCustomValidity(error.message);diagnosisInput.reportValidity();return; }
+  const cleaned=target.href!==diagnosisInput.value.trim();
+  diagnosisInput.value=target.href;
+  let notice=document.querySelector('#diagnosis-url-normalized');
+  if(!notice){notice=element('p','','availability');notice.id='diagnosis-url-normalized';notice.setAttribute('role','status');diagnosisForm.querySelector('.url-entry').after(notice);}
+  notice.textContent=cleaned?'診断するURL：'+target.href:'';notice.hidden=!cleaned;
   results.replaceChildren(); diagnosisState.hidden=false; document.querySelector('#diagnosis-target').textContent=(document.querySelector('#diagnosis-form').dataset.reportLabel || '医院ホームページ')+'の診断結果';
   title.textContent='公開ホームページを確認しています'; message.textContent='最大約3分かかります。ページの保護設定・使用部品・公開プログラムを確認しています。';
   scanProgress('start');
