@@ -82,7 +82,7 @@ jobs:
             --cache-control "public, max-age=86400"
           aws s3 sync site/assets/website-check/ "s3://${{ secrets.SITE_S3_BUCKET }}/assets/website-check/" \
             --cache-control "public, max-age=86400"
-          for asset in website-check.css website-check.js; do
+          for asset in website-check.css website-check.js hp-management.css; do
             aws s3 cp "site/$asset" "s3://${{ secrets.SITE_S3_BUCKET }}/$asset" \
               --cache-control "public, max-age=86400"
           done
@@ -105,6 +105,8 @@ jobs:
             --exclude "for/clinic.html" \
             --exclude "for/pharmaceutical-companies.html" \
             --exclude "for/*/pharmaceutical-companies.html" \
+            --exclude "hp-management.html" \
+            --exclude "hp-management/clinic.html" \
             --cache-control "public, max-age=300"
 
       - name: Sync i18n runtime + translation JSON (short cache)
@@ -130,6 +132,8 @@ jobs:
             --exclude ".well-known/apple-app-site-association" \
             --exclude "for/" \
             --exclude "for/*/" \
+            --exclude "hp-management/" \
+            --exclude "hp-management/*/" \
             --cache-control "public, max-age=86400"
 
       - name: Publish apple-app-site-association (application/json, no redirect)

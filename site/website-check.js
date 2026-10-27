@@ -112,7 +112,7 @@ function renderReport(report) {
     scope.append(details);results.append(scope);
   }
   const next=element('div','','report-next');
-  next.append(element('strong','院長先生が次にすること'),element('p',technologies.length || libraries.length || patches.length || reviews.length ? 'この結果を制作会社へ送り、対応が必要か確認してください。' : '今の管理体制を継続し、定期的に更新状況を確認してください。'));
+  next.append(element('strong',document.querySelector('#diagnosis-form')?.dataset.nextLabel || '院長先生が次にすること'),element('p',technologies.length || libraries.length || patches.length || reviews.length ? 'この結果を制作会社へ送り、対応が必要か確認してください。' : '今の管理体制を継続し、定期的に更新状況を確認してください。'));
   results.append(next);
   renderEvaluationTable(report);
   if(reviews.length){const concise=element('details','','report-settings');concise.append(element('summary','保護設定で確認したい点（'+reviews.length+'件）'));const list=element('ul','');reviews.forEach(f=>list.append(element('li',f.title)));concise.append(list);results.append(concise);}
@@ -138,7 +138,7 @@ function renderReport(report) {
   reportDetails.append(coverage,scope);
   results.append(element('p','侵入・漏えいの有無は、この診断では分かりません。','report-boundary'),reportDetails);
   reportDetails=null;
-  const save=element('button','制作会社に渡す結果を保存','button button-primary');save.type='button';save.addEventListener('click',()=>{const blob=new Blob([title.textContent+'\n'+report.url+'\n'+message.textContent+'\n'+results.textContent+'\n\n詳細な取得根拠\n'+JSON.stringify(report,null,2)],{type:'text/plain;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='医院ホームページ診断.txt';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);});results.append(save);
+  const save=element('button','制作会社に渡す結果を保存','button button-primary');save.type='button';save.addEventListener('click',()=>{const blob=new Blob([title.textContent+'\n'+report.url+'\n'+message.textContent+'\n'+results.textContent+'\n\n詳細な取得根拠\n'+JSON.stringify(report,null,2)],{type:'text/plain;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=(document.querySelector('#diagnosis-form')?.dataset.reportLabel || '医院ホームページ')+'診断.txt';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);});results.append(save);
 }
 let scanClock;
 function scanProgress(stage, detail) {
@@ -179,7 +179,7 @@ diagnosisForm.addEventListener('submit', async event => {
   let target;
   try { const value=diagnosisInput.value.trim(); target=new URL(/^[a-z][a-z\d+.-]*:/i.test(value)?value:'https://'+value); if(!['https:','http:'].includes(target.protocol)||target.username||target.password||target.port||target.search||target.hash||!target.hostname.includes('.')||/\s/.test(value)) throw Error(); }
   catch { diagnosisInput.setCustomValidity('認証情報や「?」「#」以降を含まない公開URLを入力してください。');diagnosisInput.reportValidity();return; }
-  results.replaceChildren(); diagnosisState.hidden=false; document.querySelector('#diagnosis-target').textContent='医院ホームページの診断結果';
+  results.replaceChildren(); diagnosisState.hidden=false; document.querySelector('#diagnosis-target').textContent=(document.querySelector('#diagnosis-form').dataset.reportLabel || '医院ホームページ')+'の診断結果';
   title.textContent='公開ホームページを確認しています'; message.textContent='最大約3分かかります。ページの保護設定・使用部品・公開プログラムを確認しています。';
   scanProgress('start');
   if(urlInput) urlInput.value=target.href; clearDraft();

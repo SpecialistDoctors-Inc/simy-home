@@ -33,7 +33,7 @@ LABELS = {
 
 def ref(ident, lang):
     if ident == 'clinic':
-        return ('/for/clinic/', 'Clinic｜クリニックのホームページ診断', '医院のURLから、公開サイトの確認へ。診断画面のプレビューと、ホームページ保守・セキュリティ管理の料金案をご案内します。')
+        return ('/hp-management/', 'HP管理｜診断・見守り・更新', 'ホームページの診断から、見守り、更新まで。業界に合わせた管理をご案内します。')
     if ident == 'pharmaceutical-companies':
         return ('/for/pharmaceutical-companies/' if lang == 'ja' else '/for/en/pharmaceutical-companies/',
                 '製薬企業向けSIMY' if lang == 'ja' else 'SIMY for pharmaceutical companies',
