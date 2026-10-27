@@ -57,6 +57,12 @@ const releaseReferences = {
   jquery: { version: '4.0.0', url: 'https://blog.jquery.com/2026/01/17/jquery-4-0-0/' },
   swiper: { version: '14.3.0', url: 'https://github.com/nolimits4web/swiper/releases/tag/v14.3.0' }
 };
+// Compare only complete numeric release versions; do not guess prerelease or partial versions.
+function compareReleaseVersions(current, latest) {
+  const parse=value=>typeof value==='string' && /^v?\d+\.\d+\.\d+$/.test(value) ? value.replace(/^v/,'').split('.').map(Number) : null;
+  const a=parse(current),b=parse(latest);if(!a||!b)return null;
+  for(let i=0;i<3;i++){if(a[i]<b[i])return -1;if(a[i]>b[i])return 1;}return 0;
+}
 function renderEvaluationTable(report) {
   const rows = new Map();
   const add = (name, version, issues, assessment, fix) => {
@@ -72,25 +78,30 @@ function renderEvaluationTable(report) {
   section.append(element('h3', '言語・システム・ライブラリのバージョン比較'));
   if (!rows.size) {
     section.append(element('p', '公開情報から部品の版を特定できませんでした。安全という判定ではありません。制作会社に構成と更新状況の確認が必要です。'));
+    const missed=[...new Map((report.scripts.resources||[]).filter(r=>r.status==='failed'||r.status==='skipped').map(r=>[r.url,r])).values()];
+    if(missed.length){const reasons=[...new Set(missed.map(r=>r.reason))];section.append(element('p','版を特定できなかった理由：'+reasons.join('／'),'evaluation-note'));}
+    section.append(element('p','次にすること：制作会社に、言語・システム・ライブラリの名前とバージョン一覧を依頼してください。'));
     results.append(section); return;
   }
   const wrap = element('div', '', 'evaluation-scroll'); wrap.tabIndex = 0; wrap.setAttribute('role','region'); wrap.setAttribute('aria-label','使用部品の評価表。画面が狭い場合は横にスクロールできます');
   const table = element('table', '', 'evaluation-table');
   table.append(element('caption', '使用部品・検出した版・公式情報・評価・対応'));
   const head = element('thead',''); const tr = element('tr','');
-  for (const label of ['言語・部品','現在のバージョン','最新バージョン','判定']) {const th=element('th',label);th.scope='col';tr.append(th);}head.append(tr);table.append(head);
+  for (const label of ['言語・部品','現在のバージョン','最新バージョン','必要な対応']) {const th=element('th',label);th.scope='col';tr.append(th);}head.append(tr);table.append(head);
   const body = element('tbody','');
   for (const row of rows.values()) {
     const ref = releaseReferences[row.name.toLowerCase()];
     const ended = /サポート終了/.test(row.assessment);
     const issue = row.issues.length > 0;
-    const state = ended ? '更新を相談' : issue ? '修正を確認' : !row.version ? '版が不明' : '追加確認';
-    const line = element('tr','');const name=element('th',row.name);name.scope='row';const purpose={php:'サーバーの動作基盤',jquery:'画面の動きを作る部品',swiper:'写真を切り替える部品',wordpress:'ページを管理する仕組み'}[row.name.toLowerCase()];if(purpose)name.append(element('small',purpose));line.append(name,element('td',row.version || '不明'));
+    const comparison = ref ? compareReleaseVersions(row.version,ref.version) : null;
+    const outdated = comparison === -1;
+    const state = ended ? '保守中の版へ更新を依頼' : issue ? '修正版への更新を依頼' : !row.version ? '制作会社に使用中の版を確認' : outdated ? '制作会社に更新を相談' : comparison === 0 ? '更新不要・定期確認を継続' : '制作会社に最新の公式情報と照合を依頼';
+    const line = element('tr','');const name=element('th',row.name);name.scope='row';const purpose={php:'サーバーの動作基盤',jquery:'画面の動きを作る部品',swiper:'写真を切り替える部品',wordpress:'ページを管理する仕組み'}[row.name.toLowerCase()];if(purpose)name.append(element('small',purpose));const current=element('td','');current.append(element('strong',row.version || '不明',outdated?'version-outdated':''));if(outdated)current.append(element('small','旧バージョン','version-outdated-label'));line.append(name,current);
     const official=element('td','');
     if(ref){const a=element('a',ref.version);a.href=ref.url;a.target='_blank';a.rel='noopener';official.append(a,element('small','2026年10月27日確認'));}
     else official.append(element('span','公式情報を別途確認'));
-    const status=element('td','');status.append(element('span',state,ended||issue?'evaluation-badge urgent':'evaluation-badge'));
-    if(ended||issue)status.append(element('small',ended?'開発元のサポート終了':'既知の問題に関係する版'));line.append(official,status);body.append(line);
+    const status=element('td','');status.append(element('span',state,ended||issue||outdated?'evaluation-badge urgent':'evaluation-badge'));
+    if(ended||issue)status.append(element('small',ended?'開発元のサポート終了':'既知の問題に関係する版'));else if(outdated)status.append(element('small','動作確認のうえ更新。旧版だけで危険とは判定しません。'));else if(comparison===0)status.append(element('small','確認日の公式版と一致。安全性全体の保証ではありません。'));line.append(official,status);body.append(line);
   }
   table.append(body);wrap.append(table);section.append(wrap,element('p','公開情報による判定です。実際の版・修正状況は制作会社に確認してください。最新バージョンは記載日に確認した公式情報です。旧版というだけで脆弱性があるとは限りません。','evaluation-note'));
   results.append(section);
