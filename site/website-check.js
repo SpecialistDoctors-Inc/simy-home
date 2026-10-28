@@ -110,7 +110,7 @@ function renderEvaluationTable(report) {
   }
   for (const l of report.scripts.libraries) add(l.name, l.version, l.issues);
   const section = element('section', '', 'evaluation-section');
-  section.append(element('h3', '01 / 古い部品・パッチの更新状況'));
+  section.append(element('h3', '01 / 使用部品の脆弱性・セキュリティリスク'));
   if (!rows.size) {
     section.append(element('p', '公開情報から部品の版を特定できませんでした。安全という判定ではありません。'));
     const missed=[...new Map((report.scripts.resources||[]).filter(r=>r.status==='failed'||r.status==='skipped').map(r=>[r.url,r])).values()];
@@ -164,7 +164,7 @@ function renderSummary(report){
   for(const r of report.scripts.resources||[])if(r.status!=='checked')unknown.add('asset:'+r.url);
   const serviceRisk=window.SimyServiceSecurity?.assess(report);
   const counts=element('div','','report-counts');
-  for(const [label,value,style] of [['古い部品・更新の確認',updates.size+priorityVersions.size,'priority'],['関連する事故・脆弱性の公表',serviceRisk?.notices.length||'未確認','update'],['その他の確認事項',report.findings.filter(f=>f.state==='review').length,'unknown']]){const box=element('div','',style);box.append(element('strong',String(value)),element('span',label));counts.append(box);}
+  for(const [label,value,style] of [['脆弱性・更新リスク',updates.size+priorityVersions.size,'priority'],['関連する事故・脆弱性の公表',serviceRisk?.notices.length||'未確認','update'],['その他の確認事項',report.findings.filter(f=>f.state==='review').length,'unknown']]){const box=element('div','',style);box.append(element('strong',String(value)),element('span',label));counts.append(box);}
   results.append(counts);
   for(const warning of report.sourceWarnings||[])results.append(element('p',warning,'source-warning'));
 }
