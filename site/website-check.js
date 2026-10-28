@@ -255,27 +255,23 @@ function appendEmailReceipt(report, snapshot, onSaved) {
   const consent=element('input','');consent.type='checkbox';consent.name='consent';consent.required=true;
   const consentText='全結果の閲覧・PDFダウンロードとお問い合わせ対応のため、SIMYがメールアドレス・クリニック名・名前・対象URL・診断結果を保存・利用することに同意します。';
   consentLabel.append(consent,element('span',consentText));
-  const marketingLabel=element('label','','report-email-consent');
-  const marketing=element('input','');marketing.type='checkbox';marketing.name='marketingConsent';
-  marketingLabel.append(marketing,element('span','（任意）SIMYからホームページ管理サービスの案内メールを受け取ることに同意します。いつでも配信停止できます。'));
-
   const privacy=element('a','個人情報の取り扱い');privacy.href='/privacy.html?lang=ja';privacy.target='_blank';privacy.rel='noopener';
   const submit=element('button','登録して一覧・PDFを見る','button button-primary');submit.type='submit';
   const note=element('p','登録無料・この画面で一覧表示とPDFダウンロードができます。保存期間は原則90日。削除のご希望は sales@simy.one へ。','report-email-note');
   const status=element('p','','report-email-status');status.setAttribute('role','status');status.setAttribute('aria-live','polite');
-  receiptForm.append(label,email,clinicLabel,clinicName,nameLabel,contactName,consentLabel,marketingLabel,privacy,note,submit,status);section.append(receiptForm);
+  receiptForm.append(label,email,clinicLabel,clinicName,nameLabel,contactName,consentLabel,privacy,note,submit,status);section.append(receiptForm);
   let requestId=crypto.randomUUID(),submitting=false;
   receiptForm.addEventListener('input',()=>{if(!submitting){requestId=crypto.randomUUID();status.textContent='';}});
   receiptForm.addEventListener('submit',async event=>{
     event.preventDefault();if(submitting||!receiptForm.reportValidity())return;
-    submitting=true;submit.disabled=true;email.disabled=true;clinicName.disabled=true;contactName.disabled=true;consent.disabled=true;marketing.disabled=true;status.textContent='保存しています…';
+    submitting=true;submit.disabled=true;email.disabled=true;clinicName.disabled=true;contactName.disabled=true;consent.disabled=true;status.textContent='保存しています…';
     const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),20000);
     try{
-      const response=await fetch(new URL('/api/report-registration',diagnosisEndpoint),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:requestId,email:email.value.trim(),clinicName:clinicName.value.trim(),contactName:contactName.value.trim(),consent:consent.checked,consentVersion:'2026-10-28-v3',marketingConsent:marketing.checked,marketingConsentVersion:'2026-10-28-marketing-v1',url:report.url,checkedAt:report.checkedAt,reportText:snapshot}),signal:controller.signal});
+      const response=await fetch(new URL('/api/report-registration',diagnosisEndpoint),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:requestId,email:email.value.trim(),clinicName:clinicName.value.trim(),contactName:contactName.value.trim(),consent:consent.checked,consentVersion:'2026-10-28-v3',url:report.url,checkedAt:report.checkedAt,reportText:snapshot}),signal:controller.signal});
       const body=await response.json();if(!response.ok)throw Error(body.error||'保存できませんでした。');
       if(body.receiptId!==requestId||body.status!=='registered')throw Error('保存結果を確認できませんでした。もう一度お試しください。');
       status.textContent='登録が完了しました。すべての結果を表示しました。';submit.textContent='登録済み';onSaved({clinicName:clinicName.value.trim(),contactName:contactName.value.trim()});
-    }catch(error){status.textContent=error.name==='AbortError'?'受付結果を確認できませんでした。もう一度押すと、重複せずに確認できます。':error instanceof TypeError?'接続できませんでした。通信状態を確認して、もう一度お試しください。':error.message||'保存できませんでした。再度お試しください。';submit.disabled=false;email.disabled=false;clinicName.disabled=false;contactName.disabled=false;consent.disabled=false;marketing.disabled=false;submitting=false;}
+    }catch(error){status.textContent=error.name==='AbortError'?'受付結果を確認できませんでした。もう一度押すと、重複せずに確認できます。':error instanceof TypeError?'接続できませんでした。通信状態を確認して、もう一度お試しください。':error.message||'保存できませんでした。再度お試しください。';submit.disabled=false;email.disabled=false;clinicName.disabled=false;contactName.disabled=false;consent.disabled=false;submitting=false;}
     finally{clearTimeout(timer);}
   });
   results.append(section);
