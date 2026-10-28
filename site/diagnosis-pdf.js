@@ -63,6 +63,7 @@
     table('提供元が公表した事故・障害', ['公表日','公表内容','対象・状況'], (global.SimyServiceSecurity?.providerNotices(report)||report.providers?.notices||[]).map(n=>[n.published,(n.name?n.name+'：':'')+n.title+'\n'+n.summary,n.scope+'\n'+n.resolution]), [35,140,90]);
     const security=global.SimyServiceSecurity?.assess(report);
     table('03 / 外部サービスの事故・脆弱性情報', ['サービス・公表日', '公表された内容・対象', '公式発表'], [...new Map((security?global.SimyServiceSecurity.visibleServices(security).flatMap(service=>global.SimyServiceSecurity.findingsFor(service,security)):[]).map(n=>[n.id,n])).values()].map(n=>[n.name+'\n公表 '+n.published+' / 確認 '+n.checkedAt,n.title+'\n'+n.summary+'\n'+n.scope,n.url]), [55,110,100]);
+    paragraph(security?.research?.status==='completed'?'診断時に公式情報を検索しました。':security?.research?.status==='partial'?'診断時の検索・一次情報確認は一部のみ完了しました。':'診断時の検索は未実施または取得できませんでした。事前確認の公表事例を含みます。',9);
     paragraph('外部サービス：'+(security?.notices.length?'上記の公表事例に関連する記載あり。':'今回の照合で関連事例を特定できず。事故なしの判定ではありません。')+' 選定した公式発表との照合で、全件収集・リアルタイム更新ではありません。情報確認 '+(security?.checkedAt||'未確認'),9);
     table('その他おすすめの改善点', ['項目', '確認結果・医院への影響'], (report.findings || []).filter(f => f.state === 'review').map(f => [f.title, f.summary]), [65, 200]);
     const flow=global.SimyInformationFlow?.model(report)||[];
