@@ -51,9 +51,9 @@ function sharingName(item){
 }
 function sharingCopy(item){
  const copies={
-  'preview-observed':{label:'本文は未確認',reason:'ログインなしで閲覧画面を確認しました。資料本文は未取得のため、公開用の案内か院内資料かは未判定です。',action:''},
-  'access-required':{label:'閲覧にはアクセス許可が必要です',reason:'今回の確認では、ログインなしで資料を閲覧できませんでした。誰に共有されているかは未確認です。',action:''},
-  unknown:{label:'見られるか判断できませんでした',reason:'今回の取得結果だけでは、ログインなしで見られるか判断できませんでした。',action:''},
+  'preview-observed':{label:'本文は未確認',reason:'閲覧画面を確認しました。資料本文は未取得のため、公開用の案内か院内資料かは未判定です。',action:''},
+  'access-required':{label:'閲覧にはアクセス許可が必要です',reason:'今回の確認では、資料の閲覧にアクセス許可が必要でした。誰に共有されているかは未確認です。',action:''},
+  unknown:{label:'見られるか判断できませんでした',reason:'今回の取得結果だけでは、閲覧できるか判断できませんでした。',action:''},
   'not-checked':{label:'今回は確認していません',reason:'確認件数や時間の上限に達したため、このリンクは未確認です。',action:''}
  };
  if(item.status!=='preview-observed')return copies[item.status]||copies.unknown;
