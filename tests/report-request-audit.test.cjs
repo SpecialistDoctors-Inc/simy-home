@@ -1,7 +1,7 @@
 const {test}=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs');
 const js=fs.readFileSync('site/website-check.js','utf8'),pdf=fs.readFileSync('site/diagnosis-pdf.js','utf8');
 test('report keeps requested section order and does not reintroduce removed content',()=>{
- const render=js.slice(js.indexOf('function renderReport'),js.indexOf('// Results are immediately'));
+ const render=js.slice(js.indexOf('function renderReport'),js.indexOf('function appendEmailReceipt'));
  assert(render.indexOf('renderEvaluationTable(report)')<render.indexOf('renderInfrastructure(report)'));
  assert(render.indexOf('renderInfrastructure(report)')<render.indexOf('renderServiceSecurity(report)'));
  for(const text of ['調べたページを見る','同じサイト内の','院長先生が次にすること','その他の確認・改善点'])assert(!render.includes(text));
