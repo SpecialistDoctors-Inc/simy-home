@@ -13,13 +13,13 @@ function model(report){
 function managementCopy(g){
  const category=(g.categories||[g.category]).join(' ');
  if(/予約|問診|診療|決済|ログイン/.test(category))return {label:'患者情報の管理が重要',reason:'予約・問診などで、氏名や連絡先、症状などを入力する可能性があります。',action:'入力する情報・閲覧できる人・保存期間を確認してください。'};
- if(g.category==='資料共有'||g.sharing?.length)return {label:'資料の公開範囲を確認',reason:'患者さん向けの公開資料か、院内だけで使う資料かで、必要な管理が変わります。',action:'公開してよい内容か、共有相手が適切かを確認してください。'};
+ if(g.category==='資料共有'||g.sharing?.length)return {label:'資料の公開範囲が重要',reason:'患者さん向けの公開資料か、院内だけで使う資料かで、必要な管理が変わります。',action:'公開してよい内容か、共有相手が適切かを確認してください。'};
  if(g.kinds.includes('form'))return {label:'入力情報の管理が重要',reason:'フォームの入力内容を外部へ送る設定があります。入力内容は未確認です。',action:'送信する項目・受取先・保存期間を確認してください。'};
- if(g.kinds.some(k=>k==='script'||k==='embed'))return {label:'外部への送信内容を確認',reason:'ページを開くだけで、アクセス情報などが外部に送られる場合があります。',action:'送る情報と外部プログラムの更新状況を確認してください。'};
+ if(g.kinds.some(k=>k==='script'||k==='embed'))return {label:'外部へ情報が送られる可能性',reason:'ページを開くだけで、アクセス情報などが外部に送られる場合があります。',action:'送る情報と外部プログラムの更新状況を確認してください。'};
  return {label:'案内だけのリンクなら、優先度は低め',reason:'リンクを置いているだけでは、患者情報が送られるとは限りません。移動先で情報を入力する場合は、管理の確認が必要です。',action:'案内を見るだけか、予約や個人情報の入力に使うかを確認してください。'};
 }
 function render(report,root,el){
- const groups=model(report),section=el('section','','information-flow');section.append(el('h3','03 / ホームページと外部サービスのつながり'),el('p','患者情報を扱う接続先から、優先して確認しましょう。用途から考えられる管理の重要度を示しています。'));
+ const groups=model(report),section=el('section','','information-flow');section.append(el('h3','03 / ホームページと外部サービスのつながり'),el('p','用途から考えられる管理の重要度を示しています。'));
  const diagram=el('div','','flow-diagram');diagram.setAttribute('aria-label','医院ホームページ、閲覧者のブラウザー、外部サービスの接続図');
  const site=el('div','','flow-node flow-site');site.append(el('span','医院のホームページ'),el('strong',new URL(report.url).hostname),el('p','ページ・画像などを配信'));
  const browser=el('div','','flow-node flow-browser');browser.append(el('span','⇄ ページの取得','flow-direction'),el('strong','閲覧者のブラウザー'),el('p','医院のHPを表示'),el('small','診断では匿名のブラウザーを使用。患者情報は入力しません。'));
@@ -28,7 +28,7 @@ function render(report,root,el){
  for(const [category,list] of categories){const observed=list.some(g=>g.observed),branch=el('details','','flow-branch'+(observed?' observed':''));const summary=el('summary','');const direction=list.every(g=>g.kinds.every(k=>k==='link'||k==='form'))?'→':'⇄';summary.append(el('span',direction,'flow-arrow'),el('strong',category+' · '+list.length+'サービス'),el('small',observed?'通常表示で通信を確認した接続先あり':'ページに接続先の記載あり'));
  if(list.some(g=>g.sharing.some(x=>x.status==='preview-observed')))summary.append(el('b','ログインなしで閲覧画面が開く資料あり','flow-sharing-alert'));
  branch.open=true;branch.append(summary);
- for(const g of list){const copy=managementCopy(g),entry=el('div','','flow-service');entry.append(el('strong',g.domain),el('p',copy.label),el('p',copy.reason),el('p','確認すること：'+copy.action));
+ for(const g of list){const copy=managementCopy(g),entry=el('div','','flow-service');entry.append(el('strong',g.domain),el('p',copy.label),el('p',copy.reason));
  branch.append(entry);}
  branches.append(branch);}
  if(!groups.length)branches.append(el('p','接続先を検出できませんでした。未使用の証明ではありません。'));
@@ -47,12 +47,12 @@ function sharingCopy(item){
 function renderSharing(report,root,el){
  const section=el('section','','sharing-review');section.append(el('h3','Google Driveなどの公開範囲'));
  const items=report.sharing?.items||[];
- if(!report.sharing){section.append(el('p','この診断結果には共有リンクの閲覧確認がありません。再診断して確認してください。'));root.append(section);return;}
+ if(!report.sharing){section.append(el('p','この診断結果には共有リンクの閲覧確認がありません。'));root.append(section);return;}
  if(!items.length)section.append(el('p','確認した公開ページでは、検査対象のGoogle Drive・Docs直接リンクは見つかりませんでした。リンクのない内部共有は未検査です。'));
  const open=items.filter(x=>x.status==='preview-observed').length;
- if(items.length){section.append(el('strong','ログインなしで閲覧画面が開いた資料：'+open+'件 / 確認対象 '+items.length+'件'),el('p','患者さん向けの案内など、公開するための資料なら問題ありません。院内限定の資料が含まれていないか確認してください。'));}
- items.forEach((item,i)=>{const copy=sharingCopy(item);const article=el('details','','sharing-item '+(item.status==='preview-observed'?'review':''));const summary=el('summary','');summary.append(el('strong',item.service+' · '+(item.kind==='folder'?'フォルダ':'共有資料')+' '+(i+1)),el('span',copy.label));article.append(summary,el('p',copy.reason),el('p','確認すること：'+copy.action),el('small','資料の内容や、編集できる人までは確認していません。情報漏えいを確認した結果ではありません。'),el('p',item.url),el('p','記載ページ：'+item.pages.join(' / ')),el('p','確認：'+(item.checkedAt?new Date(item.checkedAt).toLocaleString('ja-JP'):'未実施')));section.append(article);});
- const scope=el('details','');scope.append(el('summary','確認範囲と、管理者に確認する設定'));for(const t of report.sharing.limitations||[])scope.append(el('p',t));section.append(scope);root.append(section);
+ if(items.length){section.append(el('strong','ログインなしで閲覧画面が開いた資料：'+open+'件 / 確認対象 '+items.length+'件'),el('p','患者さん向けの案内など、公開するための資料なら問題ありません。資料の内容が公開用かどうかは未判定です。'));}
+ items.forEach((item,i)=>{const copy=sharingCopy(item);const article=el('details','','sharing-item '+(item.status==='preview-observed'?'review':''));const summary=el('summary','');summary.append(el('strong',item.service+' · '+(item.kind==='folder'?'フォルダ':'共有資料')+' '+(i+1)),el('span',copy.label));article.append(summary,el('p',copy.reason),el('small','資料の内容や、編集できる人までは確認していません。情報漏えいを確認した結果ではありません。'),el('p',item.url),el('p','記載ページ：'+item.pages.join(' / ')),el('p','確認：'+(item.checkedAt?new Date(item.checkedAt).toLocaleString('ja-JP'):'未実施')));section.append(article);});
+ root.append(section);
 }
 global.SimyInformationFlow={model,render,sharingCopy,managementCopy};
 })(typeof window==='undefined'?globalThis:window);
