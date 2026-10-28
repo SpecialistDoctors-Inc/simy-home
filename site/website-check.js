@@ -180,7 +180,8 @@ function renderSummary(report){
   const updates=new Set();
   for(const l of report.scripts.libraries){const key=aliases(l.name),ref=report.releaseInfo?.[key]||releaseReferences[key];if(l.issues.length||(ref&&compareReleaseVersions(l.version,ref.version)===-1))updates.add(key+':'+l.version);}
   for(const t of report.technologies){const key=aliases(t.name),ref=report.releaseInfo?.[key]||releaseReferences[key];for(const v of t.versions||[])if(t.status==='review'||(ref&&compareReleaseVersions(v,ref.version)===-1))updates.add(key+':'+v);}
-  const urgent=report.findings.filter(f=>['private-key','form-http','directory','public-config'].includes(f.id)&&f.state==='review').length;
+  const exploited=new Set((report.exploitation||[]).filter(x=>x.knownExploited===true).map(x=>x.cve));const priorityVersions=new Set(report.scripts.libraries.filter(l=>l.basis!=='url'&&l.issues.some(i=>i.ids.some(id=>exploited.has(id)))).map(l=>aliases(l.name)+':'+l.version));for(const key of priorityVersions)updates.delete(key);
+  const urgent=priorityVersions.size+report.findings.filter(f=>['private-key','form-http','directory','public-config'].includes(f.id)&&f.state==='review').length;
   const unknown=new Set(report.technologies.filter(t=>!t.versions?.length).map(t=>aliases(t.name)));
   for(const f of report.findings.filter(f=>f.state==='unknown'))unknown.add('setting:'+f.id);
   for(const p of report.crawl?.pages||[])if(p.status!=='checked')unknown.add('page:'+p.url);
@@ -192,10 +193,11 @@ function renderSummary(report){
 }
 function renderConnections(report){
   if(!Array.isArray(report.integrations))return;
-  const section=element('details','','report-technical');section.append(element('summary','外部サービスとの接続先（'+report.integrations.length+'件）'));
+  const grouped=new Map();for(const x of report.integrations){const key=x.kind+'|'+x.destination;const prior=grouped.get(key);if(prior)prior.pages.add(x.page);else grouped.set(key,{...x,pages:new Set([x.page])});}
+  const section=element('details','','report-technical');section.append(element('summary','外部サービスとの接続先（'+grouped.size+'件）'));
   section.append(element('p','公開ページの記載です。リンクの存在だけでは、患者情報の送信や提供会社内部の保存は確認できません。'));
   if(!report.integrations.length)section.append(element('p','取得したHTMLでは接続先を検出できませんでした。未使用という判定ではありません。'));
-  for(const x of report.integrations){const row=element('div','','connection-row');row.append(element('strong',x.category+' · '+x.domain),element('p',({link:'リンク',embed:'埋め込み',script:'プログラム読込',form:'フォーム送信先'}[x.kind]||x.kind)+' / '+(x.protocol==='https:'?'HTTPS':'HTTP')));const detail=element('details','');detail.append(element('summary','設置場所・根拠'),element('p',x.page),element('p',x.destination),element('p',x.basis));if(x.fields?.length)detail.append(element('p','コード上の項目名：'+x.fields.join('、')+'（値は取得せず、送信も行っていません）'));row.append(detail);section.append(row);}
+  for(const x of grouped.values()){const row=element('div','','connection-row');row.append(element('strong',x.category+' · '+x.domain),element('p',({link:'リンク',embed:'埋め込み',script:'プログラム読込',form:'フォーム送信先'}[x.kind]||x.kind)+' / '+(x.protocol==='https:'?'HTTPS':'HTTP')));const detail=element('details','');detail.append(element('summary','設置場所・根拠（'+x.pages.size+'ページ）'),element('p',[...x.pages].join('\n')),element('p',x.destination),element('p',x.basis));if(x.fields?.length)detail.append(element('p','コード上の項目名：'+x.fields.join('、')+'（値は取得せず、送信も行っていません）'));row.append(detail);section.append(row);}
   const observed=report.scripts.browserEvidence?.connections||[];if(observed.length){const d=element('details','');d.append(element('summary','通常表示で観測した通信（'+observed.length+'件）'));for(const x of observed)d.append(element('p',x.type+' / '+x.destination));d.append(element('p','患者情報は入力していません。提供会社内部の保存・削除・権限は未確認です。'));section.append(d);}
   results.append(section);
 }
@@ -263,7 +265,7 @@ function renderReport(report) {
 function gateReport(report) {
   const full=element('div','','report-full');
   while(results.firstChild)full.append(results.firstChild);
-  const snapshot=title.textContent+'\n'+report.url+'\n'+message.textContent+'\n'+full.textContent+'\n\n診断記録\n'+JSON.stringify({diagnosisId:report.diagnosisId,checkedAt:report.checkedAt,scope:report.scope,releaseInfo:report.releaseInfo,technologies:report.technologies,findings:report.findings,integrations:report.integrations,advisories:report.advisories});
+  const snapshot=title.textContent+'\n'+report.url+'\n'+message.textContent+'\n\n診断記録（根拠と確認範囲）\n'+JSON.stringify(report);
   const preview=element('section','','report-preview');
   preview.append(element('p','診断結果の一部を表示しています','report-preview-label'));
   const summary=full.querySelector('.report-counts');if(summary)preview.append(summary.cloneNode(true));
