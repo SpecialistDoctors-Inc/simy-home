@@ -13,7 +13,6 @@
     "commit": "1de154e",
     "changes": [
       "bounded search, safe failure codes, usage records, REXML correction",
-      "target/collector refusal provenance",
       "independent marketing consent, confirmation, approval, unsubscribe and ledger"
     ],
     "tests": "outreach,email-request,sheets-sync,service-security,joanr-retrieval,scan-progress,typecheck,build passed",
@@ -36,8 +35,11 @@
   "remaining_acceptance": [
     "AI API classification and official web search from diagnosis, saved result, screen/PDF",
     "Google Sheets same-ID delivery, readback and retry",
-    "JOANR fixed collector retrieval and formal diagnosis; current Mac 301/301/200 is not production proof",
     "Test mailbox receipt, confirmation, approved service email receipt, unsubscribe and suppression"
   ],
-  "prior_evidence": "v36 acceptance retained in /Users/t.shiwaku/Documents/Codex/2026-10-28/hp-integration-acceptance/acceptance.json; not rerated as current remaining-feature acceptance"
+  "prior_evidence": "v36 acceptance retained in /Users/t.shiwaku/Documents/Codex/2026-10-28/hp-integration-acceptance/acceptance.json; not rerated as current remaining-feature acceptance",
+  "excluded_by_latest_user_instruction": {
+    "JOANR": "403 resolution and production diagnosis removed from scope and acceptance; unpublished change excluded, source commit retained",
+    "preserved_commit": "7ddc145bc3399c5adfae03ede24d4edd96ed50de"
+  }
 }
