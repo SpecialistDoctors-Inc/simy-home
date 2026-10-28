@@ -136,7 +136,7 @@ function renderEvaluationTable(report) {
     if(ended||issue)status.append(element('small',ended?'開発元のサポート終了':'既知の問題に関係する版'));else if(outdated&&row.name.toLowerCase()!=='jquery-migrate')status.append(element('small','旧版だけで危険とは判定しません。'));else if(comparison===0)status.append(element('small','確認日の公式版と一致。安全性全体の保証ではありません。'));appendIssueEvidence(status,row.issues);line.append(official,status);body.append(line);
   }
   table.append(body);wrap.append(table);section.append(wrap,element('p','公開日は検出した版の配布元の記録です。版や日付が不明なものは未確認と表示します。最新の版は記載日の確認情報です。旧版だけで脆弱性があるとは限りません。','evaluation-note'));
-  if([...rows.values()].some(row=>row.name.toLowerCase()!=='php'&&row.issues.length)){
+  if(![...rows.values()].some(row=>row.name.toLowerCase()==='php') && [...rows.values()].some(row=>row.name.toLowerCase()!=='php'&&row.issues.length)){
     const figure=element('figure','','clinic-manga infrastructure-manga'),img=element('img','');img.src='/assets/website-check/clinic-component-risks-v1.png';img.width=1536;img.height=1024;img.loading='lazy';img.alt='PHP以外の部品も攻撃の入口になり得ることを示す架空の漫画。公表された問題と、この医院の被害は区別します。';figure.append(img);section.append(figure);
   }
   if([...rows.values()].some(row=>row.name.toLowerCase()==='php')){
