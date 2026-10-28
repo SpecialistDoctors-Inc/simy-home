@@ -60,7 +60,7 @@
     if (!versions.length) paragraph('公開情報から使用部品の版は特定できませんでした。安全という判定ではありません。');
     const action = value => text(value).replace(/SIMY|制作会社(?:・管理者)?/g, '管理担当者');
     const security=global.SimyServiceSecurity?.assess(report);
-    table('外部サービスの事故・脆弱性情報', ['サービス・公表日', '公表された内容・対象', '必要な対応・公式発表'], (security?.notices||[]).map(n=>[n.name+'\n公表 '+n.published+' / 確認 '+n.checkedAt,n.title+'\n'+n.summary+'\n'+n.scope,n.action+'\n'+n.impact+'\n'+n.url]), [55,110,100]);
+    table('外部サービスの事故・脆弱性情報', ['サービス・公表日', '公表された内容・対象', '公式発表'], (security?.notices||[]).map(n=>[n.name+'\n公表 '+n.published+' / 確認 '+n.checkedAt,n.title+'\n'+n.summary+'\n'+n.scope,n.url]), [55,110,100]);
     paragraph('外部サービス：'+(security?.notices.length?'上記の公表事例に関連する記載あり。':'今回の照合で関連事例を特定できず。事故なしの判定ではありません。')+' 選定した公式発表との照合で、全件収集・リアルタイム更新ではありません。情報確認 '+(security?.checkedAt||'未確認'),9);
     table('その他の確認・改善点', ['項目', '確認結果・医院への影響', '必要な対応'], (report.findings || []).filter(f => f.state === 'review').map(f => [f.title, f.summary, action(f.fix)]), [48, 105, 112]);
     const flow=global.SimyInformationFlow?.model(report)||[];

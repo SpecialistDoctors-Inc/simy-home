@@ -17,4 +17,6 @@ test('deduplicates integration pages, exposes unmatched and stale catalog',()=>{
  const n=assess({integrations:[connection('blastmail.jp')]},Date.parse('2027-06-01')).notices[0];assert.equal(n.recent,false);assert.equal(n.stale,true);
 });
 
-test('DNS providers including Onamae are listed without implying a hosting incident',()=>{const r=assess({providers:{facts:[{provider:'onamae',name:'お名前.com',role:'DNS提供元',status:'記載を確認',evidence:'NS'}]}});assert.equal(r.services[0].name,'お名前.com');assert.equal(r.services[0].category,'DNS提供元');assert.equal(r.unmatched.length,1);assert.equal(r.notices.length,0);});
+test('DNS providers including Onamae are listed without implying a hosting incident',()=>{const r=assess({providers:{facts:[{provider:'onamae',name:'お名前.com',role:'DNS提供元',status:'記載を確認',evidence:'NS'}]}});assert.equal(r.services[0].name,'お名前.com');assert.equal(r.services[0].category,'DNS提供元');assert.equal(r.unmatched.length,0);assert.equal(r.notices.length,1);assert.match(r.notices[0].scope,/DNS・ドメイン登録の事故を示す発表ではありません/);});
+
+test('research separates provider incidents from the detected service and excludes lookalikes',()=>{const info=assess({integrations:[connection('console.nomoca-ai.com')]},now);assert.equal(info.notices.length,1);assert.match(info.notices[0].scope,/chatの事故を示すものではありません/);assert.equal(assess({integrations:[connection('nomoca-ai.com.attacker.example')]},now).notices.length,0);});
