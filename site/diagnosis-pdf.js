@@ -62,6 +62,11 @@
     table('外部サービスの事故・脆弱性情報', ['サービス・公表日', '公表された内容・対象', '必要な対応・公式発表'], (security?.notices||[]).map(n=>[n.name+'\n公表 '+n.published+' / 確認 '+n.checkedAt,n.title+'\n'+n.summary+'\n'+n.scope,n.action+'\n'+n.impact+'\n'+n.url]), [55,110,100]);
     paragraph('外部サービス：'+(security?.notices.length?'上記の公表事例に関連する記載あり。':'今回の照合で関連事例を特定できず。事故なしの判定ではありません。')+' 選定した公式発表との照合で、全件収集・リアルタイム更新ではありません。情報確認 '+(security?.checkedAt||'未確認'),9);
     table('その他の確認・改善点', ['項目', '確認結果・医院への影響', '必要な対応'], (report.findings || []).filter(f => f.state === 'review').map(f => [f.title, f.summary, action(f.fix)]), [48, 105, 112]);
+    const flow=global.SimyInformationFlow?.model(report)||[];
+    table('ホームページと外部サービスの接続図（一覧）', ['接続の起点', '外部サービス', '経路・確認状況'], flow.map(g=>['閲覧者のブラウザー（医院HPを表示）',g.category+' / '+g.domain,g.labels.join(' / ')+'\n'+(g.observed?'通常表示で通信を確認':'公開ページに記載。実際の送信は未確認')]), [65,90,110]);
+    paragraph('矢印・経路は接続関係です。患者情報の送信や提供先内部の保存を確認したものではありません。',9);
+    table('Google Drive等の共有範囲', ['対象', '匿名閲覧の確認', '必要な対応'], (report.sharing?.items||[]).map((x,i)=>[x.service+' '+(i+1)+' / '+x.kind+'\n'+x.url,x.reason+'\n確認日時：'+(x.checkedAt||'未実施'),x.action]), [80,90,95]);
+    for(const limit of report.sharing?.limitations||[])paragraph(limit,9);
     table('外部サービスとの接続先', ['用途・接続先', '設置方法', '設置ページ数・公開された接続先'], connections.map(x => [x.category + '\n' + x.domain, ({link: 'リンク', embed: '埋め込み', script: 'プログラム読込', form: 'フォーム送信先'}[x.kind] || x.kind), x.pages.size + 'ページに記載\n' + x.destination]), [60, 35, 170]);
     paragraph('リンク・コードの記載と、実際の通信は別です。患者情報は入力・送信していません。外部サービス内部の保存・削除・権限は未確認です。', 9);
     table('通常表示で観測した通信', ['種類', '接続先'], (report.scripts?.browserEvidence?.connections || []).map(x => [x.type, x.destination]), [40, 225]);
