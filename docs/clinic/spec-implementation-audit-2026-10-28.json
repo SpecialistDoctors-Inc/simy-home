@@ -40,14 +40,14 @@
       "requirement": "公開根拠・Ruby/Rails・複数版",
       "implementation": "lib/technology.ts; lib/library-detect.ts; lib/version-summary.ts",
       "limitations_or_plan": "担当5の検出版・JOANR検証を統合予定",
-      "verification": "担当作業中"
+      "verification": "担当変更を統合、関連テスト・型チェック・ビルド成功。本番公開後受入は別途。"
     },
     {
       "id": "DT02",
       "requirement": "版・公開日・最新安定版",
       "implementation": "lib/release-info.ts; site/website-check.js",
       "limitations_or_plan": "担当5の公式日付修正を統合予定。対応指示列の復活は最新判断で対象外",
-      "verification": "担当作業中"
+      "verification": "担当変更を統合、関連テスト・型チェック・ビルド成功。本番公開後受入は別途。"
     },
     {
       "id": "DT03",
@@ -96,7 +96,7 @@
       "requirement": "進捗・途中結果・再接続",
       "implementation": "lib/initial-fetch.ts; lib/scan.ts; app/api/scan/route.ts",
       "limitations_or_plan": "担当1の復旧・早期途中結果を統合予定",
-      "verification": "担当作業中"
+      "verification": "担当変更を統合、関連テスト・型チェック・ビルド成功。本番公開後受入は別途。"
     },
     {
       "id": "SYS01",
@@ -117,21 +117,21 @@
       "requirement": "資料内容名・AI内容判定",
       "implementation": "lib/shared-resources.ts",
       "limitations_or_plan": "担当2。キー/送信対象認可等が不足する場合は未判定を表示",
-      "verification": "担当作業中"
+      "verification": "担当変更を統合、関連テスト・型チェック・ビルド成功。本番公開後受入は別途。"
     },
     {
       "id": "ADD02",
       "requirement": "都度事故・脆弱性調査",
       "implementation": "lib/provider-info.ts",
       "limitations_or_plan": "担当3。未設定/失敗を事故なしにしない",
-      "verification": "担当作業中"
+      "verification": "担当変更を統合、関連テスト・型チェック・ビルド成功。本番公開後受入は別途。"
     },
     {
       "id": "ADD03",
       "requirement": "Sheets即時連携・営業準備",
       "implementation": "app/api/scan/route.ts; app/api/report-email/route.ts",
       "limitations_or_plan": "担当4。Google認証未設定。営業実送信なし",
-      "verification": "担当作業中"
+      "verification": "担当変更を統合、関連テスト・型チェック・ビルド成功。本番公開後受入は別途。"
     }
   ],
   "production_baseline": {
@@ -153,7 +153,22 @@
       "passed": 1519,
       "failed": 0
     },
-    "api": "typecheck、公公開仕様、登録、メタデータ、CORS、コード比較、巡回、初回取得、提供元、Ruby、進捗、scan、scripts、共有、技術、版比較が通過",
+    "api": "typecheck、公開仕様、登録、メタデータ、CORS、コード比較、巡回、初回取得、提供元、Ruby、進捗、scan、scripts、共有、技術、版比較が通過",
     "excluded": "内部PostgreSQL診断テストは参照HTML不足で未実行完了"
+  },
+  "integration_commits": {
+    "timeout": "dec36dab66c9db4f66a783e5b1582935c02da3e9",
+    "technology": "09bc0d9689bd90071660df4fb412614c7218b45d",
+    "documents": "202f4d2f04bdb2224ae55fa3bb08521dff8b10b8",
+    "research": "2005cfee566cc75ed44f7f276bd86bd2190d01cd",
+    "sheets": "993aed3cdbe312ccd1708843ac633da42b71c96c"
+  },
+  "runtime_dependencies": {
+    "openai": "ユーザーは担当チャットで今は作成しないと回答。未設定。実AI判定と実ネット調査は未検証。",
+    "sheets": "サービスアカウント未設定、配送無効。D1キュー実装済み。定期実行は依頼されていないため作成しない。"
+  },
+  "integrated_static_tests": {
+    "passed": 1527,
+    "failed": 0
   }
 }
