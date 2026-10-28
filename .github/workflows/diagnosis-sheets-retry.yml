@@ -1,0 +1,31 @@
+name: Retry diagnosis Sheets delivery
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+permissions: {}
+concurrency:
+  group: diagnosis-sheets-retry
+  cancel-in-progress: false
+jobs:
+  retry:
+    if: vars.DIAGNOSIS_SHEETS_RETRY_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    environment: prod
+    timeout-minutes: 3
+    steps:
+      - name: Deliver pending diagnosis history
+        env:
+          SYNC_TOKEN: ${{ secrets.DIAGNOSIS_SHEETS_SYNC_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ ${#SYNC_TOKEN} -lt 32 || ! "$SYNC_TOKEN" =~ ^[A-Za-z0-9_-]+$ ]]; then
+            echo 'Configure the dedicated DIAGNOSIS_SHEETS_SYNC_TOKEN in the prod environment.'
+            exit 1
+          fi
+          # Authorization is supplied on stdin, never in argv or output. No redirects.
+          printf 'header = "Authorization: Bearer %s"\n' "$SYNC_TOKEN" |
+            curl --config - --silent --show-error --fail --max-time 40 \
+              --request POST \
+              'https://site-health-check-shiwaku.mauve-bow-3401.chatgpt.site/api/internal/sheets-sync'
