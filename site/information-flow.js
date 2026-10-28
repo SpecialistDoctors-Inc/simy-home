@@ -51,8 +51,9 @@ function sharingName(item){
  return item.kind==='folder'?'共有フォルダ（内容未判定）':'内容を特定できていない資料';
 }
 function sharingCopy(item){
+ if(item.kind==='folder')return {label:'フォルダー内の資料',reason:item.folder?.discovered?'公開一覧から'+item.folder.discovered+'件を検出。資料ごとの結果を下に表示します。':'フォルダー内の資料は未確認です。',action:''};
  const copies={
-  'preview-observed':{label:'本文は未確認',reason:'公開用の資料か判定できませんでした。',action:''},
+  'preview-observed':{label:'本文は未確認',reason:'資料の内容を確認できませんでした。',action:''},
   'access-required':{label:'閲覧にはアクセス許可が必要です',reason:'今回の確認では、資料の閲覧にアクセス許可が必要でした。誰に共有されているかは未確認です。',action:''},
   unknown:{label:'見られるか判断できませんでした',reason:'今回の取得結果だけでは、閲覧できるか判断できませんでした。',action:''},
   'not-checked':{label:'今回は確認していません',reason:'確認件数や時間の上限に達したため、このリンクは未確認です。',action:''}
@@ -60,12 +61,12 @@ function sharingCopy(item){
  if(item.status!=='preview-observed')return copies[item.status]||copies.unknown;
  const content=item.content,a=item.assessment;
  if(!content||content.status==='unavailable')return copies['preview-observed'];
- if(!a||a.status==='not-run')return {label:'内容は未判定',reason:'公開用の資料か判定できませんでした。',action:''};
- if(a.status==='withheld')return {label:'内容の確認が必要です',reason:'公開用の資料か判定できませんでした。',action:''};
- if(a.status!=='assessed'||a.scope!=='extracted-text-only')return {label:'内容を判定できませんでした',reason:'公開用の資料か判定できませんでした。',action:''};
+ if(!a||a.status==='not-run')return {label:'内容は未判定',reason:'資料の内容を確認できませんでした。',action:''};
+ if(a.status==='withheld')return {label:'内容の確認が必要です',reason:'資料の内容を確認できませんでした。',action:''};
+ if(a.status!=='assessed'||a.scope!=='extracted-text-only')return {label:'内容を判定できませんでした',reason:'資料の内容を確認できませんでした。',action:''};
  const partial=content.status==='partial'?'取得できた一部の文字では、':'取得できた文字では、';
  if(a.audience==='internal')return {label:'院内向け資料の可能性があります',reason:partial+'院内向けの資料と推定されます。公開の意図や情報漏えいの有無は断定できません。',action:''};
- if(a.audience==='patient'&&a.concern==='none')return {label:'患者さん向けの案内と推定されます',reason:partial+'患者さん向けの案内と推定され、公開範囲に関する問題は見つかりませんでした。画像・手書き・抽出できない部分や共有権限は未評価です。',action:''};
+ if(a.audience==='patient'&&a.concern==='none'&&content.status==='extracted')return {label:'確認範囲で秘匿情報なし',reason:'確認した範囲では、秘匿情報は見つかりませんでした。',action:''};
  return {label:'内容の確認が必要です',reason:partial+'公開用の案内資料と判断できませんでした。',action:''};
 }
 function renderSharing(report,root,el){
