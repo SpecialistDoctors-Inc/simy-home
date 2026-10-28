@@ -140,6 +140,13 @@ function renderEvaluationTable(report) {
     if(ended||issue)status.append(element('small',ended?'開発元のサポート終了':'既知の問題に関係する版'));else if(outdated&&row.name.toLowerCase()!=='jquery-migrate')status.append(element('small','動作確認のうえ更新。旧版だけで危険とは判定しません。'));else if(comparison===0)status.append(element('small','確認日の公式版と一致。安全性全体の保証ではありません。'));appendIssueEvidence(status,row.issues);line.append(official,status);body.append(line);
   }
   table.append(body);wrap.append(table);section.append(wrap,element('p','公開日は検出した版の配布元の記録です。版や日付が不明なものは未確認と表示します。最新の版は記載日の確認情報です。旧版だけで脆弱性があるとは限りません。実際の版・修正状況はSIMYへご相談ください。','evaluation-note'));
+  if([...rows.values()].some(row=>row.name.toLowerCase()==='php')){
+    const news=element('aside','','php-news-context');news.append(element('h4','ニュースで見たPHP。自院の更新状況も確認を。'));
+    const figure=element('figure','','clinic-manga');const image=element('img','');image.src='/assets/website-check/clinic-php-news-v1.png';image.width=1536;image.height=1024;image.loading='lazy';image.alt='PHPの脆弱性悪用のニュースを見て驚く院長と、SIMYと使用中の版・修正状況を確認する院長の漫画。PHPの利用だけでは被害は判定できません。';const link=element('a','');link.href=image.src;link.target='_blank';link.rel='noopener';link.setAttribute('aria-label','PHPと更新確認の漫画を拡大する');link.append(image);figure.append(link);news.append(figure);
+    news.append(element('p','2026年10月公表：PHPの脆弱性2件が、実際に悪用された脆弱性としてCISAに掲載されました。条件がそろうと、外部からサーバーで不正な処理を実行されるおそれがあります。'),element('strong','SIMYに、使用中の版・影響する設定・修正版の適用状況を確認。'),element('p','このニュースへの該当性や、この医院への侵入・漏えいは未確認です。修正済みの版を使っている場合もあるため、上の検出結果と分けて確認します。','evaluation-note'));
+    const sources=element('p','公表：2026/10/21 · CISA掲載：2026/10/26 · 情報確認：2026/10/28。');
+    for(const [label,url] of [['PHP公式発表①','https://github.com/php/php-src/security/advisories/GHSA-w8hw-w9fx-j79w'],['PHP公式発表②','https://github.com/php/php-src/security/advisories/GHSA-6wmf-4rv5-p3rp'],['CISAの悪用確認一覧','https://www.cisa.gov/known-exploited-vulnerabilities-catalog']]){const a=element('a',label+' ↗ ');a.href=url;a.target='_blank';a.rel='noopener';sources.append(a);}news.append(sources);section.append(news);
+  }
   results.append(section);
 }
 
@@ -222,7 +229,7 @@ function renderReport(report) {
   contact.href='mailto:sales@simy.one?subject='+encodeURIComponent('ホームページの診断結果について相談')+'&body='+encodeURIComponent('診断したURL：'+report.url+'\n'+message.textContent+'\n\nこの診断結果について、必要な対応を相談したいです。\n診断結果は「PDFをダウンロード」から保存して添付できます。');
   next.append(contact);
   results.append(next);
-  reportDetails=element('details','','report-technical');reportDetails.append(element('summary','SIMY向けの詳細・確認範囲を見る'));
+  reportDetails=element('details','','report-technical');reportDetails.append(element('summary','診断の根拠・今回調べられなかったこと（補足）'),element('p','上の診断結果を裏付ける取得情報と、今回の検査範囲をまとめています。SIMYへ相談するときの確認資料として使えます。新たな診断や申込みの操作ではありません。'));
 
   for (const t of technologies.filter(t => !libraries.some(l => l.name.toLowerCase() === t.name.toLowerCase()))) card('urgent', t.name === 'PHP' ? 'ホームページの土台に、古いPHPの表記があります' : t.name + 'に更新の確認が必要です', t.name === 'PHP' ? '開発元のサポートが終了した系列です。新しい問題が見つかっても、開発元から修正が提供されません。表記だけでは実際の修正状況までは分かりません。' : '既知の問題に関係する版の手掛かりがあります。実際の導入版と修正状況を確認する必要があります。', t.fix, t.evidence.join('\n') + '\n' + t.assessment);
   for (const l of libraries) card('urgent', l.name + ' ' + l.version + '：既知の問題に関係する部品です', '画面の動きに使う部品です。使い方によっては不正な処理につながるおそれがあります。侵入や漏えいが起きたと判定したものではありません。', 'SIMYに、使用中の版の確認と修正版への更新をご相談ください。', '検出方法：' + ({url:'URLの表記から推定',body:'公開ファイルの内容',hash:'ファイルの照合',sourcemap:'公開された元ソース情報'}[l.basis] || l.basis) + '\n取得元：' + l.resource + '\n' + l.issues.flatMap(i => i.ids).join('、'));
