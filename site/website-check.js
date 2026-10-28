@@ -201,10 +201,26 @@ function renderConnections(report){
   results.append(section);
 }
 
+function groupLibraryFindings(libraries) {
+  const groups = new Map();
+  for (const library of libraries) {
+    if (!library.issues?.length) continue;
+    const name = library.name.trim().toLowerCase();
+    const version = String(library.version || '').trim();
+    const key = JSON.stringify([name, version]);
+    let group = groups.get(key);
+    if (!group) { group = {name, version, issues: [], evidence: []}; groups.set(key, group); }
+    for (const issue of library.issues) if (!group.issues.some(x => JSON.stringify(x) === JSON.stringify(issue))) group.issues.push(issue);
+    const evidence = {basis: library.basis, resource: library.resource};
+    if (!group.evidence.some(x => x.basis === evidence.basis && x.resource === evidence.resource)) group.evidence.push(evidence);
+  }
+  return [...groups.values()];
+}
+
 function renderReport(report) {
   if (!Array.isArray(report.findings) || !Array.isArray(report.technologies) || !Array.isArray(report.scripts?.libraries)) throw Error('結果の形式を確認できませんでした。時間をおいて再度お試しください。');
   const technologies = report.technologies.filter(t => t.status === 'review');
-  const libraries = report.scripts.libraries.filter(l => l.issues.length);
+  const libraries = groupLibraryFindings(report.scripts.libraries);
   const reviews = report.findings.filter(f => f.state === 'review');
   const patches = (report.scripts.comparisons || []).filter(c => ['legacy','mixed'].includes(c.patch?.state));
   title.textContent = technologies.length || libraries.length || patches.length ? '放置せず、SIMYへ確認してください。' : reviews.length ? '保護設定に、見直したい点があります。' : '今回の範囲で、状態を確認しました。';
@@ -232,7 +248,7 @@ function renderReport(report) {
   reportDetails=element('details','','report-technical');reportDetails.append(element('summary','診断の根拠・今回調べられなかったこと（補足）'),element('p','上の診断結果を裏付ける取得情報と、今回の検査範囲をまとめています。SIMYへ相談するときの確認資料として使えます。新たな診断や申込みの操作ではありません。'));
 
   for (const t of technologies.filter(t => !libraries.some(l => l.name.toLowerCase() === t.name.toLowerCase()))) card('urgent', t.name === 'PHP' ? 'ホームページの土台に、古いPHPの表記があります' : t.name + 'に更新の確認が必要です', t.name === 'PHP' ? '開発元のサポートが終了した系列です。新しい問題が見つかっても、開発元から修正が提供されません。表記だけでは実際の修正状況までは分かりません。' : '既知の問題に関係する版の手掛かりがあります。実際の導入版と修正状況を確認する必要があります。', t.fix, t.evidence.join('\n') + '\n' + t.assessment);
-  for (const l of libraries) card('urgent', l.name + ' ' + l.version + '：既知の問題に関係する部品です', '画面の動きに使う部品です。使い方によっては不正な処理につながるおそれがあります。侵入や漏えいが起きたと判定したものではありません。', 'SIMYに、使用中の版の確認と修正版への更新をご相談ください。', '検出方法：' + ({url:'URLの表記から推定',body:'公開ファイルの内容',hash:'ファイルの照合',sourcemap:'公開された元ソース情報'}[l.basis] || l.basis) + '\n取得元：' + l.resource + '\n' + l.issues.flatMap(i => i.ids).join('、'));
+  for (const l of libraries) card('urgent', l.name + ' ' + l.version + '：既知の問題に関係する部品です', '画面の動きに使う部品です。使い方によっては不正な処理につながるおそれがあります。侵入や漏えいが起きたと判定したものではありません。', 'SIMYに、使用中の版の確認と修正版への更新をご相談ください。', l.evidence.map(e => '検出方法：' + ({url:'URLの表記から推定',body:'公開ファイルの内容',hash:'ファイルの照合',sourcemap:'公開された元ソース情報'}[e.basis] || e.basis) + '\n取得元：' + e.resource).join('\n\n') + '\n関連する問題：' + [...new Set(l.issues.flatMap(i => i.ids || []))].join('、'));
   for (const c of patches) card('urgent', '修正前のプログラムに似た特徴があります', '版の番号だけでなく、公開コードにも確認が必要な特徴があります。実際に攻撃できるかは調べていません。', 'SIMYへコードの修正適用状況を確認してください。', JSON.stringify(c, null, 2));
   const technical=reportDetails;
   reportDetails=element('section','','report-other-issues');
