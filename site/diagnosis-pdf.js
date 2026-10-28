@@ -52,7 +52,7 @@
       y = doc.lastAutoTable.finalY + 9;
     }
     paragraph(registration.clinicName + '　診断結果一覧', 17);
-    paragraph('お名前：' + registration.contactName + ' 様');
+    if(registration.contactName) paragraph('お名前：' + registration.contactName + ' 様');
     paragraph('対象：' + report.url + '\n確認日時：' + new Date(report.checkedAt).toLocaleString('ja-JP') + '\n診断ID：' + (report.diagnosisId || '未取得'), 9);
     paragraph('公開情報による確認です。旧版だけで脆弱性があるとは限りません。侵入・情報漏えいの有無は判定できません。', 9);
     table('言語・システム・ライブラリの比較', ['言語・部品', '現在のバージョン', 'その版の公開日', '最新安定版', '必要な対応・根拠'], versions, [36, 37, 33, 36, 123]);

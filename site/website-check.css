@@ -173,12 +173,8 @@
 .report-preview th,.report-preview td{padding:18px;vertical-align:top}
 .report-preview thead{background:#14294d;color:#fff}
 .report-preview small{display:block;font-size:13px;line-height:1.7;margin-top:8px}
-.report-mosaic{height:230px;overflow:hidden;position:relative;user-select:none;pointer-events:none;border-top:1px solid #dbe3ed;background:#edf3fa}
-.report-mosaic-content{filter:blur(9px);opacity:.55;transform:scale(1.02);padding:12px 18px}
-.report-mosaic::after{content:'';position:absolute;inset:0;background:linear-gradient(transparent,#edf3fa 95%)}
 .report-preview+.report-email{margin-top:-26px;position:relative;z-index:1;border:2px solid #2860c2;box-shadow:0 12px 32px #19385a12}
-.report-unlocked{padding:16px 22px;background:#eaf5f0;border-left:4px solid #267757;color:#20503d}
-@media(max-width:600px){.report-preview th,.report-preview td{padding:12px;min-width:110px}.report-mosaic{height:170px}.report-preview+.report-email{margin-top:-16px}}
+@media(max-width:600px){.report-preview th,.report-preview td{padding:12px;min-width:110px}.report-preview+.report-email{margin-top:-16px}}
 
 /* Version/date columns and shared result summary geometry. */
 #main .evaluation-table{min-width:760px}#main .evaluation-table thead th:nth-child(1){width:17%}#main .evaluation-table thead th:nth-child(2){width:16%}#main .evaluation-table thead th:nth-child(3){width:16%}#main .evaluation-table thead th:nth-child(4){width:18%}#main .evaluation-table thead th:nth-child(5){width:33%}

@@ -41,41 +41,6 @@ const element = (tag, text, className) => {
   if (className) node.className = className;
   return node;
 };
-function appendEmailReceipt(report, snapshot, onSaved) {
-  const section=element('section','','report-email report-next');
-  section.append(element('h3','診断結果を一覧で見る'),element('p','3項目を登録すると、すべての結果をこの画面で確認・PDF保存できます。'));
-  const receiptForm=element('form','','report-email-form');
-  const label=element('label','メールアドレス（必須）');label.htmlFor='report-email-address';
-  const email=element('input','');email.id='report-email-address';email.name='email';email.type='email';email.autocomplete='email';email.placeholder='you@example.jp';email.required=true;email.maxLength=254;
-  const clinicLabel=element('label','クリニック名（必須）');clinicLabel.htmlFor='report-clinic-name';
-  const clinicName=element('input','');clinicName.id='report-clinic-name';clinicName.name='clinicName';clinicName.autocomplete='organization';clinicName.placeholder='○○クリニック';clinicName.required=true;clinicName.maxLength=200;
-  const nameLabel=element('label','お名前（必須）');nameLabel.htmlFor='report-contact-name';
-  const contactName=element('input','');contactName.id='report-contact-name';contactName.name='contactName';contactName.autocomplete='name';contactName.placeholder='山田 太郎';contactName.required=true;contactName.maxLength=100;
-  const consentLabel=element('label','','report-email-consent');
-  const consent=element('input','');consent.type='checkbox';consent.name='consent';consent.required=true;
-  const consentText='全結果の閲覧・PDFダウンロードとお問い合わせ対応のため、SIMYがメールアドレス・クリニック名・名前・対象URL・診断結果を保存・利用することに同意します。';
-  consentLabel.append(consent,element('span',consentText));
-  const privacy=element('a','個人情報の取り扱い');privacy.href='/privacy.html?lang=ja';privacy.target='_blank';privacy.rel='noopener';
-  const submit=element('button','登録して一覧・PDFを見る','button button-primary');submit.type='submit';
-  const note=element('p','登録無料・この画面で一覧表示とPDFダウンロードができます。保存期間は原則90日。削除のご希望は sales@simy.one へ。','report-email-note');
-  const status=element('p','','report-email-status');status.setAttribute('role','status');status.setAttribute('aria-live','polite');
-  receiptForm.append(label,email,clinicLabel,clinicName,nameLabel,contactName,consentLabel,privacy,note,submit,status);section.append(receiptForm);
-  let requestId=crypto.randomUUID(),submitting=false;
-  receiptForm.addEventListener('input',()=>{if(!submitting){requestId=crypto.randomUUID();status.textContent='';}});
-  receiptForm.addEventListener('submit',async event=>{
-    event.preventDefault();if(submitting||!receiptForm.reportValidity())return;
-    submitting=true;submit.disabled=true;email.disabled=true;clinicName.disabled=true;contactName.disabled=true;consent.disabled=true;status.textContent='保存しています…';
-    const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),20000);
-    try{
-      const response=await fetch(new URL('/api/report-registration',diagnosisEndpoint),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:requestId,email:email.value.trim(),clinicName:clinicName.value.trim(),contactName:contactName.value.trim(),consent:consent.checked,consentVersion:'2026-10-28-v3',url:report.url,checkedAt:report.checkedAt,reportText:snapshot}),signal:controller.signal});
-      const body=await response.json();if(!response.ok)throw Error(body.error||'保存できませんでした。');
-      if(body.receiptId!==requestId||body.status!=='registered')throw Error('保存結果を確認できませんでした。もう一度お試しください。');
-      status.textContent='登録が完了しました。すべての結果を表示しました。';submit.textContent='登録済み';onSaved({clinicName:clinicName.value.trim(),contactName:contactName.value.trim()});
-    }catch(error){status.textContent=error.name==='AbortError'?'受付結果を確認できませんでした。もう一度押すと、重複せずに確認できます。':error.message||'保存できませんでした。再度お試しください。';submit.disabled=false;email.disabled=false;clinicName.disabled=false;contactName.disabled=false;consent.disabled=false;submitting=false;}
-    finally{clearTimeout(timer);}
-  });
-  results.append(section);
-}
 function simyAction(action) {
   return String(action || '').replace(/制作会社(?:・管理者)?/g, 'SIMY').replace(/管理者([へに])/g, 'SIMY$1');
 }
@@ -263,38 +228,25 @@ function renderReport(report) {
   results.append(element('p','侵入・漏えいの有無は、この診断では分かりません。','report-boundary'),reportDetails);
   reportDetails=null;
 
-  gateReport(report);
+  appendProviderResults(report);
+  appendReportDownload(report);
 }
-// This is a presentation gate, not an authentication boundary. Full details stay
-// detached from the visible DOM until the consent record is saved successfully.
-function gateReport(report) {
-  const full=element('div','','report-full');
-  while(results.firstChild)full.append(results.firstChild);
-  const snapshot=title.textContent+'\n'+report.url+'\n'+message.textContent+'\n\n診断記録（根拠と確認範囲）\n'+JSON.stringify(report);
-  const preview=element('section','','report-preview');
-  preview.append(element('p','診断結果の一部を表示しています','report-preview-label'));
-  const summary=full.querySelector('.report-counts');if(summary)preview.append(summary.cloneNode(true));
-  const table=full.querySelector('table');
-  if(table){
-    const sample=table.cloneNode(true);const rows=sample.querySelectorAll('tbody tr');
-    rows.forEach((row,i)=>{if(i>0)row.remove();});
-    const wrap=element('div','','evaluation-scroll');wrap.append(sample);preview.append(wrap);
-  }else{
-    const finding=full.querySelector('.report-other-issues article');
-    if(finding)preview.append(finding.cloneNode(true));else preview.append(element('p','公開情報では使用部品の版を特定できませんでした。確認範囲と次の対応は、全結果でご覧いただけます。'));
-  }
-  const veil=element('div','','report-mosaic');veil.setAttribute('aria-hidden','true');veil.inert=true;
-  const blurred=full.cloneNode(true);blurred.className='report-mosaic-content';
-  blurred.querySelectorAll('[id]').forEach(n=>n.removeAttribute('id'));
-  veil.append(blurred);preview.append(veil);results.append(preview);
-  appendEmailReceipt(report,snapshot,(registration)=>{
-    if(!preview.isConnected)return; // Ignore a late response after a new diagnosis.
-    results.replaceChildren(full);
-    const confirmed=element('p',registration.clinicName+' の診断結果一覧です。PDFでも保存できます。','report-unlocked');confirmed.setAttribute('role','status');results.prepend(confirmed);
-    const downloads=element('div','','report-downloads');const pdf=element('button','PDFをダウンロード','button button-primary');pdf.type='button';const pdfStatus=element('p','','report-pdf-status');pdfStatus.setAttribute('role','status');downloads.append(pdf,pdfStatus);confirmed.after(downloads);
-    pdf.addEventListener('click',async()=>{pdf.disabled=true;pdfStatus.textContent='PDFを作成しています…';try{await loadReportPdf();await window.SimyReportPdf.download({report,registration,root:full});pdfStatus.textContent='PDFを作成しました。ダウンロードをご確認ください。';}catch(error){pdfStatus.textContent='PDFを作成できませんでした。もう一度お試しください。';}finally{pdf.disabled=false;}});
-    diagnosisState.focus({preventScroll:true});diagnosisState.scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
-  });
+// Results are immediately visible. PDF generation stays in the browser.
+function appendReportDownload(report) {
+  const downloads=element('div','','report-downloads');
+  const pdf=element('button','PDFをダウンロード','button button-primary');pdf.type='button';
+  const status=element('p','','report-pdf-status');status.setAttribute('role','status');
+  downloads.append(pdf,status);results.prepend(downloads);
+  pdf.addEventListener('click',async()=>{pdf.disabled=true;status.textContent='PDFを作成しています…';try{await loadReportPdf();await window.SimyReportPdf.download({report,registration:{clinicName:new URL(report.url).hostname,contactName:''},root:results});status.textContent='PDFを作成しました。';}catch{status.textContent='PDFを作成できませんでした。もう一度お試しください。';}finally{pdf.disabled=false;}});
+}
+function appendProviderResults(report) {
+  const info=report.providers;if(!info)return;
+  const section=element('section','','report-other-issues');section.append(element('h3','ドメイン・サーバー・制作元'));
+  for(const fact of info.facts||[]){const row=element('article','','live-finding');row.append(element('h3',fact.role+'：'+fact.name),element('p',fact.status));const detail=element('details','');detail.append(element('summary','根拠を見る'),element('p',fact.evidence));if(/^https:\/\//.test(fact.source)){const a=element('a','登録情報・公式資料');a.href=fact.source;a.target='_blank';a.rel='noopener';detail.append(a);}row.append(detail);section.append(row);}
+  section.append(element('h3','関連する公式発表'),element('p','過去の公表事例。自院への影響は未確認です。'));
+  for(const notice of info.notices||[]){const row=element('article','','live-finding');row.append(element('h3',notice.title),element('p',notice.publisher+' / 公表 '+notice.published+' / 情報確認 '+notice.checkedAt),element('p',notice.summary),element('p','対象：'+notice.scope),element('p',notice.resolution));if(notice.quote)row.append(element('blockquote','公式発表より引用：「'+notice.quote+'」'));row.append(element('p','すること：'+notice.action));if(/^https:\/\//.test(notice.url)){const a=element('a','出典：公式発表');a.href=notice.url;a.target='_blank';a.rel='noopener';row.append(a);}section.append(row);}
+  if(!info.notices?.length)section.append(element('p','選定事例に一致なし。事故の有無は判定していません。'));
+  const scope=element('details','');scope.append(element('summary','調査範囲'));for(const text of info.limitations||[])scope.append(element('p',text));section.append(scope);results.append(section);
 }
 
 let scanClock;
@@ -368,6 +320,6 @@ document.querySelector('.edit-url').addEventListener('click',()=>{if(!busy){diag
 
 let reportPdfLoader;
 function loadReportPdf(){
-  if(!reportPdfLoader)reportPdfLoader=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='/diagnosis-pdf.js?v=9aec3776e7e2';script.onload=resolve;script.onerror=()=>{script.remove();reportPdfLoader=null;reject(Error('PDF機能の読込に失敗しました'));};document.head.append(script);});
+  if(!reportPdfLoader)reportPdfLoader=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='/diagnosis-pdf.js?v=9d69c2f3b6a5';script.onload=resolve;script.onerror=()=>{script.remove();reportPdfLoader=null;reject(Error('PDF機能の読込に失敗しました'));};document.head.append(script);});
   return reportPdfLoader;
 }
