@@ -1,6 +1,6 @@
 {
   "date": "2026-10-28",
-  "scope": "Recent clinic diagnosis requests, source review and pending production acceptance",
+  "scope": "Recent clinic diagnosis requests and production acceptance, with unresolved dependencies",
   "implemented_this_change": [
     "Remove crawl detail list from screen and PDF",
     "Rename recommendations heading",
@@ -36,7 +36,7 @@
   ],
   "registration": {
     "current": "User explicitly requested restoration: save email, clinic name, contact name and consent before displaying full result and PDF",
-    "validation": "既存本番でD1保存は前担当が確認済み。今回の統合版は公開後に正式UI・D1再読込・PDFを再受入する。"
+    "validation": "本番正式UIでダミー登録。D1再読込、全結果表示、PDF7ページ取得と目視を確認。詳細はspec-implementation-audit-2026-10-28.json。"
   },
   "assets": {
     "tool": "built-in image_gen",

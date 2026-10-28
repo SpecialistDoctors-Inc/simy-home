@@ -39,15 +39,15 @@
       "id": "DT01",
       "requirement": "公開根拠・Ruby/Rails・複数版",
       "implementation": "lib/technology.ts; lib/library-detect.ts; lib/version-summary.ts",
-      "limitations_or_plan": "担当5の検出版・JOANR検証を統合予定",
-      "verification": "担当変更を統合、関連テスト・型チェック・ビルド成功。本番公開後受入は別途。"
+      "limitations_or_plan": "統合済み。JOANRは本番HTTP403のため検出成功とはしない",
+      "verification": "本番urachilでPHP/jQuery複数版/Apache不明を確認"
     },
     {
       "id": "DT02",
       "requirement": "版・公開日・最新安定版",
       "implementation": "lib/release-info.ts; site/website-check.js",
-      "limitations_or_plan": "担当5の公式日付修正を統合予定。対応指示列の復活は最新判断で対象外",
-      "verification": "担当変更を統合、関連テスト・型チェック・ビルド成功。本番公開後受入は別途。"
+      "limitations_or_plan": "公式公開日とパッケージ配布日を区別。対応指示列は対象外",
+      "verification": "本番画面とPDFでPHP公開日・jQuery配布日を確認"
     },
     {
       "id": "DT03",
@@ -95,15 +95,15 @@
       "id": "UX03",
       "requirement": "進捗・途中結果・再接続",
       "implementation": "lib/initial-fetch.ts; lib/scan.ts; app/api/scan/route.ts",
-      "limitations_or_plan": "担当1の復旧・早期途中結果を統合予定",
-      "verification": "担当変更を統合、関連テスト・型チェック・ビルド成功。本番公開後受入は別途。"
+      "limitations_or_plan": "早期途中結果・初回取得の上限付き再試行を統合",
+      "verification": "本番urachilは約59秒/14ページ完了、途中結果約0.7秒。実タイムアウト回復発生は未検証"
     },
     {
       "id": "SYS01",
       "requirement": "診断保存・登録・保持",
       "implementation": "lib/scan-journal.ts; app/api/report-email/route.ts",
-      "limitations_or_plan": "D1診断ログと登録結果保存。登録90日設定、診断ログ90日固定。履歴Sheetsは担当4",
-      "verification": "fixture合格/本番再受入待ち"
+      "limitations_or_plan": "D1診断ログ・登録結果保存。Sheets外部配送は未設定",
+      "verification": "正式UI登録後、D1メタデータ再読込で同意・診断ID・184294文字の保存を確認"
     },
     {
       "id": "SYS02",
@@ -116,22 +116,22 @@
       "id": "ADD01",
       "requirement": "資料内容名・AI内容判定",
       "implementation": "lib/shared-resources.ts",
-      "limitations_or_plan": "担当2。キー/送信対象認可等が不足する場合は未判定を表示",
-      "verification": "担当変更を統合、関連テスト・型チェック・ビルド成功。本番公開後受入は別途。"
+      "limitations_or_plan": "キー未設定。外部AI送信を保留し未判定を表示",
+      "verification": "本番7資料中6件本文文字取得、1件未取得。実AI判定未実施"
     },
     {
       "id": "ADD02",
       "requirement": "都度事故・脆弱性調査",
       "implementation": "lib/provider-info.ts",
-      "limitations_or_plan": "担当3。未設定/失敗を事故なしにしない",
-      "verification": "担当変更を統合、関連テスト・型チェック・ビルド成功。本番公開後受入は別途。"
+      "limitations_or_plan": "都度調査実装済み。キー未設定。既存公表一覧と区別",
+      "verification": "本番で都度調査未実施を表示。実検索未検証"
     },
     {
       "id": "ADD03",
       "requirement": "Sheets即時連携・営業準備",
       "implementation": "app/api/scan/route.ts; app/api/report-email/route.ts",
-      "limitations_or_plan": "担当4。Google認証未設定。営業実送信なし",
-      "verification": "担当変更を統合、関連テスト・型チェック・ビルド成功。本番公開後受入は別途。"
+      "limitations_or_plan": "D1同期キュー実装。Google認証未設定。営業実送信なし",
+      "verification": "本番診断2件・登録1件のキュー再読込。同期0、試行0。Sheets実配送未検証"
     }
   ],
   "production_baseline": {
@@ -141,7 +141,7 @@
     "observed": "完了表示、PHP 7.2.24、登録前一部結果、登録フォーム",
     "registration_and_pdf": "この試行では未実施"
   },
-  "acceptance": "未完了。各担当の統合・本番公開後に正式UI入力から再検証する。",
+  "acceptance": "統合・公開済み。urachilは正式UI→本番API→D1保存再読込→全結果→PDF取得・全7ページ目視を確認。AI/都度検索/Sheets実配送/JOANR診断は未達。仕様全項目の完全達成とはしない。",
   "production_baseline_joanr": {
     "target": "http://joanr.org/",
     "input": "正式UI",
@@ -170,5 +170,56 @@
   "integrated_static_tests": {
     "passed": 1527,
     "failed": 0
+  },
+  "production_acceptance": {
+    "date": "2026-10-28",
+    "static_merge": "e71890d7df624aa57e9ab1b32918ca324990785e",
+    "static_pr": "https://github.com/SpecialistDoctors-Inc/simy-home/pull/211",
+    "static_deploy": "https://github.com/SpecialistDoctors-Inc/simy-home/actions/runs/40661454877",
+    "sites_version": 36,
+    "sites_source_commit": "566742f43296f8ff2e3582e3f15210396b0598d9",
+    "sites_deployment": "appgdep_6ae1ba95bfdc8191ae9237daaf4e26c8",
+    "target": "https://urachil.com/",
+    "diagnosis_id": "9c5987f1-97ad-484f-ae26-d0411ab8c9b0",
+    "completed_pages": 14,
+    "elapsed_seconds": 59,
+    "resource_failures": 14,
+    "registration_id": "a2704c09-5bf5-4fd3-8c86-57aa80571dc6",
+    "stored_characters": 184294,
+    "consent_version": "2026-10-28-v3",
+    "pdf": {
+      "pages": 7,
+      "generated_at": "2026-10-28T18:13:58+09:00",
+      "visual_check": "全7ページ目視。文字切れ・意図しない重なりなし。未取得・未判定を維持。",
+      "sha256": "f3fa31c497404d79dac0a62e6682d077875a0d638c0b3841c98c8b45af186b51"
+    },
+    "desktop_geometry": {
+      "viewport": 1280,
+      "document_width": 1280,
+      "tables_within_parent": true
+    },
+    "joanr": {
+      "diagnosis_id": "2423e690-0fc0-446b-bb10-61b2ba603fe2",
+      "result": "HTTP403 refusal, no report"
+    },
+    "outbox": {
+      "records": 3,
+      "synced": 0,
+      "attempts": 0
+    },
+    "limits": [
+      "AI判定と都度ネット調査はキー未設定。ユーザー判断により作成しない",
+      "Sheets認証未設定。実配送未検証",
+      "実タイムアウト後の回復は本番未発生。関連fixtureのみ",
+      "JOANR本番診断はHTTP403で未達",
+      "14件のリソース取得失敗があり全資産取得成功ではない",
+      "全上限負荷試験・全端末表示は未実施"
+    ],
+    "tests": {
+      "static_passed": 1527,
+      "static_failed": 0,
+      "api": "関連テスト・型チェック・ビルド成功",
+      "excluded": "内部PostgreSQL診断テストは参照HTML不足"
+    }
   }
 }
