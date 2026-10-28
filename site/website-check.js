@@ -60,7 +60,7 @@ const releaseReferences = {
   "axios": {"version":"1.21.0","url":"https://www.npmjs.com/package/axios?activeTab=versions","checkedAt":"2026-10-28","dates":{"0.1.0":"2014-08-29","0.2.0":"2014-09-12","0.2.1":"2014-09-12","0.2.2":"2014-09-15","0.3.0":"2014-09-16","0.3.1":"2014-09-17","0.4.0":"2014-10-05","0.4.1":"2014-10-15","0.4.2":"2014-12-11","0.5.0":"2015-01-23","0.5.1":"2015-03-10","0.5.2":"2015-03-13","0.5.3":"2015-04-08","0.5.4":"2015-04-08","0.6.0":"2015-09-21","0.7.0":"2015-09-29","0.8.0":"2015-12-11","0.8.1":"2015-12-15","0.9.0":"2016-01-18","0.9.1":"2016-01-24","0.10.0":"2016-04-21","0.11.0":"2016-04-27","0.11.1":"2016-05-17","0.12.0":"2016-06-01","0.13.0":"2016-07-13","0.13.1":"2016-07-16","0.14.0":"2016-08-27","0.15.0":"2016-10-11","0.15.1":"2016-10-15","0.15.2":"2016-10-18","0.15.3":"2016-11-27","0.16.0":"2017-04-01","0.16.1":"2017-04-08","0.16.2":"2017-06-03","0.17.0":"2017-10-21","0.17.1":"2017-11-11","0.18.0":"2018-02-19","0.19.0":"2019-05-30","0.18.1":"2019-06-01","0.19.1":"2020-01-07","0.19.2":"2020-01-22","0.20.0":"2020-08-21","0.21.0":"2020-10-23","0.21.1":"2020-12-22","0.21.2":"2021-09-04","0.21.3":"2021-09-04","0.21.4":"2021-09-06","0.22.0":"2021-10-01","0.23.0":"2021-10-12","0.24.0":"2021-10-25","0.25.0":"2022-01-18","0.26.0":"2022-02-13","0.26.1":"2022-03-09","0.27.0":"2022-04-25","0.27.1":"2022-04-26","0.27.2":"2022-04-27","1.0.0":"2022-10-04","1.1.0":"2022-10-06","1.1.1":"2022-10-07","1.1.2":"2022-10-07","1.1.3":"2022-10-15","1.2.0":"2022-11-22","1.2.1":"2022-12-05","1.2.2":"2022-12-29","1.2.3":"2023-01-17","1.2.4":"2023-01-24","1.2.5":"2023-01-26","1.2.6":"2023-01-28","1.3.0":"2023-01-31","1.3.1":"2023-02-01","1.3.2":"2023-02-03","1.3.3":"2023-02-13","1.3.4":"2023-02-22","1.3.5":"2023-04-05","1.3.6":"2023-04-19","1.4.0":"2023-04-27","1.5.0":"2023-08-26","1.5.1":"2023-09-26","1.6.0":"2023-10-26","1.6.1":"2023-11-08","1.6.2":"2023-11-14","1.6.3":"2023-12-26","1.6.4":"2024-01-03","1.6.5":"2024-01-05","1.6.6":"2024-01-24","1.6.7":"2024-01-25","0.28.0":"2024-02-12","1.6.8":"2024-03-15","0.28.1":"2024-03-28","1.7.0":"2024-05-19","1.7.1":"2024-05-20","1.7.2":"2024-05-21","1.7.3":"2024-08-01","1.7.4":"2024-08-13","1.7.5":"2024-08-23","1.7.6":"2024-08-30","1.7.7":"2024-08-31","0.29.0":"2024-11-21","1.7.8":"2024-11-25","1.7.9":"2024-12-04","1.8.0":"2025-02-26","1.8.1":"2025-02-26","1.8.2":"2025-03-07","1.8.3":"2025-03-12","1.8.4":"2025-03-19","0.30.0":"2025-03-26","1.9.0":"2025-04-24","1.10.0":"2025-06-14","1.11.0":"2025-07-23","0.30.1":"2025-08-04","1.12.0":"2025-09-11","1.12.1":"2025-09-12","1.12.2":"2025-09-14","0.30.2":"2025-09-27","1.13.0":"2025-10-27","1.13.1":"2025-10-28","1.13.2":"2025-11-04","1.13.3":"2026-01-25","1.13.4":"2026-01-27","1.13.5":"2026-02-08","0.30.3":"2026-02-18","1.13.6":"2026-02-27","1.14.0":"2026-03-27","1.14.1":"2026-03-31","0.30.4":"2026-03-31","1.15.0":"2026-04-08","0.31.0":"2026-04-12","1.15.1":"2026-04-19","0.31.1":"2026-04-19","1.15.2":"2026-04-21","1.16.0":"2026-05-02","0.32.0":"2026-05-04","1.16.1":"2026-05-13","1.17.0":"2026-06-03","0.33.0":"2026-06-14","1.18.0":"2026-06-14","1.18.1":"2026-06-22","1.19.0":"2026-07-29","1.20.0":"2026-08-26","0.34.0":"2026-09-16","1.21.0":"2026-10-27"}},
   'jquery-ui': { version: '1.14.2', url: 'https://jqueryui.com/download/all/' },
   wordpress: { version: '7.1.3', url: 'https://wordpress.org/download/releases/' },
-  php: { version: '8.5.12', url: 'https://www.php.net/downloads.php' },
+  php: { version: '8.5.12', url: 'https://www.php.net/downloads.php', checkedAt: '2026-10-28', dates: {'7.2.24': '2019-10-24', '8.5.12': '2026-10-21'} },
   jquery: { version: '4.0.0', url: 'https://blog.jquery.com/2026/01/17/jquery-4-0-0/' },
   swiper: { version: '14.3.0', url: 'https://github.com/nolimits4web/swiper/releases/tag/v14.3.0' }
 };
@@ -95,6 +95,10 @@ function compareReleaseVersions(current, latest) {
   const a=parse(current),b=parse(latest);if(!a||!b)return null;
   for(let i=0;i<Math.max(a.length,b.length);i++){if((a[i]||0)<(b[i]||0))return -1;if((a[i]||0)>(b[i]||0))return 1;}return 0;
 }
+function releaseLabel(date) {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(date || '');
+  return match ? match[1] + '年' + Number(match[2]) + '月' + Number(match[3]) + '日リリース' : 'リリース日未確認';
+}
 function renderEvaluationTable(report) {
   const rows = new Map();
   const add = (name, version, issues, assessment, fix) => {
@@ -120,7 +124,7 @@ function renderEvaluationTable(report) {
   const table = element('table', '', 'evaluation-table');
   table.append(element('caption', '使用部品・検出した版・公式情報・評価・対応'));
   const head = element('thead',''); const tr = element('tr','');
-  for (const label of ['言語・部品','現在のバージョン','その版の公開日','最新安定版','必要な対応']) {const th=element('th',label);th.scope='col';tr.append(th);}head.append(tr);table.append(head);
+  for (const label of ['言語・部品','現在のバージョン','最新安定版','必要な対応']) {const th=element('th',label);th.scope='col';tr.append(th);}head.append(tr);table.append(head);
   const body = element('tbody','');
   for (const row of rows.values()) {
     const fallback=releaseReferences[row.name.toLowerCase()];const reported=report.releaseInfo?.[row.name.toLowerCase()];
@@ -130,9 +134,9 @@ function renderEvaluationTable(report) {
     const comparison = ref ? compareReleaseVersions(row.version,ref.version) : null;
     const outdated = comparison === -1;
     const state = row.name.toLowerCase()==='jquery-migrate' && outdated && !issue ? 'SIMYにjQueryとセットで更新を相談' : ended ? 'SIMYに対応版への更新を相談' : issue ? 'SIMYに修正版への更新を相談' : !row.version ? 'SIMYに使用中の版を確認' : outdated ? 'SIMYに更新を相談' : comparison === 0 ? '更新不要・定期確認を継続' : 'SIMYに最新の公式情報と照合を依頼';
-    const line = element('tr','');const name=element('th',row.name);name.scope='row';const purpose={php:'サーバーの動作基盤',jquery:'画面の動きを作る部品',swiper:'写真を切り替える部品',wordpress:'ページを管理する仕組み','jquery-migrate':'jQuery更新時の互換性を補う部品'}[row.name.toLowerCase()];if(purpose)name.append(element('small',purpose));const current=element('td','');current.append(element('strong',row.version || 'バージョン未確認',outdated?'version-outdated':''));if(outdated)current.append(element('small','旧バージョン','version-outdated-label'));const released=ref?.dates?.[row.version];const releaseCell=element('td',released?released.replace(/-/g,'/'):'公開日未確認');const evidence=report.scripts.libraries.filter(l=>l.name.toLowerCase()===row.name.toLowerCase()&&l.version===row.version);if(evidence.length&&evidence.every(l=>l.basis==='url')){current.append(element('small','URL表記から推定'));releaseCell.append(element('small','推定した版の公開日'));}if(!row.version&&/Ruby|Rails/.test(row.name))name.append(element('small','利用の手掛かりあり（推定）'));line.append(name,current,releaseCell);
+    const line = element('tr','');const name=element('th',row.name);name.scope='row';const purpose={php:'サーバーの動作基盤',jquery:'画面の動きを作る部品',swiper:'写真を切り替える部品',wordpress:'ページを管理する仕組み','jquery-migrate':'jQuery更新時の互換性を補う部品'}[row.name.toLowerCase()];if(purpose)name.append(element('small',purpose));const current=element('td','');current.append(element('strong',row.version || 'バージョン未確認',outdated?'version-outdated':''));if(outdated)current.append(element('small','旧バージョン','version-outdated-label'));const released=ref?.dates?.[row.version];current.append(element('small',releaseLabel(released)));const evidence=report.scripts.libraries.filter(l=>l.name.toLowerCase()===row.name.toLowerCase()&&l.version===row.version);if(evidence.length&&evidence.every(l=>l.basis==='url')){current.append(element('small','URL表記から推定'));current.append(element('small','推定した版のリリース日'));}if(!row.version&&/Ruby|Rails/.test(row.name))name.append(element('small','利用の手掛かりあり（推定）'));line.append(name,current);
     const official=element('td','');
-    if(ref){const a=element('a',ref.version);a.href=ref.url;a.target='_blank';a.rel='noopener';official.append(a,element('small',new Date(ref.checkedAt || '2026-10-27').toLocaleDateString('ja-JP')+'確認'));}
+    if(ref){const a=element('a',ref.version);a.href=ref.url;a.target='_blank';a.rel='noopener';official.append(a,element('small',releaseLabel(ref.dates?.[ref.version])),element('small',new Date(ref.checkedAt || '2026-10-27').toLocaleDateString('ja-JP')+'確認'));}
     else official.append(element('span','公式情報を別途確認'));
     const status=element('td','');status.append(element('span',state,ended||issue||outdated?'evaluation-badge urgent':'evaluation-badge'));
     if(!row.version&&row.name.toLowerCase()==='wordpress')status.append(element('small','公開情報では版を特定できません。SIMYに管理画面・構成情報の確認をご相談ください。'));
@@ -381,6 +385,6 @@ document.querySelector('.edit-url').addEventListener('click',()=>{if(!busy){diag
 
 let reportPdfLoader;
 function loadReportPdf(){
-  if(!reportPdfLoader)reportPdfLoader=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='/diagnosis-pdf.js?v=49a7bcd4291f';script.onload=resolve;script.onerror=()=>{script.remove();reportPdfLoader=null;reject(Error('PDF機能の読込に失敗しました'));};document.head.append(script);});
+  if(!reportPdfLoader)reportPdfLoader=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='/diagnosis-pdf.js?v=caedc155f616';script.onload=resolve;script.onerror=()=>{script.remove();reportPdfLoader=null;reject(Error('PDF機能の読込に失敗しました'));};document.head.append(script);});
   return reportPdfLoader;
 }
