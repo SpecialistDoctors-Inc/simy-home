@@ -89,9 +89,10 @@ function compareReleaseVersions(current, latest) {
   const a=parse(current),b=parse(latest);if(!a||!b)return null;
   for(let i=0;i<Math.max(a.length,b.length);i++){if((a[i]||0)<(b[i]||0))return -1;if((a[i]||0)>(b[i]||0))return 1;}return 0;
 }
-function releaseLabel(date) {
+function releaseLabel(date, kind) {
   const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(date || '');
-  return match ? match[1] + '年' + Number(match[2]) + '月' + Number(match[3]) + '日リリース' : 'リリース日未確認';
+  const label = kind === 'package' ? '配布' : '公開';
+  return match ? match[1] + '年' + Number(match[2]) + '月' + Number(match[3]) + '日' + label : label + '日未確認';
 }
 function renderEvaluationTable(report) {
   const rows = new Map();
@@ -127,9 +128,9 @@ function renderEvaluationTable(report) {
     const comparison = ref ? compareReleaseVersions(row.version,ref.version) : null;
     const outdated = comparison === -1;
     const state = ended ? 'サポート終了' : issue ? '既知の脆弱性に関連' : !row.version ? 'バージョン不明' : outdated ? '旧バージョン' : comparison === 0 ? '最新の公式版と一致' : '比較情報なし';
-    const line = element('tr','');const name=element('th',row.name);name.scope='row';const purpose={php:'サーバーの動作基盤',jquery:'画面の動きを作る部品',swiper:'写真を切り替える部品',wordpress:'ページを管理する仕組み','jquery-migrate':'jQuery更新時の互換性を補う部品'}[row.name.toLowerCase()];if(purpose)name.append(element('small',purpose));const current=element('td','');current.append(element('strong',row.version || 'バージョン未確認',outdated?'version-outdated':''));if(outdated)current.append(element('small','旧バージョン','version-outdated-label'));const released=ref?.dates?.[row.version];current.append(element('small',releaseLabel(released)));const evidence=report.scripts.libraries.filter(l=>l.name.toLowerCase()===row.name.toLowerCase()&&l.version===row.version);if(evidence.length&&evidence.every(l=>l.basis==='url')){current.append(element('small','URL表記から推定'));current.append(element('small','推定した版のリリース日'));}if(!row.version&&/Ruby|Rails/.test(row.name))name.append(element('small','利用の手掛かりあり（推定）'));line.append(name,current);
+    const line = element('tr','');const name=element('th',row.name);name.scope='row';const purpose={php:'サーバーの動作基盤',jquery:'画面の動きを作る部品',swiper:'写真を切り替える部品',wordpress:'ページを管理する仕組み','jquery-migrate':'jQuery更新時の互換性を補う部品'}[row.name.toLowerCase()];if(purpose)name.append(element('small',purpose));const current=element('td','');current.append(element('strong',row.version || 'バージョン未確認',outdated?'version-outdated':''));if(outdated)current.append(element('small','旧バージョン','version-outdated-label'));const released=ref?.dates?.[row.version];current.append(element('small',releaseLabel(released,ref?.dateKind)));const evidence=report.scripts.libraries.filter(l=>l.name.toLowerCase()===row.name.toLowerCase()&&l.version===row.version);if(evidence.length&&evidence.every(l=>l.basis==='url')){current.append(element('small','URL表記から推定'));current.append(element('small','推定した版の日付'));}if(!row.version&&/Ruby|Rails/.test(row.name))name.append(element('small','利用の手掛かりあり（推定）'));line.append(name,current);
     const official=element('td','');
-    if(ref){const a=element('a',ref.version);a.href=ref.url;a.target='_blank';a.rel='noopener';official.append(a,element('small',releaseLabel(ref.dates?.[ref.version])),element('small',new Date(ref.checkedAt || '2026-10-27').toLocaleDateString('ja-JP')+'確認'));}
+    if(ref){const a=element('a',ref.version);a.href=ref.url;a.target='_blank';a.rel='noopener';official.append(a,element('small',releaseLabel(ref.dates?.[ref.version],ref.dateKind)),element('small',new Date(ref.checkedAt || '2026-10-27').toLocaleDateString('ja-JP')+'確認'));}
     else official.append(element('span','公式情報を別途確認'));
     const status=element('td','');status.append(element('span',state,ended||issue||outdated?'evaluation-badge urgent':'evaluation-badge'));
     if(!row.version&&row.name.toLowerCase()==='wordpress')status.append(element('small','公開情報では版を特定できません。'));
