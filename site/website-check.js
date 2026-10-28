@@ -196,10 +196,10 @@ function renderServiceSecurity(report){
   for(const service of [...visible].sort((a,b)=>Math.max(0,...window.SimyServiceSecurity.findingsFor(b,info).map(n=>Date.parse(n.published)))-Math.max(0,...window.SimyServiceSecurity.findingsFor(a,info).map(n=>Date.parse(n.published))))){
     const row=element('tr',''),name=element('th',service.name);name.scope='row';name.append(element('small',service.category||''));
     const risk=element('td',''),sources=element('td','');const notices=window.SimyServiceSecurity.findingsFor(service,info);
-    for(const n of notices){risk.append(element('strong',n.type),element('p',n.title),element('p',n.summary),element('small',n.scope));if(n.occurred)risk.append(element('small','発生・確認：'+n.occurred));sources.append(element('p','公表 '+n.published));const link=element('a','公式発表 ↗');link.href=n.url;link.target='_blank';link.rel='noopener';sources.append(link);if(n.stale)sources.append(element('small','情報確認から7日以上経過'));}
+    for(const n of notices){risk.append(element('strong',n.type),element('p',n.title),element('p',n.summary),element('small',n.scope));if(n.occurred)risk.append(element('small','発生・確認：'+n.occurred));if(n.affectedVersions)risk.append(element('small','公表された影響版：'+n.affectedVersions));sources.append(element('p','公表 '+n.published));const link=element('a','公式発表 ↗');link.href=n.url;link.target='_blank';link.rel='noopener';sources.append(link);if(n.stale)sources.append(element('small','情報確認から7日以上経過'));}
     row.append(name,risk,sources);body.append(row);
   }
-  table.append(body);wrap.append(table);section.append(wrap,element('p','ネット調査日：'+info.checkedAt+'。検索で見つかった公式発表を掲載しています。公表が見つからないことは安全の証明ではありません。診断ごとの自動検索は未対応です。'));results.append(section);
+  table.append(body);wrap.append(table);section.append(wrap,element('p',(info.research?.status==='completed'?'診断時に公式情報を検索。':info.research?.status==='partial'?'診断時の検索・一次情報確認は一部のみ完了。':'診断時の検索は未実施または取得できませんでした。')+' 確認：'+info.checkedAt+'。事前確認の公表事例も含みます。全件網羅ではなく、このサイトの被害を示しません。'));results.append(section);
 }
 function groupLibraryFindings(libraries) {
   const groups = new Map();
