@@ -155,7 +155,7 @@
 
 /* Result email receipt: one shared column for field and action. */
 .report-email-form{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;max-width:640px}
-.report-email-form>label:first-child{font-weight:700}
+.report-email-form>label:not(.report-email-consent){font-weight:700}
 .report-email-form>input{box-sizing:border-box;width:100%;min-height:56px;border:2px solid #527395;border-radius:8px;padding:14px 16px;background:#fff;color:#172e3a;font:inherit}
 .report-email-form>input:focus-visible{outline:3px solid #8cb9ff;outline-offset:3px}
 .report-email-consent{display:grid;grid-template-columns:22px minmax(0,1fr);gap:12px;align-items:start;font-size:15px;line-height:1.7}
@@ -183,3 +183,5 @@
 /* Version/date columns and shared result summary geometry. */
 #main .evaluation-table{min-width:760px}#main .evaluation-table thead th:nth-child(1){width:17%}#main .evaluation-table thead th:nth-child(2){width:16%}#main .evaluation-table thead th:nth-child(3){width:16%}#main .evaluation-table thead th:nth-child(4){width:18%}#main .evaluation-table thead th:nth-child(5){width:33%}
 .report-counts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0 0 24px}.report-counts>div{border:1px solid #c5d2dc;border-radius:8px;padding:18px;background:white;display:flex;flex-direction:column;gap:8px}.report-counts strong{font-size:32px;line-height:1.1}.report-counts span{font-size:14px;font-weight:600}.report-counts .priority strong{color:#b42318}.report-counts .update strong{color:#9b4b12}.report-counts .unknown strong{color:#526579}.connection-row{padding:18px 0;border-bottom:1px solid #dce4eb;overflow-wrap:anywhere}.source-warning{padding:14px;border-left:4px solid #9b4b12;background:#fff6e9}@media(max-width:600px){.report-counts{gap:6px}.report-counts>div{padding:12px 8px}.report-counts span{font-size:12px}.report-counts strong{font-size:28px}}
+
+.report-downloads{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin:20px 0}.report-pdf-status{flex-basis:100%;font-size:14px}.report-pdf-status:empty{display:none}.issue-table td{vertical-align:top}.issue-table pre{white-space:pre-wrap;overflow-wrap:anywhere;max-width:100%}
