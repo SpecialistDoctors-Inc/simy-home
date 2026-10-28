@@ -52,7 +52,7 @@ function sharingName(item){
 }
 function sharingCopy(item){
  const copies={
-  'preview-observed':{label:'本文は未確認',reason:'閲覧画面を確認しました。資料本文は未取得のため、公開用の案内か院内資料かは未判定です。',action:''},
+  'preview-observed':{label:'本文は未確認',reason:'公開用の資料か判定できませんでした。',action:''},
   'access-required':{label:'閲覧にはアクセス許可が必要です',reason:'今回の確認では、資料の閲覧にアクセス許可が必要でした。誰に共有されているかは未確認です。',action:''},
   unknown:{label:'見られるか判断できませんでした',reason:'今回の取得結果だけでは、閲覧できるか判断できませんでした。',action:''},
   'not-checked':{label:'今回は確認していません',reason:'確認件数や時間の上限に達したため、このリンクは未確認です。',action:''}
@@ -60,9 +60,9 @@ function sharingCopy(item){
  if(item.status!=='preview-observed')return copies[item.status]||copies.unknown;
  const content=item.content,a=item.assessment;
  if(!content||content.status==='unavailable')return copies['preview-observed'];
- if(!a||a.status==='not-run')return {label:'内容は未判定',reason:'本文の文字は取得できましたが、患者さん向けか院内資料かの判定は未実施です。',action:''};
- if(a.status==='withheld')return {label:'内容の確認が必要です',reason:'本文の文字は取得できました。外部AIへの送信は保留し、内容は未判定です。',action:''};
- if(a.status!=='assessed'||a.scope!=='extracted-text-only')return {label:'内容を判定できませんでした',reason:'本文の文字は取得できましたが、用途の判定を完了できませんでした。',action:''};
+ if(!a||a.status==='not-run')return {label:'内容は未判定',reason:'公開用の資料か判定できませんでした。',action:''};
+ if(a.status==='withheld')return {label:'内容の確認が必要です',reason:'公開用の資料か判定できませんでした。',action:''};
+ if(a.status!=='assessed'||a.scope!=='extracted-text-only')return {label:'内容を判定できませんでした',reason:'公開用の資料か判定できませんでした。',action:''};
  const partial=content.status==='partial'?'取得できた一部の文字では、':'取得できた文字では、';
  if(a.audience==='internal')return {label:'院内向け資料の可能性があります',reason:partial+'院内向けの資料と推定されます。公開の意図や情報漏えいの有無は断定できません。',action:''};
  if(a.audience==='patient'&&a.concern==='none')return {label:'患者さん向けの案内と推定されます',reason:partial+'患者さん向けの案内と推定され、公開範囲に関する問題は見つかりませんでした。画像・手書き・抽出できない部分や共有権限は未評価です。',action:''};
