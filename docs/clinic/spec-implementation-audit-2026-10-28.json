@@ -1,0 +1,174 @@
+{
+  "source_document": "/Users/t.shiwaku/Documents/Codex/2026-10-28/hp-security-spec/SIMY_HP管理_外部公開セキュリティ診断仕様書.docx",
+  "baseline": {
+    "static": "0191a22",
+    "sites_version": 35,
+    "sites_commit": "7310c6f6129fb0ed33d788986c3c391b3b4a97d3"
+  },
+  "latest_user_decisions_override_document": true,
+  "requirements": [
+    {
+      "id": "SC01",
+      "requirement": "対象境界・関連ホスト候補",
+      "implementation": "lib/network.ts; lib/host-candidates.ts; lib/scan.ts",
+      "limitations_or_plan": "同一オリジン境界・CT候補のみ。公開検索による候補発見は未実装",
+      "verification": "コード確認"
+    },
+    {
+      "id": "SC02",
+      "requirement": "優先巡回・動的表示・URL除外",
+      "implementation": "lib/crawl.ts; lib/sitemaps.ts; browser-service/runner.mjs",
+      "limitations_or_plan": "予約優先、サイトマップ上限、隔離ブラウザー。配下ページ動的読込は未実施",
+      "verification": "fixture合格"
+    },
+    {
+      "id": "SC03",
+      "requirement": "30ページ・180秒・JS/通信上限",
+      "implementation": "lib/scan-policy.ts; lib/request-budget.ts; browser-service/budget.mjs",
+      "limitations_or_plan": "30/180秒/8MiB/64MiB/100ファイル/300通信/同時2の設定。実環境の全上限負荷試験は未実施",
+      "verification": "fixture合格"
+    },
+    {
+      "id": "SC04",
+      "requirement": "未確認理由・範囲",
+      "implementation": "lib/scan.ts; lib/script-scan.ts",
+      "limitations_or_plan": "取得/解析/容量の状態を保持。削除済みクロール一覧は復活させない",
+      "verification": "コード確認"
+    },
+    {
+      "id": "DT01",
+      "requirement": "公開根拠・Ruby/Rails・複数版",
+      "implementation": "lib/technology.ts; lib/library-detect.ts; lib/version-summary.ts",
+      "limitations_or_plan": "担当5の検出版・JOANR検証を統合予定",
+      "verification": "担当変更を統合、関連テスト・型チェック・ビルド成功。本番公開後受入は別途。"
+    },
+    {
+      "id": "DT02",
+      "requirement": "版・公開日・最新安定版",
+      "implementation": "lib/release-info.ts; site/website-check.js",
+      "limitations_or_plan": "担当5の公式日付修正を統合予定。対応指示列の復活は最新判断で対象外",
+      "verification": "担当変更を統合、関連テスト・型チェック・ビルド成功。本番公開後受入は別途。"
+    },
+    {
+      "id": "DT03",
+      "requirement": "OSV/KEV/EPSS・鮮度",
+      "implementation": "lib/intelligence.ts; lib/exploitation.ts; lib/scan-policy.ts",
+      "limitations_or_plan": "照合・確認日時あり。OSVはnpm中心で全言語網羅ではない。同系列修正版/バックポート判断は限定",
+      "verification": "コード確認"
+    },
+    {
+      "id": "EX01",
+      "requirement": "設定・公開ファイル・誤判定",
+      "implementation": "lib/public-observations.ts; lib/exposure-check.ts",
+      "limitations_or_plan": "形式確認、既知パスは登録対象のみ。CORS/限定ポート等の仕様全範囲は未実装",
+      "verification": "fixture合格"
+    },
+    {
+      "id": "EX02",
+      "requirement": "機微情報の最小保持",
+      "implementation": "lib/redact.ts; lib/public-observations.ts",
+      "limitations_or_plan": "秘密鍵/認証代入/URLクエリ/メールを伏字。全種類の患者情報を網羅する保証はない",
+      "verification": "fixture合格"
+    },
+    {
+      "id": "IN01",
+      "requirement": "外部サービス・情報の流れ",
+      "implementation": "lib/public-observations.ts; browser-service/runner.mjs",
+      "limitations_or_plan": "リンク/埋込/フォーム/観測通信を区別、内部保存を断定しない",
+      "verification": "fixture合格"
+    },
+    {
+      "id": "IN02-03",
+      "requirement": "内部運用の対象外・観測限定",
+      "implementation": "lib/public-observations.ts; site/website-check.js",
+      "limitations_or_plan": "入力項目名のみ。患者データ送信・内部保存の試験はしない",
+      "verification": "コード確認"
+    },
+    {
+      "id": "UX01-02",
+      "requirement": "結果構成・優先順位",
+      "implementation": "site/website-check.js",
+      "limitations_or_plan": "最新判断優先:患者情報赤枠/02提供元/03事故公表サービス/04情報の流れ。根拠/対応指示/クロール一覧の削除維持",
+      "verification": "本番入力確認"
+    },
+    {
+      "id": "UX03",
+      "requirement": "進捗・途中結果・再接続",
+      "implementation": "lib/initial-fetch.ts; lib/scan.ts; app/api/scan/route.ts",
+      "limitations_or_plan": "担当1の復旧・早期途中結果を統合予定",
+      "verification": "担当変更を統合、関連テスト・型チェック・ビルド成功。本番公開後受入は別途。"
+    },
+    {
+      "id": "SYS01",
+      "requirement": "診断保存・登録・保持",
+      "implementation": "lib/scan-journal.ts; app/api/report-email/route.ts",
+      "limitations_or_plan": "D1診断ログと登録結果保存。登録90日設定、診断ログ90日固定。履歴Sheetsは担当4",
+      "verification": "fixture合格/本番再受入待ち"
+    },
+    {
+      "id": "SYS02",
+      "requirement": "宛先制限・隔離・回数停止",
+      "implementation": "lib/network.ts; browser-service/network.mjs; lib/rate-limit.ts",
+      "limitations_or_plan": "公開IP検証、取得基盤IP固定、隔離context、D1回数制限、SCAN_DISABLED。環境設定未確認時は本番保護の完全達成としない",
+      "verification": "コード/fixture確認"
+    },
+    {
+      "id": "ADD01",
+      "requirement": "資料内容名・AI内容判定",
+      "implementation": "lib/shared-resources.ts",
+      "limitations_or_plan": "担当2。キー/送信対象認可等が不足する場合は未判定を表示",
+      "verification": "担当変更を統合、関連テスト・型チェック・ビルド成功。本番公開後受入は別途。"
+    },
+    {
+      "id": "ADD02",
+      "requirement": "都度事故・脆弱性調査",
+      "implementation": "lib/provider-info.ts",
+      "limitations_or_plan": "担当3。未設定/失敗を事故なしにしない",
+      "verification": "担当変更を統合、関連テスト・型チェック・ビルド成功。本番公開後受入は別途。"
+    },
+    {
+      "id": "ADD03",
+      "requirement": "Sheets即時連携・営業準備",
+      "implementation": "app/api/scan/route.ts; app/api/report-email/route.ts",
+      "limitations_or_plan": "担当4。Google認証未設定。営業実送信なし",
+      "verification": "担当変更を統合、関連テスト・型チェック・ビルド成功。本番公開後受入は別途。"
+    }
+  ],
+  "production_baseline": {
+    "target": "https://urachil.com/",
+    "input": "正式UI",
+    "checked_at_jst": "2026-10-28T17:53:35+09:00",
+    "observed": "完了表示、PHP 7.2.24、登録前一部結果、登録フォーム",
+    "registration_and_pdf": "この試行では未実施"
+  },
+  "acceptance": "未完了。各担当の統合・本番公開後に正式UI入力から再検証する。",
+  "production_baseline_joanr": {
+    "target": "http://joanr.org/",
+    "input": "正式UI",
+    "result": "HTTP403、診断結果は作成していません",
+    "boundary": "本番成功ではない。接続拒否を安全扱いしない"
+  },
+  "baseline_tests": {
+    "static": {
+      "passed": 1519,
+      "failed": 0
+    },
+    "api": "typecheck、公開仕様、登録、メタデータ、CORS、コード比較、巡回、初回取得、提供元、Ruby、進捗、scan、scripts、共有、技術、版比較が通過",
+    "excluded": "内部PostgreSQL診断テストは参照HTML不足で未実行完了"
+  },
+  "integration_commits": {
+    "timeout": "dec36dab66c9db4f66a783e5b1582935c02da3e9",
+    "technology": "09bc0d9689bd90071660df4fb412614c7218b45d",
+    "documents": "202f4d2f04bdb2224ae55fa3bb08521dff8b10b8",
+    "research": "2005cfee566cc75ed44f7f276bd86bd2190d01cd",
+    "sheets": "993aed3cdbe312ccd1708843ac633da42b71c96c"
+  },
+  "runtime_dependencies": {
+    "openai": "ユーザーは担当チャットで今は作成しないと回答。未設定。実AI判定と実ネット調査は未検証。",
+    "sheets": "サービスアカウント未設定、配送無効。D1キュー実装済み。定期実行は依頼されていないため作成しない。"
+  },
+  "integrated_static_tests": {
+    "passed": 1527,
+    "failed": 0
+  }
+}

@@ -25,12 +25,29 @@ function assess(report,now=Date.now()){
   const age=(now-Date.parse(n.published))/86400000;
   notices.push({...n,recent:age>=0&&age<=180,stale:now-Date.parse(n.checkedAt)>7*86400000,connection:connection&&connection.kind!=='provider'?(connection.kind==='link'?'リンクを確認（利用契約は未確認）':'埋め込み・読込等の記載を確認'):'サーバー提供元の候補（推定）',impact:'このサイトへの影響は未確認'});
  }
- return {checkedAt,notices,services:[...linked.values()],unmatched:[...linked.values()].filter(x=>!notices.some(n=>(x.provider&&x.provider===n.provider&&(n.providerWide||x.category==='サーバー・ネットワーク'))||n.domains.some(d=>matches(x.host,d))))};
+ const research=report.serviceSecurity;
+ for(const n of [...(research?.catalog||[]),...(research?.notices||[])]){
+  if(!n.subjectId||!/^https:\/\//.test(n.url||''))continue;
+  let service;
+  if(n.subjectId.startsWith('component:')){
+   const name=n.subjectId.slice(10);if(!(report.technologies||[]).some(t=>t.name===name&&t.status!=='unknown')&&!(report.scripts?.libraries||[]).some(l=>l.name.toLowerCase()===name.toLowerCase()))continue;
+   const key=n.subjectId;service=linked.get(key);if(!service){service={host:'',name,kind:'component',category:'検出した部品',subjectId:key};linked.set(key,service);}
+  }else{
+   const registry={drive:['drive.google.com','docs.google.com'],nomoca:['nomoca-ai.com'],blastmail:['blastmail.jp'],digikar:['digikar-smart.jp'],stripe:['stripe.com'],line:['line.me'],onamae:['onamae.com']};
+   service=[...linked.values()].find(x=>x.provider===n.subjectId||(registry[n.subjectId]||[]).some(d=>matches(x.host,d)));
+   if(!service)continue;service.subjectId=n.subjectId;
+  }
+  const type=({exploitation:'悪用実績の公表',vulnerability:'脆弱性の公表',outage:'稼働障害の公表',incident:'事故の公表'})[n.kind]||'公表情報';
+  const age=(now-Date.parse(n.published))/86400000;
+  const item={...n,domains:[],type:(n.relationship==='same-provider-other-service'?'同社の別サービス：':'')+type,recent:age>=0&&age<=180,stale:now-Date.parse(n.checkedAt)>7*86400000,connection:service.kind==='link'?'リンクを確認（利用契約は未確認）':'公開情報に記載',impact:'このサイトへの影響は未確認'};
+  const prior=notices.findIndex(x=>x.url===n.url&&(!x.subjectId||x.subjectId===n.subjectId));if(prior>=0)notices.splice(prior,1);notices.push(item);
+ }
+ return {checkedAt:research?.checkedAt||checkedAt,research,notices,services:[...linked.values()],unmatched:[...linked.values()].filter(x=>!notices.some(n=>(x.provider&&x.provider===n.provider&&(n.providerWide||x.category==='サーバー・ネットワーク'))||n.domains.some(d=>matches(x.host,d))))};
 }
 // Dated manual research; never represent this as a search performed by each scan.
 const researchedDomains=['digikar-smart.jp','nomoca-ai.com','doctorsfile.jp','googletagmanager.com','google-analytics.com','ajax.googleapis.com','drive.google.com','instagram.com','caloo.jp','tokyo-doctors.com','kireireport.com'];
-function findingsFor(service,info){return info.notices.filter(n=>(service.provider&&service.provider===n.provider&&(n.providerWide||service.category==='サーバー・ネットワーク'))||n.domains.some(d=>matches(service.host,d)));}
-function researchStatus(service){return researchedDomains.some(d=>matches(service.host,d))?'今回のネット調査では、このサービスの事故・脆弱性の公表を特定できませんでした。':'このサービスのネット調査は未実施です。';}
+function findingsFor(service,info){return info.notices.filter(n=>n.subjectId?n.subjectId===service.subjectId:(service.provider&&service.provider===n.provider&&(n.providerWide||service.category==='サーバー・ネットワーク'))||n.domains.some(d=>matches(service.host,d)));}
+function researchStatus(service){return researchedDomains.some(d=>matches(service.host,d))?'事前調査のカタログに該当情報はありません。':'このサービスのネット調査は未実施です。';}
 function providerNotices(report){
  const info=assess(report),notices=[...(report.providers?.notices||[])];
  for(const service of info.services.filter(s=>s.kind==='provider'))for(const n of findingsFor(service,info))notices.push({...n,publisher:n.name,resolution:''});

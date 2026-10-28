@@ -1,3 +1,5 @@
 const {test}=require('node:test');const assert=require('node:assert/strict');const fs=require('node:fs');const vm=require('node:vm');
 const src=fs.readFileSync('site/website-check.js','utf8');const ctx={};vm.runInNewContext(src.slice(src.indexOf('function compareReleaseVersions'),src.indexOf('function renderEvaluationTable')),ctx);
 test('numeric versions distinguish older, equal, newer, unknown',()=>{for(const [a,b,want]of [['3.5.1','4.0.0',-1],['1.9.9','1.10.0',-1],['4.0.0','4.0.0',0],['4.0.1','4.0.0',1],['8.5','8.5.12',null],['4.0.0-rc.1','4.0.0',null],['','4.0.0',null]])assert.equal(ctx.compareReleaseVersions(a,b),want);});
+
+test('release date distinguishes package publication and unknown dates',()=>{assert.equal(ctx.releaseLabel('2026-10-28','package'),'2026年10月28日配布');assert.equal(ctx.releaseLabel('2026-10-28','release'),'2026年10月28日公開');assert.equal(ctx.releaseLabel(undefined,'package'),'配布日未確認');});

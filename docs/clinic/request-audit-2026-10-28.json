@@ -21,11 +21,11 @@
   "blocked": [
     {
       "request": "Per-diagnosis web research and LLM classification of public shared documents",
-      "status": "API key local destination declined; no key created or saved"
+      "status": "専用チャットで今はキーを作成しないとユーザー回答。本文取得・AI判定経路・都度検索を実装して統合。実APIは未設定・未検証。"
     },
     {
       "request": "Immediate Google Sheets logging and outreach workflow",
-      "status": "No live Sheets integration; gcloud reauthentication requires user password; no outreach sent"
+      "status": "D1同期キュー・重複防止・再送・下書き作成を実装して統合。サービスアカウント未設定、実Sheets未検証。定期実行・営業実送信なし。"
     }
   ],
   "not_included_in_competitor_comparison": [
@@ -36,7 +36,7 @@
   ],
   "registration": {
     "current": "User explicitly requested restoration: save email, clinic name, contact name and consent before displaying full result and PDF",
-    "validation": "Production verification pending deployment"
+    "validation": "既存本番でD1保存は前担当が確認済み。今回の統合版は公開後に正式UI・D1再読込・PDFを再受入する。"
   },
   "assets": {
     "tool": "built-in image_gen",
