@@ -73,19 +73,15 @@ function issueIncident(issue) {
   return {kind:'unconfirmed',summary:'登録した公表情報では、具体的な被害事例は未確認です。事故がないことを意味しません。'};
 }
 function appendIssueEvidence(status,issues) {
-  const unique=[...new Map(issues.map(i=>[(i.ids||[]).slice().sort().join(',')+'|'+i.fixedFrom+'|'+i.summary,i])).values()];
-  if(!unique.length)return;
-  unique.sort((a,b)=>({case:2,exploited:1,unconfirmed:0}[issueIncident(b).kind]-{case:2,exploited:1,unconfirmed:0}[issueIncident(a).kind]));
-  const first=issueIncident(unique[0]);
-  status.append(element('small',first.kind==='case'?'報告された攻撃：'+first.summary:first.kind==='exploited'?'実際の悪用を確認（CISA）':'具体的な被害事例は未確認','incident-summary'));
-  const detail=element('details','','incident-details');detail.append(element('summary','影響・修正版・事例を見る（'+unique.length+'件）'));
-  for(const issue of unique){const evidence=issueIncident(issue);const item=element('div','','incident-item');item.append(element('strong',(issue.ids||[]).join(' / ')||'公開された脆弱性情報'),element('p','起こり得る影響：'+(issue.summary||'発生条件と影響は公式情報の確認が必要です。')),element('p',issue.fixedFrom?'修正情報：'+issue.fixedFrom+'以降（対象系列・個別修正を要確認）':'修正版：公式情報で確認'),element('p','事故・悪用事例：'+evidence.summary));
-   if(evidence.source){const a=element('a',evidence.publisher+'の報告（'+evidence.date+'）');a.href=evidence.source;a.target='_blank';a.rel='noopener';item.append(a);}
-   const source=(issue.links||[]).find(url=>/^https:\/\//.test(url));if(source){const a=element('a','この問題の修正情報');a.href=source;a.target='_blank';a.rel='noopener';item.append(element('p',''),a);}
-   detail.append(item);
+  if(!issues.length)return;
+  const summaries=[...new Set(issues.map(i=>i.summary).filter(Boolean))];
+  if(summaries.length)status.append(element('p',summaries[0]));
+  const evidence=[...new Map(issues.map(issueIncident).filter(e=>e.kind!=='unconfirmed').map(e=>[e.kind==='case'?e.source:'cisa',e])).values()];
+  if(!evidence.length){status.append(element('small','具体的な被害事例は未確認です。'));return;}
+  for(const e of evidence){const item=element('div','','incident-item');item.append(element('strong',e.kind==='case'?'報告された攻撃':'実際の悪用を確認'));
+    item.append(element('p',e.kind==='case'?e.summary:'この問題を悪用した攻撃が、CISAの公表情報に掲載されています。この医院の被害を確認したものではありません。'));
+    const a=element('a',e.publisher+'の公表');a.href=e.source;a.target='_blank';a.rel='noopener';item.append(a);status.append(item);
   }
-  detail.append(element('p','事例情報の確認日：'+incidentEvidence.checkedAt+'。このサイトでの侵入・漏えいや、攻撃が成立することを確認したものではありません。'));
-  status.append(detail);
 }
 // Compare only complete numeric release versions; do not guess prerelease or partial versions.
 function compareReleaseVersions(current, latest) {
@@ -140,6 +136,9 @@ function renderEvaluationTable(report) {
     if(ended||issue)status.append(element('small',ended?'開発元のサポート終了':'既知の問題に関係する版'));else if(outdated&&row.name.toLowerCase()!=='jquery-migrate')status.append(element('small','旧版だけで危険とは判定しません。'));else if(comparison===0)status.append(element('small','確認日の公式版と一致。安全性全体の保証ではありません。'));appendIssueEvidence(status,row.issues);line.append(official,status);body.append(line);
   }
   table.append(body);wrap.append(table);section.append(wrap,element('p','公開日は検出した版の配布元の記録です。版や日付が不明なものは未確認と表示します。最新の版は記載日の確認情報です。旧版だけで脆弱性があるとは限りません。','evaluation-note'));
+  if([...rows.values()].some(row=>row.name.toLowerCase()!=='php'&&row.issues.length)){
+    const figure=element('figure','','clinic-manga infrastructure-manga'),img=element('img','');img.src='/assets/website-check/clinic-component-risks-v1.png';img.width=1536;img.height=1024;img.loading='lazy';img.alt='PHP以外の部品も攻撃の入口になり得ることを示す架空の漫画。公表された問題と、この医院の被害は区別します。';figure.append(img);section.append(figure);
+  }
   if([...rows.values()].some(row=>row.name.toLowerCase()==='php')){
     const news=element('aside','','php-news-context');news.append(element('h4','PHPの脆弱性で起きていること。'));
     const figure=element('figure','','clinic-manga');const image=element('img','');image.src='/assets/website-check/clinic-php-news-v1.png';image.width=1536;image.height=1024;image.loading='lazy';image.alt='PHPの脆弱性悪用のニュースを見て驚く院長と、使用中の版・修正状況を確認する院長の漫画。PHPの利用だけでは被害は判定できません。';const link=element('a','');link.href=image.src;link.target='_blank';link.rel='noopener';link.setAttribute('aria-label','PHPと更新確認の漫画を拡大する');link.append(image);figure.append(link);news.append(figure);
@@ -168,10 +167,26 @@ function renderSummary(report){
   results.append(counts);
   for(const warning of report.sourceWarnings||[])results.append(element('p',warning,'source-warning'));
 }
+function renderInfrastructure(report) {
+  const section=element('section','','infrastructure-section');
+  section.append(element('h3','02 / ドメイン・サーバー・制作元の詳細'));
+  const facts=(report.providers?.facts||[]).filter(f=>f.role!=='現在の保守・契約担当');
+  const wrap=element('div','','evaluation-scroll'),table=element('table','','evaluation-table');
+  const head=element('thead',''),hr=element('tr','');
+  for(const label of ['項目','提供元','判定']){const th=element('th',label);th.scope='col';hr.append(th);}head.append(hr);table.append(head);
+  const body=element('tbody','');
+  for(const f of facts){const tr=element('tr',''),th=element('th',f.role);th.scope='row';tr.append(th,element('td',/Onamae\.com/i.test(f.name)?'お名前.com（GMO Internet Group）':f.name),element('td',f.status));body.append(tr);}
+  table.append(body);wrap.append(table);section.append(facts.length?wrap:element('p','提供元を特定できませんでした。'));
+  for(const n of report.providers?.notices||[]){const card=element('article','','provider-notice');card.append(element('strong',/障害/.test(n.title)?'提供元が公表した稼働障害':'提供元が公表した事故'),element('h4',n.title),element('p',n.summary),element('small','対象：'+n.scope+' '+n.resolution),element('small',n.publisher+' / 公表 '+n.published));const a=element('a','公式発表 ↗');a.href=n.url;a.target='_blank';a.rel='noopener';card.append(a);section.append(card);}
+  section.append(element('p','提供元の過去の公表です。この医院の被害を示すものではありません。','evaluation-note'));
+  const figure=element('figure','','clinic-manga infrastructure-manga'),img=element('img','');
+  img.src='/assets/website-check/clinic-aws-migration-v1.png';img.width=1536;img.height=1024;img.loading='lazy';img.alt='サーバー管理に悩む医師が、AWSの基盤とSIMYの設定・更新・バックアップを組み合わせた移行を検討する漫画。';
+  figure.append(img,element('figcaption','AWSへの移行イメージ。安全性は、構成・設定・継続的な保守にも左右されます。'));section.append(figure);results.append(section);
+}
 function renderServiceSecurity(report){
   const info=window.SimyServiceSecurity?.assess(report);
   const section=element('section','','service-security');
-  section.append(element('h3','02 / 外部サービスの事故・脆弱性情報'));
+  section.append(element('h3','03 / 外部サービスの事故・脆弱性情報'));
   if(!info){section.append(element('p','公表情報を読み込めませんでした。'));results.append(section);return;}
   const wrap=element('div','','evaluation-scroll');const table=element('table','','evaluation-table service-table');
   const head=element('thead',''),hr=element('tr','');for(const label of ['外部サービス','事故・脆弱性の調査結果','公表日・出典']){const th=element('th',label);th.scope='col';hr.append(th);}head.append(hr);table.append(head);
@@ -212,18 +227,11 @@ function renderReport(report) {
   title.textContent = technologies.length || libraries.length || patches.length ? '更新・修正の確認が必要です' : reviews.length ? '設定の確認が必要です' : '今回の範囲では、問題を特定できませんでした';
   renderSummary(report);
   renderEvaluationTable(report);
+  renderInfrastructure(report);
   renderServiceSecurity(report);
   window.SimyInformationFlow?.render(report,results,element);
-  if(report.crawl){
-    const c=report.crawl;const scope=element('div','','crawl-summary');
-    scope.append(element('strong','同じサイト内の '+c.checked+' ページを確認（上限 '+c.maxPages+' ページ）'));
-    if(c.limited||c.pages.some(p=>p.status!=='checked'||p.truncated)||c.scriptLimitReached)scope.append(element('p','上限・接続状況などにより、一部は未確認です。'));
-    const details=element('details','');details.append(element('summary','調べたページを見る'));
-    for(const page of c.pages)details.append(element('p',(page.status==='checked'?'確認':'未確認')+'：'+page.url+' — '+page.reason));
-    if(report.scope)scope.append(element('p','発見した候補 '+report.scope.discoveredPages+'件 / 対象外 '+report.scope.excludedPages+'件 / 取得失敗 '+report.scope.failedPages+'件。サイト全体の網羅率ではありません。'));scope.append(details);results.append(scope);
-  }
   reportDetails=element('section','','report-other-issues');
-  reportDetails.append(element('h3','その他の確認・改善点（'+reviews.length+'件）'));
+  reportDetails.append(element('h3','その他おすすめの改善点'));
   if(!reviews.length)reportDetails.append(element('p','今回の確認範囲では、追加の改善点は特定できませんでした。'));
   if(reviews.length){const wrap=element('div','','evaluation-scroll');const table=element('table','','evaluation-table issue-table');const head=element('thead','');const hr=element('tr','');for(const label of ['項目','医院への影響']){const th=element('th',label);th.scope='col';hr.append(th);}head.append(hr);table.append(head);const body=element('tbody','');for(const f of reviews){const tr=element('tr','');const th=element('th',f.title);th.scope='row';const impact=element('td',f.summary);tr.append(th,impact);body.append(tr);}table.append(body);wrap.append(table);reportDetails.append(wrap);}
 
@@ -311,6 +319,6 @@ document.querySelector('.edit-url').addEventListener('click',()=>{if(!busy){diag
 
 let reportPdfLoader;
 function loadReportPdf(){
-  if(!reportPdfLoader)reportPdfLoader=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='/diagnosis-pdf.js?v=a8cd40487b91';script.onload=resolve;script.onerror=()=>{script.remove();reportPdfLoader=null;reject(Error('PDF機能の読込に失敗しました'));};document.head.append(script);});
+  if(!reportPdfLoader)reportPdfLoader=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='/diagnosis-pdf.js?v=2c8645a9f8bd';script.onload=resolve;script.onerror=()=>{script.remove();reportPdfLoader=null;reject(Error('PDF機能の読込に失敗しました'));};document.head.append(script);});
   return reportPdfLoader;
 }

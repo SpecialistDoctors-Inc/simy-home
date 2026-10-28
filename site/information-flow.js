@@ -19,7 +19,7 @@ function managementCopy(g){
  return {label:'案内だけのリンクなら、優先度は低め',reason:'リンクを置いているだけでは、患者情報が送られるとは限りません。移動先で情報を入力する場合は、管理の確認が必要です。',action:'案内を見るだけか、予約や個人情報の入力に使うかを確認してください。'};
 }
 function render(report,root,el){
- const groups=model(report),section=el('section','','information-flow');section.append(el('h3','03 / ホームページと外部サービスのつながり'),el('p','用途から考えられる管理の重要度を示しています。'));
+ const groups=model(report),section=el('section','','information-flow');section.append(el('h3','04 / ホームページと外部サービスのつながり'),el('p','用途から考えられる管理の重要度を示しています。'));
  const diagram=el('div','','flow-diagram');diagram.setAttribute('aria-label','医院ホームページ、閲覧者のブラウザー、外部サービスの接続図');
  const site=el('div','','flow-node flow-site');site.append(el('span','医院のホームページ'),el('strong',new URL(report.url).hostname),el('p','ページ・画像などを配信'));
  const browser=el('div','','flow-node flow-browser');browser.append(el('span','⇄ ページの取得','flow-direction'),el('strong','閲覧者のブラウザー'),el('p','医院のHPを表示'),el('small','診断では匿名のブラウザーを使用。患者情報は入力しません。'));

@@ -1,0 +1,52 @@
+{
+  "date": "2026-10-28",
+  "scope": "Recent clinic diagnosis requests, source review and pending production acceptance",
+  "implemented_this_change": [
+    "Remove crawl detail list from screen and PDF",
+    "Rename recommendations heading",
+    "Restore concise provider table as 02 without evidence disclosures",
+    "Move external incident information to 03 and flow to 04",
+    "Emphasize published provider incidents and distinguish availability outages",
+    "Add AWS migration manga without safety guarantee",
+    "Add shared non-PHP component risk manga triggered by detected issues",
+    "Keep component incident descriptions visible, deduplicated and matched by CVE"
+  ],
+  "verified_existing": [
+    "30-page maximum and reservation/login priority in crawl.ts",
+    "Diagnosis journal and bounded retry/partial results",
+    "Version release dates, PHP/WordPress/Ruby/Rails detection with unknown state",
+    "CISA/OSV lookup; no claim of comprehensive database coverage",
+    "PDF service name and sales@simy.one contact"
+  ],
+  "blocked": [
+    {
+      "request": "Per-diagnosis web research and LLM classification of public shared documents",
+      "status": "API key local destination declined; no key created or saved"
+    },
+    {
+      "request": "Immediate Google Sheets logging and outreach workflow",
+      "status": "No live Sheets integration; gcloud reauthentication requires user password; no outreach sent"
+    }
+  ],
+  "not_included_in_competitor_comparison": [
+    "Comprehensive leaked-data intelligence",
+    "Chained attack-path analysis",
+    "Applicant device/IP fingerprint report",
+    "Daily scheduled rescans"
+  ],
+  "registration": {
+    "current": "Full results and PDF without registration since PR183",
+    "historical_request": "Earlier registration gate was intentionally removed in PR183; not silently restored during audit"
+  },
+  "assets": {
+    "tool": "built-in image_gen",
+    "files": [
+      "site/assets/website-check/clinic-aws-migration-v1.png",
+      "site/assets/website-check/clinic-component-risks-v1.png"
+    ],
+    "briefs": [
+      "Expressive doctor in clinic corridor considers AWS infrastructure plus SIMY configuration, patching and backups; no guaranteed security",
+      "Doctor learns PHP is not the only component risk; WordPress, JavaScript, React and Rails shown conceptually; incidents displayed only for exact matched CVEs"
+    ]
+  }
+}
