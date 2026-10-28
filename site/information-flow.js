@@ -18,6 +18,14 @@ function managementCopy(g){
  if(g.kinds.some(k=>k==='script'||k==='embed'))return {label:'外部へ情報が送られる可能性',reason:'ページを開くだけで、アクセス情報などが外部に送られる場合があります。',action:'送る情報と外部プログラムの更新状況を確認してください。'};
  return {label:'案内だけのリンクなら、優先度は低め',reason:'リンクを置いているだけでは、患者情報が送られるとは限りません。移動先で情報を入力する場合は、管理の確認が必要です。',action:'案内を見るだけか、予約や個人情報の入力に使うかを確認してください。'};
 }
+function renderPriority(report,root,el){
+ const groups=model(report).filter(g=>managementCopy(g).label==='患者情報の管理が重要');
+ if(!groups.length)return;
+ const box=el('section','','patient-information-priority');
+ box.append(el('h3','患者情報の管理が重要'),el('p','予約・問診などの外部サービスでは、氏名・連絡先・症状などを扱う可能性があります。'));
+ const list=el('ul','');for(const g of groups)list.append(el('li',g.domain+'（'+g.categories.join('・')+'）'));
+ box.append(list,el('p','患者情報の送信や漏えいを確認したものではありません。','small'));root.append(box);
+}
 function render(report,root,el){
  const groups=model(report),section=el('section','','information-flow');section.append(el('h3','04 / ホームページと外部サービスのつながり'),el('p','用途から考えられる管理の重要度を示しています。'));
  const diagram=el('div','','flow-diagram');diagram.setAttribute('aria-label','医院ホームページ、閲覧者のブラウザー、外部サービスの接続図');
@@ -62,5 +70,5 @@ function renderSharing(report,root,el){
  }
  root.append(section);
 }
-global.SimyInformationFlow={model,render,sharingCopy,managementCopy};
+global.SimyInformationFlow={model,render,renderPriority,sharingCopy,managementCopy};
 })(typeof window==='undefined'?globalThis:window);

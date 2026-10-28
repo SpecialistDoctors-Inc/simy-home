@@ -236,3 +236,5 @@
 @media(max-width:600px){.report-preview th,.report-preview td{padding:12px;min-width:110px}.report-mosaic{height:170px}.report-preview+.report-email{margin-top:-16px}}
 .report-email-form{padding:0;background:transparent;box-shadow:none}.report-email-form>label,.report-email-form>input,.report-email-form>p{margin:0}
 .report-email-form{max-width:640px;width:100%;box-sizing:border-box}.report-email-form>input{width:100%;max-width:none}
+
+#main .patient-information-priority{margin:0 0 28px;padding:24px;border:2px solid #b42318;border-left-width:6px;border-radius:10px;background:#fff4f1;min-width:0;overflow-wrap:anywhere}#main .patient-information-priority h3{margin:0 0 12px;color:#a21d16;font-size:24px}#main .patient-information-priority p{margin:0 0 12px}#main .patient-information-priority ul{margin:12px 0;padding-left:24px;font-weight:650}#main .patient-information-priority .small{margin:16px 0 0}@media(max-width:600px){#main .patient-information-priority{padding:18px}#main .patient-information-priority h3{font-size:21px}}
