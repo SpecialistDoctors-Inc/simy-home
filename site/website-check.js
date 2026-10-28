@@ -177,7 +177,7 @@ function renderInfrastructure(report) {
   const body=element('tbody','');
   for(const f of facts){const tr=element('tr',''),th=element('th',f.role);th.scope='row';tr.append(th,element('td',/Onamae\.com/i.test(f.name)?'お名前.com（GMO Internet Group）':f.name),element('td',f.status));body.append(tr);}
   table.append(body);wrap.append(table);section.append(facts.length?wrap:element('p','提供元を特定できませんでした。'));
-  for(const n of report.providers?.notices||[]){const card=element('article','','provider-notice');card.append(element('strong',/障害/.test(n.title)?'提供元が公表した稼働障害':'提供元が公表した事故'),element('h4',n.title),element('p',n.summary),element('small','対象：'+n.scope+' '+n.resolution),element('small',n.publisher+' / 公表 '+n.published));const a=element('a','公式発表 ↗');a.href=n.url;a.target='_blank';a.rel='noopener';card.append(a);section.append(card);}
+  for(const n of window.SimyServiceSecurity?.providerNotices(report)||report.providers?.notices||[]){const card=element('article','','provider-notice');card.append(element('strong',n.type||(/障害/.test(n.title)?'提供元が公表した稼働障害':'提供元が公表した事故')),element('h4',(n.name?n.name+'：':'')+n.title),element('p',n.summary),element('small','対象：'+n.scope+' '+n.resolution),element('small',n.publisher+' / 公表 '+n.published));const a=element('a','公式発表 ↗');a.href=n.url;a.target='_blank';a.rel='noopener';card.append(a);section.append(card);}
   section.append(element('p','提供元の過去の公表です。この医院の被害を示すものではありません。','evaluation-note'));
   const figure=element('figure','','clinic-manga infrastructure-manga'),img=element('img','');
   img.src='/assets/website-check/clinic-aws-migration-v1.png';img.width=1536;img.height=1024;img.loading='lazy';img.alt='サーバー管理に悩む医師が、AWSの基盤とSIMYの設定・更新・バックアップを組み合わせた移行を検討する漫画。';
@@ -188,13 +188,13 @@ function renderServiceSecurity(report){
   const section=element('section','','service-security');
   section.append(element('h3','03 / 外部サービスの事故・脆弱性情報'));
   if(!info){section.append(element('p','公表情報を読み込めませんでした。'));results.append(section);return;}
+  const visible=window.SimyServiceSecurity.visibleServices(info);if(!visible.length)return;
   const wrap=element('div','','evaluation-scroll');const table=element('table','','evaluation-table service-table');
   const head=element('thead',''),hr=element('tr','');for(const label of ['外部サービス','事故・脆弱性の調査結果','公表日・出典']){const th=element('th',label);th.scope='col';hr.append(th);}head.append(hr);table.append(head);
   const body=element('tbody','');
-  for(const service of [...info.services].sort((a,b)=>Math.max(0,...window.SimyServiceSecurity.findingsFor(b,info).map(n=>Date.parse(n.published)))-Math.max(0,...window.SimyServiceSecurity.findingsFor(a,info).map(n=>Date.parse(n.published))))){
+  for(const service of [...visible].sort((a,b)=>Math.max(0,...window.SimyServiceSecurity.findingsFor(b,info).map(n=>Date.parse(n.published)))-Math.max(0,...window.SimyServiceSecurity.findingsFor(a,info).map(n=>Date.parse(n.published))))){
     const row=element('tr',''),name=element('th',service.name);name.scope='row';name.append(element('small',service.category||''));
     const risk=element('td',''),sources=element('td','');const notices=window.SimyServiceSecurity.findingsFor(service,info);
-    if(!notices.length){risk.append(element('p',window.SimyServiceSecurity.researchStatus(service)));sources.textContent=window.SimyServiceSecurity.researchStatus(service).includes('未実施')?'—':'調査日 '+info.checkedAt;}
     for(const n of notices){risk.append(element('strong',n.type),element('p',n.title),element('p',n.summary),element('small',n.scope));if(n.occurred)risk.append(element('small','発生・確認：'+n.occurred));sources.append(element('p','公表 '+n.published));const link=element('a','公式発表 ↗');link.href=n.url;link.target='_blank';link.rel='noopener';sources.append(link);if(n.stale)sources.append(element('small','情報確認から7日以上経過'));}
     row.append(name,risk,sources);body.append(row);
   }
@@ -378,6 +378,6 @@ document.querySelector('.edit-url').addEventListener('click',()=>{if(!busy){diag
 
 let reportPdfLoader;
 function loadReportPdf(){
-  if(!reportPdfLoader)reportPdfLoader=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='/diagnosis-pdf.js?v=2c8645a9f8bd';script.onload=resolve;script.onerror=()=>{script.remove();reportPdfLoader=null;reject(Error('PDF機能の読込に失敗しました'));};document.head.append(script);});
+  if(!reportPdfLoader)reportPdfLoader=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='/diagnosis-pdf.js?v=86aa6aea448c';script.onload=resolve;script.onerror=()=>{script.remove();reportPdfLoader=null;reject(Error('PDF機能の読込に失敗しました'));};document.head.append(script);});
   return reportPdfLoader;
 }

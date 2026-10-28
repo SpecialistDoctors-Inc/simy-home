@@ -31,5 +31,11 @@ function assess(report,now=Date.now()){
 const researchedDomains=['digikar-smart.jp','nomoca-ai.com','doctorsfile.jp','googletagmanager.com','google-analytics.com','ajax.googleapis.com','drive.google.com','instagram.com','caloo.jp','tokyo-doctors.com','kireireport.com'];
 function findingsFor(service,info){return info.notices.filter(n=>(service.provider&&service.provider===n.provider&&(n.providerWide||service.category==='サーバー・ネットワーク'))||n.domains.some(d=>matches(service.host,d)));}
 function researchStatus(service){return researchedDomains.some(d=>matches(service.host,d))?'今回のネット調査では、このサービスの事故・脆弱性の公表を特定できませんでした。':'このサービスのネット調査は未実施です。';}
-global.SimyServiceSecurity={assess,catalog,findingsFor,researchStatus};
+function providerNotices(report){
+ const info=assess(report),notices=[...(report.providers?.notices||[])];
+ for(const service of info.services.filter(s=>s.kind==='provider'))for(const n of findingsFor(service,info))notices.push({...n,publisher:n.name,resolution:''});
+ return [...new Map(notices.map(n=>[n.url,n])).values()].sort((a,b)=>Date.parse(b.published)-Date.parse(a.published));
+}
+function visibleServices(info){return info.services.filter(s=>s.kind!=='provider'&&findingsFor(s,info).length);}
+global.SimyServiceSecurity={assess,catalog,findingsFor,researchStatus,providerNotices,visibleServices};
 })(typeof window==='undefined'?globalThis:window);
