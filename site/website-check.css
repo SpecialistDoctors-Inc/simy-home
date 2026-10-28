@@ -204,3 +204,5 @@
 @media(max-width:900px){.flow-diagram{grid-template-columns:minmax(0,1fr)}.flow-node{padding:16px}.flow-branches{border-left:2px solid #b6c7dc;padding-left:16px}.information-flow,.sharing-review{padding:18px}}
 .flow-service{border-top:1px solid #dce3e8;padding:14px 0}.flow-service>strong{font-size:15px}.flow-branches{border-left:2px solid #b6c7dc;padding-left:18px}.flow-branch{position:relative}.flow-branch:before{content:'';position:absolute;left:-20px;top:30px;width:18px;border-top:2px solid #b6c7dc}
 .sharing-item{padding:0}.sharing-item summary{display:flex;justify-content:space-between;gap:14px;padding:18px 0;flex-wrap:wrap}.sharing-item summary span{font-size:14px}.sharing-item.review summary span{color:#aa3128}
+
+#main .evaluation-section .evaluation-table thead th:nth-child(1){width:17%}#main .evaluation-section .evaluation-table thead th:nth-child(2){width:23%}#main .evaluation-section .evaluation-table thead th:nth-child(3){width:23%}#main .evaluation-section .evaluation-table thead th:nth-child(4){width:37%}

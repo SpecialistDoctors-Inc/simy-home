@@ -47,7 +47,7 @@
         styles: {font: 'ReportJP', fontStyle: 'normal', fontSize: 9, cellPadding: 3, overflow: 'linebreak', lineColor: [215, 224, 235], lineWidth: 0.15},
         headStyles: {fillColor: [19, 43, 76], textColor: 255, fontStyle: 'normal'},
         alternateRowStyles: {fillColor: [242, 246, 251]}, columnStyles, rowPageBreak: 'avoid',
-        didParseCell(data) { if (head.length === 5 && data.section === 'body' && /旧バージョン/.test(text(data.row.raw[1])) && [1, 4].includes(data.column.index)) data.cell.styles.textColor = [174, 41, 34]; }
+        didParseCell(data) { if (head.length === 4 && data.section === 'body' && /旧バージョン/.test(text(data.row.raw[1])) && [1, 3].includes(data.column.index)) data.cell.styles.textColor = [174, 41, 34]; }
       });
       y = doc.lastAutoTable.finalY + 9;
     }
@@ -55,7 +55,7 @@
     if(registration.contactName) paragraph('お名前：' + registration.contactName + ' 様');
     paragraph('対象：' + report.url + '\n確認日時：' + new Date(report.checkedAt).toLocaleString('ja-JP') + '\n診断ID：' + (report.diagnosisId || '未取得'), 9);
     paragraph('公開情報による確認です。旧版だけで脆弱性があるとは限りません。侵入・情報漏えいの有無は判定できません。', 9);
-    table('言語・システム・ライブラリの比較', ['言語・部品', '現在のバージョン', 'その版の公開日', '最新安定版', '必要な対応・根拠'], versions, [36, 37, 33, 36, 123]);
+    table('言語・システム・ライブラリの比較', ['言語・部品', '現在のバージョン', '最新安定版', '必要な対応・根拠'], versions, [36, 53, 53, 123]);
     if (!versions.length) paragraph('公開情報から使用部品の版は特定できませんでした。安全という判定ではありません。');
     const action = value => text(value).replace(/制作会社(?:・管理者)?/g, 'SIMY').replace(/管理者([へに])/g, 'SIMY$1');
     const security=global.SimyServiceSecurity?.assess(report);
