@@ -20,3 +20,12 @@ test('deduplicates integration pages, exposes unmatched and stale catalog',()=>{
 test('DNS providers including Onamae are listed without implying a hosting incident',()=>{const r=assess({providers:{facts:[{provider:'onamae',name:'お名前.com',role:'DNS提供元',status:'記載を確認',evidence:'NS'}]}});assert.equal(r.services[0].name,'お名前.com');assert.equal(r.services[0].category,'DNS提供元');assert.equal(r.unmatched.length,0);assert.equal(r.notices.length,1);assert.match(r.notices[0].scope,/DNS・ドメイン登録の事故を示す発表ではありません/);});
 
 test('research separates provider incidents from the detected service and excludes lookalikes',()=>{const info=assess({integrations:[connection('console.nomoca-ai.com')]},now);assert.equal(info.notices.length,1);assert.match(info.notices[0].scope,/chatの事故を示すものではありません/);assert.equal(assess({integrations:[connection('nomoca-ai.com.attacker.example')]},now).notices.length,0);});
+test('provider notices include Onamae once for registrar plus DNS and keep scope explicit',()=>{
+ const report={providers:{facts:[{role:'ドメイン登録会社',name:'GMO d/b/a Onamae.com',status:'記載を確認'},{role:'DNS提供元',name:'お名前.com',provider:'onamae',status:'推定'}]}};
+ const notices=ctx.SimyServiceSecurity.providerNotices(report);assert.equal(notices.length,1);assert.match(notices[0].name,/デスクトップクラウド/);assert.match(notices[0].scope,/DNS・ドメイン登録の事故を示す発表ではありません/);
+ assert.equal(ctx.SimyServiceSecurity.visibleServices(assess(report)).length,0);
+});
+test('external incident rows omit unresearched and no-disclosure services',()=>{
+ const report={integrations:[connection('unknown.example'),connection('digikar-smart.jp'),connection('blastmail.jp')]};
+ const rows=ctx.SimyServiceSecurity.visibleServices(assess(report));assert.equal(rows.length,1);assert.equal(rows[0].host,'blastmail.jp');
+});
