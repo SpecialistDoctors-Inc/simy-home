@@ -180,7 +180,7 @@ function renderServiceSecurity(report){
   const wrap=element('div','','evaluation-scroll');const table=element('table','','evaluation-table service-table');
   const head=element('thead',''),hr=element('tr','');for(const label of ['外部サービス','事故・脆弱性の調査結果','公表日・出典']){const th=element('th',label);th.scope='col';hr.append(th);}head.append(hr);table.append(head);
   const body=element('tbody','');
-  for(const service of [...info.services].sort((a,b)=>window.SimyServiceSecurity.findingsFor(b,info).length-window.SimyServiceSecurity.findingsFor(a,info).length)){
+  for(const service of [...info.services].sort((a,b)=>Math.max(0,...window.SimyServiceSecurity.findingsFor(b,info).map(n=>Date.parse(n.published)))-Math.max(0,...window.SimyServiceSecurity.findingsFor(a,info).map(n=>Date.parse(n.published))))){
     const row=element('tr',''),name=element('th',service.name);name.scope='row';name.append(element('small',service.category||''));
     const risk=element('td',''),sources=element('td','');const notices=window.SimyServiceSecurity.findingsFor(service,info);
     if(!notices.length){risk.append(element('p',window.SimyServiceSecurity.researchStatus(service)));sources.textContent=window.SimyServiceSecurity.researchStatus(service).includes('未実施')?'—':'調査日 '+info.checkedAt;}

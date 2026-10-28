@@ -206,3 +206,5 @@
 .sharing-item{padding:0}.sharing-item summary{display:flex;justify-content:space-between;gap:14px;padding:18px 0;flex-wrap:wrap}.sharing-item summary span{font-size:14px}.sharing-item.review summary span{color:#aa3128}
 
 #main .evaluation-section .evaluation-table thead th:nth-child(1){width:17%}#main .evaluation-section .evaluation-table thead th:nth-child(2){width:23%}#main .evaluation-section .evaluation-table thead th:nth-child(3){width:23%}#main .evaluation-section .evaluation-table thead th:nth-child(4){width:37%}
+
+.service-table thead th:nth-child(1){width:24%}.service-table thead th:nth-child(2){width:56%}.service-table thead th:nth-child(3){width:20%}
