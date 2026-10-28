@@ -27,10 +27,10 @@ function renderPriority(report,root,el){
  box.append(list,el('p','患者情報の送信や漏えいを確認したものではありません。','small'));root.append(box);
 }
 function render(report,root,el){
- const groups=model(report),section=el('section','','information-flow');section.append(el('h3','04 / ホームページと外部サービスのつながり'),el('p','用途から考えられる管理の重要度を示しています。'));
+ const all=model(report),links=all.filter(g=>g.kinds.every(k=>k==='link')&&!g.sharing.length&&!/予約|問診|診療|決済|ログイン/.test(g.categories.join(' '))),groups=all.filter(g=>!links.includes(g)),section=el('section','','information-flow');section.append(el('h3','04 / ホームページと外部サービスのつながり'),el('p','用途から考えられる管理の重要度を示しています。'));
  const diagram=el('div','','flow-diagram');diagram.setAttribute('aria-label','医院ホームページ、閲覧者のブラウザー、外部サービスの接続図');
- const site=el('div','','flow-node flow-site');site.append(el('span','医院のホームページ'),el('strong',new URL(report.url).hostname),el('p','ページ・画像などを配信'));
- const browser=el('div','','flow-node flow-browser');browser.append(el('span','⇄ ページの取得','flow-direction'),el('strong','閲覧者のブラウザー'),el('p','医院のHPを表示'),el('small','診断では匿名のブラウザーを使用。患者情報は入力しません。'));
+ const site=el('div','','flow-node flow-site');site.append(el('span','診断対象のホームページ'),el('strong',new URL(report.url).hostname),el('p','ページ・画像などを配信'));
+ const browser=el('div','','flow-node flow-browser');browser.append(el('span','⇄ ページの取得','flow-direction'),el('strong','閲覧者のブラウザー'),el('p','ホームページを表示'),el('small','診断では匿名のブラウザーを使用。患者情報は入力しません。'));
  const branches=el('div','','flow-branches');
  const categories=new Map();for(const g of groups){const key=g.category==='用途未確認'?'その他の外部リンク':g.category;const list=categories.get(key)||[];list.push(g);categories.set(key,list);}
  for(const [category,list] of categories){const observed=list.some(g=>g.observed),branch=el('details','','flow-branch'+(observed?' observed':''));const summary=el('summary','');const direction=list.every(g=>g.kinds.every(k=>k==='link'||k==='form'))?'→':'⇄';summary.append(el('span',direction,'flow-arrow'),el('strong',category+' · '+list.length+'サービス'),el('small',observed?'通常表示で通信を確認した接続先あり':'ページに接続先の記載あり'));
@@ -38,7 +38,8 @@ function render(report,root,el){
  for(const g of list){const copy=managementCopy(g),entry=el('div','','flow-service');entry.append(el('strong',g.domain),el('p',copy.label),el('p',copy.reason));
  branch.append(entry);}
  branches.append(branch);}
- if(!groups.length)branches.append(el('p','接続先を検出できませんでした。未使用の証明ではありません。'));
+ if(links.length)branches.append(el('p','案内・参考情報への外部リンク：'+links.length+'件。リンクの記載だけでは、サービス利用や情報送信は確認できません。'));
+ if(!groups.length&&!links.length)branches.append(el('p','接続先を検出できませんでした。未使用の証明ではありません。'));
  diagram.append(site,browser,branches);section.append(diagram,el('p','管理の重要度は、安全・危険の判定ではありません。入力内容や実際の患者情報の送信、提供先内部の管理状況は未確認です。','small'));root.append(section);
  renderSharing(report,root,el);
 }
