@@ -164,14 +164,14 @@ function renderSummary(report){
   for(const r of report.scripts.resources||[])if(r.status!=='checked')unknown.add('asset:'+r.url);
   const serviceRisk=window.SimyServiceSecurity?.assess(report);
   const counts=element('div','','report-counts');
-  for(const [label,value,style] of [['脆弱性・更新リスク',updates.size+priorityVersions.size,'priority'],['関連する事故・脆弱性の公表',serviceRisk?.notices.length||'未確認','update'],['その他の確認事項',report.findings.filter(f=>f.state==='review').length,'unknown']]){const box=element('div','',style);box.append(element('strong',String(value)),element('span',label));counts.append(box);}
+  for(const [label,value,style] of [['脆弱性・更新リスク',updates.size+priorityVersions.size,'priority'],['関連する事故・脆弱性の公表',serviceRisk?new Set([...window.SimyServiceSecurity.visibleServices(serviceRisk).flatMap(s=>window.SimyServiceSecurity.findingsFor(s,serviceRisk)),...window.SimyServiceSecurity.providerNotices(report)].map(n=>n.url)).size:'未確認','update'],['その他の確認事項',report.findings.filter(f=>f.state==='review').length,'unknown']]){const box=element('div','',style);box.append(element('strong',String(value)),element('span',label));counts.append(box);}
   results.append(counts);
   for(const warning of report.sourceWarnings||[])results.append(element('p',warning,'source-warning'));
 }
 function renderInfrastructure(report) {
   const section=element('section','','infrastructure-section');
   section.append(element('h3','02 / ドメイン・サーバー・制作元の詳細'));
-  const facts=(report.providers?.facts||[]).filter(f=>f.role!=='現在の保守・契約担当');
+  const facts=[...new Map((report.providers?.facts||[]).filter(f=>f.role!=='現在の保守・契約担当').map(f=>[JSON.stringify([f.role,f.name,f.status]),f])).values()];
   const wrap=element('div','','evaluation-scroll'),table=element('table','','evaluation-table');
   const head=element('thead',''),hr=element('tr','');
   for(const label of ['項目','提供元','判定']){const th=element('th',label);th.scope='col';hr.append(th);}head.append(hr);table.append(head);

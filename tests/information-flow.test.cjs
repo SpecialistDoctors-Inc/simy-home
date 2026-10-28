@@ -27,3 +27,20 @@ test('internal and uncertain content remain qualified',()=>{
  assert.match(flow.sharingCopy({...assessed,assessment:{...assessed.assessment,audience:'internal'}}).reason,/断定できません/);
  assert.match(flow.sharingCopy({...assessed,assessment:{...assessed.assessment,concern:'review'}}).reason,/判断できません/);
 });
+
+test('reference links are summarized while actual embeds and booking remain visible',()=>{
+ const el=(tag,text='',cls='')=>({tag,text,cls,children:[],append(...items){this.children.push(...items);},setAttribute(){}});
+ const root=el('div');
+ flow.render({url:'https://company.example/',integrations:[
+  {...item,destination:'https://docs.example/a'},
+  {...item,destination:'https://docs.example/b'},
+  {...item,destination:'https://widget.example/js',kind:'script'},
+  {...item,destination:'https://booking.example/',category:'予約'}
+ ],sharing:{items:[]}},root,el);
+ const text=n=>[n.text,...n.children.map(text)].join('\n');
+ const output=text(root);
+ assert.match(output,/案内・参考情報への外部リンク：1件/);
+ assert.doesNotMatch(output,/docs\.example/);
+ assert.match(output,/widget\.example/);assert.match(output,/booking\.example/);
+ assert.match(output,/患者情報の管理が重要/);
+});
