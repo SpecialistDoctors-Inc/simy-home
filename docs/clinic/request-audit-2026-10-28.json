@@ -35,8 +35,8 @@
     "Daily scheduled rescans"
   ],
   "registration": {
-    "current": "Full results and PDF without registration since PR183",
-    "historical_request": "Earlier registration gate was intentionally removed in PR183; not silently restored during audit"
+    "current": "User explicitly requested restoration: save email, clinic name, contact name and consent before displaying full result and PDF",
+    "validation": "Production verification pending deployment"
   },
   "assets": {
     "tool": "built-in image_gen",
