@@ -19,7 +19,7 @@ function render(report,root,el){
  const categories=new Map();for(const g of groups){const key=g.category==='用途未確認'?'その他の外部リンク':g.category;const list=categories.get(key)||[];list.push(g);categories.set(key,list);}
  for(const [category,list] of categories){const observed=list.some(g=>g.observed),branch=el('details','','flow-branch'+(observed?' observed':''));const summary=el('summary','');const direction=list.every(g=>g.kinds.every(k=>k==='link'||k==='form'))?'→':'⇄';summary.append(el('span',direction,'flow-arrow'),el('strong',category+' · '+list.length+'サービス'),el('small',observed?'通常表示で通信を確認した接続先あり':'ページに接続先の記載あり'));
  if(list.some(g=>g.sharing.some(x=>x.status==='preview-observed')))summary.append(el('b','ログインなしで閲覧画面が開く資料あり','flow-sharing-alert'));
- branch.append(summary);
+ branch.open=true;branch.append(summary);
  for(const g of list){const entry=el('div','','flow-service');entry.append(el('strong',g.domain),el('p',g.labels.join(' / ')),el('p',(g.observed?'通常表示で通信を確認':'設定・リンクのみ確認')+' · 記載 '+g.pages.length+'ページ'));
  const possibilities=g.kinds.includes('form')?'フォームの入力内容が送信される設計です。入力・送信は検査していません。':g.kinds.includes('script')||g.kinds.includes('embed')?'アクセス時の通信情報を提供先が受け取る場合があります。患者情報の送信や保存の有無は未確認です。':'クリックすると外部ページへ移動するリンクです。リンクだけでは契約や情報送信を確認できません。';entry.append(el('p',possibilities));branch.append(entry);}
  branch.append(el('p','提供先の内部保存・再共有・削除は管理者と確認します。','small'));branches.append(branch);}
