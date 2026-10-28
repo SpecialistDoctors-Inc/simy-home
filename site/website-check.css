@@ -183,3 +183,11 @@
 .report-downloads{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin:20px 0}.report-pdf-status{flex-basis:100%;font-size:14px}.report-pdf-status:empty{display:none}.issue-table td{vertical-align:top}.issue-table pre{white-space:pre-wrap;overflow-wrap:anywhere;max-width:100%}
 
 .report-email-form{padding:0;background:transparent;box-shadow:none}.report-email-form>label,.report-email-form>input,.report-email-form>p{margin:0}
+/* Shared tracks for the two service plans and three care benefits. */
+#main .care-plans{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.care-benefits{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:36px}
+.care-benefits article{border-top:2px solid #2865c8;padding-top:20px;min-width:0}
+.care-benefits span{color:#2865c8;font-weight:650}.care-benefits h3{font-size:23px;margin:16px 0}.care-benefits p{font-size:16px;line-height:1.85}
+.hp-care-value,.hp-ai-support{background:#edf3fa}.care-included{margin:28px 0 16px;font-weight:650}.care-detail-offer{margin-top:24px}
+.service-security{margin:28px 0;padding:24px;background:#fff;border:1px solid #afc0d1;border-radius:12px}.service-security h3{font-size:22px;margin:0 0 20px}.service-security h4{font-size:20px;margin:12px 0}.service-security p{font-size:15px;line-height:1.8;margin:10px 0}.service-incident{border-left:4px solid #bd3028;background:#fff5f2;padding:20px;margin:20px 0}.incident-label{color:#a3201b;font-weight:700}.service-unknown{font-weight:650}.service-security a{color:#2055ac;text-decoration:underline}
+@media(max-width:760px){#main .care-plans,.care-benefits{grid-template-columns:minmax(0,1fr)}.service-security{padding:18px}.service-incident{padding:16px}}
