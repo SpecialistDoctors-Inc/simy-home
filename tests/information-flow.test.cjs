@@ -5,3 +5,7 @@ test('observed status requires the actual destination path',()=>{const report={i
 test('sharing evidence joins only the exact host and preserves unknown state',()=>{const g=model({integrations:[item],sharing:{items:[{url:item.destination,status:'unknown'},{url:'https://evil.example/file',status:'preview-observed'}]}})[0];assert.equal(g.sharing.length,1);assert.equal(g.sharing[0].status,'unknown');});
 
 test('same-origin form targets are not portrayed as external services',()=>{assert.equal(model({url:'https://clinic.jp/',integrations:[{...item,destination:'https://clinic.jp/contact',kind:'form'}]}).length,0);});
+
+test('booking remains high priority even if another link on the host was found first',()=>{const g=model({integrations:[{...item,destination:'https://booking.example/about'}, {...item,destination:'https://booking.example/reserve',category:'予約'}]})[0];assert.equal(ctx.SimyInformationFlow.managementCopy(g).label,'患者情報の管理が重要');});
+test('ordinary links are only conditionally low priority, not certified safe',()=>{const g=model({integrations:[{...item,destination:'https://example.org/'}]})[0];const copy=ctx.SimyInformationFlow.managementCopy(g);assert.match(copy.label,/なら/);assert.match(copy.reason,/入力する場合/);});
+test('shared documents and scripts do not inherit low link priority',()=>{assert.match(ctx.SimyInformationFlow.managementCopy(model({integrations:[item]})[0]).label,/公開範囲/);assert.match(ctx.SimyInformationFlow.managementCopy({kinds:['link','script'],category:'用途未確認'}).label,/送信内容/);});
