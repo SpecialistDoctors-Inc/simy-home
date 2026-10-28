@@ -29,7 +29,7 @@ function render(report,root,el){
  if(list.some(g=>g.sharing.some(x=>x.status==='preview-observed')))summary.append(el('b','ログインなしで閲覧画面が開く資料あり','flow-sharing-alert'));
  branch.open=true;branch.append(summary);
  for(const g of list){const copy=managementCopy(g),entry=el('div','','flow-service');entry.append(el('strong',g.domain),el('p',copy.label),el('p',copy.reason),el('p','確認すること：'+copy.action));
- const evidence=el('details','');evidence.append(el('summary','接続の根拠'),el('p',g.labels.join(' / ')),el('p',(g.observed?'通常表示で通信を確認':'公開ページに接続先の記載あり')+' · '+g.pages.length+'ページに記載'));entry.append(evidence);branch.append(entry);}
+ branch.append(entry);}
  branches.append(branch);}
  if(!groups.length)branches.append(el('p','接続先を検出できませんでした。未使用の証明ではありません。'));
  diagram.append(site,browser,branches);section.append(diagram,el('p','管理の重要度は、安全・危険の判定ではありません。入力内容や実際の患者情報の送信、提供先内部の管理状況は未確認です。','small'));root.append(section);

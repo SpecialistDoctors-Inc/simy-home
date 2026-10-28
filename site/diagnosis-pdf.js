@@ -56,7 +56,7 @@
     paragraph('対象：' + report.url + '\n確認日時：' + new Date(report.checkedAt).toLocaleString('ja-JP') + '\n診断ID：' + (report.diagnosisId || '未取得'), 9);
     if(report.completion==='partial') paragraph('一部完了：'+report.completionReason, 11);
     paragraph('公開情報による確認です。旧版だけで脆弱性があるとは限りません。侵入・情報漏えいの有無は判定できません。', 9);
-    table('言語・システム・ライブラリの比較', ['言語・部品', '現在のバージョン', '最新安定版', '必要な対応・根拠'], versions, [36, 53, 53, 123]);
+    table('言語・システム・ライブラリの比較', ['言語・部品', '現在のバージョン', '最新安定版', '必要な対応'], versions, [36, 53, 53, 123]);
     if (!versions.length) paragraph('公開情報から使用部品の版は特定できませんでした。安全という判定ではありません。');
     const action = value => text(value).replace(/SIMY|制作会社(?:・管理者)?/g, '管理担当者');
     const security=global.SimyServiceSecurity?.assess(report);
@@ -68,17 +68,12 @@
     paragraph('矢印・経路は接続関係です。患者情報の送信や提供先内部の保存を確認したものではありません。',9);
     table('Google Drive等の共有範囲', ['対象', '公開範囲の確認', '必要な対応'], (report.sharing?.items||[]).map((x,i)=>[x.service+' '+(i+1)+' / '+x.kind+'\n'+x.url,(global.SimyInformationFlow?.sharingCopy(x).reason||x.reason)+'\n確認日時：'+(x.checkedAt||'未実施'),global.SimyInformationFlow?.sharingCopy(x).action||x.action]), [80,90,95]);
     for(const limit of report.sharing?.limitations||[])paragraph(limit,9);
-    table('外部サービスとの接続先', ['用途・接続先', '設置方法', '設置ページ数・公開された接続先'], connections.map(x => [x.category + '\n' + x.domain, ({link: 'リンク', embed: '埋め込み', script: 'プログラム読込', form: 'フォーム送信先'}[x.kind] || x.kind), x.pages.size + 'ページに記載\n' + x.destination]), [60, 35, 170]);
-    paragraph('リンク・コードの記載と、実際の通信は別です。患者情報は入力・送信していません。外部サービス内部の保存・削除・権限は未確認です。', 9);
-    table('通常表示で観測した通信', ['種類', '接続先'], (report.scripts?.browserEvidence?.connections || []).map(x => [x.type, x.destination]), [40, 225]);
-    table('確認済み・外からは確認できない項目', ['項目', '判定', '確認範囲・根拠'], (report.findings || []).filter(f => f.state !== 'review').map(f => [f.title, f.state === 'observed' ? '確認できた設定' : '未確認', f.summary || '詳細な根拠は診断画面でご確認ください。']), [48, 35, 182]);
     table('調べたページ', ['対象ページ', '取得状況'], (report.crawl?.pages || []).map(p => [p.url, p.status === 'checked' ? '確認' : '未確認：' + (p.reason || p.status)]), [205, 60]);
     paragraph('診断の範囲・制限', 13);
     if (report.crawl) paragraph('確認ページ数：' + report.crawl.pages.filter(p => p.status === 'checked').length + '（上限30ページ）。サイト全体の安全性を保証するものではありません。', 9);
     paragraph('今回確認したこと：公開ページから、古い部品や見直しが必要な設定を確認しました。', 9);
     paragraph('まだ分からないこと：侵入・情報漏えいの有無、サーバー内部、電子カルテ・予約サービスの内部は確認していません。', 9);
     paragraph('詳しく確認したい場合：管理者の協力のもと、アクセス記録・ファイル・利用者の権限などを追加で調べる必要があります。', 9);
-    paragraph('取得できなかった理由や容量・時間の上限は、診断画面の「技術担当者向けの検査記録」で確認できます。', 9);
     const count = doc.getNumberOfPages();
     for (let i = 1; i <= count; i++) { doc.setPage(i); doc.setFont('ReportJP', 'normal'); doc.setTextColor(19, 43, 76); doc.setFontSize(10); doc.text('SIMY HP管理', 16, 14); doc.setFontSize(9); doc.text('お問い合わせ：sales@simy.one', 281, 14, {align: 'right'}); doc.link(226, 9, 55, 6, {url: 'mailto:sales@simy.one'}); doc.setDrawColor(215, 224, 235); doc.line(16, 18, 281, 18); doc.setFontSize(8); doc.text('サービス詳細：https://simy.one/hp-management.html', 16, 201); doc.link(16, 197, 90, 6, {url: 'https://simy.one/hp-management.html'}); doc.text('公開情報の診断記録・確認日時点', 158, 201); doc.text(i + ' / ' + count, 281, 201, {align: 'right'}); }
     return doc;
