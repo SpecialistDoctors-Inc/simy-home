@@ -10,11 +10,11 @@
   },
   "local_api": {
     "path": "/tmp/simy-hp-sites-integration-20261028",
-    "commit": "1de154e",
+    "commit": "bfe34ac8b8425084748b8aa8d71bc652ff9115df",
     "changes": [
       "bounded search, safe failure codes, usage records, REXML correction"
     ],
-    "tests": "outreach,email-request,sheets-sync,service-security,joanr-retrieval,scan-progress,typecheck,build passed",
+    "tests": "After excluding JOANR and outreach: sheets-sync, service-security, scan-progress, typecheck, build passed",
     "published": false
   },
   "required_user_actions": [
@@ -40,6 +40,7 @@
     "tests": 1528,
     "published": false,
     "order": "No marketing UI changes. Enable scheduled Sheets retry only after authentication, live same-ID delivery and readback.",
-    "schedule_gate": "repository variable DIAGNOSIS_SHEETS_RETRY_ENABLED=true required; leave unset until live sync verified"
+    "schedule_gate": "repository variable DIAGNOSIS_SHEETS_RETRY_ENABLED=true required; leave unset until live sync verified",
+    "pr": "https://github.com/SpecialistDoctors-Inc/simy-home/pull/215"
   }
 }
