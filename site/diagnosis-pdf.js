@@ -65,7 +65,7 @@
     const flow=global.SimyInformationFlow?.model(report)||[];
     table('ホームページと外部サービスの接続図（一覧）', ['接続の起点', '外部サービス', '経路・確認状況'], flow.map(g=>['閲覧者のブラウザー（医院HPを表示）',g.category+' / '+g.domain,g.labels.join(' / ')+'\n'+(g.observed?'通常表示で通信を確認':'公開ページに記載。実際の送信は未確認')]), [65,90,110]);
     paragraph('矢印・経路は接続関係です。患者情報の送信や提供先内部の保存を確認したものではありません。',9);
-    table('Google Drive等の共有範囲', ['対象', '匿名閲覧の確認', '必要な対応'], (report.sharing?.items||[]).map((x,i)=>[x.service+' '+(i+1)+' / '+x.kind+'\n'+x.url,x.reason+'\n確認日時：'+(x.checkedAt||'未実施'),x.action]), [80,90,95]);
+    table('Google Drive等の共有範囲', ['対象', '公開範囲の確認', '必要な対応'], (report.sharing?.items||[]).map((x,i)=>[x.service+' '+(i+1)+' / '+x.kind+'\n'+x.url,(global.SimyInformationFlow?.sharingCopy(x).reason||x.reason)+'\n確認日時：'+(x.checkedAt||'未実施'),global.SimyInformationFlow?.sharingCopy(x).action||x.action]), [80,90,95]);
     for(const limit of report.sharing?.limitations||[])paragraph(limit,9);
     table('外部サービスとの接続先', ['用途・接続先', '設置方法', '設置ページ数・公開された接続先'], connections.map(x => [x.category + '\n' + x.domain, ({link: 'リンク', embed: '埋め込み', script: 'プログラム読込', form: 'フォーム送信先'}[x.kind] || x.kind), x.pages.size + 'ページに記載\n' + x.destination]), [60, 35, 170]);
     paragraph('リンク・コードの記載と、実際の通信は別です。患者情報は入力・送信していません。外部サービス内部の保存・削除・権限は未確認です。', 9);
