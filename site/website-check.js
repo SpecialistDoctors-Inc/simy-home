@@ -180,10 +180,10 @@ function renderServiceSecurity(report){
   const wrap=element('div','','evaluation-scroll');const table=element('table','','evaluation-table service-table');
   const head=element('thead',''),hr=element('tr','');for(const label of ['外部サービス','事故・脆弱性の調査結果','公表日・出典']){const th=element('th',label);th.scope='col';hr.append(th);}head.append(hr);table.append(head);
   const body=element('tbody','');
-  for(const service of info.services){
+  for(const service of [...info.services].sort((a,b)=>window.SimyServiceSecurity.findingsFor(b,info).length-window.SimyServiceSecurity.findingsFor(a,info).length)){
     const row=element('tr',''),name=element('th',service.name);name.scope='row';name.append(element('small',service.category||''));
     const risk=element('td',''),sources=element('td','');const notices=window.SimyServiceSecurity.findingsFor(service,info);
-    if(!notices.length){risk.append(element('p',window.SimyServiceSecurity.researchStatus(service)));sources.textContent='調査日 '+info.checkedAt;}
+    if(!notices.length){risk.append(element('p',window.SimyServiceSecurity.researchStatus(service)));sources.textContent=window.SimyServiceSecurity.researchStatus(service).includes('未実施')?'—':'調査日 '+info.checkedAt;}
     for(const n of notices){risk.append(element('strong',n.type),element('p',n.title),element('p',n.summary),element('small',n.scope));if(n.occurred)risk.append(element('small','発生・確認：'+n.occurred));sources.append(element('p','公表 '+n.published));const link=element('a','公式発表 ↗');link.href=n.url;link.target='_blank';link.rel='noopener';sources.append(link);if(n.stale)sources.append(element('small','情報確認から7日以上経過'));}
     row.append(name,risk,sources);body.append(row);
   }
