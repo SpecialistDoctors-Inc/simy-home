@@ -34,7 +34,6 @@ function render(report,root,el){
  const branches=el('div','','flow-branches');
  const categories=new Map();for(const g of groups){const key=g.category==='用途未確認'?'その他の外部リンク':g.category;const list=categories.get(key)||[];list.push(g);categories.set(key,list);}
  for(const [category,list] of categories){const observed=list.some(g=>g.observed),branch=el('details','','flow-branch'+(observed?' observed':''));const summary=el('summary','');const direction=list.every(g=>g.kinds.every(k=>k==='link'||k==='form'))?'→':'⇄';summary.append(el('span',direction,'flow-arrow'),el('strong',category+' · '+list.length+'サービス'),el('small',observed?'通常表示で通信を確認した接続先あり':'ページに接続先の記載あり'));
- if(list.some(g=>g.sharing.some(x=>x.status==='preview-observed')))summary.append(el('b','ログインなしで閲覧画面が開く資料あり','flow-sharing-alert'));
  branch.open=true;branch.append(summary);
  for(const g of list){const copy=managementCopy(g),entry=el('div','','flow-service');entry.append(el('strong',g.domain),el('p',copy.label),el('p',copy.reason));
  branch.append(entry);}
@@ -45,7 +44,7 @@ function render(report,root,el){
 }
 function sharingCopy(item){
  const copies={
-  'preview-observed':{label:'ログインなしで閲覧画面が開きます',reason:'ホームページから、この資料の閲覧画面をログインせずに開けました。公開用の案内資料なら問題ありません。',action:'この資料が「誰に見られてもよい資料」か確認してください。院内限定の資料なら、公開範囲を見直してください。'},
+  'preview-observed':{label:'内容は未判定',reason:'公開用の案内資料なら問題ありません。資料の内容が患者さん向けか、院内限定かは未判定です。',action:'この資料が「誰に見られてもよい資料」か確認してください。院内限定の資料なら、公開範囲を見直してください。'},
   'access-required':{label:'閲覧にはアクセス許可が必要です',reason:'今回の確認では、ログインなしで資料を閲覧できませんでした。誰に共有されているかは未確認です。',action:'院内限定の資料なら、不要な外部の人に共有していないか確認してください。'},
   unknown:{label:'見られるか判断できませんでした',reason:'今回の取得結果だけでは、ログインなしで見られるか判断できませんでした。',action:'資料の持ち主と、共有先と公開範囲を確認してください。'},
   'not-checked':{label:'今回は確認していません',reason:'確認件数や時間の上限に達したため、このリンクは未確認です。',action:'資料の持ち主に公開範囲を確認してください。'}
@@ -57,15 +56,13 @@ function renderSharing(report,root,el){
  const items=report.sharing?.items||[];
  if(!report.sharing){section.append(el('p','この診断結果には共有リンクの閲覧確認がありません。'));root.append(section);return;}
  if(!items.length)section.append(el('p','確認した公開ページでは、検査対象のGoogle Drive・Docs直接リンクは見つかりませんでした。リンクのない内部共有は未検査です。'));
- const open=items.filter(x=>x.status==='preview-observed').length;
- if(items.length){section.append(el('strong','ログインなしで閲覧画面が開いた資料：'+open+'件 / 確認対象 '+items.length+'件'),el('p','患者さん向けの案内など、公開するための資料なら問題ありません。資料の内容が公開用かどうかは未判定です。'));}
  if(items.length){
  const wrap=el('div','','evaluation-scroll');const table=el('table','','evaluation-table sharing-table');const head=el('thead',''),header=el('tr','');
- for(const label of ['資料','公開状態','判定内容']){const cell=el('th',label);cell.scope='col';header.append(cell);}head.append(header);table.append(head);
+ for(const label of ['資料','判定内容']){const cell=el('th',label);cell.scope='col';header.append(cell);}head.append(header);table.append(head);
  const body=el('tbody','');
  items.forEach((item,i)=>{const copy=sharingCopy(item),row=el('tr',''),name=el('th',item.service+' · '+(item.kind==='folder'?'フォルダ':'共有資料')+' '+(i+1));name.scope='row';
  if(/^https:\/\//.test(item.url||'')){const link=el('a','資料を見る ↗');link.href=item.url;link.target='_blank';link.rel='noopener';name.append(el('br',''),link);}
- const state=el('td',copy.label);const result=el('td',copy.reason);row.append(name,state,result);body.append(row);});
+ const result=el('td',copy.reason);row.append(name,result);body.append(row);});
  table.append(body);wrap.append(table);section.append(wrap,el('p','資料の内容が患者さん向けか、院内限定かは未判定です。編集権限も未確認です。公開されているだけで情報漏えいとは判定しません。','small'));
  }
  root.append(section);
