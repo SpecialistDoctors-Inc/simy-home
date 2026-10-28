@@ -1,0 +1,32 @@
+/* Shared reading rhythm based on the supplied SIMY pricing reference. */
+body{background:#f7f9fc;color:#17253b}
+#main{--ink:#17253b;--sub:#506177;--line:#e3e9f1;--accent:#1262b0;--pale:#f1f7fd;--bg:#f7f9fc;max-width:1120px}
+#main .pad{padding:48px 32px}#main .care-nav{padding:18px 32px}#main h2{font-size:clamp(24px,3.1vw,34px);line-height:1.4}#main p{line-height:1.75}#main .button{border-radius:10px}#main .section-head>p{color:#506177}
+#main .offer-pricing,#main .offer-compare,#main .offer-faq,#main .hp-care-value,#main .offer-flow{background:transparent;border-color:#e3e9f1}
+#main .diagnosis-state{background:#f7f9fc;border:1px solid #e3e9f1;border-radius:16px;padding:32px;margin:24px 32px}
+#main .evaluation-scroll,#main .simple-compare{overflow-x:auto;background:white;border:1px solid #e3e9f1;border-radius:16px;box-shadow:0 8px 30px rgba(23,37,59,.05)}
+#main .evaluation-table,#main .simple-compare table{border-collapse:separate;border-spacing:0;background:white;color:#17253b}
+#main .evaluation-table th,#main .evaluation-table td,#main .simple-compare th,#main .simple-compare td{padding:16px 20px;border-bottom:1px solid #e3e9f1;line-height:1.65}
+#main .evaluation-table thead,#main .simple-compare thead{background:#edf6ff;color:#17253b}#main .evaluation-table thead th,#main .simple-compare thead th{background:#edf6ff;color:#17253b}
+#main .evaluation-table tbody tr:nth-child(even){background:#f9fbfe}#main .simple-compare td:nth-child(2){background:#f1f7fd;color:#1262b0}
+#main .evaluation-section h3{font-size:22px;margin-bottom:18px}#main .live-finding,#main .manager-summary{border-radius:12px}#main .manager-summary{padding:24px;background:#f1f7fd;margin-top:24px}
+#main .offer-faq details{background:#fff;border:1px solid #e3e9f1;border-radius:12px;padding:18px 22px;margin:12px 0}
+#main .plan-comparison .table-frame{overflow-x:auto;background:white;border:1px solid var(--line);border-radius:16px;box-shadow:0 8px 30px rgba(23,37,59,.05)}
+#main .plan-comparison table{width:100%;min-width:680px;border-collapse:separate;border-spacing:0;table-layout:fixed}
+#main .plan-comparison th,#main .plan-comparison td{border-bottom:1px solid var(--line);vertical-align:middle;padding:14px 22px}
+#main .plan-comparison thead th{padding:23px 20px;text-align:center;border-bottom:2px solid var(--line)}
+#main .plan-comparison thead th:first-child{width:48%;text-align:left;background:#fafbfd;color:var(--sub);font-size:14px;font-weight:600}
+#main .plan-comparison thead th:nth-child(2){background:#f9fbfe}#main .plan-comparison thead th:nth-child(3){background:#edf6ff}
+#main .plan-comparison .plan-name{display:block;font-size:18px;font-weight:750;line-height:1.4}
+#main .plan-comparison .price{display:block;font-size:29px;font-weight:800;letter-spacing:-.035em;line-height:1.5;font-variant-numeric:tabular-nums}
+#main .plan-comparison .price small{display:inline;font-size:13px;font-weight:600;letter-spacing:0}#main .plan-comparison .tax{font-size:12px;color:var(--sub);font-weight:500}
+#main .plan-comparison tbody th{text-align:left;font-size:15px;font-weight:700}#main .plan-comparison tbody th small{display:block;color:var(--sub);font-size:12px;font-weight:400;line-height:1.6;margin-top:2px}
+#main .plan-comparison tbody td{text-align:center;font-size:14px}#main .plan-comparison tbody td:nth-child(3){background:rgba(241,247,253,.46)}
+#main .plan-comparison .group th{background:#f3f6fa!important;color:#42536b;font-size:13px;letter-spacing:.045em;padding:10px 22px;border-bottom:1px solid #dfe6ed}
+#main .plan-comparison .check{font-size:24px;color:#116cba;font-weight:800;line-height:1}#main .plan-comparison .na{color:#738298}
+#main .plan-comparison .option td{font-weight:650}#main .plan-comparison td small{display:block;font-size:12px;color:var(--sub)}
+#main .plan-comparison .total th,#main .plan-comparison .total td{background:#eaf3fd!important;border-bottom:0;font-weight:750}
+#main .plan-comparison .total td{font-size:22px;font-variant-numeric:tabular-nums;color:#114b83}#main .plan-comparison .total small{font-size:12px;color:#637188;font-weight:500}
+#main .plan-comparison .notes{color:#58697f;font-size:12px;line-height:1.8;margin:17px 4px 0}#main .plan-comparison .notes p{margin:4px 0}
+#main .plan-comparison .scroll-tip{display:none;color:#6a7b92;font-size:12px;text-align:right;margin:0 0 8px}
+@media(max-width:700px){#main .pad{padding:32px 16px}#main .care-nav{padding:14px 16px}#main .diagnosis-state{margin:16px 0;padding:16px}#main .plan-comparison .scroll-tip{display:block}#main .plan-comparison th,#main .plan-comparison td{padding:12px 15px}#main .plan-comparison tbody th{font-size:14px}#main .evaluation-table th,#main .evaluation-table td,#main .simple-compare th,#main .simple-compare td{padding:14px 12px}#main .simple-compare table{min-width:620px}}
