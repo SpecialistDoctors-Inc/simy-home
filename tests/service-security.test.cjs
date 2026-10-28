@@ -16,3 +16,5 @@ test('deduplicates integration pages, exposes unmatched and stale catalog',()=>{
  const r=assess({integrations:[connection('patient.digikar-smart.jp'),connection('patient.digikar-smart.jp')]},now);assert.equal(r.services.length,1);assert.equal(r.unmatched.length,1);
  const n=assess({integrations:[connection('blastmail.jp')]},Date.parse('2027-06-01')).notices[0];assert.equal(n.recent,false);assert.equal(n.stale,true);
 });
+
+test('DNS providers including Onamae are listed without implying a hosting incident',()=>{const r=assess({providers:{facts:[{provider:'onamae',name:'お名前.com',role:'DNS提供元',status:'記載を確認',evidence:'NS'}]}});assert.equal(r.services[0].name,'お名前.com');assert.equal(r.services[0].category,'DNS提供元');assert.equal(r.unmatched.length,1);assert.equal(r.notices.length,0);});

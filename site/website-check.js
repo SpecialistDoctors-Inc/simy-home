@@ -168,15 +168,25 @@ function renderServiceSecurity(report){
   if(!info){section.append(element('p','公表情報を読み込めませんでした。SIMYに確認をご相談ください。'));results.append(section);return;}
   if(!info.notices.length)section.append(element('p','今回の照合では、関連する公表事例を特定できませんでした。','service-unknown'),element('p','事故なしの判定ではありません。予約・問診などの提供会社から届く通知も、SIMYと確認してください。'));
   for(const n of info.notices){const article=element('article','','service-incident');article.append(element('span',(n.recent?'直近6か月の公表 · ':'過去の公表 · ')+n.type,'incident-label'),element('h4',n.name+'：'+n.title),element('p','公表 '+n.published+' / 情報確認 '+n.checkedAt),element('p',n.summary),element('strong','すること：'+n.action),element('p',n.connection+'。'+n.impact+'。'));const details=element('details','');details.append(element('summary','影響範囲・公式発表'),element('p',n.scope));const a=element('a','公式発表を確認 ↗');a.href=n.url;a.target='_blank';a.rel='noopener';details.append(a);article.append(details);if(n.stale)article.append(element('p','確認から7日以上経過しています。最新の続報を確認してください。','source-warning'));section.append(article);}
-  const detail=element('details','');detail.append(element('summary','接続先と照合状況（'+info.services.length+'サービス）'));
-  for(const service of info.services)detail.append(element('p',service.name+'：'+(service.kind==='link'?'リンクあり・契約未確認':'接続の記載あり')+' / '+(info.unmatched.includes(service)?'事故・脆弱性の全件照合は未実施':'上記の公式発表に関連')));
-  detail.append(element('p','情報確認 '+info.checkedAt+'。選定した公式発表との照合です。ニュースの全件収集・リアルタイム更新には対応していません。外部サービス内部は検査しません。'));
-  section.append(detail);results.append(section);
+  const wrap=element('div','','evaluation-scroll');const table=element('table','','evaluation-table service-table');
+  const head=element('thead',''),hr=element('tr','');for(const label of ['外部サービス','役割・確認できたこと','事故・脆弱性情報','必要な対応']){const th=element('th',label);th.scope='col';hr.append(th);}head.append(hr);table.append(head);
+  const body=element('tbody','');
+  for(const service of info.services){
+    const row=element('tr',''),name=element('th',service.name);name.scope='row';
+    const role=element('td',service.category||'用途未確認');role.append(element('small',service.kind==='provider'?service.status:service.kind==='link'?'リンクあり・契約未確認':'接続の記載あり'));
+    if(service.evidence){const evidence=element('details','');evidence.append(element('summary','確認した根拠'),element('p',service.evidence));role.append(evidence);}
+    const unmatched=info.unmatched.includes(service),risk=element('td',unmatched?'関連する事故情報は未確認':'関連する公式発表あり');
+    const action=element('td',unmatched?'SIMYと提供元の最新通知・契約内容を確認':'上記の対象範囲をSIMYと確認');
+    if(service.category==='DNS提供元')action.textContent='SIMYとDNS管理者・ログイン保護・変更通知を確認';
+    else if(service.category==='ドメイン登録会社')action.textContent='SIMYと更新期限・管理権限・ログイン保護を確認';
+    row.append(name,role,risk,action);body.append(row);
+  }
+  table.append(body);wrap.append(table);section.append(wrap,element('p','情報確認 '+info.checkedAt+'。選定した公式発表との照合です。「未確認」は事故がないという意味ではありません。外部サービス内部は検査しません。'));results.append(section);
 }
 function renderConnections(report){
   if(!Array.isArray(report.integrations))return;
   const grouped=new Map();for(const x of report.integrations){const key=x.kind+'|'+x.destination;const prior=grouped.get(key);if(prior)prior.pages.add(x.page);else grouped.set(key,{...x,pages:new Set([x.page])});}
-  const section=element('details','','report-technical');section.append(element('summary','外部サービスとの接続先（'+grouped.size+'件）'));
+  const section=element('section','','report-technical');section.append(element('h3','外部サービスとの接続先（'+grouped.size+'件）'));
   section.append(element('p','公開ページの記載です。リンクの存在だけでは、患者情報の送信や提供会社内部の保存は確認できません。'));
   if(!report.integrations.length)section.append(element('p','取得したHTMLでは接続先を検出できませんでした。未使用という判定ではありません。'));
   for(const x of grouped.values()){const row=element('div','','connection-row');row.append(element('strong',x.category+' · '+x.domain),element('p',({link:'リンク',embed:'埋め込み',script:'プログラム読込',form:'フォーム送信先'}[x.kind]||x.kind)+' / '+(x.protocol==='https:'?'HTTPS':'HTTP')));const detail=element('details','');detail.append(element('summary','設置場所・根拠（'+x.pages.size+'ページ）'),element('p',[...x.pages].join('\n')),element('p',x.destination),element('p',x.basis));if(x.fields?.length)detail.append(element('p','コード上の項目名：'+x.fields.join('、')+'（値は取得せず、送信も行っていません）'));row.append(detail);section.append(row);}
@@ -256,7 +266,7 @@ function appendReportDownload(report) {
 }
 function appendProviderResults(report) {
   const info=report.providers;if(!info)return;
-  const section=element('details','','report-technical');section.append(element('summary','ドメイン・サーバー・制作元の詳細'));
+  const section=element('section','','report-technical');section.append(element('h3','ドメイン・サーバー・制作元の詳細'));
   for(const fact of info.facts||[]){const row=element('article','','live-finding');row.append(element('h3',fact.role+'：'+fact.name),element('p',fact.status));const detail=element('details','');detail.append(element('summary','根拠を見る'),element('p',fact.evidence));if(/^https:\/\//.test(fact.source)){const a=element('a','登録情報・公式資料');a.href=fact.source;a.target='_blank';a.rel='noopener';detail.append(a);}row.append(detail);section.append(row);}
   section.append(element('h3','関連する公式発表'),element('p','過去の公表事例。自院への影響は未確認です。'));
   for(const notice of info.notices||[]){const row=element('article','','live-finding');row.append(element('h3',notice.title),element('p',notice.publisher+' / 公表 '+notice.published+' / 情報確認 '+notice.checkedAt),element('p',notice.summary),element('p','対象：'+notice.scope),element('p',notice.resolution));if(notice.quote)row.append(element('blockquote','公式発表より引用：「'+notice.quote+'」'));row.append(element('p','すること：'+notice.action));if(/^https:\/\//.test(notice.url)){const a=element('a','出典：公式発表');a.href=notice.url;a.target='_blank';a.rel='noopener';row.append(a);}section.append(row);}
