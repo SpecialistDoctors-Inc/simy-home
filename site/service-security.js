@@ -3,8 +3,8 @@
 'use strict';
 const checkedAt='2026-10-28';
 const catalog=[
- {id:'blastmail-20261021',domains:['blastmail.jp'],provider:'blastmail',name:'ブラストメール',published:'2026-10-21',checkedAt,type:'情報漏えい',title:'不正アクセスで契約者情報・一部の配信先情報が流出',summary:'API用サーバーへの侵入からデータが持ち出されたと公表。侵入経路の詳細は調査中で、古いPHPが原因とは断定できません。',scope:'販売管理システムの全契約者の情報と、一部顧客のメール配信情報。',action:'SIMYと、提供元の個別通知・対象データ・連携継続の可否を確認。',url:'https://www.rakus.co.jp/news/2026/1021-3.html'},
- {id:'xserver-20261023',domains:[],provider:'xserver',name:'エックスサーバー（委託先）',published:'2026-10-23',checkedAt,type:'委託先で情報漏えい',title:'メール配信委託先で顧客のメールアドレスが流出',summary:'ブラストメールに登録された配信先が対象。エックスサーバーのサーバー・管理画面への侵入ではありません。',scope:'ニュース等の配信を希望し、委託先に登録されていた顧客。全利用者ではありません。',action:'SIMYと、契約先からの対象者通知・不審メールへの対応を確認。',url:'https://www.xserver.co.jp/news/152'}
+ {id:'blastmail-20261021',domains:['blastmail.jp'],provider:'blastmail',name:'ブラストメール',published:'2026-10-21',checkedAt,type:'情報漏えい',title:'不正アクセスで契約者情報・一部の配信先情報が流出',summary:'API用サーバーへの侵入からデータが持ち出されたと公表。侵入経路の詳細は調査中で、古いPHPが原因とは断定できません。',scope:'販売管理システムの全契約者の情報と、一部顧客のメール配信情報。',action:'提供元の個別通知・対象データ・連携継続の可否を確認。',url:'https://www.rakus.co.jp/news/2026/1021-3.html'},
+ {id:'xserver-20261023',domains:[],provider:'xserver',name:'エックスサーバー（委託先）',published:'2026-10-23',checkedAt,type:'委託先で情報漏えい',title:'メール配信委託先で顧客のメールアドレスが流出',summary:'ブラストメールに登録された配信先が対象。エックスサーバーのサーバー・管理画面への侵入ではありません。',scope:'ニュース等の配信を希望し、委託先に登録されていた顧客。全利用者ではありません。',action:'契約先からの対象者通知・不審メールへの対応を確認。',url:'https://www.xserver.co.jp/news/152'}
 ];
 const services=[['digikar-smart.jp','デジスマ診療'],['nomoca-ai.com','NOMOCA AI'],['doctorsfile.jp','ドクターズ・ファイル'],['googletagmanager.com','Googleタグ'],['google-analytics.com','Google Analytics'],['ajax.googleapis.com','Google Hosted Libraries'],['line.me','LINE'],['stripe.com','Stripe'],['blastmail.jp','ブラストメール']];
 function matches(host,domain){return host===domain||host.endsWith('.'+domain);}
