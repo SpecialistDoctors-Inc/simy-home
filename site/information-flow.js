@@ -42,15 +42,30 @@ function render(report,root,el){
  diagram.append(site,browser,branches);section.append(diagram,el('p','管理の重要度は、安全・危険の判定ではありません。入力内容や実際の患者情報の送信、提供先内部の管理状況は未確認です。','small'));root.append(section);
  renderSharing(report,root,el);
 }
-function sharingName(item){return typeof item.title==='string'&&item.title.trim()?item.title.trim():item.kind==='folder'?'共有フォルダ（名称未取得）':'資料名を取得できませんでした';}
+function sharingName(item){
+ const assessment=item.assessment;
+ if(item.status==='preview-observed'&&['extracted','partial'].includes(item.content?.status)&&assessment?.status==='assessed'&&typeof assessment.topic==='string'&&assessment.topic.trim())return assessment.topic.trim().replace(/に関する資料$/, '')+'に関する資料';
+ const title=typeof item.title==='string'?item.title.trim().replace(/\.(pdf|docx?|pptx?|xlsx?)$/i,''):'';
+ if(title&&!/^(?:プレゼンテーション|presentation|資料|document|untitled|無題|ファイル|scan|スキャン|[0-9 _-]+)[0-9 _-]*$/i.test(title))return title+'に関する資料（名称から表示・内容未判定）';
+ return item.kind==='folder'?'共有フォルダ（内容未判定）':'内容を特定できていない資料';
+}
 function sharingCopy(item){
  const copies={
-  'preview-observed':{label:'内容は未判定',reason:'公開用の案内資料なら問題ありません。資料の内容が患者さん向けか、院内限定かは未判定です。',action:'この資料が「誰に見られてもよい資料」か確認してください。院内限定の資料なら、公開範囲を見直してください。'},
-  'access-required':{label:'閲覧にはアクセス許可が必要です',reason:'今回の確認では、ログインなしで資料を閲覧できませんでした。誰に共有されているかは未確認です。',action:'院内限定の資料なら、不要な外部の人に共有していないか確認してください。'},
-  unknown:{label:'見られるか判断できませんでした',reason:'今回の取得結果だけでは、ログインなしで見られるか判断できませんでした。',action:'資料の持ち主と、共有先と公開範囲を確認してください。'},
-  'not-checked':{label:'今回は確認していません',reason:'確認件数や時間の上限に達したため、このリンクは未確認です。',action:'資料の持ち主に公開範囲を確認してください。'}
+  'preview-observed':{label:'本文は未確認',reason:'ログインなしで閲覧画面を確認しました。資料本文は未取得のため、公開用の案内か院内資料かは未判定です。',action:''},
+  'access-required':{label:'閲覧にはアクセス許可が必要です',reason:'今回の確認では、ログインなしで資料を閲覧できませんでした。誰に共有されているかは未確認です。',action:''},
+  unknown:{label:'見られるか判断できませんでした',reason:'今回の取得結果だけでは、ログインなしで見られるか判断できませんでした。',action:''},
+  'not-checked':{label:'今回は確認していません',reason:'確認件数や時間の上限に達したため、このリンクは未確認です。',action:''}
  };
- return copies[item.status]||copies.unknown;
+ if(item.status!=='preview-observed')return copies[item.status]||copies.unknown;
+ const content=item.content,a=item.assessment;
+ if(!content||content.status==='unavailable')return copies['preview-observed'];
+ if(!a||a.status==='not-run')return {label:'内容は未判定',reason:'本文の文字は取得できましたが、患者さん向けか院内資料かの判定は未実施です。',action:''};
+ if(a.status==='withheld')return {label:'内容の確認が必要です',reason:'本文の文字は取得できました。外部AIへの送信は保留し、内容は未判定です。',action:''};
+ if(a.status!=='assessed'||a.scope!=='extracted-text-only')return {label:'内容を判定できませんでした',reason:'本文の文字は取得できましたが、用途の判定を完了できませんでした。',action:''};
+ const partial=content.status==='partial'?'取得できた一部の文字では、':'取得できた文字では、';
+ if(a.audience==='internal')return {label:'院内向け資料の可能性があります',reason:partial+'院内向けの資料と推定されます。公開の意図や情報漏えいの有無は断定できません。',action:''};
+ if(a.audience==='patient'&&a.concern==='none')return {label:'患者さん向けの案内と推定されます',reason:partial+'患者さん向けの案内と推定され、公開範囲に関する問題は見つかりませんでした。画像・手書き・抽出できない部分や共有権限は未評価です。',action:''};
+ return {label:'内容の確認が必要です',reason:partial+'公開用の案内資料と判断できませんでした。',action:''};
 }
 function renderSharing(report,root,el){
  const section=el('section','','sharing-review');section.append(el('h3','Google Driveなどの公開範囲'));
@@ -64,7 +79,7 @@ function renderSharing(report,root,el){
  items.forEach((item,i)=>{const copy=sharingCopy(item),row=el('tr',''),name=el('th',sharingName(item));name.scope='row';
  if(/^https:\/\//.test(item.url||'')){const link=el('a','資料を見る ↗');link.href=item.url;link.target='_blank';link.rel='noopener';name.append(el('br',''),link);}
  const result=el('td',copy.reason);row.append(name,result);body.append(row);});
- table.append(body);wrap.append(table);section.append(wrap,el('p','資料の内容が患者さん向けか、院内限定かは未判定です。編集権限も未確認です。公開されているだけで情報漏えいとは判定しません。','small'));
+ table.append(body);wrap.append(table);section.append(wrap,el('p','用途の判定は取得できた文字に限ります。画像・手書き・編集権限は未確認です。公開されているだけで情報漏えいとは判定しません。','small'));
  }
  root.append(section);
 }
