@@ -54,6 +54,7 @@
     paragraph(registration.clinicName + '　診断結果一覧', 17);
     if(registration.contactName) paragraph('お名前：' + registration.contactName + ' 様');
     paragraph('対象：' + report.url + '\n確認日時：' + new Date(report.checkedAt).toLocaleString('ja-JP') + '\n診断ID：' + (report.diagnosisId || '未取得'), 9);
+    if(report.completion==='partial') paragraph('一部完了：'+report.completionReason, 11);
     paragraph('公開情報による確認です。旧版だけで脆弱性があるとは限りません。侵入・情報漏えいの有無は判定できません。', 9);
     table('言語・システム・ライブラリの比較', ['言語・部品', '現在のバージョン', '最新安定版', '必要な対応・根拠'], versions, [36, 53, 53, 123]);
     if (!versions.length) paragraph('公開情報から使用部品の版は特定できませんでした。安全という判定ではありません。');

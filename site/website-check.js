@@ -337,11 +337,12 @@ function scanProgress(stage, detail) {
 async function readScanResponse(response){
   if(!response.ok){const data=await response.json();throw Error(data.error||'診断結果を取得できませんでした。');}
   if(!response.headers.get('content-type')?.includes('application/x-ndjson'))return response.json();
-  const reader=response.body.getReader();const decoder=new TextDecoder();let pending='';let report;
-  const consume=line=>{if(!line.trim())return;const event=JSON.parse(line);if(event.type==='progress')scanProgress(event.stage,event.detail);else if(event.type==='result')report=event.report;else if(event.type==='error')throw Error(event.error);};
-  try{while(true){const {done,value}=await reader.read();pending+=decoder.decode(value,{stream:!done});let at;while((at=pending.indexOf('\n'))>=0){consume(pending.slice(0,at));pending=pending.slice(at+1);}if(done){consume(pending);break;}}}
+  const reader=response.body.getReader();const decoder=new TextDecoder();let pending='';let report;let partial;
+  const consume=line=>{if(!line.trim())return;const event=JSON.parse(line);if(event.type==='progress')scanProgress(event.stage,event.detail);else if(event.type==='partial')partial=event.report;else if(event.type==='result')report=event.report;else if(event.type==='error')throw Error(event.error);};
+  try{while(true){const {done,value}=await reader.read();pending+=decoder.decode(value,{stream:!done});let at;while((at=pending.indexOf('\n'))>=0){consume(pending.slice(0,at));pending=pending.slice(at+1);}if(report)return report;if(done){consume(pending);break;}}}
+  catch(error){if(partial)return {...partial,completion:'partial',completionReason:'追加の確認が時間内に完了しませんでした。確認できた範囲の結果を表示しています。'};throw error;}
   finally{await reader.cancel().catch(()=>{});reader.releaseLock();}
-  if(!report)throw Error('診断結果の受信が途中で止まりました。もう一度お試しください。');return report;
+  if(!report&&partial)return partial;if(!report)throw Error('診断結果の受信が途中で止まりました。もう一度お試しください。');return report;
 }
 
 // Advertising identifiers do not select a page. Remove only known tracking keys;
@@ -374,14 +375,14 @@ diagnosisForm.addEventListener('submit', async event => {
   if(urlInput) urlInput.value=target.href; clearDraft();
   if(!diagnosisEndpoint){title.textContent='診断サービスは接続準備中です';message.textContent='まだ診断は実行していません。公開設定の確認後にご利用いただけます。';return;}
   busy=true;const button=diagnosisForm.querySelector('button');const label=button.querySelector('.button-label');const originalLabel=label?.textContent;if(label)label.textContent='診断中…';button.disabled=true;diagnosisInput.disabled=true;diagnosisForm.setAttribute('aria-busy','true');
-  try { const response=await fetch(diagnosisEndpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url:target.href,behavior:false,stream:true}),signal:AbortSignal.timeout(185000)}); const data=await readScanResponse(response); renderReport(data); scanProgress('done','下に結果を表示しました。'); diagnosisState.focus({preventScroll:true});diagnosisState.scrollIntoView({block:'start',behavior:'smooth'}); }
-  catch(error){results.replaceChildren();title.textContent='診断を完了できませんでした';message.textContent=error.name==='TimeoutError'?'時間内に応答がありませんでした。少し待って再度お試しください。':error.message==='Failed to fetch'?'診断サービスに接続できませんでした。少し待って再度お試しください。':error.message;}
+  try { const response=await fetch(diagnosisEndpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url:target.href,behavior:false,stream:true}),signal:AbortSignal.timeout(185000)}); const data=await readScanResponse(response); renderReport(data); scanProgress('done',data.completion==='partial'?data.completionReason:'下に結果を表示しました。');if(data.completion==='partial'){const heading=document.querySelector('#scan-progress strong');if(heading)heading.textContent='確認できた範囲の結果を表示しました';results.prepend(element('p',data.completionReason,'report-boundary'));} diagnosisState.focus({preventScroll:true});diagnosisState.scrollIntoView({block:'start',behavior:'smooth'}); }
+  catch(error){results.replaceChildren();title.textContent='診断を完了できませんでした';message.textContent=/timeout|timed out|aborted/i.test((error.name||'')+' '+(error.message||''))?'時間内に応答がありませんでした。少し待って再度お試しください。':error.message==='Failed to fetch'?'診断サービスに接続できませんでした。少し待って再度お試しください。':error.message;}
   finally{busy=false;button.disabled=false;diagnosisInput.disabled=false;diagnosisForm.removeAttribute('aria-busy');if(label)label.textContent=originalLabel;if(title.textContent==='診断を完了できませんでした')scanProgress('error',message.textContent);}
 });
 document.querySelector('.edit-url').addEventListener('click',()=>{if(!busy){diagnosisState.hidden=true;diagnosisInput.focus();}});
 
 let reportPdfLoader;
 function loadReportPdf(){
-  if(!reportPdfLoader)reportPdfLoader=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='/diagnosis-pdf.js?v=b1232c9d3b23';script.onload=resolve;script.onerror=()=>{script.remove();reportPdfLoader=null;reject(Error('PDF機能の読込に失敗しました'));};document.head.append(script);});
+  if(!reportPdfLoader)reportPdfLoader=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='/diagnosis-pdf.js?v=904b6fa652dd';script.onload=resolve;script.onerror=()=>{script.remove();reportPdfLoader=null;reject(Error('PDF機能の読込に失敗しました'));};document.head.append(script);});
   return reportPdfLoader;
 }
