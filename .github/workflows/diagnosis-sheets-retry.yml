@@ -9,6 +9,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   retry:
+    if: vars.DIAGNOSIS_SHEETS_RETRY_ENABLED == 'true'
     runs-on: ubuntu-latest
     environment: prod
     timeout-minutes: 3

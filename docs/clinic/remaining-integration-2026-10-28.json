@@ -1,0 +1,43 @@
+{
+  "status": "awaiting authentication; not production acceptance",
+  "production_static": {
+    "pr": 214,
+    "commit": "91e41d24d94387ecbda93d86b037dadb61de474b",
+    "deploy_run": 40666818556,
+    "result": "success",
+    "pdf_asset_verified": true,
+    "comic_PR213_preserved": true
+  },
+  "local_api": {
+    "path": "/tmp/simy-hp-sites-integration-20261028",
+    "commit": "1de154e",
+    "changes": [
+      "bounded search, safe failure codes, usage records, REXML correction",
+      "target/collector refusal provenance",
+      "independent marketing consent, confirmation, approval, unsubscribe and ledger"
+    ],
+    "tests": "outreach,email-request,sheets-sync,service-security,joanr-retrieval,scan-progress,typecheck,build passed",
+    "published": false
+  },
+  "static_outreach": {
+    "path": "/tmp/simy-hp-integration-20261028",
+    "branch": "codex/hp-outreach-integration",
+    "tests": 1528,
+    "published": false,
+    "order": "Publish API with migration 0006 before static consent UI",
+    "schedule_gate": "repository variable DIAGNOSIS_SHEETS_RETRY_ENABLED=true required; leave unset until live sync verified"
+  },
+  "required_user_actions": [
+    "Connect Sites under the account/workspace owning appgprj_6ae054d34b9c819180efb19b6cedd6e4; current get_site and credential return NOT_FOUND",
+    "Connect OpenAI Developers through the key-owner chat; never paste key into chat",
+    "Reauthenticate gcloud auth login tetsuo@simy.one; then confirm dedicated Sheets access",
+    "Specify verified sender identity and a test recipient controlled by user; no real customer send authorized"
+  ],
+  "remaining_acceptance": [
+    "AI API classification and official web search from diagnosis, saved result, screen/PDF",
+    "Google Sheets same-ID delivery, readback and retry",
+    "JOANR fixed collector retrieval and formal diagnosis; current Mac 301/301/200 is not production proof",
+    "Test mailbox receipt, confirmation, approved service email receipt, unsubscribe and suppression"
+  ],
+  "prior_evidence": "v36 acceptance retained in /Users/t.shiwaku/Documents/Codex/2026-10-28/hp-integration-acceptance/acceptance.json; not rerated as current remaining-feature acceptance"
+}
