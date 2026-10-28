@@ -12,10 +12,10 @@ function model(report){
 }
 function managementCopy(g){
  const category=(g.categories||[g.category]).join(' ');
- if(/予約|問診|診療|決済|ログイン/.test(category))return {label:'患者情報の管理が重要',reason:'予約・問診などで、氏名や連絡先、症状などを入力する可能性があります。',action:'SIMYと、入力する情報・閲覧できる人・保存期間を確認してください。'};
- if(g.category==='資料共有'||g.sharing?.length)return {label:'資料の公開範囲を確認',reason:'患者さん向けの公開資料か、院内だけで使う資料かで、必要な管理が変わります。',action:'SIMYと、公開してよい内容か、共有相手が適切かを確認してください。'};
- if(g.kinds.includes('form'))return {label:'入力情報の管理が重要',reason:'フォームの入力内容を外部へ送る設定があります。入力内容は未確認です。',action:'SIMYと、送信する項目・受取先・保存期間を確認してください。'};
- if(g.kinds.some(k=>k==='script'||k==='embed'))return {label:'外部への送信内容を確認',reason:'ページを開くだけで、アクセス情報などが外部に送られる場合があります。',action:'SIMYと、送る情報と外部プログラムの更新状況を確認してください。'};
+ if(/予約|問診|診療|決済|ログイン/.test(category))return {label:'患者情報の管理が重要',reason:'予約・問診などで、氏名や連絡先、症状などを入力する可能性があります。',action:'入力する情報・閲覧できる人・保存期間を確認してください。'};
+ if(g.category==='資料共有'||g.sharing?.length)return {label:'資料の公開範囲を確認',reason:'患者さん向けの公開資料か、院内だけで使う資料かで、必要な管理が変わります。',action:'公開してよい内容か、共有相手が適切かを確認してください。'};
+ if(g.kinds.includes('form'))return {label:'入力情報の管理が重要',reason:'フォームの入力内容を外部へ送る設定があります。入力内容は未確認です。',action:'送信する項目・受取先・保存期間を確認してください。'};
+ if(g.kinds.some(k=>k==='script'||k==='embed'))return {label:'外部への送信内容を確認',reason:'ページを開くだけで、アクセス情報などが外部に送られる場合があります。',action:'送る情報と外部プログラムの更新状況を確認してください。'};
  return {label:'案内だけのリンクなら、優先度は低め',reason:'リンクを置いているだけでは、患者情報が送られるとは限りません。移動先で情報を入力する場合は、管理の確認が必要です。',action:'案内を見るだけか、予約や個人情報の入力に使うかを確認してください。'};
 }
 function render(report,root,el){
@@ -37,10 +37,10 @@ function render(report,root,el){
 }
 function sharingCopy(item){
  const copies={
-  'preview-observed':{label:'ログインなしで閲覧画面が開きます',reason:'ホームページから、この資料の閲覧画面をログインせずに開けました。公開用の案内資料なら問題ありません。',action:'この資料が「誰に見られてもよい資料」か確認してください。院内限定の資料なら、SIMYへ公開範囲の見直しをご相談ください。'},
-  'access-required':{label:'閲覧にはアクセス許可が必要です',reason:'今回の確認では、ログインなしで資料を閲覧できませんでした。誰に共有されているかは未確認です。',action:'院内限定の資料なら、不要な外部の人に共有していないかSIMYと確認してください。'},
-  unknown:{label:'見られるか判断できませんでした',reason:'今回の取得結果だけでは、ログインなしで見られるか判断できませんでした。',action:'資料の持ち主とSIMYで、共有先と公開範囲を確認してください。'},
-  'not-checked':{label:'今回は確認していません',reason:'確認件数や時間の上限に達したため、このリンクは未確認です。',action:'必要に応じてSIMYへ、この資料の公開範囲の確認をご相談ください。'}
+  'preview-observed':{label:'ログインなしで閲覧画面が開きます',reason:'ホームページから、この資料の閲覧画面をログインせずに開けました。公開用の案内資料なら問題ありません。',action:'この資料が「誰に見られてもよい資料」か確認してください。院内限定の資料なら、公開範囲を見直してください。'},
+  'access-required':{label:'閲覧にはアクセス許可が必要です',reason:'今回の確認では、ログインなしで資料を閲覧できませんでした。誰に共有されているかは未確認です。',action:'院内限定の資料なら、不要な外部の人に共有していないか確認してください。'},
+  unknown:{label:'見られるか判断できませんでした',reason:'今回の取得結果だけでは、ログインなしで見られるか判断できませんでした。',action:'資料の持ち主と、共有先と公開範囲を確認してください。'},
+  'not-checked':{label:'今回は確認していません',reason:'確認件数や時間の上限に達したため、このリンクは未確認です。',action:'資料の持ち主に公開範囲を確認してください。'}
  };
  return copies[item.status]||copies.unknown;
 }
