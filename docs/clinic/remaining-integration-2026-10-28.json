@@ -1,5 +1,5 @@
 {
-  "status": "awaiting authentication; not production acceptance",
+  "status": "local real Codex E2E passed; Sites NOT_FOUND blocks production publication",
   "production_static": {
     "pr": 214,
     "commit": "91e41d24d94387ecbda93d86b037dadb61de474b",
@@ -10,20 +10,20 @@
   },
   "local_api": {
     "path": "/tmp/simy-hp-sites-integration-20261028",
-    "commit": "bfe34ac8b8425084748b8aa8d71bc652ff9115df",
+    "commit": "eb7ee9d",
     "changes": [
-      "bounded search, safe failure codes, usage records, REXML correction"
+      "authenticated diagnosis queue and fixed Mac ChatGPT Codex runner; no API key",
+      "validated document classification and live official incident research",
+      "lease/idempotency/limits/payload cleanup; no outreach or JOANR changes"
     ],
-    "tests": "After excluding JOANR and outreach: sheets-sync, service-security, scan-progress, typecheck, build passed",
+    "tests": "formal local scan API with synthetic acquisition -> real Codex classification -> registration -> DB readback; live research 2 searches, 1 verified official notice, 0 rejected; classifier 9/9 and five related suites, typecheck and build passed",
     "published": false
   },
-  "required_user_actions": [
-    "Connect Sites under the account/workspace owning appgprj_6ae054d34b9c819180efb19b6cedd6e4; current get_site and credential return NOT_FOUND",
-    "Connect OpenAI Developers through the key-owner chat; never paste key into chat",
-    "Reauthenticate gcloud auth login tetsuo@simy.one; then confirm dedicated Sheets access"
-  ],
+  "required_user_actions": [],
   "remaining_acceptance": [
-    "AI API classification and official web search from diagnosis, saved result, screen/PDF",
+    "Publish exact committed API source and migration through existing Sites project once access works",
+    "Set dedicated queue secret in Sites and protected Mac environment; enable and run fixed worker",
+    "Production diagnosis -> actual allowed documents/live research -> saved readback -> screen/PDF",
     "Google Sheets same-ID delivery, readback and retry"
   ],
   "prior_evidence": "v36 acceptance retained in /Users/t.shiwaku/Documents/Codex/2026-10-28/hp-integration-acceptance/acceptance.json; not rerated as current remaining-feature acceptance",
@@ -42,5 +42,10 @@
     "order": "No marketing UI changes. Enable scheduled Sheets retry only after authentication, live same-ID delivery and readback.",
     "schedule_gate": "repository variable DIAGNOSIS_SHEETS_RETRY_ENABLED=true required; leave unset until live sync verified",
     "pr": "https://github.com/SpecialistDoctors-Inc/simy-home/pull/215"
+  },
+  "blockers": {
+    "Sites": "get_site and source write credential return NOT_FOUND for unchanged project ID; cause unknown; no account/relogin instruction inferred",
+    "Sheets": "Separate existing credential and same-ID delivery/readback verification remain incomplete",
+    "runner": "Not configured or running in production; no daemon/autostart installed; exact setup and bounds in API codex-runner/README.md"
   }
 }
