@@ -74,8 +74,10 @@
     table('調べたページ', ['対象ページ', '取得状況'], (report.crawl?.pages || []).map(p => [p.url, p.status === 'checked' ? '確認' : '未確認：' + (p.reason || p.status)]), [205, 60]);
     paragraph('診断の範囲・制限', 13);
     if (report.crawl) paragraph('確認ページ数：' + report.crawl.pages.filter(p => p.status === 'checked').length + '（上限30ページ）。サイト全体の安全性を保証するものではありません。', 9);
-    for (const limit of [...(report.sourceWarnings || []), ...(report.scripts?.limitations || [])]) paragraph(limit, 9);
-    paragraph('サーバー内部・データベース・ログイン後・電子カルテ・外部サービス内部は対象外です。対応の確認・ご相談：SIMY（sales@simy.one）', 9);
+    paragraph('今回確認したこと：公開ページから、古い部品や見直しが必要な設定を確認しました。', 9);
+    paragraph('まだ分からないこと：侵入・情報漏えいの有無、サーバー内部、電子カルテ・予約サービスの内部は確認していません。', 9);
+    paragraph('詳しく確認したい場合：SIMYへご相談ください。管理者の協力のもと、アクセス記録・ファイル・利用者の権限などを確認する範囲をご案内します。sales@simy.one', 9);
+    paragraph('取得できなかった理由や容量・時間の上限は、診断画面の「技術担当者向けの検査記録」で確認できます。', 9);
     const count = doc.getNumberOfPages();
     for (let i = 1; i <= count; i++) { doc.setPage(i); doc.setFont('ReportJP', 'normal'); doc.setTextColor(19, 43, 76); doc.setFontSize(10); doc.text('SIMY HP管理', 16, 14); doc.setFontSize(9); doc.text('お問い合わせ：sales@simy.one', 281, 14, {align: 'right'}); doc.link(226, 9, 55, 6, {url: 'mailto:sales@simy.one'}); doc.setDrawColor(215, 224, 235); doc.line(16, 18, 281, 18); doc.setFontSize(8); doc.text('サービス詳細：https://simy.one/hp-management.html', 16, 201); doc.link(16, 197, 90, 6, {url: 'https://simy.one/hp-management.html'}); doc.text('公開情報の診断記録・確認日時点', 158, 201); doc.text(i + ' / ' + count, 281, 201, {align: 'right'}); }
     return doc;
