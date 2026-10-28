@@ -177,22 +177,17 @@ function renderServiceSecurity(report){
   const section=element('section','','service-security');
   section.append(element('h3','02 / 外部サービスの事故・脆弱性情報'));
   if(!info){section.append(element('p','公表情報を読み込めませんでした。提供元の公式情報を確認してください。'));results.append(section);return;}
-  if(!info.notices.length)section.append(element('p','今回の照合では、関連する公表事例を特定できませんでした。','service-unknown'),element('p','事故なしの判定ではありません。予約・問診などの提供会社から届く通知も確認してください。'));
-  for(const n of info.notices){const article=element('article','','service-incident');article.append(element('span',(n.recent?'直近6か月の公表 · ':'過去の公表 · ')+n.type,'incident-label'),element('h4',n.name+'：'+n.title),element('p','公表 '+n.published+' / 情報確認 '+n.checkedAt),element('p',n.summary),element('strong','すること：'+n.action),element('p',n.connection+'。'+n.impact+'。'));const details=element('details','');details.append(element('summary','影響範囲・公式発表'),element('p',n.scope));const a=element('a','公式発表を確認 ↗');a.href=n.url;a.target='_blank';a.rel='noopener';details.append(a);article.append(details);if(n.stale)article.append(element('p','確認から7日以上経過しています。最新の続報を確認してください。','source-warning'));section.append(article);}
   const wrap=element('div','','evaluation-scroll');const table=element('table','','evaluation-table service-table');
-  const head=element('thead',''),hr=element('tr','');for(const label of ['外部サービス','役割・確認できたこと','事故・脆弱性情報','必要な対応']){const th=element('th',label);th.scope='col';hr.append(th);}head.append(hr);table.append(head);
+  const head=element('thead',''),hr=element('tr','');for(const label of ['外部サービス','事故・脆弱性の調査結果','公表日・出典']){const th=element('th',label);th.scope='col';hr.append(th);}head.append(hr);table.append(head);
   const body=element('tbody','');
   for(const service of info.services){
-    const row=element('tr',''),name=element('th',service.name);name.scope='row';
-    const role=element('td',service.category||'用途未確認');role.append(element('small',service.kind==='provider'?service.status:service.kind==='link'?'リンクあり・契約未確認':'接続の記載あり'));
-    if(service.evidence){const evidence=element('details','');evidence.append(element('summary','確認した根拠'),element('p',service.evidence));role.append(evidence);}
-    const unmatched=info.unmatched.includes(service),risk=element('td',unmatched?'関連する事故情報は未確認':'関連する公式発表あり');
-    const action=element('td',unmatched?'提供元の最新通知・契約内容を確認':'上記の対象範囲に該当するか確認');
-    if(service.category==='DNS提供元')action.textContent='DNS管理者・ログイン保護・変更通知を確認';
-    else if(service.category==='ドメイン登録会社')action.textContent='更新期限・管理権限・ログイン保護を確認';
-    row.append(name,role,risk,action);body.append(row);
+    const row=element('tr',''),name=element('th',service.name);name.scope='row';name.append(element('small',service.category||''));
+    const risk=element('td',''),sources=element('td','');const notices=window.SimyServiceSecurity.findingsFor(service,info);
+    if(!notices.length){risk.append(element('p',window.SimyServiceSecurity.researchStatus(service)));sources.textContent='調査日 '+info.checkedAt;}
+    for(const n of notices){risk.append(element('strong',n.type),element('p',n.title),element('p',n.summary),element('small',n.scope));if(n.occurred)risk.append(element('small','発生・確認：'+n.occurred));sources.append(element('p','公表 '+n.published));const link=element('a','公式発表 ↗');link.href=n.url;link.target='_blank';link.rel='noopener';sources.append(link);if(n.stale)sources.append(element('small','情報確認から7日以上経過'));}
+    row.append(name,risk,sources);body.append(row);
   }
-  table.append(body);wrap.append(table);section.append(wrap,element('p','情報確認 '+info.checkedAt+'。選定した公式発表との照合です。「未確認」は事故がないという意味ではありません。外部サービス内部は検査しません。'));results.append(section);
+  table.append(body);wrap.append(table);section.append(wrap,element('p','ネット調査日：'+info.checkedAt+'。検索で見つかった公式発表を掲載しています。公表が見つからないことは安全の証明ではありません。診断ごとの自動検索は未対応です。'));results.append(section);
 }
 function renderConnections(report){
   if(!Array.isArray(report.integrations))return;
@@ -383,6 +378,6 @@ document.querySelector('.edit-url').addEventListener('click',()=>{if(!busy){diag
 
 let reportPdfLoader;
 function loadReportPdf(){
-  if(!reportPdfLoader)reportPdfLoader=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='/diagnosis-pdf.js?v=904b6fa652dd';script.onload=resolve;script.onerror=()=>{script.remove();reportPdfLoader=null;reject(Error('PDF機能の読込に失敗しました'));};document.head.append(script);});
+  if(!reportPdfLoader)reportPdfLoader=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='/diagnosis-pdf.js?v=1d3fe94fd42d';script.onload=resolve;script.onerror=()=>{script.remove();reportPdfLoader=null;reject(Error('PDF機能の読込に失敗しました'));};document.head.append(script);});
   return reportPdfLoader;
 }
