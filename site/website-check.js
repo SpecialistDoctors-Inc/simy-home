@@ -196,6 +196,7 @@ function renderReport(report) {
   renderSummary(report);
   renderEvaluationTable(report);
   renderServiceSecurity(report);
+  window.SimyInformationFlow?.render(report,results,element);
   renderConnections(report);
   if(report.crawl){
     const c=report.crawl;const scope=element('div','','crawl-summary');
@@ -334,6 +335,6 @@ document.querySelector('.edit-url').addEventListener('click',()=>{if(!busy){diag
 
 let reportPdfLoader;
 function loadReportPdf(){
-  if(!reportPdfLoader)reportPdfLoader=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='/diagnosis-pdf.js?v=8825226a7644';script.onload=resolve;script.onerror=()=>{script.remove();reportPdfLoader=null;reject(Error('PDF機能の読込に失敗しました'));};document.head.append(script);});
+  if(!reportPdfLoader)reportPdfLoader=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='/diagnosis-pdf.js?v=d0e184e2f1ef';script.onload=resolve;script.onerror=()=>{script.remove();reportPdfLoader=null;reject(Error('PDF機能の読込に失敗しました'));};document.head.append(script);});
   return reportPdfLoader;
 }

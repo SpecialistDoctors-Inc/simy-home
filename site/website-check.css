@@ -195,3 +195,12 @@
 #diagnosis-results{grid-template-columns:minmax(0,1fr)}
 #diagnosis-results>*{min-width:0}
 .report-counts>div{min-width:0;overflow-wrap:anywhere}
+.information-flow,.sharing-review{padding:24px;background:white;border:1px solid #afc0d1;border-radius:12px}
+.information-flow h3,.sharing-review h3{font-size:23px;margin-bottom:16px}.information-flow p,.sharing-review p{font-size:15px;line-height:1.85;margin:12px 0;overflow-wrap:anywhere}
+.flow-diagram{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,2fr);gap:20px;align-items:start;margin:28px 0}
+.flow-node{border:1px solid #adc0d9;background:#eff5ff;border-radius:10px;padding:18px;min-width:0;overflow-wrap:anywhere}.flow-node strong{display:block;margin:12px 0}.flow-direction{color:#2865c8;font-weight:600}.flow-branches{display:grid;gap:12px;min-width:0}
+.flow-branch{border:1px dashed #8a9bb0;border-radius:8px;padding:0 16px;min-width:0;overflow-wrap:anywhere}.flow-branch.observed{border-style:solid;border-color:#2a7867}.flow-branch summary{padding:16px 0}.flow-branch summary strong{font-size:15px}.flow-branch summary small{display:block;margin-top:6px;color:#536779}.flow-arrow{font-size:22px;margin-right:10px;color:#2865c8}.flow-sharing-alert{display:block;color:#a83428;font-size:13px;margin-top:8px}
+.sharing-item{padding:20px 0;border-bottom:1px solid #dce3e8}.sharing-item h4{margin:0 0 12px;font-size:18px}.sharing-item.review>strong{color:#aa3128}.sharing-item p{overflow-wrap:anywhere}
+@media(max-width:900px){.flow-diagram{grid-template-columns:minmax(0,1fr)}.flow-node{padding:16px}.flow-branches{border-left:2px solid #b6c7dc;padding-left:16px}.information-flow,.sharing-review{padding:18px}}
+.flow-service{border-top:1px solid #dce3e8;padding:14px 0}.flow-service>strong{font-size:15px}.flow-branches{border-left:2px solid #b6c7dc;padding-left:18px}.flow-branch{position:relative}.flow-branch:before{content:'';position:absolute;left:-20px;top:30px;width:18px;border-top:2px solid #b6c7dc}
+.sharing-item{padding:0}.sharing-item summary{display:flex;justify-content:space-between;gap:14px;padding:18px 0;flex-wrap:wrap}.sharing-item summary span{font-size:14px}.sharing-item.review summary span{color:#aa3128}
