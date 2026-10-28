@@ -42,6 +42,7 @@ function render(report,root,el){
  diagram.append(site,browser,branches);section.append(diagram,el('p','管理の重要度は、安全・危険の判定ではありません。入力内容や実際の患者情報の送信、提供先内部の管理状況は未確認です。','small'));root.append(section);
  renderSharing(report,root,el);
 }
+function sharingName(item){return typeof item.title==='string'&&item.title.trim()?item.title.trim():item.kind==='folder'?'共有フォルダ（名称未取得）':'資料名を取得できませんでした';}
 function sharingCopy(item){
  const copies={
   'preview-observed':{label:'内容は未判定',reason:'公開用の案内資料なら問題ありません。資料の内容が患者さん向けか、院内限定かは未判定です。',action:'この資料が「誰に見られてもよい資料」か確認してください。院内限定の資料なら、公開範囲を見直してください。'},
@@ -60,12 +61,12 @@ function renderSharing(report,root,el){
  const wrap=el('div','','evaluation-scroll');const table=el('table','','evaluation-table sharing-table');const head=el('thead',''),header=el('tr','');
  for(const label of ['資料','判定内容']){const cell=el('th',label);cell.scope='col';header.append(cell);}head.append(header);table.append(head);
  const body=el('tbody','');
- items.forEach((item,i)=>{const copy=sharingCopy(item),row=el('tr',''),name=el('th',item.service+' · '+(item.kind==='folder'?'フォルダ':'共有資料')+' '+(i+1));name.scope='row';
+ items.forEach((item,i)=>{const copy=sharingCopy(item),row=el('tr',''),name=el('th',sharingName(item));name.scope='row';
  if(/^https:\/\//.test(item.url||'')){const link=el('a','資料を見る ↗');link.href=item.url;link.target='_blank';link.rel='noopener';name.append(el('br',''),link);}
  const result=el('td',copy.reason);row.append(name,result);body.append(row);});
  table.append(body);wrap.append(table);section.append(wrap,el('p','資料の内容が患者さん向けか、院内限定かは未判定です。編集権限も未確認です。公開されているだけで情報漏えいとは判定しません。','small'));
  }
  root.append(section);
 }
-global.SimyInformationFlow={model,render,renderPriority,sharingCopy,managementCopy};
+global.SimyInformationFlow={model,render,renderPriority,sharingCopy,sharingName,managementCopy};
 })(typeof window==='undefined'?globalThis:window);
