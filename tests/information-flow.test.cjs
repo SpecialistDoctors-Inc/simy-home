@@ -18,10 +18,9 @@ test('document names use assessed topic, never numbered or ambiguous file labels
  assert.match(flow.sharingName({title:'診療報酬改定によるウエブサイト掲示.pdf'}),/名称から表示・内容未判定/);
 });
 test('only assessed extracted text gets a scoped no-concern statement',()=>{
- assert.match(flow.sharingCopy(assessed).reason,/取得できた文字では/);
- assert.match(flow.sharingCopy(assessed).reason,/画像・手書き/);
+ assert.equal(flow.sharingCopy(assessed).reason,'確認した範囲では、秘匿情報は見つかりませんでした。');
  assert.match(flow.sharingCopy({...assessed,content:{status:'partial'}}).reason,/一部の文字/);
- for(const item of [{status:'preview-observed'},{...assessed,content:{status:'unavailable'}},{...assessed,assessment:{status:'withheld'}},{...assessed,assessment:{status:'unavailable'}},{...assessed,status:'access-required'}])assert.doesNotMatch(flow.sharingCopy(item).reason,/問題は見つかりません/);
+ for(const item of [{status:'preview-observed'},{...assessed,content:{status:'unavailable'}},{...assessed,assessment:{status:'withheld'}},{...assessed,assessment:{status:'unavailable'}},{...assessed,status:'access-required'}])assert.doesNotMatch(flow.sharingCopy(item).reason,/秘匿情報は見つかりません/);
 });
 test('internal and uncertain content remain qualified',()=>{
  assert.match(flow.sharingCopy({...assessed,assessment:{...assessed.assessment,audience:'internal'}}).reason,/断定できません/);
@@ -44,3 +43,5 @@ test('reference links are summarized while actual embeds and booking remain visi
  assert.match(output,/widget\.example/);assert.match(output,/booking\.example/);
  assert.match(output,/患者情報の管理が重要/);
 });
+
+test('folder listing is never treated as assessed document content',()=>{assert.equal(flow.sharingCopy({...assessed,kind:'folder'}).reason,'フォルダー内の資料は未確認です。');assert.doesNotMatch(flow.sharingCopy({...assessed,kind:'folder',folder:{discovered:2}}).reason,/秘匿情報は見つかりません/);});
