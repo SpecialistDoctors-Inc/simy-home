@@ -30,7 +30,7 @@
   function create({report, registration, versions, connections}, font, JsPDF) {
     const doc = new JsPDF({unit: 'mm', format: 'a4', orientation: 'landscape', compress: true, putOnlyUsedFonts: true});
     doc.addFileToVFS('ReportJP.ttf', font); doc.addFont('ReportJP.ttf', 'ReportJP', 'normal'); doc.setFont('ReportJP', 'normal');
-    doc.setProperties({title: 'SIMY ホームページ診断結果', author: 'SIMY', subject: registration.clinicName});
+    doc.setProperties({title: 'SIMY HP管理｜ホームページ診断結果', author: 'SIMY', subject: registration.clinicName});
     let y = 27;
     function paragraph(value, size = 10) {
       doc.setFontSize(size); doc.setTextColor(30, 48, 65);
@@ -69,7 +69,7 @@
     for (const limit of [...(report.sourceWarnings || []), ...(report.scripts?.limitations || [])]) paragraph(limit, 9);
     paragraph('サーバー内部・データベース・ログイン後・電子カルテ・外部サービス内部は対象外です。対応の確認・ご相談：SIMY（sales@simy.one）', 9);
     const count = doc.getNumberOfPages();
-    for (let i = 1; i <= count; i++) { doc.setPage(i); doc.setFont('ReportJP', 'normal'); doc.setTextColor(19, 43, 76); doc.setFontSize(10); doc.text('SIMY  /  HP管理', 16, 14); doc.setDrawColor(215, 224, 235); doc.line(16, 18, 281, 18); doc.setFontSize(8); doc.text('公開情報の診断記録・確認日時点', 16, 201); doc.text(i + ' / ' + count, 281, 201, {align: 'right'}); }
+    for (let i = 1; i <= count; i++) { doc.setPage(i); doc.setFont('ReportJP', 'normal'); doc.setTextColor(19, 43, 76); doc.setFontSize(10); doc.text('SIMY HP管理', 16, 14); doc.setFontSize(9); doc.text('お問い合わせ：sales@simy.one', 281, 14, {align: 'right'}); doc.link(226, 9, 55, 6, {url: 'mailto:sales@simy.one'}); doc.setDrawColor(215, 224, 235); doc.line(16, 18, 281, 18); doc.setFontSize(8); doc.text('サービス詳細：https://simy.one/hp-management.html', 16, 201); doc.link(16, 197, 90, 6, {url: 'https://simy.one/hp-management.html'}); doc.text('公開情報の診断記録・確認日時点', 158, 201); doc.text(i + ' / ' + count, 281, 201, {align: 'right'}); }
     return doc;
   }
   async function download(input) { const font = await prepare(); const doc = create(model(input), font, global.jspdf.jsPDF); doc.save('SIMY_ホームページ診断_' + new Date(input.report.checkedAt).toISOString().slice(0, 10) + '.pdf'); }
