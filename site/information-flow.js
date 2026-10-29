@@ -26,8 +26,16 @@ function renderPriority(report,root,el){
  const list=el('ul','');for(const g of groups)list.append(el('li',g.domain+'（'+g.categories.join('・')+'）'));
  box.append(list,el('p','患者情報の送信や漏えいを確認したものではありません。','small'));root.append(box);
 }
+function noProblemSummary(report){
+ if(!model(report).length)return '';
+ if((report.sharing?.items||[]).some(sharingHasIssue))return '';
+ if((report.findings||[]).some(f=>f.state==='review'&&/form|api|storage|secret|private-key|tracking|sensitive|mixed|http/i.test(f.id||'')))return '';
+ const info=global.SimyServiceSecurity?.assess(report);
+ if(info&&global.SimyServiceSecurity.visibleServices(info).some(s=>global.SimyServiceSecurity.findingsFor(s,info).length))return '';
+ return '現時点では、本診断の調査範囲において問題を発見することはできませんでした。';
+}
 function render(report,root,el){
- const all=model(report),links=all.filter(g=>g.kinds.every(k=>k==='link')&&!g.sharing.length&&!/予約|問診|診療|決済|ログイン/.test(g.categories.join(' '))),groups=all.filter(g=>!links.includes(g)),section=el('section','','information-flow');section.append(el('h3','04 / ホームページと外部サービスのつながり'),el('p','用途から考えられる管理の重要度を示しています。'));
+ const all=model(report),links=all.filter(g=>g.kinds.every(k=>k==='link')&&!g.sharing.length&&!/予約|問診|診療|決済|ログイン/.test(g.categories.join(' '))),groups=all.filter(g=>!links.includes(g)),section=el('section','','information-flow');section.append(el('h3','04 / ホームページが利用する外部サービス'),el('p','用途から考えられる管理の重要度を示しています。'));
  const diagram=el('div','','flow-diagram');diagram.setAttribute('aria-label','医院ホームページ、閲覧者のブラウザー、外部サービスの接続図');
  const site=el('div','','flow-node flow-site');site.append(el('span','診断対象のホームページ'),el('strong',new URL(report.url).hostname),el('p','ページ・画像などを配信'));
  const browser=el('div','','flow-node flow-browser');browser.append(el('span','⇄ ページの取得','flow-direction'),el('strong','閲覧者のブラウザー'),el('p','ホームページを表示'),el('small','診断では匿名のブラウザーを使用。患者情報は入力しません。'));
@@ -40,7 +48,7 @@ function render(report,root,el){
  branches.append(branch);}
  if(links.length)branches.append(el('p','案内・参考情報への外部リンク：'+links.length+'件。リンクの記載だけでは、サービス利用や情報送信は確認できません。'));
  if(!groups.length&&!links.length)branches.append(el('p','接続先を検出できませんでした。未使用の証明ではありません。'));
- diagram.append(site,browser,branches);section.append(diagram,el('p','管理の重要度は、安全・危険の判定ではありません。入力内容や実際の患者情報の送信、提供先内部の管理状況は未確認です。','small'));root.append(section);
+ diagram.append(site,browser,branches);section.append(diagram,el('p','管理の重要度は、安全・危険の判定ではありません。入力内容や実際の患者情報の送信、提供先内部の管理状況は未確認です。','small'));const summary=noProblemSummary(report);if(summary)section.append(el('p',summary,'flow-result-summary'));root.append(section);
  renderSharing(report,root,el);
 }
 function sharingName(item){
@@ -87,5 +95,5 @@ function renderSharing(report,root,el){
  }
  root.append(section);
 }
-global.SimyInformationFlow={model,render,renderPriority,sharingCopy,sharingName,sharingHasIssue,managementCopy};
+global.SimyInformationFlow={model,render,renderPriority,sharingCopy,sharingName,sharingHasIssue,managementCopy,noProblemSummary};
 })(typeof window==='undefined'?globalThis:window);
