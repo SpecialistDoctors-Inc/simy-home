@@ -45,7 +45,6 @@
 
 #main .diagnosis-banner{display:flex;align-items:center;justify-content:space-between;gap:24px;margin:0 0 36px;padding:28px 32px;background:#102b50;color:#fff;border-radius:16px}
 #main .diagnosis-banner>div{min-width:0}
-#main .diagnosis-banner p{margin:0 0 8px;color:#fff;font-size:clamp(18px,2vw,23px);font-weight:700;line-height:1.6}
 #main .diagnosis-banner-url{color:#c7dcff;font-size:14px;overflow-wrap:anywhere;text-underline-offset:4px}
 #main .diagnosis-banner-button{display:inline-flex;align-items:center;justify-content:center;gap:20px;flex-shrink:0;min-height:56px;padding:14px 24px;background:#fff;color:#174b9b;border-radius:8px;text-decoration:none;font-size:16px;font-weight:800;line-height:1.6}
 #main .diagnosis-banner-button:hover{background:#e8f1ff}
@@ -141,3 +140,5 @@ html:root{scroll-behavior:auto;scroll-padding-top:0}
  #main .review-support .review-panel{padding:22px 20px}
  #main .offer-faq summary{font-size:16px}
 }
+
+#main .diagnosis-banner #scan-progress,#main .diagnosis-banner .diagnosis-state{color:#17253b}
