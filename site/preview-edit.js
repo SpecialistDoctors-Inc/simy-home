@@ -15,8 +15,13 @@
   const style=doc.createElement('style');style.textContent='a,area,button,input,select,textarea,[role=button]{pointer-events:none!important}';doc.head.append(style);
   return '<!doctype html>\n'+doc.documentElement.outerHTML;
  }
- function apply(html,message){
-  const change=parse(message),doc=new DOMParser().parseFromString(html,'text/html');
+ function normalize(change){
+  if(change?.type==='notice'&&typeof change.text==='string'&&change.text.trim()&&change.text.length<=500)return {type:'notice',text:change.text.trim()};
+  if(change?.type==='replace'&&typeof change.from==='string'&&change.from.trim()&&typeof change.to==='string'&&change.from.length<=500&&change.to.length<=500)return {type:'replace',from:change.from,to:change.to};
+  throw Error('変更する文章を入力してください。');
+ }
+ function applyChange(html,input){
+  const change=normalize(input),doc=new DOMParser().parseFromString(html,'text/html');
   if(change.type==='notice'){
    let notice=doc.querySelector('#simy-preview-notice');if(!notice){notice=doc.createElement('aside');notice.id='simy-preview-notice';notice.setAttribute('role','note');notice.style.cssText='position:relative!important;display:block!important;visibility:visible!important;opacity:1!important;padding:20px 24px!important;background:#fff3d5!important;color:#442f12!important;font:700 18px/1.7 sans-serif!important;text-align:center!important;border-bottom:2px solid #e7bc5c!important;z-index:2147483647!important;';doc.body.prepend(notice);}notice.textContent=change.text;
    return {html:'<!doctype html>\n'+doc.documentElement.outerHTML,summary:'ページの先頭にお知らせを追加しました。'};
@@ -26,5 +31,6 @@
   if(!count)throw Error('変更前の文章が見つかりませんでした。プレビューにある文章をそのまま指定してください。');
   return {html:'<!doctype html>\n'+doc.documentElement.outerHTML,summary:count+'か所の文章を差し替えました。'};
  }
- global.SimyPreviewEdit={parse,prepare,apply};
+ const apply=(html,message)=>applyChange(html,parse(message));
+ global.SimyPreviewEdit={parse,prepare,apply,applyChange,normalize};
 })(typeof window==='undefined'?globalThis:window);

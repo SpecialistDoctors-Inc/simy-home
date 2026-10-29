@@ -195,3 +195,35 @@ body.preview-editor-open{overflow:hidden}
 #main #diagnosis h1 .hero-address{display:block;font-size:clamp(20px,2vw,25px);line-height:1.6;letter-spacing:0;margin-bottom:8px}
 #main #diagnosis .hero-service-summary{margin:18px 0 0;color:inherit;font-size:15px;line-height:1.8;font-weight:400}
 @media(max-width:700px){#main #diagnosis h1{font-size:30px}#main #diagnosis h1 .hero-address{font-size:20px}#main #diagnosis .hero-service-summary{font-size:14px}}
+
+/* The trial should work without remembering an instruction format. */
+#rebuild-editor .preview-edit-modes{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+#rebuild-editor .preview-edit-modes button{padding:8px;font-size:13px}
+#rebuild-editor .preview-edit-modes [aria-pressed="true"],#rebuild-editor .preview-mobile-tabs [aria-pressed="true"]{background:#245dbd;color:#fff;border-color:#245dbd}
+#rebuild-editor #preview-edit-example{color:#185a73;border-color:#a7cdd6;background:#edf7f8;font-size:13px;text-align:left}
+#rebuild-editor #preview-edit-example[hidden],#rebuild-editor #preview-replace-source[hidden]{display:none}
+#rebuild-editor #preview-replace-source label{display:block;margin-bottom:8px}
+#rebuild-editor #preview-edit-from{width:100%;height:44px;margin:0;padding:10px 12px;border:1px solid #7895b9;border-radius:7px;font-size:16px;background:#fff;color:#17253b}
+#rebuild-editor .preview-chat{gap:10px}
+#rebuild-editor .preview-chat #preview-conversation{min-height:36px}
+#rebuild-editor .preview-mobile-tabs{display:none}
+#rebuild-editor .preview-editor-footer{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-shrink:0;padding:12px 20px;border-top:1px solid #c7d5e5;background:#fff}
+#rebuild-editor .preview-editor-footer>span{font-size:12px;color:#536780}
+#rebuild-editor .preview-editor-footer>div{display:flex;gap:10px;align-items:center}
+#rebuild-editor .preview-editor-footer a{display:inline-flex;align-items:center;min-height:44px;padding:10px 14px;border:1px solid #245dbd;border-radius:7px;background:#245dbd;color:#fff;font-size:14px;font-weight:750;text-decoration:none;line-height:1.5}
+@media(max-width:700px){
+ #rebuild-editor .preview-mobile-tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;flex-shrink:0;padding:8px 14px;border-bottom:1px solid #c7d5e5;background:#fff}
+ #rebuild-editor .preview-editor-layout{display:flex;flex-direction:column;overflow:hidden}
+ #rebuild-editor .preview-chat,#rebuild-editor .preview-canvas{height:auto;min-height:0;flex:1;overflow:auto}
+ #rebuild-editor .preview-chat{border:0}
+ #rebuild-editor[data-pane="canvas"] .preview-chat,#rebuild-editor[data-pane="edit"] .preview-canvas{display:none}
+ #rebuild-editor .preview-editor-footer{padding:10px 14px;display:block}
+ #rebuild-editor .preview-editor-footer>span{display:none}
+ #rebuild-editor .preview-editor-footer>div{display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px}
+ #rebuild-editor .preview-editor-footer a{justify-content:center;text-align:center;font-size:13px}
+ #rebuild-editor .preview-chat #preview-conversation{min-height:36px;max-height:120px}
+}
+#rebuild-editor .preview-editor-header>div{min-width:0}
+#rebuild-editor #preview-source{overflow-wrap:anywhere}
+#rebuild-editor #rebuild-editor-close{flex-shrink:0}
+#rebuild-editor .preview-editor-footer>div{align-items:stretch}

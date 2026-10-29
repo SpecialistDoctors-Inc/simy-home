@@ -170,7 +170,7 @@ function renderSummary(report){
   for(const r of report.scripts.resources||[])if(r.status!=='checked')unknown.add('asset:'+r.url);
   const serviceRisk=window.SimyServiceSecurity?.assess(report);
   const counts=element('div','','report-counts');
-  for(const [label,value,style] of [['脆弱性・更新リスク',updates.size+priorityVersions.size,'priority'],['関連する事故・脆弱性の公表',serviceRisk?new Set([...window.SimyServiceSecurity.visibleServices(serviceRisk).flatMap(s=>window.SimyServiceSecurity.findingsFor(s,serviceRisk)),...(window.SimyServiceSecurity.componentServices?.(serviceRisk)||[]).flatMap(s=>window.SimyServiceSecurity.findingsFor(s,serviceRisk)),...window.SimyServiceSecurity.providerNotices(report)].map(n=>n.url)).size:'未確認','update'],['その他の確認事項',report.findings.filter(f=>f.state==='review').length,'unknown']]){const box=element('div','',style);box.append(element('strong',String(value)),element('span',label));counts.append(box);}
+  for(const [label,value,style] of [['古い版・脆弱性のある部品',updates.size+priorityVersions.size,'priority'],['関連する公表事例',serviceRisk?new Set([...window.SimyServiceSecurity.visibleServices(serviceRisk).flatMap(s=>window.SimyServiceSecurity.findingsFor(s,serviceRisk)),...(window.SimyServiceSecurity.componentServices?.(serviceRisk)||[]).flatMap(s=>window.SimyServiceSecurity.findingsFor(s,serviceRisk)),...window.SimyServiceSecurity.providerNotices(report)].map(n=>n.url)).size:'未確認','update'],['その他の確認事項',report.findings.filter(f=>f.state==='review').length,'unknown']]){const box=element('div','',style);box.append(element('strong',String(value)),element('span',label));counts.append(box);}
   results.append(counts);
   for(const warning of report.sourceWarnings||[])results.append(element('p',warning,'source-warning'));
 }
@@ -253,6 +253,7 @@ function renderReport(report) {
   const migrationLink=element('a','このホームページをSIMYへ移す手順を見る →','report-migration-link');migrationLink.href='#migration';results.append(migrationLink);
   reportDetails=null;
   gateReport(report);
+  const rebuildInput=document.querySelector('#rebuild-url');if(rebuildInput&&!rebuildInput.value)rebuildInput.value=report.url;
 }
 function appendEmailReceipt(report, snapshot, onSaved) {
   const section=element('section','','report-email report-next');

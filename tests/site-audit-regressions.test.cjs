@@ -47,3 +47,11 @@ test('nested legacy pages retain their same-page language alternatives', () => {
     assert.ok(source.includes(`href="/old/compare/index.html?lang=${locale}" lang="${locale}"`));
   }
 });
+
+test('clinic header keeps diagnosis and HP management pricing on the current service',()=>{
+ const source=fs.readFileSync(path.join(site,'hp-management/clinic/index.html'),'utf8');
+ const header=source.slice(source.indexOf('<header'),source.indexOf('</header>'));
+ assert.match(header,/class="sh-pricing" data-service-pricing href="#pricing">HP管理の料金/);
+ assert.match(header,/class="sh-signup" href="#diagnosis">URL入力へ/);
+ assert.doesNotMatch(header,/data-new-account-signup|>Sign up<|>Pricing</);
+});
