@@ -16,7 +16,7 @@
  frame.addEventListener('load',()=>{try{const mark=frame.contentDocument?.querySelector('[data-simy-changed]');mark?.scrollIntoView({block:'center',behavior:'instant'});}catch{}});
  editForm.addEventListener('submit',async event=>{event.preventDefault();if(editBusy||!editForm.reportValidity()||!currentHtml)return;const message=editInput.value.trim(),base=currentHtml;log(message,'preview-user-message');setEditBusy(true);
   try{
-   const response=await fetch(new URL('/api/preview-edit',form.dataset.endpoint),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({request:message,nodes:window.SimyPreviewEdit.inventory(base),history:chat.slice(-6)}),signal:AbortSignal.timeout(100000)});
+   const response=await fetch(new URL('/api/preview-edit',form.dataset.endpoint),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({request:message,nodes:window.SimyPreviewEdit.inventory(base,frame.contentDocument),history:chat.slice(-6)}),signal:AbortSignal.timeout(100000)});
    const plan=await response.json();if(!response.ok)throw Error(plan.error||'変更案を作成できませんでした。');
    if(currentHtml!==base)throw Error('ページの状態が変わりました。もう一度お試しください。');
    if(plan.status==='edit'){const changed=window.SimyPreviewEdit.applyPlan(base,plan);history.push(base);if(history.length>10)history.shift();updatePreview(changed.html);log(changed.summary);}

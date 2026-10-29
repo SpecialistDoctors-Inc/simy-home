@@ -52,10 +52,10 @@
  }
  function isNews(e){return ['DL','UL','OL'].includes(e.tagName)&&/お知らせ|休診|診療.*変更|担当医|感染症|news|information/i.test(label(e));}
  api.index=function(html){const doc=parse(html);let count=0;for(const e of doc.body.querySelectorAll('*')){if(!blocked(e))e.setAttribute('data-simy-edit-id','e'+count++);}return '<!doctype html>\n'+doc.documentElement.outerHTML;};
- api.inventory=function(html){
+ api.inventory=function(html,liveDocument){
   const doc=parse(html),all=[...doc.body.querySelectorAll('[data-simy-edit-id]')],news=all.filter(isNews);
   const out=[],seen=new Set();let size=0;
-  function add(e,kind){const id=e.getAttribute('data-simy-edit-id');if(seen.has(id)||out.length>=220)return;let t=text(e);if(!t)return;if(kind==='text'&&t.length>1800)return;t=t.slice(0,1800);const n={id,kind,tag:e.tagName.toLowerCase(),text:t,context:label(e)};const len=JSON.stringify(n).length;if(size+len>35000)return;size+=len;seen.add(id);out.push(n);}
+  function add(e,kind){const id=e.getAttribute('data-simy-edit-id');if(seen.has(id)||out.length>=220)return;let t=text(e);if(!t)return;if(kind==='text'&&t.length>1800)return;t=t.slice(0,1800);let context=label(e);try{const live=liveDocument?.querySelector('[data-simy-edit-id="'+id+'"]');if(live){const css=liveDocument.defaultView.getComputedStyle(live);context+=' / 現在の文字サイズ:'+css.fontSize+'、文字色:'+css.color+'、背景:'+css.backgroundColor;}}catch{}const n={id,kind,tag:e.tagName.toLowerCase(),text:t,context:context.slice(0,300)};const len=JSON.stringify(n).length;if(size+len>35000)return;size+=len;seen.add(id);out.push(n);}
   news.forEach(e=>add(e,'news'));
   // Semantic headings and buttons first; then editable leaf paragraphs, avoiding nested duplicates.
   all.filter(e=>/^H[1-6]$/.test(e.tagName)||['A','BUTTON'].includes(e.tagName)).forEach(e=>add(e,'text'));
