@@ -25,9 +25,9 @@ test('provider notices include Onamae once for registrar plus DNS and keep scope
  const notices=ctx.SimyServiceSecurity.providerNotices(report);assert.equal(notices.length,1);assert.match(notices[0].name,/デスクトップクラウド/);assert.match(notices[0].scope,/DNS・ドメイン登録の事故を示す発表ではありません/);
  assert.equal(ctx.SimyServiceSecurity.visibleServices(assess(report)).length,0);
 });
-test('external incident rows omit unresearched and no-disclosure services',()=>{
+test('external inventory retains all observed services with disclosure matches first',()=>{
  const report={integrations:[connection('unknown.example'),connection('digikar-smart.jp'),connection('blastmail.jp')]};
- const rows=ctx.SimyServiceSecurity.visibleServices(assess(report));assert.equal(rows.length,1);assert.equal(rows[0].host,'blastmail.jp');
+ const rows=ctx.SimyServiceSecurity.visibleServices(assess(report));assert.equal(rows.length,3);assert.equal(rows[0].host,'blastmail.jp');
 });
 
 test('per-diagnosis research merges verified notices and keeps components separate',()=>{
@@ -41,8 +41,8 @@ test('runtime results replace dated matching URLs and retain sibling classificat
  const report={providers:{facts:[{name:'お名前.com',provider:'onamae',role:'DNS提供元',status:'推定'}]},serviceSecurity:{notices:[n],catalog:[],status:'completed',checkedAt:n.checkedAt}};
  const notices=ctx.SimyServiceSecurity.providerNotices(report);assert.equal(notices.length,1);assert.match(notices[0].type,/同社の別サービス/);assert.match(notices[0].scope,/DNS・ドメイン登録の事故を示す発表ではありません/);
 });
-test('successful empty runtime search does not create no-incident rows',()=>{
- const info=assess({integrations:[connection('digikar-smart.jp')],serviceSecurity:{status:'completed',notices:[],catalog:[],checkedAt:'2026-10-28'}});assert.equal(ctx.SimyServiceSecurity.visibleServices(info).length,0);
+test('successful empty research keeps the service without claiming it is safe',()=>{
+ const info=assess({integrations:[connection('digikar-smart.jp')],serviceSecurity:{status:'completed',notices:[],catalog:[],checkedAt:'2026-10-28'}});const rows=ctx.SimyServiceSecurity.visibleServices(info);assert.equal(rows.length,1);assert.match(ctx.SimyServiceSecurity.inventoryResearchStatus(rows[0],info),/未確認/);
 });
 
 test('fixed jQuery versions keep historical disclosures distinct from applicable vulnerabilities',()=>{
@@ -51,4 +51,13 @@ test('fixed jQuery versions keep historical disclosures distinct from applicable
  const info=assess(report,now);assert.equal(ctx.SimyServiceSecurity.visibleServices(info).length,0);assert.equal(ctx.SimyServiceSecurity.componentServices(info).length,1);assert.match(info.notices[0].type,/影響範囲外/);assert.match(info.notices[0].scope,/3.7.1/);
  report.scripts.libraries.push({name:'jquery',version:'3.4.1'});assert.doesNotMatch(assess(report,now).notices[0].type,/影響範囲外/);
  report.scripts.libraries=[{name:'jquery',version:'3.7.1-custom'}];assert.doesNotMatch(assess(report,now).notices[0].type,/影響範囲外/);
+});
+
+test('researched absence and unsearched status stay distinct in the full inventory',()=>{
+ const info=assess({integrations:[connection('digikar-smart.jp'),connection('unknown.example')],serviceSecurity:{status:'partial',searchedSubjectIds:['digikar'],catalog:[],notices:[]}});
+ const rows=ctx.SimyServiceSecurity.visibleServices(info);assert.match(ctx.SimyServiceSecurity.inventoryResearchStatus(rows[0],info),/特定できませんでした/);assert.match(ctx.SimyServiceSecurity.inventoryResearchStatus(rows[1],info),/未確認/);
+});
+test('02 keeps unknown provider facts and prioritizes providers with related disclosures',()=>{
+ const report={providers:{facts:[{role:'サーバー・ネットワーク',name:'未特定',status:'未確認'},{role:'DNS提供元',name:'お名前.com',provider:'onamae',status:'推定'}]}};
+ const facts=ctx.SimyServiceSecurity.providerFacts(report);assert.equal(facts.length,2);assert.equal(facts[0].provider,'onamae');assert.equal(facts[1].name,'未特定');
 });

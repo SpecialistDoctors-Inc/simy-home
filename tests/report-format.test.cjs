@@ -27,3 +27,12 @@ test('PDF puts component-only disclosures in section 01 without an external-serv
  assert(text.includes('01 / SOFTWARE COMPONENTS'));for(const name of names)assert(text.includes(name+' / '+name+'の公表'));
  assert(text.includes('影響範囲外'));assert(!text.includes('03 / PUBLIC ADVISORIES'));
 });
+test('PDF lists current and unknown components plus all external services, with public incidents first',()=>{
+ const local={URL};for(const f of ['information-flow','service-security','diagnosis-pdf'])vm.runInNewContext(fs.readFileSync('site/'+f+'.js','utf8'),local);
+ const output=[],tables=[];class Capture extends jsPDF{constructor(o){super(o);const original=this.text,table=this.autoTable;this.text=function(s,...args){output.push(Array.isArray(s)?s.join('\n'):s);return original.call(this,s,...args);};this.autoTable=function(o){tables.push(o);return table.call(this,o);};}}
+ const report={url:'https://clinic.example/',checkedAt:'2026-10-29T01:00:00Z',integrations:[{destination:'https://unknown.example/',kind:'link'},{destination:'https://patient.digikar-smart.jp/',kind:'link'},{destination:'https://blastmail.jp/',kind:'script'}],providers:{facts:[{role:'制作元の記載',name:'未特定',status:'未確認'}]},serviceSecurity:{searchedSubjectIds:['digikar'],catalog:[],notices:[]}};
+ local.SimyReportPdf.create({report,versions:[['Modern','2.0.0','2.0.0','最新の公式版と一致'],['Mystery','バージョン未確認','公式情報を別途確認','バージョン不明'],['Old','1.0.0','2.0.0','旧バージョン']]},font,Capture);
+ const all=output.join('\n');for(const name of ['Modern','Mystery','Old'])assert(all.includes(name));assert(all.includes('1件 / 脆弱性・更新リスク'));
+ const external=tables.find(t=>t.head[0][0]==='サービス・接続先');assert.equal(external.body.length,3);assert.match(external.body[0][0],/ブラストメール/);assert(external.body.some(r=>r[1].includes('未確認')));assert(external.body.some(r=>r[1].includes('特定できませんでした')));
+ const providers=tables.find(t=>t.head[0][0]==='項目');assert.equal(providers.body[0][1],'未特定');
+});
