@@ -108,12 +108,7 @@ function renderEvaluationTable(report) {
   for (const l of report.scripts.libraries) add(l.name, l.version, l.issues);
   const section = element('section', '', 'evaluation-section');
   section.append(element('h3', '01 / 使用部品の脆弱性・セキュリティリスク'));
-  if (!rows.size) {
-    section.append(element('p', '公開情報から部品の版を特定できませんでした。安全という判定ではありません。'));
-    const missed=[...new Map((report.scripts.resources||[]).filter(r=>r.status==='failed'||r.status==='skipped').map(r=>[r.url,r])).values()];
-    if(missed.length){const reasons=[...new Set(missed.map(r=>r.reason))];section.append(element('p','版を特定できなかった理由：'+reasons.join('／'),'evaluation-note'));}
-    results.append(section); return;
-  }
+  if(!rows.size)return;
   const wrap = element('div', '', 'evaluation-scroll'); wrap.tabIndex = 0; wrap.setAttribute('role','region'); wrap.setAttribute('aria-label','使用部品の評価表。画面が狭い場合は横にスクロールできます');
   const table = element('table', '', 'evaluation-table');
   table.append(element('caption', '使用部品・検出した版・公式情報・評価・対応'));
@@ -127,6 +122,7 @@ function renderEvaluationTable(report) {
     const issue = row.issues.length > 0;
     const comparison = ref ? compareReleaseVersions(row.version,ref.version) : null;
     const outdated = comparison === -1;
+    if(!ended&&!issue&&!outdated)continue;
     const state = ended ? 'サポート終了' : issue ? '既知の脆弱性に関連' : !row.version ? 'バージョン不明' : outdated ? '旧バージョン' : comparison === 0 ? '最新の公式版と一致' : '比較情報なし';
     const line = element('tr','');const name=element('th',row.name);name.scope='row';const purpose={php:'サーバーの動作基盤',jquery:'画面の動きを作る部品',swiper:'写真を切り替える部品',wordpress:'ページを管理する仕組み','jquery-migrate':'jQuery更新時の互換性を補う部品'}[row.name.toLowerCase()];if(purpose)name.append(element('small',purpose));const current=element('td','');current.append(element('strong',row.version || 'バージョン未確認',outdated?'version-outdated':''));if(outdated)current.append(element('small','旧バージョン','version-outdated-label'));const released=ref?.dates?.[row.version];current.append(element('small',releaseLabel(released,ref?.dateKind)));const evidence=report.scripts.libraries.filter(l=>l.name.toLowerCase()===row.name.toLowerCase()&&l.version===row.version);if(evidence.length&&evidence.every(l=>l.basis==='url')){current.append(element('small','URL表記から推定'));current.append(element('small','推定した版の日付'));}if(!row.version&&/Ruby|Rails/.test(row.name))name.append(element('small','利用の手掛かりあり（推定）'));line.append(name,current);
     const official=element('td','');
@@ -136,6 +132,7 @@ function renderEvaluationTable(report) {
     if(!row.version&&row.name.toLowerCase()==='wordpress')status.append(element('small','公開情報では版を特定できません。'));
     if(ended||issue)status.append(element('small',ended?'開発元のサポート終了':'既知の問題に関係する版'));else if(outdated&&row.name.toLowerCase()!=='jquery-migrate')status.append(element('small','旧版だけで危険とは判定しません。'));else if(comparison===0)status.append(element('small','確認日の公式版と一致。安全性全体の保証ではありません。'));appendIssueEvidence(status,row.issues);line.append(official,status);body.append(line);
   }
+  if(!body.children.length)return;
   table.append(body);wrap.append(table);section.append(wrap,element('p','公開日は検出した版の配布元の記録です。版や日付が不明なものは未確認と表示します。最新の版は記載日の確認情報です。旧版だけで脆弱性があるとは限りません。','evaluation-note'));
   if(![...rows.values()].some(row=>row.name.toLowerCase()==='php') && [...rows.values()].some(row=>row.name.toLowerCase()!=='php'&&row.issues.length)){
     const figure=element('figure','','clinic-manga infrastructure-manga'),img=element('img','');img.src='/assets/website-check/clinic-component-risks-v1.png';img.width=1536;img.height=1024;img.loading='lazy';img.alt='PHP以外の部品も攻撃の入口になり得ることを示す架空の漫画。公表された問題と、この医院の被害は区別します。';figure.append(img);section.append(figure);
@@ -171,13 +168,13 @@ function renderSummary(report){
 function renderInfrastructure(report) {
   const section=element('section','','infrastructure-section');
   section.append(element('h3','02 / ドメイン・サーバー・制作元の詳細'));
-  const facts=[...new Map((report.providers?.facts||[]).filter(f=>f.role!=='現在の保守・契約担当').map(f=>[JSON.stringify([f.role,f.name,f.status]),f])).values()];
+  const facts=[...new Map((report.providers?.facts||[]).filter(f=>f.role!=='現在の保守・契約担当'&&!/未特定|未確認|不明/.test(f.name+' '+f.status)).map(f=>[JSON.stringify([f.role,f.name,f.status]),f])).values()];
   const wrap=element('div','','evaluation-scroll'),table=element('table','','evaluation-table');
   const head=element('thead',''),hr=element('tr','');
   for(const label of ['項目','提供元','判定']){const th=element('th',label);th.scope='col';hr.append(th);}head.append(hr);table.append(head);
   const body=element('tbody','');
   for(const f of facts){const tr=element('tr',''),th=element('th',f.role);th.scope='row';tr.append(th,element('td',/Onamae\.com/i.test(f.name)?'お名前.com（GMO Internet Group）':f.name),element('td',f.status));body.append(tr);}
-  table.append(body);wrap.append(table);section.append(facts.length?wrap:element('p','提供元を特定できませんでした。'));
+  table.append(body);wrap.append(table);if(facts.length)section.append(wrap);
   for(const n of window.SimyServiceSecurity?.providerNotices(report)||report.providers?.notices||[]){const card=element('article','','provider-notice');card.append(element('strong',n.type||(/障害/.test(n.title)?'提供元が公表した稼働障害':'提供元が公表した事故')),element('h4',(n.name?n.name+'：':'')+n.title),element('p',n.summary),element('small','対象：'+n.scope+' '+n.resolution),element('small',n.publisher+' / 公表 '+n.published));const a=element('a','公式発表 ↗');a.href=n.url;a.target='_blank';a.rel='noopener';card.append(a);section.append(card);}
   section.append(element('p','提供元の過去の公表です。この医院の被害を示すものではありません。','evaluation-note'));
   const figure=element('figure','','clinic-manga infrastructure-manga'),img=element('img','');
@@ -381,6 +378,6 @@ diagnosisForm.addEventListener('submit', async event => {
 
 let reportPdfLoader;
 function loadReportPdf(){
-  if(!reportPdfLoader)reportPdfLoader=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='/diagnosis-pdf.js?v=f88f3a6a8008';script.onload=resolve;script.onerror=()=>{script.remove();reportPdfLoader=null;reject(Error('PDF機能の読込に失敗しました'));};document.head.append(script);});
+  if(!reportPdfLoader)reportPdfLoader=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='/diagnosis-pdf.js?v=de399ffe4918';script.onload=resolve;script.onerror=()=>{script.remove();reportPdfLoader=null;reject(Error('PDF機能の読込に失敗しました'));};document.head.append(script);});
   return reportPdfLoader;
 }
