@@ -45,3 +45,12 @@ test('reference links are summarized while actual embeds and booking remain visi
 });
 
 test('folder listing is never treated as assessed document content',()=>{assert.equal(flow.sharingCopy({...assessed,kind:'folder'}).reason,'フォルダー内の資料は未確認です。');assert.doesNotMatch(flow.sharingCopy({...assessed,kind:'folder',folder:{discovered:2}}).reason,/秘匿情報は見つかりません/);});
+test('sharing results show assessed concerns but hide clean and unassessed items',()=>{
+ const has=ctx.SimyInformationFlow.sharingHasIssue;
+ const base={status:'preview-observed',content:{status:'extracted'},assessment:{status:'assessed',scope:'extracted-text-only',audience:'patient',concern:'none'}};
+ assert.equal(has(base),false);
+ assert.equal(has({...base,assessment:{...base.assessment,audience:'internal'}}),true);
+ assert.equal(has({...base,assessment:{...base.assessment,concern:'review'}}),true);
+ assert.equal(has({...base,assessment:{status:'unavailable'}}),false);
+ assert.equal(has({...base,kind:'folder',content:{status:'unavailable'}}),false);
+});
