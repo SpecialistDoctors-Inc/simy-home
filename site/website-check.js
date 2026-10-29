@@ -379,6 +379,6 @@ diagnosisForm.addEventListener('submit', async event => {
 
 let reportPdfLoader;
 function loadReportPdf(){
-  if(!reportPdfLoader)reportPdfLoader=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='/diagnosis-pdf.js?v=2fe07c4a1d1e';script.onload=resolve;script.onerror=()=>{script.remove();reportPdfLoader=null;reject(Error('PDF機能の読込に失敗しました'));};document.head.append(script);});
+  if(!reportPdfLoader)reportPdfLoader=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='/diagnosis-pdf.js?v=bc83de09b660';script.onload=resolve;script.onerror=()=>{script.remove();reportPdfLoader=null;reject(Error('PDF機能の読込に失敗しました'));};document.head.append(script);});
   return reportPdfLoader;
 }
