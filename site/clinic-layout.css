@@ -189,3 +189,9 @@ body.preview-editor-open{overflow:hidden}
 }
 
 #main .flow-result-summary{padding:16px 20px;background:#edf5f3;border-left:4px solid #397c6d;color:#204e43;font-weight:700;line-height:1.8}
+
+/* Keep the PHP question prominent without pushing URL entry below a long headline. */
+#main #diagnosis h1{font-size:clamp(30px,3.2vw,42px);line-height:1.4;letter-spacing:-.025em}
+#main #diagnosis h1 .hero-address{display:block;font-size:clamp(20px,2vw,25px);line-height:1.6;letter-spacing:0;margin-bottom:8px}
+#main #diagnosis .hero-service-summary{margin:18px 0 0;color:inherit;font-size:15px;line-height:1.8;font-weight:400}
+@media(max-width:700px){#main #diagnosis h1{font-size:30px}#main #diagnosis h1 .hero-address{font-size:20px}#main #diagnosis .hero-service-summary{font-size:14px}}
