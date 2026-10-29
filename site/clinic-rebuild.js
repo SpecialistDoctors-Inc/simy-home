@@ -23,7 +23,7 @@
    else if(['clarify','unsupported'].includes(plan.status)){log(plan.question||plan.summary);if(mobile())setPane('edit');}
    else throw Error('変更案の形式を確認できませんでした。');
    chat.push({role:'user',text:message},{role:'assistant',text:(plan.question||plan.summary).slice(0,1500)});chat=chat.slice(-6);editInput.value='';
-  }catch(error){log(error.name==='TimeoutError'?'変更案の作成に時間がかかっています。ページは変更していません。もう一度お試しください。':error.message,'preview-edit-error');}
+  }catch(error){log(error.name==='TimeoutError'?'変更案の作成に時間がかかっています。ページは変更していません。もう一度お試しください。':error.name==='TypeError'?'接続できませんでした。ページは変更していません。時間をおいて再度お試しください。':error.message,'preview-edit-error');}
   finally{setEditBusy(false);if(!mobile()||editor.dataset.pane==='edit')editInput.focus({preventScroll:true});}
  });
  example.addEventListener('click',()=>{editInput.value='明日は午後休診です。お知らせに追加してください。';editForm.requestSubmit();});
