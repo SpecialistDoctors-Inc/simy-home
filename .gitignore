@@ -22,3 +22,6 @@ proof.json.signed.json
 # Python site-generation checks
 __pycache__/
 *.pyc
+
+# Local sample-clinic test evidence (not application source)
+/output/sample-clinic/

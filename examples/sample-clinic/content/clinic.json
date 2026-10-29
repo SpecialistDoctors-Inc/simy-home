@@ -1,0 +1,49 @@
+{
+  "name": "SIMY サンプルクリニック",
+  "englishName": "SIMY SAMPLE CLINIC",
+  "changeRequest": {
+    "id": "3ebf607c-e242-436a-b1cd-0feae476e1ab",
+    "revision": 1
+  },
+  "tagline": ["いつもの毎日に、", "安心できる場所を。"],
+  "description": "小さな気がかりも、気軽に話せる。\nあなたとご家族の毎日に寄り添う、\n街のかかりつけクリニックです。",
+  "heroImage": "assets/clinic-interior.png",
+  "heroImageAlt": "自然光が入る、木のベンチと植物のある待合室のイメージ。AIで制作した架空の院内です。",
+  "hours": {
+    "morning": "9:00–12:30",
+    "afternoon": "14:30–18:00",
+    "morningDays": [true, true, false, true, true, true, false],
+    "afternoonDays": [true, true, false, true, true, false, false],
+    "note": "休診日：水曜・日曜・祝日／土曜は午前のみ"
+  },
+  "notices": [
+    {
+      "id": "sheet-request-test-20261030",
+      "date": "2026-10-30",
+      "category": "お知らせ",
+      "title": "ホームページ更新テストのお知らせ",
+      "body": "このお知らせは、Codexから共有スプレッドシートに登録した更新依頼を、開発環境へ反映する動作確認用です。実際の診療予定には関係ありません。"
+    },
+    {
+      "id": "november-holiday",
+      "date": "2026-10-30",
+      "category": "診療案内",
+      "title": "11月の診療日について",
+      "body": "11月3日（火・祝）と11月23日（月・祝）は休診とするサンプルです。お知らせの文章・日付を変更する更新体験にご利用いただけます。"
+    },
+    {
+      "id": "first-visit",
+      "date": "2026-10-20",
+      "category": "お知らせ",
+      "title": "初めて受診される方へ",
+      "body": "初診時の持ち物や受診の流れをご案内するお知らせのサンプルです。このクリニックは架空のため、実際の予約・診療は行っていません。"
+    },
+    {
+      "id": "website-open",
+      "date": "2026-10-01",
+      "category": "お知らせ",
+      "title": "ホームページを公開しました",
+      "body": "SIMYのホームページ管理を体験するためのサンプルサイトです。お知らせ・診療時間・写真など、日々の更新を想定した構成になっています。"
+    }
+  ]
+}
