@@ -2,8 +2,8 @@
 <html lang="ja">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>HP管理｜診断・見守り・更新｜SIMY</title>
-<meta name="description" content="URLから今の状態を診断。見守りから更新まで、業界に合わせてホームページの管理を支えます。">
+<title>HP管理｜脆弱性診断・更新・保守｜SIMY</title>
+<meta name="description" content="URLから古い部品と外部サービスのリスクを無料診断。更新・保守まで、業界に合わせてホームページの管理を支えます。">
 <meta name="robots" content="noindex,follow"><meta name="theme-color" content="#f6f5f4">
 <link rel="icon" href="/favicon-32.png"><link rel="stylesheet" href="/site-theme.css"><link rel="stylesheet" href="/website-check.css?v=6dd9b06b53c7">
 <script src="/information-flow.js?v=837ce41cfba0" defer></script>
@@ -13,11 +13,11 @@
 <script src="/site-header.js?v=20261021-pharma-1" defer></script>
 <link rel="canonical" href="https://simy.one/hp-management/">
 <meta property="og:type" content="website"><meta property="og:url" content="https://simy.one/hp-management/">
-<meta property="og:title" content="HP管理｜診断・見守り・更新｜SIMY">
-<meta property="og:description" content="医院のURLから、公開ホームページの保護設定と使用部品を診断。確認した根拠と次の対応を分かりやすくお伝えします。">
+<meta property="og:title" content="HP管理｜脆弱性診断・更新・保守｜SIMY">
+<meta property="og:description" content="URLから古い部品と外部サービスのリスクを無料診断。全結果とPDFは登録後に表示します。">
 <meta property="og:image" content="https://simy.one/assets/website-check/clinic-doctor-cybersecurity-v1.png">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="stylesheet" href="/hp-management.css?v=20261027-1"><link rel="stylesheet" href="/hp-readable.css?v=11029e19b0e3"><link rel="stylesheet" href="/hp-migration.css?v=c626c1d206cd"></head>
+<link rel="stylesheet" href="/hp-management.css?v=20261027-1"><link rel="stylesheet" href="/hp-readable.css?v=11029e19b0e3"><link rel="stylesheet" href="/hp-migration.css?v=c626c1d206cd"><link rel="stylesheet" href="/clinic-layout.css?v=505ec03f2488"></head>
 <body><header class="simy-header" translate="no" data-simy-no-translate>
   <div class="sh-frame">
     <a class="sh-brand" href="/ja.html" aria-label="SIMY home"><img src="/simy-icon-56.png" width="32" height="32" alt=""><span>SIMY</span></a>
@@ -31,127 +31,89 @@
 <a class="skip" href="#main">本文へ移動</a>
 
 <main id="main" class="frame hp-service"><nav class="care-nav" aria-label="HP管理ナビゲーション"><span>HP管理</span><a href="#industries">業界から選ぶ</a><a href="#migration">SIMYへの移管</a><a href="#diagnosis">URL診断</a></nav>
-<section class="pad hp-hero" id="diagnosis"><div><p class="eyebrow"><span class="eyebrow-dot"></span> SIMY · HP管理</p><h1>ホームページの管理を、<br><em>気がかりのままにしません。</em></h1><p class="hero-lead">古い部品と、外部サービスのリスク。URLから今の状態を確認できます。</p><form data-endpoint="https://site-health-check-shiwaku.mauve-bow-3401.chatgpt.site/api/scan" id="diagnosis-form" data-report-label="ホームページ" data-next-label="次にすること" class="diagnosis-form"><div class="diagnosis-heading"><label for="diagnosis-url">ホームページのURL</label></div><div class="url-entry"><input id="diagnosis-url" name="website" type="text" inputmode="url" autocomplete="url" autocapitalize="none" spellcheck="false" placeholder="例：https://example.jp" required aria-describedby="diagnosis-note"><button class="button button-primary" type="submit"><span class="button-label">無料で診断する</span><span aria-hidden="true">→</span></button></div><p class="entry-benefits">約3分・最大30ページ。全結果とPDFは登録後に表示します。</p><p id="diagnosis-note" class="availability">公開情報の確認です。侵入・漏えいの有無は判定できません。</p><details class="scan-details"><summary>診断範囲・URLの取り扱い</summary><p>同じサイトの配下リンクを最大30ページまでたどり、公開ページ・使用部品・公開プログラムを確認します。別ドメインやリンクで見つからないページは対象外です。サーバー内部・外部予約サービス内部は対象外です。広告用の追跡情報や「#」以降は自動で除きます。ページ指定など、それ以外のパラメーターがある場合はトップページのURLをご利用ください。URLは診断サービスへ送信し、対象サイトに取得アクセスが記録される場合があります。</p></details><div id="scan-progress" hidden></div><noscript><p class="small">URL入力にはJavaScriptが必要です。下の診断レポート例をご覧ください。</p></noscript></form></div><aside class="hp-overview" aria-label="HP管理のサービス"><p class="eyebrow">診断から、その後まで。</p><div><span>01</span><h2>診断する</h2><p>今、確認が必要なことが分かります。</p></div><div><span>02</span><h2>24時間以内に対応開始</h2><p>セキュリティ修正が公開されたら、確認・対応を開始します。</p></div><div><span>03</span><h2>影響を確認し、更新</h2><p>AIがサイトへの影響を確認し、必要な更新を進めます。</p></div></aside></section><section id="diagnosis-state" class="diagnosis-state" hidden aria-labelledby="diagnosis-state-title" tabindex="-1"><p class="eyebrow">YOUR WEBSITE REPORT</p><h2 id="diagnosis-state-title">公開ホームページを確認しています</h2><p id="diagnosis-target"></p><p id="diagnosis-message" role="status" aria-live="polite"></p><div id="diagnosis-results"></div></section>
-<section class="migration-guide" id="migration" aria-label="SIMYへの移管のご案内">
-    <section class="hero" aria-labelledby="migration-reference-title">
-      <div class="hero-inner">
-        <div>
-          <h2 class="migration-headline" id="migration-reference-title">診断の、その先へ。<br>今のホームページを、<span>SIMYへ。</span></h2>
-          <p class="hero-lead">URLも、見慣れたデザインも。<br>大切なものを引き継いで、管理の負担を軽くします。</p>
-          <p class="hero-copy">医院には、情報の受け取りと内容の確認をお願いします。<br><strong>移管の準備から公開まで、SIMYが進めます。</strong></p>
-        </div>
-        <div class="hero-art" aria-hidden="true">
-          <div class="browser">
-            <div class="browser-top"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="address">www.your-clinic.jp</span></div>
-            <div class="browser-content">
-              <div class="mock-navi"><span class="mock-logo"></span><span class="mock-lines"></span></div>
-              <div class="mock-title">診療のご案内</div>
-              <div class="mock-sub"><i></i><i></i><i></i></div>
-              <div class="mock-photo"></div>
-            </div>
-            <div class="floating-pill"><span>✓</span>今のURLをそのまま</div>
-          </div>
-        </div>
-      </div>
-    </section>
+<section class="pad hp-hero" id="diagnosis"><div><p class="eyebrow"><span class="eyebrow-dot"></span> SIMY · HP管理</p><h1>ホームページの管理を、<br><em>気がかりのままにしません。</em></h1><p class="hero-lead">古い部品と、外部サービスのリスク。URLから今の状態を確認できます。</p><form data-endpoint="https://site-health-check-shiwaku.mauve-bow-3401.chatgpt.site/api/scan" id="diagnosis-form" data-report-label="ホームページ" data-next-label="次にすること" class="diagnosis-form"><div class="diagnosis-heading"><label for="diagnosis-url">ホームページのURL</label></div><div class="url-entry"><input id="diagnosis-url" name="website" type="text" inputmode="url" autocomplete="url" autocapitalize="none" spellcheck="false" placeholder="例：https://example.jp" required aria-describedby="diagnosis-note"><button class="button button-primary" type="submit"><span class="button-label">無料で診断する</span><span aria-hidden="true">→</span></button></div><p class="entry-benefits">約3分・最大30ページ。全結果とPDFは登録後に表示します。</p><p id="diagnosis-note" class="availability">公開情報の確認です。侵入・漏えいの有無は判定できません。</p><details class="scan-details"><summary>診断範囲・URLの取り扱い</summary><p>同じサイトの配下リンクを最大30ページまでたどり、公開ページ・使用部品・公開プログラムを確認します。別ドメインやリンクで見つからないページは対象外です。サーバー内部・外部予約サービス内部は対象外です。広告用の追跡情報や「#」以降は自動で除きます。ページ指定など、それ以外のパラメーターがある場合はトップページのURLをご利用ください。URLは診断サービスへ送信し、対象サイトに取得アクセスが記録される場合があります。</p></details><div id="scan-progress" hidden></div><noscript><p class="small">診断にはJavaScriptを有効にしてください。</p></noscript></form></div><aside class="hp-overview" aria-label="HP管理のサービス"><p class="eyebrow">診断から、その後まで。</p><div><span>01</span><h2>診断する</h2><p>今、確認が必要なことが分かります。</p></div><div><span>02</span><h2>24時間以内に対応開始</h2><p>セキュリティ修正が公開されたら、確認・対応を開始します。</p></div><div><span>03</span><h2>影響を確認し、更新</h2><p>AIがサイトへの影響を確認し、必要な更新を進めます。</p></div></aside></section><section id="diagnosis-state" class="diagnosis-state" hidden aria-labelledby="diagnosis-state-title" tabindex="-1"><p class="eyebrow">YOUR WEBSITE REPORT</p><h2 id="diagnosis-state-title">公開ホームページを確認しています</h2><p id="diagnosis-target"></p><p id="diagnosis-message" role="status" aria-live="polite"></p><div id="diagnosis-results"></div></section>
+<section aria-label="SIMYへの移管のご案内" class="migration-guide" id="migration"><div class="migration-chapter">診断で終わらせず、更新・保守まで。</div>
+<section aria-labelledby="migration-reference-title" class="hero">
+<div class="hero-inner">
+<div>
+<h2 class="migration-headline" id="migration-reference-title">脆弱性診断の、その先へ。<br/>今のホームページを、<span>SIMYへ。</span></h2>
+<p class="hero-lead">AIが得意なことは、AIへ。<br/>先生の「こうしたい」を、もっとシンプルに。</p>
+</div>
+</div>
+</section>
 
-    <section class="section" aria-labelledby="steps-title">
-      <div class="section-intro">
-        <p class="kicker">移管の3ステップ</p>
-        <h2 id="steps-title">お引き継ぎは、3つのステップで進めます。</h2>
 
-      </div>
-
-      <div class="steps">
-        <article class="step" aria-labelledby="step1-title">
-          <div class="step-info">
-            <p class="step-label">STEP 01</p>
-            <h3 class="step-head" id="step1-title">まず、今の管理会社へ<br><em>「移管したい」とお伝えください。</em></h3>
-            <p class="step-description">制作会社・管理会社、またはドメイン登録会社から、必要な情報を受け取ります。ドメイン移管が必要な場合は認証コード<strong>「AuthCode（オースコード）」</strong>、サイトのお引き継ぎには<strong>HTML・画像・管理情報</strong>などが対象となります。</p>
-            <p class="step-description">何を頼めばよいかは、<strong>SIMYがご案内します。</strong></p>
-          </div>
-          <div class="visual">
-            <div class="transfer">
-              <div class="transfer-card">
-                <p class="caption">今の管理会社・制作会社</p>
-                <div class="document-line">AuthCode <span>必要な場合のみ</span></div>
-                <div class="document-line">HTML・画像 <span>サイトデータ</span></div>
-                <div class="document-line">管理情報 <span>必要な設定情報</span></div>
-              </div>
-              <div class="transfer-arrow"><b>↓</b>引き継ぎ</div>
-              <div class="transfer-brand"><img src="/simy-icon-56.png" alt="">SIMY</div>
-            </div>
-          </div>
-        </article>
-
-        <div class="connector" aria-hidden="true">↓</div>
-
-        <article class="step" aria-labelledby="step2-title">
-          <div class="step-info">
-            <p class="step-label">STEP 02</p>
-            <h3 class="step-head" id="step2-title">ここからは、SIMYが担当します。<br><em>今の見た目を、最新の技術で作り直します。</em></h3>
-            <p class="step-description">今あるHTML・画像を引き継ぐ方法に加え、<strong>同じ見た目・内容を最新技術で無料で作り直す</strong>方法も選べます。</p>
-            <p class="step-description">公開前に、先生に画面をご確認いただきます。</p>
-            <p class="step-small">※ 再制作の費用は0円です。権利と対象範囲を確認してから着手します。</p>
-          </div>
-          <div class="visual">
-            <div class="rebuild-card" aria-label="従来のホームページを最新技術に置き換えるイメージ">
-              <div class="rebuild-eyebrow">いつものホームページ</div>
-              <div class="clinic-line">診療のご案内</div>
-              <div class="rebuild-grid"><div class="rebuild-lines"><i></i><i></i><i></i></div><div class="rebuild-picture"></div></div>
-              <div class="zero"><span>見た目・内容はそのまま</span><strong>再制作 0円</strong></div>
-            </div>
-          </div>
-        </article>
-
-        <div class="connector" aria-hidden="true">↓</div>
-
-        <article class="step" aria-labelledby="step3-title">
-          <div class="step-info">
-            <p class="step-label">STEP 03</p>
-            <h3 class="step-head" id="step3-title">ご確認いただいたら、公開します。<br><em>同じURLで公開し、ChatGPTで更新できます。</em></h3>
-            <p class="step-description">ドメインの設定・公開先の切り替えをSIMYが進めます。予約リンク・フォーム・メールへの影響を確認して切り替え、先生がお持ちのChatGPTアカウントを更新環境へ接続します。</p>
-            <p class="step-description"><strong>「休診日を載せて」と伝え、プレビューを確認して公開できます。</strong></p>
-            <p class="step-small">ホームページのURLは、そのままご利用いただけます。</p>
-          </div>
-          <div class="visual">
-            <div class="chat-card">
-              <div class="chat-question">来月の休診日を<br>ホームページに載せて。</div>
-              <div class="chat-response"><img src="/simy-icon-56.png" alt=""><div><strong>更新内容のプレビューを作成します</strong><small>公開前に内容を確認できます</small></div></div>
-              <div class="preview-action">✓ ご確認後に公開できます。</div>
-            </div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section class="rights-guide" id="migration-rights" aria-labelledby="rights-title">
-      <p class="rights-eyebrow">移管前の権利確認</p>
-      <h2 id="rights-title">今のホームページ、<br>権利の確認からお手伝いします。</h2>
-      <div class="rights-rows">
-        <div><h3>医院が権利をお持ちなら</h3><p>契約上、利用できる範囲を確認して引き継ぎます。</p></div>
-        <div><h3>制作会社などが権利を持つ場合</h3><p><strong>SIMYへのデータ引き渡し・移設・作り替え・公開・今後の更新</strong>について、権利者の許可を得て進めます。必要な確認事項や依頼文は、SIMYがご案内します。</p></div>
-        <div><h3>許可を得られない素材がある場合</h3><p>そのデザイン・文章・写真などは使用せず、新しく制作・差し替えます。</p></div>
-      </div>
-      <p class="rights-note">同じ見た目・内容での再制作は、必要な権利・許諾を確認できた範囲で対応します。写真素材・フォント・テンプレートは、それぞれの利用条件も確認します。許諾は対象と利用範囲を明確にし、書面やメールで残します。</p>
-      <details class="rights-request"><summary>今の制作会社への依頼文を見る</summary><p>当院ホームページの管理をSIMYへ移管したいと考えています。現在の契約上、デザイン・文章・画像・プログラムについて、SIMYへのデータ提供、別サーバーへの移設、再制作・改修および継続公開が可能かご確認ください。別途許諾や費用が必要な場合、また移管できない素材がある場合は、その対象と条件をお知らせください。</p></details>
-    </section>
-
-    <section class="cta-wrap" aria-labelledby="cta-title">
-      <div class="cta">
-        <h2 id="cta-title">まずは、<br>今の管理先をお知らせください。</h2>
-        <p>必要な準備や確認事項は、SIMYがご案内します。</p>
-        <a class="cta-button" href="mailto:sales@simy.one?subject=SIMY%E3%81%B8%E3%81%AE%E3%83%9B%E3%83%BC%E3%83%A0%E3%83%9A%E3%83%BC%E3%82%B8%E7%A7%BB%E7%AE%A1%E3%81%AE%E7%9B%B8%E8%AB%87&amp;body=SIMY%20%E3%81%94%E6%8B%85%E5%BD%93%E8%80%85%E6%A7%98%0D%0A%0D%0A%E5%8C%BB%E7%99%82%E6%A9%9F%E9%96%A2%E5%90%8D%EF%BC%9A%0D%0A%E3%81%94%E6%8B%85%E5%BD%93%E8%80%85%E5%90%8D%EF%BC%9A%0D%0A%E3%83%9B%E3%83%BC%E3%83%A0%E3%83%9A%E3%83%BC%E3%82%B8URL%EF%BC%9A%0D%0A%E3%81%94%E7%94%A8%E4%BB%B6%EF%BC%9A%E3%83%9B%E3%83%BC%E3%83%A0%E3%83%9A%E3%83%BC%E3%82%B8%E3%81%AE%E7%A7%BB%E7%AE%A1%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%0D%0A%0D%0A%E3%81%94%E7%9B%B8%E8%AB%87%E5%86%85%E5%AE%B9%EF%BC%9A%0D%0A">SIMYへの移管を相談する <span aria-hidden="true">↗</span></a>
-      </div>
-    </section>
-
-    <section class="notes" aria-label="ご利用条件と注意事項">
-      <p class="notes-heading">ご利用にあたって</p>
-      <p>※ 無料再制作は、SIMYのホームページ管理をご契約いただく場合に提供します。デザイン・文章・画像等の再利用・改変に必要な権利と許諾を確認でき、事前に合意したページ・機能が対象です。</p>
-      <p>※ 予約などの外部サービス内部や機能追加は別途確認します。ドメインの取得・更新・移管にかかる実費、月額保守料、AIサービスの契約・利用料は別途となります。</p>
-      <p>※ ドメインによって必要な情報・承認手順は異なります。既存URLを維持するために、必ずしもドメイン登録会社の移管が必要とは限りません。</p>
-
-    </section>
-  </section>
+<section aria-labelledby="steps-title" class="section">
+<div class="section-intro">
+<p class="kicker">移管の3ステップ</p>
+<h2 id="steps-title">気に入ったら、移管は3ステップです。</h2>
+</div>
+<div class="steps">
+<article aria-labelledby="step1-title" class="step">
+<div class="step-info">
+<p class="step-label">STEP 01</p>
+<h3 class="step-head" id="step1-title">今の管理先から、<br/><em>データを受け取ります。</em></h3>
+<p class="step-description">今の管理先から、HTML・画像・管理情報を受け取ります。ドメイン移管が必要な場合は<strong>AuthCode（オースコード）</strong>も受け取ります。</p>
+<p class="step-description">必要な依頼内容は、SIMYがご案内します。</p>
+</div>
+<div class="visual">
+<div class="transfer">
+<div class="transfer-card">
+<p class="caption">今の管理会社・制作会社</p>
+<div class="document-line">AuthCode <span>必要な場合のみ</span></div>
+<div class="document-line">HTML・画像 <span>サイトデータ</span></div>
+<div class="document-line">管理情報 <span>必要な設定情報</span></div>
+</div>
+<div class="transfer-arrow"><b>↓</b>引き継ぎ</div>
+<div class="transfer-brand"><img alt="" src="/simy-icon-56.png"/>SIMY</div>
+</div>
+</div>
+</article>
+<div aria-hidden="true" class="connector">↓</div>
+<article aria-labelledby="step2-title" class="step">
+<div class="step-info">
+<p class="step-label">STEP 02</p>
+<h3 class="step-head" id="step2-title">今の見た目を、<br/><em>最新の技術で作り直します。</em></h3>
+<p class="step-description">既存データの引き継ぎも、<strong>同じ見た目・内容での無料再制作</strong>も選べます。</p>
+<p class="step-description">公開前に、先生に画面をご確認いただきます。</p>
+<p class="step-small">HP管理のご契約と、権利・対象範囲の確認が条件です。</p>
+</div>
+<div class="visual">
+<div aria-label="従来のホームページを最新技術に置き換えるイメージ" class="rebuild-card">
+<div class="rebuild-eyebrow">いつものホームページ</div>
+<div class="clinic-line">診療のご案内</div>
+<div class="rebuild-grid"><div class="rebuild-lines"><i></i><i></i><i></i></div><div class="rebuild-picture"></div></div>
+<div class="zero"><span>見た目・内容はそのまま</span><strong>再制作 0円</strong></div>
+</div>
+</div>
+</article>
+<div aria-hidden="true" class="connector">↓</div>
+<article aria-labelledby="step3-title" class="step">
+<div class="step-info">
+<p class="step-label">STEP 03</p>
+<h3 class="step-head" id="step3-title">同じURLで公開し、<br/><em>ChatGPTへ接続します。</em></h3>
+<p class="step-description">予約・フォーム・メールへの影響を確認して公開先を切り替え、医院のChatGPTを更新環境へ接続します。</p>
+</div>
+<div class="visual">
+<div class="chat-card">
+<div class="chat-question">来月の休診日を<br/>ホームページに載せて。</div>
+<div class="chat-response"><img alt="" src="/simy-icon-56.png"/><div><strong>更新内容のプレビューを作成します</strong><small>公開前に内容を確認できます</small></div></div>
+<div class="preview-action">✓ ご確認後に公開できます。</div>
+</div>
+</div>
+</article>
+</div>
+</section>
+<section aria-labelledby="rights-title" class="rights-guide" id="migration-rights">
+<p class="rights-eyebrow">移管前の権利確認</p>
+<h2 id="rights-title">再制作の前に、権利を確認します。</h2>
+<div class="rights-rows">
+<div><h3>医院が権利をお持ちなら</h3><p>契約上、利用できる範囲を確認して引き継ぎます。</p></div>
+<div><h3>制作会社などが権利を持つ場合</h3><p>データの引き渡し・移設・再制作・公開・更新について、権利者の許可を得て進めます。</p></div>
+<div><h3>許可を得られない素材がある場合</h3><p>対象のデザイン・文章・写真は使用せず、新しく制作します。</p></div>
+</div>
+<p class="rights-note">写真・フォント・テンプレートの利用条件も確認し、許可の対象と範囲を記録します。</p>
+</section>
+</section>
 <section class="pad hp-industries" id="industries"><p class="eyebrow">業界別のHP管理</p><h2>あなたの業界に合う、<br>管理をご案内します。</h2><a class="hp-clinic-card" href="/hp-management/clinic/"><img src="/assets/website-check/clinic-doctor-cybersecurity-v1.png" width="1536" height="1024" loading="lazy" alt="ホームページを確認する医師の漫画。架空のイメージ。"><div><span class="eyebrow">医療・健康</span><h3>クリニック向け</h3><p>診療に集中するための、医院ホームページ管理。</p><strong>診断・料金を見る →</strong></div></a><details class="hp-future"><summary>その他の業界を見る <span>専用ページは順次公開</span></summary><div class="hp-industry-grid"><div><h3>医療・健康</h3><p>歯科クリニック・動物病院・整骨院・接骨院・鍼灸院・調剤薬局・整体院</p></div><div><h3>美容</h3><p>美容室・理容室・エステ・ネイル・脱毛サロン</p></div><div><h3>士業</h3><p>弁護士・税理士・司法書士・行政書士・社労士</p></div><div><h3>不動産</h3><p>仲介・賃貸管理・住宅販売</p></div><div><h3>建築・住宅</h3><p>工務店・リフォーム・設計・外壁塗装</p></div><div><h3>教育</h3><p>学習塾・予備校・英会話・音楽教室・幼稚園・保育園</p></div><div><h3>介護・福祉</h3><p>老人ホーム・デイサービス・訪問介護・障害福祉</p></div><div><h3>飲食</h3><p>レストラン・カフェ・居酒屋・専門飲食店</p></div><div><h3>宿泊・観光</h3><p>ホテル・旅館・民宿・旅行会社</p></div><div><h3>自動車</h3><p>販売・整備・車検・板金塗装</p></div><div><h3>冠婚葬祭</h3><p>葬儀・結婚式場・写真館・ブライダル</p></div><div><h3>小売</h3><p>花屋・宝石・家具・アパレル・専門店</p></div><div><h3>BtoB企業</h3><p>製造・印刷・卸売・運送・IT</p></div><div><h3>その他サービス</h3><p>人材紹介・警備・清掃・ペットサロン</p></div></div></details></section></main><footer class="footer frame"><a class="brand" href="/ja.html">SIMY</a><span>ホームページの気がかりを、そのままにしません。</span><a href="/privacy.html?lang=ja">プライバシー</a><a href="/contact.html?lang=ja">お問い合わせ</a><small>© SIMY</small></footer>
 </body></html>
