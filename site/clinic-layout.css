@@ -142,3 +142,50 @@ html:root{scroll-behavior:auto;scroll-padding-top:0}
 }
 
 #main .diagnosis-banner #scan-progress,#main .diagnosis-banner .diagnosis-state{color:#17253b}
+
+/* Paired entry controls share one border box, in both ready and loading states. */
+#main .rebuild-entry{align-items:start}
+#main .rebuild-entry input,#main .rebuild-entry button,#main #inline-diagnosis-form .url-entry input,#main #inline-diagnosis-form .url-entry button{box-sizing:border-box;height:58px;min-height:58px;max-height:58px;margin:0;line-height:1.4;align-self:start}
+#main .migration-story-copy{display:grid;grid-template-rows:auto 1fr auto;align-content:start}
+#main .migration-story-copy h3{margin-top:0}
+#main .preview-open{margin-top:18px;padding:14px 22px;border:0;border-radius:8px;background:#245dbd;color:#fff;font-size:17px;font-weight:750;line-height:1.5;font-family:inherit;cursor:pointer}
+body.preview-editor-open{overflow:hidden}
+#rebuild-editor{box-sizing:border-box;width:calc(100vw - 32px);max-width:1600px;height:calc(100dvh - 32px);max-height:none;margin:auto;padding:0;border:1px solid #b7c9dd;border-radius:14px;background:#f4f7fb;color:#17253b;overflow:hidden}
+#rebuild-editor::backdrop{background:rgba(10,23,43,.65)}
+#rebuild-editor[open]{display:flex;flex-direction:column}
+#rebuild-editor *{box-sizing:border-box}
+#rebuild-editor .preview-editor-header{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:16px 20px;background:#fff;border-bottom:1px solid #c7d5e5;flex-shrink:0}
+#rebuild-editor .preview-editor-header strong{font-size:20px}
+#rebuild-editor .preview-editor-header p{margin:5px 0 0;font-size:13px;color:#536780}
+#rebuild-editor button{border:1px solid #adc1d9;border-radius:7px;background:#fff;color:#183c68;padding:10px 14px;min-height:44px;margin:0;font-size:14px;font-weight:700;line-height:1.4;cursor:pointer}
+#rebuild-editor .preview-editor-layout{display:grid;grid-template-columns:300px minmax(0,1fr);min-height:0;flex:1}
+#rebuild-editor .preview-chat{display:flex;flex-direction:column;gap:14px;min-height:0;padding:20px;border-right:1px solid #c7d5e5;overflow:auto}
+#rebuild-editor .preview-chat h3{margin:0;font-size:20px}
+#rebuild-editor .preview-chat>p{margin:0;font-size:14px;line-height:1.7}
+#rebuild-editor #preview-conversation{flex:1;min-height:80px;overflow:auto;font-size:14px;line-height:1.7}
+#rebuild-editor #preview-conversation p{padding:10px 12px;border-radius:8px;background:#fff;margin:0 0 10px;overflow-wrap:anywhere}
+#rebuild-editor #preview-conversation .preview-user-message{background:#dceafe;color:#183c68}
+#rebuild-editor #preview-conversation .preview-edit-error{background:#fff1ed;color:#a02a22}
+#rebuild-editor #preview-edit-form{margin:0;padding:0;border:0;background:none;display:grid;gap:8px}
+#rebuild-editor label{font-size:14px;font-weight:750}
+#rebuild-editor textarea{width:100%;min-height:112px;border:1px solid #7895b9;border-radius:7px;padding:12px;margin:0;font:16px/1.6 sans-serif;color:#17253b;background:#fff;resize:vertical}
+#rebuild-editor #preview-edit-form button{background:#245dbd;color:#fff;border-color:#245dbd;font-size:16px}
+#rebuild-editor .preview-edit-actions{display:flex;gap:8px}
+#rebuild-editor button:disabled{opacity:.5;cursor:default}
+#rebuild-editor .preview-scope{font-size:12px!important;color:#536780}
+#rebuild-editor .preview-canvas{display:flex;flex-direction:column;min-width:0;min-height:0;background:#fff}
+#rebuild-editor .preview-canvas-label{padding:10px 16px;background:#e9f0f8;font-size:13px;color:#314d70;border-bottom:1px solid #c7d5e5}
+#rebuild-editor #rebuild-preview{width:100%;height:100%;min-height:0;flex:1;border:0;border-radius:0;background:#fff;display:block}
+#rebuild-editor :focus-visible{outline:3px solid #7fbcff;outline-offset:2px}
+@media(max-width:700px){
+ #rebuild-editor{width:100vw;height:100dvh;border-radius:0;border:0}
+ #rebuild-editor .preview-editor-header{padding:12px 14px}
+ #rebuild-editor .preview-editor-header strong{font-size:17px}
+ #rebuild-editor .preview-editor-layout{display:flex;flex-direction:column-reverse;overflow:auto}
+ #rebuild-editor .preview-canvas{flex:none;height:48dvh;min-height:240px}
+ #rebuild-editor .preview-chat{flex:none;border-right:0;border-top:1px solid #c7d5e5;padding:16px;overflow:visible}
+ #rebuild-editor #preview-conversation{max-height:140px;min-height:0}
+ #rebuild-editor textarea{min-height:90px}
+}
+
+#main .flow-result-summary{padding:16px 20px;background:#edf5f3;border-left:4px solid #397c6d;color:#204e43;font-weight:700;line-height:1.8}

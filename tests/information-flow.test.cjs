@@ -54,3 +54,11 @@ test('sharing results show assessed concerns but hide clean and unassessed items
  assert.equal(has({...base,assessment:{status:'unavailable'}}),false);
  assert.equal(has({...base,kind:'folder',content:{status:'unavailable'}}),false);
 });
+
+test('scoped no-problem conclusion is hidden when a sharing or transmission problem was found',()=>{
+ const report={url:'https://clinic.jp/',integrations:[{...item,destination:'https://booking.example/',category:'予約'}]};
+ assert.equal(flow.noProblemSummary(report),'現時点では、本診断の調査範囲において問題を発見することはできませんでした。');
+ assert.equal(flow.noProblemSummary({...report,findings:[{id:'form-http',state:'review'}]}),'');
+ assert.equal(flow.noProblemSummary({...report,sharing:{items:[{...assessed,assessment:{...assessed.assessment,audience:'internal'}}]}}),'');
+ assert.equal(flow.noProblemSummary({url:'https://clinic.jp/'}),'');
+});
