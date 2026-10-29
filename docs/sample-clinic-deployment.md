@@ -29,7 +29,10 @@ explicitly authorized target. This setup never syncs the existing homepage bucke
 
 Environments `sample-clinic-dev` and `sample-clinic-prod` must allow only branch
 `dev` and `main`, respectively. Production must require a reviewer who checks
-the customer approval evidence. Keep the production enable variable false until
+the customer approval evidence. Disable administrator bypass for production and
+read back `can_admins_bypass=false` before enabling it. The initial manual test
+allows the same SIMY operator to dispatch and review; it is not a test of
+independent customer identities. Keep the production enable variable false until
 these protections and all production secrets have been read back successfully.
 The reviewer must not approve a production job merely because CI passed.
 
