@@ -4,12 +4,19 @@
  const input=form.querySelector('[name="url"]'),button=form.querySelector('button'),status=document.querySelector('#rebuild-status'),result=document.querySelector('#rebuild-result'),frame=document.querySelector('#rebuild-preview'),download=document.querySelector('#rebuild-download');
  const editor=document.querySelector('#rebuild-editor'),openEditor=document.querySelector('#rebuild-editor-open'),closeEditor=document.querySelector('#rebuild-editor-close'),editForm=document.querySelector('#preview-edit-form'),editInput=document.querySelector('#preview-edit-message'),conversation=document.querySelector('#preview-conversation'),undo=document.querySelector('#preview-edit-undo'),reset=document.querySelector('#preview-edit-reset');
  const example=document.querySelector('#preview-edit-example');
- let busy=false,editBusy=false,objectUrl,currentHtml='',originalHtml='',history=[],chat=[];
+ let busy=false,editBusy=false,objectUrl,currentHtml='',originalHtml='',history=[],chat=[],assets=[];
  // Use wall-clock time so background-tab throttling cannot undercount elapsed time.
  const makeElapsed=anchor=>{const output=document.createElement('p');output.className='small operation-elapsed';output.hidden=true;output.setAttribute('role','timer');output.setAttribute('aria-live','off');output.style.fontVariantNumeric='tabular-nums';anchor.after(output);let timer;
   return ()=>{clearInterval(timer);const started=Date.now();output.hidden=false;const tick=()=>{output.textContent='経過 '+Math.floor((Date.now()-started)/1000)+'秒';};tick();timer=setInterval(tick,1000);return ()=>{clearInterval(timer);tick();};};
  };
  const startRebuildElapsed=makeElapsed(status),startEditElapsed=makeElapsed(editForm.querySelector('button'));
+ const photoInput=document.querySelector('#preview-photo'),photoStatus=document.querySelector('#preview-photo-status');
+ photoInput.addEventListener('change',async()=>{const file=photoInput.files[0];if(!file)return;photoInput.disabled=true;
+  try{if(!['image/jpeg','image/png','image/webp'].includes(file.type)||file.size>5*1024*1024)throw Error('写真はJPEG・PNG・WebP、5MB以内で選んでください。');
+   const bitmap=await createImageBitmap(file),scale=Math.min(1,1600/Math.max(bitmap.width,bitmap.height));const canvas=document.createElement('canvas');canvas.width=Math.round(bitmap.width*scale);canvas.height=Math.round(bitmap.height*scale);canvas.getContext('2d').drawImage(bitmap,0,0,canvas.width,canvas.height);bitmap.close();
+   assets=[{id:'a0',name:file.name.slice(0,120),data:canvas.toDataURL('image/jpeg',.88)}];photoStatus.textContent='添付：'+file.name;log('写真を添付しました。差し替えたい写真の場所を入力してください。');
+  }catch(e){photoStatus.textContent=e.message;photoInput.value='';}finally{photoInput.disabled=false;}
+ });
  const mobile=()=>matchMedia('(max-width:700px)').matches;
  const setPane=pane=>{editor.dataset.pane=pane;for(const tab of editor.querySelectorAll('[data-preview-pane]'))tab.setAttribute('aria-pressed',String(tab.dataset.previewPane===pane));};
  for(const tab of editor.querySelectorAll('[data-preview-pane]'))tab.addEventListener('click',()=>{setPane(tab.dataset.previewPane);if(tab.dataset.previewPane==='edit')editInput.focus({preventScroll:true});});
@@ -17,14 +24,14 @@
  const log=(text,kind='')=>{const p=document.createElement('p');p.textContent=text;if(kind)p.className=kind;conversation.append(p);conversation.scrollTop=conversation.scrollHeight;};
  const showEditor=()=>{if(!currentHtml)return;setPane(mobile()?'canvas':'edit');editor.showModal();document.body.classList.add('preview-editor-open');(mobile()?closeEditor:editInput).focus({preventScroll:true});};
  openEditor.addEventListener('click',showEditor);closeEditor.addEventListener('click',()=>editor.close());editor.addEventListener('close',()=>{document.body.classList.remove('preview-editor-open');openEditor.focus({preventScroll:true});});
- const setEditBusy=value=>{editBusy=value;editForm.querySelector('button').disabled=value;editForm.querySelector('button').textContent=value?'ご依頼に合わせて変更中…':'ChatGPTに送信 →';undo.disabled=value||!history.length;reset.disabled=value;example.disabled=value;editInput.disabled=value;editForm.setAttribute('aria-busy',String(value));};
+ const setEditBusy=value=>{editBusy=value;editForm.querySelector('button').disabled=value;editForm.querySelector('button').textContent=value?'ご依頼に合わせて変更中…':'ChatGPTに送信 →';undo.disabled=value||!history.length;reset.disabled=value;example.disabled=value;editInput.disabled=value;photoInput.disabled=value;editForm.setAttribute('aria-busy',String(value));};
  frame.addEventListener('load',()=>{try{const mark=frame.contentDocument?.querySelector('[data-simy-changed]');mark?.scrollIntoView({block:'center',behavior:'instant'});}catch{}});
  editForm.addEventListener('submit',async event=>{event.preventDefault();if(editBusy||!editForm.reportValidity()||!currentHtml)return;const message=editInput.value.trim(),base=currentHtml;log(message,'preview-user-message');setEditBusy(true);const stopElapsed=startEditElapsed();
   try{
-   const response=await fetch(new URL('/api/preview-edit',form.dataset.endpoint),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({request:message,nodes:window.SimyPreviewEdit.inventory(base,frame.contentDocument),history:chat.slice(-6)}),signal:AbortSignal.timeout(100000)});
+   const response=await fetch(new URL('/api/preview-edit',form.dataset.endpoint),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({request:message,nodes:window.SimyPreviewEdit.inventory(base,frame.contentDocument),history:chat.slice(-6),assets:assets.map(({id,name})=>({id,name}))}),signal:AbortSignal.timeout(100000)});
    const plan=await response.json();if(!response.ok)throw Error(plan.error||'変更案を作成できませんでした。');
    if(currentHtml!==base)throw Error('ページの状態が変わりました。もう一度お試しください。');
-   if(plan.status==='edit'){const changed=window.SimyPreviewEdit.applyPlan(base,plan);history.push(base);if(history.length>10)history.shift();updatePreview(changed.html);log(changed.summary);}
+   if(plan.status==='edit'){const changed=window.SimyPreviewEdit.applyPlan(base,plan,assets,frame.contentDocument);history.push(base);if(history.length>10)history.shift();updatePreview(changed.html);log(changed.summary);}
    else if(['clarify','unsupported'].includes(plan.status)){log(plan.question||plan.summary);if(mobile())setPane('edit');}
    else throw Error('変更案の形式を確認できませんでした。');
    chat.push({role:'user',text:message},{role:'assistant',text:(plan.question||plan.summary).slice(0,1500)});chat=chat.slice(-6);editInput.value='';
@@ -44,7 +51,7 @@
    const response=await fetch(form.dataset.endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url:url.href,rightsConfirmed:form.elements.rights.checked}),signal:AbortSignal.timeout(80000)});
    const data=await response.json();if(!response.ok)throw Error(data.error||'プレビューを作成できませんでした。');
    if(data.mode!=='static-html5-preview'||typeof data.html!=='string'||data.html.length>2000000)throw Error('プレビューの形式を確認できませんでした。');
-   originalHtml=window.SimyPreviewEdit.index(window.SimyPreviewEdit.prepare(data.html));history=[];chat=[];updatePreview(originalHtml);document.querySelector('#preview-source').textContent=url.hostname+' · 公開中のサイトは変更しません';conversation.replaceChildren();log('いつものChatGPTに話すように、変えたいことを入力してください。');
+   originalHtml=window.SimyPreviewEdit.index(window.SimyPreviewEdit.prepare(data.html));history=[];chat=[];assets=[];photoInput.value='';photoStatus.textContent='';updatePreview(originalHtml);document.querySelector('#preview-source').textContent=url.hostname+' · 公開中のサイトは変更しません';conversation.replaceChildren();log('いつものChatGPTに話すように、変えたいことを入力してください。');
    const enquiryBody='SIMY ご担当者様\r\n\r\n医療機関名：\r\nご担当者名：\r\nホームページURL：'+url.href+'\r\nご用件：ホームページの再現を体験しました。移管・保守について相談したいです。\r\n';document.querySelector('#preview-enquiry').href='mailto:sales@simy.one?subject='+encodeURIComponent('HP管理・移管の相談')+'&body='+encodeURIComponent(enquiryBody);
    const versions=document.querySelector('#rebuild-versions');versions.replaceChildren();
    const table=document.createElement('table');const caption=document.createElement('caption');caption.textContent='再現したトップページの構成・更新状況';table.append(caption);

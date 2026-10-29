@@ -33,3 +33,9 @@
 - バックエンド11テスト、型チェック、ビルド成功。Sites version 51で本番API応答を確認。
 
 画像生成・複雑な配置変更・別ページ・外部予約システム内部の編集は、本体の制作環境とは異なりこの体験では行わない。
+
+## 2026-10-30: broader preview editing
+
+Photo replacement now uses a JPEG/PNG/WebP upload (5 MiB limit, browser resizing to 1600 px). Only asset ID/name go to the planner; photo bytes remain in the browser. Added bounded whole-page redesign (modern/editorial/warm with chosen accent), section addition, explicit removal, and moving elements. Previous statements that all image/layout changes are unsupported are superseded for these operations. Image generation, booking backend changes, editing another page and publishing to an external service remain unsupported.
+
+Validation: 1,560 frontend tests; 10 planner tests; TypeScript/build; actual Codex selected the greeting-section director image for a named replacement, returned a warm green redesign for a whole-page request, and asked for photo/position when missing. DOM checks verify replacement asset binding, no mutation on missing asset, original text/image count retained by redesign, and notice regression. Theme layout is bounded, not unrestricted design generation.
