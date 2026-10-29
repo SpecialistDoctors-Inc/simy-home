@@ -189,7 +189,7 @@ function renderInfrastructure(report) {
   section.append(element('p','提供元の過去の公表です。この医院の被害を示すものではありません。','evaluation-note'));
   const figure=element('figure','','clinic-manga infrastructure-manga'),img=element('img','');
   img.src='/assets/website-check/clinic-aws-migration-v1.png';img.width=1536;img.height=1024;img.loading='lazy';img.alt='サーバー管理に悩む医師が、AWSの基盤とSIMYの設定・更新・バックアップを組み合わせた移行を検討する漫画。';
-  figure.append(img,element('figcaption','AWSへの移行イメージ。安全性は、構成・設定・継続的な保守にも左右されます。'));section.append(figure);results.append(section);
+  figure.append(img);section.append(figure);results.append(section);
 }
 function renderNoticeTable(info,services,nameLabel){
   const wrap=element('div','','evaluation-scroll');const table=element('table','','evaluation-table service-table');
@@ -393,6 +393,6 @@ diagnosisForm.addEventListener('submit', async event => {
 
 let reportPdfLoader;
 function loadReportPdf(){
-  if(!reportPdfLoader)reportPdfLoader=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='/diagnosis-pdf.js?v=3f7e2759ba76';script.onload=resolve;script.onerror=()=>{script.remove();reportPdfLoader=null;reject(Error('PDF機能の読込に失敗しました'));};document.head.append(script);});
+  if(!reportPdfLoader)reportPdfLoader=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='/diagnosis-pdf.js?v=22a6c0ba7fac';script.onload=resolve;script.onerror=()=>{script.remove();reportPdfLoader=null;reject(Error('PDF機能の読込に失敗しました'));};document.head.append(script);});
   return reportPdfLoader;
 }

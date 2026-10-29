@@ -83,13 +83,13 @@
     card('02 / Googleが「危険なサイト」と警告','不正な内容やマルウェアが検出されると、Googleの検索結果やChromeに「危険なサイト」などの警告が表示される場合があります。患者さんがアクセスや予約をためらい、来院機会や医院への信頼を失うおそれがあります。');
     card('03 / 他システムに被害が広がるおそれ','同じサーバー環境や認証情報を他システムと共有している場合、侵入の足掛かりにされ、被害が広がる可能性があります。予約停止や情報漏えいの調査・復旧に追われ、受付や診療の継続にも負担がかかります。');
     paragraph('被害の広がり方は、接続関係・認証情報の共有・権限の設定によって異なります。公開URLの診断だけでは、院内ネットワークとの接続や侵入の有無は分かりません。',8);
-    write('Googleによる危険サイト警告の説明',left,y,8,width,C.blue);doc.link(left,y-3,width,5,{url:'https://support.google.com/webmasters/answer/6347750?hl=ja'});y+=10;contact();
+    contact();
     page('SIMY SERVICE');heading('WHY SIMY / AFTER THE DIAGNOSIS','診断・修正・監視を、\nひとつのサービスに。','公開後も必要な対策を続けるために。修正情報の確認、更新、動作確認、バックアップ、稼働監視までSIMYが対応します。');
     grid([['24時間以内','セキュリティ修正が公開されたら、24時間以内に確認・対応を開始。AIが医院への影響を確認し、必要な更新を進めます。'],['24時間365日','ホームページの稼働状況を自動監視。異常を検知した場合は状況を確認します。'],['多層防御','WAF、海外アクセス制限、DDoS・Bot対策、攻撃ログの確認など。セキュリティ強化プランで対応します。'],['更新から復元まで','必要な修正を適用し、表示や主要機能を確認。バックアップで復元にも備えます。']]);
     heading('MONTHLY MANAGEMENT','保守プランは2種類です。');
     grid([['基本保守 / 月額14,800円','税込16,280円。修正対応・動作確認・バックアップ・稼働監視・サーバー管理。医院がご契約のChatGPT・Claude Codeへの接続を支援します。'],['セキュリティ強化 / 月額29,800円','税込32,780円。基本保守に加え、WAF・海外アクセス制限・DDoSやBot対策・攻撃ログ確認などに対応します。']]);
     paragraph('更新代行は月額35,000円（税別）を追加。MEO（Googleマップ対策）＋GEO（AI検索対策）を含みます。地図・口コミ対応と、AIにも伝わる医院情報の整備を支援します。',9);
-    paragraph('24時間以内は影響確認・対応の開始で、修正完了の期限ではありません。24時間365日は自動監視を指します。対象範囲・条件は契約により定めます。AIサービスは医院にご契約いただきます。',8);contact();
+    paragraph('ドメインの新規取得費用・更新費用は別途です。',8);contact();
     if(components.length||componentNotices.length){page('COMPONENTS');heading('01 / SOFTWARE COMPONENTS','使用部品の脆弱性・更新リスク','検出した版と公式情報を比較しています。使用箇所や修正の適用状況により、実際の影響は異なります。');
       for(const c of components){const name=c.name.split('\n'),a=c.current.split('\n'),b=c.latest.split('\n');const detailLines=lines(c.assessment,9,164),details=detailLines.slice(0,24).join('\n');const h=50+Math.max(height(c.current,10,66),height(c.latest,10,66))+height(details,9,164)+12;ensure(h+5);box(left,y,width,h);write(name[0],left+6,y+9,14,164);if(name[1])write(name.slice(1).join(' '),left+6,y+15,8,164,C.muted);const top=y+24;box(left+6,top,76,Math.max(height(c.current,10,66),height(c.latest,10,66))+14,C.pale);box(left+94,top,76,Math.max(height(c.current,10,66),height(c.latest,10,66))+14,C.pale);write('確認したバージョン',left+10,top+6,7,68,C.muted);write('確認時点の最新安定版',left+98,top+6,7,68,C.muted);write(c.current,left+10,top+13,10,66,/サポート終了|脆弱性|旧バージョン/.test(c.assessment)?C.red:C.ink);write(c.latest,left+98,top+13,10,66);const below=top+Math.max(height(c.current,10,66),height(c.latest,10,66))+20;write(details,left+6,below,9,164,C.muted);y=Math.max(y+h+5,below+height(details,9,164)+8);if(detailLines.length>24)card(name[0]+' / 公表情報の続き',detailLines.slice(24).join('\n'));}
     }
@@ -111,7 +111,7 @@
     page('RIGHTS & CONTACT');heading('BEFORE THE MIGRATION','権利の確認から、\nSIMYがお手伝いします。');
     card('医院が権利をお持ちの場合','契約上、利用できる範囲を確認して引き継ぎます。');card('制作会社などが権利を持つ場合','データ引き渡し・移設・作り替え・公開・今後の更新について、権利者の許可を得て進めます。確認事項や依頼文はSIMYがご案内します。');card('許可を得られない素材がある場合','そのデザイン・文章・写真などは使用せず、新しく制作・差し替えます。');
     paragraph('同じ見た目・内容での再制作は必要な権利・許諾を確認できた範囲で対応します。写真素材・フォント・テンプレートの利用条件も確認し、許諾の対象と範囲を書面やメールで残します。',8);
-    card('今の制作会社への依頼文','当院ホームページの管理をSIMYへ移管したいと考えています。契約上、デザイン・文章・画像・プログラムについて、SIMYへのデータ提供、別サーバーへの移設、再制作・改修および継続公開が可能かご確認ください。別途許諾や費用が必要な場合、移管できない素材がある場合は、その対象と条件をお知らせください。');contact();
+    contact();
     const count=doc.getNumberOfPages();for(let i=1;i<=count;i++){doc.setPage(i);doc.setDrawColor(...C.line);doc.line(left,280,193,280);write('SIMY HP管理 · 公開情報に基づく確認レポート',left,285,6,115,C.muted);write('sales@simy.one',left,290,7,110,C.blue);doc.link(left,286,75,6,{url:mail});write(i+' / '+count,178,286,7,15,C.muted);}
     return doc;
   }
