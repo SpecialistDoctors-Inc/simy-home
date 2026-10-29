@@ -143,3 +143,23 @@
 @media(max-width:600px){#main .migration-guide .rights-guide{padding:40px 24px 48px}#main .migration-guide .rights-rows>div{grid-template-columns:1fr;gap:8px}#main .migration-guide .rights-request{padding:16px}}
 
 #main .migration-guide .step-head em{display:inline-block;max-width:100%;text-wrap:balance}
+
+/* ChatGPT request and the resulting published clinic notice. */
+#main .migration-guide .update-demo{width:min(100%,370px);min-width:0;color:#182b40;font-size:13px;line-height:1.6}
+#main .migration-guide .update-chat,#main .migration-guide .update-website{background:#fff;border:1px solid #d8e2ee;border-radius:14px;overflow:hidden;box-shadow:0 8px 24px #23466d08}
+#main .migration-guide .update-chat-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 15px;border-bottom:1px solid #eef0f3;color:#202123}
+#main .migration-guide .update-chat-head strong{font-size:16px}.migration-guide .update-chat-head>span{font-size:10px;color:#637081}
+#main .migration-guide .update-chat-body{padding:15px;display:flex;flex-direction:column;gap:16px}
+#main .migration-guide .update-prompt{align-self:flex-end;background:#f1f1f1;border-radius:16px;padding:10px 14px;color:#242424;font-size:13px}
+#main .migration-guide .update-answer strong{font-size:13px;color:#242424}#main .migration-guide .update-answer p{font-size:12px;line-height:1.7;margin:7px 0 10px;color:#46515c}
+#main .migration-guide .update-publish{display:inline-block;background:#212121;color:#fff;border-radius:8px;padding:7px 11px;font-size:11px;font-weight:700}
+#main .migration-guide .update-composer{margin:0 15px 14px;border:1px solid #e3e3e3;border-radius:22px;padding:7px 10px 7px 12px;display:flex;align-items:center;justify-content:space-between;gap:6px;color:#6b6b6b;font-size:10px}
+#main .migration-guide .update-composer b{border-radius:50%;width:24px;height:24px;background:#212121;color:#fff;text-align:center;font-size:17px}
+#main .migration-guide .update-flow{text-align:center;font-size:24px;line-height:1.5;font-weight:800;color:#2266c4}
+#main .migration-guide .update-address{background:#f6f8fb;border-bottom:1px solid #e0e8f2;padding:8px 12px;text-align:center;color:#62768f;font-size:10px;letter-spacing:.02em}
+#main .migration-guide .update-address>span{float:left;font-size:8px;color:#ccd5df}
+#main .migration-guide .update-site-body{padding:14px}
+#main .migration-guide .update-site-heading{display:flex;justify-content:space-between;align-items:center;gap:8px;border-bottom:1px solid #dde7f1;padding-bottom:9px}
+#main .migration-guide .update-site-heading>strong{font-size:14px;color:#1f4466}#main .migration-guide .update-site-heading>span{background:#e5f5ed;color:#147653;border-radius:20px;padding:3px 9px;font-size:10px;font-weight:800;white-space:nowrap}
+#main .migration-guide .update-news{border-left:3px solid #2b70cf;background:#f3f8ff;padding:10px 12px;margin-top:11px}
+#main .migration-guide .update-news>span{display:block;color:#386496;font-size:10px;margin-bottom:4px}#main .migration-guide .update-news>strong{display:block;font-size:12px;color:#17385b}#main .migration-guide .update-news>p{font-size:11px;margin:5px 0 0;color:#526679}
