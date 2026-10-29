@@ -51,19 +51,38 @@
   return '';
  }
  function isNews(e){return ['DL','UL','OL'].includes(e.tagName)&&/お知らせ|休診|診療.*変更|担当医|感染症|news|information/i.test(label(e));}
- api.index=function(html){const doc=parse(html);let count=0;for(const e of doc.body.querySelectorAll('*')){if(!blocked(e))e.setAttribute('data-simy-edit-id','e'+count++);}return '<!doctype html>\n'+doc.documentElement.outerHTML;};
+ api.index=function(html){const doc=parse(html);let count=0;for(const e of [doc.body,...doc.body.querySelectorAll('*')]){if(!blocked(e))e.setAttribute('data-simy-edit-id','e'+count++);}return '<!doctype html>\n'+doc.documentElement.outerHTML;};
  api.inventory=function(html,liveDocument){
-  const doc=parse(html),all=[...doc.body.querySelectorAll('[data-simy-edit-id]')],news=all.filter(isNews);
+  const doc=parse(html),all=[doc.body,...doc.body.querySelectorAll('[data-simy-edit-id]')],news=all.filter(isNews);
   const out=[],seen=new Set();let size=0;
-  function add(e,kind){const id=e.getAttribute('data-simy-edit-id');if(seen.has(id)||out.length>=220)return;let t=text(e);if(!t)return;if(kind==='text'&&t.length>1800)return;t=t.slice(0,1800);let context=label(e);try{const live=liveDocument?.querySelector('[data-simy-edit-id="'+id+'"]');if(live){const css=liveDocument.defaultView.getComputedStyle(live);context+=' / 現在の文字サイズ:'+css.fontSize+'、文字色:'+css.color+'、背景:'+css.backgroundColor;}}catch{}const n={id,kind,tag:e.tagName.toLowerCase(),text:t,context:context.slice(0,300)};const len=JSON.stringify(n).length;if(size+len>35000)return;size+=len;seen.add(id);out.push(n);}
+  function add(e,kind){const id=e.getAttribute('data-simy-edit-id');if(seen.has(id)||out.length>=220)return;let t=kind==='image'?(e.getAttribute('alt')||'画像'):(e.tagName==='BODY'?'ページ全体':text(e));if(!t)return;if(kind==='text'&&t.length>1800)return;t=t.slice(0,1800);let context=label(e);try{const live=liveDocument?.querySelector('[data-simy-edit-id="'+id+'"]');if(live){const css=liveDocument.defaultView.getComputedStyle(live);context+=' / 現在の文字サイズ:'+css.fontSize+'、文字色:'+css.color+'、背景:'+css.backgroundColor;}}catch{}const n={id,kind,tag:e.tagName.toLowerCase(),text:t,context:context.slice(0,300)};const len=JSON.stringify(n).length;if(size+len>35000)return;size+=len;seen.add(id);out.push(n);}
+  add(doc.body,'element');
+  all.filter(e=>e.tagName==='IMG').slice(0,50).forEach(e=>add(e,'image'));
+  all.filter(e=>['SECTION','ARTICLE','HEADER','FOOTER','NAV'].includes(e.tagName)).slice(0,35).forEach(e=>add(e,'element'));
   news.forEach(e=>add(e,'news'));
   // Semantic headings and buttons first; then editable leaf paragraphs, avoiding nested duplicates.
   all.filter(e=>/^H[1-6]$/.test(e.tagName)||['A','BUTTON'].includes(e.tagName)).forEach(e=>add(e,'text'));
   all.filter(e=>!['DL','UL','OL','TABLE','TR','TBODY'].includes(e.tagName)&&text(e)&&![...e.children].some(c=>text(c)&&!['SPAN','BR','B','STRONG','EM','I','SMALL'].includes(c.tagName))).forEach(e=>add(e,'text'));
   return out;
  };
- api.applyPlan=function(html,plan){
-  if(plan.status!=='edit'||!Array.isArray(plan.operations)||!plan.operations.length||plan.operations.length>6)throw Error('変更案を確認できませんでした。');
+ api.redesign=function(doc,theme,accent,liveDocument){
+  // Keep visible CSS background photography when replacing the old design system.
+  if(liveDocument)for(const n of doc.body.querySelectorAll('[data-simy-edit-id]')){try{const live=liveDocument.querySelector('[data-simy-edit-id="'+n.getAttribute('data-simy-edit-id')+'"]');const bg=live&&liveDocument.defaultView.getComputedStyle(live).backgroundImage;const match=bg?.match(/^url\(["']?(https?:\/\/[^"')]+)["']?\)$/);if(match&&!n.children.length){const img=doc.createElement('img');img.src=match[1];img.alt='';n.append(img);}}catch{}}
+  for(const n of doc.querySelectorAll('link[rel="stylesheet"],style'))n.remove();
+  for(const n of doc.body.querySelectorAll('*')){n.removeAttribute('style');n.removeAttribute('width');n.removeAttribute('height');}
+  doc.body.removeAttribute('style');doc.body.setAttribute('data-simy-theme',theme);
+  for(const list of doc.querySelectorAll('ul,ol')){if(!isNews(list)&&list.children.length>=2&&[...list.children].every(li=>li.querySelector('img')))list.setAttribute('data-simy-grid','true');}
+  const style=doc.createElement('style');style.textContent=`
+  *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:${theme==='warm'?'#faf6ef':'#f5f7fa'};color:#172b3a;font:17px/1.85 ${theme==='editorial'?"Georgia, 'Yu Mincho', serif":"'Noto Sans JP', sans-serif"};overflow-wrap:anywhere}
+  body>*,main>*,header,footer{max-width:1120px;margin:0 auto}body>div,main,section,article{padding:clamp(16px,4vw,48px)}header,nav,footer{padding:24px;background:#fff}section,article{margin:24px auto;background:#fff;border-radius:${theme==='warm'?'28':'8'}px}
+  img{max-width:100%;height:auto;display:block;margin:16px auto;border-radius:${theme==='warm'?'20':'4'}px}picture{display:block}iframe,video{max-width:100%}h1,h2,h3{line-height:1.45;color:${accent};letter-spacing:.03em}h1{font-size:clamp(28px,4vw,48px)}h2{font-size:clamp(23px,3vw,32px);border-bottom:2px solid ${accent};padding-bottom:16px}p{margin:16px 0}a{color:${accent};pointer-events:none}ul,ol{padding-left:24px}nav ul{display:flex;flex-wrap:wrap;gap:16px;list-style:none;padding:0}dt{font-weight:700;color:${accent};margin-top:24px}dd{margin:8px 0 24px;border-bottom:1px solid #dce3e9;padding-bottom:16px}table{border-collapse:collapse;width:100%}td,th{padding:12px;border:1px solid #dce3e9}button,input,textarea,select{pointer-events:none}svg{max-width:100%;max-height:120px}[hidden]{display:none!important}
+  [class*="nav_sp"],[class*="logo_sp"],.toggle,.toggle-label{display:none!important}nav ul,.main_nav{display:flex;flex-wrap:wrap;gap:12px;list-style:none;padding:0}nav li{padding:8px 12px;background:#edf3f1;border-radius:8px}nav ul ul{font-size:13px}.key_visual{display:grid;grid-template-columns:1fr 1.4fr;gap:32px;align-items:center}.key_visual h1 img{max-width:320px}.key_visual section{padding:24px}.key_visual nav{font-size:14px}.key_visual .slider>div:not(:first-child){display:none}.key_visual .slider img{width:100%;max-height:500px;object-fit:cover}.top_access_text{text-align:center;background:${accent};color:white;padding:16px}.notice_area{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}[data-simy-grid]{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;list-style:none;padding:0}[data-simy-grid] img{width:100%}.side_web_link{display:inline-block;padding:12px 24px;border:2px solid ${accent};border-radius:30px}.demo-icon{display:none}
+  @media(max-width:799px){.key_visual,.notice_area,[data-simy-grid]{grid-template-columns:1fr}.key_visual{gap:16px}}
+  @media(min-width:800px){body[data-simy-theme="editorial"] section{border-radius:0;border-left:5px solid ${accent}}} @media(max-width:600px){body>div,main,section,article{padding:16px}img{max-height:65vh;object-fit:contain}}
+  `;doc.head.append(style);
+ };
+ api.applyPlan=function(html,plan,assets=[],liveDocument){
+  if(plan.status!=='edit'||!Array.isArray(plan.operations)||!plan.operations.length||plan.operations.length>24)throw Error('変更案を確認できませんでした。');
   const doc=parse(html);for(const e of doc.querySelectorAll('[data-simy-changed]'))e.removeAttribute('data-simy-changed');
   const changed=[];
   for(const o of plan.operations){if(!/^e\d+$/.test(o.target))throw Error('変更箇所を確認できませんでした。');const e=doc.querySelector('[data-simy-edit-id="'+o.target+'"]');if(!e||blocked(e))throw Error('変更箇所が見つかりません。');
@@ -88,6 +107,18 @@
     if(!inserted)throw Error('文章を変更できませんでした。');e.setAttribute('data-simy-changed','true');changed.push(o.target);
    }else if(o.type==='set_style'){
     const valid=(['color','background-color'].includes(o.property)&&/^#[0-9a-f]{6}$/i.test(o.value))||(o.property==='font-size'&&/^(1[4-9]|[23]\d|40)px$/.test(o.value))||(o.property==='font-weight'&&/^(400|600|700)$/.test(o.value));if(!valid)throw Error('対応していない見た目の変更です。');e.style.setProperty(o.property,o.value,'important');e.setAttribute('data-simy-changed','true');changed.push(o.target);
+   }else if(o.type==='replace_image'){
+    const asset=assets.find(a=>a.id===o.value);if(e.tagName!=='IMG'||!asset||!/^data:image\/(jpeg|png|webp);base64,[a-z0-9+/=]+$/i.test(asset.data))throw Error('差し替える写真を添付してください。');
+    e.src=asset.data;e.removeAttribute('srcset');e.removeAttribute('sizes');e.removeAttribute('loading');for(const source of e.closest('picture')?.querySelectorAll('source')||[])source.remove();e.setAttribute('data-simy-changed','true');changed.push(o.target);
+   }else if(o.type==='redesign'){
+    if(e!==doc.body||!['modern','editorial','warm'].includes(o.property)||!/^#[0-9a-f]{6}$/i.test(o.value))throw Error('デザイン指定を確認できません。');
+    api.redesign(doc,o.property,o.value,liveDocument);changed.push(o.target);
+   }else if(o.type==='add_section'){
+    if(e===doc.body||!o.title?.trim()||!o.body?.trim())throw Error('追加先を確認できません。');const section=doc.createElement('section'),h=doc.createElement('h2'),p=doc.createElement('p');h.textContent=o.title;p.textContent=o.body;section.append(h,p);section.style.cssText='padding:32px;max-width:1100px;margin:24px auto;';section.setAttribute('data-simy-changed','true');e.after(section);changed.push(o.target);
+   }else if(o.type==='remove_element'){
+    if(e===doc.body)throw Error('ページ全体は削除できません。');e.remove();changed.push(o.target);
+   }else if(o.type==='move_before'){
+    if(!/^e\d+$/.test(o.value))throw Error('移動先を確認できません。');const dest=doc.querySelector('[data-simy-edit-id="'+o.value+'"]');if(!dest||dest===e||dest===doc.body||e===doc.body||e.contains(dest))throw Error('この位置には移動できません。');dest.before(e);e.setAttribute('data-simy-changed','true');changed.push(o.target);
    }else throw Error('対応していない変更です。');
   }
   if(!doc.querySelector('#simy-edit-highlight')){const style=doc.createElement('style');style.id='simy-edit-highlight';style.textContent='[data-simy-changed]{outline:3px solid #248c83!important;outline-offset:4px;scroll-margin:30px}';doc.head.append(style);}

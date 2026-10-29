@@ -235,3 +235,5 @@ body.preview-editor-open{overflow:hidden}
 #rebuild-editor .preview-chat #preview-conversation{min-height:120px;flex:1 0 120px}
 #rebuild-editor .preview-chat #preview-edit-form,#rebuild-editor .preview-edit-actions{flex-shrink:0}
 #rebuild-editor textarea{min-height:80px}
+
+#preview-photo{width:100%;min-width:0;font-size:13px;padding:8px 0}#preview-photo-status{font-size:13px;overflow-wrap:anywhere;margin:4px 0}.preview-photo-label{margin-top:10px;font-size:13px}
