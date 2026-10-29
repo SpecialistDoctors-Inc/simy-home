@@ -300,7 +300,7 @@ function gateReport(report) {
     if(!preview.isConnected)return; // Ignore a late response after a new diagnosis.
     results.replaceChildren(full);
     const confirmed=element('p',registration.clinicName+' の診断結果一覧です。PDFでも保存できます。','report-unlocked');confirmed.setAttribute('role','status');results.prepend(confirmed);
-    const downloads=element('div','','report-downloads report-download-dock');downloads.setAttribute('aria-label','診断結果のPDF保存');const pdf=element('button','診断結果をPDFで保存 ↓','button button-primary');pdf.type='button';const pdfStatus=element('p','','report-pdf-status');pdfStatus.setAttribute('role','status');downloads.append(pdf,pdfStatus);confirmed.after(downloads);
+    const downloads=element('div','','report-downloads report-download-dock');downloads.setAttribute('aria-label','診断結果のPDF保存');const pdf=element('button','診断結果をPDFで保存 ↓','button button-primary');pdf.type='button';const pdfStatus=element('p','','report-pdf-status');pdfStatus.setAttribute('role','status');const saveHint=element('span','院内共有・相談に使える診断レポート','report-save-hint');downloads.append(saveHint,pdf,pdfStatus);confirmed.after(downloads);
     pdf.addEventListener('click',async()=>{pdf.disabled=true;pdfStatus.textContent='PDFを作成しています…';try{await loadReportPdf();await window.SimyReportPdf.download({report,registration,root:full});pdfStatus.textContent='PDFを作成しました。ダウンロードをご確認ください。';}catch(error){pdfStatus.textContent='PDFを作成できませんでした。もう一度お試しください。';}finally{pdf.disabled=false;}});
     diagnosisState.focus({preventScroll:true});diagnosisState.scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
   });
@@ -378,6 +378,6 @@ diagnosisForm.addEventListener('submit', async event => {
 
 let reportPdfLoader;
 function loadReportPdf(){
-  if(!reportPdfLoader)reportPdfLoader=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='/diagnosis-pdf.js?v=b22c2b5fec05';script.onload=resolve;script.onerror=()=>{script.remove();reportPdfLoader=null;reject(Error('PDF機能の読込に失敗しました'));};document.head.append(script);});
+  if(!reportPdfLoader)reportPdfLoader=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='/diagnosis-pdf.js?v=b9a4d1dce2f3';script.onload=resolve;script.onerror=()=>{script.remove();reportPdfLoader=null;reject(Error('PDF機能の読込に失敗しました'));};document.head.append(script);});
   return reportPdfLoader;
 }
