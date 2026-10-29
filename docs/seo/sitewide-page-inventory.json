@@ -953,5 +953,10 @@
     "policy": "utility",
     "language": "ja",
     "topic": "clinic-hp-management"
+  },
+  "diagnosis-tests-shared-folder.html": {
+    "policy": "noindex",
+    "language": "ja",
+    "reason": "公開フォルダー配下の架空資料を検査する本番受入ページ"
   }
 }
