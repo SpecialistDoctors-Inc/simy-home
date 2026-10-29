@@ -372,15 +372,21 @@ function normalizeDiagnosisUrl(input) {
 }
 
 diagnosisInput.addEventListener('input', () => { diagnosisInput.setCustomValidity(''); if(!busy) diagnosisState.hidden = true; });
-diagnosisForm.addEventListener('submit', async event => {
+async function runDiagnosis(event) {
   event.preventDefault(); if(busy) return;
+  const diagnosisForm=event.currentTarget;
+  const diagnosisInput=diagnosisForm.querySelector('input[name=website]');
+  const panel=document.querySelector('#scan-progress');
+  if(diagnosisForm.id==='inline-diagnosis-form'){diagnosisForm.append(panel);diagnosisForm.after(diagnosisState);}
+  else{diagnosisForm.append(panel);document.querySelector('#diagnosis').after(diagnosisState);}
   let target;
   try { target=normalizeDiagnosisUrl(diagnosisInput.value); }
   catch(error) { diagnosisInput.setCustomValidity(error.message);diagnosisInput.reportValidity();return; }
   const cleaned=target.href!==diagnosisInput.value.trim();
   diagnosisInput.value=target.href;
   let notice=document.querySelector('#diagnosis-url-normalized');
-  if(!notice){notice=element('p','','availability');notice.id='diagnosis-url-normalized';notice.setAttribute('role','status');diagnosisForm.querySelector('.url-entry').after(notice);}
+  if(!notice){notice=element('p','','availability');notice.id='diagnosis-url-normalized';notice.setAttribute('role','status');}
+  diagnosisForm.querySelector('.url-entry').after(notice);
   notice.textContent=cleaned?'診断するURL：'+target.href:'';notice.hidden=!cleaned;
   results.replaceChildren(); diagnosisState.hidden=true; document.querySelector('#diagnosis-target').textContent=(document.querySelector('#diagnosis-form').dataset.reportLabel || '医院ホームページ')+'の診断結果';
   title.textContent='公開ホームページを確認しています'; message.textContent='最大約3分かかります。ページの保護設定・使用部品・公開プログラムを確認しています。';
@@ -391,7 +397,10 @@ diagnosisForm.addEventListener('submit', async event => {
   try { const response=await fetch(diagnosisEndpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url:target.href,behavior:false,stream:true}),signal:AbortSignal.timeout(185000)}); const data=await readScanResponse(response); renderReport(data); diagnosisState.hidden=false; scanProgress('done',data.completion==='partial'?data.completionReason:'下に結果を表示しました。');if(data.completion==='partial'){const heading=document.querySelector('#scan-progress strong');if(heading)heading.textContent='確認できた範囲の結果を表示しました';results.prepend(element('p',data.completionReason,'report-boundary'));} diagnosisState.focus({preventScroll:true});diagnosisState.scrollIntoView({block:'start',behavior:'auto'}); }
   catch(error){results.replaceChildren();title.textContent='診断を完了できませんでした';message.textContent=/timeout|timed out|aborted/i.test((error.name||'')+' '+(error.message||''))?'時間内に応答がありませんでした。少し待って再度お試しください。':error.message==='Failed to fetch'?'診断サービスに接続できませんでした。少し待って再度お試しください。':error.message;}
   finally{busy=false;button.disabled=false;diagnosisInput.disabled=false;diagnosisForm.removeAttribute('aria-busy');if(label)label.textContent=originalLabel;if(title.textContent==='診断を完了できませんでした')scanProgress('error',message.textContent);}
-});
+}
+diagnosisForm.addEventListener('submit',runDiagnosis);
+const inlineDiagnosisForm=document.querySelector('#inline-diagnosis-form');
+if(inlineDiagnosisForm){inlineDiagnosisForm.addEventListener('submit',runDiagnosis);inlineDiagnosisForm.querySelector('input').addEventListener('input',event=>event.target.setCustomValidity(''));}
 
 
 let reportPdfLoader;

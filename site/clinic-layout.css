@@ -85,3 +85,24 @@ html{scroll-behavior:auto}
 #main .report-rebuild-link{display:flex;width:fit-content;max-width:100%;margin:28px auto 0;box-sizing:border-box}
 @media(max-width:700px){#main .rebuild-section{padding:28px 16px}#main #rebuild-form{padding:20px 16px}#main .rebuild-entry{grid-template-columns:minmax(0,1fr)}#main #rebuild-preview{height:560px}}
 @media(prefers-reduced-motion:reduce){#main .rebuild-status.is-running:before{animation:none}}
+#main .diagnosis-banner{display:block}
+#main #inline-diagnosis-form{margin:0;padding:0;background:none;border:0}
+#main #inline-diagnosis-form .url-entry{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;border:0;background:none;padding:0}
+#main #inline-diagnosis-form input{margin:0;min-height:58px;border:2px solid #bdd0ed;border-radius:7px;background:#fff;color:#172c38;font-size:17px;padding:12px 16px;min-width:0}
+#main #inline-diagnosis-form button{min-height:58px;border-radius:7px;background:#2865c8;color:#fff;gap:20px;padding:12px 24px}
+#main .migration-chapter{padding:20px 28px;background:#175b6e;color:#fff;font-size:clamp(18px,2.3vw,25px);font-weight:800;letter-spacing:.02em}
+#main .migration-guide>.hero{background:#fff;color:#14253a;border-bottom:1px solid #dce5ef}
+#main .migration-guide .hero-inner{display:block;padding:36px 28px}
+#main .migration-guide .hero-lead{font-size:20px;line-height:1.7;margin-bottom:0}
+#main .migration-story-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;padding:28px;background:#f0f7f6}
+#main .migration-story-grid article{display:flex;flex-direction:column;min-width:0;border:1px solid #ccdcd9;border-radius:12px;overflow:hidden;background:#fff}
+#main .migration-story-grid img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:contain}
+#main .migration-story-copy{padding:22px;flex:1}
+#main .migration-story-copy .story-label{font-size:13px;font-weight:800;color:#18736f;margin-bottom:12px}
+#main .migration-story-copy h3{font-size:20px;line-height:1.7;margin:0 0 12px}
+#main .migration-story-copy>p:last-child{font-size:16px;line-height:1.8;color:#3e5669;margin:0}
+#main #rebuild-versions{margin:20px 0;overflow-x:auto}
+#main #rebuild-versions table{width:100%;border-collapse:collapse;background:#fff;font-size:14px}
+#main #rebuild-versions th,#main #rebuild-versions td{text-align:left;padding:12px;border:1px solid #cfdaea;vertical-align:top}
+#main #rebuild-versions thead{background:#16385d;color:#fff}
+@media(max-width:760px){#main .migration-story-grid{grid-template-columns:minmax(0,1fr);padding:20px 16px}#main .migration-chapter{padding:20px 16px}#main #inline-diagnosis-form .url-entry{grid-template-columns:minmax(0,1fr)}}
