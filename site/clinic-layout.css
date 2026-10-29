@@ -216,7 +216,9 @@ body.preview-editor-open{overflow:hidden}
  #rebuild-editor .preview-editor-layout{display:flex;flex-direction:column;overflow:hidden}
  #rebuild-editor .preview-chat,#rebuild-editor .preview-canvas{height:auto;min-height:0;flex:1;overflow:auto}
  #rebuild-editor .preview-chat{border:0}
- #rebuild-editor[data-pane="canvas"] .preview-chat,#rebuild-editor[data-pane="edit"] .preview-canvas{display:none}
+ #rebuild-editor .preview-editor-layout{position:relative}
+ #rebuild-editor[data-pane="canvas"] .preview-chat{display:none}
+ #rebuild-editor[data-pane="edit"] .preview-canvas{position:absolute;inset:0;visibility:hidden;pointer-events:none}
  #rebuild-editor .preview-editor-footer{padding:10px 14px;display:block}
  #rebuild-editor .preview-editor-footer>span{display:none}
  #rebuild-editor .preview-editor-footer>div{display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px}
