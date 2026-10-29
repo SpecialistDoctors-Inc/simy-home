@@ -184,7 +184,7 @@ function renderInfrastructure(report) {
 function renderServiceSecurity(report){
   const info=window.SimyServiceSecurity?.assess(report);
   const section=element('section','','service-security');
-  section.append(element('h3','03 / 外部サービスの事故・脆弱性情報'));
+  section.append(element('h3','03 / ご利用中の外部サービス'));
   if(!info){section.append(element('p','公表情報を読み込めませんでした。'));results.append(section);return;}
   const visible=window.SimyServiceSecurity.visibleServices(info);if(!visible.length)return;
   const wrap=element('div','','evaluation-scroll');const table=element('table','','evaluation-table service-table');
@@ -379,6 +379,6 @@ diagnosisForm.addEventListener('submit', async event => {
 
 let reportPdfLoader;
 function loadReportPdf(){
-  if(!reportPdfLoader)reportPdfLoader=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='/diagnosis-pdf.js?v=5dd685625cfe';script.onload=resolve;script.onerror=()=>{script.remove();reportPdfLoader=null;reject(Error('PDF機能の読込に失敗しました'));};document.head.append(script);});
+  if(!reportPdfLoader)reportPdfLoader=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='/diagnosis-pdf.js?v=fcf3ee669ca1';script.onload=resolve;script.onerror=()=>{script.remove();reportPdfLoader=null;reject(Error('PDF機能の読込に失敗しました'));};document.head.append(script);});
   return reportPdfLoader;
 }
