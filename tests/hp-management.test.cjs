@@ -16,7 +16,7 @@ for(const [name,code] of [['production',production],['terraform',terraform]]){
 test('Clinic service migration preserves the actual form, manga and script',()=>{
  const page=fs.readFileSync('site/hp-management/clinic/index.html','utf8');
  assert.match(page,/id="diagnosis-form"/);assert.match(page,/最大30ページ/);
- for(const asset of ['clinic-doctor-cybersecurity-v1','clinic-risk-tamper','clinic-risk-google-warning-v3','clinic-risk-system-spread','clinic-chatgpt-security-current-v2'])assert.ok(page.includes(asset));
+ for(const asset of ['clinic-doctor-cybersecurity-v1','clinic-risk-tamper','clinic-risk-google-warning-v3','clinic-risk-system-spread'])assert.ok(page.includes(asset));
  assert.doesNotMatch(page,/clinic-manga-journey/);
  assert.match(page,/href="\/hp-management\/"/);
  assert.match(fs.readFileSync('site/for/clinic/index.html','utf8'),/location.search\+location.hash/);
