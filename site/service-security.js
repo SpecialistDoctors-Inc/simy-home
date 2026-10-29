@@ -31,7 +31,7 @@ function assess(report,now=Date.now()){
   let service;
   if(n.subjectId.startsWith('component:')){
    const name=n.subjectId.slice(10);if(!(report.technologies||[]).some(t=>t.name===name&&t.status!=='unknown')&&!(report.scripts?.libraries||[]).some(l=>l.name.toLowerCase()===name.toLowerCase()))continue;
-   const key=n.subjectId;service=linked.get(key);if(!service){service={host:'',name,kind:'component',category:'検出した部品',subjectId:key};linked.set(key,service);}
+   const key=n.subjectId;service=linked.get(key);if(!service){service={host:'',name,kind:'component',category:'検出した部品',subjectId:key,versions:[...new Set([...(report.technologies||[]).filter(t=>t.status!=='unknown'&&t.name.toLowerCase()===name.toLowerCase()).flatMap(t=>t.versions||[]),...(report.scripts?.libraries||[]).filter(l=>l.name.toLowerCase()===name.toLowerCase()).map(l=>l.version)].filter(Boolean))]};linked.set(key,service);}
   }else{
    const registry={drive:['drive.google.com','docs.google.com'],nomoca:['nomoca-ai.com'],blastmail:['blastmail.jp'],digikar:['digikar-smart.jp'],stripe:['stripe.com'],line:['line.me'],onamae:['onamae.com']};
    service=[...linked.values()].find(x=>x.provider===n.subjectId||(registry[n.subjectId]||[]).some(d=>matches(x.host,d)));
@@ -40,6 +40,10 @@ function assess(report,now=Date.now()){
   const type=({exploitation:'悪用実績の公表',vulnerability:'脆弱性の公表',outage:'稼働障害の公表',incident:'事故の公表'})[n.kind]||'公表情報';
   const age=(now-Date.parse(n.published))/86400000;
   const item={...n,domains:[],type:(n.relationship==='same-provider-other-service'?'同社の別サービス：':'')+type,recent:age>=0&&age<=180,stale:now-Date.parse(n.checkedAt)>7*86400000,connection:service.kind==='link'?'リンクを確認（利用契約は未確認）':'公開情報に記載',impact:'このサイトへの影響は未確認'};
+  // This historical jQuery advisory applies only before 3.5.0; do not imply that a detected fixed version is vulnerable.
+  if(n.subjectId.toLowerCase()==='component:jquery'&&n.id==='jQuery-3.5.0'&&service.versions.length&&service.versions.every(v=>/^\d+\.\d+\.\d+$/.test(v)&&((Number(v.split('.')[0])>3)||(Number(v.split('.')[0])===3&&Number(v.split('.')[1])>=5)))){
+   item.type='過去の脆弱性（検出した版は影響範囲外）';item.scope='検出したjQuery '+service.versions.join('、')+'は、この公表の影響版（3.5.0より前）には含まれません。過去の修正事例として掲載しています。';
+  }
   const prior=notices.findIndex(x=>x.url===n.url&&(!x.subjectId||x.subjectId===n.subjectId));if(prior>=0)notices.splice(prior,1);notices.push(item);
  }
  return {checkedAt:research?.checkedAt||checkedAt,research,notices,services:[...linked.values()],unmatched:[...linked.values()].filter(x=>!notices.some(n=>(x.provider&&x.provider===n.provider&&(n.providerWide||x.category==='サーバー・ネットワーク'))||n.domains.some(d=>matches(x.host,d))))};
@@ -53,6 +57,7 @@ function providerNotices(report){
  for(const service of info.services.filter(s=>s.kind==='provider'))for(const n of findingsFor(service,info))notices.push({...n,publisher:n.name,resolution:''});
  return [...new Map(notices.map(n=>[n.url,n])).values()].sort((a,b)=>Date.parse(b.published)-Date.parse(a.published));
 }
-function visibleServices(info){return info.services.filter(s=>s.kind!=='provider'&&findingsFor(s,info).length);}
-global.SimyServiceSecurity={assess,catalog,findingsFor,researchStatus,providerNotices,visibleServices};
+function componentServices(info){return info.services.filter(s=>s.kind==='component'&&findingsFor(s,info).length);}
+function visibleServices(info){return info.services.filter(s=>s.kind!=='provider'&&s.kind!=='component'&&findingsFor(s,info).length);}
+global.SimyServiceSecurity={assess,catalog,findingsFor,researchStatus,providerNotices,visibleServices,componentServices};
 })(typeof window==='undefined'?globalThis:window);

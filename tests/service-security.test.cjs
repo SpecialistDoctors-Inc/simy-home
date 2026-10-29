@@ -33,8 +33,8 @@ test('external incident rows omit unresearched and no-disclosure services',()=>{
 test('per-diagnosis research merges verified notices and keeps components separate',()=>{
  const notice={id:'component:Ruby:case',subjectId:'component:Ruby',name:'Ruby',published:'2024-07-16',checkedAt:'2026-10-28',kind:'vulnerability',relationship:'same-service',url:'https://www.ruby-lang.org/en/news/',summary:'REXML',scope:'対象版は未確認',affectedVersions:'REXML <=3.3.2'};
  const report={technologies:[{name:'Ruby',status:'hint'}],serviceSecurity:{checkedAt:'2026-10-28',status:'unavailable',catalog:[notice],notices:[]}};
- const info=assess(report,now),visible=ctx.SimyServiceSecurity.visibleServices(info);assert.equal(visible.length,1);assert.equal(visible[0].name,'Ruby');assert.equal(ctx.SimyServiceSecurity.findingsFor(visible[0],info)[0].affectedVersions,'REXML <=3.3.2');
- report.technologies[0].status='unknown';assert.equal(ctx.SimyServiceSecurity.visibleServices(assess(report)).length,0);
+ const info=assess(report,now),visible=ctx.SimyServiceSecurity.componentServices(info);assert.equal(ctx.SimyServiceSecurity.visibleServices(info).length,0);assert.equal(visible.length,1);assert.equal(visible[0].name,'Ruby');assert.equal(ctx.SimyServiceSecurity.findingsFor(visible[0],info)[0].affectedVersions,'REXML <=3.3.2');
+ report.technologies[0].status='unknown';assert.equal(ctx.SimyServiceSecurity.componentServices(assess(report)).length,0);
 });
 test('runtime results replace dated matching URLs and retain sibling classification',()=>{
  const n={...ctx.SimyServiceSecurity.catalog[1],subjectId:'onamae',relationship:'same-provider-other-service',kind:'incident',checkedAt:'2026-10-28T01:00:00Z'};
@@ -43,4 +43,12 @@ test('runtime results replace dated matching URLs and retain sibling classificat
 });
 test('successful empty runtime search does not create no-incident rows',()=>{
  const info=assess({integrations:[connection('digikar-smart.jp')],serviceSecurity:{status:'completed',notices:[],catalog:[],checkedAt:'2026-10-28'}});assert.equal(ctx.SimyServiceSecurity.visibleServices(info).length,0);
+});
+
+test('fixed jQuery versions keep historical disclosures distinct from applicable vulnerabilities',()=>{
+ const n={id:'jQuery-3.5.0',subjectId:'component:jQuery',name:'jQuery',published:'2020-04-10',checkedAt:'2026-10-28',kind:'vulnerability',relationship:'same-service',url:'https://blog.jquery.com/2020/04/10/jquery-3-5-0-released/',summary:'HTML processing',scope:'対象版は未確認'};
+ const report={scripts:{libraries:[{name:'jquery',version:'3.7.1'}]},serviceSecurity:{catalog:[n]}};
+ const info=assess(report,now);assert.equal(ctx.SimyServiceSecurity.visibleServices(info).length,0);assert.equal(ctx.SimyServiceSecurity.componentServices(info).length,1);assert.match(info.notices[0].type,/影響範囲外/);assert.match(info.notices[0].scope,/3.7.1/);
+ report.scripts.libraries.push({name:'jquery',version:'3.4.1'});assert.doesNotMatch(assess(report,now).notices[0].type,/影響範囲外/);
+ report.scripts.libraries=[{name:'jquery',version:'3.7.1-custom'}];assert.doesNotMatch(assess(report,now).notices[0].type,/影響範囲外/);
 });

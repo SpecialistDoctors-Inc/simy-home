@@ -22,7 +22,7 @@
   }
   const text = value => String(value ?? '').replace(/\r/g, '');
   function model({report, registration, root}) {
-    const versions = [...root.querySelectorAll('.evaluation-section tbody tr')].map(row => [...row.children].map(cell => {
+    const versions = [...root.querySelectorAll('.evaluation-section .component-version-table tbody tr')].map(row => [...row.children].map(cell => {
       // Preserve line boundaries and full issue/incident details, including collapsed evidence.
       const clone = cell.cloneNode(true);
       clone.querySelectorAll('small,summary,p,li').forEach(n => n.prepend('\n'));
@@ -57,6 +57,7 @@
     function pageHeaderOnly(){if(logo)doc.addImage(logo,'PNG',left,16,7,7);write('SIMY',logo?27:left,21.5,12,32);write('HP MANAGEMENT',44,21,6,50,C.muted);doc.setDrawColor(...C.line);doc.line(left,26,193,26);}
     const security=global.SimyServiceSecurity?.assess(report);
     const notices=[...new Map((security?global.SimyServiceSecurity.visibleServices(security).flatMap(s=>global.SimyServiceSecurity.findingsFor(s,security)):[]).map(n=>[n.id||n.url,n])).values()];
+    const componentNotices=[...new Map((security?(global.SimyServiceSecurity.componentServices?.(security)||[]).flatMap(s=>global.SimyServiceSecurity.findingsFor(s,security)):[]).map(n=>[n.id||n.url,n])).values()];
     const providerNotices=global.SimyServiceSecurity?.providerNotices(report)||report.providers?.notices||[];
     const findings=(report.findings||[]).filter(f=>f.state==='review');
     const flow=global.SimyInformationFlow?.model(report)||[];
@@ -74,7 +75,7 @@
     paragraph('診断対象：'+report.url,8);paragraph('確認日時：'+new Date(report.checkedAt).toLocaleString('ja-JP')+'\n診断ID：'+(report.diagnosisId||'未取得'),7);
     if(report.completion==='partial')paragraph('一部完了：'+report.completionReason,9,C.red);
     heading('AT A GLANCE','主な確認結果');
-    grid([[''+components.filter(c=>/サポート終了/.test(c.assessment)).length+'件 / サポートが終了した部品',components.filter(c=>/サポート終了/.test(c.assessment)).map(c=>c.name.split('\n')[0]+' '+c.current.split('\n')[0]).join('、')||'今回の範囲では特定していません。'],[''+components.length+'件 / 脆弱性・更新リスク','公開情報から確認できた部品の版を、公式情報と比較しています。'],[''+new Set([...notices,...providerNotices].map(n=>n.url)).size+'件 / 関連する公表情報','関連する提供元・サービスの事故や脆弱性の公表です。この医院の被害を示すものではありません。'],[''+findings.length+'件 / その他の改善点','公開ページで見直しが必要な設定などを確認しています。']]);
+    grid([[''+components.filter(c=>/サポート終了/.test(c.assessment)).length+'件 / サポートが終了した部品',components.filter(c=>/サポート終了/.test(c.assessment)).map(c=>c.name.split('\n')[0]+' '+c.current.split('\n')[0]).join('、')||'今回の範囲では特定していません。'],[''+components.length+'件 / 脆弱性・更新リスク','公開情報から確認できた部品の版を、公式情報と比較しています。'],[''+new Set([...componentNotices,...notices,...providerNotices].map(n=>n.url)).size+'件 / 関連する公表情報','関連する提供元・サービスの事故や脆弱性の公表です。この医院の被害を示すものではありません。'],[''+findings.length+'件 / その他の改善点','公開ページで見直しが必要な設定などを確認しています。']]);
     paragraph('公開情報に基づく診断です。古い部品があるだけで攻撃可能とは限りません。侵入・情報漏えいの有無は判定できません。',8);
     page('RISKS TO PATIENTS & CLINIC');heading('IF LEFT UNADDRESSED','放置した場合の影響は、\n患者さんと診療にも及びます。','以下は起こり得るリスクの説明です。この診断で、被害や改ざんの発生を確認したという意味ではありません。');
     card('01 / 患者さんが偽の予約先へ誘導されるおそれ','改ざんによって予約リンクがすり替えられたり、悪意のあるプログラムが埋め込まれたりすることがあります。患者さんが偽の予約画面に個人情報を入力し、詐欺やマルウェアの被害を受けるおそれがあります。');
@@ -88,9 +89,10 @@
     grid([['基本保守 / 月額14,800円','税込16,280円。修正対応・動作確認・バックアップ・稼働監視・サーバー管理。医院がご契約のChatGPT・Claude Codeへの接続を支援します。'],['セキュリティ強化 / 月額29,800円','税込32,780円。基本保守に加え、WAF・海外アクセス制限・DDoSやBot対策・攻撃ログ確認などに対応します。']]);
     paragraph('更新代行は月額35,000円（税別）を追加。MEO（Googleマップ対策）＋GEO（AI検索対策）を含みます。地図・口コミ対応と、AIにも伝わる医院情報の整備を支援します。',9);
     paragraph('24時間以内は影響確認・対応の開始で、修正完了の期限ではありません。24時間365日は自動監視を指します。対象範囲・条件は契約により定めます。AIサービスは医院にご契約いただきます。',8);contact();
-    if(components.length){page('COMPONENTS');heading('01 / SOFTWARE COMPONENTS','使用部品の脆弱性・更新リスク','検出した版と公式情報を比較しています。使用箇所や修正の適用状況により、実際の影響は異なります。');
+    if(components.length||componentNotices.length){page('COMPONENTS');heading('01 / SOFTWARE COMPONENTS','使用部品の脆弱性・更新リスク','検出した版と公式情報を比較しています。使用箇所や修正の適用状況により、実際の影響は異なります。');
       for(const c of components){const name=c.name.split('\n'),a=c.current.split('\n'),b=c.latest.split('\n');const detailLines=lines(c.assessment,9,164),details=detailLines.slice(0,24).join('\n');const h=50+Math.max(height(c.current,10,66),height(c.latest,10,66))+height(details,9,164)+12;ensure(h+5);box(left,y,width,h);write(name[0],left+6,y+9,14,164);if(name[1])write(name.slice(1).join(' '),left+6,y+15,8,164,C.muted);const top=y+24;box(left+6,top,76,Math.max(height(c.current,10,66),height(c.latest,10,66))+14,C.pale);box(left+94,top,76,Math.max(height(c.current,10,66),height(c.latest,10,66))+14,C.pale);write('確認したバージョン',left+10,top+6,7,68,C.muted);write('確認時点の最新安定版',left+98,top+6,7,68,C.muted);write(c.current,left+10,top+13,10,66,C.red);write(c.latest,left+98,top+13,10,66);const below=top+Math.max(height(c.current,10,66),height(c.latest,10,66))+20;write(details,left+6,below,9,164,C.muted);y=Math.max(y+h+5,below+height(details,9,164)+8);if(detailLines.length>24)card(name[0]+' / 公表情報の続き',detailLines.slice(24).join('\n'));}
     }
+    if(componentNotices.length){heading('COMPONENT DISCLOSURES','検出した部品に関する公表情報','過去の公表事例です。検出した版への該当性や、このサイトの被害を示すものではありません。');grid(componentNotices.map(n=>[n.name+' / '+n.title,n.type+' / 公表 '+n.published+'\n'+n.summary+'\n'+(n.affectedVersions?'公表された影響版：'+n.affectedVersions+'\n':'')+n.scope,n.url]),true);}
     const facts=(report.providers?.facts||[]).filter(f=>f.role!=='現在の保守・契約担当'&&!/未特定|未確認|不明/.test(f.name+' '+f.status));
     if(facts.length||providerNotices.length){page('INFRASTRUCTURE');heading('02 / DOMAIN & SERVER','ドメイン・サーバーについて','公開情報から確認・推定した管理先と、提供元が公表している事故・障害情報です。');table('公開情報から確認した管理先',['項目','提供元','判定'],facts.map(f=>[f.role,f.name,f.status]),[40,108,28]);grid(providerNotices.map(n=>[(n.name?n.name+' / ':'')+n.title,'公表 '+n.published+'\n'+n.summary+'\n対象：'+(n.scope||'公表内容をご参照ください。')+'\n'+(n.resolution||''),n.url]),true);paragraph('提供元の過去の公表です。この医院での被害や、同じ製品・契約であることを示すものではありません。',8);}
     if(notices.length){page('PUBLIC ADVISORIES');heading('03 / PUBLIC ADVISORIES','ご利用中の外部サービス','関連するサービスが公表した事故・脆弱性情報です。この医院で事故が発生したという意味ではありません。');grid(notices.map(n=>[n.name+' / '+n.title,'公表 '+n.published+'\n'+n.summary+'\n対象：'+(n.scope||'公表内容をご参照ください。')+'\n'+(n.resolution||''),n.url]),true);}
