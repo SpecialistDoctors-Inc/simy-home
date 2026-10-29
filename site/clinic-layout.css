@@ -42,3 +42,46 @@
  #main .migration-guide .cta{padding:32px 20px}
  #main .migration-guide .notes{padding:24px 20px}
 }
+
+#main .diagnosis-banner{display:flex;align-items:center;justify-content:space-between;gap:24px;margin:0 0 36px;padding:28px 32px;background:#102b50;color:#fff;border-radius:16px}
+#main .diagnosis-banner>div{min-width:0}
+#main .diagnosis-banner p{margin:0 0 8px;color:#fff;font-size:clamp(18px,2vw,23px);font-weight:700;line-height:1.6}
+#main .diagnosis-banner-url{color:#c7dcff;font-size:14px;overflow-wrap:anywhere;text-underline-offset:4px}
+#main .diagnosis-banner-button{display:inline-flex;align-items:center;justify-content:center;gap:20px;flex-shrink:0;min-height:56px;padding:14px 24px;background:#fff;color:#174b9b;border-radius:8px;text-decoration:none;font-size:16px;font-weight:800;line-height:1.6}
+#main .diagnosis-banner-button:hover{background:#e8f1ff}
+#main .diagnosis-banner a:focus-visible{outline:3px solid #7fc6ff;outline-offset:5px}
+@media(max-width:700px){#main .diagnosis-banner{flex-direction:column;align-items:stretch;gap:20px;padding:24px 20px;margin-bottom:28px}#main .diagnosis-banner-button{width:100%;box-sizing:border-box}#main .diagnosis-banner-url{font-size:12px}}
+
+#main .migration-guide .migration-story{margin:0;padding:0 28px 36px;background:#fff}
+#main .migration-story a{display:block;max-width:960px;margin:0 auto;border:1px solid #dce5ef;border-radius:14px;overflow:hidden}
+#main .migration-story img{display:block;width:100%;height:auto}
+@media(max-width:700px){#main .migration-guide .migration-story{padding:0 16px 28px}#main .migration-story a{border-radius:10px}}
+
+/* Section links should land immediately, even on a long report. */
+html{scroll-behavior:auto}
+#main .offer-last .button{background:#2557b7;color:#fff}
+#main .rebuild-section{padding:40px 28px;background:#edf4ff;border-block:1px solid #ccdbef}
+#main .rebuild-section h2{font-size:clamp(25px,3vw,34px);margin-bottom:12px}
+#main .rebuild-section>p{color:#3d526b;margin-bottom:20px}
+#main #rebuild-form{padding:24px;background:#fff;border:1px solid #bdcfe8;border-radius:12px}
+#main #rebuild-form>label:first-child{display:block;font-weight:750;margin-bottom:10px}
+#main .rebuild-entry{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px}
+#main .rebuild-entry input{width:100%;min-width:0;min-height:58px;padding:12px 16px;background:#fff;border:2px solid #6b87ab;border-radius:7px;font-size:17px;color:#142438}
+#main .rebuild-entry button{display:flex;align-items:center;justify-content:center;gap:24px;min-height:58px;padding:12px 26px;border:0;border-radius:7px;color:#fff;background:#245dbd;font-size:17px;font-weight:750;cursor:pointer}
+#main .rebuild-entry button:disabled{opacity:.7;cursor:wait}
+#main .rebuild-consent{display:flex;align-items:flex-start;gap:10px;font-size:14px;margin:16px 0 0;color:#354d69}
+#main .rebuild-consent input{width:18px;height:18px;flex-shrink:0;margin:4px 0 0}
+#main .rebuild-status{margin:12px 0 0;font-size:15px;color:#214f91}
+#main .rebuild-status:empty{display:none}
+#main .rebuild-status.is-error{color:#b52d28}
+#main .rebuild-status.is-running:before{content:'';display:inline-block;width:14px;height:14px;border:2px solid #b3c8e9;border-top-color:#245dbd;border-radius:50%;margin-right:8px;vertical-align:-2px;animation:rebuild-spin .8s linear infinite}
+@keyframes rebuild-spin{to{transform:rotate(360deg)}}
+#main #rebuild-result{margin-top:24px;scroll-margin-top:160px}
+#main #rebuild-result[hidden]{display:none}
+#main .rebuild-result-head{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;color:#14365d}
+#main .rebuild-result-head a{font-weight:750;color:#2058b0}
+#main .rebuild-note{font-size:13px;margin:8px 0 16px;color:#4e637e}
+#main #rebuild-preview{display:block;width:100%;height:680px;border:1px solid #b3c5df;border-radius:8px;background:#fff}
+#main .report-rebuild-link{display:flex;width:fit-content;max-width:100%;margin:28px auto 0;box-sizing:border-box}
+@media(max-width:700px){#main .rebuild-section{padding:28px 16px}#main #rebuild-form{padding:20px 16px}#main .rebuild-entry{grid-template-columns:minmax(0,1fr)}#main #rebuild-preview{height:560px}}
+@media(prefers-reduced-motion:reduce){#main .rebuild-status.is-running:before{animation:none}}
