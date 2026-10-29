@@ -1,0 +1,5 @@
+region                  = "ap-northeast-1"
+environment             = "prod"
+domain_name             = "sample-clinic.simy.one"
+route53_zone_id         = "Z0008232OGBGLDBHC41G"
+expected_aws_account_id = "209300895845"
