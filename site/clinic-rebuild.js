@@ -17,7 +17,7 @@
  const log=(text,kind='')=>{const p=document.createElement('p');p.textContent=text;if(kind)p.className=kind;conversation.append(p);conversation.scrollTop=conversation.scrollHeight;};
  const showEditor=()=>{if(!currentHtml)return;setPane(mobile()?'canvas':'edit');editor.showModal();document.body.classList.add('preview-editor-open');(mobile()?closeEditor:editInput).focus({preventScroll:true});};
  openEditor.addEventListener('click',showEditor);closeEditor.addEventListener('click',()=>editor.close());editor.addEventListener('close',()=>{document.body.classList.remove('preview-editor-open');openEditor.focus({preventScroll:true});});
- const setEditBusy=value=>{editBusy=value;editForm.querySelector('button').disabled=value;editForm.querySelector('button').textContent=value?'ページの内容とご依頼を確認中…':'AIで変更する →';undo.disabled=value||!history.length;reset.disabled=value;example.disabled=value;editInput.disabled=value;editForm.setAttribute('aria-busy',String(value));};
+ const setEditBusy=value=>{editBusy=value;editForm.querySelector('button').disabled=value;editForm.querySelector('button').textContent=value?'ご依頼に合わせて変更中…':'ChatGPTに送信 →';undo.disabled=value||!history.length;reset.disabled=value;example.disabled=value;editInput.disabled=value;editForm.setAttribute('aria-busy',String(value));};
  frame.addEventListener('load',()=>{try{const mark=frame.contentDocument?.querySelector('[data-simy-changed]');mark?.scrollIntoView({block:'center',behavior:'instant'});}catch{}});
  editForm.addEventListener('submit',async event=>{event.preventDefault();if(editBusy||!editForm.reportValidity()||!currentHtml)return;const message=editInput.value.trim(),base=currentHtml;log(message,'preview-user-message');setEditBusy(true);const stopElapsed=startEditElapsed();
   try{
@@ -44,7 +44,7 @@
    const response=await fetch(form.dataset.endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url:url.href,rightsConfirmed:form.elements.rights.checked}),signal:AbortSignal.timeout(80000)});
    const data=await response.json();if(!response.ok)throw Error(data.error||'プレビューを作成できませんでした。');
    if(data.mode!=='static-html5-preview'||typeof data.html!=='string'||data.html.length>2000000)throw Error('プレビューの形式を確認できませんでした。');
-   originalHtml=window.SimyPreviewEdit.index(window.SimyPreviewEdit.prepare(data.html));history=[];chat=[];updatePreview(originalHtml);document.querySelector('#preview-source').textContent=url.hostname+' · 公開中のサイトは変更しません';conversation.replaceChildren();log('変えたいことをお伝えください。ページの内容に合わせて変更します。');
+   originalHtml=window.SimyPreviewEdit.index(window.SimyPreviewEdit.prepare(data.html));history=[];chat=[];updatePreview(originalHtml);document.querySelector('#preview-source').textContent=url.hostname+' · 公開中のサイトは変更しません';conversation.replaceChildren();log('いつものChatGPTに話すように、変えたいことを入力してください。');
    const enquiryBody='SIMY ご担当者様\r\n\r\n医療機関名：\r\nご担当者名：\r\nホームページURL：'+url.href+'\r\nご用件：ホームページの再現を体験しました。移管・保守について相談したいです。\r\n';document.querySelector('#preview-enquiry').href='mailto:sales@simy.one?subject='+encodeURIComponent('HP管理・移管の相談')+'&body='+encodeURIComponent(enquiryBody);
    const versions=document.querySelector('#rebuild-versions');versions.replaceChildren();
    const table=document.createElement('table');const caption=document.createElement('caption');caption.textContent='再現したトップページの構成・更新状況';table.append(caption);
