@@ -1,0 +1,44 @@
+/* The frame owns the outer edge; tables must not leave a second bottom seam. */
+#main .evaluation-scroll>table,#main .simple-compare>table,#main .table-frame>table{margin:0}
+#main .evaluation-table tbody tr:last-child>*,#main .simple-compare tbody tr:last-child>*,#main .table-frame tbody tr:last-child>*{border-bottom:0}
+/* Keep long pages navigable without hiding findings or removing illustrations. */
+:root{--clinic-header-height:76px;--clinic-nav-height:64px}
+#main .care-nav{position:sticky;top:var(--clinic-header-height);z-index:950;background:rgba(247,249,252,.98);display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:nowrap;padding:14px 32px;border-bottom:1px solid #dce5ef}
+#main .care-nav>span{flex-shrink:0}
+#main .care-nav-links{display:flex;align-items:center;gap:20px;overflow-x:auto;min-width:0;scrollbar-width:thin}
+#main .care-nav .care-nav-links a{background:transparent;color:#31465b;flex-shrink:0;padding:8px 0;font-size:13px;font-weight:700;text-decoration:none;white-space:nowrap}
+#main .care-nav-links a:hover,#main .care-nav-links a:focus-visible{color:#216bd9;text-decoration:underline;text-underline-offset:5px}
+#main section[id]{scroll-margin-top:calc(var(--clinic-header-height) + var(--clinic-nav-height) + 16px)}
+#main .pad{padding-top:36px;padding-bottom:36px}
+#main .migration-guide .hero-inner{padding:40px 28px;gap:36px}
+#main .migration-guide .migration-headline{font-size:clamp(30px,3.2vw,40px)}
+#main .migration-guide .section{padding:40px 28px}
+#main .migration-guide .step-info{padding:28px}
+#main .migration-guide .visual{padding:24px;min-height:270px}
+#main .migration-guide .cta{padding:36px 28px}
+#main .migration-guide .notes{padding:24px 28px}
+#main .migration-guide .rights-guide{padding-top:36px;padding-bottom:36px}
+#main .migration-guide .rights-rows>div{padding-top:16px;padding-bottom:16px}
+@media(min-width:1000px){
+ #main .migration-guide .steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;align-items:stretch}
+ #main .migration-guide .connector{display:none}
+ #main .migration-guide .step{display:flex;flex-direction:column;min-width:0}
+ #main .migration-guide .step-info{padding:24px;flex:1}
+ #main .migration-guide .step-head{font-size:22px}
+ #main .migration-guide .visual{border-left:0;border-top:1px solid #e9eef6;padding:20px;min-height:300px}
+ #main .migration-guide .transfer{gap:12px}
+ #main .migration-guide .transfer-card{padding:14px}
+}
+@media(max-width:700px){
+ :root{--clinic-header-height:64px;--clinic-nav-height:58px}
+ #main .care-nav{padding:8px 16px;gap:0;display:block}
+ #main .care-nav>span{display:none}
+ #main .care-nav-links{gap:22px}
+ #main .care-nav .care-nav-links a{background:transparent;color:#31465b;padding:10px 0}
+ #main .pad{padding-top:28px;padding-bottom:28px}
+ #main .migration-guide .hero-inner{padding:32px 20px}
+ #main .migration-guide .section{padding:32px 16px}
+ #main .migration-guide .step-info{padding:24px}
+ #main .migration-guide .cta{padding:32px 20px}
+ #main .migration-guide .notes{padding:24px 20px}
+}
