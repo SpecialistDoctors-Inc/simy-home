@@ -96,6 +96,8 @@ function releaseLabel(date, kind) {
 }
 function renderEvaluationTable(report) {
   const rows = new Map();
+  const disclosureInfo=window.SimyServiceSecurity?.assess(report);
+  const componentServices=disclosureInfo?(window.SimyServiceSecurity.componentServices?.(disclosureInfo)||[]):[];
   const add = (name, version, issues, assessment, fix) => {
     name = ({nextjs:'Next.js',next:'Next.js',rails:'Ruby on Rails',moment:'moment.js'}[name.toLowerCase()] || name);
     const key = name.toLowerCase() + ':' + (version || '');
@@ -108,9 +110,9 @@ function renderEvaluationTable(report) {
   for (const l of report.scripts.libraries) add(l.name, l.version, l.issues);
   const section = element('section', '', 'evaluation-section');
   section.append(element('h3', '01 / 使用部品の脆弱性・セキュリティリスク'));
-  if(!rows.size)return;
+  if(!rows.size&&!componentServices.length)return;
   const wrap = element('div', '', 'evaluation-scroll'); wrap.tabIndex = 0; wrap.setAttribute('role','region'); wrap.setAttribute('aria-label','使用部品の評価表。画面が狭い場合は横にスクロールできます');
-  const table = element('table', '', 'evaluation-table');
+  const table = element('table', '', 'evaluation-table component-version-table');
   table.append(element('caption', '使用部品・検出した版・公式情報・評価・対応'));
   const head = element('thead',''); const tr = element('tr','');
   for (const label of ['言語・部品','現在のバージョン','最新安定版','判定']) {const th=element('th',label);th.scope='col';tr.append(th);}head.append(tr);table.append(head);
@@ -132,8 +134,9 @@ function renderEvaluationTable(report) {
     if(!row.version&&row.name.toLowerCase()==='wordpress')status.append(element('small','公開情報では版を特定できません。'));
     if(ended||issue)status.append(element('small',ended?'開発元のサポート終了':'既知の問題に関係する版'));else if(outdated&&row.name.toLowerCase()!=='jquery-migrate')status.append(element('small','旧版だけで危険とは判定しません。'));else if(comparison===0)status.append(element('small','確認日の公式版と一致。安全性全体の保証ではありません。'));appendIssueEvidence(status,row.issues);line.append(official,status);body.append(line);
   }
-  if(!body.children.length)return;
-  table.append(body);wrap.append(table);section.append(wrap,element('p','公開日は検出した版の配布元の記録です。版や日付が不明なものは未確認と表示します。最新の版は記載日の確認情報です。旧版だけで脆弱性があるとは限りません。','evaluation-note'));
+  if(!body.children.length&&!componentServices.length)return;
+  if(body.children.length){table.append(body);wrap.append(table);section.append(wrap,element('p','公開日は検出した版の配布元の記録です。版や日付が不明なものは未確認と表示します。最新の版は記載日の確認情報です。旧版だけで脆弱性があるとは限りません。','evaluation-note'));}
+  if(componentServices.length){section.append(element('h4','検出した部品に関する事故・脆弱性の公表情報'),element('p','部品ごとの過去の公表事例です。検出した版への該当性や、このサイトでの被害を示すものではありません。','evaluation-note'),renderNoticeTable(disclosureInfo,componentServices,'使用部品'));}
   if(![...rows.values()].some(row=>row.name.toLowerCase()==='php') && [...rows.values()].some(row=>row.name.toLowerCase()!=='php'&&row.issues.length)){
     const figure=element('figure','','clinic-manga infrastructure-manga'),img=element('img','');img.src='/assets/website-check/clinic-component-risks-v1.png';img.width=1536;img.height=1024;img.loading='lazy';img.alt='PHP以外の部品も攻撃の入口になり得ることを示す架空の漫画。公表された問題と、この医院の被害は区別します。';figure.append(img);section.append(figure);
   }
@@ -181,22 +184,25 @@ function renderInfrastructure(report) {
   img.src='/assets/website-check/clinic-aws-migration-v1.png';img.width=1536;img.height=1024;img.loading='lazy';img.alt='サーバー管理に悩む医師が、AWSの基盤とSIMYの設定・更新・バックアップを組み合わせた移行を検討する漫画。';
   figure.append(img,element('figcaption','AWSへの移行イメージ。安全性は、構成・設定・継続的な保守にも左右されます。'));section.append(figure);results.append(section);
 }
+function renderNoticeTable(info,services,nameLabel){
+  const wrap=element('div','','evaluation-scroll');const table=element('table','','evaluation-table service-table');
+  const head=element('thead',''),hr=element('tr','');for(const label of [nameLabel,'事故・脆弱性の調査結果','公表日・出典']){const th=element('th',label);th.scope='col';hr.append(th);}head.append(hr);table.append(head);
+  const body=element('tbody','');
+  for(const service of [...services].sort((a,b)=>Math.max(0,...window.SimyServiceSecurity.findingsFor(b,info).map(n=>Date.parse(n.published)))-Math.max(0,...window.SimyServiceSecurity.findingsFor(a,info).map(n=>Date.parse(n.published))))){
+    const row=element('tr',''),name=element('th',service.name);name.scope='row';name.append(element('small',service.category||''));
+    const risk=element('td',''),sources=element('td','');const notices=window.SimyServiceSecurity.findingsFor(service,info);
+    for(const n of notices){risk.append(element('strong',n.type),element('p',n.title),element('p',n.summary),element('small',n.scope));if(n.occurred)risk.append(element('small','発生・確認：'+n.occurred));if(n.affectedVersions)risk.append(element('small','公表された影響版：'+n.affectedVersions));sources.append(element('p','公表 '+n.published));const link=element('a','公式発表 ↗');link.href=n.url;link.target='_blank';link.rel='noopener';sources.append(link);if(n.stale)sources.append(element('small','情報確認から7日以上経過'));}
+    row.append(name,risk,sources);body.append(row);
+  }
+  table.append(body);wrap.append(table);return wrap;
+}
 function renderServiceSecurity(report){
   const info=window.SimyServiceSecurity?.assess(report);
   const section=element('section','','service-security');
   section.append(element('h3','03 / ご利用中の外部サービス'));
   if(!info){section.append(element('p','公表情報を読み込めませんでした。'));results.append(section);return;}
   const visible=window.SimyServiceSecurity.visibleServices(info);if(!visible.length)return;
-  const wrap=element('div','','evaluation-scroll');const table=element('table','','evaluation-table service-table');
-  const head=element('thead',''),hr=element('tr','');for(const label of ['外部サービス','事故・脆弱性の調査結果','公表日・出典']){const th=element('th',label);th.scope='col';hr.append(th);}head.append(hr);table.append(head);
-  const body=element('tbody','');
-  for(const service of [...visible].sort((a,b)=>Math.max(0,...window.SimyServiceSecurity.findingsFor(b,info).map(n=>Date.parse(n.published)))-Math.max(0,...window.SimyServiceSecurity.findingsFor(a,info).map(n=>Date.parse(n.published))))){
-    const row=element('tr',''),name=element('th',service.name);name.scope='row';name.append(element('small',service.category||''));
-    const risk=element('td',''),sources=element('td','');const notices=window.SimyServiceSecurity.findingsFor(service,info);
-    for(const n of notices){risk.append(element('strong',n.type),element('p',n.title),element('p',n.summary),element('small',n.scope));if(n.occurred)risk.append(element('small','発生・確認：'+n.occurred));if(n.affectedVersions)risk.append(element('small','公表された影響版：'+n.affectedVersions));sources.append(element('p','公表 '+n.published));const link=element('a','公式発表 ↗');link.href=n.url;link.target='_blank';link.rel='noopener';sources.append(link);if(n.stale)sources.append(element('small','情報確認から7日以上経過'));}
-    row.append(name,risk,sources);body.append(row);
-  }
-  table.append(body);wrap.append(table);section.append(wrap,element('p',(info.research?.status==='completed'?'診断時に公式情報を検索。':info.research?.status==='partial'?'診断時の検索・一次情報確認は一部のみ完了。':'診断時の検索は未実施または取得できませんでした。')+' 確認：'+info.checkedAt+'。事前確認の公表事例も含みます。全件網羅ではなく、このサイトの被害を示しません。'));results.append(section);
+  section.append(renderNoticeTable(info,visible,'外部サービス'),element('p',(info.research?.status==='completed'?'診断時に公式情報を検索。':info.research?.status==='partial'?'診断時の検索・一次情報確認は一部のみ完了。':'診断時の検索は未実施または取得できませんでした。')+' 確認：'+info.checkedAt+'。事前確認の公表事例も含みます。全件網羅ではなく、このサイトの被害を示しません。'));results.append(section);
 }
 function groupLibraryFindings(libraries) {
   const groups = new Map();
@@ -379,6 +385,6 @@ diagnosisForm.addEventListener('submit', async event => {
 
 let reportPdfLoader;
 function loadReportPdf(){
-  if(!reportPdfLoader)reportPdfLoader=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='/diagnosis-pdf.js?v=3be6f3818c1d';script.onload=resolve;script.onerror=()=>{script.remove();reportPdfLoader=null;reject(Error('PDF機能の読込に失敗しました'));};document.head.append(script);});
+  if(!reportPdfLoader)reportPdfLoader=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='/diagnosis-pdf.js?v=8cda13051b67';script.onload=resolve;script.onerror=()=>{script.remove();reportPdfLoader=null;reject(Error('PDF機能の読込に失敗しました'));};document.head.append(script);});
   return reportPdfLoader;
 }

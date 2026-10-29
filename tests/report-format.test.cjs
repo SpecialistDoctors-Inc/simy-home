@@ -19,3 +19,11 @@ test('variable length issues paginate inside printable body, without dropping is
  assert(doc.getNumberOfPages()>8);const content=texts.map(t=>t.s).join('\n');for(let i=0;i<9;i++)assert(content.includes('END-'+i));assert(!content.includes('正常な設定'));
  for(const t of texts){assert(t.y<=290,'text origin outside paper: '+t.y);assert(t.x>=17&&t.x<=193,'text outside horizontal margin');}
 });
+test('PDF puts component-only disclosures in section 01 without an external-service section',()=>{
+ const local={URL};for(const f of ['information-flow','service-security','diagnosis-pdf'])vm.runInNewContext(fs.readFileSync('site/'+f+'.js','utf8'),local);
+ const output=[];class Capture extends jsPDF{constructor(o){super(o);const original=this.text;this.text=function(s,...args){output.push(Array.isArray(s)?s.join('\n'):s);return original.call(this,s,...args);};}}
+ const names=['Apache','jQuery','WordPress'];const report={url:'https://clinic.example/',checkedAt:'2026-10-29T01:00:00Z',technologies:names.map(name=>({name,status:'detected',versions:[]})),scripts:{libraries:[{name:'jquery',version:'3.7.1'}]},serviceSecurity:{catalog:names.map(name=>({id:name==='jQuery'?'jQuery-3.5.0':name,subjectId:'component:'+name,name,published:'2020-04-10',checkedAt:'2026-10-28',kind:'vulnerability',scope:'対象版は未確認',summary:'公表事例',title:name+'の公表',url:'https://official.example/'+name}))}};
+ local.SimyReportPdf.create({report,versions:[]},font,Capture);const text=output.join('\n');
+ assert(text.includes('01 / SOFTWARE COMPONENTS'));for(const name of names)assert(text.includes(name+' / '+name+'の公表'));
+ assert(text.includes('影響範囲外'));assert(!text.includes('03 / PUBLIC ADVISORIES'));
+});
