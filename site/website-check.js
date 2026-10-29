@@ -94,6 +94,13 @@ function releaseLabel(date, kind) {
   const label = kind === 'package' ? '配布' : '公開';
   return match ? match[1] + '年' + Number(match[2]) + '月' + Number(match[3]) + '日' + label : label + '日未確認';
 }
+function componentRowPriority(row,report){
+ if(/サポート終了/.test(row.assessment)||(row.issues||[]).length)return 4;
+ const fallback=releaseReferences[row.name.toLowerCase()],reported=report.releaseInfo?.[row.name.toLowerCase()];
+ const ref=reported?{...fallback,...reported}:fallback;
+ if(ref&&compareReleaseVersions(row.version,ref.version)===-1)return 3;
+ return !row.version||!ref||compareReleaseVersions(row.version,ref.version)!==0?1:0;
+}
 function renderEvaluationTable(report) {
   const rows = new Map();
   const disclosureInfo=window.SimyServiceSecurity?.assess(report);
@@ -110,21 +117,20 @@ function renderEvaluationTable(report) {
   for (const l of report.scripts.libraries) add(l.name, l.version, l.issues);
   const section = element('section', '', 'evaluation-section');
   section.append(element('h3', '01 / 使用部品の脆弱性・セキュリティリスク'));
-  if(!rows.size&&!componentServices.length)return;
+  if(!rows.size&&!componentServices.length){section.append(element('p','公開情報から使用部品を特定できませんでした。'));results.append(section);return;}
   const wrap = element('div', '', 'evaluation-scroll'); wrap.tabIndex = 0; wrap.setAttribute('role','region'); wrap.setAttribute('aria-label','使用部品の評価表。画面が狭い場合は横にスクロールできます');
   const table = element('table', '', 'evaluation-table component-version-table');
   table.append(element('caption', '使用部品・検出した版・公式情報・評価・対応'));
   const head = element('thead',''); const tr = element('tr','');
   for (const label of ['言語・部品','現在のバージョン','最新安定版','判定']) {const th=element('th',label);th.scope='col';tr.append(th);}head.append(tr);table.append(head);
   const body = element('tbody','');
-  for (const row of rows.values()) {
+  for (const row of [...rows.values()].sort((a,b)=>componentRowPriority(b,report)-componentRowPriority(a,report))) {
     const fallback=releaseReferences[row.name.toLowerCase()];const reported=report.releaseInfo?.[row.name.toLowerCase()];
     const ref=reported ? {...fallback,...reported,dates:{...fallback?.dates,...reported.dates}} : fallback;
     const ended = /サポート終了/.test(row.assessment);
     const issue = row.issues.length > 0;
     const comparison = ref ? compareReleaseVersions(row.version,ref.version) : null;
     const outdated = comparison === -1;
-    if(!ended&&!issue&&!outdated)continue;
     const state = ended ? 'サポート終了' : issue ? '既知の脆弱性に関連' : !row.version ? 'バージョン不明' : outdated ? '旧バージョン' : comparison === 0 ? '最新の公式版と一致' : '比較情報なし';
     const line = element('tr','');const name=element('th',row.name);name.scope='row';const purpose={php:'サーバーの動作基盤',jquery:'画面の動きを作る部品',swiper:'写真を切り替える部品',wordpress:'ページを管理する仕組み','jquery-migrate':'jQuery更新時の互換性を補う部品'}[row.name.toLowerCase()];if(purpose)name.append(element('small',purpose));const current=element('td','');current.append(element('strong',row.version || 'バージョン未確認',outdated?'version-outdated':''));if(outdated)current.append(element('small','旧バージョン','version-outdated-label'));const released=ref?.dates?.[row.version];current.append(element('small',releaseLabel(released,ref?.dateKind)));const evidence=report.scripts.libraries.filter(l=>l.name.toLowerCase()===row.name.toLowerCase()&&l.version===row.version);if(evidence.length&&evidence.every(l=>l.basis==='url')){current.append(element('small','URL表記から推定'));current.append(element('small','推定した版の日付'));}if(!row.version&&/Ruby|Rails/.test(row.name))name.append(element('small','利用の手掛かりあり（推定）'));line.append(name,current);
     const official=element('td','');
@@ -164,21 +170,22 @@ function renderSummary(report){
   for(const r of report.scripts.resources||[])if(r.status!=='checked')unknown.add('asset:'+r.url);
   const serviceRisk=window.SimyServiceSecurity?.assess(report);
   const counts=element('div','','report-counts');
-  for(const [label,value,style] of [['脆弱性・更新リスク',updates.size+priorityVersions.size,'priority'],['関連する事故・脆弱性の公表',serviceRisk?new Set([...window.SimyServiceSecurity.visibleServices(serviceRisk).flatMap(s=>window.SimyServiceSecurity.findingsFor(s,serviceRisk)),...window.SimyServiceSecurity.providerNotices(report)].map(n=>n.url)).size:'未確認','update'],['その他の確認事項',report.findings.filter(f=>f.state==='review').length,'unknown']]){const box=element('div','',style);box.append(element('strong',String(value)),element('span',label));counts.append(box);}
+  for(const [label,value,style] of [['脆弱性・更新リスク',updates.size+priorityVersions.size,'priority'],['関連する事故・脆弱性の公表',serviceRisk?new Set([...window.SimyServiceSecurity.visibleServices(serviceRisk).flatMap(s=>window.SimyServiceSecurity.findingsFor(s,serviceRisk)),...(window.SimyServiceSecurity.componentServices?.(serviceRisk)||[]).flatMap(s=>window.SimyServiceSecurity.findingsFor(s,serviceRisk)),...window.SimyServiceSecurity.providerNotices(report)].map(n=>n.url)).size:'未確認','update'],['その他の確認事項',report.findings.filter(f=>f.state==='review').length,'unknown']]){const box=element('div','',style);box.append(element('strong',String(value)),element('span',label));counts.append(box);}
   results.append(counts);
   for(const warning of report.sourceWarnings||[])results.append(element('p',warning,'source-warning'));
 }
 function renderInfrastructure(report) {
   const section=element('section','','infrastructure-section');
   section.append(element('h3','02 / ドメイン・サーバー・制作元の詳細'));
-  const facts=[...new Map((report.providers?.facts||[]).filter(f=>f.role!=='現在の保守・契約担当'&&!/未特定|未確認|不明/.test(f.name+' '+f.status)).map(f=>[JSON.stringify([f.role,f.name,f.status]),f])).values()];
+  const facts=window.SimyServiceSecurity?.providerFacts(report)||(report.providers?.facts||[]).filter(f=>f.role!=='現在の保守・契約担当');
   const wrap=element('div','','evaluation-scroll'),table=element('table','','evaluation-table');
   const head=element('thead',''),hr=element('tr','');
   for(const label of ['項目','提供元','判定']){const th=element('th',label);th.scope='col';hr.append(th);}head.append(hr);table.append(head);
   const body=element('tbody','');
-  for(const f of facts){const tr=element('tr',''),th=element('th',f.role);th.scope='row';tr.append(th,element('td',/Onamae\.com/i.test(f.name)?'お名前.com（GMO Internet Group）':f.name),element('td',f.status));body.append(tr);}
-  table.append(body);wrap.append(table);if(facts.length)section.append(wrap);
+  for(const f of facts){const tr=element('tr',''),th=element('th',f.role);th.scope='row';tr.append(th,element('td',/Onamae\.com/i.test(f.name)?'お名前.com（GMO Internet Group）':f.name||'未特定'),element('td',f.status||'未確認'));body.append(tr);}
+  table.append(body);wrap.append(table);
   for(const n of window.SimyServiceSecurity?.providerNotices(report)||report.providers?.notices||[]){const card=element('article','','provider-notice');card.append(element('strong',n.type||(/障害/.test(n.title)?'提供元が公表した稼働障害':'提供元が公表した事故')),element('h4',(n.name?n.name+'：':'')+n.title),element('p',n.summary),element('small','対象：'+n.scope+' '+n.resolution),element('small',n.publisher+' / 公表 '+n.published));const a=element('a','公式発表 ↗');a.href=n.url;a.target='_blank';a.rel='noopener';card.append(a);section.append(card);}
+  if(facts.length)section.append(wrap);else section.append(element('p','管理・運営基盤の提供元は特定できませんでした。'));
   section.append(element('p','提供元の過去の公表です。この医院の被害を示すものではありません。','evaluation-note'));
   const figure=element('figure','','clinic-manga infrastructure-manga'),img=element('img','');
   img.src='/assets/website-check/clinic-aws-migration-v1.png';img.width=1536;img.height=1024;img.loading='lazy';img.alt='サーバー管理に悩む医師が、AWSの基盤とSIMYの設定・更新・バックアップを組み合わせた移行を検討する漫画。';
@@ -188,9 +195,10 @@ function renderNoticeTable(info,services,nameLabel){
   const wrap=element('div','','evaluation-scroll');const table=element('table','','evaluation-table service-table');
   const head=element('thead',''),hr=element('tr','');for(const label of [nameLabel,'事故・脆弱性の調査結果','公表日・出典']){const th=element('th',label);th.scope='col';hr.append(th);}head.append(hr);table.append(head);
   const body=element('tbody','');
-  for(const service of [...services].sort((a,b)=>Math.max(0,...window.SimyServiceSecurity.findingsFor(b,info).map(n=>Date.parse(n.published)))-Math.max(0,...window.SimyServiceSecurity.findingsFor(a,info).map(n=>Date.parse(n.published))))){
+  for(const service of services){
     const row=element('tr',''),name=element('th',service.name);name.scope='row';name.append(element('small',service.category||''));
     const risk=element('td',''),sources=element('td','');const notices=window.SimyServiceSecurity.findingsFor(service,info);
+    if(!notices.length){risk.append(element('span',window.SimyServiceSecurity.inventoryResearchStatus(service,info)));sources.append(element('span','—'));}
     for(const n of notices){risk.append(element('strong',n.type),element('p',n.title),element('p',n.summary),element('small',n.scope));if(n.occurred)risk.append(element('small','発生・確認：'+n.occurred));if(n.affectedVersions)risk.append(element('small','公表された影響版：'+n.affectedVersions));sources.append(element('p','公表 '+n.published));const link=element('a','公式発表 ↗');link.href=n.url;link.target='_blank';link.rel='noopener';sources.append(link);if(n.stale)sources.append(element('small','情報確認から7日以上経過'));}
     row.append(name,risk,sources);body.append(row);
   }
@@ -199,9 +207,9 @@ function renderNoticeTable(info,services,nameLabel){
 function renderServiceSecurity(report){
   const info=window.SimyServiceSecurity?.assess(report);
   const section=element('section','','service-security');
-  section.append(element('h3','03 / ご利用中の外部サービス'));
+  section.append(element('h3','03 / 外部サービス・接続先の一覧'));
   if(!info){section.append(element('p','公表情報を読み込めませんでした。'));results.append(section);return;}
-  const visible=window.SimyServiceSecurity.visibleServices(info);if(!visible.length)return;
+  const visible=window.SimyServiceSecurity.visibleServices(info);if(!visible.length){section.append(element('p','外部サービス・接続先は今回の確認範囲では特定できませんでした。'));results.append(section);return;}
   section.append(renderNoticeTable(info,visible,'外部サービス'),element('p',(info.research?.status==='completed'?'診断時に公式情報を検索。':info.research?.status==='partial'?'診断時の検索・一次情報確認は一部のみ完了。':'診断時の検索は未実施または取得できませんでした。')+' 確認：'+info.checkedAt+'。事前確認の公表事例も含みます。全件網羅ではなく、このサイトの被害を示しません。'));results.append(section);
 }
 function groupLibraryFindings(libraries) {
@@ -385,6 +393,6 @@ diagnosisForm.addEventListener('submit', async event => {
 
 let reportPdfLoader;
 function loadReportPdf(){
-  if(!reportPdfLoader)reportPdfLoader=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='/diagnosis-pdf.js?v=8cda13051b67';script.onload=resolve;script.onerror=()=>{script.remove();reportPdfLoader=null;reject(Error('PDF機能の読込に失敗しました'));};document.head.append(script);});
+  if(!reportPdfLoader)reportPdfLoader=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='/diagnosis-pdf.js?v=3f7e2759ba76';script.onload=resolve;script.onerror=()=>{script.remove();reportPdfLoader=null;reject(Error('PDF機能の読込に失敗しました'));};document.head.append(script);});
   return reportPdfLoader;
 }

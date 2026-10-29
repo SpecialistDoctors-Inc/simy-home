@@ -14,7 +14,7 @@ const services=[['digikar-smart.jp','デジスマ診療'],['nomoca-ai.com','NOMO
 function matches(host,domain){return host===domain||host.endsWith('.'+domain);}
 function assess(report,now=Date.now()){
  const linked=new Map();
- for(const x of report.integrations||[]){let host;try{host=new URL(x.destination).hostname.toLowerCase();}catch{continue;}const known=services.find(([domain])=>matches(host,domain));const key=known?.[0]||host;const prior=linked.get(key);if(!prior)linked.set(key,{host,name:known?.[1]||host,kind:x.kind,category:x.category});else if(prior.kind==='link'&&x.kind!=='link')prior.kind=x.kind;}
+ for(const x of report.integrations||[]){let host;try{host=new URL(x.destination).hostname.toLowerCase();}catch{continue;}if(!host)continue;const known=services.find(([domain])=>matches(host,domain));const key=known?.[0]||host;const prior=linked.get(key);if(!prior)linked.set(key,{host,name:known?.[1]||host,kind:x.kind,category:x.category});else if(prior.kind==='link'&&x.kind!=='link')prior.kind=x.kind;}
  for(const fact of report.providers?.facts||[]){
   if(!['DNS提供元','ドメイン登録会社','サーバー・ネットワーク'].includes(fact.role)||fact.status==='未確認')continue;
   const key='provider:'+fact.role+':'+(fact.provider||fact.name);
@@ -55,9 +55,23 @@ function researchStatus(service){return researchedDomains.some(d=>matches(servic
 function providerNotices(report){
  const info=assess(report),notices=[...(report.providers?.notices||[])];
  for(const service of info.services.filter(s=>s.kind==='provider'))for(const n of findingsFor(service,info))notices.push({...n,publisher:n.name,resolution:''});
- return [...new Map(notices.map(n=>[n.url,n])).values()].sort((a,b)=>Date.parse(b.published)-Date.parse(a.published));
+ return [...new Map(notices.map(n=>[n.url,n])).values()].sort((a,b)=>noticePriority(b)-noticePriority(a)||Date.parse(b.published)-Date.parse(a.published));
 }
-function componentServices(info){return info.services.filter(s=>s.kind==='component'&&findingsFor(s,info).length);}
-function visibleServices(info){return info.services.filter(s=>s.kind!=='provider'&&s.kind!=='component'&&findingsFor(s,info).length);}
-global.SimyServiceSecurity={assess,catalog,findingsFor,researchStatus,providerNotices,visibleServices,componentServices};
+// Inventory stays visible even when disclosure research is unavailable or has no match.
+function noticePriority(n){if(/影響範囲外/.test(n.type||''))return 0;return /exploitation|incident/.test(n.kind||'')||/悪用|漏えい|不正アクセス/.test(n.type||'')?3:n.kind==='outage'||/障害/.test(n.type||'')?1:2;}
+function servicePriority(service,info){return Math.max(0,...findingsFor(service,info).map(noticePriority));}
+function prioritizeServices(items,info){return [...items].sort((a,b)=>servicePriority(b,info)-servicePriority(a,info)||Math.max(0,...findingsFor(b,info).map(n=>Date.parse(n.published)||0))-Math.max(0,...findingsFor(a,info).map(n=>Date.parse(n.published)||0)));}
+function componentServices(info){return prioritizeServices(info.services.filter(s=>s.kind==='component'&&findingsFor(s,info).length),info);}
+function visibleServices(info){return prioritizeServices(info.services.filter(s=>s.kind!=='provider'&&s.kind!=='component'),info);}
+function inventoryResearchStatus(service,info){
+ const registry={drive:['drive.google.com','docs.google.com'],nomoca:['nomoca-ai.com'],blastmail:['blastmail.jp'],digikar:['digikar-smart.jp'],stripe:['stripe.com'],line:['line.me'],onamae:['onamae.com']};
+ const id=service.subjectId||service.provider||Object.keys(registry).find(id=>registry[id].some(d=>matches(service.host||'',d)));
+ return id&&info.research?.searchedSubjectIds?.includes(id)?'今回の調査では、事故・脆弱性の公表情報を特定できませんでした。':'事故・脆弱性情報は未確認です。';
+}
+function providerFacts(report){
+ const info=assess(report);const facts=[...new Map((report.providers?.facts||[]).filter(f=>f.role!=='現在の保守・契約担当').map(f=>[JSON.stringify([f.role,f.name,f.status]),f])).values()];
+ const score=f=>{const service=info.services.find(s=>s.kind==='provider'&&s.category===f.role&&((s.provider&&s.provider===(f.provider||(/Onamae\.com/i.test(f.name||'')?'onamae':undefined)))||s.name===f.name));return Math.max(service?servicePriority(service,info):0,f.role==='サーバー・ネットワーク'&&(report.providers?.notices||[]).length?2:0);};
+ return facts.sort((a,b)=>score(b)-score(a));
+}
+global.SimyServiceSecurity={assess,catalog,findingsFor,researchStatus,providerNotices,visibleServices,componentServices,inventoryResearchStatus,providerFacts,servicePriority};
 })(typeof window==='undefined'?globalThis:window);
