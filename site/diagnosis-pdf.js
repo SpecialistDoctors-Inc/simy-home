@@ -81,13 +81,13 @@
     doc.setTextColor(19,43,76);doc.setFontSize(24);doc.text('今のホームページを、SIMYへ。',16,42);
     doc.setFontSize(10);doc.text('URLも、見慣れたデザインも。医院は情報の受け取りと内容の確認。移管の準備から公開までSIMYが進めます。',16,53);
     const steps=[
-     ['01','今の管理会社に、移管情報を依頼。','制作会社・管理会社、またはドメイン登録会社から、移管用認証コード「AuthCode（オースコード）」と、HTML・画像等のサイトデータを受け取ります。','何を頼めばよいかは、SIMYがご案内します。','AuthCode','HTML・画像・管理情報'],
-     ['02','同じ見た目を、最新の技術で。','既存データを引き継ぐか、同じ見た目・内容を最新技術で無料再制作。公開前に、先生に画面をご確認いただきます。','権利と対象範囲を確認してから着手します。','作り直し 0円','見た目・内容を引き継ぐ'],
-     ['03','同じURLで公開。ChatGPTへ接続。','ドメイン管理・公開先をSIMYへ移管。予約・フォーム・メールへの影響を確認して切り替え、先生のChatGPTを更新環境へ接続します。','「休診日を載せて」と伝え、プレビューを確認して公開する運用へ。','ChatGPT','確認して、公開。']
+     ['01','今の管理会社に、移管情報を依頼。','制作会社・管理会社、またはドメイン登録会社から、HTML・画像・管理情報を受け取ります。ドメイン移管が必要な場合は「AuthCode（オースコード）」も依頼します。','何を頼めばよいかは、SIMYがご案内します。','AuthCode','HTML・画像・管理情報'],
+     ['02','今の見た目を、最新の技術で作り直す。','既存データを引き継ぐか、同じ見た目・内容を最新技術で無料再制作。公開前に、先生に画面をご確認いただきます。','権利と対象範囲を確認してから着手します。','作り直し 0円','見た目・内容を引き継ぐ'],
+     ['03','同じURLで公開。ChatGPTへ接続。','ドメインの設定・公開先を切り替え。予約・フォーム・メールへの影響を確認し、先生のChatGPTを更新環境へ接続する運用を予定しています。','「休診日を載せて」と伝え、プレビューを確認して公開する運用へ。','ChatGPT','確認して、公開。']
     ];
-    steps.forEach(([number,title,copy,note,visual,caption],i)=>{const top=61+i*31;doc.setDrawColor(220,229,236);doc.line(16,top,281,top);doc.setTextColor(38,92,165);doc.setFontSize(22);doc.text(number,16,top+12);doc.setTextColor(19,43,76);doc.setFontSize(13);doc.text(title,37,top+9);doc.setFontSize(8.8);doc.text(doc.splitTextToSize(copy,165),37,top+16);doc.setFontSize(7.5);doc.setTextColor(85,104,123);doc.text(note,37,top+27);doc.setFillColor(239,245,250);doc.roundedRect(211,top+4,70,24,2,2,'F');doc.setTextColor(38,92,165);doc.setFontSize(16);doc.text(visual,246,top+15,{align:'center'});doc.setFontSize(8);doc.text(caption,246,top+23,{align:'center'});});
+    steps.forEach(([number,title,copy,note,visual,caption],i)=>{const top=61+i*31;doc.setDrawColor(223,231,241);doc.setFillColor(255,255,255);doc.roundedRect(16,top,265,30,3,3,'FD');doc.setTextColor(33,107,217);doc.setFontSize(18);doc.text(number,21,top+12);doc.setTextColor(19,43,76);doc.setFontSize(13);doc.text(title,37,top+9);doc.setFontSize(8.8);doc.text(doc.splitTextToSize(copy,165),37,top+16);doc.setFontSize(7.5);doc.setTextColor(85,104,123);doc.text(note,37,top+27);doc.setFillColor(239,245,250);doc.roundedRect(211,top+4,70,24,2,2,'F');doc.setTextColor(38,92,165);doc.setFontSize(16);doc.text(visual,246,top+15,{align:'center'});doc.setFontSize(8);doc.text(caption,246,top+23,{align:'center'});});
     doc.setTextColor(85,104,123);doc.setFontSize(7);
-    const terms='無料再制作はSIMYのHP管理をご契約いただく場合の提供案です。デザイン・文章・画像等の再利用・改変に必要な権利と許諾を確認でき、事前合意したページ・機能が対象です。外部サービス内部や追加機能は別途確認。ドメイン取得・更新・移管実費、月額保守料、AIサービス契約・利用料は別途。ドメインにより必要情報・承認手順は異なります。移管・無料再制作・ChatGPT連携は提供準備中です。';
+    const terms='無料再制作はSIMYのHP管理をご契約いただく場合の提供案です。デザイン・文章・画像等の再利用・改変に必要な権利と許諾を確認でき、事前合意したページ・機能が対象です。外部サービス内部や追加機能は別途確認。ドメイン取得・更新・移管実費、月額保守料、AIサービス契約・利用料は別途。ドメインにより必要情報・承認手順は異なり、登録会社の移管が不要な場合もあります。移管・無料再制作・ChatGPT連携は提供準備中です。';
     doc.text(doc.splitTextToSize(terms,265),16,160);
     const mail='mailto:sales@simy.one?subject='+encodeURIComponent('SIMYへのホームページ移管の相談：'+report.url)+'&body='+encodeURIComponent('診断ID：'+(report.diagnosisId||'')+'\n対象URL：'+report.url+'\n\n現在の管理会社：\n相談内容：');
     doc.setFillColor(19,43,76);doc.roundedRect(16,178,265,16,2,2,'F');doc.setTextColor(255,255,255);doc.setFontSize(13);doc.text('この診断結果を、SIMYに相談する',23,188);doc.setFontSize(10);doc.text('sales@simy.one',274,188,{align:'right'});doc.link(16,178,265,16,{url:mail});
