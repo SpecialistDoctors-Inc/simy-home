@@ -71,3 +71,25 @@
 #main .review-support .reviews-header{margin-bottom:30px}
 #main .review-support .reviews-map-kicker{letter-spacing:.04em}
 @media(max-width:600px){#main .review-support .reviews-section{padding:32px 16px}#main .review-support .reviews-map-text,#main .review-support .review-panel{padding:24px 20px}}
+/* Survey and paired MEO/GEO services share one readable grid. */
+#main .review-support .discovery-survey{display:grid;grid-template-columns:1fr 1fr;gap:24px 36px;background:#fff;border:1px solid #dbe7f5;border-radius:22px;padding:30px;margin:0 0 26px;align-items:center}
+#main .review-support .discovery-survey h3{font-size:clamp(20px,2.2vw,26px);line-height:1.55;margin:0 0 14px;letter-spacing:-.035em}
+#main .review-support .discovery-survey-copy>p:last-child{color:#586c82;font-size:14px;margin:0}
+#main .review-support .discovery-bars{list-style:none;padding:0;margin:0;display:grid;gap:14px}
+#main .review-support .discovery-bars li{display:grid;grid-template-columns:1fr auto;gap:5px 12px;color:#52677e;font-size:13px;align-items:baseline}
+#main .review-support .discovery-bars strong{font-size:26px;line-height:1.2;font-variant-numeric:tabular-nums;letter-spacing:-.035em;color:#52677e}
+#main .review-support .discovery-bars small{font-size:13px;margin-left:2px}
+#main .review-support .discovery-bars i{display:block;height:7px;grid-column:1/-1;background:linear-gradient(to right,#b5c3d4 var(--value),#f0f3f7 var(--value));border-radius:4px}
+#main .review-support .discovery-bars .is-google{color:#175faa;font-weight:700}
+#main .review-support .discovery-bars .is-google strong{color:#175faa}
+#main .review-support .discovery-bars .is-google i{background:linear-gradient(to right,#216bd9 var(--value),#f0f3f7 var(--value))}
+#main .review-support .discovery-survey-source{grid-column:1/-1;font-size:11px;color:#687b90;margin:0;padding-top:16px;border-top:1px solid #e3eaf3;line-height:1.8}
+#main .review-support a{text-underline-offset:3px}
+#main .review-support .discovery-services{grid-template-columns:repeat(2,minmax(0,1fr))}
+#main .review-support .discovery-services .review-panel{padding:28px}
+#main .review-support .discovery-services .geo-panel{background:#eef7f5;border-color:#cbe1db}
+#main .review-support .discovery-services ul{padding-left:19px;margin:0;display:grid;gap:12px;font-size:13px;color:#52677e;line-height:1.75}
+#main .review-support .discovery-services li::marker{color:#216bd9}
+#main .review-support .discovery-services .geo-panel li::marker{color:#188069}
+#main .review-support .reviews-foot a{white-space:normal}
+@media(max-width:700px){#main .review-support .discovery-survey,#main .review-support .discovery-services{grid-template-columns:1fr}#main .review-support .discovery-survey{padding:24px 20px;gap:24px}#main .review-support .discovery-services .review-panel{padding:24px 20px}}
