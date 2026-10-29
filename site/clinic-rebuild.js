@@ -5,11 +5,11 @@
  const editor=document.querySelector('#rebuild-editor'),openEditor=document.querySelector('#rebuild-editor-open'),closeEditor=document.querySelector('#rebuild-editor-close'),editForm=document.querySelector('#preview-edit-form'),editInput=document.querySelector('#preview-edit-message'),conversation=document.querySelector('#preview-conversation'),undo=document.querySelector('#preview-edit-undo'),reset=document.querySelector('#preview-edit-reset');
  let busy=false,objectUrl,currentHtml='',originalHtml='',history=[];
  const updatePreview=html=>{currentHtml=html;frame.srcdoc=html;if(objectUrl)URL.revokeObjectURL(objectUrl);objectUrl=URL.createObjectURL(new Blob([html],{type:'text/html;charset=utf-8'}));download.href=objectUrl;undo.disabled=!history.length;};
- const log=(text,kind='')=>{const p=document.createElement('p');p.textContent=text;if(kind)p.className=kind;conversation.append(p);p.scrollIntoView({block:'nearest'});};
+ const log=(text,kind='')=>{const p=document.createElement('p');p.textContent=text;if(kind)p.className=kind;conversation.append(p);conversation.scrollTop=conversation.scrollHeight;};
  const showEditor=()=>{if(!currentHtml)return;editor.showModal();document.body.classList.add('preview-editor-open');editInput.focus();};
  openEditor.addEventListener('click',showEditor);closeEditor.addEventListener('click',()=>editor.close());editor.addEventListener('close',()=>{document.body.classList.remove('preview-editor-open');openEditor.focus({preventScroll:true});});
  editForm.addEventListener('submit',event=>{event.preventDefault();if(!editForm.reportValidity()||!currentHtml)return;const message=editInput.value.trim();try{const changed=window.SimyPreviewEdit.apply(currentHtml,message);history.push(currentHtml);if(history.length>10)history.shift();updatePreview(changed.html);log(message,'preview-user-message');log(changed.summary);editInput.value='';}catch(error){log(error.message,'preview-edit-error');}editInput.focus();});
- undo.addEventListener('click',()=>{if(history.length){updatePreview(history.pop());log('ひとつ前の状態に戻しました。');}});reset.addEventListener('click',()=>{if(currentHtml!==originalHtml){history.push(currentHtml);updatePreview(originalHtml);log('最初のプレビューに戻しました。');}});
+ undo.addEventListener('click',()=>{if(history.length){updatePreview(history.pop());log('ひとつ前の状態に戻しました。');}});reset.addEventListener('click',()=>{if(currentHtml!==originalHtml){history.push(currentHtml);if(history.length>10)history.shift();updatePreview(originalHtml);log('最初のプレビューに戻しました。');}});
  document.addEventListener('click',event=>{const link=event.target.closest('[data-rebuild-url]');if(!link)return;event.preventDefault();input.value=link.dataset.rebuildUrl;document.querySelector('#rebuild').scrollIntoView({block:'start',behavior:'instant'});input.focus({preventScroll:true});});
  input.addEventListener('input',()=>input.setCustomValidity(''));
  form.addEventListener('submit',async event=>{
@@ -27,6 +27,6 @@
    const rows=[['生成日時',new Date(data.generatedAt||Date.now()).toLocaleString('ja-JP')],['HTML・CSS','ブラウザーの標準仕様で生成'],['JavaScriptライブラリ','0件。旧サイトのJavaScriptは引き継いでいません。'],['PHP・WordPressの実行','なし。静的HTMLとして生成しています。'],['元サイトのCSS参照',String(data.externalStylesheets??0)+'件。外部CSSの版・更新状況は未確認です。']];
    for(const [label,value]of rows){const tr=document.createElement('tr'),th=document.createElement('th'),td=document.createElement('td');th.scope='row';th.textContent=label;td.textContent=value;tr.append(th,td);body.append(tr);}table.append(body);versions.append(table);
    status.className='rebuild-status';status.textContent='プレビューができました。';result.hidden=false;result.scrollIntoView({block:'start',behavior:'instant'});showEditor();
-  }catch(error){status.className='rebuild-status is-error';status.textContent=error.name==='TimeoutError'?'時間内に取得できませんでした。もう一度お試しください。':error.message;}finally{busy=false;button.disabled=false;button.innerHTML='作ってみる <span aria-hidden="true">→</span>';}
+  }catch(error){status.className='rebuild-status is-error';status.textContent=error.name==='TimeoutError'?'時間内に取得できませんでした。もう一度お試しください。':error.name==='TypeError'?'接続できませんでした。時間をおいて、もう一度お試しください。':error.message;}finally{busy=false;button.disabled=false;button.innerHTML='作ってみる <span aria-hidden="true">→</span>';}
  });
 })();
