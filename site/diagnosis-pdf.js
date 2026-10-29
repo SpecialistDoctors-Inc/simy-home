@@ -69,7 +69,7 @@
     const flow=global.SimyInformationFlow?.model(report)||[];
     table('04 / ホームページと外部サービスのつながり', ['接続の起点', '外部サービス', '管理の重要度'], flow.map(g=>['閲覧者のブラウザー（医院HPを表示）',g.category+' / '+g.domain,global.SimyInformationFlow.managementCopy(g).label+'\n'+global.SimyInformationFlow.managementCopy(g).reason]), [65,90,110]);
     paragraph('矢印・経路は接続関係です。患者情報の送信や提供先内部の保存を確認したものではありません。',9);
-    table('Google Drive等の共有範囲', ['資料', '本文・公開範囲の確認'], (report.sharing?.items||[]).map((x,i)=>[(global.SimyInformationFlow?.sharingName(x)||x.title||'資料名を取得できませんでした')+'\n'+x.url,(global.SimyInformationFlow?.sharingCopy(x).reason||x.reason)+'\n確認日時：'+(x.checkedAt||'未実施')]), [85,180]);
+    table('Google Drive等の共有範囲', ['資料', '本文・公開範囲の確認'], (report.sharing?.items||[]).filter(x=>global.SimyInformationFlow?.sharingHasIssue(x)).map((x,i)=>[(global.SimyInformationFlow?.sharingName(x)||x.title||'資料名を取得できませんでした')+'\n'+x.url,(global.SimyInformationFlow?.sharingCopy(x).reason||x.reason)+'\n確認日時：'+(x.checkedAt||'未実施')]), [85,180]);
     paragraph('診断の範囲・制限', 13);
     paragraph('今回確認したこと：公開ページから、古い部品や見直しが必要な設定を確認しました。', 9);
     paragraph('まだ分からないこと：侵入・情報漏えいの有無、サーバー内部、電子カルテ・予約サービスの内部は確認していません。', 9);

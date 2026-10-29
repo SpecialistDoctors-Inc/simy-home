@@ -69,11 +69,13 @@ function sharingCopy(item){
  if(a.audience==='patient'&&a.concern==='none'&&content.status==='extracted')return {label:'確認範囲で秘匿情報なし',reason:'確認した範囲では、秘匿情報は見つかりませんでした。',action:''};
  return {label:'内容の確認が必要です',reason:partial+'公開用の案内資料と判断できませんでした。',action:''};
 }
+function sharingHasIssue(item){
+ const a=item.assessment;return item.status==='preview-observed'&&['extracted','partial'].includes(item.content?.status)&&a?.status==='assessed'&&a.scope==='extracted-text-only'&&(a.audience==='internal'||a.concern==='review');
+}
 function renderSharing(report,root,el){
  const section=el('section','','sharing-review');section.append(el('h3','Google Driveなどの公開範囲'));
- const items=report.sharing?.items||[];
- if(!report.sharing){section.append(el('p','この診断結果には共有リンクの閲覧確認がありません。'));root.append(section);return;}
- if(!items.length)section.append(el('p','確認した公開ページでは、検査対象のGoogle Drive・Docs直接リンクは見つかりませんでした。リンクのない内部共有は未検査です。'));
+ const items=(report.sharing?.items||[]).filter(sharingHasIssue);
+ if(!items.length)return;
  if(items.length){
  const wrap=el('div','','evaluation-scroll');const table=el('table','','evaluation-table sharing-table');const head=el('thead',''),header=el('tr','');
  for(const label of ['資料','判定内容']){const cell=el('th',label);cell.scope='col';header.append(cell);}head.append(header);table.append(head);
@@ -85,5 +87,5 @@ function renderSharing(report,root,el){
  }
  root.append(section);
 }
-global.SimyInformationFlow={model,render,renderPriority,sharingCopy,sharingName,managementCopy};
+global.SimyInformationFlow={model,render,renderPriority,sharingCopy,sharingName,sharingHasIssue,managementCopy};
 })(typeof window==='undefined'?globalThis:window);

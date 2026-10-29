@@ -234,10 +234,11 @@ function renderReport(report) {
   window.SimyInformationFlow?.render(report,results,element);
   reportDetails=element('section','','report-other-issues');
   reportDetails.append(element('h3','その他おすすめの改善点'));
-  if(!reviews.length)reportDetails.append(element('p','今回の確認範囲では、追加の改善点は特定できませんでした。'));
+
   if(reviews.length){const wrap=element('div','','evaluation-scroll');const table=element('table','','evaluation-table issue-table');const head=element('thead','');const hr=element('tr','');for(const label of ['項目','医院への影響']){const th=element('th',label);th.scope='col';hr.append(th);}head.append(hr);table.append(head);const body=element('tbody','');for(const f of reviews){const tr=element('tr','');const th=element('th',f.title);th.scope='row';const impact=element('td',f.summary);tr.append(th,impact);body.append(tr);}table.append(body);wrap.append(table);reportDetails.append(wrap);}
 
-  results.append(reportDetails,element('p','侵入・漏えいの有無、サーバー内部・外部サービス内部は、この診断では確認していません。','report-boundary'));
+  if(reviews.length)results.append(reportDetails);
+  results.append(element('p','侵入・漏えいの有無、サーバー内部・外部サービス内部は、この診断では確認していません。','report-boundary'));
   reportDetails=null;
   gateReport(report);
 }
@@ -380,6 +381,6 @@ diagnosisForm.addEventListener('submit', async event => {
 
 let reportPdfLoader;
 function loadReportPdf(){
-  if(!reportPdfLoader)reportPdfLoader=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='/diagnosis-pdf.js?v=5a2da98e6d3b';script.onload=resolve;script.onerror=()=>{script.remove();reportPdfLoader=null;reject(Error('PDF機能の読込に失敗しました'));};document.head.append(script);});
+  if(!reportPdfLoader)reportPdfLoader=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='/diagnosis-pdf.js?v=f88f3a6a8008';script.onload=resolve;script.onerror=()=>{script.remove();reportPdfLoader=null;reject(Error('PDF機能の読込に失敗しました'));};document.head.append(script);});
   return reportPdfLoader;
 }
