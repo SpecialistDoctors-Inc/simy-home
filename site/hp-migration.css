@@ -141,3 +141,5 @@
 #main .migration-guide .rights-request summary{cursor:pointer;font-size:14px;font-weight:750;color:#245b9f}
 #main .migration-guide .rights-request p{font-size:14px;line-height:1.9;margin:18px 0 0;user-select:text}
 @media(max-width:600px){#main .migration-guide .rights-guide{padding:40px 24px 48px}#main .migration-guide .rights-rows>div{grid-template-columns:1fr;gap:8px}#main .migration-guide .rights-request{padding:16px}}
+
+#main .migration-guide .step-head em{display:inline-block;max-width:100%;text-wrap:balance}

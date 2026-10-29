@@ -79,15 +79,15 @@
     doc.addPage();
     doc.setTextColor(38,92,165);doc.setFontSize(10);doc.text('診断の、その先へ。',16,29);
     doc.setTextColor(19,43,76);doc.setFontSize(24);doc.text('今のホームページを、SIMYへ。',16,42);
-    doc.setFontSize(10);doc.text('URLも、見慣れたデザインも。医院は情報の受け取りと内容の確認。移管の準備から公開までSIMYが進めます。',16,53);
+    doc.setFontSize(10);doc.text('URLも、見慣れたデザインも。医院には情報の受け取りと内容の確認をお願いします。移管の準備から公開までSIMYが進めます。',16,53);
     const steps=[
-     ['01','今の管理会社に、移管情報を依頼。','制作会社・管理会社、またはドメイン登録会社から、HTML・画像・管理情報を受け取ります。ドメイン移管が必要な場合は「AuthCode（オースコード）」も依頼します。','何を頼めばよいかは、SIMYがご案内します。','AuthCode','HTML・画像・管理情報'],
-     ['02','今の見た目を、最新の技術で作り直す。','既存データを引き継ぐか、同じ見た目・内容を最新技術で無料再制作。公開前に、先生に画面をご確認いただきます。','権利と対象範囲を確認してから着手します。','作り直し 0円','見た目・内容を引き継ぐ'],
-     ['03','同じURLで公開。ChatGPTへ接続。','ドメインの設定・公開先を切り替え。予約・フォーム・メールへの影響を確認し、先生のChatGPTを更新環境へ接続します。','「休診日を載せて」と伝え、プレビューを確認して公開する運用へ。','ChatGPT','確認して、公開。']
+     ['01','今の管理会社に、移管情報をご依頼ください。','制作会社・管理会社、またはドメイン登録会社から、HTML・画像・管理情報を受け取ります。ドメイン移管が必要な場合は「AuthCode（オースコード）」も依頼します。','何を頼めばよいかは、SIMYがご案内します。','AuthCode','HTML・画像・管理情報'],
+     ['02','今の見た目を、最新の技術で作り直します。','既存データを引き継ぐか、同じ見た目・内容を最新技術で無料で再制作します。公開前に、先生に画面をご確認いただきます。','権利と対象範囲を確認してから着手します。','作り直し 0円','見た目・内容を引き継ぐ'],
+     ['03','同じURLで公開し、ChatGPTへ接続します。','ドメインの設定・公開先を切り替えます。予約・フォーム・メールへの影響を確認し、先生のChatGPTを更新環境へ接続します。','「休診日を載せて」と伝え、プレビューを確認して公開できます。','ChatGPT','ご確認後に公開できます。']
     ];
     steps.forEach(([number,title,copy,note,visual,caption],i)=>{const top=61+i*31;doc.setDrawColor(223,231,241);doc.setFillColor(255,255,255);doc.roundedRect(16,top,265,30,3,3,'FD');doc.setTextColor(33,107,217);doc.setFontSize(18);doc.text(number,21,top+12);doc.setTextColor(19,43,76);doc.setFontSize(13);doc.text(title,37,top+9);doc.setFontSize(8.8);doc.text(doc.splitTextToSize(copy,165),37,top+16);doc.setFontSize(7.5);doc.setTextColor(85,104,123);doc.text(note,37,top+27);doc.setFillColor(239,245,250);doc.roundedRect(211,top+4,70,24,2,2,'F');doc.setTextColor(38,92,165);doc.setFontSize(16);doc.text(visual,246,top+15,{align:'center'});doc.setFontSize(8);doc.text(caption,246,top+23,{align:'center'});});
     doc.setTextColor(85,104,123);doc.setFontSize(7);
-    const terms='無料再制作はSIMYのHP管理をご契約いただく場合に提供します。デザイン・文章・画像等の再利用・改変に必要な権利と許諾を確認でき、事前合意したページ・機能が対象です。外部サービス内部や追加機能は別途確認。ドメイン取得・更新・移管実費、月額保守料、AIサービス契約・利用料は別途。ドメインにより必要情報・承認手順は異なり、登録会社の移管が不要な場合もあります。';
+    const terms='無料再制作はSIMYのHP管理をご契約いただく場合に提供します。デザイン・文章・画像等の再利用・改変に必要な権利と許諾を確認でき、事前合意したページ・機能が対象です。外部サービス内部や追加機能は別途確認します。ドメイン取得・更新・移管実費、月額保守料、AIサービス契約・利用料は別途です。ドメインにより必要情報・承認手順は異なり、登録会社の移管が不要な場合もあります。';
     doc.text(doc.splitTextToSize(terms,265),16,160);
     const mail='mailto:sales@simy.one?subject='+encodeURIComponent('SIMYへのホームページ移管の相談：'+report.url)+'&body='+encodeURIComponent('診断ID：'+(report.diagnosisId||'')+'\n対象URL：'+report.url+'\n\n現在の管理会社：\n相談内容：');
     doc.setFillColor(19,43,76);doc.roundedRect(16,178,265,16,2,2,'F');doc.setTextColor(255,255,255);doc.setFontSize(13);doc.text('この診断結果を、SIMYに相談する',23,188);doc.setFontSize(10);doc.text('sales@simy.one',274,188,{align:'right'});doc.link(16,178,265,16,{url:mail});
@@ -100,7 +100,7 @@
       ['許可を得られない素材がある場合','そのデザイン・文章・写真などは使用せず、新しく制作・差し替えます。']
     ];
     rights.forEach(([title,copy],i)=>{const top=52+i*23;doc.setFillColor(240,245,252);doc.roundedRect(16,top,265,21,2,2,'F');doc.setTextColor(19,43,76);doc.setFontSize(11);doc.text(title,22,top+8);doc.setFontSize(9);doc.text(doc.splitTextToSize(copy,250),22,top+14);});
-    doc.setTextColor(85,104,123);doc.setFontSize(8);doc.text(doc.splitTextToSize('同じ見た目・内容での再制作は、必要な権利・許諾を確認できた範囲で対応します。写真素材・フォント・テンプレートは各利用条件も確認。許諾は対象と利用範囲を明確にし、書面やメールで残します。',265),16,126);
+    doc.setTextColor(85,104,123);doc.setFontSize(8);doc.text(doc.splitTextToSize('同じ見た目・内容での再制作は、必要な権利・許諾を確認できた範囲で対応します。写真素材・フォント・テンプレートは各利用条件も確認します。許諾は対象と利用範囲を明確にし、書面やメールで残します。',265),16,126);
     doc.setTextColor(19,43,76);doc.setFontSize(12);doc.text('今の制作会社への依頼文',16,143);
     doc.setDrawColor(215,227,241);doc.roundedRect(16,149,265,23,2,2,'S');doc.setFontSize(9);doc.text(doc.splitTextToSize('当院ホームページの管理をSIMYへ移管したいと考えています。現在の契約上、デザイン・文章・画像・プログラムについて、SIMYへのデータ提供、別サーバーへの移設、再制作・改修および継続公開が可能かご確認ください。別途許諾や費用が必要な場合、また移管できない素材がある場合は、その対象と条件をお知らせください。',253),22,156);
     doc.setFillColor(19,43,76);doc.roundedRect(16,178,265,16,2,2,'F');doc.setTextColor(255,255,255);doc.setFontSize(13);doc.text('移管の準備も、SIMYに相談できます',23,188);doc.setFontSize(10);doc.text('sales@simy.one',274,188,{align:'right'});doc.link(16,178,265,16,{url:mail});
