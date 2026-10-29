@@ -588,7 +588,8 @@ resource "aws_iam_role_policy_attachment" "github_actions_site_deploy" {
 }
 
 # Baseline browser protection. CSP initially constrains plugins, embedding and base
-# URLs and limits script origins to the site and its existing Google analytics.
+# URLs and limits script origins to the site, Google analytics and the opt-in
+# Cloudflare Turnstile experience.
 # Inline scripts remain for legacy pages; this is not a strict nonce-based CSP.
 resource "aws_cloudfront_response_headers_policy" "site_security" {
   name = "${local.bucket_name}-security"
@@ -605,7 +606,7 @@ resource "aws_cloudfront_response_headers_policy" "site_security" {
       override                   = true
     }
     content_security_policy {
-      content_security_policy = "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; object-src 'none'; base-uri 'self'; frame-ancestors 'self'"
+      content_security_policy = "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://challenges.cloudflare.com; object-src 'none'; base-uri 'self'; frame-ancestors 'self'"
       override                = true
     }
   }

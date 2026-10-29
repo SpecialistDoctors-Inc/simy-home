@@ -1,0 +1,23 @@
+#main .cloudflare-experience{background:#f3f7f7;border-top:1px solid #dce5e6;border-bottom:1px solid #dce5e6;scroll-margin-top:100px}
+#main .cloudflare-experience .cf-demo-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,.85fr);gap:48px;align-items:center}
+#main .cloudflare-experience .cf-demo-label{display:inline-block;font-size:13px;font-weight:800;letter-spacing:.06em;color:#336c80;margin:0 0 16px}
+#main .cloudflare-experience h2{font-size:clamp(27px,3.2vw,40px);line-height:1.6;color:#152737;margin:0 0 18px;text-wrap:balance}
+#main .cloudflare-experience .cf-demo-lead{color:#4e6372;font-size:16px;line-height:1.95;margin:0 0 24px}
+#main .cloudflare-experience .cf-demo-path{display:flex;align-items:center;gap:10px;padding:0;list-style:none;font-size:13px;font-weight:700;color:#425d6f;margin:0}
+#main .cloudflare-experience .cf-demo-path li{display:flex;align-items:center;gap:10px}
+#main .cloudflare-experience .cf-demo-path li+li:before{content:'→';color:#8b9ba6}
+#main .cloudflare-experience .cf-demo-path strong{background:#e1eeee;color:#1e6378;padding:8px 10px;border-radius:6px}
+#main .cloudflare-experience .cf-demo-card{min-width:0;background:#fff;border:1px solid #d7e2e5;border-radius:16px;padding:28px;box-shadow:0 8px 28px #263f4d08}
+#main .cloudflare-experience .cf-demo-card h3{font-size:20px;color:#1c3546;margin:0 0 8px}
+#main .cloudflare-experience .cf-demo-card>p{font-size:14px;color:#536975;line-height:1.85;margin:0 0 18px}
+#main .cloudflare-experience .cf-demo-widget{width:100%;min-height:65px;margin:18px 0 0}
+#main .cloudflare-experience .cf-demo-status{font-size:14px;color:#466171;line-height:1.8;min-height:1.8em;margin:16px 0 0}
+#main .cloudflare-experience .cf-demo-result{margin-top:20px;padding-top:20px;border-top:1px solid #dce8e5;color:#17694e}
+#main .cloudflare-experience .cf-demo-result strong{display:block;font-size:17px;margin-bottom:8px;color:#17694e}
+#main .cloudflare-experience .cf-demo-result p{font-size:14px;line-height:1.85;margin:0 0 12px;color:#466171}
+#main .cloudflare-experience .cf-demo-result a{font-size:14px;font-weight:700;color:#245eb0;text-underline-offset:4px}
+#main .cloudflare-experience .cf-demo-note{font-size:12px;line-height:1.85;color:#6b7f89;margin:22px 0 0}
+#main .cloudflare-experience .button{font-size:15px;min-height:48px}
+#main .cloudflare-experience [hidden]{display:none!important}
+@media(max-width:800px){#main .cloudflare-experience .cf-demo-grid{grid-template-columns:1fr;gap:28px}#main .cloudflare-experience .cf-demo-card{padding:24px}#main .cloudflare-experience .cf-demo-path{flex-wrap:wrap;font-size:12px}#main .cloudflare-experience .cf-demo-path strong{padding:7px}#main .cloudflare-experience .cf-demo-card .button{width:100%}}
+@media(max-width:380px){#main .cloudflare-experience .cf-demo-card{padding:18px}}
