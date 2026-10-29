@@ -3,9 +3,29 @@
   const header = document.querySelector('.simy-header');
   const nav = document.querySelector('#main .care-nav');
   if (!nav) return;
+  const links = [...nav.querySelectorAll('a[href^="#"]')];
+  function updateActive() {
+    const edge = nav.getBoundingClientRect().bottom + 72;
+    let current = links[0];
+    for (const link of links) {
+      const target = document.getElementById(link.hash.slice(1));
+      if (target && target.getBoundingClientRect().top <= edge) current = link;
+    }
+    for (const link of links) {
+      if (link === current) link.setAttribute('aria-current','location');
+      else link.removeAttribute('aria-current');
+    }
+  }
+  let queued = false;
+  window.addEventListener('scroll', () => {
+    if (queued) return;
+    queued = true;
+    requestAnimationFrame(() => { queued = false; updateActive(); });
+  }, {passive:true});
   const measure = () => {
     document.documentElement.style.setProperty('--clinic-header-height', `${header?.getBoundingClientRect().height || 0}px`);
     document.documentElement.style.setProperty('--clinic-nav-height', `${nav.getBoundingClientRect().height}px`);
+    updateActive();
   };
   measure();
   // Styles, fonts and images can change layout after the browser first resolves a fragment.

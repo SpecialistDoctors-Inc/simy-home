@@ -58,7 +58,7 @@
 @media(max-width:700px){#main .migration-guide .migration-story{padding:0 16px 28px}#main .migration-story a{border-radius:10px}}
 
 /* Section links should land immediately, even on a long report. */
-html{scroll-behavior:auto}
+html:root{scroll-behavior:auto;scroll-padding-top:0}
 #main .offer-last .button{background:#2557b7;color:#fff}
 #main .rebuild-section{padding:40px 28px;background:#edf4ff;border-block:1px solid #ccdbef}
 #main .rebuild-section h2{font-size:clamp(25px,3vw,34px);margin-bottom:12px}
@@ -106,3 +106,38 @@ html{scroll-behavior:auto}
 #main #rebuild-versions th,#main #rebuild-versions td{text-align:left;padding:12px;border:1px solid #cfdaea;vertical-align:top}
 #main #rebuild-versions thead{background:#16385d;color:#fff}
 @media(max-width:760px){#main .migration-story-grid{grid-template-columns:minmax(0,1fr);padding:20px 16px}#main .migration-chapter{padding:20px 16px}#main #inline-diagnosis-form .url-entry{grid-template-columns:minmax(0,1fr)}}
+
+/* A shorter reading path: compare plans together, then explain the optional growth support. */
+#main .care-nav .care-nav-links a[aria-current="location"]{color:#205ebc;text-decoration:underline;text-underline-offset:7px;text-decoration-thickness:2px}
+#main #diagnosis .button-primary{background:#2865c8;color:#fff}
+#main #diagnosis .entry-benefits{font-size:13px;line-height:1.6}
+#main .migration-guide .rights-guide{padding:28px;background:#f7f9fc;border-block:1px solid #dce5ef}
+#main .migration-guide .rights-guide h2{font-size:25px;margin:0 0 20px}
+#main .migration-guide .rights-rows>div{padding:12px 0}
+#main .migration-guide .rights-rows h3{font-size:17px}
+#main .migration-guide .rights-rows p,#main .migration-guide .rights-note{font-size:15px;line-height:1.8}
+#main .migration-guide .rights-eyebrow{margin-bottom:8px}
+#main .plan-enquiry{display:inline-block;color:#205ebc;font-size:14px;font-weight:750;text-decoration:underline;text-underline-offset:4px;padding:8px 0}
+#main .plan-comparison tfoot>*{background:#fff}
+#main .plan-comparison tfoot th{font-size:14px;text-align:left}
+#main .plan-comparison tfoot td{border-bottom:0}
+#main .plan-comparison th,#main .plan-comparison td{padding-top:12px;padding-bottom:12px}
+#main .offer-compare{padding-top:28px;padding-bottom:28px}
+#main .offer-compare h2{margin-bottom:22px}
+#main .simple-compare th,#main .simple-compare td{padding-top:12px;padding-bottom:12px}
+#main .review-support{margin-top:0}
+#main .review-support .reviews-section{padding:40px 28px}
+#main .review-support .reviews-header{margin-bottom:28px}
+#main .review-support .review-panel{padding:24px}
+#main .review-support .review-panel li{font-size:16px;line-height:1.8}
+#main .offer-faq details{margin:8px 0;padding:12px 18px}
+#main .offer-faq summary{font-size:17px;line-height:1.7}
+#main .report-email>p{font-size:16px;font-weight:400;margin-bottom:20px}
+#main .report-email .report-email-note{font-size:13px;font-weight:400}
+@media(max-width:700px){
+ #main .migration-guide .rights-guide{padding:24px 16px}
+ #main .migration-guide .rights-guide h2{font-size:23px}
+ #main .review-support .reviews-section{padding:32px 16px}
+ #main .review-support .review-panel{padding:22px 20px}
+ #main .offer-faq summary{font-size:16px}
+}
