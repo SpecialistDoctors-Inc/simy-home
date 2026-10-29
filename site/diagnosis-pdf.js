@@ -62,7 +62,7 @@
     const flow=global.SimyInformationFlow?.model(report)||[];
     const sharing=(report.sharing?.items||[]).filter(x=>global.SimyInformationFlow?.sharingHasIssue(x));
     const components=versions.map(row=>({name:row[0],current:row[1],latest:row[2],assessment:row[3]}));
-    const mail='mailto:sales@simy.one?subject='+encodeURIComponent('ホームページ診断の相談：'+(registration.clinicName||report.url))+'&body='+encodeURIComponent('対象URL：'+report.url+'\n診断ID：'+(report.diagnosisId||'')+'\n\n相談内容：');
+    const mail='mailto:sales@simy.one?subject='+encodeURIComponent('ホームページ診断の相談：'+(registration.clinicName||report.url))+'&body='+encodeURIComponent('SIMY ご担当者様\r\n\r\n医療機関名：'+(registration.clinicName||'')+'\r\nご担当者名：'+(registration.contactName||'')+'\r\nホームページURL：'+report.url+'\r\nご用件：診断結果について\r\n\r\nご相談内容：\r\n\r\n診断ID：'+(report.diagnosisId||''));
     function contact(){ensure(28);box(left,y,width,24,C.mint);write('この診断結果を、SIMYに相談する',left+6,y+9,12,width-12);write('お問い合わせ：sales@simy.one',left+6,y+17,10,width-12,C.blue);doc.link(left,y,width,24,{url:mail});y+=30;}
     page('SUMMARY');
     const clinic=registration.clinicName||new URL(report.url).hostname;
