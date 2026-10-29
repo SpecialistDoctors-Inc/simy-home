@@ -20,10 +20,10 @@
 #main .migration-guide .rights-guide{padding-top:36px;padding-bottom:36px}
 #main .migration-guide .rights-rows>div{padding-top:16px;padding-bottom:16px}
 @media(min-width:1000px){
- #main .migration-guide .steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;align-items:stretch}
+ #main .migration-guide .steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:18px;row-gap:0;align-items:stretch}
  #main .migration-guide .connector{display:none}
- #main .migration-guide .step{display:flex;flex-direction:column;min-width:0}
- #main .migration-guide .step-info{padding:24px;flex:1}
+ #main .migration-guide .step{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:subgrid;grid-row:span 2;row-gap:0;min-width:0}
+ #main .migration-guide .step-info{padding:24px}
  #main .migration-guide .step-head{font-size:22px}
  #main .migration-guide .visual{border-left:0;border-top:1px solid #e9eef6;padding:20px;min-height:300px}
  #main .migration-guide .transfer{gap:12px}
