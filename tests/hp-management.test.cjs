@@ -21,3 +21,13 @@ test('Clinic service migration preserves the actual form, manga and script',()=>
  assert.match(page,/href="\/hp-management\/"/);
  assert.match(fs.readFileSync('site/for/clinic/index.html','utf8'),/location.search\+location.hash/);
 });
+test('ISMS mark loads before scrolling and stays within the web image budget',()=>{
+ const page=fs.readFileSync('site/hp-management/clinic/index.html','utf8');
+ const section=page.match(/<section[^>]*id="providers"[\s\S]*?<\/section>/)[0];
+ const img=section.match(/<img\b[^>]*>/)[0];
+ assert.match(img,/loading="eager"/);
+ assert.match(img,/decoding="async"/);
+ assert.match(img,/width="640" height="403"/);
+ const src=img.match(/src="([^"]+)"/)[1];
+ assert.ok(fs.statSync('site'+src).size<50000,'Certification mark must stay under 50 KB');
+});
