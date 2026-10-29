@@ -30,3 +30,10 @@ body{background:#f7f9fc;color:#17253b}
 #main .plan-comparison .notes{color:#58697f;font-size:12px;line-height:1.8;margin:17px 4px 0}#main .plan-comparison .notes p{margin:4px 0}
 #main .plan-comparison .scroll-tip{display:none;color:#6a7b92;font-size:12px;text-align:right;margin:0 0 8px}
 @media(max-width:700px){#main .pad{padding:32px 16px}#main .care-nav{padding:14px 16px}#main .diagnosis-state{margin:16px 0;padding:16px}#main .plan-comparison .scroll-tip{display:block}#main .plan-comparison th,#main .plan-comparison td{padding:12px 15px}#main .plan-comparison tbody th{font-size:14px}#main .evaluation-table th,#main .evaluation-table td,#main .simple-compare th,#main .simple-compare td{padding:14px 12px}#main .simple-compare table{min-width:620px}}
+
+/* Keep the advisor within the shared pricing-table column geometry. */
+#main .plan-comparison .advisor-total{display:flex;align-items:center;gap:16px;min-width:0}
+#main .plan-comparison .advisor-total>img{display:block;flex:0 0 96px;width:96px;height:96px;max-width:none;object-fit:cover;border-radius:50%;border:3px solid #fff;box-sizing:border-box}
+#main .plan-comparison .advisor-total>span{min-width:0}
+#main .plan-comparison .advisor-total .advisor-promise{color:#125b68;font-weight:700;margin:6px 0}
+@media(max-width:700px){#main .plan-comparison .advisor-total{flex-direction:column;align-items:flex-start;gap:10px}#main .plan-comparison .advisor-total>img{width:72px;height:72px;flex-basis:72px}}
