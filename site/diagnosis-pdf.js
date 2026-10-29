@@ -91,6 +91,19 @@
     doc.text(doc.splitTextToSize(terms,265),16,160);
     const mail='mailto:sales@simy.one?subject='+encodeURIComponent('SIMYへのホームページ移管の相談：'+report.url)+'&body='+encodeURIComponent('診断ID：'+(report.diagnosisId||'')+'\n対象URL：'+report.url+'\n\n現在の管理会社：\n相談内容：');
     doc.setFillColor(19,43,76);doc.roundedRect(16,178,265,16,2,2,'F');doc.setTextColor(255,255,255);doc.setFontSize(13);doc.text('この診断結果を、SIMYに相談する',23,188);doc.setFontSize(10);doc.text('sales@simy.one',274,188,{align:'right'});doc.link(16,178,265,16,{url:mail});
+    doc.addPage();
+    doc.setTextColor(38,92,165);doc.setFontSize(10);doc.text('移管前の権利確認',16,29);
+    doc.setTextColor(19,43,76);doc.setFontSize(22);doc.text('権利の確認から、SIMYがお手伝いします。',16,42);
+    const rights=[
+      ['医院が権利をお持ちなら','契約上、利用できる範囲を確認して引き継ぎます。'],
+      ['制作会社などが権利を持つ場合','SIMYへのデータ引き渡し・移設・作り替え・公開・今後の更新について、権利者の許可を得て進めます。必要な確認事項や依頼文はSIMYがご案内します。'],
+      ['許可を得られない素材がある場合','そのデザイン・文章・写真などは使用せず、新しく制作・差し替えます。']
+    ];
+    rights.forEach(([title,copy],i)=>{const top=52+i*23;doc.setFillColor(240,245,252);doc.roundedRect(16,top,265,21,2,2,'F');doc.setTextColor(19,43,76);doc.setFontSize(11);doc.text(title,22,top+8);doc.setFontSize(9);doc.text(doc.splitTextToSize(copy,250),22,top+14);});
+    doc.setTextColor(85,104,123);doc.setFontSize(8);doc.text(doc.splitTextToSize('同じ見た目・内容での再制作は、必要な権利・許諾を確認できた範囲で対応します。写真素材・フォント・テンプレートは各利用条件も確認。許諾は対象と利用範囲を明確にし、書面やメールで残します。',265),16,126);
+    doc.setTextColor(19,43,76);doc.setFontSize(12);doc.text('今の制作会社への依頼文',16,143);
+    doc.setDrawColor(215,227,241);doc.roundedRect(16,149,265,23,2,2,'S');doc.setFontSize(9);doc.text(doc.splitTextToSize('当院ホームページの管理をSIMYへ移管したいと考えています。現在の契約上、デザイン・文章・画像・プログラムについて、SIMYへのデータ提供、別サーバーへの移設、再制作・改修および継続公開が可能かご確認ください。別途許諾や費用が必要な場合、また移管できない素材がある場合は、その対象と条件をお知らせください。',253),22,156);
+    doc.setFillColor(19,43,76);doc.roundedRect(16,178,265,16,2,2,'F');doc.setTextColor(255,255,255);doc.setFontSize(13);doc.text('移管の準備も、SIMYに相談できます',23,188);doc.setFontSize(10);doc.text('sales@simy.one',274,188,{align:'right'});doc.link(16,178,265,16,{url:mail});
     const count = doc.getNumberOfPages();
     for (let i = 1; i <= count; i++) { doc.setPage(i); doc.setFont('ReportJP', 'normal'); doc.setTextColor(19, 43, 76); doc.setFontSize(10); if(logo)doc.addImage(logo,'PNG',16,7,8,8);doc.text('SIMY HP管理', logo?27:16, 14); doc.setFontSize(9); doc.text('お問い合わせ：sales@simy.one', 281, 14, {align: 'right'}); doc.link(226, 9, 55, 6, {url: 'mailto:sales@simy.one'}); doc.setDrawColor(215, 224, 235); doc.line(16, 18, 281, 18); doc.setFontSize(8); doc.text('診断結果のご相談：sales@simy.one', 16, 201); doc.link(16,197,100,6,{url:'mailto:sales@simy.one'}); doc.text('公開情報の診断記録・確認日時点', 158, 201); doc.text(i + ' / ' + count, 281, 201, {align: 'right'}); }
     return doc;

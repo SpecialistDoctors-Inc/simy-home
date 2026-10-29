@@ -128,3 +128,16 @@
 #main .migration-guide{scroll-margin-top:80px}#main .migration-guide .hero-inner{padding-top:68px;padding-bottom:68px}#main .migration-guide .migration-headline{font-size:clamp(32px,4.2vw,52px);letter-spacing:-.055em;line-height:1.45;margin:0 0 27px;font-weight:800}#main .migration-guide .section{padding-top:64px;padding-bottom:64px}#main .migration-guide .section-intro{margin-bottom:34px}.report-migration-link{display:inline-block;margin:24px 0;color:#216bd9;font-weight:650;text-underline-offset:5px}#main .care-nav{flex-wrap:wrap}
 /* Keep the reference hero independent of the diagnosis form's grid. */
 #main .migration-guide .hero{display:block;padding:0;gap:0}
+
+#main .migration-guide .rights-guide{max-width:1050px;margin:0 auto;padding:56px 28px 64px}
+#main .migration-guide .rights-eyebrow{color:#3268ac;font-size:13px;font-weight:750;margin:0 0 12px}
+#main .migration-guide .rights-guide h2{font-size:clamp(25px,3vw,34px);line-height:1.55;margin:0 0 28px;letter-spacing:-.035em}
+#main .migration-guide .rights-rows{border-top:1px solid #d7e3f1}
+#main .migration-guide .rights-rows>div{display:grid;grid-template-columns:245px 1fr;gap:28px;padding:22px 0;border-bottom:1px solid #d7e3f1}
+#main .migration-guide .rights-rows h3{font-size:16px;line-height:1.7;margin:0;color:#193b67}
+#main .migration-guide .rights-rows p{font-size:14px;line-height:1.9;margin:0}
+#main .migration-guide .rights-note{font-size:12px;line-height:1.9;color:#617188;margin:20px 0}
+#main .migration-guide .rights-request{background:#f0f5fc;border:1px solid #d7e3f1;border-radius:12px;padding:18px 22px}
+#main .migration-guide .rights-request summary{cursor:pointer;font-size:14px;font-weight:750;color:#245b9f}
+#main .migration-guide .rights-request p{font-size:14px;line-height:1.9;margin:18px 0 0;user-select:text}
+@media(max-width:600px){#main .migration-guide .rights-guide{padding:40px 24px 48px}#main .migration-guide .rights-rows>div{grid-template-columns:1fr;gap:8px}#main .migration-guide .rights-request{padding:16px}}
