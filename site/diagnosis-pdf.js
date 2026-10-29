@@ -75,12 +75,19 @@
     paragraph('診断の範囲・制限', 13);
     paragraph('今回確認したこと：公開ページから、古い部品や見直しが必要な設定を確認しました。', 9);
     paragraph('まだ分からないこと：侵入・情報漏えいの有無、サーバー内部、電子カルテ・予約サービスの内部は確認していません。', 9);
-    if(y>140){doc.addPage();y=27;}
-    paragraph('この診断結果について、SIMYにご相談ください。', 16);
-    paragraph('古い部品の更新・セキュリティ設定・ホームページの保守をまとめてご相談いただけます。', 11);
-    paragraph('お問い合わせ：sales@simy.one', 15);
-    doc.link(16,y-12,160,12,{url:'mailto:sales@simy.one?subject='+encodeURIComponent('HP診断結果の相談：'+report.url)+'&body='+encodeURIComponent('診断ID：'+(report.diagnosisId||'')+'\n対象URL：'+report.url+'\n\n相談内容：')});
-    paragraph('メールに、このPDFを添付してお送りください。', 10);
+    // A deliberate closing page: decision support, then one clear contact action.
+    doc.addPage();y=27;
+    const updateCount=versions.length,settingCount=(report.findings||[]).filter(f=>f.state==='review').length;
+    doc.setTextColor(38,92,165);doc.setFontSize(11);doc.text('診断の次に、決めること。',16,33);
+    doc.setTextColor(19,43,76);doc.setFontSize(24);doc.text('どこから直すか。誰に任せるか。',16,49);
+    doc.setFontSize(11);doc.text('SIMYと、優先順位・対応範囲・費用を整理しませんか。',16,62);
+    const blocks=[['更新リスクの候補',updateCount+'件','検出した旧版・既知の問題など'],['設定の改善候補',settingCount+'件','公開情報で見直しが必要とされた設定']];
+    blocks.forEach(([label,value,note],i)=>{const x=16+i*136;doc.setFillColor(239,245,253);doc.roundedRect(x,73,129,28,3,3,'F');doc.setTextColor(65,85,112);doc.setFontSize(10);doc.text(label,x+6,82);doc.setTextColor(19,43,76);doc.setFontSize(21);doc.text(value,x+99,85,{align:'right'});doc.setFontSize(8);doc.text(note,x+6,94);});
+    const steps=[['01','このPDFを送る','専門用語で説明する必要はありません。'],['02','優先順位を整理','対象と設定を確認し、対応範囲を整理。'],['03','任せる範囲を決める','対応内容と費用をご案内します。']];
+    steps.forEach(([number,label,note],i)=>{const x=16+i*91;doc.setTextColor(38,92,165);doc.setFontSize(10);doc.text(number,x,116);doc.setTextColor(19,43,76);doc.setFontSize(13);doc.text(label,x,126);doc.setFontSize(9);doc.text(doc.splitTextToSize(note,81),x,136);});
+    const mail='mailto:sales@simy.one?subject='+encodeURIComponent('HP診断結果の相談：'+report.url)+'&body='+encodeURIComponent('診断ID：'+(report.diagnosisId||'')+'\n対象URL：'+report.url+'\n\n相談内容：');
+    doc.setFillColor(19,43,76);doc.roundedRect(16,151,265,32,3,3,'F');doc.setTextColor(255,255,255);doc.setFontSize(16);doc.text('この診断結果を、SIMYに相談する',24,164);doc.setFontSize(11);doc.text('sales@simy.one',24,175);doc.setFontSize(9);doc.text('クリックしてメールを作成',273,175,{align:'right'});doc.link(16,151,265,32,{url:mail});
+    doc.setTextColor(65,85,112);doc.setFontSize(9);doc.text('メールにこのPDFを添付してください。ご契約前に、対応範囲と費用をご案内します。',16,192);
     const count = doc.getNumberOfPages();
     for (let i = 1; i <= count; i++) { doc.setPage(i); doc.setFont('ReportJP', 'normal'); doc.setTextColor(19, 43, 76); doc.setFontSize(10); if(logo)doc.addImage(logo,'PNG',16,7,8,8);doc.text('SIMY HP管理', logo?27:16, 14); doc.setFontSize(9); doc.text('お問い合わせ：sales@simy.one', 281, 14, {align: 'right'}); doc.link(226, 9, 55, 6, {url: 'mailto:sales@simy.one'}); doc.setDrawColor(215, 224, 235); doc.line(16, 18, 281, 18); doc.setFontSize(8); doc.text('診断結果のご相談：sales@simy.one', 16, 201); doc.link(16,197,100,6,{url:'mailto:sales@simy.one'}); doc.text('公開情報の診断記録・確認日時点', 158, 201); doc.text(i + ' / ' + count, 281, 201, {align: 'right'}); }
     return doc;
