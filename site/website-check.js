@@ -348,7 +348,7 @@ function normalizeDiagnosisUrl(input) {
   const value=input.trim();let url;
   try{url=new URL(/^[a-z][a-z\d+.-]*:/i.test(value)?value:'https://'+value);}catch{throw Error('ホームページのURLを入力してください。');}
   if(!['https:','http:'].includes(url.protocol)||url.username||url.password||url.port||!url.hostname.includes('.')||/\s/.test(value))throw Error('認証情報を含まない、http:// または https:// の公開URLを入力してください。');
-  const tracking=/^(?:utm_.+|gclid|dclid|gbraid|wbraid|gad_source|gad_campaignid|gclsrc|fbclid|msclkid|yclid|twclid|ttclid|srsltid|mc_cid|mc_eid|campaignid|adgroupid|creative|matchtype|network|device|keyword)$/i;
+  const tracking=/^(?:utm_.+|gclid|dclid|gbraid|wbraid|gad_source|gad_campaignid|gclsrc|rwg_token|fbclid|msclkid|yclid|twclid|ttclid|srsltid|mc_cid|mc_eid|campaignid|adgroupid|creative|matchtype|network|device|keyword)$/i;
   for(const key of [...url.searchParams.keys()])if(tracking.test(key))url.searchParams.delete(key);
   url.hash='';
   if(url.search)throw Error('広告用の追跡情報は自動で除けます。このURLにはページ指定などの情報もあるため、サイトのトップページURLを入力してください。');
