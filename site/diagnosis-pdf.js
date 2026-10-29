@@ -11,7 +11,9 @@
       if (!response.ok) throw Error('日本語フォントを読み込めませんでした');
       const bytes = new Uint8Array(await response.arrayBuffer());
       let binary = ''; for (let i = 0; i < bytes.length; i += 32768) binary += String.fromCharCode(...bytes.subarray(i, i + 32768));
-      return btoa(binary);
+      const icon=await fetch('/simy-icon-56.png');if(!icon.ok)throw Error('SIMYアイコンを読み込めませんでした');
+      const iconBytes=new Uint8Array(await icon.arrayBuffer());let iconBinary='';for(const value of iconBytes)iconBinary+=String.fromCharCode(value);
+      return {font:btoa(binary),logo:btoa(iconBinary)};
     })().catch(error => { dependencies = null; throw error; });
     return dependencies;
   }
@@ -27,7 +29,7 @@
     for (const x of report.integrations || []) { const key = x.kind + '|' + x.destination; const old = connections.get(key); if (old) old.pages.add(x.page); else connections.set(key, {...x, pages: new Set([x.page])}); }
     return {report, registration, versions, connections: [...connections.values()]};
   }
-  function create({report, registration, versions, connections}, font, JsPDF) {
+  function create({report, registration, versions, connections}, font, JsPDF, logo) {
     const doc = new JsPDF({unit: 'mm', format: 'a4', orientation: 'landscape', compress: true, putOnlyUsedFonts: true});
     doc.addFileToVFS('ReportJP.ttf', font); doc.addFont('ReportJP.ttf', 'ReportJP', 'normal'); doc.setFont('ReportJP', 'normal');
     doc.setProperties({title: 'SIMY HP管理｜ホームページ診断結果', author: 'SIMY', subject: registration.clinicName});
@@ -73,10 +75,15 @@
     paragraph('診断の範囲・制限', 13);
     paragraph('今回確認したこと：公開ページから、古い部品や見直しが必要な設定を確認しました。', 9);
     paragraph('まだ分からないこと：侵入・情報漏えいの有無、サーバー内部、電子カルテ・予約サービスの内部は確認していません。', 9);
+    paragraph('この診断結果について、SIMYにご相談ください。', 16);
+    paragraph('古い部品の更新・セキュリティ設定・ホームページの保守をまとめてご相談いただけます。', 11);
+    paragraph('お問い合わせ：sales@simy.one', 15);
+    doc.link(16,y-12,160,12,{url:'mailto:sales@simy.one?subject='+encodeURIComponent('HP診断結果の相談：'+report.url)+'&body='+encodeURIComponent('診断ID：'+(report.diagnosisId||'')+'\n対象URL：'+report.url+'\n\n相談内容：')});
+    paragraph('メールに、このPDFを添付してお送りください。', 10);
     const count = doc.getNumberOfPages();
-    for (let i = 1; i <= count; i++) { doc.setPage(i); doc.setFont('ReportJP', 'normal'); doc.setTextColor(19, 43, 76); doc.setFontSize(10); doc.text('SIMY HP管理', 16, 14); doc.setFontSize(9); doc.text('お問い合わせ：sales@simy.one', 281, 14, {align: 'right'}); doc.link(226, 9, 55, 6, {url: 'mailto:sales@simy.one'}); doc.setDrawColor(215, 224, 235); doc.line(16, 18, 281, 18); doc.setFontSize(8); doc.text('サービス詳細：https://simy.one/hp-management.html', 16, 201); doc.link(16, 197, 90, 6, {url: 'https://simy.one/hp-management.html'}); doc.text('公開情報の診断記録・確認日時点', 158, 201); doc.text(i + ' / ' + count, 281, 201, {align: 'right'}); }
+    for (let i = 1; i <= count; i++) { doc.setPage(i); doc.setFont('ReportJP', 'normal'); doc.setTextColor(19, 43, 76); doc.setFontSize(10); if(logo)doc.addImage(logo,'PNG',16,7,8,8);doc.text('SIMY HP管理', logo?27:16, 14); doc.setFontSize(9); doc.text('お問い合わせ：sales@simy.one', 281, 14, {align: 'right'}); doc.link(226, 9, 55, 6, {url: 'mailto:sales@simy.one'}); doc.setDrawColor(215, 224, 235); doc.line(16, 18, 281, 18); doc.setFontSize(8); doc.text('診断結果のご相談：sales@simy.one', 16, 201); doc.link(16,197,100,6,{url:'mailto:sales@simy.one'}); doc.text('公開情報の診断記録・確認日時点', 158, 201); doc.text(i + ' / ' + count, 281, 201, {align: 'right'}); }
     return doc;
   }
-  async function download(input) { const font = await prepare(); const doc = create(model(input), font, global.jspdf.jsPDF); doc.save('SIMY_ホームページ診断_' + new Date(input.report.checkedAt).toISOString().slice(0, 10) + '.pdf'); }
+  async function download(input) { const assets = await prepare(); const doc = create(model(input), assets.font, global.jspdf.jsPDF, assets.logo); doc.save('SIMY_ホームページ診断_' + new Date(input.report.checkedAt).toISOString().slice(0, 10) + '.pdf'); }
   global.SimyReportPdf = {download, create, model};
 })(typeof window === 'undefined' ? globalThis : window);
