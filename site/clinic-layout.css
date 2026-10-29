@@ -229,3 +229,9 @@ body.preview-editor-open{overflow:hidden}
 #rebuild-editor #preview-source{overflow-wrap:anywhere}
 #rebuild-editor #rebuild-editor-close{flex-shrink:0}
 #rebuild-editor .preview-editor-footer>div{align-items:stretch}
+
+/* Keep the latest AI answer readable on short screens. */
+#rebuild-editor .preview-chat h3{font-size:18px;flex-shrink:0}
+#rebuild-editor .preview-chat #preview-conversation{min-height:120px;flex:1 0 120px}
+#rebuild-editor .preview-chat #preview-edit-form,#rebuild-editor .preview-edit-actions{flex-shrink:0}
+#rebuild-editor textarea{min-height:80px}
