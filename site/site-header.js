@@ -23,12 +23,12 @@
     header.querySelector('.sh-google-play').href = (locale === 'ja' ? '/download.html' : `/download/${locale.toLowerCase()}.html`) + '#android';
     const home = locale === 'en' ? '/' : `/${locale}.html`;
     header.querySelector('.sh-brand').href = home;
-    header.querySelector('.sh-pricing').href = home + '#pricing';
+    if (!header.querySelector('.sh-pricing').hasAttribute('data-service-pricing')) header.querySelector('.sh-pricing').href = home + '#pricing';
     header.querySelectorAll('.sh-navigation a:not(.sh-store)').forEach(link => {
       const url = new URL(link.href);
       if (url.origin !== location.origin) return;
       if (url.pathname.startsWith('/download')) url.pathname = locale === 'ja' ? '/download.html' : `/download/${locale.toLowerCase()}.html`;
-      else if (url.hash) url.pathname = home;
+      else if (url.hash && !link.hasAttribute('data-service-pricing')) url.pathname = home;
       else if (url.pathname.includes('/pharmaceutical-companies/')) url.pathname = locale === 'ja' ? '/for/pharmaceutical-companies/' : `/for/${locale.toLowerCase()}/pharmaceutical-companies/`;
       else if (url.pathname.includes('/financial-planners/')) url.pathname = locale === 'ja' ? '/for/financial-planners/' : `/for/${locale.toLowerCase()}/financial-planners/`;
       else if (url.pathname.startsWith('/for/')) url.pathname = url.pathname.includes('engineers') ? (locale === 'ja' ? '/for/engineers/' : `/for/${locale.toLowerCase()}/engineers/`) : (locale === 'ja' ? '/for/' : '/for/en/');

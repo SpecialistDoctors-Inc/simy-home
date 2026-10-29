@@ -3,6 +3,7 @@
 from pathlib import Path
 from html.parser import HTMLParser
 import html
+import hashlib
 import re
 import argparse
 import json
@@ -46,13 +47,19 @@ def header(locale, source, path):
     region = {"en": "us", "ja": "jp", "hi": "in", "es": "es", "fr": "fr"}.get(locale)
     params = f"lang={locale}&amp;locale={locale}" + (f"&amp;region={region}" if region else "")
     code = "ZH" if locale == "zh-Hans" else locale.upper()
-    return f'''<header class="simy-header" translate="no" data-simy-no-translate>
+    markup = f'''<header class="simy-header" translate="no" data-simy-no-translate>
   <div class="sh-frame">
     <a class="sh-brand" href="{base}" aria-label="SIMY home"><img src="/simy-icon-56.png" width="32" height="32" alt=""><span>SIMY</span></a>
     <details class="sh-menu"><summary class="sh-menu-toggle" aria-label="Navigation menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></summary><div class="sh-menu-panel"><div class="sh-navigation" role="navigation" aria-label="Primary navigation">{menus}<a class="sh-pricing" href="{base}#pricing">Pricing</a></div><a class="sh-login" data-existing-account-login href="https://app.simy.one/">Log in</a></div></details>
     <div class="sh-account"><details class="sh-dropdown sh-language"><summary aria-label="Language: {LOCALES[locale]}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/></svg> {code}</summary><div class="sh-panel">{options}</div></details><a data-new-account-signup class="sh-signup" href="https://app.simy.one/signup?{params}">Sign up</a></div>
   </div>
 </header>'''
+    # The clinic landing page sells HP management, not the separate SIMY app.
+    if path == SITE / 'hp-management/clinic/index.html':
+        markup = markup.replace(f'<a class="sh-pricing" href="{base}#pricing">Pricing</a>', '<a class="sh-pricing" data-service-pricing href="#pricing">HP管理の料金</a>')
+        markup = markup.replace('>Log in</a>', '>SIMYアプリ</a>')
+        markup = markup.replace(f'<a data-new-account-signup class="sh-signup" href="https://app.simy.one/signup?{params}">Sign up</a>', '<a class="sh-signup" href="#diagnosis">URL入力へ</a>')
+    return markup
 
 class HeaderParser(HTMLParser):
     def __init__(self, source):
@@ -106,7 +113,10 @@ def apply(source, path):
     assets = '<link rel="stylesheet" href="/site-header.css?v=20261021-pharma-1">\n<script src="/site-header.js?v=20261021-pharma-1" defer></script>\n'
     if '/site-header.css?' not in source:
         source = source.replace('</head>', assets + '</head>')
-    source = re.sub(r'(/site-header\.(?:css|js)\?v=)[^"\s]+', r'\g<1>20261021-pharma-1', source)
+    def asset_version(match):
+        version = hashlib.sha256((SITE / 'site-header.js').read_bytes()).hexdigest()[:12] if path == SITE / 'hp-management/clinic/index.html' and '.js?' in match[1] else '20261021-pharma-1'
+        return match[1] + version
+    source = re.sub(r'(/site-header\.(?:css|js)\?v=)[^"\s]+', asset_version, source)
     if "data-story-scene" in source:
         from home_manga_locales import localized_header
         source = localized_header(source, locale, homepage_content())
