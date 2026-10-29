@@ -120,7 +120,7 @@ function renderEvaluationTable(report) {
   if(!rows.size&&!componentServices.length){section.append(element('p','公開情報から使用部品を特定できませんでした。'));results.append(section);return;}
   const wrap = element('div', '', 'evaluation-scroll'); wrap.tabIndex = 0; wrap.setAttribute('role','region'); wrap.setAttribute('aria-label','使用部品の評価表。画面が狭い場合は横にスクロールできます');
   const table = element('table', '', 'evaluation-table component-version-table');
-  table.append(element('caption', '使用部品・検出した版・公式情報・評価・対応'));
+  table.append(element('caption', '使用部品・現在の版・最新安定版・判定'));
   const head = element('thead',''); const tr = element('tr','');
   for (const label of ['言語・部品','現在のバージョン','最新安定版','判定']) {const th=element('th',label);th.scope='col';tr.append(th);}head.append(tr);table.append(head);
   const body = element('tbody','');
@@ -256,7 +256,7 @@ function renderReport(report) {
 }
 function appendEmailReceipt(report, snapshot, onSaved) {
   const section=element('section','','report-email report-next');
-  section.append(element('h3','診断結果を一覧で見る'),element('p','3項目を登録すると、すべての結果をこの画面で確認・PDF保存できます。'));
+  section.append(element('h3','全結果とPDFを見る'),element('p','無料登録で、この画面にすべての結果を表示します。'));
   const receiptForm=element('form','','report-email-form');
   const label=element('label','メールアドレス（必須）');label.htmlFor='report-email-address';
   const email=element('input','');email.id='report-email-address';email.name='email';email.type='email';email.autocomplete='email';email.placeholder='you@example.jp';email.required=true;email.maxLength=254;
@@ -270,7 +270,7 @@ function appendEmailReceipt(report, snapshot, onSaved) {
   consentLabel.append(consent,element('span',consentText));
   const privacy=element('a','個人情報の取り扱い');privacy.href='/privacy.html?lang=ja';privacy.target='_blank';privacy.rel='noopener';
   const submit=element('button','登録して一覧・PDFを見る','button button-primary');submit.type='submit';
-  const note=element('p','登録無料・この画面で一覧表示とPDFダウンロードができます。保存期間は原則90日。削除のご希望は sales@simy.one へ。','report-email-note');
+  const note=element('p','保存は原則90日。削除のご希望：sales@simy.one','report-email-note');
   const status=element('p','','report-email-status');status.setAttribute('role','status');status.setAttribute('aria-live','polite');
   receiptForm.append(label,email,clinicLabel,clinicName,nameLabel,contactName,consentLabel,privacy,note,submit,status);section.append(receiptForm);
   let requestId=crypto.randomUUID(),submitting=false;
@@ -312,7 +312,6 @@ function gateReport(report) {
   blurred.querySelectorAll('[id]').forEach(n=>n.removeAttribute('id'));
   veil.append(blurred);preview.append(veil);results.append(preview);
   const rebuildLink=()=>{const a=element('a','最新の技術で作ってみる →','report-rebuild-link button button-primary');a.href='#rebuild';a.dataset.rebuildUrl=report.url;return a;};
-  if(document.querySelector('#rebuild-form'))results.append(rebuildLink());
   appendEmailReceipt(report,snapshot,(registration)=>{
     if(!preview.isConnected)return; // Ignore a late response after a new diagnosis.
     results.replaceChildren(full);
@@ -363,11 +362,11 @@ async function readScanResponse(response){
 function normalizeDiagnosisUrl(input) {
   const value=input.trim();let url;
   try{url=new URL(/^[a-z][a-z\d+.-]*:/i.test(value)?value:'https://'+value);}catch{throw Error('ホームページのURLを入力してください。');}
-  if(!['https:','http:'].includes(url.protocol)||url.username||url.password||url.port||!url.hostname.includes('.')||/\s/.test(value))throw Error('認証情報を含まない、http:// または https:// の公開URLを入力してください。');
+  if(!['https:','http:'].includes(url.protocol)||url.username||url.password||url.port||!url.hostname.includes('.')||/\s/.test(value))throw Error('ホームページのURLをご確認ください。例：https://example.jp/');
   const tracking=/^(?:utm_.+|gclid|dclid|gbraid|wbraid|gad_source|gad_campaignid|gclsrc|rwg_token|fbclid|msclkid|yclid|twclid|ttclid|srsltid|mc_cid|mc_eid|campaignid|adgroupid|creative|matchtype|network|device|keyword)$/i;
   for(const key of [...url.searchParams.keys()])if(tracking.test(key))url.searchParams.delete(key);
   url.hash='';
-  if(url.search)throw Error('広告用の追跡情報は自動で除けます。このURLにはページ指定などの情報もあるため、サイトのトップページURLを入力してください。');
+  if(url.search)throw Error('URLにページ指定などが含まれています。サイトのトップページURLをお試しください。');
   return url;
 }
 
