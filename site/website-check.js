@@ -312,7 +312,7 @@ function gateReport(report) {
   const blurred=full.cloneNode(true);blurred.className='report-mosaic-content';
   blurred.querySelectorAll('[id]').forEach(n=>n.removeAttribute('id'));
   veil.append(blurred);preview.append(veil);results.append(preview);
-  const rebuildLink=()=>{const a=element('a','最新の技術で作ってみる →','report-rebuild-link button button-primary');a.href='#rebuild';a.dataset.rebuildUrl=report.url;return a;};
+  const rebuildLink=()=>{const a=element('a','今のデザインで作り直してみる →','report-rebuild-link button button-primary');a.href='#rebuild';a.dataset.rebuildUrl=report.url;return a;};
   appendEmailReceipt(report,snapshot,(registration)=>{
     if(!preview.isConnected)return; // Ignore a late response after a new diagnosis.
     results.replaceChildren(full);
