@@ -26,6 +26,9 @@ def header(locale, source, path):
         "Solutions": [("For your work", ("/for/" if locale == "ja" else "/for/en/")), ("For engineers", ("/for/engineers/" if locale == "ja" else f"/for/{locale.lower()}/engineers/")), ("For financial planners", ("/for/financial-planners/" if locale == "ja" else f"/for/{locale.lower()}/financial-planners/")), ("For pharmaceutical companies", "/for/" + ("" if locale == "ja" else locale.lower() + "/") + "pharmaceutical-companies/"), ("Use cases", base + "#use-cases")],
         "Resources": [("Guides", f"/guides/{suffix}index.html"), ("Compare", "/compare.html"), ("News", "/press-release.html"), ("About SIMY", "/about.html"), ("Security", "/security.html"), ("Contact", "/contact.html"), ("Legal & service information", "/legal.html"), ("Seller information", "/seller-info.html")],
     }
+    if path == SITE / 'ja.html':
+        groups['Solutions'].insert(1, ('HP管理・無料診断', '/hp-management/'))
+        groups['Solutions'].insert(2, ('クリニック向けHP管理', '/hp-management/clinic/'))
     def link(label, href):
         if label == "For pharmaceutical companies":
             label = {"ja": "製薬企業向け", "en": "For pharmaceutical companies", "es": "Para farmacéuticas", "fr": "Pour les laboratoires", "hi": "दवा कंपनियों के लिए", "zh-Hans": "面向制药企业"}[locale]
