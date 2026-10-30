@@ -233,3 +233,30 @@ body.preview-editor-open{overflow:hidden}
 #rebuild-editor textarea{min-height:80px}
 
 #preview-photo{width:100%;min-width:0;font-size:13px;padding:8px 0}#preview-photo-status{font-size:13px;overflow-wrap:anywhere;margin:4px 0}.preview-photo-label{margin-top:10px;font-size:13px}
+
+/* Conversation-first editor with a compact composer and contextual tools. */
+#rebuild-editor .preview-editor-layout{grid-template-columns:minmax(320px,380px) minmax(0,1fr)}
+#rebuild-editor .preview-chat{background:#fff;padding:24px;gap:16px}
+#rebuild-editor .preview-chat h3{font-size:17px;color:#263238}
+#rebuild-editor .preview-chat #preview-conversation{flex:1 1 0;min-height:100px;max-height:none;padding-top:24px}
+#rebuild-editor #preview-conversation p{background:transparent;padding:10px 0;color:#30383d}
+#rebuild-editor #preview-conversation .preview-user-message{background:#f0f1f2;color:#20272b;border-radius:20px;padding:12px 16px;margin-left:24px}
+#rebuild-editor #preview-edit-form{display:flex;flex-direction:column;gap:0;border:1px solid #dedfe2;border-radius:24px;background:#fff;padding:12px;box-shadow:0 3px 14px #17253b0d}
+#rebuild-editor .composer-label{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+#rebuild-editor #preview-edit-message{border:0;background:transparent;box-shadow:none;outline:none;padding:8px;min-height:76px;max-height:180px;resize:vertical;color:#20272b;font:16px/1.6 sans-serif}
+#rebuild-editor #preview-edit-form:focus-within{border-color:#6f899a;box-shadow:0 0 0 2px #6f899a22}
+#rebuild-editor .composer-toolbar{display:flex;align-items:center;gap:8px}
+#rebuild-editor .composer-toolbar span{flex:1;font-size:12px;color:#6b7379}
+#rebuild-editor #preview-edit-form .composer-toolbar button{display:grid;place-items:center;width:40px;height:40px;min-height:40px;padding:0;flex:0 0 40px;border:0;border-radius:50%;background:#f3f4f4;color:#222;font-size:26px}
+#rebuild-editor #preview-edit-form #preview-send{background:#202626;color:#fff}
+#rebuild-editor #preview-photo-status:empty{display:none}
+#rebuild-editor .preview-scope{font-size:11px!important;line-height:1.6;color:#788187}
+#rebuild-editor #preview-tools{position:fixed;inset:auto;margin:0;width:260px;max-width:calc(100vw - 16px);padding:8px;border:1px solid #e0e2e5;border-radius:16px;background:#fff;color:#263238;box-shadow:0 12px 40px #15263426}
+#rebuild-editor #preview-tools p{margin:8px 12px;font-size:12px;color:#7a8288}
+#rebuild-editor #preview-tools>button{display:block;width:100%;text-align:left;border:0;background:#fff;color:#263238;font-size:14px;font-weight:500;border-radius:8px}
+#rebuild-editor #preview-tools button:hover{background:#f0f3f4}
+#rebuild-editor #preview-tools .preview-edit-actions{border-top:1px solid #eee;margin-top:6px;padding-top:8px}
+#rebuild-editor #preview-tools .preview-edit-actions button{flex:1;border:0;font-size:12px;padding:8px}
+#rebuild-editor #preview-edit-form .operation-elapsed{margin:4px 8px;font-size:12px;color:#68767e;order:3}
+#rebuild-editor .composer-toolbar .operation-elapsed{flex:1;white-space:nowrap}
+@media(max-width:700px){#rebuild-editor .preview-chat{padding:18px}#rebuild-editor .preview-chat #preview-conversation{min-height:80px}#rebuild-editor .preview-editor-header strong{font-size:15px}}
