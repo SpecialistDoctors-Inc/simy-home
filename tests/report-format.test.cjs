@@ -23,8 +23,8 @@ test('PDF puts component-only disclosures in section 01 without an external-serv
  const local={URL};for(const f of ['information-flow','service-security','diagnosis-pdf'])vm.runInNewContext(fs.readFileSync('site/'+f+'.js','utf8'),local);
  const output=[];class Capture extends jsPDF{constructor(o){super(o);const original=this.text;this.text=function(s,...args){output.push(Array.isArray(s)?s.join('\n'):s);return original.call(this,s,...args);};}}
  const names=['Apache','jQuery','WordPress'];const report={url:'https://clinic.example/',checkedAt:'2026-10-29T01:00:00Z',technologies:names.map(name=>({name,status:'detected',versions:[]})),scripts:{libraries:[{name:'jquery',version:'3.7.1'}]},serviceSecurity:{catalog:names.map(name=>({id:name==='jQuery'?'jQuery-3.5.0':name,subjectId:'component:'+name,name,published:'2020-04-10',checkedAt:'2026-10-28',kind:'vulnerability',scope:'対象版は未確認',summary:'公表事例',title:name+'の公表',url:'https://official.example/'+name}))}};
- local.SimyReportPdf.create({report,versions:[]},font,Capture);const text=output.join('\n');
- assert(text.includes('01 / SOFTWARE COMPONENTS'));for(const name of names)assert(text.includes(name+' / '+name+'の公表'));
+ local.SimyReportPdf.create({report,versions:names.map(name=>[name,'バージョン未確認','公式情報を別途確認',name+'の公表\n'+(name==='jQuery'?'影響範囲外':'この版への該当は未確認')])},font,Capture);const text=output.join('\n');
+ assert(text.includes('01 / SOFTWARE COMPONENTS'));for(const name of names)assert(text.includes(name+'の公表'));
  assert(text.includes('影響範囲外'));assert(!text.includes('03 / PUBLIC ADVISORIES'));
 });
 test('PDF lists current and unknown components plus all external services, with public incidents first',()=>{
