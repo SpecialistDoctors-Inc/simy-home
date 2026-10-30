@@ -240,7 +240,6 @@ function renderReport(report) {
   message.textContent = '確認日時：' + new Date(report.checkedAt).toLocaleString('ja-JP') + '。公開ページと関連するプログラムを調べた結果です。';
   title.textContent = technologies.length || libraries.length || patches.length ? '更新・修正の確認が必要です' : reviews.length ? '設定の確認が必要です' : '今回の範囲では、問題を特定できませんでした';
   renderSummary(report);
-  window.SimyInformationFlow?.renderPriority(report,results,element);
   renderEvaluationTable(report);
   renderInfrastructure(report);
   renderServiceSecurity(report);
