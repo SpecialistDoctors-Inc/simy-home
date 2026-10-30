@@ -55,12 +55,13 @@
  api.inventory=function(html,liveDocument){
   const doc=parse(html),all=[doc.body,...doc.body.querySelectorAll('[data-simy-edit-id]')],news=all.filter(isNews);
   const out=[],seen=new Set();let size=0;
-  function add(e,kind){const id=e.getAttribute('data-simy-edit-id');if(seen.has(id)||out.length>=220)return;let t=kind==='image'?(e.getAttribute('alt')||'画像'):(e.tagName==='BODY'?'ページ全体':text(e));if(!t)return;if(kind==='text'&&t.length>1800)return;t=t.slice(0,1800);let context=label(e);try{const live=liveDocument?.querySelector('[data-simy-edit-id="'+id+'"]');if(live){const css=liveDocument.defaultView.getComputedStyle(live);context+=' / 現在の文字サイズ:'+css.fontSize+'、文字色:'+css.color+'、背景:'+css.backgroundColor;}}catch{}const n={id,kind,tag:e.tagName.toLowerCase(),text:t,context:context.slice(0,300)};const len=JSON.stringify(n).length;if(size+len>35000)return;size+=len;seen.add(id);out.push(n);}
+  function add(e,kind){const id=e.getAttribute('data-simy-edit-id');if(seen.has(id)||out.length>=220)return;let t=kind==='image'?(e.getAttribute('alt')||'画像'):(e.tagName==='BODY'?'ページ全体':text(e));if(!t)return;t=t.slice(0,kind==='element'?120:kind==='text'?600:1800);let context=label(e);try{const live=liveDocument?.querySelector('[data-simy-edit-id="'+id+'"]');if(live){const css=liveDocument.defaultView.getComputedStyle(live);context+=' / 現在の文字サイズ:'+css.fontSize+'、文字色:'+css.color+'、背景:'+css.backgroundColor;}}catch{}const n={id,kind,tag:e.tagName.toLowerCase(),text:t,context:context.slice(0,300)};const len=JSON.stringify(n).length;if(size+len>35000)return;size+=len;seen.add(id);out.push(n);}
   add(doc.body,'element');
+  // Keep notice targets before optional structure summaries spend the shared budget.
+  news.forEach(e=>add(e,'news'));
   all.filter(e=>e.tagName==='IMG').slice(0,50).forEach(e=>add(e,'image'));
   if(liveDocument)all.filter(e=>e.tagName!=='IMG').forEach(e=>{try{const live=liveDocument.querySelector('[data-simy-edit-id="'+e.getAttribute('data-simy-edit-id')+'"]');if(live&&/^url\(/.test(liveDocument.defaultView.getComputedStyle(live).backgroundImage))add(e,'image');}catch{}});
   all.filter(e=>['SECTION','ARTICLE','HEADER','FOOTER','NAV'].includes(e.tagName)).slice(0,35).forEach(e=>add(e,'element'));
-  news.forEach(e=>add(e,'news'));
   // Semantic headings and buttons first; then editable leaf paragraphs, avoiding nested duplicates.
   all.filter(e=>/^H[1-6]$/.test(e.tagName)||['A','BUTTON'].includes(e.tagName)).forEach(e=>add(e,'text'));
   all.filter(e=>!['DL','UL','OL','TABLE','TR','TBODY'].includes(e.tagName)&&text(e)&&![...e.children].some(c=>text(c)&&!['SPAN','BR','B','STRONG','EM','I','SMALL'].includes(c.tagName))).forEach(e=>add(e,'text'));
@@ -68,7 +69,7 @@
  };
  api.redesign=function(doc,theme,accent,liveDocument){
   // Keep visible CSS background photography when replacing the old design system.
-  if(liveDocument)for(const n of doc.body.querySelectorAll('[data-simy-edit-id]')){try{const live=liveDocument.querySelector('[data-simy-edit-id="'+n.getAttribute('data-simy-edit-id')+'"]');const bg=live&&liveDocument.defaultView.getComputedStyle(live).backgroundImage;const match=bg?.match(/^url\(["']?(https?:\/\/[^"')]+)["']?\)$/);if(match&&!n.children.length){const img=doc.createElement('img');img.src=match[1];img.alt='';n.append(img);}}catch{}}
+  if(liveDocument)for(const n of doc.body.querySelectorAll('[data-simy-edit-id]')){try{const live=liveDocument.querySelector('[data-simy-edit-id="'+n.getAttribute('data-simy-edit-id')+'"]');const bg=live&&liveDocument.defaultView.getComputedStyle(live).backgroundImage;const match=bg?.match(/^url\(["']?(https?:\/\/[^"')]+)["']?\)$/);if(match&&![...n.children].some(c=>c.getAttribute('data-simy-background')===match[1])){const img=doc.createElement('img');img.src=match[1];img.alt='';img.setAttribute('data-simy-background',match[1]);n.append(img);}}catch{}}
   for(const n of doc.querySelectorAll('link[rel="stylesheet"],style'))n.remove();
   for(const n of doc.body.querySelectorAll('*')){n.removeAttribute('style');n.removeAttribute('width');n.removeAttribute('height');}
   doc.body.removeAttribute('style');doc.body.setAttribute('data-simy-theme',theme);
