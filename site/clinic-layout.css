@@ -100,10 +100,6 @@ html:root{scroll-behavior:auto;scroll-padding-top:0}
 #main .migration-story-copy .story-label{font-size:13px;font-weight:800;color:#18736f;margin-bottom:12px}
 #main .migration-story-copy h3{font-size:20px;line-height:1.7;margin:0 0 12px}
 #main .migration-story-copy>p:last-child{font-size:16px;line-height:1.8;color:#3e5669;margin:0}
-#main #rebuild-versions{margin:20px 0;overflow-x:auto}
-#main #rebuild-versions table{width:100%;border-collapse:collapse;background:#fff;font-size:14px}
-#main #rebuild-versions th,#main #rebuild-versions td{text-align:left;padding:12px;border:1px solid #cfdaea;vertical-align:top}
-#main #rebuild-versions thead{background:#16385d;color:#fff}
 @media(max-width:760px){#main .migration-story-grid{grid-template-columns:minmax(0,1fr);padding:20px 16px}#main .migration-chapter{padding:20px 16px}#main #inline-diagnosis-form .url-entry{grid-template-columns:minmax(0,1fr)}}
 
 /* A shorter reading path: compare plans together, then explain the optional growth support. */
