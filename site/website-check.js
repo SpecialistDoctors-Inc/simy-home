@@ -117,7 +117,7 @@ function renderEvaluationTable(report) {
   for (const l of report.scripts.libraries) add(l.name, l.version, l.issues);
   const section = element('section', '', 'evaluation-section');
   section.append(element('h3', '01 / 使用部品の脆弱性・セキュリティリスク'));
-  if(!rows.size&&!componentServices.length){section.append(element('p','公開情報から使用部品を特定できませんでした。'));results.append(section);return;}
+  if(!rows.size&&!componentServices.length){section.append(element('p',report.completion==='partial'?'使用部品の確認は途中です。問題がないという判定ではありません。':'公開情報から使用部品を特定できませんでした。'));results.append(section);return;}
   const wrap = element('div', '', 'evaluation-scroll'); wrap.tabIndex = 0; wrap.setAttribute('role','region'); wrap.setAttribute('aria-label','使用部品の評価表。画面が狭い場合は横にスクロールできます');
   const table = element('table', '', 'evaluation-table component-version-table');
   table.append(element('caption', '使用部品・現在の版・最新安定版・判定'));
@@ -169,8 +169,10 @@ function renderSummary(report){
   for(const p of report.crawl?.pages||[])if(p.status!=='checked')unknown.add('page:'+p.url);
   for(const r of report.scripts.resources||[])if(r.status!=='checked')unknown.add('asset:'+r.url);
   const serviceRisk=window.SimyServiceSecurity?.assess(report);
+  const hasInventory=report.technologies.some(t=>t.status!=='unknown')||report.scripts.libraries.length>0;
+  const componentCount=updates.size+priorityVersions.size;
   const counts=element('div','','report-counts');
-  for(const [label,value,style] of [['古い版・脆弱性のある部品',updates.size+priorityVersions.size,'priority'],['関連する公表事例',serviceRisk?new Set([...window.SimyServiceSecurity.visibleServices(serviceRisk).flatMap(s=>window.SimyServiceSecurity.findingsFor(s,serviceRisk)),...(window.SimyServiceSecurity.componentServices?.(serviceRisk)||[]).flatMap(s=>window.SimyServiceSecurity.findingsFor(s,serviceRisk)),...window.SimyServiceSecurity.providerNotices(report)].map(n=>n.url)).size:'未確認','update'],['その他の確認事項',report.findings.filter(f=>f.state==='review').length,'unknown']]){const box=element('div','',style);box.append(element('strong',String(value)),element('span',label));counts.append(box);}
+  for(const [label,value,style] of [['古い版・脆弱性のある部品',componentCount ? String(componentCount)+(report.completion==='partial'?'件以上':'') : (!hasInventory||report.completion==='partial'?'未確認':'0'),'priority'],['関連する公表事例',serviceRisk?new Set([...window.SimyServiceSecurity.visibleServices(serviceRisk).flatMap(s=>window.SimyServiceSecurity.findingsFor(s,serviceRisk)),...(window.SimyServiceSecurity.componentServices?.(serviceRisk)||[]).flatMap(s=>window.SimyServiceSecurity.findingsFor(s,serviceRisk)),...window.SimyServiceSecurity.providerNotices(report)].map(n=>n.url)).size:'未確認','update'],['その他の確認事項',report.findings.filter(f=>f.state==='review').length,'unknown']]){const box=element('div','',style);box.append(element('strong',String(value)),element('span',label));counts.append(box);}
   results.append(counts);
   for(const warning of report.sourceWarnings||[])results.append(element('p',warning,'source-warning'));
 }
@@ -209,7 +211,7 @@ function renderServiceSecurity(report){
   const section=element('section','','service-security');
   section.append(element('h3','03 / 外部サービス・接続先の一覧'));
   if(!info){section.append(element('p','公表情報を読み込めませんでした。'));results.append(section);return;}
-  const visible=window.SimyServiceSecurity.visibleServices(info);if(!visible.length){section.append(element('p','外部サービス・接続先は今回の確認範囲では特定できませんでした。'));results.append(section);return;}
+  const visible=window.SimyServiceSecurity.visibleServices(info);if(!visible.length){section.append(element('p',report.completion==='partial'?'外部サービスの確認は途中です。利用していないという判定ではありません。':'外部サービス・接続先は今回の確認範囲では特定できませんでした。'));results.append(section);return;}
   section.append(renderNoticeTable(info,visible,'外部サービス'),element('p',(info.research?.status==='completed'?'診断時に公式情報を検索。':info.research?.status==='partial'?'診断時の検索・一次情報確認は一部のみ完了。':'診断時の検索は未実施または取得できませんでした。')+' 確認：'+info.checkedAt+'。事前確認の公表事例も含みます。全件網羅ではなく、このサイトの被害を示しません。'));results.append(section);
 }
 function groupLibraryFindings(libraries) {
@@ -353,9 +355,9 @@ async function readScanResponse(response){
   const reader=response.body.getReader();const decoder=new TextDecoder();let pending='';let report;let partial;
   const consume=line=>{if(!line.trim())return;const event=JSON.parse(line);if(event.type==='progress')scanProgress(event.stage,event.detail);else if(event.type==='partial')partial=event.report;else if(event.type==='result')report=event.report;else if(event.type==='error')throw Error(event.error);};
   try{while(true){const {done,value}=await reader.read();pending+=decoder.decode(value,{stream:!done});let at;while((at=pending.indexOf('\n'))>=0){consume(pending.slice(0,at));pending=pending.slice(at+1);}if(report)return report;if(done){consume(pending);break;}}}
-  catch(error){if(partial)return {...partial,completion:'partial',completionReason:'追加の確認が時間内に完了しませんでした。確認できた範囲の結果を表示しています。'};throw error;}
+  catch(error){if(partial)return {...partial,completion:'partial',completionReason:partial.completionReason||'追加の確認が時間内に完了しませんでした。確認できた範囲の結果を表示しています。'};throw error;}
   finally{await reader.cancel().catch(()=>{});reader.releaseLock();}
-  if(!report&&partial)return partial;if(!report)throw Error('診断結果の受信が途中で止まりました。もう一度お試しください。');return report;
+  if(!report&&partial)return {...partial,completion:'partial',completionReason:partial.completionReason||'診断結果の受信が途中で止まりました。確認できた範囲の結果を表示しています。'};if(!report)throw Error('診断結果の受信が途中で止まりました。もう一度お試しください。');return report;
 }
 
 // Advertising identifiers do not select a page. Remove only known tracking keys;
@@ -405,6 +407,6 @@ if(inlineDiagnosisForm){inlineDiagnosisForm.addEventListener('submit',runDiagnos
 
 let reportPdfLoader;
 function loadReportPdf(){
-  if(!reportPdfLoader)reportPdfLoader=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='/diagnosis-pdf.js?v=55e91773a3d7';script.onload=resolve;script.onerror=()=>{script.remove();reportPdfLoader=null;reject(Error('PDF機能の読込に失敗しました'));};document.head.append(script);});
+  if(!reportPdfLoader)reportPdfLoader=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='/diagnosis-pdf.js?v=340e8eb4ca3e';script.onload=resolve;script.onerror=()=>{script.remove();reportPdfLoader=null;reject(Error('PDF機能の読込に失敗しました'));};document.head.append(script);});
   return reportPdfLoader;
 }

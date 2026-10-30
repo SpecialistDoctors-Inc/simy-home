@@ -76,7 +76,8 @@
     paragraph('診断対象：'+report.url,8);paragraph('確認日時：'+new Date(report.checkedAt).toLocaleString('ja-JP')+'\n診断ID：'+(report.diagnosisId||'未取得'),7);
     if(report.completion==='partial')paragraph('一部完了：'+report.completionReason,9,C.red);
     heading('AT A GLANCE','主な確認結果');
-    grid([[''+components.filter(c=>/サポート終了/.test(c.assessment)).length+'件 / サポートが終了した部品',components.filter(c=>/サポート終了/.test(c.assessment)).map(c=>c.name.split('\n')[0]+' '+c.current.split('\n')[0]).join('、')||'今回の範囲では特定していません。'],[''+components.filter(c=>/サポート終了|脆弱性|旧バージョン/.test(c.assessment)).length+'件 / 脆弱性・更新リスク','公開情報から確認できた部品の版を、公式情報と比較しています。'],[''+new Set([...componentNotices,...notices,...providerNotices].map(n=>n.url)).size+'件 / 関連する公表情報','関連する提供元・サービスの事故や脆弱性の公表です。この医院の被害を示すものではありません。'],[''+findings.length+'件 / その他の改善点','公開ページで見直しが必要な設定などを確認しています。']]);
+    const countLabel=n=>n?String(n)+(report.completion==='partial'?'件以上':'件'):(!components.length||report.completion==='partial'?'未確認':'0件');
+    grid([[countLabel(components.filter(c=>/サポート終了/.test(c.assessment)).length)+' / サポートが終了した部品',components.filter(c=>/サポート終了/.test(c.assessment)).map(c=>c.name.split('\n')[0]+' '+c.current.split('\n')[0]).join('、')||'今回の範囲では特定していません。'],[countLabel(components.filter(c=>/サポート終了|脆弱性|旧バージョン/.test(c.assessment)).length)+' / 脆弱性・更新リスク','公開情報から確認できた部品の版を、公式情報と比較しています。'],[''+new Set([...componentNotices,...notices,...providerNotices].map(n=>n.url)).size+'件 / 関連する公表情報','関連する提供元・サービスの事故や脆弱性の公表です。この医院の被害を示すものではありません。'],[''+findings.length+'件 / その他の改善点','公開ページで見直しが必要な設定などを確認しています。']]);
     paragraph('公開情報に基づく診断です。古い部品があるだけで攻撃可能とは限りません。侵入・情報漏えいの有無は判定できません。',8);
     page('RISKS TO PATIENTS & CLINIC');heading('IF LEFT UNADDRESSED','放置した場合の影響は、\n患者さんと診療にも及びます。','以下は起こり得るリスクの説明です。この診断で、被害や改ざんの発生を確認したという意味ではありません。');
     card('01 / 患者さんが偽の予約先へ誘導されるおそれ','改ざんによって予約リンクがすり替えられたり、悪意のあるプログラムが埋め込まれたりすることがあります。患者さんが偽の予約画面に個人情報を入力し、詐欺やマルウェアの被害を受けるおそれがあります。');
