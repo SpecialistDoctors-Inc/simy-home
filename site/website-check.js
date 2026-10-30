@@ -74,13 +74,12 @@ function issueIncident(issue) {
 }
 function appendIssueEvidence(status,issues) {
   if(!issues.length)return;
-  const summaries=[...new Set(issues.map(i=>i.summary).filter(Boolean))];
-  if(summaries.length)status.append(element('p',summaries[0]));
-  const evidence=[...new Map(issues.map(issueIncident).filter(e=>e.kind!=='unconfirmed').map(e=>[e.kind==='case'?e.source:'cisa',e])).values()];
-  if(!evidence.length){status.append(element('small','具体的な被害事例は未確認です。'));return;}
-  for(const e of evidence){const item=element('div','','incident-item');item.append(element('strong',e.kind==='case'?'報告された攻撃':'実際の悪用を確認'));
-    item.append(element('p',e.kind==='case'?e.summary:'この問題を悪用した攻撃が、CISAの公表情報に掲載されています。この医院の被害を確認したものではありません。'));
-    const a=element('a',e.publisher+'の公表');a.href=e.source;a.target='_blank';a.rel='noopener';item.append(a);status.append(item);
+  const summary=[...new Set(issues.map(i=>i.summary).filter(Boolean))][0];
+  if(summary)status.append(element('p',summary));
+  const evidence=[...new Map(issues.map(issueIncident).filter(e=>e.kind!=='unconfirmed').map(e=>[e.source,e])).values()];
+  for(const e of evidence){
+    const a=element('a',e.kind==='case'?'攻撃事例の公表 ↗':'悪用実績あり（CISA） ↗');
+    a.href=e.source;a.target='_blank';a.rel='noopener';status.append(a);
   }
 }
 // Compare only complete numeric release versions; do not guess prerelease or partial versions.
@@ -100,6 +99,21 @@ function componentRowPriority(row,report){
  const ref=reported?{...fallback,...reported}:fallback;
  if(ref&&compareReleaseVersions(row.version,ref.version)===-1)return 3;
  return !row.version||!ref||compareReleaseVersions(row.version,ref.version)!==0?1:0;
+}
+function appendComponentDisclosures(status,row,info,services) {
+  const canonical=n=>({nextjs:'next.js',rails:'ruby on rails'}[n.toLowerCase()]||n.toLowerCase());
+  const service=services.find(s=>canonical(s.name)===canonical(row.name));
+  if(!service)return;
+  const notices=window.SimyServiceSecurity.findingsFor(service,info);
+  for(const n of [...new Map(notices.map(n=>[n.url,n])).values()]){
+    const item=element('p','','component-disclosure');
+    let title=n.title||'脆弱性の公表';
+    if(title==='脆弱性の公表'&&/unauthenticated remote code execution/i.test(n.summary||''))title='認証なしで不正な処理を実行されるおそれ';
+    item.append(element('span',title));
+    const outside=canonical(row.name)==='jquery'&&n.id==='jQuery-3.5.0'&&compareReleaseVersions(row.version,'3.5.0')!==null&&compareReleaseVersions(row.version,'3.5.0')>=0;
+    item.append(element('small',outside?'この公表の影響範囲外':'過去の公表事例・この版への該当は未確認'));
+    const a=element('a',(n.published?'公表 '+n.published+' · ':'')+'公式発表 ↗');a.href=n.url;a.target='_blank';a.rel='noopener';item.append(a);status.append(item);
+  }
 }
 function renderEvaluationTable(report) {
   const rows = new Map();
@@ -138,11 +152,10 @@ function renderEvaluationTable(report) {
     else official.append(element('span','公式情報を別途確認'));
     const status=element('td','');status.append(element('span',state,ended||issue||outdated?'evaluation-badge urgent':'evaluation-badge'));
     if(!row.version&&row.name.toLowerCase()==='wordpress')status.append(element('small','公開情報では版を特定できません。'));
-    if(ended||issue)status.append(element('small',ended?'開発元のサポート終了':'既知の問題に関係する版'));else if(outdated&&row.name.toLowerCase()!=='jquery-migrate')status.append(element('small','旧版だけで危険とは判定しません。'));else if(comparison===0)status.append(element('small','確認日の公式版と一致。安全性全体の保証ではありません。'));appendIssueEvidence(status,row.issues);line.append(official,status);body.append(line);
+    if(outdated&&!ended&&!issue&&row.name.toLowerCase()!=='jquery-migrate')status.append(element('small','旧版だけで危険とは判定しません。'));else if(comparison===0)status.append(element('small','確認日の公式版と一致。安全性全体の保証ではありません。'));appendIssueEvidence(status,row.issues);appendComponentDisclosures(status,row,disclosureInfo,componentServices);line.append(official,status);body.append(line);
   }
   if(!body.children.length&&!componentServices.length)return;
   if(body.children.length){table.append(body);wrap.append(table);section.append(wrap,element('p','公開日は検出した版の配布元の記録です。版や日付が不明なものは未確認と表示します。最新の版は記載日の確認情報です。旧版だけで脆弱性があるとは限りません。','evaluation-note'));}
-  if(componentServices.length){section.append(element('h4','検出した部品に関する事故・脆弱性の公表情報'),element('p','部品ごとの過去の公表事例です。検出した版への該当性や、このサイトでの被害を示すものではありません。','evaluation-note'),renderNoticeTable(disclosureInfo,componentServices,'使用部品'));}
   if(![...rows.values()].some(row=>row.name.toLowerCase()==='php') && [...rows.values()].some(row=>row.name.toLowerCase()!=='php'&&row.issues.length)){
     const figure=element('figure','','clinic-manga infrastructure-manga'),img=element('img','');img.src='/assets/website-check/clinic-component-risks-v1.png';img.width=1536;img.height=1024;img.loading='lazy';img.alt='PHP以外の部品も攻撃の入口になり得ることを示す架空の漫画。公表された問題と、この医院の被害は区別します。';figure.append(img);section.append(figure);
   }
@@ -406,6 +419,6 @@ if(inlineDiagnosisForm){inlineDiagnosisForm.addEventListener('submit',runDiagnos
 
 let reportPdfLoader;
 function loadReportPdf(){
-  if(!reportPdfLoader)reportPdfLoader=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='/diagnosis-pdf.js?v=340e8eb4ca3e';script.onload=resolve;script.onerror=()=>{script.remove();reportPdfLoader=null;reject(Error('PDF機能の読込に失敗しました'));};document.head.append(script);});
+  if(!reportPdfLoader)reportPdfLoader=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='/diagnosis-pdf.js?v=faacc4d67728';script.onload=resolve;script.onerror=()=>{script.remove();reportPdfLoader=null;reject(Error('PDF機能の読込に失敗しました'));};document.head.append(script);});
   return reportPdfLoader;
 }

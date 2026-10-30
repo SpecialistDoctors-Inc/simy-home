@@ -28,3 +28,13 @@ test('01 shows every detected component, ordering known risks before old, unknow
  const section=r.children[0],table=section.children.find(n=>n.className==='evaluation-scroll').children[0];const rows=table.children.find(n=>n.tag==='tbody').children;
  assert.deepEqual(rows.map(row=>row.children[0].text),['Risk','Old','Mystery','Current']);assert.doesNotMatch(text(section),/NotDetected/);assert.match(text(rows[2]),/バージョン不明/);assert.match(text(rows[3]),/最新の公式版と一致/);
 });
+
+test('disclosures are inside version rows, without a second disclosure table or PDF section',()=>{
+ const r=run({technologies:[{name:'Apache',status:'detected',versions:[]}],scripts:{libraries:[]},serviceSecurity:{catalog:[notice('Apache')]}});
+ const section=r.children[0],table=section.children.find(n=>n.className==='evaluation-scroll').children[0];
+ const row=table.children.find(n=>n.tag==='tbody').children[0];
+ assert.match(text(row.children[3]),/Apacheの修正/);
+ assert.match(text(row.children[3]),/この版への該当は未確認/);
+ assert.doesNotMatch(text(section),/検出した部品に関する事故・脆弱性の公表情報/);
+ assert.doesNotMatch(fs.readFileSync('site/diagnosis-pdf.js','utf8'),/heading\('COMPONENT DISCLOSURES'/);
+});
