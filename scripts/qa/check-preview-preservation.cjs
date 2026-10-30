@@ -27,14 +27,21 @@ const source=fs.readFileSync(process.env.SIMY_EDITOR_SOURCE||'site/preview-edit.
     assert(result.nodes.some(n=>n.kind==='news'),'news target missing');
     assert(result.nodes.some(n=>n.kind==='text'&&n.text==='末尾の予約案内'),'late leaf text missing');
     assert.equal(result.nodes.filter(n=>n.tag==='p'&&n.text.startsWith('xxx')).length,25,'long paragraphs must remain targetable');
+    assert(result.nodes.filter(n=>n.kind==='text').every(n=>n.text.length<=600));
+    assert(result.nodes.filter(n=>n.kind==='element').every(n=>n.text.length<=120));
     assert(result.edited.includes('明日は午後休診です'),'notice cannot be applied');
     assert(result.nodes.length<=220);assert(result.nodes.reduce((n,x)=>n+JSON.stringify(x).length,0)<=35000);
    });
   await check('redesign preserves nested hero photography and repeated redesign stays idempotent',
    '<html><head><style>.hero{background-image:url("https://fixture.test/hero.jpg")}</style></head><body><section class="hero"><h1>診療案内</h1><p>予約について</p></section></body></html>',
    async indexed=>{
-    const changed=await page.evaluate(indexed=>SimyPreviewEdit.applyPlan(indexed,{status:'edit',operations:[{type:'redesign',target:'e0',property:'warm',value:'#146854'}]},[],document).html,indexed);
+    // Both operations see the original live CSS; the duplicate marker must do the work.
+    const changed=await page.evaluate(indexed=>{
+     const operation={type:'redesign',target:'e0',property:'warm',value:'#146854'};
+     return SimyPreviewEdit.applyPlan(indexed,{status:'edit',operations:[operation,operation]},[],document).html;
+    },indexed);
     await page.setContent(changed);
+    assert.equal(await page.locator('.hero img').count(),1);
     assert.equal(await page.locator('.hero img').getAttribute('src'),'https://fixture.test/hero.jpg');
     assert.equal(await page.locator('.hero h1').textContent(),'診療案内');
     assert.equal(await page.locator('.hero p').textContent(),'予約について');
