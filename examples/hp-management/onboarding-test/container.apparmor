@@ -1,0 +1,11 @@
+# Optional Linux-engine compatibility profile. Load only on a test engine
+# whose AppArmor userns gate blocks bubblewrap. Select it only for the test
+# container; no executable attachment or global sysctl change is needed.
+# This removes docker-default AppArmor restrictions for that container.
+# Prefer a dedicated test VM/engine; this is not production hardening.
+# Keep the custom seccomp
+# profile, non-root user, cap-drop=ALL and no-new-privileges from the runbook.
+abi <abi/4.0>,
+profile simy-clinic-codex-onboarding flags=(unconfined) {
+  userns,
+}
