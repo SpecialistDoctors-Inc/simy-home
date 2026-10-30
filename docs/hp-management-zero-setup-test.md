@@ -1,5 +1,11 @@
 # Codexをインストールした直後からのHP更新受付テスト
 
+これは通常の医院向け導入手順ではない。通常ChatGPTからの入口は準備中であり、
+現時点ではCodex、Google接続、ローカルスキルを不要にする受付を提供していない。
+現在の[Codexによるサンプル受付テスト手順](hp-management-customer-guide.md)と
+[SIMY向け初期設定・運用手順](hp-management-setup-guide.md)を参照する。
+この文書はDocker/CLIを使う担当者向けの再現試験手順。
+
 このテストは、端末にSIMYの設定・スキル・Codex認証がまだない状態を
 対象にする。既存アカウントにあるGoogle接続は復元されることがある。
 DockerではLinux版Codex CLIを確認する。
