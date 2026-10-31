@@ -12,7 +12,7 @@
   const doc=new DOMParser().parseFromString(html,'text/html');
   for(const a of doc.querySelectorAll('a,area')){a.removeAttribute('href');a.removeAttribute('target');a.setAttribute('aria-disabled','true');}
   for(const control of doc.querySelectorAll('button,input,select,textarea'))control.disabled=true;
-  const style=doc.createElement('style');style.textContent='a,area,button,input,select,textarea,[role=button]{pointer-events:none!important}';doc.head.append(style);
+  const style=doc.createElement('style');style.textContent='a,area,button,input,select,textarea,[role=button]{pointer-events:none!important}.splide:not(.is-initialized){visibility:visible!important}.splide:not(.is-initialized) .splide__track{overflow-x:auto!important}.splide:not(.is-initialized) .splide__slide{flex:0 0 min(100%,360px)!important;min-width:0!important;white-space:normal!important}';doc.head.append(style);
   return '<!doctype html>\n'+doc.documentElement.outerHTML;
  }
  function normalize(change){
@@ -50,10 +50,30 @@
   }
   return '';
  }
- function isNews(e){return ['DL','UL','OL'].includes(e.tagName)&&/お知らせ|休診|診療.*変更|担当医|感染症|news|information/i.test(label(e));}
+ const datePattern=/\d{4}\s*[.\/年-]\s*\d{1,2}\s*[.\/月-]\s*\d{1,2}/;
+ const dateOnly=value=>datePattern.test(value)&&!value.replace(datePattern,'').replace(/[日月火水木金土曜（）()\s]/g,'');
+ function newsContext(e){let p=e;for(let depth=0;p&&p.tagName!=='BODY'&&depth<5;depth++,p=p.parentElement){const hints=[p.id,p.className,label(p),...[...p.children].map(c=>(c.className||'')+' '+(c.querySelector('[class*=news],[class*=notice]')?.className||'')),...[...p.querySelectorAll(':scope > h2,:scope > h3,:scope > header h2,:scope > header h3,:scope > div[class*=head] h2,:scope > div[class*=head] h3')].map(text)].join(' ');if(/お知らせ|休診|news|information|topics|notice/i.test(hints))return true;}return false;}
+ function noticeRow(e){
+  if(e.tagName==='DL'){
+   const dt=e.querySelector(':scope > dt');
+   if(dt?.nextElementSibling?.tagName==='DD'&&(datePattern.test(text(dt))||/news|notice/i.test(dt.className||'')))return dt;
+  }
+  if(!['DL','UL','OL','DIV','SECTION'].includes(e.tagName))return null;
+  const rows=[...e.children].filter(c=>['LI','DIV','ARTICLE','A','DL'].includes(c.tagName)&&(text(c).match(new RegExp(datePattern.source,'g'))||[]).length===1&&text(c).length<2500&&text(c).replace(datePattern,'').trim().length>4);
+  const contentChildren=[...e.children].filter(c=>!blocked(c)&&text(c));
+  if(rows.length>=2&&rows.length/contentChildren.length>=0.5)return rows[0];
+  if(contentChildren.length>2)return null;
+  return rows.find(c=>['LI','ARTICLE','A'].includes(c.tagName)||/(?:^|[-_ ])(?:item|post|news|notice)(?:[-_ ]|$)/i.test(c.className||''))||null;
+ }
+ function isNews(e){return (e.tagName!=='DL'||!!e.querySelector(':scope > dt'))&&!e.closest('nav,footer')&&newsContext(e)&&!!noticeRow(e);}
+
  api.index=function(html){const doc=parse(html);let count=0;for(const e of [doc.body,...doc.body.querySelectorAll('*')]){if(!blocked(e))e.setAttribute('data-simy-edit-id','e'+count++);}return '<!doctype html>\n'+doc.documentElement.outerHTML;};
  api.inventory=function(html,liveDocument){
-  const doc=parse(html),all=[doc.body,...doc.body.querySelectorAll('[data-simy-edit-id]')],news=all.filter(isNews);
+  const doc=parse(html),all=[doc.body,...doc.body.querySelectorAll('[data-simy-edit-id]')];
+  const newsCandidates=all.filter(isNews);
+  // Prefer the existing article list over an outer section containing several categories.
+  const collections=newsCandidates.filter(e=>!newsCandidates.some(n=>n!==e&&e.contains(n)&&['DL','UL','OL'].includes(n.tagName)));
+  const news=collections.filter(e=>!collections.some(n=>n!==e&&n.contains(e)&&[...n.children].filter(c=>datePattern.test(text(c))&&text(c).length<2500).length>=2));
   const out=[],seen=new Set();let size=0;
   function add(e,kind){const id=e.getAttribute('data-simy-edit-id');if(seen.has(id)||out.length>=220)return;let t=kind==='image'?(e.getAttribute('alt')||'画像'):(e.tagName==='BODY'?'ページ全体':text(e));if(!t)return;if(kind==='text'&&t.length>1800)return;t=t.slice(0,1800);let context=label(e);try{const live=liveDocument?.querySelector('[data-simy-edit-id="'+id+'"]');if(live){const css=liveDocument.defaultView.getComputedStyle(live);context+=' / 現在の文字サイズ:'+css.fontSize+'、文字色:'+css.color+'、背景:'+css.backgroundColor;}}catch{}const n={id,kind,tag:e.tagName.toLowerCase(),text:t,context:context.slice(0,300)};const len=JSON.stringify(n).length;if(size+len>35000)return;size+=len;seen.add(id);out.push(n);}
   add(doc.body,'element');
@@ -86,29 +106,55 @@
   if(plan.status!=='edit'||!Array.isArray(plan.operations)||!plan.operations.length||plan.operations.length>24)throw Error('変更案を確認できませんでした。');
   const doc=parse(html);doc.querySelector('#simy-edit-highlight')?.remove();for(const e of doc.querySelectorAll('[data-simy-changed]'))e.removeAttribute('data-simy-changed');
   const changed=[];
-  for(const o of plan.operations){if(!/^e\d+$/.test(o.target))throw Error('変更箇所を確認できませんでした。');const e=doc.querySelector('[data-simy-edit-id="'+o.target+'"]');if(!e||blocked(e))throw Error('変更箇所が見つかりません。');
+  // Deduplicate the same physical text range, not every descendant of a target.
+  const starts=new Map();
+  const matchStart=o=>{
+   if(starts.has(o))return starts.get(o);
+   const target=/^e\d+$/.test(o.target)&&doc.querySelector('[data-simy-edit-id="'+o.target+'"]');
+   if(!target)return null;
+   const walker=doc.createTreeWalker(target,NodeFilter.SHOW_TEXT),map=[];let n,normalized='',space=false;
+   while(n=walker.nextNode()){if(blocked(n.parentElement))continue;for(let offset=0;offset<n.nodeValue.length;offset++){
+    const char=n.nodeValue[offset];if(/\s/.test(char)){if(space)continue;space=true;normalized+=' ';}else{space=false;normalized+=char;}map.push({node:n,offset});
+   }}
+   const at=normalized.indexOf(o.oldText),start=at<0?null:map[at];starts.set(o,start);return start;
+  };
+  const operations=plan.operations.filter((o,i,all)=>o.type!=='replace_text'||!all.slice(0,i).some(other=>{
+   if(other.type!=='replace_text'||o.oldText!==other.oldText||o.newText!==other.newText)return false;
+   const a=matchStart(o),b=matchStart(other);return a&&b&&a.node===b.node&&a.offset===b.offset;
+  }));
+  for(const o of operations){if(!/^e\d+$/.test(o.target))throw Error('変更箇所を確認できませんでした。');const e=doc.querySelector('[data-simy-edit-id="'+o.target+'"]');if(!e||blocked(e))throw Error('変更箇所が見つかりません。');
    if(o.type==='insert_notice'){
     if(!isNews(e)||!o.title||!o.body||!/^\d{4}-\d{2}-\d{2}$/.test(o.date))throw Error('お知らせの追加先を確認できません。');
     const cleanClone=source=>{const clone=source.cloneNode(true);for(const n of [clone,...clone.querySelectorAll('*')]){n.removeAttribute('id');n.removeAttribute('data-simy-edit-id');n.removeAttribute('data-simy-changed');}return clone;};
     const writeText=(node,value)=>{const walker=doc.createTreeWalker(node,NodeFilter.SHOW_TEXT),nodes=[];let n;while(n=walker.nextNode())if(n.nodeValue.trim())nodes.push(n);if(nodes.length){nodes[0].nodeValue=value;for(const rest of nodes.slice(1))rest.nodeValue='';}else node.textContent=value;};
-    let heading,body;
-    if(e.tagName==='DL'){
-     const template=e.querySelector(':scope > dt'),bodyTemplate=template?.nextElementSibling;
+    let heading,body,item,dateElement;
+    const metadata=node=>{for(let p=node;p&&p!==item;p=p.parentElement)if(/(?:^|[-_ ])(?:cat|cate|category|label|badge)(?:[-_ ]|$)/i.test(p.className||''))return true;return false;};
+    if(e.tagName==='DL'&&e.querySelector(':scope > dt')){
+     const template=noticeRow(e),bodyTemplate=template?.nextElementSibling;
      if(!template||bodyTemplate?.tagName!=='DD')throw Error('既存のお知らせの形式を確認できません。');
-     heading=cleanClone(template);body=cleanClone(bodyTemplate);
+     const first=cleanClone(template),second=cleanClone(bodyTemplate);e.prepend(first,second);
+     if(dateOnly(text(template))){
+      dateElement=first;heading=second.querySelector('h2,h3,h4,h5,[class*=title],[class*=ttl]')||second;
+      body=[...second.querySelectorAll('p,[class*=excerpt],[class*=description]')].find(n=>n!==heading&&!heading.contains(n)&&!n.contains(heading));
+     }else{heading=first;body=second;dateElement=first.querySelector('time')||[...first.querySelectorAll('[class*=date]')].find(n=>dateOnly(text(n)));}
     }else{
-     const template=e.querySelector(':scope > li');if(!template)throw Error('既存のお知らせの形式を確認できません。');
-     const item=cleanClone(template);heading=item.querySelector('strong,h3,h4');body=item.querySelector('p');
-     if(!heading||!body)throw Error('既存のお知らせの形式を確認できません。');
+     const template=noticeRow(e);if(!template)throw Error('既存のお知らせの形式を確認できません。');item=cleanClone(template);
+     dateElement=item.querySelector('time')||[...item.querySelectorAll('dt,[class*=date]')].find(n=>datePattern.test(text(n)))||[...item.querySelectorAll('*')].find(n=>dateOnly(text(n)));
+     heading=item.querySelector('h2,h3,h4,h5,dd,[class*=title],[class*=ttl]');
+     if(!heading){const candidates=[item,...item.querySelectorAll('a,span,p,div')].filter(n=>n!==dateElement&&!n.contains(dateElement)&&!metadata(n)&&text(n)&&!datePattern.test(text(n))&&!/^(お知らせ|新着|NEWS|NEW|診療時間|休診情報)$/i.test(text(n)));heading=candidates.find(n=>![...n.children].some(c=>text(c)))||candidates[0];}
+     if(!heading){if(dateElement)throw Error('既存のお知らせの見出しを確認できません。');heading=item;}
+     body=[...item.querySelectorAll('p,[class*=excerpt],[class*=description],[class*=body]')].find(n=>n!==heading&&!heading.contains(n)&&!n.contains(heading)&&n!==dateElement&&!n.contains(dateElement)&&!metadata(n)&&!/^(お知らせ|新着|NEWS|NEW|診療案内|休診情報)$/i.test(text(n)));
      e.prepend(item);
     }
-    const date=o.date.replace(/-/g,'.'),walker=doc.createTreeWalker(heading,NodeFilter.SHOW_TEXT);let n,dateNode;
-    while(n=walker.nextNode())if(/^\s*\d{4}[.\/-]\d{1,2}[.\/-]\d{1,2}\s*$/.test(n.nodeValue)){dateNode=n;break;}
-    if(dateNode){dateNode.nodeValue=date+'　';const titleNodes=[];const tw=doc.createTreeWalker(heading,NodeFilter.SHOW_TEXT);while(n=tw.nextNode())if(n!==dateNode&&n.nodeValue.trim())titleNodes.push(n);if(titleNodes.length){titleNodes[0].nodeValue=o.title;for(const rest of titleNodes.slice(1))rest.nodeValue='';}else heading.append(doc.createTextNode(o.title));}
-    else writeText(heading,date+'　'+o.title);
-    writeText(body,o.body);
-    if(e.tagName==='DL')e.prepend(heading,body);
-    heading.setAttribute('data-simy-changed','true');body.setAttribute('data-simy-changed','true');changed.push(o.target);
+    const formatDate=before=>{const source=before.match(datePattern)?.[0]||before,parts=o.date.split('-');return source.includes('年')?parts[0]+'年'+parts[1]+'月'+parts[2]+'日':parts.join(source.includes('/')?'/':source.includes('-')?'-':'.');};
+    const date=formatDate(text(heading));
+    if(dateElement){writeText(dateElement,formatDate(text(dateElement)));if(dateElement.tagName==='TIME')dateElement.setAttribute('datetime',o.date);if(heading.contains(dateElement)){const tw=doc.createTreeWalker(heading,NodeFilter.SHOW_TEXT),nodes=[];let n;while(n=tw.nextNode())if(!dateElement.contains(n)&&n.nodeValue.trim())nodes.push(n);if(!nodes.length)heading.append(doc.createTextNode(o.title+(body?'':' — '+o.body)));else{nodes[0].nodeValue=o.title+(body?'':' — '+o.body);for(const rest of nodes.slice(1))rest.nodeValue='';}}else writeText(heading,o.title+(body?'':' — '+o.body));}
+    else{const walker=doc.createTreeWalker(heading,NodeFilter.SHOW_TEXT);let n,dateNode;while(n=walker.nextNode())if(/^\s*\d{4}[.\/-]\d{1,2}[.\/-]\d{1,2}\s*$/.test(n.nodeValue)){dateNode=n;break;}
+     if(dateNode){dateNode.nodeValue=date+'　';const titleNodes=[];const tw=doc.createTreeWalker(heading,NodeFilter.SHOW_TEXT);while(n=tw.nextNode())if(n!==dateNode&&n.nodeValue.trim())titleNodes.push(n);if(titleNodes.length){titleNodes[0].nodeValue=o.title+(body?'':' — '+o.body);for(const rest of titleNodes.slice(1))rest.nodeValue='';}else heading.append(doc.createTextNode(o.title+(body?'':' — '+o.body)));}
+     else writeText(heading,(datePattern.test(text(heading))?date+'　':'')+o.title+(body?'':' — '+o.body));
+    }
+    if(body)writeText(body,o.body);
+    heading.setAttribute('data-simy-changed','true');body?.setAttribute('data-simy-changed','true');changed.push(o.target);
    }else if(o.type==='replace_text'){
     if(!o.oldText||typeof o.newText!=='string'||!o.newText.trim())throw Error('変更文を確認できません。');
     // Locate text across inline elements without destroying links, icons or layout.
