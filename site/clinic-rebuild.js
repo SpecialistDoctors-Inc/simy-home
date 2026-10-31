@@ -30,7 +30,18 @@
  const showEditor=()=>{if(!currentHtml)return;editor.showModal();document.body.classList.add('preview-editor-open');(mobile()?closeEditor:editInput).focus({preventScroll:true});};
  openEditor.addEventListener('click',showEditor);closeEditor.addEventListener('click',()=>editor.close());editor.addEventListener('close',()=>{document.body.classList.remove('preview-editor-open');openEditor.focus({preventScroll:true});});
  const setEditBusy=value=>{editBusy=value;let pending=conversation.querySelector('.chat-thinking');if(value){pending=document.createElement('p');pending.className='chat-thinking';pending.setAttribute('role','status');pending.textContent='変更内容を考えています';conversation.append(pending);conversation.scrollTop=conversation.scrollHeight;}else pending?.remove();editForm.querySelector('[type=submit]').disabled=value;editForm.querySelector('[type=submit]').textContent=value?'…':'↑';undo.disabled=value||!history.length;reset.disabled=value;example.disabled=value;editInput.disabled=value;photoInput.disabled=value;editForm.setAttribute('aria-busy',String(value));};
- frame.addEventListener('load',()=>{try{const mark=frame.contentDocument?.querySelector('[data-simy-changed]');mark?.scrollIntoView({block:'center',behavior:'instant'});}catch{}});
+ const pageOffer=document.querySelector('#preview-page-offer');
+ document.querySelector('#page-offer-close').addEventListener('click',()=>pageOffer.close());
+ document.querySelector('#page-offer-back').addEventListener('click',()=>pageOffer.close());
+ document.querySelector('#page-offer-apply').addEventListener('click',()=>{pageOffer.close();document.querySelector('#preview-apply').click();});
+ frame.addEventListener('load',()=>{try{const doc=frame.contentDocument;if(!doc)return;
+  for(const link of doc.querySelectorAll('a,area,[role=button]')){link.removeAttribute('aria-disabled');link.setAttribute('tabindex','0');}
+  const style=doc.createElement('style');style.textContent='a,area,button,[role=button],input[type=button],input[type=submit]{pointer-events:auto!important;cursor:pointer!important}';doc.head.append(style);
+  for(const control of doc.querySelectorAll('button,input[type=button],input[type=submit]')){control.disabled=false;control.setAttribute('type','button');}
+  doc.addEventListener('click',event=>{if(event.target.closest?.('a,area,button,[role=button],input[type=button],input[type=submit]')){event.preventDefault();event.stopImmediatePropagation();if(!pageOffer.open)pageOffer.showModal();}},true);
+  doc.addEventListener('submit',event=>{event.preventDefault();event.stopImmediatePropagation();},true);
+  doc.querySelector('[data-simy-changed]')?.scrollIntoView({block:'center',behavior:'instant'});
+ }catch{}});
  editForm.addEventListener('submit',async event=>{event.preventDefault();if(editBusy||!editForm.reportValidity()||!currentHtml)return;const message=editInput.value.trim(),base=currentHtml;log(message,'preview-user-message');setEditBusy(true);const stopElapsed=startEditElapsed();
   try{
    const response=await fetch(new URL('/api/preview-edit',form.dataset.endpoint),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({request:message,nodes:window.SimyPreviewEdit.inventory(base,frame.contentDocument),history:chat.slice(-6),assets:assets.map(({id,name})=>({id,name}))}),signal:AbortSignal.timeout(100000)});
