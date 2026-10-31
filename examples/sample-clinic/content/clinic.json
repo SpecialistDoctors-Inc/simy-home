@@ -2,7 +2,7 @@
   "name": "SIMY サンプルクリニック",
   "englishName": "SIMY SAMPLE CLINIC",
   "changeRequest": {
-    "id": "adf09f04-c2e2-437a-a14c-22b6a7f362af",
+    "id": "aad6800d-c41b-479e-b631-ad946c167e24",
     "revision": 1
   },
   "tagline": ["いつもの毎日に、", "安心できる場所を。"],
@@ -17,6 +17,13 @@
     "note": "休診日：水曜・日曜・祝日／土曜は午前のみ"
   },
   "notices": [
+    {
+      "id": "standalone-codex-sheet-20261031",
+      "date": "2026-10-31",
+      "category": "お知らせ",
+      "title": "Codexとスプレッドシートによる更新テスト",
+      "body": "このお知らせは、医院側のCodexから共有スプレッドシートに登録した依頼を、開発側のCodexが反映する動作確認用です。架空のクリニックのサンプルであり、実際の診療予定には関係ありません。"
+    },
     {
       "id": "fresh-codex-onboarding-20261030",
       "date": "2026-10-30",
