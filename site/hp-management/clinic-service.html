@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="light" name="color-scheme"/>
+<meta content="#11243a" name="theme-color"/>
+<meta content="ホームページの保守・ChatGPTでの更新に加え、診察や音声メモから記事案を作成。先生が確認して公開するSIMYのクリニック向けHP管理。SIMYライセンス込みの料金案。" name="description"/>
+<title>クリニック向けHP管理・AI更新 | SIMY</title>
+<!-- Design proposal, not a production service or a ranking/clinical claim. --><!-- Implementation checklist before production:
+  1. Confirm the two HP plans include a SIMY license, seats, recording/AI limits, overages.
+  2. Obtain appropriate consent; verify audio/transcription processing locations and contracts.
+  3. Validate pre-generation de-identification and human review, retention/deletion and access.
+  4. Publish only clinician-approved content; verify medical/advertising requirements and sources.
+  5. Replace local demos with authenticated APIs and a separate staging/publish approval system.
+  6. Do not promise Google ranking, AI citations or complete automatic anonymization.
+  7. Remove the noindex meta tag only when the approved page is ready for publication.
+--><link href="/clinic-service.css?v=1" rel="stylesheet"/><script defer="" src="/information-flow.js?v=60c0e347ac9f"></script><script defer="" src="/service-security.js?v=10c67d62bb46"></script><script defer="" src="/website-check.js?v=18ea8f2cb1f6"></script><script defer="" src="/preview-edit.js?v=3d38195ce03c"></script><script defer="" src="/clinic-rebuild.js?v=481382f65b2c"></script><link href="https://simy.one/hp-management/clinic-service.html" rel="canonical"/><meta name="robots" content="noindex,follow">
+</head>
+<body>
+<header class="site-header service-copy">
+<div class="wrap nav-inner">
+<a aria-label="SIMY トップへ" class="logo" href="#top"><img src="/simy-icon-56.png" alt="" width="32" height="32"/>SIMY</a>
+<span class="nav-label">クリニック向け HP管理</span>
+<nav aria-label="ページ内メニュー" class="main-nav" id="main-nav">
+<a href="#risk">守る</a><a href="#ai">自分で更新する</a><a href="#discover">診察から発信</a><a href="#pricing">料金</a><a href="#faq">よくある質問</a>
+<a href="/hp-management/clinic.html">現行ページと比較 ↗</a></nav>
+<a class="btn btn-dark header-cta" href="#diagnosis">無料でHPを診断する <span aria-hidden="true">↗</span></a>
+<button aria-controls="main-nav" aria-expanded="false" class="menu-toggle" id="menu-toggle" type="button">☰ メニュー</button>
+</div>
+</header>
+<main id="top">
+<section aria-labelledby="hero-heading" class="hero service-copy">
+<div class="wrap hero-inner">
+<div>
+<div class="kicker">SIMY Website Management / For Clinics</div>
+<h1 id="hero-heading">ホームページを<br/><span>守るのはSIMY。</span><br/>更新するのは、<br/>先生自身。</h1>
+<p class="hero-lead">古いPHPなどのセキュリティ対策はSIMYにお任せ。文章や写真の変更は、ご自身のChatGPTで。制作会社を待たずに、先生のペースで更新できます。</p>
+<div class="hero-tags"><span>✓ 365日見守り</span><span>✓ AIで自由に更新</span><span>✓ SIMYライセンス込み</span></div>
+<div class="hero-actions"><a class="btn btn-blue" href="#diagnosis">無料でHPのリスクを確認 <span aria-hidden="true">→</span></a><a class="btn btn-white" href="#rebuild">ChatGPT更新を見る <span aria-hidden="true">↗</span></a></div>
+<p class="hero-note">公開情報の確認です。無料診断だけでは侵入や漏えいの有無は判定できません。</p>
+</div>
+<div class="hero-art">
+<img alt="診療室でホームページを確認する医師と、サイバー攻撃のイメージを対比した漫画" data-fallback-key="hero" decoding="async" fetchpriority="high" loading="eager" src="/assets/website-check/clinic-doctor-cybersecurity-v1.webp"/>
+<div class="hero-price"><small>セキュリティ保守・AI更新・SIMYライセンス</small><b>月額 14,800円〜</b> <span>税別</span></div>
+</div>
+</div>
+</section><section aria-labelledby="diagnosis-heading" class="live-tools service-diagnosis" id="diagnosis"><div class="tool-intro"><span>無料の脆弱性診断</span><h2>今のホームページを、まず確認。</h2><p>URLを入力すると、この場で結果をご覧いただけます。</p></div><form class="diagnosis-form" data-endpoint="https://site-health-check-shiwaku.mauve-bow-3401.chatgpt.site/api/scan" id="diagnosis-form"><div class="diagnosis-heading"><label for="diagnosis-url">医院のホームページURL</label></div><div class="url-entry"><input aria-describedby="diagnosis-note" autocapitalize="none" autocomplete="url" id="diagnosis-url" inputmode="url" name="website" placeholder="例：https://example-clinic.jp" required="" spellcheck="false" type="text"/><button class="button button-primary" type="submit"><span class="button-label">無料で診断する</span><span aria-hidden="true">→</span></button></div><p class="entry-benefits">約3分・最大30ページ。全結果とPDFは登録後に表示します。</p><p class="availability" id="diagnosis-note">公開情報の確認です。侵入・漏えいの有無は判定できません。</p><details class="scan-details"><summary>診断範囲・URLの取り扱い</summary><p>同じサイトの配下リンクを最大30ページまでたどり、公開ページ・使用部品・公開プログラムを確認します。別ドメインやリンクで見つからないページは対象外です。サーバー内部・電子カルテ・外部予約サービス内部は対象外です。広告用の追跡情報や「#」以降は自動で除きます。ページ指定など、それ以外のパラメーターがある場合はトップページのURLをご利用ください。URLは診断サービスへ送信し、対象サイトに取得アクセスが記録される場合があります。</p></details><div hidden="" id="scan-progress"></div><noscript><p class="small">診断にはJavaScriptを有効にしてください。</p></noscript></form></section><section aria-labelledby="diagnosis-state-title" class="diagnosis-state live-tools service-report" hidden="" id="diagnosis-state" tabindex="-1"><p class="eyebrow">YOUR CLINIC REPORT</p><h2 id="diagnosis-state-title">公開ホームページを確認しています</h2><p id="diagnosis-target"></p><p aria-live="polite" id="diagnosis-message" role="status"></p><div id="diagnosis-results"></div></section>
+<div aria-label="サービスの3つの価値" class="feature-strip service-copy"><div class="wrap feature-list">
+<a class="feature-item" href="#risk"><span class="feature-no">01</span><div><strong>安全に守る</strong><small>古いプログラムの更新、監視、バックアップ</small></div></a>
+<a class="feature-item" href="#ai"><span class="feature-no">02</span><div><strong>自分で変えられる</strong><small>ChatGPTで文章・写真を改善して公開</small></div></a>
+<a class="feature-item" href="#discover"><span class="feature-no">03</span><div><strong>患者さんに見つけてもらう</strong><small>日々の説明から記事案をつくり、確認して公開</small></div></a>
+</div></div>
+<section aria-labelledby="risk-heading" class="section risk service-copy" id="risk">
+<div class="wrap">
+<div class="section-head"><span class="eyebrow">01 / SAFETY</span><h2 id="risk-heading">「うちは大丈夫」が、<br/>思わぬリスクになることも。</h2><p>予約への案内、医院への信頼、日々の診療。ホームページの更新漏れや不正な改ざんが、患者さんにも影響する場合があります。</p></div>
+<div class="cards-three">
+<article class="comic-card"><img alt="予約ページが別の不審なページに変わり、患者さんが医師にスマートフォンを見せる漫画" data-fallback-key="security_1" decoding="async" loading="lazy" src="/assets/website-check/clinic-risk-tamper.webp"/><div class="comic-content"><p class="kicker">01 / 患者さんへの被害</p><h3>予約リンクが、<br/>偽サイトにすり替えられることも。</h3><p>サイトが改ざんされると、患者さんが偽の予約ページに誘導され、個人情報を入力してしまうおそれがあります。</p></div></article>
+<article class="comic-card"><img alt="Googleの危険なサイトという警告を見て困る保護者の漫画" data-fallback-key="security_2" decoding="async" loading="lazy" src="/assets/website-check/clinic-risk-google-warning-v3.webp"/><div class="comic-content"><p class="kicker">02 / 集患・信用への影響</p><h3>Googleに「危険なサイト」と<br/>表示されることも。</h3><p>不正な内容が検出された場合、ブラウザーや検索結果に警告が出て、予約や来院の機会を損なうことがあります。</p></div></article>
+<article class="comic-card"><img alt="院内のホームページサーバーから別システムへ被害が拡大するリスクを確認する医師とスタッフの漫画" data-fallback-key="security_3" decoding="async" loading="lazy" src="/assets/website-check/clinic-risk-system-spread.webp"/><div class="comic-content"><p class="kicker">03 / 診療への影響</p><h3>復旧対応で、<br/>診療にも影響が出ることも。</h3><p>サーバーや認証情報を共有している場合は、被害が広がり、予約の停止や受付・診療への負担につながるおそれがあります。</p></div></article>
+</div>
+<p class="risk-disclaimer">※ 漫画は想定されるリスクの説明です。すべての医院で同様の被害が発生するという意味ではありません。</p>
+<div class="risk-action"><div><strong>大切なのは、診断して終わらないこと。</strong><p>SIMYは、プログラムの更新・監視・バックアップまで継続して支援します。</p></div><a class="btn btn-white" href="#pricing">保守プランを見る →</a></div>
+</div>
+</section>
+<section aria-labelledby="ai-heading" class="section ai-section service-copy" id="ai">
+<div class="wrap"><div class="section-head"><span class="eyebrow">02 / UPDATE WITH AI</span><h2 id="ai-heading">「ここを直したい」を、<br/>先生のChatGPTで、その場で。</h2><p>制作会社への依頼・見積もり・返事待ちを減らす。先生が内容を確認したうえで、文章や画像の変更を公開できます。</p></div>
+<div class="cards-three">
+<article class="comic-card ai"><img alt="ホームページの改善を考えながら紙の修正指示を見る医師の漫画" data-fallback-key="update_1" decoding="async" loading="lazy" src="/assets/website-check/clinic-improvement-scene-1.webp"/><div class="comic-content"><p class="kicker">これまで / 更新の悩み</p><h3>少し直したい。<br/>毎回、待っていませんか。</h3><p>「診療時間を変えたい」「写真を差し替えたい」。その都度、制作会社とのやりとりが必要でした。</p></div></article>
+<article class="comic-card ai"><img alt="医師がスマートフォンでChatGPTにホームページ更新を依頼する漫画" data-fallback-key="update_2" decoding="async" loading="lazy" src="/assets/website-check/clinic-improvement-scene-2.webp"/><div class="comic-content"><p class="kicker">これから / ChatGPTで改善</p><h3>「こうしたい」を、<br/>いつもの言葉で伝えるだけ。</h3><p>お持ちのChatGPTで、診療案内・画像・お知らせなどの更新案を作成できます。</p></div></article>
+<article class="comic-card ai"><img alt="AIが更新したホームページを医師とスタッフが確認する漫画" data-fallback-key="update_3" decoding="async" loading="lazy" src="/assets/website-check/clinic-improvement-scene-3.webp"/><div class="comic-content"><p class="kicker">先生が確認 / 公開へ</p><h3>内容を確認して公開。<br/>保守はSIMYにお任せ。</h3><p>先生が伝えたい情報は先生のペースで。安全のための更新・監視はSIMYが担います。</p></div></article>
+</div>
+<div class="ai-after"><div><strong>文章も、写真も、お知らせも。</strong><span>ご自身のChatGPT・Claude Codeとの連携をサポート。利用料は各サービスで別途必要です。</span></div><a class="btn btn-dark" href="#rebuild">実際の更新イメージを見る →</a></div>
+</div>
+</section>
+<section aria-labelledby="rebuild-title" class="rebuild-section live-tools service-rebuild" id="rebuild">
+<p class="eyebrow">02を体験 / 無料プレビュー</p>
+<h2 id="rebuild-title">まずは、ご自身のホームページで試してみる。</h2>
+<p>まずは、トップページを作ります。</p>
+<form data-endpoint="https://site-health-check-shiwaku.mauve-bow-3401.chatgpt.site/api/rebuild" id="rebuild-form">
+<label for="rebuild-url">再現したいホームページのURL</label>
+<div class="rebuild-entry"><input autocapitalize="none" autocomplete="url" id="rebuild-url" inputmode="url" name="url" placeholder="https://example-clinic.jp/" required="" spellcheck="false" type="text"/><button type="submit">作ってみる <span aria-hidden="true">→</span></button></div>
+<label class="rebuild-consent"><input name="rights" required="" type="checkbox"/>このページを再制作する権限があります。</label>
+<p aria-live="polite" class="rebuild-status" id="rebuild-status" role="status"></p>
+</form>
+<div hidden="" id="rebuild-result">
+<div class="rebuild-result-head"><strong>トップページのプレビューができました。</strong><a download="SIMY_HP再現プレビュー.html" id="rebuild-download">HTMLをダウンロード ↓</a></div>
+<button class="preview-open" id="rebuild-editor-open" type="button">大きな画面で編集を試す →</button>
+<p class="rebuild-note">公開中のホームページは変わりません。予約・問診などの接続は移管時に行います。</p>
+</div>
+<dialog aria-labelledby="preview-editor-title" data-pane="canvas" id="rebuild-editor">
+<header class="preview-editor-header"><div><strong id="preview-editor-title">ChatGPT <span class="preview-demo-badge">更新体験</span></strong><p id="preview-source"></p></div><button aria-label="体験を閉じる" id="rebuild-editor-close" type="button">×</button></header>
+<div class="preview-editor-layout">
+<section aria-label="変更の入力" class="preview-chat is-empty"><div class="chat-welcome"><h3>どこを変えましょうか？</h3><p>いつもの言葉で、ホームページを更新。</p></div>
+<div aria-live="polite" id="preview-conversation" role="log"></div>
+<form id="preview-edit-form"><label class="composer-label" for="preview-edit-message">ChatGPTへのメッセージ</label><textarea id="preview-edit-message" maxlength="1500" placeholder="ChatGPTに依頼する" required="" rows="2"></textarea><p id="preview-photo-status" role="status"></p><div class="composer-toolbar"><button aria-label="写真の添付・操作例を開く" popovertarget="preview-tools" title="写真・操作例" type="button">＋</button><span>ホームページを更新</span><button aria-label="メッセージを送信" id="preview-send" title="送信" type="submit">↑</button></div></form>
+<div class="chat-suggestions"><button data-chat-prompt="明日は午後休診です。お知らせに追加してください。" type="button">休診のお知らせ</button><button data-chat-prompt="全体を緑色のやさしいデザインに変えてください。" type="button">デザインを変更</button></div><div aria-label="編集メニュー" id="preview-tools" popover=""><p>写真・操作例</p><button id="preview-attach" type="button">写真を添付</button><input accept="image/jpeg,image/png,image/webp" hidden="" id="preview-photo" type="file"/><button id="preview-edit-example" type="button">休診のお知らせを追加</button><button data-edit-prompt="全体を緑色のやさしいデザインに変えてください。" type="button">デザインを変える</button><button data-edit-prompt="診療案内の文章を、患者さんにわかりやすくしてください。" type="button">文章をわかりやすく</button><div class="preview-edit-actions"><button disabled="" id="preview-edit-undo" type="button">ひとつ戻す</button><button id="preview-edit-reset" type="button">最初に戻す</button></div></div>
+<p class="preview-scope">体験用の接続です。ご利用時はご自身のChatGPTを接続します。</p>
+</section>
+<section aria-label="変更後のホームページ" class="preview-canvas"><div class="preview-canvas-label">ホームページのプレビュー</div><iframe id="rebuild-preview" referrerpolicy="no-referrer" sandbox="allow-same-origin" title="再現したホームページの編集プレビュー"></iframe></section>
+</div>
+<footer class="preview-editor-footer"><span><strong>この使いやすさを、先生の医院へ。</strong><br/>月額14,800円〜（税別）</span><div><button id="preview-show-pricing" type="button">料金を見る</button><button id="preview-apply" type="button">このホームページで申し込む →</button><a href="mailto:sales@simy.one" id="preview-enquiry">先に相談する ↗</a></div></footer>
+</dialog>
+</section>
+<section aria-labelledby="discover-heading" class="section voice-growth service-copy" id="discover">
+<div class="wrap">
+<div class="voice-title-row">
+<div class="voice-title"><span class="eyebrow">03 / YOUR VOICE, YOUR CONTENT</span><h2 id="discover-heading">いつもの説明が、<br/><em>医院の発信に。</em></h2><p class="voice-lead">いつもの診察で伝えている知識。治療に込めた思い。<br/>SIMYが記事案にまとめ、先生の確認後にホームページへ。<br/><strong>原稿を書く時間を増やさず、医院らしい発信を続けられます。</strong></p></div>
+<aside class="voice-license"><div class="voice-license-symbol"><svg aria-hidden="true" class="ui-icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.65" viewbox="0 0 24 24"><rect height="12" rx="3" width="6" x="9" y="2"></rect><path d="M5 10v2a7 7 0 0 0 14 0v-2M12 19v3M8 22h8"></path></svg></div><span class="kicker">SIMY INCLUDED</span><strong>話すことが、<br/>医院のコンテンツに。</strong><span class="pill mint">SIMYライセンス込み</span><small>基本保守・セキュリティ強化<br/>どちらのプランでも</small><a href="#pricing">料金・利用条件を見る <svg aria-hidden="true" class="ui-icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.65" viewbox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"></path></svg></a></aside>
+</div>
+<div class="voice-flow-heading"><h3>先生はいつもの診察を。<br class="only-mobile"/>SIMYが発信の準備を。</h3><span>録音 → 整理 → 下書き → 確認して公開</span></div>
+<ol aria-label="診察からホームページのコンテンツを作る4ステップ" class="voice-flow">
+<li class="voice-step"><div class="voice-step-head"><span>01</span><svg aria-hidden="true" class="ui-icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.65" viewbox="0 0 24 24"><rect height="12" rx="3" width="6" x="9" y="2"></rect><path d="M5 10v2a7 7 0 0 0 14 0v-2M12 19v3M8 22h8"></path></svg></div><h3>日常の診察・会話</h3><p>治療方針、質問への回答、専門知識。適切な同意のもとで録音します。</p><div class="flow-mini recorder-mini"><div><span class="record-dot"></span>診察・音声メモ<span class="record-time">00:42</span></div><div aria-hidden="true" class="waveform"><i style="--h:9px"></i><i style="--h:16px"></i><i style="--h:26px"></i><i style="--h:13px"></i><i style="--h:32px"></i><i style="--h:41px"></i><i style="--h:22px"></i><i style="--h:35px"></i><i style="--h:17px"></i><i style="--h:45px"></i><i style="--h:29px"></i><i style="--h:15px"></i><i style="--h:37px"></i><i style="--h:24px"></i><i style="--h:11px"></i><i style="--h:30px"></i><i style="--h:43px"></i><i style="--h:21px"></i><i style="--h:34px"></i><i style="--h:16px"></i><i style="--h:26px"></i><i style="--h:38px"></i><i style="--h:13px"></i><i style="--h:20px"></i></div><small><svg aria-hidden="true" class="ui-icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.65" viewbox="0 0 24 24"><path d="m5 12 4 4L19 6"></path></svg> 同意・利用目的を確認</small></div><p class="voice-step-foot">患者さんを録音せず、診察後に先生だけで音声メモを残す方法も。</p></li>
+<li class="voice-step"><div class="voice-step-head"><span>02</span><svg aria-hidden="true" class="ui-icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.65" viewbox="0 0 24 24"><path d="M12 3 3 7v5c0 5 9 9 9 9s9-4 9-9V7l-9-4Z"></path><path d="m8 12 3 3 5-6"></path></svg></div><h3>公開できる知識を抽出</h3><p>患者さんの情報ではなく、先生の説明や考え方を取り出します。</p><div class="flow-mini mask-mini"><div><span>患者名</span><i aria-label="除外" class="redact"></i><b>除外</b></div><div><span>連絡先</span><i aria-label="除外" class="redact"></i><b>除外</b></div><div class="kept-knowledge"><svg aria-hidden="true" class="ui-icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.65" viewbox="0 0 24 24"><path d="m5 12 4 4L19 6"></path></svg> 診療の考え方・一般的な説明</div></div><p class="voice-step-foot">個人を推測できる固有の経緯も確認。記事生成前に除く運用を設計します。</p></li>
+<li class="voice-step"><div class="voice-step-head"><span>03</span><svg aria-hidden="true" class="ui-icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.65" viewbox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6Z"></path><path d="M14 2v6h6M8 13h8M8 17h6"></path></svg></div><h3>記事の下書きを作成</h3><p>患者向けFAQ、治療の比較、院長ブログなど、読みやすい記事案に。</p><div class="flow-mini drafts-mini"><div><svg aria-hidden="true" class="ui-icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.65" viewbox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6Z"></path><path d="M14 2v6h6M8 13h8M8 17h6"></path></svg><span>患者さんからよくある質問</span><small>下書き</small></div><div><svg aria-hidden="true" class="ui-icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.65" viewbox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6Z"></path><path d="M14 2v6h6M8 13h8M8 17h6"></path></svg><span>診療で大切にしていること</span><small>下書き</small></div><div><svg aria-hidden="true" class="ui-icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.65" viewbox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6Z"></path><path d="M14 2v6h6M8 13h8M8 17h6"></path></svg><span>季節の健康情報</span><small>下書き</small></div></div><p class="voice-step-foot">録音をそのまま掲載せず、公開に適した説明に整理します。</p></li>
+<li class="voice-step"><div class="voice-step-head"><span>04</span><svg aria-hidden="true" class="ui-icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.65" viewbox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c5 5 5 13 0 18-5-5-5-13 0-18Z"></path></svg></div><h3>先生が確認して公開</h3><p>医学的な内容と個人情報を確認。承認した記事だけをHPに反映します。</p><div class="flow-mini publish-mini"><div><i></i><i></i><i></i><span>医院のホームページ</span></div><p>先生の知識が、<br/><strong>医院の情報として蓄積。</strong></p><span class="publish-mini-badge"><svg aria-hidden="true" class="ui-icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.65" viewbox="0 0 24 24"><path d="m5 12 4 4L19 6"></path></svg> 確認後に公開</span></div><p class="voice-step-foot">検索で参照される機会を増やし、患者さんの共感と信頼につなげます。</p></li>
+</ol>
+<p class="flow-note">※ 録音から公開までの運用提案です。利用には、録音への同意、処理環境、個人情報の除去方法などの確認が必要です。</p>
+<div aria-labelledby="voice-example-heading" class="voice-example" id="voice-example"><div class="article-example"><div><span class="eyebrow">先生の音声メモ</span><h3>「いつも説明していること」を話すだけ。</h3><blockquote>治療を決める前に、患者さんが何を大切にしているかを聞きたい。選択肢を説明して、一緒に考えることを大切にしています。</blockquote></div><div class="article-paper"><span class="eyebrow">記事の仕上がり例</span><h3>治療の選択肢を、<br/>一緒に考えるために。</h3><p>当院では、患者さんが大切にしていることを伺いながら、治療の選択肢を分かりやすくお伝えしています。納得して選んでいただけるよう、一緒に考えていきます。</p><span class="article-check">先生が内容を確認してから公開</span></div></div></div>
+<div class="voice-safety"><h3>患者さんの個人情報を、記事に載せません。</h3><p>発信用の音声メモをもとに記事案を作成。診察音声を使う場合は同意と情報の取り扱いを確認し、公開前に先生が内容を確認します。</p></div>
+<div class="search-value"><div><span class="eyebrow">BE FOUND, BUILD TRUST</span><h3>「記事を増やす」だけではなく、<br/>その医院だから伝えられる情報を。</h3><p>先生が普段伝えている専門知識や、患者さんが本当に知りたいことを、分かりやすく継続して発信。Google検索やAI検索から参照される機会を増やし、医院への共感と信頼につなげることを目指します。</p><small>検索順位・AIによる掲載・引用、集患効果を保証するものではありません。</small></div><div class="search-value-steps"><span><svg aria-hidden="true" class="ui-icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.65" viewbox="0 0 24 24"><path d="M21 11a8 8 0 0 1-8 8H7l-5 3 2-6a8 8 0 1 1 17-5Z"></path><path d="M7 9h9M7 13h6"></path></svg> 患者さんの疑問</span><i>↓</i><span><svg aria-hidden="true" class="ui-icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.65" viewbox="0 0 24 24"><circle cx="12" cy="7" r="4"></circle><path d="M4 22v-3a8 8 0 0 1 16 0v3"></path></svg> 先生ならではの説明</span><i>↓</i><span><svg aria-hidden="true" class="ui-icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.65" viewbox="0 0 24 24"><path d="M12 5C8 2 3 3 3 3v16s5-1 9 2c4-3 9-2 9-2V3s-5-1-9 2Zm0 0v16"></path></svg> 役立つ医院のコンテンツ</span><i>↓</i><strong><svg aria-hidden="true" class="ui-icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.65" viewbox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c5 5 5 13 0 18-5-5-5-13 0-18Z"></path></svg> 検索で見つけてもらう機会へ</strong></div></div>
+<div class="meo-support" id="meo-support"><div class="meo-comic"><img alt="GoogleマップとAI検索の両方で医院を見つけてもらうためのMEO・GEO対策イメージ" data-fallback-key="geo" decoding="async" loading="lazy" src="/assets/website-check/clinic-meo-geo-v3.webp"/></div><div><span class="pill purple">担当者による運用支援はオプション</span><h3>Googleマップや口コミ対応まで、<br/>担当者に相談したい先生へ。</h3><p>診療時間・住所・予約リンクの整備、口コミ返信案の作成、記事公開の運用支援などは「運用・集患サポート」で対応します。</p><p class="meo-price">＋49,800円／月 <small>税別（税込54,780円）</small></p><a class="linkish" href="#pricing">基本料金に含むもの・追加サポートを見る →</a></div><section aria-labelledby="discovery-survey-title" class="discovery-survey live-tools">
+<div class="discovery-survey-copy"><p class="reviews-map-kicker">医院を探す、その入口で。</p><h3 id="discovery-survey-title">初めての医院探しで、<br/>半数以上がGoogle検索を利用。</h3><p>Googleマップも29.5％。<br/>検索と地図、両方の情報を整えることが大切です。</p></div>
+<div aria-label="初めて行く医院を探すときに使ったことがある方法・複数回答" class="discovery-survey-chart">
+<ol class="discovery-bars">
+<li class="is-google"><span>Google検索</span><strong>51.3<small>％</small></strong><i aria-hidden="true" style="--value:51.3%"></i></li>
+<li><span>家族に聞く</span><strong>31.7<small>％</small></strong><i aria-hidden="true" style="--value:31.7%"></i></li>
+<li class="is-google"><span>Googleマップ</span><strong>29.5<small>％</small></strong><i aria-hidden="true" style="--value:29.5%"></i></li>
+<li><span>Yahoo!検索</span><strong>27.7<small>％</small></strong><i aria-hidden="true" style="--value:27.7%"></i></li>
+</ol>
+</div>
+<p class="discovery-survey-source">出典：<a href="https://medical-reserve.co.jp/news/reservation_survey/" rel="noopener" target="_blank">GMOリザーブプラス「患者の医院選びと予約行動に関する調査」↗</a>（2025年3月公表／15,715人・複数回答）。</p>
+</section></div>
+</div>
+</section><section aria-labelledby="pricing-heading" class="section pricing service-copy" id="pricing"><div class="wrap">
+<div class="pricing-intro"><span class="eyebrow">PLANS &amp; PRICING</span><h2 id="pricing-heading">守る・更新する・発信する。<br/>SIMYライセンスも、月額に。</h2><p>基本保守14,800円、セキュリティ強化29,800円。どちらもSIMYを使った記事案作成・確認・公開の仕組みを含む料金です。</p></div>
+<div class="included-banner"><div class="included-banner-icon"><svg aria-hidden="true" class="ui-icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.65" viewbox="0 0 24 24"><rect height="12" rx="3" width="6" x="9" y="2"></rect><path d="M5 10v2a7 7 0 0 0 14 0v-2M12 19v3M8 22h8"></path></svg></div><div><strong>両プランとも、SIMYライセンス込み。</strong><p>診察・音声メモから記事案を作成し、先生の確認後にホームページへ反映。</p></div><span>追加のSIMYライセンス料なし</span></div><div class="price-grid">
+<article class="price-card"><div class="price-top"><h3>基本保守</h3><span class="pill">スタンダード</span></div><div class="price-amount"><b>14,800</b><span> 円 / 月</span></div><div class="price-tax">税別（税込16,280円）／1クリニック・1サイト</div><div class="price-license-badge">✓ SIMYライセンスを含みます</div><p class="price-explain">ホームページを守りながら、<br/>日々の説明を医院の発信に活かしたい先生へ。</p><ul class="price-list"><li>脆弱性修正への対応・動作確認</li><li>サイト稼働監視・バックアップ</li><li>サーバー管理（5GB）・SSL管理</li><li>Googleアナリティクス（GA4）基本設定</li><li>ご自身のChatGPT・Claude Code連携</li><li><strong>SIMYによる音声メモ・診察からの記事案作成</strong></li><li>先生の確認・承認後にHPへ反映</li></ul><button class="btn btn-white btn-block" data-select-plan="基本保守" type="button">基本保守を相談する →</button><p class="caption">安全上の修正が公開された後、24時間以内に影響確認・対応を開始します。</p></article>
+<article class="price-card featured"><div class="price-top"><h3>セキュリティ強化</h3><span class="pill mint">攻撃対策を追加</span></div><div class="price-amount"><b>29,800</b><span> 円 / 月</span></div><div class="price-tax">税別（税込32,780円）／1クリニック・1サイト</div><div class="price-license-badge">✓ SIMYライセンスを含みます</div><p class="price-explain">基本保守に加え、攻撃の遮断や不正アクセス対策まで強化したい先生へ。</p><ul class="price-list"><li><strong>基本保守のすべて</strong></li><li>WAFによるWeb攻撃対策</li><li>海外アクセス・不審なBotの制限</li><li>DDoSによる負荷の軽減</li><li>CAPTCHA・ログイン攻撃対策</li><li>攻撃ログの確認と一次対応</li></ul><button class="btn btn-blue btn-block" data-select-plan="セキュリティ強化" type="button">セキュリティ強化を相談する →</button><p class="caption">対策の内容はサイト構成・外部サービスの利用状況に応じて調整します。</p></article>
+</div>
+<div class="option-row"><div><span class="pill purple">必要な医院だけ</span><h3>運用・集患サポート <small>（更新代行オプション）</small></h3><p>LINEで担当者に更新を依頼。Googleマップ情報・口コミ返信案・記事公開の運用も支援します。SIMYライセンスと先生ご自身での記事作成・更新は、基本の2プランに含まれます。</p></div><div class="option-price">＋49,800円 / 月 <small>税別・税込＋54,780円／両プラン共通</small></div></div>
+<details class="spec-box"><summary>＋ プランの機能を詳しく比較する</summary><div class="spec-table-wrap"><table class="spec-table"><thead><tr><th>サービス内容</th><th>基本保守</th><th>セキュリティ強化</th></tr></thead><tbody>
+<tr class="category"><th colspan="3">共通の基本機能</th></tr><tr><th>SIMYライセンス</th><td>込み</td><td>込み</td></tr><tr><th>診察・音声メモからの記事案作成 ※</th><td>込み</td><td>込み</td></tr><tr><th>先生の承認後にHPへ反映 ※</th><td>込み</td><td>込み</td></tr><tr><th>セキュリティ修正・動作確認</th><td>✓</td><td>✓</td></tr><tr><th>稼働監視・バックアップ</th><td>✓</td><td>✓</td></tr><tr><th>サーバー・SSL管理</th><td>✓</td><td>✓</td></tr><tr><th>Googleアナリティクス基本設定</th><td>✓</td><td>✓</td></tr><tr><th>ChatGPT / Claude Code連携設定</th><td>✓</td><td>✓</td></tr>
+<tr class="category"><th colspan="3">セキュリティ強化のみ</th></tr><tr><th>WAF・Web攻撃遮断</th><td class="not-available">—</td><td>✓</td></tr><tr><th>海外アクセス制限・Bot対策</th><td class="not-available">—</td><td>✓</td></tr><tr><th>DDoS負荷軽減・CAPTCHA</th><td class="not-available">—</td><td>✓</td></tr><tr><th>IP別の制御・攻撃ログ分析</th><td class="not-available">—</td><td>✓</td></tr></tbody></table></div></details>
+</div></section>
+<section aria-labelledby="migration-heading" class="section migration service-copy" id="migration"><div class="wrap"><div class="section-head"><span class="eyebrow">EASY MIGRATION</span><h2 id="migration-heading">今のホームページから、<br/>3ステップで始められます。</h2><p>見慣れたデザイン・文章・写真はできるだけ引き継ぎながら、裏側の古い仕組みを見直し、ChatGPTで更新できるサイトへ。</p></div>
+<div class="steps">
+<article class="step-card"><span class="step-no">01</span><h3>現在の制作会社から<br/>必要な情報を受け取る</h3><p>サイトデータ・画像・管理情報を確認。ドメイン移管が必要な場合は、現在の管理会社から移管コード（AuthCode）を受け取ります。依頼する内容はSIMYがご案内します。</p></article>
+<article class="step-card"><span class="step-no">02</span><h3>見た目を活かして、<br/>裏側を新しくする</h3><p>権利や対象範囲を確認したうえで再制作。古いプログラムへの依存を減らし、今後の管理をしやすくします。</p></article>
+<article class="step-card"><span class="step-no">03</span><h3>同じURLで公開、<br/>ChatGPTを連携</h3><p>予約リンク・フォーム・メールへの影響を確認して切り替え。先生のアカウントを更新環境につなぎます。</p></article>
+</div>
+<div class="steps-illustration"><div><strong>現在のホームページ</strong>デザイン・文章・写真</div><b aria-hidden="true">→</b><div><strong>SIMYが安全に移行</strong>古い仕組みを見直す</div><b aria-hidden="true">→</b><div><strong>先生のChatGPTで更新</strong>保守・管理はSIMY</div></div>
+<div class="legal-notes"><details><summary>移管・再制作に関する重要な条件</summary><p>ホームページの再制作0円の案内は、HP管理の契約および権利・対象範囲の確認が条件です。現制作会社などが素材・テンプレートの権利を持つ場合は、利用許諾を得るか新たに制作します。移管実費や追加機能費用が発生する場合は事前に提示します。</p></details></div>
+</div></section>
+<section aria-labelledby="trust-heading" class="trust service-copy"><div class="wrap trust-inner"><div><span class="eyebrow" style="color:#a0d4c8">TRUST &amp; SECURITY</span><h2 id="trust-heading">安心して任せられる、<br/>情報管理体制を。</h2><p>SIMY × スペシャリスト・ドクターズ株式会社。クリニックに関わる情報を扱うからこそ、運用面の信頼性も大切にします。</p></div><div class="trust-card"><span class="label">JOINT PROVIDER</span><strong>ISO/IEC 27001:2022</strong><p>共同提供するスペシャリスト・ドクターズ株式会社は、LAPから情報セキュリティマネジメントシステムの認証を取得しています。適用範囲は「クラウド型情報提供プラットフォームサービスの開発、運用、提供」。組織の管理体制に関する認証であり、個別サイトの安全性を保証するものではありません。</p><img alt="LAP・ANAB ISO/IEC 27001:2022 認証マーク" height="160" src="/assets/website-check/lap-isms-27001-2022-640.webp" width="240"/></div></div></section>
+<section aria-labelledby="faq-heading" class="section faq service-copy" id="faq"><div class="wrap faq-layout"><div><span class="eyebrow">FAQ</span><h2 id="faq-heading">よくあるご質問</h2><p class="muted mini">導入前に確認しておきたいことをまとめました。</p></div><div>
+<details><summary>ChatGPTで更新するとき、毎回制作会社への依頼が必要ですか？</summary><p>必要ありません。連携できる範囲の文章や画像などは、ご自身のChatGPTから変更案を作成し、先生が確認して公開できます。サービスの利用料や操作可能な範囲は、ご契約の環境に応じて異なります。</p></details>
+<details><summary>PHPなどの古いプログラムは更新してもらえますか？</summary><p>保守対象となるプログラムの修正情報を確認し、必要な更新と動作確認を行います。安全上の修正が公開された後、原則24時間以内に影響確認と対応を開始します。修正完了までの所要時間を保証するものではありません。</p></details>
+<details><summary>今のホームページのデザインを引き継げますか？</summary><p>権利と対象範囲を確認のうえ、デザイン・文章・写真の引き継ぎや再制作をご案内します。許諾が必要な素材については権利者の同意を得て進めます。</p></details>
+<details><summary>SIMYライセンスや記事作成も、基本料金に含まれますか？</summary><p>この料金案では、基本保守・セキュリティ強化の両プランにSIMYライセンスと、録音・音声メモから記事案をつくり、先生の確認後に公開する仕組みを含めています。利用人数・録音時間・AI処理量などの条件は契約前に明示します。担当者によるGoogleマップ・口コミ・更新代行は、運用・集患サポートとして別料金です。</p></details>
+<details><summary>無料診断だけを利用できますか？</summary><p>はい。無料診断だけでも利用可能です。結果の全表示とPDFは、公開サイト上で所定の登録をした後に表示されます。公開情報の確認であり、侵入や漏えいの有無を判断する診断ではありません。</p></details>
+<details><summary>患者さんとの会話を録音せずに使えますか？</summary><p>はい。患者さんの情報を含めず、診察後に先生だけで「今日よく聞かれた質問」や「診療で大切にしていること」を音声メモに残す方法もあります。患者さんとの会話を録音する場合は、目的の説明と適切な同意を得て実施します。</p></details><details><summary>個人情報が記事に出たり、勝手に公開されたりしませんか？</summary><p>記事生成前に識別情報を除外し、公開前にも確認する運用を前提としています。ただし、自動除去だけで完全な匿名化を保証することはできません。個人を推測できる経緯なども先生が確認し、承認した記事だけを公開する設計です。録音・文字起こしの送信先、保存期間、学習利用の有無も導入前に確認します。</p></details><details><summary>記事を増やせば、GoogleやAI検索で必ず上位に出ますか？</summary><p>上位表示、AIによる掲載・引用、集患効果は保証できません。患者さんに役立つ説明を、正確性・独自性・出典を確認して継続的に発信し、検索で参照される機会を増やすことを目指します。</p></details></div></div></section>
+<section aria-labelledby="contact-heading" class="bottom-cta service-copy" id="contact"><div class="wrap bottom-cta-inner"><div><span class="eyebrow">START WITH SIMY</span><h2 id="contact-heading">守りも、更新も。<br/>次は、先生の医院で。</h2><p class="muted">ホームページ管理の見直しから、今のサイトの移管、AIでの更新まで。まずはご希望のプランをお聞かせください。</p><a class="linkish" href="#diagnosis">プランを決める前に無料診断から始める ↗</a></div>
+<div class="contact-card"><h3>導入について相談する</h3><form id="inquiry-form">
+<label for="contact-plan">ご希望のプラン</label><select class="field" id="contact-plan" required=""><option value="基本保守">基本保守（月額14,800円・税別）</option><option value="セキュリティ強化">セキュリティ強化（月額29,800円・税別）</option><option value="相談して決めたい">相談して決めたい</option></select>
+<label for="contact-clinic">医療機関名</label><input class="field" id="contact-clinic" placeholder="例：みどりクリニック" required=""/>
+<label for="contact-person">ご担当者名</label><input class="field" id="contact-person" placeholder="例：山田 太郎" required=""/>
+<label for="contact-email">メールアドレス</label><input class="field" id="contact-email" placeholder="example@clinic.jp" required="" type="email"/><label for="contact-url">ホームページのURL</label><input class="field" id="contact-url" placeholder="https://" type="url"/><label for="contact-message">ご用件</label><textarea class="field" id="contact-message" placeholder="移管や更新について、気になることをお聞かせください。" rows="3"></textarea>
+<label class="check-line"><input id="contact-option" type="checkbox"/><span>運用・集患サポート（＋49,800円/月・税別）も相談したい</span></label>
+<button class="btn btn-blue btn-block" type="submit">相談メールを作成する ↗</button><p class="contact-note">メールアプリが開きます。内容を確認して送信してください。</p>
+</form></div>
+</div></section>
+</main>
+<footer class="footer service-copy"><div class="wrap footer-inner"><a aria-label="SIMY ページの先頭に戻る" class="logo" href="#top"><img src="/simy-icon-56.png" alt="" width="32" height="32"/>SIMY</a><div class="footlinks"><a href="https://simy.one/hp-management/clinic.html" rel="noopener noreferrer" target="_blank">公開中のHP管理サイト</a><a href="https://www.awak.app/" rel="noopener noreferrer" target="_blank">会社概要</a><a href="mailto:sales@simy.one">お問い合わせ</a></div><span class="copyright">© SIMY · 本ページは改善案のHTMLプレビューです</span></div></footer>
+<a class="btn btn-blue floating-cta service-copy" href="#diagnosis">無料でHPを診断する ↗</a>
+<dialog aria-labelledby="page-offer-title" class="live-tools" id="preview-page-offer">
+<button aria-label="プレビューに戻る" id="page-offer-close" type="button">×</button>
+<p class="eyebrow">この先のページも、SIMYで。</p>
+<h2 id="page-offer-title">お申し込み後は、<br/>他のページも作成できます。</h2>
+<p>医師紹介・診療案内・アクセスなども、今のホームページに合わせて作成します。</p>
+<button id="page-offer-apply" type="button">プランを選んで申し込む →</button>
+<button id="page-offer-back" type="button">プレビューを続ける</button>
+</dialog><dialog aria-labelledby="application-title" class="live-tools" id="preview-application">
+<button aria-label="編集体験に戻る" id="application-close" type="button">×</button>
+<p class="eyebrow">SIMY HP管理のお申し込み</p><h2 id="application-title">更新も、保守も。<br/>次は、先生の医院で。</h2>
+<p id="application-site"></p>
+<form id="application-form">
+<fieldset><legend>1. プランを選ぶ</legend>
+<label class="application-plan"><input checked="" name="plan" type="radio" value="14800"/><span><strong>基本保守</strong><small>更新・バックアップ・サーバー管理</small></span><b>14,800円/月</b></label>
+<label class="application-plan"><input name="plan" type="radio" value="29800"/><span><strong>セキュリティ強化</strong><small>基本保守＋WAF・不正アクセス対策</small></span><b>29,800円/月</b></label>
+<label class="application-option"><input name="assistance" type="checkbox"/>担当者による更新代行を追加（＋49,800円/月）<small>LINEで依頼。MEO・GEOサポートを含みます。</small></label>
+</fieldset>
+<div aria-live="polite" class="application-total"><span>月額合計・税別</span><strong id="application-total">14,800円</strong><small id="application-tax">税込16,280円</small></div>
+<fieldset><legend>2. 医院の連絡先</legend><label>医療機関名<input autocomplete="organization" maxlength="120" name="clinic" required=""/></label><label>ご担当者名<input autocomplete="name" maxlength="80" name="contact" required=""/></label><label>メールアドレス<input autocomplete="email" maxlength="254" name="email" required="" type="email"/></label></fieldset>
+<p class="application-next">お申し込み → 移管内容・費用の確認 → ご同意後に開始</p>
+<button class="application-submit" type="submit">この内容で申込メールを作成 →</button><p class="application-note">メールアプリで内容を確認して送信してください。移管の範囲や費用は、開始前にご案内します。</p>
+<a href="mailto:sales@simy.one" id="application-enquiry">プランを決める前に相談する ↗</a>
+</form>
+</dialog><script defer="" src="/clinic-service.js?v=1"></script></body>
+</html>
