@@ -22,3 +22,7 @@ Reference perspectives (our interpretation, not proposals or endorsements):
 - Japan: Yugo Nakamura / tha, interaction as experience: https://tha.jp/
 - International: Vitaly Friedman, clear complex interfaces: https://www.smashingmagazine.com/author/vitaly-friedman/
 - United States: Brad Frost, coherent systems from existing components: https://atomicdesign.bradfrost.com/chapter-2/
+
+## Message order
+- Lead each chapter with the service benefit and visual, then concrete capabilities, then supporting statistics. The MEO/GEO survey follows the image and service panels.
+- Explain migration before the plan CTA. Pricing headings introduce plan selection rather than repeating the security chapter. Keep DOM and visual reading order identical on mobile and desktop.
