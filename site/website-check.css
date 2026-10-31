@@ -261,3 +261,4 @@ body:has(.report-download-dock){padding-bottom:150px}
 @media(max-width:600px){.report-download-dock{left:10px;right:10px;width:calc(100% - 20px);padding:10px;bottom:calc(10px + env(safe-area-inset-bottom))}.report-download-dock .button{font-size:16px}}
 
 .report-save-hint{font-size:12px;font-weight:600;color:#506177;line-height:1.4;text-align:center;width:100%}.report-download-dock{row-gap:8px}
+.report-download-dock[hidden]{display:none!important}

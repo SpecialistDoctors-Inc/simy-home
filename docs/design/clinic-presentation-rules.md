@@ -7,3 +7,18 @@ The shared pricing reference is defined in `site/hp-readable.css`.
 - A common option price spans both service columns. Label it as an additional charge, never a plan total.
 - Supporting photos remain inside the row-heading column and do not change the table tracks.
 - Keep text, borders, and category hierarchy consistent when adding content. Verify the rendered desktop and mobile layout before publishing.
+
+## Service story
+
+Introduce three benefits together, then repeat the same chapter heading, number,
+spacing and anchor pattern in order: security, self-directed improvement and
+editing, Google Maps and AI discovery. Keep the actual editing experience within
+chapter 02. Follow the three benefits with migration steps and plan selection.
+Do not insert an unrelated feature or change the meaning of the chapter numbers.
+Keep the existing comic assets. A diagnosis download control appears only while
+its report is in view and must not obscure the service story.
+
+Reference perspectives (our interpretation, not proposals or endorsements):
+- Japan: Yugo Nakamura / tha, interaction as experience: https://tha.jp/
+- International: Vitaly Friedman, clear complex interfaces: https://www.smashingmagazine.com/author/vitaly-friedman/
+- United States: Brad Frost, coherent systems from existing components: https://atomicdesign.bradfrost.com/chapter-2/
