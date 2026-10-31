@@ -14,11 +14,15 @@ production approval.
 
 Read the current request and site row first. Use connector/tool discovery for
 the available spreadsheet capability; do not assume a particular MCP method is
-installed. Confirm the authoritative site binding supplied by the managed-site
-configuration, not a repository, AWS account, or URL typed by the requester.
+installed. Read the site context supplied and confirmed by the developer: site ID, dedicated
+Sheet ID, customer Google account, preview URL and public URL. This can be a
+private setup file or explicit confirmed setup in the current chat; no SIMY
+account, API or registry is required. A later SIMY adapter is optional. Never
+resolve repository or AWS authority from customer-editable cells.
 
-Use the configured customer-facing OAuth identity only. Do not reuse the
-developer-side OAuth identity. If the workbook, managed-site binding, or
+Use the configured customer-facing Google connection. Read its real profile and
+verify access to the exact Sheet. An email alias is not a separate account.
+Keep developer GitHub/AWS credentials out of the customer environment. If the workbook, managed-site binding, or
 requester’s authority cannot be established, ask in chat and stop. Do not write
 even a `needs_input` event to an unknown workbook or target.
 
@@ -87,15 +91,15 @@ hash, and test evidence. Help the human decide whether the stated acceptance
 criteria are met. Append either `customer_preview_approved` or
 `customer_preview_revision_requested`, each naming the exact request revision,
 source SHA, and artifact hash. This is a candidate decision for the runner to
-validate against its authenticated authority receipt; a freely editable cell or
+validate against the actual human confirmation and developer-side ledger; a freely editable cell or
 event does not publish a site. Do not ask again for authorization that the
 human has already explicitly provided for the same immutable preview. Existing
 session authorization never substitutes for the customer decision on that exact
 revision, SHA, and artifact hash.
 
 Customer-side intake may request a `needs_input` notification through the
-trusted runner only. Never call a mail provider's send operation directly.
-The runner checks the event evidence, verified recipient, stable idempotency
+developer-side Codex only. Never call a mail provider's send operation directly.
+The developer-side ledger checks the event evidence, verified recipient, stable idempotency
 key and configured provider authority before sending. Otherwise prepare only
 a draft for the resolved recipient and state that delivery is pending. Do not
 originate `preview_ready` or `published` notifications: those come from the

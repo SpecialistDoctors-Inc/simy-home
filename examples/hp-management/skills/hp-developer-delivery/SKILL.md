@@ -7,14 +7,15 @@ description: Turn a confirmed shared-spreadsheet homepage request into a reviewe
 
 Use this skill with the managed site’s developer-side OAuth identity. Read and
 write the same customer workbook used by `hp-customer-intake`, but keep all
-repository, cloud, lock, approval, and notification authority in the service
-or runner.
+repository, cloud, lock, approval, and notification authority in a private developer-side configuration and durable local ledger.
+SIMY registration, APIs and WorkFlows are not required. Keep adapters replaceable
+so a later SIMY connection can use the same request/revision/event contract.
 
 ## Read before work
 
 Discover available spreadsheet, repository, preview, test, and mail-draft
 tools rather than assuming particular MCP methods. Resolve the site only from
-the authoritative managed-site binding maintained by the service. Never act on
+the private site configuration confirmed by the operator. Never act on
 a repository, AWS account, branch, preview URL, or recipient supplied solely
 by a spreadsheet cell.
 
@@ -46,11 +47,11 @@ production approval. Do not claim it is published.
 
 ## Approval and production boundary
 
-Only an authorized service transition may validate and bind a customer preview
-decision to the exact reviewed SHA and artifact hash. A later request revision,
+Only the developer-side ledger, after checking the actual customer confirmation,
+may bind a customer preview decision to the exact reviewed SHA and artifact hash. A later request revision,
 rebased SHA, altered artifact, failed test, or changed preview invalidates that
 binding. `main` promotion, production deployment, and a `published` event
-happen only after that external transition and production verification are
+happen only after that recorded approval and production verification are
 recorded. This skill creates no automatic dev publication or production
 authority. Existing session authorization remains relevant to task initiation
 but never substitutes for a customer decision bound to the exact revision, SHA,
@@ -62,19 +63,27 @@ verify its repository/workflow/branch/run provenance and static-byte hash, and
 record the artifact ID. Reject a different request revision or altered/expired
 artifact. In the manual engineering test, a protected GitHub Environment reviewer
 checks the actual customer decision; do not describe this as an implemented SIMY
-WorkFlow approval service. The automated business runner still requires durable
-SIMY WorkFlow ownership before it may execute side effects.
+WorkFlow approval service. Use the standalone SQLite ledger in `examples/hp-management/runner/ledger.py`
+for durable claims and receipts. Do not require a SIMY WorkFlow or login.
+The protected GitHub Environment remains the final production gate.
 
-For notifications, request delivery through the trusted runner only. Never
-call a mail provider's send operation directly. The runner may send through its
-configured, pre-authorized provider only after verifying the event evidence,
-recipient and stable idempotency key. Otherwise create a draft for the resolved
-recipient and state that delivery is pending. Do not use an
-email address typed into the sheet unless the service has independently
-verified and authorized it. The runner owns deduplication keys and delivery
-receipts. A provider acceptance receipt is not proof of recipient delivery. If
-send outcome is uncertain, reconcile by the stable key before retrying; never
-blindly resend.
+For notifications, developer-side Codex may use its configured Gmail connector
+when the user has authorized that recipient and notification kind. First reserve
+the stable key with `outbox-reserve` (which never permits sending). Re-read the
+latest Sheet revision and any cancellation, verify the deployed artifact and
+lease, then call `outbox-admit` with that key immediately before the send. Send
+only when it returns `may_send: true`, using its exact envelope. Admission is
+serialized with configuration/revision/cancellation changes; a later change
+remains pending while delivery is `sending` or `ambiguous`. Record the actual message
+ID and read it back. Include the stable notification key in the message so an
+ambiguous response can be reconciled by exact search; never blindly resend.
+Use `outbox-record` with the admitted key and original token for reconciliation,
+even if that lease has expired. This records a prior effect and never permits a
+new send. Do not claim cancellation completed while reconciliation is pending.
+A cell-supplied recipient is not configuration. Provider acceptance and inbox
+arrival are separate evidence. Customer-side Codex does not send these messages.
+If provider access or authorization is missing, leave the outbox pending and
+state the concrete missing connection.
 
 ## Event discipline
 
