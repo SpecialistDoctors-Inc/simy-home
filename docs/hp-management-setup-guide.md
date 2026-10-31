@@ -148,7 +148,7 @@ JSON
 
 ## 6. 手動で依頼を dev まで進める
 
-自動ポーリングは未完了です。運用担当が次の順で、1件ずつ明示して進めます。
+手動で進める場合は、運用担当が次の順で、1件ずつ明示して進めます。
 
 1. Sheet の最新 `Requests` revision と `Events` を読み、対象・依頼者参照・通知先参照・受入条件を確認します。
 2. 台帳に取り込み、依頼ID・revision・内容ハッシュを記録します。同じ内容は再処理せず、異なる revision は新しい依頼として扱います。
@@ -156,9 +156,22 @@ JSON
 4. 実装、テスト、dev 配信、表示確認を行います。`Events` に `claimed`、`test_result`、`dev_preview_ready` などの事実を追記します。
 5. `dev_preview_ready` には依頼ID、revision、dev URL、実際の source SHA、artifact ID / hash、実行したテストを残します。
 
-サンプルでは、[PR #313](https://github.com/SpecialistDoctors-Inc/simy-home/pull/313) の dev 成果物について、[run 41163859006](https://github.com/SpecialistDoctors-Inc/simy-home/actions/runs/41163859006) の保存済み artifact `13028320719` と dev 上の8ファイルが byte-for-byte 一致することを確認しました。source は `fc4355a5d74b32488d7c10ece465df38ed8d70e0`、artifact hash は `3bd47d30e529c42e7eb081234b3376963202cf0bf42d30aafd912ed527570b7b` です。これは当該成果物の検証であり、以後の依頼の自動配信を意味しません。
+サンプルでは、[PR #313](https://github.com/SpecialistDoctors-Inc/simy-home/pull/313) の dev 成果物について、[run 41163859006](https://github.com/SpecialistDoctors-Inc/simy-home/actions/runs/41163859006) の保存済み artifact `13028320719` と dev 上の8ファイルが byte-for-byte 一致することを確認しました。source は `fc4355a5d74b32488d7c10ece465df38ed8d70e0`、artifact hash は `3bd47d30e529c42e7eb081234b3376963202cf0bf42d30aafd912ed527570b7b` です。
 
-`ready_for_dev` を Sheet に追記しても、自動で開発や配信が始まるとは限りません。5分ごとの heartbeat は作成済みですが、定期実行による実際の起動は未確認です。将来 Codex の Scheduled tasks を使う場合は、まず通常チャットでプロンプトを試し、初回の実行結果を確認してください。ローカルプロジェクトを扱う定期実行は、端末の電源とデスクトップアプリの稼働が必要です。[公式の Scheduled tasks ガイド](https://learn.chatgpt.com/docs/automations) を参照してください。
+5分ごとの heartbeat は、実際に1件の新規 Sheet 依頼を検出し、台帳で claim、スコープ内のお知らせ文追加、PR・dev 配信・表示確認を行いました。[run 41166888036](https://github.com/SpecialistDoctors-Inc/simy-home/actions/runs/41166888036) は成功し、source は `f5a596c156dc6851a4978221b409c27fb723b3de`、artifact は `13028304194`、hash は `a4bb55ad97d63981103e0c9b0cfa899abbf192d37e02cb11c2caf38983e54891` です。dev の8ファイルと artifact は byte-for-byte 一致し、デスクトップ・モバイル表示を確認しました。本番の既存8ファイルは変更していません。
+
+オンボーディングでは、まず通常チャットで同じ指示を1回試し、期待どおりの claim と readback を確認してから、次の文面で **このチャット** の5分ごとの Scheduled task を作成します。
+
+```text
+このチャットを5分ごとに再開してください。<共有Sheet URL> の Requests と Events を読取り、
+site_id <site_id> の ready_for_dev の新規 revision だけを対象にしてください。
+private site config と SQLite ledger を照合し、同じ request_id / revision は再処理せず、
+claim を取得できた場合だけ許可された worktree・content path で dev 確認を進めてください。
+本番公開は行わず、メールは outbox-admit が may_send: true を返した場合にだけ1回送信してください。
+不明な送信は再送せず照合し、対象外・設定不一致・claim失敗は変更せず結果を報告してください。
+```
+
+これは端末上の Codex アプリが動作している間だけのローカル定期実行で、24時間稼働のホスト型サービスではありません。サイトや本番の権限を追加せず、台帳の request / revision / claim による重複防止を維持します。[公式の Scheduled tasks ガイド](https://learn.chatgpt.com/docs/automations) を参照してください。
 
 ## 7. 本番を公開する
 
@@ -185,11 +198,11 @@ Gmail 接続は開発・運用側だけに設定します。宛先は非公開�
 
 送信結果が不明なら `ambiguous` と記録し、同じ通知キーで Gmail の送信済み記録を検索・照合します。**不明な送信をそのまま再送しません。** `sending` または `ambiguous` が残る間は、サイト設定の変更、取込、claim が停止するため、先に配信結果を照合します。`outbox-reserve` は送信許可ではありません。
 
-サンプルでは、開発側 Gmail から設定済み宛先へ preview・公開の通知を手動起点で各1件送信し、provider の `SENT` と読戻しを確認しました。同じ通知の2回目の送信は台帳が許可しません。両メールの受信箱での人による確認は未完了です。上記は provider 証跡であり、自動送信・到達確認が完成したことを意味しません。設定または権限が不足する間は、下書きまたは手動連絡として扱います。
+サンプルでは、開発側 Gmail から設定済み宛先へ preview・公開の通知を手動起点で各1件、heartbeat 起点の preview 通知を1件送信し、provider の `SENT`・本文・宛先の読戻しを確認しました。heartbeat 通知の replay は台帳が拒否し、claim は解放済みです。全メールの受信箱での人による確認は未完了です。上記は provider 証跡であり、到達確認が完成したことを意味しません。設定または権限が不足する間は、下書きまたは手動連絡として扱います。
 
 ## 9. 確認済み範囲と残作業
 
-ローカルの台帳テスト17件とサイトのテスト8件が通り、独立した Codex レビューでは blocker / P1 はありませんでした。本番の人による承認、Environment を通す公開、公開後の読戻しも完了しています。残る確認は、preview・公開メールの受信箱での人による確認と、定期実行が実際に起動した証跡です。
+ローカルの台帳テスト17件とサイトのテスト8件が通り、独立した Codex レビューでは blocker / P1 はありませんでした。本番の人による承認、Environment を通す公開、公開後の読戻しも完了しています。heartbeat の実際の起動・claim・dev 成果物・通知 provider 証跡、医院側による2件目の `claimed` / `test_result` / `dev_preview_ready` の読戻しも確認済みです。残る確認は、全メールの受信箱での人による確認だけです。
 
 ## 10. 将来の SIMY 連携
 

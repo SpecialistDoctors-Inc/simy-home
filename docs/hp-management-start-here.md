@@ -35,14 +35,14 @@ Sheet の状態やセルに `approved` と書くだけでは本番公開にな�
 
 | 確認項目 | 確認できた事実 | 状態 |
 | --- | --- | --- |
-| dev 成果物 | [PR #313](https://github.com/SpecialistDoctors-Inc/simy-home/pull/313) を dev へ反映し、[run 41163859006](https://github.com/SpecialistDoctors-Inc/simy-home/actions/runs/41163859006) は成功。8つの静的ファイルが保存済み artifact `13028320719` と byte-for-byte 一致し、source `fc4355a5d74b32488d7c10ece465df38ed8d70e0`、artifact hash `3bd47d30e529c42e7eb081234b3376963202cf0bf42d30aafd912ed527570b7b` を照合した。 | 確認済み |
-| Sheet の往復 | 新規コンテナの医院側 Codex が標準の自動承認レビューで `Requests` 1行と `ready_for_dev` を書込み、別 Google 接続の開発側が読取り・進捗追記。その後、医院側が `dev_preview_ready` の同じ成果物タプルを読戻した。 | 確認済み |
-| メール | 開発側 Gmail が設定済み宛先へ preview・公開通知を各1回送信し、provider の `SENT` と読戻しを確認。台帳は同じ通知の重複送信を許可しない。 | provider まで確認済み |
+| 初回dev成果物 | [PR #313](https://github.com/SpecialistDoctors-Inc/simy-home/pull/313) を dev へ反映し、[run 41163859006](https://github.com/SpecialistDoctors-Inc/simy-home/actions/runs/41163859006) は成功。8つの静的ファイルが保存済み artifact `13028320719` と byte-for-byte 一致し、source `fc4355a5d74b32488d7c10ece465df38ed8d70e0`、artifact hash `3bd47d30e529c42e7eb081234b3376963202cf0bf42d30aafd912ed527570b7b` を照合した。 | 確認済み |
+| Sheet の往復 | 新規コンテナの医院側 Codex が標準の自動承認レビューで `Requests` 1行と `ready_for_dev` を書込み、別 Google 接続の開発側が読取り・進捗追記。その後、医院側が `dev_preview_ready` の同じ成果物タプルを読戻した。heartbeat による2件目も、医院側が一意の依頼、`claimed`、`test_result`、`dev_preview_ready` の同一タプルを読み戻し、先行する `published` イベントが残ることを確認した。 | 確認済み |
+| メール | 開発側 Gmail が設定済み宛先へ手動の preview・公開通知と heartbeat 起点の preview 通知を各1回送信し、provider の `SENT` と読戻しを確認。台帳は同じ通知の重複送信を許可しない。 | provider まで確認済み |
 | 本番 | 人による同一成果物の承認を private ledger に記録し、既存の本番 Environment reviewer を通過。 [run 41165087996](https://github.com/SpecialistDoctors-Inc/simy-home/actions/runs/41165087996) が成功し、main release `32d33b8e23a2d0af2f8136925b13911379fd857b` で公開した。2026-10-31T03:38:01.079056Z に本番の8ファイルが同じ ZIP と byte-for-byte 一致し、デスクトップと iPhone 16 幅でお知らせの展開・表示を確認した。 | 確認済み |
-| 定期実行 | 5分ごとの heartbeat は作成済みだが、定期実行が実際に起動した証跡は未確認。今回の最初の依頼は人が開始した。 | 未完了 |
+| 定期実行 | 5分のローカル heartbeat が実際に新しい Sheet 依頼を検出し、台帳で claim、許可範囲のお知らせ文追加、PR・dev 配信・確認まで進めた。[run 41166888036](https://github.com/SpecialistDoctors-Inc/simy-home/actions/runs/41166888036) は成功。source `f5a596c156dc6851a4978221b409c27fb723b3de`、artifact `13028304194`、hash `a4bb55ad97d63981103e0c9b0cfa899abbf192d37e02cb11c2caf38983e54891` を照合し、dev の8ファイルと artifact が byte-for-byte 一致、PC・モバイル表示を確認した。本番の既存8ファイルは変更していない。 | サンプル範囲で確認済み |
 
 固定版 `fc4355a5d74b32488d7c10ece465df38ed8d70e0` の受付スキルをテスト環境に導入し、医院側の Codex から公開完了イベントまで読み戻せることも確認しました。Docker はこの導入検証用で、医院の通常利用に必要なものではありません。
 
-公開メールも provider の `SENT` と読戻しを確認し、台帳は同じ通知の再送を許可しません。Sheet の取込後に開発を自動で始める処理、定期実行、受信箱への到達確認は、まだ完了・検証済みとして扱いません。依頼を Sheet に入れた後は、開発・運用担当が内容を読んで着手します。メールは provider の受理と受信箱到達を分けて扱います。
+この heartbeat は、端末上の Codex アプリが動いている間だけ動くローカル定期実行であり、24時間稼働のホスト型サービスではありません。試験用スケジュールは、この往復検証後に削除しました。継続運用には運用側設定ガイドに従って定期実行を設定します。受信箱への到達確認は、まだ完了・検証済みとして扱いません。メールは provider の受理と受信箱到達を分けて扱います。
 
 新しい環境での初回導入を試した履歴は、[ゼロ設定からの試験記録](hp-management-zero-setup-test.md)にあります。これは履歴であり、上記の自動化完了を意味しません。
