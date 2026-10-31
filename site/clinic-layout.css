@@ -323,3 +323,16 @@ body.preview-editor-open{overflow:hidden}
 @media(max-width:600px){#main .security-intro{padding:28px 20px}#main .security-intro th,#main .security-intro td{padding:12px 8px}#main .security-intro th:first-child{width:54%}#main .security-intro table{font-size:13px}#main .security-intro small{font-size:12px}}
 #main .security-intro table{min-width:0;max-width:100%}
 #main .security-intro th,#main .security-intro td{overflow-wrap:anywhere}
+
+/* One workspace: the homepage remains visible while editing. */
+#rebuild-editor .preview-mobile-tabs{display:none}
+#rebuild-editor[data-pane] .preview-editor-layout{display:grid;grid-template-columns:minmax(320px,36%) minmax(0,1fr)}
+#rebuild-editor[data-pane] .preview-chat{display:flex;width:auto;border-right:1px solid #eceef0;padding:24px}
+#rebuild-editor[data-pane] .preview-canvas{position:static;visibility:visible;pointer-events:auto}
+@media(max-width:700px){
+ #rebuild-editor[data-pane] .preview-editor-layout{display:flex;flex-direction:column;overflow:auto}
+ #rebuild-editor[data-pane] .preview-canvas{order:0;flex:0 0 55vh;min-height:300px}
+ #rebuild-editor[data-pane] .preview-chat{order:1;flex:0 0 auto;min-height:300px;overflow:visible;width:100%;padding:20px;border:0;border-top:1px solid #eceef0}
+ #rebuild-editor .is-empty .chat-welcome{margin:0 0 12px}
+ #rebuild-editor .is-empty .preview-scope{margin-bottom:0}
+}
