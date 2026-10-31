@@ -33,8 +33,9 @@ Sheet は依頼と監査記録の共有面であり、認可・ロック・本�
 開発環境には `hp-developer-delivery` を、配布元と **承認済み候補タグまたはコミットSHA** を指定して導入します。「最新版」だけで更新しないでください。スキルは、反復する作業の手順と参照資料をまとめる仕組みです。一般的な導入・利用は [公式の Skills & Plugins ガイド](https://learn.chatgpt.com/docs/skills-and-plugins) を参照できます。
 
 ```text
-<配布元> の hp-developer-delivery スキルを、
-固定版 <承認済み候補タグまたはコミットSHA> で導入してください。
+SpecialistDoctors-Inc/simy-home の
+examples/hp-management/skills/hp-developer-delivery を、
+固定リビジョン fc4355a5d74b32488d7c10ece465df38ed8d70e0 で導入してください。
 references も導入し、既存の同名スキルは確認なしに上書きしないでください。
 導入後は、依頼の実装、公開、メール送信を開始せず、認識できたスキル名だけを返してください。
 ```
@@ -155,7 +156,9 @@ JSON
 4. 実装、テスト、dev 配信、表示確認を行います。`Events` に `claimed`、`test_result`、`dev_preview_ready` などの事実を追記します。
 5. `dev_preview_ready` には依頼ID、revision、dev URL、実際の source SHA、artifact ID / hash、実行したテストを残します。
 
-`ready_for_dev` を Sheet に追記しても、自動で開発や配信が始まるとは限りません。将来 Codex の Scheduled tasks を使う場合は、まず通常チャットでプロンプトを試し、初回の実行結果を確認してください。ローカルプロジェクトを扱う定期実行は、端末の電源とデスクトップアプリの稼働が必要です。[公式の Scheduled tasks ガイド](https://learn.chatgpt.com/docs/automations) を参照してください。
+サンプルでは、[PR #313](https://github.com/SpecialistDoctors-Inc/simy-home/pull/313) の dev 成果物について、[run 41163859006](https://github.com/SpecialistDoctors-Inc/simy-home/actions/runs/41163859006) の保存済み artifact `13028320719` と dev 上の8ファイルが byte-for-byte 一致することを確認しました。source は `fc4355a5d74b32488d7c10ece465df38ed8d70e0`、artifact hash は `3bd47d30e529c42e7eb081234b3376963202cf0bf42d30aafd912ed527570b7b` です。これは当該成果物の検証であり、以後の依頼の自動配信を意味しません。
+
+`ready_for_dev` を Sheet に追記しても、自動で開発や配信が始まるとは限りません。5分ごとの heartbeat は作成済みですが、定期実行による実際の起動は未確認です。将来 Codex の Scheduled tasks を使う場合は、まず通常チャットでプロンプトを試し、初回の実行結果を確認してください。ローカルプロジェクトを扱う定期実行は、端末の電源とデスクトップアプリの稼働が必要です。[公式の Scheduled tasks ガイド](https://learn.chatgpt.com/docs/automations) を参照してください。
 
 ## 7. 本番を公開する
 
@@ -167,6 +170,8 @@ JSON
 4. main の公開手順が、承認済み artifact を再ビルドせずに公開し、公開後の URL と成果物を読戻して確認できること。
 
 Sheet の `approved`、PR のマージ、main への push だけでは公開してはいけません。別 revision、異なる SHA、異なる artifact hash、期限切れの成果物は承認をやり直します。
+
+サンプルでは、承認済みの dev source `fc4355a5d74b32488d7c10ece465df38ed8d70e0` と artifact hash `3bd47d30e529c42e7eb081234b3376963202cf0bf42d30aafd912ed527570b7b` を変えずに、[run 41165087996](https://github.com/SpecialistDoctors-Inc/simy-home/actions/runs/41165087996) が本番へ公開しました。main release は `32d33b8e23a2d0af2f8136925b13911379fd857b` です。公開後は8つの静的ファイルが保存済み ZIP と byte-for-byte 一致し、デスクトップと iPhone 16 幅でお知らせの展開・閲覧を確認しました。これはこの承認済み成果物の証跡であり、以後の依頼を無承認で公開できることを意味しません。
 
 ## 8. Gmail と連絡
 
@@ -180,8 +185,12 @@ Gmail 接続は開発・運用側だけに設定します。宛先は非公開�
 
 送信結果が不明なら `ambiguous` と記録し、同じ通知キーで Gmail の送信済み記録を検索・照合します。**不明な送信をそのまま再送しません。** `sending` または `ambiguous` が残る間は、サイト設定の変更、取込、claim が停止するため、先に配信結果を照合します。`outbox-reserve` は送信許可ではありません。
 
-メールの自動送信と到達確認は、まだ完了・検証済みではありません。上記は台帳の安全な記録手順であり、Gmail の接続、provider 受理、受信箱到達を実証するものではありません。設定または権限が不足する間は、下書きまたは手動連絡として扱います。
+サンプルでは、開発側 Gmail から設定済み宛先へ preview・公開の通知を手動起点で各1件送信し、provider の `SENT` と読戻しを確認しました。同じ通知の2回目の送信は台帳が許可しません。両メールの受信箱での人による確認は未完了です。上記は provider 証跡であり、自動送信・到達確認が完成したことを意味しません。設定または権限が不足する間は、下書きまたは手動連絡として扱います。
 
-## 9. 将来の SIMY 連携
+## 9. 確認済み範囲と残作業
+
+ローカルの台帳テスト17件とサイトのテスト8件が通り、独立した Codex レビューでは blocker / P1 はありませんでした。本番の人による承認、Environment を通す公開、公開後の読戻しも完了しています。残る確認は、preview・公開メールの受信箱での人による確認と、定期実行が実際に起動した証跡です。
+
+## 10. 将来の SIMY 連携
 
 SIMY を後から使う場合も、今日の医院に登録を求める必要はありません。Sheet の `request_id`・`revision` と、台帳の immutable な成果物承認を維持したまま、受付・実行・通知のアダプターを置き換える選択肢です。
