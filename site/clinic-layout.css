@@ -336,3 +336,24 @@ body.preview-editor-open{overflow:hidden}
  #rebuild-editor .is-empty .chat-welcome{margin:0 0 12px}
  #rebuild-editor .is-empty .preview-scope{margin-bottom:0}
 }
+
+#rebuild-editor .preview-editor-footer>span{font-size:12px;color:#536780;line-height:1.6}
+#rebuild-editor .preview-editor-footer>span strong{font-size:14px;color:#17253b}
+#rebuild-editor #preview-apply{background:#245dbd;color:#fff;border-color:#245dbd;padding:12px 22px;font-size:15px;font-weight:750;border-radius:8px}
+#rebuild-editor #preview-enquiry{border:0;padding:8px;font-size:12px}
+#preview-application{width:min(680px,calc(100% - 24px));max-height:90dvh;overflow:auto;border:0;border-radius:18px;padding:32px;color:#17253b;background:#fff}
+#preview-application::backdrop{background:#17212b99}
+#application-close{float:right;border:0;background:#f3f5f7;border-radius:50%;width:36px;height:36px;font-size:24px}
+#preview-application h2{font-size:30px;line-height:1.5;margin:12px 0}
+#application-site{font-size:13px;overflow-wrap:anywhere;color:#617387}
+#application-form fieldset{border:0;padding:0;margin:24px 0}
+#application-form legend{font-weight:750;margin-bottom:12px}
+#application-form label{display:block;font-size:14px;margin:12px 0}
+#application-form input:not([type=radio]):not([type=checkbox]){display:block;width:100%;box-sizing:border-box;padding:12px;border:1px solid #9aafc7;border-radius:7px;margin-top:6px;font:inherit}
+#application-form .application-plan{display:flex;gap:12px;align-items:center;padding:16px;border:1px solid #dce5ed;border-radius:10px}
+#application-form .application-plan:has(input:checked){border-color:#245dbd;background:#f0f6ff}
+#application-form .application-plan span{flex:1}#application-form small{display:block;font-size:12px;color:#617387;line-height:1.6}
+#application-form .application-option{padding:12px;background:#f7f9fc;border-radius:8px}
+.application-total{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;background:#edf6f4;padding:16px;border-radius:10px}.application-total strong{font-size:28px}.application-total span{font-size:13px}
+.application-next{font-size:13px;color:#506177}.application-submit{width:100%;background:#245dbd;color:#fff;padding:16px;border:0;border-radius:8px;font:700 16px/1.5 sans-serif}.application-note{font-size:12px;color:#617387;line-height:1.7}#application-enquiry{font-size:13px;color:#245dbd}
+@media(max-width:700px){#rebuild-editor .preview-editor-footer>div{grid-template-columns:1fr auto}#rebuild-editor #preview-show-pricing{display:none}#rebuild-editor #preview-apply{font-size:13px;padding:12px}#preview-application{padding:24px 18px}#application-form .application-plan{flex-wrap:wrap}#application-form .application-plan b{font-size:14px}}
