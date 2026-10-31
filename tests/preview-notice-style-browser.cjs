@@ -8,3 +8,34 @@ for(const tag of ['dl','ul','ol']){
  assert(checked.sameHeading&&checked.sameBody&&checked.nestedDate,JSON.stringify(checked));assert.equal(checked.title,'休診のお知らせ');assert.equal(checked.date,'2026.11.01');assert.equal(checked.highlight,false);assert.equal(checked.outline,'none');console.log(tag,'existing structure and computed styles retained');
 }
 await browser.close();})().catch(e=>{console.error(e);process.exit(1)});
+
+(async()=>{
+ const browser=await chromium.launch({headless:true,channel:'chrome'}),page=await browser.newPage();
+ const cases=[
+  ['category-badge','<ul class="info-list"><li><span class="info-list-date">2026.10.29</span><p class="info-list-cat"><a><span>診療時間</span></a></p><span class="info-list-text"><a>以前のタイトル</a></span></li><li><span>2026.10.28</span><p class="info-list-cat">お知らせ</p><span>以前のタイトル2</span></li></ul>'],
+  ['japanese-date-span','<dl><dt><span class="date">2026年10月1日</span><span class="title">以前のタイトル</span></dt><dd>以前の本文</dd></dl>'],
+  ['japanese-date-column','<dl><dt>2026年10月1日</dt><dd><a>以前のタイトル</a></dd></dl>'],
+  ['date-column','<dl><dt>2026/10/29</dt><dd><h4><a>以前のタイトル</a></h4></dd></dl>'],
+  ['cards','<div class="news-list"><article class="card"><time>2026/10/29</time><h3>以前のタイトル</h3><p>以前の本文</p></article><article class="card"><time>2026/10/28</time><h3>その前のタイトル</h3><p>その前の本文</p></article></div>'],
+  ['wrapped-dl','<div id="topicsIn"><dl><a><dt>2026.10.29</dt><dd>以前のタイトル</dd></a></dl><dl><a><dt>2026.10.28</dt><dd>以前のタイトル2</dd></a></dl></div>'],
+  ['single-card','<div class="news"><div class="inner-news"><p>2026年10月29日</p><p>以前のお知らせ</p></div></div>'],
+  ['undated-dl','<dl><dt class="news_title">休診のお知らせ</dt><dd class="news_body">明日は休診です</dd></dl>'],
+  ['builder','<div class="news-list"><div class="post"><div class="news__wrapper"><div><time>2026/10/29</time><h4>以前のタイトル</h4></div></div></div><div class="post"><div class="news__wrapper"><div><time>2026/10/28</time><h4>以前のタイトル2</h4></div></div></div></div>']
+ ];
+ for(const[name,markup]of cases){
+  await page.setContent('<style>h3,h4,dt{font:700 20px/1.6 serif;color:#53722a}p,dd{font:16px/1.8 serif;border-bottom:1px dashed #ccc}article{padding:12px}</style><section><h2>お知らせ</h2>'+markup+'</section><section><h2>医院概要</h2><dl><dt>所在地</dt><dd>東京都</dd></dl></section>');
+  await page.addScriptTag({path:path.resolve('site/preview-edit.js')});
+  const result=await page.evaluate(()=>{const html=SimyPreviewEdit.index(document.documentElement.outerHTML),nodes=SimyPreviewEdit.inventory(html),news=nodes.filter(n=>n.kind==='news');if(news.length!==1)return{error:'Expected one collection',news};const plan={status:'edit',operations:[{type:'insert_notice',target:news[0].id,title:'午後休診のご案内',body:'11月1日は午後休診です。',date:'2026-10-31'}]},final=SimyPreviewEdit.applyPlan(html,plan).html,doc=new DOMParser().parseFromString(final,'text/html');return{news:news[0],title:doc.body.textContent.includes('午後休診のご案内'),body:doc.body.textContent.includes('11月1日は午後休診です。'),outline:!!doc.querySelector('#simy-edit-highlight'),nestedDate:doc.querySelector('.date')?.textContent,dateColumn:doc.querySelector('dt')?.textContent,badge:doc.querySelector('.info-list-cat')?.textContent,profile:doc.querySelector('section:last-child').textContent};});
+  assert(!result.error,JSON.stringify(result));assert(result.title&&result.body&&!result.outline,JSON.stringify(result));assert.equal(result.profile,'医院概要所在地東京都');if(name==='category-badge')assert.equal(result.badge,'診療時間');if(name==='japanese-date-span')assert.equal(result.nestedDate,'2026年10月31日');if(name==='japanese-date-column')assert.equal(result.dateColumn,'2026年10月31日');console.log(name,'retains collection and does not edit clinic profile');
+ }
+ await page.setContent('<div class="notice_area">'+['お知らせ','担当医のお知らせ','感染症流行状況'].map(title=>'<div class="notice_box"><h3>'+title+'</h3><dl><dt class="news_title">2026.10.29 以前のタイトル</dt><dd>以前の本文</dd></dl></div>').join('')+'</div>');
+ await page.addScriptTag({path:path.resolve('site/preview-edit.js')});
+ const categories=await page.evaluate(()=>{const html=SimyPreviewEdit.index(document.documentElement.outerHTML),news=SimyPreviewEdit.inventory(html).filter(n=>n.kind==='news');if(news.length!==3||news.some(n=>n.tag!=='dl'))throw Error('Category wrapper was mistaken for an article list');const result=SimyPreviewEdit.applyPlan(html,{status:'edit',operations:[{type:'insert_notice',target:news[0].id,title:'午後休診のご案内',body:'明日は午後休診です。',date:'2026-10-31'}]});return [...new DOMParser().parseFromString(result.html,'text/html').querySelectorAll('.notice_box h3')].map(e=>e.textContent);});
+ assert.deepEqual(categories,['お知らせ','担当医のお知らせ','感染症流行状況']);
+ await page.setContent('<style>.splide{visibility:hidden}</style><div class="splide"><div class="splide__track">お知らせカード</div></div>');await page.addScriptTag({path:path.resolve('site/preview-edit.js')});const visibleHtml=await page.evaluate(()=>SimyPreviewEdit.prepare(document.documentElement.outerHTML));await page.setContent(visibleHtml);assert.equal(await page.locator('.splide').evaluate(e=>getComputedStyle(e).visibility),'visible');
+ await page.setContent('<h2><span>診療案内</span></h2>');await page.addScriptTag({path:path.resolve('site/preview-edit.js')});
+ const text=await page.evaluate(()=>{const html=SimyPreviewEdit.index(document.documentElement.outerHTML),doc=new DOMParser().parseFromString(html,'text/html'),targets=[doc.querySelector('h2'),doc.querySelector('span')].map(e=>e.getAttribute('data-simy-edit-id'));return SimyPreviewEdit.applyPlan(html,{status:'edit',operations:targets.map(target=>({type:'replace_text',target,oldText:'診療案内',newText:'診療案内について'}))}).html;});assert(!text.includes('についてについて'));assert(text.includes('診療案内について'));
+ await page.setContent('<p><span>診療案内</span><span>診療案内</span></p>');await page.addScriptTag({path:path.resolve('site/preview-edit.js')});
+ const distinct=await page.evaluate(()=>{const html=SimyPreviewEdit.index(document.documentElement.outerHTML),doc=new DOMParser().parseFromString(html,'text/html'),targets=[doc.querySelector('p'),doc.querySelectorAll('span')[1]].map(e=>e.getAttribute('data-simy-edit-id'));const result=SimyPreviewEdit.applyPlan(html,{status:'edit',operations:targets.map(target=>({type:'replace_text',target,oldText:'診療案内',newText:'診療案内について'}))});return new DOMParser().parseFromString(result.html,'text/html').body.textContent;});assert.equal(distinct,'診療案内について診療案内について');
+ await browser.close();
+})().catch(e=>{console.error(e);process.exit(1)});
