@@ -1,0 +1,25 @@
+/* Three benefits, one visual grammar. Chapters share typography and geometry. */
+#main .feature-overview{padding:64px 32px;background:#102b46;color:#fff}
+#main .feature-overview h2{font-size:clamp(30px,4vw,48px);line-height:1.45;letter-spacing:-.035em;color:#fff;margin:16px 0}
+#main .feature-overview .eyebrow,#main .feature-overview-lead{color:#bdd7e9}
+#main .feature-map{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin-top:36px;border:1px solid #597084;border-radius:12px;overflow:hidden}
+#main .feature-map a{position:relative;display:flex;flex-direction:column;align-items:flex-start;padding:24px;gap:12px;color:#fff;text-decoration:none;border-right:1px solid #597084;transition:background .18s}
+#main .feature-map a:last-child{border:0}#main .feature-map a:hover,#main .feature-map a:focus-visible{background:#22445f}
+#main .feature-number{font-size:42px;font-weight:500;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.05em;color:var(--chapter-color,#245dbd)}
+#main .feature-map .feature-number{font-size:28px;color:#79c8ed}#main .feature-map strong{font-size:18px}#main .feature-map small{font-size:13px;color:#bdd7e9}#main .feature-arrow{position:absolute;right:20px;top:24px;color:#79c8ed}
+#main .feature-chapter{--chapter-color:#245dbd;scroll-margin-top:150px;border:0;border-bottom:1px solid #dce5ed;background:#fff;padding:48px 32px}
+#main .feature-heading{display:grid;grid-template-columns:64px minmax(0,1fr);gap:24px;align-items:start;margin:0 0 32px;border-top:3px solid var(--chapter-color);padding-top:28px}
+#main .feature-heading .eyebrow{color:var(--chapter-color);margin:0 0 12px;font-size:13px;font-weight:750}
+#main .feature-heading h2{font-size:clamp(28px,3.4vw,40px);line-height:1.5;letter-spacing:-.035em;margin:0 0 16px;color:#17253b}
+#main .feature-heading p:last-child{font-size:16px;line-height:1.8;color:#506177;max-width:720px;margin:0}
+#main .security-response{padding:20px 24px;background:#edf4fc;border-left:3px solid var(--chapter-color);display:flex;flex-direction:column;gap:8px;margin-bottom:24px}#main .security-response strong{font-size:17px}#main .security-response span{font-size:14px;color:#506177}
+#main .feature-update{--chapter-color:#16746d;background:#f1f7f6}
+#main .feature-update .migration-story-grid{padding:0;background:none;border:0;gap:20px}
+#main .feature-update .rebuild-section{margin:32px 0 0;padding:28px;background:#fff;border:1px solid #cedee1;border-radius:12px}
+#main .feature-update .rebuild-section h2{font-size:clamp(23px,2.6vw,30px)}
+#main .review-support.feature-chapter{--chapter-color:#7255a1;background:#fff;padding:48px 32px}
+#main .review-support .reviews-section,#main .review-support .reviews-inner{padding:0;margin:0;max-width:none;background:none;border:0}
+#main .feature-plan-note{display:inline-block;font-size:12px;color:#7255a1;padding:6px 10px;border-radius:6px;background:#f3eff9;margin-top:14px}
+#main .feature-finish{padding:32px;background:#102b46;color:#fff;display:flex;align-items:center;justify-content:space-between;gap:24px}
+#main .feature-finish h2{color:#fff;font-size:26px;margin:8px 0 0}#main .feature-finish .eyebrow{color:#bdd7e9}#main .feature-finish .button{flex-shrink:0;background:#fff;color:#174675}
+@media(max-width:700px){#main .feature-overview{padding:36px 20px}#main .feature-map{grid-template-columns:1fr;margin-top:24px}#main .feature-map a{display:grid;grid-template-columns:36px 1fr;gap:8px 16px;padding:18px;border-right:0;border-bottom:1px solid #597084}#main .feature-map small{grid-column:2}#main .feature-map .feature-number{grid-row:span 2;align-self:center}#main .feature-map strong{font-size:16px}#main .feature-arrow{display:none}#main .feature-chapter,#main .review-support.feature-chapter{padding:32px 20px}#main .feature-heading{grid-template-columns:40px 1fr;gap:14px;padding-top:22px;margin-bottom:24px}#main .feature-number{font-size:32px}#main .feature-heading h2{font-size:27px}#main .feature-heading p:last-child{font-size:15px}#main .feature-update .rebuild-section{padding:22px 16px}#main .security-response{padding:16px}#main .feature-finish{padding:28px 20px;flex-direction:column;align-items:stretch}#main .feature-finish h2{font-size:24px}}
