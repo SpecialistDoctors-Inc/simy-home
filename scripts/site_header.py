@@ -93,7 +93,9 @@ class HeaderParser(HTMLParser):
 def needs_header(source, path):
     # The authentication return page has a focused, security-sensitive purpose.
     # Redirect aliases and verification tokens never render site navigation.
-    return (path.name != "auth-callback.html"
+    # The noindex comparison page intentionally uses its own service navigation.
+    return (path != SITE / "hp-management/clinic-service.html"
+            and path.name != "auth-callback.html"
             and not re.search(r'http-equiv=["\']refresh', source, re.I)
             and "<body" in source.lower())
 
