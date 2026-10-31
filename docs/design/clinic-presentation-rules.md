@@ -26,3 +26,8 @@ Reference perspectives (our interpretation, not proposals or endorsements):
 ## Message order
 - Lead each chapter with the service benefit and visual, then concrete capabilities, then supporting statistics. The MEO/GEO survey follows the image and service panels.
 - Explain migration before the plan CTA. Pricing headings introduce plan selection rather than repeating the security chapter. Keep DOM and visual reading order identical on mobile and desktop.
+
+## Editorial hierarchy
+- Use a shared 48px desktop / 20px mobile chapter gutter. Avoid nested rounded cards for explanatory content.
+- Each chapter has one focal point: security response time, working update preview, or discovery visual. Keep statistics visually secondary.
+- MEO/GEO pairs its visual with service descriptions on wide screens; narrow screens read visual, services, then survey. Retain all existing imagery and functional forms.
