@@ -187,7 +187,7 @@ function renderSummary(report){
   const counts=element('div','','report-counts');
   for(const [label,value,style] of [['古い版・脆弱性のある部品',componentCount ? String(componentCount)+(report.completion==='partial'?'件以上':'') : (!hasInventory||report.completion==='partial'?'未確認':'0'),'priority'],['関連する公表事例',serviceRisk?new Set([...window.SimyServiceSecurity.visibleServices(serviceRisk).flatMap(s=>window.SimyServiceSecurity.findingsFor(s,serviceRisk)),...(window.SimyServiceSecurity.componentServices?.(serviceRisk)||[]).flatMap(s=>window.SimyServiceSecurity.findingsFor(s,serviceRisk)),...window.SimyServiceSecurity.providerNotices(report)].map(n=>n.url)).size:'未確認','update'],['その他の確認事項',report.findings.filter(f=>f.state==='review').length,'unknown']]){const box=element('div','',style);box.append(element('strong',String(value)),element('span',label));counts.append(box);}
   results.append(counts);
-  for(const warning of report.sourceWarnings||[])results.append(element('p',warning,'source-warning'));
+  // Source freshness is an operational concern, not a finding about the scanned site.
 }
 function renderInfrastructure(report) {
   const section=element('section','','infrastructure-section');
