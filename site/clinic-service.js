@@ -1,11 +1,14 @@
 (function(){
 "use strict";
-// Self-contained design prototype. No analytics, AI calls or recording uploads.
+// Navigation and inquiry UI for the alternate service page.
 const menuButton=document.getElementById('menu-toggle'),mainNav=document.getElementById('main-nav');
 menuButton.addEventListener('click',()=>{const isOpen=mainNav.classList.toggle('open');menuButton.setAttribute('aria-expanded',String(isOpen));});
 mainNav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{mainNav.classList.remove('open');menuButton.setAttribute('aria-expanded','false');}));
 const floatingCta=document.querySelector('.floating-cta');
-const updateFloatingCta=()=>floatingCta.classList.toggle('is-visible',window.scrollY>750);
+const updateFloatingCta=()=>{
+ const interacting=['diagnosis','rebuild','contact'].some(id=>{const r=document.getElementById(id).getBoundingClientRect();return r.top<innerHeight && r.bottom>0;});
+ floatingCta.classList.toggle('is-visible',window.scrollY>750 && !interacting && !document.querySelector('dialog[open]'));
+};
 window.addEventListener('scroll',updateFloatingCta,{passive:true});
 updateFloatingCta();
 document.querySelectorAll('[data-select-plan]').forEach(btn=>btn.addEventListener('click',()=>{document.getElementById('contact-plan').value=btn.dataset.selectPlan;document.getElementById('contact').scrollIntoView({behavior:'smooth'});setTimeout(()=>document.getElementById('contact-clinic').focus({preventScroll:true}),320); }));
