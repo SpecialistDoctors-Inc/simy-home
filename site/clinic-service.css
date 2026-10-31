@@ -2037,3 +2037,55 @@ body { margin:0; background:#faf9f5; color:#172638; }
 .live-tools button,.live-tools input,.live-tools textarea{font:inherit}
 .service-copy .discovery-survey{padding:32px;margin:40px 0 0;border-radius:16px;background:white}
 @media(max-width:600px){.service-copy.hero{padding-block:40px}.service-copy .voice-flow{grid-template-columns:1fr}.service-copy .discovery-survey{padding:20px}}
+
+/* Service-page acceptance geometry: real controls, readable copy, aligned peers. */
+body .service-copy p, body .service-copy li, body .service-copy blockquote { font-size:16px; line-height:1.85; }
+body .service-copy small, body .service-copy .contact-note { font-size:14px; line-height:1.7; }
+body .service-copy .btn { min-height:52px; font-size:16px; padding:14px 22px; }
+body .service-copy .main-nav a { font-size:14px; min-height:44px; display:inline-flex; align-items:center; }
+body .service-copy .field { font:inherit; font-size:16px; min-height:56px; padding:14px 16px; width:100%; box-sizing:border-box; }
+body .service-copy textarea.field { min-height:120px; }
+body .service-copy #inquiry-form > label { display:block; font-size:16px; font-weight:700; margin:20px 0 8px; }
+body .service-copy #inquiry-form .check-line { display:flex; align-items:flex-start; gap:10px; font-weight:400; }
+body .service-copy #inquiry-form .check-line input { width:20px; height:20px; flex:0 0 20px; margin-top:5px; }
+body .service-copy .contact-card { min-width:0; }
+body .live-tools.service-diagnosis { grid-template-columns:minmax(0,1fr); gap:24px; }
+body .service-diagnosis .tool-intro h2 { font-size:32px; margin:8px 0; }
+body .service-diagnosis .tool-intro p { font-size:16px; margin:0; }
+body .service-diagnosis .diagnosis-form { width:100%; min-width:0; }
+body .service-diagnosis .diagnosis-form label, body .service-rebuild #rebuild-form > label { font-size:18px; font-weight:700; }
+body .service-diagnosis .diagnosis-form .url-entry, body .service-rebuild .rebuild-entry { display:grid; grid-template-columns:minmax(0,1fr) 220px; gap:12px; width:100%; }
+body .service-diagnosis .url-entry input, body .service-rebuild .rebuild-entry input { width:100%; min-width:0; height:64px; padding:16px 20px; font-size:18px; border:2px solid #9db4d0; border-radius:10px; }
+body .service-diagnosis .url-entry button, body .service-rebuild .rebuild-entry button { width:100%; min-width:0; height:64px; padding:14px 18px; font-size:18px; border-radius:10px; background:#245ac3; color:#fff; border:0; }
+body .service-diagnosis .diagnosis-form p, body .service-diagnosis .scan-details { font-size:14px; }
+body .service-rebuild #rebuild-form { max-width:none; padding:0; border:0; background:transparent; }
+body .service-copy .discovery-survey { grid-column:1/-1; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:24px 40px; width:100%; box-sizing:border-box; }
+body .discovery-survey .discovery-survey-source { grid-column:1/-1; font-size:14px; border-top:1px solid #dce3e8; padding-top:20px; margin:0; }
+body .discovery-survey .discovery-bars { list-style:none; padding:0; margin:0; display:grid; gap:20px; }
+body .discovery-survey .discovery-bars li { display:grid; grid-template-columns:1fr auto; gap:8px; font-size:16px; align-items:baseline; }
+body .discovery-survey .discovery-bars strong { font-size:30px; color:#245ac3; }
+body .discovery-survey .discovery-bars small { font-size:16px; }
+body .discovery-survey .discovery-bars i { grid-column:1/-1; display:block; height:8px; border-radius:8px; background:linear-gradient(to right,#245ac3 var(--value),#edf1f6 var(--value)); }
+body :is(input,select,textarea,button,a):focus-visible { outline:3px solid #3688ef; outline-offset:3px; }
+body .service-copy .price-card .btn { width:100%; box-sizing:border-box; }
+@media(max-width:800px) {
+ body .service-copy .discovery-survey { grid-template-columns:minmax(0,1fr); padding:24px; }
+ body .service-diagnosis .tool-intro h2 { font-size:26px; }
+ body .service-diagnosis .diagnosis-form .url-entry, body .service-rebuild .rebuild-entry { grid-template-columns:minmax(0,1fr); }
+ body .service-diagnosis .url-entry input, body .service-diagnosis .url-entry button, body .service-rebuild .rebuild-entry input, body .service-rebuild .rebuild-entry button { height:58px; font-size:17px; }
+}
+@media(max-width:480px) {
+ body .live-tools.service-diagnosis, body .live-tools.service-report, body .live-tools.service-rebuild { width:calc(100% - 32px); padding:28px 16px; }
+ body .service-copy .article-paper { padding:20px; }
+ body .service-copy .discovery-survey { padding:20px 16px; }
+}
+#contact #inquiry-form .field, #contact #inquiry-form button { font-size:16px; }
+#rebuild .rebuild-entry input, #rebuild .rebuild-entry button { height:64px; min-height:64px; }
+@media(max-width:800px){#rebuild .rebuild-entry input,#rebuild .rebuild-entry button{height:58px;min-height:58px}}
+#top .service-copy p, #top .service-copy li, #top .service-copy blockquote { font-size:16px; line-height:1.85; }
+#top .service-copy small, #top .service-copy .contact-note { font-size:14px; line-height:1.7; }
+#top .service-copy .btn { font-size:16px; min-height:52px; }
+#top .service-copy .meo-support h3 {font-size:24px;line-height:1.55}
+#top .service-copy .meo-comic img {display:block;width:100%;height:auto}
+#top .service-copy .meo-support {grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px;padding:32px}
+@media(max-width:800px){#top .service-copy .meo-support{grid-template-columns:minmax(0,1fr);padding:20px;gap:24px}}
