@@ -306,3 +306,20 @@ body.preview-editor-open{overflow:hidden}
 @keyframes chat-breathe{to{opacity:.25;transform:scale(.65)}}
 @media(prefers-reduced-motion:reduce){#rebuild-editor .chat-thinking::before{animation:none}}
 @media(max-width:700px){#rebuild-editor .preview-mobile-tabs{margin:8px 0}#rebuild-editor[data-pane="edit"] .preview-chat{padding:20px;min-width:0;width:100%}#rebuild-editor .chat-welcome h3{font-size:25px}#rebuild-editor .preview-editor-footer{padding:8px 16px}#rebuild-editor .preview-editor-footer a{font-size:11px}}
+
+/* Security offer shares one table grid across both service columns. */
+#main .security-intro{padding:36px 28px;background:#fff;border-block:1px solid #dce5ed}
+#main .security-intro h2{font-size:clamp(26px,3vw,38px);line-height:1.5;margin:12px 0}
+#main .security-intro table{width:100%;border-collapse:collapse;table-layout:fixed;margin-top:24px;font-size:15px}
+#main .security-intro th,#main .security-intro td{padding:16px;border-bottom:1px solid #dce5ed;vertical-align:middle}
+#main .security-intro thead{background:#122c4c;color:#fff}
+#main .security-intro th:first-child{width:58%;text-align:left}
+#main .security-intro td,#main .security-intro thead th:not(:first-child){text-align:center}
+#main .security-intro small{display:block;margin-top:4px;font-size:13px;color:#617387;font-weight:400;line-height:1.6}
+#main .security-intro td:last-child{background:#edf6f4}
+#main .security-intro .check{font-size:26px;color:#08765d;font-weight:800}
+#main .security-intro .na{color:#8190a0}
+#main .security-bridge{margin:28px 0 0;font-weight:650;color:#155d69}
+@media(max-width:600px){#main .security-intro{padding:28px 20px}#main .security-intro th,#main .security-intro td{padding:12px 8px}#main .security-intro th:first-child{width:54%}#main .security-intro table{font-size:13px}#main .security-intro small{font-size:12px}}
+#main .security-intro table{min-width:0;max-width:100%}
+#main .security-intro th,#main .security-intro td{overflow-wrap:anywhere}
