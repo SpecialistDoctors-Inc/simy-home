@@ -84,16 +84,30 @@
  };
  api.applyPlan=function(html,plan,assets=[],liveDocument){
   if(plan.status!=='edit'||!Array.isArray(plan.operations)||!plan.operations.length||plan.operations.length>24)throw Error('変更案を確認できませんでした。');
-  const doc=parse(html);for(const e of doc.querySelectorAll('[data-simy-changed]'))e.removeAttribute('data-simy-changed');
+  const doc=parse(html);doc.querySelector('#simy-edit-highlight')?.remove();for(const e of doc.querySelectorAll('[data-simy-changed]'))e.removeAttribute('data-simy-changed');
   const changed=[];
   for(const o of plan.operations){if(!/^e\d+$/.test(o.target))throw Error('変更箇所を確認できませんでした。');const e=doc.querySelector('[data-simy-edit-id="'+o.target+'"]');if(!e||blocked(e))throw Error('変更箇所が見つかりません。');
    if(o.type==='insert_notice'){
     if(!isNews(e)||!o.title||!o.body||!/^\d{4}-\d{2}-\d{2}$/.test(o.date))throw Error('お知らせの追加先を確認できません。');
-    const heading=doc.createElement(e.tagName==='DL'?'dt':'strong'),body=doc.createElement(e.tagName==='DL'?'dd':'p');
-    const template=e.querySelector(e.tagName==='DL'?'dt':'strong');if(template)heading.className=template.className;
-    const bodyTemplate=e.querySelector(e.tagName==='DL'?'dd':'p');if(bodyTemplate)body.className=bodyTemplate.className;
-    heading.textContent=o.date.replace(/-/g,'.')+'　'+o.title;body.textContent=o.body;
-    if(e.tagName==='DL'){e.prepend(heading,body);}else{const li=doc.createElement('li');li.className=e.querySelector('li')?.className||'';li.append(heading,body);e.prepend(li);}
+    const cleanClone=source=>{const clone=source.cloneNode(true);for(const n of [clone,...clone.querySelectorAll('*')]){n.removeAttribute('id');n.removeAttribute('data-simy-edit-id');n.removeAttribute('data-simy-changed');}return clone;};
+    const writeText=(node,value)=>{const walker=doc.createTreeWalker(node,NodeFilter.SHOW_TEXT),nodes=[];let n;while(n=walker.nextNode())if(n.nodeValue.trim())nodes.push(n);if(nodes.length){nodes[0].nodeValue=value;for(const rest of nodes.slice(1))rest.nodeValue='';}else node.textContent=value;};
+    let heading,body;
+    if(e.tagName==='DL'){
+     const template=e.querySelector(':scope > dt'),bodyTemplate=template?.nextElementSibling;
+     if(!template||bodyTemplate?.tagName!=='DD')throw Error('既存のお知らせの形式を確認できません。');
+     heading=cleanClone(template);body=cleanClone(bodyTemplate);
+    }else{
+     const template=e.querySelector(':scope > li');if(!template)throw Error('既存のお知らせの形式を確認できません。');
+     const item=cleanClone(template);heading=item.querySelector('strong,h3,h4');body=item.querySelector('p');
+     if(!heading||!body)throw Error('既存のお知らせの形式を確認できません。');
+     e.prepend(item);
+    }
+    const date=o.date.replace(/-/g,'.'),walker=doc.createTreeWalker(heading,NodeFilter.SHOW_TEXT);let n,dateNode;
+    while(n=walker.nextNode())if(/^\s*\d{4}[.\/-]\d{1,2}[.\/-]\d{1,2}\s*$/.test(n.nodeValue)){dateNode=n;break;}
+    if(dateNode){dateNode.nodeValue=date+'　';const titleNodes=[];const tw=doc.createTreeWalker(heading,NodeFilter.SHOW_TEXT);while(n=tw.nextNode())if(n!==dateNode&&n.nodeValue.trim())titleNodes.push(n);if(titleNodes.length){titleNodes[0].nodeValue=o.title;for(const rest of titleNodes.slice(1))rest.nodeValue='';}else heading.append(doc.createTextNode(o.title));}
+    else writeText(heading,date+'　'+o.title);
+    writeText(body,o.body);
+    if(e.tagName==='DL')e.prepend(heading,body);
     heading.setAttribute('data-simy-changed','true');body.setAttribute('data-simy-changed','true');changed.push(o.target);
    }else if(o.type==='replace_text'){
     if(!o.oldText||typeof o.newText!=='string'||!o.newText.trim())throw Error('変更文を確認できません。');
@@ -122,7 +136,7 @@
     if(!/^e\d+$/.test(o.value))throw Error('移動先を確認できません。');const dest=doc.querySelector('[data-simy-edit-id="'+o.value+'"]');if(!dest||dest===e||dest===doc.body||e===doc.body||e.contains(dest))throw Error('この位置には移動できません。');dest.before(e);e.setAttribute('data-simy-changed','true');changed.push(o.target);
    }else throw Error('対応していない変更です。');
   }
-  if(!doc.querySelector('#simy-edit-highlight')){const style=doc.createElement('style');style.id='simy-edit-highlight';style.textContent='[data-simy-changed]{outline:3px solid #248c83!important;outline-offset:4px;scroll-margin:30px}';doc.head.append(style);}
+
   return {html:api.index('<!doctype html>\n'+doc.documentElement.outerHTML),summary:plan.summary,targets:changed};
  };
 })(typeof window==='undefined'?globalThis:window);
