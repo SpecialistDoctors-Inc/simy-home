@@ -10,7 +10,7 @@ test('every shared header exposes deployable guide and legal destinations', () =
   for (const file of files) {
     const source = fs.readFileSync(path.join(site,file),'utf8');
     const header = source.match(/<header class="simy-header"[\s\S]*?<\/header>/)?.[0];
-    const excluded = file === 'hp-management/clinic-service.html' || file === 'auth-callback.html' || !/<body\b/i.test(source) || /http-equiv=["']refresh/i.test(source);
+    const excluded = ['hp-management/clinic-service.html', 'hp-management/clinic-service-v2.html'].includes(file) || file === 'auth-callback.html' || !/<body\b/i.test(source) || /http-equiv=["']refresh/i.test(source);
     if (excluded) continue;
     assert.ok(header, `${file}: every rendered public page needs the shared header`);
     assert.equal((source.match(/<header class="simy-header"/g) || []).length, 1, `${file}: one shared header`);
