@@ -30,7 +30,7 @@
 .sp-main .sp-pillars>a:first-child{padding-left:0}
 .sp-main .sp-pillars>a:last-child{padding-right:0;border-right:0}
 .sp-main .sp-pillars strong{font-size:clamp(23px,2vw,28px);margin:0;line-height:1.5}
-.sp-main .sp-pillars .pillar-number{font-size:30px;line-height:1.5;color:#145bef;padding:0}
+.sp-main .sp-pillars .pillar-number{width:40px;flex:0 0 40px;font-variant-numeric:tabular-nums;font-size:30px;line-height:1.5;color:#145bef;padding:0}
 .sp-main .sp-section{padding-block:76px}
 .sp-main .sp-heading h2{font-size:clamp(28px,3vw,40px);line-height:1.55;text-wrap:balance}
 .sp-main .sp-heading>p:last-child{font-size:16px;line-height:1.9}
