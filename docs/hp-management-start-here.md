@@ -29,8 +29,8 @@
 - [公開中のサンプルホームページ](https://sample-clinic.simy.one/)
 - [公開前の確認用ページ](https://sample-clinic-dev.simy.one/#news)
 
-架空のクリニックのサンプルです。2026-10-31に、依頼から公開・メール3通の受信まで確認しました。継続して使う医院では、運用担当が専用の更新サービスを設定します。医院のパソコンで定期実行を設定したり、Docker や GitHub を扱ったりする必要はありません。受付時間と連絡方法は、利用開始前に確認してください。
+架空のクリニックのサンプルです。2026-10-31に、依頼から公開・メール3通の受信まで確認しました。継続して使う医院では、SIMY運用の常時稼働サービスが受付表を確認します。医院のパソコンを起動し続けたり、Docker、GitHub、AWS を扱ったりする必要はありません。受付時間と連絡方法は、利用開始前に確認してください。
 
 ## 運用担当の方へ
 
-医院へは[医院向け手順書](hp-management-customer-guide.md)を渡してください。運用担当が行う設定と初回サポートは[設定ガイド](hp-management-setup-guide.md)、専用更新サービスの技術的な初回設定は[運用手順](../examples/hp-management/runner/OPERATOR.md)、検証の詳細は[サンプルの検証記録](hp-management-sample-verification.md)にまとめています。
+医院へは[医院向け手順書](hp-management-customer-guide.md)を渡してください。運用担当が行う設定と初回サポートは[設定ガイド](hp-management-setup-guide.md)、SIMY運用サービスの技術的な初回設定は[運用手順](../examples/hp-management/runner/OPERATOR.md)、検証の詳細は[サンプルの検証記録](hp-management-sample-verification.md)にまとめています。

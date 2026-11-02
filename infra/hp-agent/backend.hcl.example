@@ -1,0 +1,6 @@
+# Copy outside this repository as a private backend.hcl file.
+bucket       = "simy-infra-tfstate-209300895845-ap-northeast-1"
+key          = "hp-agent/terraform.tfstate"
+region       = "ap-northeast-1"
+encrypt      = true
+use_lockfile = true

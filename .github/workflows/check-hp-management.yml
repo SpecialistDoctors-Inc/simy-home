@@ -2,15 +2,27 @@ name: Check standalone HP management
 
 on:
   pull_request:
-    paths: ['examples/hp-management/**', '.github/workflows/check-hp-management.yml']
+    paths: ['examples/hp-management/**', 'infra/hp-agent/**', '.github/workflows/check-hp-management.yml']
   push:
     branches: [dev]
-    paths: ['examples/hp-management/**', '.github/workflows/check-hp-management.yml']
+    paths: ['examples/hp-management/**', 'infra/hp-agent/**', '.github/workflows/check-hp-management.yml']
 
 permissions:
   contents: read
 
 jobs:
+  infrastructure:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: hashicorp/setup-terraform@b9cd54a3c349d3f38e8881555d616ced269862dd # v3
+        with:
+          terraform_version: 1.14.0
+      - run: terraform -chdir=infra/hp-agent fmt -check -recursive
+      - run: terraform -chdir=infra/hp-agent init -backend=false
+      - run: terraform -chdir=infra/hp-agent validate
+      - run: python3 -m unittest discover -s infra/hp-agent -p 'test_*.py'
+      - run: bash -n infra/hp-agent/prepare-volume.sh infra/hp-agent/install-runtime.sh
   ledger:
     runs-on: ubuntu-latest
     steps:

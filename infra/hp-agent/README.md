@@ -1,0 +1,98 @@
+# Always-on HP update agent
+
+This Terraform root creates a single dedicated ARM Ubuntu 24.04 EC2 instance
+for the standalone homepage update controller. It is deliberately separate from
+the static-site Terraform state. The instance has no inbound security-group
+rules, no SSH key and is administered through SSM only.
+
+It creates an immutable ECR repository, a one-day encrypted sealed-artifact S3
+bucket, a 30-day CloudWatch log group, and a separate encrypted 20 GiB EBS data
+volume for the SQLite ledger and Codex auth. The data volume and its attachment
+have `prevent_destroy`, and the attachment has `force_detach = false`; a
+maintenance migration must explicitly remove those safeguards before a live
+detach. The instance itself is protected from destroy and ignores AMI/user-data
+drift after first launch. Daily DLM snapshots retain seven copies.
+
+The bootstrap uses the arm64 Noble HTTPS package source
+`https://ports.ubuntu.com/ubuntu-ports`, installs Docker, and installs the
+official fixed AWS CLI v2.39.3 archive only after checking its pinned SHA-256.
+It intentionally does not install credentials, state, or start the agent. Use a separate encrypted migration after
+the Terraform apply succeeds; verify its encryption and pinned SHA-256 in an
+SSM session before writing the data volume. The agent instance role can read only
+`sealed/*` objects in its artifact bucket, pull only its ECR repository, write
+only its log group and publish health metrics under `SIMY/HPAgent`.
+
+The instance role includes only SSM session-messaging channels and instance
+registration. It does not receive the broad managed SSM policy and cannot read
+Parameter Store.
+
+## Apply
+
+Keep `backend.hcl`, the sealed migration bundle and every credential outside Git.
+Do not place Google OAuth, GitHub, Codex authentication or local SQLite state in
+Terraform variables or user data.
+
+```sh
+cd infra/hp-agent
+cp terraform.tfvars.example /private/location/hp-agent.tfvars
+# Set a recorded, pinned Ubuntu 24.04 arm64 AMI ID and unique bucket name.
+terraform init -backend-config=/private/location/backend.hcl
+terraform plan -var-file=/private/location/hp-agent.tfvars -out=/private/location/hp-agent.tfplan
+terraform apply /private/location/hp-agent.tfplan
+```
+
+After apply, use the `ssm_start_session_command` output. Confirm the EBS data
+volume is mounted and the sealed migration has been verified before starting the
+systemd service. An EC2 system-status alarm uses AWS recovery; it does not
+restart the controller for application failures.
+
+The host needs normal HTTPS egress to Google, GitHub, OpenAI and AWS. The
+service remains fail-closed: an interrupted worker/reviewer is not retried
+without operator recovery, and production publishing still needs its own exact
+artifact approval.
+
+## Release and migration
+
+1. Commit and review the runtime files. Build the ARM image from that committed
+   runner directory, push to the dedicated ECR, and resolve its immutable digest.
+2. Run `build-release.py --source <40-character-commit> --image <ECR@sha256>
+   --output <private-staging>/release-manifest.json`. This reads committed Git
+   objects, not untracked local files. Retain its printed manifest hash.
+3. Package those committed paths with `git archive`, add the manifest, and pin
+   the archive SHA-256 in the SSM command. On the host, verify that archive hash
+   **before extracting or executing any script**. Run `verify-release.py` with
+   the expected manifest hash, source SHA and image digest from the operator's
+   release record. Never obtain expected hashes from the downloaded bundle.
+4. Use `prepare-volume.sh <exact-volume-id>` on the new dedicated data disk.
+   Confirm the old controller has no active work or ambiguous external effects.
+   Stop only its recorded, immediately reverified owned process; preserve the
+   stopped local volumes as rollback evidence. Never start both writers.
+5. Archive the four service volumes (`control`, `state`, `work`, `codex-auth`)
+   after the writer has stopped. Checkpoint SQLite and record its hash. Encrypt
+   the archive to a dedicated server-generated GPG key whose public fingerprint
+   is read back through SSM. Upload only ciphertext to `sealed/`; authentication
+   must never appear in SSM commands/output, Git, Terraform, or logs.
+6. Decrypt on the host in a root-only directory. Run `restore-bundle.py
+   <archive> <archive-sha256> <database-sha256> <manifest-sha256> <source-sha>
+   <image>`. It rejects unsafe archive entries, verifies database integrity and
+   inactive effect state, and binds the restore marker to this release.
+7. Run `install-runtime.sh <image> ap-northeast-1 <instance-id> <source-sha>
+   <manifest-sha256>`. It verifies the files and marker, and checks the image's
+   Python payload without network/credentials before mounting service secrets.
+   A partial install can be retried only while no `hp-agent` container exists;
+   inspect any existing container before deciding a separate recovery action.
+8. Verify live Google identity, polling, isolation, one new dev request, exact
+   deployed files, Sheet readback and a single preview notification. Check the
+   health metric and snapshot configuration. Confirm production is unchanged.
+   Remove only this task's temporary transfer files and temporary key material.
+
+The systemd egress unit requires the data mount before Docker starts. It blocks
+the container from instance metadata, private networks and host-local services.
+The application receives no instance AWS role; the host uses it only for ECR,
+the sealed migration prefix, CloudWatch and SSM messaging. A health alarm exists
+in CloudWatch; external alarm delivery requires a separately configured target.
+
+The instance and data volume must not be replaced by routine Terraform applies.
+For a deliberate host upgrade, prepare a replacement, quiesce and verify the
+single writer, checkpoint/snapshot the disk and perform an explicit migration.
+Do not remove Terraform destruction protections to force an unattended upgrade.
