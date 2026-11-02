@@ -1,0 +1,21 @@
+services:
+  hp-agent:
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Dockerfile
+    init: true
+    read_only: true
+    cap_drop: [ALL]
+    cap_add: [CHOWN, SETUID, SETGID]
+    security_opt:
+      - no-new-privileges:true
+      - seccomp=./seccomp-codex.json
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,nodev,size=64m
+    volumes:
+      - ./runtime/control:/control:ro
+      - ./runtime/state:/state
+      - ./runtime/work:/work
+      - ./runtime/codex-auth:/home/node/.codex
+    command: ["--config", "/control/config.json", "--db", "/state/agent.sqlite3"]

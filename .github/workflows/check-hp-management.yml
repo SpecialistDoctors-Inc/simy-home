@@ -17,3 +17,32 @@ jobs:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - run: python3 -m unittest discover -s examples/hp-management/runner -p 'test_*.py'
       - run: git diff --check
+
+  container:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Build the independent service
+        run: docker build --tag hp-agent-ci examples/hp-management/runner
+      - name: Verify the packaged entrypoint and dependencies
+        run: |
+          docker run --rm --network none hp-agent-ci --help
+          docker run --rm --network none --entrypoint python3 hp-agent-ci -c 'import google.auth, google_auth_oauthlib, requests, agent, github_provider, gmail_provider, google_provider'
+      - name: Exercise controller and worker isolation
+        run: |
+          docker run --rm --network none --entrypoint python3 \
+            --cap-drop ALL --cap-add CHOWN --cap-add SETUID --cap-add SETGID \
+            --security-opt no-new-privileges --read-only \
+            --security-opt seccomp=examples/hp-management/runner/seccomp-codex.json \
+            --tmpfs /tmp:rw,noexec,nosuid,nodev,size=64m \
+            --tmpfs /work:rw,exec,nosuid,nodev,size=64m \
+            hp-agent-ci /opt/hp-agent/test_controller_container.py
+      - name: Verify the real Codex sandbox without model credentials
+        run: |
+          docker run --rm --network none --entrypoint python3 \
+            --cap-drop ALL --cap-add CHOWN --cap-add SETUID --cap-add SETGID \
+            --security-opt no-new-privileges --read-only \
+            --security-opt seccomp=examples/hp-management/runner/seccomp-codex.json \
+            --tmpfs /tmp:rw,noexec,nosuid,nodev,size=64m \
+            --tmpfs /work:rw,exec,nosuid,nodev,size=64m \
+            hp-agent-ci /opt/hp-agent/test_codex_sandbox.py
