@@ -5,8 +5,8 @@ const {chromium} = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
  const browser = await chromium.launch({channel:'chrome',headless:true});
  try {
   const page=await browser.newPage();
-  for (const width of [1440,1024,768,390,320]) {
-   await page.setViewportSize({width,height:1000});
+  for (const [width,height] of [[1440,1000],[1024,1000],[768,1000],[390,844],[320,568],[844,390]]) {
+   await page.setViewportSize({width,height});
    await page.goto(process.env.CLINIC_URL || 'http://127.0.0.1:8899/hp-management/clinic-service-v2.html');
    await page.evaluate(()=>document.fonts.ready);
    const data=await page.evaluate(()=>{
@@ -21,7 +21,21 @@ const {chromium} = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
     else {assert.ok(f.button.top>=f.input.bottom,`${width}: ${f.id} overlap`);assert.ok(Math.abs(f.input.left-f.button.left)<=1&&Math.abs(f.input.right-f.button.right)<=1,`${width}: ${f.id} column edges`);}
    }
    if(data.plans.length===2&&Math.abs(data.plans[0].top-data.plans[1].top)<=1)assert.ok(Math.abs(data.plans[0].bottom-data.plans[1].bottom)<=1,`${width}: plan bottoms`);
-   console.log(`${width}px: form targets, edges and overflow passed`);
+   await page.locator('[data-plan=basic]').first().click();
+   const plan=page.locator('#plan-dialog');
+   const modal=await plan.evaluate(e=>({w:e.clientWidth,scroll:e.scrollWidth,close:e.querySelector('.dialog-close').getBoundingClientRect().height}));
+   assert.ok(modal.scroll<=modal.w+1,`${width}: plan dialog overflow`);
+   assert.ok(modal.close>=44,`${width}: close target`);
+   await page.locator('#plan-review').click();
+   assert.equal(await page.locator('#plan-summary-area').isVisible(),true);
+   await page.keyboard.press('Escape');
+   // Open the existing application dialog only for layout measurement; no submission.
+   await page.locator('#preview-application').evaluate(e=>e.showModal());
+   const app=await page.locator('#preview-application').evaluate(e=>({w:e.clientWidth,scroll:e.scrollWidth,radios:[...e.querySelectorAll('[type=radio]')].map(i=>i.getBoundingClientRect().width),cards:[...e.querySelectorAll('.application-plan')].map(i=>getComputedStyle(i).display)}));
+   assert.ok(app.scroll<=app.w+1,`${width}: application overflow`);
+   assert.ok(app.radios.every(w=>w===20),`${width}: radio stretched`);assert.ok(app.cards.every(x=>x==='grid'),`${width}: application card layout overridden`);
+   await page.keyboard.press('Escape');
+   console.log(`${width}x${height}: forms, plan summary, application controls and overflow passed`);
   }
  } finally {await browser.close();}
 })().catch(e=>{console.error(e);process.exit(1)});
