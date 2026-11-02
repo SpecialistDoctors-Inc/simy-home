@@ -44,5 +44,5 @@ jobs:
             --security-opt no-new-privileges --read-only \
             --security-opt seccomp=examples/hp-management/runner/seccomp-codex.json \
             --tmpfs /tmp:rw,noexec,nosuid,nodev,size=64m \
-            --tmpfs /work:rw,exec,nosuid,nodev,size=64m \
+            --mount type=volume,target=/work \
             hp-agent-ci /opt/hp-agent/test_codex_sandbox.py

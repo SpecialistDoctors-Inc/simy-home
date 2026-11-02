@@ -13,8 +13,9 @@ upstream rules and default deny action and adds only the observed setup calls:
   IPC, PID and network namespace plus SIGCHLD. Other namespace combinations
   remain subject to the upstream profile.
 - `unshare` with exactly `CLONE_NEWUSER` for bubblewrap's final privilege drop.
-- `mount` with ten exact flag combinations observed during setup, including
-  read-only remounts, tmpfs and private/slave propagation.
+- `mount` with eleven exact flag combinations observed during setup, including
+  read-only remounts, a writable nosuid/nodev bind remount for a persistent
+  workspace volume, tmpfs and private/slave propagation.
 - `pivot_root`, and `umount2` with exactly `MNT_DETACH`, to replace and detach
   the old root inside the new namespace.
 
