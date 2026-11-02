@@ -1,0 +1,5 @@
+vpc_id               = "vpc-0a4e84100b61ab7e9"
+subnet_id            = "subnet-0fbfee81af5475f1d"
+# Verified Canonical Ubuntu 24.04 arm64 AMI for ap-northeast-1.
+ubuntu_ami_id        = "ami-07d7d1bf631243bb0"
+artifact_bucket_name = "simy-hp-agent-artifacts-209300895845"
