@@ -986,7 +986,27 @@ dialog#plan-dialog .dialog-close{position:sticky;top:0;float:right;width:44px;he
 dialog#plan-dialog .plan-option{min-height:56px;align-items:center}
 @media(max-width:700px){#preview-application #application-form .application-plan{grid-template-columns:22px minmax(0,1fr);gap:6px 12px}#preview-application #application-form .application-plan>input{grid-row:1/3;align-self:center}#preview-application #application-form .application-plan>b{grid-column:2;font-size:16px}#preview-application #application-form .application-plan>span{grid-column:2}dialog#rebuild-editor .preview-editor-footer>div{gap:8px}dialog#rebuild-editor #preview-apply{min-height:48px}dialog#rebuild-editor #preview-enquiry{min-height:44px;font-size:12px;text-align:center}}
 @media(max-width:600px){dialog#plan-dialog{width:calc(100% - 24px);max-width:calc(100% - 24px);padding:0;max-height:calc(100dvh - 24px);box-sizing:border-box}dialog#plan-dialog .dialog-body{padding:24px 20px}dialog#plan-dialog .dialog-body>p{font-size:14px;line-height:1.8}dialog#plan-dialog .dialog-actions{display:grid;grid-template-columns:minmax(0,1fr)}dialog#plan-dialog .dialog-actions>*{width:100%;min-height:48px;box-sizing:border-box}dialog#plan-dialog .summary-box{overflow-wrap:anywhere} .sp-header button{min-height:44px!important;min-width:44px!important}}
-</style><style>.sp-pillars a{align-items:flex-start}.sp-pillars strong{font-size:clamp(21px,1.8vw,26px);line-height:1.5;letter-spacing:-.025em}.sp-pillars .pillar-number{padding-top:3px}.sp-pillars p{line-height:1.8}@media(max-width:700px){.sp-pillars strong{font-size:21px}.sp-pillars strong br{display:none}.sp-pillars p{font-size:13px}}</style></head>
+</style><style>.sp-pillars a{align-items:flex-start}.sp-pillars strong{font-size:clamp(21px,1.8vw,26px);line-height:1.5;letter-spacing:-.025em}.sp-pillars .pillar-number{padding-top:3px}.sp-pillars p{line-height:1.8}@media(max-width:700px){.sp-pillars strong{font-size:21px}.sp-pillars strong br{display:none}.sp-pillars p{font-size:13px}}</style><style>
+#diagnosis-state .report-edit-next{margin:40px 0 8px;padding:32px;background:#fff;border:2px solid #2464ce;border-radius:16px;box-shadow:0 10px 28px #193c6c0d}
+#diagnosis-state .report-edit-next h3{margin:0 0 10px;font-size:clamp(23px,2.2vw,30px);line-height:1.5}
+#diagnosis-state .report-edit-next>p{margin:0 0 24px;line-height:1.7}
+#diagnosis-state .report-rebuild-form{margin:0;padding:0;border:0;box-shadow:none;background:transparent;max-width:none}
+#diagnosis-state .report-rebuild-form>label:first-child{display:block;margin-bottom:10px;font-size:16px;font-weight:700}
+#diagnosis-state .report-rebuild-entry{display:grid;grid-template-columns:minmax(0,1fr) 200px;gap:12px;align-items:stretch}
+#diagnosis-state .report-rebuild-entry input{box-sizing:border-box;min-width:0;width:100%;height:58px;margin:0;padding:0 16px;border:2px solid #7891b5;border-radius:8px;background:#fff;color:#172c3b;font:inherit;font-size:17px}
+#diagnosis-state .report-rebuild-entry button{box-sizing:border-box;width:100%;min-height:58px;margin:0;padding:12px 16px;border:0;border-radius:8px;background:#165bdc;color:#fff;font:inherit;font-size:18px;font-weight:700;cursor:pointer}
+#diagnosis-state .report-rebuild-entry button:disabled{opacity:.65;cursor:wait}
+#diagnosis-state .report-rebuild-consent{display:flex;align-items:flex-start;gap:10px;margin-top:18px;font-size:14px;line-height:1.6;cursor:pointer}
+#diagnosis-state .report-rebuild-consent input{flex:0 0 20px;width:20px;height:20px;margin:1px 0 0;accent-color:#165bdc}
+#diagnosis-state .report-rebuild-form .rebuild-status:empty{display:none}
+#diagnosis-state .report-rebuild-form .rebuild-status{margin:18px 0 0;line-height:1.7;font-size:15px}
+#diagnosis-state .report-rebuild-form .is-running{border-left:3px solid #165bdc;padding-left:12px}
+#diagnosis-state .report-rebuild-form .is-running:before{content:'';display:inline-block;width:12px;height:12px;margin-right:8px;border:2px solid #b8ccef;border-top-color:#165bdc;border-radius:50%;animation:report-rebuild-spin 1s linear infinite}
+#diagnosis-state .report-rebuild-form .is-error{color:#b52c24}
+@keyframes report-rebuild-spin{to{transform:rotate(360deg)}}
+@media(max-width:700px){#diagnosis-state .report-edit-next{padding:22px 18px;margin-top:28px}#diagnosis-state .report-rebuild-entry{grid-template-columns:minmax(0,1fr)}#diagnosis-state .report-rebuild-entry input,#diagnosis-state .report-rebuild-entry button{height:56px;min-height:56px}}
+</style>
+</head>
 <body id="top">
 <a class="skip" href="#main">本文へ移動</a>
 <header class="header">
@@ -1267,5 +1287,5 @@ function renderSharing(report,root,el){
 }
 global.SimyInformationFlow={model,render,sharingCopy,sharingName,sharingHasIssue,managementCopy,noProblemSummary};
 })(typeof window==='undefined'?globalThis:window);
-</script><script src="/assets/clinic-service-v2/10c67d62bb46fb.js"></script><script src="/assets/clinic-service-v2/4d13c001d2d5a8.js"></script><script src="/assets/clinic-service-v2/3d38195ce03cea.js"></script><script src="/assets/clinic-service-v2/481382f65b2c3c.js"></script><script>for(const id of ['try-article','jump-update'])document.getElementById(id)?.addEventListener('click',()=>{const input=document.getElementById('rebuild-url');input.value=document.getElementById('diagnosis-url').value;document.getElementById('rebuild').scrollIntoView({behavior:'smooth'});input.focus({preventScroll:true});});</script></body>
+</script><script src="/assets/clinic-service-v2/10c67d62bb46fb.js"></script><script src="/assets/clinic-service-v2/33a5d8e6590c1d.js"></script><script src="/assets/clinic-service-v2/3d38195ce03cea.js"></script><script src="/assets/clinic-service-v2/4f007913ffde3d.js"></script><script>for(const id of ['try-article','jump-update'])document.getElementById(id)?.addEventListener('click',()=>{const input=document.getElementById('rebuild-url');input.value=document.getElementById('diagnosis-url').value;document.getElementById('rebuild').scrollIntoView({behavior:'smooth'});input.focus({preventScroll:true});});</script></body>
 </html>
