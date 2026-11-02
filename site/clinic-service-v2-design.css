@@ -1,0 +1,144 @@
+/* Clinic service v2: shared marketing geometry. Functional state stays in its own scripts. */
+.sp-main{--content-width:1240px;background:#fff}
+.sp-main .sp-wrap{max-width:var(--content-width)}
+.sp-main .sp-hero-grid{max-width:1520px;grid-template-columns:minmax(0,1.04fr) minmax(0,1fr);gap:24px;padding-inline:48px}
+.sp-hero-copy,.sp-entry,.functional-scan,.sp-heading,.sp-security-stats>div,.sp-discovery-columns>article{min-width:0}
+.sp-hero .sp-hero-copy{padding-block:42px 36px}
+.sp-hero h1{font-size:clamp(34px,3.45vw,54px);line-height:1.4;letter-spacing:-.045em}
+.sp-hero h1 em{white-space:normal}
+.sp-hero .sp-lead{font-size:18px;line-height:1.85;margin-bottom:24px}
+.sp-main .sp-entry-question{font-size:16px;font-weight:650;line-height:1.75;margin-bottom:14px;color:#435b71}
+.sp-main .sp-entry-title{font-size:18px;line-height:1.65;margin-bottom:10px}
+.sp-hero #diagnosis-form{margin:0;padding:18px;background:#f1f6ff;border:1px solid #d7e3f3;border-radius:10px;box-shadow:none}
+.sp-hero #diagnosis-form .url-entry{grid-template-columns:minmax(240px,1fr) auto;gap:0;border:1px solid #839fc5;border-radius:6px;overflow:visible}
+.sp-hero #diagnosis-form .url-entry input{border:0;border-radius:5px 0 0 5px;font-size:16px;height:58px;min-height:58px}
+.sp-hero #diagnosis-form .url-entry button{min-width:166px;border-radius:0 5px 5px 0;font-size:16px;height:58px;min-height:58px;padding:12px 16px;gap:8px}
+.sp-hero #diagnosis-form .url-entry:focus-within{outline:3px solid #a4c5ff;outline-offset:3px}
+.sp-hero #diagnosis-form .entry-benefits{margin:10px 0 0;font-size:12px}
+.sp-hero #diagnosis-form .availability{border:0;padding:0;margin:8px 0 0;text-align:left;font-size:12px!important}
+.sp-hero #diagnosis-form .scan-details{margin-top:8px}
+.sp-hero #diagnosis-form .scan-details summary{padding:4px 0;font-size:12px}
+.sp-hero #diagnosis-form .scan-details p{font-size:13px;line-height:1.8}
+.sp-hero-art{margin-right:-48px;align-self:center;pointer-events:none}
+.sp-hero-art img{width:100%;max-width:100%;margin:0;mask-image:linear-gradient(to right,transparent,#000 7%)}
+.sp-main .sp-price-line{gap:4px 14px;margin-top:22px!important}
+.sp-price-line .hero-price-select{min-height:44px}
+.sp-price-line small{display:inline}
+.sp-main .sp-overview{padding:24px 0;background:#f2f7ff}
+.sp-main .sp-pillars{grid-template-columns:1fr 1fr 1.2fr;margin:0;gap:0}
+.sp-main .sp-pillars>a{padding:8px 28px;align-items:center;border-top:0;border-right:1px solid #d5e2f5}
+.sp-main .sp-pillars>a:first-child{padding-left:0}
+.sp-main .sp-pillars>a:last-child{padding-right:0;border-right:0}
+.sp-main .sp-pillars strong{font-size:clamp(23px,2vw,28px);margin:0;line-height:1.5}
+.sp-main .sp-pillars .pillar-number{font-size:30px;line-height:1.5;color:#145bef;padding:0}
+.sp-main .sp-section{padding-block:76px}
+.sp-main .sp-heading h2{font-size:clamp(28px,3vw,40px);line-height:1.55;text-wrap:balance}
+.sp-main .sp-heading>p:last-child{font-size:16px;line-height:1.9}
+.sp-main .sp-security-stats{grid-template-columns:repeat(3,minmax(0,1fr));gap:0;padding-block:28px}
+.sp-main .sp-security-stats>div{padding-inline:28px;border-left:1px solid #dbe2e7}
+.sp-main .sp-security-stats>div:first-child{padding-left:0;border-left:0}
+.sp-main .sp-security-stats>div:last-child{padding-right:0}
+.sp-main .sp-security-stats strong{min-height:72px;display:flex;align-items:baseline;flex-wrap:wrap;gap:0 6px;font-size:42px}
+.sp-main .sp-security-stats strong span{margin:0;font-size:16px}
+.sp-main .sp-security-stats .sp-stat-words{font-size:22px;display:block;line-height:1.6}
+.sp-main .sp-comics{grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.sp-main .sp-comic{display:flex;flex-direction:column}
+.sp-main .sp-comic img{object-fit:contain;background:#fff}
+.sp-main .sp-comic>div{flex:1}
+.sp-main .sp-comic h3{min-height:0;font-size:19px;line-height:1.65}
+.sp-main .sp-editorial{gap:48px}
+.sp-main .sp-editorial h3{font-size:clamp(23px,2.2vw,29px);line-height:1.65}
+.sp-main .plans{grid-template-columns:repeat(2,minmax(0,1fr));align-items:stretch}
+.sp-main .plans .plan{padding:30px;min-width:0}
+.sp-main .plan-top{flex-wrap:wrap;gap:4px 12px}
+.sp-main .plans h3{font-size:24px;margin:0}
+.sp-main .plan li{font-size:14px;line-height:1.8}
+.sp-main .plan li::before{content:none}
+.sp-main .plan li{padding-left:0}
+.sp-main .plan .price{gap:6px;flex-wrap:wrap;letter-spacing:0;min-height:64px;margin:0}
+.sp-main .plan .price strong{font-size:46px;letter-spacing:-.045em;line-height:1.3}
+.sp-main .plan .price :is(span,small){margin:0;font-size:13px}
+.sp-main .plan .btn{margin-top:auto;min-height:52px;font-size:15px}
+.sp-main .support{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:28px}
+.sp-main .support-price{min-width:0}
+.sp-main #rebuild{width:100%;max-width:1240px;margin:0 auto;padding:56px 40px;border-block:1px solid #d5e2f5}
+.sp-main #rebuild-form{box-shadow:none}
+.sp-main .rebuild-entry{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px}
+.sp-main #rebuild-form .rebuild-entry :is(input,button){height:58px;min-height:58px;margin:0;box-sizing:border-box;line-height:1.5}
+.sp-main #rebuild-form .rebuild-entry button{width:auto;padding:12px 24px;white-space:nowrap}
+.sp-main #diagnosis-state{display:block;width:calc(100% - 80px);max-width:1160px;margin:32px auto;padding:32px;clear:both;overflow-wrap:anywhere;isolation:isolate}
+.sp-main #diagnosis-state[hidden]{display:none!important}
+#diagnosis-state :is(.evaluation-scroll,.table-scroll){max-width:100%;overflow-x:auto;overscroll-behavior-x:contain}
+#diagnosis-state table{max-width:100%}
+#diagnosis-state :is(.report-edit-next,.report-email,.information-flow){min-width:0}
+.sp-main .sp-trust,.sp-main .sp-trust *{opacity:1!important;visibility:visible!important;transform:none!important}
+.sp-main .sp-isms-mark{display:block;opacity:1!important;visibility:visible!important;transform:none!important}
+.sp-main .sp-final h2{font-size:clamp(28px,3vw,40px);line-height:1.6}
+@media(max-width:1199px){
+ .sp-main .sp-hero-grid{padding-inline:32px;gap:24px}
+ .sp-hero-art{margin-right:-32px}
+ .sp-hero #diagnosis-form .url-entry{grid-template-columns:minmax(0,1fr);gap:8px;border:0;border-radius:0}
+ .sp-hero #diagnosis-form .url-entry :is(input,button){width:100%;border-radius:6px}
+ .sp-hero #diagnosis-form .url-entry input{border:1px solid #839fc5}
+ .sp-hero .sp-lead{font-size:16px}
+ .sp-main .support{grid-template-columns:1fr}
+ .sp-main .support-price{align-items:flex-start}
+}
+@media(max-width:900px){
+ .sp-main .sp-hero-grid{grid-template-columns:minmax(0,1fr);gap:0}
+ .sp-hero .sp-hero-copy{padding-block:32px 16px;max-width:680px;width:100%;margin:auto}
+ .sp-hero h1{font-size:clamp(32px,5.4vw,48px)}
+ .sp-hero-art{width:min(100%,620px);margin:0 auto;max-width:620px}
+ .sp-hero-art img{mask-image:none}
+ .sp-main .sp-pillars>a{padding-inline:18px;gap:14px}
+ .sp-main .sp-pillars strong{font-size:22px}
+ .sp-main .sp-security-stats>div{padding-inline:18px}
+ .sp-main .sp-security-stats strong{font-size:36px}
+ .sp-main .sp-security-stats .sp-stat-words{font-size:19px}
+ .sp-main .sp-security-stats strong span{font-size:14px}
+ .sp-main .sp-editorial{gap:28px}
+}
+@media(max-width:700px){
+ .sp-main .sp-hero-grid{display:grid;padding-inline:22px}
+ .sp-hero .sp-hero-copy{padding-block:28px 12px}
+ .sp-hero h1{font-size:clamp(26px,6.9vw,42px)}
+ .sp-hero .sp-lead{font-size:15px;line-height:1.8;margin-bottom:22px}
+ .sp-main .sp-entry-question{font-size:15px;margin-bottom:12px}
+ .sp-main .sp-entry-title{font-size:16px}
+ .sp-hero #diagnosis-form{padding:14px}
+ .sp-hero #diagnosis-form .url-entry :is(input,button){height:56px;min-height:56px;font-size:16px}
+ .sp-main .sp-price-line{gap:0 10px;font-size:13px}
+ .sp-main .sp-price-line strong{font-size:30px}
+ .sp-main .sp-overview{padding-block:8px}
+ .sp-main .sp-pillars{grid-template-columns:minmax(0,1fr)}
+ .sp-main .sp-pillars>a,.sp-main .sp-pillars>a:first-child,.sp-main .sp-pillars>a:last-child{padding:16px 0;border-right:0;border-bottom:1px solid #d5e2f5;gap:20px}
+ .sp-main .sp-pillars>a:last-child{border-bottom:0}
+ .sp-main .sp-section{padding-block:48px}
+ .sp-main .sp-heading h2{font-size:28px}
+ .sp-main .sp-heading>p:last-child{font-size:15px}
+ .sp-main .sp-security-stats{grid-template-columns:minmax(0,1fr);padding:0}
+ .sp-main .sp-security-stats>div,.sp-main .sp-security-stats>div:first-child,.sp-main .sp-security-stats>div:last-child{padding:22px 0;border-left:0;border-bottom:1px solid #dbe2e7}
+ .sp-main .sp-security-stats strong{min-height:0;font-size:40px}
+ .sp-main .sp-security-stats .sp-stat-words{font-size:23px}
+ .sp-main .sp-security-stats p{margin-top:10px}
+ .sp-main .sp-comics,.sp-main .sp-editorial,.sp-main .plans{grid-template-columns:minmax(0,1fr)}
+ .sp-main .sp-comic h3{font-size:21px}
+ .sp-main .sp-comic>div{padding-top:16px}
+ .sp-main .sp-comic p{font-size:15px}
+ .sp-main .sp-editorial{margin-top:32px}
+ .sp-main .plans .plan{padding:24px}
+ .sp-main .plan-top{display:block}
+ .sp-main .plan-code{display:block;margin-top:4px}
+ .sp-main .plan .price strong{font-size:42px}
+ .sp-main .plan-license{min-height:0}
+ .sp-main .support{padding:24px;gap:22px}
+ .sp-main .support-intro{flex-wrap:wrap}
+ .sp-main .support-price{width:100%}
+ .sp-main .support-apply{width:100%}
+ .sp-main #rebuild{padding:40px 22px}
+ .sp-main #rebuild-form{padding:20px 16px}
+ .sp-main .rebuild-entry{grid-template-columns:minmax(0,1fr)}
+ .sp-main #rebuild-form .rebuild-entry :is(input,button){width:100%;height:56px;min-height:56px;font-size:16px}
+ .sp-main #diagnosis-state{width:calc(100% - 32px);margin:24px auto;padding:20px 16px}
+ .sp-main .sp-final h2{font-size:28px}
+}
