@@ -4,6 +4,7 @@ import json
 import os
 from pathlib import Path
 import subprocess
+import shutil
 import sys
 import tempfile
 import unittest
@@ -131,6 +132,20 @@ class AgentTest(unittest.TestCase):
         self.until('awaiting_approval')
         self.assertEqual(self.workers,2)
         self.assertEqual(self.github.candidates,1)
+    @unittest.skipUnless(shutil.which('node'), 'Node is required for the actual site build')
+    def test_pristine_site_verification_without_git_records_bound_revision(self):
+        job=self.path/'pristine'
+        (job/'control/private').mkdir(parents=True)
+        sample=Path(__file__).resolve().parents[2]/'sample-clinic'
+        if not sample.exists():self.skipTest('actual sample source is required')
+        shutil.copytree(sample,job/'source/examples/sample-clinic',ignore=shutil.ignore_patterns('dist','node_modules'))
+        content=json.loads((sample/'content/clinic.json').read_text())
+        base={'sha':'a'*40,'content':content}
+        proof=self.agent.verify_candidate(self.key,base,content,job)
+        self.assertTrue(proof['root_pristine_tests'])
+        manifest=json.loads((job/'control/private/verification/examples/sample-clinic/dist/version.json').read_text())
+        self.assertEqual(manifest['sourceRevision'],base['sha'])
+        self.assertFalse((job/'control/private/verification/.git').exists())
     def test_optional_mail_uses_ledger_admission_and_replay_does_not_resend(self):
         mail=Mail();self.config['mail_enabled']=True
         self.agent=Agent(self.config,self.store,self.sheets,self.github,worker=self.worker,verifier=self.verifier,reviewer=self.reviewer,mail=mail)

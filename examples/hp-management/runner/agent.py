@@ -246,6 +246,9 @@ class Agent:
         content=verify/'examples/sample-clinic/content/clinic.json'
         atomic_json(content,candidate)
         env={k:v for k,v in os.environ.items() if k in {'PATH','LANG','LC_ALL','TMPDIR'}}
+        # The pristine copy deliberately has no Git metadata. Bind the build
+        # to the trusted source revision, as for the isolated worker.
+        env['SOURCE_REVISION']=base['sha']
         run_owned(['node','examples/sample-clinic/build.mjs'],verify,private/'verify-build.log',private/'verify-build-process.json',env=env,timeout=120)
         tests=sorted(str(p.relative_to(verify)) for p in (verify/'examples/sample-clinic/tests').glob('*.test.mjs'))
         require(tests,'verification_tests_missing')
