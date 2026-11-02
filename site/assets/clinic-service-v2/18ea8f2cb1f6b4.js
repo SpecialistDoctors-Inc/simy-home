@@ -265,6 +265,11 @@ function renderReport(report) {
   if(reviews.length)results.append(reportDetails);
   results.append(element('p','侵入・漏えいの有無、サーバー内部・外部サービス内部は、この診断では確認していません。','report-boundary'));
   reportDetails=null;
+  const next=element('section','','report-edit-next');
+  next.append(element('h3','このホームページを、実際に変えてみませんか。'),element('p','今のトップページを再現して、文章や写真の変更を体験できます。'));
+  const edit=element('button','自分のホームページで編集を試す →','button button-primary');edit.type='button';
+  edit.addEventListener('click',()=>{const input=document.querySelector('#rebuild-url');if(input){input.value=report.url;input.closest('section')?.scrollIntoView({block:'start',behavior:'smooth'});input.focus({preventScroll:true});}});
+  next.append(edit);results.append(next);
   gateReport(report);
   const rebuildInput=document.querySelector('#rebuild-url');if(rebuildInput&&!rebuildInput.value)rebuildInput.value=report.url;
 }
@@ -330,7 +335,7 @@ function gateReport(report) {
     results.replaceChildren(full);
     const confirmed=element('p',registration.clinicName+' の診断結果一覧です。PDFでも保存できます。','report-unlocked');confirmed.setAttribute('role','status');results.prepend(confirmed);
     const downloads=element('div','','report-downloads report-download-dock');downloads.setAttribute('aria-label','診断結果のPDF保存');const pdf=element('button','診断結果をPDFで保存 ↓','button button-primary');pdf.type='button';const pdfStatus=element('p','','report-pdf-status');pdfStatus.setAttribute('role','status');const saveHint=element('span','院内共有・相談に使える診断レポート','report-save-hint');downloads.append(saveHint,pdf,pdfStatus);confirmed.after(downloads);
-    if('IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>{if(!downloads.isConnected){observer.disconnect();return;}downloads.hidden=!entries[0].isIntersecting;});observer.observe(confirmed);}
+
     pdf.addEventListener('click',async()=>{pdf.disabled=true;pdfStatus.textContent='PDFを作成しています…';try{await loadReportPdf();await window.SimyReportPdf.download({report,registration,root:full});pdfStatus.textContent='PDFを作成しました。ダウンロードをご確認ください。';}catch(error){pdfStatus.textContent='PDFを作成できませんでした。もう一度お試しください。';}finally{pdf.disabled=false;}});
     diagnosisState.focus({preventScroll:true});diagnosisState.scrollIntoView({block:'start',behavior:'auto'});
   });
@@ -389,8 +394,7 @@ async function runDiagnosis(event) {
   const diagnosisForm=event.currentTarget;
   const diagnosisInput=diagnosisForm.querySelector('input[name=website]');
   const panel=document.querySelector('#scan-progress');
-  if(diagnosisForm.id==='inline-diagnosis-form'){diagnosisForm.append(panel);diagnosisForm.after(diagnosisState);}
-  else{diagnosisForm.append(panel);document.querySelector('#diagnosis').after(diagnosisState);}
+  diagnosisForm.append(panel);
   let target;
   try { target=normalizeDiagnosisUrl(diagnosisInput.value); }
   catch(error) { diagnosisInput.setCustomValidity(error.message);diagnosisInput.reportValidity();return; }
