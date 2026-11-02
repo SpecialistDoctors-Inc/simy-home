@@ -54,11 +54,17 @@ print(json.dumps({'workspace_write': True, 'outside_write_denied': True,
 ''' % (str(outside / 'forbidden.txt'), str(private / 'provider-secret-fixture'))
     env = {key: value for key, value in os.environ.items() if key in {'PATH', 'LANG', 'LC_ALL'}}
     env.update({'HOME': '/home/node', 'CODEX_HOME': '/home/node/.codex'})
-    run_owned(['codex', 'sandbox', '-c', 'sandbox_mode="workspace-write"',
-               '-c', 'sandbox_workspace_write.network_access=false', '--',
-               'python3', '-c', program], workspace, private / 'sandbox.log',
-              private / 'sandbox-process.json', env=env, user=1000, group=1000,
-              extra_groups=[], timeout=60)
+    try:
+        run_owned(['codex', 'sandbox', '-c', 'sandbox_mode="workspace-write"',
+                   '-c', 'sandbox_workspace_write.network_access=false', '--',
+                   'python3', '-c', program], workspace, private / 'sandbox.log',
+                  private / 'sandbox-process.json', env=env, user=1000, group=1000,
+                  extra_groups=[], timeout=60)
+    except RuntimeError:
+        # This credential-free fixture runs in a disposable CI container.
+        # Keep the actual sandbox failure visible after that container exits.
+        print((private / 'sandbox.log').read_bytes()[-16384:].decode(errors='replace'), flush=True)
+        raise
     assert not (outside / 'forbidden.txt').exists()
     print((private / 'sandbox.log').read_text())
 
