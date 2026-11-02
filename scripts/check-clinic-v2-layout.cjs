@@ -22,20 +22,15 @@ const {chromium} = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
    }
    if(data.plans.length===2&&Math.abs(data.plans[0].top-data.plans[1].top)<=1)assert.ok(Math.abs(data.plans[0].bottom-data.plans[1].bottom)<=1,`${width}: plan bottoms`);
    await page.locator('[data-plan=basic]').first().click();
-   const plan=page.locator('#plan-dialog');
-   const modal=await plan.evaluate(e=>({w:e.clientWidth,scroll:e.scrollWidth,close:e.querySelector('.dialog-close').getBoundingClientRect().height}));
-   assert.ok(modal.scroll<=modal.w+1,`${width}: plan dialog overflow`);
-   assert.ok(modal.close>=44,`${width}: close target`);
-   await page.locator('#plan-review').click();
-   assert.equal(await page.locator('#plan-summary-area').isVisible(),true);
-   await page.keyboard.press('Escape');
+   await page.locator('#preview-application[open]').waitFor();
+   await page.locator('#application-close').click();
    // Open the existing application dialog only for layout measurement; no submission.
    await page.locator('#preview-application').evaluate(e=>e.showModal());
    const app=await page.locator('#preview-application').evaluate(e=>({w:e.clientWidth,scroll:e.scrollWidth,radios:[...e.querySelectorAll('[type=radio]')].map(i=>i.getBoundingClientRect().width),cards:[...e.querySelectorAll('.application-plan')].map(i=>({display:getComputedStyle(i).display,height:i.getBoundingClientRect().height,textWidth:i.querySelector('span').getBoundingClientRect().width,radioLeft:i.querySelector('input').getBoundingClientRect().left,textLeft:i.querySelector('span').getBoundingClientRect().left}))}));
    assert.ok(app.scroll<=app.w+1,`${width}: application overflow`);
    assert.ok(app.radios.every(w=>w===20),`${width}: radio stretched`);assert.ok(app.cards.every(x=>x.display==='grid'&&x.height<180&&x.textWidth>=Math.min(150,width-125)&&x.radioLeft<x.textLeft),`${width}: application card layout overridden`);
    await page.keyboard.press('Escape');
-   console.log(`${width}x${height}: forms, plan summary, application controls and overflow passed`);
+   console.log(`${width}x${height}: forms, pricing entry, application controls and overflow passed`);
   }
  } finally {await browser.close();}
 })().catch(e=>{console.error(e);process.exit(1)});
