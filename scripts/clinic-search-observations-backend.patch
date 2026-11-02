@@ -1,0 +1,93 @@
+From b27ff03d3be836341d563c55aa03608e497cff88 Mon Sep 17 00:00:00 2001
+From: tshiwaku <264725443+tshiwaku@users.noreply.github.com>
+Date: Mon, 2 Nov 2026 21:52:16 +0900
+Subject: [PATCH] Observe public search metadata without inventing visibility
+ scores
+
+---
+ lib/scan.ts                          |  3 ++-
+ lib/search-observations.ts           | 33 ++++++++++++++++++++++++++++
+ scripts/test-search-observations.mjs | 13 +++++++++++
+ 3 files changed, 48 insertions(+), 1 deletion(-)
+ create mode 100644 lib/search-observations.ts
+ create mode 100644 scripts/test-search-observations.mjs
+
+diff --git a/lib/scan.ts b/lib/scan.ts
+index 378202f..69f580f 100644
+--- a/lib/scan.ts
++++ b/lib/scan.ts
+@@ -1,3 +1,4 @@
++import {searchObservations} from './search-observations';
+ import {failureCode} from './scan-journal';
+ import {inspectServiceSecurity,observedSubjects,componentCatalog,type Research} from './service-security';
+ import {initialFetch} from './initial-fetch';
+@@ -106,7 +107,7 @@ export function analyze(url: string, h: Headers, html: string, truncated: boolea
+  add('cookies','Cookieの保護設定',!cookies.length?'unknown':missing.length?'review':'observed','未認証の応答で発行されたCookieの属性です。用途・ログイン後のCookieは未確認です。',!cookies.length?'この応答ではSet-Cookieを受信していません。':missing.length?missing.map(c=>`Cookie ${c.n}: ${c.attrs.join('、')} がありません（値は非表示）`).join('\n'):`${cookies.length}件にSecure・HttpOnly・SameSite属性を確認（値の妥当性は未評価）`,'SIMYへ、ログイン用CookieのSecure・HttpOnly・SameSite設定の確認を依頼してください。外部サービスとのログイン連携やJavaScript利用を考慮して設定します。',mdn+'Set-Cookie');
+  const refs=Array.from(html.matchAll(/<(?:script|img|iframe|link|audio|video|source)\b[^>]*\b(?:src|href)\s*=\s*["'](http:\/\/[^"']+)["']/gi));
+  add('mixed','暗号化されていない素材の参照',!https?'unknown':refs.length?'review':truncated?'unknown':'observed','画像やスクリプトのHTTP参照をHTMLから探します。ブラウザーによる自動更新・ブロックや、JavaScript実行後の通信は検査しません。',refs.length?`HTML内にHTTP素材の参照が${refs.length}件あります。`:`取得したHTML内ではHTTP素材の参照を検出していません。${truncated?'容量上限により一部のみ検査。':''}`,'SIMYへ、画像・スクリプトなどのURLをHTTPSへ変更するよう依頼してください。HTTPS非対応の素材は移設や置き換えを検討します。','https://developer.mozilla.org/ja/docs/Web/Security/Mixed_content');
+- return out;
++ return [...out,...searchObservations(url,h,html,truncated)];
+ }
+ 
+ async function scanWithinBudget(input:string,behavior=false,onProgress?:(stage:string,detail:string)=>void,onPartial?:(report:Report)=>void):Promise<Report> {
+diff --git a/lib/search-observations.ts b/lib/search-observations.ts
+new file mode 100644
+index 0000000..767a83a
+--- /dev/null
++++ b/lib/search-observations.ts
+@@ -0,0 +1,33 @@
++import {parse,type DefaultTreeAdapterMap} from 'parse5';
++import type {Finding} from './scan';
++// Observes the fetched entry HTML only. No ranking, advertising or AI visibility score.
++export function searchObservations(url:string,headers:Headers,html:string,truncated:boolean):Finding[]{
++ const nodes:DefaultTreeAdapterMap['element'][]=[];
++ function walk(n:DefaultTreeAdapterMap['node']){if('tagName'in n){nodes.push(n);if(['template','noscript','script','style'].includes(n.tagName))return;}if('childNodes'in n)n.childNodes.forEach(walk);}
++ walk(parse(html));
++ const attr=(n:DefaultTreeAdapterMap['element'],key:string)=>n.attrs.find(a=>a.name===key)?.value||'';
++ const text=(n:DefaultTreeAdapterMap['node']):string=>'value'in n?n.value:'childNodes'in n?n.childNodes.map(text).join(' '):'';
++ const clean=(s:string)=>s.replace(/\s+/g,' ').trim();
++ const out:Finding[]=[];
++ const add=(id:string,title:string,found:boolean,evidence:string,fix:string,reference:string)=>out.push({id,title,state:found?'observed':truncated?'unknown':'review',summary:found?'取得したトップページのHTMLで記載を確認しました。':'取得したHTMLでは記載を確認できませんでした。必要性と内容をご確認ください。',evidence:evidence.slice(0,500)+(truncated?' / HTMLは一部のみ取得。未検出項目は未確認です。':''),fix,reference});
++ const base='https://developers.google.com/search/docs/';
++ const titles=nodes.filter(n=>n.tagName==='title').map(n=>clean(text(n))).filter(Boolean);
++ add('seo-title','SEO / 検索結果の見出し',!!titles.length,titles.join(' / ')||'titleの記載を検出せず','医院名・地域・診療内容が伝わるタイトルを確認してください。',base+'appearance/title-link');
++ const descriptions=nodes.filter(n=>n.tagName==='meta'&&attr(n,'name').toLowerCase()==='description').map(n=>clean(attr(n,'content'))).filter(Boolean);
++ add('seo-description','SEO / ページの説明文',!!descriptions.length,descriptions.join(' / ')||'meta descriptionの記載を検出せず','患者さんに伝えたいページの内容を短く説明してください。検索結果での採用は検索エンジンが判断します。',base+'appearance/snippet');
++ const h1=nodes.filter(n=>n.tagName==='h1').map(n=>clean(text(n))).filter(Boolean);
++ add('seo-heading','SEO / ページの主な見出し',!!h1.length,h1.join(' / ')||'空でないh1の記載を検出せず','ページの内容が伝わる主な見出しを確認してください。',base+'fundamentals/seo-starter-guide');
++ const canonical=nodes.filter(n=>n.tagName==='link'&&attr(n,'rel').toLowerCase().split(/\s+/).includes('canonical'));
++ const valid=canonical.flatMap(n=>{try{const u=new URL(attr(n,'href'),url);return /^https?:$/.test(u.protocol)&&!u.username&&!u.password?[u.origin+u.pathname]:[];}catch{return [];}});
++ add('seo-canonical','SEO / 正規URLの指定',valid.length===1,valid.length?valid.join(' / '):'有効なcanonicalの記載を検出せず','同じ内容のURLが複数ある場合は、正規URLの指定を確認してください。未指定だけで順位低下とは判定しません。',base+'crawling-indexing/consolidate-duplicate-urls');
++ const robots=nodes.filter(n=>n.tagName==='meta'&&['robots','googlebot'].includes(attr(n,'name').toLowerCase())).map(n=>attr(n,'content'));if(headers.get('x-robots-tag'))robots.push(headers.get('x-robots-tag')!);
++ const excluded=robots.some(v=>/(?:^|[\s,:;])(?:noindex|none)(?:$|[\s,;])/i.test(v));
++ out.push({id:'seo-indexing',title:'SEO / 検索から除外する指定',state:excluded?'review':'unknown',summary:excluded?'検索から除外する指定を確認しました。意図した設定かご確認ください。':'取得したHTML・応答ヘッダーでは検索除外の指定を検出していません。検索掲載の有無は未確認です。',evidence:robots.join(' / ').slice(0,500)||'robots / X-Robots-Tagの指定なし。robots.txt・Search Console・検索結果は未確認。',fix:'公開対象のページか確認し、検索掲載はSearch Consoleで確認してください。',reference:base+'crawling-indexing/block-indexing'});
++ // JSON-LD presence is evidence of markup, not validation or AI citation eligibility.
++ const scripts=[...html.matchAll(/<script\b[^>]*type\s*=\s*["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script\s*>/gi)];
++ let parsed=0;for(const m of scripts){try{const v=JSON.parse(m[1]);if(v&&typeof v==='object')parsed++;}catch{}}
++ add('geo-structured-data','GEO / 情報を機械に伝える記載',parsed>0,`JSONとして読めるJSON-LD：${parsed}件。スキーマの適合性・記載の正確性・AI検索への引用は未確認。`,'医院情報と画面の記載を一致させ、構造化データの内容を確認してください。',base+'appearance/structured-data/intro-structured-data');
++ out.push({id:'sem-performance',title:'SEM / 検索広告の成果',state:'unknown',summary:'広告費・表示回数・予約につながった件数は、公開ページだけでは確認できません。',evidence:'広告アカウント・計測データには接続していません。',fix:'広告管理画面と予約の計測データで確認してください。',reference:'https://support.google.com/google-ads/answer/1722022'});
++ out.push({id:'geo-visibility',title:'GEO / AI検索での紹介・引用',state:'unknown',summary:'AI検索での紹介・引用状況は、この診断では確認していません。',evidence:'AI検索への問い合わせ・引用結果の観測は未実施。',fix:'対象の検索語と確認日を決めて、実際の引用結果を確認してください。',reference:base+'appearance/ai-features'});
++ return out;
++}
+diff --git a/scripts/test-search-observations.mjs b/scripts/test-search-observations.mjs
+new file mode 100644
+index 0000000..036e40e
+--- /dev/null
++++ b/scripts/test-search-observations.mjs
+@@ -0,0 +1,13 @@
++import {build} from 'esbuild';import assert from 'node:assert/strict';
++await build({entryPoints:['lib/search-observations.ts'],bundle:true,platform:'node',format:'esm',outfile:'.sites-runtime/search-observations.mjs'});
++const {searchObservations}=await import('../.sites-runtime/search-observations.mjs');
++const run=(html,truncated=false,h=new Headers())=>searchObservations('https://example.com/',h,html,truncated);
++const missing=run('<html><body>医院</body></html>');assert.equal(missing.find(f=>f.id==='seo-title').state,'review');assert.equal(missing.find(f=>f.id==='seo-indexing').state,'unknown');
++assert(run('<title>医院</title>',true).filter(f=>f.id!=='seo-title').every(f=>f.state==='unknown'));
++const complete=run('<title>医院</title><meta name="description" content="地域の医院"><h1>診療案内</h1><link rel="canonical" href="/"><script type="application/ld+json">{"@type":"MedicalClinic"}</script>');
++for(const id of ['seo-title','seo-description','seo-heading','seo-canonical','geo-structured-data'])assert.equal(complete.find(f=>f.id===id).state,'observed');
++assert.equal(run('<meta name="googlebot" content="none">').find(f=>f.id==='seo-indexing').state,'review');assert.equal(run('',false,new Headers({'X-Robots-Tag':'googlebot: noindex'})).find(f=>f.id==='seo-indexing').state,'review');
++assert.equal(run('<script type="application/ld+json">broken</script>').find(f=>f.id==='geo-structured-data').state,'review');
++assert.equal(run('<link rel="canonical" href="javascript:alert(1)">').find(f=>f.id==='seo-canonical').state,'review');
++for(const f of complete.filter(f=>/^sem-|^geo-visibility/.test(f.id)))assert.equal(f.state,'unknown');
++assert(!JSON.stringify(complete).includes('score'));console.log('Observed HTML evidence, truncation, invalid JSON/URL and unmeasured SEM/GEO passed');
+-- 
+2.53.0
+
