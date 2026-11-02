@@ -91,6 +91,10 @@ CREATE TABLE IF NOT EXISTS leases(
   owner TEXT NOT NULL, token TEXT NOT NULL UNIQUE, expires REAL NOT NULL,
   PRIMARY KEY(site_id,request_id,revision),
   FOREIGN KEY(site_id,request_id,revision) REFERENCES requests(site_id,request_id,revision));
+CREATE TABLE IF NOT EXISTS agent_effects(
+  key TEXT PRIMARY KEY, site_id TEXT NOT NULL, request_id TEXT NOT NULL, revision INTEGER NOT NULL,
+  stage TEXT NOT NULL, input_digest TEXT NOT NULL, state TEXT NOT NULL,
+  token_hash TEXT NOT NULL, receipt TEXT, created REAL NOT NULL);
 CREATE TABLE IF NOT EXISTS notifications(
   key TEXT PRIMARY KEY, site_id TEXT NOT NULL, request_id TEXT NOT NULL, revision INTEGER NOT NULL,
   kind TEXT NOT NULL, envelope TEXT NOT NULL, state TEXT NOT NULL,
@@ -148,6 +152,8 @@ CREATE TABLE IF NOT EXISTS notifications(
         # stays pending until the already-admitted provider effect is reconciled.
         pending = self.row("SELECT key FROM notifications WHERE site_id=? AND state IN ('sending','ambiguous') LIMIT 1", (site_id,))
         require(pending is None, 'delivery_reconciliation_required')
+        effect = self.row("SELECT key FROM agent_effects WHERE site_id=? AND state='admitted' LIMIT 1", (site_id,))
+        require(effect is None, 'effect_reconciliation_required')
 
     def op_config(self, data):
         config = data['config']

@@ -1,0 +1,6 @@
+# Use only after the host administrator loads apparmor-codex.profile.
+# Compose merges these options with the base no-new-privileges/seccomp options.
+services:
+  hp-agent:
+    security_opt:
+      - apparmor=simy-hp-codex

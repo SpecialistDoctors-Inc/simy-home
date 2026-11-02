@@ -1,0 +1,25 @@
+{
+  "site": {
+    "site_id": "REPLACE_WITH_SITE_ID",
+    "sheet_id": "REPLACE_WITH_GOOGLE_SHEET_ID",
+    "repo": "REPLACE_WITH_OWNER/REPOSITORY",
+    "content_path": "examples/sample-clinic/content/clinic.json",
+    "dev_url": "https://REPLACE_WITH_DEV_HOST",
+    "prod_url": "https://REPLACE_WITH_PRODUCTION_HOST",
+    "recipient": "REPLACE_WITH_CONFIRMED_RECIPIENT_EMAIL",
+    "requester_ref": "REPLACE_WITH_GOOGLE_SUBJECT_REFERENCE",
+    "notification_recipient_ref": "REPLACE_WITH_VERIFIED_RECIPIENT_REFERENCE"
+  },
+  "intake_start_at": "2026-01-01T00:00:00Z",
+  "notice_id": "REPLACE_WITH_NOTICE_ID",
+  "work_directory": "/work/jobs",
+  "worker_uid": 1000,
+  "google_credentials_file": "/control/google-oauth.json",
+  "google_subject": "REPLACE_WITH_GOOGLE_SUBJECT",
+  "google_email": "REPLACE_WITH_OPERATOR_GOOGLE_EMAIL",
+  "worker_home": "/home/node",
+  "github_token_file": "/control/github-token.txt",
+  "auto_merge_dev": false,
+  "mail_enabled": false,
+  "poll_seconds": 60
+}
