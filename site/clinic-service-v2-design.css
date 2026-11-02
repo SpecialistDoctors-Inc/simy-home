@@ -26,7 +26,7 @@
 .sp-price-line small{display:inline}
 .sp-main .sp-overview{padding:24px 0;background:#f2f7ff}
 .sp-main .sp-pillars{grid-template-columns:1fr 1fr 1.2fr;margin:0;gap:0}
-.sp-main .sp-pillars>a{padding:8px 28px;align-items:center;border-top:0;border-right:1px solid #d5e2f5}
+.sp-main .sp-pillars>a{padding:8px 28px;align-items:flex-start;border-top:0;border-right:1px solid #d5e2f5}
 .sp-main .sp-pillars>a:first-child{padding-left:0}
 .sp-main .sp-pillars>a:last-child{padding-right:0;border-right:0}
 .sp-main .sp-pillars strong{font-size:clamp(23px,2vw,28px);margin:0;line-height:1.5}
