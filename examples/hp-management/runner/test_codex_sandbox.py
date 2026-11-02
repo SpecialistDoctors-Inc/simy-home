@@ -12,6 +12,10 @@ from codex_worker import run_owned
 def main():
     if sys.platform != 'linux' or os.getuid() != 0:
         raise SystemExit('requires isolated Linux root controller')
+    if os.environ.get('EXPECT_APPARMOR_PROFILE'):
+        profile = Path('/proc/self/attr/current').read_text().strip()
+        assert profile == os.environ['EXPECT_APPARMOR_PROFILE'] + ' (enforce)', profile
+        print(json.dumps({'apparmor_profile': profile}), flush=True)
     root = Path(tempfile.mkdtemp(dir='/work'))
     root.chmod(0o711)
     workspace = root / 'workspace'

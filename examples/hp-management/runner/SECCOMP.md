@@ -34,3 +34,29 @@ model executables to verify process ownership and result/review receipt replay.
 CI exercises both on the packaged image. If the host disallows unprivileged
 user namespaces, stop and use a compatible host; do not change shared host
 security settings from the service.
+
+## Linux hosts enforcing AppArmor
+
+Docker's `docker-default` AppArmor profile denies mount operations even inside
+the nested user namespace. On those hosts, `bwrap: Failed to make / slave:
+Permission denied` can occur despite the seccomp allowances above.
+
+`apparmor-codex.profile` is a separately named, enforcing profile derived from
+the [Moby AppArmor template](https://github.com/moby/profiles/blob/4b8214fc4971e06172938a1f1554ccff6647ee80/apparmor/template.go)
+at the same pinned commit. Its upstream source SHA-256 is
+`7da15d81aa5c507f5002b844fdc49a969904681447a2cc29222bd6cbe797163b`.
+It retains the default file, proc/sys, network-family, signal and ptrace rules,
+replacing only the blanket mount denial with mount and pivot_root permission.
+The paired seccomp profile still restricts the exact mount flags; the outer
+container still has no SYS_ADMIN. This is not an unconfined AppArmor profile.
+The license is the same Apache 2.0 license in `seccomp-codex.LICENSE`.
+
+A host administrator must load this distinct profile and select it only for
+this service. Do not replace `docker-default` or disable AppArmor/user-namespace
+restrictions globally. Docker Desktop's Linux VM does not require this overlay.
+The GitHub-hosted CI VM loads the distinct profile for its disposable sandbox
+test, verifies the profile is in enforce mode, and runs the actual packaged
+Codex filesystem/network denial checks. If another host policy prevents sandbox
+creation, stop and resolve that host's compatibility with its administrator.
+
+See [Docker's custom AppArmor instructions](https://docs.docker.com/engine/security/apparmor/).

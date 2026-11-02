@@ -70,6 +70,15 @@ docker compose run --rm --user 1000:1000 --entrypoint codex hp-agent login statu
 
 ## 起動と停止
 
+LinuxホストでAppArmorが有効な場合は、運用者が [隔離設定の説明](SECCOMP.md) を確認し、このサービスだけに適用するプロファイルを登録します。既定の `docker-default` やホスト全体の設定を変更しません。Docker DesktopのLinux VMでは、この追加手順は不要です。
+
+```sh
+sudo apparmor_parser -r -W apparmor-codex.profile
+docker compose -f compose.yaml -f compose.apparmor.yaml config
+```
+
+表示された設定で `no-new-privileges`、`seccomp`、`apparmor=simy-hp-codex` が全て残ることを確認します。以下のComposeコマンドにも同じ2つの `-f` を付けます。プロファイルの登録権限がないホストでは、管理者に設定を依頼してください。
+
 `--once` はread-onlyではありません。有効なready eventがあるとclaim/worker起動などを進めます。空の専用Sheetでの接続確認以外には使わず、実運用の最初のtickは準備済みの依頼として扱ってください。実際の変更には有効なready event、agentのlease、独立レビュー、運用者の明示承認が必要です。
 
 ```sh

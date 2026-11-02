@@ -39,10 +39,15 @@ jobs:
             hp-agent-ci /opt/hp-agent/test_controller_container.py
       - name: Verify the real Codex sandbox without model credentials
         run: |
+          # A distinct profile applies only to this disposable test container.
+          # Keep docker-default and the runner's global security settings intact.
+          sudo apparmor_parser -r -W examples/hp-management/runner/apparmor-codex.profile
           docker run --rm --network none --entrypoint python3 \
             --cap-drop ALL --cap-add CHOWN --cap-add SETUID --cap-add SETGID \
             --security-opt no-new-privileges --read-only \
             --security-opt seccomp=examples/hp-management/runner/seccomp-codex.json \
+            --security-opt apparmor=simy-hp-codex \
+            --env EXPECT_APPARMOR_PROFILE=simy-hp-codex \
             --tmpfs /tmp:rw,noexec,nosuid,nodev,size=64m \
             --mount type=volume,target=/work \
             hp-agent-ci /opt/hp-agent/test_codex_sandbox.py
