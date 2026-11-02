@@ -1,5 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
+require_no_signatures() {
+  local signatures
+  # --output is uppercase -O; lowercase -o is a byte offset. Keep the probe
+  # separate so a failed inspection cannot be mistaken for an empty result.
+  signatures=$(wipefs --no-act --noheadings --output TYPE "$1")
+  [[ -z "$signatures" ]]
+}
+
+prepare_volume() {
 volume_id=${1:?exact task-owned EBS volume ID required}
 [[ "$volume_id" =~ ^vol-[a-f0-9]+$ ]]
 [[ $(id -u) == 0 ]]
@@ -21,7 +30,7 @@ else
     # Only the explicitly supplied, new task volume may be initialized.
     [[ $(blockdev --getsize64 "$device") == 21474836480 ]]
     [[ -z $(lsblk -n -o MOUNTPOINTS "$device" | tr -d '[:space:]') ]]
-    [[ -z $(wipefs --no-act --noheadings -o TYPE "$device") ]]
+    require_no_signatures "$device"
     mkfs.ext4 -L hp-agent-data "$device"
   else
     [[ "$signature" == ext4 ]]
@@ -36,3 +45,8 @@ else
 fi
 chmod 700 /srv/hp-agent
 findmnt -rn -o SOURCE,TARGET,FSTYPE /srv/hp-agent
+}
+
+if [[ ${BASH_SOURCE[0]} == "$0" ]]; then
+  prepare_volume "$@"
+fi
