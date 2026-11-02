@@ -1,1 +1,25 @@
-{"enabled":false,"plans":{}}
+{
+  "enabled": true,
+  "plans": {
+    "basic": {
+      "monthlyYen": 19800,
+      "taxInclusiveYen": 21780,
+      "url": "https://buy.stripe.com/14A28k3oE8VW0gSebEes000"
+    },
+    "security": {
+      "monthlyYen": 29800,
+      "taxInclusiveYen": 32780,
+      "url": "https://buy.stripe.com/28EaEQaR67RS3t4gjMes001"
+    },
+    "basic_manager": {
+      "monthlyYen": 69600,
+      "taxInclusiveYen": 76560,
+      "url": "https://buy.stripe.com/4gM4gse3i1tugfQ0kOes003"
+    },
+    "security_manager": {
+      "monthlyYen": 79600,
+      "taxInclusiveYen": 87560,
+      "url": "https://buy.stripe.com/eVqbIU1gw3BC6Fg3x0es002"
+    }
+  }
+}
