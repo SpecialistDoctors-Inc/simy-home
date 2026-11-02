@@ -1006,6 +1006,7 @@ dialog#plan-dialog .plan-option{min-height:56px;align-items:center}
 @keyframes report-rebuild-spin{to{transform:rotate(360deg)}}
 @media(max-width:700px){#diagnosis-state .report-edit-next{padding:22px 18px;margin-top:28px}#diagnosis-state .report-rebuild-entry{grid-template-columns:minmax(0,1fr)}#diagnosis-state .report-rebuild-entry input,#diagnosis-state .report-rebuild-entry button{height:56px;min-height:56px}}
 </style>
+<link rel="stylesheet" href="/clinic-application.css?v=374279505a42"/>
 </head>
 <body id="top">
 <a class="skip" href="#main">本文へ移動</a>
@@ -1087,7 +1088,7 @@ dialog#plan-dialog .plan-option{min-height:56px;align-items:center}
 <button id="page-offer-back" type="button">プレビューを続ける</button>
 </dialog><dialog aria-labelledby="application-title" id="preview-application">
 <button aria-label="編集体験に戻る" id="application-close" type="button">×</button>
-<p class="eyebrow">SIMY HP管理のお申し込み</p><h2 id="application-title">更新も、保守も。<br/>次は、先生の医院で。</h2>
+<p class="eyebrow">SIMY HP管理のお申し込み</p><h2 id="application-title">プランを選んで、申し込む。</h2>
 <p id="application-site"></p>
 <form id="application-form">
 <fieldset><legend>1. プランを選ぶ</legend>
@@ -1287,5 +1288,5 @@ function renderSharing(report,root,el){
 }
 global.SimyInformationFlow={model,render,sharingCopy,sharingName,sharingHasIssue,managementCopy,noProblemSummary};
 })(typeof window==='undefined'?globalThis:window);
-</script><script src="/assets/clinic-service-v2/10c67d62bb46fb.js"></script><script src="/assets/clinic-service-v2/33a5d8e6590c1d.js"></script><script src="/assets/clinic-service-v2/013b007e5f2e91.js"></script><script src="/assets/clinic-service-v2/3cff5a9b482763.js"></script><script>for(const id of ['try-article','jump-update'])document.getElementById(id)?.addEventListener('click',()=>{const input=document.getElementById('rebuild-url');input.value=document.getElementById('diagnosis-url').value;document.getElementById('rebuild').scrollIntoView({behavior:'smooth'});input.focus({preventScroll:true});});</script></body>
+</script><script src="/assets/clinic-service-v2/10c67d62bb46fb.js"></script><script src="/assets/clinic-service-v2/33a5d8e6590c1d.js"></script><script src="/assets/clinic-service-v2/013b007e5f2e91.js"></script><script src="/clinic-checkout.js?v=470028d4de73"></script><script src="/assets/clinic-service-v2/77a6d0468ae10b.js"></script><script>for(const id of ['try-article','jump-update'])document.getElementById(id)?.addEventListener('click',()=>{const input=document.getElementById('rebuild-url');input.value=document.getElementById('diagnosis-url').value;document.getElementById('rebuild').scrollIntoView({behavior:'smooth'});input.focus({preventScroll:true});});</script></body>
 </html>

@@ -31,9 +31,9 @@ const {chromium} = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
    await page.keyboard.press('Escape');
    // Open the existing application dialog only for layout measurement; no submission.
    await page.locator('#preview-application').evaluate(e=>e.showModal());
-   const app=await page.locator('#preview-application').evaluate(e=>({w:e.clientWidth,scroll:e.scrollWidth,radios:[...e.querySelectorAll('[type=radio]')].map(i=>i.getBoundingClientRect().width),cards:[...e.querySelectorAll('.application-plan')].map(i=>getComputedStyle(i).display)}));
+   const app=await page.locator('#preview-application').evaluate(e=>({w:e.clientWidth,scroll:e.scrollWidth,radios:[...e.querySelectorAll('[type=radio]')].map(i=>i.getBoundingClientRect().width),cards:[...e.querySelectorAll('.application-plan')].map(i=>({display:getComputedStyle(i).display,height:i.getBoundingClientRect().height,textWidth:i.querySelector('span').getBoundingClientRect().width,radioLeft:i.querySelector('input').getBoundingClientRect().left,textLeft:i.querySelector('span').getBoundingClientRect().left}))}));
    assert.ok(app.scroll<=app.w+1,`${width}: application overflow`);
-   assert.ok(app.radios.every(w=>w===20),`${width}: radio stretched`);assert.ok(app.cards.every(x=>x==='grid'),`${width}: application card layout overridden`);
+   assert.ok(app.radios.every(w=>w===20),`${width}: radio stretched`);assert.ok(app.cards.every(x=>x.display==='grid'&&x.height<180&&x.textWidth>=Math.min(150,width-125)&&x.radioLeft<x.textLeft),`${width}: application card layout overridden`);
    await page.keyboard.press('Escape');
    console.log(`${width}x${height}: forms, plan summary, application controls and overflow passed`);
   }

@@ -1,7 +1,7 @@
 // Operator-only billing integration. Never import this module into the public site.
 import { createHash } from 'node:crypto';
 import { domainToASCII } from 'node:url';
-export const plans = Object.freeze({basic:14800,security:29800,basic_manager:49800,security_manager:64800});
+export const plans = Object.freeze({basic:19800,security:29800,basic_manager:69600,security_manager:79600});
 const names = {basic:'HP管理・基本保守',security:'HP管理・セキュリティ強化',basic_manager:'HP管理・基本保守（担当者付き）',security_manager:'HP管理・セキュリティ強化（担当者付き）'};
 export function validate(q, now=Date.now()) {
   if (!q || !/^[a-zA-Z0-9_-]{8,80}$/.test(q.id)) throw Error('Invalid quote ID');
