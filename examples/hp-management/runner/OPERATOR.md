@@ -6,7 +6,7 @@
 
 本番運用先は、SIMYが管理するUbuntu 24.04 arm64の専用EC2（t4g.medium）です。インターネットからの受信管理ポートは公開せず、運用者はAWS Systems Manager (SSM) を通じて管理します。サービスのSQLite状態、作業領域、専用Codex認証、運用設定は暗号化された専用EBS上に置きます。インスタンス、ボリューム、SSM権限の具体的な作成方法は [`infra/hp-agent/README.md`](../../../infra/hp-agent/README.md) を参照してください。
 
-この構成が実際に配備・確認されるまでは、常時稼働を前提にしません。ローカルDockerでの検証は、AWSサービスの稼働証明にはなりません。
+2026-11-03に、この構成で実際の新規Sheet依頼を自動処理し、dev配信、Sheet読戻し、確認メールの受信まで確認しました。稼働中のリリースはsource `b92cd909862b41648363e213ae6dd7633e67e35a`、ECR image digest `sha256:2cfef3c6aa6a578a58d5d0ac650b3cbd282eef2baa0798bdc308cf6545bde134` です。ローカルDockerでの検証は、AWSサービスの稼働証明にはなりません。初期の暗号化スナップショットは完了済みですが、日次DLMの初回スケジュール実行はまだ観測していません。
 
 ## AWS本番運用の手順
 
@@ -104,7 +104,7 @@ docker compose stop hp-agent
 
 `mail_enabled` と `auto_merge_dev` は初期値 `false` のままにします。`mail_enabled=true` の場合だけ、admitted envelopeをGmail APIへ直接送信し、SENT readbackで照合します。本番公開とAWS操作はこのcontainerから直接行いません。公開は既存GitHub Actionsの保護Environmentと、その承認済みartifactを通します。
 
-本番ではsystemdが `/srv/hp-agent` のランタイムを管理します。`restart: unless-stopped` はローカルCompose試験の挙動であり、EC2本番の導入方法には使いません。どちらの環境でも、再起動後はSQLiteに保存したeffect/outboxを先にreadback照合します。workerまたは独立reviewが中断されたjobは自動で再実行・再送せず、運用者の復旧判断を待ちます。control・state・work・Codex authはそれぞれ専用の永続領域へ置き、controlはroot所有0700・ファイル0600を確認してread-onlyでmountします。workerが読むCodex authや作業領域にprovider credentialを混在させません。
+本番ではsystemdがデータ領域・通信制限・Dockerの起動順と死活監視を管理し、専用コンテナはDockerの `restart unless-stopped` で自動再起動します。本番の導入には検証済みの `install-runtime.sh` を使います。再起動後はSQLiteに保存したeffect/outboxを先にreadback照合します。workerまたは独立reviewが中断されたjobは自動で再実行・再送せず、運用者の復旧判断を待ちます。control・state・work・Codex authはそれぞれ専用の永続領域へ置き、controlはroot所有0700・ファイル0600を確認してread-onlyでmountします。workerが読むCodex authや作業領域にprovider credentialを混在させません。
 
 ## 運用上の境界
 
