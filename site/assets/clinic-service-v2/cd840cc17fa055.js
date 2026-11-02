@@ -253,11 +253,11 @@ function renderSearchChecks(report){
     section.append(element('p','SEO（検索対策）・SEM（検索広告）・GEO（AI検索対策）は、この診断では未確認です。','report-boundary'));
     section.append(element('p','検索順位、広告の成果、AI検索での紹介・引用は評価していません。'));
   }else{
-    const wrap=element('div','','evaluation-scroll'),table=element('table','','evaluation-table'),head=element('thead',''),tr=element('tr','');
-    for(const label of ['項目','確認結果・根拠']){const th=element('th',label);th.scope='col';tr.append(th);}head.append(tr);table.append(head);
-    const body=element('tbody','');
-    for(const f of checks){const row=element('tr',''),name=element('th',f.title);name.scope='row';const detail=element('td','');detail.append(element('strong',f.state==='unknown'?'未確認':f.state==='observed'?'記載を確認':'確認が必要'),element('p',f.summary),element('small',f.evidence||''));row.append(name,detail);body.append(row);}
-    table.append(body);wrap.append(table);section.append(wrap,element('p','取得した公開ページの範囲で確認しています。記載の有無から、検索順位やAI検索での引用は判定できません。','report-boundary'));
+    for(const f of checks){
+      const item=element('article','','live-finding');
+      item.append(element('h4',f.title),element('strong',f.state==='unknown'?'未確認':f.state==='observed'?'記載を確認':'確認が必要'),element('p',f.summary),element('small',f.evidence||''));section.append(item);
+    }
+    section.append(element('p','取得した公開ページの範囲で確認しています。記載の有無から、検索順位やAI検索での引用は判定できません。','report-boundary'));
   }
   results.append(section);
 }
