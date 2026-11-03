@@ -18,11 +18,11 @@ import traceback
 from provider_errors import AuthenticationRequired
 
 
-def atomic_json(path, value):
+def atomic_json(path, value, *, mode=0o600):
     path = Path(path)
     temporary = path.with_name(path.name + '.tmp')
     temporary.write_text(json.dumps(value, ensure_ascii=False, indent=2) + '\n')
-    os.chmod(temporary, 0o600)
+    os.chmod(temporary, mode)
     temporary.replace(path)
 
 
@@ -39,8 +39,11 @@ def run_owned(command, cwd, log_path, identity_path, *, stdin=None, env=None, ti
             identity = process_identity(process.pid)
         except subprocess.CalledProcessError:
             identity = ''
+        # The child directory inherits controller group 0. Allow the hardened
+        # controller (without DAC override) to read this process identity when
+        # reconciling a stopped worker, while keeping it private to both roles.
         atomic_json(identity_path, {'pid':process.pid,'ppid':os.getpid(),'command':command,
-            'started_at':datetime.now(timezone.utc).isoformat(),'identity':identity})
+            'started_at':datetime.now(timezone.utc).isoformat(),'identity':identity}, mode=0o640)
         try:
             process.communicate(stdin, timeout=timeout)
         except subprocess.TimeoutExpired:
@@ -139,13 +142,11 @@ def main():
         run_owned(['node','--test',*tests],worker,worker.parent/'tests.log',worker.parent/'tests-process.json',env=env,timeout=120)
         # A child cannot attest tests or an independent review.  Its one output
         # is a candidate payload, validated and verified by the controller.
-        atomic_json(receipt,{'state':'success','content':after})
-        os.chmod(receipt,0o640)
+        atomic_json(receipt,{'state':'success','content':after},mode=0o640)
         return 0
     except Exception as exc:
         traceback.print_exc()
-        atomic_json(receipt,{'state':'failed','error':type(exc).__name__})
-        os.chmod(receipt,0o640)
+        atomic_json(receipt,{'state':'failed','error':type(exc).__name__},mode=0o640)
         return 1
 
 

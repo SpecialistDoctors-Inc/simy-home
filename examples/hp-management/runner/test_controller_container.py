@@ -52,6 +52,12 @@ PY''')
    print((job/'child/result.json').read_text())
    print((job/'control/private/worker.log').read_text()); raise
   assert candidate['notices'][0]['body']=='new'
+  # The controller has no DAC override: worker-owned process records must be
+  # readable through the inherited controller group for safe recovery.
+  process_record=job/'child'/'codex-process.json'
+  assert process_record.stat().st_uid==1000 and process_record.stat().st_gid==0
+  assert process_record.stat().st_mode & 0o777 == 0o640
+  assert json.loads(process_record.read_text())['identity']
   proof=agent.verify_candidate(('site',REQUEST['request_id'],1),BASE,candidate,job); assert proof['root_pristine_tests']
   review=agent.review_candidate(('site',REQUEST['request_id'],1),BASE,candidate,REQUEST,job); assert review=={'approved':True,'findings':[]}
   # Restart reconciliation: same receipts must not launch fake Codex again.
