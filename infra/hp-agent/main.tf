@@ -17,6 +17,7 @@ locals {
     Project   = "hp-agent"
     ManagedBy = "terraform"
   }, var.tags)
+  operational_alarm_actions = var.operational_alert_email == "" ? [] : [aws_sns_topic.operational[0].arn]
 }
 
 resource "terraform_data" "guard" {
@@ -128,6 +129,52 @@ resource "aws_cloudwatch_log_group" "agent" {
   name              = "/simy/hp-agent"
   retention_in_days = 30
   tags              = local.tags
+}
+
+resource "aws_sns_topic" "operational" {
+  count = var.operational_alert_email == "" ? 0 : 1
+  name  = "${local.name}-operational-alerts"
+  tags  = local.tags
+}
+
+data "aws_iam_policy_document" "operational_sns" {
+  count = var.operational_alert_email == "" ? 0 : 1
+  statement {
+    sid    = "CloudWatchMayPublishOnlyForTheseAgentAlarms"
+    effect = "Allow"
+    principals {
+      type        = "Service"
+      identifiers = ["cloudwatch.amazonaws.com"]
+    }
+    actions   = ["sns:Publish"]
+    resources = [aws_sns_topic.operational[0].arn]
+    condition {
+      test     = "StringEquals"
+      variable = "AWS:SourceAccount"
+      values   = [data.aws_caller_identity.current.account_id]
+    }
+    condition {
+      test     = "ArnEquals"
+      variable = "AWS:SourceArn"
+      values = [
+        "arn:aws:cloudwatch:${var.region}:${data.aws_caller_identity.current.account_id}:alarm:${local.name}-system-status-recovery",
+        "arn:aws:cloudwatch:${var.region}:${data.aws_caller_identity.current.account_id}:alarm:${local.name}-heartbeat-missing",
+      ]
+    }
+  }
+}
+
+resource "aws_sns_topic_policy" "operational" {
+  count  = var.operational_alert_email == "" ? 0 : 1
+  arn    = aws_sns_topic.operational[0].arn
+  policy = data.aws_iam_policy_document.operational_sns[0].json
+}
+
+resource "aws_sns_topic_subscription" "operational_email" {
+  count     = var.operational_alert_email == "" ? 0 : 1
+  topic_arn = aws_sns_topic.operational[0].arn
+  protocol  = "email"
+  endpoint  = var.operational_alert_email
 }
 
 resource "aws_security_group" "agent" {
@@ -374,7 +421,8 @@ resource "aws_cloudwatch_metric_alarm" "system_recovery" {
   comparison_operator = "GreaterThanOrEqualToThreshold"
   treat_missing_data  = "notBreaching"
   dimensions          = { InstanceId = aws_instance.agent.id }
-  alarm_actions       = ["arn:aws:automate:${var.region}:ec2:recover"]
+  alarm_actions       = concat(["arn:aws:automate:${var.region}:ec2:recover"], local.operational_alarm_actions)
+  ok_actions          = local.operational_alarm_actions
   tags                = local.tags
 }
 
@@ -454,7 +502,7 @@ resource "aws_dlm_lifecycle_policy" "data" {
       create_rule {
         interval      = 24
         interval_unit = "HOURS"
-        times         = ["18:00"]
+        times         = [var.backup_time_utc]
       }
       retain_rule { count = var.snapshot_retention_days }
       tags_to_add = merge(local.tags, { Source = "hp-agent-data-volume" })
@@ -464,7 +512,7 @@ resource "aws_dlm_lifecycle_policy" "data" {
 
 resource "aws_cloudwatch_metric_alarm" "agent_heartbeat_missing" {
   alarm_name          = "${local.name}-heartbeat-missing"
-  alarm_description   = "Visible fail-closed alarm when the service has not emitted a successful poll heartbeat."
+  alarm_description   = "HP update service requires attention: missing heartbeat, unresolved request incident, or overdue work."
   namespace           = "SIMY/HPAgent"
   metric_name         = "Healthy"
   statistic           = "Minimum"
@@ -474,5 +522,7 @@ resource "aws_cloudwatch_metric_alarm" "agent_heartbeat_missing" {
   comparison_operator = "LessThanThreshold"
   treat_missing_data  = "breaching"
   dimensions          = { InstanceId = aws_instance.agent.id }
+  alarm_actions       = local.operational_alarm_actions
+  ok_actions          = local.operational_alarm_actions
   tags                = local.tags
 }

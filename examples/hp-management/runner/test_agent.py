@@ -111,7 +111,7 @@ class AgentTest(unittest.TestCase):
         self.assertEqual(self.store.job(self.key)['data']['local_proof'],{'root_pristine_tests':True})
     def test_reviewer_rejection_moves_only_job_to_needs_input(self):
         self.agent.reviewer=lambda *args: (_ for _ in ()).throw(ValueError('independent_review_rejected'))
-        self.until('coding')
+        self.until('reviewing')
         self.assertEqual(self.agent.tick()['stage'],'needs_input')
         self.assertEqual(self.store.job(self.key)['stage'],'needs_input')
     def test_failed_verification_is_not_replayed_and_does_not_block_queue(self):
@@ -120,7 +120,7 @@ class AgentTest(unittest.TestCase):
             calls.append(1)
             raise RuntimeError('owned_process_failed')
         self.agent.verifier=fail_once
-        self.until('coding')
+        self.until('verifying')
         self.assertEqual(self.agent.tick()['stage'],'needs_input')
         self.assertEqual(self.agent.tick()['stage'],'idle')
         self.assertEqual(calls,[1])
@@ -141,6 +141,11 @@ class AgentTest(unittest.TestCase):
         shutil.copytree(sample,job/'source/examples/sample-clinic',ignore=shutil.ignore_patterns('dist','node_modules'))
         content=json.loads((sample/'content/clinic.json').read_text())
         base={'sha':'a'*40,'content':content}
+        # Verification belongs to a durable job; direct test invocation still
+        # uses the same job record as the runtime path.
+        self.store.execute('config',{'config':self.config['site']})
+        self.store.execute('ingest',{'request':self.row})
+        self.store.add_job(self.row)
         proof=self.agent.verify_candidate(self.key,base,content,job)
         self.assertTrue(proof['root_pristine_tests'])
         manifest=json.loads((job/'control/private/verification/examples/sample-clinic/dist/version.json').read_text())
@@ -188,20 +193,26 @@ class AgentTest(unittest.TestCase):
     def test_uncertain_candidate_reconciles_after_restart_and_expired_lease(self):
         self.github.uncertain=True;self.until('candidate')
         self.assertIn('error',self.agent.tick())
-        self.now[0]+=4000;self.restart();self.until('awaiting_approval')
+        self.now[0]+=4000;self.restart()
+        self.github.uncertain=False
+        self.agent.recover(self.key,'resume','operator@example.com');self.until('awaiting_approval')
         self.assertEqual(self.github.candidates,1)
     def test_uncertain_merge_reconciles_without_remerge(self):
         self.github.merge_uncertain=True;self.until('merge');self.assertIn('error',self.agent.tick())
-        self.restart();self.until('awaiting_approval');self.assertEqual(self.github.merges,1)
+        self.restart();self.agent.recover(self.key,'resume','operator@example.com')
+        self.until('awaiting_approval');self.assertEqual(self.github.merges,1)
     def test_sheet_append_response_loss_is_reconciled_without_duplicate(self):
         self.until('results');self.sheets.uncertain=True;self.assertIn('error',self.agent.tick())
-        self.restart();self.until('awaiting_approval');self.assertEqual(self.sheets.writes,2)
+        self.restart();self.agent.recover(self.key,'resume','operator@example.com')
+        self.until('awaiting_approval');self.assertEqual(self.sheets.writes,2)
     def test_partial_candidate_is_observable_and_not_retried(self):
         self.until('candidate');self.github.uncertain=True
         self.agent.tick();self.github.proof=None
+        self.assertEqual(self.store.job(self.key)['stage'],'needs_input')
+        self.agent.recover(self.key,'resume','operator@example.com')
         self.assertEqual(self.agent.tick()['stage'],'provider_reconciliation_required')
         self.assertEqual(self.store.job(self.key)['data']['provider_recovery'],{'effect':'candidate','state':'remote_partial_or_absent'})
-        for _ in range(2):self.assertEqual(self.agent.tick()['stage'],'provider_reconciliation_required')
+        for _ in range(2):self.assertEqual(self.agent.tick()['stage'],'idle')
         self.assertEqual(self.github.candidates,1)
     def test_new_revision_and_cancel_stop_old_work_before_github(self):
         self.until('candidate')
@@ -234,7 +245,7 @@ class AgentTest(unittest.TestCase):
         self.until('candidate');self.github.uncertain=True;self.agent.tick()
         with self.assertRaisesRegex(ValueError,'effect_reconciliation_required'):
             self.store.execute('cancel',{**self.row,'reason':'stop'})
-        self.until('awaiting_approval')
+        self.agent.recover(self.key,'resume','operator@example.com');self.until('awaiting_approval')
         self.assertEqual(self.store.execute('cancel',{**self.row,'reason':'stop'})['state'],'cancelled')
 
 

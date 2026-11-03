@@ -15,6 +15,7 @@ import subprocess
 import sys
 import time
 import traceback
+from provider_errors import AuthenticationRequired
 
 
 def atomic_json(path, value):
@@ -113,6 +114,11 @@ def main():
                  '--sandbox','workspace-write','-c','sandbox_workspace_write.network_access=false','-c','features.apps=false',
                  '-c','web_search="disabled"','--json','--output-last-message',str(worker.parent/'codex-summary.txt'),'-']
         env['SOURCE_REVISION']=data['base']['sha']
+        try:
+            run_owned([data.get('codex_binary','codex'),'login','status'],worker,
+                      worker.parent/'codex-login.log',worker.parent/'codex-login-process.json',env=env,timeout=30)
+        except RuntimeError as exc:
+            raise AuthenticationRequired('codex', 'codex_auth_required') from exc
         run_owned(command,worker,worker.parent/'codex.jsonl',worker.parent/'codex-process.json',stdin=prompt,env=env)
         after=json.loads(content.read_text())
         validate_candidate(data['base']['content'],after,data['request'],data['notice_id'])

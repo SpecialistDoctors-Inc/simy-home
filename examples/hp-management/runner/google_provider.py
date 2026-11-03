@@ -13,7 +13,7 @@ import stat
 from typing import Any, Mapping
 from urllib.parse import quote
 
-from provider_errors import EffectNotStarted, classify_effect, note_write_attempt
+from provider_errors import AuthenticationRequired, EffectNotStarted, classify_effect, note_write_attempt
 
 
 FIELDS = (
@@ -160,10 +160,12 @@ class GoogleSheets:
                 from google.auth.transport.requests import Request
                 self._credentials.refresh(Request())
             except Exception as error:  # provider details can include sensitive data
-                raise RuntimeError('Google credential refresh failed') from error
+                raise AuthenticationRequired('google', 'google_auth_refresh_required') from error
 
     def _response_json(self, response: Any, operation: str) -> dict[str, Any]:
         status = getattr(response, 'status_code', 200)
+        if status in {401, 403}:
+            raise AuthenticationRequired('google', f'google_http_{status}', status)
         if not 200 <= status < 300:
             raise RuntimeError(f'Google {operation} request failed')
         try:

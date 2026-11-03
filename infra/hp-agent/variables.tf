@@ -59,6 +59,28 @@ variable "snapshot_retention_days" {
   default = 7
 }
 
+variable "backup_time_utc" {
+  description = "UTC time for the daily DLM state-volume snapshot, in 24-hour HH:MM form."
+  type        = string
+  default     = "03:00"
+
+  validation {
+    condition     = can(regex("^([01][0-9]|2[0-3]):[0-5][0-9]$", var.backup_time_utc))
+    error_message = "backup_time_utc must use 24-hour UTC HH:MM form."
+  }
+}
+
+variable "operational_alert_email" {
+  description = "Optional dedicated operations mailbox for only this agent's CloudWatch alarm and recovery notifications. Leave blank to create no notification target."
+  type        = string
+  default     = ""
+
+  validation {
+    condition     = var.operational_alert_email == "" || can(regex("^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$", var.operational_alert_email))
+    error_message = "operational_alert_email must be blank or a single email address."
+  }
+}
+
 variable "tags" {
   type    = map(string)
   default = {}

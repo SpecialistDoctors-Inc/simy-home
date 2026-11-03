@@ -21,5 +21,11 @@
   "github_token_file": "/control/github-token.txt",
   "auto_merge_dev": false,
   "mail_enabled": false,
-  "poll_seconds": 60
+  "poll_seconds": 60,
+  "recovery": {
+    "enabled": true,
+    "max_retries": 3,
+    "base_delay_seconds": 30,
+    "stage_timeout_seconds": 1800
+  }
 }
