@@ -17,7 +17,7 @@ const source=fs.readFileSync(process.env.SIMY_EDITOR_SOURCE||'site/preview-edit.
  }
  try{
   await check('long page keeps news and late editable text within the existing budget',
-   '<html><body>'+Array.from({length:25},(_,i)=>`<section><h2>Section ${i}</h2><p>${'x'.repeat(1800)}</p></section>`).join('')+'<section><h2>お知らせ</h2><ul><li>'+ '診療時間は通常どおりです'.repeat(150)+' </li></ul><p>末尾の予約案内</p></section></body></html>',
+   '<html><body>'+Array.from({length:25},(_,i)=>`<section><h2>Section ${i}</h2><p>${'x'.repeat(1800)}</p></section>`).join('')+'<section><h2>お知らせ</h2><ul><li>2026年10月30日 '+ '診療時間は通常どおりです'.repeat(150)+' </li></ul><p>末尾の予約案内</p></section></body></html>',
    async indexed=>{
     const result=await page.evaluate(indexed=>{
      const api=SimyPreviewEdit,nodes=api.inventory(indexed,document),news=nodes.find(n=>n.kind==='news');

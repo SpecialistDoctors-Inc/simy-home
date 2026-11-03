@@ -100,10 +100,6 @@ html:root{scroll-behavior:auto;scroll-padding-top:0}
 #main .migration-story-copy .story-label{font-size:13px;font-weight:800;color:#18736f;margin-bottom:12px}
 #main .migration-story-copy h3{font-size:20px;line-height:1.7;margin:0 0 12px}
 #main .migration-story-copy>p:last-child{font-size:16px;line-height:1.8;color:#3e5669;margin:0}
-#main #rebuild-versions{margin:20px 0;overflow-x:auto}
-#main #rebuild-versions table{width:100%;border-collapse:collapse;background:#fff;font-size:14px}
-#main #rebuild-versions th,#main #rebuild-versions td{text-align:left;padding:12px;border:1px solid #cfdaea;vertical-align:top}
-#main #rebuild-versions thead{background:#16385d;color:#fff}
 @media(max-width:760px){#main .migration-story-grid{grid-template-columns:minmax(0,1fr);padding:20px 16px}#main .migration-chapter{padding:20px 16px}#main #inline-diagnosis-form .url-entry{grid-template-columns:minmax(0,1fr)}}
 
 /* A shorter reading path: compare plans together, then explain the optional growth support. */
@@ -237,3 +233,136 @@ body.preview-editor-open{overflow:hidden}
 #rebuild-editor textarea{min-height:80px}
 
 #preview-photo{width:100%;min-width:0;font-size:13px;padding:8px 0}#preview-photo-status{font-size:13px;overflow-wrap:anywhere;margin:4px 0}.preview-photo-label{margin-top:10px;font-size:13px}
+
+/* Conversation-first editor with a compact composer and contextual tools. */
+#rebuild-editor .preview-editor-layout{grid-template-columns:minmax(320px,380px) minmax(0,1fr)}
+#rebuild-editor .preview-chat{background:#fff;padding:24px;gap:16px}
+#rebuild-editor .preview-chat h3{font-size:17px;color:#263238}
+#rebuild-editor .preview-chat #preview-conversation{flex:1 1 0;min-height:100px;max-height:none;padding-top:24px}
+#rebuild-editor #preview-conversation p{background:transparent;padding:10px 0;color:#30383d}
+#rebuild-editor #preview-conversation .preview-user-message{background:#f0f1f2;color:#20272b;border-radius:20px;padding:12px 16px;margin-left:24px}
+#rebuild-editor #preview-edit-form{display:flex;flex-direction:column;gap:0;border:1px solid #dedfe2;border-radius:24px;background:#fff;padding:12px;box-shadow:0 3px 14px #17253b0d}
+#rebuild-editor .composer-label{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+#rebuild-editor #preview-edit-message{border:0;background:transparent;box-shadow:none;outline:none;padding:8px;min-height:76px;max-height:180px;resize:vertical;color:#20272b;font:16px/1.6 sans-serif}
+#rebuild-editor #preview-edit-form:focus-within{border-color:#6f899a;box-shadow:0 0 0 2px #6f899a22}
+#rebuild-editor .composer-toolbar{display:flex;align-items:center;gap:8px}
+#rebuild-editor .composer-toolbar span{flex:1;font-size:12px;color:#6b7379}
+#rebuild-editor #preview-edit-form .composer-toolbar button{display:grid;place-items:center;width:40px;height:40px;min-height:40px;padding:0;flex:0 0 40px;border:0;border-radius:50%;background:#f3f4f4;color:#222;font-size:26px}
+#rebuild-editor #preview-edit-form #preview-send{background:#202626;color:#fff}
+#rebuild-editor #preview-photo-status:empty{display:none}
+#rebuild-editor .preview-scope{font-size:11px!important;line-height:1.6;color:#788187}
+#rebuild-editor #preview-tools{position:fixed;inset:auto;margin:0;width:260px;max-width:calc(100vw - 16px);padding:8px;border:1px solid #e0e2e5;border-radius:16px;background:#fff;color:#263238;box-shadow:0 12px 40px #15263426}
+#rebuild-editor #preview-tools p{margin:8px 12px;font-size:12px;color:#7a8288}
+#rebuild-editor #preview-tools>button{display:block;width:100%;text-align:left;border:0;background:#fff;color:#263238;font-size:14px;font-weight:500;border-radius:8px}
+#rebuild-editor #preview-tools button:hover{background:#f0f3f4}
+#rebuild-editor #preview-tools .preview-edit-actions{border-top:1px solid #eee;margin-top:6px;padding-top:8px}
+#rebuild-editor #preview-tools .preview-edit-actions button{flex:1;border:0;font-size:12px;padding:8px}
+#rebuild-editor #preview-edit-form .operation-elapsed{margin:4px 8px;font-size:12px;color:#68767e;order:3}
+#rebuild-editor .composer-toolbar .operation-elapsed{flex:1;white-space:nowrap}
+@media(max-width:700px){#rebuild-editor .preview-chat{padding:18px}#rebuild-editor .preview-chat #preview-conversation{min-height:80px}#rebuild-editor .preview-editor-header strong{font-size:15px}}
+/* Match the rhythm of a chat workspace, including its empty state. */
+#rebuild-editor{border:0;border-radius:20px;background:#fff}
+#rebuild-editor::backdrop{background:#17212b80;backdrop-filter:blur(3px)}
+#rebuild-editor .preview-editor-header{padding:16px 24px;border-color:#eceef0}
+#rebuild-editor .preview-editor-header strong{font-size:20px;font-weight:600;letter-spacing:-.5px;color:#252b2f}
+#rebuild-editor .preview-demo-badge{font-size:11px;font-weight:500;letter-spacing:0;background:#f1f2f3;color:#6d7479;padding:4px 8px;border-radius:6px;margin-left:8px;vertical-align:middle}
+#rebuild-editor #rebuild-editor-close{width:40px;min-height:40px;padding:0;border:0;border-radius:50%;font-size:25px;background:#f5f5f5;color:#444}
+#rebuild-editor .preview-editor-layout{grid-template-columns:minmax(360px,42%) minmax(0,1fr)}
+#rebuild-editor .preview-chat{padding:28px;gap:16px;border-color:#eceef0}
+#rebuild-editor .chat-welcome{display:none;text-align:center}
+#rebuild-editor .is-empty .chat-welcome{display:block;margin-top:auto}
+#rebuild-editor .chat-welcome h3{font-size:26px;line-height:1.5;font-weight:600;letter-spacing:-.6px}
+#rebuild-editor .chat-welcome p{margin:12px 0 16px;font-size:13px;color:#7a8288}
+#rebuild-editor .is-empty #preview-conversation{display:none}
+#rebuild-editor .is-empty .preview-scope{margin-bottom:auto}
+#rebuild-editor .preview-chat #preview-conversation{font-size:15px;line-height:1.85;padding-top:8px}
+#rebuild-editor #preview-conversation p{margin-bottom:24px}
+#rebuild-editor #preview-conversation .preview-user-message{margin-left:48px;padding:12px 18px}
+#rebuild-editor .chat-suggestions{display:none;gap:8px;flex-wrap:wrap;justify-content:center}
+#rebuild-editor .is-empty .chat-suggestions{display:flex}
+#rebuild-editor .chat-suggestions button{font-size:12px;font-weight:500;min-height:34px;padding:6px 12px;border:1px solid #e2e4e5;border-radius:18px;color:#61696e}
+#rebuild-editor .preview-scope{text-align:center}
+#rebuild-editor .preview-canvas-label{background:#f9fafb;border-color:#eceef0;color:#6c757b;font-size:12px}
+#rebuild-editor .preview-editor-footer{border-color:#eceef0;padding:10px 24px}
+#rebuild-editor #preview-show-pricing{border:0;font-size:12px;font-weight:500;color:#777}
+#rebuild-editor .preview-editor-footer a{background:#fff;color:#414d54;border-color:#dde2e5;font-weight:500;font-size:12px}
+@media(max-width:700px){#rebuild-editor{border-radius:0}#rebuild-editor .preview-chat{padding:20px}#rebuild-editor .chat-welcome h3{font-size:23px}#rebuild-editor .preview-editor-header{padding:12px 16px}#rebuild-editor .preview-editor-header strong{font-size:18px}#rebuild-editor .preview-mobile-tabs button{border:0;background:#f3f4f5;color:#555;border-radius:20px}#rebuild-editor .preview-mobile-tabs button[aria-pressed="true"]{background:#242a2d;color:#fff}}
+/* Start with the familiar chat canvas; reveal the website only when needed. */
+#rebuild-editor .preview-mobile-tabs{display:flex;align-self:center;gap:4px;margin:12px 0;padding:4px;border:0;border-radius:28px;background:#f3f3f3;flex-shrink:0}
+#rebuild-editor .preview-mobile-tabs button{min-height:34px;border:0;border-radius:22px;background:transparent;color:#777;font-size:13px;font-weight:500;padding:6px 24px}
+#rebuild-editor .preview-mobile-tabs button[aria-pressed="true"]{background:#fff;color:#232323;box-shadow:0 1px 5px #00000012}
+#rebuild-editor[data-pane="edit"] .preview-editor-layout{display:flex;justify-content:center;position:relative}
+#rebuild-editor[data-pane="edit"] .preview-chat{width:min(100%,780px);border:0;padding:24px 30px}
+#rebuild-editor[data-pane="edit"] .preview-canvas{position:absolute;inset:0;visibility:hidden;pointer-events:none}
+#rebuild-editor .chat-welcome h3{font-size:30px;font-weight:500;letter-spacing:-.6px}
+#rebuild-editor .chat-welcome p{display:none}
+#rebuild-editor .is-empty .chat-welcome{margin-bottom:12px}
+#rebuild-editor #preview-edit-message{min-height:60px;resize:none;max-height:180px}
+#rebuild-editor #preview-edit-form{border-color:#e5e5e5;box-shadow:0 2px 12px #00000008;border-radius:28px}
+#rebuild-editor #preview-edit-form:focus-within{border-color:#c8c8c8;box-shadow:0 2px 12px #0000000c}
+#rebuild-editor .composer-toolbar span{color:#858585}
+#rebuild-editor .chat-thinking{color:#7a7a7a!important;display:flex;align-items:center;gap:10px;font-size:14px}
+#rebuild-editor .chat-thinking::before{content:'';width:9px;height:9px;border-radius:50%;background:#555;animation:chat-breathe 1s ease-in-out infinite alternate}
+@keyframes chat-breathe{to{opacity:.25;transform:scale(.65)}}
+@media(prefers-reduced-motion:reduce){#rebuild-editor .chat-thinking::before{animation:none}}
+@media(max-width:700px){#rebuild-editor .preview-mobile-tabs{margin:8px 0}#rebuild-editor[data-pane="edit"] .preview-chat{padding:20px;min-width:0;width:100%}#rebuild-editor .chat-welcome h3{font-size:25px}#rebuild-editor .preview-editor-footer{padding:8px 16px}#rebuild-editor .preview-editor-footer a{font-size:11px}}
+
+/* Security offer shares one table grid across both service columns. */
+#main .security-intro{padding:36px 28px;background:#fff;border-block:1px solid #dce5ed}
+#main .security-intro h2{font-size:clamp(26px,3vw,38px);line-height:1.5;margin:12px 0}
+#main .security-intro table{width:100%;border-collapse:collapse;table-layout:fixed;margin-top:24px;font-size:15px}
+#main .security-intro th,#main .security-intro td{padding:16px;border-bottom:1px solid #dce5ed;vertical-align:middle}
+#main .security-intro thead{background:#122c4c;color:#fff}
+#main .security-intro th:first-child{width:58%;text-align:left}
+#main .security-intro td,#main .security-intro thead th:not(:first-child){text-align:center}
+#main .security-intro small{display:block;margin-top:4px;font-size:13px;color:#617387;font-weight:400;line-height:1.6}
+#main .security-intro td:last-child{background:#edf6f4}
+#main .security-intro .check{font-size:26px;color:#08765d;font-weight:800}
+#main .security-intro .na{color:#8190a0}
+#main .security-bridge{margin:28px 0 0;font-weight:650;color:#155d69}
+@media(max-width:600px){#main .security-intro{padding:28px 20px}#main .security-intro th,#main .security-intro td{padding:12px 8px}#main .security-intro th:first-child{width:54%}#main .security-intro table{font-size:13px}#main .security-intro small{font-size:12px}}
+#main .security-intro table{min-width:0;max-width:100%}
+#main .security-intro th,#main .security-intro td{overflow-wrap:anywhere}
+
+/* One workspace: the homepage remains visible while editing. */
+#rebuild-editor .preview-mobile-tabs{display:none}
+#rebuild-editor[data-pane] .preview-editor-layout{display:grid;grid-template-columns:minmax(320px,36%) minmax(0,1fr)}
+#rebuild-editor[data-pane] .preview-chat{display:flex;width:auto;border-right:1px solid #eceef0;padding:24px}
+#rebuild-editor[data-pane] .preview-canvas{position:static;visibility:visible;pointer-events:auto}
+@media(max-width:700px){
+ #rebuild-editor[data-pane] .preview-editor-layout{display:flex;flex-direction:column;overflow:auto}
+ #rebuild-editor[data-pane] .preview-canvas{order:0;flex:0 0 55vh;min-height:300px}
+ #rebuild-editor[data-pane] .preview-chat{order:1;flex:0 0 auto;min-height:300px;overflow:visible;width:100%;padding:20px;border:0;border-top:1px solid #eceef0}
+ #rebuild-editor .is-empty .chat-welcome{margin:0 0 12px}
+ #rebuild-editor .is-empty .preview-scope{margin-bottom:0}
+}
+
+#rebuild-editor .preview-editor-footer>span{font-size:12px;color:#536780;line-height:1.6}
+#rebuild-editor .preview-editor-footer>span strong{font-size:14px;color:#17253b}
+#rebuild-editor #preview-apply{background:#245dbd;color:#fff;border-color:#245dbd;padding:12px 22px;font-size:15px;font-weight:750;border-radius:8px}
+#rebuild-editor #preview-enquiry{border:0;padding:8px;font-size:12px}
+#preview-application{width:min(680px,calc(100% - 24px));max-height:90dvh;overflow:auto;border:0;border-radius:18px;padding:32px;color:#17253b;background:#fff}
+#preview-application::backdrop{background:#17212b99}
+#application-close{float:right;border:0;background:#f3f5f7;border-radius:50%;width:36px;height:36px;font-size:24px}
+#preview-application h2{font-size:30px;line-height:1.5;margin:12px 0}
+#application-site{font-size:13px;overflow-wrap:anywhere;color:#617387}
+#application-form fieldset{border:0;padding:0;margin:24px 0}
+#application-form legend{font-weight:750;margin-bottom:12px}
+#application-form label{display:block;font-size:14px;margin:12px 0}
+#application-form input:not([type=radio]):not([type=checkbox]){display:block;width:100%;box-sizing:border-box;padding:12px;border:1px solid #9aafc7;border-radius:7px;margin-top:6px;font:inherit}
+#application-form .application-plan{display:flex;gap:12px;align-items:center;padding:16px;border:1px solid #dce5ed;border-radius:10px}
+#application-form .application-plan:has(input:checked){border-color:#245dbd;background:#f0f6ff}
+#application-form .application-plan span{flex:1}#application-form small{display:block;font-size:12px;color:#617387;line-height:1.6}
+#application-form .application-option{padding:12px;background:#f7f9fc;border-radius:8px}
+.application-total{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;background:#edf6f4;padding:16px;border-radius:10px}.application-total strong{font-size:28px}.application-total span{font-size:13px}
+.application-next{font-size:13px;color:#506177}.application-submit{width:100%;background:#245dbd;color:#fff;padding:16px;border:0;border-radius:8px;font:700 16px/1.5 sans-serif}.application-note{font-size:12px;color:#617387;line-height:1.7}#application-enquiry{font-size:13px;color:#245dbd}
+@media(max-width:700px){#rebuild-editor .preview-editor-footer>div{grid-template-columns:1fr auto}#rebuild-editor #preview-show-pricing{display:none}#rebuild-editor #preview-apply{font-size:13px;padding:12px}#preview-application{padding:24px 18px}#application-form .application-plan{flex-wrap:wrap}#application-form .application-plan b{font-size:14px}}
+
+#preview-page-offer{width:min(520px,calc(100% - 32px));box-sizing:border-box;padding:32px;border:0;border-radius:18px;background:#fff;color:#17253b}
+#preview-page-offer::backdrop{background:#17212b99;backdrop-filter:blur(3px)}
+#page-offer-close{float:right;width:36px;height:36px;border:0;border-radius:50%;font-size:24px;background:#f3f5f7;color:#17253b}
+#preview-page-offer h2{font-size:clamp(24px,3vw,30px);line-height:1.5;margin:16px 0}
+#preview-page-offer p{font-size:15px;line-height:1.8;color:#536780}
+#page-offer-apply,#page-offer-back{display:block;width:100%;padding:14px;border-radius:8px;font:700 15px/1.5 sans-serif;margin-top:16px}
+#page-offer-apply{border:0;background:#245dbd;color:#fff}
+#page-offer-back{border:1px solid #dce5ed;background:#fff;color:#536780}

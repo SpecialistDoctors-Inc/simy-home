@@ -74,13 +74,12 @@ function issueIncident(issue) {
 }
 function appendIssueEvidence(status,issues) {
   if(!issues.length)return;
-  const summaries=[...new Set(issues.map(i=>i.summary).filter(Boolean))];
-  if(summaries.length)status.append(element('p',summaries[0]));
-  const evidence=[...new Map(issues.map(issueIncident).filter(e=>e.kind!=='unconfirmed').map(e=>[e.kind==='case'?e.source:'cisa',e])).values()];
-  if(!evidence.length){status.append(element('small','具体的な被害事例は未確認です。'));return;}
-  for(const e of evidence){const item=element('div','','incident-item');item.append(element('strong',e.kind==='case'?'報告された攻撃':'実際の悪用を確認'));
-    item.append(element('p',e.kind==='case'?e.summary:'この問題を悪用した攻撃が、CISAの公表情報に掲載されています。この医院の被害を確認したものではありません。'));
-    const a=element('a',e.publisher+'の公表');a.href=e.source;a.target='_blank';a.rel='noopener';item.append(a);status.append(item);
+  const summary=[...new Set(issues.map(i=>i.summary).filter(Boolean))][0];
+  if(summary)status.append(element('p',summary));
+  const evidence=[...new Map(issues.map(issueIncident).filter(e=>e.kind!=='unconfirmed').map(e=>[e.source,e])).values()];
+  for(const e of evidence){
+    const a=element('a',e.kind==='case'?'攻撃事例の公表 ↗':'悪用実績あり（CISA） ↗');
+    a.href=e.source;a.target='_blank';a.rel='noopener';status.append(a);
   }
 }
 // Compare only complete numeric release versions; do not guess prerelease or partial versions.
@@ -101,6 +100,21 @@ function componentRowPriority(row,report){
  if(ref&&compareReleaseVersions(row.version,ref.version)===-1)return 3;
  return !row.version||!ref||compareReleaseVersions(row.version,ref.version)!==0?1:0;
 }
+function appendComponentDisclosures(status,row,info,services) {
+  const canonical=n=>({nextjs:'next.js',rails:'ruby on rails'}[n.toLowerCase()]||n.toLowerCase());
+  const service=services.find(s=>canonical(s.name)===canonical(row.name));
+  if(!service)return;
+  const notices=window.SimyServiceSecurity.findingsFor(service,info);
+  for(const n of [...new Map(notices.map(n=>[n.url,n])).values()]){
+    const item=element('p','','component-disclosure');
+    let title=n.title||'脆弱性の公表';
+    if(title==='脆弱性の公表'&&/unauthenticated remote code execution/i.test(n.summary||''))title='認証なしで不正な処理を実行されるおそれ';
+    item.append(element('span',title));
+    const outside=canonical(row.name)==='jquery'&&n.id==='jQuery-3.5.0'&&compareReleaseVersions(row.version,'3.5.0')!==null&&compareReleaseVersions(row.version,'3.5.0')>=0;
+    item.append(element('small',outside?'この公表の影響範囲外':'過去の公表事例・この版への該当は未確認'));
+    const a=element('a',(n.published?'公表 '+n.published+' · ':'')+'公式発表 ↗');a.href=n.url;a.target='_blank';a.rel='noopener';item.append(a);status.append(item);
+  }
+}
 function renderEvaluationTable(report) {
   const rows = new Map();
   const disclosureInfo=window.SimyServiceSecurity?.assess(report);
@@ -117,7 +131,7 @@ function renderEvaluationTable(report) {
   for (const l of report.scripts.libraries) add(l.name, l.version, l.issues);
   const section = element('section', '', 'evaluation-section');
   section.append(element('h3', '01 / 使用部品の脆弱性・セキュリティリスク'));
-  if(!rows.size&&!componentServices.length){section.append(element('p','公開情報から使用部品を特定できませんでした。'));results.append(section);return;}
+  if(!rows.size&&!componentServices.length){section.append(element('p',report.completion==='partial'?'使用部品の確認は途中です。問題がないという判定ではありません。':'公開情報から使用部品を特定できませんでした。'));results.append(section);return;}
   const wrap = element('div', '', 'evaluation-scroll'); wrap.tabIndex = 0; wrap.setAttribute('role','region'); wrap.setAttribute('aria-label','使用部品の評価表。画面が狭い場合は横にスクロールできます');
   const table = element('table', '', 'evaluation-table component-version-table');
   table.append(element('caption', '使用部品・現在の版・最新安定版・判定'));
@@ -138,11 +152,10 @@ function renderEvaluationTable(report) {
     else official.append(element('span','公式情報を別途確認'));
     const status=element('td','');status.append(element('span',state,ended||issue||outdated?'evaluation-badge urgent':'evaluation-badge'));
     if(!row.version&&row.name.toLowerCase()==='wordpress')status.append(element('small','公開情報では版を特定できません。'));
-    if(ended||issue)status.append(element('small',ended?'開発元のサポート終了':'既知の問題に関係する版'));else if(outdated&&row.name.toLowerCase()!=='jquery-migrate')status.append(element('small','旧版だけで危険とは判定しません。'));else if(comparison===0)status.append(element('small','確認日の公式版と一致。安全性全体の保証ではありません。'));appendIssueEvidence(status,row.issues);line.append(official,status);body.append(line);
+    if(outdated&&!ended&&!issue&&row.name.toLowerCase()!=='jquery-migrate')status.append(element('small','旧版だけで危険とは判定しません。'));else if(comparison===0)status.append(element('small','確認日の公式版と一致。安全性全体の保証ではありません。'));appendIssueEvidence(status,row.issues);appendComponentDisclosures(status,row,disclosureInfo,componentServices);line.append(official,status);body.append(line);
   }
   if(!body.children.length&&!componentServices.length)return;
   if(body.children.length){table.append(body);wrap.append(table);section.append(wrap,element('p','公開日は検出した版の配布元の記録です。版や日付が不明なものは未確認と表示します。最新の版は記載日の確認情報です。旧版だけで脆弱性があるとは限りません。','evaluation-note'));}
-  if(componentServices.length){section.append(element('h4','検出した部品に関する事故・脆弱性の公表情報'),element('p','部品ごとの過去の公表事例です。検出した版への該当性や、このサイトでの被害を示すものではありません。','evaluation-note'),renderNoticeTable(disclosureInfo,componentServices,'使用部品'));}
   if(![...rows.values()].some(row=>row.name.toLowerCase()==='php') && [...rows.values()].some(row=>row.name.toLowerCase()!=='php'&&row.issues.length)){
     const figure=element('figure','','clinic-manga infrastructure-manga'),img=element('img','');img.src='/assets/website-check/clinic-component-risks-v1.png';img.width=1536;img.height=1024;img.loading='lazy';img.alt='PHP以外の部品も攻撃の入口になり得ることを示す架空の漫画。公表された問題と、この医院の被害は区別します。';figure.append(img);section.append(figure);
   }
@@ -169,10 +182,12 @@ function renderSummary(report){
   for(const p of report.crawl?.pages||[])if(p.status!=='checked')unknown.add('page:'+p.url);
   for(const r of report.scripts.resources||[])if(r.status!=='checked')unknown.add('asset:'+r.url);
   const serviceRisk=window.SimyServiceSecurity?.assess(report);
+  const hasInventory=report.technologies.some(t=>t.status!=='unknown')||report.scripts.libraries.length>0;
+  const componentCount=updates.size+priorityVersions.size;
   const counts=element('div','','report-counts');
-  for(const [label,value,style] of [['古い版・脆弱性のある部品',updates.size+priorityVersions.size,'priority'],['関連する公表事例',serviceRisk?new Set([...window.SimyServiceSecurity.visibleServices(serviceRisk).flatMap(s=>window.SimyServiceSecurity.findingsFor(s,serviceRisk)),...(window.SimyServiceSecurity.componentServices?.(serviceRisk)||[]).flatMap(s=>window.SimyServiceSecurity.findingsFor(s,serviceRisk)),...window.SimyServiceSecurity.providerNotices(report)].map(n=>n.url)).size:'未確認','update'],['その他の確認事項',report.findings.filter(f=>f.state==='review').length,'unknown']]){const box=element('div','',style);box.append(element('strong',String(value)),element('span',label));counts.append(box);}
+  for(const [label,value,style] of [['古い版・脆弱性のある部品',componentCount ? String(componentCount)+(report.completion==='partial'?'件以上':'') : (!hasInventory||report.completion==='partial'?'未確認':'0'),'priority'],['関連する公表事例',serviceRisk?new Set([...window.SimyServiceSecurity.visibleServices(serviceRisk).flatMap(s=>window.SimyServiceSecurity.findingsFor(s,serviceRisk)),...(window.SimyServiceSecurity.componentServices?.(serviceRisk)||[]).flatMap(s=>window.SimyServiceSecurity.findingsFor(s,serviceRisk)),...window.SimyServiceSecurity.providerNotices(report)].map(n=>n.url)).size:'未確認','update'],['その他の確認事項',report.findings.filter(f=>f.state==='review').length,'unknown']]){const box=element('div','',style);box.append(element('strong',String(value)),element('span',label));counts.append(box);}
   results.append(counts);
-  for(const warning of report.sourceWarnings||[])results.append(element('p',warning,'source-warning'));
+  // Source freshness is an operational concern, not a finding about the scanned site.
 }
 function renderInfrastructure(report) {
   const section=element('section','','infrastructure-section');
@@ -209,7 +224,7 @@ function renderServiceSecurity(report){
   const section=element('section','','service-security');
   section.append(element('h3','03 / 外部サービス・接続先の一覧'));
   if(!info){section.append(element('p','公表情報を読み込めませんでした。'));results.append(section);return;}
-  const visible=window.SimyServiceSecurity.visibleServices(info);if(!visible.length){section.append(element('p','外部サービス・接続先は今回の確認範囲では特定できませんでした。'));results.append(section);return;}
+  const visible=window.SimyServiceSecurity.visibleServices(info);if(!visible.length){section.append(element('p',report.completion==='partial'?'外部サービスの確認は途中です。利用していないという判定ではありません。':'外部サービス・接続先は今回の確認範囲では特定できませんでした。'));results.append(section);return;}
   section.append(renderNoticeTable(info,visible,'外部サービス'),element('p',(info.research?.status==='completed'?'診断時に公式情報を検索。':info.research?.status==='partial'?'診断時の検索・一次情報確認は一部のみ完了。':'診断時の検索は未実施または取得できませんでした。')+' 確認：'+info.checkedAt+'。事前確認の公表事例も含みます。全件網羅ではなく、このサイトの被害を示しません。'));results.append(section);
 }
 function groupLibraryFindings(libraries) {
@@ -238,7 +253,6 @@ function renderReport(report) {
   message.textContent = '確認日時：' + new Date(report.checkedAt).toLocaleString('ja-JP') + '。公開ページと関連するプログラムを調べた結果です。';
   title.textContent = technologies.length || libraries.length || patches.length ? '更新・修正の確認が必要です' : reviews.length ? '設定の確認が必要です' : '今回の範囲では、問題を特定できませんでした';
   renderSummary(report);
-  window.SimyInformationFlow?.renderPriority(report,results,element);
   renderEvaluationTable(report);
   renderInfrastructure(report);
   renderServiceSecurity(report);
@@ -250,7 +264,6 @@ function renderReport(report) {
 
   if(reviews.length)results.append(reportDetails);
   results.append(element('p','侵入・漏えいの有無、サーバー内部・外部サービス内部は、この診断では確認していません。','report-boundary'));
-  const migrationLink=element('a','このホームページをSIMYへ移す手順を見る →','report-migration-link');migrationLink.href='#migration';results.append(migrationLink);
   reportDetails=null;
   gateReport(report);
   const rebuildInput=document.querySelector('#rebuild-url');if(rebuildInput&&!rebuildInput.value)rebuildInput.value=report.url;
@@ -312,13 +325,12 @@ function gateReport(report) {
   const blurred=full.cloneNode(true);blurred.className='report-mosaic-content';
   blurred.querySelectorAll('[id]').forEach(n=>n.removeAttribute('id'));
   veil.append(blurred);preview.append(veil);results.append(preview);
-  const rebuildLink=()=>{const a=element('a','今のデザインで作り直してみる →','report-rebuild-link button button-primary');a.href='#rebuild';a.dataset.rebuildUrl=report.url;return a;};
   appendEmailReceipt(report,snapshot,(registration)=>{
     if(!preview.isConnected)return; // Ignore a late response after a new diagnosis.
     results.replaceChildren(full);
-    if(document.querySelector('#rebuild-form'))results.append(rebuildLink());
     const confirmed=element('p',registration.clinicName+' の診断結果一覧です。PDFでも保存できます。','report-unlocked');confirmed.setAttribute('role','status');results.prepend(confirmed);
     const downloads=element('div','','report-downloads report-download-dock');downloads.setAttribute('aria-label','診断結果のPDF保存');const pdf=element('button','診断結果をPDFで保存 ↓','button button-primary');pdf.type='button';const pdfStatus=element('p','','report-pdf-status');pdfStatus.setAttribute('role','status');const saveHint=element('span','院内共有・相談に使える診断レポート','report-save-hint');downloads.append(saveHint,pdf,pdfStatus);confirmed.after(downloads);
+    if('IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>{if(!downloads.isConnected){observer.disconnect();return;}downloads.hidden=!entries[0].isIntersecting;});observer.observe(confirmed);}
     pdf.addEventListener('click',async()=>{pdf.disabled=true;pdfStatus.textContent='PDFを作成しています…';try{await loadReportPdf();await window.SimyReportPdf.download({report,registration,root:full});pdfStatus.textContent='PDFを作成しました。ダウンロードをご確認ください。';}catch(error){pdfStatus.textContent='PDFを作成できませんでした。もう一度お試しください。';}finally{pdf.disabled=false;}});
     diagnosisState.focus({preventScroll:true});diagnosisState.scrollIntoView({block:'start',behavior:'auto'});
   });
@@ -353,9 +365,9 @@ async function readScanResponse(response){
   const reader=response.body.getReader();const decoder=new TextDecoder();let pending='';let report;let partial;
   const consume=line=>{if(!line.trim())return;const event=JSON.parse(line);if(event.type==='progress')scanProgress(event.stage,event.detail);else if(event.type==='partial')partial=event.report;else if(event.type==='result')report=event.report;else if(event.type==='error')throw Error(event.error);};
   try{while(true){const {done,value}=await reader.read();pending+=decoder.decode(value,{stream:!done});let at;while((at=pending.indexOf('\n'))>=0){consume(pending.slice(0,at));pending=pending.slice(at+1);}if(report)return report;if(done){consume(pending);break;}}}
-  catch(error){if(partial)return {...partial,completion:'partial',completionReason:'追加の確認が時間内に完了しませんでした。確認できた範囲の結果を表示しています。'};throw error;}
+  catch(error){if(partial)return {...partial,completion:'partial',completionReason:partial.completionReason||'追加の確認が時間内に完了しませんでした。確認できた範囲の結果を表示しています。'};throw error;}
   finally{await reader.cancel().catch(()=>{});reader.releaseLock();}
-  if(!report&&partial)return partial;if(!report)throw Error('診断結果の受信が途中で止まりました。もう一度お試しください。');return report;
+  if(!report&&partial)return {...partial,completion:'partial',completionReason:partial.completionReason||'診断結果の受信が途中で止まりました。確認できた範囲の結果を表示しています。'};if(!report)throw Error('診断結果の受信が途中で止まりました。もう一度お試しください。');return report;
 }
 
 // Advertising identifiers do not select a page. Remove only known tracking keys;
@@ -394,7 +406,7 @@ async function runDiagnosis(event) {
   if(urlInput) urlInput.value=target.href; clearDraft();
   if(!diagnosisEndpoint){scanProgress('error','診断サービスに接続できません。ページを再読み込みしてお試しください。診断はまだ実行していません。');return;}
   busy=true;const button=diagnosisForm.querySelector('button');const label=button.querySelector('.button-label');const originalLabel=label?.textContent;if(label)label.textContent='診断中…';button.disabled=true;diagnosisInput.disabled=true;diagnosisForm.setAttribute('aria-busy','true');
-  try { const response=await fetch(diagnosisEndpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url:target.href,behavior:false,stream:true}),signal:AbortSignal.timeout(185000)}); const data=await readScanResponse(response); renderReport(data); diagnosisState.hidden=false; scanProgress('done',data.completion==='partial'?data.completionReason:'下に結果を表示しました。');if(data.completion==='partial'){const heading=document.querySelector('#scan-progress strong');if(heading)heading.textContent='確認できた範囲の結果を表示しました';results.prepend(element('p',data.completionReason,'report-boundary'));} diagnosisState.focus({preventScroll:true});diagnosisState.scrollIntoView({block:'start',behavior:'auto'}); }
+  try { const response=await fetch(diagnosisEndpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url:target.href,behavior:false,stream:true}),signal:AbortSignal.timeout(185000)}); const data=await readScanResponse(response); renderReport(data); const quickDiagnosis=document.querySelector('#quick-diagnosis');if(quickDiagnosis){if(quickDiagnosis.contains(diagnosisState))quickDiagnosis.after(diagnosisState);quickDiagnosis.hidden=true;quickDiagnosis.style.display='none';} diagnosisState.hidden=false; scanProgress('done',data.completion==='partial'?data.completionReason:'下に結果を表示しました。');if(data.completion==='partial'){const heading=document.querySelector('#scan-progress strong');if(heading)heading.textContent='確認できた範囲の結果を表示しました';results.prepend(element('p',data.completionReason,'report-boundary'));} diagnosisState.focus({preventScroll:true});diagnosisState.scrollIntoView({block:'start',behavior:'auto'}); }
   catch(error){results.replaceChildren();title.textContent='診断を完了できませんでした';message.textContent=/timeout|timed out|aborted/i.test((error.name||'')+' '+(error.message||''))?'時間内に応答がありませんでした。少し待って再度お試しください。':error.message==='Failed to fetch'?'診断サービスに接続できませんでした。少し待って再度お試しください。':error.message;}
   finally{busy=false;button.disabled=false;diagnosisInput.disabled=false;diagnosisForm.removeAttribute('aria-busy');if(label)label.textContent=originalLabel;if(title.textContent==='診断を完了できませんでした')scanProgress('error',message.textContent);}
 }
@@ -405,6 +417,6 @@ if(inlineDiagnosisForm){inlineDiagnosisForm.addEventListener('submit',runDiagnos
 
 let reportPdfLoader;
 function loadReportPdf(){
-  if(!reportPdfLoader)reportPdfLoader=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='/diagnosis-pdf.js?v=55e91773a3d7';script.onload=resolve;script.onerror=()=>{script.remove();reportPdfLoader=null;reject(Error('PDF機能の読込に失敗しました'));};document.head.append(script);});
+  if(!reportPdfLoader)reportPdfLoader=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='/diagnosis-pdf.js?v=956d587064bb';script.onload=resolve;script.onerror=()=>{script.remove();reportPdfLoader=null;reject(Error('PDF機能の読込に失敗しました'));};document.head.append(script);});
   return reportPdfLoader;
 }
