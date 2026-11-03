@@ -190,7 +190,7 @@ JSON
 
 サービスは、worker・検証・独立reviewが中断されても、前回の終了と保存済み成果物を確認できる場合に限り、回数と待ち時間を限定した新しいattemptで再試行できます。認証切れ、review却下、外部操作の結果不明では自動再試行・メール再送を行いません。運用担当が保存済みの依頼・成果物・送信結果を照合して復旧します。復旧CLIは単一writer lockを使うため、通常はcontrollerを停止せずに安全な確認・復旧操作を行えます。設定方法、Google の同意範囲、再起動時の扱い、復旧時の注意は[運用手順](../examples/hp-management/runner/OPERATOR.md)を正とします。
 
-2026-11-03に、AWSの常時稼働構成で新しいSheet依頼を自動受付し、Codexによる変更、独立レビュー、テスト、dev配信、Sheet読戻し、確認メール送信までを実測しました。現在の反映対象はsource `2967a35` と記録済みimmutable image digest（`sha256:af205527…`）で、計画したOS再起動後の復帰も確認済みです。EC2は東京リージョンの専用t4g.medium、状態は暗号化済み20 GiB EBSに保存し、管理経路はSSMのみです。初期の暗号化スナップショット完了と、日次7世代のDLM設定も確認しました。中断試験と、その後の新しい通常更新を確認済みです。DLMの定期実行・復元は検証中です。確認済み範囲は[復旧検証記録](hp-management-recovery-verification.md)を、過去のサンプル成果物は[サンプルの検証記録](hp-management-sample-verification.md)を参照してください。
+2026-11-03に、AWSの常時稼働構成で新しいSheet依頼を自動受付し、Codexによる変更、独立レビュー、テスト、dev配信、Sheet読戻し、確認メール送信までを実測しました。現在の反映対象はsource `2967a35` と記録済みimmutable image digest（`sha256:af205527…`）で、計画したOS再起動後の復帰も確認済みです。EC2は東京リージョンの専用t4g.medium、状態は暗号化済み20 GiB EBSに保存し、管理経路はSSMのみです。初期の暗号化スナップショット完了と、日次7世代のDLM設定も確認しました。中断試験と、その後の新しい通常更新を確認済みです。修正後のDLMによる定期snapshotの完了と、そのsnapshotからの隔離した読み取り専用の台帳復元も確認済みです。確認済み範囲は[復旧検証記録](hp-management-recovery-verification.md)を、過去のサンプル成果物は[サンプルの検証記録](hp-management-sample-verification.md)を参照してください。
 
 ### 途中で止まったときの扱い
 

@@ -62,7 +62,9 @@ runner 101件、infra 30件の自動テストとARMコンテナでの確認を�
 
 修正headは `383abb7c7a7888d6662e0e6376d758e0cc8d534e`、dev統合は `2c614f39e4c57f255e08b255397dc02442b77e96` です。現headと統合後のCIが成功し、04:13:25 UTCに、IAM policyとDLM scheduleの2か所だけを適用しました。追加・削除・置換はなく、適用後のTerraformは差分なしです。日次時刻は04:15 UTC（13:15 JST）、保持数は7です。独立レビューは、Claudeの認証が利用できなかったため別Codexを使い、最終blocker/P1なしでした。
 
-修正後の実スケジュールによるsnapshot作成と、そのsnapshotからの隔離した読み取り専用復元を確認中です。手動snapshotや権限評価の成功だけでは、この検証を完了とは扱いません。
+修正後のDLMが04:38:05 UTCに作成した暗号化snapshot `snap-0af3aac2e4ac7efd2` の完了を確認しました。元volume・policy・scheduleのタグを照合し、そのsnapshotから検証専用volume `vol-09c141c2c9315dc98` を作成しました。ホスト上では正確なNVMeシリアルで対象を限定し、`ro,noload,nosuid,nodev,noexec` でmountしました（kernelの表示は同義の `norecovery`）。
+
+SQLiteとWAL/SHMの通常ファイルだけをroot専用tmpfsへコピーし、`integrity_check=ok`、依頼5件、jobは確認待ち4件・停止1件、外部effectは観測済み16件、通知は受信確認済み4件、障害は解決済み5件を照合しました。復元したサービス・Codex・providerは起動していません。検証後はmountとtmpfsを解放し、fixtureのタグ・接続先を再確認して切断・削除しました。削除後の読戻しは `InvalidVolume.NotFound`、元volumeの接続・暗号化は維持され、EC2と両監視アラームも正常です。これは日次バックアップの実行と台帳の隔離復元の証拠であり、元volumeの置換や復元した二重サービスの起動ではありません。
 
 ## 中断試験の後の通常更新
 
