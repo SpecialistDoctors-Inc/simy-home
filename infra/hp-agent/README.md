@@ -13,9 +13,17 @@ maintenance migration must explicitly remove those safeguards before a live
 detach. The instance itself is protected from destroy and ignores AMI/user-data
 drift after first launch. Daily DLM snapshots retain seven copies.
 
-`backup_time_utc` controls the daily snapshot schedule. Its default is `03:00`
-UTC (12:00 JST), selected so the first scheduled snapshot can be observed during
-this acceptance run. A manual snapshot is not evidence that the DLM schedule
+`backup_time_utc` controls the daily snapshot schedule. Its default is `04:15`
+UTC (13:15 JST), selected so the first scheduled snapshot can be observed during
+this acceptance run. EC2 snapshot ARNs omit the account field; the source volume ARN remains pinned
+to this account and this data volume. Before applying an IAM change, export the
+rendered policy from the Terraform plan and run `check-dlm-policy.py --policy
+<policy.json> --account <account-id> --region <region> --volume-id <volume-id>`.
+This read-only AWS IAM simulation covers snapshot create/tag/delete matching and
+denial for unrelated volumes and untagged deletions. See the [AWS snapshot IAM
+examples](https://docs.aws.amazon.com/ebs/latest/userguide/security_iam_id-based-policy-examples.html#security_iam_id-based-policy-examples-snapshots).
+
+A manual snapshot is not evidence that the DLM schedule
 ran; record the DLM-created snapshot timestamp and completion separately.
 
 The bootstrap uses the arm64 Noble HTTPS package source

@@ -456,14 +456,15 @@ data "aws_iam_policy_document" "dlm" {
     actions = ["ec2:CreateSnapshot"]
     resources = [
       "arn:aws:ec2:${var.region}:${var.expected_aws_account_id}:volume/${aws_ebs_volume.data.id}",
-      "arn:aws:ec2:${var.region}:${var.expected_aws_account_id}:snapshot/*"
+      # EC2 snapshot ARNs have an empty account field; volume ARNs do not.
+      "arn:aws:ec2:${var.region}::snapshot/*"
     ]
   }
   statement {
     sid       = "DeleteOnlyTaggedAgentDataSnapshots"
     effect    = "Allow"
     actions   = ["ec2:DeleteSnapshot"]
-    resources = ["arn:aws:ec2:${var.region}:${var.expected_aws_account_id}:snapshot/*"]
+    resources = ["arn:aws:ec2:${var.region}::snapshot/*"]
     condition {
       test     = "StringEquals"
       variable = "aws:ResourceTag/Project"
@@ -476,10 +477,15 @@ data "aws_iam_policy_document" "dlm" {
     }
   }
   statement {
-    sid       = "TagOnlyCurrentAccountSnapshots"
+    sid       = "TagOnlyDuringSnapshotCreation"
     effect    = "Allow"
     actions   = ["ec2:CreateTags"]
-    resources = ["arn:aws:ec2:${var.region}:${var.expected_aws_account_id}:snapshot/*"]
+    resources = ["arn:aws:ec2:${var.region}::snapshot/*"]
+    condition {
+      test     = "StringEquals"
+      variable = "ec2:CreateAction"
+      values   = ["CreateSnapshot"]
+    }
   }
 }
 

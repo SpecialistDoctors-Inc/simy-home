@@ -62,7 +62,7 @@ variable "snapshot_retention_days" {
 variable "backup_time_utc" {
   description = "UTC time for the daily DLM state-volume snapshot, in 24-hour HH:MM form."
   type        = string
-  default     = "03:00"
+  default     = "04:15"
 
   validation {
     condition     = can(regex("^([01][0-9]|2[0-3]):[0-5][0-9]$", var.backup_time_utc))
