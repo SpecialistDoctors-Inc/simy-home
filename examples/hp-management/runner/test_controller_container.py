@@ -52,11 +52,11 @@ PY''')
    print((job/'child/result.json').read_text())
    print((job/'control/private/worker.log').read_text()); raise
   assert candidate['notices'][0]['body']=='new'
-  proof=agent.verify_candidate(None,BASE,candidate,job); assert proof['root_pristine_tests']
-  review=agent.review_candidate(None,BASE,candidate,REQUEST,job); assert review=={'approved':True,'findings':[]}
+  proof=agent.verify_candidate(('site',REQUEST['request_id'],1),BASE,candidate,job); assert proof['root_pristine_tests']
+  review=agent.review_candidate(('site',REQUEST['request_id'],1),BASE,candidate,REQUEST,job); assert review=={'approved':True,'findings':[]}
   # Restart reconciliation: same receipts must not launch fake Codex again.
-  assert agent.verify_candidate(None,BASE,candidate,job)==proof
-  assert agent.review_candidate(None,BASE,candidate,REQUEST,job)==review
+  assert agent.verify_candidate(('site',REQUEST['request_id'],1),BASE,candidate,job)==proof
+  assert agent.review_candidate(('site',REQUEST['request_id'],1),BASE,candidate,REQUEST,job)==review
   print(json.dumps({'ok':True,'pid':record['pid'],'identity':bool(record['identity'])}))
   store.close()
 

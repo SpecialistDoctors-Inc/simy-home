@@ -13,6 +13,11 @@ maintenance migration must explicitly remove those safeguards before a live
 detach. The instance itself is protected from destroy and ignores AMI/user-data
 drift after first launch. Daily DLM snapshots retain seven copies.
 
+`backup_time_utc` controls the daily snapshot schedule. Its default is `03:00`
+UTC (12:00 JST), selected so the first scheduled snapshot can be observed during
+this acceptance run. A manual snapshot is not evidence that the DLM schedule
+ran; record the DLM-created snapshot timestamp and completion separately.
+
 The bootstrap uses the arm64 Noble HTTPS package source
 `https://ports.ubuntu.com/ubuntu-ports`, installs Docker, and installs the
 official fixed AWS CLI v2.39.3 archive only after checking its pinned SHA-256.
@@ -25,6 +30,20 @@ only its log group and publish health metrics under `SIMY/HPAgent`.
 The instance role includes only SSM session-messaging channels and instance
 registration. It does not receive the broad managed SSM policy and cannot read
 Parameter Store.
+
+The health alarm is fail-closed. In addition to a recent container poll, the
+host reads the state database without writing it. An unresolved recovery
+incident, an interrupted worker/review, a provider reconciliation requirement,
+an exhausted retry, an overdue active job, or an unreadable state schema makes
+the `Healthy` metric zero. A human approval wait is not an incident.
+
+Set `operational_alert_email` only to the dedicated operations mailbox.
+Terraform then creates a task-owned SNS topic and subscription and attaches it
+to the service-health and EC2 system-recovery alarms. AWS sends a subscription
+confirmation to that address; **do not regard notification as configured until
+the recipient accepts it and an alarm test is read back**. With the variable
+blank, no SNS topic, subscription, or external alarm action is created. Alert
+messages contain CloudWatch alarm metadata, not request text or credentials.
 
 ## Apply
 
@@ -89,10 +108,34 @@ artifact approval.
 The systemd egress unit requires the data mount before Docker starts. It blocks
 the container from instance metadata, private networks and host-local services.
 The application receives no instance AWS role; the host uses it only for ECR,
-the sealed migration prefix, CloudWatch and SSM messaging. A health alarm exists
-in CloudWatch; external alarm delivery requires a separately configured target.
+the sealed migration prefix, CloudWatch and SSM messaging. The operational SNS
+recipient is independent of Google/Gmail so it can report an expired Google
+connection; keep the recipient confirmation and its test receipt with the
+release evidence.
 
 The instance and data volume must not be replaced by routine Terraform applies.
 For a deliberate host upgrade, prepare a replacement, quiesce and verify the
 single writer, checkpoint/snapshot the disk and perform an explicit migration.
 Do not remove Terraform destruction protections to force an unattended upgrade.
+
+## In-place controller upgrade after a planned reboot
+
+`upgrade-runtime.sh` is deliberately narrower than an installation. It may run
+only after a planned reboot has left the one recorded old controller stopped.
+The operator supplies the exact old container ID, old source/manifest/image
+identity and the separately recorded new immutable image/source/manifest
+identity. Before changing anything, the helper verifies both release records,
+the original migration proof and SQLite integrity. It refuses a pending effect,
+ambiguous/sending email, unresolved incident or active job. The sole legacy
+exception is a `needs_input` job whose matching request is already
+`superseded`, `cancelled` or `revoked` and has no pending effect or email; the
+new controller reconciles that parked history to `stopped`.
+
+The helper never stops, removes or signals a process or container. It verifies
+the old container is the exact named, stopped, non-restarting container, renames
+it to `hp-agent-rollback-<old-source-prefix>`, and preserves the old migration
+marker as a root-only backup before creating the new `hp-agent`. If any step
+fails, it leaves the current state in place and writes one root-only
+`upgrade-recovery-<new-source-prefix>.json` receipt. Do not delete that receipt
+or retry automatically: reconcile it against the named rollback container and
+the preserved marker first.

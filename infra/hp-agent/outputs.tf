@@ -6,3 +6,11 @@ output "artifact_bucket_name" { value = aws_s3_bucket.artifact.bucket }
 output "artifact_prefix" { value = var.artifact_prefix }
 output "ecr_repository_url" { value = aws_ecr_repository.agent.repository_url }
 output "cloudwatch_log_group" { value = aws_cloudwatch_log_group.agent.name }
+output "operational_alert_topic_arn" {
+  value       = try(aws_sns_topic.operational[0].arn, null)
+  description = "Dedicated alert topic. The email recipient must confirm its SNS subscription before delivery begins."
+}
+output "operational_alert_configured" {
+  value       = var.operational_alert_email != ""
+  description = "True only when a recipient was supplied to this Terraform apply."
+}

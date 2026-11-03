@@ -14,7 +14,7 @@ from urllib.parse import quote
 import re
 
 from google_provider import EMAIL_SCOPE, OPENID_SCOPE, USERINFO_URL, _RequestsTransport, _require
-from provider_errors import EffectNotStarted, classify_effect, note_write_attempt
+from provider_errors import AuthenticationRequired, EffectNotStarted, classify_effect, note_write_attempt
 
 
 GMAIL_SEND_SCOPE = 'https://www.googleapis.com/auth/gmail.send'
@@ -82,7 +82,7 @@ class Gmail:
                 from google.auth.transport.requests import Request
                 self._credentials.refresh(Request())
             except Exception as error:
-                raise RuntimeError('Google credential refresh failed') from error
+                raise AuthenticationRequired('google', 'google_auth_refresh_required') from error
 
     def _request(self, method: str, url: str, *, params=None, json_body=None, operation: str) -> dict[str, Any]:
         self._refresh_if_needed()
@@ -90,14 +90,20 @@ class Gmail:
             if method not in {'GET', 'HEAD'}:
                 note_write_attempt(self)
             response = self._transport.request(method, url, params=params, json=json_body)
-            if not 200 <= getattr(response, 'status_code', 200) < 300:
-                raise RuntimeError('status')
-            payload = response.json()
-            if not isinstance(payload, dict):
-                raise RuntimeError('payload')
-            return payload
         except Exception as error:
             raise RuntimeError(f'Google {operation} request failed') from error
+        status = getattr(response, 'status_code', 200)
+        if status in {401, 403}:
+            raise AuthenticationRequired('google', f'google_http_{status}', status)
+        if not 200 <= status < 300:
+            raise RuntimeError(f'Google {operation} request failed')
+        try:
+            payload = response.json()
+        except Exception as error:
+            raise RuntimeError(f'Google {operation} request failed') from error
+        if not isinstance(payload, dict):
+            raise RuntimeError(f'Google {operation} request failed')
+        return payload
 
     def authorized_user(self) -> dict[str, str]:
         profile = self._request('GET', USERINFO_URL, operation='userinfo')

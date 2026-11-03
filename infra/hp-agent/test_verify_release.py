@@ -17,7 +17,7 @@ class ReleaseTest(unittest.TestCase):
         self.root = Path(self.temp.name).resolve()
         self.files = {}
         for folder, names in {
-            'infra/hp-agent': ['verify-release.py', 'install-runtime.sh', 'restore-bundle.py', 'health.py'],
+            'infra/hp-agent': ['verify-release.py', 'install-runtime.sh', 'upgrade-runtime.sh', 'restore-bundle.py', 'health.py'],
             'examples/hp-management/runner': ['agent.py', 'Dockerfile', 'requirements.txt', 'seccomp-codex.json', 'apparmor-codex.profile'],
         }.items():
             for name in names:
@@ -25,7 +25,9 @@ class ReleaseTest(unittest.TestCase):
                 path.parent.mkdir(parents=True, exist_ok=True)
                 path.write_text(name)
                 self.files[folder+'/'+name] = hashlib.sha256(path.read_bytes()).hexdigest()
-        self.payload = {'source_sha': 'a'*40, 'image': 'repo@sha256:'+'b'*64, 'files': self.files}
+        self.payload = {'source_sha': 'a'*40,
+                        'image': '209300895845.dkr.ecr.ap-northeast-1.amazonaws.com/simy-hp-agent@sha256:'+'b'*64,
+                        'files': self.files}
         self.manifest = self.root/'manifest.json'
         self.write_manifest()
 
@@ -68,13 +70,26 @@ class ReleaseTest(unittest.TestCase):
     def test_marker_bound_to_same_release(self):
         marker = self.root/'migration.json'
         value = {'manifest_sha256': self.digest, 'source_sha': self.payload['source_sha'],
-                 'image': self.payload['image'], 'database_integrity':'ok', 'pending_effects':0,'active_jobs':0}
+                 'image': self.payload['image'], 'database_integrity':'ok', 'pending_effects':0,
+                 'active_jobs':0, 'database_sha256':'c'*64, 'archive_sha256':'d'*64}
         marker.write_text(json.dumps(value))
         release.verify_migration(marker, self.digest, value['source_sha'], value['image'])
-        value['image'] = 'old-image'
+        value['image'] = '209300895845.dkr.ecr.ap-northeast-1.amazonaws.com/simy-hp-agent@sha256:'+'c'*64
         marker.write_text(json.dumps(value))
         with self.assertRaisesRegex(ValueError, 'migration_release_mismatch'):
             release.verify_migration(marker, self.digest, value['source_sha'], self.payload['image'])
+
+    def test_marker_shape_rejects_extra_or_unsafe_original_proof(self):
+        marker = self.root/'migration.json'
+        value = {'manifest_sha256': self.digest, 'source_sha': self.payload['source_sha'],
+                 'image': self.payload['image'], 'database_integrity':'ok', 'pending_effects':0,
+                 'active_jobs':0, 'database_sha256':'c'*64, 'archive_sha256':'d'*64}
+        marker.write_text(json.dumps(value))
+        self.assertEqual(release.verify_migration_shape(marker), value)
+        value['extra'] = True
+        marker.write_text(json.dumps(value))
+        with self.assertRaisesRegex(ValueError, 'migration_marker_schema_invalid'):
+            release.verify_migration_shape(marker)
 
 
 if __name__ == '__main__': unittest.main()

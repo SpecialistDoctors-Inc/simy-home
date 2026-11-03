@@ -106,6 +106,70 @@ docker compose stop hp-agent
 
 本番ではsystemdがデータ領域・通信制限・Dockerの起動順と死活監視を管理し、専用コンテナはDockerの `restart unless-stopped` で自動再起動します。本番の導入には検証済みの `install-runtime.sh` を使います。再起動後はSQLiteに保存したeffect/outboxを先にreadback照合します。workerまたは独立reviewが中断されたjobは自動で再実行・再送せず、運用者の復旧判断を待ちます。control・state・work・Codex authはそれぞれ専用の永続領域へ置き、controlはroot所有0700・ファイル0600を確認してread-onlyでmountします。workerが読むCodex authや作業領域にprovider credentialを混在させません。
 
+## 障害の確認と復旧
+
+ここでいう「復旧」は、同じ外部操作を闇雲にもう一度実行することではありません。まず保存済みの台帳、GitHub Actions、dev の表示、Sheet、Gmail の送信済み記録を照合し、既に反映・送信済みなら再実行しません。特に `ambiguous`、`sending`、`provider_reconciliation_required` は、外部操作が成功したか判定できない状態です。readback で一致を確認するまで、再送・再マージ・再公開をしません。
+
+状態確認は運用者だけがSSM上で行います。以下は秘密値やlease tokenを表示しない読み取り専用の例です。SQLiteを直接更新して「復旧済み」に見せかけることは禁止です。
+
+```sh
+sqlite3 -readonly /srv/hp-agent/state/agent.sqlite3 <<'SQL'
+.headers on
+.mode column
+SELECT request_id, revision, stage, error FROM agent_jobs ORDER BY rowid DESC;
+SELECT request_id, revision, stage, attempt, failures, retry_at, resume_stage
+  FROM agent_job_runtime ORDER BY rowid DESC;
+SELECT request_id, revision, code, opened_at, acknowledged_at, resolved_at
+  FROM agent_incidents ORDER BY opened_at DESC;
+SELECT failures, retry_at, paused FROM agent_service_runtime WHERE id=1;
+SQL
+```
+
+`acknowledge` は「担当者が障害を確認した」という監査記録だけです。依頼を再開せず、incidentも解決済みにしません。原因を除去し、上のreadbackで外部効果を照合した後にだけ `resume` を使います。どちらも `--config` と `--db` は本番の同じ値を指定し、request ID と revision を必ず指定します。
+
+```sh
+# Agent は、停止済みと確認した単一のcontrollerだけが実行する。
+# <operator-id> は監査用の運用者IDであり、tokenやメール本文ではない。
+python3 /opt/hp-agent/agent.py \
+  --config /control/config.json --db /state/agent.sqlite3 \
+  --recover acknowledge \
+  --request-id '<request-id>' --revision '<revision>' --operator '<operator-id>'
+
+python3 /opt/hp-agent/agent.py \
+  --config /control/config.json --db /state/agent.sqlite3 \
+  --recover resume \
+  --request-id '<request-id>' --revision '<revision>' --operator '<operator-id>'
+```
+
+実行中のcontrollerと並行して上記を起動してはいけません。停止・再開は承認済みのSSM運用手順で行い、この文書のコマンドはプロセスを停止しません。プロセスへsignalを送る必要がある場合も、実行者がこの作業で起動・記録した正のPIDだけを、PID・親PID・開始時刻・コマンドを直前に再照合して扱います。名前、パターン、process group/tree、共有サービスを対象に停止しません。
+
+`retry_wait` は設定された期限と回数の範囲でのみ自動再試行します。標準の設定例は次のとおりです。認証不良、入力の不整合、独立reviewの却下、外部効果が不明な場合は自動再試行の対象ではありません。
+
+```json
+"recovery": {
+  "enabled": true,
+  "max_retries": 3,
+  "base_delay_seconds": 30,
+  "stage_timeout_seconds": 1800
+}
+```
+
+Googleの401/403またはrefresh失敗では、サービスは `authentication_required` として停止します。運用者がGoogleの同意画面で再接続し、emailと不変subjectを再照合してから、providerを読み取りで確認します。その後、サービス全体の受付だけを安全に戻すには次を一度だけ実行します。これはSheet・GitHub・有効な場合はGmailの認証確認を行いますが、依頼の変更、メール送信、公開は行いません。
+
+```sh
+python3 /opt/hp-agent/agent.py \
+  --config /control/config.json --db /state/agent.sqlite3 \
+  --recover-intake --operator '<operator-id>'
+```
+
+incidentは、前進できる状態へ遷移したときにのみ解決済みになります。`acknowledged_at` があるだけでは解決ではありません。health check は未解決incident、停止したworker/reviewer、provider照合待ち、期限超過、読めない台帳を異常としてCloudWatchへ出します。運用用SNS通知を設定する場合は専用運用メールアドレスのsubscription確認とアラーム試験のreadbackが必要です。通知には依頼本文・認証情報を含めません。これらの復旧API・通知条件を含むリリースのAWS本番適用と実地受入は、この文書の更新時点では別途確認が必要です。
+
+## バックアップからの検証と復元
+
+日次DLMスナップショットは、初期手動snapshotとは別に、DLMが作成した時刻・source volume・保持タグを記録して初めて実行証跡になります。復元テストでは本番volumeや本番controllerにsnapshotを接続しません。暗号化された一時volumeを、受信ポートなし・SSM限定の隔離EC2へ接続し、agent container、Codex、Google/GitHub/Gmailのcredentialを起動せずにSQLiteの `PRAGMA integrity_check`、上記の件数・stage・incident readback、archive hashを確認します。
+
+元のbackupは保存したまま、隔離環境は確認後に作業用のinstance/volumeだけを所有者・resource IDで再照合して削除します。本番へ戻す必要がある場合は、まず本番writerが存在しないことと外部効果の照合を確認し、同時に二つのwriterを動かさない移行手順で復元します。snapshotから復元した状態をそのまま起動してproviderへ接続することはしません。
+
 ## 運用上の境界
 
 - `/control` はcontainer内rootだけが読めます。Google refresh token、GitHub token、設定、SQLite台帳を worker promptへ渡しません。
