@@ -13,7 +13,7 @@ verify=(python3 "$repo_root/infra/hp-agent/verify-release.py" --root "$repo_root
   --manifest "$repo_root/release-manifest.json" --sha256 "$manifest_sha" --source "$source_sha" --image "$image")
 findmnt -rn /srv/hp-agent >/dev/null
 "${verify[@]}" --migration-marker /srv/hp-agent/migration-verified.json
-if docker inspect hp-agent >/dev/null 2>&1; then
+if docker container inspect hp-agent >/dev/null 2>&1; then
   echo 'Existing service requires an explicit owned-process upgrade; refusing replacement.' >&2
   exit 1
 fi
