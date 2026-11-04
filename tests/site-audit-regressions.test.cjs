@@ -10,7 +10,7 @@ test('every shared header exposes deployable guide and legal destinations', () =
   for (const file of files) {
     const source = fs.readFileSync(path.join(site,file),'utf8');
     const header = source.match(/<header class="simy-header"[\s\S]*?<\/header>/)?.[0];
-    const excluded = ['hp-management/clinic-service.html', 'hp-management/clinic-service-v2.html'].includes(file) || file === 'auth-callback.html' || !/<body\b/i.test(source) || /http-equiv=["']refresh/i.test(source);
+    const excluded = file === 'hp-management/clinic/index.html' || file === 'auth-callback.html' || !/<body\b/i.test(source) || /http-equiv=["']refresh/i.test(source);
     if (excluded) continue;
     assert.ok(header, `${file}: every rendered public page needs the shared header`);
     assert.equal((source.match(/<header class="simy-header"/g) || []).length, 1, `${file}: one shared header`);
@@ -23,7 +23,7 @@ test('every shared header exposes deployable guide and legal destinations', () =
     assert.ok(android?.endsWith('#android'), `${file}: Android badge has an explained destination`);
     assert.ok(fs.readFileSync(path.join(site,android.split('#')[0]),'utf8').includes('id="android"'));
   }
-  assert.equal(checked,181);
+  assert.equal(checked,180);
 });
 
 test('seller pricing describes tax separately and uses the verified name', () => {
@@ -51,7 +51,7 @@ test('nested legacy pages retain their same-page language alternatives', () => {
 test('clinic header keeps diagnosis and HP management pricing on the current service',()=>{
  const source=fs.readFileSync(path.join(site,'hp-management/clinic/index.html'),'utf8');
  const header=source.slice(source.indexOf('<header'),source.indexOf('</header>'));
- assert.match(header,/class="sh-pricing" data-service-pricing href="#pricing">HP管理の料金/);
- assert.match(header,/class="sh-signup" href="#diagnosis">URL入力へ/);
+ assert.match(header,/href="#pricing">料金/);
+ assert.match(header,/href="#diagnosis">無料診断/);
  assert.doesNotMatch(header,/data-new-account-signup|>Sign up<|>Pricing</);
 });

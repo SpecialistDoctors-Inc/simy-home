@@ -39,3 +39,45 @@ await browser.close();})().catch(e=>{console.error(e);process.exit(1)});
  const distinct=await page.evaluate(()=>{const html=SimyPreviewEdit.index(document.documentElement.outerHTML),doc=new DOMParser().parseFromString(html,'text/html'),targets=[doc.querySelector('p'),doc.querySelectorAll('span')[1]].map(e=>e.getAttribute('data-simy-edit-id'));const result=SimyPreviewEdit.applyPlan(html,{status:'edit',operations:targets.map(target=>({type:'replace_text',target,oldText:'診療案内',newText:'診療案内について'}))});return new DOMParser().parseFromString(result.html,'text/html').body.textContent;});assert.equal(distinct,'診療案内について診療案内について');
  await browser.close();
 })().catch(e=>{console.error(e);process.exit(1)});
+
+async function checkStaticScrollAreas() {
+ const fs = require('node:fs');
+ const pageHtml = fs.readFileSync('site/hp-management/clinic/index.html', 'utf8');
+ const scripts = [...pageHtml.matchAll(/<script src="(\/assets\/clinic-service-v2\/[a-f0-9]+\.js)"/g)];
+ const editorPath = scripts.map(match => path.resolve('site' + match[1]))
+  .find(file => fs.readFileSync(file, 'utf8').includes('global.SimyPreviewEdit='));
+ const browser = await chromium.launch({ headless: true, channel: 'chrome' });
+ try {
+  const page = await browser.newPage();
+  const entries = Array.from({length: 10}, (_, i) =>
+   '<li><dl><dt>2026.10.01</dt><dd>以前のお知らせ' + i + '</dd></dl></li>').join('');
+  const source = '<style>.topics .scl_area{height:120px}li{min-height:60px}</style>' +
+   '<div class="topi_blog"><div class="topics"><h2>お知らせ</h2><div class="scl_area">' +
+   '<ul class="item_list">' + entries + '</ul></div></div></div><section>予約・動画案内</section>';
+  await page.addScriptTag({path: editorPath});
+  const updated = await page.evaluate(source => {
+   const html = SimyPreviewEdit.index(SimyPreviewEdit.prepare(source));
+   const target = SimyPreviewEdit.inventory(html).find(node => node.kind === 'news').id;
+   return SimyPreviewEdit.applyPlan(html, {status:'edit', operations:[{
+    type:'insert_notice', target, title:'休診のお知らせ', body:'明日は休診です。', date:'2026-11-04'
+   }]}).html;
+  }, source);
+  await page.setContent(updated);
+  const list = page.locator('.scl_area');
+  assert.match(await list.locator('li').first().innerText(), /明日は休診です/);
+  assert.equal(await list.locator('dt').count(), 11);
+  const clipped = await list.evaluate(box => {
+   const section = document.querySelector('section').getBoundingClientRect();
+   const overSection = document.elementsFromPoint(section.left + 60, section.top + 5);
+   return !overSection.some(element => box.contains(element));
+  });
+  assert(clipped, 'Notices must not paint over the next section');
+  assert(await list.evaluate(box => {
+   box.scrollTop = box.scrollHeight;
+   return box.scrollTop > 0 && box.querySelector('li:last-child').getBoundingClientRect().bottom <= box.getBoundingClientRect().bottom + 1;
+  }), 'The final notice must be reachable by scrolling inside the list');
+ } finally {
+  await browser.close();
+ }
+}
+checkStaticScrollAreas().catch(error => { console.error(error); process.exit(1); });

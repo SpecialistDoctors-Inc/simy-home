@@ -38,7 +38,7 @@
     doc.addFileToVFS('ReportJP.ttf',font);doc.addFont('ReportJP.ttf','ReportJP','normal');doc.setFont('ReportJP','normal');
     if(bold){doc.addFileToVFS('ReportJP-Bold.ttf',bold);doc.addFont('ReportJP-Bold.ttf','ReportJP','bold');}
     doc.setProperties({title:'SIMY HP管理｜ホームページ診断レポート',author:'SIMY',subject:registration.clinicName||report.url});
-    const C={ink:[24,36,47],muted:[100,116,123],blue:[48,127,174],mint:[235,246,244],paper:[255,253,250],pale:[247,246,241],line:[223,223,216],red:[177,72,61]};
+    const C={ink:[24,36,47],muted:[100,116,123],blue:[48,127,174],mint:[255,255,255],paper:[255,255,255],pale:[255,255,255],line:[223,223,216],red:[177,72,61]};
     const left=17,width=176,bottom=268;let y=32,section='SUMMARY';
     const date=new Date(report.checkedAt).toLocaleDateString('ja-JP');
     const lines=(s,size,w)=>{doc.setFont('ReportJP',bold&&size>=11?'bold':'normal');doc.setFontSize(size);return doc.splitTextToSize(text(s),w);};
@@ -54,13 +54,14 @@
       for(let start=0;start<all.length;start+=limit){const chunk=all.slice(start,start+limit).join('\n'),label=title+(start?'（続き）':'');const h=height(label,12,width-12)+height(chunk,9,width-12)+(tag?8:0)+14;ensure(h+5);box(left,y,width,h);let top=y+8;if(tag){write(tag,left+6,top,8,width-12,C.red);top+=8;}top+=write(label,left+6,top,12,width-12)+3;write(chunk,left+6,top,9,width-12,C.muted);y+=h+5;}
     }
     function grid(items,compact=false){for(let i=0;i<items.length;i+=2){const pair=items.slice(i,i+2),w=85,titleSize=compact?11:13,bodySize=compact?8:9;const h=Math.max(...pair.map(a=>height(a[0],titleSize,w-12)+height(a[1],bodySize,w-12)+17+(a[2]?7:0)));ensure(h+5);pair.forEach((a,j)=>{const x=left+j*91;box(x,y,w,h,j===0?C.mint:C.paper);const used=write(a[0],x+6,y+9,titleSize,w-12,C.blue);write(a[1],x+6,y+12+used,bodySize,w-12,C.muted);if(a[2]&&/^https:\/\//.test(a[2])){write('公式発表を開く',x+6,y+h-4,7,w-12,C.blue);doc.link(x+6,y+h-7,w-12,5,{url:a[2]});}});y+=h+5;}}
-    function table(title,head,body,widths){if(!body.length)return;ensure(30);paragraph(title,12,C.ink);const columnStyles={};widths.forEach((w,i)=>columnStyles[i]={cellWidth:w});doc.autoTable({startY:y,margin:{left,right:17,top:34,bottom:30},head:[head],body,styles:{font:'ReportJP',fontStyle:'normal',fontSize:8,cellPadding:3,overflow:'linebreak',lineWidth:.15,lineColor:C.line,textColor:C.ink},headStyles:{fillColor:C.pale,textColor:C.muted,fontStyle:'normal'},alternateRowStyles:{fillColor:[250,250,247]},columnStyles,rowPageBreak:'avoid',didDrawPage(data){if(data.pageNumber>1){const saved=y;y=33;pageHeaderOnly();y=saved;}}});y=doc.lastAutoTable.finalY+7;}
+    function table(title,head,body,widths){if(!body.length)return;ensure(30);paragraph(title,12,C.ink);const columnStyles={};widths.forEach((w,i)=>columnStyles[i]={cellWidth:w});doc.autoTable({startY:y,margin:{left,right:17,top:34,bottom:30},head:[head],body,styles:{font:'ReportJP',fontStyle:'normal',fontSize:8,cellPadding:3,overflow:'linebreak',lineWidth:.15,lineColor:C.line,textColor:C.ink},headStyles:{fillColor:C.pale,textColor:C.muted,fontStyle:'normal'},alternateRowStyles:{fillColor:[255,255,255]},columnStyles,rowPageBreak:'avoid',didDrawPage(data){if(data.pageNumber>1){const saved=y;y=33;pageHeaderOnly();y=saved;}}});y=doc.lastAutoTable.finalY+7;}
     function pageHeaderOnly(){if(logo)doc.addImage(logo,'PNG',left,16,7,7);write('SIMY',logo?27:left,21.5,12,32);write('HP MANAGEMENT',44,21,6,50,C.muted);doc.setDrawColor(...C.line);doc.line(left,26,193,26);}
     const security=global.SimyServiceSecurity?.assess(report);
     const externalServices=security?global.SimyServiceSecurity.visibleServices(security):[];
     const notices=[...new Map((security?global.SimyServiceSecurity.visibleServices(security).flatMap(s=>global.SimyServiceSecurity.findingsFor(s,security)):[]).map(n=>[n.id||n.url,n])).values()];
     const componentNotices=[...new Map((security?(global.SimyServiceSecurity.componentServices?.(security)||[]).flatMap(s=>global.SimyServiceSecurity.findingsFor(s,security)):[]).map(n=>[n.id||n.url,n])).values()];
     const providerNotices=global.SimyServiceSecurity?.providerNotices(report)||report.providers?.notices||[];
+    const searchFindings=(report.findings||[]).filter(f=>/^(?:seo|sem|geo)-/.test(f.id));
     const findings=(report.findings||[]).filter(f=>f.state==='review'&&!/^(?:seo|sem|geo)-/.test(f.id));
     const flow=global.SimyInformationFlow?.model(report)||[];
     const sharing=(report.sharing?.items||[]).filter(x=>global.SimyInformationFlow?.sharingHasIssue(x));
@@ -102,6 +103,7 @@
     const mainFlow=flow.filter(g=>!g.kinds.every(k=>k==='link')||/予約|問診|診療|決済|ログイン/.test(g.categories.join(' '))||g.sharing.length);
     if(mainFlow.length){page('EXTERNAL CONNECTIONS');heading('04 / EXTERNAL CONNECTION MAP','ホームページが利用する外部サービス','接続先の記載と、患者情報の送信は別です。外部サービス内部の保存先・保存期間は、この診断では分かりません。');card('医院のホームページ → 閲覧者のブラウザー → 外部サービス','公開ページの表示・外部プログラムの読込・予約などの接続関係を整理しています。');
       const grouped=new Map();for(const g of mainFlow){const key=g.category;const item=grouped.get(key)||{domains:[],reason:global.SimyInformationFlow.managementCopy(g).reason};item.domains.push(g.domain);grouped.set(key,item);}grid([...grouped].map(([category,g])=>[category,[...new Set(g.domains)].join('\n')+'\n'+g.reason]),true);const summary=global.SimyInformationFlow.noProblemSummary?.(report);if(summary)paragraph(summary,10);}
+    if(searchFindings.length){page('SEARCH OBSERVATIONS');heading('SEARCH / PUBLIC PAGE CHECKS','検索・AI検索に関する確認結果','公開HTMLの記載を確認した結果です。検索順位、広告の成果、AI検索での紹介・引用を評価したものではありません。');table('確認できた項目と未確認の項目',['項目','確認結果','確認した内容'],searchFindings.map(f=>[f.title,f.state==='observed'?'記載を確認':f.state==='unknown'?'未確認':'確認が必要',[f.summary,f.evidence].filter(Boolean).join('\n')]),[46,28,102]);}
     if(findings.length||sharing.length){page('RECOMMENDATIONS');heading('05 / RECOMMENDATIONS','その他おすすめの改善点','診断で見つかった問題・見直しが必要な点だけを記載しています。');for(const f of findings)card(f.title,f.summary);table('共有資料の公開範囲',['資料','確認した内容'],sharing.map(x=>[global.SimyInformationFlow.sharingName(x),global.SimyInformationFlow.sharingCopy(x).reason]),[58,118]);}
     page('SEARCH VISIBILITY');heading('SEARCH & AI SEARCH','検索・AI検索への対応','公開ページで確認できる記載と、実際の検索成果を分けて整理しています。');
     const searchChecks=(report.findings||[]).filter(f=>/^(?:seo|sem|geo)-/.test(f.id));

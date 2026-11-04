@@ -12,7 +12,10 @@
   const doc=new DOMParser().parseFromString(html,'text/html');
   for(const a of doc.querySelectorAll('a,area')){a.removeAttribute('href');a.removeAttribute('target');a.setAttribute('aria-disabled','true');}
   for(const control of doc.querySelectorAll('button,input,select,textarea'))control.disabled=true;
-  const style=doc.createElement('style');style.textContent='a,area,button,input,select,textarea,[role=button]{pointer-events:none!important}.splide:not(.is-initialized){visibility:visible!important}.splide:not(.is-initialized) .splide__track{overflow-x:auto!important}.splide:not(.is-initialized) .splide__slide{flex:0 0 min(100%,360px)!important;min-width:0!important;white-space:normal!important}';doc.head.append(style);
+  const style=doc.createElement('style');style.textContent='a,area,button,input,select,textarea,[role=button]{pointer-events:none!important}.splide:not(.is-initialized){visibility:visible!important}.splide:not(.is-initialized) .splide__track{overflow-x:auto!important}.splide:not(.is-initialized) .splide__slide{flex:0 0 min(100%,360px)!important;min-width:0!important;white-space:normal!important}';
+  // The source page initializes PerfectScrollbar here. Static previews use native scrolling.
+  style.textContent += '.topi_blog .scl_area{overflow:auto!important}';
+  doc.head.append(style);
   return '<!doctype html>\n'+doc.documentElement.outerHTML;
  }
  function normalize(change){
@@ -73,9 +76,11 @@
   const newsCandidates=all.filter(isNews);
   // Prefer the existing article list over an outer section containing several categories.
   const collections=newsCandidates.filter(e=>!newsCandidates.some(n=>n!==e&&e.contains(n)&&['DL','UL','OL'].includes(n.tagName)));
-  const news=collections.filter(e=>!collections.some(n=>n!==e&&n.contains(e)&&[...n.children].filter(c=>datePattern.test(text(c))&&text(c).length<2500).length>=2));
+  const preferred=collections.filter(e=>!collections.some(n=>n!==e&&n.contains(e)&&[...n.children].filter(c=>datePattern.test(text(c))&&text(c).length<2500).length>=2));
+  // A template row that is itself a complete collection is not a second collection.
+  const news=preferred.filter(e=>!preferred.some(n=>n!==e&&noticeRow(e)===n));
   const out=[],seen=new Set();let size=0;
-  function add(e,kind){const id=e.getAttribute('data-simy-edit-id');if(seen.has(id)||out.length>=220)return;let t=kind==='image'?(e.getAttribute('alt')||'画像'):(e.tagName==='BODY'?'ページ全体':text(e));if(!t)return;t=t.slice(0,kind==='element'?120:kind==='text'?600:1800);let context=label(e);try{const live=liveDocument?.querySelector('[data-simy-edit-id="'+id+'"]');if(live){const css=liveDocument.defaultView.getComputedStyle(live);context+=' / 現在の文字サイズ:'+css.fontSize+'、文字色:'+css.color+'、背景:'+css.backgroundColor;}}catch{}const n={id,kind,tag:e.tagName.toLowerCase(),text:t,context:context.slice(0,300)};const len=JSON.stringify(n).length;if(size+len>35000)return;size+=len;seen.add(id);out.push(n);}
+  function add(e,kind){const id=e.getAttribute('data-simy-edit-id');if(seen.has(id)||out.length>=220)return;let t=kind==='image'?(e.getAttribute('alt')||'画像'):(e.tagName==='BODY'?'ページ全体':text(e));if(!t)return;t=t.slice(0,kind==='element'?120:kind==='text'?600:1800);let context=label(e);try{const live=liveDocument?.querySelector('[data-simy-edit-id="'+id+'"]');if(live){const css=liveDocument.defaultView.getComputedStyle(live);if(kind==='image'){const box=live.getBoundingClientRect();context='画像の表示サイズ:'+Math.round(box.width)+'×'+Math.round(box.height)+'px / ページ上端から:'+Math.round(box.top+liveDocument.defaultView.scrollY)+'px / '+context;}context+=' / 現在の文字サイズ:'+css.fontSize+'、文字色:'+css.color+'、背景:'+css.backgroundColor;}}catch{}const n={id,kind,tag:e.tagName.toLowerCase(),text:t,context:context.slice(0,300)};const len=JSON.stringify(n).length;if(size+len>35000)return;size+=len;seen.add(id);out.push(n);}
   add(doc.body,'element');
   // Keep notice targets before optional structure summaries spend the shared budget.
   news.forEach(e=>add(e,'news'));

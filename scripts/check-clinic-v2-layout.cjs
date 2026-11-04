@@ -7,7 +7,7 @@ const {chromium} = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
   const page=await browser.newPage();
   for (const [width,height] of [[1440,1000],[1024,1000],[768,1000],[390,844],[320,568],[844,390]]) {
    await page.setViewportSize({width,height});
-   await page.goto(process.env.CLINIC_URL || 'http://127.0.0.1:8899/hp-management/clinic-service-v2.html');
+   await page.goto(process.env.CLINIC_URL || 'http://127.0.0.1:8899/hp-management/clinic/index.html');
    await page.evaluate(()=>document.fonts.ready);
    const data=await page.evaluate(()=>{
     const box=e=>{const r=e.getBoundingClientRect();return {left:r.left,right:r.right,top:r.top,bottom:r.bottom,width:r.width,height:r.height}};
