@@ -61,7 +61,8 @@
     const notices=[...new Map((security?global.SimyServiceSecurity.visibleServices(security).flatMap(s=>global.SimyServiceSecurity.findingsFor(s,security)):[]).map(n=>[n.id||n.url,n])).values()];
     const componentNotices=[...new Map((security?(global.SimyServiceSecurity.componentServices?.(security)||[]).flatMap(s=>global.SimyServiceSecurity.findingsFor(s,security)):[]).map(n=>[n.id||n.url,n])).values()];
     const providerNotices=global.SimyServiceSecurity?.providerNotices(report)||report.providers?.notices||[];
-    const findings=(report.findings||[]).filter(f=>f.state==='review');
+    const searchFindings=(report.findings||[]).filter(f=>/^(?:seo|sem|geo)-/.test(f.id));
+    const findings=(report.findings||[]).filter(f=>f.state==='review'&&!/^(?:seo|sem|geo)-/.test(f.id));
     const flow=global.SimyInformationFlow?.model(report)||[];
     const sharing=(report.sharing?.items||[]).filter(x=>global.SimyInformationFlow?.sharingHasIssue(x));
     const components=versions.map(row=>({name:row[0],current:row[1],latest:row[2],assessment:row[3]}));
@@ -102,6 +103,7 @@
     const mainFlow=flow.filter(g=>!g.kinds.every(k=>k==='link')||/予約|問診|診療|決済|ログイン/.test(g.categories.join(' '))||g.sharing.length);
     if(mainFlow.length){page('EXTERNAL CONNECTIONS');heading('04 / EXTERNAL CONNECTION MAP','ホームページが利用する外部サービス','接続先の記載と、患者情報の送信は別です。外部サービス内部の保存先・保存期間は、この診断では分かりません。');card('医院のホームページ → 閲覧者のブラウザー → 外部サービス','公開ページの表示・外部プログラムの読込・予約などの接続関係を整理しています。');
       const grouped=new Map();for(const g of mainFlow){const key=g.category;const item=grouped.get(key)||{domains:[],reason:global.SimyInformationFlow.managementCopy(g).reason};item.domains.push(g.domain);grouped.set(key,item);}grid([...grouped].map(([category,g])=>[category,[...new Set(g.domains)].join('\n')+'\n'+g.reason]),true);const summary=global.SimyInformationFlow.noProblemSummary?.(report);if(summary)paragraph(summary,10);}
+    if(searchFindings.length){page('SEARCH OBSERVATIONS');heading('SEARCH / PUBLIC PAGE CHECKS','検索・AI検索に関する確認結果','公開HTMLの記載を確認した結果です。検索順位、広告の成果、AI検索での紹介・引用を評価したものではありません。');table('確認できた項目と未確認の項目',['項目','確認結果','確認した内容'],searchFindings.map(f=>[f.title,f.state==='observed'?'記載を確認':f.state==='unknown'?'未確認':'確認が必要',[f.summary,f.evidence].filter(Boolean).join('\n')]),[46,28,102]);}
     if(findings.length||sharing.length){page('RECOMMENDATIONS');heading('05 / RECOMMENDATIONS','その他おすすめの改善点','診断で見つかった問題・見直しが必要な点だけを記載しています。');for(const f of findings)card(f.title,f.summary);table('共有資料の公開範囲',['資料','確認した内容'],sharing.map(x=>[global.SimyInformationFlow.sharingName(x),global.SimyInformationFlow.sharingCopy(x).reason]),[58,118]);}
     paragraph('今回の確認は公開情報の範囲です。サーバー内部、データベース、ログイン後、電子カルテ・予約サービス内部、侵入や漏えいの有無は調査していません。',8);contact();
     page('MIGRATION');heading('DIAGNOSIS TO ACTION','今のホームページを、SIMYへ。','URLも、見慣れたデザインも。医院には情報の受け取りと内容の確認をお願いします。準備から公開までSIMYが進めます。');
