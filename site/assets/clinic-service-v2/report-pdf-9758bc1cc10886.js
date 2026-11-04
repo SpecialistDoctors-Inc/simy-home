@@ -107,11 +107,19 @@
     const growth=global.SimyClinicGrowth?.model(report);
     if(growth?.available){
       page('GROWTH REPORT');heading('GROWTH / CLINIC WEBSITE',growth.headline,growth.name+' / '+growth.intro);
+      if(growth.discovery){const d=growth.discovery;
+        grid([['AI回答への登場 '+d.ratio,'医院名を入力しない質問で確認'],['公式サイトへの誘導','公式URLへの到達・診療情報の一致は未検証']]);
+        table('01 / AI検索の実測結果',['患者さんの質問','医院の紹介','同じ回答に登場した医院'],d.questions.map(q=>[q.theme,q.status!=='observed'?'取得できず':q.mentioned?'紹介あり':'紹介なし',q.peers.join('、')||'—']),[65,25,86]);
+        if(d.different)card('公式サイトへの誘導は、要検証','取得した回答に、公式サイトと異なるドメインのリンクがありました。公式サイトへの到達と、診療情報の一致は未確認です。\n改善の方向：公式URLの表記を揃え、回答内リンクの到達先と診療情報を照合します。');
+        paragraph(d.provider+' / '+d.measuredLabel+' / 各質問'+d.repetitions+'回。医院名は入力せず。回答は条件・日時で変わります。',8);paragraph('取得記録：'+d.sourceUrl,7);
+        if(growth.contentAvailable){page('GROWTH / WEBSITE');heading('02 / WEBSITE','ホームページで、受診につながるか。',growth.contentSummary);}
+      }
+      if(growth.contentAvailable){
       table('本文から確認した数値',['項目','確認結果'],growth.metrics,[110,66]);
       for(const [i,item] of growth.priorities.entries())card(String(i+1).padStart(2,'0')+' / '+item.title,'現状：'+item.observation+'\n改善案：'+item.change);
       card('トップページの掲載案',growth.proposal.heading+'\n'+growth.proposal.description+'\n'+growth.proposal.button);
       table('初めての患者さんに必要な案内',['項目','公開本文で確認できたこと'],growth.questions.map(q=>[q.label,q.status+'\n'+q.answer]),[42,134]);
-      paragraph(growth.scope+' 掲載案は医院で内容をご確認ください。',8);
+      paragraph(growth.scope+' 掲載案は医院で内容をご確認ください。',8);}
     }
     paragraph('今回の確認は公開情報の範囲です。サーバー内部、データベース、ログイン後、電子カルテ・予約サービス内部、侵入や漏えいの有無は調査していません。',8);contact();
     page('MIGRATION');heading('DIAGNOSIS TO ACTION','今のホームページを、SIMYへ。','URLも、見慣れたデザインも。医院には情報の受け取りと内容の確認をお願いします。準備から公開までSIMYが進めます。');
