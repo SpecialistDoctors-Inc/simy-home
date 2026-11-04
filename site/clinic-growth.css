@@ -20,3 +20,6 @@ body:has(.growth-report) .report-download-dock{left:auto;right:20px;width:auto;m
 body:has(.growth-report) .report-download-dock .report-save-hint{display:none}
 body:has(.growth-report) .report-download-dock .button{min-height:44px;font-size:14px;padding:10px 20px}
 @media(max-width:600px){.growth-metrics>div{padding:14px 9px}.growth-metrics strong{font-size:22px}.growth-metrics span{font-size:11px}.growth-questions article{grid-template-columns:1fr auto;gap:6px 12px}.growth-report .growth-questions p{grid-column:1/-1;grid-row:2}.growth-questions article>span{grid-column:2;max-width:120px}.growth-strengths{gap:6px}body:has(.growth-report) .report-download-dock{right:12px}#diagnosis-results .growth-report{border-radius:10px}}
+
+/* Share internal rows so multi-line findings never stagger the comparison rules. */
+@supports(grid-template-rows:subgrid){.growth-priority{display:grid;grid-row:span 4;grid-template-rows:subgrid;row-gap:0}.growth-change{margin-top:0}}
