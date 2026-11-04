@@ -37,11 +37,22 @@ test('PDF lists current and unknown components plus all external services, with 
  const providers=tables.find(t=>t.head[0][0]==='項目');assert.equal(providers.body[0][1],'未特定');
 });
 test('PDF preserves observed and unmeasured search findings without counting them as security issues',()=>{
- for(const file of ['site/diagnosis-pdf.js','site/assets/clinic-service-v2/report-pdf-9758bc1cc10886.js']){
+ for(const file of ['site/diagnosis-pdf.js']){
   const local={URL};vm.runInNewContext(fs.readFileSync(file,'utf8'),local);const texts=[],tables=[];
   class Capture extends jsPDF{constructor(o){super(o);const text=this.text,table=this.autoTable;this.text=function(s,...a){texts.push(Array.isArray(s)?s.join('\n'):s);return text.call(this,s,...a);};this.autoTable=function(o){tables.push(o);return table.call(this,o);};}}
   const findings=[{id:'seo-title',title:'検索結果の見出し',state:'observed',summary:'記載あり',evidence:'地域のクリニック'},{id:'seo-canonical',title:'正規URL',state:'review',summary:'記載なし',evidence:'canonical未検出'},{id:'sem-performance',title:'検索広告の成果',state:'unknown',summary:'広告アカウント未接続'},{id:'geo-visibility',title:'AI検索での引用',state:'unknown',summary:'引用観測未実施'}];
   local.SimyReportPdf.create({report:{url:'https://clinic.example/',checkedAt:'2026-11-04T00:00:00Z',findings},versions:[]},font,Capture);
   const search=tables.find(t=>t.head[0][0]==='項目'&&t.head[0][1]==='確認結果');assert(search,file);assert.equal(search.body.length,4);assert.equal(search.body[0][1],'記載を確認');assert.equal(search.body[2][1],'未確認');assert.equal(search.body[3][1],'未確認');assert(texts.join('\n').includes('0件 / その他の改善点'));assert(!texts.join('\n').includes('05 / RECOMMENDATIONS'));
  }
+});
+
+test('clinic PDF uses the same factual growth summary as the screen and omits unmeasured advertisements',()=>{
+ const local={URL};vm.runInNewContext(fs.readFileSync('site/clinic-growth.js','utf8'),local);
+ vm.runInNewContext(fs.readFileSync('site/assets/clinic-service-v2/report-pdf-9758bc1cc10886.js','utf8'),local);
+ const texts=[],tables=[];
+ class Capture extends jsPDF{constructor(o){super(o);const text=this.text,table=this.autoTable;this.text=function(s,...a){texts.push(Array.isArray(s)?s.join('\n'):s);return text.call(this,s,...a);};this.autoTable=function(o){tables.push(o);return table.call(this,o);};}}
+ const report={url:'https://clinic.example/',checkedAt:'2026-11-04T00:00:00Z',findings:[{id:'seo-title',state:'observed',evidence:'テスト医院｜港区の小児科'},{id:'seo-description',state:'observed',evidence:'港区の小児科です。神谷町駅徒歩3分。小児科専門医が診療。'},{id:'sem-performance',state:'unknown',evidence:'未測定'}]};
+ local.SimyReportPdf.create({report,versions:[]},font,Capture);
+ const metrics=tables.find(t=>t.head[0][0]==='項目'&&t.head[0][1]==='今回の確認結果');assert(metrics);assert.equal(metrics.body[0][1],'3 / 5');assert(texts.join(' ').includes('集客レポート'));assert(!texts.join(' ').includes('検索広告の成果'));
+ const m=local.SimyClinicGrowth.model(report);assert(m.questions[1].answer.includes('徒歩3分'));assert(m.proposal.description.includes('専門医'));assert(!m.proposal.description.includes('費用'));
 });

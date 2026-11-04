@@ -103,12 +103,18 @@
     const mainFlow=flow.filter(g=>!g.kinds.every(k=>k==='link')||/予約|問診|診療|決済|ログイン/.test(g.categories.join(' '))||g.sharing.length);
     if(mainFlow.length){page('EXTERNAL CONNECTIONS');heading('04 / EXTERNAL CONNECTION MAP','ホームページが利用する外部サービス','接続先の記載と、患者情報の送信は別です。外部サービス内部の保存先・保存期間は、この診断では分かりません。');card('医院のホームページ → 閲覧者のブラウザー → 外部サービス','公開ページの表示・外部プログラムの読込・予約などの接続関係を整理しています。');
       const grouped=new Map();for(const g of mainFlow){const key=g.category;const item=grouped.get(key)||{domains:[],reason:global.SimyInformationFlow.managementCopy(g).reason};item.domains.push(g.domain);grouped.set(key,item);}grid([...grouped].map(([category,g])=>[category,[...new Set(g.domains)].join('\n')+'\n'+g.reason]),true);const summary=global.SimyInformationFlow.noProblemSummary?.(report);if(summary)paragraph(summary,10);}
-    if(searchFindings.length){page('SEARCH OBSERVATIONS');heading('SEARCH / PUBLIC PAGE CHECKS','検索・AI検索に関する確認結果','公開HTMLの記載を確認した結果です。検索順位、広告の成果、AI検索での紹介・引用を評価したものではありません。');table('確認できた項目と未確認の項目',['項目','確認結果','確認した内容'],searchFindings.map(f=>[f.title,f.state==='observed'?'記載を確認':f.state==='unknown'?'未確認':'確認が必要',[f.summary,f.evidence].filter(Boolean).join('\n')]),[46,28,102]);}
     if(findings.length||sharing.length){page('RECOMMENDATIONS');heading('05 / RECOMMENDATIONS','その他おすすめの改善点','診断で見つかった問題・見直しが必要な点だけを記載しています。');for(const f of findings)card(f.title,f.summary);table('共有資料の公開範囲',['資料','確認した内容'],sharing.map(x=>[global.SimyInformationFlow.sharingName(x),global.SimyInformationFlow.sharingCopy(x).reason]),[58,118]);}
-    page('SEARCH VISIBILITY');heading('SEARCH & AI SEARCH','検索・AI検索への対応','公開ページで確認できる記載と、実際の検索成果を分けて整理しています。');
-    const searchChecks=(report.findings||[]).filter(f=>/^(?:seo|sem|geo)-/.test(f.id));
-    if(searchChecks.length){for(const f of searchChecks)card(f.title,(f.state==='unknown'?'未確認：':f.state==='observed'?'記載を確認：':'確認が必要：')+f.summary+'\n'+(f.evidence||''));}
-    else paragraph('SEO（検索対策）・SEM（検索広告）・GEO（AI検索対策）は、この診断では未確認です。検索順位・広告成果・AI検索での紹介や引用は評価していません。',10);
+    const growth=global.SimyClinicGrowth?.model(report);
+    if(growth?.available){
+      page('GROWTH REPORT');heading('GROWTH / CLINIC WEBSITE',growth.name+'の集客レポート',growth.scope);
+      card('公開ページから伝わっていること',growth.intro);
+      table('確認できた数値',['項目','今回の確認結果'],growth.metrics,[110,66]);
+      table('患者さんの疑問と回答材料',['患者さんの疑問','確認結果'],growth.questions.map(q=>[q.question,q.status+'\n'+(q.answer||'見出し・説明文では回答を読み取れませんでした。')]),[70,106]);
+      paragraph('「本文を確認」の項目は、下層ページに案内があるかを確認する候補です。',8);
+      for(const item of growth.priorities)card(item.title,item.detail);
+      table('トップページの改善案',['取得した主見出し','改善案'],[[growth.before,[growth.proposal.heading,growth.proposal.description,growth.proposal.button].filter(Boolean).join('\n')]],[88,88]);
+      paragraph('すでに検索向けに記載された情報をページ冒頭にも活かす案です。医院の確認後に反映します。',8);
+    }
     paragraph('今回の確認は公開情報の範囲です。サーバー内部、データベース、ログイン後、電子カルテ・予約サービス内部、侵入や漏えいの有無は調査していません。',8);contact();
     page('MIGRATION');heading('DIAGNOSIS TO ACTION','今のホームページを、SIMYへ。','URLも、見慣れたデザインも。医院には情報の受け取りと内容の確認をお願いします。準備から公開までSIMYが進めます。');
     card('01 / 今の管理会社から、移管情報を受け取ります。','HTML・画像・管理情報を受け取ります。ドメイン登録会社の移管が必要なら「AuthCode（オースコード）」も依頼します。必要な依頼内容はSIMYがご案内します。');

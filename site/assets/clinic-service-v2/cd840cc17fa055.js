@@ -246,19 +246,26 @@ function groupLibraryFindings(libraries) {
 
 function isSearchFinding(f){return /^(?:seo|sem|geo)-/.test(f.id);}
 function renderSearchChecks(report){
-  const section=element('section','','report-search-checks');
-  section.append(element('h3','検索・AI検索で見つけてもらうための確認'));
-  const checks=report.findings.filter(isSearchFinding);
-  if(!checks.length){
-    section.append(element('p','SEO（検索対策）・SEM（検索広告）・GEO（AI検索対策）は、この診断では未確認です。','report-boundary'));
-    section.append(element('p','検索順位、広告の成果、AI検索での紹介・引用は評価していません。'));
-  }else{
-    for(const f of checks){
-      const item=element('article','','live-finding');
-      item.append(element('h4',f.title),element('strong',f.state==='unknown'?'未確認':f.state==='observed'?'記載を確認':'確認が必要'),element('p',f.summary),element('small',f.evidence||''));section.append(item);
-    }
-    section.append(element('p','取得した公開ページの範囲で確認しています。記載の有無から、検索順位やAI検索での引用は判定できません。','report-boundary'));
-  }
+  const growth=window.SimyClinicGrowth.model(report);
+  const section=element('section','','report-search-checks growth-report');
+  section.append(element('p','集客レポート','growth-kicker'),element('h3',growth.name+'を、初めて知る患者さんへ。'));
+  if(!growth.available){section.append(element('p','今回の取得結果には、集客レポートの作成に必要なページ情報が含まれていません。'));results.append(section);return;}
+  section.append(element('h4','公開ページから伝わっていること'),element('p',growth.intro));
+  const strengths=element('div','','growth-strengths');
+  for(const item of growth.strengths){const card=element('article','');card.append(element('h4',item.title),element('p',item.detail));strengths.append(card);}
+  section.append(strengths);
+  const metrics=element('div','','growth-metrics');
+  for(const [label,value] of growth.metrics){const box=element('div','');box.append(element('strong',value),element('span',label));metrics.append(box);}
+  section.append(metrics,element('p','以下は検索向けの見出し・説明文での確認です。「本文を確認」の項目は、下層ページに案内があるかを確認する候補です。','growth-scope'));
+  const list=element('div','','growth-questions');
+  for(const q of growth.questions){const row=element('article','');row.append(element('h4',q.question),element('strong',q.status),element('p',q.answer||'見出し・説明文だけでは回答を読み取れませんでした。'));list.append(row);}
+  section.append(element('h4','患者さんの疑問に、どこまで答えていますか'),list,element('h4','優先して整えたいこと'));
+  for(const [i,item] of growth.priorities.entries()){const card=element('article','','growth-priority');card.append(element('span',String(i+1).padStart(2,'0')),element('h4',item.title),element('p',item.detail));section.append(card);}
+  section.append(element('h4','トップページの改善案'));
+  const compare=element('div','','growth-compare'),before=element('article',''),after=element('article','');
+  before.append(element('span','取得した主見出し'),element('p',growth.before));
+  after.append(element('span','改善案'),element('h4',growth.proposal.heading),element('p',growth.proposal.description||'診療内容と受診方法を、確認できた情報から追記します。'),element('strong',growth.proposal.button));
+  compare.append(before,after);section.append(compare,element('p','診療内容・場所・専門性のうち、すでに検索向けに記載された情報を、ページ冒頭にも活かす案です。医院の確認後に反映します。','growth-scope'));
   results.append(section);
 }
 
@@ -448,6 +455,6 @@ if(inlineDiagnosisForm){inlineDiagnosisForm.addEventListener('submit',runDiagnos
 
 let reportPdfLoader;
 function loadReportPdf(){
-  if(!reportPdfLoader)reportPdfLoader=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='/assets/clinic-service-v2/report-pdf-9758bc1cc10886.js?v=ca844ea99743';script.onload=resolve;script.onerror=()=>{script.remove();reportPdfLoader=null;reject(Error('PDF機能の読込に失敗しました'));};document.head.append(script);});
+  if(!reportPdfLoader)reportPdfLoader=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='/assets/clinic-service-v2/report-pdf-9758bc1cc10886.js?v=ba8c93cf89d9';script.onload=resolve;script.onerror=()=>{script.remove();reportPdfLoader=null;reject(Error('PDF機能の読込に失敗しました'));};document.head.append(script);});
   return reportPdfLoader;
 }
