@@ -42,7 +42,7 @@ await browser.close();})().catch(e=>{console.error(e);process.exit(1)});
 
 async function checkStaticScrollAreas() {
  const fs = require('node:fs');
- const pageHtml = fs.readFileSync('site/hp-management/clinic-service-v2.html', 'utf8');
+ const pageHtml = fs.readFileSync('site/hp-management/clinic/index.html', 'utf8');
  const scripts = [...pageHtml.matchAll(/<script src="(\/assets\/clinic-service-v2\/[a-f0-9]+\.js)"/g)];
  const editorPath = scripts.map(match => path.resolve('site' + match[1]))
   .find(file => fs.readFileSync(file, 'utf8').includes('global.SimyPreviewEdit='));
