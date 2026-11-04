@@ -14,7 +14,20 @@
 - 医院名・site ID・Sheet ID/URL・医院Googleアカウント・dev/公開URLを記入済みの「利用開始メッセージ」
 - 本番公開を伴わない練習の内容と、保存・開発側受付・確認ページ・メール受信を一緒に確かめる時間
 
-受付スキルの導入元は `examples/hp-management/skills/hp-customer-intake`、検証済み固定refは `fc4355a5d74b32488d7c10ece465df38ed8d70e0` です。既存の同名スキルを無断で上書きせず、導入後に新規チャットで認識を確認します。医院にコミットSHAを選ばせたり、インストールコマンドの入力を求めたりしません。Googleログインと接続への同意は医院の担当者自身が行います。
+利用者向け受付スキルの配布元は、専用の公開リポジトリ [SpecialistDoctors-Inc/simy-hp-skills](https://github.com/SpecialistDoctors-Inc/simy-hp-skills) の `skills/hp-customer-intake`、固定refは `0d41c574fe9c45f8ef1f2e638cf4fd39b9fa3fe5` です。`simy-home` の閲覧権限は導入に不要です。開発側スキルは引き続き本リポジトリで管理します。既存の同名スキルを無断で上書きせず、導入後に新規チャットで認識を確認します。医院にコミットSHAを選ばせたり、インストールコマンドの入力を求めたりしません。Googleログインと接続への同意は医院の担当者自身が行います。
+
+まっさらなCodexには、利用開始メッセージより先に次を渡します。名前を入力するだけでは、未導入のスキルを利用できません。
+
+```text
+次のHP更新受付スキルを、同梱のreferencesも含めて導入してください。
+https://github.com/SpecialistDoctors-Inc/simy-hp-skills/tree/0d41c574fe9c45f8ef1f2e638cf4fd39b9fa3fe5/skills/hp-customer-intake
+公式のskill-installerが利用できれば、それを使ってください。
+既に同名スキルがある場合は上書きせず、取得元と内容を確認してください。
+導入後、新しいチャットでhp-customer-intakeが認識されることを確認してください。
+今回は導入だけで、依頼登録・サイト変更・メール送信は行いません。
+```
+
+導入案内だけなら、上の公開リポジトリのREADMEを渡せます。医院ごとのGoogleアカウント・受付表・通知先は公開リポジトリへ保存せず、次の記入済みメッセージで個別に案内します。
 
 「利用開始メッセージ」は、次を**運用担当がすべて記入した上で**非公開の連絡手段で渡します。医院側のスキルが受け取れる明示的なサイト設定であり、権限の新規付与を意味しません。
 
