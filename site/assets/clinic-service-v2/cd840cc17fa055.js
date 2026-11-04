@@ -251,10 +251,21 @@ function renderSearchChecks(report){
   section.append(element('p','集客診断 · '+growth.name,'growth-kicker'));
   if(!growth.available){section.append(element('h3','集客分析は、まだ完了していません。'),element('p',growth.scope,'growth-scope'));results.append(section);return;}
   section.append(element('h3',growth.headline),element('p',growth.intro,'growth-lead'));
+  if(growth.discovery){const d=growth.discovery;const discovery=element('section','','growth-discovery');
+   discovery.append(element('p','01 / AI検索で見つかるか','growth-step'),element('h4','医院名なしで、紹介されるかを実測。','growth-section-title'));
+   const score=element('div','','growth-discovery-score');score.append(element('strong',d.ratio),element('span','回答に医院名が登場'));discovery.append(score);
+   const table=element('table','','growth-discovery-table');const head=element('thead','');const hr=element('tr','');for(const label of ['患者さんの質問','医院の紹介','同じ回答に登場した医院'])hr.append(element('th',label));head.append(hr);const body=element('tbody','');
+   for(const q of d.questions){const row=element('tr','');row.append(element('th',q.theme),element('td',q.status!=='observed'?'取得できず':q.mentioned?'紹介あり':'紹介なし'),element('td',q.peers.join('、')||'—'));row.querySelector('th').scope='row';row.querySelector('th').title=q.query;body.append(row);}for(const th of head.querySelectorAll('th'))th.scope='col';table.append(head,body);discovery.append(table);
+   const caveat=element('div','','growth-citation-alert');caveat.append(element('strong',d.different?'公式サイトへの誘導は、要検証。':'公式サイトへの引用は、未確認。'),element('p',d.different?'取得した回答に、公式サイトと異なるドメインのリンクがありました。公式サイトへの到達と、診療情報の一致は未確認です。':'回答中の医院名を確認しました。引用リンクの到達先は確認していません。'));if(d.different)caveat.append(element('p','改善の方向：公式URLの表記を揃え、回答内リンクの到達先と診療情報を照合します。','growth-discovery-action'));discovery.append(caveat);
+   const condition=element('p','別途実測：'+d.provider+' · '+d.measuredLabel+' · 各質問'+d.repetitions+'回 · 医院名は入力せず。回答は条件・日時で変わります。','growth-scope');const link=element('a','取得記録 ↗');link.href=d.sourceUrl;link.target='_blank';link.rel='noopener';condition.append(' ',link);discovery.append(condition);section.append(discovery);
+  }
+  if(!growth.contentAvailable){section.append(element('p',growth.scope,'growth-scope'));results.append(section);return;}
+  section.append(element('p',(growth.discovery?'02':'01')+' / ホームページで受診につながるか','growth-step'));
+  if(growth.discovery)section.append(element('p',growth.contentSummary,'growth-lead'));
   const metrics=element('div','','growth-metrics');
   for(const [label,value] of growth.metrics){const box=element('div','');box.append(element('strong',value),element('span',label));metrics.append(box);}
   section.append(metrics);
-  if(growth.priorities.length){section.append(element('h4','まず、ここを変える。','growth-section-title'));const priorities=element('div','','growth-priorities');
+  if(growth.priorities.length){section.append(element('h4','優先して変えたいこと','growth-section-title'));const priorities=element('div','','growth-priorities');priorities.dataset.count=growth.priorities.length;
    for(const [i,item] of growth.priorities.entries()){const card=element('article','','growth-priority');card.append(element('span',String(i+1).padStart(2,'0'),'growth-number'),element('h4',item.title),element('p',item.observation,'growth-observation'));const change=element('div','','growth-change');change.append(element('span','改善案'),element('p',item.change));card.append(change);priorities.append(card);}section.append(priorities);}
   section.append(element('h4','この医院なら、こう伝える。','growth-section-title'));
   const proposal=element('article','','growth-proposal');proposal.append(element('p','トップページの掲載案','growth-proposal-label'),element('h4',growth.proposal.heading),element('p',growth.proposal.description),element('span',growth.proposal.button+' →','growth-example-button'));section.append(proposal);
@@ -266,6 +277,7 @@ function renderSearchChecks(report){
 }
 
 function renderReport(report) {
+  window.SimyClinicGrowth.attach(report);
   if (!Array.isArray(report.findings) || !Array.isArray(report.technologies) || !Array.isArray(report.scripts?.libraries)) throw Error('結果の形式を確認できませんでした。時間をおいて再度お試しください。');
   const technologies = report.technologies.filter(t => t.status === 'review');
   const libraries = groupLibraryFindings(report.scripts.libraries);
@@ -451,6 +463,6 @@ if(inlineDiagnosisForm){inlineDiagnosisForm.addEventListener('submit',runDiagnos
 
 let reportPdfLoader;
 function loadReportPdf(){
-  if(!reportPdfLoader)reportPdfLoader=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='/assets/clinic-service-v2/report-pdf-9758bc1cc10886.js?v=bafe58041747';script.onload=resolve;script.onerror=()=>{script.remove();reportPdfLoader=null;reject(Error('PDF機能の読込に失敗しました'));};document.head.append(script);});
+  if(!reportPdfLoader)reportPdfLoader=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='/assets/clinic-service-v2/report-pdf-9758bc1cc10886.js?v=b5d14c971966';script.onload=resolve;script.onerror=()=>{script.remove();reportPdfLoader=null;reject(Error('PDF機能の読込に失敗しました'));};document.head.append(script);});
   return reportPdfLoader;
 }

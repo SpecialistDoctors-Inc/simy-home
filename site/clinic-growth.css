@@ -23,3 +23,25 @@ body:has(.growth-report) .report-download-dock .button{min-height:44px;font-size
 
 /* Share internal rows so multi-line findings never stagger the comparison rules. */
 @supports(grid-template-rows:subgrid){.growth-priority{display:grid;grid-row:span 4;grid-template-rows:subgrid;row-gap:0}.growth-change{margin-top:0}}
+
+/* Observation, interpretation, and suggested copy are three distinct reading levels. */
+.growth-report .growth-step{font-size:12px!important;font-weight:700;color:#286a92;letter-spacing:.06em;margin:30px 0 8px!important}
+.growth-discovery{margin:24px 0 30px;padding:24px;background:#f7fafc;border:1px solid #dce5ec;border-radius:8px}
+.growth-report .growth-discovery .growth-step{margin:0!important}.growth-report .growth-discovery .growth-section-title{margin:8px 0 12px}
+.growth-discovery-score{display:flex;align-items:baseline;gap:16px;margin:16px 0 20px}.growth-discovery-score strong{font-size:40px;font-weight:750;color:#1b609e;line-height:1.2}.growth-discovery-score span{font-size:14px;font-weight:600;color:#385764}
+.growth-discovery-table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:14px;text-align:left}.growth-discovery-table th,.growth-discovery-table td{padding:12px 10px!important;border-bottom:1px solid #dce5ec;vertical-align:top;line-height:1.65}.growth-discovery-table th:first-child{width:39%}.growth-discovery-table th:nth-child(2){width:18%}.growth-discovery-table thead{font-size:12px;color:#526773}.growth-discovery-table tbody th{font-weight:600}.growth-discovery-table tbody td:nth-child(2){color:#247465;font-weight:700}
+.growth-citation-alert{padding:16px 18px;border-left:3px solid #b87823;background:#fff9ef;margin-top:20px}.growth-citation-alert strong{font-size:17px;color:#805012}.growth-report .growth-citation-alert p{font-size:14px;margin-top:6px}.growth-discovery .growth-scope a{color:#476573;text-underline-offset:3px}
+@media(max-width:600px){.growth-discovery{padding:16px;margin-inline:-4px}.growth-discovery-score{gap:10px}.growth-discovery-score strong{font-size:34px}.growth-discovery-table{font-size:12px}.growth-discovery-table th,.growth-discovery-table td{padding:10px 5px!important}.growth-discovery-table th:first-child{width:40%}.growth-discovery-table th:nth-child(2){width:20%}.growth-report .growth-citation-alert p{font-size:13px}}
+
+@media(min-width:800px){.growth-priorities[data-count="4"]{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+@media(max-width:600px){
+ .growth-discovery-table,.growth-discovery-table tbody{display:block}
+ .growth-discovery-table thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+ .growth-discovery-table tbody tr{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;padding:12px 0;border-bottom:1px solid #dce5ec}
+ .growth-discovery-table tbody th,.growth-discovery-table tbody td{display:block;width:auto!important;border:0;padding:0!important;font-size:14px}
+ .growth-discovery-table tbody td:last-child{grid-column:1/-1;font-size:13px;color:#526773}
+ .growth-discovery-table tbody td:last-child::before{content:'同じ回答に登場：';color:#6c7e88}
+}
+
+.growth-discovery-table th,.growth-discovery-table td{text-align:left!important}
