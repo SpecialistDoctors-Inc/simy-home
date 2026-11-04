@@ -6,7 +6,7 @@ const asset=path.resolve(__dirname,'../site/assets/clinic-service-v2/cd840cc17fa
 await p.route('**/33a5d8e6590c1d.js',r=>r.fulfill({contentType:'text/javascript',body:fs.readFileSync(asset,'utf8')}));
 await p.route('**/api/report-registration',r=>r.fulfill({status:202,json:{status:'registered',receiptId:r.request().postDataJSON().id}}));
 for(const width of [1440,390]){await p.setViewportSize({width,height:1000});for(const measured of [false,true]){
- await p.goto(process.env.CLINIC_URL||'http://127.0.0.1:18972/hp-management/clinic-service-v2.html');
+ await p.goto(process.env.CLINIC_URL||'http://127.0.0.1:18972/hp-management/clinic/index.html');
  const report={url:'https://example.com/',checkedAt:new Date().toISOString(),completion:'partial',completionReason:'追加取得は未完了',technologies:[],scripts:{libraries:[],resources:[]},findings:measured?[{id:'seo-title',title:'SEO / 検索結果の見出し',state:'observed',summary:'記載を確認しました。',evidence:'テスト医院',fix:'',reference:''},{id:'sem-performance',title:'SEM / 検索広告の成果',state:'unknown',summary:'広告データは未確認です。',evidence:'管理画面未接続',fix:'',reference:''}]:[]};
  await p.evaluate(r=>{renderReport(r);document.querySelector('#diagnosis-state').hidden=false},report);
  await p.locator('#report-email-address').fill('test@example.com');await p.locator('#report-clinic-name').fill('架空医院');await p.locator('#report-contact-name').fill('テスト');await p.locator('.report-email-consent input').check();await p.locator('.report-email-form button').click();await p.locator('.report-unlocked').waitFor();
