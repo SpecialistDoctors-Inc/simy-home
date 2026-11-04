@@ -106,14 +106,12 @@
     if(findings.length||sharing.length){page('RECOMMENDATIONS');heading('05 / RECOMMENDATIONS','その他おすすめの改善点','診断で見つかった問題・見直しが必要な点だけを記載しています。');for(const f of findings)card(f.title,f.summary);table('共有資料の公開範囲',['資料','確認した内容'],sharing.map(x=>[global.SimyInformationFlow.sharingName(x),global.SimyInformationFlow.sharingCopy(x).reason]),[58,118]);}
     const growth=global.SimyClinicGrowth?.model(report);
     if(growth?.available){
-      page('GROWTH REPORT');heading('GROWTH / CLINIC WEBSITE',growth.name+'の集客レポート',growth.scope);
-      card('公開ページから伝わっていること',growth.intro);
-      table('確認できた数値',['項目','今回の確認結果'],growth.metrics,[110,66]);
-      table('患者さんの疑問と回答材料',['患者さんの疑問','確認結果'],growth.questions.map(q=>[q.question,q.status+'\n'+(q.answer||'見出し・説明文では回答を読み取れませんでした。')]),[70,106]);
-      paragraph('「本文を確認」の項目は、下層ページに案内があるかを確認する候補です。',8);
-      for(const item of growth.priorities)card(item.title,item.detail);
-      table('トップページの改善案',['取得した主見出し','改善案'],[[growth.before,[growth.proposal.heading,growth.proposal.description,growth.proposal.button].filter(Boolean).join('\n')]],[88,88]);
-      paragraph('すでに検索向けに記載された情報をページ冒頭にも活かす案です。医院の確認後に反映します。',8);
+      page('GROWTH REPORT');heading('GROWTH / CLINIC WEBSITE',growth.headline,growth.name+' / '+growth.intro);
+      table('本文から確認した数値',['項目','確認結果'],growth.metrics,[110,66]);
+      for(const [i,item] of growth.priorities.entries())card(String(i+1).padStart(2,'0')+' / '+item.title,'現状：'+item.observation+'\n改善案：'+item.change);
+      card('トップページの掲載案',growth.proposal.heading+'\n'+growth.proposal.description+'\n'+growth.proposal.button);
+      table('初めての患者さんに必要な案内',['項目','公開本文で確認できたこと'],growth.questions.map(q=>[q.label,q.status+'\n'+q.answer]),[42,134]);
+      paragraph(growth.scope+' 掲載案は医院で内容をご確認ください。',8);
     }
     paragraph('今回の確認は公開情報の範囲です。サーバー内部、データベース、ログイン後、電子カルテ・予約サービス内部、侵入や漏えいの有無は調査していません。',8);contact();
     page('MIGRATION');heading('DIAGNOSIS TO ACTION','今のホームページを、SIMYへ。','URLも、見慣れたデザインも。医院には情報の受け取りと内容の確認をお願いします。準備から公開までSIMYが進めます。');

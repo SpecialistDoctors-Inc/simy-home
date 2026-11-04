@@ -248,25 +248,21 @@ function isSearchFinding(f){return /^(?:seo|sem|geo)-/.test(f.id);}
 function renderSearchChecks(report){
   const growth=window.SimyClinicGrowth.model(report);
   const section=element('section','','report-search-checks growth-report');
-  section.append(element('p','集客レポート','growth-kicker'),element('h3',growth.name+'を、初めて知る患者さんへ。'));
-  if(!growth.available){section.append(element('p','今回の取得結果には、集客レポートの作成に必要なページ情報が含まれていません。'));results.append(section);return;}
-  section.append(element('h4','公開ページから伝わっていること'),element('p',growth.intro));
-  const strengths=element('div','','growth-strengths');
-  for(const item of growth.strengths){const card=element('article','');card.append(element('h4',item.title),element('p',item.detail));strengths.append(card);}
-  section.append(strengths);
+  section.append(element('p','集客診断 · '+growth.name,'growth-kicker'));
+  if(!growth.available){section.append(element('h3','集客分析は、まだ完了していません。'),element('p',growth.scope,'growth-scope'));results.append(section);return;}
+  section.append(element('h3',growth.headline),element('p',growth.intro,'growth-lead'));
   const metrics=element('div','','growth-metrics');
   for(const [label,value] of growth.metrics){const box=element('div','');box.append(element('strong',value),element('span',label));metrics.append(box);}
-  section.append(metrics,element('p','以下は検索向けの見出し・説明文での確認です。「本文を確認」の項目は、下層ページに案内があるかを確認する候補です。','growth-scope'));
+  section.append(metrics);
+  if(growth.priorities.length){section.append(element('h4','まず、ここを変える。','growth-section-title'));const priorities=element('div','','growth-priorities');
+   for(const [i,item] of growth.priorities.entries()){const card=element('article','','growth-priority');card.append(element('span',String(i+1).padStart(2,'0'),'growth-number'),element('h4',item.title),element('p',item.observation,'growth-observation'));const change=element('div','','growth-change');change.append(element('span','改善案'),element('p',item.change));card.append(change);priorities.append(card);}section.append(priorities);}
+  section.append(element('h4','この医院なら、こう伝える。','growth-section-title'));
+  const proposal=element('article','','growth-proposal');proposal.append(element('p','トップページの掲載案','growth-proposal-label'),element('h4',growth.proposal.heading),element('p',growth.proposal.description),element('span',growth.proposal.button+' →','growth-example-button'));section.append(proposal);
+  if(growth.strengths.length){const strengths=element('div','','growth-strengths');strengths.append(element('span','活かしたい医院の特徴'));for(const item of growth.strengths)strengths.append(element('strong',item.label));section.append(strengths);}
+  section.append(element('h4','初めての患者さんに必要な案内','growth-section-title'));
   const list=element('div','','growth-questions');
-  for(const q of growth.questions){const row=element('article','');row.append(element('h4',q.question),element('strong',q.status),element('p',q.answer||'見出し・説明文だけでは回答を読み取れませんでした。'));list.append(row);}
-  section.append(element('h4','患者さんの疑問に、どこまで答えていますか'),list,element('h4','優先して整えたいこと'));
-  for(const [i,item] of growth.priorities.entries()){const card=element('article','','growth-priority');card.append(element('span',String(i+1).padStart(2,'0')),element('h4',item.title),element('p',item.detail));section.append(card);}
-  section.append(element('h4','トップページの改善案'));
-  const compare=element('div','','growth-compare'),before=element('article',''),after=element('article','');
-  before.append(element('span','取得した主見出し'),element('p',growth.before));
-  after.append(element('span','改善案'),element('h4',growth.proposal.heading),element('p',growth.proposal.description||'診療内容と受診方法を、確認できた情報から追記します。'),element('strong',growth.proposal.button));
-  compare.append(before,after);section.append(compare,element('p','診療内容・場所・専門性のうち、すでに検索向けに記載された情報を、ページ冒頭にも活かす案です。医院の確認後に反映します。','growth-scope'));
-  results.append(section);
+  for(const q of growth.questions){const row=element('article','');row.append(element('h4',q.label),element('span',q.status,q.status==='案内あり'?'growth-found':'growth-gap'),element('p',q.answer));list.append(row);}
+  section.append(list,element('p',growth.scope+' 掲載案は医院で内容をご確認ください。','growth-scope'));results.append(section);
 }
 
 function renderReport(report) {
@@ -455,6 +451,6 @@ if(inlineDiagnosisForm){inlineDiagnosisForm.addEventListener('submit',runDiagnos
 
 let reportPdfLoader;
 function loadReportPdf(){
-  if(!reportPdfLoader)reportPdfLoader=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='/assets/clinic-service-v2/report-pdf-9758bc1cc10886.js?v=ba8c93cf89d9';script.onload=resolve;script.onerror=()=>{script.remove();reportPdfLoader=null;reject(Error('PDF機能の読込に失敗しました'));};document.head.append(script);});
+  if(!reportPdfLoader)reportPdfLoader=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='/assets/clinic-service-v2/report-pdf-9758bc1cc10886.js?v=bafe58041747';script.onload=resolve;script.onerror=()=>{script.remove();reportPdfLoader=null;reject(Error('PDF機能の読込に失敗しました'));};document.head.append(script);});
   return reportPdfLoader;
 }

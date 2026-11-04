@@ -51,8 +51,10 @@ test('clinic PDF uses the same factual growth summary as the screen and omits un
  vm.runInNewContext(fs.readFileSync('site/assets/clinic-service-v2/report-pdf-9758bc1cc10886.js','utf8'),local);
  const texts=[],tables=[];
  class Capture extends jsPDF{constructor(o){super(o);const text=this.text,table=this.autoTable;this.text=function(s,...a){texts.push(Array.isArray(s)?s.join('\n'):s);return text.call(this,s,...a);};this.autoTable=function(o){tables.push(o);return table.call(this,o);};}}
- const report={url:'https://clinic.example/',checkedAt:'2026-11-04T00:00:00Z',findings:[{id:'seo-title',state:'observed',evidence:'テスト医院｜港区の小児科'},{id:'seo-description',state:'observed',evidence:'港区の小児科です。神谷町駅徒歩3分。小児科専門医が診療。'},{id:'sem-performance',state:'unknown',evidence:'未測定'}]};
+ const report={url:'https://clinic.example/',checkedAt:'2026-11-04T00:00:00Z',findings:[],growth:{status:'assessed',sources:[{id:'p0'}],bookingLinks:2,analysis:{clinicName:'テスト医院',headline:'初診の案内を予約につなげる',summary:'診療と予約の案内を本文で確認しました。',strengths:[],questions:[{label:'予約',status:'found',answer:'初診も予約できます。'}],priorities:[{title:'予約への入口をまとめる',observation:'案内が分かれています。',change:'持ち物と予約を並べます。'}],proposal:{heading:'港区の小児科',body:'専門医が診療します。',button:'初診の案内'}}}};
  local.SimyReportPdf.create({report,versions:[]},font,Capture);
- const metrics=tables.find(t=>t.head[0][0]==='項目'&&t.head[0][1]==='今回の確認結果');assert(metrics);assert.equal(metrics.body[0][1],'3 / 5');assert(texts.join(' ').includes('集客レポート'));assert(!texts.join(' ').includes('検索広告の成果'));
- const m=local.SimyClinicGrowth.model(report);assert(m.questions[1].answer.includes('徒歩3分'));assert(m.proposal.description.includes('専門医'));assert(!m.proposal.description.includes('費用'));
+ const metrics=tables.find(t=>t.head[0][0]==='項目'&&t.head[0][1]==='確認結果');assert(metrics);assert.equal(metrics.body[0][1],'1ページ');assert(texts.join(' ').includes('初診の案内を予約につなげる'));assert(!texts.join(' ').includes('検索広告の成果'));
+ const m=local.SimyClinicGrowth.model(report);assert(m.questions[0].answer.includes('初診'));assert(m.proposal.description.includes('専門医'));assert(!m.proposal.description.includes('費用'));
+ assert.equal(local.SimyClinicGrowth.model({url:report.url,findings:[{id:'seo-title',state:'observed',evidence:'医院'}]}).available,false);
+
 });
