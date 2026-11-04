@@ -104,7 +104,7 @@ docker --context YOUR_TEST_CONTEXT exec -i simy-clinic-codex-onboarding-test \
    `-c sandbox_workspace_write.network_access=true` も指定した。
    インストール後はこの追加許可を外した新しいセッションで
    `hp-customer-intake` が認識され、同梱の契約を読み込めることを確認する。
-5. SIMYが確認した医院・利用者・専用シートの対応を用意する。
+5. 運用担当が確認した医院・利用者・専用シートの設定を用意する。
    利用者が入力したURLやメール文字列だけを権限の根拠にしない。
 6. 本人がテスト依頼を伝える。Codexが不足事項を確認し、許可されたシートに
    `Requests` と `ready_for_dev` イベントを書き、再読込する。
@@ -124,22 +124,32 @@ docker --context YOUR_TEST_CONTEXT exec -i simy-clinic-codex-onboarding-test \
 
 ## ユーザーが貼るスキル導入メッセージ
 
+2026-11-04からは専用の公開配布元を使います。「2026-10-30の実行結果」の記録は、当時の配布元・接続での結果をそのまま保持しています。
+
 ```text
 SIMYのホームページ更新受付スキルをインストールしてください。
-取得元は SpecialistDoctors-Inc/simy-home、
-リビジョンは 80a04f7f3fe143df06767a4ae1eaf786e1297519、
-パスは examples/hp-management/skills/hp-customer-intake です。
+取得元は SpecialistDoctors-Inc/simy-hp-skills、
+リビジョンは 0d41c574fe9c45f8ef1f2e638cf4fd39b9fa3fe5、
+パスは skills/hp-customer-intake です。
 公式のskill-installerが利用できれば、それを使ってください。
 同梱のreferencesも含めて導入し、既存の同名スキルがあれば上書きせず確認してください。
-完了後、利用開始に必要な接続・医院の登録情報を教えてください。
+完了後、利用開始に必要なGoogle接続・受付先の設定を教えてください。
 このメッセージでは、シートへの依頼登録、本番公開、メール送信は依頼しません。
 ```
 
 これはスキルを取得する入口であり、医院の本人確認やGoogle接続を行う
 プログラムではない。現在の受付スキルは、確認済みの医院と利用者の対応が
-得られない場合に書き込みを停止する。対応を登録・取得するサービスは未実装。
+得られない場合に書き込みを停止する。運用担当が確認した設定を個別に渡す。SIMYへの登録は不要。
+
+## 2026-11-04の配布先移転の確認
+
+新しい配布元 `SpecialistDoctors-Inc/simy-hp-skills` の固定リビジョン `0d41c574fe9c45f8ef1f2e638cf4fd39b9fa3fe5` を、GitHubの認証情報を使わず、公式のskill-installerのdownload方式で空の保存先へ導入しました。スキル本体・同梱資料のバイト一致と内部リンク、quick_validateの成功を確認しました。同じ保存先への再導入は拒否され、既存ファイルが維持されることも確認済みです。
+
+この確認は配布物の取得・導入の検証です。新しいCodexセッションからの会話操作、Googleの初回接続、受付表への書込み、サイト変更、メール送信は実行していません。
 
 ## 2026-10-30の実行結果
+
+この日の取得元は `SpecialistDoctors-Inc/simy-home`、リビジョンは `80a04f7f3fe143df06767a4ae1eaf786e1297519`、パスは `examples/hp-management/skills/hp-customer-intake` です。下記は当時の導入結果であり、移転先での新しい初回ログイン試験ではありません。
 
 - 初回はディスク不足でビルドに失敗した。空き容量確保後、稼働済みのローカル
   Colimaエンジンでビルドが成功した。Docker Desktopの再起動は行っていない。
