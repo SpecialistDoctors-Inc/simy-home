@@ -75,7 +75,7 @@
  }catch{}});
  editForm.addEventListener('submit',async event=>{event.preventDefault();if(editBusy||!editForm.reportValidity()||!currentHtml)return;const message=editInput.value.trim(),base=currentHtml;log(message,'preview-user-message');setEditBusy(true);const stopElapsed=startEditElapsed();
   try{
-   const response=await fetch(new URL('/api/preview-edit',form.dataset.endpoint),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(editPayload(message,base)),signal:AbortSignal.timeout(100000)});
+   const response=await fetch(new URL('/api/preview-edit',form.dataset.endpoint),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({...editPayload(message,base),siteUrl:previewSourceUrl}),signal:AbortSignal.timeout(100000)});
    const plan=await response.json();if(!response.ok)throw Error(plan.error||'変更案を作成できませんでした。');
    if(currentHtml!==base)throw Error('ページの状態が変わりました。もう一度お試しください。');
    if(plan.status==='edit'){const changed=window.SimyPreviewEdit.applyPlan(base,plan,assets,frame.contentDocument);history.push(snapshot());if(history.length>10)history.shift();updatePreview(changed.html);log(changed.summary);}

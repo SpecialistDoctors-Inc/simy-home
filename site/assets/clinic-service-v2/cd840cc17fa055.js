@@ -301,6 +301,8 @@ function renderSearchChecks(report){
 }
 
 function renderReport(report) {
+  if(report.publicSummary===true){title.textContent='公開ページへの接続を確認しました';message.textContent=report.scope;const section=element('section','','report-preview');section.append(element('h3',report.title||'医院の公開ページ'),element('p',report.https?'HTTPSのページを取得しました。':'HTTPのページを取得しました。'));const link=element('a','ChatGPTでログインして、医院を確認する →','button button-primary');link.href=new URL('/clinic-portal?target='+encodeURIComponent(report.url),diagnosisEndpoint).href;link.target='_top';section.append(link,element('p','医院との関係を確認すると、詳細診断・保存した結果・PDF・編集を利用できます。','report-boundary'));results.append(section);return;}
+
   window.SimyClinicGrowth.attach(report);
   if (!Array.isArray(report.findings) || !Array.isArray(report.technologies) || !Array.isArray(report.scripts?.libraries)) throw Error('結果の形式を確認できませんでした。時間をおいて再度お試しください。');
   const technologies = report.technologies.filter(t => t.status === 'review');
@@ -376,6 +378,8 @@ function appendEmailReceipt(report, snapshot, onSaved) {
 // This is a presentation gate, not an authentication boundary. Full details stay
 // detached from the visible DOM until the consent record is saved successfully.
 function gateReport(report) {
+  if(window.SimyClinicPortal===true){const dock=element('div','','report-downloads report-download-dock'),button=element('button','診断結果をPDFで保存 ↓','button button-primary'),status=element('p','','report-pdf-status');button.type='button';status.setAttribute('role','status');button.addEventListener('click',async()=>{button.disabled=true;status.textContent='PDFを作成しています…';try{await loadReportPdf();await window.SimyReportPdf.download({report,registration:{clinicName:window.SimyClinicUser?.clinicName||''},root:results});status.textContent='PDFを作成しました。';}catch{status.textContent='PDFを作成できませんでした。再度お試しください。';}finally{button.disabled=false;}});dock.append(button,status);results.prepend(dock);return;}
+
   const full=element('div','','report-full');
   while(results.firstChild)full.append(results.firstChild);
   const snapshot=title.textContent+'\n'+report.url+'\n'+message.textContent+'\n\n診断記録（根拠と確認範囲）\n'+JSON.stringify(report);
