@@ -16,6 +16,7 @@ from service import Rejected, fingerprint
 from store import Write
 
 ACCOUNT='209300895845'
+MAX_JOB=64*1024
 MAX_REPORT=64*1024
 MAX_SCREENSHOT=8*1024*1024
 
@@ -136,6 +137,59 @@ class BrowserValidation:
             raise BrowserValidationRejected('browser_validation_intent_changed')
         return config,key,token,prefix,row
 
+    @staticmethod
+    def _manifest_body(row):
+        body=row.get('job_json')
+        if not isinstance(body,str) or len(body.encode())>MAX_JOB or sha256(body.encode())!=row.get('job_sha256') or row.get('request_sha256')!=fingerprint(row.get('request')):
+            raise BrowserValidationRejected('browser_validation_manifest_intent_changed')
+        expected_key='browser-validation/'+row['site_id']+'/'+row['operation_id']+'/'+row['artifact_sha256']+'/job.json'
+        if row.get('job_key')!=expected_key:
+            raise BrowserValidationRejected('browser_validation_manifest_binding_changed')
+        try:
+            envelope=json.loads(row['request']['overrides']['containerOverrides'][0]['environment'][0]['value'],object_pairs_hook=_unique)
+            job=json.loads(body,object_pairs_hook=_unique)
+        except (ValueError,KeyError,TypeError,IndexError):
+            raise BrowserValidationRejected('browser_validation_manifest_intent_changed') from None
+        if not isinstance(envelope,dict) or not isinstance(job,dict) or envelope.get('schema_version')!=1 or envelope.get('kind')!='browser-validation-job' or envelope.get('job_sha256')!=row['job_sha256'] or envelope.get('deadline')!=row['deadline'] or any(job.get(name)!=row.get(name) for name in ('site_id','operation_id','validation_id','artifact_sha256','source_commit','package_operation_id','deadline')):
+            raise BrowserValidationRejected('browser_validation_manifest_intent_changed')
+        return body.encode()
+
+    def _observe_manifest(self,config,row,guard):
+        expected=self._manifest_body(row)
+        try:
+            observed=self._get(config['output_bucket'],row['job_key'],MAX_JOB,guard)
+        except Exception as error:
+            if getattr(error,'response',{}).get('Error',{}).get('Code') in ('NoSuchKey','404','NotFound'):
+                return False
+            raise
+        if observed!=expected or sha256(observed)!=row['job_sha256']:
+            raise BrowserValidationRejected('browser_validation_manifest_readback_mismatch')
+        return True
+
+    def _ensure_manifest(self,config,key,row,guard):
+        if not self._observe_manifest(config,row,guard):
+            # Intent, exact job bytes and exact RunTask request already exist.
+            # Conditional create makes an authorized replay immutable, not a new
+            # capability set. Read-only reconciliation never enters this method.
+            guard()
+            if row.get('manifest_state')!='put_admitted':
+                row=self.store.put(key,{**row,'manifest_state':'put_admitted'},row['_version'])
+            try:
+                self._call(self.s3,'put_object',guard,Bucket=config['output_bucket'],Key=row['job_key'],
+                    Body=self._manifest_body(row),ContentType='application/json',ExpectedBucketOwner=ACCOUNT,
+                    IfNoneMatch='*',ServerSideEncryption='AES256',Metadata={'sha256':row['job_sha256']})
+            except (Rejected,Busy):
+                raise
+            except Exception as error:
+                if getattr(error,'response',{}).get('Error',{}).get('Code') not in ('PreconditionFailed','412'):
+                    raise BrowserValidationPending('browser_validation_manifest_ack_unknown',row['deadline']) from None
+            if not self._observe_manifest(config,row,guard):
+                raise BrowserValidationPending('browser_validation_manifest_not_visible',row['deadline'])
+        if row.get('manifest_state')!='verified':
+            guard()
+            row=self.store.put(key,{**row,'manifest_state':'verified'},row['_version'])
+        return row
+
     def _tasks(self,config,row,guard):
         arns=[row['task_arn']] if row.get('task_arn') else None
         if arns is None:
@@ -173,6 +227,8 @@ class BrowserValidation:
         expected={'schema_version':1,'kind':'browser-validation','site_id':row['site_id'],'operation_id':row['operation_id'],
             'validation_id':row['validation_id'],'artifact_sha256':row['artifact_sha256'],'source_commit':row['source_commit'],
             'source_sha256':row['source_sha256']}
+        if row.get('job_sha256'):
+            expected['job_sha256']=row['job_sha256']
         if not isinstance(report,dict) or any(report.get(key)!=value for key,value in expected.items()) or type(report.get('schema_version')) is not int or report.get('verified') is not True or report.get('chromium_os_sandbox') is not False or not re.fullmatch('[0-9a-f]{64}',report.get('source_sha256','')):
             raise BrowserValidationRejected('browser_validation_report_binding_failed')
         states=report.get('viewports')
@@ -214,24 +270,38 @@ class BrowserValidation:
                 put_urls[name]=self.s3.generate_presigned_url('put_object',Params={'Bucket':config['output_bucket'],'Key':object_key,'ContentType':'application/json' if name=='report' else 'image/png','ExpectedBucketOwner':ACCOUNT,'IfNoneMatch':'*'},ExpiresIn=900)
             job={'site_id':site['site_id'],'operation_id':operation_id,'validation_id':token,'artifact_sha256':preview['artifact_sha256'],
                 'source_commit':preview['source_commit'],'package_operation_id':preview.get('package_operation_id'),'artifact_get_url':get_url,'output_put_urls':put_urls,'deadline':deadline}
+            job_json=json.dumps(job,sort_keys=True,separators=(',',':'))
+            if len(job_json.encode())>MAX_JOB:
+                raise BrowserValidationRejected('browser_validation_job_manifest_budget')
+            job_key=prefix+'/job.json'
+            job_sha256=sha256(job_json.encode())
+            guard()
+            job_get_url=self.s3.generate_presigned_url('get_object',Params={'Bucket':config['output_bucket'],'Key':job_key,'ExpectedBucketOwner':ACCOUNT},ExpiresIn=900)
+            envelope={'schema_version':1,'kind':'browser-validation-job','job_get_url':job_get_url,
+                'job_sha256':job_sha256,'deadline':deadline}
             request={'cluster':config['cluster'],'taskDefinition':config['task_definition'],'launchType':'FARGATE','platformVersion':'1.4.0','count':1,
                 'clientToken':token,'startedBy':token[:32],'enableExecuteCommand':False,
                 'networkConfiguration':{'awsvpcConfiguration':{'subnets':config['subnet_ids'],'securityGroups':config['security_group_ids'],'assignPublicIp':'ENABLED'}},
-                'overrides':{'containerOverrides':[{'name':config['container_name'],'environment':[{'name':'HP_VALIDATION_JOB','value':json.dumps(job,sort_keys=True,separators=(',',':'))}]}]}}
+                'overrides':{'containerOverrides':[{'name':config['container_name'],'environment':[{'name':'HP_VALIDATION_JOB','value':json.dumps(envelope,sort_keys=True,separators=(',',':'))}]}]}}
             if len(json.dumps(request['overrides']).encode())>8000:
                 raise BrowserValidationRejected('browser_validation_launch_override_budget')
             row={'site_id':site['site_id'],'operation_id':operation_id,'source_commit':preview['source_commit'],
                 'package_operation_id':preview['package_operation_id'],
                 'artifact_sha256':preview['artifact_sha256'],'artifact_key':artifact_key,'validation_id':token,
                 'source_sha256':metadata['source_sha256'],
-                'config_fingerprint':fingerprint(config),'deadline':deadline,'output_keys':output_keys,'request':request}
+                'config_fingerprint':fingerprint(config),'deadline':deadline,'output_keys':output_keys,'request':request,
+                'request_sha256':fingerprint(request),'job_json':job_json,'job_sha256':job_sha256,'job_key':job_key,'manifest_state':'sealed','launch_state':'not_admitted'}
             guard()
             self.store.put(key,row,None)
             row=self.store.get(key)
         if time.time()>row['deadline']:
             raise BrowserValidationRejected('browser_validation_deadline_exceeded')
+        row=self._ensure_manifest(config,key,row,guard)
         task=self._tasks(config,row,guard)
         if task is None:
+            guard()
+            if row.get('launch_state')!='admitted':
+                row=self.store.put(key,{**row,'launch_state':'admitted'},row['_version'])
             # ClientToken plus the exact persisted request makes lost RunTask
             # acknowledgements safely replayable only under active authority.
             try:
@@ -258,7 +328,23 @@ class BrowserValidation:
             return {'safe_to_resume':True,'prewrite_proven':True}
         if time.time()>row['deadline']:
             raise BrowserValidationRejected('browser_validation_deadline_exceeded')
+        if 'job_json' not in row:
+            # Older sealed inline jobs have no explicit no-launch marker. They
+            # can only be observed, never inferred not-started from absence.
+            task=self._tasks(config,row,guard)
+            return {'safe_to_resume':True} if task is None else self._result(config,row,task,guard)
+        self._manifest_body(row)
+        if row.get('launch_state')=='not_admitted':
+            # This explicit durable marker, not row existence or ListTasks, proves
+            # no RunTask call was admitted. Manifest ownership remains recorded;
+            # a possibly in-flight private PUT is not claimed absent/cancelled.
+            return {'safe_to_resume':True,'launch_prewrite_proven':True,
+                'manifest_state':row['manifest_state'],'job_sha256':row['job_sha256']}
+        # Observe prior effects only; no upload, presign or RunTask under a fence.
+        manifest_exists=self._observe_manifest(config,row,guard)
         task=self._tasks(config,row,guard)
         if task is None:
             return {'safe_to_resume':True}
+        if not manifest_exists:
+            raise BrowserValidationPending('browser_validation_manifest_not_visible',row['deadline'])
         return self._result(config,row,task,guard)

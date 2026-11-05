@@ -19,16 +19,16 @@
   "final_image": {
     "registry": "209300895845.dkr.ecr.ap-northeast-1.amazonaws.com",
     "repository": "simy-hp-control-validator",
-    "tag": "remediation-1.64.1-final-20261105T071836Z",
-    "manifest_digest": "sha256:f61048e320481d3d2d07c2bc39a78277293d00a33e5c75f83075c3a28ecd4aee",
-    "config_image_id": "sha256:c7e1488b69cfc0cad3c6e70cf898ea318b46ab9fcc6ad601953a09e39d29139a",
+    "tag": "sealed-manifest-20261105T102116Z",
+    "manifest_digest": "sha256:5643dfed38ada9f571a5a769ae7cb6ea9e60c2c1f89e60a6a8ef611ff21771b4",
+    "config_image_id": "sha256:b1da6293eaa1f8a1ee64393f210bdbdc3cb0b7364c2c1798e9bee9a536117a4c",
     "platform": "linux/amd64",
     "bundled_chromium_version": "156.0.8078.4"
   },
   "scan": {
     "type": "ECR_BASIC",
     "status": "COMPLETE",
-    "completed_at": "2026-11-05 16:39:21+09:00",
+    "completed_at": "2026-11-05 19:22:54+09:00",
     "finding_count": 0,
     "severity_counts": {}
   },
@@ -60,7 +60,28 @@
         "verified": false,
         "expected": false
       }
-    ]
+    ],
+    "sealed_manifest_loader": true
   },
-  "evidence_root": "output/hp-local-editor-20261105/validator-remediation-20261105T071836Z/candidate3"
+  "evidence_root": "output/hp-local-editor-20261105/sealed-manifest-20261105T102116Z",
+  "previous_image": {
+    "registry": "209300895845.dkr.ecr.ap-northeast-1.amazonaws.com",
+    "repository": "simy-hp-control-validator",
+    "tag": "remediation-1.64.1-final-20261105T071836Z",
+    "manifest_digest": "sha256:f61048e320481d3d2d07c2bc39a78277293d00a33e5c75f83075c3a28ecd4aee",
+    "config_image_id": "sha256:c7e1488b69cfc0cad3c6e70cf898ea318b46ab9fcc6ad601953a09e39d29139a",
+    "platform": "linux/amd64",
+    "bundled_chromium_version": "156.0.8078.4"
+  },
+  "transport": {
+    "protocol": "sealed_job_manifest_v1",
+    "manifest_max_bytes": 65536,
+    "envelope_override_max_bytes": 8000,
+    "signature_version": "s3v4",
+    "expected_bucket_owner_signed_header": true,
+    "conditional_manifest_put": "If-None-Match: *",
+    "no_redirect": true,
+    "launch_admission_marker": true,
+    "readonly_reconciliation_never_writes_or_launches": true
+  }
 }

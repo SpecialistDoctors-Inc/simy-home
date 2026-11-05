@@ -85,6 +85,26 @@ def dispatch_pending(event, context, *, store=None, sqs=None, clock=None):
     return {'enqueued': sent}
 
 
+def regional_s3_client(region):
+    """Construct a regional SigV4 client from trusted deployment configuration.
+
+    An implicit S3 client may presign GET with SigV2, which hoists the expected
+    owner into query parameters while the renderer sends the required header.
+    Keep the owner header and sign it once with SigV4 instead.
+    """
+    import re
+    import boto3
+    from botocore.config import Config
+    if not isinstance(region, str) or not re.fullmatch(r'[a-z]{2}(?:-[a-z]+)+-[0-9]', region):
+        raise ValueError('regional_s3_region_required')
+    endpoint = 'https://s3.' + region + '.amazonaws.com'
+    client = boto3.client('s3', region_name=region, endpoint_url=endpoint,
+        config=Config(signature_version='s3v4', s3={'addressing_style': 'virtual'}))
+    if client.meta.region_name != region or client.meta.endpoint_url != endpoint or client.meta.config.signature_version != 's3v4':
+        raise ValueError('regional_s3_client_binding_failed')
+    return client
+
+
 def consumer():
     import boto3
     from executor import Executor
@@ -94,14 +114,16 @@ def consumer():
     from browser_validation import BrowserValidation
     store = DynamoStore(os.environ['HP_TABLE_NAME']); secret = Secrets()
     drive = GoogleDrive(os.environ['HP_GOOGLE_OPERATOR_SECRET_ARN'], secret)
-    artifacts = S3Artifacts(os.environ['HP_ARTIFACT_BUCKET'], boto3.client('s3'))
+    validator_config = json.loads(os.environ.get('HP_VALIDATOR_CONFIG', '{}'))
+    region = validator_config.get('region') or os.environ.get('AWS_REGION') or os.environ.get('AWS_DEFAULT_REGION')
+    s3 = regional_s3_client(region)
+    artifacts = S3Artifacts(os.environ['HP_ARTIFACT_BUCKET'], s3)
     github = github_factory(os.environ['HP_GITHUB_SECRET_ARN'], secret)
     roles = json.loads(os.environ.get('HP_PUBLISHER_ROLES', '{}'))
     preview_publisher = SitePublisher('dev', roles.get('dev'), store)
     publisher = SitePublisher('prod', roles.get('prod'), store)
     workflow = GitHubWorkflow(github, preview_readback=preview_publisher.readback)
-    browser = BrowserValidation(store, boto3.client('ecs'), boto3.client('s3'),
-        json.loads(os.environ.get('HP_VALIDATOR_CONFIG', '{}')))
+    browser = BrowserValidation(store, boto3.client('ecs', region_name=region), s3, validator_config)
     return Executor(store, github, drive, artifacts, workflow, publisher,
         publication_enabled=os.environ.get('HP_PUBLICATION_ENABLED') == 'true', preview_publisher=preview_publisher,
         lease_seconds=960, browser_validator=browser)

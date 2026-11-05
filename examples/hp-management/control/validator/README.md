@@ -44,9 +44,9 @@ exploit containment. No validator gate is enabled by a successful local smoke or
 an ECR push. Final registry digest and residual findings are recorded in
 `image-manifest.json` and the task's preserved scan receipts.
 
-## Final candidate scan and fix availability (2026-11-05)
+## Previous Chromium-only remediation and fix availability (2026-11-05)
 
-The immutable review candidate is:
+The previous immutable Chromium-only image (preserved during the transport fix) is:
 
 ```text
 209300895845.dkr.ecr.ap-northeast-1.amazonaws.com/simy-hp-control-validator@sha256:f61048e320481d3d2d07c2bc39a78277293d00a33e5c75f83075c3a28ecd4aee
@@ -83,18 +83,47 @@ both viewport PNGs and negative-case reports. All four real smoke cases passed
 again with the final image. Original and intermediate registry images remain.
 Docker login used a task-owned temporary credential directory which was removed
 after push; no token was written to source, logs, image layers, or shared Docker
-settings. No ECS task was launched and no validation/publication gate was enabled.
+settings. That image-build/scan preparation launched no ECS task or changed any gate;
+subsequent live integration probes are separate evidence.
 
 Vendor reference: [Canonical USN-8764-1](https://ubuntu.com/security/notices/USN-8764-1).
+
+## Current sealed-manifest image candidate
+
+The matching transfer-protocol candidate is:
+
+```text
+209300895845.dkr.ecr.ap-northeast-1.amazonaws.com/simy-hp-control-validator@sha256:5643dfed38ada9f571a5a769ae7cb6ea9e60c2c1f89e60a6a8ef611ff21771b4
+```
+
+Its ECR BASIC scan completed on 2026-11-05 with no findings. The image retains the
+same reviewed Chromium-only dependency and isolation settings. All four real
+hardened/no-network smoke cases passed again, now exercising the bounded manifest
+loader with a local byte-fetch fixture before each render. Positive desktop and
+mobile screenshots are available for inspection. Controller/signer/worker tests
+also cover manifest tampering, lost PUT acknowledgement/restart, immutable replay,
+prelaunch cancellation/revocation, admitted-but-invisible task ambiguity and log
+redaction. These are local/container results, not a successful real S3/Fargate
+transfer or a production deployment.
+
+Evidence: `output/hp-local-editor-20261105/sealed-manifest-20261105T102116Z/` contains
+`candidate-receipt.json`, `candidate-scan.json`, `image-input-freeze.json`, build and
+package logs, and `smoke-output/`. The recorded image inputs are file hashes,
+not an assumed repository HEAD. The earlier `f61048e3…` image and evidence remain
+intact. Rollout still requires independent review of the matching controller,
+worker and exact job-object IAM scope; no ECS task or site write was launched by
+this candidate build/push/scan preparation.
 
 ## Actual isolation and limitations
 
 The image runs user 1000, has a read-only root, drops all Linux capabilities, has
 no privileged mode, secrets, task role, host mounts or execute-command access, and
-uses a task-local writable `/tmp` scratch volume. Its only network capabilities
-are four short-lived S3 URLs: one exact artifact GET and three exact conditional
-PUTs (`desktop.png`, `mobile.png`, `report.json`). The launcher supplies expected
-bucket-owner headers, and PUTs use `If-None-Match: *`. Capability URLs are never
+uses a task-local writable `/tmp` scratch volume. Its launch envelope carries one
+short-lived S3 GET capability for a private sealed job manifest. The verified
+manifest contains one exact artifact GET and three exact conditional PUTs
+(`desktop.png`, `mobile.png`, `report.json`). All presigns use regional SigV4;
+the expected bucket owner is a signed header, not a duplicate query parameter.
+The launcher supplies that owner header and PUTs use `If-None-Match: *`. Capability URLs are never
 injected into the page or logged. The worker self-exits at the sealed deadline;
 there is no StopTask permission and no shared service or process is stopped.
 
@@ -123,6 +152,51 @@ and no horizontal overflow. It captures both full-page PNGs and a JSON report.
 These deterministic checks do not judge design quality, accessibility, every
 interactive path or every page. Human screenshot review remains necessary.
 
+## Sealed manifest transfer contract
+
+The consumer constructs its S3 client from trusted validator/Lambda region config,
+with an explicit regional HTTPS endpoint and `signature_version="s3v4"`. It never
+uses a caller-supplied endpoint. The old implicit SigV2 GET hoisted the expected
+owner into a query parameter while the worker also sent its required header,
+causing a real S3 HTTP 400. The owner guard and redirect rejection are retained.
+
+A full job's four signed URLs can exceed the retained 8,000-byte ECS override
+guard at allowed identifier/bucket/container bounds. Before any new manifest PUT
+or RunTask, the controller durably seals canonical full-job JSON, its SHA-256,
+the immutable object key, and the exact small RunTask request. The object is
+`browser-validation/{site_id}/{operation_id}/{artifact_sha256}/job.json` in the
+private output bucket. Upload uses expected owner, `If-None-Match: *`, AES256 and
+application/json; full bytes and SHA-256 are read back before launch. Ambiguous
+acknowledgements reuse this object, original capabilities and original ECS
+clientToken; they do not generate a fresh request.
+
+The `HP_VALIDATION_JOB` environment value now contains exactly `schema_version`,
+`kind: "browser-validation-job"`, `job_get_url`, `job_sha256`, and `deadline`.
+The worker accepts at most 8,000 bytes for that envelope and 64 KiB for the fetched
+manifest. It verifies the exact hash, deadline and full job shape before artifact
+fetch, browser execution or output upload. Transfer uses the same owner header
+and NoRedirect handler. The resulting report includes `job_sha256`, which the
+consumer checks against its sealed intent. Neither manifest capabilities nor
+transfer errors/bodies enter the page or application logs.
+
+A new row explicitly records `launch_state: "not_admitted"`; it changes durably
+to `admitted` before any RunTask call. During cancellation/revocation, only the
+explicit first marker proves no renderer launch was admitted. The executor can
+record a factual `not_started` validation receipt and finish cancellation without
+another upload or launch; a possibly in-flight private preparation object remains
+owned by the sealed record. Active authority instead receives a conditional
+`safe_to_resume` signal, never successful validation. Missing ListTasks results,
+older rows with no marker, or an unknown admitted RunTask acknowledgement do not
+prove that no task started. Read-only reconciliation never PUTs or launches.
+
+Worker failure diagnostics contain only a constant stage, exception class and an
+HTTP status when present. They never stringify HTTP errors, capability URLs,
+headers, response bodies or job JSON. A new reviewed image is required for this
+envelope API: install the matching consumer, task revision/image and exact
+`job.json` IAM pattern with the validation gate closed, then verify the actual
+Fargate path before treating the integration as working. Local fake-provider and
+container tests do not substitute for that live check.
+
 ## Consumer interface
 
 `BrowserValidation(store, ecs, s3, config)` exposes:
@@ -138,7 +212,8 @@ The preview carries `site_id`, full `source_commit`, `artifact_sha256` and
 `package_operation_id`. The input key must be exactly
 `artifacts/{site_id}/{artifact_sha256}/site.zip`. Output keys are exactly
 `browser-validation/{site_id}/{operation_id}/{artifact_sha256}/desktop.png`,
-`mobile.png` and `report.json`. Input and output digests, source metadata, task
+`mobile.png` and `report.json`, with the private preparation manifest at the
+same prefix as `job.json`. Input, manifest and output digests, source metadata, task
 identity, image digest, both viewport results and each screenshot hash are checked.
 The receipt contains the report key/hash and a list of screenshot keys.
 
@@ -152,12 +227,13 @@ user, read-only root and no task application role/secrets/environment files.
 
 RunTask `clientToken` is the full deterministic operation/site/source/artifact
 fingerprint, with its first 32 hex characters as `startedBy`. The entire request,
-including scoped URLs and deadline, is persisted **before** RunTask and reused
+including the single scoped manifest URL and deadline, is persisted **before**
+manifest PUT or RunTask and reused
 unchanged after an ambiguous acknowledgement. A returned task ARN is persisted
 for readback, including STOPPED tasks. Lost acknowledgements can be discovered by
 startedBy while running; a stopped task not discoverable by ListTasks requires an
 actively authorized replay of the identical idempotent RunTask request. Read-only
-reconciliation never launches one. Deadline or definite task/render failure raises
+reconciliation never launches one or creates a manifest. Deadline or definite task/render failure raises
 a rejection; running/missing-yet-bounded output raises a durable waiting exception.
 
 ## Local or CI smoke
@@ -175,7 +251,8 @@ docker run --rm --platform linux/amd64 --network none --read-only \
 python3 -m unittest discover -s examples/hp-management/control -p test_browser_validation.py -v
 ```
 
-Smoke has no cloud credentials, URLs or external network. It verifies a valid
+Smoke has no cloud credentials, usable capability URLs or external network. It
+exercises the real manifest loader with a local fake byte fetch before each case. It verifies a valid
 render, JavaScript error detection, overflow detection, and rejection of both
 169.254.169.254 and an external script request. Results and screenshots stay under
 ignored `smoke-output/`. The valid desktop/mobile screenshots were visually

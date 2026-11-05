@@ -41,7 +41,8 @@ resource "aws_iam_role_policy" "validation_launcher" {
       Resource = [
         "${aws_s3_bucket.artifacts.arn}/browser-validation/*/*/*/desktop.png",
         "${aws_s3_bucket.artifacts.arn}/browser-validation/*/*/*/mobile.png",
-        "${aws_s3_bucket.artifacts.arn}/browser-validation/*/*/*/report.json"
+        "${aws_s3_bucket.artifacts.arn}/browser-validation/*/*/*/report.json",
+        "${aws_s3_bucket.artifacts.arn}/browser-validation/*/*/*/job.json"
       ]
     }
   ] })

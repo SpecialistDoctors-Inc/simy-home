@@ -1,7 +1,7 @@
 """Local container smoke: render, JS error, overflow, and rejected external I/O."""
 import io,json,os,signal,time,zipfile
 from pathlib import Path
-from render import digest,render
+from render import digest,render,load_job
 
 signal.signal(signal.SIGALRM,lambda *_: os._exit(124))
 signal.alarm(120)
@@ -24,8 +24,15 @@ for scenario,body,expected in [
         for path,data in source.items(): archive.writestr(path,data)
         archive.writestr('version.json',json.dumps(metadata))
     data=stream.getvalue()
-    job={'site_id':'smoke','operation_id':'23456789-1234-4234-8234-123456789abc','validation_id':'c'*64,'artifact_sha256':digest(data),'source_commit':'a'*40,'package_operation_id':package,'deadline':time.time()+25}
+    job={'site_id':'smoke','operation_id':'23456789-1234-4234-8234-123456789abc','validation_id':'c'*64,'artifact_sha256':digest(data),'source_commit':'a'*40,'package_operation_id':package,'deadline':int(time.time())+25,
+        'artifact_get_url':'https://smoke.s3.ap-northeast-1.amazonaws.com/site.zip?signature=FAKE',
+        'output_put_urls':{name:'https://smoke.s3.ap-northeast-1.amazonaws.com/'+name+'?signature=FAKE' for name in ('desktop','mobile','report')}}
+    manifest=json.dumps(job,sort_keys=True,separators=(',',':')).encode()
+    envelope={'schema_version':1,'kind':'browser-validation-job','job_get_url':'https://smoke.s3.ap-northeast-1.amazonaws.com/job.json?signature=FAKE','job_sha256':digest(manifest),'deadline':job['deadline']}
+    # Exercise the real bounded manifest loader without network/capabilities.
+    job=load_job(json.dumps(envelope),fetch=lambda method,url,limit:manifest)
     report,screenshots=render(data,job)
+    report['job_sha256']=envelope['job_sha256']
     directory=output if scenario=='valid' else output/scenario
     directory.mkdir(parents=True,exist_ok=True)
     (directory/'report.json').write_text(json.dumps(report,indent=2))

@@ -451,6 +451,17 @@ class _Run:
         elif kind == 'preview_readback' and hasattr(self.executor.validator, 'reconcile_readback'):
             result = self.executor.validator.reconcile_readback(site, descriptor['proof'], self.fence_guard)
         if isinstance(result, dict) and result.get('safe_to_resume') is True:
+            if kind == 'browser_validation' and result.get('launch_prewrite_proven') is True:
+                try:
+                    self.guard()
+                except Rejected:
+                    # The explicit renderer launch marker proves no child task
+                    # was admitted. Account for that fact when authority ended;
+                    # never turn it into successful validation or a new launch.
+                    self.record_receipt(pending['name'], {'not_started': True,
+                        'launch_prewrite_proven': True, 'manifest_state': result.get('manifest_state'),
+                        'job_sha256': result.get('job_sha256')})
+                    return
             if result.get('cache_cleanup_requires_attention') is True:
                 self.fence_guard()
                 self.store.put(self.key, {**self.op, 'reconciliation_reason': 'cache_cleanup_requires_attention'}, self.op['_version'])

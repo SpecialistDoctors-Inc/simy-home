@@ -17,6 +17,8 @@ import urllib.parse
 import urllib.request
 import zipfile
 
+MAX_JOB = 64 * 1024
+MAX_ENVELOPE = 8000
 MAX_FILE = 10 * 1024 * 1024
 MAX_TOTAL = 50 * 1024 * 1024
 MAX_TRANSPORT = 60 * 1024 * 1024
@@ -77,10 +79,17 @@ class NoRedirect(urllib.request.HTTPRedirectHandler):
         return None
 
 
-def transfer(method,url,data=None,limit=MAX_TRANSPORT,content_type=None):
-    parsed=urllib.parse.urlsplit(url)
-    if parsed.scheme != 'https' or not parsed.hostname or not parsed.hostname.endswith('.amazonaws.com') or parsed.username or parsed.password or parsed.port not in (None,443) or parsed.fragment:
+def transfer_target(url):
+    if not isinstance(url,str) or any(ord(character)<32 or ord(character)==127 for character in url):
         raise RenderError('transfer_target_rejected')
+    parsed=urllib.parse.urlsplit(url)
+    if parsed.scheme!='https' or not parsed.hostname or not parsed.hostname.endswith('.amazonaws.com') or '@' in parsed.netloc or parsed.port not in (None,443) or parsed.fragment:
+        raise RenderError('transfer_target_rejected')
+    return url
+
+
+def transfer(method,url,data=None,limit=MAX_TRANSPORT,content_type=None):
+    transfer_target(url)
     headers={'x-amz-expected-bucket-owner':'209300895845'}
     if content_type:
         headers['Content-Type']=content_type
@@ -92,6 +101,66 @@ def transfer(method,url,data=None,limit=MAX_TRANSPORT,content_type=None):
         if response.status not in (200,204) or len(content)>limit:
             raise RenderError('transfer_failed')
         return content
+
+
+def unique_json(pairs):
+    value={}
+    for key,item in pairs:
+        if key in value:
+            raise RenderError('validation_job_duplicate_key')
+        value[key]=item
+    return value
+
+
+def parse_envelope(raw):
+    if not isinstance(raw,str) or len(raw.encode())>MAX_ENVELOPE:
+        raise RenderError('validation_job_envelope_invalid')
+    envelope=json.loads(raw,object_pairs_hook=unique_json)
+    fields={'schema_version','kind','job_get_url','job_sha256','deadline'}
+    if not isinstance(envelope,dict) or set(envelope)!=fields or type(envelope['schema_version']) is not int or envelope['schema_version']!=1 or envelope['kind']!='browser-validation-job' or not isinstance(envelope['job_sha256'],str) or not re.fullmatch('[0-9a-f]{64}',envelope['job_sha256']) or type(envelope['deadline']) is not int or not 0<envelope['deadline']-time.time()<=600:
+        raise RenderError('validation_job_envelope_invalid')
+    transfer_target(envelope['job_get_url'])
+    return envelope
+
+
+def load_job(raw,fetch=None):
+    envelope=parse_envelope(raw)
+    data=(fetch or transfer)('GET',envelope['job_get_url'],limit=MAX_JOB)
+    if not isinstance(data,bytes) or len(data)>MAX_JOB or digest(data)!=envelope['job_sha256']:
+        raise RenderError('validation_job_manifest_hash_mismatch')
+    job=json.loads(data,object_pairs_hook=unique_json)
+    allowed={'site_id','operation_id','validation_id','artifact_sha256','source_commit','package_operation_id','artifact_get_url','output_put_urls','deadline'}
+    if not isinstance(job,dict) or set(job)!=allowed or type(job['deadline']) is not int or job['deadline']!=envelope['deadline'] or not isinstance(job['site_id'],str) or not re.fullmatch('[A-Za-z0-9_-]{1,200}',job['site_id']) or not isinstance(job['output_put_urls'],dict) or set(job['output_put_urls'])!={'desktop','mobile','report'}:
+        raise RenderError('validation_job_invalid')
+    for name,length in (('validation_id',64),('artifact_sha256',64),('source_commit',40)):
+        if not isinstance(job[name],str) or not re.fullmatch('[0-9a-f]{'+str(length)+'}',job[name]):
+            raise RenderError('validation_job_invalid')
+    for name in ('operation_id','package_operation_id'):
+        import uuid
+        try:
+            valid=isinstance(job[name],str) and str(uuid.UUID(job[name]))==job[name]
+        except ValueError:
+            valid=False
+        if not valid:
+            raise RenderError('validation_job_invalid')
+    transfer_target(job['artifact_get_url'])
+    for url in job['output_put_urls'].values():
+        transfer_target(url)
+    return job
+
+
+STAGES={'envelope','job_manifest','artifact_download','render','desktop_upload','mobile_upload','report_upload'}
+
+
+def failure_record(stage,error):
+    # Never stringify an HTTPError, its URL, response body, job or capabilities.
+    kind=type(error).__name__
+    result={'event':'browser_validation_failed','stage':stage if stage in STAGES else 'unknown',
+        'error_class':kind if re.fullmatch('[A-Za-z_][A-Za-z0-9_]{0,80}',kind) else 'Error'}
+    status=getattr(error,'code',None)
+    if type(status) is int and 100<=status<=599:
+        result['http_status']=status
+    return result
 
 
 class Handler(http.server.SimpleHTTPRequestHandler):
@@ -168,30 +237,34 @@ def render(data,job,browser_type=None):
 
 
 def main():
-    job=json.loads(os.environ['HP_VALIDATION_JOB'])
-    allowed={'site_id','operation_id','validation_id','artifact_sha256','source_commit','package_operation_id','artifact_get_url','output_put_urls','deadline'}
-    if not isinstance(job,dict) or set(job)!=allowed or set(job['output_put_urls'])!={'desktop','mobile','report'}:
-        raise RenderError('validation_job_invalid')
-    remaining=int(job['deadline']-time.time())
-    if not 0<remaining<=600:
-        raise RenderError('validation_deadline_invalid')
-    # A stuck browser or hostile page cannot outlive the sealed task deadline.
-    # This exits only this worker process; no shared processes are signalled.
-    signal.signal(signal.SIGALRM,lambda *_: os._exit(124))
-    signal.alarm(remaining)
-    data=transfer('GET',job['artifact_get_url'])
-    report,screenshots=render(data,job)
-    for name,content in screenshots.items():
-        if len(content)>8*1024*1024:
-            raise RenderError('screenshot_size_exceeded')
-        transfer('PUT',job['output_put_urls'][name],content,0,'image/png')
-    transfer('PUT',job['output_put_urls']['report'],json.dumps(report,sort_keys=True,separators=(',',':')).encode(),0,'application/json')
+    stage='envelope'
+    try:
+        raw=os.environ['HP_VALIDATION_JOB']
+        envelope=parse_envelope(raw)
+        remaining=int(envelope['deadline']-time.time())
+        if not 0<remaining<=600:
+            raise RenderError('validation_job_invalid')
+        # Bounds this worker only, including the first manifest transfer.
+        signal.signal(signal.SIGALRM,lambda *_: os._exit(124))
+        signal.alarm(remaining)
+        stage='job_manifest'
+        job=load_job(raw)
+        stage='artifact_download'
+        data=transfer('GET',job['artifact_get_url'])
+        stage='render'
+        report,screenshots=render(data,job)
+        report['job_sha256']=envelope['job_sha256']
+        for name,content in screenshots.items():
+            if len(content)>8*1024*1024:
+                raise RenderError('screenshot_size_exceeded')
+            stage={'desktop':'desktop_upload','mobile':'mobile_upload'}[name]
+            transfer('PUT',job['output_put_urls'][name],content,0,'image/png')
+        stage='report_upload'
+        transfer('PUT',job['output_put_urls']['report'],json.dumps(report,sort_keys=True,separators=(',',':')).encode(),0,'application/json')
+    except Exception as error:
+        print(json.dumps(failure_record(stage,error),sort_keys=True),flush=True)
+        raise SystemExit(1) from None
 
 
 if __name__=='__main__':
-    try:
-        main()
-    except Exception as error:
-        # Do not log presigned capability URLs or the full job environment.
-        print('browser_validation_failed:'+type(error).__name__,flush=True)
-        raise SystemExit(1)
+    main()

@@ -6,6 +6,7 @@ from pathlib import Path
 import time
 import unittest
 import zipfile
+from urllib.parse import urlsplit,unquote
 
 from browser_validation import ACCOUNT, BrowserValidation, BrowserValidationPending, BrowserValidationRejected
 from bundles import sha256
@@ -38,7 +39,8 @@ class Missing(Exception):
 
 
 class FakeS3:
-    def __init__(self): self.objects={};self.calls=[]
+    def __init__(self):
+        self.objects={};self.calls=[];self.unknown_put_ack=False;self.hide_manifest=False;self.before_put=None
     def head_bucket(self,**args):
         self.calls.append(('head_bucket',args))
         assert args['ExpectedBucketOwner']==ACCOUNT
@@ -46,14 +48,31 @@ class FakeS3:
     def get_object(self,**args):
         self.calls.append(('get_object',args))
         assert args['ExpectedBucketOwner']==ACCOUNT
+        if self.hide_manifest and args['Key'].endswith('/job.json'): raise Missing()
         if (args['Bucket'],args['Key']) not in self.objects: raise Missing()
         return {'Body':io.BytesIO(self.objects[args['Bucket'],args['Key']])}
+    def put_object(self,**args):
+        self.calls.append(('put_object',args))
+        assert args['ExpectedBucketOwner']==ACCOUNT and args['IfNoneMatch']=='*'
+        assert args['ContentType']=='application/json' and args['ServerSideEncryption']=='AES256'
+        if self.before_put: self.before_put(args)
+        key=(args['Bucket'],args['Key'])
+        if key in self.objects:
+            error=RuntimeError('already exists');error.response={'Error':{'Code':'PreconditionFailed'}};raise error
+        self.objects[key]=args['Body']
+        if self.unknown_put_ack: raise OSError('manifest PUT response lost')
+        return {}
     def generate_presigned_url(self,method,Params,ExpiresIn):
         self.calls.append(('presign',{'method':method,'params':Params,'expiry':ExpiresIn}))
         assert ExpiresIn==900
         assert Params['ExpectedBucketOwner']==ACCOUNT
         if method=='put_object': assert Params['IfNoneMatch']=='*'
         return 'https://'+Params['Bucket']+'.s3.amazonaws.com/'+Params['Key']+'?signature=FAKE'
+
+
+def s3_location(url):
+    parsed=urlsplit(url)
+    return parsed.hostname.split('.s3',1)[0],unquote(parsed.path.lstrip('/'))
 
 
 class FakeECS:
@@ -78,28 +97,29 @@ class FakeECS:
         assert args['taskDefinition']==DEFINITION and args['cluster']==CLUSTER
         assert args['launchType']=='FARGATE' and args['enableExecuteCommand'] is False
         assert 'taskRoleArn' not in args['overrides']
-        job=json.loads(args['overrides']['containerOverrides'][0]['environment'][0]['value'])
+        envelope=json.loads(args['overrides']['containerOverrides'][0]['environment'][0]['value'])
+        assert envelope['kind']=='browser-validation-job'
+        job_bytes=self.s3.objects[s3_location(envelope['job_get_url'])]
+        assert sha256(job_bytes)==envelope['job_sha256']
+        job=json.loads(job_bytes)
         assert job['validation_id']==args['clientToken']
         if self.task is None:
             self.task={'taskArn':'arn:aws:ecs:ap-northeast-1:'+ACCOUNT+':task/hp-validation/'+'c'*32,
                 'clusterArn':CLUSTER,'taskDefinitionArn':DEFINITION,'startedBy':args['startedBy'],'group':'family:hp-validator',
                 'lastStatus':'RUNNING' if self.running else 'STOPPED',
-                'containers':[{'name':'validator','exitCode':0,'imageDigest':IMAGE}]}
+                'containers':[{'name':self.definition['containerDefinitions'][0]['name'],'exitCode':0,'imageDigest':IMAGE}]}
         if not self.missing_output:
-            input_key=job['artifact_get_url'].split('.amazonaws.com/',1)[1].split('?',1)[0]
-            metadata=unpack(self.s3.objects['artifact-bucket',input_key],None,job['artifact_sha256'],job['source_commit'])
+            metadata=unpack(self.s3.objects[s3_location(job['artifact_get_url'])],None,job['artifact_sha256'],job['source_commit'])
             report={key:job[key] for key in ('site_id','operation_id','validation_id','artifact_sha256','source_commit')}
-            report.update({'schema_version':1,'kind':'browser-validation','source_sha256':metadata['source_sha256'],'verified':True,'chromium_os_sandbox':False,'viewports':[]})
+            report.update({'job_sha256':envelope['job_sha256'],'schema_version':1,'kind':'browser-validation','source_sha256':metadata['source_sha256'],'verified':True,'chromium_os_sandbox':False,'viewports':[]})
             for name,width,height in [('desktop',1440,1000),('mobile',390,844)]:
                 image=b'\x89PNG\r\n\x1a\nFAKE-'+name.encode()
                 report['viewports'].append({'name':name,'width':width,'height':height,'ok':True,'errors':[],
                     'blocked_request_count':0,'metrics':{'width':width,'scrollWidth':width,'height':height,'text':7},
                     'screenshot_sha256':sha256(image),'screenshot_size':len(image)})
-                output_key=job['output_put_urls'][name].split('.amazonaws.com/',1)[1].split('?',1)[0]
-                self.s3.objects['output-bucket',output_key]=image
+                self.s3.objects[s3_location(job['output_put_urls'][name])]=image
             if self.bad_report: report['artifact_sha256']='f'*64
-            report_key=job['output_put_urls']['report'].split('.amazonaws.com/',1)[1].split('?',1)[0]
-            self.s3.objects['output-bucket',report_key]=json.dumps(report).encode()
+            self.s3.objects[s3_location(job['output_put_urls']['report'])]=json.dumps(report).encode()
         if self.unknown_ack: raise OSError('RunTask response lost')
         return {'tasks':[deepcopy(self.task)]}
 
@@ -125,7 +145,7 @@ class BrowserValidationTest(unittest.TestCase):
         finally:
             self.assertEqual(before,self.store.rows)
             self.assertFalse(any(method=='run_task' for method,_ in self.ecs.calls[calls:]))
-            self.assertFalse(any(method=='presign' for method,_ in self.s3.calls[s3_calls:]))
+            self.assertFalse(any(method in ('presign','put_object') for method,_ in self.s3.calls[s3_calls:]))
 
     def test_exact_input_output_and_successful_readonly_reconciliation(self):
         receipt=self.validate()
@@ -136,8 +156,80 @@ class BrowserValidationTest(unittest.TestCase):
         self.assertTrue(self.reconcile()['verified'])
         self.assertEqual(len(self.ecs.requests),1)
         presigns=[args for method,args in self.s3.calls if method=='presign']
-        self.assertEqual(len(presigns),4)
+        self.assertEqual(len(presigns),5)
         self.assertEqual({args['params']['Bucket'] for args in presigns},{'artifact-bucket','output-bucket'})
+
+    def test_manifest_and_exact_request_are_durable_before_conditional_put(self):
+        def inspect(args):
+            row=next(iter(self.store.rows.values()))
+            self.assertEqual(row['manifest_state'],'put_admitted')
+            self.assertEqual(row['launch_state'],'not_admitted')
+            self.assertEqual(args['Body'],row['job_json'].encode())
+            self.assertEqual(sha256(args['Body']),row['job_sha256'])
+            self.assertEqual(fingerprint(row['request']),row['request_sha256'])
+            envelope=json.loads(row['request']['overrides']['containerOverrides'][0]['environment'][0]['value'])
+            self.assertEqual(set(envelope),{'schema_version','kind','job_get_url','job_sha256','deadline'})
+            self.assertNotIn('artifact_get_url',envelope)
+            self.assertNotIn('output_put_urls',envelope)
+            self.assertFalse(self.ecs.requests)
+        self.s3.before_put=inspect
+        self.assertTrue(self.validate()['verified'])
+
+    def test_unknown_manifest_put_ack_restart_reuses_frozen_object_and_run_request(self):
+        self.s3.unknown_put_ack=True
+        with self.assertRaises(BrowserValidationPending): self.validate()
+        original=deepcopy(next(iter(self.store.rows.values())))
+        self.assertEqual(original['launch_state'],'not_admitted')
+        self.assertFalse(self.ecs.requests)
+        self.assertEqual(sum(method=='put_object' for method,_ in self.s3.calls),1)
+        self.s3.unknown_put_ack=False
+        self.validator=BrowserValidation(self.store,self.ecs,self.s3,self.config)
+        self.assertTrue(self.validate()['verified'])
+        self.assertEqual(self.ecs.requests,[original['request']])
+        self.assertEqual(sum(method=='put_object' for method,_ in self.s3.calls),1)
+        self.assertEqual(sum(method=='presign' for method,_ in self.s3.calls),5)
+
+    def test_tampered_private_manifest_is_rejected_before_launch(self):
+        self.s3.unknown_put_ack=True
+        with self.assertRaises(BrowserValidationPending): self.validate()
+        row=next(iter(self.store.rows.values()))
+        self.s3.objects['output-bucket',row['job_key']]+=b' '
+        self.s3.unknown_put_ack=False
+        with self.assertRaisesRegex(BrowserValidationRejected,'manifest_readback_mismatch'):
+            self.validate()
+        self.assertFalse(self.ecs.requests)
+        self.assertEqual(sum(method=='put_object' for method,_ in self.s3.calls),1)
+
+    def test_prelaunch_readonly_reconciliation_has_explicit_no_launch_proof_without_put(self):
+        self.s3.before_put=lambda args: (_ for _ in ()).throw(OSError('write response unknown'))
+        with self.assertRaises(BrowserValidationPending): self.validate()
+        row=deepcopy(next(iter(self.store.rows.values())))
+        self.assertEqual(row['launch_state'],'not_admitted')
+        result=self.reconcile()
+        self.assertTrue(result['safe_to_resume'])
+        self.assertTrue(result['launch_prewrite_proven'])
+        self.assertEqual(result['manifest_state'],'put_admitted')
+        self.assertFalse(self.ecs.requests)
+        self.s3.before_put=None
+        self.assertTrue(self.validate()['verified'])
+        self.assertEqual(self.ecs.requests[0],row['request'])
+
+    def test_invisible_task_after_launch_admission_never_claims_prewrite_proof(self):
+        self.ecs.unknown_ack=True;self.ecs.hide_tasks=True
+        with self.assertRaises(BrowserValidationPending): self.validate()
+        self.assertEqual(next(iter(self.store.rows.values()))['launch_state'],'admitted')
+        self.assertEqual(self.reconcile(),{'safe_to_resume':True})
+        self.assertEqual(len(self.ecs.requests),1)
+
+    def test_legacy_row_without_launch_marker_cannot_prove_no_task(self):
+        self.ecs.unknown_ack=True;self.ecs.hide_tasks=True
+        with self.assertRaises(BrowserValidationPending): self.validate()
+        key=next(iter(self.store.rows))
+        row=self.store.rows[key]
+        for name in ('launch_state','job_json','job_key','job_sha256','manifest_state','request_sha256'):
+            row.pop(name,None)
+        self.assertEqual(self.reconcile(),{'safe_to_resume':True})
+        self.assertEqual(len(self.ecs.requests),1)
 
     def test_missing_configuration_and_unsafe_task_definition_fail_preflight(self):
         self.config['enabled']=False

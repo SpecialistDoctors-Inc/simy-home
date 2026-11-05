@@ -626,7 +626,10 @@ class ExecutorTests(unittest.TestCase):
         with self.assertRaises(BrowserValidationPending): self.execute(operation)
         self.assertEqual(self.github.branches['dev'],self.github.base)
         self.assertEqual(len(ecs.requests),1)
-        job=json.loads(ecs.requests[0]['overrides']['containerOverrides'][0]['environment'][0]['value'])
+        envelope=json.loads(ecs.requests[0]['overrides']['containerOverrides'][0]['environment'][0]['value'])
+        browser_row=next(value for key,value in self.store.rows.items() if key.startswith('browser-validation:'))
+        job=json.loads(browser_row['job_json'])
+        self.assertEqual(envelope['job_sha256'],sha256(browser_row['job_json'].encode()))
         self.assertEqual(job['package_operation_id'],operation)
         ecs.unknown_ack=False
         result=self.execute(operation)
@@ -637,6 +640,95 @@ class ExecutorTests(unittest.TestCase):
         self.assertEqual(len(preview['browser_validation']['screenshot_keys']),2)
         self.assertTrue(any(method=='head_bucket' for method,_ in s3.calls))
         self.assertEqual(len(validate_calls),1)
+
+    def install_real_browser_fixture(self):
+        from browser_validation import BrowserValidation
+        from test_browser_validation import ACCOUNT, CLUSTER, DEFINITION, IMAGE, FakeECS, FakeS3
+        s3=FakeS3();ecs=FakeECS(s3)
+        config={'enabled':True,'account_id':ACCOUNT,'region':'ap-northeast-1','cluster':CLUSTER,
+            'task_definition':DEFINITION,'image_digest':IMAGE,'container_name':'validator',
+            'subnet_ids':['subnet-12345678'],'security_group_ids':['sg-12345678'],
+            'artifact_bucket':'artifact-bucket','output_bucket':'output-bucket','deadline_seconds':600}
+        self.executor.browser_validator=BrowserValidation(self.store,ecs,s3,config)
+        original=self.artifacts.put_exact
+        def upload(key,data):
+            result=original(key,data);s3.objects['artifact-bucket',key]=data;return result
+        self.artifacts.put_exact=upload
+        workspace,_=self.open()
+        saved=self.execute(self.save(workspace))['result']
+        operation=self.admit('submit_preview',workspace_id=workspace,saved_commit=saved['saved_commit'])
+        return operation,s3,ecs
+
+    def test_cancel_after_private_manifest_put_finishes_without_task_or_dev_write(self):
+        operation,s3,ecs=self.install_real_browser_fixture()
+        s3.before_put=lambda args:self.service.cancel(self.claims,operation)
+        result=self.execute(operation)
+        self.assertEqual(result['status'],'cancelled')
+        self.assertTrue(result['phases']['browser_validation']['not_started'])
+        self.assertTrue(result['phases']['browser_validation']['launch_prewrite_proven'])
+        self.assertNotIn('pending_effect',result)
+        self.assertFalse(ecs.requests)
+        self.assertEqual(self.github.branches['dev'],self.github.base)
+        self.assertFalse(self.preview_publisher.effects)
+        self.assertEqual(sum(method=='put_object' for method,_ in s3.calls),1)
+
+    def test_revocation_after_private_manifest_put_records_no_launch_without_new_effect(self):
+        operation,s3,ecs=self.install_real_browser_fixture()
+        def revoke(args):
+            member=self.store.get('principal:operator')
+            self.store.put('principal:operator',{**member,'disabled':True},member['_version'])
+        s3.before_put=revoke
+        result=self.execute(operation)
+        self.assertEqual(result['status'],'failed')
+        self.assertTrue(result['phases']['browser_validation']['launch_prewrite_proven'])
+        self.assertNotIn('pending_effect',result)
+        self.assertFalse(ecs.requests)
+        self.assertEqual(self.github.branches['dev'],self.github.base)
+
+    def test_cancel_after_unknown_manifest_put_ack_settles_without_new_put_or_task(self):
+        from browser_validation import BrowserValidationPending
+        operation,s3,ecs=self.install_real_browser_fixture()
+        s3.unknown_put_ack=True
+        with self.assertRaises(BrowserValidationPending):self.execute(operation)
+        row=self.store.get('operation:'+operation)
+        self.assertIn('pending_effect',row)
+        self.service.cancel(self.claims,operation)
+        writes=sum(method=='put_object' for method,_ in s3.calls)
+        result=self.execute(operation)
+        self.assertEqual(result['status'],'cancelled')
+        self.assertTrue(result['phases']['browser_validation']['launch_prewrite_proven'])
+        self.assertEqual(sum(method=='put_object' for method,_ in s3.calls),writes)
+        self.assertFalse(ecs.requests)
+
+    def test_cancel_with_missing_manifest_and_no_launch_admission_finishes_readonly(self):
+        from browser_validation import BrowserValidationPending
+        operation,s3,ecs=self.install_real_browser_fixture()
+        s3.before_put=lambda args: (_ for _ in ()).throw(OSError('unknown prelaunch object response'))
+        with self.assertRaises(BrowserValidationPending):self.execute(operation)
+        self.assertFalse(any(key.endswith('/job.json') for bucket,key in s3.objects))
+        self.service.cancel(self.claims,operation)
+        writes=sum(method=='put_object' for method,_ in s3.calls)
+        result=self.execute(operation)
+        self.assertEqual(result['status'],'cancelled')
+        self.assertTrue(result['phases']['browser_validation']['launch_prewrite_proven'])
+        self.assertEqual(sum(method=='put_object' for method,_ in s3.calls),writes)
+        self.assertFalse(ecs.requests)
+        self.assertNotIn('pending_effect',result)
+
+    def test_cancel_after_unknown_invisible_run_task_stays_ambiguous_and_never_relaunches(self):
+        from browser_validation import BrowserValidationPending
+        operation,s3,ecs=self.install_real_browser_fixture()
+        ecs.unknown_ack=True;ecs.hide_tasks=True
+        with self.assertRaises(BrowserValidationPending):self.execute(operation)
+        self.service.cancel(self.claims,operation)
+        with self.assertRaises(ReconciliationRequired):self.execute(operation)
+        result=self.store.get('operation:'+operation)
+        self.assertNotEqual(result['status'],'cancelled')
+        self.assertIn('pending_effect',result)
+        self.assertNotIn('browser_validation',result.get('phases',{}))
+        self.assertEqual(len(ecs.requests),1)
+        self.assertEqual(sum(method=='put_object' for method,_ in s3.calls),1)
+        self.assertEqual(self.github.branches['dev'],self.github.base)
 
     def test_preview_combines_unrelated_dev_changes_and_binds_ci_artifact(self):
         workspace,_ = self.open()
