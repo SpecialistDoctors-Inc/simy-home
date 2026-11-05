@@ -21,6 +21,13 @@ unchanged. Record app/installation/repository IDs in private operator bindings.
 Store the app PEM and a generated webhook secret in a dedicated Secrets Manager
 secret. Never put values in Terraform state, SSM command text, repo or output logs.
 
+For a newly created site repository, inspect its Actions page and complete the
+repository's **Enable Actions on this repository** activation if shown. The REST
+Actions permissions endpoint can report `enabled: true` while this UI activation
+is still pending. Verify a normal App-created pull request or synchronize event
+starts the trusted workflow and produces its exact-head artifact. A manually
+dispatched successful run does not prove automatic validation is working.
+
 ## Google identity application
 
 Create a separate Web application OAuth client named `SIMY HP Local Editor` in

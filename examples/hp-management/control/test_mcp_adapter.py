@@ -214,6 +214,24 @@ class AdapterTests(unittest.TestCase):
         self.assertEqual(value['sub'], self.claims['sub'])
         self.assertNotIn('scope', value)
 
+    def test_google_callback_accepts_known_issuer_and_rejects_issuer_substitution(self):
+        calls = []
+        def callback(state, code):
+            calls.append((state, code))
+            return 'http://127.0.0.1:43123/callback?code=hp-code'
+        self.identity.callback = callback
+        query = {'state': 'state', 'code': 'google-code', 'iss': 'https://accounts.google.com',
+                 'scope': 'openid email', 'authuser': '0', 'hd': 'example.invalid', 'prompt': 'none'}
+        response, _ = self.http('/oauth/google/callback', query=query)
+        self.assertEqual(response['statusCode'], 302)
+        self.assertEqual(calls, [('state', 'google-code')])
+        for issuer in ('https://attacker.invalid', 'https://accounts.google.com.attacker.invalid',
+                       'http://accounts.google.com', ''):
+            with self.subTest(issuer=issuer):
+                response, value = self.http('/oauth/google/callback', query={**query, 'iss': issuer})
+                self.assertEqual((response['statusCode'], value), (400, {'error': 'invalid_request'}))
+        self.assertEqual(calls, [('state', 'google-code')])
+
 
 if __name__ == '__main__':
     unittest.main()

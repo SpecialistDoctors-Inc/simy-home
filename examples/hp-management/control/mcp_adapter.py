@@ -184,7 +184,9 @@ class App:
         if method == 'GET' and path == '/oauth/authorize':
             return self.response(302, headers={'location': self.identity.authorize(query)})
         if method == 'GET' and path == '/oauth/google/callback':
-            fields(query, ('state', 'code'), ('scope', 'authuser', 'prompt', 'hd'))
+            fields(query, ('state', 'code'), ('scope', 'authuser', 'prompt', 'hd', 'iss'))
+            if 'iss' in query and query['iss'] != 'https://accounts.google.com':
+                raise BadRequest()
             return self.response(302, headers={'location': self.identity.callback(query['state'], query['code'])})
         content_type = headers.get('content-type', '').split(';')[0].strip().lower()
         if method == 'POST' and path == '/oauth/register':
