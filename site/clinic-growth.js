@@ -12,6 +12,7 @@ function journeyAudit(d){
  const a=d?.journeyAudit;if(!a||typeof a.headline!=='string'||typeof a.summary!=='string'||typeof a.scope!=='string'||!Array.isArray(a.confirmed)||a.confirmed.some(x=>typeof x!=='string')||!a.proposal||!['heading','body','button','note'].every(k=>typeof a.proposal[k]==='string')||a.version!==1||!/^\d{4}-\d{2}-\d{2}$/.test(a.checkedOn)||!Array.isArray(a.findings)||a.findings.length>8)return null;
  const safe=u=>{try{return new URL(u).protocol==='https:';}catch{return false;}};
  if(!a.findings.every(x=>['title','observation','impact','change'].every(k=>typeof x[k]==='string'&&x[k].length<500)&&Array.isArray(x.sources)&&x.sources.every(y=>safe(y.url)&&typeof y.label==='string')))return null;
+ if(a.confirmedSources&&(!Array.isArray(a.confirmedSources)||!a.confirmedSources.every(s=>safe(s.url)&&typeof s.label==='string')))return null;
  return a;
 }
 function attach(report){const d=discovery(report);if(d&&!report.aiDiscovery)report.aiDiscovery=JSON.parse(JSON.stringify(global.SimyClinicAiObservations.find(x=>x.origin===d.origin)));return report;}
