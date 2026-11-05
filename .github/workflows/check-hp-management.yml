@@ -1,0 +1,65 @@
+name: Check standalone HP management
+
+on:
+  pull_request:
+    paths: ['examples/hp-management/**', 'infra/hp-agent/**', '.github/workflows/check-hp-management.yml']
+  push:
+    branches: [dev]
+    paths: ['examples/hp-management/**', 'infra/hp-agent/**', '.github/workflows/check-hp-management.yml']
+
+permissions:
+  contents: read
+
+jobs:
+  infrastructure:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: hashicorp/setup-terraform@b9cd54a3c349d3f38e8881555d616ced269862dd # v3
+        with:
+          terraform_version: 1.14.0
+      - run: terraform -chdir=infra/hp-agent fmt -check -recursive
+      - run: terraform -chdir=infra/hp-agent init -backend=false
+      - run: terraform -chdir=infra/hp-agent validate
+      - run: python3 -m unittest discover -s infra/hp-agent -p 'test_*.py'
+      - run: bash -n infra/hp-agent/prepare-volume.sh infra/hp-agent/install-runtime.sh infra/hp-agent/upgrade-runtime.sh
+  ledger:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - run: python3 -m unittest discover -s examples/hp-management/runner -p 'test_*.py'
+      - run: git diff --check
+
+  container:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Build the independent service
+        run: docker build --tag hp-agent-ci examples/hp-management/runner
+      - name: Verify the packaged entrypoint and dependencies
+        run: |
+          docker run --rm --network none hp-agent-ci --help
+          docker run --rm --network none --entrypoint python3 hp-agent-ci -c 'import google.auth, google_auth_oauthlib, requests, agent, github_provider, gmail_provider, google_provider'
+      - name: Exercise controller and worker isolation
+        run: |
+          docker run --rm --network none --entrypoint python3 \
+            --cap-drop ALL --cap-add CHOWN --cap-add SETUID --cap-add SETGID \
+            --security-opt no-new-privileges --read-only \
+            --security-opt seccomp=examples/hp-management/runner/seccomp-codex.json \
+            --tmpfs /tmp:rw,noexec,nosuid,nodev,size=64m \
+            --tmpfs /work:rw,exec,nosuid,nodev,size=64m \
+            hp-agent-ci /opt/hp-agent/test_controller_container.py
+      - name: Verify the real Codex sandbox without model credentials
+        run: |
+          # A distinct profile applies only to this disposable test container.
+          # Keep docker-default and the runner's global security settings intact.
+          sudo apparmor_parser -r -W examples/hp-management/runner/apparmor-codex.profile
+          docker run --rm --network none --entrypoint python3 \
+            --cap-drop ALL --cap-add CHOWN --cap-add SETUID --cap-add SETGID \
+            --security-opt no-new-privileges --read-only \
+            --security-opt seccomp=examples/hp-management/runner/seccomp-codex.json \
+            --security-opt apparmor=simy-hp-codex \
+            --env EXPECT_APPARMOR_PROFILE=simy-hp-codex \
+            --tmpfs /tmp:rw,noexec,nosuid,nodev,size=64m \
+            --mount type=volume,target=/work \
+            hp-agent-ci /opt/hp-agent/test_codex_sandbox.py

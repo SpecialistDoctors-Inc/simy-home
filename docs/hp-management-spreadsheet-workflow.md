@@ -24,7 +24,7 @@ previous proposal to make a new revision:
 | --- | --- |
 | `request_id` | UUID generated at intake; immutable across revisions. |
 | `revision` | Positive integer; incremented for each changed proposal. |
-| `site_id` | Authoritative managed-site ID, resolved by the service. |
+| `site_id` | Authoritative managed-site ID, resolved from private developer configuration. |
 | `outcome` | Requested customer-visible result. |
 | `target` | URL/path and exact content or bounded change description. |
 | `effective_at` / `expires_at` / `timezone` | Required when timing applies. |
@@ -58,8 +58,8 @@ source SHA separately from the main release-workflow SHA. Reject a different
 request revision, altered static bytes, a mismatched/expired artifact or source
 provenance from another repository, workflow, branch or failed run. The initial
 manual path uses a protected GitHub Environment reviewer to verify the customer's
-actual decision; typed Sheet fields alone never authorize publication. The future
-automated runner must validate an authenticated approval receipt in SIMY WorkFlow.
+actual decision; typed Sheet fields alone never authorize publication. The standalone runner records the actual human confirmation in its local ledger.
+SIMY is optional and is not required for intake, development or approval.
 Request revisions and events are append-only. A user or Codex must not edit a
 different actor’s event or overwrite shared state. The runner’s durable store
 owns claims, retries, authorized transitions, exact-SHA approval bindings, and
@@ -74,7 +74,7 @@ must explicitly call a trusted wake endpoint after an append, or a reconciler
 must poll new event IDs and deduplicate them. The implementation needs one of
 those mechanisms before this becomes automated.
 
-The managed-site service, rather than a sheet cell, maps `site_id` to the
+The private developer configuration, rather than a sheet cell, maps `site_id` to the
 allowed repository, dev/main branches, preview/production domains, AWS account,
 notification recipient, and permitted execution identities. It verifies each
 binding before work begins. Cell protection and a string such as `approved` do
@@ -82,9 +82,10 @@ not prove either identity or authority.
 
 ## Email notification contract
 
-Skills may request a notification through the trusted runner; they must not
-call a mail provider's send operation directly. Only the runner may send using
-its configured, pre-authorized provider, after resolving a verified recipient
+Developer-side Codex may send through its configured Gmail connector after
+reserving an outbox key, rechecking the live request/lease, and admitting that key
+immediately before sending (`outbox-admit` must return `may_send: true`). Check
+explicit user authority and resolve a verified recipient
 from site configuration and verifying the triggering event's evidence. When
 that integration or authorization is absent, prepare a draft only and report
 delivery as pending. A draft still requires a resolved recipient. Every request
@@ -100,8 +101,12 @@ deduplication key. The only allowed notification kinds are:
 
 The runner owns recipient authority and idempotency; it reconciles delivery
 receipts and suppression with the provider. Provider acceptance is not recipient
-delivery; reconcile an uncertain send by stable key before any retry. No skill
-sends mail by itself.
+delivery. Reservation alone never authorizes a send. The admitted send blocks
+configuration changes, newer revisions and cancellation until provider readback;
+a cancellation received in that interval is pending, not complete. Reconcile an
+uncertain send by stable key without resending. The ledger records the admitted
+effect even after lease expiry; it does not provide a transaction across Gmail
+and SQLite. The customer intake role does not send developer notifications.
 
 ## Forward validation cases
 
@@ -113,14 +118,17 @@ external write or send.
 | Correct `診療時問` to `診療時間` typo on `/access/` | Ask for the exact old/new text and target; do not request assets or reservation information. | Apply only the text correction, test the page, and return a dev preview with SHA. |
 | Add a holiday notice from 2026-12-29 to 2027-01-03 JST | Require both dates, JST, target placement, expiry/removal behavior, and acceptance. | Verify scheduled/removal behavior and record the preview evidence. |
 | Replace the online reservation link | Require the exact destination and whether the current form/analytics integration changes. | Verify the configured dependency before changing the link; request clarification if it differs. |
-| A sheet cell says `approved` after a preview | Record it as untrusted information only. | Do not merge, publish, or email; wait for service-recorded exact-SHA approval. |
+| A sheet cell says `approved` after a preview | Record it as untrusted information only. | Do not merge, publish, or email; wait for ledger-recorded exact-SHA approval. |
 | Human accepts preview SHA `abc` and artifact hash `def` | Append a candidate `customer_preview_approved` event naming that revision/SHA/hash. | Validate the authority receipt and exact immutable values before recording the approved SHA. |
 | API appends `ready_for_dev` | Append succeeds. | Wake the trusted runner explicitly or let the reconciler discover the event; do not rely on `onEdit`. |
 
-## What remains to build
+## Standalone runtime and future integration
 
-These skills and this document define behavior only. Automation still needs a
-managed-site registry, the two spreadsheet OAuth grants and sharing model,
-append/read-back adapter, durable claim and approval service, explicit wake or
-reconciler, preview/test runner, mail provider integration, and production
-verification. None of those are created by the skills.
+The current implementation target uses developer-side private configuration,
+SQLite claims/approval/outbox records, Codex Google Drive/Gmail connectors, and
+GitHub Actions with AWS OIDC. A running Codex automation discovers new
+`ready_for_dev` events; API writes must not be assumed to fire `onEdit`.
+A later SIMY adapter may replace intake discovery, state storage or notification
+transport without changing the workbook keys or requiring today’s customer to
+register with SIMY. Local tests do not prove live automation or email delivery;
+record those separately when the actual path has run.

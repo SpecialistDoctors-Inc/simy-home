@@ -14,6 +14,11 @@
 # Logs
 *.log
 
+# Local browser test dependencies and reports
+node_modules/
+playwright-report/
+test-results/
+
 # Local SIMY Quality Monitor evidence
 proof.json
 proof.json.diagnostics.json
@@ -25,3 +30,5 @@ __pycache__/
 
 # Local sample-clinic test evidence (not application source)
 /output/sample-clinic/
+/output/hp-always-on-20261103/
+/output/hp-recovery-20261103/
