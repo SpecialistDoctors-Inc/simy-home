@@ -319,6 +319,10 @@ class ServiceTests(unittest.TestCase):
 
     def test_nonce_is_only_private_metadata_and_persisted_as_hash(self):
         approval_id, nonce, response = self.prepare()
+        preview = self.store.get('preview:' + self.preview_id)
+        self.assertEqual(response['structuredContent']['site_id'], self.site_id)
+        self.assertEqual(response['structuredContent']['source_commit'], preview['source_commit'])
+        self.assertEqual(response['structuredContent']['artifact_sha256'], preview['artifact_sha256'])
         self.assertNotIn(nonce, json.dumps(response['structuredContent']))
         self.assertNotIn(nonce, json.dumps(response['content']))
         approval = self.store.get('approval:' + approval_id)

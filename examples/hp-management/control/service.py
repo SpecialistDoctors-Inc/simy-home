@@ -262,8 +262,9 @@ class Service:
         # confirm checks the authenticated subject, live ACL and immutable proof.
         message = ('接続テストです。公開は行いません。確認カードの接続確認ボタンを押してください。'
             if mode == 'connection_test' else '確認した内容を公開する場合は、確認カードの公開ボタンを押してください。')
-        return {'structuredContent': {'approval_id': approval_id, 'mode': mode, 'site_name': site['name'],
+        return {'structuredContent': {'approval_id': approval_id, 'mode': mode, 'site_id': site_id, 'site_name': site['name'],
             'preview_id': preview_id, 'preview_url': preview['url'], 'production_url': site['prod_url'],
+            'source_commit': record['source_commit'], 'artifact_sha256': record['artifact_sha256'],
             'summary': preview['summary'], 'expires_at': record['expires_at']},
             '_meta': {'confirmation_nonce': nonce}, 'content': [{'type': 'text', 'text': message}]}
 
