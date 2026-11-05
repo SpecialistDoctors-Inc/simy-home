@@ -159,11 +159,22 @@ class AdapterTests(unittest.TestCase):
         self.assertEqual(value['result']['structuredContent']['status'], 'queued')
         self.assertNotIn(nonce, json.dumps(value))
 
-    def test_publication_disabled_remains_fail_closed(self):
+    def test_disabled_publication_card_tests_connection_without_queueing(self):
         self.service.publication_enabled = False
         response, value = self.tool('hp_prepare_publish', {'site_id': 'sample-site', 'preview_id': self.preview_id})
-        self.assertTrue(value['result']['isError'])
-        self.assertEqual(value['result']['structuredContent']['error'], 'publication_not_enabled')
+        result = value['result']
+        self.assertEqual(result['structuredContent']['mode'], 'connection_test')
+        self.assertEqual(result['_meta']['ui']['resourceUri'], UI_URI)
+        nonce = result['_meta']['confirmation_nonce']
+        self.assertNotIn(nonce, json.dumps(result['structuredContent']))
+        self.assertNotIn(nonce, json.dumps(result['content']))
+        arguments = {'approval_id': result['structuredContent']['approval_id'], 'confirmation_nonce': nonce}
+        response, value = self.tool('hp_confirm_publish', arguments)
+        self.assertEqual(value['result']['structuredContent']['kind'], 'connection_test')
+        self.assertEqual(value['result']['structuredContent']['status'], 'completed')
+        self.assertNotIn(nonce, json.dumps(value))
+        self.assertFalse(any(key.startswith(('operation:', 'publication-target:')) for key in self.store.rows))
+        self.assertEqual(self.store.pending(now=self.now), [])
 
     def test_strict_bounded_body_duplicate_keys_and_form_values(self):
         for body in ['[]', '{bad', '{"jsonrpc":"2.0","jsonrpc":"2.0"}', '{"jsonrpc":"2.0","id":1,"method":"ping","params":{"x":NaN}}']:

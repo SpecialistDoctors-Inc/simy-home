@@ -20,6 +20,7 @@ async function mount(nextMode: string) {
       if (mode === 'rejected') return { isError: true, content: [{ type: 'text', text: 'confirmation_stale' }] };
       if (mode === 'ambiguous') throw new Error('Simulated ambiguous transport failure');
       if (params.arguments?.confirmation_nonce !== nonce) return { isError: true, content: [{ type: 'text', text: 'confirmation_invalid' }] };
+      if (mode === 'connection_test') return { content: [], structuredContent: { kind: 'connection_test', status: 'completed', approval_id: '11111111-1111-4111-8111-111111111111' } };
       const reporting = ['reporting', 'needs_attention', 'published_after_cancel_or_revocation'].includes(mode);
       return { content: [], structuredContent: { operation_id: operationId, kind: 'publish', status: reporting ? mode : 'queued', ...(reporting ? { result: { kind: 'published', receipt: { verified: true } } } : {}) } };
     }
@@ -30,7 +31,7 @@ async function mount(nextMode: string) {
   bridge.oninitialized = async () => {
     status.textContent = '接続済み（ローカルの模擬ホスト）';
     await bridge!.sendToolInput({ arguments: { site_id: 'example-site', preview_id: '33333333-3333-4333-8333-333333333333' } });
-    await bridge!.sendToolResult({ content: [], structuredContent: { approval_id: '11111111-1111-4111-8111-111111111111', site_name: 'サンプル医院', summary: '診療時間のお知らせを更新します。\nプレビューで文章・リンクをご確認ください。', preview_url: 'https://preview.example.invalid/current', production_url: 'https://site.example.invalid', expires_at: Math.floor(Date.now() / 1000) + (mode === 'expired' ? -1 : 600) }, _meta: mode === 'missing' ? {} : { confirmation_nonce: nonce } });
+    await bridge!.sendToolResult({ content: [], structuredContent: { mode: mode === 'connection_test' ? 'connection_test' : 'publish', approval_id: '11111111-1111-4111-8111-111111111111', site_name: 'サンプル医院', summary: '診療時間のお知らせを更新します。\nプレビューで文章・リンクをご確認ください。', preview_url: 'https://preview.example.invalid/current', production_url: 'https://site.example.invalid', expires_at: Math.floor(Date.now() / 1000) + (mode === 'expired' ? -1 : 600) }, _meta: mode === 'missing' ? {} : { confirmation_nonce: nonce } });
   };
   await bridge.connect(new PostMessageTransport(frame.contentWindow!, frame.contentWindow!));
   frame.src = '/publish.html';

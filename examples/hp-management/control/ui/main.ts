@@ -19,7 +19,9 @@ function render(view: Readonly<View>) {
   element('operation').textContent = view.operationId ? `操作ID: ${view.operationId}` : '';
   element('expiry').textContent = view.expiresAt && view.phase === 'ready' ? `確認期限: ${new Date(view.expiresAt).toLocaleTimeString('ja-JP')}` : '';
   confirm.disabled = !view.connected || view.phase !== 'ready';
-  confirm.textContent = view.phase === 'sending' ? '送信中…' : 'この内容の公開を依頼する';
+  element('mode').textContent = view.mode === 'connection_test' ? '接続テスト・公開しません' : 'ホームページ管理';
+  element('disclaimer').textContent = view.mode === 'connection_test' ? 'このカードは接続の確認専用です。公開依頼は作成されません。' : '公開依頼の受付と公開完了は異なります。完了後に公開先の表示をご確認ください。';
+  confirm.textContent = view.phase === 'sending' ? '送信中…' : view.mode === 'connection_test' ? '接続を確認する' : 'この内容の公開を依頼する';
   refresh.hidden = !view.operationId;
   refresh.disabled = !view.connected;
   link('preview', view.preview); link('production', view.production);

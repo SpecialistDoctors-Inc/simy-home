@@ -249,10 +249,9 @@ class Service:
         preview = self.store.get('preview:' + uuid(preview_id))
         if not preview or preview['site_id'] != site_id or preview.get('status') != 'verified' or site.get('current_preview') != preview_id:
             raise Rejected('preview_not_current')
-        if not self.publication_enabled:
-            raise Rejected('publication_not_enabled')
+        mode = 'publish' if self.publication_enabled else 'connection_test'
         approval_id, nonce = str(uuid4()), secrets.token_urlsafe(32)
-        record = {'approval_id': approval_id, 'subject': claims['sub'], 'site_id': site_id,
+        record = {'approval_id': approval_id, 'mode': mode, 'subject': claims['sub'], 'site_id': site_id,
             'preview_id': preview_id, 'source_commit': preview['source_commit'], 'artifact_sha256': preview['artifact_sha256'],
             'member_version': member['_version'], 'site_config_version': site['config_version'],
             'expected_publication': site.get('current_publication'), 'nonce_hash': fingerprint(nonce),
@@ -261,27 +260,46 @@ class Service:
         self.store.put('approval:' + approval_id, record)
         # The host sends _meta to the app only. It is not permission by itself;
         # confirm checks the authenticated subject, live ACL and immutable proof.
-        return {'structuredContent': {'approval_id': approval_id, 'site_name': site['name'],
+        message = ('接続テストです。公開は行いません。確認カードの接続確認ボタンを押してください。'
+            if mode == 'connection_test' else '確認した内容を公開する場合は、確認カードの公開ボタンを押してください。')
+        return {'structuredContent': {'approval_id': approval_id, 'mode': mode, 'site_name': site['name'],
             'preview_id': preview_id, 'preview_url': preview['url'], 'production_url': site['prod_url'],
             'summary': preview['summary'], 'expires_at': record['expires_at']},
-            '_meta': {'confirmation_nonce': nonce}, 'content': [{'type': 'text', 'text': '確認した内容を公開する場合は、確認カードの公開ボタンを押してください。'}]}
+            '_meta': {'confirmation_nonce': nonce}, 'content': [{'type': 'text', 'text': message}]}
 
     def confirm_publish(self, claims, approval_id, nonce):
         key = 'approval:' + uuid(approval_id); approval = self.store.get(key)
         if not approval or approval['subject'] != claims['sub'] or not isinstance(nonce, str) or not secrets.compare_digest(approval['nonce_hash'], fingerprint(nonce)):
             raise Rejected('confirmation_invalid')
         member, site = self.authorized(claims, approval['site_id'], 'publish')
-        if not self.publication_enabled:
-            raise Rejected('publication_not_enabled')
-        if approval['state'] == 'accepted':
-            return self.operation(claims, approval['operation_id'])
-        if approval['state'] != 'prepared' or approval['expires_at'] <= self.clock():
+        mode = approval.get('mode', 'publish')  # Existing publication approvals remain publication-only.
+        if mode not in ('publish', 'connection_test'):
+            raise Rejected('confirmation_invalid')
+        if mode == 'publish':
+            if not self.publication_enabled:
+                raise Rejected('publication_not_enabled')
+            if approval['state'] == 'accepted':
+                return self.operation(claims, approval['operation_id'])
+        valid_states = ('prepared', 'connection_tested') if mode == 'connection_test' else ('prepared',)
+        if approval['state'] not in valid_states or approval['expires_at'] <= self.clock():
             raise Rejected('confirmation_expired')
         if member['_version'] != approval['member_version'] or site['config_version'] != approval['site_config_version'] or site.get('current_preview') != approval['preview_id'] or site.get('current_publication') != approval['expected_publication'] or main_commit(site) != approval['expected_main_commit']:
             raise Rejected('confirmation_stale')
         preview = self.store.get('preview:' + approval['preview_id'])
         if not preview or preview['status'] != 'verified' or preview['artifact_sha256'] != approval['artifact_sha256'] or preview['source_commit'] != approval['source_commit']:
             raise Rejected('confirmation_stale')
+        if mode == 'connection_test':
+            # A test card can never become publication authority after a gate change.
+            # The approval row is the durable audit; there is no operation or queue entry.
+            if approval['state'] == 'connection_tested':
+                return approval['result']
+            result = {'kind': 'connection_test', 'status': 'completed', 'approval_id': approval_id,
+                'preview_id': approval['preview_id'], 'completed_at': int(self.clock())}
+            self.store.transact([Write(key, {**approval, 'state': 'connection_tested', 'result': result}, approval['_version']),
+                Check('principal:' + claims['sub'], member['_version']),
+                Check('site:' + approval['site_id'], site['_version']),
+                Check('preview:' + approval['preview_id'], preview['_version'])])
+            return result
         target_key = 'publication-target:' + approval['site_id'] + ':' + approval['preview_id']
         target = self.store.get(target_key)
         replacement_checks = []

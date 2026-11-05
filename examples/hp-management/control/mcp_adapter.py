@@ -42,8 +42,8 @@ DESCRIPTIONS = {
     'hp_get_operation': 'Read an owned operation. Queued or running is not complete.',
     'hp_cancel_operation': 'Request cancellation of an owned operation; active effects may require reconciliation.',
     'hp_resume_operation': 'Explicitly resume the same needs-attention execution without changing its input or approval. Reuse recovery_id on retries. May continue previously approved publication; reporting-only attention is not resumable here.',
-    'hp_prepare_publish': 'Prepare a short-lived confirmation card for one current verified preview. Does not publish.',
-    'hp_confirm_publish': 'App-only confirmation of an exact preview using the private card nonce. Queues publication, does not claim completion.',
+    'hp_prepare_publish': 'Prepare a short-lived card for one current verified preview. When publication is disabled this is a connection test only; it cannot request publication.',
+    'hp_confirm_publish': 'App-only confirmation using the private card nonce. Connection-test cards only audit the connection; publication cards queue publication without claiming completion.',
 }
 READ_TOOLS = {'hp_profile', 'hp_list_sites', 'hp_get_operation'}
 SAFE_REJECTIONS = set('authentication_required access_revoked invalid_site insufficient_scope site_access_denied site_unavailable invalid_id invalid_input invalid_digest workspace_access_denied unsupported_operation operation_id_conflict invalid_commit workspace_changed invalid_drive_file operation_access_denied preview_not_current publication_not_enabled confirmation_invalid confirmation_expired confirmation_stale resumption_stale resumption_id_conflict resumption_cancel_requested resumption_not_allowed resumption_approval_invalid resumption_site_busy'.split())

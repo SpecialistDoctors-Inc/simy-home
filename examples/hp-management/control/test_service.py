@@ -331,6 +331,107 @@ class ServiceTests(unittest.TestCase):
             self.service.confirm_publish(dict(self.claims, sub='other-subject'), approval_id, nonce)
         self.assertEqual(self.operations(), {})
 
+    def test_connection_test_audits_only_and_never_becomes_publication(self):
+        self.service.publication_enabled = False
+        approval_id, nonce, response = self.prepare()
+        self.assertEqual(response['structuredContent']['mode'], 'connection_test')
+        self.assertIn('公開は行いません', response['content'][0]['text'])
+        self.assertNotIn(nonce, json.dumps(response['structuredContent']))
+        before = deepcopy(self.store.rows)
+        self.service.publication_enabled = True
+        result = self.service.confirm_publish(self.claims, approval_id, nonce)
+        self.assertEqual(result, {'kind': 'connection_test', 'status': 'completed', 'approval_id': approval_id,
+            'preview_id': self.preview_id, 'completed_at': self.now})
+        audit = self.store.get('approval:' + approval_id)
+        self.assertEqual((audit['mode'], audit['state'], audit['result']), ('connection_test', 'connection_tested', result))
+        self.assertNotIn(nonce, json.dumps(audit))
+        self.assertEqual(set(self.store.rows), set(before))
+        for key in before:
+            if key != 'approval:' + approval_id:
+                self.assertEqual(self.store.rows[key], before[key])
+        self.assertEqual(self.operations(), {})
+        self.assertEqual(self.store.pending(now=self.now), [])
+        tested = deepcopy(self.store.rows)
+        self.service.publication_enabled = False
+        self.assertEqual(self.service.confirm_publish(self.claims, approval_id, nonce), result)
+        self.assertEqual(self.store.rows, tested)
+        self.service.publication_enabled = True
+        normal_id, normal_nonce, response = self.prepare()
+        self.assertEqual(response['structuredContent']['mode'], 'publish')
+        self.assertEqual(self.service.confirm_publish(self.claims, normal_id, normal_nonce)['kind'], 'publish')
+        self.assertEqual(len(self.operations()), 1)
+
+    def test_connection_test_rejects_nonce_actor_scope_and_unverified_preview(self):
+        self.service.publication_enabled = False
+        approval_id, nonce, _ = self.prepare()
+        original = deepcopy(self.store.rows)
+        for claims, supplied in [(self.claims, 'wrong'), (dict(self.claims, sub='other'), nonce),
+                                 (dict(self.claims, scope='hp:read'), nonce)]:
+            with self.subTest(claims=claims), self.assertRaises(Rejected):
+                self.service.confirm_publish(claims, approval_id, supplied)
+            self.assertEqual(self.store.rows, original)
+        self.update('preview:' + self.preview_id, status='superseded')
+        with self.assertRaisesRegex(Rejected, 'preview_not_current'):
+            self.prepare()
+
+    def test_connection_test_first_confirmation_and_replay_recheck_live_bindings(self):
+        self.service.publication_enabled = False
+        mutations = [('site:' + self.site_id, dict(current_preview=str(uuid4()))),
+            ('site:' + self.site_id, dict(config_version=2)),
+            ('site:' + self.site_id, dict(current_main_commit='e' * 40)),
+            ('site:' + self.site_id, dict(current_publication='another')),
+            ('preview:' + self.preview_id, dict(artifact_sha256='f' * 64)),
+            ('preview:' + self.preview_id, dict(source_commit='f' * 40)),
+            ('preview:' + self.preview_id, dict(status='superseded')),
+            ('principal:' + self.claims['sub'], dict(disabled=True)),
+            ('principal:' + self.claims['sub'], dict(sites={self.site_id: ['read', 'edit']}))]
+        fixture = deepcopy(self.store.rows)
+        for tested in (False, True):
+            for key, changes in mutations:
+                with self.subTest(tested=tested, changes=changes):
+                    self.store.rows = deepcopy(fixture)
+                    approval_id, nonce, _ = self.prepare()
+                    if tested:
+                        self.service.confirm_publish(self.claims, approval_id, nonce)
+                    self.update(key, **changes)
+                    before = deepcopy(self.store.rows)
+                    with self.assertRaises(Rejected):
+                        self.service.confirm_publish(self.claims, approval_id, nonce)
+                    self.assertEqual(self.store.rows, before)
+            self.store.rows = deepcopy(fixture)
+            approval_id, nonce, _ = self.prepare()
+            if tested:
+                self.service.confirm_publish(self.claims, approval_id, nonce)
+            self.now += 600
+            with self.assertRaisesRegex(Rejected, 'expired'):
+                self.service.confirm_publish(self.claims, approval_id, nonce)
+
+    def test_connection_test_completion_is_atomic_against_revocation(self):
+        self.service.publication_enabled = False
+        approval_id, nonce, _ = self.prepare()
+        self.race_before_transaction(lambda: self.update('principal:' + self.claims['sub'], disabled=True))
+        with self.assertRaises(Conflict):
+            self.service.confirm_publish(self.claims, approval_id, nonce)
+        self.assertEqual(self.store.get('approval:' + approval_id)['state'], 'prepared')
+        self.assertEqual(self.operations(), {})
+
+    def test_connection_test_response_loss_replays_durable_completion(self):
+        self.service.publication_enabled = False
+        approval_id, nonce, _ = self.prepare()
+        original = self.store.transact
+        def lost(writes):
+            original(writes)
+            raise OSError('response lost after audit commit')
+        self.store.transact = lost
+        with self.assertRaises(OSError):
+            self.service.confirm_publish(self.claims, approval_id, nonce)
+        self.store.transact = original
+        before = deepcopy(self.store.rows)
+        result = self.service.confirm_publish(self.claims, approval_id, nonce)
+        self.assertEqual(result, before['approval:' + approval_id]['result'])
+        self.assertEqual(self.store.rows, before)
+        self.assertEqual(self.operations(), {})
+
     def test_double_confirmation_returns_same_queued_operation(self):
         approval_id, nonce, response = self.prepare()
         first = self.service.confirm_publish(self.claims, approval_id, nonce)
@@ -370,7 +471,9 @@ class ServiceTests(unittest.TestCase):
             self.service.confirm_publish(self.claims, approval_id, nonce)
         self.service.publication_enabled = False
         with self.assertRaisesRegex(Rejected, 'not_enabled'):
-            self.service.prepare_publish(self.claims, self.site_id, self.preview_id)
+            self.service.confirm_publish(self.claims, approval_id, nonce)
+        _, _, test_card = self.prepare()
+        self.assertEqual(test_card['structuredContent']['mode'], 'connection_test')
         self.assertEqual(self.operations(), {})
 
     def test_concurrent_revocation_before_confirm_transaction_wins_atomically(self):
