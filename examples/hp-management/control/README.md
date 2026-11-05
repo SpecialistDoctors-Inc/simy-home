@@ -5,10 +5,15 @@ service stores authorized changes in a private GitHub repository, validates the
 exact artifact, publishes it on explicit authenticated approval, and reports
 results. It never invokes Codex, another model, or customer build scripts.
 
-**State:** implementation and isolated verification; real Google/GitHub App
-connections and the actual Codex confirmation host are not accepted yet. All
-renderer/preview/production launch gates default to false. The existing accepted
-site/service has not been cut over.
+**State (2026-11-06):** real Google/GitHub connections, customer-local draft
+save, exact-artifact dev preview, recipient inbox arrival, and a real post-GitHub
+process crash followed by original-message AWS recovery have been verified.
+Validation and dev preview are enabled; production remains disabled. The old dev
+writer is fenced; the old production writer/runtime remains in place. Actual
+Codex conversation-host confirmation remains an acceptance gate. The local
+floating controls have passed real-browser connection confirmation, automatic
+reload and process-crash recovery with the installed package. Production is
+still disabled; a no-publication connection test is not publication acceptance.
 
 ## Boundaries
 
@@ -54,6 +59,15 @@ writes. Publication already completed externally is recorded as a factual
 revocation, attention and the site block remain; this does not claim cancellation
 rolled back publication.
 
+If a confirmation response is lost, `hp_get_confirmation` reads the original
+owned approval and any existing operation without returning its nonce. A
+`prepared` read does not establish that an in-flight confirmation had no effect.
+Approval audits retain their records alongside operations; their original
+confirmation deadline still limits new confirmation. Explicit
+`hp_cancel_confirmation` atomically withdraws an unaccepted approval. If another
+surface already requested the same publication, readback still reports that
+existing operation; withdrawal never rolls back an accepted publication.
+
 Requests and Events record each local operation with its own operation UUID and
 revision 1. Their `local_*` states never activate the old cloud-editor intake.
 
@@ -88,8 +102,8 @@ account; tshiwaku onboarding remains deferred.
 
 ## Local checks
 
-Install the hash-locked `requirements.lock` and isolated `moto[dynamodb,sqs]==5.1.17`
-test dependency, then run Python3.12 unittest discovery in this directory. UI uses
+Install the hash-locked `requirements.lock` and the pinned dependencies in
+`requirements-test.txt`, then run Python3.12 unittest discovery in this directory. UI uses
 `npm ci --ignore-scripts`, `npm test`, `npm run typecheck`, `npm run build`.
 `build_lambda.py --verify-runtime` produces a source-hashed package and imports
 it in a pinned official Lambda image with network disabled. The renderer has a
