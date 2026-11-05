@@ -73,8 +73,8 @@ class DynamoStore:
         result = {'pk': {'S': key}, 'body': {'S': json.dumps(value, ensure_ascii=False, separators=(',', ':'))},
                   'version': {'N': str(version)}}
         # Confirmation expiry limits new approval; it must not delete the audit
-        # needed by an accepted operation or a client recovering its lost reply.
-        retained_confirmation = key.startswith('approval:') and value.get('state') in ('accepted', 'connection_tested')
+        # a returning client needs to reconcile or atomically withdraw a lost reply.
+        retained_confirmation = key.startswith('approval:')
         if value.get('expires_at') is not None and not retained_confirmation:
             result['expires_at'] = {'N': str(int(value['expires_at']))}
         if value.get('status') == 'needs_attention' or value.get('reporting_state') == 'needs_attention':

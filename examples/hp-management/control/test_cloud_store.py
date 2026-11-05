@@ -75,12 +75,12 @@ class CloudStoreTests(unittest.TestCase):
         item=self.client.get_item(TableName=self.store.table,Key={'pk':{'S':'operation:report'}})['Item']
         self.assertNotIn('attention_state',item)
 
-    def test_accepted_confirmation_retains_audit_without_extending_confirmation_expiry(self):
-        for state in ('accepted', 'connection_tested'):
+    def test_confirmation_audit_retention_does_not_extend_approval_expiry(self):
+        for state in ('accepted', 'connection_tested', 'cancelled'):
             key = 'approval:' + state
             prepared = self.store.put(key, {'state': 'prepared', 'expires_at': 1600})
             item = self.client.get_item(TableName=self.store.table, Key={'pk': {'S': key}})['Item']
-            self.assertEqual(item['expires_at'], {'N': '1600'})
+            self.assertNotIn('expires_at', item)
             accepted = self.store.put(key, {**prepared, 'state': state}, prepared['_version'])
             item = self.client.get_item(TableName=self.store.table, Key={'pk': {'S': key}})['Item']
             self.assertNotIn('expires_at', item)

@@ -32,6 +32,7 @@ TOOL_FIELDS = {
     'hp_resume_operation': ('operation_id', 'recovery_id'),
     'hp_prepare_publish': ('site_id', 'preview_id'),
     'hp_get_confirmation': ('approval_id',),
+    'hp_cancel_confirmation': ('approval_id',),
     'hp_confirm_publish': ('approval_id', 'confirmation_nonce'),
 }
 DESCRIPTIONS = {
@@ -45,6 +46,7 @@ DESCRIPTIONS = {
     'hp_resume_operation': 'Explicitly resume the same needs-attention execution without changing its input or approval. Reuse recovery_id on retries. May continue previously approved publication; reporting-only attention is not resumable here.',
     'hp_prepare_publish': 'Prepare a short-lived card for one current verified preview. When publication is disabled this is a connection test only; it cannot request publication.',
     'hp_get_confirmation': 'Read an owned confirmation and its existing operation after a lost response. Never returns a private nonce. A prepared result is not authority to resend confirmation.',
+    'hp_cancel_confirmation': 'Atomically withdraw an unaccepted owned confirmation. An accepted publication is returned unchanged, not rolled back or cancelled. Re-read the same approval after uncertain results.',
     'hp_confirm_publish': 'App-only confirmation using the private card nonce. Connection-test cards only audit the connection; publication cards queue publication without claiming completion.',
 }
 READ_TOOLS = {'hp_profile', 'hp_list_sites', 'hp_get_operation', 'hp_get_confirmation'}
@@ -99,7 +101,7 @@ def tool_definitions():
         result.append({'name': name, 'description': DESCRIPTIONS[name], 'inputSchema': schema(properties),
             'annotations': {'readOnlyHint': readonly, 'destructiveHint': name in ('hp_confirm_publish', 'hp_resume_operation'),
                 'idempotentHint': name != 'hp_prepare_publish', 'openWorldHint': False},
-            'securitySchemes': [{'type': 'oauth2', 'scopes': ['hp:read' if readonly else 'hp:write']}],
+            'securitySchemes': [{'type': 'oauth2', 'scopes': ['hp:read', 'hp:write'] if name == 'hp_cancel_confirmation' else ['hp:read' if readonly else 'hp:write']}],
             '_meta': meta})
     return result
 
@@ -297,6 +299,8 @@ class App:
             return result
         if name == 'hp_get_confirmation':
             return tool_result(self.service.confirmation(claims, arguments['approval_id']))
+        if name == 'hp_cancel_confirmation':
+            return tool_result(self.service.cancel_confirmation(claims, arguments['approval_id']))
         if name == 'hp_confirm_publish':
             # The official host enforces app-only exposure; Service binds this
             # nonce to the OAuth subject, live membership and exact artifact.

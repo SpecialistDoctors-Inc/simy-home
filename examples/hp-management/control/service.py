@@ -281,18 +281,33 @@ class Service:
         elif approval['state'] == 'connection_tested':
             result['result'] = {key: approval['result'][key] for key in
                 ('kind', 'status', 'approval_id', 'preview_id', 'completed_at')}
-        elif approval['state'] == 'prepared':
+        elif approval['state'] in ('prepared', 'cancelled'):
             # Another confirmation surface may already have requested these same
             # bytes. Read that factual operation without accepting this card.
             target = self.store.get('publication-target:' + approval['site_id'] + ':' + approval['preview_id']) if result['mode'] == 'publish' else None
             if target and target.get('subject') == claims['sub'] and target.get('artifact_sha256') == approval['artifact_sha256']:
                 result['state'] = 'already_requested'
                 result['operation'] = self.operation(claims, target['operation_id'])
-            elif approval['expires_at'] <= self.clock():
+            elif approval['state'] == 'prepared' and approval['expires_at'] <= self.clock():
                 result['state'] = 'expired'
         # A prepared read is not proof that an in-flight confirmation cannot
         # still commit. Clients preserve uncertainty and never resend from it.
         return result
+
+    def cancel_confirmation(self, claims, approval_id):
+        key = 'approval:' + uuid(approval_id)
+        approval = self.store.get(key)
+        if not approval or approval['subject'] != claims.get('sub'):
+            raise Rejected('confirmation_invalid')
+        member, site = self.authorized(claims, approval['site_id'], 'publish')
+        self.authorized(claims, approval['site_id'])  # Readback must be authorized before mutation.
+        if approval['state'] == 'prepared':
+            # Competes atomically with confirm's acceptance. Expiry alone cannot
+            # prove that an earlier in-flight confirm will not still commit.
+            self.store.transact([Write(key, {**approval, 'state': 'cancelled'}, approval['_version']),
+                Check('principal:' + claims['sub'], member['_version']),
+                Check('site:' + approval['site_id'], site['_version'])])
+        return self.confirmation(claims, approval_id)
 
     def confirm_publish(self, claims, approval_id, nonce):
         key = 'approval:' + uuid(approval_id); approval = self.store.get(key)

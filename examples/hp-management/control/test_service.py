@@ -387,6 +387,80 @@ class ServiceTests(unittest.TestCase):
         self.assertEqual(self.store.rows, before)
         self.assertEqual(self.operations(), {})
 
+    def test_withdrawal_blocks_late_confirmation_and_replays_without_publication(self):
+        approval, nonce, _ = self.prepare()
+        result = self.service.cancel_confirmation(self.claims, approval)
+        self.assertEqual(result['state'], 'cancelled')
+        self.assertNotIn(nonce, json.dumps(result))
+        before = deepcopy(self.store.rows)
+        self.assertEqual(self.service.cancel_confirmation(self.claims, approval), result)
+        self.assertEqual(self.store.rows, before)
+        with self.assertRaisesRegex(Rejected, 'confirmation_expired'):
+            self.service.confirm_publish(self.claims, approval, nonce)
+        self.assertEqual(self.operations(), {})
+        # An expired but unresolved record can also be withdrawn definitively.
+        expired, _, _ = self.prepare()
+        self.now += 601
+        self.assertEqual(self.service.cancel_confirmation(self.claims, expired)['state'], 'cancelled')
+
+    def test_withdrawal_preserves_accepted_operation_and_connection_result(self):
+        approval, nonce, _ = self.prepare()
+        operation = self.service.confirm_publish(self.claims, approval, nonce)
+        before = deepcopy(self.store.rows)
+        self.assertEqual(self.service.cancel_confirmation(self.claims, approval)['operation'], operation)
+        self.assertEqual(self.store.rows, before)
+        self.assertFalse(self.store.get('operation:' + operation['operation_id']).get('cancel_requested'))
+        self.service.publication_enabled = False
+        tested, nonce, _ = self.prepare()
+        result = self.service.confirm_publish(self.claims, tested, nonce)
+        self.assertEqual(self.service.cancel_confirmation(self.claims, tested)['result'], result)
+
+    def test_withdrawing_duplicate_card_keeps_other_surfaces_existing_publication_visible(self):
+        first, nonce, _ = self.prepare()
+        duplicate, duplicate_nonce, _ = self.prepare()
+        operation = self.service.confirm_publish(self.claims, first, nonce)
+        self.assertEqual(self.service.confirm_publish(self.claims, duplicate, duplicate_nonce), operation)
+        self.assertEqual(self.store.get('approval:' + duplicate)['state'], 'prepared')
+        readback = self.service.cancel_confirmation(self.claims, duplicate)
+        self.assertEqual(self.store.get('approval:' + duplicate)['state'], 'cancelled')
+        self.assertEqual(readback['state'], 'already_requested')
+        self.assertEqual(readback['operation'], operation)
+        self.assertEqual(self.service.confirmation(self.claims, duplicate), readback)
+        self.assertEqual(len(self.operations()), 1)
+        self.assertFalse(self.store.get('operation:' + operation['operation_id']).get('cancel_requested'))
+
+    def test_withdrawal_owner_live_permission_and_concurrent_acceptance_are_checked(self):
+        approval, nonce, _ = self.prepare()
+        for claims in (dict(self.claims, sub='other'), dict(self.claims, scope='hp:read'), dict(self.claims, scope='hp:write')):
+            with self.subTest(claims=claims), self.assertRaises(Rejected):
+                self.service.cancel_confirmation(claims, approval)
+        self.assertEqual(self.store.get('approval:' + approval)['state'], 'prepared')
+        original = self.store.transact
+        def accept_first(writes):
+            self.store.transact = original
+            self.service.confirm_publish(self.claims, approval, nonce)
+            original(writes)
+        self.store.transact = accept_first
+        with self.assertRaises(Conflict):
+            self.service.cancel_confirmation(self.claims, approval)
+        readback = self.service.confirmation(self.claims, approval)
+        self.assertEqual(readback['state'], 'accepted')
+        self.assertEqual(len(self.operations()), 1)
+        self.assertFalse(self.store.get('operation:' + readback['operation']['operation_id']).get('cancel_requested'))
+
+    def test_withdrawal_wins_against_inflight_confirmation_atomic_acceptance(self):
+        approval, nonce, _ = self.prepare()
+        original = self.store.transact
+        def cancel_first(writes):
+            self.store.transact = original
+            self.service.cancel_confirmation(self.claims, approval)
+            original(writes)
+        self.store.transact = cancel_first
+        with self.assertRaises(Conflict):
+            self.service.confirm_publish(self.claims, approval, nonce)
+        self.assertEqual(self.service.confirmation(self.claims, approval)['state'], 'cancelled')
+        self.assertEqual(self.operations(), {})
+
     def test_connection_test_audits_only_and_never_becomes_publication(self):
         self.service.publication_enabled = False
         approval_id, nonce, response = self.prepare()
