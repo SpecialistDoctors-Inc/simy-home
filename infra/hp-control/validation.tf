@@ -51,12 +51,15 @@ resource "aws_ecs_task_definition" "validation" {
     cpu_architecture        = "X86_64"
   }
   ephemeral_storage { size_in_gib = 21 }
-  volume { name = "scratch" }
+  volume {
+    name                = "scratch"
+    configure_at_launch = false
+  }
   container_definitions = jsonencode([{
     name                   = "validator", image = var.validator_image, essential = true,
     readonlyRootFilesystem = true, user = "1000:1000", privileged = false,
     mountPoints            = [{ sourceVolume = "scratch", containerPath = "/tmp", readOnly = false }],
-    linuxParameters        = { capabilities = { drop = ["ALL"] } },
+    linuxParameters        = { capabilities = { add = [], drop = ["ALL"] } },
     environment            = [{ name = "AWS_EC2_METADATA_DISABLED", value = "true" }],
     logConfiguration = { logDriver = "awslogs", options = {
       awslogs-group  = aws_cloudwatch_log_group.runtime["validator"].name,
