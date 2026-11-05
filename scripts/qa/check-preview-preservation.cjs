@@ -6,7 +6,8 @@ const source=fs.readFileSync(process.env.SIMY_EDITOR_SOURCE||'site/preview-edit.
  const browser=await chromium.launch({headless:true});
  const page=await browser.newPage();
  page.setDefaultTimeout(3000);
- await page.route('https://fixture.test/**',route=>route.abort());
+ // Serve a real local pixel for geometry assertions; aborted images render fallback alt text.
+ await page.route('https://fixture.test/**',route=>route.request().url().endsWith('/clinic-hero.jpg')?route.fulfill({contentType:'image/png',body:Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+aP1UAAAAASUVORK5CYII=','base64')}):route.abort());
  const results=[];
  async function check(name,html,verify){
   try{
@@ -50,6 +51,29 @@ const source=fs.readFileSync(process.env.SIMY_EDITOR_SOURCE||'site/preview-edit.
     // Undo restores the saved original HTML, including its stylesheet and heading.
     await page.setContent(indexed);assert.equal(await page.locator('.hero img').count(),0);
     assert((await page.locator('.hero').evaluate(e=>getComputedStyle(e).backgroundImage)).includes('hero.jpg'));
+   });
+  await check('image inventory keeps usage, source, dimensions and position with bounded text',
+   '<html><body><section class="hero"><img id="clinic-hero" class="photo" src="https://fixture.test/clinic-hero.jpg" alt="院内写真" style="width:240px;height:120px"></section></body></html>',
+   async indexed=>{
+    const image=await page.evaluate(indexed=>SimyPreviewEdit.inventory(indexed,document).find(n=>n.kind==='image'),indexed);
+    assert(image,'image target missing');
+    for(const expected of ['画像の表示サイズ:240×120px','元寸法:1x1','ページ上端から:','用途:clinic-hero photo hero','素材:clinic-hero.jpg'])assert(image.context.includes(expected),expected+' missing');
+    assert(image.context.length<=300);
+   });
+  await check('existing image reuse and insertion survive preview preservation refresh',
+   '<html><body><section><article class="feature"><h2>診療案内</h2><img src="https://fixture.test/original.jpg" alt="院内"></article><article class="feature"><h2>予約案内</h2><p>予約方法はこちらです。</p></article></section></body></html>',
+   async indexed=>{
+    const result=await page.evaluate(indexed=>{
+     const api=SimyPreviewEdit,doc=new DOMParser().parseFromString(indexed,'text/html'),image=doc.querySelector('img'),card=doc.querySelectorAll('article')[1];
+     const nodes=api.inventory(indexed,document),source=image.getAttribute('data-simy-edit-id'),target=card.getAttribute('data-simy-edit-id');
+     const inserted=api.applyPlan(indexed,{status:'edit',operations:[{type:'insert_image',target,value:source,title:'予約案内の院内写真'}]},[],document).html;
+     const insertedDoc=new DOMParser().parseFromString(inserted,'text/html'),newImage=insertedDoc.querySelectorAll('article')[1].querySelector('img');
+     return {hasCard:nodes.some(n=>n.id===target&&n.kind==='element'),insertedSource:newImage?.getAttribute('src'),insertedAlt:newImage?.getAttribute('alt'),originalText:insertedDoc.querySelectorAll('article')[1].textContent};
+    },indexed);
+    assert(result.hasCard,'card target missing');
+    assert.equal(result.insertedSource,'https://fixture.test/original.jpg');
+    assert.equal(result.insertedAlt,'予約案内の院内写真');
+    assert(result.originalText.includes('予約方法はこちらです。'));
    });
  }finally{await browser.close();}
  console.log(JSON.stringify(results,null,2));if(results.some(r=>!r.passed))process.exitCode=1;

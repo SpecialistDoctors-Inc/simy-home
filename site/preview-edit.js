@@ -80,13 +80,34 @@
   // A template row that is itself a complete collection is not a second collection.
   const news=preferred.filter(e=>!preferred.some(n=>n!==e&&noticeRow(e)===n));
   const out=[],seen=new Set();let size=0;
-  function add(e,kind){const id=e.getAttribute('data-simy-edit-id');if(seen.has(id)||out.length>=220)return;let t=kind==='image'?(e.getAttribute('alt')||'画像'):(e.tagName==='BODY'?'ページ全体':text(e));if(!t)return;t=t.slice(0,kind==='element'?120:kind==='text'?600:1800);let context=label(e);try{const live=liveDocument?.querySelector('[data-simy-edit-id="'+id+'"]');if(live){const css=liveDocument.defaultView.getComputedStyle(live);if(kind==='image'){const box=live.getBoundingClientRect();context='画像の表示サイズ:'+Math.round(box.width)+'×'+Math.round(box.height)+'px / ページ上端から:'+Math.round(box.top+liveDocument.defaultView.scrollY)+'px / '+context;}context+=' / 現在の文字サイズ:'+css.fontSize+'、文字色:'+css.color+'、背景:'+css.backgroundColor;}}catch{}const n={id,kind,tag:e.tagName.toLowerCase(),text:t,context:context.slice(0,300)};const len=JSON.stringify(n).length;if(size+len>35000)return;size+=len;seen.add(id);out.push(n);}
+  function add(e,kind){
+   const id=e.getAttribute('data-simy-edit-id');if(seen.has(id)||out.length>=220)return;
+   let t=kind==='image'?(e.getAttribute('alt')||'画像'):(e.tagName==='BODY'?'ページ全体':text(e));if(!t)return;
+   t=t.slice(0,kind==='element'?120:kind==='text'?600:1800);
+   let context=label(e),imageContext='';
+   if(kind==='image')imageContext='用途:'+(e.id+' '+e.className+' '+(e.parentElement?.className||'')+' '+(e.parentElement?.parentElement?.className||'')).slice(0,90)+' / 素材:'+(e.getAttribute('src')||'').split('/').pop().slice(0,60);
+   try{
+    const live=liveDocument?.querySelector('[data-simy-edit-id="'+id+'"]');
+    if(live){
+     const css=liveDocument.defaultView.getComputedStyle(live);
+     if(kind==='image'){
+      const box=live.getBoundingClientRect();
+      imageContext='画像の表示サイズ:'+Math.round(box.width)+'×'+Math.round(box.height)+'px / 元寸法:'+(live.naturalWidth||0)+'x'+(live.naturalHeight||0)+' / ページ上端から:'+Math.round(box.top+liveDocument.defaultView.scrollY)+'px / '+imageContext;
+     }
+     context+=' / 現在の文字サイズ:'+css.fontSize+'、文字色:'+css.color+'、背景:'+css.backgroundColor;
+    }
+   }catch{}
+   if(imageContext)context=imageContext+' / '+context;
+   const n={id,kind,tag:e.tagName.toLowerCase(),text:t,context:context.slice(0,300)};
+   const len=JSON.stringify(n).length;if(size+len>35000)return;size+=len;seen.add(id);out.push(n);
+  }
   add(doc.body,'element');
   // Keep notice targets before optional structure summaries spend the shared budget.
   news.forEach(e=>add(e,'news'));
   all.filter(e=>e.tagName==='IMG').slice(0,50).forEach(e=>add(e,'image'));
   if(liveDocument)all.filter(e=>e.tagName!=='IMG').forEach(e=>{try{const live=liveDocument.querySelector('[data-simy-edit-id="'+e.getAttribute('data-simy-edit-id')+'"]');if(live&&/^url\(/.test(liveDocument.defaultView.getComputedStyle(live).backgroundImage))add(e,'image');}catch{}});
   all.filter(e=>['SECTION','ARTICLE','HEADER','FOOTER','NAV'].includes(e.tagName)).slice(0,35).forEach(e=>add(e,'element'));
+  all.filter(e=>['DIV','LI','FIGURE'].includes(e.tagName)&&/card|feature|reason/i.test(e.className||'')&&text(e).length<=1800).slice(0,35).forEach(e=>add(e,'element'));
   // Semantic headings and buttons first; then editable leaf paragraphs, avoiding nested duplicates.
   all.filter(e=>/^H[1-6]$/.test(e.tagName)||['A','BUTTON'].includes(e.tagName)).forEach(e=>add(e,'text'));
   all.filter(e=>!['DL','UL','OL','TABLE','TR','TBODY'].includes(e.tagName)&&text(e)&&![...e.children].some(c=>text(c)&&!['SPAN','BR','B','STRONG','EM','I','SMALL'].includes(c.tagName))).forEach(e=>add(e,'text'));
@@ -128,7 +149,7 @@
    if(other.type!=='replace_text'||o.oldText!==other.oldText||o.newText!==other.newText)return false;
    const a=matchStart(o),b=matchStart(other);return a&&b&&a.node===b.node&&a.offset===b.offset;
   }));
-  for(const o of operations){if(!/^e\d+$/.test(o.target))throw Error('変更箇所を確認できませんでした。');const e=doc.querySelector('[data-simy-edit-id="'+o.target+'"]');if(!e||blocked(e))throw Error('変更箇所が見つかりません。');
+  for(const o of operations){if(!/^e\d+$/.test(o.target))throw Error('変更箇所を確認できませんでした。');let e=doc.querySelector('[data-simy-edit-id="'+o.target+'"]');if(!e||blocked(e))throw Error('変更箇所が見つかりません。');
    if(o.type==='insert_notice'){
     if(!isNews(e)||!o.title||!o.body||!/^\d{4}-\d{2}-\d{2}$/.test(o.date))throw Error('お知らせの追加先を確認できません。');
     const cleanClone=source=>{const clone=source.cloneNode(true);for(const n of [clone,...clone.querySelectorAll('*')]){n.removeAttribute('id');n.removeAttribute('data-simy-edit-id');n.removeAttribute('data-simy-changed');}return clone;};
@@ -174,9 +195,27 @@
     if(!inserted)throw Error('文章を変更できませんでした。');e.setAttribute('data-simy-changed','true');changed.push(o.target);
    }else if(o.type==='set_style'){
     const valid=(['color','background-color'].includes(o.property)&&/^#[0-9a-f]{6}$/i.test(o.value))||(o.property==='font-size'&&/^(1[4-9]|[23]\d|40)px$/.test(o.value))||(o.property==='font-weight'&&/^(400|600|700)$/.test(o.value));if(!valid)throw Error('対応していない見た目の変更です。');e.style.setProperty(o.property,o.value,'important');e.setAttribute('data-simy-changed','true');changed.push(o.target);
-   }else if(o.type==='replace_image'){
-    const asset=assets.find(a=>a.id===o.value);if(!asset||!/^data:image\/(jpeg|png|webp);base64,[a-z0-9+/=]+$/i.test(asset.data))throw Error('差し替える写真を添付してください。');
-    if(e.tagName==='IMG'){e.src=asset.data;}else{e.style.setProperty('background-image','url("'+asset.data+'")','important');}e.removeAttribute('srcset');e.removeAttribute('sizes');e.removeAttribute('loading');for(const source of e.closest('picture')?.querySelectorAll('source')||[])source.remove();e.setAttribute('data-simy-changed','true');changed.push(o.target);
+   }else if(o.type==='replace_image'||o.type==='insert_image'){
+    const asset=assets.find(a=>a.id===o.value);let source;
+    if(asset){if(!/^data:image\/(jpeg|png|webp);base64,[a-z0-9+/=]+$/i.test(asset.data))throw Error('写真の形式を確認できません。');source=asset.data;}
+    else if(/^e\d+$/.test(o.value)&&o.value!==o.target){const other=doc.querySelector('[data-simy-edit-id="'+o.value+'"]');if(other&&!blocked(other)){if(other.tagName==='IMG'){source=other.getAttribute('src');if(source){try{source=new URL(source,doc.querySelector('base[href]')?.href||liveDocument?.baseURI).href;}catch{source=null;}}if(e.tagName==='IMG')e.alt=other.getAttribute('alt')||'';}else{const live=liveDocument?.querySelector('[data-simy-edit-id="'+o.value+'"]');const bg=live&&liveDocument.defaultView.getComputedStyle(live).backgroundImage;source=bg?.match(/^url\(["']?(https?:\/\/[^"')]+)["']?\)$/)?.[1];}}if(!source||!(/^https?:\/\//i.test(source)||/^data:image\/(jpeg|png|webp);base64,[a-z0-9+/=]+$/i.test(source)))throw Error('選んだ既存画像を読み込めません。');}
+    else throw Error('差し替え元の写真を確認できません。');
+    if(o.type==='insert_image'){
+     let card=e;
+     if(!['DIV','ARTICLE','LI','SECTION','FIGURE'].includes(card.tagName)){
+      card=e.closest('article,li,figure,[data-simy-card],.card,[class*=card],[class*=feature],[class*=reason]');
+      if(!card){const parent=e.parentElement;if(parent&&['DIV','SECTION'].includes(parent.tagName)&&parent!==doc.body&&[...parent.parentElement.children].some(s=>s!==parent&&s.tagName===parent.tagName&&s.querySelector('img')))card=parent;}
+     }
+     if(!card||card===doc.body||!['DIV','ARTICLE','LI','SECTION','FIGURE'].includes(card.tagName)||card.querySelector('img')||card.querySelectorAll('h1,h2,h3,h4').length>1)throw Error('画像の追加先を確認できません。');
+     e=card;
+     const img=doc.createElement('img');img.src=source;img.alt=o.title||'';img.setAttribute('data-simy-inserted-image','true');
+     const siblings=[...e.parentElement.children].filter(n=>n!==e);const example=siblings.map(n=>n.querySelector('img')).find(Boolean);
+     if(example){img.className=example.className;img.style.cssText=example.style.cssText;}
+     img.style.setProperty('width','100%');img.style.setProperty('height','auto');img.style.setProperty('display','block');img.style.setProperty('object-fit','cover');img.style.setProperty('aspect-ratio',example?.getAttribute('width')&&example?.getAttribute('height')?example.getAttribute('width')+'/'+example.getAttribute('height'):'3 / 2');
+     const sampleHeading=example?.parentElement?.querySelector('h1,h2,h3,h4');
+     if(example&&sampleHeading&&(example.compareDocumentPosition(sampleHeading)&4))e.prepend(img);else e.append(img);e.setAttribute('data-simy-changed','true');changed.push(o.target);continue;
+    }
+    if(e.tagName==='IMG'){e.src=source;}else{e.style.setProperty('background-image','url("'+source.replace(/["\\\n\r]/g,'')+'")','important');}e.removeAttribute('srcset');e.removeAttribute('sizes');e.removeAttribute('loading');for(const source of e.closest('picture')?.querySelectorAll('source')||[])source.remove();e.setAttribute('data-simy-changed','true');changed.push(o.target);
    }else if(o.type==='redesign'){
     if(e!==doc.body||!['modern','editorial','warm'].includes(o.property)||!/^#[0-9a-f]{6}$/i.test(o.value))throw Error('デザイン指定を確認できません。');
     api.redesign(doc,o.property,o.value,liveDocument);changed.push(o.target);
