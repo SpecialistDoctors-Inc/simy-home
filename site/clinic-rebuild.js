@@ -17,8 +17,24 @@
  };
  const snapshot=()=>({html:currentHtml,context:{...context},chat:chat.map(x=>({...x})),assets:[...assets]});
  const restore=previous=>{context={...previous.context};chat=previous.chat.map(x=>({...x}));assets=[...previous.assets];photoInput.value='';photoStatus.textContent=assets.length?'添付：'+assets.map(a=>a.name).join('、'):'';updatePreview(previous.html);};
+ // Chrome canvas JPEG may contain an ICC APP2 segment. Strip only that identified profile.
+ const normalizeCanvasJpeg=dataUrl=>{try{
+  const prefix='data:image/jpeg;base64,';if(typeof dataUrl!=='string'||!dataUrl.startsWith(prefix))return null;
+  const encoded=dataUrl.slice(prefix.length);if(encoded.length>350000||encoded.length%4||!/^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/.test(encoded))return null;
+  const raw=atob(encoded);if(btoa(raw)!==encoded||raw.length<32||raw.charCodeAt(0)!==255||raw.charCodeAt(1)!==216)return null;
+  const byte=i=>raw.charCodeAt(i),word=i=>(byte(i)<<8)|byte(i+1),parts=[raw.slice(0,2)],chunks=new Set();let i=2,scan=false,ended=false,profileCount=0,profileBytes=0,segments=0;
+  while(i<raw.length){const start=i;if(++segments>256||byte(i++)!==255)return null;while(byte(i)===255)i++;const marker=byte(i++);
+   if(marker===217){if(i!==raw.length||!scan)return null;parts.push(raw.slice(start,i));ended=true;break;}
+   if(![224,226,219,196,221,192,194,218].includes(marker)||i+2>raw.length)return null;
+   const length=word(i),end=i+length;if(length<2||end>raw.length-2)return null;
+   if(marker===226){const payload=i+2;if(scan||length<16||raw.slice(payload,payload+12)!=='ICC_PROFILE\0')return null;const sequence=byte(payload+12),count=byte(payload+13);if(!sequence||!count||count>16||sequence>count||(profileCount&&count!==profileCount)||chunks.has(sequence))return null;profileCount=count;chunks.add(sequence);profileBytes+=length;if(profileBytes>65536)return null;}
+   else parts.push(raw.slice(start,end));i=end;
+   if(marker===218){scan=true;const entropy=i;while(i<raw.length){if(byte(i)!==255){i++;continue;}const next=byte(i+1);if(next===0||(next>=208&&next<=215)){i+=2;continue;}break;}parts.push(raw.slice(entropy,i));}
+  }
+  if(!ended||(profileCount&&chunks.size!==profileCount))return null;return btoa(parts.join(''));
+ }catch{return null;}};
  // Encode pixels locally; never send original files, EXIF or remote URLs to the image runner.
- const thumbnail=(source,width,height)=>{try{for(let edge=384;edge>=96;edge=Math.floor(edge*.75)){const canvas=document.createElement('canvas'),scale=Math.min(1,edge/Math.max(width,height));canvas.width=Math.max(1,Math.round(width*scale));canvas.height=Math.max(1,Math.round(height*scale));canvas.getContext('2d').drawImage(source,0,0,canvas.width,canvas.height);for(const quality of [.72,.5,.32]){const data=canvas.toDataURL('image/jpeg',quality);if(data.startsWith('data:image/jpeg;base64,')&&data.length-23<=16384)return data.slice(23);}}}catch{}return null;};
+ const thumbnail=(source,width,height)=>{try{for(let edge=384;edge>=96;edge=Math.floor(edge*.75)){const canvas=document.createElement('canvas'),scale=Math.min(1,edge/Math.max(width,height));canvas.width=Math.max(1,Math.round(width*scale));canvas.height=Math.max(1,Math.round(height*scale));canvas.getContext('2d').drawImage(source,0,0,canvas.width,canvas.height);for(const quality of [.72,.5,.32]){const data=normalizeCanvasJpeg(canvas.toDataURL('image/jpeg',quality));if(data&&data.length<=16384)return data;}}}catch{}return null;};
  const editPayload=(message,base)=>{const nodes=window.SimyPreviewEdit.inventory(base,frame.contentDocument);let images=[];
   const asset=assets.at(-1);if(asset?.thumbnail)images=[{id:asset.id,mime:'image/jpeg',data:asset.thumbnail}];
   // Reuse already decoded browser pixels only. A tainted cross-origin canvas falls back to metadata.
