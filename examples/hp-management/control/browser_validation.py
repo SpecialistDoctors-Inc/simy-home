@@ -88,7 +88,9 @@ class BrowserValidation:
         scratch=[mount for mount in mounts if mount.get('containerPath')=='/tmp' and mount.get('readOnly') is False]
         user=container.get('user','').split(':')[0]
         capabilities=container.get('linuxParameters',{}).get('capabilities',{})
-        if container.get('name')!=config['container_name'] or not container.get('image','').endswith('@'+config['image_digest']) or container.get('readonlyRootFilesystem') is not True or user not in ('1000','10001') or container.get('privileged',False) or container.get('secrets') or container.get('environmentFiles') or container.get('repositoryCredentials') or container.get('entryPoint') or container.get('command') or capabilities.get('add') or 'ALL' not in capabilities.get('drop',[]) or len(scratch)!=1 or len(mounts)!=1 or len(volumes)!=1 or volumes[0]!={'name':scratch[0]['sourceVolume']}:
+        # ECS describes a Fargate ephemeral volume with an empty host object.
+        # Accept that normalization without permitting a host path or shared volume.
+        if container.get('name')!=config['container_name'] or not container.get('image','').endswith('@'+config['image_digest']) or container.get('readonlyRootFilesystem') is not True or user not in ('1000','10001') or container.get('privileged',False) or container.get('secrets') or container.get('environmentFiles') or container.get('repositoryCredentials') or container.get('entryPoint') or container.get('command') or capabilities.get('add') or 'ALL' not in capabilities.get('drop',[]) or len(scratch)!=1 or len(mounts)!=1 or len(volumes)!=1 or volumes[0] not in ({'name':scratch[0]['sourceVolume']}, {'name':scratch[0]['sourceVolume'],'host':{}}):
             raise BrowserValidationRejected('browser_validation_container_isolation_rejected')
         for bucket in {config['artifact_bucket'],config['output_bucket']}:
             self._call(self.s3,'head_bucket',guard,Bucket=bucket,ExpectedBucketOwner=ACCOUNT)

@@ -159,6 +159,20 @@ class BrowserValidationTest(unittest.TestCase):
         self.assertTrue(self.reconcile()['verified'])
         self.assertEqual(len(self.ecs.requests),1)
 
+    def test_aws_empty_host_scratch_volume_is_ephemeral_but_shared_volumes_fail(self):
+        self.ecs.definition['volumes']=[{'name':'scratch','host':{}}]
+        self.assertTrue(self.validator.preflight(self.site,self.guard)['ready'])
+        for volume in ({'name':'scratch','host':{'sourcePath':'/tmp'}},
+                       {'name':'scratch','host':None},
+                       {'name':'scratch','efsVolumeConfiguration':{'fileSystemId':'fs-other'}},
+                       {'name':'scratch','host':{},'dockerVolumeConfiguration':{}},
+                       {'name':'other','host':{}}):
+            with self.subTest(volume=volume):
+                self.ecs.definition['volumes']=[volume]
+                with self.assertRaises(BrowserValidationRejected):
+                    self.validator.preflight(self.site,self.guard)
+        self.assertFalse(self.ecs.requests)
+
     def test_ambiguous_invisible_stopped_task_can_only_replay_identical_client_token(self):
         self.ecs.unknown_ack=True;self.ecs.hide_tasks=True
         with self.assertRaises(BrowserValidationPending): self.validate()
