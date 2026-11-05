@@ -106,7 +106,10 @@ class FakeCloudFront:
         return {'InvalidationList': {'IsTruncated': False, 'Items': [{'Id': key} for key in self.fake.invalidations]}}
     def get_invalidation(self, **kwargs):
         self.fake.calls.append(('get_invalidation', kwargs))
-        return {'Invalidation': deepcopy(self.fake.invalidations[kwargs['Id']])}
+        value = deepcopy(self.fake.invalidations[kwargs['Id']])
+        if self.fake.reorder_invalidation_paths:
+            value['InvalidationBatch']['Paths']['Items'].reverse()
+        return {'Invalidation': value}
     def create_invalidation(self, **kwargs):
         self.fake.calls.append(('create_invalidation', kwargs))
         assert kwargs['DistributionId'] == DISTRIBUTION
@@ -135,6 +138,7 @@ class FakeAWS:
         self.etag, self.status = 'original-etag', 'Deployed'
         self.partial_put = self.lost_put_ack = self.reject_switch = self.unknown_switch_ack = False
         self.propagating = self.invalidation_pending = self.unknown_invalidation_ack = False
+        self.reorder_invalidation_paths = False
         self.live_tamper = None
         self.cached_retired = {}
         self.puts = 0
@@ -281,6 +285,45 @@ class PublisherTest(unittest.TestCase):
             self.publish()
         self.assertTrue(self.reconcile()['verified'])
         self.assertEqual(sum(method == 'create_invalidation' for method, _ in self.fake.calls), 1)
+
+    def test_completed_wire_reordered_paths_reconcile_without_any_new_write(self):
+        self.fake.reorder_invalidation_paths = True
+        self.fake.unknown_invalidation_ack = True
+        with self.assertRaises(PublicationPending):
+            self.publish()
+        frozen = deepcopy(self.store.rows)
+        writes = {method: sum(m == method for m, _ in self.fake.calls)
+                  for method in ('put_object', 'update_distribution', 'create_invalidation')}
+        result = self.reconcile()
+        self.assertTrue(result['verified'])
+        self.assertEqual(self.store.rows, frozen)
+        for method, count in writes.items():
+            self.assertEqual(sum(m == method for m, _ in self.fake.calls), count)
+        self.assertEqual(writes['create_invalidation'], 1)
+
+    def test_same_caller_reordered_paths_still_reject_wrong_set_or_malformed_batch(self):
+        self.publish()
+        invalidation = next(iter(self.fake.invalidations.values()))
+        original = deepcopy(invalidation['InvalidationBatch'])
+        def wrong_path(batch): batch['Paths']['Items'][0] = '/not-requested.html'
+        def duplicate(batch):
+            batch['Paths']['Items'].append(batch['Paths']['Items'][0])
+            batch['Paths']['Quantity'] += 1
+        def wrong_count(batch): batch['Paths']['Quantity'] += 1
+        def boolean_count(batch): batch['Paths']['Quantity'] = True
+        def extra_batch(batch): batch['extra'] = 'unbound'
+        def extra_paths(batch): batch['Paths']['extra'] = 'unbound'
+        def non_list(batch): batch['Paths']['Items'] = tuple(batch['Paths']['Items'])
+        def non_string(batch): batch['Paths']['Items'][0] = None
+        for mutation in (wrong_path, duplicate, wrong_count, boolean_count,
+                         extra_batch, extra_paths, non_list, non_string):
+            with self.subTest(mutation=mutation.__name__):
+                batch = deepcopy(original)
+                mutation(batch)
+                invalidation['InvalidationBatch'] = batch
+                with self.assertRaisesRegex(PublicationRejected, 'invalidation_identity_collision'):
+                    self.reconcile()
+        invalidation['InvalidationBatch'] = original
 
     def test_propagation_and_invalidation_are_pending_not_success(self):
         self.fake.propagating = True

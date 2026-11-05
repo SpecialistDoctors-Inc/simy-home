@@ -37,6 +37,188 @@ class ServiceTests(unittest.TestCase):
     def operations(self):
         return {key: value for key, value in self.store.rows.items() if key.startswith('operation:')}
 
+    def stopped(self, pending=True):
+        operation = self.service.admit(self.claims, 'save_draft', self.body())['operation_id']
+        changes = {'status': 'needs_attention', 'stage': 'preview_deploy', 'error': 'retry_budget_exhausted',
+            'retry_attempts': 8, 'retry_generation': 11, 'retry_at': self.now + 500,
+            'wait_deadline': self.now - 10, 'wait_stage': 'preview_deploy',
+            'execution_site': {'site_id': self.site_id, 'config_version': 1},
+            'phases': {'artifact_upload': {'key': 'exact-prior-artifact'}},
+            'lease_owner': 'old-owner', 'lease_epoch': 4}
+        if pending:
+            changes['pending_effect'] = {'name': 'preview_deploy', 'lease_epoch': 4,
+                'reconciliation': {'kind': 'preview_deploy', 'sealed': 'PRIVATE-BODY-NOT-FOR-AUDIT'}}
+        self.update('operation:' + operation, **changes)
+        self.store.put('lease:site:' + self.site_id, {'owner': 'old-owner', 'operation_id': operation,
+            'blocked_operation': operation if pending else None, 'epoch': 4, 'until': 0})
+        return operation
+
+    def test_resume_audits_same_operation_and_preserves_all_sealed_work_and_deadlines(self):
+        operation = self.stopped()
+        key = 'operation:' + operation
+        before = self.store.get(key)
+        lease = self.store.get('lease:site:' + self.site_id)
+        recovery = str(uuid4())
+        result = self.service.resume(self.claims, operation, recovery)
+        self.assertEqual((result['operation_id'], result['status']), (operation, 'reconciling'))
+        after = self.store.get(key)
+        changed = {'status', 'queue_state', 'retry_at', 'retry_attempts', 'retry_generation', 'error', '_version'}
+        self.assertEqual({name:value for name,value in before.items() if name not in changed},
+            {name:value for name,value in after.items() if name not in changed})
+        self.assertEqual((after['queue_state'], after['retry_at'], after['retry_attempts'], after['retry_generation'], after['error']), ('pending', self.now, 0, 12, None))
+        self.assertEqual(self.store.get('lease:site:' + self.site_id), lease)
+        audit = self.store.get('resumption:' + recovery)
+        self.assertEqual((audit['operation_id'], audit['subject'], audit['original_fingerprint']), (operation, self.claims['sub'], before['fingerprint']))
+        self.assertEqual((audit['prior_error'], audit['prior_retry_attempts'], audit['prior_retry_generation'], audit['resumed_at']), ('retry_budget_exhausted', 8, 11, self.now))
+        self.assertNotIn('PRIVATE-BODY-NOT-FOR-AUDIT', json.dumps(audit))
+        self.assertFalse({'input', 'pending_effect', 'phases', 'execution_site'} & set(audit))
+        self.assertEqual(len(self.operations()), 1)
+
+    def test_resume_without_pending_queues_retry_wait_and_replay_after_running_does_not_reset(self):
+        operation = self.stopped(pending=False)
+        recovery = str(uuid4())
+        self.assertEqual(self.service.resume(self.claims, operation, recovery)['status'], 'retry_wait')
+        self.update('operation:' + operation, status='running', retry_attempts=3, retry_generation=18, retry_at=self.now + 30)
+        self.update('lease:site:' + self.site_id, until=self.now + 300)
+        before = deepcopy(self.store.rows)
+        self.assertEqual(self.service.resume(self.claims, operation, recovery)['status'], 'running')
+        self.assertEqual(self.store.rows, before)
+        self.update('operation:' + operation, status='cancelled', cancel_requested=True)
+        before = deepcopy(self.store.rows)
+        self.assertEqual(self.service.resume(self.claims, operation, recovery)['status'], 'cancelled')
+        self.assertEqual(self.store.rows, before)
+
+    def test_resume_committed_response_loss_replays_existing_audit_without_second_reset(self):
+        operation = self.stopped()
+        recovery = str(uuid4())
+        original = self.store.transact
+        def lost(writes):
+            original(writes)
+            raise OSError('response lost after atomic admission')
+        self.store.transact = lost
+        with self.assertRaises(OSError):
+            self.service.resume(self.claims, operation, recovery)
+        before = deepcopy(self.store.rows)
+        replay = self.service.resume(self.claims, operation, recovery)
+        self.assertEqual(replay['status'], 'reconciling')
+        self.assertEqual(self.store.rows, before)
+        self.assertEqual(self.store.get('operation:' + operation)['retry_generation'], 12)
+        self.assertEqual(self.store.get('resumption:' + recovery)['_version'], 1)
+
+    def test_resume_reconciliation_flag_uses_reconciling_without_changing_old_fence(self):
+        operation = self.stopped(pending=False)
+        self.update('operation:' + operation, reconciliation_required=True)
+        self.assertEqual(self.service.resume(self.claims, operation, str(uuid4()))['status'], 'reconciling')
+        self.assertEqual(self.store.get('operation:' + operation)['lease_epoch'], 4)
+
+    def test_resume_rejects_other_owner_insufficient_role_scope_and_binding_drift(self):
+        operation = self.stopped()
+        self.store.put('principal:other-subject', {'sites': {self.site_id: ['read', 'edit', 'publish']}})
+        for claims in [dict(self.claims, sub='other-subject'), dict(self.claims, scope='hp:read')]:
+            with self.subTest(claims=claims), self.assertRaises(Rejected):
+                self.service.resume(claims, operation, str(uuid4()))
+        original = deepcopy(self.store.rows)
+        for mutation in [lambda: self.update('principal:' + self.claims['sub'], sites={self.site_id: ['read']}),
+                         lambda: self.update('principal:' + self.claims['sub'], disabled=True),
+                         lambda: self.update('principal:' + self.claims['sub'], sites={self.site_id: ['read', 'edit', 'publish']}),
+                         lambda: self.update('site:' + self.site_id, config_version=2)]:
+            with self.subTest(mutation=mutation):
+                mutation()
+                with self.assertRaises(Rejected):self.service.resume(self.claims, operation, str(uuid4()))
+                self.assertEqual(self.store.get('operation:' + operation)['status'], 'needs_attention')
+                self.assertFalse(any(key.startswith('resumption:') for key in self.store.rows))
+                self.store.rows = deepcopy(original)
+
+    def test_resume_rejects_active_other_blocked_lease_cancellation_and_terminal_reporting_states(self):
+        operation = self.stopped()
+        original = deepcopy(self.store.rows)
+        mutations = [lambda: self.update('lease:site:' + self.site_id, until=self.now + 1),
+            lambda: self.update('lease:site:' + self.site_id, blocked_operation=str(uuid4())),
+            lambda: self.update('operation:' + operation, cancel_requested=True)]
+        mutations += [lambda status=status: self.update('operation:' + operation, status=status)
+            for status in ('cancelled', 'failed', 'completed', 'running', 'queued', 'retry_wait', 'reconciling', 'published_after_cancel_or_revocation')]
+        mutations.append(lambda: self.update('operation:' + operation, status='completed', reporting_required=True, reporting_state='needs_attention'))
+        for mutation in mutations:
+            with self.subTest(mutation=mutation):
+                mutation(); before = deepcopy(self.store.rows)
+                with self.assertRaises(Rejected):self.service.resume(self.claims, operation, str(uuid4()))
+                self.assertEqual(self.store.rows, before)
+                self.store.rows = deepcopy(original)
+
+    def test_resume_recovery_id_conflicts_and_malformed_ids_do_not_rearm(self):
+        operation = self.stopped()
+        recovery = str(uuid4())
+        self.service.resume(self.claims, operation, recovery)
+        second = self.service.admit(self.claims, 'open_workspace', {'operation_id': str(uuid4()), 'site_id': self.site_id})['operation_id']
+        self.update('operation:' + second, status='needs_attention')
+        with self.assertRaisesRegex(Rejected, 'resumption_id_conflict'):
+            self.service.resume(self.claims, second, recovery)
+        for op, rec in [('bad', str(uuid4())), (operation, 'bad')]:
+            with self.assertRaisesRegex(Rejected, 'invalid_id'):
+                self.service.resume(self.claims, op, rec)
+        self.assertEqual(self.store.get('operation:' + operation)['retry_generation'], 12)
+
+    def test_publish_resume_requires_original_accepted_approval_and_never_creates_another(self):
+        approval_id, nonce, _ = self.prepare()
+        operation = self.service.confirm_publish(self.claims, approval_id, nonce)['operation_id']
+        self.update('operation:' + operation, status='needs_attention', retry_attempts=8, error='retry_budget_exhausted')
+        before = deepcopy(self.store.rows)
+        self.service.publication_enabled = False
+        with self.assertRaisesRegex(Rejected, 'publication_not_enabled'):
+            self.service.resume(self.claims, operation, str(uuid4()))
+        self.service.publication_enabled = True
+        self.update('approval:' + approval_id, state='prepared')
+        with self.assertRaisesRegex(Rejected, 'resumption_approval_invalid'):
+            self.service.resume(self.claims, operation, str(uuid4()))
+        self.store.rows = deepcopy(before)
+        result = self.service.resume(self.claims, operation, str(uuid4()))
+        self.assertEqual(result['operation_id'], operation)
+        self.assertEqual(self.store.get('operation:' + operation)['input'], {'approval_id': approval_id})
+        self.assertEqual(self.store.get('approval:' + approval_id), before['approval:' + approval_id])
+        self.assertEqual(len(self.operations()), 1)
+        self.assertEqual(sum(key.startswith('approval:') for key in self.store.rows), 1)
+
+    def test_resume_transaction_checks_absent_lease_and_current_principal_site_operation_audit(self):
+        operation = self.stopped()
+        original = deepcopy(self.store.rows)
+        for target in ('principal', 'site', 'operation', 'lease', 'audit'):
+            with self.subTest(target=target):
+                self.store.rows = deepcopy(original)
+                recovery = str(uuid4())
+                if target == 'lease':self.store.rows.pop('lease:site:' + self.site_id)
+                def mutation():
+                    if target == 'principal':self.update('principal:' + self.claims['sub'], disabled=True)
+                    elif target == 'site':self.update('site:' + self.site_id, config_version=2)
+                    elif target == 'operation':self.update('operation:' + operation, cancel_requested=True)
+                    elif target == 'lease':self.store.put('lease:site:' + self.site_id, {'until': self.now + 300, 'blocked_operation': operation})
+                    else:self.store.put('resumption:' + recovery, {'operation_id': 'other', 'subject': 'other'})
+                self.race_before_transaction(mutation)
+                with self.assertRaises(Conflict):self.service.resume(self.claims, operation, recovery)
+                self.assertEqual(self.store.get('operation:' + operation)['status'], 'needs_attention')
+                self.assertEqual(self.store.get('operation:' + operation)['retry_attempts'], 8)
+                if target != 'audit':self.assertIsNone(self.store.get('resumption:' + recovery))
+
+    def test_publish_resume_checks_original_approval_version_atomically(self):
+        approval_id, nonce, _ = self.prepare()
+        operation = self.service.confirm_publish(self.claims, approval_id, nonce)['operation_id']
+        self.update('operation:' + operation, status='needs_attention')
+        recovery = str(uuid4())
+        self.race_before_transaction(lambda: self.update('approval:' + approval_id, state='revoked'))
+        with self.assertRaises(Conflict):
+            self.service.resume(self.claims, operation, recovery)
+        self.assertEqual(self.store.get('operation:' + operation)['status'], 'needs_attention')
+        self.assertIsNone(self.store.get('resumption:' + recovery))
+
+    def test_resume_audit_does_not_copy_an_unclassified_error_body(self):
+        operation = self.stopped()
+        self.update('operation:' + operation, error='https://example.invalid/?token=PRIVATE-ERROR-BODY')
+        recovery = str(uuid4())
+        self.service.resume(self.claims, operation, recovery)
+        audit = self.store.get('resumption:' + recovery)
+        self.assertEqual(audit['prior_error'], 'unclassified_error')
+        self.assertEqual(len(audit['prior_error_sha256']), 64)
+        self.assertNotIn('PRIVATE-ERROR-BODY', json.dumps(audit))
+
     def test_operation_admission_idempotent_and_input_conflict(self):
         body = self.body()
         first = self.service.admit(self.claims, 'save_draft', body)

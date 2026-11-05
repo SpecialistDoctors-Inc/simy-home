@@ -76,7 +76,7 @@ class AdapterTests(unittest.TestCase):
         self.assertNotIn('_version', json.dumps(value))
         response, value = self.rpc('tools/list')
         tools = {tool['name']: tool for tool in value['result']['tools']}
-        self.assertEqual(len(tools), 9)
+        self.assertEqual(len(tools), 10)
         self.assertTrue(tools['hp_profile']['annotations']['readOnlyHint'])
         self.assertFalse(tools['hp_save_draft']['annotations']['readOnlyHint'])
         self.assertTrue(tools['hp_confirm_publish']['annotations']['destructiveHint'])
@@ -99,6 +99,33 @@ class AdapterTests(unittest.TestCase):
         self.assertEqual(content['mimeType'], 'text/html;profile=mcp-app')
         self.assertIn('<title>Confirmation</title>', content['text'])
         self.assertEqual(content['_meta']['ui']['csp']['resourceDomains'], [])
+
+    def test_resume_tool_is_authenticated_write_destructive_idempotent_and_returns_same_operation(self):
+        response, listing = self.rpc('tools/list')
+        tool = next(tool for tool in listing['result']['tools'] if tool['name'] == 'hp_resume_operation')
+        self.assertEqual(tool['inputSchema']['required'], ['operation_id', 'recovery_id'])
+        self.assertFalse(tool['annotations']['readOnlyHint'])
+        self.assertTrue(tool['annotations']['destructiveHint'])
+        self.assertTrue(tool['annotations']['idempotentHint'])
+        self.assertEqual(tool['securitySchemes'][0]['scopes'], ['hp:write'])
+        op = self.service.admit(self.claims, 'open_workspace', {'operation_id': str(uuid4()), 'site_id': 'sample-site'})['operation_id']
+        key = 'operation:' + op
+        row = self.store.get(key)
+        self.store.put(key, {**row, 'status': 'needs_attention', 'error': 'retry_budget_exhausted', 'retry_attempts': 8}, row['_version'])
+        arguments = {'operation_id': op, 'recovery_id': str(uuid4())}
+        response, value = self.rpc('tools/call', {'name': 'hp_resume_operation', 'arguments': arguments}, auth=False)
+        self.assertEqual(response['statusCode'], 401)
+        response, value = self.tool('hp_resume_operation', {**arguments, 'cancel_requested': False})
+        self.assertEqual(response['statusCode'], 400)
+        response, value = self.tool('hp_resume_operation', arguments)
+        self.assertEqual(value['result']['structuredContent']['operation_id'], op)
+        self.assertEqual(value['result']['structuredContent']['status'], 'retry_wait')
+        self.assertIsNone(value['result']['structuredContent']['error'])
+        self.assertNotIn('fingerprint', value['result']['structuredContent'])
+        response, value = self.tool('hp_resume_operation', {**arguments, 'recovery_id': str(uuid4())})
+        self.assertTrue(value['result']['isError'])
+        self.assertEqual(value['result']['structuredContent']['error'], 'resumption_not_allowed')
+        self.assertEqual(sum(key.startswith('resumption:') for key in self.store.rows), 1)
 
     def test_queue_receipt_and_cancellation_are_public_projection(self):
         arguments = {'operation_id': str(uuid4()), 'site_id': 'sample-site'}

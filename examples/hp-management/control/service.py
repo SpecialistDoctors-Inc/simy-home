@@ -179,6 +179,71 @@ class Service:
         self.store.put(key, row, row['_version'])
         return self.public_operation(row)
 
+    def resume(self, claims, operation_id, recovery_id):
+        """Audit an explicit same-operation retry; never replace its sealed work."""
+        operation_id, recovery_id = uuid(operation_id), uuid(recovery_id)
+        self.principal(claims)
+        key = 'operation:' + operation_id
+        row = self.store.get(key)
+        if not row or row.get('subject') != claims['sub']:
+            raise Rejected('operation_access_denied')
+        member, site = self.authorized(claims, row['site_id'], 'publish' if row['kind'] == 'publish' else 'edit')
+        if member['_version'] != row.get('member_version') or site.get('config_version') != row.get('site_config_version'):
+            raise Rejected('resumption_stale')
+        audit_key = 'resumption:' + recovery_id
+        existing = self.store.get(audit_key)
+        if existing:
+            if existing.get('operation_id') != operation_id or existing.get('subject') != claims['sub'] or existing.get('original_fingerprint') != row.get('fingerprint'):
+                raise Rejected('resumption_id_conflict')
+            # Replay observes current state even after the worker starts/finishes;
+            # it never clears cancellation, resets retries, or requeues again.
+            return self.public_operation(row)
+        if row.get('cancel_requested'):
+            raise Rejected('resumption_cancel_requested')
+        if row.get('status') != 'needs_attention' or row.get('kind') not in ('open_workspace', 'save_draft', 'submit_preview', 'publish'):
+            raise Rejected('resumption_not_allowed')
+        approval = None
+        approval_key = None
+        if row['kind'] == 'publish':
+            if not self.publication_enabled:
+                raise Rejected('publication_not_enabled')
+            approval_id = row.get('input', {}).get('approval_id')
+            try:
+                approval_key = 'approval:' + uuid(approval_id)
+            except Rejected:
+                raise Rejected('resumption_approval_invalid') from None
+            approval = self.store.get(approval_key)
+            if not approval or approval.get('state') != 'accepted' or approval.get('operation_id') != operation_id or approval.get('subject') != claims['sub'] or approval.get('site_id') != row['site_id'] or approval.get('member_version') != row['member_version'] or approval.get('site_config_version') != row['site_config_version']:
+                raise Rejected('resumption_approval_invalid')
+        observed_now = self.clock()
+        now = int(observed_now)
+        lease_key = 'lease:site:' + row['site_id']
+        lease = self.store.get(lease_key)
+        if lease and (lease.get('until', 0) > observed_now or lease.get('blocked_operation') not in (None, operation_id)):
+            raise Rejected('resumption_site_busy')
+        prior_error = row.get('error')
+        # Keep known stop codes verbatim; unexpected error data is fingerprinted,
+        # never copied into another record where it could contain provider data.
+        safe_error = prior_error if prior_error in (None, 'retry_budget_exhausted', 'wait_deadline_exceeded') else 'unclassified_error'
+        audit = {'schema_version': 1, 'kind': 'operation_resumption', 'recovery_id': recovery_id,
+            'operation_id': operation_id, 'subject': claims['sub'], 'original_fingerprint': row['fingerprint'],
+            'prior_status': row['status'], 'prior_error': safe_error,
+            'prior_retry_attempts': row.get('retry_attempts', 0), 'prior_retry_at': row.get('retry_at'),
+            'prior_retry_generation': row.get('retry_generation', 0), 'resumed_at': now}
+        if safe_error == 'unclassified_error':
+            audit['prior_error_sha256'] = fingerprint(prior_error)
+        resumed = {**row, 'status': 'reconciling' if row.get('pending_effect') or row.get('reconciliation_required') else 'retry_wait',
+            'queue_state': 'pending', 'retry_at': now, 'retry_attempts': 0,
+            'retry_generation': row.get('retry_generation', 0) + 1, 'error': None}
+        writes = [Write(key, resumed, row['_version']), Write(audit_key, audit, None),
+            Check('principal:' + claims['sub'], member['_version']), Check('site:' + row['site_id'], site['_version']),
+            Check(lease_key, lease['_version'] if lease else None)]
+        if approval:
+            writes.append(Check(approval_key, approval['_version']))
+        # The old lease, pending-effect fence and external deadlines stay intact.
+        self.store.transact(writes)
+        return self.public_operation(resumed)
+
     def prepare_publish(self, claims, site_id, preview_id):
         member, site = self.authorized(claims, site_id, 'publish')
         preview = self.store.get('preview:' + uuid(preview_id))

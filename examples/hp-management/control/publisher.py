@@ -150,6 +150,29 @@ def _missing(error):
     return getattr(error, 'response', {}).get('Error', {}).get('Code') in ('NoSuchKey', '404', 'NotFound')
 
 
+def _same_invalidation_batch(expected, observed):
+    """CloudFront may reorder paths on readback; preserve exact set identity."""
+    if not isinstance(expected, dict) or not isinstance(observed, dict):
+        return False
+    if set(expected) != {'CallerReference', 'Paths'} or set(observed) != set(expected):
+        return False
+    if not isinstance(expected['CallerReference'], str) or not expected['CallerReference'] or observed['CallerReference'] != expected['CallerReference']:
+        return False
+    groups = []
+    for batch in (expected, observed):
+        paths = batch['Paths']
+        if not isinstance(paths, dict) or set(paths) != {'Quantity', 'Items'}:
+            return False
+        count, items = paths['Quantity'], paths['Items']
+        if type(count) is not int or not 1 <= count <= 3000 or not isinstance(items, list) or len(items) != count or any(not isinstance(item, str) for item in items):
+            return False
+        unique = set(items)
+        if len(unique) != count:
+            return False
+        groups.append(unique)
+    return groups[0] == groups[1]
+
+
 class SitePublisher:
     def __init__(self, environment, role_arn, store, github_factory=None, clients_factory=None, fetch=None):
         if environment not in ('dev', 'prod'):
@@ -334,7 +357,7 @@ class SitePublisher:
                     DistributionId=row['binding']['target']['distribution_id'], Id=entry['Id'])['Invalidation']
                 batch = invalidation.get('InvalidationBatch', {})
                 if batch.get('CallerReference') == row['invalidation']['CallerReference']:
-                    if batch != row['invalidation']:
+                    if not _same_invalidation_batch(row['invalidation'], batch):
                         raise PublicationRejected('invalidation_identity_collision')
                     return invalidation
             if result.get('IsTruncated') is False:

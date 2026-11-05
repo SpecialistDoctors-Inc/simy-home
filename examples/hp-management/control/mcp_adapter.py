@@ -29,6 +29,7 @@ TOOL_FIELDS = {
     'hp_save_draft': ('operation_id', 'site_id', 'workspace_id', 'base_commit', 'bundle_file_id', 'bundle_sha256'),
     'hp_submit_preview': ('operation_id', 'site_id', 'workspace_id', 'saved_commit'),
     'hp_get_operation': ('operation_id',), 'hp_cancel_operation': ('operation_id',),
+    'hp_resume_operation': ('operation_id', 'recovery_id'),
     'hp_prepare_publish': ('site_id', 'preview_id'),
     'hp_confirm_publish': ('approval_id', 'confirmation_nonce'),
 }
@@ -40,11 +41,12 @@ DESCRIPTIONS = {
     'hp_submit_preview': 'Queue reconciliation and verification of the exact saved draft for preview.',
     'hp_get_operation': 'Read an owned operation. Queued or running is not complete.',
     'hp_cancel_operation': 'Request cancellation of an owned operation; active effects may require reconciliation.',
+    'hp_resume_operation': 'Explicitly resume the same needs-attention execution without changing its input or approval. Reuse recovery_id on retries. May continue previously approved publication; reporting-only attention is not resumable here.',
     'hp_prepare_publish': 'Prepare a short-lived confirmation card for one current verified preview. Does not publish.',
     'hp_confirm_publish': 'App-only confirmation of an exact preview using the private card nonce. Queues publication, does not claim completion.',
 }
 READ_TOOLS = {'hp_profile', 'hp_list_sites', 'hp_get_operation'}
-SAFE_REJECTIONS = set('authentication_required access_revoked invalid_site insufficient_scope site_access_denied site_unavailable invalid_id invalid_input invalid_digest workspace_access_denied unsupported_operation operation_id_conflict invalid_commit workspace_changed invalid_drive_file operation_access_denied preview_not_current publication_not_enabled confirmation_invalid confirmation_expired confirmation_stale'.split())
+SAFE_REJECTIONS = set('authentication_required access_revoked invalid_site insufficient_scope site_access_denied site_unavailable invalid_id invalid_input invalid_digest workspace_access_denied unsupported_operation operation_id_conflict invalid_commit workspace_changed invalid_drive_file operation_access_denied preview_not_current publication_not_enabled confirmation_invalid confirmation_expired confirmation_stale resumption_stale resumption_id_conflict resumption_cancel_requested resumption_not_allowed resumption_approval_invalid resumption_site_busy'.split())
 SAFE_AUTH_ERRORS = set('invalid_redirect_uri unsupported_client_auth invalid_client_or_redirect invalid_authorization_request pkce_s256_required invalid_scope invalid_nonce expired_login invalid_google_identity site_invitation_required invalid_resource invalid_grant unsupported_grant_type access_revoked invalid_google_nonce'.split())
 
 
@@ -93,7 +95,7 @@ def tool_definitions():
         elif name == 'hp_confirm_publish':
             meta = {'ui': {'visibility': ['app']}}
         result.append({'name': name, 'description': DESCRIPTIONS[name], 'inputSchema': schema(properties),
-            'annotations': {'readOnlyHint': readonly, 'destructiveHint': name == 'hp_confirm_publish',
+            'annotations': {'readOnlyHint': readonly, 'destructiveHint': name in ('hp_confirm_publish', 'hp_resume_operation'),
                 'idempotentHint': name != 'hp_prepare_publish', 'openWorldHint': False},
             'securitySchemes': [{'type': 'oauth2', 'scopes': ['hp:read' if readonly else 'hp:write']}],
             '_meta': meta})
@@ -285,6 +287,8 @@ class App:
             return tool_result(self.service.operation(claims, arguments['operation_id']))
         if name == 'hp_cancel_operation':
             return tool_result(self.service.cancel(claims, arguments['operation_id']))
+        if name == 'hp_resume_operation':
+            return tool_result(self.service.resume(claims, arguments['operation_id'], arguments['recovery_id']))
         if name == 'hp_prepare_publish':
             result = self.service.prepare_publish(claims, arguments['site_id'], arguments['preview_id'])
             result['_meta']['ui'] = {'resourceUri': UI_URI}
