@@ -7,7 +7,7 @@ on:
       - dev
     paths:
       - 'site/**'
-      - 'infra/cloudfront-functions/**'
+      - 'scripts/publish-occupation-pages.sh'
       - '.github/workflows/deploy-site.yml'
   workflow_dispatch:
     inputs:
@@ -19,6 +19,10 @@ on:
         options:
           - prod
           - dev
+      publish_edge_function:
+        description: 'Also publish CloudFront routing (requires separate function permissions)'
+        type: boolean
+        default: false
 
 permissions:
   id-token: write
@@ -33,18 +37,76 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Set up Node for site checks
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Verify localized pages and site behavior
+        run: |
+          python3 scripts/build-localized-home.py --check
+          python3 scripts/check-home-seo.py
+          python3 scripts/build-pharmaceutical-pages.py --check
+          python3 scripts/check-site-seo.py
+          node --test tests/*.test.cjs
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.AWS_SITE_DEPLOY_ROLE_ARN }}
           aws-region: ${{ secrets.AWS_REGION }}
 
+      # Publish directory keys directly, like old/, before exposing homepage links.
+      # Both existing pass-through routing and future index rewrites can serve them.
+      - name: Prepare occupation pages and assets
+        run: |
+          aws s3 sync site/assets/home-manga-preview/ s3://${{ secrets.SITE_S3_BUCKET }}/assets/home-manga-preview/ \
+            --cache-control "public, max-age=86400"
+          for asset in home-manga-preview.css home-manga-preview.js home-manga-{en,ja,es,fr,hi,zh-Hans}.js; do
+            aws s3 cp "site/$asset" "s3://${{ secrets.SITE_S3_BUCKET }}/$asset" \
+              --cache-control "public, max-age=86400"
+          done
+          aws s3 sync site/assets/engineer-experience/ s3://${{ secrets.SITE_S3_BUCKET }}/assets/engineer-experience/ \
+            --cache-control "public, max-age=86400"
+          aws s3 sync site/assets/engineer-manga/ s3://${{ secrets.SITE_S3_BUCKET }}/assets/engineer-manga/ \
+            --cache-control "public, max-age=86400"
+          aws s3 sync site/assets/engineer-mechanism/ s3://${{ secrets.SITE_S3_BUCKET }}/assets/engineer-mechanism/ \
+            --cache-control "public, max-age=86400"
+          aws s3 sync site/assets/fp-experience/ "s3://${{ secrets.SITE_S3_BUCKET }}/assets/fp-experience/" \
+            --cache-control "public, max-age=86400"
+          for asset in pharmaceutical-companies.css site-theme.css engineers.css engineers.js engineers-experience.css engineers-experience.js engineers-manga.css financial-planners.css financial-planners.js site-header.css site-header.js; do
+            aws s3 cp "site/$asset" "s3://${{ secrets.SITE_S3_BUCKET }}/$asset" \
+              --cache-control "public, max-age=86400"
+          done
+          aws s3 sync site/assets/pharmaceutical-companies/ "s3://${{ secrets.SITE_S3_BUCKET }}/assets/pharmaceutical-companies/" \
+            --cache-control "public, max-age=86400"
+          aws s3 sync site/assets/website-check/ "s3://${{ secrets.SITE_S3_BUCKET }}/assets/website-check/" \
+            --cache-control "public, max-age=86400"
+          for asset in website-check.css website-check.js hp-management.css; do
+            aws s3 cp "site/$asset" "s3://${{ secrets.SITE_S3_BUCKET }}/$asset" \
+              --cache-control "public, max-age=86400"
+          done
+          aws s3 sync site/for/ s3://${{ secrets.SITE_S3_BUCKET }}/for/ \
+            --cache-control "public, max-age=300"
+          bash scripts/publish-occupation-pages.sh "${{ secrets.SITE_S3_BUCKET }}"
+
+      # downloads/ belongs to the CLI release publisher. Exclude it from
+      # every root sync so --delete cannot remove installers or manifests.
       - name: Sync HTML files (short cache)
         run: |
           aws s3 sync site/ s3://${{ secrets.SITE_S3_BUCKET }}/ \
             --delete \
             --exclude "*" \
             --include "*.html" \
+            --exclude "downloads/*" \
+            --exclude "samples/*" \
+            --exclude "for/*/engineers.html" \
+            --exclude "for/*/financial-planners.html" \
+            --exclude "for/clinic.html" \
+            --exclude "for/pharmaceutical-companies.html" \
+            --exclude "for/*/pharmaceutical-companies.html" \
+            --exclude "hp-management.html" \
+            --exclude "hp-management/clinic.html" \
             --cache-control "public, max-age=300"
 
       - name: Sync i18n runtime + translation JSON (short cache)
@@ -65,7 +127,23 @@ jobs:
             --exclude "*.html" \
             --exclude "i18n.js" \
             --exclude "lang/*" \
+            --exclude "downloads/*" \
+            --exclude "samples/*" \
+            --exclude ".well-known/apple-app-site-association" \
+            --exclude "for/" \
+            --exclude "for/*/" \
+            --exclude "hp-management/" \
+            --exclude "hp-management/*/" \
             --cache-control "public, max-age=86400"
+
+      - name: Publish apple-app-site-association (application/json, no redirect)
+        # Extensionless file: set the content type explicitly. It is excluded
+        # from the sync above so --delete never removes it.
+        run: |
+          aws s3 cp site/.well-known/apple-app-site-association \
+            s3://${{ secrets.SITE_S3_BUCKET }}/.well-known/apple-app-site-association \
+            --content-type "application/json" \
+            --cache-control "public, max-age=3600"
 
       - name: Publish old homepage slash URL
         run: |
@@ -76,9 +154,17 @@ jobs:
             --content-type "text/html; charset=utf-8" \
             --cache-control "public, max-age=300"
 
+      # Refresh uploaded HTML, directory keys and assets.
+      - name: Invalidate CloudFront cache
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ secrets.SITE_CF_DISTRIBUTION_ID }} \
+            --paths "/*"
+
+      # Edge normalization is independent of serving the static site. Explicit
+      # edge publication still fails visibly if its permissions are missing.
       - name: Update CloudFront Function
-        if: github.ref == 'refs/heads/main' || (github.event_name == 'workflow_dispatch' && inputs.environment == 'prod')
-        continue-on-error: true
+        if: github.event_name == 'workflow_dispatch' && inputs.environment == 'prod' && inputs.publish_edge_function
         run: |
           FUNC_NAME="simy-site-prod-redirect"
           FUNC_CODE_FILE="infra/cloudfront-functions/redirect-prod.js"
@@ -104,9 +190,3 @@ jobs:
             --if-match "$UPDATE_ETAG"
 
           echo "CloudFront Function '$FUNC_NAME' updated and published."
-
-      - name: Invalidate CloudFront cache
-        run: |
-          aws cloudfront create-invalidation \
-            --distribution-id ${{ secrets.SITE_CF_DISTRIBUTION_ID }} \
-            --paths "/*"

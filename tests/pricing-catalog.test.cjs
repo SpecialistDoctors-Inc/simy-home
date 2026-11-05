@@ -116,7 +116,16 @@ test('homepage pricing bundles do not ship the retired Starter Autorun cap', () 
 
 test('storage prices are visible without opening a dialog', () => {
   const html = fs.readFileSync(path.join(__dirname, '../site/index.html'), 'utf8');
-  assert.match(html, /<aside class="storage-pricing" id="storage-pricing"/);
+  assert.match(html, /<aside class="storage-pricing"[^>]*id="storage-pricing"/);
   assert.match(html, /href="#storage-pricing"/);
   assert.doesNotMatch(html, /<dialog|data-storage-dialog/);
+});
+
+test('all six published locales expose the same three storage tiers inline', () => {
+  for (const file of ['index.html','ja.html','hi.html','es.html','fr.html','zh-Hans.html']) {
+    const html = fs.readFileSync(path.join(__dirname, '../site', file), 'utf8');
+    assert.deepEqual([...html.matchAll(/data-storage-capacity="([^"]+)"/g)].map(m=>m[1]), ['30 GB','200 GB','1 TB'], file);
+    assert.match(html, /<aside class="storage-pricing"[^>]*id="storage-pricing"/);
+    assert.doesNotMatch(html, /data-storage-dialog|5 TB/);
+  }
 });

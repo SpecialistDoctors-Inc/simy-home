@@ -19,6 +19,15 @@ node_modules/
 playwright-report/
 test-results/
 
+# Local SIMY Quality Monitor evidence
+proof.json
+proof.json.diagnostics.json
+proof.json.signed.json
+
+# Python site-generation checks
+__pycache__/
+*.pyc
+
 # Local sample-clinic test evidence (not application source)
 /output/sample-clinic/
 /output/hp-always-on-20261103/
