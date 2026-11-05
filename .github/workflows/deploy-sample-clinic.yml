@@ -1,0 +1,153 @@
+name: Deploy sample clinic static site
+
+on:
+  pull_request:
+    paths: ['examples/sample-clinic/**', '.github/workflows/deploy-sample-clinic.yml']
+  push:
+    branches: [dev]
+    paths: ['examples/sample-clinic/**', '.github/workflows/deploy-sample-clinic.yml']
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Target environment (dev branch for dev; main for production)
+        required: true
+        default: dev
+        type: choice
+        options: [dev, prod]
+      source_artifact_id:
+        description: Production only - immutable artifact ID from a successful dev deployment
+        type: string
+      approved_source_sha:
+        description: Production only - full dev SHA reviewed by the customer
+        type: string
+      approved_artifact_hash:
+        description: Production only - artifactHash of that reviewed preview
+        type: string
+      request_id:
+        description: Production only - reviewed request UUID
+        type: string
+      request_revision:
+        description: Production only - reviewed request revision
+        type: string
+      approval_record_ref:
+        description: Production only - customer approval evidence for the environment reviewer
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sample-clinic-${{ github.event_name == 'pull_request' && github.ref || (github.event_name == 'workflow_dispatch' && inputs.environment || 'dev') }}
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22'
+      - run: node examples/sample-clinic/build.mjs
+      - run: node --test examples/sample-clinic/tests/*.test.mjs
+
+  deploy_dev:
+    if: >-
+      needs.validate.result == 'success' &&
+      ((github.event_name == 'push' && github.ref == 'refs/heads/dev') ||
+      (github.event_name == 'workflow_dispatch' && inputs.environment == 'dev' && github.ref == 'refs/heads/dev'))
+    needs: validate
+    runs-on: ubuntu-latest
+    environment: sample-clinic-dev
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22'
+      - name: Build the exact dev revision
+        env:
+          SITE_ENV: dev
+          SOURCE_REVISION: ${{ github.sha }}
+        run: node examples/sample-clinic/build.mjs
+      - uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4
+        with:
+          role-to-assume: ${{ secrets.AWS_SAMPLE_CLINIC_DEPLOY_ROLE_ARN }}
+          aws-region: ap-northeast-1
+      - name: Deploy and read back the dev version
+        env:
+          SITE_S3_BUCKET: ${{ secrets.SAMPLE_CLINIC_S3_BUCKET }}
+          SITE_CF_DISTRIBUTION_ID: ${{ secrets.SAMPLE_CLINIC_CF_DISTRIBUTION_ID }}
+        run: bash examples/sample-clinic/publish.sh examples/sample-clinic/dist dev
+      - name: Retain the verified immutable artifact for promotion
+        id: artifact
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: sample-clinic-dev-${{ github.sha }}-${{ github.run_attempt }}
+          path: examples/sample-clinic/dist/
+          if-no-files-found: error
+          retention-days: 90
+      - name: Record the promotion artifact ID
+        env:
+          ARTIFACT_ID: ${{ steps.artifact.outputs.artifact-id }}
+        run: echo "Immutable dev artifact ID = $ARTIFACT_ID" >> "$GITHUB_STEP_SUMMARY"
+
+  deploy_prod:
+    # Production is a manual promotion of the exact dev artifact. The protected
+    # Environment reviewer checks the customer receipt and these frozen inputs.
+    if: >-
+      needs.validate.result == 'success' &&
+      vars.SAMPLE_CLINIC_PRODUCTION_ENABLED == 'true' &&
+      github.event_name == 'workflow_dispatch' && inputs.environment == 'prod' &&
+      github.ref == 'refs/heads/main'
+    needs: validate
+    runs-on: ubuntu-latest
+    environment: sample-clinic-prod
+    permissions:
+      contents: read
+      actions: read
+      id-token: write
+    env:
+      SOURCE_ARTIFACT_ID: ${{ inputs.source_artifact_id }}
+      APPROVED_SOURCE_SHA: ${{ inputs.approved_source_sha }}
+      APPROVED_ARTIFACT_HASH: ${{ inputs.approved_artifact_hash }}
+      REQUEST_ID: ${{ inputs.request_id }}
+      REQUEST_REVISION: ${{ inputs.request_revision }}
+      APPROVAL_RECORD_REF: ${{ inputs.approval_record_ref }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22'
+      - name: Verify the artifact belongs to a successful dev deployment
+        id: source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          node examples/sample-clinic/release.mjs inputs
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$SOURCE_ARTIFACT_ID" > "$RUNNER_TEMP/clinic-artifact.json"
+          DEV_RUN_ID=$(node -e 'const fs=require("fs");const a=JSON.parse(fs.readFileSync(process.argv[1]));if(!Number.isSafeInteger(a.workflow_run?.id))throw new Error("Missing run");console.log(a.workflow_run.id)' "$RUNNER_TEMP/clinic-artifact.json")
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$DEV_RUN_ID" > "$RUNNER_TEMP/clinic-run.json"
+          node examples/sample-clinic/release.mjs source "$RUNNER_TEMP/clinic-artifact.json" "$RUNNER_TEMP/clinic-run.json"
+          echo "run_id=$DEV_RUN_ID" >> "$GITHUB_OUTPUT"
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          artifact-ids: ${{ inputs.source_artifact_id }}
+          run-id: ${{ steps.source.outputs.run_id }}
+          github-token: ${{ github.token }}
+          path: release-dist
+          merge-multiple: true
+      - name: Check approved static bytes and prepare production metadata
+        run: node examples/sample-clinic/release.mjs prepare release-dist
+      - uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4
+        with:
+          role-to-assume: ${{ secrets.AWS_SAMPLE_CLINIC_DEPLOY_ROLE_ARN }}
+          aws-region: ap-northeast-1
+      - name: Promote and read back the production version
+        env:
+          SITE_S3_BUCKET: ${{ secrets.SAMPLE_CLINIC_S3_BUCKET }}
+          SITE_CF_DISTRIBUTION_ID: ${{ secrets.SAMPLE_CLINIC_CF_DISTRIBUTION_ID }}
+        run: bash examples/sample-clinic/publish.sh release-dist prod

@@ -18,12 +18,47 @@ test('document names use assessed topic, never numbered or ambiguous file labels
  assert.match(flow.sharingName({title:'診療報酬改定によるウエブサイト掲示.pdf'}),/名称から表示・内容未判定/);
 });
 test('only assessed extracted text gets a scoped no-concern statement',()=>{
- assert.match(flow.sharingCopy(assessed).reason,/取得できた文字では/);
- assert.match(flow.sharingCopy(assessed).reason,/画像・手書き/);
+ assert.equal(flow.sharingCopy(assessed).reason,'確認した範囲では、秘匿情報は見つかりませんでした。');
  assert.match(flow.sharingCopy({...assessed,content:{status:'partial'}}).reason,/一部の文字/);
- for(const item of [{status:'preview-observed'},{...assessed,content:{status:'unavailable'}},{...assessed,assessment:{status:'withheld'}},{...assessed,assessment:{status:'unavailable'}},{...assessed,status:'access-required'}])assert.doesNotMatch(flow.sharingCopy(item).reason,/問題は見つかりません/);
+ for(const item of [{status:'preview-observed'},{...assessed,content:{status:'unavailable'}},{...assessed,assessment:{status:'withheld'}},{...assessed,assessment:{status:'unavailable'}},{...assessed,status:'access-required'}])assert.doesNotMatch(flow.sharingCopy(item).reason,/秘匿情報は見つかりません/);
 });
 test('internal and uncertain content remain qualified',()=>{
  assert.match(flow.sharingCopy({...assessed,assessment:{...assessed.assessment,audience:'internal'}}).reason,/断定できません/);
  assert.match(flow.sharingCopy({...assessed,assessment:{...assessed.assessment,concern:'review'}}).reason,/判断できません/);
+});
+
+test('reference links are summarized while actual embeds and booking remain visible',()=>{
+ const el=(tag,text='',cls='')=>({tag,text,cls,children:[],append(...items){this.children.push(...items);},setAttribute(){}});
+ const root=el('div');
+ flow.render({url:'https://company.example/',integrations:[
+  {...item,destination:'https://docs.example/a'},
+  {...item,destination:'https://docs.example/b'},
+  {...item,destination:'https://widget.example/js',kind:'script'},
+  {...item,destination:'https://booking.example/',category:'予約'}
+ ],sharing:{items:[]}},root,el);
+ const text=n=>[n.text,...n.children.map(text)].join('\n');
+ const output=text(root);
+ assert.match(output,/案内・参考情報への外部リンク：1件/);
+ assert.doesNotMatch(output,/docs\.example/);
+ assert.match(output,/widget\.example/);assert.match(output,/booking\.example/);
+ assert.match(output,/患者情報の管理が重要/);
+});
+
+test('folder listing is never treated as assessed document content',()=>{assert.equal(flow.sharingCopy({...assessed,kind:'folder'}).reason,'フォルダー内の資料は未確認です。');assert.doesNotMatch(flow.sharingCopy({...assessed,kind:'folder',folder:{discovered:2}}).reason,/秘匿情報は見つかりません/);});
+test('sharing results show assessed concerns but hide clean and unassessed items',()=>{
+ const has=ctx.SimyInformationFlow.sharingHasIssue;
+ const base={status:'preview-observed',content:{status:'extracted'},assessment:{status:'assessed',scope:'extracted-text-only',audience:'patient',concern:'none'}};
+ assert.equal(has(base),false);
+ assert.equal(has({...base,assessment:{...base.assessment,audience:'internal'}}),true);
+ assert.equal(has({...base,assessment:{...base.assessment,concern:'review'}}),true);
+ assert.equal(has({...base,assessment:{status:'unavailable'}}),false);
+ assert.equal(has({...base,kind:'folder',content:{status:'unavailable'}}),false);
+});
+
+test('scoped no-problem conclusion is hidden when a sharing or transmission problem was found',()=>{
+ const report={url:'https://clinic.jp/',integrations:[{...item,destination:'https://booking.example/',category:'予約'}]};
+ assert.equal(flow.noProblemSummary(report),'現時点では、本診断の調査範囲において問題を発見することはできませんでした。');
+ assert.equal(flow.noProblemSummary({...report,findings:[{id:'form-http',state:'review'}]}),'');
+ assert.equal(flow.noProblemSummary({...report,sharing:{items:[{...assessed,assessment:{...assessed.assessment,audience:'internal'}}]}}),'');
+ assert.equal(flow.noProblemSummary({url:'https://clinic.jp/'}),'');
 });

@@ -10,7 +10,7 @@ test('every shared header exposes deployable guide and legal destinations', () =
   for (const file of files) {
     const source = fs.readFileSync(path.join(site,file),'utf8');
     const header = source.match(/<header class="simy-header"[\s\S]*?<\/header>/)?.[0];
-    const excluded = file === 'auth-callback.html' || !/<body\b/i.test(source) || /http-equiv=["']refresh/i.test(source);
+    const excluded = file === 'hp-management/clinic/index.html' || file === 'auth-callback.html' || !/<body\b/i.test(source) || /http-equiv=["']refresh/i.test(source);
     if (excluded) continue;
     assert.ok(header, `${file}: every rendered public page needs the shared header`);
     assert.equal((source.match(/<header class="simy-header"/g) || []).length, 1, `${file}: one shared header`);
@@ -46,4 +46,12 @@ test('nested legacy pages retain their same-page language alternatives', () => {
   for (const locale of ['en','ja','hi','es','fr','zh-Hans']) {
     assert.ok(source.includes(`href="/old/compare/index.html?lang=${locale}" lang="${locale}"`));
   }
+});
+
+test('clinic header keeps diagnosis and HP management pricing on the current service',()=>{
+ const source=fs.readFileSync(path.join(site,'hp-management/clinic/index.html'),'utf8');
+ const header=source.slice(source.indexOf('<header'),source.indexOf('</header>'));
+ assert.match(header,/href="#pricing">料金/);
+ assert.match(header,/href="#diagnosis">無料診断/);
+ assert.doesNotMatch(header,/data-new-account-signup|>Sign up<|>Pricing</);
 });

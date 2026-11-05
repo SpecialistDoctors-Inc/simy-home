@@ -16,7 +16,18 @@ for(const [name,code] of [['production',production],['terraform',terraform]]){
 test('Clinic service migration preserves the actual form, manga and script',()=>{
  const page=fs.readFileSync('site/hp-management/clinic/index.html','utf8');
  assert.match(page,/id="diagnosis-form"/);assert.match(page,/最大30ページ/);
- for(const asset of ['clinic-doctor-cybersecurity-v1','clinic-update-review-v2','clinic-incident-response-v2','clinic-provider-review-v2'])assert.ok(page.includes(asset));
- assert.match(page,/href="\/hp-management\/"/);
+ for(const asset of ['clinic-hero-phone.png','予約先の改ざん','危険サイト','復旧対応'])assert.ok(page.includes(asset));
+ assert.doesNotMatch(page,/<section[^>]*class="[^"]*clinic-manga-journey/);
+ assert.match(page,/id="rebuild-form"/);
  assert.match(fs.readFileSync('site/for/clinic/index.html','utf8'),/location.search\+location.hash/);
+});
+test('ISMS mark loads before scrolling and stays within the web image budget',()=>{
+ const page=fs.readFileSync('site/hp-management/clinic/index.html','utf8');
+ const section=page.match(/<section[^>]*id="isms"[\s\S]*?<\/section>/)[0];
+ const img=section.match(/<img\b[^>]*>/)[0];
+ assert.match(img,/loading="eager"/);
+ assert.match(img,/decoding="async"/);
+ assert.match(img,/width="640"/);assert.match(img,/height="403"/);
+ const src=img.match(/src="([^"]+)"/)[1];
+ assert.ok(fs.statSync('site'+src).size<50000,'Certification mark must stay under 50 KB');
 });

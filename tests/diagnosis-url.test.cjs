@@ -8,3 +8,10 @@ test('tracking URLs keep their path and remove advertising identifiers and fragm
 test('page selecting and private query values are not silently changed or sent',()=>{
  for(const url of ['https://example.com/?p=12&utm_source=a','https://example.com/?token=secret','https://user:pass@example.com/','javascript:alert(1)'])assert.throws(()=>ctx.normalizeDiagnosisUrl(url));
 });
+
+test('Google reservation attribution is removed while the institution reservation path is preserved',()=>{
+ const base='https://patient.digikar-smart.jp/institutions/f9d68741-cf53-489b-91c7-49a07b3411aa/reserve';
+ assert.equal(ctx.normalizeDiagnosisUrl(base+'?utm_source=digisma&utm_medium=google_map&utm_campaign=inst_example&rwg_token=synthetic%3D%3D').href,base);
+ assert.throws(()=>ctx.normalizeDiagnosisUrl(base+'?rwg_token=synthetic&token=private'));
+ assert.throws(()=>ctx.normalizeDiagnosisUrl(base+'?rwg_token=synthetic&appointment_id=123'));
+});

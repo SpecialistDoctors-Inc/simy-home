@@ -8,6 +8,6 @@ test('registration unlock requires matching saved receipt, with no pre-registrat
  const render=s.slice(s.indexOf('function renderReport'),s.indexOf('function appendEmailReceipt'));
  assert(render.includes('gateReport(report)'));assert(!render.includes('appendReportDownload'));
  const gate=s.slice(s.indexOf('function gateReport'),s.indexOf('let scanClock'));
- assert(gate.indexOf('appendEmailReceipt(')<gate.indexOf("element('button','PDFをダウンロード'"));
+ assert(gate.indexOf('appendEmailReceipt(')<gate.indexOf("element('button','診断結果をPDFで保存 ↓'"));
  assert(gate.includes('if(!preview.isConnected)return'));
 });

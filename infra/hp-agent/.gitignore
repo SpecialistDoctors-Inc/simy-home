@@ -1,0 +1,7 @@
+.terraform/
+backend.hcl
+*.tfvars
+*.tfvars.json
+sealed-*
+__pycache__/
+!.terraform.lock.hcl
