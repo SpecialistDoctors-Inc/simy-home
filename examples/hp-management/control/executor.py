@@ -72,11 +72,11 @@ class Executor:
             'blocked_operation': operation_id if op.get('pending_effect') or op.get('reconciliation_required') else None}, (lock or {}).get('_version')),
             Write(key, {**op, 'status': 'running', 'lease_owner': owner, 'lease_epoch': epoch}, op['_version'])])
         run = _Run(self, key, lock_key, owner, epoch)
-        provider_site = op.get('execution_site') or self.store.get('site:' + op['site_id'])
-        run.drive = (self.drive.for_site(provider_site, run.guard) if hasattr(self.drive, 'for_site')
-                     else self.drive.for_run(run.guard) if hasattr(self.drive, 'for_run') else self.drive)
-        run.artifacts = self.artifacts.for_run(run.guard) if hasattr(self.artifacts, "for_run") else self.artifacts
         try:
+            provider_site = op.get('execution_site') or self.store.get('site:' + op['site_id'])
+            run.drive = (self.drive.for_site(provider_site, run.guard) if hasattr(self.drive, 'for_site')
+                         else self.drive.for_run(run.guard) if hasattr(self.drive, 'for_run') else self.drive)
+            run.artifacts = self.artifacts.for_run(run.guard) if hasattr(self.artifacts, "for_run") else self.artifacts
             try:
                 run.guard()
             except Rejected:

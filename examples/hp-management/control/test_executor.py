@@ -235,6 +235,19 @@ class ExecutorTests(unittest.TestCase):
         return self.service.confirm_publish(self.claims, prepared['structuredContent']['approval_id'],
             prepared['_meta']['confirmation_nonce'])['operation_id']
 
+    def test_provider_binding_failure_after_claim_has_durable_recovery(self):
+        operation = self.admit('open_workspace')
+        class InvalidBinding:
+            def for_site(inner, site, guard):
+                raise RuntimeError('provider binding unavailable')
+        self.executor.drive = InvalidBinding()
+        with self.assertRaises(RuntimeError):
+            self.execute(operation)
+        row = self.store.get('operation:' + operation)
+        self.assertEqual((row['status'], row['queue_state']), ('retry_wait', 'pending'))
+        self.assertEqual(self.store.get('lease:site:' + self.site)['until'], 0)
+        self.assertNotIn('pending_effect', row)
+
     def test_open_replay_and_ambiguous_upload_reuses_exact_file_id(self):
         operation = self.admit('open_workspace')
         self.drive.fail_upload_once = True
