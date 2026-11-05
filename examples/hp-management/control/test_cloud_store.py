@@ -75,6 +75,21 @@ class CloudStoreTests(unittest.TestCase):
         item=self.client.get_item(TableName=self.store.table,Key={'pk':{'S':'operation:report'}})['Item']
         self.assertNotIn('attention_state',item)
 
+    def test_accepted_confirmation_retains_audit_without_extending_confirmation_expiry(self):
+        for state in ('accepted', 'connection_tested'):
+            key = 'approval:' + state
+            prepared = self.store.put(key, {'state': 'prepared', 'expires_at': 1600})
+            item = self.client.get_item(TableName=self.store.table, Key={'pk': {'S': key}})['Item']
+            self.assertEqual(item['expires_at'], {'N': '1600'})
+            accepted = self.store.put(key, {**prepared, 'state': state}, prepared['_version'])
+            item = self.client.get_item(TableName=self.store.table, Key={'pk': {'S': key}})['Item']
+            self.assertNotIn('expires_at', item)
+            self.assertEqual(accepted['expires_at'], 1600)
+        # An unrelated expiring record cannot opt out of TTL using this state.
+        self.store.put('oauth:example', {'state': 'accepted', 'expires_at': 1600})
+        item = self.client.get_item(TableName=self.store.table, Key={'pk': {'S': 'oauth:example'}})['Item']
+        self.assertEqual(item['expires_at'], {'N': '1600'})
+
     def test_attention_query_is_bounded_keys_only_presence_without_scan(self):
         calls=[]
         class Presence:

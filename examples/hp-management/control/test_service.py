@@ -335,6 +335,58 @@ class ServiceTests(unittest.TestCase):
             self.service.confirm_publish(dict(self.claims, sub='other-subject'), approval_id, nonce)
         self.assertEqual(self.operations(), {})
 
+    def test_confirmation_readback_recovers_lost_reply_and_other_surface_without_writes(self):
+        first, nonce, _ = self.prepare()
+        second, _, _ = self.prepare()
+        before = deepcopy(self.store.rows)
+        self.assertEqual(self.service.confirmation(self.claims, first)['state'], 'prepared')
+        self.assertEqual(self.store.rows, before)
+        operation = self.service.confirm_publish(self.claims, first, nonce)
+        # The client lost this response and only retained the approval ID.
+        before = deepcopy(self.store.rows)
+        result = self.service.confirmation(dict(self.claims, scope='hp:read'), first)
+        self.assertEqual(result['state'], 'accepted')
+        self.assertEqual(result['operation'], operation)
+        other_surface = self.service.confirmation(self.claims, second)
+        self.assertEqual(other_surface['state'], 'already_requested')
+        self.assertEqual(other_surface['operation']['operation_id'], operation['operation_id'])
+        self.assertEqual(self.store.rows, before)
+        self.assertEqual(len(self.operations()), 1)
+        for private in (nonce, 'nonce_hash', 'subject', 'member_version', 'site_config_version'):
+            self.assertNotIn(private, json.dumps(result))
+
+    def test_confirmation_readback_checks_owner_scope_and_live_read_access(self):
+        approval, _, _ = self.prepare()
+        for claims in (dict(self.claims, sub='other'), dict(self.claims, scope='hp:write')):
+            with self.subTest(claims=claims), self.assertRaises(Rejected):
+                self.service.confirmation(claims, approval)
+        with self.assertRaises(Rejected):
+            self.service.confirmation(self.claims, str(uuid4()))
+        self.update('principal:' + self.claims['sub'], disabled=True)
+        with self.assertRaisesRegex(Rejected, 'access_revoked'):
+            self.service.confirmation(self.claims, approval)
+        self.update('principal:' + self.claims['sub'], disabled=False, sites={self.site_id: ['publish']})
+        with self.assertRaisesRegex(Rejected, 'site_access_denied'):
+            self.service.confirmation(self.claims, approval)
+        self.assertEqual(self.operations(), {})
+
+    def test_confirmation_readback_preserves_test_mode_and_reports_expiry_without_accepting(self):
+        self.service.publication_enabled = False
+        pending, _, _ = self.prepare()
+        approval, nonce, _ = self.prepare()
+        completion = self.service.confirm_publish(self.claims, approval, nonce)
+        self.now += 601
+        self.service.publication_enabled = True
+        before = deepcopy(self.store.rows)
+        tested = self.service.confirmation(self.claims, approval)
+        self.assertEqual(tested['mode'], 'connection_test')
+        self.assertEqual(tested['result'], completion)
+        self.assertEqual(tested['state'], 'connection_tested')
+        self.assertNotIn('operation', tested)
+        self.assertEqual(self.service.confirmation(self.claims, pending)['state'], 'expired')
+        self.assertEqual(self.store.rows, before)
+        self.assertEqual(self.operations(), {})
+
     def test_connection_test_audits_only_and_never_becomes_publication(self):
         self.service.publication_enabled = False
         approval_id, nonce, response = self.prepare()

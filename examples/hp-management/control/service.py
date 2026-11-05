@@ -268,6 +268,32 @@ class Service:
             'summary': preview['summary'], 'expires_at': record['expires_at']},
             '_meta': {'confirmation_nonce': nonce}, 'content': [{'type': 'text', 'text': message}]}
 
+    def confirmation(self, claims, approval_id):
+        approval = self.store.get('approval:' + uuid(approval_id))
+        if not approval or approval['subject'] != claims.get('sub'):
+            raise Rejected('confirmation_invalid')
+        self.authorized(claims, approval['site_id'])
+        result = {key: approval[key] for key in ('approval_id', 'site_id', 'preview_id',
+            'source_commit', 'artifact_sha256', 'state', 'expires_at')}
+        result['mode'] = approval.get('mode', 'publish')
+        if approval['state'] == 'accepted':
+            result['operation'] = self.operation(claims, approval['operation_id'])
+        elif approval['state'] == 'connection_tested':
+            result['result'] = {key: approval['result'][key] for key in
+                ('kind', 'status', 'approval_id', 'preview_id', 'completed_at')}
+        elif approval['state'] == 'prepared':
+            # Another confirmation surface may already have requested these same
+            # bytes. Read that factual operation without accepting this card.
+            target = self.store.get('publication-target:' + approval['site_id'] + ':' + approval['preview_id']) if result['mode'] == 'publish' else None
+            if target and target.get('subject') == claims['sub'] and target.get('artifact_sha256') == approval['artifact_sha256']:
+                result['state'] = 'already_requested'
+                result['operation'] = self.operation(claims, target['operation_id'])
+            elif approval['expires_at'] <= self.clock():
+                result['state'] = 'expired'
+        # A prepared read is not proof that an in-flight confirmation cannot
+        # still commit. Clients preserve uncertainty and never resend from it.
+        return result
+
     def confirm_publish(self, claims, approval_id, nonce):
         key = 'approval:' + uuid(approval_id); approval = self.store.get(key)
         if not approval or approval['subject'] != claims['sub'] or not isinstance(nonce, str) or not secrets.compare_digest(approval['nonce_hash'], fingerprint(nonce)):
