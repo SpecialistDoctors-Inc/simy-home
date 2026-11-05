@@ -1,0 +1,63 @@
+name: Check static site
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches: [dev]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: static-site-check-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  static-site:
+    name: Validate and package static site
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22'
+      - name: Test trusted validation tools
+        run: python3 -m unittest discover -s tests -p 'test_*.py' -v
+      - name: Validate static source without running customer code
+        run: python3 tools/validate_site.py site
+      - name: Package the exact checked-out source revision
+        env:
+          SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          SOURCE_REPOSITORY: ${{ github.repository }}
+        run: |
+          OPERATION_ID=$(python3 -c 'import os,uuid; print(uuid.uuid5(uuid.NAMESPACE_URL, "https://github.com/" + os.environ["SOURCE_REPOSITORY"] + "/commit/" + os.environ["SOURCE_SHA"]))')
+          python3 tools/package_site.py --site site --output output --source-commit "$SOURCE_SHA" --operation-id "$OPERATION_ID"
+      - name: Retain immutable checked bytes
+        id: artifact
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: static-site-${{ github.event.pull_request.head.sha || github.sha }}-${{ github.run_attempt }}
+          path: |
+            output/site.zip
+            output/manifest.json
+          if-no-files-found: error
+          retention-days: 30
+      - name: Record immutable artifact coordinates
+        env:
+          ARTIFACT_ID: ${{ steps.artifact.outputs.artifact-id }}
+          ARTIFACT_DIGEST: ${{ steps.artifact.outputs.artifact-digest }}
+        run: |
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          manifest = json.loads(Path('output/manifest.json').read_text())
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as summary:
+              summary.write('Validated static artifact\n\n')
+              for key, value in {'artifact_id': os.environ['ARTIFACT_ID'], 'actions_artifact_digest': os.environ['ARTIFACT_DIGEST'], 'source_commit': manifest['source_commit'], 'source_sha256': manifest['source_sha256'], 'artifact_sha256': manifest['artifact_sha256']}.items():
+                  summary.write(f'{key}: `{value}`\n\n')
+          PY

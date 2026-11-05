@@ -1,0 +1,61 @@
+name: Check standalone HP control
+
+on:
+  pull_request:
+    paths: ['examples/hp-management/control/**', 'infra/hp-control/**', '.github/workflows/check-hp-control.yml']
+  push:
+    branches: [dev]
+    paths: ['examples/hp-management/control/**', 'infra/hp-control/**', '.github/workflows/check-hp-control.yml']
+
+permissions:
+  contents: read
+
+jobs:
+  runtime:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22'
+      - name: Install locked runtime and isolated test dependencies
+        run: |
+          python -m pip install uv==0.9.7
+          uv pip install --system --require-hashes -r examples/hp-management/control/requirements.lock
+          uv pip install --system -r examples/hp-management/control/requirements-test.txt
+      - name: Check cloud authority and command behavior without AWS access
+        env:
+          AWS_EC2_METADATA_DISABLED: 'true'
+          AWS_DEFAULT_REGION: ap-northeast-1
+        run: python -m unittest discover -s examples/hp-management/control -p 'test_*.py' -v
+      - name: Build and import the real Lambda package
+        run: python examples/hp-management/control/build_lambda.py --verify-runtime
+      - name: Check whitespace
+        run: git diff --check
+  infrastructure:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: hashicorp/setup-terraform@b9cd54a3c349d3f38e8881555d616ced269862dd # v3
+        with:
+          terraform_version: 1.14.0
+      - run: terraform -chdir=infra/hp-control fmt -check -recursive
+      - run: terraform -chdir=infra/hp-control init -backend=false -input=false
+      - run: terraform -chdir=infra/hp-control validate
+  renderer:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Build the reviewed renderer source
+        run: docker build --platform linux/amd64 --tag hp-browser-validator:ci examples/hp-management/control/validator
+      - name: Verify browser rendering without network, credentials or privileges
+        run: |
+          install -d -m 0777 "$RUNNER_TEMP/hp-browser-output"
+          docker run --rm --platform linux/amd64 --network none --read-only \
+            --cap-drop ALL --security-opt no-new-privileges --user 1000:1000 \
+            --tmpfs /tmp:rw,mode=1777,size=512m \
+            --mount "type=bind,source=$RUNNER_TEMP/hp-browser-output,target=/output" \
+            --entrypoint python3 hp-browser-validator:ci /opt/validator/smoke.py

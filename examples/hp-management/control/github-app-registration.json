@@ -1,0 +1,9 @@
+{
+  "name": "SIMY HP Local Editor",
+  "url": "https://simy.one/hp-management/clinic/",
+  "description": "Store customer-local static website edits in operator-managed private repositories and read deterministic validation results. No customer GitHub accounts and no operator-side AI execution.",
+  "public": false,
+  "hook_attributes": {"url": "https://hp-control.simy.one/github/webhook", "active": false},
+  "default_permissions": {"contents": "write", "pull_requests": "write", "checks": "read", "actions": "read", "metadata": "read"},
+  "default_events": ["check_run", "check_suite", "workflow_run", "installation", "installation_repositories"]
+}

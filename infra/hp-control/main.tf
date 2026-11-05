@@ -1,0 +1,269 @@
+data "aws_caller_identity" "current" {}
+locals {
+  name = "simy-hp-control"
+  tags = { Project = "hp-control", ManagedBy = "terraform" }
+  common_environment = {
+    HP_TABLE_NAME          = aws_dynamodb_table.authority.name
+    HP_COMMAND_QUEUE_URL   = aws_sqs_queue.commands.url
+    HP_ARTIFACT_BUCKET     = aws_s3_bucket.artifacts.id
+    HP_PUBLIC_BASE_URL     = "https://hp-control.simy.one"
+    HP_PUBLICATION_ENABLED = tostring(var.publication_enabled)
+  }
+  sites = {
+    dev  = { bucket = "simy-sample-clinic-dev-209300895845", distribution = "E2BEBS6CE71LYO" }
+    prod = { bucket = "simy-sample-clinic-prod-209300895845", distribution = "E294F04MBS65GK" }
+  }
+  publisher_sites = { for env, site in local.sites : env => site if(env == "dev" ? var.preview_enabled : var.publication_enabled) }
+}
+resource "terraform_data" "guard" {
+  lifecycle {
+    precondition {
+      condition     = data.aws_caller_identity.current.account_id == "209300895845" && terraform.workspace == "hp-control"
+      error_message = "Use the verified AWS account and dedicated hp-control workspace/state."
+    }
+    precondition {
+      condition     = !var.validation_enabled || length(trimspace(var.validation_gate_reference)) > 0
+      error_message = "Renderer launches require reviewed pinned image and isolation evidence."
+    }
+    precondition {
+      condition     = !var.publication_enabled || length(trimspace(var.publication_gate_reference)) > 0
+      error_message = "Publication requires a reviewed gate/cutover evidence reference."
+    }
+    precondition {
+      condition     = !var.preview_enabled || length(trimspace(var.preview_gate_reference)) > 0
+      error_message = "Preview switching requires legacy-writer retirement and target verification evidence."
+    }
+  }
+}
+resource "aws_dynamodb_table" "authority" {
+  name                        = local.name
+  billing_mode                = "PAY_PER_REQUEST"
+  hash_key                    = "pk"
+  deletion_protection_enabled = true
+  attribute {
+    name = "pk"
+    type = "S"
+  }
+  attribute {
+    name = "queue_state"
+    type = "S"
+  }
+  attribute {
+    name = "queue_ready_at"
+    type = "N"
+  }
+  attribute {
+    name = "attention_state"
+    type = "S"
+  }
+  global_secondary_index {
+    name            = "attention-state"
+    hash_key        = "attention_state"
+    projection_type = "KEYS_ONLY"
+  }
+  global_secondary_index {
+    name            = "queue-state"
+    hash_key        = "queue_state"
+    range_key       = "queue_ready_at"
+    projection_type = "ALL"
+  }
+  ttl {
+    attribute_name = "expires_at"
+    enabled        = true
+  }
+  point_in_time_recovery { enabled = true }
+  server_side_encryption { enabled = true }
+  tags       = local.tags
+  depends_on = [terraform_data.guard]
+  lifecycle { prevent_destroy = true }
+}
+resource "aws_sqs_queue" "dead_letters" {
+  name                      = "${local.name}-dead.fifo"
+  fifo_queue                = true
+  sqs_managed_sse_enabled   = true
+  message_retention_seconds = 1209600
+  tags                      = local.tags
+}
+resource "aws_sqs_queue" "commands" {
+  name                        = "${local.name}-commands.fifo"
+  fifo_queue                  = true
+  content_based_deduplication = false
+  sqs_managed_sse_enabled     = true
+  visibility_timeout_seconds  = 5400
+  message_retention_seconds   = 345600
+  redrive_policy              = jsonencode({ deadLetterTargetArn = aws_sqs_queue.dead_letters.arn, maxReceiveCount = 5 })
+  tags                        = local.tags
+}
+resource "aws_sqs_queue_redrive_allow_policy" "dead_letters" {
+  queue_url            = aws_sqs_queue.dead_letters.id
+  redrive_allow_policy = jsonencode({ redrivePermission = "byQueue", sourceQueueArns = [aws_sqs_queue.commands.arn] })
+}
+resource "aws_s3_bucket" "artifacts" {
+  bucket     = "simy-hp-control-artifacts-209300895845"
+  tags       = local.tags
+  depends_on = [terraform_data.guard]
+  lifecycle { prevent_destroy = true }
+}
+resource "aws_s3_bucket_public_access_block" "artifacts" {
+  bucket                  = aws_s3_bucket.artifacts.id
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+}
+resource "aws_s3_bucket_server_side_encryption_configuration" "artifacts" {
+  bucket = aws_s3_bucket.artifacts.id
+  rule {
+    apply_server_side_encryption_by_default { sse_algorithm = "AES256" }
+  }
+}
+resource "aws_s3_bucket_versioning" "artifacts" {
+  bucket = aws_s3_bucket.artifacts.id
+  versioning_configuration { status = "Enabled" }
+}
+resource "aws_s3_bucket_policy" "artifacts" {
+  bucket = aws_s3_bucket.artifacts.id
+  policy = jsonencode({ Version = "2012-10-17", Statement = [{
+    Sid       = "DenyInsecureTransport", Effect = "Deny", Principal = "*", Action = "s3:*",
+    Resource  = [aws_s3_bucket.artifacts.arn, "${aws_s3_bucket.artifacts.arn}/*"],
+    Condition = { Bool = { "aws:SecureTransport" = "false" } }
+  }] })
+}
+resource "aws_cloudwatch_log_group" "runtime" {
+  for_each          = toset(["api", "consumer", "dispatcher", "validator"])
+  name              = "/simy/hp-control/${each.key}"
+  retention_in_days = 30
+  tags              = local.tags
+}
+resource "aws_lambda_function" "runtime" {
+  for_each                       = toset(["api", "consumer", "dispatcher"])
+  function_name                  = "${local.name}-${each.key}"
+  filename                       = var.lambda_zip
+  source_code_hash               = filebase64sha256(var.lambda_zip)
+  role                           = aws_iam_role.runtime[each.key].arn
+  runtime                        = "python3.12"
+  handler                        = each.key == "api" ? "hp_control.handler" : each.key == "consumer" ? "hp_control.consume_commands" : "hp_control.dispatch_pending"
+  timeout                        = each.key == "consumer" ? 900 : 29
+  memory_size                    = each.key == "consumer" ? 2048 : 512
+  reserved_concurrent_executions = each.key == "api" ? 10 : each.key == "consumer" ? 2 : 1
+  logging_config {
+    log_format = "Text"
+    log_group  = aws_cloudwatch_log_group.runtime[each.key].name
+  }
+  environment {
+    variables = merge(local.common_environment, each.key == "api" ? {
+      HP_GOOGLE_SECRET_ARN         = var.google_secret_arn
+      HP_SIGNING_SECRET_ARN        = var.signing_secret_arn
+      HP_GITHUB_WEBHOOK_SECRET_ARN = var.github_webhook_secret_arn
+      } : each.key == "consumer" ? {
+      HP_GITHUB_SECRET_ARN          = var.github_secret_arn
+      HP_GOOGLE_OPERATOR_SECRET_ARN = var.google_operator_secret_arn
+      HP_VALIDATOR_CONFIG           = jsonencode(local.validator_config)
+      HP_PUBLISHER_ROLES            = jsonencode({ for env, role in aws_iam_role.publisher : env => role.arn })
+    } : {})
+  }
+  depends_on = [aws_cloudwatch_log_group.runtime, aws_iam_role_policy.runtime]
+  tags       = local.tags
+}
+resource "aws_lambda_event_source_mapping" "commands" {
+  event_source_arn        = aws_sqs_queue.commands.arn
+  function_name           = aws_lambda_function.runtime["consumer"].arn
+  batch_size              = 1
+  function_response_types = ["ReportBatchItemFailures"]
+  enabled                 = true
+}
+resource "aws_apigatewayv2_api" "control" {
+  name                         = local.name
+  protocol_type                = "HTTP"
+  disable_execute_api_endpoint = true
+  tags                         = local.tags
+}
+resource "aws_apigatewayv2_integration" "api" {
+  api_id                 = aws_apigatewayv2_api.control.id
+  integration_type       = "AWS_PROXY"
+  integration_uri        = aws_lambda_function.runtime["api"].invoke_arn
+  payload_format_version = "2.0"
+}
+resource "aws_apigatewayv2_route" "api" {
+  for_each  = toset(["GET /health", "POST /mcp", "POST /github/webhook", "GET /oauth/{proxy+}", "POST /oauth/{proxy+}", "GET /.well-known/{proxy+}"])
+  api_id    = aws_apigatewayv2_api.control.id
+  route_key = each.value
+  target    = "integrations/${aws_apigatewayv2_integration.api.id}"
+}
+resource "aws_apigatewayv2_stage" "default" {
+  api_id      = aws_apigatewayv2_api.control.id
+  name        = "$default"
+  auto_deploy = true
+  default_route_settings {
+    throttling_burst_limit = 20
+    throttling_rate_limit  = 10
+  }
+}
+resource "aws_lambda_permission" "api" {
+  statement_id  = "HttpApiOnly"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.runtime["api"].function_name
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "${aws_apigatewayv2_api.control.execution_arn}/*/*"
+}
+resource "aws_acm_certificate" "control" {
+  domain_name       = "hp-control.simy.one"
+  validation_method = "DNS"
+  tags              = local.tags
+}
+resource "aws_route53_record" "validation" {
+  for_each = { for option in aws_acm_certificate.control.domain_validation_options : option.domain_name => option }
+  zone_id  = var.route53_zone_id
+  name     = each.value.resource_record_name
+  type     = each.value.resource_record_type
+  records  = [each.value.resource_record_value]
+  ttl      = 300
+}
+resource "aws_acm_certificate_validation" "control" {
+  certificate_arn         = aws_acm_certificate.control.arn
+  validation_record_fqdns = [for record in aws_route53_record.validation : record.fqdn]
+}
+resource "aws_apigatewayv2_domain_name" "control" {
+  domain_name = "hp-control.simy.one"
+  domain_name_configuration {
+    certificate_arn = aws_acm_certificate_validation.control.certificate_arn
+    endpoint_type   = "REGIONAL"
+    security_policy = "TLS_1_2"
+  }
+}
+resource "aws_apigatewayv2_api_mapping" "control" {
+  api_id      = aws_apigatewayv2_api.control.id
+  domain_name = aws_apigatewayv2_domain_name.control.id
+  stage       = aws_apigatewayv2_stage.default.id
+}
+resource "aws_route53_record" "control" {
+  zone_id = var.route53_zone_id
+  name    = "hp-control.simy.one"
+  type    = "A"
+  alias {
+    name                   = aws_apigatewayv2_domain_name.control.domain_name_configuration[0].target_domain_name
+    zone_id                = aws_apigatewayv2_domain_name.control.domain_name_configuration[0].hosted_zone_id
+    evaluate_target_health = false
+  }
+}
+
+resource "aws_cloudwatch_event_rule" "dispatch_pending" {
+  name                = "${local.name}-dispatch-pending"
+  schedule_expression = "rate(1 minute)"
+  tags                = local.tags
+}
+resource "aws_cloudwatch_event_target" "dispatch_pending" {
+  rule = aws_cloudwatch_event_rule.dispatch_pending.name
+  arn  = aws_lambda_function.runtime["dispatcher"].arn
+  retry_policy {
+    maximum_event_age_in_seconds = 300
+    maximum_retry_attempts       = 2
+  }
+}
+resource "aws_lambda_permission" "dispatch_pending" {
+  statement_id  = "PendingOutboxScheduleOnly"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.runtime["dispatcher"].function_name
+  principal     = "events.amazonaws.com"
+  source_arn    = aws_cloudwatch_event_rule.dispatch_pending.arn
+}
