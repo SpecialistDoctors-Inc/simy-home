@@ -469,6 +469,6 @@ if(inlineDiagnosisForm){inlineDiagnosisForm.addEventListener('submit',runDiagnos
 
 let reportPdfLoader;
 function loadReportPdf(){
-  if(!reportPdfLoader)reportPdfLoader=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='/assets/clinic-service-v2/report-pdf-9758bc1cc10886.js?v=b5d14c971966';script.onload=resolve;script.onerror=()=>{script.remove();reportPdfLoader=null;reject(Error('PDF機能の読込に失敗しました'));};document.head.append(script);});
+  if(!reportPdfLoader)reportPdfLoader=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='/assets/clinic-service-v2/report-pdf-9758bc1cc10886.js?v=b13d1b796942';script.onload=resolve;script.onerror=()=>{script.remove();reportPdfLoader=null;reject(Error('PDF機能の読込に失敗しました'));};document.head.append(script);});
   return reportPdfLoader;
 }
