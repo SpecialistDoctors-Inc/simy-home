@@ -1,32 +1,3 @@
-:root {
-  --paper: #f6f5f4;
-  --paper-light: #ffffff;
-  --ink: #111111;
-  --ink-soft: #5d5b58;
-  --line: #202020;
-  --line-soft: rgba(17, 17, 17, 0.15);
-  --ui-line: #d9dde2;
-  --blue: #3273d7;
-  --blue-deep: #235db8;
-  --blue-soft: #eef5ff;
-  --lime: #92edce;
-  --coral: #ff865f;
-  --yellow: #ffd166;
-  --sienna: #b85b3f;
-  --mint: #92edce;
-  --mint-soft: #ecfbf6;
-  --radius-sm: 0.5rem;
-  --radius-md: 0.8rem;
-  --radius-lg: 1.1rem;
-  --page-width: 1360px;
-  --section-x: clamp(1.35rem, 4vw, 4.75rem);
-  --section-y: clamp(5rem, 9vw, 9rem);
-  --type-section-heading: clamp(2.7rem, 5.2vw, 5.5rem);
-  --display: "Helvetica Neue", "Arial Nova", Helvetica, Arial, sans-serif;
-  --body: Inter, "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
-}
-
 *,
 *::before,
 *::after {
@@ -205,6 +176,9 @@ html[lang="zh-Hans"] .section-heading {
 }
 
 .nav-frame > .brand {
+  min-width: 0;
+  max-width: 100%;
+  padding-right: 0.75rem;
   padding-left: var(--section-x);
 }
 
@@ -231,6 +205,11 @@ html[lang="zh-Hans"] .section-heading {
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.02em;
+}
+
+.nav-frame .brand-tag {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .desktop-nav {
@@ -456,50 +435,6 @@ html[lang="zh-Hans"] .section-heading {
 
 .mobile-auth-actions {
   display: none;
-}
-
-.button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  min-height: 3.25rem;
-  padding: 0.85rem 1.15rem;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-sm);
-  font-size: 0.84rem;
-  font-weight: 850;
-  letter-spacing: -0.01em;
-  text-decoration: none;
-  transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
-}
-
-.button:hover {
-  transform: translate(-3px, -3px);
-  box-shadow: 5px 5px 0 var(--ink);
-}
-
-.button-small {
-  min-height: 2.7rem;
-  padding: 0.65rem 0.9rem;
-  font-size: 0.75rem;
-}
-
-.button-dark {
-  background: var(--ink);
-  color: #fff;
-}
-
-.button-primary {
-  min-width: 12.75rem;
-  background: var(--blue);
-  color: #fff;
-}
-
-.button-light {
-  min-width: 15rem;
-  background: var(--paper-light);
-  color: var(--ink);
 }
 
 .text-link {
@@ -2507,6 +2442,81 @@ html[lang="ja"] .section-intro h2 {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.apps-more {
+  min-width: 0;
+}
+
+.apps-more > summary {
+  display: flex;
+  min-height: 3.5rem;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.8rem 1.1rem;
+  border: 1px solid rgba(255, 255, 255, 0.38);
+  border-radius: var(--radius-md);
+  color: #fff;
+  cursor: pointer;
+  font-weight: 750;
+  list-style: none;
+}
+
+.apps-more > summary::-webkit-details-marker {
+  display: none;
+}
+
+.apps-more > summary:hover,
+.apps-more[open] > summary {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.apps-more > summary:focus-visible {
+  outline: 3px solid var(--lime);
+  outline-offset: 3px;
+}
+
+.apps-more > summary small {
+  margin-left: auto;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.apps-more > summary::after {
+  content: "+";
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.apps-more[open] > summary::after {
+  content: "−";
+}
+
+.apps-more-content {
+  display: grid;
+  gap: 1.5rem;
+  padding-top: 1.5rem;
+}
+
+.apps-more .apps-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.apps-more-content > .apps-group:first-child .apps-grid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.apps-more .app-tile {
+  min-height: 6.5rem;
+}
+
+.app-tile-planned {
+  background: #f2f2f1;
+}
+
+.app-tile-planned .app-badge {
+  color: #555;
+}
+
 .app-tile {
   display: grid;
   min-width: 0;
@@ -2607,6 +2617,31 @@ html[lang="ja"] .section-intro h2 {
 .app-box .app-badge {
   background: #e8f3ff;
   color: #0b68d8;
+}
+
+.app-line .app-badge {
+  background: #e5f8e8;
+  color: #087d2c;
+}
+
+.app-x .app-badge {
+  background: #161616;
+  color: #fff;
+}
+
+.app-webex .app-badge {
+  background: #e6f6f3;
+  color: #167567;
+}
+
+.app-datadog .app-badge {
+  background: #f0e9fa;
+  color: #6b3a9b;
+}
+
+.app-plaud .app-badge {
+  background: #fff0e7;
+  color: #b85827;
 }
 
 .apps-bridge {
@@ -3915,6 +3950,24 @@ body.dialog-open {
   overflow: hidden;
 }
 
+.storage-dialog {
+  width: min(calc(100% - 2rem), 34rem);
+  max-width: none;
+  max-height: calc(100dvh - 2rem);
+  padding: 0;
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: #fff;
+  color: var(--ink);
+  box-shadow: 0 2rem 6rem rgba(17, 17, 17, 0.3);
+}
+
+.storage-dialog::backdrop {
+  background: rgba(17, 17, 17, 0.58);
+  backdrop-filter: blur(0.2rem);
+}
+
 .storage-dialog-card {
   display: grid;
   gap: 1.25rem;
@@ -3939,6 +3992,29 @@ body.dialog-open {
 html[lang="ja"] .storage-dialog-header h2,
 html[lang="zh-Hans"] .storage-dialog-header h2 {
   white-space: nowrap;
+}
+
+.storage-dialog-close {
+  display: inline-grid;
+  width: 2.6rem;
+  height: 2.6rem;
+  flex: 0 0 2.6rem;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: #fff;
+  color: var(--ink);
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+.storage-dialog-close:hover {
+  background: #f2f4f6;
+}
+
+.storage-dialog-close:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 0.2rem;
 }
 
 .storage-dialog-description {
@@ -4894,6 +4970,18 @@ html[lang="zh-Hans"] .storage-dialog-header h2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .apps-more .apps-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .apps-more-content > .apps-group:first-child .apps-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .apps-more-content > .apps-group:first-child .app-tile:last-child {
+    grid-column: span 2;
+  }
+
   .apps-grid-ai {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -5254,6 +5342,30 @@ html[lang="zh-Hans"] .storage-dialog-header h2 {
 
   .apps-grid-ai {
     grid-template-columns: 1fr;
+  }
+
+  .apps-more .apps-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .apps-more-content > .apps-group:first-child .apps-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .apps-more-content > .apps-group:first-child .app-tile:last-child {
+    grid-column: auto;
+  }
+
+  .apps-more > summary {
+    flex-wrap: wrap;
+  }
+
+  .apps-more > summary small {
+    margin-left: 0;
+  }
+
+  .apps-more > summary::after {
+    margin-left: auto;
   }
 
   .app-tile {
@@ -5659,6 +5771,11 @@ html[lang="zh-Hans"] .storage-dialog-header h2 {
     width: 100%;
   }
 
+  .storage-dialog {
+    width: calc(100% - 1rem);
+    max-height: calc(100dvh - 1rem);
+  }
+
   .storage-dialog-card {
     gap: 1rem;
     padding: 1.2rem;
@@ -5785,6 +5902,31 @@ html[lang="zh-Hans"] .storage-dialog-header h2 {
   }
 }
 
+/* FAQ rows share one parent width; longer translations wrap within it. */
+.seo-faq-list { margin-top: 2rem; border-top: 1px solid var(--line); }
+.seo-faq-list details { border-bottom: 1px solid var(--line); }
+.seo-faq-list summary { padding: 1.25rem 0; cursor: pointer; font-weight: 600; line-height: 1.5; overflow-wrap: anywhere; }
+.seo-faq-list p { padding: 0 0 1.5rem; color: var(--ink-soft); line-height: 1.7; }
+.seo-faq-links { display: flex; flex-wrap: wrap; gap: 1rem 1.5rem; margin-top: 1.5rem; }
+.seo-faq-links a { text-decoration: underline; text-underline-offset: 0.2em; }
+
+/* Translated headlines need room for accents and Devanagari vowel marks. */
+html:not([lang="en"]) .hero h1 {
+  max-width: 100%;
+  line-height: 1.12;
+  overflow-wrap: anywhere;
+}
+html[lang="hi"] .hero h1 {
+  font-size: clamp(2.75rem, 5vw, 5.5rem);
+  line-height: 1.3;
+  letter-spacing: 0;
+}
+html[lang="hi"] .section-heading,
+html[lang="hi"] .hero-lead {
+  line-height: 1.3;
+  letter-spacing: 0;
+}
+
 /* Field voices, founder note and tool entry */
 .voice-grid { list-style: none; margin: 32px 0 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
 .voice-card { display: flex; flex-direction: column; justify-content: space-between; gap: 14px; padding: 20px 18px; background: var(--paper-light); border: 1px solid var(--ink); border-radius: 12px; }
@@ -5810,7 +5952,6 @@ html[lang="zh-Hans"] .storage-dialog-header h2 {
   .desktop-nav a { padding-inline: 0.75rem; }
 }
 
-/* Keep optional storage prices visible within the plan comparison. */
 .storage-pricing {
   width: 100%;
   margin-top: 2rem;

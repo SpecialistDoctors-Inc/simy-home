@@ -1,0 +1,9 @@
+No findings.
+
+I reviewed only `site/i18n.js`, `tests/sitewide-navigation.test.cjs`, and the prior review. The updated `decorateAppLinks` correctly keeps the authored href for repeated language recalculation, preserves explicit localized URLs, and resets its stored original when another component changes the link destination.
+
+Focused verification passed:
+
+`node --test tests/sitewide-navigation.test.cjs`
+
+Result: 8 passing tests, 0 failures.

@@ -1,0 +1,18 @@
+**Findings**
+No findings in the focused follow-up review.
+
+All four prior findings appear resolved in the current files:
+- CloudFront Function update is no longer `continue-on-error`; failure will fail deploy: [.github/workflows/deploy-site.yml](/Users/t.shiwaku/.codex/worktrees/international-seo/simy-home/.github/workflows/deploy-site.yml:104).
+- Localized H1/header fixes are present: [site/home.css](/Users/t.shiwaku/.codex/worktrees/international-seo/simy-home/site/home.css:207), [site/home.css](/Users/t.shiwaku/.codex/worktrees/international-seo/simy-home/site/home.css:5828). I visually inspected `hi-hero-1440.jpg`, `fr-hero-1440.jpg`, `es-hero-720.jpg`, and `hi-hero-390.jpg`; no H1 clipping, header overlap, or obvious unreadable wrapping found.
+- Separate PR/push check workflow covers Terraform-triggered changes without publishing: [.github/workflows/check-site.yml](/Users/t.shiwaku/.codex/worktrees/international-seo/simy-home/.github/workflows/check-site.yml:3).
+- Bytecode hygiene is covered and no `__pycache__`/`.pyc` files are present: [.gitignore](/Users/t.shiwaku/.codex/worktrees/international-seo/simy-home/.gitignore:22). International SEO evidence files/manifests use `.jpg`, and `file` reports the screenshots as JPEGs.
+
+Query-key hardening is also resolved in both routing copies and covered by tests: [redirect-prod.js](/Users/t.shiwaku/.codex/worktrees/international-seo/simy-home/infra/cloudfront-functions/redirect-prod.js:12), [main.tf](/Users/t.shiwaku/.codex/worktrees/international-seo/simy-home/infra/terraform/main.tf:199), [home-seo-routing.test.cjs](/Users/t.shiwaku/.codex/worktrees/international-seo/simy-home/tests/home-seo-routing.test.cjs:57).
+
+Verification I ran read-only:
+- `node --test tests/home-seo-routing.test.cjs` passed, 24/24.
+- `python3 -B scripts/build-localized-home.py --check` passed.
+- `python3 -B scripts/check-home-seo.py` passed.
+- `git diff --check` passed.
+
+No edits, browser tabs, remote changes, SIMY loops, or spawned reviewers used.

@@ -1,0 +1,14 @@
+**Findings**
+- P2, pre-existing in `origin/main`, not introduced by this branch: the English homepage raw HTML still links to Japanese guide/download URLs. [site/index.html](/Users/t.shiwaku/.codex/worktrees/international-seo/simy-home/site/index.html:76) and [site/index.html](/Users/t.shiwaku/.codex/worktrees/international-seo/simy-home/site/index.html:633) point to `/guides/...`, and [site/index.html](/Users/t.shiwaku/.codex/worktrees/international-seo/simy-home/site/index.html:77) points to `/download.html`; those targets are Japanese pages ([site/guides/index.html](/Users/t.shiwaku/.codex/worktrees/international-seo/simy-home/site/guides/index.html:2), [site/download.html](/Users/t.shiwaku/.codex/worktrees/international-seo/simy-home/site/download.html:2)). JS rewrites these for normal browser users, but raw/no-JS crawlers see English copy linking into Japanese pages. The generated non-English homepages now have correct localized raw links, so this is isolated to the English source page.
+
+No introduced regressions found relative to `origin/main`.
+
+Verification run read-only:
+- `python3 -B scripts/build-localized-home.py --check` passed.
+- `python3 -B scripts/check-home-seo.py` passed.
+- `node --test tests/*.test.cjs` passed: 1110/1110.
+- `git diff --check` passed.
+- `node --check infra/cloudfront-functions/redirect-prod.js` passed.
+- CloudFront Function is 7008 bytes and matches the Terraform embedded copy after templating.
+
+I did not modify files, spawn agents, or deploy.

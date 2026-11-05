@@ -11,8 +11,44 @@
   });
 
   const JA_COPY = Object.freeze({
-    "SIMY by Industry includes the existing SIMY Quality (SQM), adapted to your field’s terminology, workflow, and review criteria.": "SIMY by Industryは、既存のSIMY Quality（SQM）を、業種ごとの用語、業務フロー、確認基準に合わせて最適化します。",
-    "Online signup is available for Starter and Industry (IT Engineer, Financial Planner and Pharmaceutical MR). Please contact us about Dental Clinic, Realtime and additional storage.": "オンライン申込みはStarterとIndustry（ITエンジニア・FP・製薬MR）に対応しています。歯科クリニック・Realtime・追加ストレージについてはお問い合わせください。",
+    "Explore SIMY for your work": "あなたの職業からSIMYの活用を探す",
+    "Let AI build, test,": "AIに、開発と",
+    "and check your code.": "品質チェックを任せる。",
+    "Describe what you want. AI handles implementation, testing, and fixes. SQM checks changes using rules developed from past bugs.": "つくりたいものを伝えると、AIが実装・テスト・修正を進めます。SQMは過去の不具合から作ったルールで、次の変更をチェックします。",
+    "See what SIMY can do": "SIMYにできることを見る",
+    "Build a feature · Fix a bug · Check quality": "機能をつくる · バグを直す · 品質をチェック",
+    "Your request": "あなたの依頼",
+    "“Add a search form.”": "「検索フォームを追加して」",
+    "SIMY prepares": "SIMYが用意するもの",
+    "Code for the feature": "機能のコード",
+    "Test results": "テスト結果",
+    "A separate AI review": "別のAIによるレビュー",
+    "Illustrative example. You decide whether to release.": "説明用の例です。変更を公開するかはあなたが判断します。",
+
+    "FOR ENGINEERS": "FOR ENGINEERS",
+    "Build. Verify.": "つくる。確かめる。",
+    "Move forward.": "開発を、前へ。",
+    "Connect implementation, verification, and independent review with Delivery Loop. Use SQM to bring lessons from past incidents into checks on your next change.": "Delivery Loopで実装・検証・独立レビューをつなぐ。SQMで過去の不具合から得た知識を、次の変更のチェックに活かす。",
+    "Explore the engineering experience": "エンジニアの開発体験を見る",
+    "Interactive walkthrough · Delivery Loop + SQM": "操作できるデモ · Delivery Loop + SQM",
+    "CONCEPT": "概念図",
+    "Agree on the outcome": "目的と完了条件をそろえる",
+    "Implement and verify": "実装して、検証する",
+    "Review, repair, recheck": "レビュー・修正・再確認",
+    "Hand over for a decision": "判断できる形で引き渡す",
+    "Past incidents. Knowledge for the next change.": "過去の不具合を、次の開発を守る知識に。",
+    "For engineers": "エンジニア向け",
+
+    "AI workflow automation, explained": "AIエージェントによる業務自動化とは",
+    "How does SIMY use AI agents to automate workflows?": "SIMYのAIエージェントは、どう業務を自動化しますか？",
+    "Describe the outcome in natural language. SIMY learns your working standards from the conversations you select, chooses a matching workflow, and uses Autorun to move the task forward. Reusable workflows connect your instructions, checks, and next steps.": "実現したい成果を、普段の言葉で伝えます。SIMYは選択した会話から仕事の基準を学び、合うワークフローを選んでAutorunで進めます。繰り返し使えるワークフローに、指示・確認事項・次の行動をまとめられます。",
+    "What happens after a meeting or customer conversation?": "会議や顧客との会話を、次の仕事にどうつなげますか？",
+    "With consent, SIMY carries meeting context and decisions into follow-up work. Connected apps supply the relevant messages, documents, and business information so you can prepare a customer response, a decision brief, or the next action in context.": "同意のもとで、会議の文脈と決定事項を引き継いでフォローを進めます。連携アプリのメッセージ・文書・業務情報を活用し、顧客への返信、意思決定のための資料、次のアクションを準備できます。",
+    "How do I stay in control of automated work?": "自動化した仕事の状況を確認できますか？",
+    "My Actions shows work in progress, completed work, and items waiting for your input. Review results and provide the decisions or information the work needs. What SIMY can read or do depends on the accounts and permissions you connect.": "My Actionsで進行中・完了・あなたの入力待ちの仕事を確認できます。成果物を確認し、必要な判断や情報を伝えてください。SIMYが参照・実行できる範囲は、接続したアカウントと権限によって異なります。",
+    "Explore workflows": "ワークフローを見る",
+    "See connected apps": "連携アプリを見る",
+    "Compare plans": "料金プランを比較",
     "Skip to content": "本文へ移動",
     "Your Digital Twin": "あなたのデジタルツイン",
     "Product": "プロダクト",
@@ -100,9 +136,10 @@
     "Describe the outcome. SIMY selects the Workflow.": "成果を伝える。SIMYがワークフローを選ぶ。",
     "Autorun moves it forward.": "その先は、Autorunが進める。",
 
-    "Codex, connected": "Codexと連携",
-    "Keep working in Codex. Let SIMY carry the work forward.": "Codexで頼む。その先の仕事はSIMYが動かす。",
-    "Connect the ChatGPT account you already use. Through Codex App Server, SIMY starts and continues Codex sessions for you; usage stays with your ChatGPT plan.": "いつものChatGPTアカウントを接続するだけ。SIMYはCodex App Server経由でCodexセッションを開始・継続し、利用量は現在のChatGPTプランに従います。",
+    "AI tools": "AIツール",
+    "Codex · Claude · Copilot": "Codex · Claude · Copilot",
+    "Ask in Codex, Claude, or Copilot. SIMY moves the work forward.": "Codex・Claude・Copilotで頼む。その先の仕事はSIMYが動かす。",
+    "For Codex, connect the ChatGPT account you already use. Through Codex App Server, SIMY starts and continues Codex sessions for you; usage stays with your ChatGPT plan.": "Codexの場合は、いつものChatGPTアカウントを接続するだけ。SIMYはCodex App Server経由でCodexセッションを開始・継続し、利用量は現在のChatGPTプランに従います。",
     "01 / CONNECT": "01 / 接続",
     "Your ChatGPT account": "あなたのChatGPTアカウント",
     "Connect the account and ChatGPT plan you already use.": "いつも使っているアカウントとChatGPTプランを接続します。",
@@ -201,6 +238,18 @@
     "Recordings · Transcripts": "録画・文字起こし",
     "Pages · Databases": "ページ・データベース",
     "Company documents": "社内文書",
+    "See all integrations": "すべての連携を見る",
+    "5 more available · 6 planned": "ほかに接続可能5件・準備中6件",
+    "Also available to connect": "ほかの接続可能なアプリ",
+    "More apps that connect with SIMY": "SIMYと接続できる追加アプリ",
+    "Official account messages": "公式アカウントのメッセージ",
+    "Posts · Search": "投稿・検索",
+    "Recordings · Captions": "録画・字幕",
+    "Incidents · Monitors": "障害・監視",
+    "Recordings · Transcripts · Notes": "録音・文字起こし・メモ",
+    "Planned integrations": "対応予定の連携",
+    "Integrations not yet available": "今後対応する連携",
+    "Coming soon": "準備中",
     "Context in": "文脈を取り込む",
     "Messages · meetings · files · metrics": "メッセージ・会議・ファイル・指標",
     "Workflow selected": "ワークフローを選択",
@@ -407,7 +456,7 @@
     "Product principles": "プロダクトの原則",
     "A conversation becoming a working workflow": "会話が実行されるワークフローへ変わる様子",
     "When the conversation ends, SIMY gets to work": "会話が終わるとSIMYが仕事を始める流れ",
-    "ChatGPT account connects to Codex App Server, which powers SIMY workflows and Autorun": "ChatGPTアカウントをCodex App Serverへ接続し、SIMYのワークフローとAutorunを動かす流れ",
+    "Codex connection example: ChatGPT account connects to Codex App Server, which powers SIMY workflows and Autorun": "Codexの接続例：ChatGPTアカウントをCodex App Serverへ接続し、SIMYのワークフローとAutorunを動かす流れ",
     "SIMY monthly plan comparison": "SIMY月額プラン比較",
     "Apps that connect with SIMY": "SIMYと連携できるアプリ",
     "Connected app context flows into SIMY, which selects a workflow, runs Autorun, and returns completed work": "連携アプリの文脈をSIMYへ取り込み、ワークフローを選び、Autorunを実行して、完了した仕事を戻す流れ",
@@ -418,48 +467,48 @@
 
   const PAGE_META = {
     en: {
-      title: "SIMY — Turn conversations into workflows that get work done",
-      description: "Turn chats and conversations into workflows that get work done. SIMY learns how you work, selects the right Workflow, and Autorun moves it forward.",
+      title: "SIMY — AI Workflow Automation & AI Agents for Work",
+      description: "Automate work with AI agents that learn your standards. Turn conversations into reusable workflows, connect your apps, and review progress in My Actions.",
       socialTitle: "You’re using AI. But the workload hasn’t gone down.",
       socialDescription: "SIMY learns your way of working, selects the right Workflow, and Autorun moves it forward.",
       imageAlt: "You’re using AI. But the workload hasn’t gone down. Turn chats and conversations into workflows that get work done.",
       ogLocale: "en_US"
     },
     ja: {
-      title: "SIMY — 会話を、仕事が進むワークフローに",
-      description: "チャットや会話を、仕事が進む仕組みに変える。SIMYがあなたの仕事の基準を学び、合うワークフローを選び、Autorunがその先を進めます。",
+      title: "SIMY — AIエージェントで業務自動化・ワークフローを実行",
+      description: "AIエージェントで会話を業務自動化へ。SIMYが仕事の基準を学び、ワークフローを選んでAutorunで実行。会議後のフォローや顧客対応を連携アプリと進め、My Actionsで状況を確認できます。",
       socialTitle: "AIは使っている。でも、仕事は減っていない。",
       socialDescription: "SIMYがあなたの仕事の基準を学び、合うワークフローを選び、Autorunがその先を進めます。",
       imageAlt: "AIは使っている。でも、仕事は減っていない。チャットや会話を、仕事が進む仕組みに変える。",
       ogLocale: "ja_JP"
     },
     hi: {
-      title: "SIMY — बातचीत को काम पूरा करने वाले वर्कफ़्लो में बदलें",
-      description: "चैट और बातचीत को काम आगे बढ़ाने वाले वर्कफ़्लो में बदलें। SIMY आपके काम करने का तरीका सीखता है, सही Workflow चुनता है और Autorun उसे आगे बढ़ाता है।",
+      title: "SIMY — AI एजेंट और वर्कफ़्लो ऑटोमेशन",
+      description: "AI एजेंट से काम ऑटोमेट करें। SIMY बातचीत से आपके काम के मानदंड सीखता है, ऐप जोड़ता है और Autorun से वर्कफ़्लो आगे बढ़ाता है। My Actions में प्रगति देखें।",
       socialTitle: "आप AI का उपयोग कर रहे हैं। लेकिन काम का बोझ कम नहीं हुआ।",
       socialDescription: "SIMY आपके काम करने का तरीका सीखता है, सही Workflow चुनता है और Autorun उसे आगे बढ़ाता है।",
       imageAlt: "आप AI का उपयोग कर रहे हैं। लेकिन काम का बोझ कम नहीं हुआ। चैट और बातचीत को काम पूरा करने वाले वर्कफ़्लो में बदलें।",
       ogLocale: "hi_IN"
     },
     es: {
-      title: "SIMY — Convierte conversaciones en flujos de trabajo que avanzan",
-      description: "Convierte chats y conversaciones en flujos que hacen avanzar el trabajo. SIMY aprende cómo trabajas, elige el Workflow adecuado y Autorun se ocupa del resto.",
+      title: "SIMY — Agentes de IA y automatización de tareas",
+      description: "Automatiza tareas con agentes de IA. SIMY aprende tus criterios, conecta tus aplicaciones y convierte conversaciones en flujos de trabajo con Autorun.",
       socialTitle: "Usas IA. Pero la carga de trabajo no ha disminuido.",
       socialDescription: "SIMY aprende cómo trabajas, elige el Workflow adecuado y Autorun se ocupa del resto.",
       imageAlt: "Usas IA. Pero la carga de trabajo no ha disminuido. Convierte chats y conversaciones en flujos de trabajo que hacen avanzar el trabajo.",
       ogLocale: "es_ES"
     },
     fr: {
-      title: "SIMY — Transformez les conversations en workflows qui avancent",
-      description: "Transformez les échanges en workflows qui font réellement avancer le travail. SIMY apprend votre manière de travailler, choisit le bon Workflow et Autorun prend le relais.",
+      title: "SIMY — Agents IA et automatisation des workflows",
+      description: "Automatisez vos tâches avec les agents IA de SIMY. Transformez vos échanges en workflows, connectez vos applications et suivez le travail dans My Actions.",
       socialTitle: "Vous utilisez l’IA. Mais la charge de travail n’a pas diminué.",
       socialDescription: "SIMY apprend votre manière de travailler, choisit le bon Workflow et Autorun prend le relais.",
       imageAlt: "Vous utilisez l’IA. Mais la charge de travail n’a pas diminué. Transformez les chats et les conversations en workflows qui font avancer le travail.",
       ogLocale: "fr_FR"
     },
     "zh-Hans": {
-      title: "SIMY — 将对话变成真正推进工作的工作流",
-      description: "把聊天和对话变成真正推进工作的工作流。SIMY 学习你的工作方式，选择合适的工作流，再由 Autorun 持续推进。",
+      title: "SIMY — AI 智能体与工作流自动化",
+      description: "通过 AI 智能体推进工作。SIMY 从对话中学习你的工作标准，连接常用应用，选择合适的工作流并由 Autorun 执行。在 My Actions 中查看进展和待办事项。",
       socialTitle: "你在使用 AI，但工作量并没有减少。",
       socialDescription: "SIMY 学习你的工作方式，选择合适的工作流，再由 Autorun 持续推进。",
       imageAlt: "你在使用 AI，但工作量并没有减少。将聊天和对话变成真正推进工作的工作流。",
@@ -479,6 +528,8 @@
   }
 
   function resolveInitialLocale() {
+    const renderedLocale = normalizeLocale(document.documentElement.dataset.renderedLocale);
+    if (renderedLocale) return renderedLocale;
     const queryLocale = normalizeLocale(new URL(window.location.href).searchParams.get("lang"));
     if (queryLocale) return queryLocale;
     try {
@@ -501,8 +552,8 @@
   function collectOriginalContent() {
     const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
     let node = walker.nextNode();
-    while (node) {
-      if (!node.parentElement?.hasAttribute("data-current-year")) {
+    while (node && document.documentElement.dataset.renderedLocale === "en") {
+      if (!node.parentElement?.hasAttribute("data-current-year") && !node.parentElement?.closest(".simy-header")) {
         const value = node.nodeValue || "";
         const core = value.trim();
         if (core) {
@@ -518,6 +569,7 @@
     }
 
     for (const element of document.querySelectorAll("[aria-label], [title], [placeholder], [alt]")) {
+      if (document.documentElement.dataset.renderedLocale !== "en" || element.closest(".simy-header")) continue;
       for (const name of ["aria-label", "title", "placeholder", "alt"]) {
         if (!element.hasAttribute(name)) continue;
         attributeRecords.push({ element, name, value: element.getAttribute(name) || "" });
@@ -525,13 +577,16 @@
     }
 
     for (const link of document.querySelectorAll("a[href]")) {
-      link.dataset.originalHref = link.getAttribute("href") || "";
+      link.dataset.originalHref = link.dataset.originalHref || link.getAttribute("href") || "";
     }
   }
 
   function updateMeta(locale) {
     const meta = PAGE_META[locale];
     document.title = meta.title;
+    const canonicalUrl = `https://simy.one${locale === "en" ? "/" : `/${locale}.html`}`;
+    document.querySelector('link[rel="canonical"]')?.setAttribute("href", canonicalUrl);
+    document.querySelector('meta[property="og:url"]')?.setAttribute("content", canonicalUrl);
     const values = {
       'meta[name="description"]': meta.description,
       'meta[property="og:title"]': meta.socialTitle,
@@ -551,6 +606,8 @@
       try {
         const payload = JSON.parse(structuredData.textContent || "{}");
         payload.description = meta.description;
+        payload.url = canonicalUrl;
+        payload.inLanguage = locale;
         structuredData.textContent = JSON.stringify(payload);
       } catch {
         // Leave valid static metadata untouched if a future schema shape changes.
@@ -583,13 +640,25 @@
       const localUrl = new URL(originalHref, window.location.href);
       if (localUrl.origin === window.location.origin) {
         const code = { en: "en", hi: "hi", es: "es", fr: "fr", "zh-Hans": "zh-hans" }[locale];
-        const guide = localUrl.pathname.match(/^\/guides\/([a-z-]+\.html)$/);
+        const guide = localUrl.pathname.match(/^\/guides\/(?:(?:en|hi|es|fr|zh-hans)\/)?([a-z-]+\.html)$/);
         if (guide) {
-          link.setAttribute("href", code ? `/guides/${code}/${guide[1]}` : localUrl.pathname);
+          localUrl.pathname = code ? `/guides/${code}/${guide[1]}` : `/guides/${guide[1]}`;
+          link.setAttribute("href", `${localUrl.pathname}${localUrl.search}${localUrl.hash}`);
           continue;
         }
-        if (localUrl.pathname === "/download.html") {
-          link.setAttribute("href", code ? `/download/${code}.html` : "/download.html");
+        if (["/for/", "/for/en/"].includes(localUrl.pathname)) {
+          localUrl.pathname = locale === "ja" ? "/for/" : "/for/en/";
+          link.setAttribute("href", `${localUrl.pathname}${localUrl.search}${localUrl.hash}`);
+          continue;
+        }
+        if (/^\/for\/(?:(?:en|hi|es|fr|zh-hans)\/)?engineers\/$/.test(localUrl.pathname)) {
+          localUrl.pathname = locale === "ja" ? "/for/engineers/" : `/for/${code}/engineers/`;
+          link.setAttribute("href", `${localUrl.pathname}${localUrl.search}${localUrl.hash}`);
+          continue;
+        }
+        if (/^\/download(?:\/(?:en|hi|es|fr|zh-hans))?\.html$/.test(localUrl.pathname)) {
+          localUrl.pathname = code ? `/download/${code}.html` : "/download.html";
+          link.setAttribute("href", `${localUrl.pathname}${localUrl.search}${localUrl.hash}`);
           continue;
         }
       }
@@ -680,15 +749,28 @@
     translate
   };
 
-  collectOriginalContent();
-  const initialLocale = resolveInitialLocale();
-  const localeInUrl = normalizeLocale(new URL(window.location.href).searchParams.get("lang"));
-  applyLocale(initialLocale, { updateHistory: !localeInUrl && initialLocale !== "en" });
+  // Explicit legacy language links also work on a plain static preview server.
+  const queryLocale = normalizeLocale(new URL(window.location.href).searchParams.get("lang"));
+  const renderedLocale = normalizeLocale(document.documentElement.dataset.renderedLocale);
+  if (queryLocale && renderedLocale && queryLocale !== renderedLocale) {
+    const url = new URL(window.location.href);
+    url.pathname = queryLocale === "en" ? "/" : `/${queryLocale}.html`;
+    url.searchParams.delete("lang");
+    window.location.replace(url.toString());
+    return;
+  }
 
+  collectOriginalContent();
+  applyLocale(resolveInitialLocale());
+
+  // Real links work without JavaScript and give each language a stable URL.
   for (const option of document.querySelectorAll("[data-locale-option]")) {
-    option.addEventListener("click", (event) => {
-      event.preventDefault();
-      applyLocale(option.dataset.localeOption, { persist: true, updateHistory: true });
+    option.addEventListener("click", () => {
+      try {
+        window.localStorage.setItem(STORAGE_KEY, option.dataset.localeOption);
+      } catch {
+        // Navigation remains available when storage is blocked.
+      }
     });
   }
 })();

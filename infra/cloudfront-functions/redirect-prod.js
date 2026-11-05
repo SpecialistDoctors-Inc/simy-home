@@ -9,7 +9,7 @@ function queryToString(request, additions) {
   var querystring = request.querystring || {};
   var parts = [];
   for (var key in querystring) {
-    if (!querystring.hasOwnProperty(key)) continue;
+    if (!Object.prototype.hasOwnProperty.call(querystring, key)) continue;
     var item = querystring[key];
     if (item.multiValue) {
       for (var i = 0; i < item.multiValue.length; i++) {
@@ -81,7 +81,7 @@ function regionFromAcceptLanguage(acceptLanguage) {
 
 function maybeRedirectWithViewerRegion(request, host, uri) {
   if (queryHas(request, 'region') || queryHas(request, 'lang')) return null;
-  if (!(uri === '/' || uri === '/index.html' || uri === '/compare.html' || uri === '/press-release.html' || uri === '/privacy.html' || uri === '/terms.html')) return null;
+  if (!(uri === '/compare.html' || uri === '/press-release.html' || uri === '/privacy.html' || uri === '/terms.html')) return null;
 
   var countryHeader = request.headers['cloudfront-viewer-country'];
   var languageHeader = request.headers['accept-language'];
@@ -97,7 +97,56 @@ function maybeRedirectWithViewerRegion(request, host, uri) {
   };
 }
 
+function homepageLanguageRedirect(request, host, uri) {
+  var homepagePaths = { '/': true, '/index.html': true, '/ja.html': true, '/hi.html': true, '/es.html': true, '/fr.html': true, '/zh-Hans.html': true };
+  if (!homepagePaths[uri]) return null;
+  var item = request.querystring && request.querystring.lang;
+  if (!item) return null;
+  var language = (item.value || '').toLowerCase();
+  var base = language.split('-')[0];
+  var locale = ['en', 'ja', 'hi', 'es', 'fr'].indexOf(base) >= 0 ? base : '';
+  if (['zh', 'zh-cn', 'zh-sg', 'zh-hans'].indexOf(language) >= 0) locale = 'zh-Hans';
+  if (!locale) return null;
+  var remaining = Object.create(null);
+  for (var key in request.querystring) {
+    if (Object.prototype.hasOwnProperty.call(request.querystring, key) && key !== 'lang') remaining[key] = request.querystring[key];
+  }
+  var path = locale === 'en' ? '/' : '/' + locale + '.html';
+  return {
+    statusCode: 301,
+    statusDescription: 'Moved Permanently',
+    headers: { location: { value: 'https://' + host + path + queryToString({ querystring: remaining }, {}) } }
+  };
+}
+
+// BEGIN FP SAMPLE AUTH: protect HTML, bundles and every sample object before cache lookup.
+var SAMPLE_AUTH_SHA256 = 'b0146bb02e9a1c4a2be5e888edcdee3a7ad0b83763038b0ad56b9f46c94823a7';
+function protectFpSample(request) {
+  var decoded;
+  try { decoded = decodeURIComponent(request.uri); } catch (_) { return {statusCode:400,statusDescription:'Bad Request'}; }
+  var segments = [];
+  decoded.split('/').forEach(function(part) { if (part === '..') segments.pop(); else if (part && part !== '.') segments.push(part); });
+  var path = '/' + segments.join('/');
+  if (path !== '/samples' && path.indexOf('/samples/') !== 0) return null;
+  var auth = request.headers.authorization;
+  var crypto = require('crypto');
+  if (!auth || crypto.createHash('sha256').update(auth.value).digest('hex') !== SAMPLE_AUTH_SHA256) {
+    return {statusCode:401,statusDescription:'Unauthorized',headers:{
+      'www-authenticate':{value:'Basic realm="SIMY sample", charset="UTF-8"'},
+      'cache-control':{value:'no-store'},
+      'x-robots-tag':{value:'noindex, nofollow, noarchive'}
+    }};
+  }
+  if (path === '/samples/fp-management') request.uri = '/samples/fp-management/index.html';
+  else if (path === '/samples/fp-management/index.html' || path === '/samples/fp-management/app.js' || path === '/samples/fp-management/app.css') request.uri = path;
+  else return {statusCode:404,statusDescription:'Not Found'};
+  return request;
+}
+// END FP SAMPLE AUTH
+
 function handler(event) {
+  var sampleResult = protectFpSample(event.request);
+  if (sampleResult) return sampleResult;
   var request = event.request;
   var uri = request.uri;
 
@@ -115,6 +164,9 @@ function handler(event) {
   }
 
   var host = request.headers.host ? request.headers.host.value : '';
+  var languageRedirect = homepageLanguageRedirect(request, host, uri);
+  if (languageRedirect) return languageRedirect;
+
   var viewerRegionRedirect = maybeRedirectWithViewerRegion(request, host, uri);
   if (viewerRegionRedirect) return viewerRegionRedirect;
 
@@ -122,9 +174,10 @@ function handler(event) {
   // Safari fallback page when the app is not installed. This is an internal
   // rewrite, so its query string remains available to the user-initiated
   // custom-scheme link in the page.
-  if (uri === '/app/auth/callback' || uri === '/app/auth/callback/' ||
+  if (host.toLowerCase() === 'simy.one' &&
+      (uri === '/app/auth/callback' || uri === '/app/auth/callback/' ||
       uri === '/dev-app/auth/callback' || uri === '/dev-app/auth/callback/' ||
-      uri === '/stg-app/auth/callback' || uri === '/stg-app/auth/callback/') {
+      uri === '/stg-app/auth/callback' || uri === '/stg-app/auth/callback/')) {
     request.uri = '/auth-callback.html';
     return request;
   }
@@ -142,7 +195,7 @@ function handler(event) {
     return {
       statusCode: 301,
       statusDescription: 'Moved Permanently',
-      headers: { location: { value: 'https://' + host + '/' } }
+      headers: { location: { value: 'https://' + host + '/' + queryToString(request, {}) } }
     };
   }
 
@@ -174,6 +227,39 @@ function handler(event) {
       statusDescription: 'Moved Permanently',
       headers: { location: { value: 'https://' + host + '/' } }
     };
+  }
+
+  // HP management is a service; industry pages belong beneath it.
+  var hpLegacy = /^\/for\/clinic(?:\/index\.html|\.html|\/)?$/.test(uri);
+  var hpMatch = uri.match(/^\/hp-management(\/clinic)?(?:\/index\.html|\.html|\/)?$/);
+  if (hpLegacy || hpMatch) {
+    var hpPath = hpLegacy ? '/hp-management/clinic/' : '/hp-management' + (hpMatch[1] || '') + '/';
+    if (uri !== hpPath) {
+      return {
+        statusCode: 301,
+        statusDescription: 'Moved Permanently',
+        headers: { location: { value: 'https://' + host + hpPath + queryToString(request, {}) } }
+      };
+    }
+    request.uri = hpPath + 'index.html';
+    return request;
+  }
+
+  // Occupation pages have stable directory URLs, independent of plan names.
+  var occupationAliases = { '/engineers.html': '/for/engineers/', '/engineers-en.html': '/for/en/engineers/', '/for': '/for/', '/for/': '/for/', '/for.html': '/for/', '/for/index.html': '/for/' };
+  var occupationPath = occupationAliases[uri];
+  var occupation = uri.match(/^\/for\/(?:(?:en|es|fr|hi|zh-hans)\/)?[a-z][a-z0-9-]*(?:\/index\.html|\.html|\/)?$/);
+  if (occupation && !occupationPath) occupationPath = uri.replace(/(?:\/index\.html|\.html|\/)$/, '') + '/';
+  if (occupationPath) {
+    if (uri !== occupationPath) {
+      return {
+        statusCode: 301,
+        statusDescription: 'Moved Permanently',
+        headers: { location: { value: 'https://' + host + occupationPath + queryToString(request, {}) } }
+      };
+    }
+    request.uri = occupationPath + 'index.html';
+    return request;
   }
 
   // Remove trailing slash (except root /)
