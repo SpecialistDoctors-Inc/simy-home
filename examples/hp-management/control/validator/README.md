@@ -10,10 +10,82 @@ disabled until the actual image/network/approval boundary has been reviewed and
 exercised in AWS. Local smoke is not AWS isolation or production proof.
 
 `image-manifest.json` records the observed official base manifest. Dockerfile pins
-the Linux/amd64 Playwright Python 1.56.0 base by digest; requirements pin the actual
-observed Python package versions. A built image has its own final manifest digest:
+the Linux/amd64 Playwright Python 1.64.1 base by its platform manifest digest;
+requirements pin the matching Python package and compatible dependency versions.
+Available Ubuntu Noble package patches, including published phased patches, are
+applied inside the image. No host package or OS configuration is changed. A built image has its own final manifest digest:
 review and configure **that final digest**, never substitute the base-image digest
-or a local Docker configuration/image ID. No registry push is performed here.
+or a local Docker configuration/image ID. Review candidates may be pushed only
+to the dedicated validator repository; that is not an ECS launch or enablement.
+
+## Chromium-only dependency scope
+
+The worker renders screenshots with the bundled Chromium only. Firefox, WebKit,
+and the standalone video-capture FFmpeg binary are removed. The Dockerfile also
+purges their unused GStreamer/FFmpeg, FluidSynth, cJSON, OpenEXR and related media
+packages after checking the Chromium dependency/removal plan. It does not use
+blanket autoremove, change the distro, disable scanning, or change the sandbox,
+user, networking or container privileges. Video recording and other browser
+engines are outside this worker's supported interface.
+
+The 2026-11-05 remediation compared actual dedicated-ECR scans and preserved the
+original image. Updating the supported Playwright base plus available OS patches
+reduced findings substantially, but still left vulnerable unused media parsers.
+Removing those executable libraries reduces the shipped attack surface rather
+than treating unreachable or platform-specific CVEs as automatically harmless.
+The meaningful four-case secretless smoke is rerun for the final candidate.
+
+ECR BASIC findings are package-level observations, often repeated for source and
+binary packages. Counts are not proof of exploitability or absence of bundled
+browser vulnerabilities. Use the exact final scan, package inventory and runtime
+limitations together. The Chromium version comes from the matching official
+Playwright distribution; a clean OS-package scan would not establish hostile-page
+exploit containment. No validator gate is enabled by a successful local smoke or
+an ECR push. Final registry digest and residual findings are recorded in
+`image-manifest.json` and the task's preserved scan receipts.
+
+## Final candidate scan and fix availability (2026-11-05)
+
+The immutable review candidate is:
+
+```text
+209300895845.dkr.ecr.ap-northeast-1.amazonaws.com/simy-hp-control-validator@sha256:f61048e320481d3d2d07c2bc39a78277293d00a33e5c75f83075c3a28ecd4aee
+```
+
+| Actual ECR BASIC scan | Critical | High | Other findings |
+| --- | ---: | ---: | --- |
+| Original image (`095cd1e4…`) | 90 | 584 | 485 medium, 106 low, 23 undefined |
+| Current Playwright + public OS patches | 19 | 217 | 79 medium, 12 low, 1 undefined |
+| Final Chromium-only candidate (`f61048e3…`) | 0 | 0 | None returned |
+
+The final registry scan completed successfully on 2026-11-05; its complete findings
+list is empty. This is a point-in-time BASIC scan, not a permanent CVE guarantee.
+The build applied nine vendor-published Noble package updates with no deferred
+upgrades, then removed 20 unused media packages rather than shipping unused
+vulnerable parsers. Installed core fixes include curl `8.5.0-2ubuntu10.16`, OpenSSL
+`3.0.13-0ubuntu3.16`, and SQLite `3.45.1-1ubuntu2.9`.
+
+The intermediate candidate's remaining undefined SRT advisory, USN-8764-1,
+affects media-stream control/encryption. Canonical's notice lists the Noble fix
+`1.5.3-1ubuntu0.1~esm1` under Ubuntu Pro / ESM Apps. No paid-repository credentials,
+extra repository, or unsupported upstream replacement was introduced: the unused
+`libsrt1.5-gnutls` package was removed instead. FFmpeg/GStreamer, cJSON, FluidSynth
+and OpenEXR findings were likewise removed with their unused libraries, not
+suppressed or reclassified. Chromium's linked library inspection and the package
+removal simulation were preserved before the final build.
+
+Evidence is preserved separately from source under
+`output/hp-local-editor-20261105/validator-remediation-20261105T071836Z/`.
+`original-scan.json` retains the old image findings. Final receipts are under
+`candidate3/`: `candidate-receipt.json`, `candidate-scan.json`,
+`installed-packages.log`, `build.log`, and `smoke-output/smoke-results.json` plus
+both viewport PNGs and negative-case reports. All four real smoke cases passed
+again with the final image. Original and intermediate registry images remain.
+Docker login used a task-owned temporary credential directory which was removed
+after push; no token was written to source, logs, image layers, or shared Docker
+settings. No ECS task was launched and no validation/publication gate was enabled.
+
+Vendor reference: [Canonical USN-8764-1](https://ubuntu.com/security/notices/USN-8764-1).
 
 ## Actual isolation and limitations
 

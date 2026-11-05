@@ -1,1 +1,66 @@
-{"schema_version":1,"observed_on":"2026-11-05","registry":"mcr.microsoft.com/playwright/python","tag":"v1.56.0-noble","platform":"linux/amd64","manifest_digest":"sha256:508b37a524219d210a67a7190beb079efda72553e0dcb9ef21d4dae8f8a7686b","python_playwright":"1.56.0","observation":"docker manifest inspect mcr.microsoft.com/playwright/python:v1.56.0-noble"}
+{
+  "schema_version": 1,
+  "observed_on": "2026-11-05",
+  "registry": "mcr.microsoft.com/playwright/python",
+  "tag": "v1.64.1-noble",
+  "platform": "linux/amd64",
+  "manifest_digest": "sha256:7d030ac0638b279ecc72493f8b6706fecef80a893679a23b02f912905c4915c0",
+  "index_digest": "sha256:330d401ae23c905896a0c26c66c36fc971b621519e7b11b435a8328d7bf6e031",
+  "base_created_at": "2026-10-22T17:51:03.53930973Z",
+  "python_playwright": "1.64.1",
+  "observation": "Official PyPI playwright metadata and MCR OCI index/platform manifest; available Ubuntu Noble package patches applied at build time. Final candidate image and scan are recorded separately.",
+  "runtime_scope": "chromium screenshots only",
+  "os_patch_policy": "Apply available Ubuntu Noble patches including phased updates; purge only inspected unused media dependencies; no distro migration or host updates.",
+  "removed_bundled_runtimes": [
+    "firefox",
+    "webkit",
+    "ffmpeg-video-capture"
+  ],
+  "final_image": {
+    "registry": "209300895845.dkr.ecr.ap-northeast-1.amazonaws.com",
+    "repository": "simy-hp-control-validator",
+    "tag": "remediation-1.64.1-final-20261105T071836Z",
+    "manifest_digest": "sha256:f61048e320481d3d2d07c2bc39a78277293d00a33e5c75f83075c3a28ecd4aee",
+    "config_image_id": "sha256:c7e1488b69cfc0cad3c6e70cf898ea318b46ab9fcc6ad601953a09e39d29139a",
+    "platform": "linux/amd64",
+    "bundled_chromium_version": "156.0.8078.4"
+  },
+  "scan": {
+    "type": "ECR_BASIC",
+    "status": "COMPLETE",
+    "completed_at": "2026-11-05 16:39:21+09:00",
+    "finding_count": 0,
+    "severity_counts": {}
+  },
+  "smoke": {
+    "network": "none",
+    "root_filesystem": "read-only",
+    "user": "1000:1000",
+    "capabilities": "ALL dropped",
+    "no_new_privileges": true,
+    "chromium_os_sandbox": false,
+    "scenarios": [
+      {
+        "scenario": "valid",
+        "verified": true,
+        "expected": true
+      },
+      {
+        "scenario": "page-error",
+        "verified": false,
+        "expected": false
+      },
+      {
+        "scenario": "overflow",
+        "verified": false,
+        "expected": false
+      },
+      {
+        "scenario": "external-blocked",
+        "verified": false,
+        "expected": false
+      }
+    ]
+  },
+  "evidence_root": "output/hp-local-editor-20261105/validator-remediation-20261105T071836Z/candidate3"
+}
