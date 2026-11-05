@@ -11,8 +11,11 @@ resource "aws_iam_role_policy" "validation_launcher" {
       Condition = { ArnEquals = { "ecs:cluster" = aws_ecs_cluster.validation.arn } }
     },
     {
-      Sid      = "InspectOnlyPinnedRendererDefinition", Effect = "Allow", Action = ["ecs:DescribeTaskDefinition"],
-      Resource = aws_ecs_task_definition.validation.arn
+      # DescribeTaskDefinition has no resource-level IAM support. Application
+      # preflight still requests and verifies the fixed task ARN/revision.
+      Sid       = "DescribeRendererDefinitionInRegion", Effect = "Allow", Action = ["ecs:DescribeTaskDefinition"],
+      Resource  = "*",
+      Condition = { StringEquals = { "aws:RequestedRegion" = var.region } }
     },
     {
       Sid       = "ObserveOnlyRendererTasks", Effect = "Allow", Action = ["ecs:DescribeTasks"],
