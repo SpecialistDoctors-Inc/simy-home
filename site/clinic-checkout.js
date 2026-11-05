@@ -15,12 +15,14 @@ function validate(config){
 function select(links,plan,assistance){const key=plan==='19800'?'basic':plan==='29800'?'security':null;if(!key)throw Error('プランを選択してください。');return links?.[key+(assistance?'_manager':'')]||null;}
 if(typeof module!=='undefined'&&module.exports){module.exports={validate,select};return;}
 let links=null;
-const ready=fetch('/hp-management/clinic-checkout.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(config=>{
- links=validate(config);if(!links)return;
- const form=document.querySelector('#application-form'),fields=form.querySelectorAll('fieldset')[1];fields.disabled=true;fields.hidden=true;
- form.querySelector('[type=submit]').textContent='Stripeの決済画面へ →';
- form.querySelector('.application-next').textContent='お申し込み内容と月額料金を、Stripeの画面でご確認ください。';
- form.querySelector('.application-note').textContent='医院情報・お支払い情報はStripeの画面で入力します。ドメインの取得・更新費用は別途です。';
-}).catch(()=>{});
-global.SimyClinicCheckout={ready,go:async data=>{await ready;const url=select(links,data.get('plan'),data.has('assistance'));if(!url)return false;const destination=new URL(url);destination.searchParams.set('client_reference_id','hp_'+crypto.randomUUID().replaceAll('-',''));location.assign(destination.href);return true;}};
+const applicationForm=document.querySelector('#application-form');
+const initialCopy={submit:applicationForm.querySelector('[type=submit]').textContent,next:applicationForm.querySelector('.application-next').textContent,note:applicationForm.querySelector('.application-note').textContent};
+function presentation(consultation=false){
+ const form=applicationForm,fields=form.querySelectorAll('fieldset')[1];fields.disabled=Boolean(links)&&!consultation;fields.hidden=Boolean(links)&&!consultation;
+ form.querySelector('[type=submit]').textContent=consultation?'相談メールを作成する →':links?'Stripeの決済画面へ →':initialCopy.submit;
+ form.querySelector('.application-next').textContent=consultation?'ご希望の仕組みと対象医院を確認して、SIMYへの相談メールを作成します。':links?'お申し込み内容と月額料金を、Stripeの画面でご確認ください。':initialCopy.next;
+ form.querySelector('.application-note').textContent=consultation?'表示料金はHP管理・更新代行プランの参考額です。録音・記事化・近隣医院の変化確認の実施範囲と費用は、別途ご相談のうえで決めます。':links?'医院情報・お支払い情報はStripeの画面で入力します。ドメインの取得・更新費用は別途です。':initialCopy.note;
+}
+const ready=fetch('/hp-management/clinic-checkout.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(config=>{links=validate(config);presentation();}).catch(()=>{});
+global.SimyClinicCheckout={ready,configure:async consultation=>{await ready;presentation(consultation);},go:async data=>{await ready;const url=select(links,data.get('plan'),data.has('assistance'));if(!url)return false;const destination=new URL(url);destination.searchParams.set('client_reference_id','hp_'+crypto.randomUUID().replaceAll('-',''));location.assign(destination.href);return true;}};
 })(typeof window==='undefined'?globalThis:window);

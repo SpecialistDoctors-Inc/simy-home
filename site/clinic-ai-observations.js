@@ -106,7 +106,7 @@ window.SimyClinicAiObservations=[
             },
             {
               "label": "担当医のお知らせ",
-              "url": "https://urachil.com/"
+              "url": "https://urachil.com/index.html#anc_info"
             }
           ]
         },
@@ -164,6 +164,11 @@ window.SimyClinicAiObservations=[
             }
           ]
         }
+      ],
+      "confirmedSources": [
+        {"label":"予防接種","url":"https://urachil.com/vaccination.html"},
+        {"label":"来院案内","url":"https://urachil.com/visitor.html"},
+        {"label":"WEB予約","url":"https://patient.digikar-smart.jp/institutions/f9d68741-cf53-489b-91c7-49a07b3411aa/reserve"}
       ],
       "confirmed": [
         "予防接種ページに自費料金表があります。",
