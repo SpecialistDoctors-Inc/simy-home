@@ -18,5 +18,15 @@ jobs:
         with:
           node-version: '22'
       - run: python3 scripts/build-i18n-bundle.py --check
-      - run: node --test tests/copy-localization.test.cjs tests/home-navigation.test.cjs tests/home-locales.test.cjs tests/auth-callback.test.cjs
+      - run: node --test tests/*.test.cjs tests/pricing-static.test.mjs
       - run: git diff --check
+  pricing-handoff:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-save --package-lock=false @playwright/test@1.59.1
+      - run: npx playwright install --with-deps chromium
+      - run: npx playwright test tests/pricing-signup.spec.mjs
