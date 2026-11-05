@@ -142,3 +142,6 @@
  .sp-main #diagnosis-state{width:calc(100% - 32px);margin:24px auto;padding:20px 16px}
  .sp-main .sp-final h2{font-size:28px}
 }
+
+.sp-main .sp-security-stats .sp-stat-uptime{flex-wrap:nowrap}
+@media(max-width:760px){.sp-main .sp-security-stats>div:first-child>.sp-stat-uptime,.sp-main .sp-security-stats>div:first-child>p{grid-column:1/-1}}
