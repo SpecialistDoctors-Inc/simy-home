@@ -108,13 +108,17 @@
     if(growth?.available){
       page('GROWTH REPORT');heading('GROWTH / CLINIC WEBSITE',growth.headline,growth.name+' / '+growth.intro);
       if(growth.discovery){const d=growth.discovery;
-        grid([['AI回答への登場 '+d.ratio,'医院名を入力しない質問で確認'],['公式サイトへの誘導','公式URLへの到達・診療情報の一致は未検証']]);
+        grid([['AI回答への登場 '+d.ratio,'医院名を入力しない質問で確認'],['公式サイトへの誘導',d.verified?d.verified+'件の回答から公式サイトへの到達を確認。診療情報の正確性とは別に評価。':'公式URLへの到達・診療情報の一致は未検証']]);
         table('01 / AI検索の実測結果',['患者さんの質問','医院の紹介','同じ回答に登場した医院'],d.questions.map(q=>[q.theme,q.status!=='observed'?'取得できず':q.mentioned?'紹介あり':'紹介なし',q.peers.join('、')||'—']),[65,25,86]);
         if(d.different)card('公式サイトへの誘導は、要検証','取得した回答に、公式サイトと異なるドメインのリンクがありました。公式サイトへの到達と、診療情報の一致は未確認です。\n改善の方向：公式URLの表記を揃え、回答内リンクの到達先と診療情報を照合します。');
-        paragraph(d.provider+' / '+d.measuredLabel+' / 各質問'+d.repetitions+'回。医院名は入力せず。回答は条件・日時で変わります。',8);paragraph('取得記録：'+d.sourceUrl,7);
-        if(growth.contentAvailable){page('GROWTH / WEBSITE');heading('02 / WEBSITE','ホームページで、受診につながるか。',growth.contentSummary);}
+        paragraph(d.provider+' / '+d.measuredLabel+' / 各質問'+d.repetitions+'回。医院名は入力せず。回答は条件・日時で変わります。',8);paragraph('取得記録：'+d.sourceUrl,7);if(d.captureNote)paragraph(d.captureNote,8);
+      }
+      if(growth.audit){const a=growth.audit;page('PATIENT JOURNEY');heading('02 / PATIENT JOURNEY','正しい案内から、予約まで。',a.summary);
+       for(const item of a.findings){card(item.priority+' / '+item.title,'確認したこと：'+item.observation+'\n保護者への影響：'+item.impact+'\n改善案：'+item.change);for(const source of item.sources)paragraph(source.label+'：'+source.url,7);}
+       card('すでに案内できていること',a.confirmed.join('\n'));card('成長相談ページの掲載案',a.proposal.heading+'\n'+a.proposal.body+'\n'+a.proposal.button+'\n'+a.proposal.note);paragraph('別途確認日：'+a.checkedOn+'。'+a.scope,8);
       }
       if(growth.contentAvailable){
+      page('GROWTH / WEBSITE');heading((growth.audit?'03':'02')+' / WEBSITE','診断時に取得した本文のAI分析',growth.contentSummary);
       table('本文から確認した数値',['項目','確認結果'],growth.metrics,[110,66]);
       for(const [i,item] of growth.priorities.entries())card(String(i+1).padStart(2,'0')+' / '+item.title,'現状：'+item.observation+'\n改善案：'+item.change);
       card('トップページの掲載案',growth.proposal.heading+'\n'+growth.proposal.description+'\n'+growth.proposal.button);

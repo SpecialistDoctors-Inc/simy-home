@@ -45,3 +45,6 @@ body:has(.growth-report) .report-download-dock .button{min-height:44px;font-size
 }
 
 .growth-discovery-table th,.growth-discovery-table td{text-align:left!important}
+
+/* Dated browser observations keep their sources alongside each recommendation. */
+.growth-journey{margin:28px 0}.growth-journey-findings{display:grid;grid-template-columns:1fr;gap:16px}.growth-journey-finding{padding:20px;border:1px solid #dce5ec;border-left:3px solid #2d70cb;border-radius:6px}.growth-report .growth-journey-finding h4{font-size:19px;line-height:1.6;margin:6px 0 12px}.growth-report .growth-journey-finding p+p{margin-top:10px}.growth-report .growth-journey .growth-proposal{margin-top:24px}.growth-report .growth-journey-finding a{display:inline-block;margin-right:12px;color:#245da4;text-underline-offset:3px}.growth-report .growth-journey>p+p{margin-top:6px}

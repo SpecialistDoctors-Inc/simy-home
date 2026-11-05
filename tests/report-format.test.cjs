@@ -58,9 +58,9 @@ test('clinic PDF uses the same factual growth summary as the screen and omits un
  assert.equal(local.SimyClinicGrowth.model({url:report.url,findings:[{id:'seo-title',state:'observed',evidence:'医院'}]}).available,false);
 
 });
-test('AI Mode measurement is printed separately from website analysis with its date and unresolved official links',()=>{
+test('AI Mode and dated journey findings print with verified destinations and survive missing model output',()=>{
  const local={URL};local.window=local;for(const f of ['clinic-ai-observations','clinic-growth'])vm.runInNewContext(fs.readFileSync('site/'+f+'.js','utf8'),local);vm.runInNewContext(fs.readFileSync('site/assets/clinic-service-v2/report-pdf-9758bc1cc10886.js','utf8'),local);
  const texts=[],tables=[];class Capture extends jsPDF{constructor(o){super(o);const txt=this.text,table=this.autoTable;this.text=function(s,...a){texts.push(Array.isArray(s)?s.join('\n'):s);return txt.call(this,s,...a)};this.autoTable=function(o){tables.push(o);return table.call(this,o);};}}
  local.SimyReportPdf.create({report:{url:'https://urachil.com/',checkedAt:'2026-11-05T00:00:00Z',findings:[],growth:{status:'unavailable'}},versions:[]},font,Capture);
- const text=texts.join('\n');assert(text.includes('5 / 5'));assert(text.includes('要検証'));assert(text.includes('2026/11/5'));assert(text.includes('各質問1回'));assert(!text.includes('本文から確認した数値'));const t=tables.find(t=>t.head[0][0]==='患者さんの質問');assert.equal(t.body.length,5);assert(t.body.some(r=>r[2].includes('サニーガーデン')));
+ const text=texts.join('\n');assert(text.includes('5 / 6'));assert(text.includes('公式サイトへの到達を確認'));assert(text.includes('2026/11/5'));assert(text.includes('各質問1回'));assert(!text.includes('本文から確認した数値'));const t=tables.find(t=>t.head[0][0]==='患者さんの質問');assert.equal(t.body.length,6);assert(t.body.some(r=>r[2].includes('浦上')));assert(text.includes('担当医の')||text.includes('担当医と予約'));assert(text.includes('選ぶ予約枠'));
 });
