@@ -301,8 +301,6 @@ function renderSearchChecks(report){
 }
 
 function renderReport(report) {
-  if(report.publicSummary===true){title.textContent='公開ページへの接続を確認しました';message.textContent=report.scope;const section=element('section','','report-preview');section.append(element('h3',report.title||'医院の公開ページ'),element('p',report.https?'HTTPSのページを取得しました。':'HTTPのページを取得しました。'));const link=element('a','ChatGPTでログインして、医院を確認する →','button button-primary');link.href=new URL('/clinic-portal?target='+encodeURIComponent(report.url),diagnosisEndpoint).href;link.target='_top';section.append(link,element('p','医院との関係を確認すると、詳細診断・保存した結果・PDF・編集を利用できます。','report-boundary'));results.append(section);return;}
-
   window.SimyClinicGrowth.attach(report);
   if (!Array.isArray(report.findings) || !Array.isArray(report.technologies) || !Array.isArray(report.scripts?.libraries)) throw Error('結果の形式を確認できませんでした。時間をおいて再度お試しください。');
   const technologies = report.technologies.filter(t => t.status === 'review');
@@ -418,17 +416,17 @@ function scanProgress(stage, detail) {
   if(stage==='start'){
     clearInterval(scanClock); panel.replaceChildren();panel.className='scan-live';panel.dataset.state='running';
     const header=element('div','','scan-live-heading');const spinner=element('span','','scan-spinner');spinner.setAttribute('aria-hidden','true');
-    header.append(spinner,element('strong',window.SimyClinicPortal?'ホームページを診断中':'公開トップページを確認中'),element('span','0秒','scan-elapsed'));header.lastChild.setAttribute('aria-hidden','true');
+    header.append(spinner,element('strong','ホームページを診断中'),element('span','0秒','scan-elapsed'));header.lastChild.setAttribute('aria-hidden','true');
     const status=element('p','診断サービスに接続しています','scan-live-detail');status.setAttribute('role','status');
     const track=element('div','','scan-track');track.setAttribute('aria-hidden','true');track.append(element('span',''));
     const list=element('ol','','scan-steps');
-    for(const [id,label] of (window.SimyClinicPortal?[['page','ページ取得'],['scripts','部品の照合'],['browser','追加読込の確認'],['crawl','配下ページの確認'],['report','結果の整理']]:[['page','公開ページの接続']])){const li=element('li',label);li.dataset.stage=id;list.append(li);}
+    for(const [id,label] of [['page','ページ取得'],['scripts','部品の照合'],['browser','追加読込の確認'],['crawl','配下ページの確認'],['report','結果の整理']]){const li=element('li',label);li.dataset.stage=id;list.append(li);}
     panel.append(header,status,track,list);const started=Date.now();scanClock=setInterval(()=>{const elapsed=panel.querySelector('.scan-elapsed');if(elapsed)elapsed.textContent=Math.floor((Date.now()-started)/1000)+'秒';},1000);return;
   }
   const text=panel.querySelector('.scan-live-detail');if(text)text.textContent=detail;
   if(['done','error'].includes(stage)){
     clearInterval(scanClock);panel.dataset.state=stage;
-    const heading=panel.querySelector('strong');if(heading)heading.textContent=stage==='done'?(window.SimyClinicPortal?'診断が完了しました':'簡易確認ができました'):'確認を完了できませんでした';
+    const heading=panel.querySelector('strong');if(heading)heading.textContent=stage==='done'?'診断が完了しました':'診断を完了できませんでした';
     panel.querySelectorAll('.scan-steps li').forEach(li=>{li.removeAttribute('aria-current');li.classList.remove('active');});return;
   }
   const ids=['page','scripts','browser','crawl','report'];const current=ids.indexOf(stage);
@@ -459,6 +457,21 @@ function normalizeDiagnosisUrl(input) {
 }
 
 diagnosisInput.addEventListener('input', () => { diagnosisInput.setCustomValidity(''); if(!busy) diagnosisState.hidden = true; });
+// A short-lived browser identifier is a repeat-use signal, never a permission check.
+function clinicScanBrowserId() {
+  const key = 'simy-clinic-scan-browser';
+  try {
+    const now = Date.now();
+    const stored = JSON.parse(localStorage.getItem(key) || 'null');
+    if (stored?.expiresAt > now && /^[0-9a-f-]{36}$/i.test(stored.id)) return stored.id;
+    const id = crypto.randomUUID();
+    localStorage.setItem(key, JSON.stringify({id, expiresAt: now + 86400000}));
+    return id;
+  } catch {
+    return undefined;
+  }
+}
+
 async function runDiagnosis(event) {
   event.preventDefault(); if(busy) return;
   const diagnosisForm=event.currentTarget;
@@ -475,12 +488,12 @@ async function runDiagnosis(event) {
   diagnosisForm.querySelector('.url-entry').after(notice);
   notice.textContent=cleaned?'診断するURL：'+target.href:'';notice.hidden=!cleaned;
   results.replaceChildren(); diagnosisState.hidden=true; document.querySelector('#diagnosis-target').textContent=(document.querySelector('#diagnosis-form').dataset.reportLabel || '医院ホームページ')+'の診断結果';
-  title.textContent='公開ホームページを確認しています'; message.textContent=window.SimyClinicPortal?'最大約3分かかります。ページの保護設定・使用部品・公開プログラムを確認しています。':'公開トップページの接続とタイトルを確認しています。';
+  title.textContent='公開ホームページを確認しています'; message.textContent='最大約3分かかります。ページの保護設定・使用部品・公開プログラムを確認しています。';
   scanProgress('start');
   if(urlInput) urlInput.value=target.href; clearDraft();
   if(!diagnosisEndpoint){scanProgress('error','診断サービスに接続できません。ページを再読み込みしてお試しください。診断はまだ実行していません。');return;}
   busy=true;const button=diagnosisForm.querySelector('button');const label=button.querySelector('.button-label');const originalLabel=label?.textContent;if(label)label.textContent='診断中…';button.disabled=true;diagnosisInput.disabled=true;diagnosisForm.setAttribute('aria-busy','true');
-  try { const response=await fetch(diagnosisEndpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url:target.href,behavior:false,stream:true}),signal:AbortSignal.timeout(185000)}); const data=await readScanResponse(response); renderReport(data); const quickDiagnosis=document.querySelector('#quick-diagnosis');if(quickDiagnosis){if(quickDiagnosis.contains(diagnosisState))quickDiagnosis.after(diagnosisState);quickDiagnosis.hidden=true;quickDiagnosis.style.display='none';} diagnosisState.hidden=false; scanProgress('done',data.completion==='partial'?data.completionReason:'下に結果を表示しました。');if(data.completion==='partial'){const heading=document.querySelector('#scan-progress strong');if(heading)heading.textContent='確認できた範囲の結果を表示しました';results.prepend(element('p',data.completionReason,'report-boundary'));} diagnosisState.focus({preventScroll:true});diagnosisState.scrollIntoView({block:'start',behavior:'auto'}); }
+  try { const response=await fetch(diagnosisEndpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url:target.href,behavior:false,stream:true,mode:window.SimyClinicPortal?'full':'public',browserId:clinicScanBrowserId()}),signal:AbortSignal.timeout(185000)}); const data=await readScanResponse(response); renderReport(data); const quickDiagnosis=document.querySelector('#quick-diagnosis');if(quickDiagnosis){if(quickDiagnosis.contains(diagnosisState))quickDiagnosis.after(diagnosisState);quickDiagnosis.hidden=true;quickDiagnosis.style.display='none';} diagnosisState.hidden=false; scanProgress('done',data.completion==='partial'?data.completionReason:'下に結果を表示しました。');if(data.completion==='partial'){const heading=document.querySelector('#scan-progress strong');if(heading)heading.textContent='確認できた範囲の結果を表示しました';results.prepend(element('p',data.completionReason,'report-boundary'));} diagnosisState.focus({preventScroll:true});diagnosisState.scrollIntoView({block:'start',behavior:'auto'}); }
   catch(error){results.replaceChildren();title.textContent='診断を完了できませんでした';message.textContent=/timeout|timed out|aborted/i.test((error.name||'')+' '+(error.message||''))?'時間内に応答がありませんでした。少し待って再度お試しください。':error.message==='Failed to fetch'?'診断サービスに接続できませんでした。少し待って再度お試しください。':error.message;}
   finally{busy=false;button.disabled=false;diagnosisInput.disabled=false;diagnosisForm.removeAttribute('aria-busy');if(label)label.textContent=originalLabel;if(title.textContent==='診断を完了できませんでした')scanProgress('error',message.textContent);}
 }
