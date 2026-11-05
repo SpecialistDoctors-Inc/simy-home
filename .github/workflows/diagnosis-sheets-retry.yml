@@ -9,6 +9,10 @@ concurrency:
   cancel-in-progress: false
 jobs:
   retry:
+    # Disabled by default. Do not set DIAGNOSIS_SHEETS_RETRY_ENABLED to 'true'
+    # until the sheets-sync endpoint below exists in production and same-ID
+    # delivery and readback have been verified. The current production
+    # diagnosis site does not serve this endpoint yet.
     if: vars.DIAGNOSIS_SHEETS_RETRY_ENABLED == 'true'
     runs-on: ubuntu-latest
     environment: prod
