@@ -6,6 +6,12 @@
     ['training', '職員に情報セキュリティの注意点を伝えていますか。'],
     ['response', '事故時の連絡先や初動対応を決めていますか。']
   ];
+  const needsQuestions = [
+    ['recoveryCosts', '予約システムやホームページが止まったときの、調査・復旧費用に備えたいですか。'],
+    ['dataIncidentCosts', '患者情報の漏えいが疑われたときの、調査・通知・相談費用に備えたいですか。'],
+    ['interruptionCosts', 'サイバー事故で診療や受付が止まったときの、休業中の損失に備えたいですか。']
+  ];
+  const allQuestions = [...needsQuestions, ...questions];
   const labels = {yes: 'はい', no: 'いいえ', unknown: '分からない・未確認'};
   function text(value, max) {
     const result = String(value || '').trim();
@@ -25,7 +31,7 @@
       if (!['http:', 'https:'].includes(url.protocol) || url.username || url.password || url.search || url.hash) throw Error('ホームページURLは、個人情報などを含まないトップページのURLをご入力ください。');
       data.url = url.href;
     }
-    for (const [key] of questions) {
+    for (const [key] of allQuestions) {
       const answer = value[key] || 'unknown';
       if (!Object.hasOwn(labels, answer)) throw Error('回答をご確認ください。');
       data[key] = answer;
@@ -38,6 +44,7 @@
       'SIMY ご担当者様', '', 'サイバー保険の見積りの進め方について相談したいです。', '',
       '医院名：' + data.clinicName, 'ご担当者名：' + data.contactName, 'メールアドレス：' + data.email,
       'ホームページURL：' + (data.url || '未入力'), '', '相談のための事前整理（本人の自己申告）',
+      '相談したい備え', ...needsQuestions.map(([key, label]) => label + '\n' + labels[data[key]]), '', '現在の備え',
       ...questions.map(([key, label]) => label + '\n' + labels[data[key]]), '',
       'この回答は保険会社の正式な告知書ではありません。加入可否・保険料を判定するものではありません。',
       '保険会社・代理店への情報提供が必要な場合は、提供先と内容を別途確認したうえで進めたいです。',
@@ -84,15 +91,21 @@
       wrap.append(input);fields.append(wrap);
     }
     form.append(fields);
-    const fieldset = make('fieldset');fieldset.append(make('legend', '現在の備え（任意）'));
-    fieldset.append(make('p', '分からない項目は、そのままで構いません。', 'insurance-preparation-note'));
-    for (const [key, label] of questions) {
-      const wrap = make('label', '', 'insurance-preparation-question');wrap.append(make('span', label));
-      const select = make('select');select.name = key;
-      for (const answer of ['unknown', 'yes', 'no']) { const option = make('option', labels[answer]);option.value = answer;select.append(option); }
-      wrap.append(select);fieldset.append(wrap);
+    for (const [legend, items] of [['相談したい備え（任意）', needsQuestions], ['現在の備え（任意）', questions]]) {
+      const fieldset = make('fieldset');
+      fieldset.append(make('legend', legend));
+      fieldset.append(make('p', '分からない項目は、そのままで構いません。', 'insurance-preparation-note'));
+      for (const [key, label] of items) {
+        const wrap = make('label', '', 'insurance-preparation-question');
+        wrap.append(make('span', label));
+        const select = make('select');select.name = key;
+        for (const answer of ['unknown', 'yes', 'no']) {
+          const option = make('option', labels[answer]);option.value = answer;select.append(option);
+        }
+        wrap.append(select);fieldset.append(wrap);
+      }
+      form.append(fieldset);
     }
-    form.append(fieldset);
     error = make('p', '', 'insurance-preparation-error');error.setAttribute('role', 'alert');error.hidden = true;form.append(error);
     const next = make('button', '内容を確認する', 'insurance-preparation-primary');next.type = 'submit';form.append(next);
     form.addEventListener('submit', event => {
@@ -100,7 +113,7 @@
       if (!form.reportValidity()) return;
       try {
         const data = normalize(values());draft = data;review.replaceChildren();
-        for (const [label, value] of [['医院名', data.clinicName], ['ご担当者名', data.contactName], ['メールアドレス', data.email], ['ホームページURL', data.url || '未入力'], ...questions.map(([key, label]) => [label, labels[data[key]]])]) review.append(make('dt', label), make('dd', value));
+        for (const [label, value] of [['医院名', data.clinicName], ['ご担当者名', data.contactName], ['メールアドレス', data.email], ['ホームページURL', data.url || '未入力'], ...allQuestions.map(([key, label]) => [label, labels[data[key]]])]) review.append(make('dt', label), make('dd', value));
         reviewPane.querySelector('[data-insurance-mail]').href = buildMail(data);
         inputPane.hidden = true;reviewPane.hidden = false;reviewPane.querySelector('h3').focus();
       } catch (reason) { error.textContent = reason.message;error.hidden = false; }
@@ -129,14 +142,20 @@
     });
     return dialog;
   }
-  function open() {
+  function open({url} = {}) {
     if (!global.document) return;
     if (dialog?.open) return;
     opener = global.document.activeElement;
     (dialog || createDialog()).showModal();
+    if (url) {
+      try {
+        const site = new URL(url);
+        if (['http:', 'https:'].includes(site.protocol)) form.elements.namedItem('url').value = site.origin + '/';
+      } catch {}
+    }
     form.querySelector('input').focus();
   }
-  const api = {open, normalize, buildText, buildMail};
+  const api = {open, normalize, buildText, buildMail, needsQuestions};
   if (typeof module === 'object' && module.exports) module.exports = api;
   global.SimyInsurancePreparation = api;
 })(typeof window === 'object' ? window : globalThis);
