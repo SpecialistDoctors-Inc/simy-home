@@ -8,9 +8,10 @@ validate the real host card before enabling Service.publication_enabled.
 from __future__ import annotations
 import base64
 import json
-from urllib.parse import parse_qs
+from html import escape
+from urllib.parse import parse_qs, urlsplit
 
-from identity import AuthError
+from identity import AuthError, Identity
 from service import Rejected
 from store import Conflict
 
@@ -193,7 +194,27 @@ class App:
             fields(query, ('state', 'code'), ('scope', 'authuser', 'prompt', 'hd', 'iss'))
             if 'iss' in query and query['iss'] != 'https://accounts.google.com':
                 raise BadRequest()
-            return self.response(302, headers={'location': self.identity.callback(query['state'], query['code'])})
+            redirect = self.identity.callback(query['state'], query['code'])
+            if not Identity.valid_redirect(redirect):
+                raise AuthError('invalid_redirect_uri')
+            if urlsplit(redirect).hostname == 'chatgpt.com':
+                # Google and the initiating ChatGPT session may use different
+                # browser profiles. Preserve the original one-time code/state;
+                # the registered client still needs its original PKCE verifier.
+                response = self.response(200, headers={
+                    'content-type': 'text/html; charset=utf-8',
+                    'referrer-policy': 'no-referrer', 'x-frame-options': 'DENY',
+                    'content-security-policy': "default-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"})
+                response['body'] = ('<!doctype html><html lang="ja"><head><meta charset="utf-8">'
+                    '<meta name="viewport" content="width=device-width,initial-scale=1">'
+                    '<title>ChatGPTの接続を完了する</title></head><body><main>'
+                    '<h1>Google確認が完了しました。</h1>'
+                    '<p>接続を始めたChatGPTのブラウザーで続けてください。</p>'
+                    '<p>下のリンクをコピーし、接続を始めたChatGPTのブラウザーで開いてください。</p>'
+                    '<p><a href="' + escape(redirect, quote=True) + '" rel="noreferrer noopener">'
+                    'ChatGPTに戻って接続を完了</a></p></main></body></html>')
+                return response
+            return self.response(302, headers={'location': redirect})
         content_type = headers.get('content-type', '').split(';')[0].strip().lower()
         if method == 'POST' and path == '/oauth/register':
             if content_type != 'application/json':

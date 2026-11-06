@@ -53,5 +53,14 @@ privately. Do not publish its Sheet ID, Google subject, recipient, tokens or key
 in this public repository. Test actual desktop rendering/click confirmation
 before enabling production. UI-only metadata is not itself authorization proof.
 
+For a registered ChatGPT callback, the Google callback displays a static
+handoff page instead of automatically opening ChatGPT in the Google browser
+profile. Copy its “ChatGPTに戻って接続を完了” link into the browser/profile where
+the ChatGPT connection was started. This is the same one-time, 120-second code
+URL; do not put it in logs, chat, screenshots or shared documents. The original
+client state and PKCE verifier are still required. The page has no scripts or
+third-party resources and is not cached or framed. Registered loopback CLI
+callbacks retain their exact HTTP 302 redirect behavior.
+
 A separate RSA signing key issues audience-bound HP access tokens. Keys are
 stored as secret values, with only public JWKs exposed by `/oauth/jwks`.

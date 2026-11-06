@@ -3,6 +3,7 @@ import base64
 import hashlib
 import json
 import unittest
+from html.parser import HTMLParser
 from urllib.parse import parse_qs, urlencode, urlsplit
 from uuid import uuid4
 
@@ -35,7 +36,8 @@ class AdapterTests(unittest.TestCase):
             headers['authorization'] = 'Bearer fake-access'
         event = {'rawPath': path, 'requestContext': {'http': {'method': method}}, 'headers': headers, 'body': body, 'rawQueryString': urlencode(query or {}), 'isBase64Encoded': encoded}
         response = self.app(event)
-        value = json.loads(response['body']) if response['body'] else None
+        value = (response['body'] if response['headers']['content-type'].startswith('text/html')
+                 else json.loads(response['body']) if response['body'] else None)
         return response, value
 
     def rpc(self, method, params=None, auth=True):
@@ -259,6 +261,91 @@ class AdapterTests(unittest.TestCase):
         response, value = self.http('/oauth/userinfo', auth=True)
         self.assertEqual(value['sub'], self.claims['sub'])
         self.assertNotIn('scope', value)
+
+    def test_chatgpt_callback_handoff_preserves_oidc_pkce_state_and_one_time_exchange(self):
+        class Handoff(HTMLParser):
+            def __init__(self):
+                super().__init__(); self.tags = []; self.links = []
+            def handle_starttag(self, tag, attrs):
+                self.tags.append((tag, dict(attrs)))
+                if tag == 'a': self.links.append(dict(attrs)['href'])
+
+        for redirect in ('https://chatgpt.com/connector_platform_oauth_redirect',
+                         'https://chatgpt.com/connector/oauth/example?hint="<>&\''):
+            with self.subTest(redirect=redirect):
+                _, registered = self.http('/oauth/register', 'POST', json.dumps({'redirect_uris': [redirect]}))
+                verifier = 'v' * 43
+                challenge = base64.urlsafe_b64encode(hashlib.sha256(verifier.encode()).digest()).rstrip(b'=').decode()
+                client_state = 'original-client-state<"&'
+                response, _ = self.http('/oauth/authorize', query={'client_id': registered['client_id'],
+                    'redirect_uri': redirect, 'response_type': 'code', 'resource': self.identity.resource,
+                    'code_challenge': challenge, 'code_challenge_method': 'S256', 'state': client_state})
+                login = parse_qs(urlsplit(response['headers']['location']).query)
+                query = {'state': login['state'][0], 'code': 'fake-google-code'}
+                response, html = self.http('/oauth/google/callback', query=query)
+                self.assertEqual(response['statusCode'], 200)
+                self.assertNotIn('location', response['headers'])
+                for name, expected in {'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store',
+                    'referrer-policy': 'no-referrer', 'x-frame-options': 'DENY', 'x-content-type-options': 'nosniff',
+                    'content-security-policy': "default-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"}.items():
+                    self.assertEqual(response['headers'][name], expected)
+                self.assertIn('Google確認が完了しました。', html)
+                self.assertIn('接続を始めたChatGPTのブラウザーで続けてください。', html)
+                self.assertIn('ChatGPTに戻って接続を完了', html)
+                page = Handoff(); page.feed(html)
+                self.assertEqual(len(page.links), 1)
+                self.assertTrue(all(tag in {'html', 'head', 'meta', 'title', 'body', 'main', 'h1', 'p', 'a'} for tag, _ in page.tags))
+                self.assertFalse(any('src' in attrs or 'http-equiv' in attrs or any(key.startswith('on') for key in attrs)
+                                     for _, attrs in page.tags))
+                self.assertEqual(next(attrs['rel'] for tag, attrs in page.tags if tag == 'a'), 'noreferrer noopener')
+                handoff = page.links[0]
+                self.assertTrue(handoff.startswith(redirect + ('&' if '?' in redirect else '?')))
+                self.assertIn('&amp;', html)
+                if 'hint=' in redirect:
+                    self.assertIn('&quot;&lt;&gt;&amp;&#x27;', html)
+                callback = parse_qs(urlsplit(handoff).query)
+                self.assertEqual(callback['state'], [client_state])
+                self.assertEqual(callback['iss'], [self.identity.issuer])
+                self.assertEqual(len(callback['code']), 1)
+                self.assertEqual(handoff, redirect + ('&' if '?' in redirect else '?') + urlencode({
+                    'code': callback['code'][0], 'state': client_state, 'iss': self.identity.issuer}))
+                code_key = 'code:' + hashlib.sha256(callback['code'][0].encode()).hexdigest()
+                self.assertEqual(self.store.get(code_key)['expires_at'], self.now + 120)
+                form = {'grant_type': 'authorization_code', 'client_id': registered['client_id'],
+                    'redirect_uri': redirect, 'code': callback['code'][0], 'code_verifier': verifier,
+                    'resource': self.identity.resource}
+                response, value = self.http('/oauth/token', 'POST', urlencode({**form, 'code_verifier': 'w' * 43}), content_type='application/x-www-form-urlencoded')
+                self.assertEqual((response['statusCode'], value), (400, {'error': 'invalid_grant'}))
+                response, value = self.http('/oauth/token', 'POST', urlencode(form), content_type='application/x-www-form-urlencoded')
+                self.assertEqual(response['statusCode'], 200)
+                self.assertEqual(value['token_type'], 'Bearer')
+                self.assertIn('access_token', value)
+                response, value = self.http('/oauth/token', 'POST', urlencode(form), content_type='application/x-www-form-urlencoded')
+                self.assertEqual((response['statusCode'], value), (400, {'error': 'invalid_grant'}))
+                response, value = self.http('/oauth/google/callback', query=query)
+                self.assertEqual((response['statusCode'], value), (400, {'error': 'expired_login'}))
+
+    def test_callback_handoff_rejects_external_or_invalid_callback_targets(self):
+        for target in ('https://attacker.example.invalid/callback',
+                       'https://chatgpt.com.attacker.invalid/connector_platform_oauth_redirect',
+                       'https://chatgpt.com/other',
+                       'https://user@chatgpt.com/connector_platform_oauth_redirect',
+                       'http://chatgpt.com/connector_platform_oauth_redirect',
+                       'https://chatgpt.com/connector_platform_oauth_redirect#fragment'):
+            with self.subTest(target=target):
+                self.identity.callback = lambda state, code: target
+                response, value = self.http('/oauth/google/callback', query={'state': 'fake-state', 'code': 'fake-code'})
+                self.assertEqual((response['statusCode'], value), (400, {'error': 'invalid_redirect_uri'}))
+                self.assertNotIn('location', response['headers'])
+
+    def test_loopback_callback_keeps_exact_redirect_response(self):
+        target = 'http://127.0.0.1:43123/callback?code=fake-one-time-code&state=original-state'
+        self.identity.callback = lambda state, code: target
+        response, value = self.http('/oauth/google/callback', query={'state': 'fake-state', 'code': 'fake-code'})
+        self.assertEqual(response['statusCode'], 302)
+        self.assertEqual(response['headers']['location'], target)
+        self.assertEqual(response['body'], '')
+        self.assertIsNone(value)
 
     def test_google_callback_accepts_known_issuer_and_rejects_issuer_substitution(self):
         calls = []
