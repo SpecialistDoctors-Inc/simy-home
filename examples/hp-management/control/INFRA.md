@@ -1,11 +1,15 @@
 # HP control AWS scaffold
 
-Status: **local scaffold only; nothing applied or published**. This stack owns new
-HP-control resources in AWS account `209300895845`, `ap-northeast-1`. It does not
-import, modify, remove or replace the existing HP-agent or sample-clinic stack.
-Do not apply before the application/security review and verified cutover gate.
+Status (2026-11-06): the dedicated control stack is deployed in AWS account
+`209300895845`. Google/GitHub connections, dev delivery, local and native-card
+connection tests, real draft-process recovery and confirmation-response recovery
+have passed. The deployed package source is `a9c79af2`. Production capability
+cutover and the first exact-artifact native-card publication are verified; every
+new publication still requires fresh human confirmation for its exact preview. Consult the current deployment/cutover receipt
+before applying any saved plan. The older plans below are historical preparation.
+The old dedicated runtime is stopped; its encrypted disks and records are preserved.
 
-## Read-only readiness audit (2026-11-05 JST)
+## Historical read-only readiness audit (2026-11-05 JST)
 
 - STS confirmed account `209300895845` (existing local AWS identity).
 - Public `simy.one` zone: `Z0008232OGBGLDBHC41G`.

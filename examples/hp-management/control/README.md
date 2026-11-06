@@ -5,15 +5,14 @@ service stores authorized changes in a private GitHub repository, validates the
 exact artifact, publishes it on explicit authenticated approval, and reports
 results. It never invokes Codex, another model, or customer build scripts.
 
-**State (2026-11-06):** real Google/GitHub connections, customer-local draft
-save, exact-artifact dev preview, recipient inbox arrival, and a real post-GitHub
-process crash followed by original-message AWS recovery have been verified.
-Validation and dev preview are enabled; production remains disabled. The old dev
-writer is fenced; the old production writer/runtime remains in place. Actual
-Codex conversation-host confirmation remains an acceptance gate. The local
-floating controls have passed real-browser connection confirmation, automatic
-reload and process-crash recovery with the installed package. Production is
-still disabled; a no-publication connection test is not publication acceptance.
+**State (2026-11-06):** real Google/GitHub connections, customer-local save,
+local live preview, native Codex confirmation, exact-artifact dev and production
+delivery, recipient inbox arrival and real process-crash recovery have been
+verified. The user confirmed the exact production artifact in the native card;
+all nine served files matched and Sheet/mail reporting completed once. Old dev
+and prod writers are fenced. The old dedicated EC2 runtime is stopped with its
+encrypted disks and backups preserved after explicit resource approval. New publication still requires a fresh confirmation;
+connection-test cards cannot authorize it.
 
 ## Boundaries
 

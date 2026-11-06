@@ -85,3 +85,9 @@ variable "tags" {
   type    = map(string)
   default = {}
 }
+
+variable "retired" {
+  description = "Keep the existing dedicated legacy agent stopped and disable only its recovery/heartbeat alarm actions. Requires separately authorized resource retirement after replacement acceptance."
+  type        = bool
+  default     = false
+}
