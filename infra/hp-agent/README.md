@@ -147,3 +147,37 @@ fails, it leaves the current state in place and writes one root-only
 `upgrade-recovery-<new-source-prefix>.json` receipt. Do not delete that receipt
 or retry automatically: reconcile it against the named rollback container and
 the preserved marker first.
+
+## Retiring the dedicated legacy instance
+
+After the replacement production path is fully verified, obtain explicit
+resource-lifecycle authority for account `209300895845`, region `ap-northeast-1`,
+instance `i-0249d60873ec01d17`. Review the drained ledger, writer fences, published
+bytes and retained claim/backups immediately before applying a saved plan.
+`retired = true` disables actions on this stack's system-recovery and heartbeat
+alarms, then manages only that instance's power state as `stopped` with
+`force = false`. It does not terminate the instance, detach/delete disks, alter
+DLM, remove credentials/claims/backups, or signal processes/containers. Keep
+`retired = true` in the applied variable file so future plans enforce retirement.
+The root/data disks, volume attachment and existing destruction protections remain.
+Normal stop releases the ephemeral public IPv4 address. The instance lifecycle
+ignores that observed association change so a subsequent plan cannot replace the
+protected host just to restore an address. Initial provisioning still requests
+public IPv4; this exception does not start or replace a retired host.
+
+For this retirement, the applied variables are retained privately in
+`output/hp-local-editor-20261105/legacy-retirement-preparation-20261106/retired.candidate.tfvars`.
+Keep that `retired = true` input for subsequent plans; the older pre-retirement
+variable file is not the applied retirement configuration.
+
+The pinned AWS provider's [`aws_ec2_instance_state` resource](https://registry.terraform.io/providers/hashicorp/aws/5.100.0/docs/resources/ec2_instance_state)
+uses a normal EC2 stop when `force = false`. Its [delete handler is a no-op](https://github.com/hashicorp/terraform-provider-aws/blob/v5.100.0/internal/service/ec2/ec2_instance_state.go),
+so removing this power-state resource does not restart the instance. Setting
+`retired = false` would remove the stopped-state enforcement and re-enable these
+two alarms; it is not an automatic operational rollback. Leave retirement in
+place unless a separate rollback review authorizes reactivation and restores
+exact writer fencing safely. Do not restore a legacy root `sync --delete`
+writer while production serves `releases/`. Any later host restart is a separate
+resource operation and may auto-start its old runtime; never use it as an
+unreviewed rollback. A stopped host continues to incur storage/retained-resource
+costs; deleting it or its data is outside this retirement plan.

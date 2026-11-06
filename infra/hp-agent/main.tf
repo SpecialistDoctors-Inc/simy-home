@@ -387,6 +387,8 @@ resource "aws_instance" "agent" {
       ami,
       user_data,
       user_data_replace_on_change,
+      # Normal stop releases ephemeral IPv4; that must not replace this protected host.
+      associate_public_ip_address,
     ]
     precondition {
       condition     = startswith(var.instance_type, "t4g.")
@@ -410,6 +412,7 @@ resource "aws_volume_attachment" "data" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "system_recovery" {
+  actions_enabled     = !var.retired
   alarm_name          = "${local.name}-system-status-recovery"
   alarm_description   = "Recover the dedicated agent instance on AWS system status failure."
   namespace           = "AWS/EC2"
@@ -517,6 +520,7 @@ resource "aws_dlm_lifecycle_policy" "data" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "agent_heartbeat_missing" {
+  actions_enabled     = !var.retired
   alarm_name          = "${local.name}-heartbeat-missing"
   alarm_description   = "HP update service requires attention: missing heartbeat, unresolved request incident, or overdue work."
   namespace           = "SIMY/HPAgent"
@@ -531,4 +535,21 @@ resource "aws_cloudwatch_metric_alarm" "agent_heartbeat_missing" {
   alarm_actions       = local.operational_alarm_actions
   ok_actions          = local.operational_alarm_actions
   tags                = local.tags
+}
+
+# Resource-level retirement: preserve the host and disks, with no process signals.
+# Disable the dedicated alarms before requesting the normal EC2 stop.
+resource "aws_ec2_instance_state" "retired" {
+  count       = var.retired ? 1 : 0
+  instance_id = aws_instance.agent.id
+  state       = "stopped"
+  force       = false
+
+  lifecycle {
+    precondition {
+      condition     = aws_instance.agent.id == "i-0249d60873ec01d17" && data.aws_caller_identity.current.account_id == "209300895845"
+      error_message = "Retirement is approved only for the existing dedicated HP agent i-0249d60873ec01d17."
+    }
+  }
+  depends_on = [aws_cloudwatch_metric_alarm.system_recovery, aws_cloudwatch_metric_alarm.agent_heartbeat_missing]
 }
