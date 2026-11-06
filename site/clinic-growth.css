@@ -50,3 +50,22 @@ body:has(.growth-report) .report-download-dock .button{min-height:44px;font-size
 .growth-journey{margin:28px 0}.growth-journey-findings{display:grid;grid-template-columns:1fr;gap:16px}.growth-journey-finding{padding:20px;border:1px solid #dce5ec;border-left:3px solid #2d70cb;border-radius:6px}.growth-report .growth-journey-finding h4{font-size:19px;line-height:1.6;margin:6px 0 12px}.growth-report .growth-journey-finding p+p{margin-top:10px}.growth-report .growth-journey .growth-proposal{margin-top:24px}.growth-report .growth-journey-finding a{display:inline-block;margin-right:12px;color:#245da4;text-underline-offset:3px}.growth-report .growth-journey>p+p{margin-top:6px}
 
 .growth-continuous{margin-top:32px;padding:28px;background:#edf4f8;border:1px solid #d6e3eb;border-radius:8px}.growth-continuous-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin:24px 0}.growth-continuous-grid article{min-width:0;padding:20px;background:#fff;border:1px solid #d6e3eb}.growth-continuous-grid h4{margin:0 0 12px;font-size:19px}.growth-continuous-flow{font-weight:600}.growth-continuous .growth-support-apply{white-space:normal;text-align:center;max-width:100%}@media(max-width:640px){.growth-continuous{padding:20px}.growth-continuous-grid{grid-template-columns:1fr;gap:16px}}
+
+.growth-manga-intro{margin:12px 0 20px;max-width:55em}
+.growth-manga-panels{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;list-style:none;margin:12px 0 24px;padding:0;counter-reset:manga}
+.growth-manga-panel{display:flex;flex-direction:column;min-width:0;overflow:hidden;border:1px solid #c8dbe5;border-radius:8px;background:#fff;counter-increment:manga}
+.growth-manga-panel img{display:block;width:100%;height:auto;aspect-ratio:752/498}
+.growth-manga-caption{padding:14px 16px 16px}
+.growth-manga-caption h5{display:flex;align-items:baseline;gap:8px;margin:0 0 6px;color:#193847;font-size:17px;line-height:1.5}
+.growth-manga-caption h5::before{content:counter(manga,decimal-leading-zero);color:#236c88;font-size:14px;font-variant-numeric:tabular-nums}
+.growth-manga-caption p{margin:0;color:#375361;font-size:15px;line-height:1.7}
+.growth-manga-next{border-top:1px solid #c8dbe5;padding-top:20px}
+.growth-manga-next-title{margin:0;font-weight:700;font-size:19px}
+.growth-manga-next-copy{margin:6px 0 14px}
+.growth-manga-next .growth-scope{margin:12px 0 0}
+@media(max-width:640px){
+  .growth-continuous.growth-manga{margin-inline:-14px;padding:12px}
+  .growth-manga-panels{grid-template-columns:minmax(0,1fr);gap:14px}
+  .growth-manga-caption{padding:12px}
+  .growth-manga-next .growth-support-apply{width:100%;min-width:0;justify-content:center}
+}
