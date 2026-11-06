@@ -319,6 +319,8 @@ function continuousGrowthSupport(report,growth) {
   box.append(topics);
 
   const next = element('div','','growth-manga-next');
+  next.id = 'report-growth-consultation';
+  next.tabIndex = -1;
   next.append(
     element('p','AI検索の結果から、優先して整えるページを決める。','growth-manga-next-title'),
     element('p','医院を探す質問での紹介状況と、公式ページへのリンクを確認。診療の対象や専門性が十分に伝わっていない箇所を見直し、公開後は同じ質問で再測定します。','growth-manga-next-copy')
@@ -399,12 +401,18 @@ function renderReport(report) {
   results.append(element('p','侵入・漏えいの有無、サーバー内部・外部サービス内部は、この診断では確認していません。','report-boundary'));
   reportDetails=null;
   const next=element('section','','report-edit-next');
-  next.append(element('h3','このホームページを、実際に変えてみませんか。'),element('p','今のトップページを再現して、文章や写真の変更を体験できます。'));
+  next.id='report-edit-preview';
+  next.tabIndex=-1;
+  next.append(
+    element('span','無料プレビュー','report-action-label'),
+    element('h3','自院のホームページで、文章や写真を変えてみる。'),
+    element('p','診断したURLからトップページを再現し、編集を体験できます。')
+  );
   const rebuild=element('form','','report-rebuild-form');rebuild.dataset.reportRebuild='true';
   const urlLabel=element('label','再現したいホームページのURL');urlLabel.htmlFor='report-rebuild-url';
   const entry=element('div','','report-rebuild-entry');
   const url=element('input','');url.id='report-rebuild-url';url.name='url';url.type='text';url.inputMode='url';url.autocomplete='url';url.spellcheck=false;url.required=true;url.value=report.url;
-  const submit=element('button','作ってみる →');submit.type='submit';entry.append(url,submit);
+  const submit=element('button','編集プレビューを作る →');submit.type='submit';entry.append(url,submit);
   const consent=element('label','','report-rebuild-consent');const rights=element('input','');rights.type='checkbox';rights.name='rights';rights.required=true;consent.append(rights,document.createTextNode('このページを再制作する権限があります。'));
   const status=element('p','','rebuild-status');status.setAttribute('role','status');status.setAttribute('aria-live','polite');
   rebuild.append(urlLabel,entry,consent,status);next.append(rebuild);results.append(next);
@@ -446,10 +454,59 @@ function appendEmailReceipt(report, snapshot, onSaved) {
   });
   results.append(section);
 }
+function showReportActions(root,pdf) {
+  const nav=element('nav','','report-actions');
+  nav.setAttribute('aria-label','診断結果からできること');
+
+  const save=element('button','','report-action report-action-pdf');
+  save.type='button';
+  const description=element('span','院内で共有する');
+  description.setAttribute('aria-live','polite');
+  save.append(element('strong','PDFを保存'),description);
+  const dock=pdf.closest('.report-download-dock');
+  const status=dock.querySelector('.report-pdf-status');
+  const feedback=new MutationObserver(()=>{
+    save.disabled=pdf.disabled;
+    description.textContent=status.textContent||'院内で共有する';
+  });
+  feedback.observe(pdf,{attributes:true,attributeFilter:['disabled']});
+  feedback.observe(status,{childList:true});
+  save.addEventListener('click',()=>pdf.click());
+  nav.append(save);
+
+  for (const [id,title,detail,style] of [
+    ['report-growth-consultation','集患支援を相談','記事化と近隣サイトの確認','growth'],
+    ['report-edit-preview','HP編集を体験','自院のページで無料プレビュー','edit'],
+  ]) {
+    if (!root.querySelector('#'+id)) continue;
+    const link=element('a','','report-action report-action-'+style);
+    link.href='#'+id;
+    link.append(element('strong',title),element('span',detail));
+    nav.append(link);
+  }
+  root.prepend(nav);
+
+  if ('IntersectionObserver' in window) {
+    const otherActions=[nav,root.querySelector('.growth-support-apply'),root.querySelector('.report-rebuild-entry button')].filter(Boolean);
+    const visible=new Map();
+    dock.hidden=true;
+    const observer=new IntersectionObserver(entries=>{
+      if (!dock.isConnected) {
+        observer.disconnect();
+        feedback.disconnect();
+        return;
+      }
+      for (const entry of entries) visible.set(entry.target,entry.isIntersecting);
+      dock.hidden=!visible.get(diagnosisState)||otherActions.some(action=>visible.get(action));
+    });
+    for (const target of [diagnosisState,...otherActions]) observer.observe(target);
+  }
+}
+
 // This is a presentation gate, not an authentication boundary. Full details stay
 // detached from the visible DOM until the consent record is saved successfully.
 function gateReport(report) {
-  if(window.SimyClinicPortal===true){const dock=element('div','','report-downloads report-download-dock'),button=element('button','診断結果をPDFで保存 ↓','button button-primary'),status=element('p','','report-pdf-status');button.type='button';status.setAttribute('role','status');button.addEventListener('click',async()=>{button.disabled=true;status.textContent='PDFを作成しています…';try{await loadReportPdf();await window.SimyReportPdf.download({report,registration:{clinicName:window.SimyClinicUser?.clinicName||window.SimyClinicGrowth?.model(report)?.name||''},root:results});status.textContent='PDFを作成しました。';}catch{status.textContent='PDFを作成できませんでした。再度お試しください。';}finally{button.disabled=false;}});dock.append(button,status);results.prepend(dock);return;}
+  if(window.SimyClinicPortal===true){const dock=element('div','','report-downloads report-download-dock'),button=element('button','診断結果をPDFで保存 ↓','button button-primary'),status=element('p','','report-pdf-status');button.type='button';status.setAttribute('role','status');button.addEventListener('click',async()=>{button.disabled=true;status.textContent='PDFを作成しています…';try{await loadReportPdf();await window.SimyReportPdf.download({report,registration:{clinicName:window.SimyClinicUser?.clinicName||window.SimyClinicGrowth?.model(report)?.name||''},root:results});status.textContent='PDFを作成しました。';}catch{status.textContent='PDFを作成できませんでした。再度お試しください。';}finally{button.disabled=false;}});dock.append(element('span','院内共有用のレポート','report-save-hint'),button,status);results.prepend(dock);showReportActions(results,button);return;}
 
   const full=element('div','','report-full');
   while(results.firstChild)full.append(results.firstChild);
@@ -474,8 +531,7 @@ function gateReport(report) {
     if(!preview.isConnected)return; // Ignore a late response after a new diagnosis.
     results.replaceChildren(full);
     const confirmed=element('p',registration.clinicName+' の診断結果一覧です。PDFでも保存できます。','report-unlocked');confirmed.setAttribute('role','status');results.prepend(confirmed);
-    const downloads=element('div','','report-downloads report-download-dock');downloads.setAttribute('aria-label','診断結果のPDF保存');const pdf=element('button','診断結果をPDFで保存 ↓','button button-primary');pdf.type='button';const pdfStatus=element('p','','report-pdf-status');pdfStatus.setAttribute('role','status');const saveHint=element('span','院内共有・相談に使える診断レポート','report-save-hint');downloads.append(saveHint,pdf,pdfStatus);confirmed.after(downloads);
-    if('IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>{if(!downloads.isConnected){observer.disconnect();return;}downloads.hidden=!entries[0].isIntersecting;});observer.observe(diagnosisState);}
+    const downloads=element('div','','report-downloads report-download-dock');downloads.setAttribute('aria-label','診断結果のPDF保存');const pdf=element('button','診断結果をPDFで保存 ↓','button button-primary');pdf.type='button';const pdfStatus=element('p','','report-pdf-status');pdfStatus.setAttribute('role','status');const saveHint=element('span','院内共有・相談に使える診断レポート','report-save-hint');downloads.append(saveHint,pdf,pdfStatus);confirmed.after(downloads);showReportActions(full,pdf);
 
     pdf.addEventListener('click',async()=>{pdf.disabled=true;pdfStatus.textContent='PDFを作成しています…';try{await loadReportPdf();await window.SimyReportPdf.download({report,registration,root:full});pdfStatus.textContent='PDFを作成しました。ダウンロードをご確認ください。';}catch(error){pdfStatus.textContent='PDFを作成できませんでした。もう一度お試しください。';}finally{pdf.disabled=false;}});
     diagnosisState.focus({preventScroll:true});diagnosisState.scrollIntoView({block:'start',behavior:'auto'});
