@@ -1,0 +1,52 @@
+{
+  "date": "2026-10-28",
+  "scope": "Recent clinic diagnosis requests and production acceptance, with unresolved dependencies",
+  "implemented_this_change": [
+    "Remove crawl detail list from screen and PDF",
+    "Rename recommendations heading",
+    "Restore concise provider table as 02 without evidence disclosures",
+    "Move external incident information to 03 and flow to 04",
+    "Emphasize published provider incidents and distinguish availability outages",
+    "Add AWS migration manga without safety guarantee",
+    "Add shared non-PHP component risk manga triggered by detected issues",
+    "Keep component incident descriptions visible, deduplicated and matched by CVE"
+  ],
+  "verified_existing": [
+    "30-page maximum and reservation/login priority in crawl.ts",
+    "Diagnosis journal and bounded retry/partial results",
+    "Version release dates, PHP/WordPress/Ruby/Rails detection with unknown state",
+    "CISA/OSV lookup; no claim of comprehensive database coverage",
+    "PDF service name and sales@simy.one contact"
+  ],
+  "blocked": [
+    {
+      "request": "Per-diagnosis web research and LLM classification of public shared documents",
+      "status": "専用チャットで今はキーを作成しないとユーザー回答。本文取得・AI判定経路・都度検索を実装して統合。実APIは未設定・未検証。"
+    },
+    {
+      "request": "Immediate Google Sheets logging and outreach workflow",
+      "status": "D1同期キュー・重複防止・再送・下書き作成を実装して統合。サービスアカウント未設定、実Sheets未検証。定期実行・営業実送信なし。"
+    }
+  ],
+  "not_included_in_competitor_comparison": [
+    "Comprehensive leaked-data intelligence",
+    "Chained attack-path analysis",
+    "Applicant device/IP fingerprint report",
+    "Daily scheduled rescans"
+  ],
+  "registration": {
+    "current": "User explicitly requested restoration: save email, clinic name, contact name and consent before displaying full result and PDF",
+    "validation": "本番正式UIでダミー登録。D1再読込、全結果表示、PDF7ページ取得と目視を確認。詳細はspec-implementation-audit-2026-10-28.json。"
+  },
+  "assets": {
+    "tool": "built-in image_gen",
+    "files": [
+      "site/assets/website-check/clinic-aws-migration-v1.png",
+      "site/assets/website-check/clinic-component-risks-v1.png"
+    ],
+    "briefs": [
+      "Expressive doctor in clinic corridor considers AWS infrastructure plus SIMY configuration, patching and backups; no guaranteed security",
+      "Doctor learns PHP is not the only component risk; WordPress, JavaScript, React and Rails shown conceptually; incidents displayed only for exact matched CVEs"
+    ]
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "environment": "Chromium local static site, 320x700 viewport",
+  "before": {
+    "termsHeadingPx": 41.6
+  },
+  "after": {
+    "termsHeadingPx": 28,
+    "privacyHeadingPx": 28,
+    "viewportWidth": 320,
+    "documentWidth": 320,
+    "toolbarHeight": 61,
+    "minimumToolbarLinkHeight": 44
+  },
+  "screenshots": [
+    "terms-mobile-after.png",
+    "privacy-mobile-after.png"
+  ],
+  "legalBodyChanged": false
+}

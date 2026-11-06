@@ -1,0 +1,2286 @@
+{
+  "editorSha256": "3d38195ce03cead58e1742ee817c14c9157ca1d8cb3a685a7079e3fb6497bbfe",
+  "plannerSha256": "b391f7fd41eaa6a8ca74c4de429dca0e82f21dda399bbdd5419aaa7a821854b7",
+  "runtimeSha256": "67edf349be7222ea3bcbf4a3314ba266e2620442c48d9d0d738a3d8fbab8c3e6",
+  "model": "gpt-6.1-sol",
+  "scope": "Public source HTML; local production planner/runtime with real AI inference; production API is verified separately.",
+  "sources": [
+    {
+      "id": 1,
+      "url": "https://urachil.com/",
+      "sourceSha256": "a7bd10d09c1a6ad30fd39cdc125663ea480516ceb05eb6694ff264b9f97d6758",
+      "text": true,
+      "notice": {
+        "status": "edit",
+        "application": {
+          "ok": true,
+          "highlight": false,
+          "changed": 2
+        },
+        "question": ""
+      },
+      "styleChecks": [
+        {
+          "width": 1440,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            },
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            }
+          ]
+        },
+        {
+          "width": 390,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            },
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            }
+          ]
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": 2,
+      "url": "https://takinomizu-cl.com/",
+      "sourceSha256": "2b248ce510d2b05f70fa05a35f9d56ea496ae08dc549f6d2cba594f3753927bc",
+      "text": true,
+      "notice": {
+        "status": "edit",
+        "application": {
+          "ok": true,
+          "highlight": false,
+          "changed": 2
+        },
+        "question": ""
+      },
+      "styleChecks": [
+        {
+          "width": 1440,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            },
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            }
+          ]
+        },
+        {
+          "width": 390,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            },
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            }
+          ]
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": 3,
+      "url": "https://kotoni-hifuka-cl.com/",
+      "sourceSha256": "c0e199643b65d292d43180a0e22babe013b3992d009f0f80b44dbd08dc39d059",
+      "text": true,
+      "notice": {
+        "status": "edit",
+        "application": {
+          "ok": true,
+          "highlight": false,
+          "changed": 2
+        },
+        "question": ""
+      },
+      "styleChecks": [
+        {
+          "width": 1440,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            }
+          ]
+        },
+        {
+          "width": 390,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            }
+          ]
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": 4,
+      "url": "https://www.ginzahospital.com/",
+      "sourceSha256": "156e418eb9377c4d5c770c21ed11fe22056b4a1d66313593a56c82315c34b785",
+      "text": true,
+      "notice": {
+        "status": "edit",
+        "application": {
+          "ok": true,
+          "highlight": false,
+          "changed": 1
+        },
+        "question": ""
+      },
+      "styleChecks": [
+        {
+          "width": 1440,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            }
+          ]
+        },
+        {
+          "width": 390,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            }
+          ]
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": 5,
+      "url": "https://tnf-clinic.com/",
+      "sourceSha256": "0742ed2fcb5f920974937b8ee05fdb9394ae739bfbc8a6df05fa65b2bb882018",
+      "text": true,
+      "notice": {
+        "status": "edit",
+        "application": {
+          "ok": true,
+          "highlight": false,
+          "changed": 2
+        },
+        "question": ""
+      },
+      "styleChecks": [
+        {
+          "width": 1440,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer width in horizontal layout"
+            },
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer width in horizontal layout"
+            }
+          ]
+        },
+        {
+          "width": 390,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": true
+            },
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            }
+          ]
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": 6,
+      "url": "https://sapporo-shiroishi-hifuka.jp/",
+      "sourceSha256": "1937eaca2484ccf1c0e4c9714c8da7199244b9f810cdf5dbdd9992dfdf4dd9a9",
+      "text": true,
+      "notice": {
+        "status": "edit",
+        "application": {
+          "ok": true,
+          "highlight": false,
+          "changed": 1
+        },
+        "question": ""
+      },
+      "styleChecks": [
+        {
+          "width": 1440,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            }
+          ]
+        },
+        {
+          "width": 390,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            }
+          ]
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": 7,
+      "url": "https://www.kojinkai.org/clinic/sapporo/",
+      "sourceSha256": "f70e5e69926a8d02071bd666a94b89897d812de9bd55d64ac8070a74c54e2e2c",
+      "text": true,
+      "notice": {
+        "status": "edit",
+        "application": {
+          "ok": true,
+          "highlight": false,
+          "changed": 2
+        },
+        "question": ""
+      },
+      "styleChecks": [
+        {
+          "width": 1440,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": true
+            },
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            }
+          ]
+        },
+        {
+          "width": 390,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": true
+            },
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            }
+          ]
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": 8,
+      "url": "https://www.kitanoclinic.com/",
+      "sourceSha256": "ad20b58358bbf0eb0cde43010988e43bdc9135cbda651b10833eb87c0fdf8924",
+      "text": true,
+      "notice": {
+        "status": "clarify",
+        "application": null,
+        "question": "既存の「＜お知らせ（2026年10月）＞」の箇所に、2026年11月1日の午後休診を掲載してよろしいですか？"
+      },
+      "styleChecks": [],
+      "excluded": false
+    },
+    {
+      "id": 9,
+      "url": "https://ds-clinic.jp/",
+      "sourceSha256": "1914baab3cf93f78edd2aed4db06096c413a53667decf72ac105818371e40c33",
+      "text": true,
+      "notice": {
+        "status": "edit",
+        "application": {
+          "ok": true,
+          "highlight": false,
+          "changed": 1
+        },
+        "question": ""
+      },
+      "styleChecks": [
+        {
+          "width": 1440,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            }
+          ]
+        },
+        {
+          "width": 390,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            }
+          ]
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": 10,
+      "url": "https://soen-skinclinic.com/",
+      "sourceSha256": "bc5d1f512688365a432c7f8efa2a151df998e534e57b18edf1650d028ac3ac2f",
+      "text": true,
+      "notice": {
+        "status": "clarify",
+        "application": null,
+        "question": "既存の休診案内では2026年11月1日（日）は終日休診と読めますが、この日は「午後のみ休診」に変更するということでよろしいですか？"
+      },
+      "styleChecks": [
+        {
+          "width": 1440,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            }
+          ]
+        },
+        {
+          "width": 390,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            }
+          ]
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": 11,
+      "url": "https://takinomizu-hifuka.com/",
+      "sourceSha256": "2288b739ad4be93c46f7752276a6b07bbc091465ab3dc637062a74a6daa9ec96",
+      "text": true,
+      "notice": {
+        "status": "edit",
+        "application": {
+          "ok": true,
+          "highlight": false,
+          "changed": 1
+        },
+        "question": ""
+      },
+      "styleChecks": [
+        {
+          "width": 1440,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0.015625,
+              "comparison": "peer width in horizontal layout"
+            }
+          ]
+        },
+        {
+          "width": 390,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            }
+          ]
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": 12,
+      "url": "https://keimei-kids-clinic.com/",
+      "sourceSha256": "a692b703c7cf4364bbf934dff68e04553a062f1e554e5232fc23efe561aa66d1",
+      "text": true,
+      "notice": {
+        "status": "edit",
+        "application": {
+          "ok": true,
+          "highlight": false,
+          "changed": 2
+        },
+        "question": ""
+      },
+      "styleChecks": [
+        {
+          "width": 1440,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer width in horizontal layout"
+            },
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer width in horizontal layout"
+            }
+          ]
+        },
+        {
+          "width": 390,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer width in horizontal layout"
+            },
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer width in horizontal layout"
+            }
+          ]
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": 13,
+      "url": "https://www.shiozaki-naika.jp/",
+      "sourceSha256": "e58e73460a6733bae2e61e0793c9015954f63c1d16e82a7e1d0f91deddbccc0b",
+      "text": true,
+      "notice": {
+        "status": "edit",
+        "application": {
+          "ok": true,
+          "highlight": false,
+          "changed": 1
+        },
+        "question": ""
+      },
+      "styleChecks": [
+        {
+          "width": 1440,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            }
+          ]
+        },
+        {
+          "width": 390,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            }
+          ]
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": 14,
+      "url": "https://www.brave.or.jp/",
+      "sourceSha256": "0edf50bc9b3baef36a9115254101568dedef3ac4a1f9c52081bc986e77722ebc",
+      "text": true,
+      "notice": {
+        "status": "clarify",
+        "application": null,
+        "question": "2026年11月1日の午後休診のお知らせは、どのお知らせ欄に掲載しますか？ 現在の編集対象には既存のお知らせ一覧が含まれていません。"
+      },
+      "styleChecks": [],
+      "excluded": false
+    },
+    {
+      "id": 15,
+      "url": "https://shinjuku-naika.jp/",
+      "sourceSha256": "837ca2d28390b0ac63a1a019e746ffe45dbece0bdf52fd40ee4397c7fc881865",
+      "text": true,
+      "notice": {
+        "status": "edit",
+        "application": {
+          "ok": true,
+          "highlight": false,
+          "changed": 1
+        },
+        "question": ""
+      },
+      "styleChecks": [
+        {
+          "width": 1440,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            }
+          ]
+        },
+        {
+          "width": 390,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            }
+          ]
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": 16,
+      "url": "https://ebisu-naika.jp/",
+      "sourceSha256": "c12c126d878ff1d621c4bcd298c554c7d4c70eee4751e4ac8e521dfa3525cb04",
+      "text": true,
+      "notice": {
+        "status": "edit",
+        "application": {
+          "ok": true,
+          "highlight": false,
+          "changed": 1
+        },
+        "question": ""
+      },
+      "styleChecks": [
+        {
+          "width": 1440,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            }
+          ]
+        },
+        {
+          "width": 390,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            }
+          ]
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": 17,
+      "url": "https://www.kureclinic.jp/",
+      "sourceSha256": "6b0923e3be2a2ed628fdbcb5a77deb0118b63c3469f60970c45f0fbac61f4399",
+      "text": true,
+      "notice": {
+        "status": "edit",
+        "application": {
+          "ok": true,
+          "highlight": false,
+          "changed": 1
+        },
+        "question": ""
+      },
+      "styleChecks": [
+        {
+          "width": 1440,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            }
+          ]
+        },
+        {
+          "width": 390,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            }
+          ]
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": 18,
+      "url": "https://www.oyama-clinic.com/",
+      "sourceSha256": "3f7703e1d55d96c4dbc499e88edce0b2a8c6cb44dcd505690545885e44a4a06e",
+      "text": true,
+      "notice": {
+        "status": "edit",
+        "application": {
+          "ok": true,
+          "highlight": false,
+          "changed": 1
+        },
+        "question": ""
+      },
+      "styleChecks": [
+        {
+          "width": 1440,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            }
+          ]
+        },
+        {
+          "width": 390,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            }
+          ]
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": 19,
+      "url": "https://www.noge-neurology.com/",
+      "sourceSha256": "21249e980fc8490cb83087d6b562d31b301cd61dea358ec04e823db0801f6c99",
+      "text": true,
+      "notice": {
+        "status": "edit",
+        "application": {
+          "ok": true,
+          "highlight": false,
+          "changed": 2
+        },
+        "question": ""
+      },
+      "styleChecks": [
+        {
+          "width": 1440,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            }
+          ]
+        },
+        {
+          "width": 390,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            }
+          ]
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": 20,
+      "url": "https://navitasclinic.jp/shinjuku-top/",
+      "sourceSha256": "bcab7b5c4d917b25530b8130d4b5cb9651970c1b3f3ee7f7bea90073d4aaa43b",
+      "text": true,
+      "notice": {
+        "status": "edit",
+        "application": {
+          "ok": true,
+          "highlight": false,
+          "changed": 1
+        },
+        "question": ""
+      },
+      "styleChecks": [
+        {
+          "width": 1440,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer width in horizontal layout"
+            }
+          ]
+        },
+        {
+          "width": 390,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer width in horizontal layout"
+            }
+          ]
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": 21,
+      "url": "https://www.tana-kotori.com/",
+      "sourceSha256": "5e17c5e521575018184dd89614884e15fa76a8c6105d6064400a18ca7f3d1271",
+      "text": true,
+      "notice": {
+        "status": "edit",
+        "application": {
+          "ok": true,
+          "highlight": false,
+          "changed": 1
+        },
+        "question": ""
+      },
+      "styleChecks": [
+        {
+          "width": 1440,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            }
+          ]
+        },
+        {
+          "width": 390,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            }
+          ]
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": 22,
+      "url": "https://clinic-arai.jp/",
+      "sourceSha256": "03c3e9f5f6e3df418bf85f5de450b92229e5c54db1abad8f6bdfd0a1cd3df5b9",
+      "text": true,
+      "notice": {
+        "status": "edit",
+        "application": {
+          "ok": true,
+          "highlight": false,
+          "changed": 1
+        },
+        "question": ""
+      },
+      "styleChecks": [
+        {
+          "width": 1440,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            }
+          ]
+        },
+        {
+          "width": 390,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            }
+          ]
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": 23,
+      "url": "https://www.creaclinic.jp/",
+      "sourceSha256": "2c5bb03ababbf7b9246259a20909f0d5f58c2232b507de53b604fc66b059e0ed",
+      "text": true,
+      "notice": {
+        "status": "edit",
+        "application": {
+          "ok": true,
+          "highlight": false,
+          "changed": 1
+        },
+        "question": ""
+      },
+      "styleChecks": [
+        {
+          "width": 1440,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            }
+          ]
+        },
+        {
+          "width": 390,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            }
+          ]
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": 24,
+      "url": "https://yoshitakeclinic.jp/",
+      "sourceSha256": "6e19cf56b182f4c481d0eb4858ffaa87a33f6c90c5ef9768a2a312932237fd3e",
+      "text": null,
+      "notice": null,
+      "styleChecks": [],
+      "excluded": true
+    },
+    {
+      "id": 25,
+      "url": "https://www.itonaika-clinic.jp/",
+      "sourceSha256": "6bd685ec30ac2b5f11aa39cc914d836bb5f668283aeedab29d890b7e2c4c3a00",
+      "text": true,
+      "notice": {
+        "status": "edit",
+        "application": {
+          "ok": true,
+          "highlight": false,
+          "changed": 2
+        },
+        "question": ""
+      },
+      "styleChecks": [
+        {
+          "width": 1440,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 10.53125,
+              "comparison": "peer edges",
+              "variableDateWidth": true
+            },
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            }
+          ]
+        },
+        {
+          "width": 390,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": true
+            },
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            }
+          ]
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": 26,
+      "url": "https://fujii-naika-clinic.jp/",
+      "sourceSha256": "7ca09972cd6f6b322070ab1ad25799359758b1646246d771edf4d9471f076106",
+      "text": true,
+      "notice": {
+        "status": "edit",
+        "application": {
+          "ok": true,
+          "highlight": false,
+          "changed": 1
+        },
+        "question": ""
+      },
+      "styleChecks": [
+        {
+          "width": 1440,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            }
+          ]
+        },
+        {
+          "width": 390,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            }
+          ]
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": 27,
+      "url": "https://sendai-douki-clinic.com/",
+      "sourceSha256": "c58dbabb2de0c9994e0ff1dd2bb179cb5c1ff71471f27ea0064ee6814771ec7f",
+      "text": true,
+      "notice": {
+        "status": "edit",
+        "application": {
+          "ok": true,
+          "highlight": false,
+          "changed": 1
+        },
+        "question": ""
+      },
+      "styleChecks": [
+        {
+          "width": 1440,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            }
+          ]
+        },
+        {
+          "width": 390,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            }
+          ]
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": 28,
+      "url": "https://yell-clinic.com/",
+      "sourceSha256": "c92ddf73445cbe6bed1255bfccdf7327abe6943210a6cc8b9d53c204303407dc",
+      "text": true,
+      "notice": {
+        "status": "edit",
+        "application": {
+          "ok": true,
+          "highlight": false,
+          "changed": 2
+        },
+        "question": ""
+      },
+      "styleChecks": [
+        {
+          "width": 1440,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            },
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            }
+          ]
+        },
+        {
+          "width": 390,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            },
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            }
+          ]
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": 29,
+      "url": "https://www.taihakuclinic.com/",
+      "sourceSha256": "4ef4d2b1bf8c74fa32c2aa1b8950f4c41f85dfff8dc79c057afcaac52bbd4f44",
+      "text": true,
+      "notice": {
+        "status": "clarify",
+        "application": null,
+        "question": "2026年11月1日の午後休診は、既存の「お知らせ」見出し直下に、既存記事と同じ見た目で掲載してよろしいですか？（診療時間欄では日曜は休診と記載されています。）"
+      },
+      "styleChecks": [],
+      "excluded": false
+    },
+    {
+      "id": 30,
+      "url": "https://kyotoclinic.jp/",
+      "sourceSha256": "2afc3f75b5509c16042bc9c20cfb2269bf86e5964ca81ca280179066f7df967d",
+      "text": true,
+      "notice": {
+        "status": "edit",
+        "application": {
+          "ok": true,
+          "highlight": false,
+          "changed": 2
+        },
+        "question": ""
+      },
+      "styleChecks": [
+        {
+          "width": 1440,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer width in horizontal layout"
+            }
+          ]
+        },
+        {
+          "width": 390,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer width in horizontal layout"
+            }
+          ]
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": 31,
+      "url": "https://nakano-tsr.com/",
+      "sourceSha256": "2d141fdd088e4db60ff8a5e7068e44a776740a4296218b5c86b1633e239e63c5",
+      "text": true,
+      "notice": {
+        "status": "edit",
+        "application": {
+          "ok": true,
+          "highlight": false,
+          "changed": 2
+        },
+        "question": ""
+      },
+      "styleChecks": [
+        {
+          "width": 1440,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            }
+          ]
+        },
+        {
+          "width": 390,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            }
+          ]
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": 32,
+      "url": "https://takada-naika.com/",
+      "sourceSha256": "640f47057d235ebc939159ca660e3c9141852e8cac82eaab098062503fe8eaf0",
+      "text": null,
+      "notice": {
+        "status": "clarify",
+        "application": null,
+        "question": "2026年11月1日の午後休診は、既存の「お知らせ」欄への掲載でよろしいですか？ 同じ見た目で追加するため、その欄をnews対象として指定してください。"
+      },
+      "styleChecks": [],
+      "excluded": false
+    },
+    {
+      "id": 33,
+      "url": "https://maedaclinic.com/",
+      "sourceSha256": "81a049f99eb9a56f20e50a4f87bdbf211c6d9e15c847dc84406d3049dd31f56f",
+      "text": null,
+      "notice": {
+        "status": "edit",
+        "application": {
+          "ok": true,
+          "highlight": false,
+          "changed": 2
+        },
+        "question": ""
+      },
+      "styleChecks": [
+        {
+          "width": 1440,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            },
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            }
+          ]
+        },
+        {
+          "width": 390,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            },
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            }
+          ]
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": 34,
+      "url": "https://kimachisasaki.jp/",
+      "sourceSha256": "795dcf174fe6bf00d58269bac64184a54e219ce7cb239eadcd3ba6159f6a1212",
+      "text": null,
+      "notice": {
+        "status": "edit",
+        "application": {
+          "ok": true,
+          "highlight": false,
+          "changed": 1
+        },
+        "question": ""
+      },
+      "styleChecks": [
+        {
+          "width": 1440,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            }
+          ]
+        },
+        {
+          "width": 390,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer edges",
+              "variableDateWidth": false
+            }
+          ]
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": 35,
+      "url": "https://goto-naika-clinic.com/",
+      "sourceSha256": "a3fd5ccbe82affe10006aa6bc872029681a9a1d6656bdc2b28c1a7c99b3c70bd",
+      "text": null,
+      "notice": {
+        "status": "edit",
+        "application": {
+          "ok": true,
+          "highlight": false,
+          "changed": 1
+        },
+        "question": ""
+      },
+      "styleChecks": [
+        {
+          "width": 1440,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer width in horizontal layout"
+            }
+          ]
+        },
+        {
+          "width": 390,
+          "pass": true,
+          "diffs": [],
+          "edges": [
+            {
+              "left": 0,
+              "right": 0,
+              "comparison": "peer width in horizontal layout"
+            }
+          ]
+        }
+      ],
+      "excluded": false
+    }
+  ],
+  "extraPages": [
+    {
+      "id": 101,
+      "url": "https://urachil.com/doctor.html",
+      "kind": "attached-photo",
+      "pass": true,
+      "status": "edit"
+    },
+    {
+      "id": 101,
+      "url": "https://urachil.com/doctor.html",
+      "kind": "text",
+      "pass": true,
+      "status": "edit"
+    },
+    {
+      "id": 102,
+      "url": "https://urachil.com/clinic.html",
+      "kind": "text",
+      "pass": true,
+      "status": "edit"
+    },
+    {
+      "id": 102,
+      "url": "https://urachil.com/clinic.html",
+      "kind": "attached-photo",
+      "pass": true,
+      "status": "edit"
+    },
+    {
+      "id": 103,
+      "url": "https://takinomizu-cl.com/doctor.html",
+      "kind": "attached-photo",
+      "pass": true,
+      "status": "edit"
+    },
+    {
+      "id": 103,
+      "url": "https://takinomizu-cl.com/doctor.html",
+      "kind": "text",
+      "pass": true,
+      "status": "edit"
+    },
+    {
+      "id": 104,
+      "url": "https://takinomizu-cl.com/clinic.html",
+      "kind": "text",
+      "pass": true,
+      "status": "edit"
+    },
+    {
+      "id": 104,
+      "url": "https://takinomizu-cl.com/clinic.html",
+      "kind": "attached-photo",
+      "pass": true,
+      "status": "edit"
+    },
+    {
+      "id": 105,
+      "url": "https://kotoni-hifuka-cl.com/clinic/",
+      "kind": "attached-photo",
+      "pass": true,
+      "status": "edit"
+    },
+    {
+      "id": 105,
+      "url": "https://kotoni-hifuka-cl.com/clinic/",
+      "kind": "text",
+      "pass": true,
+      "status": "edit"
+    },
+    {
+      "id": 106,
+      "url": "https://tnf-clinic.com/clinic/",
+      "kind": "attached-photo",
+      "pass": true,
+      "status": "edit"
+    },
+    {
+      "id": 106,
+      "url": "https://tnf-clinic.com/clinic/",
+      "kind": "text",
+      "pass": true,
+      "status": "edit"
+    },
+    {
+      "id": 102,
+      "url": "https://urachil.com/clinic.html",
+      "kind": "semantic",
+      "pass": false,
+      "status": "clarify"
+    },
+    {
+      "id": 101,
+      "url": "https://urachil.com/doctor.html",
+      "kind": "semantic",
+      "pass": true,
+      "status": "edit"
+    },
+    {
+      "id": 103,
+      "url": "https://takinomizu-cl.com/doctor.html",
+      "kind": "semantic",
+      "pass": true,
+      "status": "edit"
+    },
+    {
+      "id": 104,
+      "url": "https://takinomizu-cl.com/clinic.html",
+      "kind": "semantic",
+      "pass": false,
+      "status": "clarify"
+    },
+    {
+      "id": 105,
+      "url": "https://kotoni-hifuka-cl.com/clinic/",
+      "kind": "semantic",
+      "pass": true,
+      "status": "edit"
+    },
+    {
+      "id": 106,
+      "url": "https://tnf-clinic.com/clinic/",
+      "kind": "semantic",
+      "pass": true,
+      "status": "edit"
+    }
+  ],
+  "replay": [
+    {
+      "id": 1,
+      "phase": "nonnews",
+      "kind": "text",
+      "pass": true,
+      "noHighlight": true,
+      "hasWanted": true,
+      "sameMarkup": true,
+      "onlyRequested": true,
+      "changes": []
+    },
+    {
+      "id": 2,
+      "phase": "nonnews",
+      "kind": "text",
+      "pass": true,
+      "noHighlight": true,
+      "hasWanted": true,
+      "sameMarkup": true,
+      "onlyRequested": true,
+      "changes": []
+    },
+    {
+      "id": 3,
+      "phase": "nonnews",
+      "kind": "text",
+      "pass": true,
+      "noHighlight": true,
+      "hasWanted": true,
+      "sameMarkup": true,
+      "onlyRequested": true,
+      "changes": []
+    },
+    {
+      "id": 4,
+      "phase": "nonnews",
+      "kind": "text",
+      "pass": true,
+      "noHighlight": true,
+      "hasWanted": true,
+      "sameMarkup": true,
+      "onlyRequested": true,
+      "changes": []
+    },
+    {
+      "id": 5,
+      "phase": "nonnews",
+      "kind": "text",
+      "pass": true,
+      "noHighlight": true,
+      "hasWanted": true,
+      "sameMarkup": true,
+      "onlyRequested": true,
+      "changes": []
+    },
+    {
+      "id": 6,
+      "phase": "nonnews",
+      "kind": "text",
+      "pass": true,
+      "noHighlight": true,
+      "hasWanted": true,
+      "sameMarkup": true,
+      "onlyRequested": true,
+      "changes": []
+    },
+    {
+      "id": 7,
+      "phase": "nonnews",
+      "kind": "text",
+      "pass": true,
+      "noHighlight": true,
+      "hasWanted": true,
+      "sameMarkup": true,
+      "onlyRequested": true,
+      "changes": []
+    },
+    {
+      "id": 8,
+      "phase": "nonnews",
+      "kind": "text",
+      "pass": true,
+      "noHighlight": true,
+      "hasWanted": true,
+      "sameMarkup": true,
+      "onlyRequested": true,
+      "changes": []
+    },
+    {
+      "id": 9,
+      "phase": "nonnews",
+      "kind": "text",
+      "pass": true,
+      "noHighlight": true,
+      "hasWanted": true,
+      "sameMarkup": true,
+      "onlyRequested": true,
+      "changes": []
+    },
+    {
+      "id": 10,
+      "phase": "nonnews",
+      "kind": "text",
+      "pass": true,
+      "noHighlight": true,
+      "hasWanted": true,
+      "sameMarkup": true,
+      "onlyRequested": true,
+      "changes": []
+    },
+    {
+      "id": 11,
+      "phase": "nonnews",
+      "kind": "text",
+      "pass": true,
+      "noHighlight": true,
+      "hasWanted": true,
+      "sameMarkup": true,
+      "onlyRequested": true,
+      "changes": []
+    },
+    {
+      "id": 12,
+      "phase": "nonnews",
+      "kind": "text",
+      "pass": true,
+      "noHighlight": true,
+      "hasWanted": true,
+      "sameMarkup": true,
+      "onlyRequested": true,
+      "changes": []
+    },
+    {
+      "id": 13,
+      "phase": "nonnews",
+      "kind": "text",
+      "pass": true,
+      "noHighlight": true,
+      "hasWanted": true,
+      "sameMarkup": true,
+      "onlyRequested": true,
+      "changes": []
+    },
+    {
+      "id": 14,
+      "phase": "nonnews",
+      "kind": "text",
+      "pass": true,
+      "noHighlight": true,
+      "hasWanted": true,
+      "sameMarkup": true,
+      "onlyRequested": true,
+      "changes": []
+    },
+    {
+      "id": 15,
+      "phase": "nonnews",
+      "kind": "text",
+      "pass": true,
+      "noHighlight": true,
+      "hasWanted": true,
+      "sameMarkup": true,
+      "onlyRequested": true,
+      "changes": []
+    },
+    {
+      "id": 16,
+      "phase": "nonnews",
+      "kind": "text",
+      "pass": true,
+      "noHighlight": true,
+      "hasWanted": true,
+      "sameMarkup": true,
+      "onlyRequested": true,
+      "changes": []
+    },
+    {
+      "id": 17,
+      "phase": "nonnews",
+      "kind": "text",
+      "pass": true,
+      "noHighlight": true,
+      "hasWanted": true,
+      "sameMarkup": true,
+      "onlyRequested": true,
+      "changes": []
+    },
+    {
+      "id": 18,
+      "phase": "nonnews",
+      "kind": "text",
+      "pass": true,
+      "noHighlight": true,
+      "hasWanted": true,
+      "sameMarkup": true,
+      "onlyRequested": true,
+      "changes": []
+    },
+    {
+      "id": 19,
+      "phase": "nonnews",
+      "kind": "text",
+      "pass": true,
+      "noHighlight": true,
+      "hasWanted": true,
+      "sameMarkup": true,
+      "onlyRequested": true,
+      "changes": []
+    },
+    {
+      "id": 20,
+      "phase": "nonnews",
+      "kind": "text",
+      "pass": true,
+      "noHighlight": true,
+      "hasWanted": true,
+      "sameMarkup": true,
+      "onlyRequested": true,
+      "changes": []
+    },
+    {
+      "id": 21,
+      "phase": "nonnews",
+      "kind": "text",
+      "pass": true,
+      "noHighlight": true,
+      "hasWanted": true,
+      "sameMarkup": true,
+      "onlyRequested": true,
+      "changes": []
+    },
+    {
+      "id": 22,
+      "phase": "nonnews",
+      "kind": "text",
+      "pass": true,
+      "noHighlight": true,
+      "hasWanted": true,
+      "sameMarkup": true,
+      "onlyRequested": true,
+      "changes": []
+    },
+    {
+      "id": 23,
+      "phase": "nonnews",
+      "kind": "text",
+      "pass": true,
+      "noHighlight": true,
+      "hasWanted": true,
+      "sameMarkup": true,
+      "onlyRequested": true,
+      "changes": []
+    },
+    {
+      "id": 25,
+      "phase": "nonnews",
+      "kind": "text",
+      "pass": true,
+      "noHighlight": true,
+      "hasWanted": true,
+      "sameMarkup": true,
+      "onlyRequested": true,
+      "changes": []
+    },
+    {
+      "id": 26,
+      "phase": "nonnews",
+      "kind": "text",
+      "pass": true,
+      "noHighlight": true,
+      "hasWanted": true,
+      "sameMarkup": true,
+      "onlyRequested": true,
+      "changes": []
+    },
+    {
+      "id": 27,
+      "phase": "nonnews",
+      "kind": "text",
+      "pass": true,
+      "noHighlight": true,
+      "hasWanted": true,
+      "sameMarkup": true,
+      "onlyRequested": true,
+      "changes": []
+    },
+    {
+      "id": 28,
+      "phase": "nonnews",
+      "kind": "text",
+      "pass": true,
+      "noHighlight": true,
+      "hasWanted": true,
+      "sameMarkup": true,
+      "onlyRequested": true,
+      "changes": []
+    },
+    {
+      "id": 29,
+      "phase": "nonnews",
+      "kind": "text",
+      "pass": true,
+      "noHighlight": true,
+      "hasWanted": true,
+      "sameMarkup": true,
+      "onlyRequested": true,
+      "changes": []
+    },
+    {
+      "id": 30,
+      "phase": "nonnews",
+      "kind": "text",
+      "pass": true,
+      "noHighlight": true,
+      "hasWanted": true,
+      "sameMarkup": true,
+      "onlyRequested": true,
+      "changes": []
+    },
+    {
+      "id": 31,
+      "phase": "nonnews",
+      "kind": "text",
+      "pass": true,
+      "noHighlight": true,
+      "hasWanted": true,
+      "sameMarkup": true,
+      "onlyRequested": true,
+      "changes": []
+    },
+    {
+      "id": 1,
+      "phase": "notice",
+      "kind": "notice",
+      "pass": true,
+      "noHighlight": true,
+      "containsTitle": true,
+      "containsBody": true,
+      "sameStructure": true,
+      "originalUnchanged": true,
+      "added": 2
+    },
+    {
+      "id": 2,
+      "phase": "notice",
+      "kind": "notice",
+      "pass": true,
+      "noHighlight": true,
+      "containsTitle": true,
+      "containsBody": true,
+      "sameStructure": true,
+      "originalUnchanged": true,
+      "added": 2
+    },
+    {
+      "id": 3,
+      "phase": "notice",
+      "kind": "notice",
+      "pass": true,
+      "noHighlight": true,
+      "containsTitle": true,
+      "containsBody": true,
+      "sameStructure": true,
+      "originalUnchanged": true,
+      "added": 1
+    },
+    {
+      "id": 4,
+      "phase": "notice",
+      "kind": "notice",
+      "pass": true,
+      "noHighlight": true,
+      "containsTitle": true,
+      "containsBody": true,
+      "sameStructure": true,
+      "originalUnchanged": true,
+      "added": 1
+    },
+    {
+      "id": 5,
+      "phase": "notice",
+      "kind": "notice",
+      "pass": true,
+      "noHighlight": true,
+      "containsTitle": true,
+      "containsBody": true,
+      "sameStructure": true,
+      "originalUnchanged": true,
+      "added": 2
+    },
+    {
+      "id": 6,
+      "phase": "notice",
+      "kind": "notice",
+      "pass": true,
+      "noHighlight": true,
+      "containsTitle": true,
+      "containsBody": true,
+      "sameStructure": true,
+      "originalUnchanged": true,
+      "added": 1
+    },
+    {
+      "id": 7,
+      "phase": "notice",
+      "kind": "notice",
+      "pass": true,
+      "noHighlight": true,
+      "containsTitle": true,
+      "containsBody": true,
+      "sameStructure": true,
+      "originalUnchanged": true,
+      "added": 2
+    },
+    {
+      "id": 9,
+      "phase": "notice",
+      "kind": "notice",
+      "pass": true,
+      "noHighlight": true,
+      "containsTitle": true,
+      "containsBody": true,
+      "sameStructure": true,
+      "originalUnchanged": true,
+      "added": 1
+    },
+    {
+      "id": 11,
+      "phase": "notice",
+      "kind": "notice",
+      "pass": true,
+      "noHighlight": true,
+      "containsTitle": true,
+      "containsBody": true,
+      "sameStructure": true,
+      "originalUnchanged": true,
+      "added": 1
+    },
+    {
+      "id": 12,
+      "phase": "notice",
+      "kind": "notice",
+      "pass": true,
+      "noHighlight": true,
+      "containsTitle": true,
+      "containsBody": true,
+      "sameStructure": true,
+      "originalUnchanged": true,
+      "added": 2
+    },
+    {
+      "id": 13,
+      "phase": "notice",
+      "kind": "notice",
+      "pass": true,
+      "noHighlight": true,
+      "containsTitle": true,
+      "containsBody": true,
+      "sameStructure": true,
+      "originalUnchanged": true,
+      "added": 1
+    },
+    {
+      "id": 15,
+      "phase": "notice",
+      "kind": "notice",
+      "pass": true,
+      "noHighlight": true,
+      "containsTitle": true,
+      "containsBody": true,
+      "sameStructure": true,
+      "originalUnchanged": true,
+      "added": 1
+    },
+    {
+      "id": 16,
+      "phase": "notice",
+      "kind": "notice",
+      "pass": true,
+      "noHighlight": true,
+      "containsTitle": true,
+      "containsBody": true,
+      "sameStructure": true,
+      "originalUnchanged": true,
+      "added": 1
+    },
+    {
+      "id": 17,
+      "phase": "notice",
+      "kind": "notice",
+      "pass": true,
+      "noHighlight": true,
+      "containsTitle": true,
+      "containsBody": true,
+      "sameStructure": true,
+      "originalUnchanged": true,
+      "added": 1
+    },
+    {
+      "id": 18,
+      "phase": "notice",
+      "kind": "notice",
+      "pass": true,
+      "noHighlight": true,
+      "containsTitle": true,
+      "containsBody": true,
+      "sameStructure": true,
+      "originalUnchanged": true,
+      "added": 1
+    },
+    {
+      "id": 19,
+      "phase": "notice",
+      "kind": "notice",
+      "pass": true,
+      "noHighlight": true,
+      "containsTitle": true,
+      "containsBody": true,
+      "sameStructure": true,
+      "originalUnchanged": true,
+      "added": 1
+    },
+    {
+      "id": 20,
+      "phase": "notice",
+      "kind": "notice",
+      "pass": true,
+      "noHighlight": true,
+      "containsTitle": true,
+      "containsBody": true,
+      "sameStructure": true,
+      "originalUnchanged": true,
+      "added": 1
+    },
+    {
+      "id": 21,
+      "phase": "notice",
+      "kind": "notice",
+      "pass": true,
+      "noHighlight": true,
+      "containsTitle": true,
+      "containsBody": true,
+      "sameStructure": true,
+      "originalUnchanged": true,
+      "added": 1
+    },
+    {
+      "id": 22,
+      "phase": "notice",
+      "kind": "notice",
+      "pass": true,
+      "noHighlight": true,
+      "containsTitle": true,
+      "containsBody": true,
+      "sameStructure": true,
+      "originalUnchanged": true,
+      "added": 1
+    },
+    {
+      "id": 23,
+      "phase": "notice",
+      "kind": "notice",
+      "pass": true,
+      "noHighlight": true,
+      "containsTitle": true,
+      "containsBody": true,
+      "sameStructure": true,
+      "originalUnchanged": true,
+      "added": 1
+    },
+    {
+      "id": 25,
+      "phase": "notice",
+      "kind": "notice",
+      "pass": true,
+      "noHighlight": true,
+      "containsTitle": true,
+      "containsBody": true,
+      "sameStructure": true,
+      "originalUnchanged": true,
+      "added": 2
+    },
+    {
+      "id": 26,
+      "phase": "notice",
+      "kind": "notice",
+      "pass": true,
+      "noHighlight": true,
+      "containsTitle": true,
+      "containsBody": true,
+      "sameStructure": true,
+      "originalUnchanged": true,
+      "added": 1
+    },
+    {
+      "id": 27,
+      "phase": "notice",
+      "kind": "notice",
+      "pass": true,
+      "noHighlight": true,
+      "containsTitle": true,
+      "containsBody": true,
+      "sameStructure": true,
+      "originalUnchanged": true,
+      "added": 1
+    },
+    {
+      "id": 28,
+      "phase": "notice",
+      "kind": "notice",
+      "pass": true,
+      "noHighlight": true,
+      "containsTitle": true,
+      "containsBody": true,
+      "sameStructure": true,
+      "originalUnchanged": true,
+      "added": 2
+    },
+    {
+      "id": 30,
+      "phase": "notice",
+      "kind": "notice",
+      "pass": true,
+      "noHighlight": true,
+      "containsTitle": true,
+      "containsBody": true,
+      "sameStructure": true,
+      "originalUnchanged": true,
+      "added": 1
+    },
+    {
+      "id": 31,
+      "phase": "notice",
+      "kind": "notice",
+      "pass": true,
+      "noHighlight": true,
+      "containsTitle": true,
+      "containsBody": true,
+      "sameStructure": true,
+      "originalUnchanged": true,
+      "added": 1
+    },
+    {
+      "id": 33,
+      "phase": "notice",
+      "kind": "notice",
+      "pass": true,
+      "noHighlight": true,
+      "containsTitle": true,
+      "containsBody": true,
+      "sameStructure": true,
+      "originalUnchanged": true,
+      "added": 2
+    },
+    {
+      "id": 34,
+      "phase": "notice",
+      "kind": "notice",
+      "pass": true,
+      "noHighlight": true,
+      "containsTitle": true,
+      "containsBody": true,
+      "sameStructure": true,
+      "originalUnchanged": true,
+      "added": 1
+    },
+    {
+      "id": 35,
+      "phase": "notice",
+      "kind": "notice",
+      "pass": true,
+      "noHighlight": true,
+      "containsTitle": true,
+      "containsBody": true,
+      "sameStructure": true,
+      "originalUnchanged": true,
+      "added": 1
+    }
+  ],
+  "receiptHashes": {
+    "results-nonnews.json": "9febaf8c82cb8e6a7f958065497ea5daf214fefcbb6f806e4a86f76153546140",
+    "results-notice-baseline.json": "c42b8cce45b5707b1ee254d08f71aece5a2efef04682de73b4182d0ba646f9b2",
+    "results-notice.json": "5077a2678b839491f5a3c07accf55dc93649a26a02cfa67db6f4200d32ad69fe",
+    "results-extra.json": "703daaec27bb47bc89c93277fb8ef131dcbe70bb62f9726d4bd90176827b65ab",
+    "results-semantic.json": "7572e9c52dc266dda4de7ee709e9ca1f7eb173eb03964c349fd0226cabddeaff",
+    "styles.json": "2d9e877cf35fa5d4e5e0a72d6fb27e52f8fadd8a45ab5564424d3e2ba34129cd",
+    "replay.json": "fcf53553703e5938f7b1152d80f3a98676331f9fdfb8f3ed80f6c94225cad4c7"
+  }
+}

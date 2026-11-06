@@ -1,0 +1,5 @@
+const {test}=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
+const source=fs.readFileSync('site/website-check.js','utf8');const ctx={};vm.runInNewContext(source.slice(source.indexOf('function groupLibraryFindings('),source.indexOf('function renderReport(')),ctx);
+const row={name:'jQuery',version:'3.4.1',basis:'body',resource:'https://clinic.example/a.js',issues:[{ids:['CVE-A']}]};
+test('one finding per normalized library and version retains distinct evidence and issue IDs',()=>{const grouped=ctx.groupLibraryFindings([row,row,{...row,name:'jquery',resource:'https://clinic.example/b.js',issues:[{ids:['CVE-B']}]},{...row,version:'3.3.1'}]);assert.equal(grouped.length,2);assert.equal(grouped[0].evidence.length,2);assert.equal(grouped[0].issues.length,2);assert.equal(grouped[1].version,'3.3.1');assert.equal(row.issues.length,1);});
+test('libraries without issues do not create warning cards',()=>{assert.equal(ctx.groupLibraryFindings([{...row,issues:[]}]).length,0);});

@@ -119,11 +119,12 @@ resource "aws_cloudfront_distribution" "site" {
   }
 
   default_cache_behavior {
-    target_origin_id       = "s3-site"
-    viewer_protocol_policy = "redirect-to-https"
-    allowed_methods        = ["GET", "HEAD", "OPTIONS"]
-    cached_methods         = ["GET", "HEAD"]
-    compress               = true
+    target_origin_id           = "s3-site"
+    viewer_protocol_policy     = "redirect-to-https"
+    allowed_methods            = ["GET", "HEAD", "OPTIONS"]
+    cached_methods             = ["GET", "HEAD"]
+    compress                   = true
+    response_headers_policy_id = aws_cloudfront_response_headers_policy.site_security.id
 
     forwarded_values {
       query_string = false
@@ -196,7 +197,7 @@ resource "aws_cloudfront_function" "redirect" {
       var querystring = request.querystring || {};
       var parts = [];
       for (var key in querystring) {
-        if (!querystring.hasOwnProperty(key)) continue;
+        if (!Object.prototype.hasOwnProperty.call(querystring, key)) continue;
         var item = querystring[key];
         if (item.multiValue) {
           for (var i = 0; i < item.multiValue.length; i++) {
@@ -268,7 +269,7 @@ resource "aws_cloudfront_function" "redirect" {
 
     function maybeRedirectWithViewerRegion(request, host, uri) {
       if (queryHas(request, 'region') || queryHas(request, 'lang')) return null;
-      if (!(uri === '/' || uri === '/index.html' || uri === '/compare.html' || uri === '/press-release.html' || uri === '/privacy.html' || uri === '/terms.html')) return null;
+      if (!(uri === '/compare.html' || uri === '/press-release.html' || uri === '/privacy.html' || uri === '/terms.html')) return null;
 
       var countryHeader = request.headers['cloudfront-viewer-country'];
       var languageHeader = request.headers['accept-language'];
@@ -281,6 +282,28 @@ resource "aws_cloudfront_function" "redirect" {
         statusCode: 302,
         statusDescription: 'Found',
         headers: { location: { value: 'https://' + host + normalizedUri + queryToString(request, { region: region }) } }
+      };
+    }
+
+    function homepageLanguageRedirect(request, host, uri) {
+      var homepagePaths = { '/': true, '/index.html': true, '/ja.html': true, '/hi.html': true, '/es.html': true, '/fr.html': true, '/zh-Hans.html': true };
+      if (!homepagePaths[uri]) return null;
+      var item = request.querystring && request.querystring.lang;
+      if (!item) return null;
+      var language = (item.value || '').toLowerCase();
+      var base = language.split('-')[0];
+      var locale = ['en', 'ja', 'hi', 'es', 'fr'].indexOf(base) >= 0 ? base : '';
+      if (['zh', 'zh-cn', 'zh-sg', 'zh-hans'].indexOf(language) >= 0) locale = 'zh-Hans';
+      if (!locale) return null;
+      var remaining = Object.create(null);
+      for (var key in request.querystring) {
+        if (Object.prototype.hasOwnProperty.call(request.querystring, key) && key !== 'lang') remaining[key] = request.querystring[key];
+      }
+      var path = locale === 'en' ? '/' : '/' + locale + '.html';
+      return {
+        statusCode: 301,
+        statusDescription: 'Moved Permanently',
+        headers: { location: { value: 'https://' + host + path + queryToString({ querystring: remaining }, {}) } }
       };
     }
 
@@ -302,6 +325,9 @@ resource "aws_cloudfront_function" "redirect" {
       }
 
       var host = request.headers.host ? request.headers.host.value : '';
+      var languageRedirect = homepageLanguageRedirect(request, host, uri);
+      if (languageRedirect) return languageRedirect;
+
       var viewerRegionRedirect = maybeRedirectWithViewerRegion(request, host, uri);
       if (viewerRegionRedirect) return viewerRegionRedirect;
 
@@ -309,9 +335,10 @@ resource "aws_cloudfront_function" "redirect" {
       // Safari fallback page when the app is not installed. This is an internal
       // rewrite, so its query string remains available to the user-initiated
       // custom-scheme link in the page.
-      if (uri === '/app/auth/callback' || uri === '/app/auth/callback/' ||
+      if (host.toLowerCase() === 'simy.one' &&
+          (uri === '/app/auth/callback' || uri === '/app/auth/callback/' ||
           uri === '/dev-app/auth/callback' || uri === '/dev-app/auth/callback/' ||
-          uri === '/stg-app/auth/callback' || uri === '/stg-app/auth/callback/') {
+          uri === '/stg-app/auth/callback' || uri === '/stg-app/auth/callback/')) {
         request.uri = '/auth-callback.html';
         return request;
       }
@@ -329,7 +356,7 @@ resource "aws_cloudfront_function" "redirect" {
         return {
           statusCode: 301,
           statusDescription: 'Moved Permanently',
-          headers: { location: { value: 'https://' + host + '/' } }
+          headers: { location: { value: 'https://' + host + '/' + queryToString(request, {}) } }
         };
       }
 
@@ -361,6 +388,39 @@ resource "aws_cloudfront_function" "redirect" {
           statusDescription: 'Moved Permanently',
           headers: { location: { value: 'https://' + host + '/' } }
         };
+      }
+
+      // HP management is a service; industry pages belong beneath it.
+      var hpLegacy = /^\/for\/clinic(?:\/index\.html|\.html|\/)?$/.test(uri);
+      var hpMatch = uri.match(/^\/hp-management(\/clinic)?(?:\/index\.html|\.html|\/)?$/);
+      if (hpLegacy || hpMatch) {
+        var hpPath = hpLegacy ? '/hp-management/clinic/' : '/hp-management' + (hpMatch[1] || '') + '/';
+        if (uri !== hpPath) {
+          return {
+            statusCode: 301,
+            statusDescription: 'Moved Permanently',
+            headers: { location: { value: 'https://' + host + hpPath + queryToString(request, {}) } }
+          };
+        }
+        request.uri = hpPath + 'index.html';
+        return request;
+      }
+
+      // Occupation pages have stable directory URLs, independent of plan names.
+      var occupationAliases = { '/engineers.html': '/for/engineers/', '/engineers-en.html': '/for/en/engineers/', '/for': '/for/', '/for/': '/for/', '/for.html': '/for/', '/for/index.html': '/for/' };
+      var occupationPath = occupationAliases[uri];
+      var occupation = uri.match(/^\/for\/(?:(?:en|es|fr|hi|zh-hans)\/)?[a-z][a-z0-9-]*(?:\/index\.html|\.html|\/)?$/);
+      if (occupation && !occupationPath) occupationPath = uri.replace(/(?:\/index\.html|\.html|\/)$/, '') + '/';
+      if (occupationPath) {
+        if (uri !== occupationPath) {
+          return {
+            statusCode: 301,
+            statusDescription: 'Moved Permanently',
+            headers: { location: { value: 'https://' + host + occupationPath + queryToString(request, {}) } }
+          };
+        }
+        request.uri = occupationPath + 'index.html';
+        return request;
       }
 
       // Remove trailing slash (except root /)
@@ -525,4 +585,29 @@ resource "aws_iam_policy" "github_actions_site_deploy" {
 resource "aws_iam_role_policy_attachment" "github_actions_site_deploy" {
   role       = aws_iam_role.github_actions_site_deploy.name
   policy_arn = aws_iam_policy.github_actions_site_deploy.arn
+}
+
+# Baseline browser protection. CSP initially constrains plugins, embedding and base
+# URLs and limits script origins to the site, Google analytics and the opt-in
+# Cloudflare Turnstile experience.
+# Inline scripts remain for legacy pages; this is not a strict nonce-based CSP.
+resource "aws_cloudfront_response_headers_policy" "site_security" {
+  name = "${local.bucket_name}-security"
+  security_headers_config {
+    content_type_options { override = true }
+    frame_options {
+      frame_option = "SAMEORIGIN"
+      override     = true
+    }
+    strict_transport_security {
+      access_control_max_age_sec = 31536000
+      include_subdomains         = false
+      preload                    = false
+      override                   = true
+    }
+    content_security_policy {
+      content_security_policy = "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://challenges.cloudflare.com; object-src 'none'; base-uri 'self'; frame-ancestors 'self'"
+      override                = true
+    }
+  }
 }

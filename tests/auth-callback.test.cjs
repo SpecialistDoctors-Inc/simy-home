@@ -11,12 +11,12 @@ const cloudFrontFunction = fs.readFileSync(
   "utf8",
 );
 
-function handlerResult(uri) {
+function handlerResult(uri, host = "simy.one") {
   const sandbox = {};
   vm.createContext(sandbox);
   vm.runInContext(`${cloudFrontFunction}; this.run = handler;`, sandbox);
   return sandbox.run({
-    request: { uri, querystring: { code: { value: "secret" } }, headers: { host: { value: "simy.one" } } },
+    request: { uri, querystring: { code: { value: "secret" } }, headers: { host: { value: host } } },
   });
 }
 
@@ -52,6 +52,14 @@ test("each Universal Link callback path rewrites to the Safari fallback page", (
   }
 });
 
+test("the shared-host rewrite leaves www callback routing unchanged", () => {
+  for (const uri of ["/app/auth/callback", "/dev-app/auth/callback", "/stg-app/auth/callback"]) {
+    const result = handlerResult(uri, "www.simy.one");
+    assert.equal(result.statusCode, 301, uri);
+    assert.equal(result.headers.location.value, `https://www.simy.one${uri}.html`, uri);
+  }
+});
+
 test("the fallback never declares web-page authentication success", () => {
   assert.match(fallback, /<meta name="referrer" content="no-referrer">/);
   assert.match(fallback, /window\.history\.replaceState/);
@@ -60,6 +68,7 @@ test("the fallback never declares web-page authentication success", () => {
 });
 
 test("the page maps every environment to its own app scheme", () => {
+  assert.match(cloudFrontFunction, /host\.toLowerCase\(\) === 'simy\.one'/);
   assert.match(fallback, /'\/app\/auth\/callback': 'prod'/);
   assert.match(fallback, /'\/dev-app\/auth\/callback': 'dev'/);
   assert.match(fallback, /'\/stg-app\/auth\/callback': 'stg'/);

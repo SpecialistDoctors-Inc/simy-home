@@ -1,0 +1,942 @@
+{
+  "ja": {
+    "zoom": "この画面を原寸で見る",
+    "share": "この体験のリンクをコピー",
+    "copied": "リンクをコピーしました。同僚に送れます。",
+    "copyFailed": "自動コピーができませんでした。下のリンクを選択してコピーしてください。",
+    "shareLabel": "共有するリンク",
+    "scenes": [
+      {
+        "id": "build",
+        "number": "01",
+        "label": "開発を任せる",
+        "title": "不具合の修正を頼む。\nテスト・レビュー結果まで受け取る。",
+        "body": "再現の調査、コードの修正、テスト、レビューをつなげます。指摘が出たら修正して再確認。最後に、変更内容と確認結果をまとめて確認できます。",
+        "request": "「申込みフォームの二重送信を直して。エラーから復帰できるかも確認して」",
+        "result": "修正コード・テスト結果・レビュー結果。公開するかは、あなたが判断。",
+        "note": "Threadsの設計プレビューを使った説明です。画面・数値はサンプルで、将来設計を含みます。",
+        "frames": [
+          {
+            "label": "修正する",
+            "title": "二重送信の原因を調べて、修正",
+            "body": "ボタンを連続で押したときの動作を確認し、送信処理を見直す。",
+            "image": "threads-progress.png",
+            "alt": "フォーム改善の設計画面。二重送信を修正中と表示され、次に再送テストを行う。",
+            "tone": "running",
+            "focus": "top"
+          },
+          {
+            "label": "確かめる",
+            "title": "テストとレビューで、修正を確かめる",
+            "body": "再送・エラー復帰を確認。指摘があれば修正して、もう一度確認する。",
+            "image": "threads-progress.png",
+            "alt": "Threads設計画面の次のステップには操作・エラー復帰の確認とレビューが並ぶ。",
+            "tone": "running",
+            "focus": "bottom"
+          },
+          {
+            "label": "受け取る",
+            "title": "変更と検証結果が、一緒に揃う",
+            "body": "コードの変更、レビュー記録、検証レポートを開いて確認する。",
+            "image": "threads-outcome.png",
+            "alt": "成果の設計画面。フォーム改善の変更、検証レポート、完了の根拠が並ぶ。",
+            "tone": "done",
+            "focus": "top"
+          }
+        ]
+      },
+      {
+        "id": "progress",
+        "number": "02",
+        "label": "進行と判断待ちを見る",
+        "title": "「今、何してる？」が分かる。\n判断が必要なところだけ答える。",
+        "body": "目的、現在の作業、残りの条件を同じ画面で確認。止まった理由と選択肢が見えるので、会話をさかのぼらずに、次に何をするか判断できます。",
+        "request": "「入力内容は、送信エラーのあとも残したい」",
+        "result": "何が進み、何があなたの判断待ちか。選択肢ごとの違いも分かる。",
+        "note": "Threadsの将来設計です。再開操作や稼働表示の実連携は、添付資料の時点では未完了です。",
+        "frames": [
+          {
+            "label": "進行を見る",
+            "title": "二重送信を修正中。次は再送テスト",
+            "body": "最後の進展と残る条件を確認。動いていることと、進んだことを区別する。",
+            "image": "threads-progress.png",
+            "alt": "目的、最後の進展、確認済み条件、現在の作業と残作業が分かる設計画面。",
+            "tone": "running",
+            "focus": "top"
+          },
+          {
+            "label": "判断する",
+            "title": "「入力内容を引き継ぎますか？」",
+            "body": "引き継ぐなら入力の手間を減らす。リセットするなら空欄からやり直す。違いを見て選ぶ。",
+            "image": "threads-decision.png",
+            "alt": "入力内容を引き継ぐかリセットするか、両方の結果を表示した判断待ちの設計画面。",
+            "tone": "decision",
+            "focus": "top"
+          },
+          {
+            "label": "続きを見る",
+            "title": "判断後も、作業の続きを追える",
+            "body": "何を続けるか、何が残っているかを同じ画面で確認する。",
+            "image": "threads-progress.png",
+            "alt": "作業を再開した後の状態を説明するための進行画面。実際の再開処理は実行しない。",
+            "tone": "running",
+            "focus": "top"
+          }
+        ]
+      },
+      {
+        "id": "knowledge",
+        "number": "03",
+        "label": "再発防止に活かす",
+        "title": "一度直した不具合を、\n次の開発で使うルールにする。",
+        "body": "「前にも起きた」を繰り返さないために。不具合の記録と再発防止ルールをつなぎ、次の変更に適用します。誤検知も記録して、ルールを見直せます。",
+        "request": "例：古い認証情報のまま、デプロイしようとした",
+        "result": "「デプロイ前に本人性を再確認する」という再発防止ルールと、その根拠。",
+        "note": "品質モニターの実装検証キャプチャー。固定の合成テストデータです。本番実績やライブSQMの全連携完了を示しません。",
+        "frames": [
+          {
+            "label": "問題を記録",
+            "title": "何が起きたか、原因は何かを確認",
+            "body": "「デプロイ確認でセッションが失効」。記録から関連する問題をたどる。",
+            "image": "quality-incident.png",
+            "alt": "品質モニターの不具合記録。デプロイ確認でのセッション失効と原因の評価が表示される。",
+            "tone": "decision",
+            "focus": "incident"
+          },
+          {
+            "label": "ルールにする",
+            "title": "デプロイ前に、本人性を再確認",
+            "body": "元の問題とつながる再発防止ルールを管理。適用範囲と承認状態を確認する。",
+            "image": "quality-knowledge.png",
+            "alt": "再発防止ナレッジの検証画面。本人性の再確認ルールと関連するインシデントが表示される。",
+            "tone": "done",
+            "focus": "top"
+          },
+          {
+            "label": "見直す",
+            "title": "誤検知も、次の改善に使う",
+            "body": "検出が関係していたか、誤検知だったかを記録。役立つルールに育てていく。",
+            "image": "quality-knowledge.png",
+            "alt": "再発防止ルールの検出フィードバック。関連あり、誤検知、範囲が広すぎるを選ぶ検証画面。",
+            "tone": "done",
+            "focus": "bottom"
+          }
+        ],
+        "requestLabel": "たとえば、こんな不具合"
+      }
+    ],
+    "availabilityBody": "品質モニターの画像は実装を検証した記録、Threadsの画像は将来の体験設計です。ライブSQMと最新の変更の対応、稼働表示、ネイティブCLIの再開操作は、添付資料の時点では連携未完了です。利用できる範囲は、導入時にご確認ください。",
+    "play": "アニメーションを再生",
+    "pause": "アニメーションを停止",
+    "animationNote": "説明用アニメーション・実際のAIは実行しません",
+    "requestLabel": "たとえば、こんな依頼",
+    "resultLabel": "あなたが受け取るもの",
+    "stepLabel": "工程を選ぶ",
+    "next": "次の工程を見る",
+    "heroDemo": {
+      "title": "2回押しても、申込みは1件。",
+      "request": "申込みフォームの二重送信を直して",
+      "before": "修正前",
+      "after": "修正後",
+      "countBefore": "2件",
+      "countAfter": "1件",
+      "duplicate": "同じ申込みが重複",
+      "protected": "重複した送信を防止",
+      "submit": "申し込む",
+      "receipt": "申込みを受け付けました",
+      "replay": "2回クリックを再現",
+      "note": "動作の説明用デモです。実際の送信・開発は行いません。",
+      "outputs": [
+        "コードを修正",
+        "連打・再試行をテスト",
+        "レビューへ"
+      ],
+      "label": "ひとつの依頼で",
+      "preview": "動作イメージ"
+    }
+  },
+  "en": {
+    "zoom": "Open this capture at full size",
+    "share": "Copy a link to this experience",
+    "copied": "Link copied. Ready to share with your team.",
+    "copyFailed": "Could not copy automatically. Select and copy the link below.",
+    "shareLabel": "Link to share",
+    "scenes": [
+      {
+        "id": "build",
+        "number": "01",
+        "label": "Delegate development",
+        "title": "Ask for a bug fix.\nGet the code, tests, and review.",
+        "body": "Connect investigation, implementation, testing, and review. When a check finds an issue, fix it and check again. Review the change alongside its results.",
+        "request": "“Fix duplicate submissions in the signup form. Check recovery from errors, too.”",
+        "result": "The code change, test results, and review findings. You decide whether to release.",
+        "note": "Illustrated with proposed Threads screens and sample data. Includes future experience design.",
+        "frames": [
+          {
+            "label": "Fix",
+            "title": "Investigate and fix duplicate submissions",
+            "body": "Check repeated clicks and update the submission flow.",
+            "image": "threads-progress-en.png",
+            "alt": "English Threads design showing duplicate submissions being fixed and retry tests as the next step.",
+            "tone": "running",
+            "focus": "top"
+          },
+          {
+            "label": "Verify",
+            "title": "Test the change and review the code",
+            "body": "Check retries and error recovery. Address findings and verify again.",
+            "image": "threads-progress-en.png",
+            "alt": "English design showing remaining interaction tests, error recovery, and review.",
+            "tone": "running",
+            "focus": "bottom"
+          },
+          {
+            "label": "Receive",
+            "title": "The change and its checks, together",
+            "body": "Open the code changes, review record, and verification report.",
+            "image": "threads-outcome-en.png",
+            "alt": "English outcome design showing the change, test report, and completion evidence.",
+            "tone": "done",
+            "focus": "top"
+          }
+        ]
+      },
+      {
+        "id": "progress",
+        "number": "02",
+        "label": "See progress and decisions",
+        "title": "Know what AI is doing.\nAnswer where your judgment is needed.",
+        "body": "See the goal, current work, and remaining criteria together. Understand the reason for a pause and the available options without rereading the whole conversation.",
+        "request": "“Keep the user’s input after a submission error.”",
+        "result": "What is moving, what needs your input, and the difference between the options.",
+        "note": "Proposed Threads experience. Live resume and activity integrations were incomplete in the supplied material.",
+        "frames": [
+          {
+            "label": "See progress",
+            "title": "Fixing duplicate submissions. Retry tests next.",
+            "body": "See the last progress and remaining criteria. A live connection is separate from progress.",
+            "image": "threads-progress-en.png",
+            "alt": "English Threads design with the goal, current work, last progress, and remaining criteria.",
+            "tone": "running",
+            "focus": "top"
+          },
+          {
+            "label": "Decide",
+            "title": "“Should we keep the existing input?”",
+            "body": "Keep it to save retyping, or reset to start with a blank form. Choose with the consequences clear.",
+            "image": "threads-decision-en.png",
+            "alt": "English decision design showing the consequences of keeping or resetting form input.",
+            "tone": "decision",
+            "focus": "top"
+          },
+          {
+            "label": "Follow through",
+            "title": "After the decision, see what comes next",
+            "body": "Follow the work and remaining checks in the same view.",
+            "image": "threads-progress-en.png",
+            "alt": "Progress design used to illustrate following work after a decision. No actual resume is executed.",
+            "tone": "running",
+            "focus": "top"
+          }
+        ]
+      },
+      {
+        "id": "knowledge",
+        "number": "03",
+        "label": "Prevent repeat mistakes",
+        "title": "Turn a past bug\ninto a rule for the next change.",
+        "body": "Connect an incident to a prevention rule that can apply to future changes. Record false positives too, so the rule can be improved.",
+        "request": "Example: a deployment attempt used stale authentication.",
+        "result": "A rule to recheck identity before deployment, linked to the original incident.",
+        "note": "Localized illustrations adapted from Quality Monitor implementation test captures with fixed synthetic data. Not production results or complete live SQM integration.",
+        "frames": [
+          {
+            "label": "Record",
+            "title": "Understand the incident and its cause",
+            "body": "Follow a recorded session-expiry incident during deployment verification.",
+            "image": "quality-incident-en.png",
+            "alt": "English Quality Monitor illustration showing a session-expiry incident and cause assessment.",
+            "tone": "decision",
+            "focus": "bottom"
+          },
+          {
+            "label": "Create a rule",
+            "title": "Recheck identity before deployment",
+            "body": "Connect the prevention rule to its incident. Inspect scope and approval status.",
+            "image": "quality-knowledge-en.png",
+            "alt": "English prevention-rule illustration showing identity rechecking and the related incident.",
+            "tone": "done",
+            "focus": "top"
+          },
+          {
+            "label": "Refine",
+            "title": "Use false positives to improve the rule",
+            "body": "Record whether a detection was relevant, a false positive, or too broad.",
+            "image": "quality-knowledge-en.png",
+            "alt": "English detection-feedback controls for refining a prevention rule.",
+            "tone": "done",
+            "focus": "bottom"
+          }
+        ],
+        "requestLabel": "AN EXAMPLE INCIDENT"
+      }
+    ],
+    "availabilityBody": "Quality Monitor images are English illustrations adapted from synthetic implementation test captures; Threads images are localized future experience designs. Live SQM mapping to the latest change, activity intervals, and native CLI resume were incomplete in the supplied material. Confirm availability during setup.",
+    "play": "Play animation",
+    "pause": "Pause animation",
+    "animationNote": "Illustrative animation · no AI work is running",
+    "requestLabel": "AN EXAMPLE REQUEST",
+    "resultLabel": "WHAT YOU RECEIVE",
+    "stepLabel": "Choose a step",
+    "next": "Show next step",
+    "heroDemo": {
+      "title": "Two clicks. One submission.",
+      "request": "Fix duplicate submissions in the signup form.",
+      "before": "Before",
+      "after": "After",
+      "countBefore": "2 entries",
+      "countAfter": "1 entry",
+      "duplicate": "The same request, twice",
+      "protected": "Duplicate blocked",
+      "submit": "Sign up",
+      "receipt": "Submission received",
+      "replay": "Replay two clicks",
+      "note": "Illustrative demo. No real submission or development is performed.",
+      "outputs": [
+        "Fix the code",
+        "Test clicks & retries",
+        "Review the change"
+      ],
+      "label": "ONE REQUEST",
+      "preview": "Illustrative demo"
+    }
+  },
+  "es": {
+    "zoom": "Abrir esta imagen a tamaño completo",
+    "share": "Copiar un enlace a esta experiencia",
+    "copied": "Enlace copiado. Listo para compartir con tu equipo.",
+    "copyFailed": "No se pudo copiar automáticamente. Selecciona y copia el enlace de abajo.",
+    "shareLabel": "Enlace para compartir",
+    "scenes": [
+      {
+        "id": "build",
+        "number": "01",
+        "label": "Delegar el desarrollo",
+        "title": "Pide que se corrija un error.\nRecibe el código, las pruebas y la revisión.",
+        "body": "Conecta la investigación, la implementación, las pruebas y la revisión. Si una comprobación detecta un problema, corrígelo y comprueba de nuevo. Revisa el cambio junto con sus resultados.",
+        "request": "«Corrige los envíos duplicados del formulario de registro. Comprueba también la recuperación tras un error».",
+        "result": "Los cambios de código, los resultados de las pruebas y la revisión. Tú decides si se publica.",
+        "note": "Se ilustra con pantallas propuestas de Threads y datos de ejemplo. Incluye diseños de experiencias futuras.",
+        "frames": [
+          {
+            "label": "Corregir",
+            "title": "Investigar y corregir los envíos duplicados",
+            "body": "Comprueba los clics repetidos y actualiza el proceso de envío.",
+            "image": "threads-progress-es.png",
+            "alt": "Diseño de Threads en español que muestra la corrección de envíos duplicados y las pruebas de reintento como siguiente paso.",
+            "tone": "running",
+            "focus": "top"
+          },
+          {
+            "label": "Verificar",
+            "title": "Probar el cambio y revisar el código",
+            "body": "Comprueba los reintentos y la recuperación tras errores. Resuelve los hallazgos y verifica de nuevo.",
+            "image": "threads-progress-es.png",
+            "alt": "Diseño en español que muestra las pruebas pendientes de interacción, recuperación tras errores y revisión.",
+            "tone": "running",
+            "focus": "bottom"
+          },
+          {
+            "label": "Recibir",
+            "title": "El cambio y sus comprobaciones, juntos",
+            "body": "Abre los cambios de código, el registro de revisión y el informe de verificación.",
+            "image": "threads-outcome-es.png",
+            "alt": "Diseño de resultados en español que muestra el cambio, el informe de pruebas y las evidencias de finalización.",
+            "tone": "done",
+            "focus": "top"
+          }
+        ]
+      },
+      {
+        "id": "progress",
+        "number": "02",
+        "label": "Ver el progreso y las decisiones",
+        "title": "Sabe qué está haciendo la IA.\nResponde cuando se necesite tu criterio.",
+        "body": "Ve juntos el objetivo, el trabajo actual y los criterios pendientes. Comprende por qué se ha pausado y las opciones disponibles sin releer toda la conversación.",
+        "request": "«Conserva lo que ha escrito el usuario después de un error de envío».",
+        "result": "Qué está avanzando, qué necesita tu intervención y en qué se diferencian las opciones.",
+        "note": "Experiencia propuesta de Threads. Las integraciones de reanudación en vivo y actividad estaban incompletas en el material proporcionado.",
+        "frames": [
+          {
+            "label": "Ver el progreso",
+            "title": "Corrigiendo envíos duplicados. Después, pruebas de reintento.",
+            "body": "Ve el último avance y los criterios pendientes. Estar conectado no significa haber avanzado.",
+            "image": "threads-progress-es.png",
+            "alt": "Diseño de Threads en español con el objetivo, el trabajo actual, el último avance y los criterios pendientes.",
+            "tone": "running",
+            "focus": "top"
+          },
+          {
+            "label": "Decidir",
+            "title": "«¿Conservamos los datos introducidos?»",
+            "body": "Consérvalos para evitar volver a escribir, o reinicia con un formulario vacío. Elige con las consecuencias claras.",
+            "image": "threads-decision-es.png",
+            "alt": "Diseño de decisión en español que muestra las consecuencias de conservar o reiniciar los datos del formulario.",
+            "tone": "decision",
+            "focus": "top"
+          },
+          {
+            "label": "Seguir el trabajo",
+            "title": "Después de decidir, ve qué viene a continuación",
+            "body": "Sigue el trabajo y las comprobaciones pendientes en la misma vista.",
+            "image": "threads-progress-es.png",
+            "alt": "Diseño de progreso para ilustrar el seguimiento del trabajo después de una decisión. No se ejecuta ninguna reanudación real.",
+            "tone": "running",
+            "focus": "top"
+          }
+        ]
+      },
+      {
+        "id": "knowledge",
+        "number": "03",
+        "label": "Evitar errores repetidos",
+        "title": "Convierte un error anterior\nen una regla para el siguiente cambio.",
+        "body": "Relaciona un incidente con una regla de prevención aplicable a cambios futuros. Registra también los falsos positivos para mejorar la regla.",
+        "request": "Ejemplo: un intento de despliegue utilizó autenticación obsoleta.",
+        "result": "Una regla para volver a verificar la identidad antes de desplegar, vinculada al incidente original.",
+        "note": "Ilustraciones localizadas a partir de capturas de pruebas de implementación del monitor de calidad con datos sintéticos fijos. No son resultados de producción ni una integración completa con SQM en vivo.",
+        "frames": [
+          {
+            "label": "Registrar",
+            "title": "Comprender el incidente y su causa",
+            "body": "Consulta un incidente registrado de caducidad de sesión durante la verificación del despliegue.",
+            "image": "quality-incident-es.png",
+            "alt": "Ilustración del monitor de calidad en español que muestra un incidente de caducidad de sesión y la evaluación de su causa.",
+            "tone": "decision",
+            "focus": "bottom"
+          },
+          {
+            "label": "Crear una regla",
+            "title": "Volver a verificar la identidad antes de desplegar",
+            "body": "Relaciona la regla de prevención con su incidente. Revisa el alcance y el estado de aprobación.",
+            "image": "quality-knowledge-es.png",
+            "alt": "Ilustración de regla de prevención en español que muestra la verificación de identidad y el incidente relacionado.",
+            "tone": "done",
+            "focus": "top"
+          },
+          {
+            "label": "Mejorar",
+            "title": "Usar los falsos positivos para mejorar la regla",
+            "body": "Registra si la detección era pertinente, un falso positivo o tenía un alcance demasiado amplio.",
+            "image": "quality-knowledge-es.png",
+            "alt": "Controles de comentarios sobre detecciones en español para mejorar una regla de prevención.",
+            "tone": "done",
+            "focus": "bottom"
+          }
+        ],
+        "requestLabel": "UN EJEMPLO DE INCIDENTE"
+      }
+    ],
+    "availabilityBody": "Las imágenes del monitor de calidad son ilustraciones en español a partir de capturas de pruebas con datos sintéticos; las de Threads son diseños localizados de experiencias futuras. La relación de SQM en vivo con el último cambio, los intervalos de actividad y la reanudación de la CLI nativa estaban incompletos en el material proporcionado. Confirma la disponibilidad al configurar SIMY.",
+    "play": "Reproducir animación",
+    "pause": "Pausar animación",
+    "animationNote": "Animación ilustrativa · No se ejecuta ningún trabajo de IA",
+    "requestLabel": "UN EJEMPLO DE PETICIÓN",
+    "resultLabel": "LO QUE RECIBES",
+    "stepLabel": "Elegir un paso",
+    "next": "Ver el siguiente paso",
+    "heroDemo": {
+      "title": "Dos clics. Un envío.",
+      "request": "Corrige los envíos duplicados del formulario de registro.",
+      "before": "Antes",
+      "after": "Después",
+      "countBefore": "2 registros",
+      "countAfter": "1 registro",
+      "duplicate": "La misma petición, dos veces",
+      "protected": "Envío duplicado bloqueado",
+      "submit": "Registrarse",
+      "receipt": "Envío recibido",
+      "replay": "Repetir los dos clics",
+      "note": "Demostración ilustrativa. No se realiza ningún envío ni desarrollo real.",
+      "outputs": [
+        "Corregir el código",
+        "Probar clics y reintentos",
+        "Revisar el cambio"
+      ],
+      "label": "UNA PETICIÓN",
+      "preview": "Demostración ilustrativa"
+    },
+    "transcript": "Leer la animación como texto"
+  },
+  "fr": {
+    "zoom": "Ouvrir cette image en taille réelle",
+    "share": "Copier un lien vers cette expérience",
+    "copied": "Lien copié. Vous pouvez le partager avec votre équipe.",
+    "copyFailed": "La copie automatique a échoué. Sélectionnez et copiez le lien ci-dessous.",
+    "shareLabel": "Lien à partager",
+    "scenes": [
+      {
+        "id": "build",
+        "number": "01",
+        "label": "Déléguer le développement",
+        "title": "Demandez une correction.\nRecevez le code, les tests et la revue.",
+        "body": "Reliez l’analyse, l’implémentation, les tests et la revue. Si une vérification révèle un problème, corrigez-le puis vérifiez à nouveau. Examinez la modification avec ses résultats.",
+        "request": "«Corrige les envois en double du formulaire d’inscription. Vérifie aussi la récupération après une erreur.»",
+        "result": "Les modifications du code, les résultats des tests et de la revue. Vous décidez de publier ou non.",
+        "note": "Illustré avec des écrans proposés pour Threads et des données d’exemple. Inclut des expériences futures.",
+        "frames": [
+          {
+            "label": "Corriger",
+            "title": "Analyser et corriger les envois en double",
+            "body": "Vérifiez les clics répétés et modifiez le processus d’envoi.",
+            "image": "threads-progress-fr.png",
+            "alt": "Conception de Threads en français montrant la correction des envois en double et les tests de nouvelle tentative à venir.",
+            "tone": "running",
+            "focus": "top"
+          },
+          {
+            "label": "Vérifier",
+            "title": "Tester la modification et revoir le code",
+            "body": "Vérifiez les nouvelles tentatives et la récupération après erreur. Corrigez les problèmes relevés et vérifiez à nouveau.",
+            "image": "threads-progress-fr.png",
+            "alt": "Conception en français montrant les tests d’interaction, de récupération après erreur et la revue restant à faire.",
+            "tone": "running",
+            "focus": "bottom"
+          },
+          {
+            "label": "Recevoir",
+            "title": "La modification et ses vérifications réunies",
+            "body": "Ouvrez les modifications du code, le compte rendu de revue et le rapport de vérification.",
+            "image": "threads-outcome-fr.png",
+            "alt": "Conception des résultats en français montrant la modification, le rapport de tests et les preuves de finalisation.",
+            "tone": "done",
+            "focus": "top"
+          }
+        ]
+      },
+      {
+        "id": "progress",
+        "number": "02",
+        "label": "Suivre la progression et les décisions",
+        "title": "Sachez ce que fait l’IA.\nRépondez quand votre avis est nécessaire.",
+        "body": "Consultez l’objectif, le travail en cours et les critères restants ensemble. Comprenez la raison d’une pause et les options sans relire toute la conversation.",
+        "request": "«Conserve la saisie de l’utilisateur après une erreur d’envoi.»",
+        "result": "Ce qui avance, ce qui attend votre décision et les différences entre les options.",
+        "note": "Expérience proposée pour Threads. Les intégrations de reprise en direct et d’activité étaient incomplètes dans les documents fournis.",
+        "frames": [
+          {
+            "label": "Voir la progression",
+            "title": "Correction des envois en double. Tests de nouvelle tentative ensuite.",
+            "body": "Consultez la dernière avancée et les critères restants. Une connexion active ne signifie pas une progression.",
+            "image": "threads-progress-fr.png",
+            "alt": "Conception de Threads en français avec l’objectif, le travail en cours, la dernière avancée et les critères restants.",
+            "tone": "running",
+            "focus": "top"
+          },
+          {
+            "label": "Décider",
+            "title": "«Faut-il conserver la saisie actuelle ?»",
+            "body": "Conservez la saisie pour éviter de la retaper, ou repartez d’un formulaire vide. Choisissez en connaissant les conséquences.",
+            "image": "threads-decision-fr.png",
+            "alt": "Conception de décision en français montrant les conséquences de conserver ou de réinitialiser la saisie.",
+            "tone": "decision",
+            "focus": "top"
+          },
+          {
+            "label": "Suivre la suite",
+            "title": "Après la décision, voyez la suite",
+            "body": "Suivez le travail et les vérifications restantes dans la même vue.",
+            "image": "threads-progress-fr.png",
+            "alt": "Conception de progression illustrant le suivi après une décision. Aucune reprise réelle n’est exécutée.",
+            "tone": "running",
+            "focus": "top"
+          }
+        ]
+      },
+      {
+        "id": "knowledge",
+        "number": "03",
+        "label": "Prévenir les erreurs répétées",
+        "title": "Transformez un bug passé\nen règle pour la prochaine modification.",
+        "body": "Reliez un incident à une règle de prévention applicable aux modifications futures. Enregistrez aussi les faux positifs pour améliorer la règle.",
+        "request": "Exemple : une tentative de déploiement utilisait une authentification périmée.",
+        "result": "Une règle de revérification de l’identité avant le déploiement, liée à l’incident d’origine.",
+        "note": "Illustrations traduites à partir de captures de tests d’implémentation du moniteur de qualité avec des données synthétiques fixes. Ni résultats de production, ni intégration complète de SQM en direct.",
+        "frames": [
+          {
+            "label": "Enregistrer",
+            "title": "Comprendre l’incident et sa cause",
+            "body": "Consultez un incident enregistré d’expiration de session lors de la vérification du déploiement.",
+            "image": "quality-incident-fr.png",
+            "alt": "Illustration du moniteur de qualité en français montrant un incident d’expiration de session et l’évaluation de sa cause.",
+            "tone": "decision",
+            "focus": "bottom"
+          },
+          {
+            "label": "Créer une règle",
+            "title": "Revérifier l’identité avant le déploiement",
+            "body": "Reliez la règle de prévention à son incident. Examinez son périmètre et son état de validation.",
+            "image": "quality-knowledge-fr.png",
+            "alt": "Illustration d’une règle de prévention en français montrant la revérification d’identité et l’incident associé.",
+            "tone": "done",
+            "focus": "top"
+          },
+          {
+            "label": "Affiner",
+            "title": "Améliorer la règle grâce aux faux positifs",
+            "body": "Indiquez si une détection était pertinente, un faux positif ou trop large.",
+            "image": "quality-knowledge-fr.png",
+            "alt": "Commandes de retour sur les détections en français pour affiner une règle de prévention.",
+            "tone": "done",
+            "focus": "bottom"
+          }
+        ],
+        "requestLabel": "UN EXEMPLE D’INCIDENT"
+      }
+    ],
+    "availabilityBody": "Les images du moniteur de qualité sont des illustrations en français adaptées de captures de tests avec données synthétiques ; celles de Threads sont des conceptions traduites d’expériences futures. Le lien de SQM en direct avec la dernière modification, les intervalles d’activité et la reprise de la CLI native étaient incomplets dans les documents fournis. Confirmez la disponibilité à l’installation.",
+    "play": "Lire l’animation",
+    "pause": "Suspendre l’animation",
+    "animationNote": "Animation illustrative · Aucun travail d’IA n’est exécuté",
+    "requestLabel": "UN EXEMPLE DE DEMANDE",
+    "resultLabel": "CE QUE VOUS RECEVEZ",
+    "stepLabel": "Choisir une étape",
+    "next": "Voir l’étape suivante",
+    "heroDemo": {
+      "title": "Deux clics. Un seul envoi.",
+      "request": "Corrige les envois en double du formulaire d’inscription.",
+      "before": "Avant",
+      "after": "Après",
+      "countBefore": "2 demandes",
+      "countAfter": "1 demande",
+      "duplicate": "La même demande, deux fois",
+      "protected": "Envoi en double bloqué",
+      "submit": "S’inscrire",
+      "receipt": "Demande reçue",
+      "replay": "Rejouer les deux clics",
+      "note": "Démo illustrative. Aucun envoi ni développement réel n’est effectué.",
+      "outputs": [
+        "Corriger le code",
+        "Tester les clics et les nouvelles tentatives",
+        "Revoir la modification"
+      ],
+      "label": "UNE DEMANDE",
+      "preview": "Démo illustrative"
+    },
+    "transcript": "Lire l’animation en texte"
+  },
+  "hi": {
+    "zoom": "यह चित्र पूरे आकार में खोलें",
+    "share": "इस अनुभव का लिंक कॉपी करें",
+    "copied": "लिंक कॉपी हो गया। अपनी टीम से साझा कर सकते हैं।",
+    "copyFailed": "अपने आप कॉपी नहीं हुआ। नीचे का लिंक चुनकर कॉपी करें।",
+    "shareLabel": "साझा करने का लिंक",
+    "scenes": [
+      {
+        "id": "build",
+        "number": "01",
+        "label": "विकास का काम सौंपें",
+        "title": "बग ठीक करने को कहें।\nकोड, परीक्षण और समीक्षा पाएं।",
+        "body": "जांच, कार्यान्वयन, परीक्षण और समीक्षा को जोड़ें। जांच में समस्या मिलने पर उसे ठीक करके फिर जांचें। बदलाव के साथ उसके नतीजे देखें।",
+        "request": "“पंजीकरण फ़ॉर्म के दोहरे सबमिशन ठीक करो। त्रुटि के बाद वापसी भी जांचो।”",
+        "result": "कोड के बदलाव, परीक्षण के नतीजे और समीक्षा के निष्कर्ष। रिलीज़ करने का निर्णय आपका है।",
+        "note": "प्रस्तावित Threads स्क्रीन और नमूना डेटा से समझाया गया है। इसमें भविष्य के अनुभवों का डिज़ाइन शामिल है।",
+        "frames": [
+          {
+            "label": "ठीक करें",
+            "title": "दोहरे सबमिशन की जांच करके ठीक करें",
+            "body": "बार-बार क्लिक जांचें और सबमिशन प्रक्रिया सुधारें।",
+            "image": "threads-progress-hi.png",
+            "alt": "हिंदी में Threads का डिज़ाइन, जिसमें दोहरे सबमिशन का सुधार और अगला कदम पुनः प्रयास का परीक्षण दिखता है।",
+            "tone": "running",
+            "focus": "top"
+          },
+          {
+            "label": "जांचें",
+            "title": "बदलाव का परीक्षण और कोड की समीक्षा करें",
+            "body": "पुनः प्रयास और त्रुटि के बाद वापसी जांचें। मिली समस्याएं ठीक करके दोबारा जांचें।",
+            "image": "threads-progress-hi.png",
+            "alt": "हिंदी डिज़ाइन, जिसमें बाकी इंटरैक्शन परीक्षण, त्रुटि से वापसी और समीक्षा दिखती है।",
+            "tone": "running",
+            "focus": "bottom"
+          },
+          {
+            "label": "प्राप्त करें",
+            "title": "बदलाव और उसकी जांच एक साथ",
+            "body": "कोड के बदलाव, समीक्षा का रिकॉर्ड और सत्यापन रिपोर्ट खोलें।",
+            "image": "threads-outcome-hi.png",
+            "alt": "हिंदी में परिणाम का डिज़ाइन, जिसमें बदलाव, परीक्षण रिपोर्ट और पूरा होने के प्रमाण दिखते हैं।",
+            "tone": "done",
+            "focus": "top"
+          }
+        ]
+      },
+      {
+        "id": "progress",
+        "number": "02",
+        "label": "प्रगति और निर्णय देखें",
+        "title": "जानें AI क्या कर रहा है।\nजहां आपका निर्णय चाहिए, वहां जवाब दें।",
+        "body": "उद्देश्य, मौजूदा काम और बाकी शर्तें एक साथ देखें। पूरी बातचीत दोबारा पढ़े बिना रुकने का कारण और विकल्प समझें।",
+        "request": "“सबमिशन की त्रुटि के बाद उपयोगकर्ता का इनपुट बनाए रखो।”",
+        "result": "क्या आगे बढ़ रहा है, कहां आपका जवाब चाहिए और विकल्पों का अंतर।",
+        "note": "Threads का प्रस्तावित अनुभव। दी गई सामग्री में लाइव पुनः शुरू करने और गतिविधि के एकीकरण पूरे नहीं थे।",
+        "frames": [
+          {
+            "label": "प्रगति देखें",
+            "title": "दोहरे सबमिशन का सुधार जारी। आगे पुनः प्रयास का परीक्षण।",
+            "body": "आखिरी प्रगति और बाकी शर्तें देखें। सक्रिय कनेक्शन और काम की प्रगति अलग हैं।",
+            "image": "threads-progress-hi.png",
+            "alt": "हिंदी में Threads का डिज़ाइन, जिसमें उद्देश्य, मौजूदा काम, आखिरी प्रगति और बाकी शर्तें हैं।",
+            "tone": "running",
+            "focus": "top"
+          },
+          {
+            "label": "निर्णय लें",
+            "title": "“मौजूदा इनपुट बनाए रखें?”",
+            "body": "दोबारा टाइप करने से बचने के लिए इनपुट रखें, या खाली फ़ॉर्म से शुरू करें। नतीजे समझकर चुनें।",
+            "image": "threads-decision-hi.png",
+            "alt": "हिंदी निर्णय स्क्रीन, जिसमें फ़ॉर्म का इनपुट रखने या रीसेट करने के परिणाम दिखते हैं।",
+            "tone": "decision",
+            "focus": "top"
+          },
+          {
+            "label": "आगे का काम देखें",
+            "title": "निर्णय के बाद अगला कदम देखें",
+            "body": "एक ही स्क्रीन पर काम और बाकी जांच देखें।",
+            "image": "threads-progress-hi.png",
+            "alt": "निर्णय के बाद काम की प्रगति समझाने वाला डिज़ाइन। वास्तविक पुनः शुरुआत नहीं होती।",
+            "tone": "running",
+            "focus": "top"
+          }
+        ]
+      },
+      {
+        "id": "knowledge",
+        "number": "03",
+        "label": "वही गलती दोबारा होने से रोकें",
+        "title": "पुराने बग को\nअगले बदलाव का नियम बनाएं।",
+        "body": "किसी घटना को आगे के बदलावों में लागू होने वाले रोकथाम नियम से जोड़ें। गलत पहचान भी दर्ज करें ताकि नियम सुधर सके।",
+        "request": "उदाहरण: डिप्लॉय करने की कोशिश में पुराना प्रमाणीकरण इस्तेमाल हुआ।",
+        "result": "डिप्लॉय से पहले पहचान दोबारा जांचने का नियम, मूल घटना से जुड़ा हुआ।",
+        "note": "निश्चित कृत्रिम डेटा वाले गुणवत्ता मॉनिटर के कार्यान्वयन परीक्षण के स्क्रीनशॉट से बने अनूदित चित्र। ये उत्पादन के नतीजे या लाइव SQM का पूरा एकीकरण नहीं दिखाते।",
+        "frames": [
+          {
+            "label": "दर्ज करें",
+            "title": "घटना और उसका कारण समझें",
+            "body": "डिप्लॉय की जांच के दौरान सत्र समाप्त होने की दर्ज घटना देखें।",
+            "image": "quality-incident-hi.png",
+            "alt": "हिंदी में गुणवत्ता मॉनिटर का चित्र, जिसमें सत्र समाप्त होने की घटना और कारण का आकलन है।",
+            "tone": "decision",
+            "focus": "bottom"
+          },
+          {
+            "label": "नियम बनाएं",
+            "title": "डिप्लॉय से पहले पहचान दोबारा जांचें",
+            "body": "रोकथाम नियम को उसकी घटना से जोड़ें। दायरा और मंज़ूरी की स्थिति देखें।",
+            "image": "quality-knowledge-hi.png",
+            "alt": "हिंदी में रोकथाम नियम का चित्र, जिसमें पहचान की दोबारा जांच और संबंधित घटना है।",
+            "tone": "done",
+            "focus": "top"
+          },
+          {
+            "label": "सुधारें",
+            "title": "गलत पहचान से नियम सुधारें",
+            "body": "दर्ज करें कि पहचान प्रासंगिक थी, गलत थी या उसका दायरा बहुत व्यापक था।",
+            "image": "quality-knowledge-hi.png",
+            "alt": "रोकथाम नियम सुधारने के लिए हिंदी में पहचान पर फ़ीडबैक के विकल्प।",
+            "tone": "done",
+            "focus": "bottom"
+          }
+        ],
+        "requestLabel": "घटना का एक उदाहरण"
+      }
+    ],
+    "availabilityBody": "गुणवत्ता मॉनिटर के चित्र कृत्रिम डेटा वाले परीक्षण के स्क्रीनशॉट पर आधारित हिंदी चित्र हैं; Threads के चित्र भविष्य के अनुभवों के अनूदित डिज़ाइन हैं। दी गई सामग्री में लाइव SQM को नवीनतम बदलाव से जोड़ना, गतिविधि के अंतराल और नेटिव CLI की पुनः शुरुआत पूरे नहीं थे। सेटअप के समय उपलब्धता जांचें।",
+    "play": "एनिमेशन चलाएं",
+    "pause": "एनिमेशन रोकें",
+    "animationNote": "समझाने वाला एनिमेशन · AI का असली काम नहीं चल रहा",
+    "requestLabel": "अनुरोध का एक उदाहरण",
+    "resultLabel": "आपको क्या मिलता है",
+    "stepLabel": "कदम चुनें",
+    "next": "अगला कदम देखें",
+    "heroDemo": {
+      "title": "दो क्लिक। एक सबमिशन।",
+      "request": "पंजीकरण फ़ॉर्म के दोहरे सबमिशन ठीक करो।",
+      "before": "पहले",
+      "after": "बाद में",
+      "countBefore": "2 प्रविष्टियां",
+      "countAfter": "1 प्रविष्टि",
+      "duplicate": "एक ही अनुरोध दो बार",
+      "protected": "दोहरा सबमिशन रोका गया",
+      "submit": "पंजीकरण करें",
+      "receipt": "सबमिशन प्राप्त हुआ",
+      "replay": "दो क्लिक फिर दिखाएं",
+      "note": "समझाने वाला डेमो। वास्तविक सबमिशन या विकास नहीं होता।",
+      "outputs": [
+        "कोड ठीक करें",
+        "क्लिक और पुनः प्रयास जांचें",
+        "बदलाव की समीक्षा करें"
+      ],
+      "label": "एक अनुरोध",
+      "preview": "समझाने वाला डेमो"
+    },
+    "transcript": "एनिमेशन का विवरण पढ़ें"
+  },
+  "zh-Hans": {
+    "zoom": "查看原尺寸图片",
+    "share": "复制此体验的链接",
+    "copied": "链接已复制，可以分享给团队。",
+    "copyFailed": "无法自动复制。请选择并复制下方链接。",
+    "shareLabel": "分享链接",
+    "scenes": [
+      {
+        "id": "build",
+        "number": "01",
+        "label": "委托开发",
+        "title": "提出修复需求。\n获取代码、测试和审查结果。",
+        "body": "把调查、实现、测试和审查串联起来。检查发现问题后，修复并重新验证。查看变更及其验证结果。",
+        "request": "“修复注册表单的重复提交，也检查错误后的恢复流程。”",
+        "result": "代码变更、测试结果和审查结论。是否发布由您决定。",
+        "note": "使用 Threads 拟议界面和示例数据说明，包含未来体验设计。",
+        "frames": [
+          {
+            "label": "修复",
+            "title": "调查并修复重复提交",
+            "body": "检查连续点击并调整提交流程。",
+            "image": "threads-progress-zh-Hans.png",
+            "alt": "简体中文 Threads 设计界面，展示正在修复重复提交，下一步是重试测试。",
+            "tone": "running",
+            "focus": "top"
+          },
+          {
+            "label": "验证",
+            "title": "测试变更并审查代码",
+            "body": "检查重试和错误恢复。处理发现的问题后再次验证。",
+            "image": "threads-progress-zh-Hans.png",
+            "alt": "简体中文设计界面，展示剩余的交互测试、错误恢复和审查。",
+            "tone": "running",
+            "focus": "bottom"
+          },
+          {
+            "label": "接收",
+            "title": "变更与验证结果一并呈现",
+            "body": "打开代码变更、审查记录和验证报告。",
+            "image": "threads-outcome-zh-Hans.png",
+            "alt": "简体中文成果设计界面，展示变更、测试报告和完成依据。",
+            "tone": "done",
+            "focus": "top"
+          }
+        ]
+      },
+      {
+        "id": "progress",
+        "number": "02",
+        "label": "查看进度与待决事项",
+        "title": "了解 AI 正在做什么。\n只在需要判断时给出答复。",
+        "body": "同时查看目标、当前工作和剩余条件。无需翻阅整段对话，就能了解暂停原因和可选方案。",
+        "request": "“提交出错后保留用户输入。”",
+        "result": "哪些工作在推进、哪些在等待您的判断，以及不同选项的结果。",
+        "note": "Threads 拟议体验。所提供材料中的实时恢复操作和活动集成尚未完成。",
+        "frames": [
+          {
+            "label": "查看进度",
+            "title": "正在修复重复提交。接下来进行重试测试。",
+            "body": "查看最近进展和剩余条件。保持连接与取得进展是两回事。",
+            "image": "threads-progress-zh-Hans.png",
+            "alt": "简体中文 Threads 设计界面，展示目标、当前工作、最近进展和剩余条件。",
+            "tone": "running",
+            "focus": "top"
+          },
+          {
+            "label": "作出判断",
+            "title": "“是否保留已有输入？”",
+            "body": "保留输入以减少重复填写，或重置为空白表单。了解后果后再选择。",
+            "image": "threads-decision-zh-Hans.png",
+            "alt": "简体中文决策设计界面，展示保留或重置表单输入的后果。",
+            "tone": "decision",
+            "focus": "top"
+          },
+          {
+            "label": "继续跟进",
+            "title": "作出判断后查看下一步",
+            "body": "在同一界面中跟进工作和剩余检查。",
+            "image": "threads-progress-zh-Hans.png",
+            "alt": "用于说明决策后如何跟进工作的进度设计界面，不会实际执行恢复操作。",
+            "tone": "running",
+            "focus": "top"
+          }
+        ]
+      },
+      {
+        "id": "knowledge",
+        "number": "03",
+        "label": "防止问题再次发生",
+        "title": "把过去的问题\n变成下一次开发的规则。",
+        "body": "把事件记录与可用于未来变更的预防规则关联起来。也记录误报，以便改进规则。",
+        "request": "示例：部署尝试使用了过期的认证信息。",
+        "result": "部署前重新验证身份的预防规则，以及对应的原始事件。",
+        "note": "根据质量监控的固定合成数据实现测试截图制作的本地化示意图，不代表生产结果或实时 SQM 的完整集成。",
+        "frames": [
+          {
+            "label": "记录",
+            "title": "了解事件及其原因",
+            "body": "查看部署验证期间会话过期的事件记录。",
+            "image": "quality-incident-zh-Hans.png",
+            "alt": "简体中文质量监控示意图，展示会话过期事件和原因评估。",
+            "tone": "decision",
+            "focus": "bottom"
+          },
+          {
+            "label": "创建规则",
+            "title": "部署前重新验证身份",
+            "body": "将预防规则与对应事件关联，检查适用范围和批准状态。",
+            "image": "quality-knowledge-zh-Hans.png",
+            "alt": "简体中文预防规则示意图，展示身份重新验证和关联事件。",
+            "tone": "done",
+            "focus": "top"
+          },
+          {
+            "label": "优化",
+            "title": "利用误报改进规则",
+            "body": "记录检测是否相关、是否误报，或适用范围是否过宽。",
+            "image": "quality-knowledge-zh-Hans.png",
+            "alt": "简体中文检测反馈选项，用于优化预防规则。",
+            "tone": "done",
+            "focus": "bottom"
+          }
+        ],
+        "requestLabel": "事件示例"
+      }
+    ],
+    "availabilityBody": "质量监控图片是根据合成数据测试截图制作的简体中文示意图；Threads 图片是本地化的未来体验设计。所提供材料中的实时 SQM 与最新变更的对应关系、活动区间和原生 CLI 恢复功能尚未完成。请在设置时确认可用范围。",
+    "play": "播放动画",
+    "pause": "暂停动画",
+    "animationNote": "说明性动画 · 不会执行实际 AI 工作",
+    "requestLabel": "需求示例",
+    "resultLabel": "您将获得",
+    "stepLabel": "选择步骤",
+    "next": "查看下一步",
+    "heroDemo": {
+      "title": "点击两次，只提交一次。",
+      "request": "修复注册表单的重复提交。",
+      "before": "修复前",
+      "after": "修复后",
+      "countBefore": "2 条记录",
+      "countAfter": "1 条记录",
+      "duplicate": "同一申请被重复提交",
+      "protected": "防止重复提交",
+      "submit": "注册",
+      "receipt": "申请已受理",
+      "replay": "重放两次点击",
+      "note": "演示仅用于说明，不会实际提交或进行开发。",
+      "outputs": [
+        "修复代码",
+        "测试连点与重试",
+        "审查变更"
+      ],
+      "label": "一个需求",
+      "preview": "演示示例"
+    },
+    "transcript": "阅读动画文字说明"
+  }
+}

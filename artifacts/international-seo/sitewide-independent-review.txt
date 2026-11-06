@@ -1,0 +1,7 @@
+**Findings**
+
+- Low — [release-status.json](/Users/t.shiwaku/.codex/worktrees/international-seo/simy-home/artifacts/international-seo/release-status.json:14) and [page-scope-inventory.json](/Users/t.shiwaku/.codex/worktrees/international-seo/simy-home/artifacts/international-seo/page-scope-inventory.json:27): the untracked release/evidence artifacts are stale versus the current sitewide work. They still describe homepage-only scope and incorrect page facts, e.g. `status.html` marked `noindex: false` while [status.html](/Users/t.shiwaku/.codex/worktrees/international-seo/simy-home/site/status.html:23) is now `noindex`. If these artifacts are intended for the release/PR, regenerate or omit them so the production evidence does not contradict the 148-page sitewide SEO change.
+
+No implementation findings in the requested i18n navigation, metadata guards, index policies, contact fallback, validator/CI, or guide generator paths.
+
+Verification run: `build-localized-home.py --check`, `check-home-seo.py`, `check-site-seo.py`, `node --test tests/*.test.cjs` with 1123 passing tests, and `git diff --check`. I did not edit, commit, publish, or delegate.

@@ -11,6 +11,7 @@ Run from the repository root: python3 scripts/finalize-guides.py
 """
 import os
 import re
+import json
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "site")
 LANGS = [("ja", "ja", "日本語"), ("en", "en", "English"), ("zh-hans", "zh-Hans", "中文"),
@@ -40,10 +41,11 @@ def exists(name, code):
 def footer(code, current):
     L = LABELS[code]
     hl = HOME_LANG[code]
+    home = "/" if code == "en" else f"/{hl}.html"
     q = "" if code == "ja" else f"?lang={hl}"
     g = lambda n: page_path(n, code)
     items = [
-        (f"/?lang={hl}", L[0]), (f"/?lang={hl}#pricing", L[1]), ("/integrations.html", L[2]), (g("download"), L[3]), (g("index"), L[4]),
+        (home, L[0]), (f"{home}#pricing", L[1]), ("/integrations.html", L[2]), (g("download"), L[3]), (g("index"), L[4]),
         (g("claude"), "Claude"), (g("codex"), "Codex"), (g("cowork"), "Cowork"), (g("chatgpt"), "ChatGPT"), (g("plaud"), "PLAUD"), (g("notta"), "Notta"),
         (g("meeting-notes"), L[5]), (g("china-llm"), L[6]), (g("deepseek"), "DeepSeek"), (g("qwen"), "Qwen"), (g("qwen-local"), L[7]),
         ("/security.html", L[8]), (f"/privacy.html{q}", L[9]), (f"/terms.html{q}", L[10]),
@@ -54,10 +56,15 @@ def footer(code, current):
 
 
 def main():
+    # New workflow guides own their complete HTML in build-content-pages.py.
+    manifest = json.load(open(os.path.join(ROOT, '..', 'scripts', 'content-pages.json'), encoding='utf-8'))
+    generated = {p['id'] for p in manifest['pages'] if p['kind'] == 'guide'}
     names = sorted(f[:-5] for f in os.listdir(os.path.join(ROOT, "guides")) if f.endswith(".html")) + ["download"]
     touched = 0
     sitemap_urls = []
     for name in names:
+        if name in generated:
+            continue
         available = [(c, h, l) for c, h, l in LANGS if exists(name, c)]
         for code, hl, label in available:
             f = os.path.join(ROOT, page_path(name, code).lstrip("/"))
@@ -91,7 +98,7 @@ def main():
     sp = os.path.join(ROOT, "sitemap.xml")
     sm = open(sp, encoding="utf-8").read()
     add = "".join(
-        f"  <url>\n    <loc>{u}</loc>\n    <lastmod>2026-10-01</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.7</priority>\n  </url>\n"
+        f"  <url>\n    <loc>{u}</loc>\n    <changefreq>monthly</changefreq>\n    <priority>0.7</priority>\n  </url>\n"
         for u in sitemap_urls if f"<loc>{u}</loc>" not in sm)
     sm = sm.replace("</urlset>", add + "</urlset>")
     open(sp, "w", encoding="utf-8").write(sm)

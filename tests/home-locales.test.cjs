@@ -83,31 +83,12 @@ test("Hindi, Spanish, French, and Simplified Chinese cover all homepage copy", (
   }
 });
 
-test("homepage exposes every supported language in one responsive, no-JS-safe picker", () => {
+test("homepage exposes all languages as native links", () => {
+  const header = homeHtml.match(/<header class="simy-header"[\s\S]*?<\/header>/)[0];
   for (const locale of ["en", "ja", "hi", "es", "fr", "zh-Hans"]) {
-    assert.equal(
-      homeHtml.match(new RegExp(`data-locale-option="${locale}"`, "g"))?.length,
-      1,
-      `${locale} must appear once in the responsive language picker`
-    );
-    assert.match(homeHtml, new RegExp(`hreflang="${locale}"`), `${locale} must have an hreflang link`);
+    assert.match(header, new RegExp(`lang="${locale}" hreflang="${locale}"`));
   }
-  assert.match(homeHtml, /<details class="language-picker"[^>]*data-language-picker>/);
-  assert.match(homeHtml, /<summary class="language-trigger"[^>]*aria-label="Language: English"[^>]*data-language-trigger/);
-  assert.doesNotMatch(homeHtml, /<summary class="language-trigger"[^>]*aria-expanded=/);
-  assert.doesNotMatch(homeHtml, /data-language-panel[^>]*hidden/);
-  assert.doesNotMatch(homeHtml, /data-locale-select/);
-  assert.match(i18nSource, /option\.setAttribute\("aria-current", "true"\)/);
-  assert.match(i18nSource, /trigger\.setAttribute\("aria-label", `\$\{translate\("Language"\)\}: \$\{presentation\.label\}`\)/);
-  assert.match(homeCss, /\.language-trigger\s*\{[^}]*min-height:\s*2\.75rem/s);
-  assert.match(
-    homeCss,
-    /@media \(max-width: 620px\)[\s\S]*?\.language-option-grid\s*\{[^}]*grid-template-columns:\s*repeat\(3,\s*minmax\(0,\s*1fr\)\)/s
-  );
-  assert.match(
-    homeCss,
-    /@media \(max-width: 620px\)[\s\S]*?\.language-option\s*\{[^}]*min-height:\s*3\.25rem/s
-  );
+  assert.match(header, /<details class="sh-dropdown sh-language">/);
 });
 
 test("locale bundle loads before the homepage translation runtime", () => {
@@ -120,9 +101,13 @@ test("locale bundle loads before the homepage translation runtime", () => {
 test("existing-account login links open the SIMY app home", () => {
   const loginLinks = [...homeHtml.matchAll(/<a\b[^>]*data-existing-account-login[^>]*>/g)];
 
-  assert.equal(loginLinks.length, 4, "desktop header, mobile header, final CTA, and footer must expose login");
+  assert.equal(loginLinks.length, 3, "shared header, final CTA, and footer must expose login");
   for (const [link] of loginLinks) {
-    assert.match(link, /href="https:\/\/app\.simy\.one\/"/);
+    const href = link.match(/href="([^"]+)"/)[1].replaceAll('&amp;', '&');
+    const url = new URL(href);
+    assert.equal(url.origin, 'https://app.simy.one');
+    assert.equal(url.pathname, '/');
+    assert.equal(url.searchParams.get('lang') || 'en', 'en');
   }
   assert.doesNotMatch(homeHtml, /https:\/\/app\.simy\.one\/login(?:[?"'])/);
 });
@@ -304,32 +289,14 @@ test("pricing decision copy remains visibly larger than disclaimer typography", 
   assert.doesNotMatch(homeHtml, /pricing-enterprise-badge/, "Enterprise must not show a redundant inquiry badge above its heading");
 });
 
-test("header exposes direct login and signup actions outside the mobile menu", () => {
-  assert.match(
-    homeHtml,
-    /<div class="nav-actions">[\s\S]*?data-existing-account-login[\s\S]*?data-new-account-signup[\s\S]*?<\/div>/,
-    "login and signup must remain visible in the page header"
-  );
-  assert.match(
-    homeHtml,
-    /<div class="site-frame mobile-auth-actions"[^>]*>[\s\S]*?data-existing-account-login[\s\S]*?data-new-account-signup[\s\S]*?<\/div>/,
-    "mobile login and signup must follow the menu button in logical focus order"
-  );
-  const signupLinks = [...homeHtml.matchAll(/<a\b[^>]*data-new-account-signup[^>]*>/g)];
-  assert.equal(signupLinks.length, 2, "desktop and mobile headers must expose signup");
-  for (const [link] of signupLinks) {
-    assert.match(link, /href="https:\/\/app\.simy\.one\/signup\?lang=en&amp;locale=en&amp;region=us"/);
-  }
-  assert.doesNotMatch(
-    homeHtml,
-    /<nav class="mobile-menu"[\s\S]*?(?:data-existing-account-login|data-new-account-signup)[\s\S]*?<\/nav>/,
-    "auth actions must not be duplicated behind the hamburger menu"
-  );
-  assert.match(
-    homeCss,
-    /@media \(max-width: 620px\)[\s\S]*?\.mobile-auth-actions\s*\{[^}]*display:\s*grid;[^}]*grid-template-columns:\s*repeat\(2,\s*minmax\(0,\s*1fr\)\);/s,
-    "narrow screens must show login and signup in a full-width header row"
-  );
+test("header exposes login and signup at every viewport without duplication", () => {
+  const header = homeHtml.match(/<header class="simy-header"[\s\S]*?<\/header>/)[0];
+  assert.match(header, /data-existing-account-login/);
+  assert.equal((header.match(/data-existing-account-login/g) || []).length, 1);
+  assert.match(header, /class="sh-account"[\s\S]*data-new-account-signup/);
+  assert.match(header, /class="sh-brand"[\s\S]*src="\/simy-icon-56.png"/);
+  assert.equal((header.match(/data-new-account-signup/g) || []).length, 1);
+  assert.match(header, /https:\/\/app\.simy\.one\/signup\?lang=en&amp;locale=en&amp;region=us/);
 });
 
 test("connected apps feature the three AI coding tools without disturbing the work-apps grid", () => {
@@ -348,6 +315,22 @@ test("connected apps feature the three AI coding tools without disturbing the wo
   assert.match(homeHtml, /<ul class="apps-grid apps-grid-ai"[^>]*>[\s\S]*?<\/ul>/);
   assert.match(homeCss, /\.apps-grid-ai\s*\{[^}]*grid-template-columns:\s*repeat\(3,/s);
   assert.match(homeCss, /@media \(max-width: 620px\)[\s\S]*?\.apps-grid-ai\s*\{[^}]*grid-template-columns:\s*1fr/s);
+});
+
+test("connected apps include the Dev catalog and distinguish planned connectors", () => {
+  const available = [
+    "Google Workspace", "Google Analytics", "Microsoft", "Slack", "GitHub", "Zoom",
+    "Notion", "Box", "LINE", "X", "Webex", "Datadog", "Plaud"
+  ];
+  const planned = ["Salesforce", "HubSpot", "Sansan", "kintone", "Jira", "Veeva Vault"];
+  const section = homeHtml.match(/<section class="connected-apps[\s\S]*?<\/section>\s*<section class="use-cases/);
+  assert.ok(section, "connected-apps section must exist");
+  for (const name of [...available, ...planned]) {
+    assert.match(section[0], new RegExp(`<strong>${name}</strong>`), `${name} must be listed`);
+  }
+  assert.match(section[0], /<details class="apps-more">[\s\S]*?<summary>/);
+  assert.match(section[0], /<h3[^>]*>Planned integrations<\/h3>/);
+  assert.equal((section[0].match(/class="app-tile app-tile-planned"/g) ?? []).length, planned.length);
 });
 
 test("all section-level messages share one responsive typography role", () => {
@@ -375,43 +358,10 @@ test("all section-level messages share one responsive typography role", () => {
   assert.doesNotMatch(homeCss, /\.final-copy h2\s*\{[^}]*font-size:/s);
 });
 
-test("use-case metrics size themselves from the card instead of the viewport", () => {
-  assert.match(homeCss, /\.use-case-card\s*\{[^}]*container-type:\s*inline-size/s);
-  assert.match(
-    homeCss,
-    /\.case-metric\s*>\s*div\s*\{[^}]*grid-template-columns:\s*repeat\(3,\s*max-content\)[^}]*gap:\s*clamp\([^;]*cqi/s
-  );
-  assert.match(
-    homeCss,
-    /\.case-metric b,\s*\.case-metric strong\s*\{[^}]*font-size:\s*clamp\([^;]*cqi/s
-  );
-  assert.equal(
-    homeHtml.match(/class="case-metric case-metric-wide"/g)?.length,
-    2,
-    "the two copy-dense metrics must use the compact, container-aware size"
-  );
-  const metricPattern = (className, metric) => new RegExp(
-    `<div class="${className}">\\s*<span class="sr-only">[\\s\\S]*?</span>\\s*<div aria-hidden="true"><b>${metric.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}</b>`
-  );
-  for (const metric of ["60m", "3.5–4d"]) {
-    assert.match(
-      homeHtml,
-      metricPattern("case-metric case-metric-wide", metric),
-      `${metric} must use the copy-dense metric treatment`
-    );
-  }
-  for (const metric of ["1/5", "1.0×"]) {
-    assert.match(
-      homeHtml,
-      metricPattern("case-metric", metric),
-      `${metric} must retain the large metric treatment`
-    );
-  }
-  assert.doesNotMatch(
-    homeCss,
-    /\.case-metric (?:b|strong)[^{]*\{[^}]*font-size:\s*clamp\([^;]*vw/s,
-    "metric values must not grow from the full viewport width"
-  );
+test("homepage avoids unsupported outcome metrics", () => {
+  assert.doesNotMatch(homeHtml, /class="case-metric/);
+  assert.match(homeHtml, /You decide before anything is sent/);
+  assert.match(homeHtml, /Reuse checks on similar tasks/);
 });
 
 test("keeps Traditional Chinese distinct and omits unsupported China region", () => {
@@ -420,44 +370,17 @@ test("keeps Traditional Chinese distinct and omits unsupported China region", ()
   assert.doesNotMatch(i18nSource, /region: "cn"/);
 });
 
-test("protects the global editorial message in every locale", () => {
-  const locales = { ja: extractJapaneseCopy(), ...loadAdditionalLocales() };
-  const editorialKeys = [
-    "Bring in the conversations that matter. SIMY learns the checks, priorities, and non-negotiables behind your best work, turns them into focused Workflows, and selects the right one automatically. Autorun takes it from there.",
-    "Choose the conversations that reveal your checks, priorities, and non-negotiables. SIMY extracts the patterns that repeat, separates them from one-off detail, and ignores the rest.",
-    "Your conversations become the way work gets done.",
-    "SIMY finds the missing inputs, the right people, and the next move. Autorun handles the sequence, so the work keeps moving until your attention is actually needed.",
-    "General agents complete tasks.",
-    "SIMY preserves your way of working.",
-    "Quality checks shaped around your profession.",
-    "Tell SIMY what needs to move.",
-    "Autorun takes it from there."
-  ];
-
-  for (const key of editorialKeys) {
-    assert.ok(homeHtml.includes(key), `live HTML must include the editorial message: ${key}`);
-    assert.ok(i18nSource.includes(JSON.stringify(key)), `JA_COPY must include the editorial message: ${key}`);
-    for (const [locale, copy] of Object.entries(locales)) {
-      assert.ok(copy[key]?.trim(), `${locale} must include the editorial message: ${key}`);
-      assert.notEqual(copy[key], key, `${locale} must localize the editorial message: ${key}`);
+test("manga editorial copy is complete in every locale", () => {
+  const dictionary = JSON.parse(fs.readFileSync(path.join(repoRoot, 'scripts/home-manga-preview-locales.json'), 'utf8'));
+  const keys = ['チャットや会話を、仕事が進む仕組みに変える。', '一度伝えた確認を、次にも活かす。', '次の仕事、ひとりで抱えなくていい。'];
+  for (const [locale, copy] of Object.entries(dictionary)) {
+    const html = fs.readFileSync(path.join(repoRoot, 'site', locale === 'en' ? 'index.html' : locale + '.html'), 'utf8');
+    for (const key of keys) {
+      assert.ok(copy[key]?.trim(), locale + ': missing editorial translation');
+      assert.ok(html.includes(copy[key]), locale + ': missing published editorial copy');
     }
   }
-
-  for (const retired of [
-    "No agent or pipeline to choose",
-    "You ask. SIMY selects the pipeline. Autorun gets to work.",
-    "No agent or workflow to choose",
-    "You ask. SIMY selects the workflow. Autorun gets to work.",
-    "A general agent can do the task.",
-    "Put a Quality Loop around every Autorun.",
-    "Choose the conversations that reveal your standards. SIMY extracts the patterns that repeat, separates them from one-off detail, and ignores the rest."
-  ]) {
-    assert.ok(!homeHtml.includes(retired), `live HTML must retire: ${retired}`);
-    assert.ok(!i18nSource.includes(JSON.stringify(retired)), `JA_COPY must retire: ${retired}`);
-    assert.ok(!localesSource.includes(JSON.stringify(retired)), `locale copy must retire: ${retired}`);
-  }
 });
-
 test("all published product copy calls pipelines workflows", () => {
   const legacyTerms = /\bpipelines?\b|パイプライン|पाइपलाइन|管线|流水线|流水線|파이프라인|خط أنابيب|ಪೈಪ್‌ಲೈನ್|పైప్‌లైన్|ท่อส่ง|Конвейер/iu;
   const copySources = {

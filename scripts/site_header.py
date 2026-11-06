@@ -1,0 +1,144 @@
+#!/usr/bin/env python3
+"""Apply the shared static header after generating site pages. Safe to rerun."""
+from pathlib import Path
+from html.parser import HTMLParser
+import html
+import hashlib
+import re
+import argparse
+import json
+import subprocess
+from social_preview import apply as apply_social_preview
+from functools import lru_cache
+
+ROOT = Path(__file__).resolve().parents[1]
+SITE = ROOT / "site"
+LOCALES = {"en": "English", "ja": "日本語", "hi": "हिन्दी", "es": "Español", "fr": "Français", "zh-Hans": "简体中文"}
+
+def home(locale):
+    return "/" if locale == "en" else f"/{locale}.html"
+
+def header(locale, source, path):
+    base = home(locale)
+    suffix = "" if locale == "ja" else f"{locale.lower()}/"
+    groups = {
+        "Product": [("Overview", base + "#product"), ("How it works", base + "#how-it-works"), ("Apps & integrations", "/integrations.html"), ("Download", "/download.html" if locale == "ja" else f"/download/{locale.lower()}.html")],
+        "Solutions": [("For your work", ("/for/" if locale == "ja" else "/for/en/")), ("For engineers", ("/for/engineers/" if locale == "ja" else f"/for/{locale.lower()}/engineers/")), ("For financial planners", ("/for/financial-planners/" if locale == "ja" else f"/for/{locale.lower()}/financial-planners/")), ("For pharmaceutical companies", "/for/" + ("" if locale == "ja" else locale.lower() + "/") + "pharmaceutical-companies/"), ("Use cases", base + "#use-cases")],
+        "Resources": [("Guides", f"/guides/{suffix}index.html"), ("Compare", "/compare.html"), ("News", "/press-release.html"), ("About SIMY", "/about.html"), ("Security", "/security.html"), ("Contact", "/contact.html"), ("Legal & service information", "/legal.html"), ("Seller information", "/seller-info.html")],
+    }
+    if path == SITE / 'ja.html':
+        groups['Solutions'].insert(1, ('HP管理・無料診断', '/hp-management/'))
+        groups['Solutions'].insert(2, ('クリニック向けHP管理', '/hp-management/clinic/'))
+    def link(label, href):
+        if label == "For pharmaceutical companies":
+            label = {"ja": "製薬企業向け", "en": "For pharmaceutical companies", "es": "Para farmacéuticas", "fr": "Pour les laboratoires", "hi": "दवा कंपनियों के लिए", "zh-Hans": "面向制药企业"}[locale]
+        if href.endswith(".html") and href in ["/integrations.html", "/compare.html", "/press-release.html", "/about.html", "/security.html", "/contact.html"]:
+            href += "?lang=" + locale
+        return f'<a href="{html.escape(href, quote=True)}">{label}</a>'
+    download = "/download.html" if locale == "ja" else f"/download/{locale.lower()}.html"
+    stores = f'''<div class="sh-stores" role="group" aria-label="Mobile apps">
+      <a class="sh-store" href="https://apps.apple.com/app/id6745385262"><img src="/assets/store-badges/app-store.svg" width="120" height="40" alt="Download on the App Store"></a>
+      <a class="sh-store sh-google-play" href="{download}#android" aria-label="Android availability"><img src="/assets/store-badges/google-play.png" width="155" height="60" alt="Google Play"><small>Android availability</small></a>
+    </div>'''
+    menus = "".join(f'<details class="sh-dropdown"><summary>{name}<span aria-hidden="true">⌄</span></summary><div class="sh-panel">' + "".join(link(label, href) for label, href in items) + (stores if name == "Product" else "") + '</div></details>' for name, items in groups.items())
+    # Prefer an existing translated counterpart; otherwise use the localized home.
+    alternatives = dict(re.findall(r'<link[^>]*hreflang="([^" ]+)"[^>]*href="https://simy.one([^" ]*)"', source))
+    if re.search(r'<script[^>]+src="(?:/|(?:\.\./)*)i18n\.js', source):
+        page_url = "/" + str(path.relative_to(SITE))
+        alternatives = {code: page_url + "?lang=" + code for code in LOCALES}
+    options = "".join(f'<a href="{html.escape(alternatives.get(code, home(code)), quote=True)}" lang="{code}" hreflang="{code}" data-locale-option="{code}"' + (' aria-current="page"' if code == locale else '') + f'>{label}</a>' for code, label in LOCALES.items())
+    region = {"en": "us", "ja": "jp", "hi": "in", "es": "es", "fr": "fr"}.get(locale)
+    params = f"lang={locale}&amp;locale={locale}" + (f"&amp;region={region}" if region else "")
+    code = "ZH" if locale == "zh-Hans" else locale.upper()
+    markup = f'''<header class="simy-header" translate="no" data-simy-no-translate>
+  <div class="sh-frame">
+    <a class="sh-brand" href="{base}" aria-label="SIMY home"><img src="/simy-icon-56.png" width="32" height="32" alt=""><span>SIMY</span></a>
+    <details class="sh-menu"><summary class="sh-menu-toggle" aria-label="Navigation menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></summary><div class="sh-menu-panel"><div class="sh-navigation" role="navigation" aria-label="Primary navigation">{menus}<a class="sh-pricing" href="{base}#pricing">Pricing</a></div><a class="sh-login" data-existing-account-login href="https://app.simy.one/">Log in</a></div></details>
+    <div class="sh-account"><details class="sh-dropdown sh-language"><summary aria-label="Language: {LOCALES[locale]}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/></svg> {code}</summary><div class="sh-panel">{options}</div></details><a data-new-account-signup class="sh-signup" href="https://app.simy.one/signup?{params}">Sign up</a></div>
+  </div>
+</header>'''
+    # The clinic landing page sells HP management, not the separate SIMY app.
+    if path == SITE / 'hp-management/clinic/index.html':
+        markup = markup.replace(f'<a class="sh-pricing" href="{base}#pricing">Pricing</a>', '<a class="sh-pricing" data-service-pricing href="#pricing">HP管理の料金</a>')
+        markup = markup.replace('>Log in</a>', '>SIMYアプリ</a>')
+        markup = markup.replace(f'<a data-new-account-signup class="sh-signup" href="https://app.simy.one/signup?{params}">Sign up</a>', '<a class="sh-signup" href="#diagnosis">URL入力へ</a>')
+    return markup
+
+class HeaderParser(HTMLParser):
+    def __init__(self, source):
+        super().__init__()
+        self.source = source
+        self.lines = [0]
+        for m in re.finditer("\n", source): self.lines.append(m.end())
+        self.start = self.end = None
+        self.tag = None
+        self.depth = 0
+        self.in_body = False
+        self.stopped = False
+    def position(self):
+        line, col = self.getpos()
+        return self.lines[line - 1] + col
+    def handle_starttag(self, tag, attrs):
+        if tag == "body": self.in_body = True
+        if tag == "main" and self.start is None: self.stopped = True
+        if not self.in_body or self.stopped or self.end is not None: return
+        if self.start is None and tag in ("header", "nav"):
+            self.start, self.tag = self.position(), tag
+        if self.start is not None and tag == self.tag: self.depth += 1
+    def handle_endtag(self, tag):
+        if self.start is not None and self.end is None and tag == self.tag:
+            self.depth -= 1
+            if self.depth == 0: self.end = self.source.index(">", self.position()) + 1
+
+def needs_header(source, path):
+    # The authentication return page has a focused, security-sensitive purpose.
+    # Redirect aliases and verification tokens never render site navigation.
+    # The clinic landing page uses its own service navigation.
+    return (path != SITE / "hp-management/clinic/index.html"
+            and path.name != "auth-callback.html"
+            and not re.search(r'http-equiv=["\']refresh', source, re.I)
+            and "<body" in source.lower())
+
+
+@lru_cache(maxsize=1)
+def homepage_content():
+    return json.loads(subprocess.check_output(["node", str(ROOT / "scripts/home-content.cjs")], text=True))
+
+def apply(source, path):
+    if not needs_header(source, path): return source
+    locale_match = re.search(r'<html[^>]*lang="([^" ]+)"', source)
+    locale = locale_match.group(1) if locale_match else "en"
+    if locale not in LOCALES: locale = "en"
+    parser = HeaderParser(source)
+    parser.feed(source)
+    markup = header(locale, source, path)
+    if parser.end is not None: source = source[:parser.start] + markup + source[parser.end:]
+    else: source = re.sub(r'(<body[^>]*>)', lambda m: m[1] + markup, source, count=1)
+    source = re.sub(r'[ \t]*<nav class="legal-mobile-toolbar".*?</nav>', '', source, flags=re.S)
+    assets = '<link rel="stylesheet" href="/site-header.css?v=20261021-pharma-1">\n<script src="/site-header.js?v=20261021-pharma-1" defer></script>\n'
+    if '/site-header.css?' not in source:
+        source = source.replace('</head>', assets + '</head>')
+    def asset_version(match):
+        version = hashlib.sha256((SITE / 'site-header.js').read_bytes()).hexdigest()[:12] if path == SITE / 'hp-management/clinic/index.html' and '.js?' in match[1] else '20261021-pharma-1'
+        return match[1] + version
+    source = re.sub(r'(/site-header\.(?:css|js)\?v=)[^"\s]+', asset_version, source)
+    if "data-story-scene" in source:
+        from home_manga_locales import localized_header
+        source = localized_header(source, locale, homepage_content())
+    return apply_social_preview(source, path)
+
+if __name__ == "__main__":
+    cli = argparse.ArgumentParser(description=__doc__)
+    cli.add_argument("--check", action="store_true", help="Fail when a rendered page differs from the shared header")
+    args = cli.parse_args()
+    changed = []
+    for path in sorted(SITE.rglob("*.html")):
+        source = path.read_text()
+        output = apply(source, path)
+        if source != output:
+            changed.append(str(path.relative_to(SITE)))
+            if not args.check:
+                path.write_text(output)
+    if args.check and changed:
+        raise SystemExit("Shared header differs: " + ", ".join(changed))
+    print(f"{'Checked' if args.check else 'Updated'} shared headers; {len(changed)} pages {'differ' if args.check else 'updated'}")
