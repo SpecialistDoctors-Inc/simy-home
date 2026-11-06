@@ -258,19 +258,20 @@ function continuousGrowthSupport(report,growth) {
   const box = element('section','','growth-continuous growth-manga');
   box.append(
     element('p','紹介された、その先も。','growth-step'),
-    element('h4','診察で話したことが、医院のホームページを育てる。','growth-section-title')
+    element('h4','診察で話したことが、医院ならではの記事になる。','growth-section-title')
   );
   if (growth.discovery?.observed) {
     box.append(element('p',growth.name+'は、今回のAI回答'+growth.discovery.observed+'件中'+growth.discovery.mentioned+'件に登場しました。','growth-lead'));
   }
   box.append(
-    element('p','診察を録音。AIが記事案を作り、先生が確認して公開。近隣医院のサイトの更新も、自院の改善に生かせます。','growth-manga-intro'),
+    element('p','地域の感染症情報、先生の専門分野、治療で大切にしていること。AIが記事の下書きを作り、先生が確認して公開します。近隣医院の更新も、自院の案内を見直すヒントになります。','growth-manga-intro'),
+    element('p','同意を得た音声は端末内で処理します。個人を特定できる情報を取り除き、人が確認した要点だけをAIに渡します。','growth-manga-reassurance'),
     element('p','導入後の活用イメージ','growth-step')
   );
 
   const panels = [
     ['同意を得て診察を録音','診察室で、先生が保護者に「録音してもいいですか？」と確認する','録音の目的を説明し、患者さんや保護者の同意を得てから、いつもの診察での説明を録音します。'],
-    ['AIが個人情報を除き、記事案に','録音の波形から、名前などを伏せた文章と記事案ができる','端末で文字起こしし、個人を特定できる情報を除く作業を補助。確認済みの要点から、AIが記事案を作ります。'],
+    ['個人情報を除き、確認した要点をAIへ','録音の波形から、名前などを伏せた文章と記事案ができる','端末で文字起こしし、氏名などを伏せる作業を補助します。人が読み直して、個人を特定できる情報を除いた要点だけをAIに渡します。'],
     ['先生が確認し、ボタンで公開','先生がタブレットで記事を読み、「公開する」を押す','個人を特定できる記述が残っていないか、内容と根拠は正しいかを先生が確認。承認した内容を公開します。'],
     ['役立つ記事が、医院のサイトに増える','医院のホームページに、発熱や予防接種、初診案内などの記事が並ぶ','地域の感染症情報、先生の専門分野、治療で大切にしていること。医院ならではの知見が、読み応えのある記事として蓄積します。'],
     ['AI検索で、医院の記事にたどり着けるように','自宅で保護者がAI回答の出典を見て「この医院の記事だ」と気づく','質問に答える見出しや出典を整え、患者さんにもAI検索にも内容が伝わりやすいページにします。'],
@@ -332,7 +333,7 @@ function continuousGrowthSupport(report,growth) {
     element('p','まずは、よく聞かれる質問を一本の記事に。','growth-manga-next-title'),
     element('p','記事にしたい診療テーマと、見ておきたい近隣サイトから、貴院で続けられる運用を一緒に考えます。','growth-manga-next-copy')
   );
-  const button = element('button','うちの医院でも相談する →','button button-primary growth-support-apply');
+  const button = element('button','自院の記事化と近隣チェックを相談する →','button button-primary growth-support-apply');
   button.type = 'button';
   button.addEventListener('click',()=>window.SimyClinicApplication?.open({
     assistance:true,
