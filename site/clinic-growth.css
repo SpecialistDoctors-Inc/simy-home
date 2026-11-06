@@ -93,3 +93,130 @@ body:has(.growth-report) .report-download-dock .button{min-height:44px;font-size
 }
 
 .growth-manga .growth-manga-reassurance{margin:14px 0 20px;padding:10px 14px;border-inline-start:3px solid #2c7766;background:#f5faf8;color:#27473e;font-size:15px;line-height:1.65}
+/* Put the next steps before the full report and repeat them at their point of use. */
+#diagnosis-results .report-actions{
+  display:grid;
+  grid-auto-flow:column;
+  grid-auto-columns:minmax(0,1fr);
+  gap:10px;
+  margin:0 0 clamp(28px,3vw,40px);
+}
+#diagnosis-results .report-action{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:flex-start;
+  gap:3px;
+  box-sizing:border-box;
+  min-width:0;
+  min-height:76px;
+  padding:12px 15px;
+  border:1px solid transparent;
+  border-radius:12px;
+  text-align:left;
+  text-decoration:none;
+  color:#fff;
+  font:inherit;
+  cursor:pointer;
+}
+.report-action strong{font-size:clamp(16px,1.6vw,20px);line-height:1.35}
+.report-action span{font-size:13px;line-height:1.4}
+.report-action-pdf{background:#184b9e}
+.report-action-growth{background:#12665a}
+.report-action-edit{background:#4c3889}
+#diagnosis-results .report-action:hover{filter:brightness(1.13)}
+#diagnosis-results .report-action:focus-visible,
+#diagnosis-results .growth-support-apply:focus-visible,
+#diagnosis-results .report-rebuild-entry button:focus-visible{
+  outline:3px solid #142e52;
+  outline-offset:3px;
+}
+#report-growth-consultation,#report-edit-preview{scroll-margin-top:104px}
+#diagnosis-results .growth-manga-next{
+  padding:clamp(22px,4vw,40px);
+  border:2px solid #93c9bb;
+  border-radius:12px;
+  background:#e8f7f2;
+}
+#diagnosis-results .growth-manga-next-title{
+  font-size:clamp(19px,2.2vw,25px);
+  line-height:1.4;
+}
+#diagnosis-results .growth-manga-next-copy{margin:10px 0 22px}
+#diagnosis-results .growth-manga-next .growth-scope{margin-top:16px}
+#diagnosis-results .growth-support-apply{
+  display:flex;
+  width:100%;
+  min-width:0;
+  min-height:64px;
+  padding:14px 18px;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  font-size:clamp(16px,1.8vw,19px);
+  background:#12665a;
+}
+#diagnosis-state #report-edit-preview{
+  margin-top:clamp(32px,5vw,56px);
+  padding:clamp(22px,4vw,44px);
+  background:#f4f0ff;
+  border-color:#7159ae;
+}
+#diagnosis-results .report-action-label{
+  display:inline-block;
+  margin-bottom:16px;
+  padding:4px 11px;
+  border-radius:100px;
+  background:#4c3889;
+  color:#fff;
+  font-size:14px;
+  font-weight:700;
+}
+#diagnosis-state #report-edit-preview>p{margin-bottom:28px}
+#diagnosis-state #report-edit-preview .report-rebuild-entry{
+  grid-template-columns:minmax(0,1fr) minmax(220px,auto);
+  gap:16px;
+}
+#diagnosis-state #report-edit-preview .report-rebuild-entry input{height:64px}
+#diagnosis-state #report-edit-preview .report-rebuild-consent{margin-top:16px}
+#diagnosis-state #report-edit-preview .report-rebuild-entry button{
+  min-height:64px;
+  background:#4c3889;
+  font-size:17px;
+}
+#diagnosis-results .report-download-dock{
+  left:auto;
+  right:20px;
+  bottom:calc(14px + env(safe-area-inset-bottom));
+  width:min(368px,calc(100% - 40px));
+  padding:12px;
+  border:2px solid #7d9dcc;
+  border-radius:14px;
+  box-shadow:0 8px 32px #183e7650;
+}
+#diagnosis-results .report-download-dock .report-save-hint{display:block}
+#diagnosis-results .report-download-dock .button{
+  min-width:0;
+  min-height:58px;
+  font-size:17px;
+  background:#184b9e;
+}
+@media(max-width:700px){
+  #diagnosis-state #report-edit-preview .report-rebuild-entry{grid-template-columns:minmax(0,1fr)}
+}
+@media(max-width:600px){
+  #diagnosis-results .report-actions{gap:clamp(6px,2vw,12px)}
+  #diagnosis-results .report-action{
+    padding:10px clamp(6px,1.8vw,11px);
+    overflow-wrap:anywhere;
+  }
+  #diagnosis-results .report-action strong{font-size:clamp(13px,3.4vw,16px);text-wrap:balance}
+  #diagnosis-results .report-action span{font-size:clamp(11px,2.8vw,13px)}
+  #diagnosis-results .report-download-dock{
+    right:12px;
+    width:min(292px,calc(100% - 24px));
+    padding:8px;
+  }
+  #diagnosis-results .report-download-dock .report-save-hint{display:none}
+  #diagnosis-results .report-download-dock .button{min-height:48px;font-size:15px}
+}
