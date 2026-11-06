@@ -12,7 +12,7 @@
 .growth-priority{display:flex;flex-direction:column;border:1px solid #dce5ec;border-top:3px solid #2d70cb;padding:20px;border-radius:4px}
 .growth-number{font-size:13px;color:#2d70cb;font-weight:700}.growth-report .growth-priority h4{font-size:18px;line-height:1.6;margin:8px 0 12px}.growth-report .growth-priority .growth-observation{font-size:14px;color:#526773;margin-bottom:20px}.growth-change{margin-top:auto;padding-top:14px;border-top:1px solid #dce5ec}.growth-change>span{font-size:12px;font-weight:700;color:#247465}.growth-report .growth-change p{font-size:15px;margin-top:6px!important}
 .growth-proposal{border:1px solid #c6dfdb;border-left:4px solid #2f786f;background:#f4f9f8;padding:clamp(20px,3vw,32px)}
-.growth-report .growth-proposal-label{font-size:12px!important;color:#4c716d;font-weight:700}.growth-report .growth-proposal h4{font-size:clamp(21px,2.2vw,27px);line-height:1.6;margin:12px 0;max-width:28em}.growth-proposal>p{max-width:48em}.growth-example-button{display:inline-block;background:#26766c;color:#fff;border-radius:5px;padding:10px 18px;margin-top:20px;font-size:14px;font-weight:700}
+.growth-report .growth-proposal-label{font-size:12px!important;color:#4c716d;font-weight:700}.growth-report .growth-proposal h4{font-size:clamp(21px,2.2vw,27px);line-height:1.6;margin:12px 0;max-width:28em}.growth-proposal>p{max-width:48em}.growth-report .growth-proposal-copy{margin:14px 0;font-weight:600;color:#35524f}
 .growth-strengths{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:16px 0 28px}.growth-strengths>span{font-size:12px;color:#526773;margin-right:4px}.growth-strengths strong{font-size:12px;font-weight:600;padding:5px 9px;background:#f1f5f8;border-radius:4px}
 .growth-questions article{display:grid;grid-template-columns:100px minmax(0,1fr) auto;gap:10px 16px;align-items:start;padding:14px 0;border-top:1px solid #dce5ec}.growth-report .growth-questions h4{font-size:14px;line-height:1.65;margin:0}.growth-report .growth-questions p{font-size:14px;grid-column:2;grid-row:1}.growth-questions article>span{grid-column:3;grid-row:1;font-size:12px;white-space:normal;font-weight:600}.growth-found{color:#277365}.growth-gap{color:#9c5d19}.growth-report .growth-scope{font-size:12px!important;color:#657983;margin-top:18px!important}
 /* Keep the requested persistent download discoverable without covering the report width. */
@@ -73,19 +73,23 @@ body:has(.growth-report) .report-download-dock .button{min-height:44px;font-size
   .growth-manga-next .growth-support-apply{width:100%;min-width:0;justify-content:center}
 }
 
-.growth-manga-topics,.growth-manga-privacy{margin:24px 0}
-.growth-manga-topics h5,.growth-manga-privacy h5{margin:0 0 10px;color:#193847;font-size:19px;line-height:1.5}
+.growth-manga-topics{margin:24px 0}
+.growth-manga-topics h5{margin:0 0 10px;color:#193847;font-size:19px;line-height:1.5}
 .growth-manga-topics-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0;padding:0;list-style:none}
 .growth-manga-topics-list li{min-width:0;padding:14px;border:1px solid #c8dbe5;border-radius:8px;background:#fff}
-.growth-manga-topics-list strong,.growth-manga-privacy-list strong{color:#193847}
-.growth-manga-topics-list li p,.growth-manga-privacy-list li p{margin:6px 0 0;font-size:15px;line-height:1.7}
+.growth-manga-topic-heading{display:flex;align-items:center;gap:10px;margin:0 0 10px;color:#193847;font-size:16px;line-height:1.4}
+.growth-manga-topic-icon{display:block;flex:0 0 38px;width:38px;height:38px;padding:7px;border-radius:9px;box-sizing:border-box;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.growth-manga-topic-icon--trends{background:#fff1da;color:#9b4d15}
+.growth-manga-topic-icon--specialty{background:#e5efff;color:#245da4}
+.growth-manga-topic-icon--care{background:#e4f3ed;color:#246857}
+.growth-manga-topics-list li p{margin:6px 0 0;font-size:15px;line-height:1.7}
 .growth-manga-topic-example{font-weight:700}
-.growth-manga-privacy{padding:18px;border:1px solid #b9d3ce;border-radius:8px;background:#f5faf8}
-.growth-manga-privacy-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 24px;margin:12px 0 0;padding-left:1.35em}
-.growth-manga-privacy-list li{min-width:0;padding-left:4px}
+
+
+
 @media(max-width:760px){
-  .growth-manga-topics-list,.growth-manga-privacy-list{grid-template-columns:minmax(0,1fr)}
-  .growth-manga-privacy{padding:14px}
+  .growth-manga-topics-list{grid-template-columns:minmax(0,1fr)}
+
 }
 
 .growth-manga .growth-manga-reassurance{margin:14px 0 20px;padding:10px 14px;border-inline-start:3px solid #2c7766;background:#f5faf8;color:#27473e;font-size:15px;line-height:1.65}

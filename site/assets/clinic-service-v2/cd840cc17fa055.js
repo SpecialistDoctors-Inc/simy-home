@@ -257,24 +257,24 @@ function sourceParagraph(text,sources=[]){
 function continuousGrowthSupport(report,growth) {
   const box = element('section','','growth-continuous growth-manga');
   box.append(
-    element('p','紹介された、その先も。','growth-step'),
-    element('h4','診察で話したことが、医院ならではの記事になる。','growth-section-title')
+    element('p','AI検索の実測から、次の改善へ。','growth-step'),
+    element('h4','AI検索で見つけてもらうために、公式サイトを整える。','growth-section-title')
   );
   if (growth.discovery?.observed) {
     box.append(element('p',growth.name+'は、今回のAI回答'+growth.discovery.observed+'件中'+growth.discovery.mentioned+'件に登場しました。','growth-lead'));
   }
   box.append(
-    element('p','地域の感染症情報、先生の専門分野、治療で大切にしていること。AIが記事の下書きを作り、先生が確認して公開します。近隣医院の更新も、自院の案内を見直すヒントになります。','growth-manga-intro'),
+    element('p','医院を探す質問に対して、どんな診療に対応し、どこで受診できるか。先生の専門性や診療の根拠が伝わる公式ページを整えます。診療での説明は、AIが下書きにし、先生が確認して公開できます。','growth-manga-intro'),
     element('p','同意を得た音声は端末内で処理します。個人を特定できる情報を取り除き、人が確認した要点だけをAIに渡します。','growth-manga-reassurance'),
     element('p','導入後の活用イメージ','growth-step')
   );
 
   const panels = [
     ['同意を得て診察を録音','診察室で、先生が保護者に「録音してもいいですか？」と確認する','録音の目的を説明し、患者さんや保護者の同意を得てから、いつもの診察での説明を録音します。'],
-    ['個人情報を除き、確認した要点をAIへ','録音の波形から、名前などを伏せた文章と記事案ができる','端末で文字起こしし、氏名などを伏せる作業を補助します。人が読み直して、個人を特定できる情報を除いた要点だけをAIに渡します。'],
+    ['個人情報を除き、確認した要点をAIへ','録音の波形から、名前などを伏せた文章と記事案ができる','端末で文字起こしし、氏名などを伏せる作業を補助します。氏名や連絡先に加え、受診日・病歴などを組み合わせて個人が分からないか人が確認し、確認済みの要点だけをAIに渡します。'],
     ['先生が確認し、ボタンで公開','先生がタブレットで記事を読み、「公開する」を押す','個人を特定できる記述が残っていないか、内容と根拠は正しいかを先生が確認。承認した内容を公開します。'],
-    ['役立つ記事が、医院のサイトに増える','医院のホームページに、発熱や予防接種、初診案内などの記事が並ぶ','地域の感染症情報、先生の専門分野、治療で大切にしていること。医院ならではの知見が、読み応えのある記事として蓄積します。'],
-    ['AI検索で、医院の記事にたどり着けるように','自宅で保護者がAI回答の出典を見て「この医院の記事だ」と気づく','質問に答える見出しや出典を整え、患者さんにもAI検索にも内容が伝わりやすいページにします。'],
+    ['医院の専門性が伝わるページに','医院のホームページに、発熱や予防接種、初診案内などの記事が並ぶ','専門外来で診る範囲や受診の目安など、医院を選ぶ判断材料を、先生の説明と根拠を添えて掲載します。'],
+    ['AI検索で、医院の記事にたどり着けるように','自宅で保護者がAI回答の出典を見て「この医院の記事だ」と気づく','公開後に同じ質問で測り直し、回答に医院名が出るか、公式ページへのリンクから受診案内にたどり着けるかを確認します。'],
     ['近隣医院の更新も見渡せる','受付スタッフが近隣の地図と公開ページの更新前後を見比べる','登録した近隣医院の公開サイトを定期確認。診療案内や予約の文言など、変わった箇所を自院の改善に生かせます。'],
   ];
   const story = element('ol','','growth-manga-panels');
@@ -295,51 +295,41 @@ function continuousGrowthSupport(report,growth) {
   box.append(story);
 
   const topics = element('section','','growth-manga-topics');
-  topics.append(element('h5','診療の知見が、こんな記事に'));
+  topics.append(element('h5','医院を選ぶ判断材料になる、公式サイトのコンテンツ例'));
   const examples = element('ul','','growth-manga-topics-list');
-  for (const [label,example,description] of [
-    ['感染症の流行状況','「今、地域でどんな感染症が増えていますか？」','公表データで地域・集計時期を確かめ、更新日と出典を添えます。'],
-    ['先生の専門分野','「小児アレルギーの初診では、何を相談できますか？」','専門外来で診る範囲や、診察・検査の進め方を先生の言葉で伝えます。'],
-    ['治療で大切にしていること','「治療の選択肢を、どう一緒に決めるのか」','先生が大切にしている考え方や、ご家族と話し合うときの工夫を紹介します。'],
+  for (const [kind,iconPath,label,example,description] of [
+    ['trends','M3 4v16h18M6 15l4-5 4 3 6-7m-4 0h4v4','感染症の流行状況','「今、地域でどんな感染症が増えていますか？」','公表データで地域・集計時期を確かめ、更新日と出典を添えます。'],
+    ['specialty','M4 3v5a4 4 0 0 0 8 0V3M8 12v3a5 5 0 0 0 10 0v-2m3-3a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM4 3h2m4 0h2','先生の専門分野','「小児アレルギーの初診では、何を相談できますか？」','専門外来で診る範囲や、診察・検査の進め方を先生の言葉で伝えます。'],
+    ['care','M21 5H3v12h4v4l5-4h9zM12 14l-3-3a1.7 1.7 0 0 1 3-1 1.7 1.7 0 0 1 3 1z','治療で大切にしていること','「治療の選択肢を、どう一緒に決めるのか」','先生が大切にしている考え方や、ご家族と話し合うときの工夫を紹介します。'],
   ]) {
     const item = element('li','');
-    item.append(element('strong',label),element('p',example,'growth-manga-topic-example'),element('p',description));
+    const heading = element('h6','','growth-manga-topic-heading');
+    const icon = document.createElementNS('http://www.w3.org/2000/svg','svg');
+    icon.setAttribute('class','growth-manga-topic-icon growth-manga-topic-icon--'+kind);
+    icon.setAttribute('viewBox','0 0 24 24');
+    icon.setAttribute('aria-hidden','true');
+    const path = document.createElementNS(icon.namespaceURI,'path');
+    path.setAttribute('d',iconPath);
+    icon.append(path);
+    heading.append(icon,label);
+    item.append(heading,element('p',example,'growth-manga-topic-example'),element('p',description));
     examples.append(item);
   }
   topics.append(examples);
   box.append(topics);
 
-  const privacy = element('section','','growth-manga-privacy');
-  privacy.append(
-    element('h5','患者さんの情報を守る、録音から公開まで'),
-    element('p','記事に使うのは、個人が分からない形に整理した診療の知見です。')
-  );
-  const steps = element('ol','','growth-manga-privacy-list');
-  for (const [title,description] of [
-    ['録音の前に同意を確認','録音の目的と記事作成への利用を説明し、同意を得てから録音します。同意がなければ録音せず、個人情報を含まない診療後のメモを使えます。'],
-    ['音声と確認前の文字起こしは端末内','録音と文字起こしは端末内で処理します。音声や確認前の文字起こしを、SIMYや記事作成用のAIへ送信することはありません。'],
-    ['確認済みの要点だけを記事作成用のAIへ','氏名や連絡先のほか、受診日、病歴、珍しい症例など、組み合わせで個人が分かる情報も人が確認して除きます。確認を終えた要点だけを送ります。'],
-    ['先生の承認後に公開','記事案に個人を特定できる内容が残っていないか、説明や出典が正しいかを先生が確認し、公開ボタンを押します。'],
-  ]) {
-    const item = element('li','');
-    item.append(element('strong',title),element('p',description));
-    steps.append(item);
-  }
-  privacy.append(steps);
-  box.append(privacy);
-
   const next = element('div','','growth-manga-next');
   next.append(
-    element('p','まずは、よく聞かれる質問を一本の記事に。','growth-manga-next-title'),
-    element('p','記事にしたい診療テーマと、見ておきたい近隣サイトから、貴院で続けられる運用を一緒に考えます。','growth-manga-next-copy')
+    element('p','AI検索の結果から、優先して整えるページを決める。','growth-manga-next-title'),
+    element('p','医院を探す質問での紹介状況と、公式ページへのリンクを確認。診療の対象や専門性が十分に伝わっていない箇所を見直し、公開後は同じ質問で再測定します。','growth-manga-next-copy')
   );
-  const button = element('button','自院の記事化と近隣チェックを相談する →','button button-primary growth-support-apply');
+  const button = element('button','AI検索の改善を相談する →','button button-primary growth-support-apply');
   button.type = 'button';
   button.addEventListener('click',()=>window.SimyClinicApplication?.open({
     assistance:true,
     sourceUrl:report.url,
     trigger:button,
-    intent:'診療録音からの記事化と、近隣医院の公開サイトの変化確認を行う仕組みを相談したい'
+    intent:'AI検索の診断結果をもとに、公式サイトの改善と公開後の再測定を相談したい'
   }));
   next.append(button,element('p','録音後の処理を自動化する範囲や、医院サイトへの公開連携、費用は、運用に合わせてご相談します。','growth-scope'));
   box.append(next);
@@ -364,7 +354,7 @@ function renderSearchChecks(report){
    const cards=element('div','','growth-journey-findings');
    for(const item of a.findings){const card=element('article','','growth-journey-finding');card.append(element('span',item.priority,'growth-number'),element('h4',item.title),sourceParagraph(item.observation,item.sources),sourceParagraph('保護者への影響：'+item.impact,item.sources),sourceParagraph('改善案：'+item.change,item.sources));const sources=element('p','','growth-scope');for(const source of item.sources){const link=element('a',source.label+' ↗');link.href=source.url;link.target='_blank';link.rel='noopener';sources.append(link,' ');}card.append(sources);cards.append(card);}audit.append(cards);
    audit.append(element('h4','すでに案内できていること','growth-section-title'));for(const t of a.confirmed)audit.append(sourceParagraph('✓ '+t,a.confirmedSources||[]));
-   const proposal=element('article','','growth-proposal');proposal.append(element('p','成長相談ページの掲載案','growth-proposal-label'),element('h4',a.proposal.heading),element('p',a.proposal.body),element('span',a.proposal.button+' →','growth-example-button'),element('p',a.proposal.note,'growth-scope'));audit.append(proposal,element('p','別途確認日：'+a.checkedOn+'。'+a.scope,'growth-scope'));section.append(audit);
+   const proposal=element('article','','growth-proposal');proposal.append(element('p','成長相談ページの掲載案','growth-proposal-label'),element('h4',a.proposal.heading),element('p',a.proposal.body),element('p','案内文の例：「'+a.proposal.button+'」','growth-proposal-copy'),element('p',a.proposal.note,'growth-scope'));audit.append(proposal,element('p','別途確認日：'+a.checkedOn+'。'+a.scope,'growth-scope'));section.append(audit);
   }
   if(!growth.contentAvailable){section.append(element('p',growth.scope,'growth-scope'));results.append(section);return;}
   section.append(element('p',(growth.audit?'03':growth.discovery?'02':'01')+' / 診断時に取得した本文のAI分析','growth-step'));
@@ -375,7 +365,7 @@ function renderSearchChecks(report){
   if(growth.priorities.length){section.append(element('h4','優先して変えたいこと','growth-section-title'));const priorities=element('div','','growth-priorities');priorities.dataset.count=growth.priorities.length;
    for(const [i,item] of growth.priorities.entries()){const card=element('article','','growth-priority');card.append(element('span',String(i+1).padStart(2,'0'),'growth-number'),element('h4',item.title),element('p',item.observation,'growth-observation'));const change=element('div','','growth-change');change.append(element('span','改善案'),element('p',item.change));card.append(change);priorities.append(card);}section.append(priorities);}
   section.append(element('h4','この医院なら、こう伝える。','growth-section-title'));
-  const proposal=element('article','','growth-proposal');proposal.append(element('p','トップページの掲載案','growth-proposal-label'),element('h4',growth.proposal.heading),element('p',growth.proposal.description),element('span',growth.proposal.button+' →','growth-example-button'));section.append(proposal);
+  const proposal=element('article','','growth-proposal');proposal.append(element('p','トップページの掲載案','growth-proposal-label'),element('h4',growth.proposal.heading),element('p',growth.proposal.description),element('p','案内文の例：「'+growth.proposal.button+'」','growth-proposal-copy'));section.append(proposal);
   if(growth.strengths.length){const strengths=element('div','','growth-strengths');strengths.append(element('span','活かしたい医院の特徴'));for(const item of growth.strengths)strengths.append(element('strong',item.label));section.append(strengths);}
   section.append(element('h4','初めての患者さんに必要な案内','growth-section-title'));
   const list=element('div','','growth-questions');
