@@ -12,7 +12,10 @@
   const doc=new DOMParser().parseFromString(html,'text/html');
   for(const a of doc.querySelectorAll('a,area')){a.removeAttribute('href');a.removeAttribute('target');a.setAttribute('aria-disabled','true');}
   for(const control of doc.querySelectorAll('button,input,select,textarea'))control.disabled=true;
-  const style=doc.createElement('style');style.textContent='a,area,button,input,select,textarea,[role=button]{pointer-events:none!important}.splide:not(.is-initialized){visibility:visible!important}.splide:not(.is-initialized) .splide__track{overflow-x:auto!important}.splide:not(.is-initialized) .splide__slide{flex:0 0 min(100%,360px)!important;min-width:0!important;white-space:normal!important}';style.textContent+='.topi_blog .scl_area{overflow:auto!important}';doc.head.append(style);
+  const style=doc.createElement('style');style.textContent='a,area,button,input,select,textarea,[role=button]{pointer-events:none!important}.splide:not(.is-initialized){visibility:visible!important}.splide:not(.is-initialized) .splide__track{overflow-x:auto!important}.splide:not(.is-initialized) .splide__slide{flex:0 0 min(100%,360px)!important;min-width:0!important;white-space:normal!important}';
+  // The source page initializes PerfectScrollbar here. Static previews use native scrolling.
+  style.textContent += '.topi_blog .scl_area{overflow:auto!important}';
+  doc.head.append(style);
   return '<!doctype html>\n'+doc.documentElement.outerHTML;
  }
  function normalize(change){
@@ -73,15 +76,38 @@
   const newsCandidates=all.filter(isNews);
   // Prefer the existing article list over an outer section containing several categories.
   const collections=newsCandidates.filter(e=>!newsCandidates.some(n=>n!==e&&e.contains(n)&&['DL','UL','OL'].includes(n.tagName)));
-  const news=collections.filter(e=>!collections.some(n=>n!==e&&n.contains(e)&&[...n.children].filter(c=>datePattern.test(text(c))&&text(c).length<2500).length>=2));
+  const preferred=collections.filter(e=>!collections.some(n=>n!==e&&n.contains(e)&&[...n.children].filter(c=>datePattern.test(text(c))&&text(c).length<2500).length>=2));
+  // A template row that is itself a complete collection is not a second collection.
+  const news=preferred.filter(e=>!preferred.some(n=>n!==e&&noticeRow(e)===n));
   const out=[],seen=new Set();let size=0;
-  function add(e,kind){const id=e.getAttribute('data-simy-edit-id');if(seen.has(id)||out.length>=220)return;let t=kind==='image'?(e.getAttribute('alt')||'画像'):(e.tagName==='BODY'?'ページ全体':text(e));if(!t)return;if(kind==='text'&&t.length>1800)return;t=t.slice(0,1800);let context=label(e);if(kind==='image'){context+=' / 用途:'+e.id+' '+e.className+' '+(e.parentElement?.className||'')+' '+(e.parentElement?.parentElement?.className||'')+' / 素材:'+(e.getAttribute('src')||'').split('/').pop();}try{const live=liveDocument?.querySelector('[data-simy-edit-id="'+id+'"]');if(live){if(kind==='image'){const rect=live.getBoundingClientRect();context+=' / 表示寸法:'+Math.round(rect.width)+'x'+Math.round(rect.height)+' / 元寸法:'+(live.naturalWidth||0)+'x'+(live.naturalHeight||0);}const css=liveDocument.defaultView.getComputedStyle(live);context+=' / 現在の文字サイズ:'+css.fontSize+'、文字色:'+css.color+'、背景:'+css.backgroundColor;}}catch{}const n={id,kind,tag:e.tagName.toLowerCase(),text:t,context:context.slice(0,300)};const len=JSON.stringify(n).length;if(size+len>35000)return;size+=len;seen.add(id);out.push(n);}
+  function add(e,kind){
+   const id=e.getAttribute('data-simy-edit-id');if(seen.has(id)||out.length>=220)return;
+   let t=kind==='image'?(e.getAttribute('alt')||'画像'):(e.tagName==='BODY'?'ページ全体':text(e));if(!t)return;
+   t=t.slice(0,kind==='element'?120:kind==='text'?600:1800);
+   let context=label(e),imageContext='';
+   if(kind==='image')imageContext='用途:'+(e.id+' '+e.className+' '+(e.parentElement?.className||'')+' '+(e.parentElement?.parentElement?.className||'')).slice(0,90)+' / 素材:'+(e.getAttribute('src')||'').split('/').pop().slice(0,60);
+   try{
+    const live=liveDocument?.querySelector('[data-simy-edit-id="'+id+'"]');
+    if(live){
+     const css=liveDocument.defaultView.getComputedStyle(live);
+     if(kind==='image'){
+      const box=live.getBoundingClientRect();
+      imageContext='画像の表示サイズ:'+Math.round(box.width)+'×'+Math.round(box.height)+'px / 元寸法:'+(live.naturalWidth||0)+'x'+(live.naturalHeight||0)+' / ページ上端から:'+Math.round(box.top+liveDocument.defaultView.scrollY)+'px / '+imageContext;
+     }
+     context+=' / 現在の文字サイズ:'+css.fontSize+'、文字色:'+css.color+'、背景:'+css.backgroundColor;
+    }
+   }catch{}
+   if(imageContext)context=imageContext+' / '+context;
+   const n={id,kind,tag:e.tagName.toLowerCase(),text:t,context:context.slice(0,300)};
+   const len=JSON.stringify(n).length;if(size+len>35000)return;size+=len;seen.add(id);out.push(n);
+  }
   add(doc.body,'element');
+  // Keep notice targets before optional structure summaries spend the shared budget.
+  news.forEach(e=>add(e,'news'));
   all.filter(e=>e.tagName==='IMG').slice(0,50).forEach(e=>add(e,'image'));
   if(liveDocument)all.filter(e=>e.tagName!=='IMG').forEach(e=>{try{const live=liveDocument.querySelector('[data-simy-edit-id="'+e.getAttribute('data-simy-edit-id')+'"]');if(live&&/^url\(/.test(liveDocument.defaultView.getComputedStyle(live).backgroundImage))add(e,'image');}catch{}});
   all.filter(e=>['SECTION','ARTICLE','HEADER','FOOTER','NAV'].includes(e.tagName)).slice(0,35).forEach(e=>add(e,'element'));
   all.filter(e=>['DIV','LI','FIGURE'].includes(e.tagName)&&/card|feature|reason/i.test(e.className||'')&&text(e).length<=1800).slice(0,35).forEach(e=>add(e,'element'));
-  news.forEach(e=>add(e,'news'));
   // Semantic headings and buttons first; then editable leaf paragraphs, avoiding nested duplicates.
   all.filter(e=>/^H[1-6]$/.test(e.tagName)||['A','BUTTON'].includes(e.tagName)).forEach(e=>add(e,'text'));
   all.filter(e=>!['DL','UL','OL','TABLE','TR','TBODY'].includes(e.tagName)&&text(e)&&![...e.children].some(c=>text(c)&&!['SPAN','BR','B','STRONG','EM','I','SMALL'].includes(c.tagName))).forEach(e=>add(e,'text'));
@@ -89,7 +115,7 @@
  };
  api.redesign=function(doc,theme,accent,liveDocument){
   // Keep visible CSS background photography when replacing the old design system.
-  if(liveDocument)for(const n of doc.body.querySelectorAll('[data-simy-edit-id]')){try{const live=liveDocument.querySelector('[data-simy-edit-id="'+n.getAttribute('data-simy-edit-id')+'"]');const bg=live&&liveDocument.defaultView.getComputedStyle(live).backgroundImage;const match=bg?.match(/^url\(["']?(https?:\/\/[^"')]+)["']?\)$/);if(match&&!n.children.length){const img=doc.createElement('img');img.src=match[1];img.alt='';n.append(img);}}catch{}}
+  if(liveDocument)for(const n of doc.body.querySelectorAll('[data-simy-edit-id]')){try{const live=liveDocument.querySelector('[data-simy-edit-id="'+n.getAttribute('data-simy-edit-id')+'"]');const bg=live&&liveDocument.defaultView.getComputedStyle(live).backgroundImage;const match=bg?.match(/^url\(["']?(https?:\/\/[^"')]+)["']?\)$/);if(match&&![...n.children].some(c=>c.getAttribute('data-simy-background')===match[1])){const img=doc.createElement('img');img.src=match[1];img.alt='';img.setAttribute('data-simy-background',match[1]);n.append(img);}}catch{}}
   for(const n of doc.querySelectorAll('link[rel="stylesheet"],style'))n.remove();
   for(const n of doc.body.querySelectorAll('*')){n.removeAttribute('style');n.removeAttribute('width');n.removeAttribute('height');}
   doc.body.removeAttribute('style');doc.body.setAttribute('data-simy-theme',theme);
