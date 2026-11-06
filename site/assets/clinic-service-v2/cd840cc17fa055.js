@@ -254,13 +254,59 @@ function sourceParagraph(text,sources=[]){
   if(!match){p.append(rest);break;}p.append(rest.slice(0,index));const a=element('a',match.label);a.href=match.url;a.target='_blank';a.rel='noopener';p.append(a);rest=rest.slice(index+match.label.length);
  }return p;
 }
-function continuousGrowthSupport(report,growth){
- const box=element('section','','growth-continuous');box.append(element('p','紹介された、その先も。','growth-step'),element('h4','選ばれ続けるホームページを、SIMYと。','growth-section-title'));
- if(growth.discovery?.observed)box.append(element('p',growth.name+'は、今回のAI回答'+growth.discovery.observed+'件中'+growth.discovery.mentioned+'件に登場しました。次は、自院の情報を充実させながら、近隣医院の変化も確認していくこと。','growth-lead'));
- const grid=element('div','','growth-continuous-grid');
- for(const [title,body] of [['日々の診療を、医院の強みに。','同意を得て日々の診療を録音し、患者さんを特定できる情報を除去。先生の説明や、診療で気づいた感染症の状況をAIが記事案に整理し、先生の確認・承認後に公開する仕組みを構築できます。'],['近隣医院の変化も、AIが確認。','近隣の医療機関の公開ホームページを定期的に確認。診療案内・記事・予約導線などの変化を整理し、自院の改善候補をお届けする機能も一緒に作れます。']]){const card=element('article','');card.append(element('h4',title),element('p',body));grid.append(card);}box.append(grid,element('p','録音の同意 → 患者情報の除去 → AIが記事案を作成 → 先生が確認 → 公開','growth-continuous-flow'));
- box.append(element('p','録音・記事化・近隣医院の変化確認は、ご希望と運用に合わせて構築する機能です。実施範囲・費用はご相談のうえで決めます。感染症に関する記事は公表情報とも照合します。','growth-scope'));
- const button=element('button','継続的な集患支援を相談・申し込む →','button button-primary growth-support-apply');button.type='button';button.addEventListener('click',()=>window.SimyClinicApplication?.open({assistance:true,sourceUrl:report.url,trigger:button,intent:'診療録音からの記事化と、近隣医院の公開サイトの変化確認を行う仕組みを相談したい'}));box.append(button);return box;
+function continuousGrowthSupport(report,growth) {
+  const box = element('section','','growth-continuous growth-manga');
+  box.append(
+    element('p','紹介された、その先も。','growth-step'),
+    element('h4','いつもの説明が、来院前の安心に。','growth-section-title')
+  );
+  if (growth.discovery?.observed) {
+    box.append(element('p',growth.name+'は、今回のAI回答'+growth.discovery.observed+'件中'+growth.discovery.mentioned+'件に登場しました。','growth-lead'));
+  }
+  box.append(
+    element('p','診療でよく伝えることを記事に。近隣医院の変化もヒントに、患者さんが迷わない案内へ。','growth-manga-intro'),
+    element('p','クリニックでの活用イメージ','growth-step')
+  );
+
+  const panels = [
+    ['よくある質問を、記事の種に','「初診の持ち物、毎回聞かれるね」','同意を得た録音や診療後のメモから、よく聞かれる説明を集めます。'],
+    ['AIが下書き。先生が仕上げる','「記事案があるなら、確認から始められる」','患者さんを特定できる情報を除き、AIが記事案に。先生が確認・承認してから公開します。'],
+    ['近隣の変化から、次の改善が見える','「近くの医院が予約ボタンを変えました」','AIが近隣医院の公開ページを定期確認。診療案内や予約ボタンの変化を見て、自院の案内を見直せます。'],
+    ['患者さんが、来院前に準備できる','「持ち物も予約先も、ここで分かる！」','初診の持ち物と予約先をひとつの記事で確認。患者さんが次の行動を選びやすくなります。'],
+  ];
+  const story = element('ol','','growth-manga-panels');
+  panels.forEach(([title,dialogue,caption],index)=>{
+    const panel = element('li','','growth-manga-panel');
+    const art = element('img','');
+    art.src = '/assets/clinic-service-v2/clinic-growth-manga-'+(index+1)+'.webp';
+    art.alt = dialogue;
+    art.width = 752;
+    art.height = 498;
+    art.loading = 'lazy';
+    art.decoding = 'async';
+    const copy = element('div','','growth-manga-caption');
+    copy.append(element('h5',title),element('p',caption));
+    panel.append(art,copy);
+    story.append(panel);
+  });
+  box.append(story);
+
+  const next = element('div','','growth-manga-next');
+  next.append(
+    element('p','まずは、患者さんによく聞かれる質問をひとつ。','growth-manga-next-title'),
+    element('p','自院で記事にできるテーマと、見ておきたい近隣サイトをSIMYと一緒に整理できます。','growth-manga-next-copy')
+  );
+  const button = element('button','うちの医院でも相談する →','button button-primary growth-support-apply');
+  button.type = 'button';
+  button.addEventListener('click',()=>window.SimyClinicApplication?.open({
+    assistance:true,
+    sourceUrl:report.url,
+    trigger:button,
+    intent:'診療録音からの記事化と、近隣医院の公開サイトの変化確認を行う仕組みを相談したい'
+  }));
+  next.append(button,element('p','録音・記事化・近隣サイトの確認範囲と費用はご相談時に決めます。感染症の記事は公表情報とも照合します。','growth-scope'));
+  box.append(next);
+  return box;
 }
 function renderSearchChecks(report){
   const growth=window.SimyClinicGrowth.model(report);
