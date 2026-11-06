@@ -16,7 +16,7 @@
       const boldResponse=await fetch('/vendor/report-pdf/NotoSansJP-Bold.ttf',{signal:AbortSignal.timeout(60000)});
       if(!boldResponse.ok)throw Error('見出しフォントを読み込めませんでした');
       const boldBytes=new Uint8Array(await boldResponse.arrayBuffer());let boldBinary='';for(let i=0;i<boldBytes.length;i+=32768)boldBinary+=String.fromCharCode(...boldBytes.subarray(i,i+32768));
-      const illustrations={};for(const [key,path] of Object.entries({content:'/assets/website-check/clinic-content-journey.png',consultation:'/assets/website-check/clinic-provider-review-v2.png'})){const response=await fetch(path,{signal:AbortSignal.timeout(30000)});if(!response.ok)throw Error('レポート画像を読み込めませんでした');const bytes=new Uint8Array(await response.arrayBuffer());let binary='';for(let i=0;i<bytes.length;i+=32768)binary+=String.fromCharCode(...bytes.subarray(i,i+32768));illustrations[key]='data:image/png;base64,'+btoa(binary);}
+      const illustrations={};for(const [key,path] of Object.entries({consultation:'/assets/website-check/clinic-provider-review-v2.png',...Object.fromEntries(Array.from({length:6},(_,i)=>['growth'+i,'/assets/clinic-service-v2/clinic-growth-workflow-'+(i+1)+'.webp']))})){const response=await fetch(path,{signal:AbortSignal.timeout(30000)});if(!response.ok)throw Error('レポート画像を読み込めませんでした');const bytes=new Uint8Array(await response.arrayBuffer());let binary='';for(let i=0;i<bytes.length;i+=32768)binary+=String.fromCharCode(...bytes.subarray(i,i+32768));illustrations[key]='data:image/'+(path.endsWith('.webp')?'webp':'png')+';base64,'+btoa(binary);}
       return {font:btoa(binary),bold:btoa(boldBinary),logo:btoa(iconBinary),illustrations};
     })().catch(error => { dependencies = null; throw error; });
     return dependencies;
@@ -125,30 +125,34 @@ function contact(){ensure(28);box(left,y,width,24,C.mint);write('この診断結
       }
       if(growth.audit){const a=growth.audit;page('PATIENT JOURNEY');heading('02 / PATIENT JOURNEY','正しい案内から、予約まで。',a.summary);
        for(const item of a.findings){card(item.priority+' / '+item.title,item.observation+'\n保護者への影響：'+item.impact+'\n改善案：'+item.change);for(const source of item.sources)sourceLink(source.label,source.url);}
-       card('すでに案内できていること',a.confirmed.join('\n'));for(const source of a.confirmedSources||[])sourceLink(source.label,source.url);card('成長相談ページの掲載案',a.proposal.heading+'\n'+a.proposal.body+'\n'+a.proposal.button+'\n'+a.proposal.note);paragraph('別途確認日：'+a.checkedOn+'。'+a.scope,8);
+       card('すでに案内できていること',a.confirmed.join('\n'));for(const source of a.confirmedSources||[])sourceLink(source.label,source.url);card('成長相談ページの掲載案',a.proposal.heading+'\n'+a.proposal.body+'\n案内文の例：「'+a.proposal.button+'」'+'\n'+a.proposal.note);paragraph('別途確認日：'+a.checkedOn+'。'+a.scope,8);
       }
       if(growth.contentAvailable){
       if(growth.discovery||growth.audit){page('GROWTH / WEBSITE');heading((growth.audit?'03':'02')+' / WEBSITE','診断時に取得した本文のAI分析',growth.contentSummary);}else{paragraph('診断時に取得した本文のAI分析',12,C.ink);paragraph(growth.contentSummary,9);}
       table('本文から確認した数値',['項目','確認結果'],growth.metrics,[110,66]);
       for(const [i,item] of growth.priorities.entries())card(String(i+1).padStart(2,'0')+' / '+item.title,'現状：'+item.observation+'\n改善案：'+item.change);
-      card('トップページの掲載案',growth.proposal.heading+'\n'+growth.proposal.description+'\n'+growth.proposal.button);
+      card('トップページの掲載案',growth.proposal.heading+'\n'+growth.proposal.description+'\n案内文の例：「'+growth.proposal.button+'」');
       table('初めての患者さんに必要な案内',['項目','公開本文で確認できたこと'],growth.questions.map(q=>[q.label,q.status+'\n'+q.answer]),[42,134]);
       for(const source of growth.sources||[])sourceLink(source.title||source.label||'確認したページ',source.url);paragraph(growth.scope+' 掲載案は医院で内容をご確認ください。',8);}
     }
 
     page('CONTENT & DISCOVERY');
 heading('INTERVIEW TO CONTENT','セキュリティから、集患まで。SIMYに。','Googleマップでも、AI検索でも。医院を探す患者さんに、見つけてもらうために。');
-paragraph('取材で伺った先生の説明や、患者さんからよく寄せられる質問を、AIが記事案に整えます。',10);
-illustration('content');
-paragraph('取材・素材の整理 / 個人を特定できる情報の除去 / AIが記事案を作成 / 先生が確認して公開',9,C.ink);
-paragraph('氏名・連絡先・受診歴などは記事に含めず、匿名化後も個人を推測できる記述がないか確認します。公開頻度は医院と相談し、継続して内容を充実させます。',9);
+paragraph('専門外来で診る範囲や受診の目安など、医院を選ぶ判断材料を、先生の説明と根拠を添えて掲載します。',10);
+if(illustrations.growth0){
+  const gap=3, tile=(width-2*gap)/3;
+  ensure(2*(tile+gap)+5);
+  for(let i=0;i<6;i++)doc.addImage(illustrations['growth'+i],'WEBP',left+(i%3)*(tile+gap),y+Math.floor(i/3)*(tile+gap),tile,tile);
+  y+=2*(tile+gap)+4;
+}
+paragraph('同意を得て録音 → 個人情報を除く → AIが記事案を作成 → 先生が確認して公開',9,C.ink);
+paragraph('音声と確認前の文字起こしは端末内で処理します。氏名や連絡先に加え、受診日や病歴の組み合わせから個人を特定できないか人が確認し、確認済みの要点だけを記事作成用のAIに渡します。',9);
 contact();
-page('CONTINUOUS GROWTH');heading('GROWTH, EVERY DAY','選ばれ続けるホームページを、SIMYと。','紹介された、その先も。自院の情報を充実させながら、近隣医院の変化を確認していく仕組みを一緒に構築できます。');
-card('日々の診療を、医院の強みに。','同意を得て日々の診療を録音し、患者さんを特定できる情報を除去。先生の説明や、診療で気づいた感染症の状況をAIが記事案に整理し、先生の確認・承認後に公開する仕組みを構築できます。');
-card('近隣医院の変化も、AIが確認。','近隣の医療機関の公開ホームページを定期的に確認。診療案内・記事・予約導線などの変化を整理し、自院の改善候補をお届けする機能も一緒に作れます。');
-paragraph('録音の同意 → 患者情報の除去 → AIが記事案を作成 → 先生が確認 → 公開',9,C.ink);
-paragraph('ご希望と運用に合わせて構築する機能です。実施範囲・費用はご相談のうえで決めます。感染症に関する記事は公表情報とも照合します。',8);
-sourceLink('継続的な集患支援を相談・申し込む','https://simy.one/hp-management/clinic.html#pricing');
+page('CONTINUOUS GROWTH');heading('GROWTH, EVERY DAY','AI検索の実測から、次の改善へ。','医院名の登場、公式ページへのリンク、診療案内の正確さを確かめ、優先して整える公式ページを決めます。');
+card('専門性が伝わる公式ページを整える','専門外来の対象や担当医、受診の目安、予約方法を分かりやすく掲載します。公開後は同じ質問で測り直し、医院名と公式ページへのリンクを確認します。');
+card('近隣医院の変化も、AIが確認。','登録した近隣医院の公開サイトを定期的に確認します。診療案内や予約方法の変更箇所を見比べ、自院で見直す情報を判断できます。');
+paragraph('地域の感染症情報には、公表元・集計期間・更新日を添えます。先生の専門分野や治療方針も、受診先を選ぶ際の判断材料になります。',8);
+sourceLink('AI検索の改善を相談する','https://simy.one/hp-management/clinic.html#continuous-growth-apply');
 page('MIGRATION');heading('DIAGNOSIS TO ACTION','今のホームページを、SIMYへ。','URLも、見慣れたデザインも。医院には情報の受け取りと内容の確認をお願いします。準備から公開までSIMYが進めます。');
     card('01 / 今の管理会社から、移管情報を受け取ります。','HTML・画像・管理情報を受け取ります。ドメイン登録会社の移管が必要なら「AuthCode（オースコード）」も依頼します。必要な依頼内容はSIMYがご案内します。');
     card('02 / 今の見た目を、最新の技術で作り直します。','既存データを引き継ぐか、同じ見た目・内容を最新技術で無料で再制作します。必要な権利・許諾と対象範囲を確認して着手し、公開前に先生に画面をご確認いただきます。');
