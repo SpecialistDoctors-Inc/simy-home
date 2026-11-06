@@ -258,30 +258,32 @@ function continuousGrowthSupport(report,growth) {
   const box = element('section','','growth-continuous growth-manga');
   box.append(
     element('p','紹介された、その先も。','growth-step'),
-    element('h4','いつもの説明が、来院前の安心に。','growth-section-title')
+    element('h4','診察で話したことが、医院のホームページを育てる。','growth-section-title')
   );
   if (growth.discovery?.observed) {
     box.append(element('p',growth.name+'は、今回のAI回答'+growth.discovery.observed+'件中'+growth.discovery.mentioned+'件に登場しました。','growth-lead'));
   }
   box.append(
-    element('p','診療でよく伝えることを記事に。近隣医院の変化もヒントに、患者さんが迷わない案内へ。','growth-manga-intro'),
-    element('p','クリニックでの活用イメージ','growth-step')
+    element('p','診察を録音。AIが記事案を作り、先生が確認して公開。近隣医院のサイトの更新も、自院の改善に生かせます。','growth-manga-intro'),
+    element('p','導入後の活用イメージ','growth-step')
   );
 
   const panels = [
-    ['よくある質問を、記事の種に','「初診の持ち物、毎回聞かれるね」','同意を得た録音や診療後のメモから、よく聞かれる説明を集めます。'],
-    ['AIが下書き。先生が仕上げる','「記事案があるなら、確認から始められる」','患者さんを特定できる情報を除き、AIが記事案に。先生が確認・承認してから公開します。'],
-    ['近隣の変化から、次の改善が見える','「近くの医院が予約ボタンを変えました」','AIが近隣医院の公開ページを定期確認。診療案内や予約ボタンの変化を見て、自院の案内を見直せます。'],
-    ['患者さんが、来院前に準備できる','「持ち物も予約先も、ここで分かる！」','初診の持ち物と予約先をひとつの記事で確認。患者さんが次の行動を選びやすくなります。'],
+    ['同意を得て診察を録音','診察室で、先生が保護者に「録音してもいいですか？」と確認する','いつもの診察で伝えている説明を、患者さんの同意を得て録音します。'],
+    ['AIが個人情報を除き、記事案に','録音の波形から、名前などを伏せた文章と記事案ができる','AIが文字起こしから氏名などを見つけて伏せ、見出しや質問・回答のある記事案を自動で作ります。'],
+    ['先生が確認し、ボタンで公開','先生がタブレットで記事を読み、「公開する」を押す','個人を特定できる記述が残っていないか、内容と根拠は正しいかを先生が確認。承認した内容を公開します。'],
+    ['役立つ記事が、医院のサイトに増える','医院のホームページに、発熱や予防接種、初診案内などの記事が並ぶ','よくある質問、受診の目安、持ち物、出典まで。診療で積み重ねた知見が、読み応えのある記事として残ります。'],
+    ['AI検索で、医院の記事にたどり着けるように','自宅で保護者がAI回答の出典を見て「この医院の記事だ」と気づく','質問に答える見出しや出典を整え、患者さんにもAI検索にも内容が伝わりやすいページにします。'],
+    ['近隣医院の更新も見渡せる','受付スタッフが近隣の地図と公開ページの更新前後を見比べる','登録した近隣医院の公開サイトを定期確認。診療案内や予約の文言など、変わった箇所を自院の改善に生かせます。'],
   ];
   const story = element('ol','','growth-manga-panels');
   panels.forEach(([title,dialogue,caption],index)=>{
     const panel = element('li','','growth-manga-panel');
     const art = element('img','');
-    art.src = '/assets/clinic-service-v2/clinic-growth-manga-'+(index+1)+'.webp';
+    art.src = '/assets/clinic-service-v2/clinic-growth-workflow-'+(index+1)+'.webp';
     art.alt = dialogue;
-    art.width = 752;
-    art.height = 498;
+    art.width = 508;
+    art.height = 508;
     art.loading = 'lazy';
     art.decoding = 'async';
     const copy = element('div','','growth-manga-caption');
@@ -293,8 +295,8 @@ function continuousGrowthSupport(report,growth) {
 
   const next = element('div','','growth-manga-next');
   next.append(
-    element('p','まずは、患者さんによく聞かれる質問をひとつ。','growth-manga-next-title'),
-    element('p','自院で記事にできるテーマと、見ておきたい近隣サイトをSIMYと一緒に整理できます。','growth-manga-next-copy')
+    element('p','まずは、よく聞かれる質問を一本の記事に。','growth-manga-next-title'),
+    element('p','記事にしたい診療テーマと、見ておきたい近隣サイトから、貴院で続けられる運用を一緒に考えます。','growth-manga-next-copy')
   );
   const button = element('button','うちの医院でも相談する →','button button-primary growth-support-apply');
   button.type = 'button';
@@ -304,7 +306,7 @@ function continuousGrowthSupport(report,growth) {
     trigger:button,
     intent:'診療録音からの記事化と、近隣医院の公開サイトの変化確認を行う仕組みを相談したい'
   }));
-  next.append(button,element('p','録音・記事化・近隣サイトの確認範囲と費用はご相談時に決めます。感染症の記事は公表情報とも照合します。','growth-scope'));
+  next.append(button,element('p','録音後の自動処理や医院サイトへの公開連携は、運用に合わせて構築します。対象範囲・費用はご相談時に決めます。感染症の記事は公表情報とも照合します。','growth-scope'));
   box.append(next);
   return box;
 }
