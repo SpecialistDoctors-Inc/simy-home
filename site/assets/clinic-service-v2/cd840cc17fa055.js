@@ -273,7 +273,7 @@ function continuousGrowthSupport(report,growth) {
     ['同意を得て診察を録音','診察室で、先生が保護者に「録音してもいいですか？」と確認する','録音の目的を説明し、患者さんや保護者の同意を得てから、いつもの診察での説明を録音します。'],
     ['個人情報を除き、確認した要点をAIへ','録音の波形から、名前などを伏せた文章と記事案ができる','端末で文字起こしし、氏名などを伏せる作業を補助します。氏名や連絡先に加え、受診日・病歴などを組み合わせて個人が分からないか人が確認し、確認済みの要点だけをAIに渡します。'],
     ['先生が確認し、ボタンで公開','先生がタブレットで記事を読み、「公開する」を押す','個人を特定できる記述が残っていないか、内容と根拠は正しいかを先生が確認。承認した内容を公開します。'],
-    ['医院の専門性が伝わるページに','医院のホームページに、発熱や予防接種、初診案内などの記事が並ぶ','専門外来で診る範囲や受診の目安など、医院を選ぶ判断材料を、先生の説明と根拠を添えて掲載します。'],
+    ['医院の専門性や最新の感染症情報が伝わるページに','医院のホームページに、発熱や予防接種、初診案内などの記事が並ぶ','専門外来で診る範囲や受診の目安は先生の言葉で伝えます。地域で流行している感染症は、公表データの出典と更新日を添えて掲載します。'],
     ['AI検索で、医院の記事にたどり着けるように','自宅で保護者がAI回答の出典を見て「この医院の記事だ」と気づく','公開後に同じ質問で測り直し、回答に医院名が出るか、公式ページへのリンクから受診案内にたどり着けるかを確認します。'],
     ['近隣医院の更新も見渡せる','受付スタッフが近隣の地図と公開ページの更新前後を見比べる','登録した近隣医院の公開サイトを定期確認。診療案内や予約の文言など、変わった箇所を自院の改善に生かせます。'],
   ];
@@ -341,7 +341,12 @@ function renderSearchChecks(report){
   const growth=window.SimyClinicGrowth.model(report);
   const section=element('section','','report-search-checks growth-report');
   section.append(element('p','集客診断 · '+growth.name,'growth-kicker'));
-  if(!growth.available){section.append(element('h3','集客分析は、まだ完了していません。'),element('p',growth.scope,'growth-scope'));results.append(section);return;}
+  if(!growth.available){
+    section.append(element('h3','集客分析は、まだ完了していません。'),element('p',growth.scope,'growth-scope'));
+    if(window.SimyClinicPortal===true) section.append(continuousGrowthSupport(report,growth));
+    results.append(section);
+    return;
+  }
   section.append(element('h3',growth.headline),element('p',growth.intro,'growth-lead'));
   if(growth.discovery){const d=growth.discovery;const discovery=element('section','','growth-discovery');
    discovery.append(element('p','01 / AI検索で見つかるか','growth-step'),element('h4','医院名なしで、紹介されるかを実測。','growth-section-title'));
