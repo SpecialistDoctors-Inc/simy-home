@@ -87,3 +87,5 @@ body:has(.growth-report) .report-download-dock .button{min-height:44px;font-size
   .growth-manga-topics-list,.growth-manga-privacy-list{grid-template-columns:minmax(0,1fr)}
   .growth-manga-privacy{padding:14px}
 }
+
+.growth-manga .growth-manga-reassurance{margin:14px 0 20px;padding:10px 14px;border-inline-start:3px solid #2c7766;background:#f5faf8;color:#27473e;font-size:15px;line-height:1.65}
