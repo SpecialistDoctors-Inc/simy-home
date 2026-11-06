@@ -421,6 +421,24 @@ function renderReport(report) {
   const consent=element('label','','report-rebuild-consent');const rights=element('input','');rights.type='checkbox';rights.name='rights';rights.required=true;consent.append(rights,document.createTextNode('このページを再制作する権限があります。'));
   const status=element('p','','rebuild-status');status.setAttribute('role','status');status.setAttribute('aria-live','polite');
   rebuild.append(urlLabel,entry,consent,status);next.append(rebuild);results.append(next);
+  if(window.SimyClinicInsurance?.enabled() && window.SimyInsurancePreparation){
+    const insurance=element('section','','report-edit-next');
+    insurance.append(
+      element('h3','サイバー事故でかかる費用、何に備えたいですか。'),
+      element('p','調査・復旧、患者情報の漏えい対応、休業中の損失。相談したい備えを選んで、サイバー保険の相談を準備できます。')
+    );
+    if(window.SimyClinicPortal===true){
+      const link=element('a','保険相談の質問に進む →','button button-primary');
+      link.href='#clinic-insurance';
+      insurance.append(link);
+    }else{
+      const button=element('button','保険相談の質問に進む →','button button-primary');
+      button.type='button';
+      button.addEventListener('click',()=>window.SimyInsurancePreparation.open({url:report.url}));
+      insurance.append(button);
+    }
+    results.append(insurance);
+  }
   gateReport(report);
   const rebuildInput=document.querySelector('#rebuild-url');if(rebuildInput&&!rebuildInput.value)rebuildInput.value=report.url;
 }
