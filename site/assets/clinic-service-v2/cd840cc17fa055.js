@@ -269,10 +269,10 @@ function continuousGrowthSupport(report,growth) {
   );
 
   const panels = [
-    ['同意を得て診察を録音','診察室で、先生が保護者に「録音してもいいですか？」と確認する','いつもの診察で伝えている説明を、患者さんの同意を得て録音します。'],
-    ['AIが個人情報を除き、記事案に','録音の波形から、名前などを伏せた文章と記事案ができる','AIが文字起こしから氏名などを見つけて伏せ、見出しや質問・回答のある記事案を自動で作ります。'],
+    ['同意を得て診察を録音','診察室で、先生が保護者に「録音してもいいですか？」と確認する','録音の目的を説明し、患者さんや保護者の同意を得てから、いつもの診察での説明を録音します。'],
+    ['AIが個人情報を除き、記事案に','録音の波形から、名前などを伏せた文章と記事案ができる','端末で文字起こしし、個人を特定できる情報を除く作業を補助。確認済みの要点から、AIが記事案を作ります。'],
     ['先生が確認し、ボタンで公開','先生がタブレットで記事を読み、「公開する」を押す','個人を特定できる記述が残っていないか、内容と根拠は正しいかを先生が確認。承認した内容を公開します。'],
-    ['役立つ記事が、医院のサイトに増える','医院のホームページに、発熱や予防接種、初診案内などの記事が並ぶ','よくある質問、受診の目安、持ち物、出典まで。診療で積み重ねた知見が、読み応えのある記事として残ります。'],
+    ['役立つ記事が、医院のサイトに増える','医院のホームページに、発熱や予防接種、初診案内などの記事が並ぶ','地域の感染症情報、先生の専門分野、治療で大切にしていること。医院ならではの知見が、読み応えのある記事として蓄積します。'],
     ['AI検索で、医院の記事にたどり着けるように','自宅で保護者がAI回答の出典を見て「この医院の記事だ」と気づく','質問に答える見出しや出典を整え、患者さんにもAI検索にも内容が伝わりやすいページにします。'],
     ['近隣医院の更新も見渡せる','受付スタッフが近隣の地図と公開ページの更新前後を見比べる','登録した近隣医院の公開サイトを定期確認。診療案内や予約の文言など、変わった箇所を自院の改善に生かせます。'],
   ];
@@ -293,6 +293,40 @@ function continuousGrowthSupport(report,growth) {
   });
   box.append(story);
 
+  const topics = element('section','','growth-manga-topics');
+  topics.append(element('h5','診療の知見が、こんな記事に'));
+  const examples = element('ul','','growth-manga-topics-list');
+  for (const [label,example,description] of [
+    ['感染症の流行状況','「今、地域でどんな感染症が増えていますか？」','公表データで地域・集計時期を確かめ、更新日と出典を添えます。'],
+    ['先生の専門分野','「小児アレルギーの初診では、何を相談できますか？」','専門外来で診る範囲や、診察・検査の進め方を先生の言葉で伝えます。'],
+    ['治療で大切にしていること','「治療の選択肢を、どう一緒に決めるのか」','先生が大切にしている考え方や、ご家族と話し合うときの工夫を紹介します。'],
+  ]) {
+    const item = element('li','');
+    item.append(element('strong',label),element('p',example,'growth-manga-topic-example'),element('p',description));
+    examples.append(item);
+  }
+  topics.append(examples);
+  box.append(topics);
+
+  const privacy = element('section','','growth-manga-privacy');
+  privacy.append(
+    element('h5','患者さんの情報を守る、録音から公開まで'),
+    element('p','記事に使うのは、個人が分からない形に整理した診療の知見です。')
+  );
+  const steps = element('ol','','growth-manga-privacy-list');
+  for (const [title,description] of [
+    ['録音の前に同意を確認','録音の目的と記事作成への利用を説明し、同意を得てから録音します。同意がなければ録音せず、個人情報を含まない診療後のメモを使えます。'],
+    ['音声と確認前の文字起こしは端末内','録音と文字起こしは端末内で処理します。音声や確認前の文字起こしを、SIMYや記事作成用のAIへ送信することはありません。'],
+    ['確認済みの要点だけを記事作成用のAIへ','氏名や連絡先のほか、受診日、病歴、珍しい症例など、組み合わせで個人が分かる情報も人が確認して除きます。確認を終えた要点だけを送ります。'],
+    ['先生の承認後に公開','記事案に個人を特定できる内容が残っていないか、説明や出典が正しいかを先生が確認し、公開ボタンを押します。'],
+  ]) {
+    const item = element('li','');
+    item.append(element('strong',title),element('p',description));
+    steps.append(item);
+  }
+  privacy.append(steps);
+  box.append(privacy);
+
   const next = element('div','','growth-manga-next');
   next.append(
     element('p','まずは、よく聞かれる質問を一本の記事に。','growth-manga-next-title'),
@@ -306,7 +340,7 @@ function continuousGrowthSupport(report,growth) {
     trigger:button,
     intent:'診療録音からの記事化と、近隣医院の公開サイトの変化確認を行う仕組みを相談したい'
   }));
-  next.append(button,element('p','録音後の自動処理や医院サイトへの公開連携は、運用に合わせて構築します。対象範囲・費用はご相談時に決めます。感染症の記事は公表情報とも照合します。','growth-scope'));
+  next.append(button,element('p','録音後の処理を自動化する範囲や、医院サイトへの公開連携、費用は、運用に合わせてご相談します。','growth-scope'));
   box.append(next);
   return box;
 }
