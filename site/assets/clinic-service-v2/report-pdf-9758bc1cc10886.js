@@ -162,23 +162,12 @@ page('MIGRATION');heading('DIAGNOSIS TO ACTION','今のホームページを、S
     card('医院が権利をお持ちの場合','契約上、利用できる範囲を確認して引き継ぎます。');card('制作会社などが権利を持つ場合','データ引き渡し・移設・作り替え・公開・今後の更新について、権利者の許可を得て進めます。確認事項や依頼文はSIMYがご案内します。');card('許可を得られない素材がある場合','そのデザイン・文章・写真などは使用せず、新しく制作・差し替えます。');
     paragraph('同じ見た目・内容での再制作は必要な権利・許諾を確認できた範囲で対応します。写真素材・フォント・テンプレートの利用条件も確認し、許諾の対象と範囲を書面やメールで残します。',8);
     contact();
-    if(insuranceEnabled){page('CYBER INSURANCE');
-heading('MEDICAL INFORMATION / CYBER INSURANCE',"サイバー保険を検討する際に","サイバー保険は、情報漏えいやサイバー攻撃による費用負担に備える選択肢です。");
-paragraph("情報漏えいやサイバー攻撃による、原因調査・復旧・損害賠償などの費用負担に備える商品があります。休業による利益損失などは、商品・プラン・特約によって異なります。",10);
-table('ご検討いただける補償の例',['備えたいこと','費用・損害の例'],[["原因・被害範囲の調査", "事故の原因や影響を調べる費用。"], ["システム・データの復旧", "事故で損傷したシステムやデータを復旧する費用。"], ["損害賠償・法律相談", "法律上の損害賠償責任を負った場合の賠償金や、対応に必要な費用。"], ["休業中の損失への備え", "システム停止による利益損失や営業継続費用。商品・プラン・特約等の確認が必要です。"]],[44,132]);
-paragraph("補償の範囲、支払限度額、自己負担額、保険金をお支払いできない場合は契約によって異なります。ご検討の際は、取扱代理店の説明と重要事項説明書・約款をご確認ください。",9);
-paragraph("この診断は、対象の公開Webサイトを外部から確認した結果です。院内ネットワーク、電子カルテ、職員端末などの対策状況や、保険への加入可否・保険料を判定するものではありません。",9);
-paragraph('SIMYの月額保守料には保険料を含みません。',8);
-ensure(30);box(left,y,width,26);write("見積りの進め方をSIMYに相談する",left+6,y+10,11,width-12,C.blue);write('sales@simy.one',left+6,y+19,10,width-12,C.blue);
-const insuranceMail="mailto:sales@simy.one?subject=%E3%82%B5%E3%82%A4%E3%83%90%E3%83%BC%E4%BF%9D%E9%99%BA%E3%81%AE%E8%A6%8B%E7%A9%8D%E3%82%8A%E3%81%AB%E9%96%A2%E3%81%99%E3%82%8B%E7%9B%B8%E8%AB%87&body=%E3%82%B5%E3%82%A4%E3%83%90%E3%83%BC%E4%BF%9D%E9%99%BA%E3%81%AE%E8%A6%8B%E7%A9%8D%E3%82%8A%E3%81%AE%E9%80%B2%E3%82%81%E6%96%B9%E3%82%92%E7%9B%B8%E8%AB%87%E3%81%97%E3%81%9F%E3%81%84%E3%81%A7%E3%81%99%E3%80%82%0A%0A%E3%82%AF%E3%83%AA%E3%83%8B%E3%83%83%E3%82%AF%E5%90%8D%EF%BC%9A%0A%E3%81%94%E6%8B%85%E5%BD%93%E8%80%85%E5%90%8D%EF%BC%9A%0A%E3%81%94%E9%80%A3%E7%B5%A1%E5%85%88%EF%BC%9A%0A%0A%E2%80%BB%E6%82%A3%E8%80%85%E3%81%95%E3%81%BE%E3%81%AE%E6%83%85%E5%A0%B1%E3%80%81%E8%A9%B3%E3%81%97%E3%81%84%E4%BA%8B%E6%95%85%E6%83%85%E5%A0%B1%E3%80%81%E8%A8%98%E5%85%A5%E6%B8%88%E3%81%BF%E3%81%AE%E5%91%8A%E7%9F%A5%E6%9B%B8%E3%81%AF%E6%B7%BB%E4%BB%98%E3%81%97%E3%81%AA%E3%81%84%E3%81%A7%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82";doc.link(left,y,width,26,{url:insuranceMail});y+=34;
-paragraph("メール作成画面が開きます。診断結果・告知書は自動送信されません。",8);
-paragraph("見積りには、売上や保険会社ごとの質問へのご回答が別途必要です。",8);
-paragraph("初回のご相談には、患者さまの情報、詳しい事故情報、記入済みの告知書を添付しないでください。",8);
-paragraph('補償内容の参考：保険会社の公式資料（2026年11月5日確認）。特定の商品・取扱先を推奨するものではありません。',7);
-write("東京海上日動の公式資料",left,y,7,width,C.blue);doc.link(left,y-4,80,6,{url:"https://www.tokiomarine-nichido.co.jp/hojin/baiseki/cyber/"});y+=8;
-write("三井住友海上の公式資料",left,y,7,width,C.blue);doc.link(left,y-4,80,6,{url:"https://www.ms-ins.com/business/indemnity/pd-protector/"});y+=8;
-write("損保ジャパンの公式資料",left,y,7,width,C.blue);doc.link(left,y-4,80,6,{url:"https://www.sompo-japan.co.jp/hinsurance/cyberrisk/"});y+=8;
-}
+    if(insuranceEnabled){
+      page('CYBER INSURANCE');
+      heading('CYBER INSURANCE','保険代理店への取次ぎ','SIMYが取次ぎの申込みを受け付けます。');
+      paragraph('フォームに医院名・担当者名・連絡先メールアドレスを入力し、提供に同意いただくと、SIMYが株式会社メディカル保険サービスへ取り次ぎます。同社からパンフレットとチェックシートをご案内します。',10);
+      sourceLink('取次ぎ申込フォーム（ログインが必要）','https://simy-website-diagnosis.tetsuo.chatgpt.site/clinic-portal?insurance-referral=1#clinic-insurance');
+    }
 const count=doc.getNumberOfPages();for(let i=1;i<=count;i++){doc.setPage(i);doc.setDrawColor(...C.line);doc.line(left,280,193,280);write('SIMY HP管理 · 公開情報に基づく確認レポート',left,285,6,115,C.muted);write('sales@simy.one',left,290,7,110,C.blue);doc.link(left,286,75,6,{url:mail});write(i+' / '+count,178,286,7,15,C.muted);}
     return doc;
   }
