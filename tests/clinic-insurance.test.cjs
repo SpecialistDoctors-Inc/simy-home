@@ -1,6 +1,6 @@
 const {test}=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
-test('insurance distribution setting defaults on and explicitly disables both DOM policy and PDF model',()=>{
- for(const [search,on] of [['',true],['?insurance=off',false],['?insurance=on',true],['?insurance=other',true]]){
+test('paused insurance stays out of the page and PDF model even with a saved link',()=>{
+ for(const [search,on] of [['',false],['?insurance=off',false],['?insurance=on',false],['?insurance=other',false]]){
   const local={URLSearchParams,location:{search},document:{documentElement:{dataset:{}}}};local.window=local;
   vm.runInNewContext(fs.readFileSync('site/clinic-insurance.js','utf8'),local);
   assert.equal(local.SimyClinicInsurance.enabled(),on);assert.equal(local.document.documentElement.dataset.clinicInsurance,on?'on':'off');
