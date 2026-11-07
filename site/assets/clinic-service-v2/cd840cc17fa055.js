@@ -421,22 +421,15 @@ function renderReport(report) {
   const consent=element('label','','report-rebuild-consent');const rights=element('input','');rights.type='checkbox';rights.name='rights';rights.required=true;consent.append(rights,document.createTextNode('このページを再制作する権限があります。'));
   const status=element('p','','rebuild-status');status.setAttribute('role','status');status.setAttribute('aria-live','polite');
   rebuild.append(urlLabel,entry,consent,status);next.append(rebuild);results.append(next);
-  if(window.SimyClinicInsurance?.enabled() && window.SimyInsurancePreparation){
+  if(window.SimyClinicInsurance?.enabled()){
     const insurance=element('section','','report-edit-next');
+    const link=element('a','取次ぎ申込フォームへ →','button button-primary');
+    link.href=window.SimyClinicPortal===true?'#clinic-insurance':'https://simy-website-diagnosis.tetsuo.chatgpt.site/clinic-portal?insurance-referral=1#clinic-insurance';
     insurance.append(
-      element('h3','サイバー事故でかかる費用、何に備えたいですか。'),
-      element('p','調査・復旧、患者情報の漏えい対応、休業中の損失。相談したい備えを選んで、サイバー保険の相談を準備できます。')
+      element('h3','サイバー保険の取次ぎ'),
+      element('p','株式会社メディカル保険サービスからパンフレットとチェックシートの案内を受け取れます。'),
+      link
     );
-    if(window.SimyClinicPortal===true){
-      const link=element('a','保険相談の質問に進む →','button button-primary');
-      link.href='#clinic-insurance';
-      insurance.append(link);
-    }else{
-      const button=element('button','保険相談の質問に進む →','button button-primary');
-      button.type='button';
-      button.addEventListener('click',()=>window.SimyInsurancePreparation.open({url:report.url}));
-      insurance.append(button);
-    }
     results.append(insurance);
   }
   gateReport(report);
@@ -656,6 +649,6 @@ if(inlineDiagnosisForm){inlineDiagnosisForm.addEventListener('submit',runDiagnos
 
 let reportPdfLoader;
 function loadReportPdf(){
-  if(!reportPdfLoader)reportPdfLoader=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='/assets/clinic-service-v2/report-pdf-9758bc1cc10886.js?v=181b5b95e417';script.onload=resolve;script.onerror=()=>{script.remove();reportPdfLoader=null;reject(Error('PDF機能の読込に失敗しました'));};document.head.append(script);});
+  if(!reportPdfLoader)reportPdfLoader=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='/assets/clinic-service-v2/report-pdf-9758bc1cc10886.js?v=2f8363d27fa3';script.onload=resolve;script.onerror=()=>{script.remove();reportPdfLoader=null;reject(Error('PDF機能の読込に失敗しました'));};document.head.append(script);});
   return reportPdfLoader;
 }
