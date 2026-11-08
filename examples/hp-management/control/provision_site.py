@@ -7,6 +7,7 @@ import time
 from pathlib import Path
 from urllib.parse import urlsplit
 from identity import sha
+from licensing import LicenseUnavailable, license_org
 from store import DynamoStore, Write, Check
 
 ACCOUNT = '209300895845'
@@ -17,7 +18,11 @@ FIELDS = {'site_id','name','config_version','github_app_id','github_installation
 
 
 def validate(site):
-    if not isinstance(site,dict) or set(site)!=FIELDS:raise ValueError('site binding fields differ')
+    if not isinstance(site,dict) or set(site)-{'license_policy'}!=FIELDS:raise ValueError('site binding fields differ')
+    try:
+        license_org(site)
+    except LicenseUnavailable:
+        raise ValueError('invalid license policy') from None
     if not re.fullmatch('[a-z][a-z0-9-]{1,62}',site['site_id']) or site['config_version']!=1:raise ValueError('new site required')
     for name in ('github_app_id','github_installation_id','github_repository_id','validation_workflow_id'):
         if type(site[name]) is not int or site[name]<=0:raise ValueError('positive provider IDs required')

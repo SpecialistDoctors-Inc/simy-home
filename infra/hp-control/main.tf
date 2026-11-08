@@ -33,6 +33,10 @@ resource "terraform_data" "guard" {
       condition     = !var.preview_enabled || length(trimspace(var.preview_gate_reference)) > 0
       error_message = "Preview switching requires legacy-writer retirement and target verification evidence."
     }
+    precondition {
+      condition     = length(distinct([var.entitlement_endpoint == "", var.entitlement_secret_arn == "", var.preflight_secret_arn == ""])) == 1
+      error_message = "Configure both directions of the HP license bridge together."
+    }
   }
 }
 resource "aws_dynamodb_table" "authority" {
@@ -151,10 +155,14 @@ resource "aws_lambda_function" "runtime" {
     log_group  = aws_cloudwatch_log_group.runtime[each.key].name
   }
   environment {
-    variables = merge(local.common_environment, each.key == "api" ? {
-      HP_GOOGLE_SECRET_ARN         = var.google_secret_arn
-      HP_SIGNING_SECRET_ARN        = var.signing_secret_arn
-      HP_GITHUB_WEBHOOK_SECRET_ARN = var.github_webhook_secret_arn
+    variables = merge(local.common_environment, each.key != "dispatcher" ? {
+      HP_CONTROL_ENTITLEMENT_ENDPOINT   = var.entitlement_endpoint
+      HP_CONTROL_ENTITLEMENT_SECRET_ARN = var.entitlement_secret_arn
+      } : {}, each.key == "api" ? {
+      HP_GOOGLE_SECRET_ARN            = var.google_secret_arn
+      HP_SIGNING_SECRET_ARN           = var.signing_secret_arn
+      HP_GITHUB_WEBHOOK_SECRET_ARN    = var.github_webhook_secret_arn
+      HP_CONTROL_PREFLIGHT_SECRET_ARN = var.preflight_secret_arn
       } : each.key == "consumer" ? {
       HP_GITHUB_SECRET_ARN          = var.github_secret_arn
       HP_GOOGLE_OPERATOR_SECRET_ARN = var.google_operator_secret_arn
@@ -185,7 +193,7 @@ resource "aws_apigatewayv2_integration" "api" {
   payload_format_version = "2.0"
 }
 resource "aws_apigatewayv2_route" "api" {
-  for_each  = toset(["GET /health", "POST /mcp", "POST /github/webhook", "GET /oauth/{proxy+}", "POST /oauth/{proxy+}", "GET /.well-known/{proxy+}"])
+  for_each  = toset(concat(["GET /health", "POST /mcp", "POST /github/webhook", "GET /oauth/{proxy+}", "POST /oauth/{proxy+}", "GET /.well-known/{proxy+}"], var.preflight_secret_arn != "" ? ["POST /internal/license/preflight"] : []))
   api_id    = aws_apigatewayv2_api.control.id
   route_key = each.value
   target    = "integrations/${aws_apigatewayv2_integration.api.id}"

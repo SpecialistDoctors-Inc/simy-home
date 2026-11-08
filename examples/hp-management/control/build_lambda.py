@@ -20,7 +20,7 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parent
 LAMBDA_IMAGE = 'public.ecr.aws/lambda/python:3.12@sha256:0fe974382dcb297e80e7feb8c7620d7e8ece5b42b4d01a5a9ffe939c654bf8b0'
-MODULES = ('hp_control.py', 'store.py', 'service.py', 'identity.py', 'cloud_auth.py',
+MODULES = ('hp_control.py', 'store.py', 'service.py', 'licensing.py', 'identity.py', 'cloud_auth.py',
            'mcp_adapter.py', 'bundles.py', 'executor.py', 'cloud_providers.py',
            'github_app.py', 'github_workflow.py', 'github_events.py', 'browser_validation.py', 'publisher.py', 'reporting.py', 'cloud_reporting.py')
 LEGACY_MODULES = ('google_provider.py','gmail_provider.py','provider_errors.py','ledger.py')

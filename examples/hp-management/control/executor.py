@@ -13,6 +13,7 @@ import stat
 import zipfile
 import time
 from uuid import uuid4, uuid5, NAMESPACE_URL
+from licensing import site_license_allowed
 from bundles import build_snapshot, validate_snapshot, validate_changes, reconcile, sha256, BundleError
 from service import Rejected, fingerprint
 from store import Check, Write, Conflict
@@ -36,7 +37,8 @@ class SafeToResume(ReconciliationRequired):
 
 class Executor:
     def __init__(self, store, github_factory, drive, artifacts, validator=None,
-                 publisher=None, clock=time.time, publication_enabled=False, lease_seconds=300, preview_publisher=None, max_retry_attempts=8, browser_validator=None):
+                 publisher=None, clock=time.time, publication_enabled=False, lease_seconds=300, preview_publisher=None, max_retry_attempts=8, browser_validator=None,
+                 license_resolver=None):
         self.store, self.github_factory, self.drive, self.artifacts = store, github_factory, drive, artifacts
         self.validator, self.publisher, self.clock = validator, publisher, clock
         if type(max_retry_attempts) is not int or not 1 <= max_retry_attempts <= 20:
@@ -44,6 +46,7 @@ class Executor:
         self.max_retry_attempts = max_retry_attempts
         self.preview_publisher = preview_publisher
         self.browser_validator = browser_validator
+        self.license_resolver = license_resolver
         self.publication_enabled, self.lease_seconds = publication_enabled, lease_seconds
 
     def execute(self, operation_id):
@@ -379,6 +382,8 @@ class _Run:
             raise Rejected('access_revoked')
         if not self.site or self.site.get('disabled') or self.site.get('config_version') != self.op['site_config_version']:
             raise Rejected('site_configuration_changed')
+        if not site_license_allowed(self.site, self.op['subject'], self.executor.license_resolver):
+            raise Rejected('hp_license_required')
 
     def workspace(self):
         self.guard()

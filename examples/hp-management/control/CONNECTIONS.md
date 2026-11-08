@@ -1,8 +1,8 @@
 # Dedicated HP connection settings
 
-This standalone service requires no SIMY account/API/WorkFlow. It runs no Codex or
-model provider. Existing production remains on the previous accepted release
-until real provider/host tests authorize cutover.
+The existing operator-granted service works independently of SIMY. Commercial
+sites use the SIMY license bridge described below. The control service runs no
+Codex or model provider.
 
 ## GitHub administrator registration
 
@@ -64,3 +64,31 @@ callbacks retain their exact HTTP 302 redirect behavior.
 
 A separate RSA signing key issues audience-bound HP access tokens. Keys are
 stored as secret values, with only public JWKs exposed by `/oauth/jwks`.
+
+## Commercial HP sites
+
+Bind a provisioned site to its SIMY billing organization by setting
+`license_policy: {"mode":"simy","org_id":"<SIMY organization UUID>"}` in the
+operator-owned site record. This extends existing verified Google-subject and
+site-role checks. Sites without a license policy retain their existing explicit
+operator grants and cannot qualify for the commercial checkout. A billing
+organization does not authorize an arbitrary site URL or create provider bindings.
+
+Configure the two bridge directions together. `entitlement_endpoint` identifies
+the trusted SIMY `/functions/v1/hp-control-entitlement` URL. The dedicated raw
+token at `entitlement_secret_arn` must match the backend's
+`HP_CONTROL_ENTITLEMENT_TOKEN`. This read-only check receives the server-owned
+organization ID and authenticated Google subject. API and worker checks both
+require an affirmative response on each managed action. Unavailable responses
+block managed access and queued commands can retry under the same operation ID.
+
+`preflight_secret_arn` holds a separate raw token matching SIMY's
+`HP_CONTROL_PREFLIGHT_TOKEN`. Use independent base64url tokens of at least 32
+characters. After verifying identity and billing authority, SIMY sends a JSON
+`POST /internal/license/preflight` with `org_id` and `google_subject`.
+It receives `{"ready":true}` only when that Google principal already has read
+and edit permission on an enabled site bound to that organization and the entitlement
+lookup responds. This check does not require a paid license or modify authority.
+An unclaimed HP invitation must be redeemed through the existing Google
+connection before checkout. A negative or unavailable preflight leaves checkout
+unavailable until the existing operator site setup or connection is complete.

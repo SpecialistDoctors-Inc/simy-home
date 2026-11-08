@@ -102,3 +102,33 @@ variable "alarm_topic_arn" {
     error_message = "Use a reviewed existing SNS topic in the verified account/region, or leave blank."
   }
 }
+
+variable "entitlement_endpoint" {
+  description = "Trusted SIMY service endpoint for the HP entitlement resolver."
+  type        = string
+  default     = ""
+  validation {
+    condition     = var.entitlement_endpoint == "" || can(regex("^https://[a-zA-Z0-9.-]+/functions/v1/hp-control-entitlement$", var.entitlement_endpoint))
+    error_message = "Provide the HTTPS HP entitlement resolver endpoint without query or fragment."
+  }
+}
+
+variable "entitlement_secret_arn" {
+  description = "Dedicated raw bearer token for HP control to query SIMY license eligibility."
+  type        = string
+  default     = ""
+  validation {
+    condition     = var.entitlement_secret_arn == "" || can(regex("^arn:aws:secretsmanager:ap-northeast-1:209300895845:secret:hp-control/", var.entitlement_secret_arn))
+    error_message = "Use a dedicated hp-control/ entitlement secret in the verified account/region."
+  }
+}
+
+variable "preflight_secret_arn" {
+  description = "Separate raw bearer token for SIMY to check HP site setup before purchase."
+  type        = string
+  default     = ""
+  validation {
+    condition     = var.preflight_secret_arn == "" || (var.preflight_secret_arn != var.entitlement_secret_arn && can(regex("^arn:aws:secretsmanager:ap-northeast-1:209300895845:secret:hp-control/", var.preflight_secret_arn)))
+    error_message = "Use a separate dedicated hp-control/ preflight secret in the verified account/region."
+  }
+}

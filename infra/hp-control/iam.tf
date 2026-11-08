@@ -28,7 +28,7 @@ resource "aws_iam_role_policy" "runtime" {
     ], each.key != "dispatcher" ? [
     {
       Sid      = "DedicatedCredentialsOnly", Effect = "Allow", Action = ["secretsmanager:GetSecretValue"],
-      Resource = each.key == "api" ? [var.google_secret_arn, var.signing_secret_arn, var.github_webhook_secret_arn] : [var.github_secret_arn, var.google_operator_secret_arn]
+      Resource = each.key == "api" ? compact([var.google_secret_arn, var.signing_secret_arn, var.github_webhook_secret_arn, var.entitlement_secret_arn, var.preflight_secret_arn]) : compact([var.github_secret_arn, var.google_operator_secret_arn, var.entitlement_secret_arn])
     },
     {
       Sid      = "ArtifactsOnly", Effect = "Allow", Action = ["s3:GetObject", "s3:PutObject"],

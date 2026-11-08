@@ -8,10 +8,12 @@ validate the real host card before enabling Service.publication_enabled.
 from __future__ import annotations
 import base64
 import json
+import secrets
 from html import escape
 from urllib.parse import parse_qs, urlsplit
 
 from identity import AuthError, Identity
+from licensing import LicenseUnavailable, valid_service_token
 from service import Rejected
 from store import Conflict
 
@@ -51,7 +53,7 @@ DESCRIPTIONS = {
     'hp_confirm_publish': 'App-only confirmation using the private card nonce. Connection-test cards only audit the connection; publication cards queue publication without claiming completion.',
 }
 READ_TOOLS = {'hp_profile', 'hp_list_sites', 'hp_get_operation', 'hp_get_confirmation'}
-SAFE_REJECTIONS = set('authentication_required access_revoked invalid_site insufficient_scope site_access_denied site_unavailable invalid_id invalid_input invalid_digest workspace_access_denied unsupported_operation operation_id_conflict invalid_commit workspace_changed invalid_drive_file operation_access_denied preview_not_current publication_not_enabled confirmation_invalid confirmation_expired confirmation_stale resumption_stale resumption_id_conflict resumption_cancel_requested resumption_not_allowed resumption_approval_invalid resumption_site_busy'.split())
+SAFE_REJECTIONS = set('authentication_required access_revoked invalid_site insufficient_scope site_access_denied site_unavailable hp_license_required invalid_id invalid_input invalid_digest workspace_access_denied unsupported_operation operation_id_conflict invalid_commit workspace_changed invalid_drive_file operation_access_denied preview_not_current publication_not_enabled confirmation_invalid confirmation_expired confirmation_stale resumption_stale resumption_id_conflict resumption_cancel_requested resumption_not_allowed resumption_approval_invalid resumption_site_busy'.split())
 SAFE_AUTH_ERRORS = set('invalid_redirect_uri unsupported_client_auth invalid_client_or_redirect invalid_authorization_request pkce_s256_required invalid_scope invalid_nonce expired_login invalid_google_identity site_invitation_required invalid_resource invalid_grant unsupported_grant_type access_revoked invalid_google_nonce'.split())
 
 
@@ -117,9 +119,10 @@ def tool_error(code):
 
 
 class App:
-    def __init__(self, identity, service, verify, jwks, ui_html):
+    def __init__(self, identity, service, verify, jwks, ui_html, preflight_token=None):
         self.identity, self.service, self.verify = identity, service, verify
         self.jwks, self.ui_html = jwks, ui_html
+        self.preflight_token = preflight_token
 
     @staticmethod
     def response(status, value=None, headers=None):
@@ -175,6 +178,8 @@ class App:
             return self.response(413, {'error': 'request_too_large'})
         if method == 'GET' and path == '/health':
             return self.response(200, {'status': 'ok'})
+        if path == '/internal/license/preflight':
+            return self.license_preflight(method, headers, data)
         if method == 'GET' and path in ('/.well-known/oauth-authorization-server', '/.well-known/openid-configuration'):
             return self.response(200, self.identity.metadata())
         if method == 'GET' and path in ('/.well-known/oauth-protected-resource', '/.well-known/oauth-protected-resource/mcp'):
@@ -246,6 +251,31 @@ class App:
             return self.rpc(json_load(data), claims, event)
         return self.response(404, {'error': 'not_found'})
 
+    def license_preflight(self, method, headers, data):
+        if method != 'POST':
+            return self.response(405, {'error': 'method_not_allowed'}, {'allow': 'POST'})
+        try:
+            token = self.preflight_token() if self.preflight_token is not None else None
+        except Exception:
+            token = None
+        if not valid_service_token(token):
+            return self.response(503, {'error': 'hp_license_unavailable'})
+        authorization = headers.get('authorization', '')
+        if (not isinstance(authorization, str) or not authorization.startswith('Bearer ')
+                or not valid_service_token(authorization[7:])
+                or not secrets.compare_digest(authorization[7:], token)):
+            return self.response(401, {'error': 'invalid_token'})
+        if headers.get('content-type', '').split(';')[0].strip().lower() != 'application/json':
+            return self.response(415, {'error': 'unsupported_media_type'})
+        body = json_load(data)
+        fields(body, ('org_id', 'google_subject'))
+        try:
+            return self.response(200, {'ready': self.service.license_preflight(body['org_id'], body['google_subject'])})
+        except Rejected:
+            return self.response(400, {'error': 'invalid_request'})
+        except Exception:
+            return self.response(503, {'error': 'hp_license_unavailable'})
+
     def rpc(self, request, claims, event):
         fields(request, ('jsonrpc', 'method'), ('id', 'params'))
         if request['jsonrpc'] != '2.0' or not isinstance(request['method'], str):
@@ -297,6 +327,8 @@ class App:
                 return self.response(200, {'jsonrpc': '2.0', 'id': request_id, 'error': {'code': -32601, 'message': 'Method not found'}})
         except Rejected as error:
             result = tool_error(str(error) if str(error) in SAFE_REJECTIONS else 'request_rejected')
+        except LicenseUnavailable:
+            result = tool_error('hp_license_unavailable')
         except Conflict:
             result = tool_error('concurrent_change')
         return self.response(200, {'jsonrpc': '2.0', 'id': request_id, 'result': result})

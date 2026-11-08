@@ -5,11 +5,18 @@ import os
 from pathlib import Path
 from cloud_auth import Secrets, Tokens, GoogleExchange
 from identity import Identity
+from licensing import EntitlementResolver
 from service import Service
 from store import DynamoStore, Conflict
 from mcp_adapter import App
 
 _app = None
+
+
+def entitlement_resolver(secret):
+    endpoint = os.environ.get('HP_CONTROL_ENTITLEMENT_ENDPOINT', '')
+    token_arn = os.environ.get('HP_CONTROL_ENTITLEMENT_SECRET_ARN', '')
+    return EntitlementResolver(endpoint, lambda: secret(token_arn)) if endpoint and token_arn else None
 
 
 def application():
@@ -22,9 +29,12 @@ def application():
     client = json.loads(secret(os.environ['HP_GOOGLE_SECRET_ARN']))
     store = DynamoStore(os.environ['HP_TABLE_NAME'])
     identity = Identity(store, issuer, client['client_id'], tokens.sign, GoogleExchange(client))
-    service = Service(store, publication_enabled=os.environ.get('HP_PUBLICATION_ENABLED') == 'true')
+    service = Service(store, publication_enabled=os.environ.get('HP_PUBLICATION_ENABLED') == 'true',
+        license_resolver=entitlement_resolver(secret))
     html = (Path(__file__).parent / 'ui' / 'dist' / 'publish.html').read_text()
-    _app = App(identity, service, tokens.verify, {'keys': [tokens.jwk]}, html)
+    preflight_arn = os.environ.get('HP_CONTROL_PREFLIGHT_SECRET_ARN', '')
+    _app = App(identity, service, tokens.verify, {'keys': [tokens.jwk]}, html,
+        preflight_token=(lambda: secret(preflight_arn)) if preflight_arn else None)
     return _app
 
 
@@ -126,7 +136,7 @@ def consumer():
     browser = BrowserValidation(store, boto3.client('ecs', region_name=region), s3, validator_config)
     return Executor(store, github, drive, artifacts, workflow, publisher,
         publication_enabled=os.environ.get('HP_PUBLICATION_ENABLED') == 'true', preview_publisher=preview_publisher,
-        lease_seconds=960, browser_validator=browser)
+        lease_seconds=960, browser_validator=browser, license_resolver=entitlement_resolver(secret))
 
 
 def consume_commands(event, context, *, executor=None, reporter=None):
@@ -145,7 +155,7 @@ def consume_commands(event, context, *, executor=None, reporter=None):
                     from reporting import Reporter
                     from cloud_reporting import factories
                     sheets, mail = factories(os.environ['HP_GOOGLE_OPERATOR_SECRET_ARN'], Secrets())
-                    reporter = Reporter(executor.store, sheets, mail)
+                    reporter = Reporter(executor.store, sheets, mail, license_resolver=executor.license_resolver)
                 reporter.report(operation_id)
         except Exception:
             # Expected waits/reconciliation already have a durable outbox. Keeping

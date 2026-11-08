@@ -351,6 +351,18 @@ class ExecutorTests(unittest.TestCase):
         self.assertEqual(self.github.branches, {'dev': self.github.base, 'main': self.github.base})
         self.assertFalse(self.drive.created)
 
+    def test_expired_license_after_admission_has_no_provider_effect(self):
+        site_key = 'site:' + self.site
+        row = self.store.get(site_key)
+        org_id = str(uuid4())
+        self.store.put(site_key, {**row, 'license_policy': {'mode': 'simy', 'org_id': org_id}}, row['_version'])
+        self.service.license_resolver = lambda org, sub: org == org_id and sub == 'operator'
+        operation = self.admit('open_workspace')
+        self.executor.license_resolver = lambda org, sub: False
+        self.assertEqual(self.execute(operation)['error'], 'hp_license_required')
+        self.assertEqual(self.github.branches, {'dev': self.github.base, 'main': self.github.base})
+        self.assertFalse(self.drive.created)
+
     def test_fenced_site_lease_prevents_parallel_commands(self):
         operation = self.admit('open_workspace')
         self.store.put('lease:site:' + self.site, {'owner': 'other', 'epoch': 5, 'until': 1100})

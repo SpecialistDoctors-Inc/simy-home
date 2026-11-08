@@ -10,6 +10,7 @@ import re
 import secrets
 import time
 from uuid import UUID, uuid4
+from licensing import license_org, resolve_license, site_license_allowed, valid_google_subject, valid_org_id
 from store import Write, Check, Conflict
 
 
@@ -57,8 +58,9 @@ def main_commit(site):
 
 
 class Service:
-    def __init__(self, store, clock=time.time, publication_enabled=False):
+    def __init__(self, store, clock=time.time, publication_enabled=False, license_resolver=None):
         self.store, self.clock, self.publication_enabled = store, clock, publication_enabled
+        self.license_resolver = license_resolver
 
     def principal(self, claims):
         if not isinstance(claims, dict) or not isinstance(claims.get('sub'), str):
@@ -80,13 +82,16 @@ class Service:
         site = self.store.get('site:' + site_id)
         if not site or site.get('disabled'):
             raise Rejected('site_unavailable')
+        if not site_license_allowed(site, claims['sub'], self.license_resolver):
+            raise Rejected('hp_license_required')
         return member, site
 
     def profile(self, claims):
-        member = self.principal(claims)
+        self.principal(claims)
         if 'hp:read' not in claims.get('scope', '').split():
             raise Rejected('insufficient_scope')
-        return {'subject': claims['sub'], 'email': claims.get('email'), 'sites': sorted(member['sites'])}
+        return {'subject': claims['sub'], 'email': claims.get('email'),
+                'sites': [site['site_id'] for site in self.list_sites(claims)]}
 
     def list_sites(self, claims):
         member = self.principal(claims)
@@ -99,6 +104,24 @@ class Service:
             result.append({'site_id': site_id, 'name': site['name'], 'roles': member['sites'][site_id],
                 'preview_url': site['dev_url'], 'production_url': site['prod_url']})
         return result
+
+    def license_preflight(self, org_id, google_subject):
+        """Confirm an existing site can be used after purchase; never grant it."""
+        if not valid_org_id(org_id) or not valid_google_subject(google_subject):
+            raise Rejected('invalid_input')
+        member = self.store.get('principal:' + google_subject)
+        if not member or member.get('disabled'):
+            return False
+        for site_id, roles in member.get('sites', {}).items():
+            if not {'read', 'edit'} <= set(roles):
+                continue
+            site = self.store.get('site:' + site_id)
+            if site and not site.get('disabled') and license_org(site) == org_id:
+                # Check that the bridge is usable before taking payment. A
+                # definitive "not entitled yet" is normal before purchase.
+                resolve_license(self.license_resolver, org_id, google_subject)
+                return True
+        return False
 
     def workspace(self, claims, site_id, workspace_id):
         self.authorized(claims, site_id, 'edit')
