@@ -2,10 +2,10 @@
 import io
 import json
 import unittest
-from unittest.mock import Mock
+from unittest.mock import Mock, patch
 
 from licensing import EntitlementResolver, LicenseUnavailable
-from mcp_adapter import App
+from mcp_adapter import App, TOOL_FIELDS
 from service import Rejected, Service
 from store import MemoryStore
 
@@ -28,11 +28,22 @@ class LicenseTests(unittest.TestCase):
         self.token = 'a' * 32
         self.app = App(None, self.service, None, None, None, preflight_token=lambda: self.token)
 
-    def request(self, body, token='a' * 32):
-        response = self.app({'rawPath': '/internal/license/preflight', 'httpMethod': 'POST',
+    def request(self, body, token='a' * 32, transfer_ready=True):
+        event = {'rawPath': '/internal/license/preflight', 'httpMethod': 'POST',
             'headers': {'authorization': 'Bearer ' + token, 'content-type': 'application/json'},
-            'body': json.dumps(body)})
+            'body': json.dumps(body)}
+        transfer = {'hp_download_workspace': (), 'hp_prepare_upload': ()} if transfer_ready else {}
+        with patch.dict(TOOL_FIELDS, transfer):
+            response = self.app(event)
         return response['statusCode'], json.loads(response['body'])
+
+    def test_preflight_unavailable_without_registered_direct_transfer_tools(self):
+        body = {'org_id': ORG, 'google_subject': SUBJECT}
+        with patch.dict(TOOL_FIELDS, {}, clear=True):
+            self.assertEqual(self.request(body, transfer_ready=False), (503, {'error': 'hp_license_unavailable'}))
+            TOOL_FIELDS['hp_download_workspace'] = ()
+            self.assertEqual(self.request(body, transfer_ready=False), (503, {'error': 'hp_license_unavailable'}))
+        self.resolve.assert_not_called()
 
     def test_preflight_is_readonly_and_payment_independent(self):
         body = {'org_id': ORG, 'google_subject': SUBJECT}

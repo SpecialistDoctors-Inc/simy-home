@@ -13,7 +13,7 @@ from html import escape
 from urllib.parse import parse_qs, urlsplit
 
 from identity import AuthError, Identity
-from licensing import LicenseUnavailable, valid_service_token
+from licensing import LicenseUnavailable, valid_google_subject, valid_org_id, valid_service_token
 from service import Rejected
 from store import Conflict
 
@@ -53,6 +53,7 @@ DESCRIPTIONS = {
     'hp_confirm_publish': 'App-only confirmation using the private card nonce. Connection-test cards only audit the connection; publication cards queue publication without claiming completion.',
 }
 READ_TOOLS = {'hp_profile', 'hp_list_sites', 'hp_get_operation', 'hp_get_confirmation'}
+DIRECT_TRANSFER_TOOLS = {'hp_download_workspace', 'hp_prepare_upload'}
 SAFE_REJECTIONS = set('authentication_required access_revoked invalid_site insufficient_scope site_access_denied site_unavailable hp_license_required invalid_id invalid_input invalid_digest workspace_access_denied unsupported_operation operation_id_conflict invalid_commit workspace_changed invalid_drive_file operation_access_denied preview_not_current publication_not_enabled confirmation_invalid confirmation_expired confirmation_stale resumption_stale resumption_id_conflict resumption_cancel_requested resumption_not_allowed resumption_approval_invalid resumption_site_busy'.split())
 SAFE_AUTH_ERRORS = set('invalid_redirect_uri unsupported_client_auth invalid_client_or_redirect invalid_authorization_request pkce_s256_required invalid_scope invalid_nonce expired_login invalid_google_identity site_invitation_required invalid_resource invalid_grant unsupported_grant_type access_revoked invalid_google_nonce'.split())
 
@@ -269,6 +270,10 @@ class App:
             return self.response(415, {'error': 'unsupported_media_type'})
         body = json_load(data)
         fields(body, ('org_id', 'google_subject'))
+        if not valid_org_id(body['org_id']) or not valid_google_subject(body['google_subject']):
+            raise BadRequest()
+        if not DIRECT_TRANSFER_TOOLS <= TOOL_FIELDS.keys():
+            return self.response(503, {'error': 'hp_license_unavailable'})
         try:
             return self.response(200, {'ready': self.service.license_preflight(body['org_id'], body['google_subject'])})
         except Rejected:

@@ -2,7 +2,8 @@
 
 The existing operator-granted service works independently of SIMY. Commercial
 sites use the SIMY license bridge described below. The control service runs no
-Codex or model provider.
+Codex or model provider. Existing production remains on the previous accepted
+release until real provider and host tests authorize cutover.
 
 ## GitHub administrator registration
 
@@ -92,3 +93,6 @@ lookup responds. This check does not require a paid license or modify authority.
 An unclaimed HP invitation must be redeemed through the existing Google
 connection before checkout. A negative or unavailable preflight leaves checkout
 unavailable until the existing operator site setup or connection is complete.
+Preflight also requires the deployed MCP registry to contain both
+`hp_download_workspace` and `hp_prepare_upload`, which the 0.3.11 client uses.
+The Drive-only registry cannot open commercial checkout.
