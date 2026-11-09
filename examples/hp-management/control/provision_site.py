@@ -7,6 +7,7 @@ import secrets
 import time
 from pathlib import Path
 from urllib.parse import urlsplit
+from domain_verification import site_host
 from identity import sha
 from licensing import LicenseUnavailable, license_org, valid_google_subject
 from service import new_site_writes, setup_code_key
@@ -94,6 +95,21 @@ def prepare_claim(store, site, google_subject, now):
     return {'site_id': site['site_id'], 'setup_code': setup_code, 'expires_at': expires_at}
 
 
+def enable_domain_registration(store, site):
+    validate(site)
+    if license_org(site) is not None:
+        raise ValueError('an unassigned site is required')
+    host = site_host(site['prod_url'])
+    key = 'registration-site:' + host
+    existing = store.get(key)
+    if existing and existing['site'] == site:
+        return {'site_id': site['site_id'], 'host': host}
+    if any(store.get(binding.key) is not None for binding in new_site_writes(site)):
+        raise ValueError('site or repository already registered')
+    store.put(key, {'site': site})
+    return {'site_id': site['site_id'], 'host': host}
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--site', type=Path, required=True)
@@ -102,15 +118,19 @@ def main():
     identity.add_argument('--email', help='Send no mail. Create an invitation for this verified mailbox.')
     identity.add_argument('--google-subject', help='Grant access to this previously verified Google subject.')
     identity.add_argument('--claim-google-subject', help='Issue an expiring setup code for this verified Google subject.')
+    identity.add_argument('--enable-domain-registration', action='store_true',
+                          help='Allow a verified domain owner to register this unassigned site in SIMY.')
     p.add_argument('--roles', nargs='+')
     p.add_argument('--apply', action='store_true')
     a = p.parse_args()
     site=validate(json.loads(a.site.read_text()))
-    if a.claim_google_subject is not None and a.roles is not None:
-        p.error('--roles cannot be combined with --claim-google-subject')
+    if (a.claim_google_subject is not None or a.enable_domain_registration) and a.roles is not None:
+        p.error('--roles cannot be combined with self-service registration')
 
     def provision(store):
         now = int(time.time())
+        if a.enable_domain_registration:
+            return enable_domain_registration(store, site)
         if a.claim_google_subject is not None:
             return prepare_claim(store, site, a.claim_google_subject, now)
         return seed(store, site, a.email, a.roles or ['read', 'edit'], now, google_subject=a.google_subject)

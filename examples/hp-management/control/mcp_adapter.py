@@ -269,14 +269,24 @@ class App:
         if headers.get('content-type', '').split(';')[0].strip().lower() != 'application/json':
             return self.response(415, {'error': 'unsupported_media_type'})
         body = json_load(data)
-        required = ('org_id', 'google_subject', 'setup_code') if claim_site else ('org_id', 'google_subject')
+        registration = claim_site and isinstance(body, dict) and 'action' in body
+        required = ('org_id', 'google_subject')
+        if registration:
+            required += ('action', 'site_url')
+        elif claim_site:
+            required += ('setup_code',)
         fields(body, required)
         if not valid_org_id(body['org_id']) or not valid_google_subject(body['google_subject']):
+            raise BadRequest()
+        if registration and body['action'] not in ('start', 'verify'):
             raise BadRequest()
         if not DIRECT_TRANSFER_TOOLS <= TOOL_FIELDS.keys():
             return self.response(503, {'error': 'hp_license_unavailable'})
         try:
-            if claim_site:
+            if registration:
+                result = self.service.register_site(body['org_id'], body['google_subject'],
+                    body['site_url'], verify=body['action'] == 'verify')
+            elif claim_site:
                 result = self.service.claim_prepared_site(body['org_id'], body['google_subject'], body['setup_code'])
             else:
                 result = self.service.license_preflight(body['org_id'], body['google_subject'])

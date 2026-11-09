@@ -99,6 +99,16 @@ Set `self_service_site_id` to the site ID for this stack's verified publisher
 bindings. Registration and subsequent checkout preflight reject a missing or
 mismatched preview or production destination.
 
+For signups without a setup code, use `provision_site.py --site
+<verified-binding.json> --enable-domain-registration --table simy-hp-control
+--apply` once for each eligible deployment. This registers the public hostname
+and existing provider bindings without assigning an account or creating an
+active site. The signed-in billing owner enters the HP address, adds the TXT
+record shown on screen, and confirms it. The proof is valid for seven days and
+bound to the Google subject, SIMY organization and current binding version.
+The site, repository and owner roles are created together only after a match.
+The enrollment command does not create repositories, hosting or DNS resources.
+
 Configure the two bridge directions together. `entitlement_endpoint` identifies
 the trusted SIMY `/functions/v1/hp-control-entitlement` URL. The dedicated raw
 token at `entitlement_secret_arn` must match the backend's

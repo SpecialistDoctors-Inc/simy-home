@@ -1,9 +1,11 @@
 import json
 import unittest
+from io import BytesIO
 from unittest.mock import Mock, patch
 
-from provision_site import prepare_claim, seed, validate
+from provision_site import enable_domain_registration, prepare_claim, seed, validate
 from identity import sha
+from domain_verification import dns_has_value
 from licensing import LicenseUnavailable
 from mcp_adapter import App, TOOL_FIELDS
 from service import Service, Rejected
@@ -14,6 +16,15 @@ SUBJECT = 'google-subject'
 OTHER_ORG = '65a63523-8d2b-46ac-b01d-3b34f3f6d277'
 
 class ProvisionTest(unittest.TestCase):
+ def test_dns_proof_requires_a_txt_answer_for_the_exact_hostname(self):
+  name = '_simy-hp.example.invalid'
+  value = 'simy-hp=test-proof'
+  answer = {'name': name + '.', 'type': 16, 'data': '"' + value + '"'}
+  for record, expected in ((answer, True), ({**answer, 'name': 'other.example.invalid.'}, False),
+                           ({**answer, 'type': 5}, False), ({**answer, 'data': 'other'}, False)):
+   payload = json.dumps({'Status': 0, 'Answer': [record]}).encode()
+   with patch('domain_verification._dns.open', return_value=BytesIO(payload)):
+    self.assertIs(dns_has_value(name, value), expected)
  def site(self):
   return {'site_id':'example-site','name':'Example','config_version':1,'github_app_id':1,'github_installation_id':2,'github_repository_id':3,'github_owner':'Example','github_repository':'site','validation_workflow_id':4,'initial_main_commit':'a'*40,'drive_workspace_folder_id':'snapshot-folder','drive_changes_folder_id':'incoming-folder','sheet_id':'example-sheet-id','recipient':'owner@example.invalid','operator_subject':'example-operator','operator_email':'operator@example.invalid','dev_url':'https://dev.example.invalid','prod_url':'https://example.invalid','mail_enabled':True,'reporting_enabled':True,'deployment':{env:{'bucket':'example-'+env,'distribution_id':'EEXAMPLE','origin_id':'site','expected_config_sha256':'b'*64,'initial_file_paths':['index.html']} for env in ('dev','prod')}}
  def test_initial_binding_and_invitation_created_atomically_without_message(self):
@@ -104,6 +115,46 @@ class ProvisionTest(unittest.TestCase):
   resolver.return_value = True
   service.authorized(claims, 'example-site', 'edit')
   service.authorized(claims, 'example-site', 'publish')
+
+ def test_domain_registration_checks_account_and_dns_before_granting_access(self):
+  store = MemoryStore()
+  site = self.site()
+  enable_domain_registration(store, site)
+  targets = {env: {'bucket': item['bucket'], 'distribution': item['distribution_id']}
+             for env, item in site['deployment'].items()}
+  service = Service(store, clock=lambda: 1001, publication_enabled=True,
+                    license_resolver=lambda *_: False, claim_targets={site['site_id']: targets})
+  app = App(None, service, None, None, None, preflight_token=lambda: 'a' * 32)
+
+  def request(action, org=ORG, subject=SUBJECT, url='https://example.invalid/clinic', token='a' * 32):
+   event = {'rawPath': '/internal/site/claim', 'httpMethod': 'POST',
+            'headers': {'authorization': 'Bearer ' + token, 'content-type': 'application/json'},
+            'body': json.dumps({'org_id': org, 'google_subject': subject, 'action': action, 'site_url': url})}
+   with patch.dict(TOOL_FIELDS, {'hp_download_workspace': (), 'hp_prepare_upload': ()}):
+    response = app(event)
+   return response['statusCode'], json.loads(response['body'])
+
+  self.assertEqual(request('start', token='b' * 32)[0], 401)
+  self.assertEqual(request('start', url='https://unlisted.invalid')[1]['status'], 'site_not_supported')
+  self.assertEqual(request('start', url='https://x@example.invalid')[1]['status'], 'invalid_url')
+  status, proof = request('start')
+  self.assertEqual(status, 200)
+  self.assertEqual(proof['name'], '_simy-hp.example.invalid')
+  self.assertEqual(request('start', url='EXAMPLE.INVALID'), (200, proof))
+  self.assertEqual(request('verify', org=OTHER_ORG)[1]['status'], 'verification_expired')
+  self.assertEqual(request('verify', subject='other-subject')[1]['status'], 'verification_expired')
+  with patch('service.dns_has_value', return_value=False):
+   self.assertEqual(request('verify')[1]['status'], 'verification_pending')
+  self.assertIsNone(store.get('site:example-site'))
+  self.assertIsNone(store.get('principal:' + SUBJECT))
+  with patch('service.dns_has_value', return_value=True) as resolver:
+   self.assertEqual(request('verify'), (200, {'status': 'claimed'}))
+   self.assertEqual(request('verify'), (200, {'status': 'claimed'}))
+   self.assertEqual(request('verify', org=OTHER_ORG)[1]['status'], 'registration_unavailable')
+   resolver.assert_called_once_with(proof['name'], proof['value'])
+  self.assertEqual(service.license_preflight(ORG, SUBJECT), {'ready': True})
+  with self.assertRaisesRegex(Rejected, 'hp_license_required'):
+   service.authorized({'sub': SUBJECT, 'scope': 'hp:read hp:write'}, site['site_id'], 'edit')
 
  def test_claim_conflict_and_expiry_leave_bindings_untouched(self):
   store = MemoryStore()

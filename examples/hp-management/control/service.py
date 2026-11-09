@@ -10,6 +10,7 @@ import re
 import secrets
 import time
 from uuid import UUID, uuid4
+from domain_verification import dns_has_value, site_host
 from licensing import LicenseUnavailable, license_org, resolve_license, site_license_allowed, valid_google_subject, valid_org_id
 from store import Write, Check, Conflict
 
@@ -193,6 +194,73 @@ class Service:
                 self._check_claim_targets(site)
                 return {'status': 'claimed'}
         raise Rejected('site_claim_unavailable')
+
+    def register_site(self, org_id, google_subject, site_url, *, verify):
+        if not valid_org_id(org_id) or not valid_google_subject(google_subject):
+            raise Rejected('invalid_input')
+        try:
+            host = site_host(site_url)
+        except ValueError:
+            return {'status': 'invalid_url'}
+        binding_key = 'registration-site:' + host
+        binding = self.store.get(binding_key)
+        if not binding:
+            return {'status': 'site_not_supported'}
+        site = binding['site']
+        self._check_claim_targets(site)
+        site_id = site['site_id']
+        principal_key = 'principal:' + google_subject
+        member = self.store.get(principal_key) or {'sites': {}, 'disabled': False}
+        if member.get('disabled'):
+            return {'status': 'registration_unavailable'}
+        registered = self.store.get('site:' + site_id)
+        if registered:
+            return self._registered_site_status(registered, member, org_id)
+
+        name = '_simy-hp.' + host
+        key = 'registration-proof:' + fingerprint([org_id, google_subject, host])
+        proof = self.store.get(key)
+        if not proof or proof['expires_at'] <= self.clock() or proof['binding_version'] != binding['_version']:
+            if verify:
+                return {'status': 'verification_expired'}
+            try:
+                proof = self.store.put(key, {
+                    'value': 'simy-hp=' + secrets.token_urlsafe(24),
+                    'expires_at': int(self.clock()) + 7 * 86400,
+                    'binding_version': binding['_version'],
+                }, proof['_version'] if proof else None)
+            except Conflict:
+                raise LicenseUnavailable('hp_license_unavailable') from None
+        if not verify:
+            return {'status': 'verification_required', 'name': name, 'value': proof['value']}
+        if not dns_has_value(name, proof['value']):
+            return {'status': 'verification_pending'}
+        resolve_license(self.license_resolver, org_id, google_subject)
+        if proof['expires_at'] <= self.clock():
+            return {'status': 'verification_expired'}
+        managed_site = {**site, 'registered_by_claim': True, 'license_policy': {'mode': 'simy', 'org_id': org_id}}
+        try:
+            self.store.transact([
+                Check(binding_key, binding['_version']),
+                Write(key, None, proof['_version']),
+                *new_site_writes(managed_site),
+                Write(principal_key, {**member, 'sites': {**member['sites'], site_id: ['read', 'edit', 'publish']}},
+                      member.get('_version')),
+            ])
+        except Conflict:
+            registered = self.store.get('site:' + site_id)
+            if registered:
+                return self._registered_site_status(registered, self.store.get(principal_key), org_id)
+            raise LicenseUnavailable('hp_license_unavailable') from None
+        return {'status': 'claimed'}
+
+    def _registered_site_status(self, site, member, org_id):
+        if (member and not member.get('disabled') and not site.get('disabled')
+                and license_org(site) == org_id
+                and {'read', 'edit', 'publish'} <= set(member.get('sites', {}).get(site['site_id'], []))):
+            self._check_claim_targets(site)
+            return {'status': 'claimed'}
+        return {'status': 'registration_unavailable'}
 
     def _check_claim_targets(self, site):
         targets = self.claim_targets.get(site['site_id'], {})
