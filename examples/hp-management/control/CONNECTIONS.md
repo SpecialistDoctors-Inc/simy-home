@@ -108,3 +108,10 @@ organization. These states and unavailable preflight both prevent checkout.
 Preflight also requires the deployed MCP registry to contain both
 `hp_download_workspace` and `hp_prepare_upload`, which the 0.3.11 client uses.
 The Drive-only registry cannot open commercial checkout.
+
+Before deploying the commercial bridge, reconcile the deployment package with
+the source that serves the live transfer tools. On a disposable managed site,
+verify the two transfer calls with the 0.3.11 editor, then verify a saved draft
+can be reopened. Complete the same flow with the Mac and Windows release
+packages before enabling checkout. Deploying a package with the Drive-only
+registry would remove the live transfer tools.

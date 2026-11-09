@@ -809,6 +809,31 @@ class ExecutorTests(unittest.TestCase):
         self.assertEqual(self.validator.calls, 1)
         self.assertEqual(self.execute(operation), result)
 
+    def test_previous_content_can_be_restored_through_verified_preview_and_fresh_approval(self):
+        first = self.execute(self.publish_operation())['result']
+        self.assertEqual(self.github.read_site_at(first['main_commit']).files['index.html'], b'edited')
+
+        workspace, _ = self.open()
+        restored_html = self.github.read_site_at(self.github.base).files['index.html']
+        saved = self.execute(self.save(workspace, before=b'edited', after=restored_html))['result']
+        preview_op = self.admit('submit_preview', workspace_id=workspace, saved_commit=saved['saved_commit'])
+        preview = self.execute(preview_op)['result']
+        self.assertEqual(self.github.read_site_at(preview['source_commit']).files['index.html'], restored_html)
+        self.assertEqual(self.store.get('site:' + self.site)['current_publication']['operation_id'],
+                         first['operation_id'])
+
+        prepared = self.service.prepare_publish(self.claims, self.site, preview['preview_id'])
+        operation = self.service.confirm_publish(self.claims, prepared['structuredContent']['approval_id'],
+            prepared['_meta']['confirmation_nonce'])['operation_id']
+        restored = self.execute(operation)['result']
+        self.assertNotEqual(restored['operation_id'], first['operation_id'])
+        self.assertEqual(restored['artifact_sha256'], preview['artifact_sha256'])
+        self.assertEqual(self.github.read_site_at(restored['main_commit']).files,
+                         self.github.read_site_at(self.github.base).files)
+        self.assertEqual(self.store.get('site:' + self.site)['current_publication']['operation_id'], operation)
+        self.assertEqual(self.execute(operation)['result'], restored)
+        self.assertEqual(len(self.publisher.effects), 2)
+
     def test_cancel_after_verified_publish_records_factual_pointer_without_new_write(self):
         operation=self.publish_operation()
         publish=self.publisher.publish
