@@ -110,8 +110,10 @@ class Service:
         if not valid_org_id(org_id) or not valid_google_subject(google_subject):
             raise Rejected('invalid_input')
         member = self.store.get('principal:' + google_subject)
-        if not member or member.get('disabled'):
-            return False
+        if not member:
+            return {'ready': False, 'status': 'connection_required'}
+        if member.get('disabled'):
+            return {'ready': False, 'status': 'site_setup_required'}
         for site_id, roles in member.get('sites', {}).items():
             if not {'read', 'edit'} <= set(roles):
                 continue
@@ -120,8 +122,8 @@ class Service:
                 # Check that the bridge is usable before taking payment. A
                 # definitive "not entitled yet" is normal before purchase.
                 resolve_license(self.license_resolver, org_id, google_subject)
-                return True
-        return False
+                return {'ready': True}
+        return {'ready': False, 'status': 'site_setup_required'}
 
     def workspace(self, claims, site_id, workspace_id):
         self.authorized(claims, site_id, 'edit')

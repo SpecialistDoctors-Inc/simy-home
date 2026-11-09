@@ -51,8 +51,10 @@ class LicenseTests(unittest.TestCase):
         self.assertEqual(self.request(body), (200, {'ready': True}))
         self.resolve.assert_called_once_with(ORG, SUBJECT)
         self.assertEqual(json.dumps(self.store.rows, sort_keys=True), snapshot)
-        for change in ({'org_id': OTHER_ORG}, {'google_subject': 'other-subject'}):
-            self.assertEqual(self.request({**body, **change}), (200, {'ready': False}))
+        self.assertEqual(self.request({**body, 'org_id': OTHER_ORG}),
+                         (200, {'ready': False, 'status': 'site_setup_required'}))
+        self.assertEqual(self.request({**body, 'google_subject': 'other-subject'}),
+                         (200, {'ready': False, 'status': 'connection_required'}))
         self.assertEqual(self.request(body, token='b' * 32), (401, {'error': 'invalid_token'}))
         self.assertEqual(self.request({**body, 'email': 'irrelevant@example.invalid'})[0], 400)
         self.resolve.side_effect = LicenseUnavailable('hp_license_unavailable')
@@ -82,7 +84,8 @@ class LicenseTests(unittest.TestCase):
     def test_preflight_requires_an_existing_editor_and_explicit_org_binding(self):
         member = self.store.get('principal:' + SUBJECT)
         self.store.put('principal:' + SUBJECT, {'sites': {'paid-site': ['read'], 'legacy-site': ['read', 'edit']}}, member['_version'])
-        self.assertEqual(self.request({'org_id': ORG, 'google_subject': SUBJECT}), (200, {'ready': False}))
+        self.assertEqual(self.request({'org_id': ORG, 'google_subject': SUBJECT}),
+                         (200, {'ready': False, 'status': 'site_setup_required'}))
         self.resolve.assert_not_called()
 
     def test_resolver_uses_only_service_credentials_and_exact_boolean_response(self):

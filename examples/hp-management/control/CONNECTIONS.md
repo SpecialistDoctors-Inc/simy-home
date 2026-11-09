@@ -91,8 +91,10 @@ It receives `{"ready":true}` only when that Google principal already has read
 and edit permission on an enabled site bound to that organization and the entitlement
 lookup responds. This check does not require a paid license or modify authority.
 An unclaimed HP invitation must be redeemed through the existing Google
-connection before checkout. A negative or unavailable preflight leaves checkout
-unavailable until the existing operator site setup or connection is complete.
+connection before checkout. A negative response contains `{"ready":false}`
+and a `status` of `connection_required` when the principal has not connected,
+or `site_setup_required` when no eligible site is ready for that principal and
+organization. These states and unavailable preflight both prevent checkout.
 Preflight also requires the deployed MCP registry to contain both
 `hp_download_workspace` and `hp_prepare_upload`, which the 0.3.11 client uses.
 The Drive-only registry cannot open commercial checkout.

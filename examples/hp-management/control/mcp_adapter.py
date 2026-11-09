@@ -275,7 +275,7 @@ class App:
         if not DIRECT_TRANSFER_TOOLS <= TOOL_FIELDS.keys():
             return self.response(503, {'error': 'hp_license_unavailable'})
         try:
-            return self.response(200, {'ready': self.service.license_preflight(body['org_id'], body['google_subject'])})
+            return self.response(200, self.service.license_preflight(body['org_id'], body['google_subject']))
         except Rejected:
             return self.response(400, {'error': 'invalid_request'})
         except Exception:
