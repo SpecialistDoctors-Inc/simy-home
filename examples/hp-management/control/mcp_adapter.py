@@ -16,6 +16,7 @@ from identity import AuthError, Identity
 from licensing import LicenseUnavailable, valid_google_subject, valid_org_id, valid_service_token
 from service import Rejected
 from store import Conflict
+from wordpress_editor import TRANSFER_FIELDS
 
 MAX_BODY = 64 * 1024
 UI_URI = 'ui://hp-control/publish.html'
@@ -39,6 +40,8 @@ TOOL_FIELDS = {
     'hp_confirm_publish': ('approval_id', 'confirmation_nonce'),
 }
 DESCRIPTIONS = {
+    'hp_download_workspace': 'Get a private download for the owned WordPress workspace snapshot.',
+    'hp_prepare_upload': 'Authorize a private, checksum-bound upload for the owned WordPress workspace.',
     'hp_profile': 'Read the authenticated member profile and site bindings.',
     'hp_list_sites': 'List the authenticated member’s available sites and roles.',
     'hp_open_workspace': 'Queue a durable workspace snapshot request. Reuse operation_id on retry.',
@@ -93,9 +96,9 @@ def flat_query(raw):
     return {key: value[0] for key, value in values.items()}
 
 
-def tool_definitions():
+def tool_definitions(fields_map=None):
     result = []
-    for name, properties in TOOL_FIELDS.items():
+    for name, properties in (fields_map if fields_map is not None else TOOL_FIELDS).items():
         readonly = name in READ_TOOLS
         meta = {}
         if name == 'hp_prepare_publish':
@@ -120,11 +123,12 @@ def tool_error(code):
 
 
 class App:
-    def __init__(self, identity, service, verify, jwks, ui_html, preflight_token=None, wordpress=None):
+    def __init__(self, identity, service, verify, jwks, ui_html, preflight_token=None, wordpress=None, wordpress_transfers=None):
         self.identity, self.service, self.verify = identity, service, verify
         self.jwks, self.ui_html = jwks, ui_html
         self.preflight_token = preflight_token
         self.wordpress = wordpress
+        self.wordpress_transfers = wordpress_transfers
 
     @staticmethod
     def response(status, value=None, headers=None):
@@ -283,6 +287,13 @@ class App:
             raise BadRequest()
         if registration and body['action'] not in ('start', 'verify', 'owner_verified'):
             raise BadRequest()
+        if not claim_site and self.wordpress_transfers:
+            try:
+                ready = self.service.license_preflight(body['org_id'], body['google_subject'], wordpress_only=True)
+                if ready['ready']:
+                    return self.response(200, {**ready, 'provider': 'wordpress'})
+            except (Rejected, LicenseUnavailable):
+                return self.response(503, {'error': 'hp_license_unavailable'})
         if not DIRECT_TRANSFER_TOOLS <= TOOL_FIELDS.keys():
             return self.response(503, {'error': 'hp_license_unavailable'})
         try:
@@ -321,6 +332,7 @@ class App:
             return self.response(503, {'error': 'wordpress_connection_unavailable'})
 
     def rpc(self, request, claims, event):
+        tools = {**TOOL_FIELDS, **TRANSFER_FIELDS} if self.wordpress_transfers else TOOL_FIELDS
         fields(request, ('jsonrpc', 'method'), ('id', 'params'))
         if request['jsonrpc'] != '2.0' or not isinstance(request['method'], str):
             raise BadRequest()
@@ -345,7 +357,7 @@ class App:
             elif method == 'ping':
                 result = {}
             elif method == 'tools/list':
-                result = {'tools': tool_definitions()}
+                result = {'tools': tool_definitions(tools)}
             elif method == 'resources/list':
                 result = {'resources': [{'uri': UI_URI, 'name': 'HP publication confirmation', 'mimeType': UI_MIME, '_meta': {'ui': {'csp': {'connectDomains': [], 'resourceDomains': []}}}}]}
             elif method == 'resources/read':
@@ -361,9 +373,9 @@ class App:
                 name, arguments = params['name'], params.get('arguments', {})
                 if not isinstance(name, str):
                     raise BadRequest()
-                if name not in TOOL_FIELDS:
+                if name not in tools:
                     return self.response(200, {'jsonrpc': '2.0', 'id': request_id, 'error': {'code': -32602, 'message': 'Unknown tool'}})
-                fields(arguments, TOOL_FIELDS[name])
+                fields(arguments, tools[name])
                 if any(not isinstance(v, str) for v in arguments.values()):
                     raise BadRequest()
                 result = self.call_tool(name, arguments, claims, params.get('_meta', {}), event)
@@ -378,6 +390,9 @@ class App:
         return self.response(200, {'jsonrpc': '2.0', 'id': request_id, 'result': result})
 
     def call_tool(self, name, arguments, claims, meta, event):
+        if self.wordpress_transfers and name in TRANSFER_FIELDS:
+            public, private = self.wordpress_transfers.call(name, arguments, claims)
+            return {**tool_result(public), '_meta': {'hp_transfer': private}}
         if name == 'hp_profile':
             return tool_result(self.service.profile(claims))
         if name == 'hp_list_sites':
@@ -392,6 +407,11 @@ class App:
             return tool_result(self.service.resume(claims, arguments['operation_id'], arguments['recovery_id']))
         if name == 'hp_prepare_publish':
             result = self.service.prepare_publish(claims, arguments['site_id'], arguments['preview_id'])
+            if self.wordpress_transfers:
+                preview = self.service.store.get('preview:' + arguments['preview_id'])
+                if preview and preview.get('preview_html_key'):
+                    result['structuredContent']['preview_url'] = self.wordpress_transfers.download(
+                        preview['preview_html_key'], preview=True)['url']
             result['_meta']['ui'] = {'resourceUri': UI_URI}
             return result
         if name == 'hp_get_confirmation':

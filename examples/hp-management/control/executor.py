@@ -15,7 +15,7 @@ import time
 from uuid import uuid4, uuid5, NAMESPACE_URL
 from licensing import site_license_allowed
 from bundles import build_snapshot, validate_snapshot, validate_changes, reconcile, sha256, BundleError
-from service import Rejected, fingerprint
+from service import Rejected, effective_roles, fingerprint
 from store import Check, Write, Conflict
 
 
@@ -38,7 +38,7 @@ class SafeToResume(ReconciliationRequired):
 class Executor:
     def __init__(self, store, github_factory, drive, artifacts, validator=None,
                  publisher=None, clock=time.time, publication_enabled=False, lease_seconds=300, preview_publisher=None, max_retry_attempts=8, browser_validator=None,
-                 license_resolver=None):
+                 license_resolver=None, wordpress=None, wordpress_test_origin=None):
         self.store, self.github_factory, self.drive, self.artifacts = store, github_factory, drive, artifacts
         self.validator, self.publisher, self.clock = validator, publisher, clock
         if type(max_retry_attempts) is not int or not 1 <= max_retry_attempts <= 20:
@@ -47,6 +47,8 @@ class Executor:
         self.preview_publisher = preview_publisher
         self.browser_validator = browser_validator
         self.license_resolver = license_resolver
+        self.wordpress = wordpress
+        self.wordpress_test_origin = wordpress_test_origin if publication_enabled and wordpress else None
         self.publication_enabled, self.lease_seconds = publication_enabled, lease_seconds
 
     def execute(self, operation_id):
@@ -77,7 +79,7 @@ class Executor:
         run = _Run(self, key, lock_key, owner, epoch)
         try:
             provider_site = op.get('execution_site') or self.store.get('site:' + op['site_id'])
-            run.drive = (self.drive.for_site(provider_site, run.guard) if hasattr(self.drive, 'for_site')
+            run.drive = (self.drive.for_site(provider_site, run.guard) if provider_site and provider_site.get('provider') != 'wordpress' and hasattr(self.drive, 'for_site')
                          else self.drive.for_run(run.guard) if hasattr(self.drive, 'for_run') else self.drive)
             run.artifacts = self.artifacts.for_run(run.guard) if hasattr(self.artifacts, "for_run") else self.artifacts
             try:
@@ -89,6 +91,10 @@ class Executor:
             if not run.op.get('execution_site'):
                 self.store.put(key, {**run.op, 'execution_site': run.site}, run.op['_version'])
                 run.guard()
+            if run.site.get('provider') == 'wordpress':
+                result, writes = getattr(self.wordpress, op['kind'])(run)
+                run.finish('completed', result, writes)
+                return self.store.get(key)
             github = self.github_factory(run.site, run.guard)
             if op['kind'] == 'open_workspace':
                 result, writes = self._open(run, github)
@@ -378,10 +384,13 @@ class _Run:
         self.member = self.store.get('principal:' + self.op['subject'])
         self.site = self.store.get('site:' + self.op['site_id'])
         role = 'publish' if self.op['kind'] == 'publish' else 'edit'
-        if not self.member or self.member.get('disabled') or self.member['_version'] != self.op['member_version'] or role not in self.member.get('sites', {}).get(self.op['site_id'], []):
+        if not self.member or self.member.get('disabled') or self.member['_version'] != self.op['member_version']:
             raise Rejected('access_revoked')
         if not self.site or self.site.get('disabled') or self.site.get('config_version') != self.op['site_config_version']:
             raise Rejected('site_configuration_changed')
+        if role not in effective_roles(self.member, {**self.site, 'site_id': self.op['site_id']},
+                                       self.op['subject'], self.executor.wordpress_test_origin):
+            raise Rejected('access_revoked')
         if not site_license_allowed(self.site, self.op['subject'], self.executor.license_resolver):
             raise Rejected('hp_license_required')
 
@@ -415,7 +424,7 @@ class _Run:
             return
         descriptor = pending['reconciliation']
         site = self.op['execution_site']
-        github = self.executor.github_factory(site, self.fence_guard)
+        github = (self.executor.github_factory(site, self.fence_guard) if site.get('provider') != 'wordpress' else None)
         drive = self.drive.for_run(self.fence_guard) if hasattr(self.drive, 'for_run') else self.drive
         artifacts = self.executor.artifacts.for_run(self.fence_guard) if hasattr(self.executor.artifacts, 'for_run') else self.executor.artifacts
         kind = descriptor['kind']
@@ -453,6 +462,8 @@ class _Run:
             result = self.executor.preview_publisher.reconcile(site, descriptor['preview'], self.op['operation_id'], pending['lease_epoch'], self.fence_guard)
         elif kind == 'publish' and hasattr(self.executor.publisher, 'reconcile'):
             result = self.executor.publisher.reconcile(site, descriptor['preview'], self.op['operation_id'], pending['lease_epoch'], self.fence_guard)
+        elif kind == 'wordpress_publish' and self.executor.wordpress:
+            result = self.executor.wordpress.reconcile_publish(site, self.op['subject'], descriptor['preview'])
         elif kind == 'preview_readback' and hasattr(self.executor.validator, 'reconcile_readback'):
             result = self.executor.validator.reconcile_readback(site, descriptor['proof'], self.fence_guard)
         if isinstance(result, dict) and result.get('safe_to_resume') is True:
@@ -472,7 +483,7 @@ class _Run:
                 self.store.put(self.key, {**self.op, 'reconciliation_reason': 'cache_cleanup_requires_attention'}, self.op['_version'])
                 self.fence_guard()
             raise SafeToResume('conditional_effect_safe_to_resume')
-        if result is None or (kind in ('publish', 'preview_deploy') and (result.get('verified') is not True or result.get('artifact_sha256') != descriptor['preview']['artifact_sha256'])):
+        if result is None or (kind in ('publish', 'preview_deploy', 'wordpress_publish') and (result.get('verified') is not True or result.get('artifact_sha256') != descriptor['preview']['artifact_sha256'])):
             raise ReconciliationRequired('external_effect_unresolved')
         self.record_receipt(pending['name'], result)
 
@@ -540,7 +551,7 @@ class _Run:
             if getattr(error, 'effect_observed', False):
                 self.record_receipt(name, {'observed_failure': str(error)})
             raise
-        if reconciliation['kind'] in ('publish', 'preview_deploy') and (not isinstance(result, dict) or result.get('verified') is not True or result.get('artifact_sha256') != reconciliation['preview']['artifact_sha256']):
+        if reconciliation['kind'] in ('publish', 'preview_deploy', 'wordpress_publish') and (not isinstance(result, dict) or result.get('verified') is not True or result.get('artifact_sha256') != reconciliation['preview']['artifact_sha256']):
             raise ReconciliationRequired('publisher_result_unverified')
         self.record_receipt(name, result)
         self.guard()
@@ -599,7 +610,8 @@ class _Run:
         preview = intent['preview']
         publication = {'operation_id': self.op['operation_id'], 'preview_id': preview['preview_id'],
             'artifact_sha256': preview['artifact_sha256'], 'source_commit': preview['source_commit'],
-            'main_commit': self.op['phases']['main_commit']['commit'],
+            'main_commit': (preview['source_commit'] if site.get('provider') == 'wordpress'
+                            else self.op['phases']['main_commit']['commit']),
             'receipt': receipt, 'outcome': 'published_after_cancel_or_revocation'}
         result = {'kind': 'published_after_cancel_or_revocation', **publication, 'reason': reason}
         operation = {**self.op, 'status': 'published_after_cancel_or_revocation',
@@ -607,7 +619,8 @@ class _Run:
         operation.pop('queue_state', None)
         operation.pop('reconciliation_required', None)
         self.store.transact([Write(self.key, operation, self.op['_version']),
-            Write(site_key, {**site, 'current_publication': publication}, site['_version']),
+            Write(site_key, {**site, 'current_publication': publication,
+                             'current_main_commit': publication['main_commit']}, site['_version']),
             Write(self.lock_key, {**self.lock, 'until': 0, 'blocked_operation': None}, self.lock['_version'])])
 
     def retry(self, force_blocked=False, wait=False, retry_after=30, deadline=None, wait_timeout=900):

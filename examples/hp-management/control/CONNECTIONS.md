@@ -134,11 +134,18 @@ HP Control `wordpress_secret_arn` points to a dedicated secret with `client_id`,
 its state once and stores the encrypted grant for the signed-in Google subject
 and billing organization. No per-site setup code or DNS record is needed.
 
-The Mac site list returns the WordPress connection with read access after a
-valid HP entitlement. Checkout remains closed for this provider until the Mac
-editing and publication worker is wired to the stored grant. The core WordPress
-update endpoint lacks an atomic version precondition, so that worker also needs
-a strategy for concurrent changes made outside SIMY.
+An isolated test can set `wordpress_test_origin` to the exact HTTPS origin of
+one dedicated WordPress.com site. That owner's Mac client can download its
+homepage snapshot, upload a checksum-bound change ZIP, save an immutable draft,
+and preview it. The existing approval card queues publishing the exact saved
+homepage. WordPress content is read back after the write. The signup server
+only treats this provider as ready for Stripe test checkout in a Mac acceptance
+preview. Other WordPress sites retain read access after entitlement.
+
+The worker checks the previously seen homepage immediately before publishing.
+Core WordPress lacks an atomic version precondition, so simultaneous edits
+outside SIMY remain a limitation. Keep this execution restricted to an isolated
+test site until that conflict is addressed and the actual Mac host is verified.
 
 The isolated local check used the native Mac 0.3.11 binary for ZIP initialization
 and the edited package, and a real WordPress REST server for reading, autosaving,

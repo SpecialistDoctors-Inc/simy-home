@@ -42,6 +42,10 @@ resource "terraform_data" "guard" {
       condition     = var.self_service_site_id == "" || (var.preview_enabled && var.publication_enabled && var.preflight_secret_arn != "")
       error_message = "Self-service registration requires verified preview, publication and license bridge configuration."
     }
+    precondition {
+      condition     = var.wordpress_test_origin == "" || (var.wordpress_secret_arn != "" && var.preflight_secret_arn != "" && var.publication_enabled)
+      error_message = "The isolated WordPress test requires OAuth, the license bridge and publication authorization."
+    }
   }
 }
 resource "aws_dynamodb_table" "authority" {
@@ -163,12 +167,13 @@ resource "aws_lambda_function" "runtime" {
     variables = merge(local.common_environment, each.key != "dispatcher" ? {
       HP_CONTROL_ENTITLEMENT_ENDPOINT   = var.entitlement_endpoint
       HP_CONTROL_ENTITLEMENT_SECRET_ARN = var.entitlement_secret_arn
+      HP_WORDPRESS_SECRET_ARN           = var.wordpress_secret_arn
+      HP_WORDPRESS_TEST_ORIGIN          = var.wordpress_test_origin
       } : {}, each.key == "api" ? {
       HP_GOOGLE_SECRET_ARN            = var.google_secret_arn
       HP_SIGNING_SECRET_ARN           = var.signing_secret_arn
       HP_GITHUB_WEBHOOK_SECRET_ARN    = var.github_webhook_secret_arn
       HP_CONTROL_PREFLIGHT_SECRET_ARN = var.preflight_secret_arn
-      HP_WORDPRESS_SECRET_ARN         = var.wordpress_secret_arn
       HP_SITE_CLAIM_TARGETS           = jsonencode(local.claim_targets)
       } : each.key == "consumer" ? {
       HP_GITHUB_SECRET_ARN          = var.github_secret_arn

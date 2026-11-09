@@ -73,11 +73,21 @@ def main_commit(site):
     return value
 
 
+def effective_roles(member, site, subject, wordpress_test_origin):
+    roles = member.get('sites', {}).get(site['site_id'], [])
+    if (site.get('provider') == 'wordpress' and roles and wordpress_test_origin
+            and site.get('prod_url') == wordpress_test_origin and site.get('owner_subject') == subject):
+        return ['read', 'edit', 'publish']
+    return roles if site.get('provider') != 'wordpress' else [role for role in roles if role == 'read']
+
+
 class Service:
-    def __init__(self, store, clock=time.time, publication_enabled=False, license_resolver=None, claim_targets=None):
+    def __init__(self, store, clock=time.time, publication_enabled=False, license_resolver=None, claim_targets=None,
+                 wordpress_test_origin=None):
         self.store, self.clock, self.publication_enabled = store, clock, publication_enabled
         self.license_resolver = license_resolver
         self.claim_targets = claim_targets or {}
+        self.wordpress_test_origin = wordpress_test_origin if publication_enabled else None
 
     def principal(self, claims):
         if not isinstance(claims, dict) or not isinstance(claims.get('sub'), str):
@@ -94,13 +104,13 @@ class Service:
         scopes = set(claims.get('scope', '').split())
         if ('hp:read' if role == 'read' else 'hp:write') not in scopes:
             raise Rejected('insufficient_scope')
-        if role not in member['sites'].get(site_id, []):
-            raise Rejected('site_access_denied')
         site = self.store.get('site:' + site_id)
+        if site_id not in member['sites']:
+            raise Rejected('site_access_denied')
         if not site or site.get('disabled'):
             raise Rejected('site_unavailable')
-        if site.get('provider') == 'wordpress' and role != 'read':
-            raise Rejected('site_editing_not_ready')
+        if role not in effective_roles(member, {**site, 'site_id': site_id}, claims['sub'], self.wordpress_test_origin):
+            raise Rejected('site_access_denied')
         if not site_license_allowed(site, claims['sub'], self.license_resolver):
             raise Rejected('hp_license_required')
         return member, site
@@ -120,11 +130,12 @@ class Service:
                 _, site = self.authorized(claims, site_id)
             except Rejected:
                 continue
-            result.append({'site_id': site_id, 'name': site['name'], 'roles': member['sites'][site_id],
+            result.append({'site_id': site_id, 'name': site['name'], 'roles': effective_roles(member,
+                {**site, 'site_id': site_id}, claims['sub'], self.wordpress_test_origin),
                 'preview_url': site['dev_url'], 'production_url': site['prod_url']})
         return result
 
-    def license_preflight(self, org_id, google_subject):
+    def license_preflight(self, org_id, google_subject, *, wordpress_only=False):
         """Confirm an existing site can be used after purchase; never grant it."""
         if not valid_org_id(org_id) or not valid_google_subject(google_subject):
             raise Rejected('invalid_input')
@@ -133,12 +144,12 @@ class Service:
             return {'ready': False, 'status': 'connection_required'}
         if member.get('disabled'):
             return {'ready': False, 'status': 'site_setup_required'}
-        for site_id, roles in member.get('sites', {}).items():
-            if not {'read', 'edit'} <= set(roles):
-                continue
+        for site_id in member.get('sites', {}):
             site = self.store.get('site:' + site_id)
             if site and not site.get('disabled') and license_org(site) == org_id:
-                if site.get('provider') == 'wordpress':
+                if wordpress_only and site.get('provider') != 'wordpress':
+                    continue
+                if not {'read', 'edit'} <= set(effective_roles(member, {**site, 'site_id': site_id}, google_subject, self.wordpress_test_origin)):
                     continue
                 if site.get('registered_by_claim'):
                     self._check_claim_targets(site)

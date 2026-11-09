@@ -135,7 +135,7 @@ class WordPressProvider:
             raise WordPressConnectionError('wordpress_homepage_access_required')
         return HomepageConnection(site_id, page_id, 'https://' + host, raw_content(page), token)
 
-    def _read_homepage(self, connection):
+    def read_homepage(self, connection):
         prefix = f'/wp/v2/sites/{positive_id(connection.site_id)}'
         settings = self.transport('GET', prefix + '/settings', token=connection.access_token)
         if settings.get('show_on_front') != 'page' or settings.get('page_on_front') != connection.page_id:
@@ -150,7 +150,7 @@ class WordPressProvider:
     def save_draft(self, connection, content):
         if not isinstance(content, str) or not content or len(content.encode()) > 1_000_000:
             raise WordPressConnectionError('wordpress_invalid_content')
-        if self._read_homepage(connection) != connection.content:
+        if self.read_homepage(connection) != connection.content:
             raise WordPressConnectionError('wordpress_homepage_changed')
         path = page_path(connection.site_id, connection.page_id)
         result = self.transport('POST', path + '/autosaves?context=edit',
@@ -170,7 +170,7 @@ class WordPressProvider:
         if (revision.get('id') != draft.revision_id or revision.get('parent') != connection.page_id
                 or content_digest(content) != approved_sha256):
             raise WordPressConnectionError('wordpress_draft_changed')
-        current = self._read_homepage(connection)
+        current = self.read_homepage(connection)
         if current == content:
             return
         if content_digest(current) != draft.base_sha256:
@@ -178,7 +178,7 @@ class WordPressProvider:
         # Core WordPress does not provide an atomic compare-and-update here.
         # The caller must serialize publication and reconcile any uncertain write.
         self.transport('POST', path, token=connection.access_token, payload={'content': content})
-        if self._read_homepage(connection) != content:
+        if self.read_homepage(connection) != content:
             raise WordPressConnectionError('wordpress_publication_readback_mismatch')
 
 

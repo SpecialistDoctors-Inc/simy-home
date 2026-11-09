@@ -142,6 +142,16 @@ variable "wordpress_secret_arn" {
   }
 }
 
+variable "wordpress_test_origin" {
+  description = "Exact isolated WordPress.com origin allowed for Mac editing and publishing tests."
+  type        = string
+  default     = ""
+  validation {
+    condition     = var.wordpress_test_origin == "" || can(regex("^https://[a-z0-9][a-z0-9-]*[.]wordpress[.]com$", var.wordpress_test_origin))
+    error_message = "Use the exact HTTPS origin of a dedicated WordPress.com test site."
+  }
+}
+
 variable "preflight_secret_arn" {
   description = "Separate raw bearer token for SIMY to check HP site setup before purchase."
   type        = string

@@ -10,6 +10,7 @@ from service import Service
 from store import DynamoStore, Conflict
 from mcp_adapter import App
 from wordpress_onboarding import WordPressOnboarding
+from wordpress_editor import WordPressEditor, WordPressTransfers
 
 _app = None
 
@@ -30,15 +31,19 @@ def application():
     client = json.loads(secret(os.environ['HP_GOOGLE_SECRET_ARN']))
     store = DynamoStore(os.environ['HP_TABLE_NAME'])
     identity = Identity(store, issuer, client['client_id'], tokens.sign, GoogleExchange(client))
+    wordpress_arn = os.environ.get('HP_WORDPRESS_SECRET_ARN', '')
+    wordpress_origin = os.environ.get('HP_WORDPRESS_TEST_ORIGIN') if wordpress_arn else None
     service = Service(store, publication_enabled=os.environ.get('HP_PUBLICATION_ENABLED') == 'true',
         license_resolver=entitlement_resolver(secret),
-        claim_targets=json.loads(os.environ.get('HP_SITE_CLAIM_TARGETS', '{}')))
+        claim_targets=json.loads(os.environ.get('HP_SITE_CLAIM_TARGETS', '{}')), wordpress_test_origin=wordpress_origin)
     html = (Path(__file__).parent / 'ui' / 'dist' / 'publish.html').read_text()
     preflight_arn = os.environ.get('HP_CONTROL_PREFLIGHT_SECRET_ARN', '')
-    wordpress_arn = os.environ.get('HP_WORDPRESS_SECRET_ARN', '')
+    transfers = (WordPressTransfers(store, service, regional_s3_client(os.environ['AWS_REGION']),
+                                    os.environ['HP_ARTIFACT_BUCKET']) if service.wordpress_test_origin else None)
     _app = App(identity, service, tokens.verify, {'keys': [tokens.jwk]}, html,
         preflight_token=(lambda: secret(preflight_arn)) if preflight_arn else None,
-        wordpress=(lambda: WordPressOnboarding(store, json.loads(secret(wordpress_arn)))) if wordpress_arn else None)
+        wordpress=(lambda: WordPressOnboarding(store, json.loads(secret(wordpress_arn)))) if wordpress_arn else None,
+        wordpress_transfers=transfers)
     return _app
 
 
@@ -138,9 +143,17 @@ def consumer():
     publisher = SitePublisher('prod', roles.get('prod'), store)
     workflow = GitHubWorkflow(github, preview_readback=preview_publisher.readback)
     browser = BrowserValidation(store, boto3.client('ecs', region_name=region), s3, validator_config)
+    wordpress_arn = os.environ.get('HP_WORDPRESS_SECRET_ARN', '')
+    wordpress_origin = os.environ.get('HP_WORDPRESS_TEST_ORIGIN') if wordpress_arn else None
+    wordpress = None
+    if wordpress_origin:
+        onboarding = WordPressOnboarding(store, json.loads(secret(wordpress_arn)))
+        transfers = WordPressTransfers(store, None, s3, os.environ['HP_ARTIFACT_BUCKET'])
+        wordpress = WordPressEditor(onboarding, transfers, os.environ['HP_PUBLIC_BASE_URL'].rstrip('/') + '/mcp')
     return Executor(store, github, drive, artifacts, workflow, publisher,
         publication_enabled=os.environ.get('HP_PUBLICATION_ENABLED') == 'true', preview_publisher=preview_publisher,
-        lease_seconds=960, browser_validator=browser, license_resolver=entitlement_resolver(secret))
+        lease_seconds=960, browser_validator=browser, license_resolver=entitlement_resolver(secret),
+        wordpress=wordpress, wordpress_test_origin=wordpress_origin)
 
 
 def consume_commands(event, context, *, executor=None, reporter=None):

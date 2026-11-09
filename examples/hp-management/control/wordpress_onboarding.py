@@ -9,7 +9,7 @@ from cryptography.fernet import Fernet
 
 from domain_verification import site_host
 from store import Write
-from wordpress_provider import WordPressConnectionError, WordPressProvider
+from wordpress_provider import HomepageConnection, WordPressConnectionError, WordPressProvider
 
 
 class WordPressOnboarding:
@@ -58,6 +58,16 @@ class WordPressOnboarding:
             Write(member_key, {**member, 'sites': {**member['sites'], site_id: ['read']}}, member.get('_version')),
         ])
         return {'status': 'wordpress_connected'}
+
+    def load(self, site, subject):
+        credential = json.loads(self.cipher.decrypt(site['credential'].encode()))
+        if (credential['site_id'] != site['site_id'] or credential['subject'] != subject
+                or credential['org_id'] != site['license_policy']['org_id'] or credential['origin'] != site['prod_url']):
+            raise WordPressConnectionError('wordpress_credential_mismatch')
+        connection = HomepageConnection(int(site['site_id'].removeprefix('wordpress-')),
+            credential['page_id'], credential['origin'], '', credential['access_token'])
+        return HomepageConnection(connection.site_id, connection.page_id, connection.origin,
+                                  self.provider.read_homepage(connection), connection.access_token)
 
     @staticmethod
     def state_key(state):
