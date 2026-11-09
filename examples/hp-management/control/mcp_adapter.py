@@ -278,14 +278,15 @@ class App:
         fields(body, required)
         if not valid_org_id(body['org_id']) or not valid_google_subject(body['google_subject']):
             raise BadRequest()
-        if registration and body['action'] not in ('start', 'verify'):
+        if registration and body['action'] not in ('start', 'verify', 'owner_verified'):
             raise BadRequest()
         if not DIRECT_TRANSFER_TOOLS <= TOOL_FIELDS.keys():
             return self.response(503, {'error': 'hp_license_unavailable'})
         try:
             if registration:
                 result = self.service.register_site(body['org_id'], body['google_subject'],
-                    body['site_url'], verify=body['action'] == 'verify')
+                    body['site_url'], verify=body['action'] == 'verify',
+                    owner_verified=body['action'] == 'owner_verified')
             elif claim_site:
                 result = self.service.claim_prepared_site(body['org_id'], body['google_subject'], body['setup_code'])
             else:

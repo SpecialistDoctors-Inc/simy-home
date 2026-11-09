@@ -109,6 +109,14 @@ bound to the Google subject, SIMY organization and current binding version.
 The site, repository and owner roles are created together only after a match.
 The enrollment command does not create repositories, hosting or DNS resources.
 
+The signup page can also use read-only Google Search Console ownership. SIMY
+checks ownership with the authenticated Google account before sending the
+verified result over the existing internal credential. For a compatible hosting
+binding, add `--allow-search-console-owners` at enrollment only when the
+publisher authorizes Search Console owners (including delegated owners) to
+register and publish. A website without that authorization or without a binding
+stays in preparation and cannot enter checkout.
+
 Configure the two bridge directions together. `entitlement_endpoint` identifies
 the trusted SIMY `/functions/v1/hp-control-entitlement` URL. The dedicated raw
 token at `entitlement_secret_arn` must match the backend's

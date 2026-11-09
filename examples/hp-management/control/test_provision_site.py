@@ -16,6 +16,25 @@ SUBJECT = 'google-subject'
 OTHER_ORG = '65a63523-8d2b-46ac-b01d-3b34f3f6d277'
 
 class ProvisionTest(unittest.TestCase):
+ def test_search_console_owner_cannot_claim_a_site_without_publisher_authorization(self):
+  store = MemoryStore()
+  site = self.site()
+  targets = {env: {'bucket': item['bucket'], 'distribution': item['distribution_id']}
+             for env, item in site['deployment'].items()}
+  service = Service(store, publication_enabled=True, license_resolver=lambda *_: False,
+                    claim_targets={site['site_id']: targets})
+  def register(org=ORG, subject=SUBJECT):
+   return service.register_site(org, subject, site['prod_url'], verify=False, owner_verified=True)
+  self.assertEqual(register(), {'status': 'hosting_connection_required'})
+  enable_domain_registration(store, site)
+  self.assertEqual(register(), {'status': 'hosting_connection_required'})
+  self.assertIsNone(store.get('site:example-site'))
+  enable_domain_registration(store, site, allow_search_console_owners=True)
+  with patch('service.dns_has_value') as dns:
+   self.assertEqual(register(), {'status': 'claimed'})
+   self.assertEqual(register(), {'status': 'claimed'})
+   self.assertEqual(register(OTHER_ORG, 'other-subject'), {'status': 'registration_unavailable'})
+   dns.assert_not_called()
  def test_dns_proof_requires_a_txt_answer_for_the_exact_hostname(self):
   name = '_simy-hp.example.invalid'
   value = 'simy-hp=test-proof'

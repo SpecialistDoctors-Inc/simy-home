@@ -195,7 +195,7 @@ class Service:
                 return {'status': 'claimed'}
         raise Rejected('site_claim_unavailable')
 
-    def register_site(self, org_id, google_subject, site_url, *, verify):
+    def register_site(self, org_id, google_subject, site_url, *, verify, owner_verified=False):
         if not valid_org_id(org_id) or not valid_google_subject(google_subject):
             raise Rejected('invalid_input')
         try:
@@ -205,7 +205,7 @@ class Service:
         binding_key = 'registration-site:' + host
         binding = self.store.get(binding_key)
         if not binding:
-            return {'status': 'site_not_supported'}
+            return {'status': 'hosting_connection_required' if owner_verified else 'site_not_supported'}
         site = binding['site']
         self._check_claim_targets(site)
         site_id = site['site_id']
@@ -216,6 +216,15 @@ class Service:
         registered = self.store.get('site:' + site_id)
         if registered:
             return self._registered_site_status(registered, member, org_id)
+
+        if owner_verified:
+            # Search Console can delegate owners. Use it for publishing only
+            # when the trusted hosting binding explicitly accepts that role.
+            if binding.get('allow_search_console_owners') is not True:
+                return {'status': 'hosting_connection_required'}
+            resolve_license(self.license_resolver, org_id, google_subject)
+            return self._finish_site_registration(site, org_id, principal_key, member,
+                [Check(binding_key, binding['_version'])])
 
         name = '_simy-hp.' + host
         key = 'registration-proof:' + fingerprint([org_id, google_subject, host])
@@ -238,11 +247,15 @@ class Service:
         resolve_license(self.license_resolver, org_id, google_subject)
         if proof['expires_at'] <= self.clock():
             return {'status': 'verification_expired'}
+        return self._finish_site_registration(site, org_id, principal_key, member,
+            [Check(binding_key, binding['_version']), Write(key, None, proof['_version'])])
+
+    def _finish_site_registration(self, site, org_id, principal_key, member, checks):
+        site_id = site['site_id']
         managed_site = {**site, 'registered_by_claim': True, 'license_policy': {'mode': 'simy', 'org_id': org_id}}
         try:
             self.store.transact([
-                Check(binding_key, binding['_version']),
-                Write(key, None, proof['_version']),
+                *checks,
                 *new_site_writes(managed_site),
                 Write(principal_key, {**member, 'sites': {**member['sites'], site_id: ['read', 'edit', 'publish']}},
                       member.get('_version')),

@@ -95,18 +95,22 @@ def prepare_claim(store, site, google_subject, now):
     return {'site_id': site['site_id'], 'setup_code': setup_code, 'expires_at': expires_at}
 
 
-def enable_domain_registration(store, site):
+def enable_domain_registration(store, site, *, allow_search_console_owners=False):
     validate(site)
     if license_org(site) is not None:
         raise ValueError('an unassigned site is required')
     host = site_host(site['prod_url'])
     key = 'registration-site:' + host
     existing = store.get(key)
-    if existing and existing['site'] == site:
+    if (existing and existing['site'] == site
+            and existing.get('allow_search_console_owners', False) == allow_search_console_owners):
         return {'site_id': site['site_id'], 'host': host}
+    if existing and existing['site'] != site:
+        raise ValueError('a different binding already exists for this host')
     if any(store.get(binding.key) is not None for binding in new_site_writes(site)):
         raise ValueError('site or repository already registered')
-    store.put(key, {'site': site})
+    store.put(key, {'site': site, 'allow_search_console_owners': allow_search_console_owners},
+              existing['_version'] if existing else None)
     return {'site_id': site['site_id'], 'host': host}
 
 
@@ -121,16 +125,20 @@ def main():
     identity.add_argument('--enable-domain-registration', action='store_true',
                           help='Allow a verified domain owner to register this unassigned site in SIMY.')
     p.add_argument('--roles', nargs='+')
+    p.add_argument('--allow-search-console-owners', action='store_true',
+                   help='Use only when the publisher authorizes Search Console owners, including delegated owners.')
     p.add_argument('--apply', action='store_true')
     a = p.parse_args()
     site=validate(json.loads(a.site.read_text()))
     if (a.claim_google_subject is not None or a.enable_domain_registration) and a.roles is not None:
         p.error('--roles cannot be combined with self-service registration')
+    if a.allow_search_console_owners and not a.enable_domain_registration:
+        p.error('--allow-search-console-owners requires --enable-domain-registration')
 
     def provision(store):
         now = int(time.time())
         if a.enable_domain_registration:
-            return enable_domain_registration(store, site)
+            return enable_domain_registration(store, site, allow_search_console_owners=a.allow_search_console_owners)
         if a.claim_google_subject is not None:
             return prepare_claim(store, site, a.claim_google_subject, now)
         return seed(store, site, a.email, a.roles or ['read', 'edit'], now, google_subject=a.google_subject)
