@@ -117,6 +117,27 @@ publisher authorizes Search Console owners (including delegated owners) to
 register and publish. A website without that authorization or without a binding
 stays in preparation and cannot enter checkout.
 
+### WordPress.com provider adapter
+
+The adapter targets one public, static front page. It requests WordPress.com
+authorization for one site, then checks the returned site ID and public origin,
+page editing and publishing capabilities, and the configured homepage. It
+saves to a WordPress autosave revision and updates the published homepage only
+when the caller passes the approved revision digest. It verifies the saved
+content and refuses a stale homepage or changed autosave.
+
+The adapter is not used by signup or the deployed Mac MCP flow yet. Before
+enabling it, connect the OAuth callback and server-owned credential storage,
+bind approvals to the authenticated editor and exact revision, and reconcile
+the direct-transfer runtime. The core WordPress update endpoint lacks an atomic
+version precondition, so the publishing path also needs a strategy for edits
+made concurrently outside SIMY.
+
+The isolated local check used the native Mac 0.3.11 binary for ZIP initialization
+and the edited package, and a real WordPress REST server for reading, autosaving,
+publishing and reading the public homepage. Only the WordPress.com OAuth exchange
+and site registry were simulated. No production site was used.
+
 Configure the two bridge directions together. `entitlement_endpoint` identifies
 the trusted SIMY `/functions/v1/hp-control-entitlement` URL. The dedicated raw
 token at `entitlement_secret_arn` must match the backend's
