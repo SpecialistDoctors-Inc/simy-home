@@ -1,7 +1,11 @@
 import unittest
 from provision_site import seed,validate
 from identity import sha
+from service import Service, Rejected
 from store import MemoryStore,Conflict
+
+ORG = 'f4dbf297-4526-41f5-bd7b-2ba20b4736d9'
+SUBJECT = 'google-subject'
 
 class ProvisionTest(unittest.TestCase):
  def site(self):
@@ -14,3 +18,36 @@ class ProvisionTest(unittest.TestCase):
  def test_unknown_fields_and_unsafe_bindings_rejected(self):
   for change in ({'private_key':'not allowed'},{'drive_changes_folder_id':'snapshot-folder'},{'prod_url':'http://example.invalid'},{'github_app_id':True}):
    with self.subTest(change=list(change)),self.assertRaises(ValueError):validate({**self.site(),**change})
+
+ def test_verified_subject_can_use_prepared_site_when_payment_becomes_active(self):
+  store = MemoryStore()
+  site = {**self.site(), 'license_policy': {'mode': 'simy', 'org_id': ORG}}
+  store.put('principal:' + SUBJECT, {'sites': {'existing-site': ['read']}})
+  seed(store, site, None, ['read', 'edit'], 1000, google_subject=SUBJECT)
+  self.assertEqual(store.get('principal:' + SUBJECT)['sites'],
+                   {'existing-site': ['read'], 'example-site': ['edit', 'read']})
+  allowed = False
+  service = Service(store, license_resolver=lambda org, sub: allowed and (org, sub) == (ORG, SUBJECT))
+  claims = {'sub': SUBJECT, 'scope': 'hp:read hp:write'}
+  self.assertEqual(service.license_preflight(ORG, SUBJECT), {'ready': True})
+  with self.assertRaisesRegex(Rejected, 'hp_license_required'):
+   service.authorized(claims, site['site_id'], 'edit')
+  allowed = True
+  service.authorized(claims, site['site_id'], 'edit')
+  with self.assertRaisesRegex(Rejected, 'site_access_denied'):
+   service.authorized(claims, site['site_id'], 'publish')
+
+ def test_subject_provision_rejects_disabled_principal_and_preserves_conflicting_records(self):
+  store = MemoryStore()
+  site = {**self.site(), 'license_policy': {'mode': 'simy', 'org_id': ORG}}
+  key = 'principal:' + SUBJECT
+  store.put(key, {'sites': {}, 'disabled': True})
+  with self.assertRaisesRegex(ValueError, 'existing principal'):
+   seed(store, site, None, ['read', 'edit'], 1000, google_subject=SUBJECT)
+  self.assertIsNone(store.get('site:example-site'))
+  self.assertIsNone(store.get('repository:3'))
+  store.put('repository:3', {'site_id': 'another-site', 'installation_id': 2})
+  with self.assertRaises(Conflict):
+   seed(store, site, None, ['read', 'edit'], 1001, google_subject='new-subject')
+  self.assertIsNone(store.get('principal:new-subject'))
+  self.assertIsNone(store.get('site:example-site'))

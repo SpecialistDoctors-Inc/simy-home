@@ -75,6 +75,16 @@ site-role checks. Sites without a license policy retain their existing explicit
 operator grants and cannot qualify for the commercial checkout. A billing
 organization does not authorize an arbitrary site URL or create provider bindings.
 
+Once the deployment team has verified the site's repository, hosting bindings
+and Google subject, provision a new commercial site with `provision_site.py
+--site <verified-binding.json> --google-subject <verified-subject>`. This checks
+the local inputs. The existing `--table simy-hp-control --apply` path writes the
+site, repository binding and initial site roles in one transaction. It preserves
+the principal's other grants, refuses disabled principals and requires a SIMY
+organization on the site. This lets the same account pass checkout readiness
+without first installing the editor to redeem an invitation. An active SIMY
+license is still required to edit.
+
 Configure the two bridge directions together. `entitlement_endpoint` identifies
 the trusted SIMY `/functions/v1/hp-control-entitlement` URL. The dedicated raw
 token at `entitlement_secret_arn` must match the backend's
@@ -90,7 +100,7 @@ characters. After verifying identity and billing authority, SIMY sends a JSON
 It receives `{"ready":true}` only when that Google principal already has read
 and edit permission on an enabled site bound to that organization and the entitlement
 lookup responds. This check does not require a paid license or modify authority.
-An unclaimed HP invitation must be redeemed through the existing Google
+When using the invitation path, redeem it through the existing Google
 connection before checkout. A negative response contains `{"ready":false}`
 and a `status` of `connection_required` when the principal has not connected,
 or `site_setup_required` when no eligible site is ready for that principal and
