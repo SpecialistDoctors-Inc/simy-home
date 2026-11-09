@@ -10,7 +10,7 @@ import re
 import secrets
 import time
 from uuid import UUID, uuid4
-from licensing import license_org, resolve_license, site_license_allowed, valid_google_subject, valid_org_id
+from licensing import LicenseUnavailable, license_org, resolve_license, site_license_allowed, valid_google_subject, valid_org_id
 from store import Write, Check, Conflict
 
 
@@ -24,6 +24,21 @@ def canonical(value):
 
 def fingerprint(value):
     return hashlib.sha256(canonical(value).encode()).hexdigest()
+
+
+def setup_code_key(code):
+    if not isinstance(code, str) or not re.fullmatch(r'[A-Za-z0-9_-]{43}', code):
+        raise Rejected('site_claim_unavailable')
+    return 'site-claim:' + fingerprint(code)
+
+
+def new_site_writes(site):
+    site_id = site['site_id']
+    return [
+        Write('site:' + site_id, site, None),
+        Write('repository:' + str(site['github_repository_id']),
+              {'site_id': site_id, 'installation_id': site['github_installation_id']}, None),
+    ]
 
 
 def uuid(value):
@@ -58,9 +73,10 @@ def main_commit(site):
 
 
 class Service:
-    def __init__(self, store, clock=time.time, publication_enabled=False, license_resolver=None):
+    def __init__(self, store, clock=time.time, publication_enabled=False, license_resolver=None, claim_targets=None):
         self.store, self.clock, self.publication_enabled = store, clock, publication_enabled
         self.license_resolver = license_resolver
+        self.claim_targets = claim_targets or {}
 
     def principal(self, claims):
         if not isinstance(claims, dict) or not isinstance(claims.get('sub'), str):
@@ -119,11 +135,74 @@ class Service:
                 continue
             site = self.store.get('site:' + site_id)
             if site and not site.get('disabled') and license_org(site) == org_id:
+                if site.get('registered_by_claim'):
+                    self._check_claim_targets(site)
                 # Check that the bridge is usable before taking payment. A
                 # definitive "not entitled yet" is normal before purchase.
                 resolve_license(self.license_resolver, org_id, google_subject)
                 return {'ready': True}
         return {'ready': False, 'status': 'site_setup_required'}
+
+    def claim_prepared_site(self, org_id, google_subject, setup_code):
+        """Redeem an operator-prepared site for the same verified Google subject."""
+        if not valid_org_id(org_id) or not valid_google_subject(google_subject):
+            raise Rejected('site_claim_unavailable')
+        key = setup_code_key(setup_code)
+        claim = self.store.get(key)
+        if (not claim or claim['expires_at'] <= self.clock()
+                or claim['google_subject'] != google_subject):
+            raise Rejected('site_claim_unavailable')
+        if claim.get('claimed_org') is not None:
+            return self._confirmed_site_claim(claim, org_id, google_subject)
+        site = claim['site']
+        self._check_claim_targets(site)
+        site_id = site['site_id']
+        principal_key = 'principal:' + google_subject
+        member = self.store.get(principal_key) or {'sites': {}, 'disabled': False}
+        if member.get('disabled') or site_id in member['sites']:
+            raise Rejected('site_claim_unavailable')
+        # A valid negative response is expected before payment. An unavailable
+        # bridge leaves the code untouched so the same request can be retried.
+        resolve_license(self.license_resolver, org_id, google_subject)
+        managed_site = {**site, 'registered_by_claim': True, 'license_policy': {'mode': 'simy', 'org_id': org_id}}
+        roles = ['read', 'edit', 'publish']
+        claimed = {'site_id': site_id, 'claimed_org': org_id,
+                   'google_subject': google_subject, 'expires_at': claim['expires_at']}
+        try:
+            self.store.transact([
+                *new_site_writes(managed_site),
+                Write(principal_key, {**member, 'sites': {**member['sites'], site_id: roles}}, member.get('_version')),
+                Write(key, claimed, claim['_version']),
+            ])
+        except Conflict:
+            # A concurrent retry may have completed the exact claim.
+            latest = self.store.get(key)
+            if latest and latest.get('claimed_org') is not None:
+                return self._confirmed_site_claim(latest, org_id, google_subject)
+            raise Rejected('site_claim_unavailable') from None
+        return {'status': 'claimed'}
+
+    def _confirmed_site_claim(self, claim, org_id, google_subject):
+        if claim['claimed_org'] == org_id and claim['google_subject'] == google_subject:
+            site_id = claim['site_id']
+            site = self.store.get('site:' + site_id)
+            member = self.store.get('principal:' + google_subject)
+            if (site and not site.get('disabled') and license_org(site) == org_id
+                    and member and not member.get('disabled')
+                    and {'read', 'edit', 'publish'} <= set(member['sites'].get(site_id, []))):
+                self._check_claim_targets(site)
+                return {'status': 'claimed'}
+        raise Rejected('site_claim_unavailable')
+
+    def _check_claim_targets(self, site):
+        targets = self.claim_targets.get(site['site_id'], {})
+        if not self.publication_enabled or set(targets) != {'dev', 'prod'}:
+            raise LicenseUnavailable('hp_license_unavailable')
+        for environment, target in targets.items():
+            binding = site['deployment'][environment]
+            if (binding['bucket'] != target['bucket']
+                    or binding['distribution_id'] != target['distribution']):
+                raise LicenseUnavailable('hp_license_unavailable')
 
     def workspace(self, claims, site_id, workspace_id):
         self.authorized(claims, site_id, 'edit')

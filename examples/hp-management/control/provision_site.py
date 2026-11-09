@@ -3,11 +3,13 @@
 import argparse
 import json
 import re
+import secrets
 import time
 from pathlib import Path
 from urllib.parse import urlsplit
 from identity import sha
 from licensing import LicenseUnavailable, license_org, valid_google_subject
+from service import new_site_writes, setup_code_key
 from store import DynamoStore, Write
 
 ACCOUNT = '209300895845'
@@ -54,11 +56,7 @@ def seed(store, site, email, roles, now, *, google_subject=None):
     if not roles or not set(roles)<={'read','edit','publish'} or 'read' not in roles:raise ValueError('explicit role set required')
     site_id = site['site_id']
     grant = {site_id: sorted(set(roles))}
-    writes = [
-        Write('site:' + site_id, site, None),
-        Write('repository:' + str(site['github_repository_id']),
-              {'site_id': site_id, 'installation_id': site['github_installation_id']}, None),
-    ]
+    writes = new_site_writes(site)
     result = {'site_id': site_id}
     if google_subject is not None:
         if email is not None or not valid_google_subject(google_subject) or license_org(site) is None:
@@ -81,6 +79,21 @@ def seed(store, site, email, roles, now, *, google_subject=None):
     return result
 
 
+def prepare_claim(store, site, google_subject, now):
+    validate(site)
+    if not valid_google_subject(google_subject) or license_org(site) is not None:
+        raise ValueError('a verified Google subject and an unassigned site are required')
+    if any(store.get(binding.key) is not None for binding in new_site_writes(site)):
+        raise ValueError('site or repository already registered')
+    setup_code = secrets.token_urlsafe(32)
+    expires_at = now + 7 * 86400
+    # A reservation contains no active binding and disappears if it is unused.
+    # The site/repository constraints are checked again atomically at redemption.
+    store.put(setup_code_key(setup_code), {'site': site, 'google_subject': google_subject,
+                                         'expires_at': expires_at})
+    return {'site_id': site['site_id'], 'setup_code': setup_code, 'expires_at': expires_at}
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--site', type=Path, required=True)
@@ -88,13 +101,23 @@ def main():
     identity = p.add_mutually_exclusive_group(required=True)
     identity.add_argument('--email', help='Send no mail. Create an invitation for this verified mailbox.')
     identity.add_argument('--google-subject', help='Grant access to this previously verified Google subject.')
-    p.add_argument('--roles', nargs='+', default=['read', 'edit'])
+    identity.add_argument('--claim-google-subject', help='Issue an expiring setup code for this verified Google subject.')
+    p.add_argument('--roles', nargs='+')
     p.add_argument('--apply', action='store_true')
     a = p.parse_args()
     site=validate(json.loads(a.site.read_text()))
+    if a.claim_google_subject is not None and a.roles is not None:
+        p.error('--roles cannot be combined with --claim-google-subject')
+
+    def provision(store):
+        now = int(time.time())
+        if a.claim_google_subject is not None:
+            return prepare_claim(store, site, a.claim_google_subject, now)
+        return seed(store, site, a.email, a.roles or ['read', 'edit'], now, google_subject=a.google_subject)
+
     if not a.apply:
         from store import MemoryStore
-        seed(MemoryStore(), site, a.email, a.roles, int(time.time()), google_subject=a.google_subject)
+        provision(MemoryStore())
         print(json.dumps({'valid': True, 'site_id': site['site_id'], 'applied': False}))
         return
     if a.table!='simy-hp-control':raise SystemExit('use dedicated HP authority table')
@@ -102,6 +125,6 @@ def main():
     session=boto3.Session(region_name='ap-northeast-1')
     if session.client('sts').get_caller_identity()['Account']!=ACCOUNT:raise SystemExit('wrong AWS account')
     store = DynamoStore(a.table, session.client('dynamodb'))
-    print(json.dumps(seed(store, site, a.email, a.roles, int(time.time()), google_subject=a.google_subject)))
+    print(json.dumps(provision(store)))
 
 if __name__=='__main__':main()

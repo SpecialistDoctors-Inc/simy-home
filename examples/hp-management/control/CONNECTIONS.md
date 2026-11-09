@@ -85,6 +85,20 @@ organization on the site. This lets the same account pass checkout readiness
 without first installing the editor to redeem an invitation. An active SIMY
 license is still required to edit.
 
+To let a customer select their own SIMY organization in signup, prepare the same
+verified binding without a license policy. Use `--claim-google-subject` in
+place of `--google-subject`. With `--apply` this prints a setup code valid
+for seven days. Deliver it to the verified site owner. It can only be used by
+that Google subject. The owner signs in and enters the code in the HP signup
+page. SIMY checks billing authority for the selected organization and submits
+the code to `POST /internal/site/claim` with the preflight credential. HP
+Control assigns the site, its repository and the owner's read, edit and publish
+roles in one transaction. The license check still applies to all operations.
+Retries for the same account and organization are safe while the code is valid.
+Set `self_service_site_id` to the site ID for this stack's verified publisher
+bindings. Registration and subsequent checkout preflight reject a missing or
+mismatched preview or production destination.
+
 Configure the two bridge directions together. `entitlement_endpoint` identifies
 the trusted SIMY `/functions/v1/hp-control-entitlement` URL. The dedicated raw
 token at `entitlement_secret_arn` must match the backend's

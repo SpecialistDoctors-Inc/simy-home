@@ -46,6 +46,15 @@ variable "preview_enabled" {
   type    = bool
   default = false
 }
+variable "self_service_site_id" {
+  description = "Site ID bound to this deployment's reviewed preview and publication targets for registration by setup code."
+  type        = string
+  default     = ""
+  validation {
+    condition     = var.self_service_site_id == "" || can(regex("^[a-z][a-z0-9-]{1,62}$", var.self_service_site_id))
+    error_message = "Use a valid managed site ID or leave self-service registration disabled."
+  }
+}
 variable "preview_gate_reference" {
   description = "Evidence that the legacy dev writer is retired and the target preview configuration is verified."
   type        = string

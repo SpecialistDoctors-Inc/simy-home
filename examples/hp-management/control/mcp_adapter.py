@@ -179,8 +179,8 @@ class App:
             return self.response(413, {'error': 'request_too_large'})
         if method == 'GET' and path == '/health':
             return self.response(200, {'status': 'ok'})
-        if path == '/internal/license/preflight':
-            return self.license_preflight(method, headers, data)
+        if path in ('/internal/license/preflight', '/internal/site/claim'):
+            return self.hp_billing_request(method, headers, data, claim_site=path == '/internal/site/claim')
         if method == 'GET' and path in ('/.well-known/oauth-authorization-server', '/.well-known/openid-configuration'):
             return self.response(200, self.identity.metadata())
         if method == 'GET' and path in ('/.well-known/oauth-protected-resource', '/.well-known/oauth-protected-resource/mcp'):
@@ -252,7 +252,7 @@ class App:
             return self.rpc(json_load(data), claims, event)
         return self.response(404, {'error': 'not_found'})
 
-    def license_preflight(self, method, headers, data):
+    def hp_billing_request(self, method, headers, data, *, claim_site):
         if method != 'POST':
             return self.response(405, {'error': 'method_not_allowed'}, {'allow': 'POST'})
         try:
@@ -269,14 +269,21 @@ class App:
         if headers.get('content-type', '').split(';')[0].strip().lower() != 'application/json':
             return self.response(415, {'error': 'unsupported_media_type'})
         body = json_load(data)
-        fields(body, ('org_id', 'google_subject'))
+        required = ('org_id', 'google_subject', 'setup_code') if claim_site else ('org_id', 'google_subject')
+        fields(body, required)
         if not valid_org_id(body['org_id']) or not valid_google_subject(body['google_subject']):
             raise BadRequest()
         if not DIRECT_TRANSFER_TOOLS <= TOOL_FIELDS.keys():
             return self.response(503, {'error': 'hp_license_unavailable'})
         try:
-            return self.response(200, self.service.license_preflight(body['org_id'], body['google_subject']))
+            if claim_site:
+                result = self.service.claim_prepared_site(body['org_id'], body['google_subject'], body['setup_code'])
+            else:
+                result = self.service.license_preflight(body['org_id'], body['google_subject'])
+            return self.response(200, result)
         except Rejected:
+            if claim_site:
+                return self.response(409, {'error': 'site_claim_unavailable'})
             return self.response(400, {'error': 'invalid_request'})
         except Exception:
             return self.response(503, {'error': 'hp_license_unavailable'})

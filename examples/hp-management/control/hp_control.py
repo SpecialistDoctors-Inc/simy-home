@@ -30,7 +30,8 @@ def application():
     store = DynamoStore(os.environ['HP_TABLE_NAME'])
     identity = Identity(store, issuer, client['client_id'], tokens.sign, GoogleExchange(client))
     service = Service(store, publication_enabled=os.environ.get('HP_PUBLICATION_ENABLED') == 'true',
-        license_resolver=entitlement_resolver(secret))
+        license_resolver=entitlement_resolver(secret),
+        claim_targets=json.loads(os.environ.get('HP_SITE_CLAIM_TARGETS', '{}')))
     html = (Path(__file__).parent / 'ui' / 'dist' / 'publish.html').read_text()
     preflight_arn = os.environ.get('HP_CONTROL_PREFLIGHT_SECRET_ARN', '')
     _app = App(identity, service, tokens.verify, {'keys': [tokens.jwk]}, html,

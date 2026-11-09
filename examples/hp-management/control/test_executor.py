@@ -10,7 +10,7 @@ import zipfile
 from bundles import sha256, MAX_TRANSPORT
 from cloud_providers import GoogleDrive, ProviderError, S3Artifacts, google_transport
 from executor import Executor, Busy, IntegrationUnavailable, ReconciliationRequired
-from service import Service, fingerprint, Rejected
+from service import Service, fingerprint, Rejected, setup_code_key
 from store import MemoryStore
 
 
@@ -234,6 +234,34 @@ class ExecutorTests(unittest.TestCase):
         prepared = self.service.prepare_publish(self.claims, self.site, op['result']['preview_id'])
         return self.service.confirm_publish(self.claims, prepared['structuredContent']['approval_id'],
             prepared['_meta']['confirmation_nonce'])['operation_id']
+
+    def test_new_owner_can_publish_only_after_claim_and_paid_entitlement(self):
+        site = self.store.rows.pop('site:' + self.site)
+        site.pop('_version')
+        site.update(github_repository_id=3, github_installation_id=2)
+        targets = {environment: {'bucket': 'fixture-' + environment, 'distribution': 'EFIXTURE'}
+                   for environment in ('dev', 'prod')}
+        site['deployment'] = {environment: {'bucket': target['bucket'], 'distribution_id': target['distribution']}
+                              for environment, target in targets.items()}
+        self.service.claim_targets = {self.site: targets}
+        self.store.rows.pop('principal:operator')
+        org = 'f4dbf297-4526-41f5-bd7b-2ba20b4736d9'
+        code = 'a' * 42 + 'A'
+        self.store.put(setup_code_key(code), {'site': site, 'google_subject': 'operator', 'expires_at': self.now + 60})
+        paid = False
+        resolve = lambda org_id, subject: paid and (org_id, subject) == (org, 'operator')
+        self.service.license_resolver = resolve
+        self.executor.license_resolver = resolve
+
+        self.assertEqual(self.service.claim_prepared_site(org, 'operator', code), {'status': 'claimed'})
+        self.assertEqual(self.service.license_preflight(org, 'operator'), {'ready': True})
+        with self.assertRaisesRegex(Rejected, 'hp_license_required'):
+            self.admit('open_workspace')
+        paid = True
+        published = self.execute(self.publish_operation())['result']
+        self.assertEqual(published['kind'], 'published')
+        self.assertTrue(published['receipt']['verified'])
+        self.assertEqual(self.github.read_site_at(published['main_commit']).files['index.html'], b'edited')
 
     def test_provider_binding_failure_after_claim_has_durable_recovery(self):
         operation = self.admit('open_workspace')
