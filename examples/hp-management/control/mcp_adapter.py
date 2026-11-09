@@ -120,10 +120,11 @@ def tool_error(code):
 
 
 class App:
-    def __init__(self, identity, service, verify, jwks, ui_html, preflight_token=None):
+    def __init__(self, identity, service, verify, jwks, ui_html, preflight_token=None, wordpress=None):
         self.identity, self.service, self.verify = identity, service, verify
         self.jwks, self.ui_html = jwks, ui_html
         self.preflight_token = preflight_token
+        self.wordpress = wordpress
 
     @staticmethod
     def response(status, value=None, headers=None):
@@ -271,6 +272,8 @@ class App:
         body = json_load(data)
         registration = claim_site and isinstance(body, dict) and 'action' in body
         required = ('org_id', 'google_subject')
+        if registration and body['action'] in ('wordpress_start', 'wordpress_finish'):
+            return self.wordpress_request(body, required)
         if registration:
             required += ('action', 'site_url')
         elif claim_site:
@@ -298,6 +301,24 @@ class App:
             return self.response(400, {'error': 'invalid_request'})
         except Exception:
             return self.response(503, {'error': 'hp_license_unavailable'})
+
+    def wordpress_request(self, body, required):
+        starting = body['action'] == 'wordpress_start'
+        fields(body, required + ('action',) + (('site_url',) if starting else ('state', 'code')))
+        org, subject = body['org_id'], body['google_subject']
+        if not valid_org_id(org) or not valid_google_subject(subject):
+            raise BadRequest()
+        if self.wordpress is None:
+            return self.response(503, {'error': 'wordpress_connection_unavailable'})
+        try:
+            connection = self.wordpress()
+            result = (connection.start(org, subject, body['site_url']) if starting
+                      else connection.finish(org, subject, body['state'], body['code']))
+            return self.response(200, result)
+        except ValueError:
+            return self.response(409, {'error': 'wordpress_connection_failed'})
+        except Exception:
+            return self.response(503, {'error': 'wordpress_connection_unavailable'})
 
     def rpc(self, request, claims, event):
         fields(request, ('jsonrpc', 'method'), ('id', 'params'))

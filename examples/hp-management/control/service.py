@@ -99,6 +99,8 @@ class Service:
         site = self.store.get('site:' + site_id)
         if not site or site.get('disabled'):
             raise Rejected('site_unavailable')
+        if site.get('provider') == 'wordpress' and role != 'read':
+            raise Rejected('site_editing_not_ready')
         if not site_license_allowed(site, claims['sub'], self.license_resolver):
             raise Rejected('hp_license_required')
         return member, site
@@ -136,6 +138,8 @@ class Service:
                 continue
             site = self.store.get('site:' + site_id)
             if site and not site.get('disabled') and license_org(site) == org_id:
+                if site.get('provider') == 'wordpress':
+                    continue
                 if site.get('registered_by_claim'):
                     self._check_claim_targets(site)
                 # Check that the bridge is usable before taking payment. A

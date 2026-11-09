@@ -9,6 +9,7 @@ from licensing import EntitlementResolver
 from service import Service
 from store import DynamoStore, Conflict
 from mcp_adapter import App
+from wordpress_onboarding import WordPressOnboarding
 
 _app = None
 
@@ -34,8 +35,10 @@ def application():
         claim_targets=json.loads(os.environ.get('HP_SITE_CLAIM_TARGETS', '{}')))
     html = (Path(__file__).parent / 'ui' / 'dist' / 'publish.html').read_text()
     preflight_arn = os.environ.get('HP_CONTROL_PREFLIGHT_SECRET_ARN', '')
+    wordpress_arn = os.environ.get('HP_WORDPRESS_SECRET_ARN', '')
     _app = App(identity, service, tokens.verify, {'keys': [tokens.jwk]}, html,
-        preflight_token=(lambda: secret(preflight_arn)) if preflight_arn else None)
+        preflight_token=(lambda: secret(preflight_arn)) if preflight_arn else None,
+        wordpress=(lambda: WordPressOnboarding(store, json.loads(secret(wordpress_arn)))) if wordpress_arn else None)
     return _app
 
 

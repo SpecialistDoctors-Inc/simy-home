@@ -132,6 +132,16 @@ variable "entitlement_secret_arn" {
   }
 }
 
+variable "wordpress_secret_arn" {
+  description = "Optional HP WordPress.com OAuth and credential-encryption secret reference."
+  type        = string
+  default     = ""
+  validation {
+    condition     = var.wordpress_secret_arn == "" || can(regex("^arn:aws:secretsmanager:ap-northeast-1:209300895845:secret:hp-control/", var.wordpress_secret_arn))
+    error_message = "Use a dedicated hp-control/ secret in the verified account/region."
+  }
+}
+
 variable "preflight_secret_arn" {
   description = "Separate raw bearer token for SIMY to check HP site setup before purchase."
   type        = string

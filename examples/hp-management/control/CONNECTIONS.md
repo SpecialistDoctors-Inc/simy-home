@@ -126,12 +126,19 @@ saves to a WordPress autosave revision and updates the published homepage only
 when the caller passes the approved revision digest. It verifies the saved
 content and refuses a stale homepage or changed autosave.
 
-The adapter is not used by signup or the deployed Mac MCP flow yet. Before
-enabling it, connect the OAuth callback and server-owned credential storage,
-bind approvals to the authenticated editor and exact revision, and reconcile
-the direct-transfer runtime. The core WordPress update endpoint lacks an atomic
-version precondition, so the publishing path also needs a strategy for edits
-made concurrently outside SIMY.
+Signup can start WordPress.com OAuth when `HP_WORDPRESS_CONNECTION_ENABLED=1`
+and the HP Control service credential is configured. Register the exact HTTPS
+callback `/api/signup/hp-wordpress/` on the web deployment's origin. The optional
+HP Control `wordpress_secret_arn` points to a dedicated secret with `client_id`,
+`client_secret`, `callback`, and a Fernet `credential_key`. The callback consumes
+its state once and stores the encrypted grant for the signed-in Google subject
+and billing organization. No per-site setup code or DNS record is needed.
+
+The Mac site list returns the WordPress connection with read access after a
+valid HP entitlement. Checkout remains closed for this provider until the Mac
+editing and publication worker is wired to the stored grant. The core WordPress
+update endpoint lacks an atomic version precondition, so that worker also needs
+a strategy for concurrent changes made outside SIMY.
 
 The isolated local check used the native Mac 0.3.11 binary for ZIP initialization
 and the edited package, and a real WordPress REST server for reading, autosaving,

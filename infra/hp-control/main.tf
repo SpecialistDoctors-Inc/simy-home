@@ -168,6 +168,7 @@ resource "aws_lambda_function" "runtime" {
       HP_SIGNING_SECRET_ARN           = var.signing_secret_arn
       HP_GITHUB_WEBHOOK_SECRET_ARN    = var.github_webhook_secret_arn
       HP_CONTROL_PREFLIGHT_SECRET_ARN = var.preflight_secret_arn
+      HP_WORDPRESS_SECRET_ARN         = var.wordpress_secret_arn
       HP_SITE_CLAIM_TARGETS           = jsonencode(local.claim_targets)
       } : each.key == "consumer" ? {
       HP_GITHUB_SECRET_ARN          = var.github_secret_arn
