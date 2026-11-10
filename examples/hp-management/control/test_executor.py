@@ -3,15 +3,16 @@ from copy import deepcopy
 from io import BytesIO
 import json
 import unittest
+from unittest.mock import patch
 from types import SimpleNamespace
 from uuid import uuid4
 import zipfile
 
-from bundles import sha256, MAX_TRANSPORT
+from bundles import sha256, MAX_TRANSPORT, BundleError
 from cloud_providers import GoogleDrive, ProviderError, S3Artifacts, google_transport
 from executor import Executor, Busy, IntegrationUnavailable, ReconciliationRequired
 from service import Service, fingerprint, Rejected
-from store import MemoryStore
+from store import MemoryStore, Conflict
 
 
 def changes(site, workspace, base, operation, before, after):
@@ -213,6 +214,18 @@ class ExecutorTests(unittest.TestCase):
         operation = self.admit('open_workspace')
         result = self.execute(operation)['result']
         return result['workspace_id'], result
+
+    def test_consumer_keeps_single_retry_when_conflict_happens_inside_run(self):
+        from hp_control import consume_commands
+        operation = self.admit('open_workspace')
+        event = {'Records': [{'messageId': 'in-run-conflict',
+                             'body': json.dumps({'operation_id': operation})}]}
+        with patch.object(self.github, 'head', side_effect=Conflict('provider_read_conflict')):
+            self.assertEqual(consume_commands(event, None, executor=self.executor), {'batchItemFailures': []})
+        row = self.store.get('operation:' + operation)
+        self.assertEqual((row['retry_attempts'], row['retry_generation']), (1, 1))
+        self.assertEqual((row['queue_state'], row['retry_at']), ('pending', 1005))
+        self.assertEqual(row['error'], 'provider_retry_required')
 
     def save(self, workspace, before=b'base', after=b'edited'):
         base = self.store.get('workspace:' + workspace)['head_commit']
@@ -471,16 +484,100 @@ class ExecutorTests(unittest.TestCase):
 
     def test_ambiguous_preview_deployment_never_retains_old_approval_pointer(self):
         _,old=self.preview()
+        old_id=old['result']['preview_id']
+        old_time=self.store.get('preview:'+old_id)['updated_at']
+        self.now += 60
         workspace,_=self.open()
         saved=self.execute(self.save(workspace,before=b'edited',after=b'next'))['result']
         operation=self.admit('submit_preview',workspace_id=workspace,saved_commit=saved['saved_commit'])
         self.preview_publisher.fail_once=True
         with self.assertRaises(RuntimeError): self.execute(operation)
         self.assertIsNone(self.store.get('site:'+self.site).get('current_preview'))
+        self.assertEqual(self.store.get('site:'+self.site)['last_verified_preview'],old_id)
+        self.assertEqual(self.service.list_sites(self.claims)[0]['deployments']['dev']['updated_at'],old_time)
         self.assertEqual(self.store.get('lease:site:'+self.site)['blocked_operation'],operation)
         result=self.execute(operation)
         self.assertEqual(result['status'],'completed')
         self.assertEqual(self.store.get('site:'+self.site)['current_preview'],result['result']['preview_id'])
+        self.assertEqual(self.store.get('site:'+self.site)['last_verified_preview'],result['result']['preview_id'])
+        self.assertEqual(self.service.list_sites(self.claims)[0]['deployments']['dev']['updated_at'],int(self.now))
+        self.assertGreater(self.now,old_time)
+
+    def test_verified_preview_records_time_and_last_success_pointer(self):
+        _, result = self.preview()
+        preview_id = result['result']['preview_id']
+        preview = self.store.get('preview:' + preview_id)
+        site = self.store.get('site:' + self.site)
+        self.assertEqual(preview['updated_at'], int(self.now))
+        self.assertEqual(site['last_verified_preview'], preview_id)
+        status = self.service.list_sites(self.claims)[0]['deployments']
+        self.assertEqual(status['dev']['updated_at'], int(self.now))
+
+    def test_legacy_missing_production_pointer_does_not_block_preview(self):
+        site = self.store.get('site:'+self.site)
+        self.store.put('site:'+self.site, {**site, 'initial_main_commit': None}, site['_version'])
+        _, result = self.preview()
+        self.assertEqual(result['status'], 'completed')
+        self.assertIsNone(self.store.get('preview:'+result['result']['preview_id'])['publication_changes'])
+
+    def test_invalid_legacy_production_source_does_not_block_preview(self):
+        original = self.executor._snapshot
+        def snapshot(run, github, commit):
+            if 'summary_base' in run.op.get('intents', {}):
+                raise BundleError('legacy source invalid')
+            return original(run, github, commit)
+        self.executor._snapshot = snapshot
+        _, result = self.preview()
+        self.assertEqual(result['status'], 'completed')
+        self.assertIsNone(self.store.get('preview:'+result['result']['preview_id'])['publication_changes'])
+
+    def test_revocation_during_summary_read_still_blocks_dev(self):
+        original = self.executor._snapshot
+        def snapshot(run, github, commit):
+            if 'summary_base' in run.op.get('intents', {}):
+                member = self.store.get('principal:operator')
+                self.store.put('principal:operator', {**member, 'disabled': True}, member['_version'])
+            return original(run, github, commit)
+        self.executor._snapshot = snapshot
+        original_dev = self.github.branches['dev']
+        _, result = self.preview()
+        self.assertEqual(result['status'], 'failed')
+        self.assertEqual(result['error'], 'access_revoked')
+        self.assertFalse(self.preview_publisher.effects)
+        self.assertEqual(self.github.branches['dev'], original_dev)
+
+    def test_content_versions_advance_only_for_verified_new_artifacts(self):
+        _, first = self.preview()
+        first_hash = first['result']['artifact_sha256']
+        self.assertEqual(self.store.get('content-version:'+self.site+':'+first_hash)['version'], 1)
+        workspace,_ = self.open()
+        saved = self.execute(self.save(workspace,before=b'edited',after=b'next'))['result']
+        operation = self.admit('submit_preview',workspace_id=workspace,saved_commit=saved['saved_commit'])
+        self.preview_publisher.fail_once = True
+        with self.assertRaises(RuntimeError): self.execute(operation)
+        self.assertEqual(self.store.get('site:'+self.site)['last_content_version'], 1)
+        second = self.execute(operation)
+        second_hash = second['result']['artifact_sha256']
+        self.assertNotEqual(second_hash, first_hash)
+        self.assertEqual(self.store.get('content-version:'+self.site+':'+second_hash)['version'], 2)
+        self.execute(operation)
+        self.assertEqual(self.store.get('site:'+self.site)['last_content_version'], 2)
+        self.assertEqual(self.service.list_sites(self.claims)[0]['deployments']['dev']['version'], 2)
+
+    def test_invalid_version_registry_fails_before_environment_deployment(self):
+        workspace,_ = self.open()
+        saved = self.execute(self.save(workspace))['result']
+        operation = self.admit('submit_preview',workspace_id=workspace,saved_commit=saved['saved_commit'])
+        original = self.store.get
+        def get(key):
+            if key.startswith('content-version:'): return {'version': True}
+            return original(key)
+        self.store.get = get
+        result = self.execute(operation)
+        self.assertEqual(result['status'], 'failed')
+        self.assertEqual(result['error'], 'content_version_corrupt')
+        self.assertFalse(self.preview_publisher.effects)
+        self.assertIsNone(self.store.get('site:'+self.site).get('current_preview'))
 
     def test_preview_preflight_rejects_unbound_publisher_before_candidate_effects(self):
         workspace,_=self.open()

@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "runtime": "python3.12",
+  "architecture": "x86_64",
+  "sha256": "264093d7a3cc73f42fe8b0d449279d20fd2545b97359e579e1a4515485a2337a",
+  "bytes": 21130278,
+  "files": 2641,
+  "requirements_sha256": "7495f58c3a80b770b6899b95936d4cca070f20ff975008471e702eb6a7ef6d61",
+  "requirements_input_sha256": "aabfc9ed4d4aee1c632efab01733c7de7b5219c7760387d450fab76354a6b562",
+  "source_sha256": {
+    "hp_control.py": "22ae339d240b397e028830e1409eda6b3c7fa1143e66b2951537347c7e98bcee",
+    "store.py": "c06ed3b214a49a0a851415564a599e7a7d3d05d934c6fcd3476e46bed92eabf1",
+    "service.py": "ffea32e797068efab53014c26b0c09ed50f66cd0d08242d9422ea3427cdc0d68",
+    "identity.py": "3ccf10de8d255495aff41f208dd1eef28abf252817d395231b4ae1495ce35e12",
+    "cloud_auth.py": "d9be4d17f64e7f6391bc573b9e6d08ddee226c26c25ebed7f0e05398f8f7b3ea",
+    "mcp_adapter.py": "7dda5967ddf8e15270cf545d12539627904ac76417632b07b886ad95fe2f6acd",
+    "bundles.py": "a3b4077f9649d61cdc98096c5b9203a011fa648fa18804506e4d0b139aa9d5c6",
+    "change_summary.py": "70d604f9a5470a7ab5a46e7d2968a3ca6e8d19f873984eb85ca6a330780912aa",
+    "executor.py": "a68900feaf7fe9eaf61d313527451bec8b779f0d995864016ba167f6f768ec67",
+    "cloud_providers.py": "65eb9271d9c1e9f9d32c392f60af7d46ea4af379e676aec4cf85380c1db344ba",
+    "transfers.py": "d3c24f3c9ca1fc4170247d4aab0e0a951ffe1644fe7ce7b24217c01202464715",
+    "github_app.py": "8e38700c5fb654bf9f7d07ede1b443bed29b4a317b94acbd72ffd4389c028188",
+    "github_workflow.py": "b17066777668b4058aac698766e6072559baccba82e933a15a8ebd5be2f6d183",
+    "github_events.py": "67904e70e844c4c083625ee40c7be15ec11601f2a378ee7136f52a2c388d9e60",
+    "browser_validation.py": "b6c0a928352127cd35b86fd53b8412e196ad00ee037d631883e115a114bb1678",
+    "publisher.py": "e6fee2eec051ab3259749e63cc068afa0131273d232ea4354c4ccf58b21c30a7",
+    "reporting.py": "a331fa3200a2fec59124f3f34cab4e50d652e7239481a799a10a4ff072500219",
+    "cloud_reporting.py": "4ae1fa22411ac76f9441646260facd36230f69caa7f61bad9cecf00dbcb9a16d",
+    "runner/google_provider.py": "fb78b4651118ab2e9a27208ee4edf60b971a39becf54559034cbff5cd1270437",
+    "runner/gmail_provider.py": "0da1bf334c2c0e1ad28b74cd9d0e2227f7dde884914fd86ee56a16194e5cf49c",
+    "runner/provider_errors.py": "87802bd34680c16042aa6e4fffc150d9a508075d31bbcdec03640031e21ccd50",
+    "runner/ledger.py": "21113868876930ed9a60eec409d393debca75125d39f5fe39ee6c7886b4b881a",
+    "ui/dist/publish.html": "9a3cd97803983748863bc07d4ee25a8616c08aacd2334d571cbf6e316a39a490"
+  },
+  "runtime_image": "public.ecr.aws/lambda/python:3.12@sha256:0fe974382dcb297e80e7feb8c7620d7e8ece5b42b4d01a5a9ffe939c654bf8b0",
+  "runtime_container_verified": true,
+  "native_extensions": [
+    "_cffi_backend.cpython-312-x86_64-linux-gnu.so",
+    "charset_normalizer/md.cpython-312-x86_64-linux-gnu.so",
+    "charset_normalizer/cd.cpython-312-x86_64-linux-gnu.so",
+    "cryptography/hazmat/bindings/_rust.abi3.so"
+  ]
+}
