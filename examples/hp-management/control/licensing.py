@@ -59,9 +59,15 @@ class NoRedirect(HTTPRedirectHandler):
         return None
 
 
+LOOPBACK_ENDPOINT = r'http://(?:127\.0\.0\.1|localhost):[0-9]{1,5}/functions/v1/hp-control-entitlement'
+
+
 class EntitlementResolver:
-    def __init__(self, endpoint, token):
-        if not re.fullmatch(r'https://[a-zA-Z0-9.-]+/functions/v1/hp-control-entitlement', endpoint):
+    def __init__(self, endpoint, token, *, allow_loopback=False):
+        # Deployed HP Control reaches SIMY over HTTPS only. The loopback form is
+        # for local_bridge.py against a local Supabase; Lambda never passes it.
+        if not (re.fullmatch(r'https://[a-zA-Z0-9.-]+/functions/v1/hp-control-entitlement', endpoint)
+                or (allow_loopback and re.fullmatch(LOOPBACK_ENDPOINT, endpoint))):
             raise LicenseUnavailable('hp_license_unavailable')
         self.endpoint, self.token = endpoint, token
         self.opener = build_opener(NoRedirect())
