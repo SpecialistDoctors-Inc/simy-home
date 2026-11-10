@@ -78,7 +78,7 @@ class AdapterTests(unittest.TestCase):
         self.assertNotIn('_version', json.dumps(value))
         response, value = self.rpc('tools/list')
         tools = {tool['name']: tool for tool in value['result']['tools']}
-        self.assertEqual(len(tools), 12)
+        self.assertEqual(len(tools), 14)
         self.assertFalse(tools['hp_cancel_confirmation']['annotations']['readOnlyHint'])
         self.assertEqual(tools['hp_cancel_confirmation']['securitySchemes'][0]['scopes'], ['hp:read', 'hp:write'])
         self.assertTrue(tools['hp_get_confirmation']['annotations']['readOnlyHint'])
