@@ -15,6 +15,7 @@ from executor import Executor
 from mcp_adapter import App
 from service import Service
 from store import MemoryStore
+from transfers import Transfers
 import test_executor
 import test_wordpress_provider
 from wordpress_editor import WordPressEditor, WordPressTransfers
@@ -52,13 +53,14 @@ class WordPressEditorTest(unittest.TestCase):
         resolver = lambda org, sub: paid and org == ORG and sub == SUBJECT
         service = Service(store, publication_enabled=True, license_resolver=resolver, wordpress_test_origin=ORIGIN)
         onboarding = WordPressOnboarding(store, {'credential_key': Fernet.generate_key().decode()}, provider=fixture.provider)
-        transfers = WordPressTransfers(store, service, objects, 'fixture')
+        transfers = WordPressTransfers(store, objects, 'fixture')
         editor = WordPressEditor(onboarding, transfers, 'https://hp-control.example/mcp')
         executor = Executor(store, None, None, artifacts, publication_enabled=True, license_resolver=resolver,
                             wordpress=editor, wordpress_test_origin=ORIGIN)
         claims = {'sub': SUBJECT, 'scope': 'hp:read hp:write'}
         app = App(None, service, lambda _: claims, None, None, preflight_token=lambda: 's' * 32,
-                  wordpress=lambda: onboarding, wordpress_transfers=transfers)
+                  wordpress=lambda: onboarding, wordpress_transfers=transfers,
+                  transfers=Transfers(service, 'fixture', objects))
 
         def rpc(name, args):
             result = app({'rawPath': '/mcp', 'httpMethod': 'POST', 'headers': {
@@ -90,12 +92,12 @@ class WordPressEditorTest(unittest.TestCase):
         self.assertNotIn('url', download['structuredContent'])
         self.assertEqual(download['_meta']['hp_transfer']['method'], 'GET')
         initial = store.get('workspace:' + receipt['workspace_id'])
-        snapshot = artifacts.get_exact(initial['initial_snapshot_key'], receipt['snapshot_sha256'])
+        snapshot = artifacts.get_exact(initial['snapshot_artifact_key'], receipt['snapshot_sha256'])
         base, operation, data = self.package(receipt, snapshot)
         upload = rpc('hp_prepare_upload', {**workspace, 'operation_id': operation, 'base_commit': base,
                      'bundle_sha256': sha256(data), 'size': str(len(data))})
         self.assertEqual(upload['_meta']['hp_transfer']['headers']['If-None-Match'], '*')
-        objects.files[store.get('upload:hp-upload-' + operation)['key']] = data
+        objects.files[store.get('transfer:' + operation)['key']] = data
         saved = execute('hp_save_draft', {'workspace_id': receipt['workspace_id'], 'base_commit': base,
                         'bundle_file_id': 'hp-upload-' + operation, 'bundle_sha256': sha256(data)}, operation)
         preview = execute('hp_submit_preview', {'workspace_id': receipt['workspace_id'], 'saved_commit': saved['saved_commit']})

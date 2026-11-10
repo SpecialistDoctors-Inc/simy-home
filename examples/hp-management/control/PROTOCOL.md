@@ -45,6 +45,28 @@ Root index.html is required for a snapshot/candidate. Transport entries must be
 regular files or safe directory entries. Never invoke git, shell hooks, dependencies
 or supplied executables from the package. Local Python helper uses stdlib only.
 
+## Direct HP file transport (optional per site)
+
+`direct_transfer_enabled` is operator-owned site configuration. When enabled,
+workspace creation also stores the exact snapshot in the existing private
+artifact bucket. `hp_download_workspace` checks caller/site/workspace ownership
+and issues a 300-second GET only in private MCP metadata. Existing Drive fields
+remain backward compatible; customers do not need a Drive plugin.
+
+`hp_prepare_upload` binds one original package operation ID to its caller, site,
+workspace, base, SHA256 and byte length. It returns a private 300-second PUT signed
+with checksum, length, content type, encryption and create-only headers. File
+transfer alone never admits a draft save, dev preview or production publication.
+The unchanged `hp_save_draft` request can use its server-issued `hp-upload-<id>`
+file marker. Admission and execution both verify the transfer binding. The worker
+checks the stored bytes and normal changes manifest before committing anything.
+
+A duplicate PUT can return 412 after an earlier successful upload. The worker’s
+exact hash/size/manifest validation remains required; 412 is not a saved receipt.
+Same-operation retries cannot change bytes. A still-authorized caller may refresh
+membership/config versions only before save admission, transactionally excluding
+a concurrent admission. Already-admitted work keeps its original authority fence.
+
 ## Server reconciliation
 
 Save-draft advances only the caller's server-owned workspace branch, using the

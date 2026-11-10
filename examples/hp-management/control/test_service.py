@@ -34,6 +34,24 @@ class ServiceTests(unittest.TestCase):
         result = self.service.prepare_publish(self.claims, self.site_id, self.preview_id)
         return result['structuredContent']['approval_id'], result['_meta']['confirmation_nonce'], result
 
+    def test_publication_details_freeze_the_exact_baseline_and_target(self):
+        changes = {'base_commit': 'a'*40, 'items': [{'title': '診療時間', 'kind': 'changed', 'before': '18時', 'after': '19時'}], 'additional_count': 0}
+        self.update('preview:' + self.preview_id, publication_changes=changes)
+        self.update('site:' + self.site_id, current_publication={'artifact_sha256': 'd'*64})
+        self.store.put('content-version:'+self.site_id+':'+'d'*64, {'version': 2})
+        self.store.put('content-version:'+self.site_id+':'+'c'*64, {'version': 3})
+        approval, _, result = self.prepare()
+        details = result['structuredContent']['publication_details']
+        self.assertEqual((details['from_version'], details['to_version']), (2, 3))
+        self.assertEqual(details['changes']['items'][0]['after'], '19時')
+        self.update('preview:' + self.preview_id, publication_changes={**changes, 'items': []})
+        self.assertEqual(self.service.confirmation(self.claims, approval)['publication_details'], details)
+
+    def test_summary_from_another_baseline_is_not_presented(self):
+        self.update('preview:' + self.preview_id, publication_changes={'base_commit': 'e'*40, 'items': [], 'additional_count': 0})
+        _, _, result = self.prepare()
+        self.assertIsNone(result['structuredContent']['publication_details']['changes'])
+
     def operations(self):
         return {key: value for key, value in self.store.rows.items() if key.startswith('operation:')}
 

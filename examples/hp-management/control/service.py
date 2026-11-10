@@ -132,7 +132,8 @@ class Service:
                 continue
             result.append({'site_id': site_id, 'name': site['name'], 'roles': effective_roles(member,
                 {**site, 'site_id': site_id}, claims['sub'], self.wordpress_test_origin),
-                'preview_url': site['dev_url'], 'production_url': site['prod_url']})
+                'preview_url': site['dev_url'], 'production_url': site['prod_url'],
+                'deployments': self.deployment_status(site_id, site)})
         return result
 
     def license_preflight(self, org_id, google_subject, *, wordpress_only=False):
@@ -146,7 +147,8 @@ class Service:
             return {'ready': False, 'status': 'site_setup_required'}
         for site_id in member.get('sites', {}):
             site = self.store.get('site:' + site_id)
-            if site and not site.get('disabled') and license_org(site) == org_id:
+            if (site and not site.get('disabled') and license_org(site) == org_id
+                    and site.get('direct_transfer_enabled') is True):
                 if wordpress_only and site.get('provider') != 'wordpress':
                     continue
                 if not {'read', 'edit'} <= set(effective_roles(member, {**site, 'site_id': site_id}, google_subject, self.wordpress_test_origin)):
@@ -300,6 +302,57 @@ class Service:
                     or binding['distribution_id'] != target['distribution']):
                 raise LicenseUnavailable('hp_license_unavailable')
 
+    def deployment_status(self, site_id, site):
+        """Return the latest verified deployment times for an authorized site."""
+        preview_id = site.get('current_preview') or site.get('last_verified_preview')
+        preview = self.store.get('preview:' + preview_id) if isinstance(preview_id, str) else None
+        if not preview or preview.get('site_id') != site_id or preview.get('status') != 'verified':
+            preview = None
+        publication = site.get('current_publication')
+        if not isinstance(publication, dict) or (publication.get('receipt') or {}).get('verified') is not True:
+            publication = None
+
+        def updated_at(record, kind):
+            if not record:
+                return None
+            value = record.get('updated_at')
+            if type(value) is int and value > 0:
+                return value
+            operation_id = record.get('operation_id')
+            operation = self.store.get('operation:' + operation_id) if isinstance(operation_id, str) else None
+            if (not operation or operation.get('site_id') != site_id or operation.get('kind') != kind
+                    or operation.get('status') not in ('completed', 'published_after_cancel_or_revocation')):
+                return None
+            value = operation.get('completed_at')
+            return value if type(value) is int and value > 0 else None
+
+        return {
+            'dev': {'updated_at': updated_at(preview, 'submit_preview'), 'version': self.artifact_version(site_id, (preview or {}).get('artifact_sha256')), 'url': site['dev_url']},
+            'production': {'updated_at': updated_at(publication, 'publish'), 'version': self.artifact_version(site_id, (publication or {}).get('artifact_sha256')), 'url': site['prod_url']},
+        }
+
+    def artifact_version(self, site_id, artifact):
+        if not isinstance(artifact, str) or not re.fullmatch('[0-9a-f]{64}', artifact):
+            return None
+        row = self.store.get('content-version:' + site_id + ':' + artifact)
+        value = (row or {}).get('version')
+        return value if type(value) is int and value > 0 else None
+
+    def publication_details(self, approval, preview):
+        previous = approval.get('expected_publication')
+        previous = previous if isinstance(previous, dict) else {}
+        same = previous.get('artifact_sha256') == approval['artifact_sha256']
+        changes = (preview or {}).get('publication_changes')
+        # A summary is usable only for the exact production baseline approved here.
+        if same:
+            changes = {'items': [], 'additional_count': 0}
+        elif not isinstance(changes, dict) or changes.get('base_commit') != approval.get('expected_main_commit'):
+            changes = None
+        return {'from_version': self.artifact_version(approval['site_id'], previous.get('artifact_sha256')),
+                'to_version': self.artifact_version(approval['site_id'], approval['artifact_sha256']),
+                'already_current': same,
+                'changes': {key: changes[key] for key in ('items', 'additional_count')} if changes else None}
+
     def workspace(self, claims, site_id, workspace_id):
         self.authorized(claims, site_id, 'edit')
         row = self.store.get('workspace:' + uuid(workspace_id))
@@ -333,6 +386,9 @@ class Service:
             digest(body['bundle_sha256'])
             if not isinstance(body['bundle_file_id'], str) or not re.fullmatch('[A-Za-z0-9_-]{10,256}', body['bundle_file_id']):
                 raise Rejected('invalid_drive_file')
+            if body['bundle_file_id'].startswith('hp-upload-'):
+                from transfers import upload_binding
+                transfer = upload_binding(self, claims, body)
         now = int(self.clock())
         operation = {'operation_id': op_id, 'site_id': body['site_id'], 'subject': claims['sub'], 'kind': kind,
             'input': body, 'fingerprint': op_fingerprint, 'created_at': now, 'status': 'queued',
@@ -342,6 +398,8 @@ class Service:
                   Check('site:' + body['site_id'], site['_version'])]
         if kind != 'open_workspace':
             writes.append(Check('workspace:' + body['workspace_id'], workspace['_version']))
+        if kind == 'save_draft' and body['bundle_file_id'].startswith('hp-upload-'):
+            writes.append(Check('transfer:' + op_id, transfer['_version']))
         if kind == 'open_workspace':
             workspace_id = str(uuid4()); operation['workspace_id'] = workspace_id
             writes.append(Write('workspace:' + workspace_id, {'workspace_id': workspace_id,
@@ -457,6 +515,7 @@ class Service:
             'expected_publication': site.get('current_publication'), 'nonce_hash': fingerprint(nonce),
             'expected_main_commit': main_commit(site),
             'created_at': int(self.clock()), 'expires_at': int(self.clock()) + 600, 'state': 'prepared'}
+        record['publication_details'] = self.publication_details(record, preview)
         self.store.put('approval:' + approval_id, record)
         # The host sends _meta to the app only. It is not permission by itself;
         # confirm checks the authenticated subject, live ACL and immutable proof.
@@ -465,7 +524,7 @@ class Service:
         return {'structuredContent': {'approval_id': approval_id, 'mode': mode, 'site_id': site_id, 'site_name': site['name'],
             'preview_id': preview_id, 'preview_url': preview['url'], 'production_url': site['prod_url'],
             'source_commit': record['source_commit'], 'artifact_sha256': record['artifact_sha256'],
-            'summary': preview['summary'], 'expires_at': record['expires_at']},
+            'summary': preview['summary'], 'publication_details': record['publication_details'], 'expires_at': record['expires_at']},
             '_meta': {'confirmation_nonce': nonce}, 'content': [{'type': 'text', 'text': message}]}
 
     def confirmation(self, claims, approval_id):
@@ -476,6 +535,8 @@ class Service:
         result = {key: approval[key] for key in ('approval_id', 'site_id', 'preview_id',
             'source_commit', 'artifact_sha256', 'state', 'expires_at')}
         result['mode'] = approval.get('mode', 'publish')
+        result['publication_details'] = approval.get('publication_details') or self.publication_details(
+            approval, self.store.get('preview:' + approval['preview_id']))
         if approval['state'] == 'accepted':
             result['operation'] = self.operation(claims, approval['operation_id'])
         elif approval['state'] == 'connection_tested':

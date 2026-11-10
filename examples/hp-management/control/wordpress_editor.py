@@ -1,61 +1,16 @@
 """WordPress workspace operations over the existing Mac editor protocol."""
-import base64
 from html import escape
-import re
 from uuid import NAMESPACE_URL, uuid5
 
 from bundles import build_snapshot, sha256, validate_changes, validate_snapshot
-from service import Rejected, digest, uuid
+from service import Rejected
 from store import Check, Conflict, Write
 from wordpress_provider import content_digest
 
 
-TRANSFER_FIELDS = {
-    'hp_download_workspace': ('site_id', 'workspace_id'),
-    'hp_prepare_upload': ('site_id', 'workspace_id', 'operation_id', 'base_commit', 'bundle_sha256', 'size'),
-}
-
-
 class WordPressTransfers:
-    def __init__(self, store, service, client, bucket):
-        self.store, self.service, self.client, self.bucket = store, service, client, bucket
-
-    def call(self, name, args, claims):
-        workspace = self.service.workspace(claims, args['site_id'], args['workspace_id'])
-        _, site = self.service.authorized(claims, args['site_id'], 'edit')
-        if site.get('provider') != 'wordpress' or workspace.get('status') != 'ready':
-            raise Rejected('workspace_access_denied')
-        if name == 'hp_download_workspace':
-            public = {key: workspace[key] for key in ('site_id', 'workspace_id', 'snapshot_sha256')}
-            return public, self.download(workspace['initial_snapshot_key'])
-        operation = uuid(args['operation_id'])
-        checksum = digest(args['bundle_sha256'])
-        if not re.fullmatch(r'[1-9][0-9]{0,7}', args['size']) or int(args['size']) > 60 * 1024 * 1024:
-            raise Rejected('workspace_changed')
-        size = int(args['size'])
-        file_id = 'hp-upload-' + operation
-        key = 'artifacts/' + site['site_id'] + '/uploads/' + operation + '.zip'
-        record = {'site_id': site['site_id'], 'subject': claims['sub'], 'workspace_id': workspace['workspace_id'],
-                  'base_commit': args['base_commit'], 'sha256': checksum, 'size': size, 'key': key}
-        row_key = 'upload:' + file_id
-        current = self.store.get(row_key)
-        if not current:
-            if workspace['head_commit'] != args['base_commit']:
-                raise Rejected('workspace_changed')
-            try:
-                self.store.put(row_key, record)
-            except Conflict:
-                pass
-            current = self.store.get(row_key)
-        if not current or any(current.get(k) != v for k, v in record.items()):
-            raise Rejected('operation_id_conflict')
-        encoded = base64.b64encode(bytes.fromhex(checksum)).decode()
-        url = self.client.generate_presigned_url('put_object', Params={'Bucket': self.bucket, 'Key': key,
-            'ContentType': 'application/zip', 'ContentLength': size, 'ChecksumSHA256': encoded,
-            'IfNoneMatch': '*', 'ServerSideEncryption': 'AES256'}, ExpiresIn=300)
-        return {'operation_id': operation, 'bundle_file_id': file_id, 'bundle_sha256': checksum, 'size': size}, {
-            'method': 'PUT', 'url': url, 'headers': {'Content-Type': 'application/zip', 'Content-Length': str(size),
-                'x-amz-checksum-sha256': encoded, 'If-None-Match': '*', 'x-amz-server-side-encryption': 'AES256'}}
+    def __init__(self, store, client, bucket):
+        self.store, self.client, self.bucket = store, client, bucket
 
     def download(self, key, *, preview=False):
         params = {'Bucket': self.bucket, 'Key': key}
@@ -64,22 +19,6 @@ class WordPressTransfers:
             params['ResponseContentDisposition'] = 'inline'
         return {'method': 'GET', 'url': self.client.generate_presigned_url('get_object', Params=params,
                   ExpiresIn=900 if preview else 300), 'headers': {}}
-
-    def read_upload(self, run):
-        body = run.op['input']
-        if body['bundle_file_id'] != 'hp-upload-' + run.op['operation_id']:
-            raise Rejected('invalid_drive_file')
-        record = self.store.get('upload:' + body['bundle_file_id'])
-        if not record or any(record.get(k) != v for k, v in {
-                'site_id': run.site['site_id'], 'subject': run.op['subject'], 'workspace_id': run.workspace_id,
-                'base_commit': body['base_commit'], 'sha256': body['bundle_sha256']}.items()):
-            raise Rejected('invalid_drive_file')
-        run.guard()
-        with self.client.get_object(Bucket=self.bucket, Key=record['key'])['Body'] as stream:
-            data = stream.read(record['size'] + 1)
-        if len(data) != record['size'] or sha256(data) != record['sha256']:
-            raise Rejected('bundle_hash_mismatch')
-        return data
 
 
 class WordPressEditor:
@@ -111,7 +50,7 @@ class WordPressEditor:
             if checksum != sha256(data):
                 base = validate_snapshot(run.artifacts.get_exact(key, checksum), run.site['site_id']).manifest['base_commit']
         row = {**workspace, 'status': 'ready', 'head_commit': base, 'base_on_dev': base,
-               'initial_snapshot_key': key, 'snapshot_key': key, 'snapshot_sha256': checksum,
+               'snapshot_artifact_key': key, 'snapshot_key': key, 'snapshot_sha256': checksum,
                'head_snapshot_sha256': checksum}
         result = {'schema_version': 1, 'kind': 'workspace', 'site_id': run.site['site_id'],
                   'workspace_id': run.workspace_id, 'base_commit': base, 'snapshot_file_id': checksum,
@@ -125,7 +64,7 @@ class WordPressEditor:
         if workspace['head_commit'] != body['base_commit']:
             raise Rejected('workspace_changed')
         original = validate_snapshot(run.artifacts.get_exact(workspace['snapshot_key'], workspace['head_snapshot_sha256']), run.site['site_id'])
-        changes = validate_changes(self.transfers.read_upload(run), original, run.op['operation_id'])
+        changes = validate_changes(run.transferred_changes(), original, run.op['operation_id'])
         if set(changes.candidate_files) != {'index.html'} or not 0 < len(changes.candidate_files['index.html']) <= 1_000_000:
             raise Rejected('wordpress_homepage_content_only')
         saved = sha256(changes.candidate_files['index.html'])[:40]

@@ -1,3 +1,13 @@
+variable "environment" {
+  description = "Select the existing production stack or the separate WordPress acceptance stack."
+  type        = string
+  default     = "production"
+  validation {
+    condition     = contains(["production", "acceptance"], var.environment)
+    error_message = "Use production or acceptance."
+  }
+}
+
 variable "region" {
   type    = string
   default = "ap-northeast-1"

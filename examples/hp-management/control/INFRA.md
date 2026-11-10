@@ -161,3 +161,28 @@ image by digest rather than tag, and leave launcher/preview/production gates at
 their separately reviewed values. Review scan results and rerun the secretless
 renderer smoke before enabling launches. No registry creation, image push, state
 import, plan or apply was executed during this local preparation.
+
+## Isolated WordPress.com acceptance
+
+Use `environment=acceptance` with the `hp-control-acceptance` Terraform workspace
+and its own state. Review a plan before applying. The acceptance endpoint is
+`https://hp-control-acceptance.simy.one`; it has its own API, queue, authority
+table, artifact bucket, roles and logs. The existing `hp-control` workspace keeps
+its current names and publisher bindings.
+
+- Use secrets under `hp-control/acceptance/`. Use a dedicated Google OAuth client
+  with `https://hp-control-acceptance.simy.one/oauth/google/callback` and a separate
+  WordPress.com client whose redirect is the protected Vercel preview's
+  `/api/signup/hp-wordpress/` callback.
+- Point the entitlement endpoint at the SIMY verification Supabase project and
+  use its matching bridge token. Point the protected Vercel preview at that same
+  verification project and the Stripe sandbox. Enable Mac acceptance only on
+  that preview after the endpoint, license lookup and Mac download are ready.
+- Keep `self_service_site_id` empty and renderer and static preview flags
+  disabled. Enable publication for the exact dedicated WordPress.com test
+  origin and provide its reviewed publication gate reference. This workspace
+  has no publisher roles for the sample-clinic distributions.
+- Connect the Mac acceptance package to the acceptance MCP endpoint. Verify a
+  new account sees its site only after test payment, then save and review the
+  exact draft. Have the reviewer confirm the artifact in the authenticated
+  publication UI and read back the public WordPress.com page.

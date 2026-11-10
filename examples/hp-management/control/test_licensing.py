@@ -20,7 +20,7 @@ class LicenseTests(unittest.TestCase):
         self.store = MemoryStore()
         self.store.put('principal:' + SUBJECT, {'sites': {'paid-site': ['read', 'edit'], 'legacy-site': ['read']}})
         site = {'name': 'Example', 'dev_url': 'https://dev.example.invalid', 'prod_url': 'https://example.invalid'}
-        self.store.put('site:paid-site', {**site, 'license_policy': {'mode': 'simy', 'org_id': ORG}})
+        self.store.put('site:paid-site', {**site, 'direct_transfer_enabled': True, 'license_policy': {'mode': 'simy', 'org_id': ORG}})
         self.store.put('site:legacy-site', site)
         self.resolve = Mock(return_value=False)
         self.service = Service(self.store, license_resolver=self.resolve)

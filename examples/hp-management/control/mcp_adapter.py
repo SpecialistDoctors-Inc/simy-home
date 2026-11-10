@@ -16,7 +16,6 @@ from identity import AuthError, Identity
 from licensing import LicenseUnavailable, valid_google_subject, valid_org_id, valid_service_token
 from service import Rejected
 from store import Conflict
-from wordpress_editor import TRANSFER_FIELDS
 
 MAX_BODY = 64 * 1024
 UI_URI = 'ui://hp-control/publish.html'
@@ -30,6 +29,8 @@ def schema(properties):
 TOOL_FIELDS = {
     'hp_profile': (), 'hp_list_sites': (),
     'hp_open_workspace': ('operation_id', 'site_id'),
+    'hp_download_workspace': ('site_id', 'workspace_id'),
+    'hp_prepare_upload': ('operation_id', 'site_id', 'workspace_id', 'base_commit', 'bundle_sha256', 'size'),
     'hp_save_draft': ('operation_id', 'site_id', 'workspace_id', 'base_commit', 'bundle_file_id', 'bundle_sha256'),
     'hp_submit_preview': ('operation_id', 'site_id', 'workspace_id', 'saved_commit'),
     'hp_get_operation': ('operation_id',), 'hp_cancel_operation': ('operation_id',),
@@ -40,11 +41,11 @@ TOOL_FIELDS = {
     'hp_confirm_publish': ('approval_id', 'confirmation_nonce'),
 }
 DESCRIPTIONS = {
-    'hp_download_workspace': 'Get a private download for the owned WordPress workspace snapshot.',
-    'hp_prepare_upload': 'Authorize a private, checksum-bound upload for the owned WordPress workspace.',
     'hp_profile': 'Read the authenticated member profile and site bindings.',
     'hp_list_sites': 'List the authenticated member’s available sites and roles.',
     'hp_open_workspace': 'Queue a durable workspace snapshot request. Reuse operation_id on retry.',
+    'hp_download_workspace': 'Prepare private, short-lived download metadata for an owned workspace. Use the local plugin transport; never copy private URLs to chat.',
+    'hp_prepare_upload': 'Prepare immutable upload transport for the original local package operation. Does not save or publish. Reuse the exact input on retry.',
     'hp_save_draft': 'Queue validation and draft saving of an uploaded changes ZIP. Saving does not publish.',
     'hp_submit_preview': 'Queue reconciliation and verification of the exact saved draft for preview.',
     'hp_get_operation': 'Read an owned operation. Queued or running is not complete.',
@@ -59,6 +60,8 @@ READ_TOOLS = {'hp_profile', 'hp_list_sites', 'hp_get_operation', 'hp_get_confirm
 DIRECT_TRANSFER_TOOLS = {'hp_download_workspace', 'hp_prepare_upload'}
 SAFE_REJECTIONS = set('authentication_required access_revoked invalid_site insufficient_scope site_access_denied site_unavailable hp_license_required invalid_id invalid_input invalid_digest workspace_access_denied unsupported_operation operation_id_conflict invalid_commit workspace_changed invalid_drive_file operation_access_denied preview_not_current publication_not_enabled confirmation_invalid confirmation_expired confirmation_stale resumption_stale resumption_id_conflict resumption_cancel_requested resumption_not_allowed resumption_approval_invalid resumption_site_busy'.split())
 SAFE_AUTH_ERRORS = set('invalid_redirect_uri unsupported_client_auth invalid_client_or_redirect invalid_authorization_request pkce_s256_required invalid_scope invalid_nonce expired_login invalid_google_identity site_invitation_required invalid_resource invalid_grant unsupported_grant_type access_revoked invalid_google_nonce'.split())
+SAFE_REJECTIONS.update({'transfer_access_denied', 'transfer_binding_changed',
+    'direct_transfer_unavailable', 'invalid_transfer_size', 'transfer_id_conflict'})
 
 
 class BadRequest(ValueError):
@@ -106,8 +109,11 @@ def tool_definitions(fields_map=None):
         elif name == 'hp_confirm_publish':
             meta = {'ui': {'visibility': ['app']}}
         result.append({'name': name, 'description': DESCRIPTIONS[name], 'inputSchema': schema(properties),
-            'annotations': {'readOnlyHint': readonly, 'destructiveHint': name in ('hp_confirm_publish', 'hp_resume_operation'),
-                'idempotentHint': name != 'hp_prepare_publish', 'openWorldHint': False},
+            'annotations': {'readOnlyHint': readonly,
+                'destructiveHint': name in ('hp_confirm_publish', 'hp_resume_operation',
+                    'hp_cancel_operation', 'hp_cancel_confirmation'),
+                'idempotentHint': name != 'hp_prepare_publish',
+                'openWorldHint': name == 'hp_resume_operation'},
             'securitySchemes': [{'type': 'oauth2', 'scopes': ['hp:read', 'hp:write'] if name == 'hp_cancel_confirmation' else ['hp:read' if readonly else 'hp:write']}],
             '_meta': meta})
     return result
@@ -123,12 +129,14 @@ def tool_error(code):
 
 
 class App:
-    def __init__(self, identity, service, verify, jwks, ui_html, preflight_token=None, wordpress=None, wordpress_transfers=None):
+    def __init__(self, identity, service, verify, jwks, ui_html, preflight_token=None, wordpress=None,
+                 wordpress_transfers=None, transfers=None):
         self.identity, self.service, self.verify = identity, service, verify
         self.jwks, self.ui_html = jwks, ui_html
         self.preflight_token = preflight_token
         self.wordpress = wordpress
         self.wordpress_transfers = wordpress_transfers
+        self.transfers = transfers
 
     @staticmethod
     def response(status, value=None, headers=None):
@@ -332,7 +340,7 @@ class App:
             return self.response(503, {'error': 'wordpress_connection_unavailable'})
 
     def rpc(self, request, claims, event):
-        tools = {**TOOL_FIELDS, **TRANSFER_FIELDS} if self.wordpress_transfers else TOOL_FIELDS
+        tools = TOOL_FIELDS
         fields(request, ('jsonrpc', 'method'), ('id', 'params'))
         if request['jsonrpc'] != '2.0' or not isinstance(request['method'], str):
             raise BadRequest()
@@ -390,8 +398,13 @@ class App:
         return self.response(200, {'jsonrpc': '2.0', 'id': request_id, 'result': result})
 
     def call_tool(self, name, arguments, claims, meta, event):
-        if self.wordpress_transfers and name in TRANSFER_FIELDS:
-            public, private = self.wordpress_transfers.call(name, arguments, claims)
+        if name in ('hp_download_workspace', 'hp_prepare_upload'):
+            if self.transfers is None:
+                raise Rejected('direct_transfer_unavailable')
+            if name == 'hp_download_workspace':
+                public, private = self.transfers.download(claims, **arguments)
+            else:
+                public, private = self.transfers.prepare_upload(claims, arguments)
             return {**tool_result(public), '_meta': {'hp_transfer': private}}
         if name == 'hp_profile':
             return tool_result(self.service.profile(claims))

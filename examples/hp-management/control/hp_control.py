@@ -2,6 +2,7 @@
 from __future__ import annotations
 import json
 import os
+import re
 from pathlib import Path
 from cloud_auth import Secrets, Tokens, GoogleExchange
 from identity import Identity
@@ -37,18 +38,23 @@ def application():
         license_resolver=entitlement_resolver(secret),
         claim_targets=json.loads(os.environ.get('HP_SITE_CLAIM_TARGETS', '{}')), wordpress_test_origin=wordpress_origin)
     html = (Path(__file__).parent / 'ui' / 'dist' / 'publish.html').read_text()
+    from transfers import Transfers
     preflight_arn = os.environ.get('HP_CONTROL_PREFLIGHT_SECRET_ARN', '')
-    transfers = (WordPressTransfers(store, service, regional_s3_client(os.environ['AWS_REGION']),
-                                    os.environ['HP_ARTIFACT_BUCKET']) if service.wordpress_test_origin else None)
+    bucket = os.environ['HP_ARTIFACT_BUCKET']
+    s3 = regional_s3_client(os.environ.get('AWS_REGION') or os.environ.get('AWS_DEFAULT_REGION'))
     _app = App(identity, service, tokens.verify, {'keys': [tokens.jwk]}, html,
         preflight_token=(lambda: secret(preflight_arn)) if preflight_arn else None,
         wordpress=(lambda: WordPressOnboarding(store, json.loads(secret(wordpress_arn)))) if wordpress_arn else None,
-        wordpress_transfers=transfers)
+        wordpress_transfers=WordPressTransfers(store, s3, bucket) if service.wordpress_test_origin else None,
+        transfers=Transfers(service, bucket, s3))
     return _app
 
 
 def handler(event, context):
     try:
+        if event.get('rawPath') == '/.well-known/openai-apps-challenge':
+            return domain_verification(event, DynamoStore(os.environ['HP_TABLE_NAME']),
+                os.environ['HP_PUBLIC_BASE_URL'])
         if event.get('rawPath') == '/github/webhook':
             from github_events import handle
             if event.get('requestContext', {}).get('http', {}).get('method') != 'POST':
@@ -72,6 +78,21 @@ def handler(event, context):
     except Exception:
         return {'statusCode': 503, 'headers': {'Content-Type': 'application/json', 'Cache-Control': 'no-store'},
                 'body': '{"error":"service_not_configured"}'}
+
+
+def domain_verification(event, store, issuer):
+    """Serve only the operator-provisioned public ownership proof for this host."""
+    headers = {'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'no-store',
+               'X-Content-Type-Options': 'nosniff'}
+    if event.get('requestContext', {}).get('http', {}).get('method') != 'GET':
+        return {'statusCode': 405, 'headers': headers, 'body': ''}
+    record = store.get('domain-verification:openai') or {}
+    value = record.get('token')
+    if (record.get('issuer') != issuer.rstrip('/') or
+            not isinstance(value, str) or not re.fullmatch(r'[A-Za-z0-9._=\-]{16,1024}', value)):
+        return {'statusCode': 404, 'headers': headers, 'body': ''}
+    # The token is public by design. No other row fields or credentials are returned.
+    return {'statusCode': 200, 'headers': headers, 'body': value}
 
 
 def enqueue_one(store, sqs, key, now):
@@ -148,12 +169,49 @@ def consumer():
     wordpress = None
     if wordpress_origin:
         onboarding = WordPressOnboarding(store, json.loads(secret(wordpress_arn)))
-        transfers = WordPressTransfers(store, None, s3, os.environ['HP_ARTIFACT_BUCKET'])
+        transfers = WordPressTransfers(store, s3, os.environ['HP_ARTIFACT_BUCKET'])
         wordpress = WordPressEditor(onboarding, transfers, os.environ['HP_PUBLIC_BASE_URL'].rstrip('/') + '/mcp')
     return Executor(store, github, drive, artifacts, workflow, publisher,
         publication_enabled=os.environ.get('HP_PUBLICATION_ENABLED') == 'true', preview_publisher=preview_publisher,
         lease_seconds=960, browser_validator=browser, license_resolver=entitlement_resolver(secret),
         wordpress=wordpress, wordpress_test_origin=wordpress_origin)
+
+
+def defer_admission_conflict(executor, row):
+    """Persist a wake-up before acknowledging a delivery that lost admission.
+
+    Sending a FIFO message and marking its outbox row sent are separate writes.
+    A fast consumer can lose its lease transaction to that final outbox write.
+    Preserve the sealed work and fence; only reschedule a non-running operation.
+    """
+    from store import Write
+    if not row or row.get('status') not in ('queued', 'retry_wait', 'reconciling') or row.get('queue_state') not in ('pending', 'sent'):
+        return False
+    import time
+    now = getattr(executor, 'clock', time.time)()
+    if row.get('queue_state') == 'pending' and row.get('retry_at', 0) > now:
+        # execute() already persisted this delivery's retry. The dispatcher
+        # cannot have sent this future version, so its older sent write is stale.
+        return True
+    lease_key = 'lease:site:' + row['site_id']
+    lease = executor.store.get(lease_key)
+    attempts = row.get('retry_attempts', 0) + 1
+    exhausted = attempts >= getattr(executor, 'max_retry_attempts', 8)
+    updated = {**row, 'retry_attempts': attempts,
+        'retry_generation': row.get('retry_generation', 0) + 1,
+        'retry_at': max(row.get('retry_at', 0), now + min(5 * 2 ** min(attempts - 1, 6), 300),
+                        (lease or {}).get('until', 0) + 1),
+        'error': 'retry_budget_exhausted' if exhausted else 'consumer_admission_conflict'}
+    if exhausted:
+        updated['status'] = 'needs_attention'
+        updated.pop('queue_state', None)
+    else:
+        updated['queue_state'] = 'pending'
+    # Also change a still-pending row: a delayed dispatcher must not mark the
+    # acknowledged delivery sent. Admission changes the operation version, so
+    # this CAS protects an active owner without fencing unrelated lease updates.
+    executor.store.transact([Write('operation:' + row['operation_id'], updated, row['_version'])])
+    return True
 
 
 def consume_commands(event, context, *, executor=None, reporter=None):
@@ -174,11 +232,21 @@ def consume_commands(event, context, *, executor=None, reporter=None):
                     sheets, mail = factories(os.environ['HP_GOOGLE_OPERATOR_SECRET_ARN'], Secrets())
                     reporter = Reporter(executor.store, sheets, mail, license_resolver=executor.license_resolver)
                 reporter.report(operation_id)
-        except Exception:
+        except Exception as error:
             # Expected waits/reconciliation already have a durable outbox. Keeping
             # the old FIFO delivery invisible would delay that site's retry by the
             # full visibility timeout. Only ack after observing persisted recovery.
             saved = executor.store.get('operation:' + operation_id) if isinstance(operation_id, str) else None
+            from executor import Busy
+            if isinstance(error, (Busy, Conflict)):
+                try:
+                    if defer_admission_conflict(executor, saved):
+                        continue
+                except Conflict:
+                    # A concurrent owner won. Never overwrite its work or ack
+                    # solely because this delivery tried to reserve a retry.
+                    pass
+                saved = executor.store.get('operation:' + operation_id) if isinstance(operation_id, str) else None
             if saved and saved.get('status') == 'completed' and saved.get('reporting_required') and saved.get('reporting_state') != 'needs_attention':
                 if saved.get('queue_state') != 'pending':
                     import time

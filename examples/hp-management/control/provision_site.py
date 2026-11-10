@@ -21,7 +21,8 @@ FIELDS = {'site_id','name','config_version','github_app_id','github_installation
 
 
 def validate(site):
-    if not isinstance(site,dict) or set(site)-{'license_policy'}!=FIELDS:raise ValueError('site binding fields differ')
+    if not isinstance(site,dict) or set(site)-{'license_policy', 'direct_transfer_enabled'}!=FIELDS:raise ValueError('site binding fields differ')
+    if type(site.get('direct_transfer_enabled', False)) is not bool:raise ValueError('invalid direct transfer flag')
     try:
         license_org(site)
     except LicenseUnavailable:

@@ -55,4 +55,8 @@ class WordPressOnboardingTest(unittest.TestCase):
         self.assertEqual(mac_sites(), [])
         paid = True
         self.assertEqual(mac_sites(), [{'site_id': 'wordpress-123', 'name': 'clinic.wordpress.com',
-            'roles': ['read'], 'preview_url': None, 'production_url': 'https://clinic.wordpress.com'}])
+            'roles': ['read'], 'preview_url': None, 'production_url': 'https://clinic.wordpress.com',
+            'deployments': {
+                'dev': {'updated_at': None, 'version': None, 'url': None},
+                'production': {'updated_at': None, 'version': None, 'url': 'https://clinic.wordpress.com'},
+            }}])

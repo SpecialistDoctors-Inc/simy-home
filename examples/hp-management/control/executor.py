@@ -15,7 +15,8 @@ import time
 from uuid import uuid4, uuid5, NAMESPACE_URL
 from licensing import site_license_allowed
 from bundles import build_snapshot, validate_snapshot, validate_changes, reconcile, sha256, BundleError
-from service import Rejected, effective_roles, fingerprint
+from service import Service, Rejected, effective_roles, fingerprint, main_commit
+from change_summary import summarize_changes
 from store import Check, Write, Conflict
 
 
@@ -167,6 +168,11 @@ class Executor:
             'upload_folder_id': run.site['drive_changes_folder_id']}
         row = {**workspace, 'status': 'ready', 'base_on_dev': base, 'head_commit': base,
             'branch': 'codex/hp/' + run.workspace_id, 'snapshot_file_id': file_id, 'snapshot_sha256': sha256(data)}
+        if run.site.get('direct_transfer_enabled'):
+            key = 'artifacts/' + run.op['site_id'] + '/' + sha256(data) + '/site.zip'
+            run.effect('snapshot_artifact', lambda: run.artifacts.put_exact(key, data),
+                {'kind': 'artifact', 'key': key, 'sha256': sha256(data)})
+            row['snapshot_artifact_key'] = key
         return result, [Write('workspace:' + run.workspace_id, row, workspace['_version'])]
 
     def _save(self, run, github):
@@ -183,7 +189,10 @@ class Executor:
             return self._saved(run, workspace, saved)
         snapshot = self._snapshot(run, github, body['base_commit'])
         run.guard()
-        data = run.drive.read_exact(run.site['drive_changes_folder_id'], body['bundle_file_id'])
+        if body['bundle_file_id'].startswith('hp-upload-'):
+            data = run.transferred_changes()
+        else:
+            data = run.drive.read_exact(run.site['drive_changes_folder_id'], body['bundle_file_id'])
         if sha256(data) != body['bundle_sha256']:
             raise Rejected('bundle_hash_mismatch')
         changes = validate_changes(data, snapshot, run.op['operation_id'])
@@ -277,6 +286,24 @@ class Executor:
             {'kind': 'artifact', 'key': artifact_key, 'sha256': sha256(artifact)})
         if not isinstance(proof.get('package_operation_id'), str):
             raise Rejected('validation_package_identity_required')
+        changes = None
+        try:
+            summary_base = run.intent('summary_base', lambda: {'commit': main_commit(run.site)})['commit']
+            previous_files = self._snapshot(run, github, summary_base).files
+            changes = {'base_commit': summary_base, **summarize_changes(previous_files, merged.files)}
+        except BundleError:
+            pass  # A legacy production tree may not support a source summary.
+        except Rejected as error:
+            if str(error) != 'publication_source_not_configured':
+                raise
+        version_key = 'content-version:' + run.op['site_id'] + ':' + proof['artifact_sha256']
+        known_version = self.store.get(version_key)
+        last_version = run.site.get('last_content_version', 0)
+        if type(last_version) is not int or last_version < 0:
+            raise Rejected('content_version_corrupt')
+        version = known_version.get('version') if known_version else last_version + 1
+        if type(version) is not int or version < 1:
+            raise Rejected('content_version_corrupt')
         browser_preview = {'preview_id': preview_id, 'site_id': run.op['site_id'],
             'package_operation_id': proof['package_operation_id'],
             'source_commit': candidate, 'artifact_sha256': proof['artifact_sha256'],
@@ -305,17 +332,21 @@ class Executor:
         if live.get('artifact_sha256') != proof['artifact_sha256'] or live.get('source_commit') != candidate or live.get('verified') is not True:
             raise Rejected('preview_readback_mismatch')
         preview = {'preview_id': preview_id, 'site_id': run.op['site_id'], 'status': 'verified',
+            'updated_at': int(self.clock()),
             'source_commit': candidate, 'artifact_sha256': proof['artifact_sha256'],
             'artifact_key': stored['key'], 'validation': proof, 'browser_validation': browser, 'url': run.site['dev_url'],
-            'summary': '保存した変更を反映', 'operation_id': run.op['operation_id']}
+            'summary': '保存した変更を反映', 'publication_changes': changes, 'operation_id': run.op['operation_id']}
         old = self.store.get('preview:' + preview_id)
         writes = [Write('preview:' + preview_id, preview, (old or {}).get('_version')),
-            Write('site:' + run.op['site_id'], {**run.site, 'current_preview': preview_id}, run.site['_version']),
+            Write('site:' + run.op['site_id'], {**run.site, 'current_preview': preview_id, 'last_verified_preview': preview_id,
+                'last_content_version': max(last_version, version)}, run.site['_version']),
             # A later edit starts from the user's accepted contribution. Keep the
             # draft head/local receipt intact: unrelated dev edits remain remote
             # changes in the next three-way reconciliation.
             Write('workspace:' + run.workspace_id, {**workspace,
                 'base_on_dev': run.op['input']['saved_commit']}, workspace['_version'])]
+        if not known_version:
+            writes.append(Write(version_key, {'version': version}, None))
         return {'kind': 'preview', 'preview_id': preview_id, 'source_commit': candidate,
             'artifact_sha256': proof['artifact_sha256'], 'preview_url': run.site['dev_url']}, writes
 
@@ -357,6 +388,7 @@ class Executor:
         if receipt.get('artifact_sha256') != preview['artifact_sha256'] or receipt.get('verified') is not True:
             raise Rejected('publication_readback_mismatch')
         publication = {'operation_id': run.op['operation_id'], 'preview_id': preview['preview_id'],
+            'updated_at': int(self.clock()),
             'artifact_sha256': preview['artifact_sha256'], 'source_commit': preview['source_commit'],
             'main_commit': main['commit'], 'receipt': receipt}
         return {'kind': 'published', **publication}, [
@@ -393,6 +425,18 @@ class _Run:
             raise Rejected('access_revoked')
         if not site_license_allowed(self.site, self.op['subject'], self.executor.license_resolver):
             raise Rejected('hp_license_required')
+
+    def transferred_changes(self):
+        from transfers import upload_binding
+
+        service = Service(self.store, publication_enabled=self.executor.publication_enabled,
+            license_resolver=self.executor.license_resolver, wordpress_test_origin=self.executor.wordpress_test_origin)
+        body = self.op['input']
+        transfer = upload_binding(service, {'sub': self.op['subject'], 'scope': 'hp:read hp:write'}, body)
+        data = self.artifacts.get_exact(transfer['key'], body['bundle_sha256'])
+        if len(data) != int(transfer['size']):
+            raise Rejected('bundle_size_mismatch')
+        return data
 
     def workspace(self):
         self.guard()
@@ -495,7 +539,8 @@ class _Run:
                 raise Rejected('preview_authority_changed')
             return
         self.store.transact([
-            Write('site:' + self.op['site_id'], {**self.site, 'current_preview': None}, self.site['_version']),
+            Write('site:' + self.op['site_id'], {**self.site, 'current_preview': None,
+                'last_verified_preview': self.site.get('current_preview') or self.site.get('last_verified_preview')}, self.site['_version']),
             Write(self.key, {**self.op, 'intents': {**self.op.get('intents', {}),
                 'preview_invalidation': {'previous': self.site.get('current_preview')}}}, self.op['_version']),
             Check(self.lock_key, self.lock['_version']), Check('principal:' + self.op['subject'], self.member['_version'])])
@@ -609,6 +654,7 @@ class _Run:
             raise ReconciliationRequired('publication_authority_changed')
         preview = intent['preview']
         publication = {'operation_id': self.op['operation_id'], 'preview_id': preview['preview_id'],
+            'updated_at': int(self.executor.clock()),
             'artifact_sha256': preview['artifact_sha256'], 'source_commit': preview['source_commit'],
             'main_commit': (preview['source_commit'] if site.get('provider') == 'wordpress'
                             else self.op['phases']['main_commit']['commit']),

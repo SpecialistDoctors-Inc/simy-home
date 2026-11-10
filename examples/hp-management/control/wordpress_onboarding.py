@@ -51,6 +51,7 @@ class WordPressOnboarding:
             'access_token': connection.access_token}).encode()).decode()
         site = {'site_id': site_id, 'name': attempt['host'], 'prod_url': connection.origin, 'dev_url': None,
                 'provider': 'wordpress', 'owner_subject': subject, 'credential': credential,
+                'direct_transfer_enabled': True,
                 'config_version': (existing['config_version'] + 1) if existing else 1,
                 'license_policy': {'mode': 'simy', 'org_id': org}}
         self.store.transact([

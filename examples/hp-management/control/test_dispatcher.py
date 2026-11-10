@@ -8,6 +8,8 @@ from unittest.mock import patch
 import boto3
 from moto import mock_aws
 from hp_control import dispatch_pending, consume_commands
+from executor import Executor, Busy
+from store import Write
 from test_cloud_store import table
 
 
@@ -110,6 +112,95 @@ class DispatcherTests(unittest.TestCase):
         self.assertEqual(consume_commands(event,None,executor=Failed()),
             {'batchItemFailures':[{'itemIdentifier':'delivery-one'}]})
         self.assertEqual(self.store.get('operation:one')['queue_state'],'sent')
+
+    def test_actual_executor_losing_lease_to_sent_update_persists_same_work_retry(self):
+        original = self.operation(status='reconciling', retry_generation=3,
+            input={'approval_id':'sealed-approval'}, fingerprint='sealed-fingerprint',
+            pending_effect={'name':'publish','lease_epoch':7}, cancel_requested=True)
+        self.store.put('lease:site:example-site', {'epoch':7,'until':0,'blocked_operation':'one'})
+        executor = Executor(self.store, None, None, None, clock=lambda:1000)
+        transact = self.store.transact
+        raced = False
+        def racing_transact(writes):
+            nonlocal raced
+            if not raced and writes[0].key == 'lease:site:example-site':
+                raced = True
+                row = self.store.get('operation:one')
+                transact([Write('operation:one',{**row,'queue_state':'sent'},row['_version'])])
+            return transact(writes)
+        event={'Records':[{'messageId':'delivery-one','body':json.dumps({'operation_id':'one'})}]}
+        with patch.object(self.store,'transact',side_effect=racing_transact):
+            self.assertEqual(consume_commands(event,None,executor=executor),{'batchItemFailures':[]})
+        self.assertTrue(raced)
+        row = self.store.get('operation:one')
+        self.assertEqual((row['status'],row['queue_state'],row['retry_generation']),('reconciling','pending',4))
+        self.assertEqual(row['retry_at'],1005)
+        for field in ('input','fingerprint','pending_effect','cancel_requested'):
+            self.assertEqual(row[field],original[field])
+        self.assertEqual(self.store.get('lease:site:example-site')['epoch'],7)
+
+    def test_reconciling_site_busy_waits_for_existing_lease_without_modifying_it(self):
+        self.operation(status='reconciling',queue_state='sent',pending_effect={'name':'publish'})
+        lease=self.store.put('lease:site:example-site',{'epoch':4,'until':1100,'blocked_operation':'other'})
+        executor=Executor(self.store,None,None,None,clock=lambda:1000)
+        event={'Records':[{'messageId':'delivery-one','body':json.dumps({'operation_id':'one'})}]}
+        self.assertEqual(consume_commands(event,None,executor=executor),{'batchItemFailures':[]})
+        row=self.store.get('operation:one')
+        self.assertEqual((row['queue_state'],row['retry_at']),('pending',1101))
+        self.assertEqual(self.store.get('lease:site:example-site'),lease)
+
+    def test_consumer_busy_before_sent_write_invalidates_late_dispatcher_write(self):
+        self.operation(status='reconciling',pending_effect={'name':'publish'})
+        self.store.put('lease:site:example-site',{'epoch':4,'until':1100,'blocked_operation':'other'})
+        executor=Executor(self.store,None,None,None,clock=lambda:1000)
+        sqs=self.sqs
+        class Racing:
+            def send_message(inner,**arguments):
+                result=sqs.send_message(**arguments)
+                message=self.messages()[0]
+                event={'Records':[{'messageId':message['MessageId'],'body':message['Body']}]}
+                self.assertEqual(consume_commands(event,None,executor=executor),{'batchItemFailures':[]})
+                sqs.delete_message(QueueUrl=self.queue,ReceiptHandle=message['ReceiptHandle'])
+                return result
+        self.assertEqual(self.dispatch(sqs=Racing()),{'enqueued':1})
+        row=self.store.get('operation:one')
+        self.assertEqual((row['queue_state'],row['retry_generation'],row['retry_at']),('pending',1,1101))
+        self.assertFalse(self.messages())
+        self.assertEqual(dispatch_pending({},None,store=self.store,sqs=sqs,clock=lambda:1101),{'enqueued':1})
+        self.assertEqual(self.messages()[0]['Attributes']['MessageDeduplicationId'],'one:1')
+
+    def test_admission_retry_budget_becomes_visible_attention(self):
+        self.operation(status='reconciling',queue_state='sent',retry_attempts=7,pending_effect={'name':'publish'})
+        self.store.put('lease:site:example-site',{'epoch':4,'until':1100,'blocked_operation':'other'})
+        executor=Executor(self.store,None,None,None,clock=lambda:1000)
+        event={'Records':[{'messageId':'delivery-one','body':json.dumps({'operation_id':'one'})}]}
+        self.assertEqual(consume_commands(event,None,executor=executor),{'batchItemFailures':[]})
+        row=self.store.get('operation:one')
+        self.assertEqual((row['status'],row['error']),('needs_attention','retry_budget_exhausted'))
+        self.assertNotIn('queue_state',row)
+        self.assertEqual(row['pending_effect'],{'name':'publish'})
+
+    def test_failed_admission_retry_never_overwrites_concurrent_worker(self):
+        self.operation(status='reconciling',queue_state='sent')
+        store=self.store
+        class Failed:
+            def __init__(inner): inner.store=store
+            def execute(inner,operation): raise Busy('site_busy')
+        transact=self.store.transact
+        raced=False
+        def racing_transact(writes):
+            nonlocal raced
+            if not raced and writes[0].key=='operation:one':
+                raced=True
+                row=store.get('operation:one')
+                transact([Write('operation:one',{**row,'status':'running','lease_owner':'new-owner'},row['_version'])])
+            return transact(writes)
+        event={'Records':[{'messageId':'delivery-one','body':json.dumps({'operation_id':'one'})}]}
+        with patch.object(store,'transact',side_effect=racing_transact):
+            self.assertEqual(consume_commands(event,None,executor=Failed()),{'batchItemFailures':[{'itemIdentifier':'delivery-one'}]})
+        row=store.get('operation:one')
+        self.assertEqual((row['status'],row['lease_owner']),('running','new-owner'))
+        self.assertNotIn('retry_generation',row)
 
     def test_reporting_busy_after_sent_is_rescheduled_before_ack(self):
         self.operation(status='completed', reporting_required=True, reporting_state='pending', queue_state='sent')
