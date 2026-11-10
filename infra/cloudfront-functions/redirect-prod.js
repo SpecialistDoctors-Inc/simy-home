@@ -120,7 +120,7 @@ function homepageLanguageRedirect(request, host, uri) {
 }
 
 // BEGIN FP SAMPLE AUTH: protect HTML, bundles and every sample object before cache lookup.
-var SAMPLE_AUTH_SHA256 = 'b0146bb02e9a1c4a2be5e888edcdee3a7ad0b83763038b0ad56b9f46c94823a7';
+var SAMPLE_AUTH_SHA256 = '7f11803dcd14ed10e97d3365e49e7f4288fab15f7d3bd3fd17435a50b7b55907';
 function protectFpSample(request) {
   var decoded;
   try { decoded = decodeURIComponent(request.uri); } catch (_) { return {statusCode:400,statusDescription:'Bad Request'}; }
