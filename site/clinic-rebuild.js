@@ -35,11 +35,12 @@
  }catch{return null;}};
  // Encode pixels locally; never send original files, EXIF or remote URLs to the image runner.
  const thumbnail=(source,width,height)=>{try{for(let edge=384;edge>=96;edge=Math.floor(edge*.75)){const canvas=document.createElement('canvas'),scale=Math.min(1,edge/Math.max(width,height));canvas.width=Math.max(1,Math.round(width*scale));canvas.height=Math.max(1,Math.round(height*scale));canvas.getContext('2d').drawImage(source,0,0,canvas.width,canvas.height);for(const quality of [.72,.5,.32]){const data=normalizeCanvasJpeg(canvas.toDataURL('image/jpeg',quality));if(data&&data.length<=16384)return data;}}}catch{}return null;};
- const editPayload=(message,base)=>{const nodes=window.SimyPreviewEdit.inventory(base,frame.contentDocument);let images=[];
+ const editPayload=(message,base,{query='',followUp,workingContext=context}={})=>{
+  const nodes=window.SimyPreviewEdit.inventory(base,frame.contentDocument,query);let images=[];
   const asset=assets.at(-1);if(asset?.thumbnail)images=[{id:asset.id,mime:'image/jpeg',data:asset.thumbnail}];
   // Reuse already decoded browser pixels only. A tainted cross-origin canvas falls back to metadata.
   if(!asset){const candidates=nodes.filter(n=>n.kind==='image'&&n.tag==='img').map(n=>({n,live:frame.contentDocument?.querySelector('[data-simy-edit-id="'+n.id+'"]')})).filter(({live})=>live?.complete&&live.naturalWidth>1).sort((a,b)=>b.live.getBoundingClientRect().width*b.live.getBoundingClientRect().height-a.live.getBoundingClientRect().width*a.live.getBoundingClientRect().height);for(const {n,live} of candidates){const data=thumbnail(live,live.naturalWidth,live.naturalHeight);if(data){images=[{id:n.id,mime:'image/jpeg',data}];break;}}}
-  const payload={request:message,context,nodes,history:chat.slice(-6),assets:assets.map(({id,name})=>({id,name})),images};
+  const payload={request:message,context:workingContext,nodes,history:chat.slice(-6),assets:assets.map(({id,name})=>({id,name})),images,interactive:true,followUp};
   // Preserve request, conversation state and images within the unchanged planner/queue budget.
   const retained=new Set(['e0',...images.map(image=>image.id)]);
   while(JSON.stringify(payload).length>46000&&payload.nodes.length>1){let index=payload.nodes.length-1;while(index>=0&&retained.has(payload.nodes[index].id))index--;if(index<0)break;payload.nodes.splice(index,1);}
@@ -60,7 +61,7 @@
  const log=(text,kind='')=>{document.querySelector('.preview-chat').classList.remove('is-empty');const p=document.createElement('p');p.textContent=text;if(kind)p.className=kind;conversation.append(p);conversation.scrollTop=conversation.scrollHeight;};
  const showEditor=()=>{if(!currentHtml)return;editor.showModal();document.body.classList.add('preview-editor-open');(mobile()?closeEditor:editInput).focus({preventScroll:true});};
  openEditor.addEventListener('click',showEditor);closeEditor.addEventListener('click',()=>editor.close());editor.addEventListener('close',()=>{document.body.classList.remove('preview-editor-open');editorReturn.focus({preventScroll:true});});
- const setEditBusy=value=>{editBusy=value;let pending=conversation.querySelector('.chat-thinking');if(value){pending=document.createElement('p');pending.className='chat-thinking';pending.setAttribute('role','status');pending.textContent='変更内容を考えています';conversation.append(pending);conversation.scrollTop=conversation.scrollHeight;}else pending?.remove();editForm.querySelector('[type=submit]').disabled=value;editForm.querySelector('[type=submit]').textContent=value?'…':'↑';undo.disabled=value||!history.length;reset.disabled=value;example.disabled=value;editInput.disabled=value;photoInput.disabled=value;editForm.setAttribute('aria-busy',String(value));};
+ const setEditBusy=value=>{editBusy=value;let pending=conversation.querySelector('.chat-thinking');if(value){pending=document.createElement('p');pending.className='chat-thinking';pending.setAttribute('role','status');pending.textContent='依頼内容を確認しています';conversation.append(pending);conversation.scrollTop=conversation.scrollHeight;}else pending?.remove();editForm.querySelector('[type=submit]').disabled=value;editForm.querySelector('[type=submit]').textContent=value?'…':'↑';undo.disabled=value||!history.length;reset.disabled=value;example.disabled=value;editInput.disabled=value;photoInput.disabled=value;editForm.setAttribute('aria-busy',String(value));};
  const pageOffer=document.querySelector('#preview-page-offer');
  document.querySelector('#page-offer-close').addEventListener('click',()=>pageOffer.close());
  document.querySelector('#page-offer-back').addEventListener('click',()=>pageOffer.close());
@@ -73,19 +74,67 @@
   doc.addEventListener('submit',event=>{event.preventDefault();event.stopImmediatePropagation();},true);
   doc.querySelector('[data-simy-changed]')?.scrollIntoView({block:'center',behavior:'instant'});
  }catch{}});
- editForm.addEventListener('submit',async event=>{event.preventDefault();if(editBusy||!editForm.reportValidity()||!currentHtml)return;const message=editInput.value.trim(),base=currentHtml;log(message,'preview-user-message');setEditBusy(true);const stopElapsed=startEditElapsed();
+ editForm.addEventListener('submit',async event=>{
+  event.preventDefault();
+  if(editBusy||!editForm.reportValidity()||!currentHtml)return;
+  const message=editInput.value.trim(),base=currentHtml;
+  if(!message)return;
+  log(message,'preview-user-message');setEditBusy(true);
+  const stopElapsed=startEditElapsed();
+  const deadline=performance.now()+125000;
+  let workingContext=context;
+  let followUp,query='';
   try{
-   const response=await fetch(new URL('/api/preview-edit',form.dataset.endpoint),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({...editPayload(message,base),siteUrl:previewSourceUrl}),signal:AbortSignal.timeout(100000)});
-   const plan=await response.json();if(!response.ok)throw Error(plan.error||'変更案を作成できませんでした。');
-   if(currentHtml!==base)throw Error('ページの状態が変わりました。もう一度お試しください。');
-   if(plan.status==='edit'){const changed=window.SimyPreviewEdit.applyPlan(base,plan,assets,frame.contentDocument);history.push(snapshot());if(history.length>10)history.shift();updatePreview(changed.html);log(changed.summary);}
-   else if(['clarify','unsupported','answer'].includes(plan.status)){log(plan.question||plan.summary);}
-   else throw Error('変更案の形式を確認できませんでした。');
-   if(plan.context)context=plan.context;
-   if(assets.length){const latest=assets.at(-1);photoStatus.textContent='添付：'+latest.name+(plan.visualInputs?.includes(latest.id)?'（画像の内容も回答に使用）':'（画像内容は未確認）');}
-   chat.push({role:'user',text:message},{role:'assistant',text:(plan.question||plan.summary).slice(0,1500)});chat=chat.slice(-6);editInput.value='';
-  }catch(error){log(error.name==='TimeoutError'?'変更案の作成に時間がかかっています。ページは変更していません。もう一度お試しください。':error.name==='TypeError'?'接続できませんでした。ページは変更していません。時間をおいて再度お試しください。':error.message,'preview-edit-error');}
-  finally{stopElapsed();setEditBusy(false);if(!mobile()||editor.dataset.pane==='edit')editInput.focus({preventScroll:true});}
+   for(let step=0;step<3;step++){
+    const remaining=Math.floor(deadline-performance.now());
+    if(remaining<1000)throw new DOMException('','TimeoutError');
+    const payload=editPayload(message,base,{query,followUp,workingContext});
+    const response=await fetch(new URL('/api/preview-edit',form.dataset.endpoint),{
+     method:'POST',headers:{'Content-Type':'application/json'},
+     body:JSON.stringify({...payload,siteUrl:previewSourceUrl}),
+     signal:AbortSignal.timeout(Math.min(100000,remaining)),
+    });
+    const plan=await response.json();
+    if(!response.ok)throw Error(plan.error||'変更案を作成できませんでした。');
+    if(currentHtml!==base)throw Error('ページの状態が変わりました。もう一度お試しください。');
+    if(plan.status==='inspect'&&plan.interactive&&!followUp&&typeof plan.question==='string'&&plan.question.trim()&&plan.question.length<=120){
+     workingContext=plan.context||workingContext;
+     followUp='inspection';query=plan.question;
+     conversation.querySelector('.chat-thinking').textContent='ページ内を確認しています';
+     continue;
+    }
+    if(plan.status==='edit'){
+     let changed;
+     try{changed=window.SimyPreviewEdit.applyPlan(base,plan,assets,frame.contentDocument);}
+     catch(error){
+      if(!plan.interactive||followUp==='apply_failed')throw error;
+      workingContext=plan.context||workingContext;
+      followUp='apply_failed';
+      conversation.querySelector('.chat-thinking').textContent='別の方法で変更を試しています';
+      continue;
+     }
+     history.push(snapshot());if(history.length>10)history.shift();
+     updatePreview(changed.html);log(changed.summary);
+    }else if(['clarify','unsupported','answer'].includes(plan.status)){
+     log(plan.question||plan.summary);
+    }else throw Error('変更案の形式を確認できませんでした。');
+    context=plan.context||workingContext;
+    if(assets.length){
+     const latest=assets.at(-1);
+     photoStatus.textContent='添付：'+latest.name+(plan.visualInputs?.includes(latest.id)?'（画像の内容も回答に使用）':'（画像内容は未確認）');
+    }
+    chat.push({role:'user',text:message},{role:'assistant',text:(plan.question||plan.summary).slice(0,1500)});
+    chat=chat.slice(-6);editInput.value='';
+    return;
+   }
+   throw Error('ページを変更できませんでした。変更したい箇所を具体的に伝えてください。');
+  }catch(error){
+   context=workingContext;
+   log(error.name==='TimeoutError'?'変更案の作成に時間がかかっています。ページは変更していません。もう一度お試しください。':error.name==='TypeError'?'接続できませんでした。ページは変更していません。時間をおいて再度お試しください。':error.message,'preview-edit-error');
+  }finally{
+   stopElapsed();setEditBusy(false);
+   if(!mobile()||editor.dataset.pane==='edit')editInput.focus({preventScroll:true});
+  }
  });
  example.addEventListener('click',()=>{toolsMenu.hidePopover();editInput.value='明日は午後休診です。お知らせに追加してください。';editForm.requestSubmit();});
  const application=document.querySelector('#preview-application'),applicationForm=document.querySelector('#application-form');
