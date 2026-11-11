@@ -68,15 +68,34 @@
  function isNews(e){return (e.tagName!=='DL'||!!e.querySelector(':scope > dt'))&&!e.closest('nav,footer')&&newsContext(e)&&!!noticeRow(e);}
 
  api.index=function(html){const doc=parse(html);let count=0;for(const e of [doc.body,...doc.body.querySelectorAll('*')]){if(!blocked(e))e.setAttribute('data-simy-edit-id','e'+count++);}return '<!doctype html>\n'+doc.documentElement.outerHTML;};
- api.inventory=function(html,liveDocument){
+ api.inventory=function(html,liveDocument,query=''){
   const doc=parse(html),all=[doc.body,...doc.body.querySelectorAll('[data-simy-edit-id]')];
   const newsCandidates=all.filter(isNews);
   // Prefer the existing article list over an outer section containing several categories.
   const collections=newsCandidates.filter(e=>!newsCandidates.some(n=>n!==e&&e.contains(n)&&['DL','UL','OL'].includes(n.tagName)));
   const news=collections.filter(e=>!collections.some(n=>n!==e&&n.contains(e)&&[...n.children].filter(c=>datePattern.test(text(c))&&text(c).length<2500).length>=2));
   const out=[],seen=new Set();let size=0;
+  const term=query.trim().normalize('NFKC').toLowerCase();
+  const matches=term?all.filter(element=>{
+   if(element===doc.body||blocked(element))return false;
+   const alt=element.getAttribute('alt')||'';
+   const title=element.getAttribute('title')||'';
+   const content=text(element);
+   return [alt,title,element.id,typeof element.className==='string'?element.className:'',content.length<=1800?content:''].some(value=>value.normalize('NFKC').toLowerCase().includes(term));
+  }).sort((a,b)=>text(a).length-text(b).length).slice(0,25):[];
+
   function add(e,kind){const id=e.getAttribute('data-simy-edit-id');if(seen.has(id)||out.length>=220)return;let t=kind==='image'?(e.getAttribute('alt')||'画像'):(e.tagName==='BODY'?'ページ全体':text(e));if(!t)return;if(kind==='text'&&t.length>1800)return;t=t.slice(0,1800);let context=label(e);if(kind==='image'){context+=' / 用途:'+e.id+' '+e.className+' '+(e.parentElement?.className||'')+' '+(e.parentElement?.parentElement?.className||'')+' / 素材:'+(e.getAttribute('src')||'').split('/').pop();}try{const live=liveDocument?.querySelector('[data-simy-edit-id="'+id+'"]');if(live){if(kind==='image'){const rect=live.getBoundingClientRect();context+=' / 表示寸法:'+Math.round(rect.width)+'x'+Math.round(rect.height)+' / 元寸法:'+(live.naturalWidth||0)+'x'+(live.naturalHeight||0);}const css=liveDocument.defaultView.getComputedStyle(live);context+=' / 現在の文字サイズ:'+css.fontSize+'、文字色:'+css.color+'、背景:'+css.backgroundColor;}}catch{}const n={id,kind,tag:e.tagName.toLowerCase(),text:t,context:context.slice(0,300)};const len=JSON.stringify(n).length;if(size+len>35000)return;size+=len;seen.add(id);out.push(n);}
   add(doc.body,'element');
+  for(const element of matches){
+   const id=element.getAttribute('data-simy-edit-id');
+   const background=/^e\d+$/.test(id)?liveDocument?.querySelector('[data-simy-edit-id="'+id+'"]'):null;
+   let isBackground=false;
+   if(background)try{isBackground=/^url\(/.test(liveDocument.defaultView.getComputedStyle(background).backgroundImage);}catch{}
+   add(element,element.tagName==='IMG'||isBackground?'image':news.includes(element)?'news':text(element)?'text':'element');
+  }
+
+  // Keep notice targets before optional structure summaries spend the shared budget.
+  news.forEach(e=>add(e,'news'));
   all.filter(e=>e.tagName==='IMG').slice(0,50).forEach(e=>add(e,'image'));
   if(liveDocument)all.filter(e=>e.tagName!=='IMG').forEach(e=>{try{const live=liveDocument.querySelector('[data-simy-edit-id="'+e.getAttribute('data-simy-edit-id')+'"]');if(live&&/^url\(/.test(liveDocument.defaultView.getComputedStyle(live).backgroundImage))add(e,'image');}catch{}});
   all.filter(e=>['SECTION','ARTICLE','HEADER','FOOTER','NAV'].includes(e.tagName)).slice(0,35).forEach(e=>add(e,'element'));
