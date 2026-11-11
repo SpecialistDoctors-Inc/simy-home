@@ -849,7 +849,7 @@ body.preview-editor-open{overflow:hidden}
 #rebuild-editor #preview-edit-form .composer-toolbar button{display:grid;place-items:center;width:40px;height:40px;min-height:40px;padding:0;flex:0 0 40px;border:0;border-radius:50%;background:#f3f4f4;color:#222;font-size:26px}
 #rebuild-editor #preview-edit-form #preview-send{background:#202626;color:#fff}
 #rebuild-editor #preview-photo-status:empty{display:none}
-#rebuild-editor .preview-scope{font-size:11px!important;line-height:1.6;color:#788187}
+#rebuild-editor .preview-scope{font-size:12px!important;line-height:1.7;color:#536780}
 #rebuild-editor #preview-tools{position:fixed;inset:auto;margin:0;width:260px;max-width:calc(100vw - 16px);padding:8px;border:1px solid #e0e2e5;border-radius:16px;background:#fff;color:#263238;box-shadow:0 12px 40px #15263426}
 #rebuild-editor #preview-tools p{margin:8px 12px;font-size:12px;color:#7a8288}
 #rebuild-editor #preview-tools>button{display:block;width:100%;text-align:left;border:0;background:#fff;color:#263238;font-size:14px;font-weight:500;border-radius:8px}
@@ -880,7 +880,7 @@ body.preview-editor-open{overflow:hidden}
 #rebuild-editor .chat-suggestions{display:none;gap:8px;flex-wrap:wrap;justify-content:center}
 #rebuild-editor .is-empty .chat-suggestions{display:flex}
 #rebuild-editor .chat-suggestions button{font-size:12px;font-weight:500;min-height:34px;padding:6px 12px;border:1px solid #e2e4e5;border-radius:18px;color:#61696e}
-#rebuild-editor .preview-scope{text-align:center}
+#rebuild-editor .preview-scope{text-align:left}
 #rebuild-editor .preview-canvas-label{background:#f9fafb;border-color:#eceef0;color:#6c757b;font-size:12px}
 #rebuild-editor .preview-editor-footer{border-color:#eceef0;padding:10px 24px}
 #rebuild-editor #preview-show-pricing{border:0;font-size:12px;font-weight:500;color:#777}
@@ -1096,7 +1096,7 @@ dialog#plan-dialog .plan-option{min-height:56px;align-items:center}
 <div aria-live="polite" id="preview-conversation" role="log"></div>
 <form id="preview-edit-form"><label class="composer-label" for="preview-edit-message">ChatGPTへのメッセージ</label><textarea id="preview-edit-message" maxlength="1500" placeholder="ChatGPTに依頼する" required="" rows="2"></textarea><p id="preview-photo-status" role="status"></p><div class="composer-toolbar"><button aria-label="写真の添付・操作例を開く" popovertarget="preview-tools" title="写真・操作例" type="button">＋</button><span>ホームページを更新</span><button aria-label="メッセージを送信" id="preview-send" title="送信" type="submit">↑</button></div></form>
 <div class="chat-suggestions"><button data-chat-prompt="明日は午後休診です。お知らせに追加してください。" type="button">休診のお知らせ</button><button data-chat-prompt="全体を緑色のやさしいデザインに変えてください。" type="button">デザインを変更</button></div><div aria-label="編集メニュー" id="preview-tools" popover=""><p>写真・操作例</p><button id="preview-attach" type="button">写真を添付</button><input accept="image/jpeg,image/png,image/webp" hidden="" id="preview-photo" type="file"/><button id="preview-edit-example" type="button">休診のお知らせを追加</button><button data-edit-prompt="全体を緑色のやさしいデザインに変えてください。" type="button">デザインを変える</button><button data-edit-prompt="診療案内の文章を、患者さんにわかりやすくしてください。" type="button">文章をわかりやすく</button><div class="preview-edit-actions"><button disabled="" id="preview-edit-undo" type="button">ひとつ戻す</button><button id="preview-edit-reset" type="button">最初に戻す</button></div></div>
-<p class="preview-scope">体験用の接続です。ご利用時はご自身のChatGPTを接続します。</p>
+<p class="preview-scope">この画面では、ChatGPTを使ったホームページ編集を疑似体験できます。<br/>実際は、ご自身のパソコンにChatGPT（Codex）を導入して編集します。<br/>実際の編集では、AIと会話を重ねながら、さらに細かな調整も可能です。</p>
 </section>
 <section aria-label="変更後のホームページ" class="preview-canvas"><div class="preview-canvas-label">ホームページのプレビュー</div><iframe id="rebuild-preview" referrerpolicy="no-referrer" sandbox="allow-same-origin" title="再現したホームページの編集プレビュー"></iframe></section>
 </div>
