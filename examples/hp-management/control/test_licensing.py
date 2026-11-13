@@ -88,6 +88,17 @@ class LicenseTests(unittest.TestCase):
                          (200, {'ready': False, 'status': 'site_setup_required'}))
         self.resolve.assert_not_called()
 
+    def test_resolver_accepts_loopback_http_only_when_explicitly_allowed(self):
+        local = 'http://127.0.0.1:54321/functions/v1/hp-control-entitlement'
+        with self.assertRaises(LicenseUnavailable):
+            EntitlementResolver(local, lambda: self.token)
+        EntitlementResolver(local, lambda: self.token, allow_loopback=True)
+        for endpoint in ('http://api.example.invalid/functions/v1/hp-control-entitlement',
+                         'http://127.0.0.1.example.invalid:54321/functions/v1/hp-control-entitlement',
+                         'http://127.0.0.1:54321/functions/v1/other'):
+            with self.subTest(endpoint=endpoint), self.assertRaises(LicenseUnavailable):
+                EntitlementResolver(endpoint, lambda: self.token, allow_loopback=True)
+
     def test_resolver_uses_only_service_credentials_and_exact_boolean_response(self):
         resolver = EntitlementResolver('https://api.example.invalid/functions/v1/hp-control-entitlement', lambda: self.token)
         resolver.opener = Mock()
