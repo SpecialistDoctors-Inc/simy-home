@@ -71,7 +71,7 @@
  function isNews(e){return (e.tagName!=='DL'||!!e.querySelector(':scope > dt'))&&!e.closest('nav,footer')&&newsContext(e)&&!!noticeRow(e);}
 
  api.index=function(html){const doc=parse(html);let count=0;for(const e of [doc.body,...doc.body.querySelectorAll('*')]){if(!blocked(e))e.setAttribute('data-simy-edit-id','e'+count++);}return '<!doctype html>\n'+doc.documentElement.outerHTML;};
- api.inventory=function(html,liveDocument){
+ api.inventory=function(html,liveDocument,query=''){
   const doc=parse(html),all=[doc.body,...doc.body.querySelectorAll('[data-simy-edit-id]')];
   const newsCandidates=all.filter(isNews);
   // Prefer the existing article list over an outer section containing several categories.
@@ -80,6 +80,15 @@
   // A template row that is itself a complete collection is not a second collection.
   const news=preferred.filter(e=>!preferred.some(n=>n!==e&&noticeRow(e)===n));
   const out=[],seen=new Set();let size=0;
+  const term=query.trim().normalize('NFKC').toLowerCase();
+  const matches=term?all.filter(element=>{
+   if(element===doc.body||blocked(element))return false;
+   const alt=element.getAttribute('alt')||'';
+   const title=element.getAttribute('title')||'';
+   const content=text(element);
+   return [alt,title,element.id,typeof element.className==='string'?element.className:'',content.length<=1800?content:''].some(value=>value.normalize('NFKC').toLowerCase().includes(term));
+  }).sort((a,b)=>text(a).length-text(b).length).slice(0,25):[];
+
   function add(e,kind){
    const id=e.getAttribute('data-simy-edit-id');if(seen.has(id)||out.length>=220)return;
    let t=kind==='image'?(e.getAttribute('alt')||'画像'):(e.tagName==='BODY'?'ページ全体':text(e));if(!t)return;
@@ -102,6 +111,14 @@
    const len=JSON.stringify(n).length;if(size+len>35000)return;size+=len;seen.add(id);out.push(n);
   }
   add(doc.body,'element');
+  for(const element of matches){
+   const id=element.getAttribute('data-simy-edit-id');
+   const background=/^e\d+$/.test(id)?liveDocument?.querySelector('[data-simy-edit-id="'+id+'"]'):null;
+   let isBackground=false;
+   if(background)try{isBackground=/^url\(/.test(liveDocument.defaultView.getComputedStyle(background).backgroundImage);}catch{}
+   add(element,element.tagName==='IMG'||isBackground?'image':news.includes(element)?'news':text(element)?'text':'element');
+  }
+
   // Keep notice targets before optional structure summaries spend the shared budget.
   news.forEach(e=>add(e,'news'));
   all.filter(e=>e.tagName==='IMG').slice(0,50).forEach(e=>add(e,'image'));

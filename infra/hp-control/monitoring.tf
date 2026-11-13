@@ -5,7 +5,7 @@ resource "aws_cloudwatch_log_metric_filter" "dispatcher_heartbeat" {
   pattern        = "{ $.event = \"hp_dispatch_completed\" }"
   metric_transformation {
     name      = "DispatchHeartbeat"
-    namespace = "SIMY/HPControl"
+    namespace = local.metric_namespace
     value     = "1"
     unit      = "Count"
   }
@@ -13,7 +13,7 @@ resource "aws_cloudwatch_log_metric_filter" "dispatcher_heartbeat" {
 resource "aws_cloudwatch_metric_alarm" "dispatcher_heartbeat" {
   alarm_name          = "${local.name}-dispatcher-heartbeat-missing"
   alarm_description   = "No successful HP outbox dispatcher pass for ten minutes; inspect dispatcher logs and pending authority records."
-  namespace           = "SIMY/HPControl"
+  namespace           = local.metric_namespace
   metric_name         = "DispatchHeartbeat"
   statistic           = "Sum"
   period              = 300
@@ -43,6 +43,7 @@ resource "aws_cloudwatch_metric_alarm" "command_dead_letters" {
 }
 
 locals {
+  metric_namespace          = local.acceptance ? "SIMY/HPControlAcceptance" : "SIMY/HPControl"
   operational_alarm_actions = var.alarm_topic_arn == "" ? [] : [var.alarm_topic_arn]
 }
 resource "aws_cloudwatch_log_metric_filter" "attention_required" {
@@ -51,7 +52,7 @@ resource "aws_cloudwatch_log_metric_filter" "attention_required" {
   pattern        = "{ ($.event = \"hp_dispatch_completed\") && ($.has_attention IS TRUE) }"
   metric_transformation {
     name          = "AttentionRequired"
-    namespace     = "SIMY/HPControl"
+    namespace     = local.metric_namespace
     value         = "1"
     default_value = 0
     unit          = "Count"
@@ -60,7 +61,7 @@ resource "aws_cloudwatch_log_metric_filter" "attention_required" {
 resource "aws_cloudwatch_metric_alarm" "attention_required" {
   alarm_name          = "${local.name}-operation-needs-attention"
   alarm_description   = "At least one unresolved operation or notification requires attention; ordinary CI/render waits do not trigger this alarm."
-  namespace           = "SIMY/HPControl"
+  namespace           = local.metric_namespace
   metric_name         = "AttentionRequired"
   statistic           = "Maximum"
   period              = 60
