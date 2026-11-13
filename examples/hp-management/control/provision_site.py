@@ -9,7 +9,7 @@ from pathlib import Path
 from urllib.parse import urlsplit
 from domain_verification import site_host
 from identity import sha
-from licensing import LicenseUnavailable, license_org, valid_google_subject
+from licensing import LicenseUnavailable, license_policy, valid_google_subject
 from service import new_site_writes, setup_code_key
 from store import DynamoStore, Write
 
@@ -24,7 +24,7 @@ def validate(site):
     if not isinstance(site,dict) or set(site)-{'license_policy', 'direct_transfer_enabled'}!=FIELDS:raise ValueError('site binding fields differ')
     if type(site.get('direct_transfer_enabled', False)) is not bool:raise ValueError('invalid direct transfer flag')
     try:
-        license_org(site)
+        license_policy(site)
     except LicenseUnavailable:
         raise ValueError('invalid license policy') from None
     if not re.fullmatch('[a-z][a-z0-9-]{1,62}',site['site_id']) or site['config_version']!=1:raise ValueError('new site required')
@@ -61,8 +61,8 @@ def seed(store, site, email, roles, now, *, google_subject=None):
     writes = new_site_writes(site)
     result = {'site_id': site_id}
     if google_subject is not None:
-        if email is not None or not valid_google_subject(google_subject) or license_org(site) is None:
-            raise ValueError('verified Google subject and SIMY organization required')
+        if email is not None or not valid_google_subject(google_subject) or license_policy(site) is None:
+            raise ValueError('verified Google subject and a commercial license required')
         key = 'principal:' + google_subject
         current = store.get(key)
         principal = current if current is not None else {'sites': {}, 'disabled': False}
@@ -83,7 +83,7 @@ def seed(store, site, email, roles, now, *, google_subject=None):
 
 def prepare_claim(store, site, google_subject, now):
     validate(site)
-    if not valid_google_subject(google_subject) or license_org(site) is not None:
+    if not valid_google_subject(google_subject) or license_policy(site) is not None:
         raise ValueError('a verified Google subject and an unassigned site are required')
     if any(store.get(binding.key) is not None for binding in new_site_writes(site)):
         raise ValueError('site or repository already registered')
@@ -98,7 +98,7 @@ def prepare_claim(store, site, google_subject, now):
 
 def enable_domain_registration(store, site, *, allow_search_console_owners=False):
     validate(site)
-    if license_org(site) is not None:
+    if license_policy(site) is not None:
         raise ValueError('an unassigned site is required')
     host = site_host(site['prod_url'])
     key = 'registration-site:' + host

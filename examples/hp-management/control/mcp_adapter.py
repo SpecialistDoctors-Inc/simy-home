@@ -130,8 +130,10 @@ def tool_error(code):
 
 class App:
     def __init__(self, identity, service, verify, jwks, ui_html, preflight_token=None, wordpress=None,
-                 wordpress_transfers=None, transfers=None):
+                 wordpress_transfers=None, transfers=None, onboarding=None, stripe_webhook=None):
         self.identity, self.service, self.verify = identity, service, verify
+        # Clinic purchases from simy.one Payment Links (see clinic_onboarding.py).
+        self.onboarding, self.stripe_webhook = onboarding, stripe_webhook
         self.jwks, self.ui_html = jwks, ui_html
         self.preflight_token = preflight_token
         self.wordpress = wordpress
@@ -207,12 +209,24 @@ class App:
         query = flat_query(raw_query) if raw_query else event.get('queryStringParameters') or {}
         if not isinstance(query, dict) or any(not isinstance(v, str) for v in query.values()):
             raise BadRequest()
+        if path == '/stripe/webhook':
+            if method != 'POST':
+                return self.response(405, {'error': 'method_not_allowed'}, {'allow': 'POST'})
+            if self.stripe_webhook is None:
+                return self.response(503, {'error': 'billing_unavailable'})
+            return self.response(self.stripe_webhook(data, headers.get('stripe-signature')))
+        if path.startswith('/start') and self.onboarding is not None:
+            cookie = headers.get('cookie') or '; '.join(c for c in event.get('cookies') or [] if isinstance(c, str))
+            return self.onboarding_request(method, path, query, data, headers, cookie)
         if method == 'GET' and path == '/oauth/authorize':
             return self.response(302, headers={'location': self.identity.authorize(query)})
         if method == 'GET' and path == '/oauth/google/callback':
             fields(query, ('state', 'code'), ('scope', 'authuser', 'prompt', 'hd', 'iss'))
             if 'iss' in query and query['iss'] != 'https://accounts.google.com':
                 raise BadRequest()
+            if self.onboarding is not None and self.onboarding.owns_login(query['state']):
+                cookie = headers.get('cookie') or '; '.join(c for c in event.get('cookies') or [] if isinstance(c, str))
+                return self.onboarding_call(lambda: self.onboarding.google_callback(query['state'], query['code'], cookie))
             redirect = self.identity.callback(query['state'], query['code'])
             if not Identity.valid_redirect(redirect):
                 raise AuthError('invalid_redirect_uri')
@@ -320,6 +334,39 @@ class App:
             return self.response(400, {'error': 'invalid_request'})
         except Exception:
             return self.response(503, {'error': 'hp_license_unavailable'})
+
+    def onboarding_request(self, method, path, query, data, headers, cookie):
+        if method == 'GET' and path == '/start':
+            return self.onboarding_call(lambda: self.onboarding.page(query, cookie))
+        if method == 'GET' and path == '/start/google':
+            return self.onboarding_call(lambda: self.onboarding.google_start(query))
+        if method == 'POST' and path in ('/start/site', '/start/verify'):
+            if headers.get('content-type', '').split(';')[0].strip().lower() != 'application/x-www-form-urlencoded':
+                return self.response(415, {'error': 'unsupported_media_type'})
+            try:
+                form = flat_query(data.decode('utf-8'))
+            except UnicodeError:
+                raise BadRequest() from None
+            action = self.onboarding.submit_site if path == '/start/site' else self.onboarding.verify_site
+            return self.onboarding_call(lambda: action(form, cookie, headers.get('origin')))
+        return self.response(404, {'error': 'not_found'})
+
+    def onboarding_call(self, action):
+        from stripe_billing import BillingRejected
+        try:
+            return action()
+        except BillingRejected:
+            return self.onboarding.html(403, self.onboarding.error(
+                'お支払いを確認できませんでした', '決済が完了していないか、このページの対象外のお申し込みです。'))
+        except LicenseUnavailable:
+            return self.onboarding.html(503, self.onboarding.error(
+                'ただいま確認できません', '少し時間をおいて、もう一度お試しください。'))
+        except AuthError:
+            return self.onboarding.html(400, self.onboarding.error(
+                'ログインを完了できませんでした', 'お手数ですが、決済完了画面のリンクからもう一度お試しください。'))
+        except Rejected:
+            return self.onboarding.html(403, self.onboarding.error(
+                'この操作は受け付けられませんでした', 'ページを再読み込みして、もう一度お試しください。'))
 
     def wordpress_request(self, body, required):
         starting = body['action'] == 'wordpress_start'

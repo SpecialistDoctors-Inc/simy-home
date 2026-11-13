@@ -42,12 +42,32 @@ def application():
     preflight_arn = os.environ.get('HP_CONTROL_PREFLIGHT_SECRET_ARN', '')
     bucket = os.environ['HP_ARTIFACT_BUCKET']
     s3 = regional_s3_client(os.environ.get('AWS_REGION') or os.environ.get('AWS_DEFAULT_REGION'))
+    onboarding, stripe_webhook = clinic_billing(store, service, identity, secret)
     _app = App(identity, service, tokens.verify, {'keys': [tokens.jwk]}, html,
         preflight_token=(lambda: secret(preflight_arn)) if preflight_arn else None,
         wordpress=(lambda: WordPressOnboarding(store, json.loads(secret(wordpress_arn)))) if wordpress_arn else None,
         wordpress_transfers=WordPressTransfers(store, s3, bucket) if service.wordpress_test_origin else None,
-        transfers=Transfers(service, bucket, s3))
+        transfers=Transfers(service, bucket, s3), onboarding=onboarding, stripe_webhook=stripe_webhook)
     return _app
+
+
+def clinic_billing(store, service, identity, secret):
+    """Wire simy.one Payment Link purchases when the billing secret is configured.
+
+    The secret holds JSON: secret_key (restricted, read Checkout Sessions),
+    webhook_secret, payment_links {plink_id: plan}, intake_key (Fernet) and an
+    optional https plugin_url.
+    """
+    arn = os.environ.get('HP_CLINIC_BILLING_SECRET_ARN', '')
+    if not arn:
+        return None, None
+    from clinic_onboarding import ClinicOnboarding
+    from stripe_billing import StripeApi, StripeBilling
+    config = lambda: json.loads(secret(arn))
+    billing = StripeBilling(store, StripeApi(lambda: config()['secret_key']), config()['payment_links'])
+    onboarding = ClinicOnboarding(store, billing, service, identity, config()['intake_key'],
+                                  plugin_url=config().get('plugin_url'))
+    return onboarding, lambda payload, signature: billing.webhook(payload, signature, config()['webhook_secret'])
 
 
 def handler(event, context):

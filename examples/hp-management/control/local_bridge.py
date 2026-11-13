@@ -13,6 +13,13 @@ Required environment (never printed):
 
 The access token for MCP calls on behalf of the seeded subject is written to
 --token-file (mode 0600). MCP requests use it as a normal Bearer token.
+
+--mode clinic instead exercises the simy.one clinic purchase: a Stripe test
+Payment Link redirects to /start, the clinic signs in, registers its homepage
+and receives the prepared site under the Stripe subscription. It needs
+STRIPE_SECRET_KEY (test mode only), STRIPE_WEBHOOK_SECRET and --payment-links.
+Google sign-in and the DNS TXT lookup are replaced by local stand-ins that
+exist only in this tool; the stand-in sign-in page says so.
 """
 from __future__ import annotations
 
@@ -39,7 +46,7 @@ SITE_ID = 'local-clinic'
 LOOPBACK = ('127.0.0.1', 'localhost')
 
 
-def local_site(org_id):
+def local_site(org_id, host='example.invalid'):
     deployment = {env: {'bucket': 'local-' + env, 'distribution_id': 'ELOCAL', 'origin_id': 'site',
                         'expected_config_sha256': '0' * 64, 'initial_file_paths': ['index.html']}
                   for env in ('dev', 'prod')}
@@ -49,9 +56,10 @@ def local_site(org_id):
             'drive_workspace_folder_id': 'local-snapshot', 'drive_changes_folder_id': 'local-incoming',
             'sheet_id': 'local-sheet-id', 'recipient': 'owner@example.invalid',
             'operator_subject': 'local-operator', 'operator_email': 'operator@example.invalid',
-            'dev_url': 'https://dev.example.invalid', 'prod_url': 'https://example.invalid',
+            'dev_url': 'https://dev.example.invalid', 'prod_url': 'https://' + host,
             'direct_transfer_enabled': True, 'mail_enabled': False, 'reporting_enabled': False,
-            'deployment': deployment, 'license_policy': {'mode': 'simy', 'org_id': org_id}}
+            'deployment': deployment,
+            **({'license_policy': {'mode': 'simy', 'org_id': org_id}} if org_id is not None else {})}
 
 
 def build(entitlement_endpoint, entitlement_token, preflight_token, org_id, google_subject, port, clock=time.time):
@@ -77,17 +85,87 @@ def build(entitlement_endpoint, entitlement_token, preflight_token, org_id, goog
     return app, access_token
 
 
+def build_clinic(stripe_secret_key, webhook_secret, payment_links, google_subject, google_email, site_host_name,
+                 port, clock=time.time, stripe_api=None):
+    """Return (app, mcp_token_factory) for the clinic Payment Link flow on loopback."""
+    from clinic_onboarding import ClinicOnboarding
+    from cryptography.fernet import Fernet
+    from provision_site import enable_domain_registration
+    from stripe_billing import StripeApi, StripeBilling
+    if not str(stripe_secret_key).startswith(('sk_test_', 'rk_test_')) or not str(webhook_secret).startswith('whsec_'):
+        raise SystemExit('a Stripe test-mode secret key and webhook secret are required')
+    if not valid_google_subject(google_subject):
+        raise SystemExit('a Google subject is required')
+    issuer = f'http://127.0.0.1:{port}'
+    key = rsa.generate_private_key(public_exponent=65537, key_size=2048).private_bytes(
+        serialization.Encoding.PEM, serialization.PrivateFormat.PKCS8, serialization.NoEncryption()).decode()
+    tokens = Tokens(key, issuer)
+    store = MemoryStore()
+    site = local_site(None, site_host_name)
+    # SIMY prepared this clinic's site; the paying owner proves the domain to receive it.
+    enable_domain_registration(store, site)
+    targets = {env: {'bucket': item['bucket'], 'distribution': item['distribution_id']}
+               for env, item in site['deployment'].items()}
+    service = Service(store, publication_enabled=True, claim_targets={SITE_ID: targets},
+                      dns_check=lambda name, value: True)
+    profile = {'sub': google_subject, 'email': google_email, 'email_verified': True}
+    identity = Identity(store, issuer, 'local-client', tokens.sign, lambda code, redirect, nonce: dict(profile))
+    billing = StripeBilling(store, stripe_api or StripeApi(lambda: stripe_secret_key), payment_links, clock=clock)
+    onboarding = ClinicOnboarding(store, billing, service, identity, Fernet.generate_key().decode(),
+                                  google_authorize=issuer + '/dev/google', secure_cookie=False, clock=clock)
+    app = App(identity, service, tokens.verify, {'keys': [tokens.jwk]}, '<!doctype html>', onboarding=onboarding,
+              stripe_webhook=lambda payload, signature: billing.webhook(payload, signature, webhook_secret))
+
+    def mcp_token():
+        now = int(clock())
+        return tokens.sign({'iss': issuer, 'aud': issuer + '/mcp', 'sub': google_subject,
+                            'scope': 'hp:read hp:write', 'iat': now, 'exp': now + 3600, 'jti': str(uuid.uuid4())})
+    app.local_google_email = google_email
+    return app, mcp_token
+
+
+def dev_google_page(query, email):
+    """Local stand-in for Google's account chooser. Never part of the Lambda."""
+    from html import escape
+    from urllib.parse import urlencode
+    state = query.get('state', '')
+    target = '/oauth/google/callback?' + urlencode({'state': state, 'code': 'local-google-code'})
+    body = ('<!doctype html><html lang="ja"><head><meta charset="utf-8"><title>Google でログイン（ローカル検証）</title>'
+            '<style>body{font-family:-apple-system,"Hiragino Sans",sans-serif;background:#f0f4f9;margin:0}'
+            'main{max-width:420px;margin:80px auto;background:#fff;border-radius:28px;padding:36px}'
+            'h1{font-size:22px;font-weight:500;margin:12px 0 6px}p{color:#444;font-size:14px;margin:0 0 24px}'
+            'a{display:flex;gap:12px;align-items:center;border-top:1px solid #e3e3e3;border-bottom:1px solid #e3e3e3;'
+            'padding:14px 4px;color:#1f1f1f;text-decoration:none}.av{width:32px;height:32px;border-radius:50%;'
+            'background:#0b57d0;color:#fff;display:grid;place-items:center;font-weight:600}'
+            'small{display:block;color:#777;font-size:12px;margin-top:20px}</style></head><body><main>'
+            '<div style="font-weight:600;color:#555">Google</div><h1>アカウントの選択</h1>'
+            '<p>HP管理（SIMY）に移動</p>'
+            f'<a href="{escape(target, quote=True)}"><span class="av">{escape(email[:1].upper())}</span>'
+            f'<span>{escape(email)}</span></a>'
+            '<small>ローカル検証用の代替画面です（本番では Google のログイン画面が表示されます）。</small>'
+            '</main></body></html>')
+    return {'statusCode': 200, 'headers': {'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store'},
+            'body': body}
+
+
 def handler_for(app):
     class Handler(BaseHTTPRequestHandler):
         def _serve(self):
             length = int(self.headers.get('content-length') or 0)
             body = self.rfile.read(min(length, 1 << 20)).decode('utf-8', 'replace')
-            result = app({'rawPath': self.path.split('?')[0], 'headers': dict(self.headers.items()), 'body': body,
-                          'requestContext': {'http': {'method': self.command}}})
+            path, _, query = self.path.partition('?')
+            if path == '/dev/google' and getattr(app, 'local_google_email', None):
+                from urllib.parse import parse_qsl
+                result = dev_google_page(dict(parse_qsl(query)), app.local_google_email)
+            else:
+                result = app({'rawPath': path, 'rawQueryString': query, 'headers': dict(self.headers.items()),
+                              'body': body, 'requestContext': {'http': {'method': self.command}}})
             payload = result.get('body', '').encode()
             self.send_response(result['statusCode'])
             for name, value in result.get('headers', {}).items():
                 self.send_header(name, value)
+            for cookie in result.get('cookies', []):
+                self.send_header('set-cookie', cookie)
             self.send_header('content-length', str(len(payload)))
             self.end_headers()
             self.wfile.write(payload)
@@ -106,13 +184,26 @@ def main():
     parser.add_argument('--host', default='127.0.0.1', choices=LOOPBACK)
     parser.add_argument('--port', type=int, default=8787)
     parser.add_argument('--entitlement-endpoint', default='http://127.0.0.1:54321/functions/v1/hp-control-entitlement')
-    parser.add_argument('--org-id', required=True)
+    parser.add_argument('--mode', choices=('simy', 'clinic'), default='simy')
+    parser.add_argument('--org-id')
     parser.add_argument('--google-subject', required=True)
+    parser.add_argument('--google-email', default='clinic-owner@example.test')
+    parser.add_argument('--payment-links', type=Path, help='clinic mode: JSON {plink_id: plan}')
+    parser.add_argument('--site-host', default='sakura-clinic.example', help='clinic mode: prepared site host')
     parser.add_argument('--token-file', type=Path, required=True)
     args = parser.parse_args()
-    app, access_token = build(args.entitlement_endpoint, os.environ.get('HP_CONTROL_ENTITLEMENT_TOKEN', ''),
-                              os.environ.get('HP_CONTROL_PREFLIGHT_TOKEN', ''), args.org_id, args.google_subject,
-                              args.port)
+    if args.mode == 'clinic':
+        app, token_factory = build_clinic(os.environ.get('STRIPE_SECRET_KEY', ''),
+                                          os.environ.get('STRIPE_WEBHOOK_SECRET', ''),
+                                          json.loads(args.payment_links.read_text()), args.google_subject,
+                                          args.google_email, args.site_host, args.port)
+        access_token = token_factory()
+    else:
+        if not args.org_id:
+            raise SystemExit('--org-id is required in simy mode')
+        app, access_token = build(args.entitlement_endpoint, os.environ.get('HP_CONTROL_ENTITLEMENT_TOKEN', ''),
+                                  os.environ.get('HP_CONTROL_PREFLIGHT_TOKEN', ''), args.org_id, args.google_subject,
+                                  args.port)
     args.token_file.touch(mode=0o600, exist_ok=True)
     args.token_file.chmod(0o600)
     args.token_file.write_text(access_token)

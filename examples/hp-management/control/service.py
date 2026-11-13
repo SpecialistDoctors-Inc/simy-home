@@ -11,8 +11,10 @@ import secrets
 import time
 from uuid import UUID, uuid4
 from domain_verification import dns_has_value, site_host
-from licensing import LicenseUnavailable, license_org, resolve_license, site_license_allowed, valid_google_subject, valid_org_id
+from licensing import (LicenseUnavailable, license_org, license_policy, resolve_license, site_license_allowed,
+                       valid_google_subject, valid_org_id)
 from store import Write, Check, Conflict
+from stripe_billing import StripeLicenses
 
 
 class Rejected(ValueError):
@@ -83,8 +85,10 @@ def effective_roles(member, site, subject, wordpress_test_origin):
 
 class Service:
     def __init__(self, store, clock=time.time, publication_enabled=False, license_resolver=None, claim_targets=None,
-                 wordpress_test_origin=None):
+                 wordpress_test_origin=None, dns_check=None):
         self.store, self.clock, self.publication_enabled = store, clock, publication_enabled
+        # Injected only by tests and the loopback bridge; deployments use public DNS.
+        self.dns_check = dns_check
         self.license_resolver = license_resolver
         self.claim_targets = claim_targets or {}
         self.wordpress_test_origin = wordpress_test_origin if publication_enabled else None
@@ -111,7 +115,7 @@ class Service:
             raise Rejected('site_unavailable')
         if role not in effective_roles(member, {**site, 'site_id': site_id}, claims['sub'], self.wordpress_test_origin):
             raise Rejected('site_access_denied')
-        if not site_license_allowed(site, claims['sub'], self.license_resolver):
+        if not site_license_allowed(site, claims['sub'], self.license_resolver, StripeLicenses(self.store)):
             raise Rejected('hp_license_required')
         return member, site
 
@@ -215,6 +219,13 @@ class Service:
     def register_site(self, org_id, google_subject, site_url, *, verify, owner_verified=False):
         if not valid_org_id(org_id) or not valid_google_subject(google_subject):
             raise Rejected('invalid_input')
+        return self.register_licensed_site({'mode': 'simy', 'org_id': org_id}, google_subject, site_url,
+                                           verify=verify, owner_verified=owner_verified)
+
+    def register_licensed_site(self, policy, google_subject, site_url, *, verify, owner_verified=False):
+        """Bind an operator-prepared site to a verified owner under one commercial license."""
+        if not valid_google_subject(google_subject) or license_policy({'license_policy': policy}) is None:
+            raise Rejected('invalid_input')
         try:
             host = site_host(site_url)
         except ValueError:
@@ -232,19 +243,21 @@ class Service:
             return {'status': 'registration_unavailable'}
         registered = self.store.get('site:' + site_id)
         if registered:
-            return self._registered_site_status(registered, member, org_id)
+            return self._registered_site_status(registered, member, policy)
 
         if owner_verified:
             # Search Console can delegate owners. Use it for publishing only
             # when the trusted hosting binding explicitly accepts that role.
             if binding.get('allow_search_console_owners') is not True:
                 return {'status': 'hosting_connection_required'}
-            resolve_license(self.license_resolver, org_id, google_subject)
-            return self._finish_site_registration(site, org_id, principal_key, member,
+            self._require_license(policy, google_subject)
+            return self._finish_site_registration(site, policy, principal_key, member,
                 [Check(binding_key, binding['_version'])])
 
         name = '_simy-hp.' + host
-        key = 'registration-proof:' + fingerprint([org_id, google_subject, host])
+        # Keep the original SIMY proof key so pending DNS proofs survive this change.
+        key = 'registration-proof:' + fingerprint([policy['org_id'], google_subject, host] if policy['mode'] == 'simy'
+                                                  else ['stripe', policy['subscription_id'], google_subject, host])
         proof = self.store.get(key)
         if not proof or proof['expires_at'] <= self.clock() or proof['binding_version'] != binding['_version']:
             if verify:
@@ -259,17 +272,25 @@ class Service:
                 raise LicenseUnavailable('hp_license_unavailable') from None
         if not verify:
             return {'status': 'verification_required', 'name': name, 'value': proof['value']}
-        if not dns_has_value(name, proof['value']):
+        if not (self.dns_check or dns_has_value)(name, proof['value']):
             return {'status': 'verification_pending'}
-        resolve_license(self.license_resolver, org_id, google_subject)
+        self._require_license(policy, google_subject)
         if proof['expires_at'] <= self.clock():
             return {'status': 'verification_expired'}
-        return self._finish_site_registration(site, org_id, principal_key, member,
+        return self._finish_site_registration(site, policy, principal_key, member,
             [Check(binding_key, binding['_version']), Write(key, None, proof['_version'])])
 
-    def _finish_site_registration(self, site, org_id, principal_key, member, checks):
+    def _require_license(self, policy, google_subject):
+        if policy['mode'] == 'simy':
+            # SIMY checks only that the bridge answers; payment may follow.
+            resolve_license(self.license_resolver, policy['org_id'], google_subject)
+        elif not StripeLicenses(self.store).allowed(policy['subscription_id'], google_subject):
+            # A Payment Link purchase precedes registration, so it must be active now.
+            raise Rejected('hp_license_required')
+
+    def _finish_site_registration(self, site, policy, principal_key, member, checks):
         site_id = site['site_id']
-        managed_site = {**site, 'registered_by_claim': True, 'license_policy': {'mode': 'simy', 'org_id': org_id}}
+        managed_site = {**site, 'registered_by_claim': True, 'license_policy': dict(policy)}
         try:
             self.store.transact([
                 *checks,
@@ -280,13 +301,13 @@ class Service:
         except Conflict:
             registered = self.store.get('site:' + site_id)
             if registered:
-                return self._registered_site_status(registered, self.store.get(principal_key), org_id)
+                return self._registered_site_status(registered, self.store.get(principal_key), policy)
             raise LicenseUnavailable('hp_license_unavailable') from None
         return {'status': 'claimed'}
 
-    def _registered_site_status(self, site, member, org_id):
+    def _registered_site_status(self, site, member, policy):
         if (member and not member.get('disabled') and not site.get('disabled')
-                and license_org(site) == org_id
+                and license_policy(site) == policy
                 and {'read', 'edit', 'publish'} <= set(member.get('sites', {}).get(site['site_id'], []))):
             self._check_claim_targets(site)
             return {'status': 'claimed'}
