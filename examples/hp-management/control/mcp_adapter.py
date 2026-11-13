@@ -340,15 +340,14 @@ class App:
             return self.onboarding_call(lambda: self.onboarding.page(query, cookie))
         if method == 'GET' and path == '/start/google':
             return self.onboarding_call(lambda: self.onboarding.google_start(query))
-        if method == 'POST' and path in ('/start/site', '/start/verify'):
+        if method == 'POST' and path == '/start/site':
             if headers.get('content-type', '').split(';')[0].strip().lower() != 'application/x-www-form-urlencoded':
                 return self.response(415, {'error': 'unsupported_media_type'})
             try:
                 form = flat_query(data.decode('utf-8'))
             except UnicodeError:
                 raise BadRequest() from None
-            action = self.onboarding.submit_site if path == '/start/site' else self.onboarding.verify_site
-            return self.onboarding_call(lambda: action(form, cookie, headers.get('origin')))
+            return self.onboarding_call(lambda: self.onboarding.submit_site(form, cookie, headers.get('origin')))
         return self.response(404, {'error': 'not_found'})
 
     def onboarding_call(self, action):

@@ -5,12 +5,14 @@ The clinic page's Stripe Payment Links redirect to
 
 1. asks Stripe whether that Checkout Session is paid (the URL alone is not proof),
 2. signs the clinic in with Google and binds that account to the subscription once,
-3. takes the homepage URL and, when the domain moves to SIMY, its transfer AuthCode,
-4. for a site SIMY has prepared, proves domain ownership with a DNS TXT record and
-   grants the Google account read/edit/publish under the Stripe subscription.
+3. takes the homepage URL and, optionally, the domain's transfer AuthCode,
+4. when the operator registered that domain with an owner email equal to the
+   signed-in (verified) email, grants read/edit/publish under the subscription.
 
-A site SIMY has not prepared yet stays as an intake for the operator. AuthCodes are
-encrypted at rest and never shown again.
+Otherwise the URL is kept as an intake: an unknown domain is queued for a copy of
+its public homepage (see site_copy.py); a known domain with another owner email
+waits for the operator. Once the operator registers the site, reopening this page
+completes the claim. AuthCodes are encrypted at rest and never shown again.
 """
 from __future__ import annotations
 
@@ -26,6 +28,7 @@ from domain_verification import site_host
 from identity import AuthError, sha
 from licensing import LicenseUnavailable
 from service import Rejected
+from site_copy import enqueue as enqueue_copy
 from store import Conflict
 from stripe_billing import ACTIVE, BillingRejected, valid_session_id
 
@@ -84,6 +87,9 @@ class ClinicOnboarding:
         if purchase.get('status') not in ACTIVE:
             return self.html(200, self.error('契約が有効ではありません', 'お支払い状況をご確認のうえ、SIMYまでご連絡ください。'))
         intake = self.store.get('clinic-intake:' + purchase['subscription_id'])
+        if intake and intake.get('status') in ('received', 'needs_review'):
+            # The operator may have registered the site since; claim it now.
+            intake = self.claim_if_registered(purchase, visit, intake)
         return self.html(200, self.site_step(purchase, visit, intake, session_id, query.get('notice')))
 
     def google_start(self, query):
@@ -161,34 +167,41 @@ class ClinicOnboarding:
             sealed = None
         intake = {'subscription_id': purchase['subscription_id'], 'subject': visit['subject'],
                   'email': visit['email'], 'plan': purchase['plan'], 'site_url': site_url, 'host': host,
-                  'auth_code': sealed, 'status': 'received', 'dns': None, 'updated_at': int(self.clock())}
-        result = self.register(purchase, visit, site_url, verify=False)
-        if result.get('status') == 'verification_required':
-            intake.update(status='verification_required', dns={'name': result['name'], 'value': result['value']})
-        elif result.get('status') == 'claimed':
+                  'auth_code': sealed, 'updated_at': int(self.clock())}
+        status = self.register(purchase, visit, site_url).get('status')
+        if status == 'claimed':
             intake['status'] = 'claimed'
+        elif status == 'site_not_registered':
+            # Unknown to SIMY: keep the request and copy the public homepage for the operator.
+            same = existing and existing.get('host') == host and existing.get('copy_state') in ('pending', 'done')
+            generation = (existing or {}).get('copy_generation', 0)
+            intake.update(status='received', **({k: existing.get(k) for k in (
+                'copy_state', 'copy_key', 'copy_files', 'copy_truncated', 'copy_attempts', 'copy_generation')}
+                if same else {'copy_state': 'pending', 'copy_attempts': 0, 'copy_generation': generation + 1}))
+        else:
+            # Known domain but a different owner email (or not claimable now): the operator checks.
+            intake.update(status='needs_review', copy_generation=(existing or {}).get('copy_generation', 0))
         self.store.put(key, intake, existing['_version'] if existing else None)
+        if intake.get('copy_state') == 'pending':
+            enqueue_copy(self.store, purchase['subscription_id'], intake['copy_generation'])
         return self.back(session_id)
 
-    def verify_site(self, form, cookie, origin):
-        purchase, visit, session_id = self.authorized_post(form, cookie, origin)
-        key = 'clinic-intake:' + purchase['subscription_id']
-        intake = self.store.get(key)
-        if not intake or intake.get('status') != 'verification_required':
-            return self.back(session_id)
-        result = self.register(purchase, visit, intake['site_url'], verify=True)
-        status = result.get('status')
-        if status == 'claimed':
-            self.store.put(key, {**intake, 'status': 'claimed', 'updated_at': int(self.clock())}, intake['_version'])
-            return self.back(session_id)
-        return self.back(session_id, 'verification_pending' if status == 'verification_pending' else 'verification_failed')
+    def claim_if_registered(self, purchase, visit, intake):
+        if self.register(purchase, visit, intake['site_url']).get('status') != 'claimed':
+            return intake
+        try:
+            return self.store.put('clinic-intake:' + purchase['subscription_id'],
+                                  {**intake, 'status': 'claimed', 'updated_at': int(self.clock())}, intake['_version'])
+        except Conflict:
+            return self.store.get('clinic-intake:' + purchase['subscription_id'])
 
     # -- internals ----------------------------------------------------------
 
-    def register(self, purchase, visit, site_url, *, verify):
+    def register(self, purchase, visit, site_url):
         policy = {'mode': 'stripe', 'subscription_id': purchase['subscription_id']}
         try:
-            return self.service.register_licensed_site(policy, visit['subject'], site_url, verify=verify)
+            # visit['email'] is the Google account's verified email (checked at sign-in).
+            return self.service.register_by_owner_email(policy, visit['subject'], visit['email'], site_url)
         except (Rejected, LicenseUnavailable, Conflict):
             return {'status': 'registration_unavailable'}
 
@@ -294,8 +307,6 @@ class ClinicOnboarding:
         notices = {
             'invalid_url': 'ホームページのURLを確認してください（例: https://www.example-clinic.jp）。',
             'invalid_auth_code': 'AuthCodeは半角英数字・記号6〜64文字で、空白を含めずに入力してください。',
-            'verification_pending': 'DNSの設定をまだ確認できませんでした。反映まで数分〜数時間かかることがあります。',
-            'verification_failed': '確認できませんでした。時間をおいてもう一度お試しください。',
         }
         banner = f'<div class="notice">{escape(notices[notice])}</div>' if notice in notices else ''
         status = (intake or {}).get('status')
@@ -312,23 +323,23 @@ class ClinicOnboarding:
                 f'<li>HPプラグインを選び、{escape(visit["email"])} で接続します。</li>'
                 '<li>ホームページが表示されたら「HP編集を始めたい」と伝えます。</li></ol>'
                 f'{plugin}</div>'), step=3)
-        if status == 'verification_required':
-            dns = intake['dns']
-            return self.layout('ドメインの所有を確認します', account + banner + (
-                f'<div class="card"><h2>{escape(intake["host"])} にDNSレコードを追加</h2>'
-                '<p class="muted">ドメインの管理画面（またはホームページ制作会社）で、次のTXTレコードを追加してください。'
-                '追加後に「確認する」を押すと、編集権限が付与されます。</p>'
-                f'<dl class="kv"><dt>種類</dt><dd><code>TXT</code></dd><dt>名前</dt><dd><code>{escape(dns["name"])}</code></dd>'
-                f'<dt>値</dt><dd><code>{escape(dns["value"])}</code></dd></dl>'
-                f'<form method="post" action="/start/verify"><input type="hidden" name="session_id" value="{sid}">'
-                '<p style="margin-top:16px"><button class="btn" type="submit">確認する</button></p></form></div>'), step=2)
-        if status == 'received':
+        if status in ('received', 'needs_review'):
+            auth = "受け付け済み（表示しません）" if intake.get("auth_code") else "未入力"
+            if status == 'needs_review':
+                head, body = ('登録情報を確認します',
+                              'このドメインはSIMYに登録がありますが、ログイン中のメールアドレスと一致しませんでした。'
+                              '担当者が確認し、')
+            else:
+                copy = {'pending': 'コピー中', 'done': 'コピー済み', 'failed': '担当者が確認します'}.get(intake.get('copy_state'), '')
+                head, body = ('ホームページの準備を進めます',
+                              'いま公開されているホームページをSIMYにコピーし、編集できる状態に準備します。準備ができましたら、')
+            rows = f'<dt>ホームページ</dt><dd>{escape(intake["site_url"])}</dd><dt>AuthCode</dt><dd>{auth}</dd>'
+            if status == 'received' and copy:
+                rows += f'<dt>コピー</dt><dd>{escape(copy)}</dd>'
             return self.layout('お申し込みを受け付けました', account + banner + (
-                f'<div class="card"><h2>移管の準備を進めます</h2><dl class="kv">'
-                f'<dt>ホームページ</dt><dd>{escape(intake["site_url"])}</dd>'
-                f'<dt>AuthCode</dt><dd>{"受け付け済み（表示しません）" if intake.get("auth_code") else "未入力"}</dd></dl>'
-                '<p class="muted" style="margin-top:12px">SIMYでホームページの移管と準備を行い、編集を始められるようになりましたら'
-                f' {escape(visit["email"])} あてにご連絡します。</p></div>'), step=2)
+                f'<div class="card"><h2>{escape(head)}</h2><dl class="kv">{rows}</dl>'
+                f'<p class="muted" style="margin-top:12px">{escape(body)}'
+                f'{escape(visit["email"])} あてにご連絡します。このページを開き直すと、準備ができ次第そのまま編集を始められます。</p></div>'), step=2)
         return self.layout('ホームページを登録します', account + banner + (
             '<div class="card"><h2>ホームページの情報</h2>'
             f'<form method="post" action="/start/site"><input type="hidden" name="session_id" value="{sid}">'

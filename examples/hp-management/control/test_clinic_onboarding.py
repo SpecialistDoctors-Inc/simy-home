@@ -36,13 +36,12 @@ class FakeApi:
 class ClinicOnboardingTest(unittest.TestCase):
     def setUp(self):
         self.store = MemoryStore()
-        self.dns = False
         self.site = test_provision_site.ProvisionTest().site()
         targets = {env: {'bucket': item['bucket'], 'distribution': item['distribution_id']}
                    for env, item in self.site['deployment'].items()}
         self.service = Service(self.store, publication_enabled=True,
-                               claim_targets={self.site['site_id']: targets}, dns_check=lambda *_: self.dns)
-        enable_domain_registration(self.store, self.site)
+                               claim_targets={self.site['site_id']: targets})
+        enable_domain_registration(self.store, self.site, owner_email='Owner@Example.test')
         self.profile = {'sub': 'google-subject', 'email': 'owner@example.test', 'email_verified': True}
         identity = Identity(self.store, ISSUER, 'google-client', lambda claims: 'signed',
                             lambda code, redirect, nonce: self.profile)
@@ -104,21 +103,16 @@ class ClinicOnboardingTest(unittest.TestCase):
         submitted = self.call('POST', '/start/site', form={
             'session_id': SESSION, 'site_url': self.site['prod_url'], 'auth_code': AUTH_CODE})
         self.assertEqual(submitted['statusCode'], 303)
+        # The operator registered Owner@Example.test; the verified sign-in email
+        # owner@example.test matches regardless of case, so access is granted at once.
         intake = self.store.get('clinic-intake:' + SUB)
-        self.assertEqual(intake['status'], 'verification_required')
+        self.assertEqual(intake['status'], 'claimed')
         self.assertNotIn(AUTH_CODE, json.dumps(self.store.rows))
         self.assertEqual(self.onboarding.cipher.decrypt(intake['auth_code'].encode()).decode(), AUTH_CODE)
         page = self.call('GET', '/start', {'session_id': SESSION})['body']
-        self.assertIn(intake['dns']['value'], page)
+        self.assertIn('HP編集を始める', page)
         self.assertNotIn(AUTH_CODE, page)
-
-        pending = self.call('POST', '/start/verify', form={'session_id': SESSION})
-        self.assertIn('notice=verification_pending', pending['headers']['location'])
-        self.assertIsNone(self.store.get('site:' + self.site['site_id']))
-        self.dns = True
-        self.call('POST', '/start/verify', form={'session_id': SESSION})
-        self.assertEqual(self.store.get('clinic-intake:' + SUB)['status'], 'claimed')
-        self.assertIn('HP編集を始める', self.call('GET', '/start', {'session_id': SESSION})['body'])
+        self.assertIsNone(self.store.get('clinic-copy-pending'))
 
         claims = {'sub': 'google-subject', 'scope': 'hp:read hp:write'}
         self.assertEqual(self.service.list_sites(claims)[0]['roles'], ['read', 'edit', 'publish'])
@@ -162,7 +156,7 @@ class ClinicOnboardingTest(unittest.TestCase):
         self.assertNotIn('cookies', callback)
         self.assertIsNone(self.store.get('stripe-subscription:' + SUB)['subject'])
 
-    def test_unprepared_site_is_kept_for_the_operator_and_invalid_codes_are_refused(self):
+    def test_unknown_site_is_queued_for_copy_and_claimed_after_the_operator_registers_it(self):
         self.sign_in()
         bad = self.call('POST', '/start/site', form={'session_id': SESSION, 'site_url': 'https://clinic.example.jp',
                                                       'auth_code': 'has space'})
@@ -170,9 +164,61 @@ class ClinicOnboardingTest(unittest.TestCase):
         self.call('POST', '/start/site', form={'session_id': SESSION, 'site_url': 'https://clinic.example.jp',
                                                'auth_code': AUTH_CODE})
         intake = self.store.get('clinic-intake:' + SUB)
-        self.assertEqual((intake['status'], intake['host']), ('received', 'clinic.example.jp'))
-        self.assertIn('移管の準備を進めます', self.call('GET', '/start', {'session_id': SESSION})['body'])
+        self.assertEqual((intake['status'], intake['host'], intake['copy_state']),
+                         ('received', 'clinic.example.jp', 'pending'))
+        self.assertEqual(self.store.get('clinic-copy-pending')['subscriptions'], [SUB + ':1'])
+        page = self.call('GET', '/start', {'session_id': SESSION})['body']
+        self.assertIn('ホームページの準備を進めます', page)
+        self.assertNotIn(AUTH_CODE, page)
         self.assertIsNone(self.store.get('principal:google-subject'))
+        # Resubmitting the same domain does not queue it twice.
+        self.call('POST', '/start/site', form={'session_id': SESSION, 'site_url': 'https://clinic.example.jp',
+                                               'auth_code': ''})
+        self.assertEqual(self.store.get('clinic-copy-pending')['subscriptions'], [SUB + ':1'])
+        self.assertIsNotNone(self.store.get('clinic-intake:' + SUB)['auth_code'])
+
+        # The operator builds the site and registers it for the clinic's mailbox.
+        site = {**self.site, 'prod_url': 'https://clinic.example.jp'}
+        enable_domain_registration(self.store, site, owner_email='owner@example.test')
+        self.assertIn('HP編集を始める', self.call('GET', '/start', {'session_id': SESSION})['body'])
+        self.assertEqual(self.store.get('clinic-intake:' + SUB)['status'], 'claimed')
+        claims = {'sub': 'google-subject', 'scope': 'hp:read hp:write'}
+        self.assertEqual(self.service.list_sites(claims)[0]['roles'], ['read', 'edit', 'publish'])
+
+    def test_known_site_with_another_owner_email_waits_for_review(self):
+        self.profile = {'sub': 'google-subject', 'email': 'someone-else@example.test', 'email_verified': True}
+        self.sign_in()
+        self.call('POST', '/start/site', form={'session_id': SESSION, 'site_url': self.site['prod_url'],
+                                               'auth_code': ''})
+        intake = self.store.get('clinic-intake:' + SUB)
+        self.assertEqual(intake['status'], 'needs_review')
+        self.assertNotIn('copy_state', intake)
+        self.assertIsNone(self.store.get('clinic-copy-pending'))
+        page = self.call('GET', '/start', {'session_id': SESSION})['body']
+        self.assertIn('登録情報を確認します', page)
+        self.assertNotIn('Owner@Example.test', page)
+        self.assertIsNone(self.store.get('site:' + self.site['site_id']))
+
+    def test_owner_email_registration_needs_an_active_license_and_hides_the_owner(self):
+        policy = {'mode': 'stripe', 'subscription_id': SUB}
+        url = self.site['prod_url']
+        register = lambda email: self.service.register_by_owner_email(policy, 'google-subject', email, url)
+        self.assertEqual(register('other@example.test'), {'status': 'owner_mismatch'})
+        self.assertEqual(self.service.register_by_owner_email(policy, 'google-subject', 'o@example.test',
+                                                              'https://unknown.example.jp'),
+                         {'status': 'site_not_registered'})
+        with self.assertRaisesRegex(Rejected, 'hp_license_required'):
+            register('owner@example.test')  # no purchase recorded
+        self.billing.confirmed_session(SESSION)
+        # Paid, but the subscription is not bound to this Google account yet.
+        with self.assertRaisesRegex(Rejected, 'hp_license_required'):
+            register('owner@example.test')
+        self.billing.bind_subject(SUB, 'google-subject', 'owner@example.test')
+        self.assertEqual(register('OWNER@example.test'), {'status': 'claimed'})
+        self.assertEqual(register('owner@example.test'), {'status': 'claimed'})
+        other = {'mode': 'stripe', 'subscription_id': 'sub_' + 'Q' * 24}
+        self.assertEqual(self.service.register_by_owner_email(other, 'google-subject', 'owner@example.test', url),
+                         {'status': 'registration_unavailable'})
 
     def test_lambda_cookie_list_is_read(self):
         self.sign_in()

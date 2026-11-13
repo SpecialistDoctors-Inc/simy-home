@@ -15,11 +15,17 @@ The access token for MCP calls on behalf of the seeded subject is written to
 --token-file (mode 0600). MCP requests use it as a normal Bearer token.
 
 --mode clinic instead exercises the simy.one clinic purchase: a Stripe test
-Payment Link redirects to /start, the clinic signs in, registers its homepage
-and receives the prepared site under the Stripe subscription. It needs
-STRIPE_SECRET_KEY (test mode only), STRIPE_WEBHOOK_SECRET and --payment-links.
-Google sign-in and the DNS TXT lookup are replaced by local stand-ins that
-exist only in this tool; the stand-in sign-in page says so.
+Payment Link redirects to /start, the clinic signs in and enters its homepage.
+With --owner-email the site is pre-registered for that mailbox (pattern 1) and
+is granted at once when the sign-in email matches; otherwise the URL becomes an
+intake whose public homepage is copied (pattern 2). It needs STRIPE_SECRET_KEY
+(test mode only), STRIPE_WEBHOOK_SECRET and --payment-links. Google sign-in is
+replaced by a local stand-in page that says so. Two loopback-only operator
+stand-ins exist only in this tool:
+  POST /dev/copy             run the scheduled copier once; the homepage is read
+                             from --copy-origin and the zip written under --copy-dir
+  POST /dev/register?host=H  register the local site for H with --google-email
+                             as owner, as the operator CLI would
 """
 from __future__ import annotations
 
@@ -86,7 +92,7 @@ def build(entitlement_endpoint, entitlement_token, preflight_token, org_id, goog
 
 
 def build_clinic(stripe_secret_key, webhook_secret, payment_links, google_subject, google_email, site_host_name,
-                 port, clock=time.time, stripe_api=None):
+                 port, clock=time.time, stripe_api=None, owner_email=None, copy_origin=None, copy_dir=None):
     """Return (app, mcp_token_factory) for the clinic Payment Link flow on loopback."""
     from clinic_onboarding import ClinicOnboarding
     from cryptography.fernet import Fernet
@@ -102,12 +108,12 @@ def build_clinic(stripe_secret_key, webhook_secret, payment_links, google_subjec
     tokens = Tokens(key, issuer)
     store = MemoryStore()
     site = local_site(None, site_host_name)
-    # SIMY prepared this clinic's site; the paying owner proves the domain to receive it.
-    enable_domain_registration(store, site)
+    if owner_email is not None:
+        # Pattern 1: the operator prepared this clinic's site for its owner's mailbox.
+        enable_domain_registration(store, site, owner_email=owner_email)
     targets = {env: {'bucket': item['bucket'], 'distribution': item['distribution_id']}
                for env, item in site['deployment'].items()}
-    service = Service(store, publication_enabled=True, claim_targets={SITE_ID: targets},
-                      dns_check=lambda name, value: True)
+    service = Service(store, publication_enabled=True, claim_targets={SITE_ID: targets})
     profile = {'sub': google_subject, 'email': google_email, 'email_verified': True}
     identity = Identity(store, issuer, 'local-client', tokens.sign, lambda code, redirect, nonce: dict(profile))
     billing = StripeBilling(store, stripe_api or StripeApi(lambda: stripe_secret_key), payment_links, clock=clock)
@@ -121,7 +127,35 @@ def build_clinic(stripe_secret_key, webhook_secret, payment_links, google_subjec
         return tokens.sign({'iss': issuer, 'aud': issuer + '/mcp', 'sub': google_subject,
                             'scope': 'hp:read hp:write', 'iat': now, 'exp': now + 3600, 'jti': str(uuid.uuid4())})
     app.local_google_email = google_email
+    app.local_dev = {'copy': lambda query: local_copy(store, copy_origin, copy_dir),
+                     'register': lambda query: enable_domain_registration(
+                         store, local_site(None, query.get('host', '')), owner_email=google_email)}
     return app, mcp_token
+
+
+def local_copy(store, origin, out_dir):
+    """Run the copier once against a loopback origin standing in for https://<host>."""
+    from urllib.request import urlopen
+    from urllib.parse import urlsplit
+    from site_copy import copy_public_site, run_one
+    if not origin or not out_dir or urlsplit(origin).hostname not in LOOPBACK:
+        raise SystemExit('--copy-origin (loopback) and --copy-dir are required for /dev/copy')
+
+    def fetch(url):
+        parts = urlsplit(url)
+        try:
+            with urlopen(origin.rstrip('/') + (parts.path or '/') + ('?' + parts.query if parts.query else ''),
+                         timeout=10) as response:
+                return response.status, dict(response.headers), response.read()
+        except Exception as error:  # HTTPError carries the status
+            return getattr(error, 'code', 599), {}, b''
+
+    def put(key, data):
+        path = Path(out_dir) / key
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(data)
+    handled = run_one(store, put, copier=lambda host: copy_public_site(host, fetch=fetch))
+    return {'handled': handled}
 
 
 def dev_google_page(query, email):
@@ -154,9 +188,14 @@ def handler_for(app):
             length = int(self.headers.get('content-length') or 0)
             body = self.rfile.read(min(length, 1 << 20)).decode('utf-8', 'replace')
             path, _, query = self.path.partition('?')
+            from urllib.parse import parse_qsl
+            dev = getattr(app, 'local_dev', None)
             if path == '/dev/google' and getattr(app, 'local_google_email', None):
-                from urllib.parse import parse_qsl
                 result = dev_google_page(dict(parse_qsl(query)), app.local_google_email)
+            elif dev and self.command == 'POST' and path in ('/dev/copy', '/dev/register'):
+                outcome = dev[path.rsplit('/', 1)[1]](dict(parse_qsl(query)))
+                result = {'statusCode': 200, 'headers': {'content-type': 'application/json'},
+                          'body': json.dumps(outcome)}
             else:
                 result = app({'rawPath': path, 'rawQueryString': query, 'headers': dict(self.headers.items()),
                               'body': body, 'requestContext': {'http': {'method': self.command}}})
@@ -190,13 +229,18 @@ def main():
     parser.add_argument('--google-email', default='clinic-owner@example.test')
     parser.add_argument('--payment-links', type=Path, help='clinic mode: JSON {plink_id: plan}')
     parser.add_argument('--site-host', default='sakura-clinic.example', help='clinic mode: prepared site host')
+    parser.add_argument('--owner-email', help='clinic mode: pre-register --site-host for this owner mailbox')
+    parser.add_argument('--copy-origin', help='clinic mode: loopback origin served as every copied homepage')
+    parser.add_argument('--copy-dir', type=Path, help='clinic mode: where /dev/copy writes intake zips')
     parser.add_argument('--token-file', type=Path, required=True)
     args = parser.parse_args()
     if args.mode == 'clinic':
         app, token_factory = build_clinic(os.environ.get('STRIPE_SECRET_KEY', ''),
                                           os.environ.get('STRIPE_WEBHOOK_SECRET', ''),
                                           json.loads(args.payment_links.read_text()), args.google_subject,
-                                          args.google_email, args.site_host, args.port)
+                                          args.google_email, args.site_host, args.port,
+                                          owner_email=args.owner_email, copy_origin=args.copy_origin,
+                                          copy_dir=args.copy_dir)
         access_token = token_factory()
     else:
         if not args.org_id:

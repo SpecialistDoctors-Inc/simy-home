@@ -145,6 +145,17 @@ def dispatch_pending(event, context, *, store=None, sqs=None, clock=None):
     return {'enqueued': sent}
 
 
+def copy_clinic_sites(event, context, *, store=None, put_object=None):
+    """Scheduled: copy one pending clinic homepage into the private artifact bucket."""
+    import boto3
+    from site_copy import run_one, s3_put
+    store = store or DynamoStore(os.environ['HP_TABLE_NAME'])
+    put_object = put_object or s3_put(boto3.client('s3'), os.environ['HP_ARTIFACT_BUCKET'])
+    handled = run_one(store, put_object)
+    print(json.dumps({'event': 'hp_clinic_copy_completed', 'handled': handled is not None}))
+    return {'handled': handled is not None}
+
+
 def regional_s3_client(region):
     """Construct a regional SigV4 client from trusted deployment configuration.
 

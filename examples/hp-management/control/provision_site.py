@@ -14,6 +14,7 @@ from service import new_site_writes, setup_code_key
 from store import DynamoStore, Write
 
 ACCOUNT = '209300895845'
+EMAIL = re.compile(r'[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+')
 FIELDS = {'site_id','name','config_version','github_app_id','github_installation_id','github_repository_id',
     'github_owner','github_repository','validation_workflow_id','initial_main_commit',
     'drive_workspace_folder_id','drive_changes_folder_id','sheet_id','recipient','operator_subject','operator_email',
@@ -96,22 +97,32 @@ def prepare_claim(store, site, google_subject, now):
     return {'site_id': site['site_id'], 'setup_code': setup_code, 'expires_at': expires_at}
 
 
-def enable_domain_registration(store, site, *, allow_search_console_owners=False):
+def enable_domain_registration(store, site, *, allow_search_console_owners=False, owner_email=None):
+    """Prepare an unassigned site for self-service registration.
+
+    With ``owner_email``, a clinic that paid through a Payment Link and signs in
+    with that verified mailbox can claim the site without a DNS proof.
+    """
     validate(site)
     if license_policy(site) is not None:
         raise ValueError('an unassigned site is required')
+    if owner_email is not None and (not isinstance(owner_email, str) or not EMAIL.fullmatch(owner_email)):
+        raise ValueError('exact owner email required')
     host = site_host(site['prod_url'])
     key = 'registration-site:' + host
     existing = store.get(key)
     if (existing and existing['site'] == site
-            and existing.get('allow_search_console_owners', False) == allow_search_console_owners):
+            and existing.get('allow_search_console_owners', False) == allow_search_console_owners
+            and existing.get('owner_email') == owner_email):
         return {'site_id': site['site_id'], 'host': host}
     if existing and existing['site'] != site:
         raise ValueError('a different binding already exists for this host')
     if any(store.get(binding.key) is not None for binding in new_site_writes(site)):
         raise ValueError('site or repository already registered')
-    store.put(key, {'site': site, 'allow_search_console_owners': allow_search_console_owners},
-              existing['_version'] if existing else None)
+    record = {'site': site, 'allow_search_console_owners': allow_search_console_owners}
+    if owner_email is not None:
+        record['owner_email'] = owner_email
+    store.put(key, record, existing['_version'] if existing else None)
     return {'site_id': site['site_id'], 'host': host}
 
 
@@ -126,6 +137,7 @@ def main():
     identity.add_argument('--enable-domain-registration', action='store_true',
                           help='Allow a verified domain owner to register this unassigned site in SIMY.')
     p.add_argument('--roles', nargs='+')
+    p.add_argument('--owner-email', help='Clinic owner mailbox that may claim this site after a Payment Link purchase.')
     p.add_argument('--allow-search-console-owners', action='store_true',
                    help='Use only when the publisher authorizes Search Console owners, including delegated owners.')
     p.add_argument('--apply', action='store_true')
@@ -135,11 +147,14 @@ def main():
         p.error('--roles cannot be combined with self-service registration')
     if a.allow_search_console_owners and not a.enable_domain_registration:
         p.error('--allow-search-console-owners requires --enable-domain-registration')
+    if a.owner_email is not None and not a.enable_domain_registration:
+        p.error('--owner-email requires --enable-domain-registration')
 
     def provision(store):
         now = int(time.time())
         if a.enable_domain_registration:
-            return enable_domain_registration(store, site, allow_search_console_owners=a.allow_search_console_owners)
+            return enable_domain_registration(store, site, allow_search_console_owners=a.allow_search_console_owners,
+                                              owner_email=a.owner_email)
         if a.claim_google_subject is not None:
             return prepare_claim(store, site, a.claim_google_subject, now)
         return seed(store, site, a.email, a.roles or ['read', 'edit'], now, google_subject=a.google_subject)

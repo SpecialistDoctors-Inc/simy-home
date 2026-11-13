@@ -84,7 +84,7 @@ class ClinicBridgeTest(unittest.TestCase):
             build_clinic('sk_live_' + 'x' * 24, SECRET, {LINK: 'basic'}, SUBJECT, 'o@example.test',
                          'sakura-clinic.example', 8787)
         app, token = build_clinic('sk_test_' + 'x' * 24, SECRET, {LINK: 'basic'}, SUBJECT, 'o@example.test',
-                                  'sakura-clinic.example', 8787, stripe_api=FakeApi())
+                                  'sakura-clinic.example', 8787, stripe_api=FakeApi(), owner_email='O@example.test')
         cookie = {}
 
         def call(method, path, query=None, form=None):
@@ -108,7 +108,6 @@ class ClinicBridgeTest(unittest.TestCase):
         call('GET', '/oauth/google/callback', {'state': state, 'code': 'local-google-code'})
         call('POST', '/start/site', form={'session_id': SESSION, 'site_url': 'https://sakura-clinic.example',
                                           'auth_code': 'Ab3$xY9!kQ'})
-        call('POST', '/start/verify', form={'session_id': SESSION})
         self.assertIn('HP編集を始める', call('GET', '/start', {'session_id': SESSION})['body'])
         result = app({'rawPath': '/mcp', 'requestContext': {'http': {'method': 'POST'}},
                       'headers': {'Authorization': 'Bearer ' + token(), 'Content-Type': 'application/json'},

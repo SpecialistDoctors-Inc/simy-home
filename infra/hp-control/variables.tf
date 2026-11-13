@@ -171,3 +171,8 @@ variable "preflight_secret_arn" {
     error_message = "Use a separate dedicated hp-control/ preflight secret in the verified account/region."
   }
 }
+variable "clinic_copy_enabled" {
+  description = "Run the scheduled copier that saves paid clinics' public homepages into the private artifact bucket."
+  type        = bool
+  default     = false
+}

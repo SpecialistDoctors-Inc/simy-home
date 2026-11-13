@@ -280,6 +280,40 @@ class Service:
         return self._finish_site_registration(site, policy, principal_key, member,
             [Check(binding_key, binding['_version']), Write(key, None, proof['_version'])])
 
+    def register_by_owner_email(self, policy, google_subject, verified_email, site_url):
+        """Grant a paid clinic its operator-prepared site when the sign-in mailbox
+        matches the owner email the operator registered for that domain.
+
+        ``verified_email`` must come from an identity provider that verified it.
+        The registered owner email is never returned.
+        """
+        if (not valid_google_subject(google_subject) or license_policy({'license_policy': policy}) is None
+                or not isinstance(verified_email, str) or '@' not in verified_email):
+            raise Rejected('invalid_input')
+        try:
+            host = site_host(site_url)
+        except ValueError:
+            return {'status': 'invalid_url'}
+        binding_key = 'registration-site:' + host
+        binding = self.store.get(binding_key)
+        if not binding:
+            return {'status': 'site_not_registered'}
+        owner = binding.get('owner_email')
+        if not isinstance(owner, str) or owner.casefold() != verified_email.casefold():
+            return {'status': 'owner_mismatch'}
+        site = binding['site']
+        self._check_claim_targets(site)
+        principal_key = 'principal:' + google_subject
+        member = self.store.get(principal_key) or {'sites': {}, 'disabled': False}
+        if member.get('disabled'):
+            return {'status': 'registration_unavailable'}
+        registered = self.store.get('site:' + site['site_id'])
+        if registered:
+            return self._registered_site_status(registered, member, policy)
+        self._require_license(policy, google_subject)
+        return self._finish_site_registration(site, policy, principal_key, member,
+                                              [Check(binding_key, binding['_version'])])
+
     def _require_license(self, policy, google_subject):
         if policy['mode'] == 'simy':
             # SIMY checks only that the bridge answers; payment may follow.
