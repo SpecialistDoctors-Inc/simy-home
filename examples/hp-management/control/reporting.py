@@ -28,12 +28,13 @@ from urllib.parse import urlsplit
 from uuid import uuid4, uuid5, NAMESPACE_URL
 
 from executor import Busy, IntegrationUnavailable, ReconciliationRequired
+from licensing import site_license_allowed
 from service import Rejected, fingerprint, uuid
 from store import Check, Write
 
 KINDS = {'open_workspace': ('workspace', 'workspace_ready'), 'save_draft': ('saved', 'draft_saved'),
          'submit_preview': ('preview', 'dev_preview_ready'), 'publish': ('published', 'published')}
-SAFE_REASONS = set('operation_cancelled access_revoked site_configuration_changed reporting_binding_changed reporting_binding_invalid reporting_wrong_site reporting_result_invalid reporting_workspace_mismatch reporting_saved_mismatch reporting_artifact_mismatch reporting_preview_stale reporting_artifact_unverified reporting_url_invalid reporting_url_mismatch reporting_publication_stale reporting_operator_mismatch reporting_wrong_sheet reporting_wrong_recipient reporting_admission_mismatch reporting_event_mismatch reporting_notice_unverified reporting_outbox_tampered reporting_result_changed reporting_request_mismatch'.split())
+SAFE_REASONS = set('operation_cancelled access_revoked hp_license_required site_configuration_changed reporting_binding_changed reporting_binding_invalid reporting_wrong_site reporting_result_invalid reporting_workspace_mismatch reporting_saved_mismatch reporting_artifact_mismatch reporting_preview_stale reporting_artifact_unverified reporting_url_invalid reporting_url_mismatch reporting_publication_stale reporting_operator_mismatch reporting_wrong_sheet reporting_wrong_recipient reporting_admission_mismatch reporting_event_mismatch reporting_notice_unverified reporting_outbox_tampered reporting_result_changed reporting_request_mismatch'.split())
 BINDING_FIELDS = ('site_id', 'config_version', 'sheet_id', 'recipient', 'operator_subject', 'operator_email', 'mail_enabled', 'notification_recipient_ref')
 
 
@@ -64,9 +65,10 @@ def binding(site, site_id):
 
 
 class Reporter:
-    def __init__(self, store, sheets_factory, mail_factory, clock=time.time):
+    def __init__(self, store, sheets_factory, mail_factory, clock=time.time, license_resolver=None):
         self.store, self.sheets_factory, self.mail_factory, self.clock = store, sheets_factory, mail_factory, clock
         self.lease_seconds = 300
+        self.license_resolver = license_resolver
 
     def report(self, operation_id):
         uuid(operation_id)
@@ -93,10 +95,11 @@ class Reporter:
             # Never let revoked authority skip reconciliation of an admitted write.
             run.refresh()
             reason = str(error) if str(error) in SAFE_REASONS else 'reporting_rejected'
+            access_ended = reason in ('operation_cancelled', 'access_revoked', 'hp_license_required')
             if run.record and 'admitted' in run.record['phases'].values():
-                run.finish('reconciling' if reason in ('operation_cancelled', 'access_revoked') else 'needs_attention', reason)
+                run.finish('reconciling' if access_ended else 'needs_attention', reason)
             else:
-                run.finish('suppressed' if reason in ('operation_cancelled', 'access_revoked') else 'needs_attention', reason)
+                run.finish('suppressed' if access_ended else 'needs_attention', reason)
         except Exception:
             run.refresh()
             # Provider exception details may contain credentials; retain fixed codes.
@@ -132,6 +135,7 @@ class _Report:
         role = 'publish' if self.op['kind'] == 'publish' else 'edit'
         require(self.member is not None and not self.member.get('disabled') and self.member['_version'] == self.op['member_version'] and role in self.member.get('sites', {}).get(self.op['site_id'], []), 'access_revoked')
         require(self.site is not None and not self.site.get('disabled') and self.site.get('config_version') == self.op['site_config_version'], 'site_configuration_changed')
+        require(site_license_allowed(self.site, self.op['subject'], self.reporter.license_resolver), 'hp_license_required')
         frozen = self.record['provider_site'] if self.record else self.op.get('execution_site')
         require(isinstance(frozen, dict) and binding(self.site, self.op['site_id']) == binding(frozen, self.op['site_id']), 'reporting_binding_changed')
         require(not self.site.get('site_id') or self.site['site_id'] == self.op['site_id'], 'reporting_wrong_site')

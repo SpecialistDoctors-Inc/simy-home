@@ -1,8 +1,9 @@
 # Dedicated HP connection settings
 
-This standalone service requires no SIMY account/API/WorkFlow. It runs no Codex or
-model provider. Existing production remains on the previous accepted release
-until real provider/host tests authorize cutover.
+The existing operator-granted service works independently of SIMY. Commercial
+sites use the SIMY license bridge described below. The control service runs no
+Codex or model provider. Existing production remains on the previous accepted
+release until real provider and host tests authorize cutover.
 
 ## GitHub administrator registration
 
@@ -64,3 +65,120 @@ callbacks retain their exact HTTP 302 redirect behavior.
 
 A separate RSA signing key issues audience-bound HP access tokens. Keys are
 stored as secret values, with only public JWKs exposed by `/oauth/jwks`.
+
+## Commercial HP sites
+
+Bind a provisioned site to its SIMY billing organization by setting
+`license_policy: {"mode":"simy","org_id":"<SIMY organization UUID>"}` in the
+operator-owned site record. This extends existing verified Google-subject and
+site-role checks. Sites without a license policy retain their existing explicit
+operator grants and cannot qualify for the commercial checkout. A billing
+organization does not authorize an arbitrary site URL or create provider bindings.
+
+Once the deployment team has verified the site's repository, hosting bindings
+and Google subject, provision a new commercial site with `provision_site.py
+--site <verified-binding.json> --google-subject <verified-subject>`. This checks
+the local inputs. The existing `--table simy-hp-control --apply` path writes the
+site, repository binding and initial site roles in one transaction. It preserves
+the principal's other grants, refuses disabled principals and requires a SIMY
+organization on the site. This lets the same account pass checkout readiness
+without first installing the editor to redeem an invitation. An active SIMY
+license is still required to edit.
+
+To let a customer select their own SIMY organization in signup, prepare the same
+verified binding without a license policy. Use `--claim-google-subject` in
+place of `--google-subject`. With `--apply` this prints a setup code valid
+for seven days. Deliver it to the verified site owner. It can only be used by
+that Google subject. The owner signs in and enters the code in the HP signup
+page. SIMY checks billing authority for the selected organization and submits
+the code to `POST /internal/site/claim` with the preflight credential. HP
+Control assigns the site, its repository and the owner's read, edit and publish
+roles in one transaction. The license check still applies to all operations.
+Retries for the same account and organization are safe while the code is valid.
+Set `self_service_site_id` to the site ID for this stack's verified publisher
+bindings. Registration and subsequent checkout preflight reject a missing or
+mismatched preview or production destination.
+
+For signups without a setup code, use `provision_site.py --site
+<verified-binding.json> --enable-domain-registration --table simy-hp-control
+--apply` once for each eligible deployment. This registers the public hostname
+and existing provider bindings without assigning an account or creating an
+active site. The signed-in billing owner enters the HP address, adds the TXT
+record shown on screen, and confirms it. The proof is valid for seven days and
+bound to the Google subject, SIMY organization and current binding version.
+The site, repository and owner roles are created together only after a match.
+The enrollment command does not create repositories, hosting or DNS resources.
+
+The signup page can also use read-only Google Search Console ownership. SIMY
+checks ownership with the authenticated Google account before sending the
+verified result over the existing internal credential. For a compatible hosting
+binding, add `--allow-search-console-owners` at enrollment only when the
+publisher authorizes Search Console owners (including delegated owners) to
+register and publish. A website without that authorization or without a binding
+stays in preparation and cannot enter checkout.
+
+### WordPress.com provider adapter
+
+The adapter targets one public, static front page. It requests WordPress.com
+authorization for one site, then checks the returned site ID and public origin,
+page editing and publishing capabilities, and the configured homepage. It
+saves to a WordPress autosave revision and updates the published homepage only
+when the caller passes the approved revision digest. It verifies the saved
+content and refuses a stale homepage or changed autosave.
+
+Signup can start WordPress.com OAuth when `HP_WORDPRESS_CONNECTION_ENABLED=1`
+and the HP Control service credential is configured. Register the exact HTTPS
+callback `/api/signup/hp-wordpress/` on the web deployment's origin. The optional
+HP Control `wordpress_secret_arn` points to a dedicated secret with `client_id`,
+`client_secret`, `callback`, and a Fernet `credential_key`. The callback consumes
+its state once and stores the encrypted grant for the signed-in Google subject
+and billing organization. No per-site setup code or DNS record is needed.
+
+An isolated test can set `wordpress_test_origin` to the exact HTTPS origin of
+one dedicated WordPress.com site. That owner's Mac client can download its
+homepage snapshot, upload a checksum-bound change ZIP, save an immutable draft,
+and preview it. The existing approval card queues publishing the exact saved
+homepage. WordPress content is read back after the write. The signup server
+only treats this provider as ready for Stripe test checkout in a Mac acceptance
+preview. Other WordPress sites retain read access after entitlement.
+
+The worker checks the previously seen homepage immediately before publishing.
+Core WordPress lacks an atomic version precondition, so simultaneous edits
+outside SIMY remain a limitation. Keep this execution restricted to an isolated
+test site until that conflict is addressed and the actual Mac host is verified.
+
+The isolated local check used the native Mac 0.3.11 binary for ZIP initialization
+and the edited package, and a real WordPress REST server for reading, autosaving,
+publishing and reading the public homepage. Only the WordPress.com OAuth exchange
+and site registry were simulated. No production site was used.
+
+Configure the two bridge directions together. `entitlement_endpoint` identifies
+the trusted SIMY `/functions/v1/hp-control-entitlement` URL. The dedicated raw
+token at `entitlement_secret_arn` must match the backend's
+`HP_CONTROL_ENTITLEMENT_TOKEN`. This read-only check receives the server-owned
+organization ID and authenticated Google subject. API and worker checks both
+require an affirmative response on each managed action. Unavailable responses
+block managed access and queued commands can retry under the same operation ID.
+
+`preflight_secret_arn` holds a separate raw token matching SIMY's
+`HP_CONTROL_PREFLIGHT_TOKEN`. Use independent base64url tokens of at least 32
+characters. After verifying identity and billing authority, SIMY sends a JSON
+`POST /internal/license/preflight` with `org_id` and `google_subject`.
+It receives `{"ready":true}` only when that Google principal already has read
+and edit permission on an enabled site bound to that organization and the entitlement
+lookup responds. This check does not require a paid license or modify authority.
+When using the invitation path, redeem it through the existing Google
+connection before checkout. A negative response contains `{"ready":false}`
+and a `status` of `connection_required` when the principal has not connected,
+or `site_setup_required` when no eligible site is ready for that principal and
+organization. These states and unavailable preflight both prevent checkout.
+Preflight also requires the deployed MCP registry to contain both
+`hp_download_workspace` and `hp_prepare_upload`, which the 0.3.11 client uses.
+The Drive-only registry cannot open commercial checkout.
+
+Before deploying the commercial bridge, reconcile the deployment package with
+the source that serves the live transfer tools. On a disposable managed site,
+verify the two transfer calls with the 0.3.11 editor, then verify a saved draft
+can be reopened. Complete the same flow with the Mac and Windows release
+packages before enabling checkout. Deploying a package with the Drive-only
+registry would remove the live transfer tools.

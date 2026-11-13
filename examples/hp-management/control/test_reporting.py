@@ -308,6 +308,14 @@ class ReportingTests(unittest.TestCase):
                 self.assertEqual((self.sheets.appends, self.mail.sends), (0, 0))
                 self.store.rows = original
 
+    def test_license_lapse_stops_new_reporting_effects(self):
+        self.preview()
+        self.update('site:' + self.site_id, license_policy={'mode': 'simy', 'org_id': str(uuid4())})
+        self.reporter.license_resolver = lambda org, subject: False
+        receipt = self.result()
+        self.assertEqual((receipt['state'], receipt['reason']), ('suppressed', 'hp_license_required'))
+        self.assertEqual((self.sheets.appends, self.mail.sends), (0, 0))
+
     def test_provider_wrong_recipient_does_not_send(self):
         self.preview()
         self.mail.recipient = 'other@example.invalid'

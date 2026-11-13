@@ -10,6 +10,8 @@ import re
 import secrets
 import time
 from uuid import UUID, uuid4
+from domain_verification import dns_has_value, site_host
+from licensing import LicenseUnavailable, license_org, resolve_license, site_license_allowed, valid_google_subject, valid_org_id
 from store import Write, Check, Conflict
 
 
@@ -23,6 +25,21 @@ def canonical(value):
 
 def fingerprint(value):
     return hashlib.sha256(canonical(value).encode()).hexdigest()
+
+
+def setup_code_key(code):
+    if not isinstance(code, str) or not re.fullmatch(r'[A-Za-z0-9_-]{43}', code):
+        raise Rejected('site_claim_unavailable')
+    return 'site-claim:' + fingerprint(code)
+
+
+def new_site_writes(site):
+    site_id = site['site_id']
+    return [
+        Write('site:' + site_id, site, None),
+        Write('repository:' + str(site['github_repository_id']),
+              {'site_id': site_id, 'installation_id': site['github_installation_id']}, None),
+    ]
 
 
 def uuid(value):
@@ -56,9 +73,21 @@ def main_commit(site):
     return value
 
 
+def effective_roles(member, site, subject, wordpress_test_origin):
+    roles = member.get('sites', {}).get(site['site_id'], [])
+    if (site.get('provider') == 'wordpress' and roles and wordpress_test_origin
+            and site.get('prod_url') == wordpress_test_origin and site.get('owner_subject') == subject):
+        return ['read', 'edit', 'publish']
+    return roles if site.get('provider') != 'wordpress' else [role for role in roles if role == 'read']
+
+
 class Service:
-    def __init__(self, store, clock=time.time, publication_enabled=False):
+    def __init__(self, store, clock=time.time, publication_enabled=False, license_resolver=None, claim_targets=None,
+                 wordpress_test_origin=None):
         self.store, self.clock, self.publication_enabled = store, clock, publication_enabled
+        self.license_resolver = license_resolver
+        self.claim_targets = claim_targets or {}
+        self.wordpress_test_origin = wordpress_test_origin if publication_enabled else None
 
     def principal(self, claims):
         if not isinstance(claims, dict) or not isinstance(claims.get('sub'), str):
@@ -75,18 +104,23 @@ class Service:
         scopes = set(claims.get('scope', '').split())
         if ('hp:read' if role == 'read' else 'hp:write') not in scopes:
             raise Rejected('insufficient_scope')
-        if role not in member['sites'].get(site_id, []):
-            raise Rejected('site_access_denied')
         site = self.store.get('site:' + site_id)
+        if site_id not in member['sites']:
+            raise Rejected('site_access_denied')
         if not site or site.get('disabled'):
             raise Rejected('site_unavailable')
+        if role not in effective_roles(member, {**site, 'site_id': site_id}, claims['sub'], self.wordpress_test_origin):
+            raise Rejected('site_access_denied')
+        if not site_license_allowed(site, claims['sub'], self.license_resolver):
+            raise Rejected('hp_license_required')
         return member, site
 
     def profile(self, claims):
-        member = self.principal(claims)
+        self.principal(claims)
         if 'hp:read' not in claims.get('scope', '').split():
             raise Rejected('insufficient_scope')
-        return {'subject': claims['sub'], 'email': claims.get('email'), 'sites': sorted(member['sites'])}
+        return {'subject': claims['sub'], 'email': claims.get('email'),
+                'sites': [site['site_id'] for site in self.list_sites(claims)]}
 
     def list_sites(self, claims):
         member = self.principal(claims)
@@ -96,10 +130,177 @@ class Service:
                 _, site = self.authorized(claims, site_id)
             except Rejected:
                 continue
-            result.append({'site_id': site_id, 'name': site['name'], 'roles': member['sites'][site_id],
+            result.append({'site_id': site_id, 'name': site['name'], 'roles': effective_roles(member,
+                {**site, 'site_id': site_id}, claims['sub'], self.wordpress_test_origin),
                 'preview_url': site['dev_url'], 'production_url': site['prod_url'],
                 'deployments': self.deployment_status(site_id, site)})
         return result
+
+    def license_preflight(self, org_id, google_subject, *, wordpress_only=False):
+        """Confirm an existing site can be used after purchase; never grant it."""
+        if not valid_org_id(org_id) or not valid_google_subject(google_subject):
+            raise Rejected('invalid_input')
+        member = self.store.get('principal:' + google_subject)
+        if not member:
+            return {'ready': False, 'status': 'connection_required'}
+        if member.get('disabled'):
+            return {'ready': False, 'status': 'site_setup_required'}
+        for site_id in member.get('sites', {}):
+            site = self.store.get('site:' + site_id)
+            if (site and not site.get('disabled') and license_org(site) == org_id
+                    and site.get('direct_transfer_enabled') is True):
+                if wordpress_only and site.get('provider') != 'wordpress':
+                    continue
+                if not {'read', 'edit'} <= set(effective_roles(member, {**site, 'site_id': site_id}, google_subject, self.wordpress_test_origin)):
+                    continue
+                if site.get('registered_by_claim'):
+                    self._check_claim_targets(site)
+                # Check that the bridge is usable before taking payment. A
+                # definitive "not entitled yet" is normal before purchase.
+                resolve_license(self.license_resolver, org_id, google_subject)
+                return {'ready': True}
+        return {'ready': False, 'status': 'site_setup_required'}
+
+    def claim_prepared_site(self, org_id, google_subject, setup_code):
+        """Redeem an operator-prepared site for the same verified Google subject."""
+        if not valid_org_id(org_id) or not valid_google_subject(google_subject):
+            raise Rejected('site_claim_unavailable')
+        key = setup_code_key(setup_code)
+        claim = self.store.get(key)
+        if (not claim or claim['expires_at'] <= self.clock()
+                or claim['google_subject'] != google_subject):
+            raise Rejected('site_claim_unavailable')
+        if claim.get('claimed_org') is not None:
+            return self._confirmed_site_claim(claim, org_id, google_subject)
+        site = claim['site']
+        self._check_claim_targets(site)
+        site_id = site['site_id']
+        principal_key = 'principal:' + google_subject
+        member = self.store.get(principal_key) or {'sites': {}, 'disabled': False}
+        if member.get('disabled') or site_id in member['sites']:
+            raise Rejected('site_claim_unavailable')
+        # A valid negative response is expected before payment. An unavailable
+        # bridge leaves the code untouched so the same request can be retried.
+        resolve_license(self.license_resolver, org_id, google_subject)
+        managed_site = {**site, 'registered_by_claim': True, 'license_policy': {'mode': 'simy', 'org_id': org_id}}
+        roles = ['read', 'edit', 'publish']
+        claimed = {'site_id': site_id, 'claimed_org': org_id,
+                   'google_subject': google_subject, 'expires_at': claim['expires_at']}
+        try:
+            self.store.transact([
+                *new_site_writes(managed_site),
+                Write(principal_key, {**member, 'sites': {**member['sites'], site_id: roles}}, member.get('_version')),
+                Write(key, claimed, claim['_version']),
+            ])
+        except Conflict:
+            # A concurrent retry may have completed the exact claim.
+            latest = self.store.get(key)
+            if latest and latest.get('claimed_org') is not None:
+                return self._confirmed_site_claim(latest, org_id, google_subject)
+            raise Rejected('site_claim_unavailable') from None
+        return {'status': 'claimed'}
+
+    def _confirmed_site_claim(self, claim, org_id, google_subject):
+        if claim['claimed_org'] == org_id and claim['google_subject'] == google_subject:
+            site_id = claim['site_id']
+            site = self.store.get('site:' + site_id)
+            member = self.store.get('principal:' + google_subject)
+            if (site and not site.get('disabled') and license_org(site) == org_id
+                    and member and not member.get('disabled')
+                    and {'read', 'edit', 'publish'} <= set(member['sites'].get(site_id, []))):
+                self._check_claim_targets(site)
+                return {'status': 'claimed'}
+        raise Rejected('site_claim_unavailable')
+
+    def register_site(self, org_id, google_subject, site_url, *, verify, owner_verified=False):
+        if not valid_org_id(org_id) or not valid_google_subject(google_subject):
+            raise Rejected('invalid_input')
+        try:
+            host = site_host(site_url)
+        except ValueError:
+            return {'status': 'invalid_url'}
+        binding_key = 'registration-site:' + host
+        binding = self.store.get(binding_key)
+        if not binding:
+            return {'status': 'hosting_connection_required' if owner_verified else 'site_not_supported'}
+        site = binding['site']
+        self._check_claim_targets(site)
+        site_id = site['site_id']
+        principal_key = 'principal:' + google_subject
+        member = self.store.get(principal_key) or {'sites': {}, 'disabled': False}
+        if member.get('disabled'):
+            return {'status': 'registration_unavailable'}
+        registered = self.store.get('site:' + site_id)
+        if registered:
+            return self._registered_site_status(registered, member, org_id)
+
+        if owner_verified:
+            # Search Console can delegate owners. Use it for publishing only
+            # when the trusted hosting binding explicitly accepts that role.
+            if binding.get('allow_search_console_owners') is not True:
+                return {'status': 'hosting_connection_required'}
+            resolve_license(self.license_resolver, org_id, google_subject)
+            return self._finish_site_registration(site, org_id, principal_key, member,
+                [Check(binding_key, binding['_version'])])
+
+        name = '_simy-hp.' + host
+        key = 'registration-proof:' + fingerprint([org_id, google_subject, host])
+        proof = self.store.get(key)
+        if not proof or proof['expires_at'] <= self.clock() or proof['binding_version'] != binding['_version']:
+            if verify:
+                return {'status': 'verification_expired'}
+            try:
+                proof = self.store.put(key, {
+                    'value': 'simy-hp=' + secrets.token_urlsafe(24),
+                    'expires_at': int(self.clock()) + 7 * 86400,
+                    'binding_version': binding['_version'],
+                }, proof['_version'] if proof else None)
+            except Conflict:
+                raise LicenseUnavailable('hp_license_unavailable') from None
+        if not verify:
+            return {'status': 'verification_required', 'name': name, 'value': proof['value']}
+        if not dns_has_value(name, proof['value']):
+            return {'status': 'verification_pending'}
+        resolve_license(self.license_resolver, org_id, google_subject)
+        if proof['expires_at'] <= self.clock():
+            return {'status': 'verification_expired'}
+        return self._finish_site_registration(site, org_id, principal_key, member,
+            [Check(binding_key, binding['_version']), Write(key, None, proof['_version'])])
+
+    def _finish_site_registration(self, site, org_id, principal_key, member, checks):
+        site_id = site['site_id']
+        managed_site = {**site, 'registered_by_claim': True, 'license_policy': {'mode': 'simy', 'org_id': org_id}}
+        try:
+            self.store.transact([
+                *checks,
+                *new_site_writes(managed_site),
+                Write(principal_key, {**member, 'sites': {**member['sites'], site_id: ['read', 'edit', 'publish']}},
+                      member.get('_version')),
+            ])
+        except Conflict:
+            registered = self.store.get('site:' + site_id)
+            if registered:
+                return self._registered_site_status(registered, self.store.get(principal_key), org_id)
+            raise LicenseUnavailable('hp_license_unavailable') from None
+        return {'status': 'claimed'}
+
+    def _registered_site_status(self, site, member, org_id):
+        if (member and not member.get('disabled') and not site.get('disabled')
+                and license_org(site) == org_id
+                and {'read', 'edit', 'publish'} <= set(member.get('sites', {}).get(site['site_id'], []))):
+            self._check_claim_targets(site)
+            return {'status': 'claimed'}
+        return {'status': 'registration_unavailable'}
+
+    def _check_claim_targets(self, site):
+        targets = self.claim_targets.get(site['site_id'], {})
+        if not self.publication_enabled or set(targets) != {'dev', 'prod'}:
+            raise LicenseUnavailable('hp_license_unavailable')
+        for environment, target in targets.items():
+            binding = site['deployment'][environment]
+            if (binding['bucket'] != target['bucket']
+                    or binding['distribution_id'] != target['distribution']):
+                raise LicenseUnavailable('hp_license_unavailable')
 
     def deployment_status(self, site_id, site):
         """Return the latest verified deployment times for an authorized site."""

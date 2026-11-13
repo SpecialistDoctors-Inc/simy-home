@@ -11,7 +11,7 @@ resource "aws_iam_role" "validation_execution" {
   }] })
 }
 resource "aws_ecr_repository" "validator" {
-  name                 = "simy-hp-control-validator"
+  name                 = "${local.name}-validator"
   image_tag_mutability = "IMMUTABLE"
   force_delete         = false
   encryption_configuration { encryption_type = "AES256" }

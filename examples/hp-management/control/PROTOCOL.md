@@ -76,3 +76,13 @@ if U==R retain it; otherwise return a conflict, including delete/modify. Unrelat
 file edits combine. Conflicts return to customer Codex; no server AI resolves them.
 A new preview revokes earlier publication preparation for the request. Public
 artifacts and approval bind the final resulting tree, not the user's initial ZIP.
+
+## Restore published content
+
+Use the previous successful publication receipt's main commit to recover the
+intended files from the managed repository. Open a fresh workspace, apply the
+restored content as a new change and save it against that workspace's current
+head. Verify the full preview, including intervening changes, before requesting
+fresh approval for its exact artifact. Wait for the new publication receipt
+and compare the affected pages on the public site. Use the new operation ID to
+check or retry the same restore if the response is lost.

@@ -1,4 +1,4 @@
-output "base_url" { value = "https://hp-control.simy.one" }
+output "base_url" { value = "https://${local.hostname}" }
 output "authority_table" { value = aws_dynamodb_table.authority.name }
 output "command_queue_url" { value = aws_sqs_queue.commands.url }
 output "artifact_bucket" { value = aws_s3_bucket.artifacts.id }

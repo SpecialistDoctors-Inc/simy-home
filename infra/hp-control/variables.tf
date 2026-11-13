@@ -1,3 +1,13 @@
+variable "environment" {
+  description = "Select the existing production stack or the separate WordPress acceptance stack."
+  type        = string
+  default     = "production"
+  validation {
+    condition     = contains(["production", "acceptance"], var.environment)
+    error_message = "Use production or acceptance."
+  }
+}
+
 variable "region" {
   type    = string
   default = "ap-northeast-1"
@@ -45,6 +55,15 @@ variable "publication_enabled" {
 variable "preview_enabled" {
   type    = bool
   default = false
+}
+variable "self_service_site_id" {
+  description = "Site ID bound to this deployment's reviewed preview and publication targets for registration by setup code."
+  type        = string
+  default     = ""
+  validation {
+    condition     = var.self_service_site_id == "" || can(regex("^[a-z][a-z0-9-]{1,62}$", var.self_service_site_id))
+    error_message = "Use a valid managed site ID or leave self-service registration disabled."
+  }
 }
 variable "preview_gate_reference" {
   description = "Evidence that the legacy dev writer is retired and the target preview configuration is verified."
@@ -100,5 +119,55 @@ variable "alarm_topic_arn" {
   validation {
     condition     = var.alarm_topic_arn == "" || can(regex("^arn:aws:sns:ap-northeast-1:209300895845:[A-Za-z0-9_-]+$", var.alarm_topic_arn))
     error_message = "Use a reviewed existing SNS topic in the verified account/region, or leave blank."
+  }
+}
+
+variable "entitlement_endpoint" {
+  description = "Trusted SIMY service endpoint for the HP entitlement resolver."
+  type        = string
+  default     = ""
+  validation {
+    condition     = var.entitlement_endpoint == "" || can(regex("^https://[a-zA-Z0-9.-]+/functions/v1/hp-control-entitlement$", var.entitlement_endpoint))
+    error_message = "Provide the HTTPS HP entitlement resolver endpoint without query or fragment."
+  }
+}
+
+variable "entitlement_secret_arn" {
+  description = "Dedicated raw bearer token for HP control to query SIMY license eligibility."
+  type        = string
+  default     = ""
+  validation {
+    condition     = var.entitlement_secret_arn == "" || can(regex("^arn:aws:secretsmanager:ap-northeast-1:209300895845:secret:hp-control/", var.entitlement_secret_arn))
+    error_message = "Use a dedicated hp-control/ entitlement secret in the verified account/region."
+  }
+}
+
+variable "wordpress_secret_arn" {
+  description = "Optional HP WordPress.com OAuth and credential-encryption secret reference."
+  type        = string
+  default     = ""
+  validation {
+    condition     = var.wordpress_secret_arn == "" || can(regex("^arn:aws:secretsmanager:ap-northeast-1:209300895845:secret:hp-control/", var.wordpress_secret_arn))
+    error_message = "Use a dedicated hp-control/ secret in the verified account/region."
+  }
+}
+
+variable "wordpress_test_origin" {
+  description = "Exact isolated WordPress.com origin allowed for Mac editing and publishing tests."
+  type        = string
+  default     = ""
+  validation {
+    condition     = var.wordpress_test_origin == "" || can(regex("^https://[a-z0-9][a-z0-9-]*[.]wordpress[.]com$", var.wordpress_test_origin))
+    error_message = "Use the exact HTTPS origin of a dedicated WordPress.com test site."
+  }
+}
+
+variable "preflight_secret_arn" {
+  description = "Separate raw bearer token for SIMY to check HP site setup before purchase."
+  type        = string
+  default     = ""
+  validation {
+    condition     = var.preflight_secret_arn == "" || (var.preflight_secret_arn != var.entitlement_secret_arn && can(regex("^arn:aws:secretsmanager:ap-northeast-1:209300895845:secret:hp-control/", var.preflight_secret_arn)))
+    error_message = "Use a separate dedicated hp-control/ preflight secret in the verified account/region."
   }
 }
