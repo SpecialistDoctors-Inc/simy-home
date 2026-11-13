@@ -35,6 +35,19 @@ class ProvisionTest(unittest.TestCase):
    self.assertEqual(register(), {'status': 'claimed'})
    self.assertEqual(register(OTHER_ORG, 'other-subject'), {'status': 'registration_unavailable'})
    dns.assert_not_called()
+ def test_owner_email_is_stored_validated_and_idempotent(self):
+  store = MemoryStore()
+  site = self.site()
+  host = site['prod_url'].split('//', 1)[1].rstrip('/')
+  with self.assertRaises(ValueError):
+   enable_domain_registration(store, site, owner_email='not-an-email')
+  enable_domain_registration(store, site, owner_email='owner@example.test')
+  row = store.get('registration-site:' + host)
+  self.assertEqual(row['owner_email'], 'owner@example.test')
+  enable_domain_registration(store, site, owner_email='owner@example.test')
+  self.assertEqual(store.get('registration-site:' + host)['_version'], row['_version'])
+  enable_domain_registration(store, site, owner_email='new-owner@example.test')
+  self.assertEqual(store.get('registration-site:' + host)['owner_email'], 'new-owner@example.test')
  def test_dns_proof_requires_a_txt_answer_for_the_exact_hostname(self):
   name = '_simy-hp.example.invalid'
   value = 'simy-hp=test-proof'

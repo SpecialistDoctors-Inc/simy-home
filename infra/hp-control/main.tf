@@ -38,6 +38,7 @@ resource "terraform_data" "guard" {
         var.google_secret_arn, var.signing_secret_arn, var.github_secret_arn,
         var.google_operator_secret_arn, var.github_webhook_secret_arn,
         var.entitlement_secret_arn, var.preflight_secret_arn, var.wordpress_secret_arn,
+        var.clinic_billing_secret_arn,
       ]) : startswith(arn, "arn:aws:secretsmanager:ap-northeast-1:209300895845:secret:hp-control/acceptance/")])
       error_message = "Acceptance must use its own HP Control credentials."
     }
@@ -64,6 +65,14 @@ resource "terraform_data" "guard" {
     precondition {
       condition     = var.wordpress_test_origin == "" || (var.wordpress_secret_arn != "" && var.preflight_secret_arn != "" && var.publication_enabled)
       error_message = "The isolated WordPress test requires OAuth, the license bridge and publication authorization."
+    }
+    precondition {
+      condition     = !var.clinic_copy_enabled || var.clinic_billing_secret_arn != ""
+      error_message = "The clinic homepage copier only serves clinic Payment Link intake."
+    }
+    precondition {
+      condition     = var.clinic_billing_secret_arn == "" || startswith(var.clinic_billing_secret_arn, "arn:aws:secretsmanager:ap-northeast-1:209300895845:secret:hp-control/")
+      error_message = "Clinic billing must use a dedicated hp-control/ secret."
     }
   }
 }
@@ -194,6 +203,7 @@ resource "aws_lambda_function" "runtime" {
       HP_GITHUB_WEBHOOK_SECRET_ARN    = var.github_webhook_secret_arn
       HP_CONTROL_PREFLIGHT_SECRET_ARN = var.preflight_secret_arn
       HP_SITE_CLAIM_TARGETS           = jsonencode(local.claim_targets)
+      HP_CLINIC_BILLING_SECRET_ARN    = var.clinic_billing_secret_arn
       } : each.key == "consumer" ? {
       HP_GITHUB_SECRET_ARN          = var.github_secret_arn
       HP_GOOGLE_OPERATOR_SECRET_ARN = var.google_operator_secret_arn
@@ -224,7 +234,7 @@ resource "aws_apigatewayv2_integration" "api" {
   payload_format_version = "2.0"
 }
 resource "aws_apigatewayv2_route" "api" {
-  for_each  = toset(concat(["GET /health", "POST /mcp", "POST /github/webhook", "GET /oauth/{proxy+}", "POST /oauth/{proxy+}", "GET /.well-known/{proxy+}"], var.preflight_secret_arn != "" ? ["POST /internal/license/preflight", "POST /internal/site/claim"] : []))
+  for_each  = toset(concat(["GET /health", "POST /mcp", "POST /github/webhook", "GET /oauth/{proxy+}", "POST /oauth/{proxy+}", "GET /.well-known/{proxy+}"], var.preflight_secret_arn != "" ? ["POST /internal/license/preflight", "POST /internal/site/claim"] : [], var.clinic_billing_secret_arn != "" ? ["GET /start", "GET /start/google", "POST /start/site", "POST /stripe/webhook"] : []))
   api_id    = aws_apigatewayv2_api.control.id
   route_key = each.value
   target    = "integrations/${aws_apigatewayv2_integration.api.id}"

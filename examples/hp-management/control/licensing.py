@@ -28,16 +28,29 @@ def valid_service_token(value):
     return isinstance(value, str) and re.fullmatch(r'[A-Za-z0-9_-]{32,256}', value) is not None
 
 
-def license_org(site):
+def valid_subscription_id(value):
+    return isinstance(value, str) and re.fullmatch(r'sub_[A-Za-z0-9]{8,64}', value) is not None
+
+
+def license_policy(site):
+    """Return the site's commercial license: a SIMY organization or a Stripe subscription."""
     # Operator-provisioned sites that predate commercial licensing keep their
     # existing explicit site grants. They cannot pass commercial preflight.
     if 'license_policy' not in site:
         return None
     policy = site['license_policy']
-    if (not isinstance(policy, dict) or set(policy) != {'mode', 'org_id'}
-            or policy['mode'] != 'simy' or not valid_org_id(policy['org_id'])):
-        raise LicenseUnavailable('hp_license_unavailable')
-    return policy['org_id']
+    if (isinstance(policy, dict) and set(policy) == {'mode', 'org_id'}
+            and policy['mode'] == 'simy' and valid_org_id(policy['org_id'])):
+        return policy
+    if (isinstance(policy, dict) and set(policy) == {'mode', 'subscription_id'}
+            and policy['mode'] == 'stripe' and valid_subscription_id(policy['subscription_id'])):
+        return policy
+    raise LicenseUnavailable('hp_license_unavailable')
+
+
+def license_org(site):
+    policy = license_policy(site)
+    return policy['org_id'] if policy is not None and policy['mode'] == 'simy' else None
 
 
 def resolve_license(resolver, org_id, google_subject):
@@ -49,9 +62,17 @@ def resolve_license(resolver, org_id, google_subject):
     return allowed
 
 
-def site_license_allowed(site, google_subject, resolver):
-    org_id = license_org(site)
-    return org_id is None or resolve_license(resolver, org_id, google_subject)
+def site_license_allowed(site, google_subject, resolver, stripe=None):
+    policy = license_policy(site)
+    if policy is None:
+        return True
+    if policy['mode'] == 'stripe':
+        # Clinic sites bought through a Stripe Payment Link are licensed by
+        # that subscription alone; no SIMY organization is involved.
+        if stripe is None or not valid_google_subject(google_subject):
+            raise LicenseUnavailable('hp_license_unavailable')
+        return stripe.allowed(policy['subscription_id'], google_subject)
+    return resolve_license(resolver, policy['org_id'], google_subject)
 
 
 class NoRedirect(HTTPRedirectHandler):

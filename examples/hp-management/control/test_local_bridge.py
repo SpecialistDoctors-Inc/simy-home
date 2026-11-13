@@ -72,3 +72,46 @@ class LocalBridgeTest(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+class ClinicBridgeTest(unittest.TestCase):
+    def test_clinic_mode_requires_test_keys_and_grants_the_prepared_site_after_payment(self):
+        from urllib.parse import parse_qs, urlencode, urlsplit
+        from local_bridge import build_clinic, dev_google_page
+        from test_clinic_onboarding import FakeApi
+        from test_stripe_billing import LINK, SECRET, SESSION
+        with self.assertRaises(SystemExit):
+            build_clinic('sk_live_' + 'x' * 24, SECRET, {LINK: 'basic'}, SUBJECT, 'o@example.test',
+                         'sakura-clinic.example', 8787)
+        app, token = build_clinic('sk_test_' + 'x' * 24, SECRET, {LINK: 'basic'}, SUBJECT, 'o@example.test',
+                                  'sakura-clinic.example', 8787, stripe_api=FakeApi(), owner_email='O@example.test')
+        cookie = {}
+
+        def call(method, path, query=None, form=None):
+            headers = {'cookie': '; '.join(cookie.values()), 'origin': 'http://127.0.0.1:8787'}
+            if form is not None:
+                headers['content-type'] = 'application/x-www-form-urlencoded'
+            result = app({'rawPath': path, 'rawQueryString': urlencode(query or {}), 'headers': headers,
+                          'body': urlencode(form or {}), 'requestContext': {'http': {'method': method}}})
+            for line in result.get('cookies', []):
+                name = line.split('=', 1)[0]
+                if 'Max-Age=0' in line:
+                    cookie.pop(name, None)
+                else:
+                    cookie[name] = line.split(';')[0]
+            return result
+
+        google = call('GET', '/start/google', {'session_id': SESSION})['headers']['location']
+        self.assertTrue(google.startswith('http://127.0.0.1:8787/dev/google?'))
+        state = parse_qs(urlsplit(google).query)['state'][0]
+        self.assertIn('ローカル検証用', dev_google_page({'state': state}, 'o@example.test')['body'])
+        call('GET', '/oauth/google/callback', {'state': state, 'code': 'local-google-code'})
+        call('POST', '/start/site', form={'session_id': SESSION, 'site_url': 'https://sakura-clinic.example',
+                                          'auth_code': 'Ab3$xY9!kQ'})
+        self.assertIn('HP編集を始める', call('GET', '/start', {'session_id': SESSION})['body'])
+        result = app({'rawPath': '/mcp', 'requestContext': {'http': {'method': 'POST'}},
+                      'headers': {'Authorization': 'Bearer ' + token(), 'Content-Type': 'application/json'},
+                      'body': json.dumps({'jsonrpc': '2.0', 'id': 1, 'method': 'tools/call',
+                                          'params': {'name': 'hp_list_sites', 'arguments': {}}})})
+        sites = json.loads(result['body'])['result']['structuredContent']['sites']
+        self.assertEqual([(s['site_id'], s['roles']) for s in sites], [(SITE_ID, ['read', 'edit', 'publish'])])

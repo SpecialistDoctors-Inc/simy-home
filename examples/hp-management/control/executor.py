@@ -14,6 +14,7 @@ import zipfile
 import time
 from uuid import uuid4, uuid5, NAMESPACE_URL
 from licensing import site_license_allowed
+from stripe_billing import StripeLicenses
 from bundles import build_snapshot, validate_snapshot, validate_changes, reconcile, sha256, BundleError
 from service import Service, Rejected, effective_roles, fingerprint, main_commit
 from change_summary import summarize_changes
@@ -423,7 +424,8 @@ class _Run:
         if role not in effective_roles(self.member, {**self.site, 'site_id': self.op['site_id']},
                                        self.op['subject'], self.executor.wordpress_test_origin):
             raise Rejected('access_revoked')
-        if not site_license_allowed(self.site, self.op['subject'], self.executor.license_resolver):
+        if not site_license_allowed(self.site, self.op['subject'], self.executor.license_resolver,
+                                    StripeLicenses(self.executor.store)):
             raise Rejected('hp_license_required')
 
     def transferred_changes(self):

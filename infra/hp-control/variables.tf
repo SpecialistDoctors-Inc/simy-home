@@ -171,3 +171,13 @@ variable "preflight_secret_arn" {
     error_message = "Use a separate dedicated hp-control/ preflight secret in the verified account/region."
   }
 }
+variable "clinic_billing_secret_arn" {
+  description = "Dedicated hp-control/ secret for simy.one clinic Payment Link purchases (restricted Stripe key, webhook secret, payment_links, intake_key). Empty disables /start and /stripe/webhook."
+  type        = string
+  default     = ""
+}
+variable "clinic_copy_enabled" {
+  description = "Run the scheduled copier that saves paid clinics' public homepages into the private artifact bucket."
+  type        = bool
+  default     = false
+}

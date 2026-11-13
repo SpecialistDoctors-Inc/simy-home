@@ -10,3 +10,5 @@ test('published configuration maps each current monthly total to a distinct live
  assert.equal(new Set(Object.values(links)).size,4,'each plan combination needs its own checkout');
  assert.deepEqual(Object.values(c.plans).map(p=>p.taxInclusiveYen),[21780,32780,76560,87560]);
 });
+
+test('test-mode links are accepted only when the loopback preview asks for them',()=>{const c=config();c.plans.basic.url='https://buy.stripe.com/test_abc123';assert.equal(validate(c),null);assert.equal(validate(c,true).basic,'https://buy.stripe.com/test_abc123');c.plans.basic.url='https://evil.example/test_abc';assert.equal(validate(c,true),null)});

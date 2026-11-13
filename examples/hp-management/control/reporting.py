@@ -29,6 +29,7 @@ from uuid import uuid4, uuid5, NAMESPACE_URL
 
 from executor import Busy, IntegrationUnavailable, ReconciliationRequired
 from licensing import site_license_allowed
+from stripe_billing import StripeLicenses
 from service import Rejected, fingerprint, uuid
 from store import Check, Write
 
@@ -135,7 +136,7 @@ class _Report:
         role = 'publish' if self.op['kind'] == 'publish' else 'edit'
         require(self.member is not None and not self.member.get('disabled') and self.member['_version'] == self.op['member_version'] and role in self.member.get('sites', {}).get(self.op['site_id'], []), 'access_revoked')
         require(self.site is not None and not self.site.get('disabled') and self.site.get('config_version') == self.op['site_config_version'], 'site_configuration_changed')
-        require(site_license_allowed(self.site, self.op['subject'], self.reporter.license_resolver), 'hp_license_required')
+        require(site_license_allowed(self.site, self.op['subject'], self.reporter.license_resolver, StripeLicenses(self.store)), 'hp_license_required')
         frozen = self.record['provider_site'] if self.record else self.op.get('execution_site')
         require(isinstance(frozen, dict) and binding(self.site, self.op['site_id']) == binding(frozen, self.op['site_id']), 'reporting_binding_changed')
         require(not self.site.get('site_id') or self.site['site_id'] == self.op['site_id'], 'reporting_wrong_site')
