@@ -1,4 +1,6 @@
+import html
 import json
+import re
 import unittest
 from urllib.parse import parse_qs, urlsplit
 
@@ -52,8 +54,14 @@ class ClinicWordPressTest(unittest.TestCase):
 
     def start_wordpress(self, url=WORDPRESS_SITE):
         response = self.call('POST', '/start/wordpress', form={'session_id': SESSION, 'wordpress_url': url})
-        self.assertEqual(response['statusCode'], 303)
-        location = urlsplit(response['headers']['location'])
+        # A same-origin page that navigates on, not a cross-origin redirect: the start
+        # page's CSP form-action 'self' makes browsers refuse a POST redirected elsewhere.
+        self.assertEqual(response['statusCode'], 200)
+        self.assertIn("form-action 'self'", response['headers']['content-security-policy'])
+        refresh = re.search(r'<meta http-equiv="refresh" content="0;url=([^"]+)">', response['body'])
+        link = re.search(r'<a class="btn" href="([^"]+)"', response['body'])
+        self.assertEqual(html.unescape(refresh.group(1)), html.unescape(link.group(1)))
+        location = urlsplit(html.unescape(link.group(1)))
         self.assertEqual((location.scheme, location.hostname, location.path),
                          ('https', 'public-api.wordpress.com', '/oauth2/authorize'))
         query = parse_qs(location.query)
@@ -194,6 +202,16 @@ class ClinicBillingWiringTest(unittest.TestCase):
         self.assertEqual((connector.provider.client_id, connector.provider.callback),
                          ('clinic-app', 'https://hp-control-acceptance.example.test/start/wordpress/callback'))
         self.assertEqual(connector.cipher.decrypt(Fernet(key.encode()).encrypt(b'x')), b'x')
+
+    def test_paid_sites_flag_needs_the_wordpress_secret(self):
+        import os
+        from unittest.mock import patch
+        import hp_control
+        with patch.dict(os.environ, {'HP_WORDPRESS_PAID_SITES': 'true'}):
+            self.assertTrue(hp_control.wordpress_paid_sites('wordpress'))
+            self.assertFalse(hp_control.wordpress_paid_sites(''))
+        with patch.dict(os.environ, {'HP_WORDPRESS_PAID_SITES': 'false'}):
+            self.assertFalse(hp_control.wordpress_paid_sites('wordpress'))
 
     def test_wordpress_option_stays_off_without_a_clinic_client(self):
         import os

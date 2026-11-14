@@ -206,3 +206,8 @@ variable "clinic_bootstrap_token_secret_arn" {
   type        = string
   default     = ""
 }
+variable "wordpress_paid_sites" {
+  description = "Let a clinic edit and publish the WordPress.com site it connected from /start after paying, under its own Stripe subscription. Needs wordpress_secret_arn, clinic_billing_secret_arn and publication_enabled."
+  type        = bool
+  default     = false
+}

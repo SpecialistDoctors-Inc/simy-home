@@ -20,6 +20,7 @@ completes the claim. AuthCodes are encrypted at rest and never shown again.
 """
 from __future__ import annotations
 
+import json
 import re
 import secrets
 import time
@@ -264,7 +265,14 @@ class ClinicOnboarding:
         # Bind the WordPress.com round trip to this browser and this purchase.
         started = self.wordpress().start_for(self.policy(purchase), visit['subject'], site_url, {
             'onboarding_session': session_id, 'browser': sha(browser)})
-        response = self.redirect(started['url'], 303)
+        # Not a redirect: the page's CSP (form-action 'self') makes browsers refuse a
+        # form POST that redirects to another origin. A plain navigation is allowed.
+        target = escape(started['url'], quote=True)
+        response = self.html(200, self.layout('WordPress.comへ移動します', (
+            '<div class="card"><p>WordPress.comの許可画面を開いています。</p>'
+            f'<p><a class="btn" href="{target}" rel="noreferrer">WordPress.comで許可する</a></p>'
+            '<p class="muted">自動で移動しない場合は、上のボタンを押してください。</p></div>'),
+            step=2, refresh=started['url']))
         response['cookies'] = [f'{WORDPRESS_COOKIE}={browser}; Path={WORDPRESS_CALLBACK}; Max-Age=600; HttpOnly; '
                                'SameSite=Lax' + ('; Secure' if self.secure_cookie else '')]
         return response
@@ -296,6 +304,7 @@ class ClinicOnboarding:
             try:
                 connected = wordpress.finish_for(self.policy(purchase), visit['subject'], state, query['code'])
             except WordPressConnectionError as error:
+                print(json.dumps({'event': 'clinic_wordpress_failed', 'error': str(error)}))
                 notice = str(error) if str(error) in WORDPRESS_NOTICES else 'wordpress_failed'
                 response = self.back(session_id, notice)
             else:
@@ -389,7 +398,7 @@ class ClinicOnboarding:
     # -- views --------------------------------------------------------------
 
     @staticmethod
-    def layout(title, inner, step=None):
+    def layout(title, inner, step=None, refresh=None):
         steps = ''
         if step is not None:
             names = ('お支払い', 'Googleでログイン', 'ホームページの登録', '編集を始める')
@@ -398,6 +407,7 @@ class ClinicOnboarding:
                 for i, n in enumerate(names)) + '</ol>'
         return ('<!doctype html><html lang="ja"><head><meta charset="utf-8">'
                 '<meta name="viewport" content="width=device-width,initial-scale=1">'
+                + (f'<meta http-equiv="refresh" content="0;url={escape(refresh, quote=True)}">' if refresh else '') +
                 f'<title>{escape(title)} | SIMY HP管理</title><style>'
                 ':root{--fg:#1d2433;--muted:#5b6577;--line:#e3e6eb;--bg:#f6f7f9;--primary:#0075de;--ok:#1a7f37;--warn:#b54708}'
                 'body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;line-height:1.7}'

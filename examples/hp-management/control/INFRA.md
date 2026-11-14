@@ -204,3 +204,15 @@ requires an exact redirect match, so this is a separate app from the Vercel
 preview signup client. Connected sites are sealed with the
 `hp-control/acceptance/wordpress` `credential_key`, so the editor can use them;
 without `wordpress_client` the start page does not offer WordPress.
+
+### Clinic WordPress.com sites in production
+
+`wordpress_paid_sites = true` lets a clinic edit and publish the WordPress.com
+site it connected from `/start`, but only the purchaser's own Google account and
+only while its Stripe subscription is active. It needs `wordpress_secret_arn`
+(`hp-control/wordpress`: `credential_key`, plus `client_id`, `client_secret` and
+`callback` for the SIMY app signup), `clinic_billing_secret_arn` with
+`wordpress_client` for the production WordPress.com app (redirect exactly
+`https://hp-control.simy.one/start/wordpress/callback`), and
+`publication_enabled`. WordPress sites connected under a SIMY organization stay
+read-only outside the acceptance test origin.
