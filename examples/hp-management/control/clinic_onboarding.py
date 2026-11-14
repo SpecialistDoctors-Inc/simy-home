@@ -9,6 +9,10 @@ The clinic page's Stripe Payment Links redirect to
 4. when the operator registered that domain with an owner email equal to the
    signed-in (verified) email, grants read/edit/publish under the subscription.
 
+A clinic whose homepage runs on WordPress.com can instead connect it directly:
+the clinic approves SIMY on WordPress.com and the connected site is licensed by
+the same subscription (see wordpress_onboarding.py).
+
 Otherwise the URL is kept as an intake: an unknown domain is queued for a copy of
 its public homepage (see site_copy.py); a known domain with another owner email
 waits for the operator. Once the operator registers the site, reopening this page
@@ -31,9 +35,12 @@ from service import Rejected
 from site_copy import enqueue as enqueue_copy
 from store import Conflict
 from stripe_billing import ACTIVE, BillingRejected, valid_session_id
+from wordpress_provider import WordPressConnectionError
 
 COOKIE = 'hp_start'
 LOGIN_COOKIE = 'hp_start_login'
+WORDPRESS_COOKIE = 'hp_start_wordpress'
+WORDPRESS_CALLBACK = '/start/wordpress/callback'
 SESSION_SECONDS = 3600
 GOOGLE_AUTHORIZE = 'https://accounts.google.com/o/oauth2/v2/auth'
 PLANS = {
@@ -41,6 +48,16 @@ PLANS = {
     'security': ('セキュリティ強化', '29,800'),
     'basic_manager': ('基本保守＋更新代行', '69,600'),
     'security_manager': ('セキュリティ強化＋更新代行', '79,600'),
+}
+WORDPRESS_NOTICES = {
+    'wordpress_declined': 'WordPress.comでの許可が完了しませんでした。もう一度お試しください。',
+    'wordpress_wrong_site': '許可したサイトが入力したURLと一致しないか、公開されていません。',
+    'wordpress_publish_permission_required': 'このWordPress.comアカウントには、固定ページの編集・公開権限がありません。サイトの管理者アカウントで許可してください。',
+    'wordpress_static_homepage_required': 'WordPress.comの設定で、ホームページに固定ページを表示する設定にしてください。',
+    'wordpress_homepage_access_required': 'ホームページの固定ページを読み込めませんでした。公開中の固定ページか確認してください。',
+    'wordpress_site_grant_required': '「このサイトだけ」を選んで許可してください。',
+    'wordpress_site_unavailable': 'このサイトは別のお申し込みで接続済みです。SIMYまでご連絡ください。',
+    'wordpress_failed': 'WordPress.comとの接続を完了できませんでした。少し時間をおいて、もう一度お試しください。',
 }
 CSP = ("default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; base-uri 'none'; "
        "form-action 'self'; frame-ancestors 'none'")
@@ -60,9 +77,12 @@ def cookie_value(raw, name=COOKIE):
 
 
 class ClinicOnboarding:
-    def __init__(self, store, billing, service, identity, intake_key, *, plugin_url=None,
+    def __init__(self, store, billing, service, identity, intake_key, *, plugin_url=None, wordpress=None,
                  google_authorize=GOOGLE_AUTHORIZE, secure_cookie=True, clock=time.time):
         self.store, self.billing, self.service, self.identity = store, billing, service, identity
+        # Factory for a WordPressOnboarding whose WordPress.com app returns to
+        # WORDPRESS_CALLBACK on this origin; None hides the WordPress option.
+        self.wordpress = wordpress
         self.cipher = Fernet(intake_key.encode() if isinstance(intake_key, str) else intake_key)
         self.plugin_url = plugin_url if isinstance(plugin_url, str) and plugin_url.startswith('https://') else None
         self.google_authorize, self.secure_cookie, self.clock = google_authorize, secure_cookie, clock
@@ -186,6 +206,80 @@ class ClinicOnboarding:
             enqueue_copy(self.store, purchase['subscription_id'], intake['copy_generation'])
         return self.back(session_id)
 
+    def wordpress_start(self, form, cookie, origin):
+        purchase, visit, session_id = self.authorized_post(form, cookie, origin)
+        if self.wordpress is None:
+            raise Rejected('request_rejected')
+        intake = self.store.get('clinic-intake:' + purchase['subscription_id'])
+        if intake and intake.get('status') == 'claimed':
+            return self.back(session_id)
+        site_url = form.get('wordpress_url', '').strip()
+        try:
+            site_host(site_url)
+        except ValueError:
+            return self.back(session_id, 'invalid_url')
+        browser = secrets.token_urlsafe(32)
+        # Bind the WordPress.com round trip to this browser and this purchase.
+        started = self.wordpress().start_for(self.policy(purchase), visit['subject'], site_url, {
+            'onboarding_session': session_id, 'browser': sha(browser)})
+        response = self.redirect(started['url'], 303)
+        response['cookies'] = [f'{WORDPRESS_COOKIE}={browser}; Path={WORDPRESS_CALLBACK}; Max-Age=600; HttpOnly; '
+                               'SameSite=Lax' + ('; Secure' if self.secure_cookie else '')]
+        return response
+
+    def wordpress_callback(self, query, cookie):
+        if self.wordpress is None:
+            raise Rejected('request_rejected')
+        state = query.get('state')
+        wordpress = self.wordpress()
+        try:
+            attempt = wordpress.attempt(state)
+        except WordPressConnectionError:
+            attempt = None
+        browser = cookie_value(cookie, WORDPRESS_COOKIE)
+        if (attempt is None or 'onboarding_session' not in attempt or browser is None
+                or not secrets.compare_digest(sha(browser), attempt.get('browser', ''))):
+            raise AuthError('expired_login')
+        session_id = attempt['onboarding_session']
+        purchase = self.billing.confirmed_session(session_id)
+        visit = self.visit(cookie, purchase)
+        if visit is None or visit['subject'] != attempt['subject'] or purchase.get('status') not in ACTIVE:
+            raise Rejected('authentication_required')
+        clear = (f'{WORDPRESS_COOKIE}=; Path={WORDPRESS_CALLBACK}; Max-Age=0; HttpOnly; SameSite=Lax'
+                 + ('; Secure' if self.secure_cookie else ''))
+        if 'code' not in query:
+            # Declined on WordPress.com (error=access_denied) or an incomplete return.
+            response = self.back(session_id, 'wordpress_declined')
+        else:
+            try:
+                connected = wordpress.finish_for(self.policy(purchase), visit['subject'], state, query['code'])
+            except WordPressConnectionError as error:
+                notice = str(error) if str(error) in WORDPRESS_NOTICES else 'wordpress_failed'
+                response = self.back(session_id, notice)
+            else:
+                self.record_wordpress(purchase, visit, connected['origin'])
+                response = self.back(session_id)
+        response['cookies'] = [clear]
+        return response
+
+    def record_wordpress(self, purchase, visit, origin):
+        key = 'clinic-intake:' + purchase['subscription_id']
+        for _ in range(3):
+            existing = self.store.get(key)
+            intake = {**(existing or {}), 'subscription_id': purchase['subscription_id'], 'subject': visit['subject'],
+                      'email': visit['email'], 'plan': purchase['plan'], 'site_url': origin,
+                      'host': site_host(origin), 'provider': 'wordpress', 'status': 'claimed',
+                      'auth_code': (existing or {}).get('auth_code') if (existing or {}).get('host') == site_host(origin) else None,
+                      'updated_at': int(self.clock())}
+            if intake.get('copy_state') == 'pending':
+                intake['copy_state'] = None  # nothing to copy: the site is connected as it is
+            intake.pop('_version', None)
+            try:
+                return self.store.put(key, intake, existing['_version'] if existing else None)
+            except Conflict:
+                continue
+        raise Conflict('concurrent_change')
+
     def claim_if_registered(self, purchase, visit, intake):
         if self.register(purchase, visit, intake['site_url']).get('status') != 'claimed':
             return intake
@@ -197,11 +291,14 @@ class ClinicOnboarding:
 
     # -- internals ----------------------------------------------------------
 
+    @staticmethod
+    def policy(purchase):
+        return {'mode': 'stripe', 'subscription_id': purchase['subscription_id']}
+
     def register(self, purchase, visit, site_url):
-        policy = {'mode': 'stripe', 'subscription_id': purchase['subscription_id']}
         try:
             # visit['email'] is the Google account's verified email (checked at sign-in).
-            return self.service.register_by_owner_email(policy, visit['subject'], visit['email'], site_url)
+            return self.service.register_by_owner_email(self.policy(purchase), visit['subject'], visit['email'], site_url)
         except (Rejected, LicenseUnavailable, Conflict):
             return {'status': 'registration_unavailable'}
 
@@ -307,6 +404,7 @@ class ClinicOnboarding:
         notices = {
             'invalid_url': 'ホームページのURLを確認してください（例: https://www.example-clinic.jp）。',
             'invalid_auth_code': 'AuthCodeは半角英数字・記号6〜64文字で、空白を含めずに入力してください。',
+            **WORDPRESS_NOTICES,
         }
         banner = f'<div class="notice">{escape(notices[notice])}</div>' if notice in notices else ''
         status = (intake or {}).get('status')
@@ -340,7 +438,15 @@ class ClinicOnboarding:
                 f'<div class="card"><h2>{escape(head)}</h2><dl class="kv">{rows}</dl>'
                 f'<p class="muted" style="margin-top:12px">{escape(body)}'
                 f'{escape(visit["email"])} あてにご連絡します。このページを開き直すと、準備ができ次第そのまま編集を始められます。</p></div>'), step=2)
-        return self.layout('ホームページを登録します', account + banner + (
+        wordpress = '' if self.wordpress is None else (
+            '<div class="card"><h2>WordPress.comのサイトをお使いの場合</h2>'
+            '<p class="muted">WordPress.comでSIMYを許可すると、そのまま編集を始められます。'
+            'サイトの管理者アカウントで、このサイトだけを許可してください。</p>'
+            f'<form method="post" action="/start/wordpress"><input type="hidden" name="session_id" value="{sid}">'
+            '<label for="wordpress_url">WordPress.comサイトのURL</label>'
+            '<input id="wordpress_url" name="wordpress_url" type="url" required placeholder="https://example-clinic.wordpress.com" autocomplete="url">'
+            '<p style="margin-top:12px"><button class="btn secondary" type="submit">WordPress.comで接続する</button></p></form></div>')
+        return self.layout('ホームページを登録します', account + banner + wordpress + (
             '<div class="card"><h2>ホームページの情報</h2>'
             f'<form method="post" action="/start/site"><input type="hidden" name="session_id" value="{sid}">'
             '<label for="site_url">ホームページのURL</label>'

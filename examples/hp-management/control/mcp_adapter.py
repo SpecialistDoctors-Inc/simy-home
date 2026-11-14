@@ -16,6 +16,7 @@ from identity import AuthError, Identity
 from licensing import LicenseUnavailable, valid_google_subject, valid_org_id, valid_service_token
 from service import Rejected
 from store import Conflict
+from wordpress_provider import WordPressConnectionError
 
 MAX_BODY = 64 * 1024
 UI_URI = 'ui://hp-control/publish.html'
@@ -348,6 +349,16 @@ class App:
             except UnicodeError:
                 raise BadRequest() from None
             return self.onboarding_call(lambda: self.onboarding.submit_site(form, cookie, headers.get('origin')))
+        if method == 'POST' and path == '/start/wordpress':
+            if headers.get('content-type', '').split(';')[0].strip().lower() != 'application/x-www-form-urlencoded':
+                return self.response(415, {'error': 'unsupported_media_type'})
+            try:
+                form = flat_query(data.decode('utf-8'))
+            except UnicodeError:
+                raise BadRequest() from None
+            return self.onboarding_call(lambda: self.onboarding.wordpress_start(form, cookie, headers.get('origin')))
+        if method == 'GET' and path == '/start/wordpress/callback':
+            return self.onboarding_call(lambda: self.onboarding.wordpress_callback(query, cookie))
         return self.response(404, {'error': 'not_found'})
 
     def onboarding_call(self, action):
@@ -366,6 +377,9 @@ class App:
         except Rejected:
             return self.onboarding.html(403, self.onboarding.error(
                 'この操作は受け付けられませんでした', 'ページを再読み込みして、もう一度お試しください。'))
+        except WordPressConnectionError:
+            return self.onboarding.html(503, self.onboarding.error(
+                'WordPress.comに接続できませんでした', '少し時間をおいて、決済完了画面のリンクからもう一度お試しください。'))
 
     def wordpress_request(self, body, required):
         starting = body['action'] == 'wordpress_start'

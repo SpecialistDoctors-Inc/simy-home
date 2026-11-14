@@ -186,3 +186,21 @@ its current names and publisher bindings.
   new account sees its site only after test payment, then save and review the
   exact draft. Have the reviewer confirm the artifact in the authenticated
   publication UI and read back the public WordPress.com page.
+
+### Clinic purchases in acceptance (Stripe test mode)
+
+Set `clinic_billing_secret_arn` to `hp-control/acceptance/clinic-billing`. It holds
+a Stripe **test-mode** key, the test-mode webhook secret for
+`https://hp-control-acceptance.simy.one/stripe/webhook`, the test Payment Links
+(`payment_links {plink_id: plan}`, each redirecting to
+`https://hp-control-acceptance.simy.one/start?session_id={CHECKOUT_SESSION_ID}`)
+and an `intake_key`.
+
+To let a test purchaser connect the dedicated WordPress.com site from `/start`,
+add `wordpress_client {client_id, client_secret}` for a WordPress.com app whose
+redirect URL is exactly
+`https://hp-control-acceptance.simy.one/start/wordpress/callback`. WordPress.com
+requires an exact redirect match, so this is a separate app from the Vercel
+preview signup client. Connected sites are sealed with the
+`hp-control/acceptance/wordpress` `credential_key`, so the editor can use them;
+without `wordpress_client` the start page does not offer WordPress.

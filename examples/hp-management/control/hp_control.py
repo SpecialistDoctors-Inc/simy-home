@@ -55,8 +55,11 @@ def clinic_billing(store, service, identity, secret):
     """Wire simy.one Payment Link purchases when the billing secret is configured.
 
     The secret holds JSON: secret_key (restricted, read Checkout Sessions),
-    webhook_secret, payment_links {plink_id: plan}, intake_key (Fernet) and an
-    optional https plugin_url.
+    webhook_secret, payment_links {plink_id: plan}, intake_key (Fernet), an
+    optional https plugin_url and an optional wordpress_client {client_id,
+    client_secret} for a WordPress.com app whose redirect URL is
+    <HP_PUBLIC_BASE_URL>/start/wordpress/callback. Connected WordPress sites are
+    sealed with the HP_WORDPRESS_SECRET_ARN credential_key so the editor can use them.
     """
     arn = os.environ.get('HP_CLINIC_BILLING_SECRET_ARN', '')
     if not arn:
@@ -65,8 +68,20 @@ def clinic_billing(store, service, identity, secret):
     from stripe_billing import StripeApi, StripeBilling
     config = lambda: json.loads(secret(arn))
     billing = StripeBilling(store, StripeApi(lambda: config()['secret_key']), config()['payment_links'])
+    wordpress_arn = os.environ.get('HP_WORDPRESS_SECRET_ARN', '')
+    wordpress = None
+    if wordpress_arn and isinstance(config().get('wordpress_client'), dict):
+        from clinic_onboarding import WORDPRESS_CALLBACK
+        from wordpress_onboarding import WordPressOnboarding
+
+        def wordpress():
+            client = config()['wordpress_client']
+            return WordPressOnboarding(store, {
+                'client_id': client['client_id'], 'client_secret': client['client_secret'],
+                'callback': os.environ['HP_PUBLIC_BASE_URL'].rstrip('/') + WORDPRESS_CALLBACK,
+                'credential_key': json.loads(secret(wordpress_arn))['credential_key']})
     onboarding = ClinicOnboarding(store, billing, service, identity, config()['intake_key'],
-                                  plugin_url=config().get('plugin_url'))
+                                  plugin_url=config().get('plugin_url'), wordpress=wordpress)
     return onboarding, lambda payload, signature: billing.webhook(payload, signature, config()['webhook_secret'])
 
 
