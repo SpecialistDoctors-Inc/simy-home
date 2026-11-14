@@ -2,10 +2,11 @@ import copy
 import json
 import unittest
 from types import SimpleNamespace
+from unittest.mock import patch
 
 from cryptography.fernet import Fernet
 
-from domain_transfer import QUEUE, Route53Registrar, enqueue_writes, key, prepare, public_status, run_one
+from domain_transfer import QUEUE, Route53Registrar, TransferRejected, enqueue_writes, key, prepare, public_status, run_one
 from store import MemoryStore
 
 SUB = 'sub_clinic123456'
@@ -152,6 +153,25 @@ class TransferTest(unittest.TestCase):
         self.assertEqual(self.registrar.submits, 0)
         self.assertEqual(self.store.get(key(SUB))['reason'], 'intake_changed')
 
+    def test_cancellation_racing_preflight_prevents_the_chargeable_request(self):
+        self.ready()
+        def check(domain, code):
+            current = self.store.get('stripe-subscription:' + SUB)
+            self.store.put('stripe-subscription:' + SUB, {**current, 'status': 'canceled'}, current['_version'])
+            return {'transferable': True, 'quote': details()['quote']}
+        self.registrar.check = check
+        self.tick()
+        self.assertEqual(self.registrar.submits, 0)
+
+    def test_definitive_provider_rejection_allows_customer_to_correct_details(self):
+        self.ready()
+        def reject(request, code):
+            raise TransferRejected('registrar_details_rejected')
+        self.registrar.submit = reject
+        self.tick()
+        self.assertEqual(self.store.get(key(SUB))['status'], 'awaiting_details')
+        self.assertEqual(self.store.get(key(SUB))['required'], ['registrar_details'])
+
     def test_public_projection_excludes_contacts_credentials_and_provider_ids(self):
         self.ready(); self.tick()
         self.assertEqual(public_status(self.store.get(key(SUB))), {
@@ -159,6 +179,15 @@ class TransferTest(unittest.TestCase):
 
 
 class Route53ContractTest(unittest.TestCase):
+    def test_scheduled_worker_disables_sdk_retries_for_non_idempotent_transfer(self):
+        from hp_control import transfer_clinic_domains
+        client = SimpleNamespace(meta=SimpleNamespace(service_model=SimpleNamespace(
+            operation_model=lambda name: SimpleNamespace(input_shape=SimpleNamespace(members={'Consent': None})))))
+        with patch('boto3.client', return_value=client) as factory:
+            result = transfer_clinic_domains({}, None, store=MemoryStore(), cipher=Fernet(Fernet.generate_key()))
+        self.assertFalse(result['handled'])
+        self.assertEqual(factory.call_args.kwargs['config'].retries, {'total_max_attempts': 1})
+
     def test_real_sdk_accepts_price_cap_and_complete_contacts_without_network(self):
         import boto3
         from botocore.stub import Stubber

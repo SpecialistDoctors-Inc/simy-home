@@ -18,6 +18,10 @@ QUEUE = 'clinic-transfer-pending'
 TERMINAL = {'complete', 'failed', 'cancelled'}
 
 
+class TransferRejected(ValueError):
+    """A documented provider rejection, with no accepted transfer."""
+
+
 def key(subscription_id):
     if not valid_subscription_id(subscription_id):
         raise ValueError('invalid_subscription')
@@ -152,9 +156,20 @@ class Route53Registrar:
     def submit(self, request, code):
         # Current API supports Consent: MaxPrice. Do not remove this cap if an
         # older deployed SDK rejects it; upgrade that SDK before enabling writes.
-        return self.client.transfer_domain(DomainName=request['domain'], AuthCode=code,
-            Nameservers=request['nameservers'], AutoRenew=request['auto_renew'], **request['contacts'],
-            Consent={'MaxPrice': request['quote']['amount'], 'Currency': request['quote']['currency']})['OperationId']
+        try:
+            return self.client.transfer_domain(DomainName=request['domain'], AuthCode=code,
+                Nameservers=request['nameservers'], AutoRenew=request['auto_renew'], **request['contacts'],
+                Consent={'MaxPrice': request['quote']['amount'], 'Currency': request['quote']['currency']})['OperationId']
+        except Exception as error:
+            response = getattr(error, 'response', {})
+            if (response.get('ResponseMetadata', {}).get('HTTPStatusCode') == 400
+                    and response.get('Error', {}).get('Code') in (
+                        'InvalidInput', 'UnsupportedTLD', 'TLDRulesViolation',
+                        'DomainLimitExceeded', 'OperationLimitExceeded')):
+                raise TransferRejected('registrar_details_rejected') from None
+            # DuplicateRequest, transport errors and unknown responses require
+            # reconciliation. Never turn them into permission to submit again.
+            raise
 
     def detail(self, operation_id, domain):
         data = self.client.get_operation_detail(OperationId=operation_id)
@@ -251,6 +266,9 @@ def run_one(store, registrar, cipher, clock=time.time):
                         if not isinstance(operation_id, str) or not operation_id:
                             raise ValueError('missing_provider_operation')
                         update = {'status': 'transferring', 'operation_id': operation_id}
+                    except TransferRejected:
+                        update = {'status': 'awaiting_details', 'required': ['registrar_details'],
+                                  'reason': 'registrar_details_rejected'}
                     except Exception:
                         update = {'status': 'submission_unknown', 'reason': 'provider_result_pending', 'retry_at': now + 60}
         else:
