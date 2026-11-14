@@ -1,4 +1,6 @@
+import html
 import json
+import re
 import unittest
 from urllib.parse import parse_qs, urlsplit
 
@@ -52,8 +54,14 @@ class ClinicWordPressTest(unittest.TestCase):
 
     def start_wordpress(self, url=WORDPRESS_SITE):
         response = self.call('POST', '/start/wordpress', form={'session_id': SESSION, 'wordpress_url': url})
-        self.assertEqual(response['statusCode'], 303)
-        location = urlsplit(response['headers']['location'])
+        # A same-origin page that navigates on, not a cross-origin redirect: the start
+        # page's CSP form-action 'self' makes browsers refuse a POST redirected elsewhere.
+        self.assertEqual(response['statusCode'], 200)
+        self.assertIn("form-action 'self'", response['headers']['content-security-policy'])
+        refresh = re.search(r'<meta http-equiv="refresh" content="0;url=([^"]+)">', response['body'])
+        link = re.search(r'<a class="btn" href="([^"]+)"', response['body'])
+        self.assertEqual(html.unescape(refresh.group(1)), html.unescape(link.group(1)))
+        location = urlsplit(html.unescape(link.group(1)))
         self.assertEqual((location.scheme, location.hostname, location.path),
                          ('https', 'public-api.wordpress.com', '/oauth2/authorize'))
         query = parse_qs(location.query)
