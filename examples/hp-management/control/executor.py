@@ -40,7 +40,7 @@ class SafeToResume(ReconciliationRequired):
 class Executor:
     def __init__(self, store, github_factory, drive, artifacts, validator=None,
                  publisher=None, clock=time.time, publication_enabled=False, lease_seconds=300, preview_publisher=None, max_retry_attempts=8, browser_validator=None,
-                 license_resolver=None, wordpress=None, wordpress_test_origin=None):
+                 license_resolver=None, wordpress=None, wordpress_test_origin=None, wordpress_paid_sites=False):
         self.store, self.github_factory, self.drive, self.artifacts = store, github_factory, drive, artifacts
         self.validator, self.publisher, self.clock = validator, publisher, clock
         if type(max_retry_attempts) is not int or not 1 <= max_retry_attempts <= 20:
@@ -51,6 +51,7 @@ class Executor:
         self.license_resolver = license_resolver
         self.wordpress = wordpress
         self.wordpress_test_origin = wordpress_test_origin if publication_enabled and wordpress else None
+        self.wordpress_paid_sites = bool(wordpress_paid_sites and publication_enabled and wordpress)
         self.publication_enabled, self.lease_seconds = publication_enabled, lease_seconds
 
     def execute(self, operation_id):
@@ -422,7 +423,8 @@ class _Run:
         if not self.site or self.site.get('disabled') or self.site.get('config_version') != self.op['site_config_version']:
             raise Rejected('site_configuration_changed')
         if role not in effective_roles(self.member, {**self.site, 'site_id': self.op['site_id']},
-                                       self.op['subject'], self.executor.wordpress_test_origin):
+                                       self.op['subject'], self.executor.wordpress_test_origin,
+                                       self.executor.wordpress_paid_sites):
             raise Rejected('access_revoked')
         if not site_license_allowed(self.site, self.op['subject'], self.executor.license_resolver,
                                     StripeLicenses(self.executor.store)):
@@ -432,7 +434,8 @@ class _Run:
         from transfers import upload_binding
 
         service = Service(self.store, publication_enabled=self.executor.publication_enabled,
-            license_resolver=self.executor.license_resolver, wordpress_test_origin=self.executor.wordpress_test_origin)
+            license_resolver=self.executor.license_resolver, wordpress_test_origin=self.executor.wordpress_test_origin,
+            wordpress_paid_sites=self.executor.wordpress_paid_sites)
         body = self.op['input']
         transfer = upload_binding(service, {'sub': self.op['subject'], 'scope': 'hp:read hp:write'}, body)
         data = self.artifacts.get_exact(transfer['key'], body['bundle_sha256'])

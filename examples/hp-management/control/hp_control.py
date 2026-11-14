@@ -36,7 +36,8 @@ def application():
     wordpress_origin = os.environ.get('HP_WORDPRESS_TEST_ORIGIN') if wordpress_arn else None
     service = Service(store, publication_enabled=os.environ.get('HP_PUBLICATION_ENABLED') == 'true',
         license_resolver=entitlement_resolver(secret),
-        claim_targets=json.loads(os.environ.get('HP_SITE_CLAIM_TARGETS', '{}')), wordpress_test_origin=wordpress_origin)
+        claim_targets=json.loads(os.environ.get('HP_SITE_CLAIM_TARGETS', '{}')), wordpress_test_origin=wordpress_origin,
+        wordpress_paid_sites=wordpress_paid_sites(wordpress_arn))
     html = (Path(__file__).parent / 'ui' / 'dist' / 'publish.html').read_text()
     from transfers import Transfers
     preflight_arn = os.environ.get('HP_CONTROL_PREFLIGHT_SECRET_ARN', '')
@@ -46,9 +47,19 @@ def application():
     _app = App(identity, service, tokens.verify, {'keys': [tokens.jwk]}, html,
         preflight_token=(lambda: secret(preflight_arn)) if preflight_arn else None,
         wordpress=(lambda: WordPressOnboarding(store, json.loads(secret(wordpress_arn)))) if wordpress_arn else None,
-        wordpress_transfers=WordPressTransfers(store, s3, bucket) if service.wordpress_test_origin else None,
+        wordpress_transfers=(WordPressTransfers(store, s3, bucket)
+                             if service.wordpress_test_origin or service.wordpress_paid_sites else None),
         transfers=Transfers(service, bucket, s3), onboarding=onboarding, stripe_webhook=stripe_webhook)
     return _app
+
+
+def wordpress_paid_sites(wordpress_arn):
+    """Let clinics edit and publish the WordPress.com site they connected after paying.
+
+    Opt-in per environment (HP_WORDPRESS_PAID_SITES=true) and only with the
+    WordPress credential secret that seals those connections.
+    """
+    return bool(wordpress_arn) and os.environ.get('HP_WORDPRESS_PAID_SITES') == 'true'
 
 
 def clinic_billing(store, service, identity, secret):
@@ -212,15 +223,16 @@ def consumer():
     browser = BrowserValidation(store, boto3.client('ecs', region_name=region), s3, validator_config)
     wordpress_arn = os.environ.get('HP_WORDPRESS_SECRET_ARN', '')
     wordpress_origin = os.environ.get('HP_WORDPRESS_TEST_ORIGIN') if wordpress_arn else None
+    paid_sites = wordpress_paid_sites(wordpress_arn)
     wordpress = None
-    if wordpress_origin:
+    if wordpress_origin or paid_sites:
         onboarding = WordPressOnboarding(store, json.loads(secret(wordpress_arn)))
         transfers = WordPressTransfers(store, s3, os.environ['HP_ARTIFACT_BUCKET'])
         wordpress = WordPressEditor(onboarding, transfers, os.environ['HP_PUBLIC_BASE_URL'].rstrip('/') + '/mcp')
     return Executor(store, github, drive, artifacts, workflow, publisher,
         publication_enabled=os.environ.get('HP_PUBLICATION_ENABLED') == 'true', preview_publisher=preview_publisher,
         lease_seconds=960, browser_validator=browser, license_resolver=entitlement_resolver(secret),
-        wordpress=wordpress, wordpress_test_origin=wordpress_origin)
+        wordpress=wordpress, wordpress_test_origin=wordpress_origin, wordpress_paid_sites=paid_sites)
 
 
 def defer_admission_conflict(executor, row):
