@@ -29,7 +29,8 @@ from identity import AuthError, sha
 from licensing import LicenseUnavailable
 from service import Rejected
 from site_copy import enqueue as enqueue_copy
-from store import Conflict
+from domain_transfer import enqueue_writes as transfer_writes
+from store import Conflict, Write
 from stripe_billing import ACTIVE, BillingRejected, valid_session_id
 
 COOKIE = 'hp_start'
@@ -160,7 +161,11 @@ class ClinicOnboarding:
         if existing and existing.get('status') == 'claimed':
             return self.back(session_id)
         if auth_code:
-            sealed = self.cipher.encrypt(auth_code.encode()).decode()
+            # Repeated form submissions keep the same encrypted credential so a
+            # transfer job remains bound to the same immutable intake.
+            previous = existing.get('auth_code') if existing and existing.get('host') == host else None
+            same = previous and self.cipher.decrypt(previous.encode()).decode() == auth_code
+            sealed = previous if same else self.cipher.encrypt(auth_code.encode()).decode()
         elif existing and existing.get('host') == host:
             sealed = existing.get('auth_code')  # keep a code already given for the same domain
         else:
@@ -181,7 +186,8 @@ class ClinicOnboarding:
         else:
             # Known domain but a different owner email (or not claimable now): the operator checks.
             intake.update(status='needs_review', copy_generation=(existing or {}).get('copy_generation', 0))
-        self.store.put(key, intake, existing['_version'] if existing else None)
+        self.store.transact([Write(key, intake, existing['_version'] if existing else None),
+                             *transfer_writes(self.store, intake)])
         if intake.get('copy_state') == 'pending':
             enqueue_copy(self.store, purchase['subscription_id'], intake['copy_generation'])
         return self.back(session_id)

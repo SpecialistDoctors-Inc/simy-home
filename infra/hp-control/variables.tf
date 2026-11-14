@@ -181,3 +181,13 @@ variable "clinic_copy_enabled" {
   type        = bool
   default     = false
 }
+variable "clinic_transfer_enabled" {
+  description = "Enable the registrar worker after the customer details, DNS continuity and price acceptance integration is verified."
+  type        = bool
+  default     = false
+}
+variable "clinic_transfer_key_secret_arn" {
+  description = "Dedicated hp-control/ secret containing only intake_key (same encryption key as billing intake; no Stripe credentials)."
+  type        = string
+  default     = ""
+}

@@ -156,6 +156,27 @@ def copy_clinic_sites(event, context, *, store=None, put_object=None):
     return {'handled': handled is not None}
 
 
+def transfer_clinic_domains(event, context, *, store=None, registrar=None, cipher=None):
+    """Scheduled registrar worker; no content publication or DNS mutation here."""
+    if registrar is None:
+        import boto3
+        from botocore.config import Config
+        from domain_transfer import Route53Registrar
+        # TransferDomain has no client idempotency token. SDK retries must not
+        # submit another chargeable request after a lost response.
+        registrar = Route53Registrar(boto3.client('route53domains', region_name='us-east-1',
+            config=Config(retries={'total_max_attempts': 1}, connect_timeout=5, read_timeout=15)))
+    if cipher is None:
+        from cryptography.fernet import Fernet
+        configured = json.loads(Secrets()(os.environ['HP_DOMAIN_TRANSFER_SECRET_ARN']))
+        cipher = Fernet(configured['intake_key'].encode())
+    from domain_transfer import run_one
+    store = store or DynamoStore(os.environ['HP_TABLE_NAME'])
+    handled = run_one(store, registrar, cipher)
+    print(json.dumps({'event': 'hp_clinic_transfer_checked', 'handled': handled is not None}))
+    return {'handled': handled is not None}
+
+
 def regional_s3_client(region):
     """Construct a regional SigV4 client from trusted deployment configuration.
 
