@@ -41,7 +41,11 @@ def request_json(method, path, *, token=None, form=None, payload=None):
         if not isinstance(result, dict):
             raise ValueError()
         return result
-    except (OSError, ValueError):
+    except (OSError, ValueError) as error:
+        # Record which call failed and how (never the token or body) so a refused
+        # connection can be diagnosed from the Lambda log.
+        print(json.dumps({'event': 'wordpress_request_failed', 'method': method, 'path': path.split('?')[0],
+                          'status': getattr(error, 'code', None), 'error': type(error).__name__}))
         raise WordPressConnectionError('wordpress_provider_unavailable') from None
 
 
@@ -115,11 +119,11 @@ class WordPressProvider:
                 or 'global' in str(grant.get('scope', '')).lower().split()):
             raise WordPressConnectionError('wordpress_site_grant_required')
         site_id = positive_id(grant.get('blog_id'))
-        sites = self.transport('GET', '/rest/v1.1/me/sites', token=token).get('sites')
-        if not isinstance(sites, list):
-            raise WordPressConnectionError('wordpress_site_access_required')
-        site = next((site for site in sites if isinstance(site, dict) and site.get('ID') == site_id), None)
-        if not site or not same_public_origin(site.get('URL'), host) or site.get('is_private') is not False:
+        # A site-only token cannot list the account's sites (/me/sites answers 400),
+        # so read the one granted site directly and check it is the requested one.
+        site = self.transport('GET', f'/rest/v1.1/sites/{site_id}?fields=ID,URL,is_private', token=token)
+        if (site.get('ID') != site_id or not same_public_origin(site.get('URL'), host)
+                or site.get('is_private') is not False):
             raise WordPressConnectionError('wordpress_wrong_site')
         prefix = '/wp/v2/sites/' + str(site_id)
         caps = self.transport('GET', prefix + '/users/me?context=edit', token=token).get('capabilities')

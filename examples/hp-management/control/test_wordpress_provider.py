@@ -9,9 +9,9 @@ class WordPressProviderTest(unittest.TestCase):
     def setUp(self):
         self.replies = {
             '/oauth2/token': {'access_token': 'fake-wordpress-token', 'token_type': 'bearer', 'blog_id': '123'},
-            '/rest/v1.1/me/sites': {'sites': [{
+            '/rest/v1.1/sites/123?fields=ID,URL,is_private': {
                 'ID': 123, 'URL': 'https://clinic.wordpress.com', 'is_private': False,
-            }]},
+            },
             '/wp/v2/sites/123/users/me?context=edit': {
                 'capabilities': {'edit_pages': True, 'publish_pages': True},
             },
