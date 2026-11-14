@@ -58,7 +58,7 @@ class TransferTest(unittest.TestCase):
                   'status': 'received', 'auth_code': self.cipher.encrypt(b'private-transfer-code').decode()}
         self.store.put('clinic-intake:' + SUB, intake)
         self.store.transact(enqueue_writes(self.store, intake))
-        self.store.put('stripe-subscription:' + SUB, {'status': 'active', 'subject': 'buyer'})
+        self.store.put('stripe-subscription:' + SUB, {'status': 'active', 'subject': 'buyer', 'plan': 'basic'})
         self.registrar = Registrar()
 
     def ready(self):
@@ -103,7 +103,7 @@ class TransferTest(unittest.TestCase):
         self.ready()
         for status, subject in [('canceled', 'buyer'), ('active', 'different-buyer')]:
             old = self.store.get('stripe-subscription:' + SUB)
-            self.store.put('stripe-subscription:' + SUB, {'status': status, 'subject': subject}, old['_version'])
+            self.store.put('stripe-subscription:' + SUB, {**old, 'status': status, 'subject': subject}, old['_version'])
             self.tick()
         self.assertEqual(self.registrar.submits, 0)
 

@@ -367,6 +367,10 @@ jmespath==1.1.0 \
     # via
     #   boto3
     #   botocore
+phonenumbers==9.0.43 \
+    --hash=sha256:349bc799f15e010e35bd2c7d28149950ae74479cb1e11fb054ed9a95ecb4b437 \
+    --hash=sha256:d4e508ab800c3e5ce219b14be339deb3d55a0ab81af82fea44749fcabd01e908
+    # via -r examples/hp-management/control/requirements.txt
 pyasn1==0.6.5 \
     --hash=sha256:4017b0fce125096b8573b39c989fdb1a4b19cf761e683398184550fea0e66587 \
     --hash=sha256:6b11616a6bcf3a40e635f082bb232fa57b5e0dd7f517bd7ddd69ec3794508a47

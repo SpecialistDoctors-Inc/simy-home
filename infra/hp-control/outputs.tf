@@ -11,3 +11,12 @@ output "validation_network" {
 output "validator_config" { value = local.validator_config }
 
 output "validator_repository_url" { value = aws_ecr_repository.validator.repository_url }
+output "clinic_activation_stack_role_arn" {
+  value = try(aws_iam_role.clinic_stack["activation"].arn, null)
+}
+output "clinic_activation_publisher_boundary_arn" {
+  value = try(aws_iam_policy.clinic_publisher_boundary["activation"].arn, null)
+}
+output "clinic_activation_consumer_role_arn" {
+  value = aws_iam_role.runtime["consumer"].arn
+}

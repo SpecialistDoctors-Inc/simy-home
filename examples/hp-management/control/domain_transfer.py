@@ -12,7 +12,7 @@ import time
 from datetime import datetime, timezone
 
 from store import Check, Conflict, Write
-from stripe_billing import ACTIVE, valid_subscription_id
+from stripe_billing import ACTIVE, hp_entitlement, valid_subscription_id
 
 QUEUE = 'clinic-transfer-pending'
 TERMINAL = {'complete', 'failed', 'cancelled'}
@@ -56,7 +56,7 @@ def public_status(row):
     return {'stage': 'domain_transfer', **{name: row[name] for name in ('status', 'required', 'reason') if name in row}}
 
 
-def prepare(store, subscription_id, request, cipher, now=None):
+def prepare(store, subscription_id, request, cipher, now=None, *, extra_checks=(), extra_writes=()):
     """Called by the authenticated intake layer after contacts/DNS/price checks.
 
     request must be server-built: DNS continuity comes from a connected provider,
@@ -72,7 +72,7 @@ def prepare(store, subscription_id, request, cipher, now=None):
     if identity != row['intake_identity'] or intake['subject'] != row['subject']:
         raise ValueError('transfer_intake_changed')
     purchase = store.get('stripe-subscription:' + subscription_id)
-    if not purchase or purchase.get('subject') != row['subject'] or purchase.get('status') not in ACTIVE:
+    if hp_entitlement(purchase, row['subject']) is None:
         raise ValueError('active_purchase_required')
     validate_request(request, intake['host'], now)
     domain_key = 'domain-transfer-owner:' + request['domain']
@@ -93,7 +93,7 @@ def prepare(store, subscription_id, request, cipher, now=None):
               Write(QUEUE, {'subscriptions': jobs}, pending['_version'] if pending else None)]
     if not owner:
         writes.append(Write(domain_key, {'subscription_id': subscription_id}, None))
-    store.transact(writes)
+    store.transact([*writes, *extra_checks, *extra_writes])
 
 
 def validate_request(request, host, now):
@@ -213,7 +213,7 @@ def run_one(store, registrar, cipher, clock=time.time):
             pass
         return sub
     purchase = store.get('stripe-subscription:' + sub)
-    if not purchase or purchase.get('status') not in ACTIVE or purchase.get('subject') != row['subject']:
+    if hp_entitlement(purchase, row['subject']) is None:
         return sub
     now = int(clock())
     if row.get('retry_at', 0) > now:

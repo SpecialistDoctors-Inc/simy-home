@@ -191,3 +191,18 @@ variable "clinic_transfer_key_secret_arn" {
   type        = string
   default     = ""
 }
+variable "clinic_activation_enabled" {
+  description = "Enable automated isolated clinic environment creation after integration acceptance."
+  type        = bool
+  default     = false
+}
+variable "clinic_activation_secret_arn" {
+  description = "Dedicated hp-control/ activation configuration; contains references, not customer input."
+  type        = string
+  default     = ""
+}
+variable "clinic_bootstrap_token_secret_arn" {
+  description = "Dedicated service GitHub repository-creation credential, separate from runtime App permissions."
+  type        = string
+  default     = ""
+}

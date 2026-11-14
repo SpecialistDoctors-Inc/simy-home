@@ -80,8 +80,22 @@ def clinic_billing(store, service, identity, secret):
                 'client_id': client['client_id'], 'client_secret': client['client_secret'],
                 'callback': os.environ['HP_PUBLIC_BASE_URL'].rstrip('/') + WORDPRESS_CALLBACK,
                 'credential_key': json.loads(secret(wordpress_arn))['credential_key']})
+    transfer = None
+    if os.environ.get('HP_CLINIC_TRANSFER_ENABLED') == 'true':
+        import boto3
+        from cryptography.fernet import Fernet
+        from domain_transfer import Route53Registrar
+        from transfer_intake import TransferIntake
+        transfer = TransferIntake(store, Route53Registrar(boto3.client('route53domains', region_name='us-east-1')),
+            Fernet(config()['intake_key'].encode()), connection_start=config().get('dns_connection_start'))
+    plugin_download = None
+    if isinstance(config().get('plugin_package'), dict):
+        from plugin_distribution import PluginDistribution
+        plugin_download = lambda: PluginDistribution(regional_s3_client(os.environ.get('AWS_REGION') or os.environ.get('AWS_DEFAULT_REGION')),
+            os.environ['HP_ARTIFACT_BUCKET'], config()['plugin_package']).download()
     onboarding = ClinicOnboarding(store, billing, service, identity, config()['intake_key'],
-                                  plugin_url=config().get('plugin_url'), wordpress=wordpress)
+                                  plugin_url=config().get('plugin_url'), wordpress=wordpress, transfer=transfer,
+                                  plugin_download=plugin_download)
     return onboarding, lambda payload, signature: billing.webhook(payload, signature, config()['webhook_secret'])
 
 
@@ -192,6 +206,50 @@ def transfer_clinic_domains(event, context, *, store=None, registrar=None, ciphe
     return {'handled': handled is not None}
 
 
+def activate_clinic_sites(event, context, *, store=None, read_copy=None, repositories=None, hosting=None, platform=None):
+    """Create a paid owner's isolated editor/hosting bindings, never publication."""
+    import boto3
+    from activation_providers import RepositoryBootstrap, CloudEnvironments
+    from activation_template import hosting_template
+    from site_activation import run_one
+    store = store or DynamoStore(os.environ['HP_TABLE_NAME'])
+    if repositories is None or hosting is None or platform is None:
+        secrets = Secrets()
+        config = json.loads(secrets(os.environ['HP_CLINIC_ACTIVATION_SECRET_ARN']))
+        repositories = RepositoryBootstrap(config['github'], secrets)
+        hosting = CloudEnvironments(boto3.client('cloudformation', region_name='us-east-1'),
+            boto3.client('cloudfront'), boto3.client('s3', region_name='us-east-1'),
+            boto3.client('route53'), config['cloudformation_role_arn'],
+            lambda name, host, dns: hosting_template(name, host, dns,
+                consumer_role_arn=config['consumer_role_arn'],
+                permissions_boundary_arn=config['publisher_permissions_boundary_arn']))
+        platform = config['site']
+    if read_copy is None:
+        from bundles import MAX_TRANSPORT
+        from publisher import ACCOUNT
+        import re
+        s3 = regional_s3_client(os.environ.get('AWS_REGION') or os.environ.get('AWS_DEFAULT_REGION'))
+        def read_copy(key):
+            if not re.fullmatch(r'intake/[0-9a-f]{64}/[0-9a-f]{64}/site\.zip', key):
+                raise ValueError('invalid_copy_key')
+            response = s3.get_object(Bucket=os.environ['HP_ARTIFACT_BUCKET'], Key=key, ExpectedBucketOwner=ACCOUNT)
+            try:
+                if response.get('ContentLength', MAX_TRANSPORT + 1) > MAX_TRANSPORT:
+                    raise ValueError('copy_size_exceeded')
+                return response['Body'].read(MAX_TRANSPORT + 1)
+            finally:
+                response['Body'].close()
+    handled = 0
+    for _ in range(50):
+        if context is not None and context.get_remaining_time_in_millis() < 20000:
+            break
+        if run_one(store, read_copy, repositories, hosting, platform) is None:
+            break
+        handled += 1
+    print(json.dumps({'event': 'hp_clinic_activation_checked', 'handled': handled}))
+    return {'handled': handled}
+
+
 def regional_s3_client(region):
     """Construct a regional SigV4 client from trusted deployment configuration.
 
@@ -229,6 +287,9 @@ def consumer():
     roles = json.loads(os.environ.get('HP_PUBLISHER_ROLES', '{}'))
     preview_publisher = SitePublisher('dev', roles.get('dev'), store)
     publisher = SitePublisher('prod', roles.get('prod'), store)
+    from dns_cutover import DNSCutover
+    publisher.cutover = DNSCutover(store, lambda binding, guard:
+        publisher._clients(guard, 'dns-cutover', role_arn=binding['role_arn'])['route53'])
     workflow = GitHubWorkflow(github, preview_readback=preview_publisher.readback)
     browser = BrowserValidation(store, boto3.client('ecs', region_name=region), s3, validator_config)
     wordpress_arn = os.environ.get('HP_WORDPRESS_SECRET_ARN', '')

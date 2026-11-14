@@ -28,15 +28,17 @@ Secrets Manager secret contains only the intake encryption key, with the same
 value used to encrypt AuthCodes; no Stripe API key is needed by this worker.
 The SDK upgrade is required for the provider-side `Consent.MaxPrice` cap.
 
+The draft now includes the authenticated quote/contact form, registrar progress,
+complete-import validation/normalization, isolated repository/hosting creation,
+paid-owner grant, native-package download and approval-gated DNS publication.
+See [CLINIC-ACTIVATION.md](CLINIC-ACTIVATION.md) for configuration and evidence.
+These are implemented paths, not live acceptance or enabled production services.
+
 Remaining integration before self-service acceptance:
 
-* Collect/confirm contacts and quote within the existing signup flow.
 * Connect the DNS provider or migrate a complete zone and verify continuity.
-* Automatically create the editable repository, storage, preview and publication
-  binding from a verified complete import, then grant the paid owner.
 * Connect dynamic functions (forms, reservations, login, commerce) to their actual
   systems. Copying public HTML does not migrate these functions.
-* Poll registrar progress and deliver customer-only confirmation steps.
 * Test a real authorized domain through the registrar, Mac save, preview and
   the customer's exact-artifact publication approval. Unit/SDK tests are not
   this live acceptance.
