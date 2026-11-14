@@ -75,23 +75,35 @@ def main_commit(site):
     return value
 
 
-def effective_roles(member, site, subject, wordpress_test_origin):
+def effective_roles(member, site, subject, wordpress_test_origin, wordpress_paid_sites=False):
+    """Roles a member holds on a site.
+
+    WordPress sites are read-only by default. Their owner may edit and publish
+    the dedicated acceptance test site, and, when ``wordpress_paid_sites`` is on,
+    a site licensed by their own Stripe subscription (bought on simy.one). The
+    license itself is checked separately (site_license_allowed).
+    """
     roles = member.get('sites', {}).get(site['site_id'], [])
-    if (site.get('provider') == 'wordpress' and roles and wordpress_test_origin
-            and site.get('prod_url') == wordpress_test_origin and site.get('owner_subject') == subject):
-        return ['read', 'edit', 'publish']
+    if site.get('provider') == 'wordpress' and roles and site.get('owner_subject') == subject:
+        test_site = bool(wordpress_test_origin) and site.get('prod_url') == wordpress_test_origin
+        policy = site.get('license_policy')
+        paid_site = wordpress_paid_sites and isinstance(policy, dict) and policy.get('mode') == 'stripe'
+        if test_site or paid_site:
+            return ['read', 'edit', 'publish']
     return roles if site.get('provider') != 'wordpress' else [role for role in roles if role == 'read']
 
 
 class Service:
     def __init__(self, store, clock=time.time, publication_enabled=False, license_resolver=None, claim_targets=None,
-                 wordpress_test_origin=None, dns_check=None):
+                 wordpress_test_origin=None, dns_check=None, wordpress_paid_sites=False):
         self.store, self.clock, self.publication_enabled = store, clock, publication_enabled
         # Injected only by tests and the loopback bridge; deployments use public DNS.
         self.dns_check = dns_check
         self.license_resolver = license_resolver
         self.claim_targets = claim_targets or {}
         self.wordpress_test_origin = wordpress_test_origin if publication_enabled else None
+        # Edit/publish on WordPress sites licensed by the owner's Stripe subscription.
+        self.wordpress_paid_sites = bool(wordpress_paid_sites and publication_enabled)
 
     def principal(self, claims):
         if not isinstance(claims, dict) or not isinstance(claims.get('sub'), str):
@@ -113,7 +125,7 @@ class Service:
             raise Rejected('site_access_denied')
         if not site or site.get('disabled'):
             raise Rejected('site_unavailable')
-        if role not in effective_roles(member, {**site, 'site_id': site_id}, claims['sub'], self.wordpress_test_origin):
+        if role not in effective_roles(member, {**site, 'site_id': site_id}, claims['sub'], self.wordpress_test_origin, self.wordpress_paid_sites):
             raise Rejected('site_access_denied')
         if not site_license_allowed(site, claims['sub'], self.license_resolver, StripeLicenses(self.store)):
             raise Rejected('hp_license_required')
@@ -135,7 +147,7 @@ class Service:
             except Rejected:
                 continue
             result.append({'site_id': site_id, 'name': site['name'], 'roles': effective_roles(member,
-                {**site, 'site_id': site_id}, claims['sub'], self.wordpress_test_origin),
+                {**site, 'site_id': site_id}, claims['sub'], self.wordpress_test_origin, self.wordpress_paid_sites),
                 'preview_url': site['dev_url'], 'production_url': site['prod_url'],
                 'deployments': self.deployment_status(site_id, site)})
         return result
@@ -155,7 +167,7 @@ class Service:
                     and site.get('direct_transfer_enabled') is True):
                 if wordpress_only and site.get('provider') != 'wordpress':
                     continue
-                if not {'read', 'edit'} <= set(effective_roles(member, {**site, 'site_id': site_id}, google_subject, self.wordpress_test_origin)):
+                if not {'read', 'edit'} <= set(effective_roles(member, {**site, 'site_id': site_id}, google_subject, self.wordpress_test_origin, self.wordpress_paid_sites)):
                     continue
                 if site.get('registered_by_claim'):
                     self._check_claim_targets(site)

@@ -203,6 +203,16 @@ class ClinicBillingWiringTest(unittest.TestCase):
                          ('clinic-app', 'https://hp-control-acceptance.example.test/start/wordpress/callback'))
         self.assertEqual(connector.cipher.decrypt(Fernet(key.encode()).encrypt(b'x')), b'x')
 
+    def test_paid_sites_flag_needs_the_wordpress_secret(self):
+        import os
+        from unittest.mock import patch
+        import hp_control
+        with patch.dict(os.environ, {'HP_WORDPRESS_PAID_SITES': 'true'}):
+            self.assertTrue(hp_control.wordpress_paid_sites('wordpress'))
+            self.assertFalse(hp_control.wordpress_paid_sites(''))
+        with patch.dict(os.environ, {'HP_WORDPRESS_PAID_SITES': 'false'}):
+            self.assertFalse(hp_control.wordpress_paid_sites('wordpress'))
+
     def test_wordpress_option_stays_off_without_a_clinic_client(self):
         import os
         from unittest.mock import patch

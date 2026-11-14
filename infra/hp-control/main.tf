@@ -67,6 +67,10 @@ resource "terraform_data" "guard" {
       error_message = "The isolated WordPress test requires OAuth, the license bridge and publication authorization."
     }
     precondition {
+      condition     = !var.wordpress_paid_sites || (var.wordpress_secret_arn != "" && var.clinic_billing_secret_arn != "" && var.publication_enabled)
+      error_message = "Paid WordPress sites need the WordPress credential secret, clinic billing and publication authorization."
+    }
+    precondition {
       condition     = !var.clinic_copy_enabled || var.clinic_billing_secret_arn != ""
       error_message = "The clinic homepage copier only serves clinic Payment Link intake."
     }
@@ -197,6 +201,7 @@ resource "aws_lambda_function" "runtime" {
       HP_CONTROL_ENTITLEMENT_SECRET_ARN = var.entitlement_secret_arn
       HP_WORDPRESS_SECRET_ARN           = var.wordpress_secret_arn
       HP_WORDPRESS_TEST_ORIGIN          = var.wordpress_test_origin
+      HP_WORDPRESS_PAID_SITES           = tostring(var.wordpress_paid_sites)
       } : {}, each.key == "api" ? {
       HP_GOOGLE_SECRET_ARN            = var.google_secret_arn
       HP_SIGNING_SECRET_ARN           = var.signing_secret_arn
