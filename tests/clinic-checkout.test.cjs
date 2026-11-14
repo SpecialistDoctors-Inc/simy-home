@@ -5,8 +5,9 @@ test('unconfigured, test, missing and foreign checkout links are never enabled',
 
 test('published configuration maps each current monthly total to a distinct live link',()=>{
  const c=require('../site/hp-management/clinic-checkout.json');
- if(!c.enabled)return;
- const links=validate(c);assert.ok(links,'enabled checkout configuration must validate');
+ if(!c.plans){assert.equal(c.enabled,false);return;}
+ const links=validate({...c,enabled:true});assert.ok(links,'configured checkout links must validate even while release is disabled');
+ if(!c.enabled)assert.equal(validate(c),null,'staged links must not enable purchases');
  assert.equal(new Set(Object.values(links)).size,4,'each plan combination needs its own checkout');
  assert.deepEqual(Object.values(c.plans).map(p=>p.taxInclusiveYen),[21780,32780,76560,87560]);
 });
