@@ -84,7 +84,7 @@ def aws_clients(role_arn, session_name):
         RoleSessionName=session_name, DurationSeconds=900)['Credentials']
     session = boto3.Session(aws_access_key_id=assumed['AccessKeyId'],
         aws_secret_access_key=assumed['SecretAccessKey'], aws_session_token=assumed['SessionToken'])
-    return {name: session.client(name, config=config) for name in ('sts', 's3', 'cloudfront')}
+    return {name: session.client(name, config=config) for name in ('sts', 's3', 'cloudfront', 'route53')}
 
 
 def config_sha256(config, origin_id):
@@ -174,11 +174,12 @@ def _same_invalidation_batch(expected, observed):
 
 
 class SitePublisher:
-    def __init__(self, environment, role_arn, store, github_factory=None, clients_factory=None, fetch=None):
+    def __init__(self, environment, role_arn, store, github_factory=None, clients_factory=None, fetch=None, cutover=None):
         if environment not in ('dev', 'prod'):
             raise ValueError('publication_environment_invalid')
         self.environment, self.role_arn, self.store = environment, role_arn, store
         self.clients_factory, self.fetch = clients_factory or aws_clients, fetch or fetch_https
+        self.cutover = cutover
 
     @staticmethod
     def _record_budget(row, reserve=0):
@@ -193,7 +194,7 @@ class SitePublisher:
         any intent/object/config write; admission checks all known fixed state.
         """
         binding = self._binding(site)
-        clients = self._clients(guard, 'preflight')
+        clients = self._clients(guard, 'preflight', role_arn=binding['role_arn'])
         result, origin = self._distribution(clients, binding, guard)
         self._call(clients['s3'], 'head_bucket', guard, Bucket=binding['target']['bucket'], ExpectedBucketOwner=ACCOUNT)
         previous = self._previous_files(binding, origin.get('OriginPath', ''))
@@ -208,9 +209,15 @@ class SitePublisher:
             'supported_intent_bytes': MAX_INTENT_BYTES}
 
     def _binding(self, site):
-        if not self.role_arn:
+        role_arn = self.role_arn
+        managed = self.store.get('managed-publisher:' + site['site_id']) if isinstance(site.get('site_id'), str) else None
+        if managed:
+            if managed.get('site_id') != site['site_id'] or managed.get('deployment') != site.get('deployment'):
+                raise PublicationRejected('managed_publisher_binding_mismatch')
+            role_arn = managed.get('roles', {}).get(self.environment)
+        if not role_arn:
             raise IntegrationUnavailable('dedicated_publisher_role_not_configured')
-        if not isinstance(self.role_arn, str) or not re.fullmatch('arn:aws:iam::' + ACCOUNT + r':role/[A-Za-z0-9+=,.@_/-]+', self.role_arn):
+        if not isinstance(role_arn, str) or not re.fullmatch('arn:aws:iam::' + ACCOUNT + r':role/[A-Za-z0-9+=,.@_/-]+', role_arn):
             raise PublicationRejected('publisher_role_account_rejected')
         target = site.get('deployment', {}).get(self.environment)
         required = {'bucket', 'distribution_id', 'origin_id', 'expected_config_sha256'}
@@ -229,7 +236,7 @@ class SitePublisher:
         site_id = site.get('site_id')
         if not isinstance(site_id, str) or not re.fullmatch('[A-Za-z0-9_-]{1,200}', site_id):
             raise PublicationRejected('deployment_site_identity_invalid')
-        return {'site_id': site_id, 'environment': self.environment, 'target': deepcopy(target), 'url': url.rstrip('/'), 'role_arn': self.role_arn}
+        return {'site_id': site_id, 'environment': self.environment, 'target': deepcopy(target), 'url': url.rstrip('/'), 'role_arn': role_arn}
 
     @staticmethod
     def _viewer_paths(files):
@@ -261,9 +268,9 @@ class SitePublisher:
         validate_files({path: b'' for path in paths if path != 'version.json'})
         return set(paths)
 
-    def _clients(self, guard, operation='readback'):
+    def _clients(self, guard, operation='readback', *, role_arn=None):
         guard()
-        clients = self.clients_factory(self.role_arn, 'hp-' + self.environment + '-' + operation[:36])
+        clients = self.clients_factory(role_arn or self.role_arn, 'hp-' + self.environment + '-' + operation[:36])
         guard()
         identity = clients['sts'].get_caller_identity()
         if identity.get('Account') != ACCOUNT:
@@ -377,7 +384,7 @@ class SitePublisher:
         if type(fence) is not int or fence <= 0:
             raise PublicationRejected('publication_fence_invalid')
         files, metadata = unpack_release(artifact_bytes, preview)
-        clients = self._clients(guard, operation_id)
+        clients = self._clients(guard, operation_id, role_arn=binding['role_arn'])
         key = self._key(binding, operation_id)
         row = self._load_intent(binding, preview, operation_id)
         result, origin = self._distribution(clients, binding, guard)
@@ -403,7 +410,7 @@ class SitePublisher:
                 'source_commit': preview['source_commit'], 'artifact_sha256': preview['artifact_sha256'],
                 'prefix': prefix, 'metadata': metadata, 'files': [{'path': p, 'sha256': sha256(v), 'size': len(v)} for p, v in sorted(files.items())],
                 'original_config': result['Distribution']['DistributionConfig'], 'original_etag': result['ETag'],
-                'desired_config': desired, 'deadline': int(time.time()) + 3600, 'phase': 'staging',
+                'desired_config': desired, 'deadline': int(time.time()) + (self.cutover.wait_seconds(binding) if self.cutover else 3600), 'phase': 'staging',
                 'retired_files': sorted(previous_files - files.keys()),
                 'retired_paths': sorted(previous_paths - current_paths),
                 'invalidation': {'CallerReference': 'hp-' + operation_id + '-' + preview['artifact_sha256'],
@@ -445,9 +452,9 @@ class SitePublisher:
                 raise
             except Exception:
                 raise PublicationPending('invalidation_acknowledgement_unknown', row['deadline']) from None
-        return self._verify(clients, row, guard)
+        return self._verify(clients, row, guard, allow_cutover=True)
 
-    def _verify(self, clients, row, guard):
+    def _verify(self, clients, row, guard, *, allow_cutover=False):
         result, _ = self._distribution(clients, row['binding'], guard)
         if result['Distribution']['DistributionConfig'] != row['desired_config']:
             raise PublicationRejected('cloudfront_release_path_mismatch')
@@ -456,8 +463,15 @@ class SitePublisher:
         invalidation = self._find_invalidation(clients, row, guard)
         if invalidation is None or invalidation.get('Status') != 'Completed':
             raise PublicationPending('cloudfront_cache_invalidation_pending', row['deadline'])
+        # Verify every stored object before any first-publication DNS change.
         for record in row['files']:
             self._s3_read(clients, row, record, guard)
+        if self.cutover:
+            if allow_cutover:
+                self.cutover.ensure(row['binding'], row['operation_id'], guard)
+            elif not self.cutover.observed(row['binding'], guard):
+                raise PublicationPending('dns_cutover_requires_active_authority', row['deadline'])
+        for record in row['files']:
             guard()
             url = row['binding']['url'] + '/' + urllib.parse.quote(record['path'], safe='/') + '?hp_artifact=' + row['artifact_sha256']
             try:
@@ -503,7 +517,7 @@ class SitePublisher:
             # passed the mandatory persisted-intent boundary. This is a control
             # signal only: the executor must recheck active authority to resume.
             return {'safe_to_resume': True, 'prewrite_proven': True}
-        clients = self._clients(fence_only_guard, operation_id)
+        clients = self._clients(fence_only_guard, operation_id, role_arn=binding['role_arn'])
         result, _ = self._distribution(clients, binding, fence_only_guard)
         config = result['Distribution']['DistributionConfig']
         if config != row['desired_config']:
@@ -517,6 +531,8 @@ class SitePublisher:
             # The caller must leave a cancelled run blocked for operator action.
             return {'safe_to_resume': True, 'cache_cleanup_requires_attention': True,
                 'observed_release_prefix': row['prefix']}
+        if self.cutover and not self.cutover.observed(binding, fence_only_guard):
+            return {'safe_to_resume': True, 'dns_cutover_requires_active_authority': True}
         return self._verify(clients, row, fence_only_guard)
 
     def readback(self, site, proof, guard):
@@ -525,4 +541,4 @@ class SitePublisher:
         row = self.store.get(pointer['intent_key']) if pointer else None
         if not row or row['binding'] != binding or row['source_commit'] != proof.get('source_commit') or row['artifact_sha256'] != proof.get('artifact_sha256') or row['metadata']['operation_id'] != proof.get('package_operation_id'):
             raise PublicationRejected('preview_publication_intent_missing')
-        return self._verify(self._clients(guard), row, guard)
+        return self._verify(self._clients(guard, role_arn=binding['role_arn']), row, guard)

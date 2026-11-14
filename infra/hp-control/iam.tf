@@ -40,6 +40,14 @@ resource "aws_iam_role_policy" "runtime" {
       }] : [], each.key == "consumer" && length(local.publisher_sites) > 0 ? [{
       Sid      = "SeparatePublisherOnly", Effect = "Allow", Action = ["sts:AssumeRole"],
       Resource = [for role in aws_iam_role.publisher : role.arn]
+      }] : [], each.key == "api" && var.clinic_transfer_enabled ? [{
+      Sid = "TransferQuoteOnly", Effect = "Allow", Action = ["route53domains:CheckDomainTransferability"], Resource = "*"
+      }] : [], each.key == "consumer" && var.clinic_activation_enabled ? [{
+      Sid      = "IsolatedClinicPublisherOnly", Effect = "Allow", Action = ["sts:AssumeRole"],
+      Resource = "arn:aws:iam::209300895845:role/hp-clinic-*-publisher-*"
+      }] : [], each.key == "api" && var.clinic_billing_secret_arn != "" ? [{
+      Sid      = "VerifiedPluginDownloadsOnly", Effect = "Allow", Action = ["s3:GetObject", "s3:GetObjectVersion"],
+      Resource = "${aws_s3_bucket.artifacts.arn}/plugins/hp-local-editor/*"
   }] : []) })
 }
 # These are NEW roles. Existing GitHub deploy roles, policies, buckets and

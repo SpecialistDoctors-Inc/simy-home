@@ -209,6 +209,7 @@ resource "aws_lambda_function" "runtime" {
       HP_CONTROL_PREFLIGHT_SECRET_ARN = var.preflight_secret_arn
       HP_SITE_CLAIM_TARGETS           = jsonencode(local.claim_targets)
       HP_CLINIC_BILLING_SECRET_ARN    = var.clinic_billing_secret_arn
+      HP_CLINIC_TRANSFER_ENABLED      = tostring(var.clinic_transfer_enabled)
       } : each.key == "consumer" ? {
       HP_GITHUB_SECRET_ARN          = var.github_secret_arn
       HP_GOOGLE_OPERATOR_SECRET_ARN = var.google_operator_secret_arn

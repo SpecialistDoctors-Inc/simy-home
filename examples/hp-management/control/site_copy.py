@@ -1,9 +1,9 @@
-"""Copy a clinic's public homepage into private storage for the operator.
+"""Copy a clinic's public homepage into private storage for verified activation.
 
 A paid clinic whose domain SIMY has not prepared yet gives us its homepage URL.
 We fetch what the public already sees, starting at ``https://<host>/``, and keep
-it as one zip in the private artifact bucket. The operator builds the editable
-site from it; nothing here publishes or grants access.
+it as one zip in the private artifact bucket. The activation worker can build the editable
+site from a complete verified capture; nothing here publishes or grants access.
 
 Only HTTPS on the same host (with or without ``www.``) is fetched, and hosts that
 resolve to private, loopback, link-local or otherwise non-public addresses are
@@ -173,6 +173,7 @@ def copy_public_site(host, fetch=default_fetch, clock=time.monotonic, now=time.t
         raise CopyFailed('invalid_host')
     started = clock()
     queue, seen, files, total, truncated = ['https://' + host + '/'], set(), [], 0, False
+    missing = []
     buffer = io.BytesIO()
     with zipfile.ZipFile(buffer, 'w', zipfile.ZIP_DEFLATED) as archive:
         while queue:
@@ -188,8 +189,10 @@ def copy_public_site(host, fetch=default_fetch, clock=time.monotonic, now=time.t
             except CopyFailed:
                 if not files:
                     raise
+                missing.append(url)
                 continue
             except Exception:
+                missing.append(url)
                 continue  # one unreachable asset does not stop the copy
             headers = {k.lower(): v for k, v in (headers or {}).items()}
             if status in (301, 302, 303, 307, 308):
@@ -197,8 +200,11 @@ def copy_public_site(host, fetch=default_fetch, clock=time.monotonic, now=time.t
                 parts = urlsplit(target)
                 if parts.scheme == 'https' and same_site(host, parts.hostname) and target not in seen:
                     queue.insert(0, target)
+                else:
+                    missing.append(url)
                 continue
             if status != 200:
+                missing.append(url)
                 continue
             if len(body) > MAX_FILE:
                 truncated = True
@@ -221,7 +227,8 @@ def copy_public_site(host, fetch=default_fetch, clock=time.monotonic, now=time.t
                     queue.append(target)
         if not files:
             raise CopyFailed('nothing_fetched')
-        manifest = {'host': host, 'copied_at': int(now()), 'files': files, 'truncated': truncated,
+        manifest = {'copy_schema': 2, 'host': host, 'copied_at': int(now()), 'files': files, 'truncated': truncated,
+                    'missing': missing,
                     'total_bytes': total}
         archive.writestr('manifest.json', json.dumps(manifest, ensure_ascii=False, indent=2))
     return buffer.getvalue(), manifest

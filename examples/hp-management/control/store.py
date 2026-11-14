@@ -54,10 +54,10 @@ class MemoryStore:
         return any(row.get('status') == 'needs_attention' or row.get('reporting_state') == 'needs_attention'
                    for row in self.rows.values())
 
-    def pending(self, limit=25, now=None):
+    def pending(self, limit=25, now=None, queue_state='pending'):
         now = time.time() if now is None else now
         rows = [(k, deepcopy(v)) for k, v in self.rows.items()
-                if v.get('queue_state') == 'pending' and v.get('retry_at', 0) <= now]
+                if v.get('queue_state') == queue_state and v.get('retry_at', 0) <= now]
         return sorted(rows, key=lambda row: row[1].get('retry_at', row[1].get('created_at', 0)))[:limit]
 
 
@@ -125,10 +125,10 @@ class DynamoStore:
             ExpressionAttributeValues={':required': {'S': 'required'}}, Select='COUNT', Limit=1)
         return response.get('Count', 0) > 0
 
-    def pending(self, limit=25, now=None):
+    def pending(self, limit=25, now=None, queue_state='pending'):
         now = time.time() if now is None else now
         response = self.client.query(TableName=self.table, IndexName='queue-state',
             KeyConditionExpression='queue_state = :state AND queue_ready_at <= :now',
-            ExpressionAttributeValues={':state': {'S': 'pending'}, ':now': {'N': str(int(now))}}, Limit=limit)
+            ExpressionAttributeValues={':state': {'S': queue_state}, ':now': {'N': str(int(now))}}, Limit=limit)
         return [(v['pk']['S'], {**json.loads(v['body']['S']), '_version': int(v['version']['N'])})
                 for v in response.get('Items', [])]

@@ -4,6 +4,7 @@ import json
 import unittest
 import urllib.parse
 import zipfile
+from unittest.mock import Mock, patch
 
 from bundles import sha256
 from executor import IntegrationUnavailable
@@ -200,6 +201,39 @@ class PublisherTest(unittest.TestCase):
         before = deepcopy(self.store.rows)
         self.assertTrue(self.publisher.readback(self.site, proof, self.guard)['verified'])
         self.assertEqual(before, self.store.rows)
+
+    def test_first_dns_switch_follows_all_object_checks_and_reconciliation_never_switches(self):
+        cutover = Mock()
+        cutover.wait_seconds.return_value = 10800
+        cutover.observed.return_value = True
+        self.publisher.cutover = cutover
+        with patch.object(self.publisher, '_s3_read', wraps=self.publisher._s3_read) as reads:
+            def ensure(binding, operation, guard):
+                self.assertEqual({call.args[2]['path'] for call in reads.call_args_list},
+                                 {'index.html', 'style.css', 'version.json'})
+                self.assertFalse(any(name == 'fetch' for name, _ in self.fake.calls))
+            cutover.ensure.side_effect = ensure
+            self.assertTrue(self.publish()['verified'])
+        cutover.ensure.assert_called_once()
+        self.assertTrue(self.reconcile()['verified'])
+        cutover.ensure.assert_called_once()
+
+    def test_bad_stored_object_prevents_dns_switch(self):
+        cutover = Mock(); cutover.wait_seconds.return_value = 3600
+        self.publisher.cutover = cutover
+        with patch.object(self.publisher, '_s3_read', side_effect=PublicationRejected('bad_object')):
+            with self.assertRaises(PublicationRejected): self.publish()
+        cutover.ensure.assert_not_called()
+
+    def test_auto_provisioned_role_is_bound_to_exact_site_targets(self):
+        self.store.put('managed-publisher:sample-site', {'site_id': 'sample-site',
+            'roles': {'dev': ROLE}, 'deployment': deepcopy(self.site['deployment'])})
+        self.publisher.role_arn = None
+        self.assertTrue(self.publisher.preflight(self.site, self.guard)['ready'])
+        row = self.store.get('managed-publisher:sample-site')
+        changed = deepcopy(row); changed['deployment']['dev']['bucket'] = 'other-bucket'
+        self.store.put('managed-publisher:sample-site', changed, row['_version'])
+        with self.assertRaises(PublicationRejected): self.publisher.preflight(self.site, self.guard)
 
     def test_missing_role_wrong_account_and_wrong_target_fail_closed(self):
         publisher = SitePublisher('dev', None, self.store, clients_factory=self.fake.clients)
