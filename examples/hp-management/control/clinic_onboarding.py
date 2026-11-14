@@ -20,6 +20,7 @@ completes the claim. AuthCodes are encrypted at rest and never shown again.
 """
 from __future__ import annotations
 
+import json
 import re
 import secrets
 import time
@@ -261,6 +262,7 @@ class ClinicOnboarding:
             try:
                 connected = wordpress.finish_for(self.policy(purchase), visit['subject'], state, query['code'])
             except WordPressConnectionError as error:
+                print(json.dumps({'event': 'clinic_wordpress_failed', 'error': str(error)}))
                 notice = str(error) if str(error) in WORDPRESS_NOTICES else 'wordpress_failed'
                 response = self.back(session_id, notice)
             else:
