@@ -77,7 +77,7 @@ test('Pricing leads with AI information sharing and distinguishes managed growth
 
 test('Growth plan labels and recording consultation stay consistent without changing prices',()=>{
  const page=fs.readFileSync('site/hp-management/clinic/index.html','utf8');
- for(const name of ['AI・Googleマップ集患','AI・Googleマップ集患プラス']){
+ for(const name of ['AI集患','AI集患プラス']){
   const titles=[...page.matchAll(/<h3>([\s\S]*?)<\/h3>/g)].map(m=>m[1].replace(/<[^>]+>/g,''));
   assert.ok(titles.includes(name));
   assert.ok(page.includes('<strong>'+name+'</strong>'));
