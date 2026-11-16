@@ -32,6 +32,7 @@ from urllib.parse import urlencode
 from cryptography.fernet import Fernet
 
 from domain_verification import site_host
+from email_login import LOGIN_CSS, login_card
 from identity import AuthError, sha
 from licensing import LicenseUnavailable
 from service import Rejected
@@ -453,7 +454,17 @@ class ClinicOnboarding:
                 '.kv{display:grid;grid-template-columns:120px 1fr;gap:4px 12px;font-size:14px}.kv dt{color:var(--muted)}.kv dd{margin:0;word-break:break-all}'
                 'code{background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:2px 6px;font-size:13px;word-break:break-all}'
                 '.notice{border-left:3px solid var(--warn);padding:8px 12px;background:#fff8f1;margin-bottom:16px;font-size:14px}'
-                '.ok{color:var(--ok);font-weight:600}ol.guide{padding-left:20px;margin:0}'
+                '.ok{color:var(--ok);font-weight:600}ol.guide{padding-left:20px;margin:0}' + LOGIN_CSS +
+                '.site-pick form .btn{display:block;width:100%;box-sizing:border-box;margin-top:14px}'
+                '.site-pick>input[type=radio]{position:absolute;opacity:0;pointer-events:none}'
+                '.seg{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px;background:var(--bg);border:1px solid var(--line);border-radius:10px;margin:4px 0 8px}'
+                '.seg label{margin:0;padding:8px 6px;text-align:center;border-radius:7px;cursor:pointer;color:var(--muted)}'
+                '#kind-wp:checked~.seg label[for=kind-wp],#kind-other:checked~.seg label[for=kind-other]'
+                '{background:#fff;color:var(--fg);box-shadow:0 1px 2px rgba(0,0,0,.12)}'
+                '#kind-wp:focus-visible~.seg label[for=kind-wp],#kind-other:focus-visible~.seg label[for=kind-other]'
+                '{outline:2px solid var(--primary);outline-offset:1px}'
+                '.site-pick .pane{display:none}'
+                '#kind-wp:checked~.pane.wp,#kind-other:checked~.pane.other,.site-pick>.pane:only-of-type{display:block}'
                 '</style></head><body><main><div class="brand">SIMY HP管理</div>'
                 f'<h1>{escape(title)}</h1>{steps}{inner}</main></body></html>')
 
@@ -475,18 +486,10 @@ class ClinicOnboarding:
                 if bound else '<p class="muted">ホームページを編集するときに使うアカウントでログインしてください。'
                               'このアカウントにホームページの編集権限を付与します。</p>')
         banner = f'<div class="notice">{escape(notice)}</div>' if notice else ''
-        email = '' if self.identity.email_codes is None else (
-            '<div class="card"><h2>メールアドレスでログイン</h2>'
-            '<p class="muted">入力したメールアドレスに6桁の確認コードをお送りします。Googleアカウントは不要です。</p>'
-            f'<form method="post" action="/start/email"><input type="hidden" name="session_id" value="{escape(session_id, quote=True)}">'
-            '<label for="email">メールアドレス</label>'
-            '<input id="email" name="email" type="email" required autocomplete="email" inputmode="email">'
-            '<p style="margin-top:12px"><button class="btn" type="submit">確認コードを送る</button></p></form></div>')
-        google_class = 'btn secondary' if email else 'btn'
+        login = login_card(href, None if self.identity.email_codes is None else '/start/email',
+                           {'session_id': session_id})
         return self.layout('お支払いが完了しました', banner + (
-            f'<div class="card"><h2>お申し込み内容</h2>{self.plan_summary(purchase)}{note}</div>{email}'
-            f'<div class="card"><h2>Googleアカウントでログイン</h2>'
-            f'<a class="{google_class}" href="{escape(href, quote=True)}">Googleでログイン</a></div>'), step=1)
+            f'<div class="card"><h2>お申し込み内容</h2>{self.plan_summary(purchase)}{note}</div>{login}'), step=1)
 
     def site_step(self, purchase, visit, intake, session_id, notice):
         sid = escape(session_id, quote=True)
@@ -529,21 +532,32 @@ class ClinicOnboarding:
                 f'<div class="card"><h2>{escape(head)}</h2><dl class="kv">{rows}</dl>'
                 f'<p class="muted" style="margin-top:12px">{escape(body)}'
                 f'{escape(visit["email"])} あてにご連絡します。このページを開き直すと、準備ができ次第そのまま編集を始められます。</p></div>'), step=2)
-        wordpress = '' if self.wordpress is None else (
-            '<div class="card"><h2>WordPress.comのサイトをお使いの場合</h2>'
-            '<p class="muted">WordPress.comでSIMYを許可すると、そのまま編集を始められます。'
-            'サイトの管理者アカウントで、このサイトだけを許可してください。</p>'
-            f'<form method="post" action="/start/wordpress"><input type="hidden" name="session_id" value="{sid}">'
-            '<label for="wordpress_url">WordPress.comサイトのURL</label>'
-            '<input id="wordpress_url" name="wordpress_url" type="url" required placeholder="https://example-clinic.wordpress.com" autocomplete="url">'
-            '<p style="margin-top:12px"><button class="btn secondary" type="submit">WordPress.comで接続する</button></p></form></div>')
-        return self.layout('ホームページを登録します', account + banner + wordpress + (
-            '<div class="card"><h2>ホームページの情報</h2>'
-            f'<form method="post" action="/start/site"><input type="hidden" name="session_id" value="{sid}">'
+        other = (
+            f'<form class="pane other" method="post" action="/start/site"><input type="hidden" name="session_id" value="{sid}">'
             '<label for="site_url">ホームページのURL</label>'
             '<input id="site_url" name="site_url" type="url" required placeholder="https://www.example-clinic.jp" autocomplete="url">'
             '<label for="auth_code">ドメインのAuthCode（移管する場合）</label>'
             '<input id="auth_code" name="auth_code" type="text" autocomplete="off" spellcheck="false" placeholder="例: Ab3$xY9!kQ">'
             '<p class="muted">現在のドメイン管理会社が発行する移管用のコードです。ドメインをSIMYへ移す場合に入力してください。'
             '暗号化して保存し、移管手続き以外には使いません。後から担当者にお伝えいただくこともできます。</p>'
-            '<p><button class="btn" type="submit">登録する</button></p></form></div>'), step=2)
+            '<button class="btn" type="submit">登録する</button></form>')
+        if self.wordpress is None:
+            return self.layout('ホームページを登録します', account + banner + (
+                f'<div class="card site-pick"><h2>ホームページの情報</h2>{other}</div>'), step=2)
+        wordpress = (
+            f'<form class="pane wp" method="post" action="/start/wordpress"><input type="hidden" name="session_id" value="{sid}">'
+            '<p class="muted">WordPress.comでSIMYを許可すると、そのまま編集を始められます。'
+            'サイトの管理者アカウントで、このサイトだけを許可してください。</p>'
+            '<label for="wordpress_url">WordPress.comサイトのURL</label>'
+            '<input id="wordpress_url" name="wordpress_url" type="url" required placeholder="https://example-clinic.wordpress.com" autocomplete="url">'
+            '<button class="btn" type="submit">WordPress.comで接続する</button></form>')
+        # CSS-only switch (the page CSP allows no scripts): the checked radio shows one form.
+        # After a failed submit, reopen the form the notice is about.
+        pick_other = notice in ('invalid_url', 'invalid_auth_code')
+        return self.layout('ホームページを登録します', account + banner + (
+            '<div class="card site-pick"><h2>ホームページの種類</h2>'
+            f'<input type="radio" name="kind" id="kind-wp"{"" if pick_other else " checked"}>'
+            f'<input type="radio" name="kind" id="kind-other"{" checked" if pick_other else ""}>'
+            '<div class="seg"><label for="kind-wp">WordPress.com</label>'
+            '<label for="kind-other">その他のホームページ</label></div>'
+            f'{wordpress}{other}</div>'), step=2)

@@ -154,6 +154,50 @@ class SesSender:
                                 'Body': {'Text': {'Data': body, 'Charset': 'UTF-8'}}}})
 
 
+# -- shared sign-in card -------------------------------------------------------
+
+# One card with both methods, like common sign-in screens: Google first, a
+# divider, then the email code form.  Shared by the plugin and /start pages.
+LOGIN_CSS = (
+    '.login .btn{display:block;width:100%;box-sizing:border-box;text-align:center}'
+    '.login .btn.google{display:flex;align-items:center;justify-content:center;gap:10px;'
+    'background:#fff;color:#1d2433;border:1px solid #c9ced6}'
+    '.login .btn.google svg{width:18px;height:18px;flex:none}'
+    '.login .or{display:flex;align-items:center;gap:12px;color:#5b6577;font-size:13px;margin:20px 0 4px}'
+    '.login .or::before,.login .or::after{content:"";flex:1;border-top:1px solid #e3e6eb}'
+    '.login label{margin-top:14px}.login form .btn{margin-top:12px}'
+    '.login .hint{color:#5b6577;font-size:13px;margin:10px 0 0}'
+    '.login .link{background:none;border:0;padding:0;margin-left:4px;font:inherit;color:#0075de;'
+    'font-weight:600;cursor:pointer;text-decoration:underline}')
+
+GOOGLE_MARK = (
+    '<svg viewBox="0 0 48 48" aria-hidden="true">'
+    '<path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>'
+    '<path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>'
+    '<path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>'
+    '<path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>'
+    '</svg>')
+
+
+def login_card(google_href, email_action=None, hidden=None, *, intro=''):
+    """Sign-in card.  email_action=None renders the Google button alone."""
+    from html import escape
+    google = (f'<a class="btn google" href="{escape(google_href, quote=True)}">'
+              f'{GOOGLE_MARK}Googleでログイン</a>')
+    if email_action is None:
+        return f'<div class="card login"><h2>ログイン</h2>{intro}{google}</div>'
+    fields = ''.join(f'<input type="hidden" name="{escape(k, quote=True)}" value="{escape(v, quote=True)}">'
+                     for k, v in (hidden or {}).items())
+    return (f'<div class="card login"><h2>ログイン</h2>{intro}{google}'
+            '<div class="or">または</div>'
+            f'<form method="post" action="{escape(email_action, quote=True)}">{fields}'
+            '<label for="email">メールアドレス</label>'
+            '<input id="email" name="email" type="email" required autocomplete="email" inputmode="email" '
+            'placeholder="example@clinic.jp">'
+            '<button class="btn" type="submit">メールアドレスでログイン</button></form>'
+            '<p class="hint">6桁の確認コードをメールでお送りします。Googleアカウントは不要です。</p></div>')
+
+
 # -- sign-in pages for the plugin connection ---------------------------------
 
 PAGE_CSP = ("default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; "
@@ -176,6 +220,7 @@ def page(status, title, inner, *, refresh=None):
             '.btn{display:inline-block;background:#0075de;color:#fff;border:0;border-radius:8px;padding:11px 18px;font:inherit;font-weight:600;text-decoration:none;cursor:pointer}'
             '.btn.secondary{background:#fff;color:#1d2433;border:1px solid #c9ced6}'
             '.notice{border-left:3px solid #b54708;padding:8px 12px;background:#fff8f1;margin-bottom:16px;font-size:14px}'
+            + LOGIN_CSS +
             '</style></head><body><main><div class="brand">SIMY HP管理</div>'
             f'<h1>{escape(title)}</h1>{inner}</main></body></html>')
     return {'statusCode': status, 'headers': {
@@ -187,20 +232,11 @@ def page(status, title, inner, *, refresh=None):
 def choose_page(state, notice=None):
     from html import escape
     from urllib.parse import urlencode
-    s = escape(state, quote=True)
     google = '/oauth/login/google?' + urlencode({'state': state})
     banner = f'<div class="notice">{escape(notice)}</div>' if notice else ''
-    return page(200, 'HP編集に接続します', banner + (
-        '<div class="card"><h2>メールアドレスでログイン</h2>'
-        '<p class="muted">登録したメールアドレスに、6桁の確認コードをお送りします。Googleアカウントは不要です。</p>'
-        '<form method="post" action="/oauth/login/email">'
-        f'<input type="hidden" name="state" value="{s}">'
-        '<label for="email">メールアドレス</label>'
-        '<input id="email" name="email" type="email" required autocomplete="email" inputmode="email">'
-        '<button class="btn" type="submit">確認コードを送る</button></form></div>'
-        '<div class="card"><h2>Googleアカウントでログイン</h2>'
-        '<p class="muted">Googleアカウントで登録している場合はこちら。</p>'
-        f'<a class="btn secondary" href="{escape(google, quote=True)}">Googleでログイン</a></div>'))
+    return page(200, 'HP編集に接続します', banner + login_card(
+        google, '/oauth/login/email', {'state': state},
+        intro='<p class="muted">登録したアカウントでログインしてください。</p>'))
 
 
 def code_page(state, email, notice=None, *, action='/oauth/login/email/verify', resend='/oauth/login/email',
@@ -212,18 +248,18 @@ def code_page(state, email, notice=None, *, action='/oauth/login/email/verify', 
     # The plugin page must not reveal whether the address may sign in.
     sent = f'{escape(email)} が登録済みの場合、確認コードを送信しました。' if registered_only \
         else f'{escape(email)} に確認コードを送信しました。'
+    email_field = f'<input type="hidden" name="email" value="{escape(email, quote=True)}">'
+    # One card: the code form, then resend as a quiet text button (its own form).
     return page(200, '確認コードを入力', banner + (
-        f'<div class="card"><p>{sent}メールに記載の6桁のコードを入力してください。</p>'
-        '<p class="muted">コードは10分間有効です。届かない場合は、迷惑メールフォルダーもご確認ください。</p>'
-        f'<form method="post" action="{escape(action, quote=True)}">{fields}'
-        f'<input type="hidden" name="email" value="{escape(email, quote=True)}">'
-        '<label for="code">確認コード</label>'
+        f'<div class="card login"><p>{sent}</p>'
+        f'<form method="post" action="{escape(action, quote=True)}">{fields}{email_field}'
+        '<label for="code">6桁の確認コード</label>'
         '<input id="code" class="code" name="code" required inputmode="numeric" autocomplete="one-time-code" '
-        'pattern="[0-9]{6}" maxlength="6">'
-        '<button class="btn" type="submit">ログイン</button></form></div>'
-        f'<div class="card"><form method="post" action="{escape(resend, quote=True)}">{fields}'
-        f'<input type="hidden" name="email" value="{escape(email, quote=True)}">'
-        '<button class="btn secondary" type="submit">コードを再送する</button></form></div>'))
+        'pattern="[0-9]{6}" maxlength="6" autofocus>'
+        '<button class="btn" type="submit">ログイン</button></form>'
+        f'<form class="resend" method="post" action="{escape(resend, quote=True)}">{fields}{email_field}'
+        '<p class="hint">有効期限は10分です。届かない場合は迷惑メールフォルダーもご確認ください。'
+        '<button class="link" type="submit">コードを再送する</button></p></form></div>'))
 
 
 def done_page(redirect):
