@@ -31,3 +31,24 @@ test('ISMS mark loads before scrolling and stays within the web image budget',()
  const src=img.match(/src="([^"]+)"/)[1];
  assert.ok(fs.statSync('site'+src).size<50000,'Certification mark must stay under 50 KB');
 });
+
+test('HP entry pricing stays within HP management and matches the current clinic plans',()=>{
+ const entry=fs.readFileSync('site/hp-management/index.html','utf8');
+ const clinic=fs.readFileSync('site/hp-management/clinic/index.html','utf8');
+ assert.match(entry,/<a class="sh-pricing" data-service-pricing href="#pricing">/);
+ assert.match(entry,/<section[^>]*id="pricing"/);
+ assert.match(entry,/href="\/hp-management\/clinic\/#pricing"/);
+ for(const price of ['19,800','21,780','29,800','32,780','49,800','54,780']){
+  assert.ok(entry.includes(price),`HP entry price ${price}`);
+  assert.ok(clinic.includes(price),`clinic price ${price}`);
+ }
+ assert.match(entry,/既存ホームページの再制作/);
+ assert.match(entry,/HP管理のご契約と、権利・対象範囲の確認が条件/);
+});
+
+test('Clinic service keeps pre-migration rights and FAQ disclosures available',()=>{
+ const clinic=fs.readFileSync('site/hp-management/clinic/index.html','utf8');
+ for(const anchor of ['faq','migration-rights'])assert.match(clinic,new RegExp(`id="${anchor}"`));
+ for(const text of ['移管実費や追加機能の費用は事前に提示','写真・フォント・テンプレートの利用条件','許可の対象と範囲を記録','無料診断だけでも利用できますか？'])assert.ok(clinic.includes(text));
+ assert.ok(!clinic.includes('保険商品の説明・見積もり・加入手続きは'),'paused insurance referral stays paused');
+});

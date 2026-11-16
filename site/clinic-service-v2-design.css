@@ -145,3 +145,11 @@
 
 .sp-main .sp-security-stats .sp-stat-uptime{flex-wrap:nowrap}
 @media(max-width:760px){.sp-main .sp-security-stats>div:first-child>.sp-stat-uptime,.sp-main .sp-security-stats>div:first-child>p{grid-column:1/-1}}
+
+/* Restored service terms follow the same chapter gutter as pricing. */
+.hp-restored-info{border-top:1px solid var(--ui-line)}
+.hp-info-content h2{line-height:1.6;margin-bottom:1.5rem}
+.hp-info-content h3{line-height:1.7;margin-block:1rem .5rem}
+.hp-info-content p{line-height:1.8}
+.hp-info-content details{padding-block:1rem;border-bottom:1px solid var(--ui-line)}
+.hp-info-content summary{cursor:pointer;font-weight:600;line-height:1.8}
