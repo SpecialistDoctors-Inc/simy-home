@@ -32,18 +32,14 @@ test('ISMS mark loads before scrolling and stays within the web image budget',()
  assert.ok(fs.statSync('site'+src).size<50000,'Certification mark must stay under 50 KB');
 });
 
-test('HP entry pricing stays within HP management and matches the current clinic plans',()=>{
+test('HP entry reuses the existing clinic pricing without duplicating prices',()=>{
  const entry=fs.readFileSync('site/hp-management/index.html','utf8');
  const clinic=fs.readFileSync('site/hp-management/clinic/index.html','utf8');
- assert.match(entry,/<a class="sh-pricing" data-service-pricing href="#pricing">/);
- assert.match(entry,/<section[^>]*id="pricing"/);
- assert.match(entry,/href="\/hp-management\/clinic\/#pricing"/);
- for(const price of ['19,800','21,780','29,800','32,780','49,800','54,780']){
-  assert.ok(entry.includes(price),`HP entry price ${price}`);
-  assert.ok(clinic.includes(price),`clinic price ${price}`);
- }
- assert.match(entry,/既存ホームページの再制作/);
- assert.match(entry,/HP管理のご契約と、権利・対象範囲の確認が条件/);
+ assert.match(entry,/<a class="sh-pricing" data-service-pricing href="\/hp-management\/clinic\/#pricing">/);
+ assert.match(entry,/href="\/hp-management\/clinic\/#pricing">料金<\/a>/);
+ assert.doesNotMatch(entry,/hp-price-list|id="hp-pricing-title"|19,800|29,800|49,800/);
+ assert.match(clinic,/<section[^>]*id="pricing"/);
+ for(const price of ['19,800','21,780','29,800','32,780','49,800','54,780'])assert.ok(clinic.includes(price));
 });
 
 test('Clinic service keeps pre-migration rights and FAQ disclosures available',()=>{
