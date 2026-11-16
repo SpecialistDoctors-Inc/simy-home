@@ -69,7 +69,7 @@ test('Pricing leads with AI information sharing and distinguishes managed growth
  const plus=clinic.match(/<article class="plan plan-plus">[\s\S]*?<\/article>/)[0];
  assert.ok(basic.indexOf('AIで診療案内・記事の下書き')<basic.indexOf('セキュリティ修正・更新後'));
  assert.ok(plus.indexOf('標準プランのAI活用・情報発信・アクセス解析')<plus.indexOf('WAFによる攻撃対策'));
- for(const term of ['稼働監視・バックアップ・復元','サーバー（5GB）・SSL・ドメイン管理','Googleアナリティクスの導入・基本設定'])assert.ok(basic.includes(term));
+ for(const term of ['稼働監視・バックアップ・復元','ストレージ（5GB）','Webサーバー・CDN：AWS','公開・更新：ファイルのアップロード','SSL・ドメイン管理','Googleアナリティクスの導入・基本設定'])assert.ok(basic.includes(term));
  assert.ok(clinic.includes('担当者によるGoogleマップ・AI検索の運用支援は、両プラン共通の追加オプションです。'));
  assert.ok(clinic.includes('何を改善するかの相談から'));
 });
