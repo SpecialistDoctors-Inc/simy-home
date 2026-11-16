@@ -166,3 +166,9 @@
  .sp-main .support-scene,.sp-main .support-intro,.sp-main .support-price{grid-column:1;grid-row:auto}
  .sp-main .support-scene{margin-inline:-24px}
 }
+
+.sp-main .plan-recording{margin-top:16px;margin-bottom:16px;padding-top:16px;border-top:1px solid var(--line)}
+.sp-main .plan-recording .plan-desc{margin:0 0 8px}
+.sp-main .plan-recording .sp-note{margin:8px 0}
+
+.sp-main .plan-top h3>span{display:inline-block;white-space:nowrap}
