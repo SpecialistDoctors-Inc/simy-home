@@ -3,3 +3,13 @@
 @media(max-width:600px){.hp-service .hp-hero{padding-top:40px}.hp-service .hp-overview{display:block;padding:24px}.hp-overview>div{padding:18px 0}.hp-overview>.eyebrow{margin-bottom:18px}.hp-clinic-card{grid-template-columns:minmax(0,1fr)}.hp-clinic-card img{height:auto;aspect-ratio:3/2}.hp-clinic-card>div{padding:24px}.hp-clinic-card h3{font-size:25px}.hp-future summary span{display:block;margin:6px 0 0}.hp-industry-grid{grid-template-columns:minmax(0,1fr)}}
 
 #main .care-nav small{display:inline}#main.hp-service .care-nav>a{display:inline}#main .care-nav>span{letter-spacing:0}
+
+/* Service prices share one row grid at every viewport. */
+.hp-pricing{border-top:1px solid var(--ui-line)}
+.hp-price-list{margin-block:2rem}
+.hp-price-list>div{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1.5rem;padding-block:1.25rem;border-bottom:1px solid var(--ui-line)}
+.hp-price-list dt{font-weight:600}
+.hp-price-list dd{margin:0;min-width:0;font-variant-numeric:tabular-nums}
+.hp-price-list dd strong,.hp-price-list dd span{display:block}
+.hp-price-list dd span{color:var(--ink-soft);margin-top:.5rem}
+@media(max-width:600px){.hp-price-list>div{grid-template-columns:minmax(0,1fr);gap:.75rem}}
