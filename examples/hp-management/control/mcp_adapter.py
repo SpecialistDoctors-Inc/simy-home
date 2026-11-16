@@ -9,6 +9,7 @@ from __future__ import annotations
 import base64
 import json
 import secrets
+import time
 from html import escape
 from urllib.parse import parse_qs, urlsplit
 
@@ -69,6 +70,9 @@ class BadRequest(ValueError):
     pass
 
 
+EMAIL_RESPONSE_SECONDS = 1.5
+
+
 def object_pairs(pairs):
     result = {}
     for key, value in pairs:
@@ -88,6 +92,11 @@ def json_load(data):
 def fields(value, required, optional=()):
     if not isinstance(value, dict) or not set(required) <= set(value) or set(value) - set(required) - set(optional):
         raise BadRequest()
+
+
+def source_ip(event):
+    value = event.get('requestContext', {}).get('http', {}).get('sourceIp')
+    return value if isinstance(value, str) and 0 < len(value) <= 64 else None
 
 
 def flat_query(raw):
@@ -136,6 +145,7 @@ class App:
         # Clinic purchases from simy.one Payment Links (see clinic_onboarding.py).
         self.onboarding, self.stripe_webhook = onboarding, stripe_webhook
         self.jwks, self.ui_html = jwks, ui_html
+        self.email_response_seconds, self.sleep = EMAIL_RESPONSE_SECONDS, time.sleep
         self.preflight_token = preflight_token
         self.wordpress = wordpress
         self.wordpress_transfers = wordpress_transfers
@@ -218,7 +228,7 @@ class App:
             return self.response(self.stripe_webhook(data, headers.get('stripe-signature')))
         if path.startswith('/start') and self.onboarding is not None:
             cookie = headers.get('cookie') or '; '.join(c for c in event.get('cookies') or [] if isinstance(c, str))
-            return self.onboarding_request(method, path, query, data, headers, cookie)
+            return self.onboarding_request(method, path, query, data, headers, cookie, event)
         if method == 'GET' and path == '/oauth/authorize':
             return self.response(302, headers={'location': self.identity.authorize(query)})
         if method == 'GET' and path == '/oauth/google/callback':
@@ -249,6 +259,8 @@ class App:
                     'ChatGPTに戻って接続を完了</a></p></main></body></html>')
                 return response
             return self.response(302, headers={'location': redirect})
+        if path.startswith('/oauth/login') and self.identity.email_codes is not None:
+            return self.email_login_request(method, path, query, data, headers, event)
         content_type = headers.get('content-type', '').split(';')[0].strip().lower()
         if method == 'POST' and path == '/oauth/register':
             if content_type != 'application/json':
@@ -336,7 +348,72 @@ class App:
         except Exception:
             return self.response(503, {'error': 'hp_license_unavailable'})
 
-    def onboarding_request(self, method, path, query, data, headers, cookie):
+    def email_login_request(self, method, path, query, data, headers, event):
+        """Sign-in page for the plugin connection: Google or a code sent by email."""
+        import email_login as pages
+        expired = lambda: pages.error_page('ログインの有効期限が切れました',
+                                           'Codexに戻り、HPプラグインの接続をもう一度始めてください。')
+        if method == 'GET' and path in ('/oauth/login', '/oauth/login/google'):
+            fields(query, ('state',))
+            try:
+                if path == '/oauth/login/google':
+                    return self.response(302, headers={'location': self.identity.google_login(query['state'])})
+                self.identity.pending_login(query['state'])
+            except AuthError:
+                return expired()
+            return pages.choose_page(query['state'])
+        if method != 'POST' or path not in ('/oauth/login/email', '/oauth/login/email/verify'):
+            return self.response(404, {'error': 'not_found'})
+        if headers.get('content-type', '').split(';')[0].strip().lower() != 'application/x-www-form-urlencoded':
+            return self.response(415, {'error': 'unsupported_media_type'})
+        # Same-origin form posts only; the state alone must not be replayable cross-site.
+        if headers.get('origin') != self.identity.issuer:
+            return pages.error_page('この操作は受け付けられませんでした', 'ページを開き直して、もう一度お試しください。', 403)
+        try:
+            form = flat_query(data.decode('utf-8'))
+        except UnicodeError:
+            raise BadRequest() from None
+        state = form.get('state', '')
+        try:
+            if path == '/oauth/login/email':
+                fields(form, ('state', 'email'))
+                started = time.monotonic()
+                try:
+                    sent = self.identity.email_start(state, form['email'], source_ip(event))
+                except AuthError as error:
+                    if str(error) != 'invalid_email':
+                        raise
+                    return pages.choose_page(state, pages.NOTICES['invalid_email'])
+                except Conflict:
+                    raise
+                except Exception:
+                    # Same page as a successful send: a distinct error would tell
+                    # an outsider that this address is registered. The user resends.
+                    print('{"event":"hp_email_code_send_failed"}')
+                    sent = True
+                # Only registered addresses wait for SES; pad every answer to the
+                # same minimum time so latency does not reveal registration.
+                remaining = self.email_response_seconds - (time.monotonic() - started)
+                if remaining > 0:
+                    self.sleep(remaining)
+                return pages.code_page(state, form['email'].strip(), None if sent else pages.NOTICES['rate_limited'])
+            fields(form, ('state', 'code', 'email'))
+            try:
+                redirect = self.identity.email_verify(state, form['code'])
+            except AuthError as error:
+                if str(error) in ('invalid_email_code', 'expired_email_code'):
+                    return pages.code_page(state, form['email'], pages.NOTICES[str(error)])
+                if str(error) == 'site_invitation_required':
+                    return pages.error_page('このアカウントには接続できるサイトがありません',
+                                            'ご登録のメールアドレスか、担当者からのご案内をご確認ください。', 403)
+                raise
+        except AuthError:
+            return expired()
+        if not Identity.valid_redirect(redirect):
+            raise AuthError('invalid_redirect_uri')
+        return pages.done_page(redirect)
+
+    def onboarding_request(self, method, path, query, data, headers, cookie, event=None):
         if method == 'GET' and path == '/start':
             return self.onboarding_call(lambda: self.onboarding.page(query, cookie))
         if method == 'GET' and path == '/start/google':
@@ -357,6 +434,17 @@ class App:
             except UnicodeError:
                 raise BadRequest() from None
             return self.onboarding_call(lambda: self.onboarding.wordpress_start(form, cookie, headers.get('origin')))
+        if method == 'POST' and path in ('/start/email', '/start/email/verify'):
+            if headers.get('content-type', '').split(';')[0].strip().lower() != 'application/x-www-form-urlencoded':
+                return self.response(415, {'error': 'unsupported_media_type'})
+            try:
+                form = flat_query(data.decode('utf-8'))
+            except UnicodeError:
+                raise BadRequest() from None
+            if path == '/start/email':
+                return self.onboarding_call(lambda: self.onboarding.email_start(
+                    form, cookie, headers.get('origin'), source_ip(event or {})))
+            return self.onboarding_call(lambda: self.onboarding.email_verify(form, cookie, headers.get('origin')))
         if method == 'GET' and path == '/start/wordpress/callback':
             return self.onboarding_call(lambda: self.onboarding.wordpress_callback(query, cookie))
         return self.response(404, {'error': 'not_found'})

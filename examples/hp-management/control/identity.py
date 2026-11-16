@@ -1,4 +1,9 @@
-"""Google-backed OAuth issuer for HP tools. Google tokens never enter tool results."""
+"""OAuth issuer for HP tools.
+
+Users sign in with Google or, when ``email_codes`` is configured, with a one-time
+code sent to their invited mailbox (see email_login.py). Google tokens never
+enter tool results.
+"""
 from __future__ import annotations
 import base64
 import hashlib
@@ -23,9 +28,10 @@ class AuthError(ValueError):
 
 
 class Identity:
-    def __init__(self, store, issuer, google_client_id, signer, google_exchange, clock=time.time):
+    def __init__(self, store, issuer, google_client_id, signer, google_exchange, clock=time.time, email_codes=None):
         self.store, self.issuer, self.client_id = store, issuer.rstrip('/'), google_client_id
         self.signer, self.exchange, self.clock = signer, google_exchange, clock
+        self.email_codes = email_codes
         self.resource = self.issuer + '/mcp'
 
     @staticmethod
@@ -74,9 +80,59 @@ class Identity:
         self.store.put('login:' + sha(state), {'client_id': query['client_id'], 'redirect_uri': query['redirect_uri'],
             'client_state': query.get('state', ''), 'challenge': challenge, 'scope': ' '.join(sorted(scopes)),
             'nonce': nonce, 'client_nonce': client_nonce, 'resource': self.resource, 'expires_at': int(self.clock()) + 600})
+        if self.email_codes is not None:
+            # Let the user choose Google or an emailed code on our own page.
+            return self.issuer + '/oauth/login?' + urlencode({'state': state})
+        return self.google_url(state, nonce)
+
+    def google_url(self, state, nonce):
         return 'https://accounts.google.com/o/oauth2/v2/auth?' + urlencode({'client_id': self.client_id,
             'redirect_uri': self.issuer + '/oauth/google/callback', 'response_type': 'code', 'scope': 'openid email',
             'state': state, 'nonce': nonce, 'prompt': 'select_account'})
+
+    def pending_login(self, state):
+        """Return the unexpired plugin login for ``state`` (never an onboarding login)."""
+        if not isinstance(state, str) or not 16 <= len(state) <= 256:
+            raise AuthError('expired_login')
+        login = self.store.get('login:' + sha(state))
+        if not login or login['expires_at'] <= self.clock() or 'client_id' not in login:
+            raise AuthError('expired_login')
+        return login
+
+    def google_login(self, state):
+        """Continue a pending login with Google (chosen on the sign-in page)."""
+        return self.google_url(state, self.pending_login(state)['nonce'])
+
+    def email_start(self, state, email, source_ip=None):
+        """Send a code only to a mailbox that may sign in; the answer is the same either way."""
+        from email_login import email_subject, normalize_email
+        if self.email_codes is None:
+            raise AuthError('expired_login')
+        self.pending_login(state)
+        address = normalize_email(email)
+        if address is None:
+            raise AuthError('invalid_email')
+        return self.email_codes.issue(state, address, source_ip=source_ip,
+                                      deliver=self.eligible_email(address, email_subject(address)))
+
+    def eligible_email(self, address, subject):
+        member = self.store.get('principal:' + subject)
+        if member:
+            return not member.get('disabled') and bool(member.get('sites'))
+        invitation = self.store.get('invitation:' + sha(address))
+        return bool(invitation and invitation.get('email', '').casefold() == address
+                    and invitation.get('expires_at', 0) > self.clock() and not invitation.get('claimed_subject')
+                    and invitation.get('sites'))
+
+    def email_verify(self, state, code):
+        """Finish a pending login with a correct emailed code; returns the client redirect."""
+        from email_login import email_subject
+        if self.email_codes is None:
+            raise AuthError('expired_login')
+        self.pending_login(state)
+        address, _ = self.email_codes.verify(state, code)
+        login = self.pending_login(state)
+        return self.complete('login:' + sha(state), login, email_subject(address), address)
 
     def callback(self, state, google_code):
         key = 'login:' + sha(state)
@@ -87,19 +143,25 @@ class Identity:
         subject = profile.get('sub')
         if not isinstance(subject, str) or not profile.get('email_verified') or not isinstance(profile.get('email'), str):
             raise AuthError('invalid_google_identity')
+        if subject.startswith('email-'):
+            raise AuthError('invalid_google_identity')
+        return self.complete(key, login, subject, profile['email'])
+
+    def complete(self, key, login, subject, email):
         member = self.store.get('principal:' + subject)
         membership_writes = []
         if not member:
-            invitation_key = 'invitation:' + sha(profile['email'].casefold())
+            invitation_key = 'invitation:' + sha(email.casefold())
             invitation = self.store.get(invitation_key)
-            if (not invitation or invitation.get('email', '').casefold() != profile['email'].casefold()
+            if (not invitation or invitation.get('email', '').casefold() != email.casefold()
                     or invitation.get('expires_at', 0) <= self.clock() or invitation.get('claimed_subject')
                     or not invitation.get('sites')):
                 raise AuthError('site_invitation_required')
             # Only an administrator can create these server-owned invitations.
-            # A verified exact mailbox binds once to Google's immutable subject;
-            # a recycled email cannot claim the old principal's permissions.
-            member = {'sites': invitation['sites'], 'email': profile['email'], 'disabled': False}
+            # A verified exact mailbox binds once to one subject: Google's
+            # immutable subject, or the mailbox principal for an emailed code.
+            # A Google account cannot later claim an emailed principal's grants.
+            member = {'sites': invitation['sites'], 'email': email, 'disabled': False}
             membership_writes = [Write('principal:' + subject, member, None),
                 Write(invitation_key, {**invitation, 'claimed_subject': subject}, invitation['_version'])]
         elif member.get('disabled') or not member.get('sites'):
@@ -107,7 +169,7 @@ class Identity:
         else:
             membership_writes = [Check('principal:' + subject, member['_version'])]
         code = random_id()
-        value = {**login, 'subject': subject, 'email': profile['email'], 'expires_at': int(self.clock()) + 120}
+        value = {**login, 'subject': subject, 'email': email, 'expires_at': int(self.clock()) + 120}
         value.pop('_version', None)
         self.store.transact([Write(key, None, login['_version']), Write('code:' + sha(code), value, None),
                              *membership_writes])
