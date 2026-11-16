@@ -13,3 +13,13 @@ test('diagnosis entry pages publish current interactive asset revisions',()=>{
   }
  }
 });
+test('the established clinic page ships the current preview editor under its content hash',()=>{
+ const html=fs.readFileSync('site/hp-management/clinic/index.html','utf8');
+ const editors=[...html.matchAll(/<script src="(\/assets\/clinic-service-v2\/[a-f0-9]+\.js)"/g)]
+  .map(match=>({path:'site'+match[1],source:fs.readFileSync('site'+match[1],'utf8')}))
+  .filter(asset=>asset.source.includes('global.SimyPreviewEdit='));
+ assert.equal(editors.length,1,'the live clinic page loads one editor');
+ assert.equal(editors[0].source,fs.readFileSync('site/preview-edit.js','utf8'));
+ const hash=crypto.createHash('sha256').update(editors[0].source).digest('hex').slice(0,14);
+ assert.ok(editors[0].path.endsWith('/'+hash+'.js'));
+});
