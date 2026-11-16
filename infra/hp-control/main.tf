@@ -209,6 +209,7 @@ resource "aws_lambda_function" "runtime" {
       HP_CONTROL_PREFLIGHT_SECRET_ARN = var.preflight_secret_arn
       HP_SITE_CLAIM_TARGETS           = jsonencode(local.claim_targets)
       HP_CLINIC_BILLING_SECRET_ARN    = var.clinic_billing_secret_arn
+      HP_EMAIL_LOGIN_FROM             = var.email_login_from
       } : each.key == "consumer" ? {
       HP_GITHUB_SECRET_ARN          = var.github_secret_arn
       HP_GOOGLE_OPERATOR_SECRET_ARN = var.google_operator_secret_arn
@@ -239,7 +240,7 @@ resource "aws_apigatewayv2_integration" "api" {
   payload_format_version = "2.0"
 }
 resource "aws_apigatewayv2_route" "api" {
-  for_each  = toset(concat(["GET /health", "POST /mcp", "POST /github/webhook", "GET /oauth/{proxy+}", "POST /oauth/{proxy+}", "GET /.well-known/{proxy+}"], var.preflight_secret_arn != "" ? ["POST /internal/license/preflight", "POST /internal/site/claim"] : [], var.clinic_billing_secret_arn != "" ? ["GET /start", "GET /start/google", "POST /start/site", "POST /start/wordpress", "GET /start/wordpress/callback", "POST /stripe/webhook"] : []))
+  for_each  = toset(concat(["GET /health", "POST /mcp", "POST /github/webhook", "GET /oauth/{proxy+}", "POST /oauth/{proxy+}", "GET /.well-known/{proxy+}"], var.preflight_secret_arn != "" ? ["POST /internal/license/preflight", "POST /internal/site/claim"] : [], var.clinic_billing_secret_arn != "" ? ["GET /start", "GET /start/google", "POST /start/site", "POST /start/wordpress", "GET /start/wordpress/callback", "POST /stripe/webhook"] : [], var.clinic_billing_secret_arn != "" && var.email_login_from != "" ? ["POST /start/email", "POST /start/email/verify"] : []))
   api_id    = aws_apigatewayv2_api.control.id
   route_key = each.value
   target    = "integrations/${aws_apigatewayv2_integration.api.id}"

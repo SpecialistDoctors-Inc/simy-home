@@ -47,7 +47,9 @@ Lambda. All receive:
 | `HP_PUBLICATION_ENABLED` | String `false` until reviewed cutover |
 
 The API additionally receives `HP_GOOGLE_SECRET_ARN` and
-`HP_SIGNING_SECRET_ARN`. The consumer receives `HP_GITHUB_SECRET_ARN`,
+`HP_SIGNING_SECRET_ARN`. With `email_login_from` set it also receives
+`HP_EMAIL_LOGIN_FROM` and `ses:SendEmail` on the `simy.one` SES identity for
+that From address only (see CONNECTIONS.md). The consumer receives `HP_GITHUB_SECRET_ARN`,
 `HP_GOOGLE_OPERATOR_SECRET_ARN`, and `HP_PUBLISHER_ROLES` (JSON environment-to-role
 map, empty while publication is disabled). All references must be existing,
 dedicated `hp-control/` Secrets Manager secrets in the target account/region.

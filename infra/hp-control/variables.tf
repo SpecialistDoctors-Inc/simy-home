@@ -186,3 +186,12 @@ variable "wordpress_paid_sites" {
   type        = bool
   default     = false
 }
+variable "email_login_from" {
+  description = "From address for one-time sign-in codes (an SES-verified simy.one address). Empty keeps Google as the only sign-in method."
+  type        = string
+  default     = ""
+  validation {
+    condition     = var.email_login_from == "" || can(regex("^[A-Za-z0-9._%+-]+@simy\\.one$", var.email_login_from))
+    error_message = "Use an address on the SES-verified simy.one domain, or leave blank."
+  }
+}

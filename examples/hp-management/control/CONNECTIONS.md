@@ -46,6 +46,29 @@ operator Drive/Sheets/Gmail credentials. Drive file-transfer requires operator
 access to the configured folders; broaden scopes only via explicit operator
 consent, never by changing saved credential JSON.
 
+## Email sign-in without a Google account
+
+Set `email_login_from` (Terraform) to an address on the SES-verified `simy.one`
+identity, for example `no-reply@simy.one`. The API then receives
+`HP_EMAIL_LOGIN_FROM` and `ses:SendEmail` limited to that From address. Empty
+keeps Google as the only method.
+
+When enabled, `/oauth/authorize` opens an HP sign-in page offering Google or a
+six-digit code sent by email, and the `/start` purchase page offers the same.
+A code is valid for ten minutes and five attempts, is stored only as a hash
+bound to the requesting login (plugin) or browser (purchase page), and sends
+are limited per login, per address and per source IP each hour.
+
+Proving a mailbox yields the principal `email-<sha256(lowercased address)>`.
+The same address always maps to the same principal, so a later sign-in on
+another computer keeps its grants. An operator invitation (`provision_site.py
+--email`) can be claimed once by either Google or an emailed code; whichever
+claims it owns the grant. Google subjects never take the `email-` form and are
+never merged with mailbox principals. The plugin page sends a code only to an
+address with an active principal or an unclaimed invitation, and answers the
+same either way. Unlike Google's immutable subject, a mailbox principal follows
+whoever controls that mailbox; disable the principal when a clinic loses one.
+
 ## HP plugin connection
 
 Register the HTTPS MCP endpoint `https://hp-control.simy.one/mcp` with Google-backed

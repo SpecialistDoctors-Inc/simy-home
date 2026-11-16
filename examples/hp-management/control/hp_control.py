@@ -31,7 +31,8 @@ def application():
     tokens = Tokens(secret(os.environ['HP_SIGNING_SECRET_ARN']), issuer)
     client = json.loads(secret(os.environ['HP_GOOGLE_SECRET_ARN']))
     store = DynamoStore(os.environ['HP_TABLE_NAME'])
-    identity = Identity(store, issuer, client['client_id'], tokens.sign, GoogleExchange(client))
+    identity = Identity(store, issuer, client['client_id'], tokens.sign, GoogleExchange(client),
+                        email_codes=email_codes(store))
     wordpress_arn = os.environ.get('HP_WORDPRESS_SECRET_ARN', '')
     wordpress_origin = os.environ.get('HP_WORDPRESS_TEST_ORIGIN') if wordpress_arn else None
     service = Service(store, publication_enabled=os.environ.get('HP_PUBLICATION_ENABLED') == 'true',
@@ -51,6 +52,19 @@ def application():
                              if service.wordpress_test_origin or service.wordpress_paid_sites else None),
         transfers=Transfers(service, bucket, s3), onboarding=onboarding, stripe_webhook=stripe_webhook)
     return _app
+
+
+def email_codes(store):
+    """Offer sign-in with an emailed code when a verified SES sender is configured.
+
+    HP_EMAIL_LOGIN_FROM is the From address (an SES-verified identity in this
+    account/region). Empty keeps Google as the only sign-in method.
+    """
+    sender = os.environ.get('HP_EMAIL_LOGIN_FROM', '')
+    if not sender:
+        return None
+    from email_login import EmailCodes, SesSender
+    return EmailCodes(store, SesSender(sender))
 
 
 def wordpress_paid_sites(wordpress_arn):

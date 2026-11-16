@@ -4,7 +4,9 @@ The clinic page's Stripe Payment Links redirect to
 ``/start?session_id={CHECKOUT_SESSION_ID}``. This page:
 
 1. asks Stripe whether that Checkout Session is paid (the URL alone is not proof),
-2. signs the clinic in with Google and binds that account to the subscription once,
+2. signs the clinic in with Google, or with a code emailed to any mailbox it
+   chooses (when email sign-in is enabled), and binds that account to the
+   subscription once,
 3. takes the homepage URL and, optionally, the domain's transfer AuthCode,
 4. when the operator registered that domain with an owner email equal to the
    signed-in (verified) email, grants read/edit/publish under the subscription.
@@ -40,6 +42,7 @@ from wordpress_provider import WordPressConnectionError
 
 COOKIE = 'hp_start'
 LOGIN_COOKIE = 'hp_start_login'
+EMAIL_COOKIE = 'hp_start_email'
 WORDPRESS_COOKIE = 'hp_start_wordpress'
 WORDPRESS_CALLBACK = '/start/wordpress/callback'
 SESSION_SECONDS = 3600
@@ -151,20 +154,89 @@ class ClinicOnboarding:
         subject, email = profile.get('sub'), profile.get('email')
         if not isinstance(subject, str) or not profile.get('email_verified') or not isinstance(email, str):
             raise AuthError('invalid_google_identity')
+        if subject.startswith('email-'):
+            raise AuthError('invalid_google_identity')
+        response = self.signed_in(self.billing.confirmed_session(session_id), session_id, subject, email)
+        if response['statusCode'] == 302:
+            flags = '; HttpOnly; SameSite=Lax' + ('; Secure' if self.secure_cookie else '')
+            response['cookies'].append(f'{LOGIN_COOKIE}=; Path=/oauth/google/callback; Max-Age=0' + flags)
+        return response
+
+    def email_start(self, form, cookie, origin, source_ip=None):
+        """Send a sign-in code to the mailbox the clinic typed (any address)."""
+        from email_login import NOTICES, normalize_email
+        codes = self.identity.email_codes
+        if codes is None or origin != self.origin:
+            raise Rejected('request_rejected')
+        session_id = form.get('session_id')
+        if not valid_session_id(session_id) or set(form) != {'session_id', 'email'}:
+            raise Rejected('invalid_input')
         purchase = self.billing.confirmed_session(session_id)
+        address = normalize_email(form['email'])
+        if address is None:
+            return self.html(200, self.sign_in_step(purchase, session_id, NOTICES['invalid_email']))
+        # The code is redeemable only in this browser (login CSRF), like the Google flow.
+        browser = cookie_value(cookie, EMAIL_COOKIE) or secrets.token_urlsafe(32)
+        try:
+            sent = codes.issue(browser, address, source_ip=source_ip, context={'session_id': session_id})
+        except Conflict:
+            raise
+        except Exception:
+            print('{"event":"hp_email_code_send_failed"}')
+            return self.html(200, self.sign_in_step(purchase, session_id, NOTICES['send_failed']))
+        response = self.email_code_page(session_id, address, None if sent else NOTICES['rate_limited'])
+        response['cookies'] = [f'{EMAIL_COOKIE}={browser}; Path=/start; Max-Age=600; HttpOnly; SameSite=Lax'
+                               + ('; Secure' if self.secure_cookie else '')]
+        return response
+
+    def email_code_page(self, session_id, address, notice):
+        from email_login import code_page
+        response = code_page('', address, notice, action='/start/email/verify', resend='/start/email',
+                             hidden={'session_id': session_id}, registered_only=False)
+        # Keep this site's own headers (CSP allows only same-origin form posts).
+        return self.html(response['statusCode'], response['body'])
+
+    def email_verify(self, form, cookie, origin):
+        from email_login import NOTICES, email_subject
+        codes = self.identity.email_codes
+        if codes is None or origin != self.origin:
+            raise Rejected('request_rejected')
+        session_id = form.get('session_id')
+        if not valid_session_id(session_id) or set(form) != {'session_id', 'code', 'email'}:
+            raise Rejected('invalid_input')
+        browser = cookie_value(cookie, EMAIL_COOKIE)
+        if browser is None:
+            raise AuthError('expired_login')
+        try:
+            address, context = codes.verify(browser, form['code'])
+        except AuthError as error:
+            if str(error) in ('invalid_email_code', 'expired_email_code'):
+                return self.email_code_page(session_id, form['email'], NOTICES[str(error)])
+            raise
+        if context.get('session_id') != session_id:
+            raise AuthError('expired_login')
+        response = self.signed_in(self.billing.confirmed_session(session_id), session_id,
+                                  email_subject(address), address)
+        if response['statusCode'] == 302:
+            flags = '; HttpOnly; SameSite=Lax' + ('; Secure' if self.secure_cookie else '')
+            response['cookies'].append(f'{EMAIL_COOKIE}=; Path=/start; Max-Age=0' + flags)
+        return response
+
+    def signed_in(self, purchase, session_id, subject, email):
         try:
             self.billing.bind_subject(purchase['subscription_id'], subject, email)
         except BillingRejected:
-            return self.html(403, self.error('別のGoogleアカウントで登録済みです',
-                                             'このお申し込みは、最初にログインしたGoogleアカウントで続けてください。'))
+            bound = purchase.get('subject_email')
+            return self.html(403, self.error('別のアカウントで登録済みです',
+                                             f'このお申し込みは、最初にログインしたアカウント（{bound}）で続けてください。'
+                                             if bound else 'このお申し込みは、最初にログインしたアカウントで続けてください。'))
         token = secrets.token_urlsafe(32)
         self.store.put('start-session:' + sha(token), {
             'subscription_id': purchase['subscription_id'], 'session_id': session_id, 'subject': subject,
             'email': email, 'expires_at': int(self.clock()) + SESSION_SECONDS})
         response = self.redirect('/start?' + urlencode({'session_id': session_id}))
         flags = '; HttpOnly; SameSite=Lax' + ('; Secure' if self.secure_cookie else '')
-        response['cookies'] = [f'{COOKIE}={token}; Path=/start; Max-Age={SESSION_SECONDS}' + flags,
-                               f'{LOGIN_COOKIE}=; Path=/oauth/google/callback; Max-Age=0' + flags]
+        response['cookies'] = [f'{COOKIE}={token}; Path=/start; Max-Age={SESSION_SECONDS}' + flags]
         return response
 
     def submit_site(self, form, cookie, origin):
@@ -359,7 +431,7 @@ class ClinicOnboarding:
     def layout(title, inner, step=None, refresh=None):
         steps = ''
         if step is not None:
-            names = ('お支払い', 'Googleでログイン', 'ホームページの登録', '編集を始める')
+            names = ('お支払い', 'ログイン', 'ホームページの登録', '編集を始める')
             steps = '<ol class="steps">' + ''.join(
                 f'<li class="{"done" if i < step else "now" if i == step else ""}">{escape(n)}</li>'
                 for i, n in enumerate(names)) + '</ol>'
@@ -375,7 +447,7 @@ class ClinicOnboarding:
                 '.steps{display:flex;gap:6px;list-style:none;padding:0;margin:0 0 20px;font-size:12px;color:var(--muted)}'
                 '.steps li{flex:1;border-top:3px solid var(--line);padding-top:6px}.steps li.done{border-color:var(--ok);color:var(--ok)}'
                 '.steps li.now{border-color:var(--primary);color:var(--fg);font-weight:600}'
-                'label{display:block;font-weight:600;font-size:14px;margin:14px 0 4px}input[type=text],input[type=url]{width:100%;box-sizing:border-box;font:inherit;padding:10px 12px;border:1px solid #c9ced6;border-radius:8px}'
+                'label{display:block;font-weight:600;font-size:14px;margin:14px 0 4px}input[type=text],input[type=url],input[type=email],input[name=code]{width:100%;box-sizing:border-box;font:inherit;padding:10px 12px;border:1px solid #c9ced6;border-radius:8px}'
                 '.btn{display:inline-block;background:var(--primary);color:#fff;border:0;border-radius:8px;padding:11px 18px;font:inherit;font-weight:600;text-decoration:none;cursor:pointer}'
                 '.btn.secondary{background:#fff;color:var(--fg);border:1px solid #c9ced6}'
                 '.kv{display:grid;grid-template-columns:120px 1fr;gap:4px 12px;font-size:14px}.kv dt{color:var(--muted)}.kv dd{margin:0;word-break:break-all}'
@@ -396,21 +468,30 @@ class ClinicOnboarding:
             rows.append(('決済メール', purchase['email']))
         return '<dl class="kv">' + ''.join(f'<dt>{escape(k)}</dt><dd>{escape(v)}</dd>' for k, v in rows) + '</dl>'
 
-    def sign_in_step(self, purchase, session_id):
+    def sign_in_step(self, purchase, session_id, notice=None):
         href = '/start/google?' + urlencode({'session_id': session_id})
         bound = purchase.get('subject_email')
         note = (f'<p class="muted">このお申し込みは {escape(bound)} で登録済みです。同じアカウントでログインしてください。</p>'
-                if bound else '<p class="muted">ホームページを編集するときに使うGoogleアカウントでログインしてください。'
+                if bound else '<p class="muted">ホームページを編集するときに使うアカウントでログインしてください。'
                               'このアカウントにホームページの編集権限を付与します。</p>')
-        return self.layout('お支払いが完了しました', (
-            f'<div class="card"><h2>お申し込み内容</h2>{self.plan_summary(purchase)}</div>'
-            f'<div class="card"><h2>Googleアカウントでログイン</h2>{note}'
-            f'<a class="btn" href="{escape(href, quote=True)}">Googleでログイン</a></div>'), step=1)
+        banner = f'<div class="notice">{escape(notice)}</div>' if notice else ''
+        email = '' if self.identity.email_codes is None else (
+            '<div class="card"><h2>メールアドレスでログイン</h2>'
+            '<p class="muted">入力したメールアドレスに6桁の確認コードをお送りします。Googleアカウントは不要です。</p>'
+            f'<form method="post" action="/start/email"><input type="hidden" name="session_id" value="{escape(session_id, quote=True)}">'
+            '<label for="email">メールアドレス</label>'
+            '<input id="email" name="email" type="email" required autocomplete="email" inputmode="email">'
+            '<p style="margin-top:12px"><button class="btn" type="submit">確認コードを送る</button></p></form></div>')
+        google_class = 'btn secondary' if email else 'btn'
+        return self.layout('お支払いが完了しました', banner + (
+            f'<div class="card"><h2>お申し込み内容</h2>{self.plan_summary(purchase)}{note}</div>{email}'
+            f'<div class="card"><h2>Googleアカウントでログイン</h2>'
+            f'<a class="{google_class}" href="{escape(href, quote=True)}">Googleでログイン</a></div>'), step=1)
 
     def site_step(self, purchase, visit, intake, session_id, notice):
         sid = escape(session_id, quote=True)
         account = (f'<div class="card"><h2>お申し込み内容</h2>{self.plan_summary(purchase)}'
-                   f'<dl class="kv"><dt>Googleアカウント</dt><dd>{escape(visit["email"])}</dd></dl></div>')
+                   f'<dl class="kv"><dt>ログイン中</dt><dd>{escape(visit["email"])}</dd></dl></div>')
         notices = {
             'invalid_url': 'ホームページのURLを確認してください（例: https://www.example-clinic.jp）。',
             'invalid_auth_code': 'AuthCodeは半角英数字・記号6〜64文字で、空白を含めずに入力してください。',
