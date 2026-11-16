@@ -55,9 +55,21 @@ test('Clinic service keeps pre-migration rights and FAQ disclosures available',(
 test('Update assistance shows AI updates with optional human support',()=>{
  const clinic=fs.readFileSync('site/hp-management/clinic/index.html','utf8');
  assert.doesNotMatch(clinic,/support-portrait|support-advisor|clinic-support-advisor-portrait/);
- assert.ok(clinic.includes('文章・写真の更新を、LINEで依頼。'));
+ assert.ok(clinic.includes('集患・HP運用の知見で、'));
  assert.match(clinic,/<figure class="support-scene"><img[^>]+clinic-ai-with-secretary-support-v2\.webp/);
  assert.ok(fs.statSync('site/assets/website-check/clinic-ai-with-secretary-support-v2.webp').size<400000);
- assert.ok(clinic.includes('担当者による更新代行を追加'));
+ assert.ok(clinic.includes('担当者による集患・更新支援を追加'));
  assert.ok(clinic.includes('税込＋54,780円／月'));
+});
+
+
+test('Pricing leads with AI information sharing and distinguishes managed growth support',()=>{
+ const clinic=fs.readFileSync('site/hp-management/clinic/index.html','utf8');
+ const basic=clinic.match(/<article class="plan">[\s\S]*?<\/article>/)[0];
+ const plus=clinic.match(/<article class="plan plan-plus">[\s\S]*?<\/article>/)[0];
+ assert.ok(basic.indexOf('AIで診療案内・記事の下書き')<basic.indexOf('セキュリティ修正・更新後'));
+ assert.ok(plus.indexOf('基本保守のAI活用・情報発信・アクセス解析')<plus.indexOf('WAFによる攻撃対策'));
+ for(const term of ['稼働監視・バックアップ・復元','サーバー（5GB）・SSL・ドメイン管理','Googleアナリティクスの導入・基本設定'])assert.ok(basic.includes(term));
+ assert.ok(clinic.includes('担当者によるGoogleマップ・AI検索の運用支援は、両プラン共通の追加オプションです。'));
+ assert.ok(clinic.includes('何を改善するかの相談から'));
 });
