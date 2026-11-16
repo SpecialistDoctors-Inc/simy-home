@@ -50,3 +50,12 @@ test('Clinic service keeps pre-migration rights and FAQ disclosures available',(
  for(const text of ['移管実費や追加機能の費用は事前に提示','写真・フォント・テンプレートの利用条件','許可の対象と範囲を記録','無料診断だけでも利用できますか？'])assert.ok(clinic.includes(text));
  assert.ok(!clinic.includes('保険商品の説明・見積もり・加入手続きは'),'paused insurance referral stays paused');
 });
+
+
+test('Update assistance uses service details without decorative portrait labels',()=>{
+ const clinic=fs.readFileSync('site/hp-management/clinic/index.html','utf8');
+ assert.doesNotMatch(clinic,/support-portrait|support-advisor|clinic-support-advisor-portrait/);
+ assert.ok(clinic.includes('文章・写真の更新を、LINEで依頼。'));
+ assert.ok(clinic.includes('担当者による更新代行を追加'));
+ assert.ok(clinic.includes('税込＋54,780円／月'));
+});
