@@ -68,8 +68,25 @@ test('Pricing leads with AI information sharing and distinguishes managed growth
  const basic=clinic.match(/<article class="plan">[\s\S]*?<\/article>/)[0];
  const plus=clinic.match(/<article class="plan plan-plus">[\s\S]*?<\/article>/)[0];
  assert.ok(basic.indexOf('AIで診療案内・記事の下書き')<basic.indexOf('セキュリティ修正・更新後'));
- assert.ok(plus.indexOf('基本保守のAI活用・情報発信・アクセス解析')<plus.indexOf('WAFによる攻撃対策'));
+ assert.ok(plus.indexOf('標準プランのAI活用・情報発信・アクセス解析')<plus.indexOf('WAFによる攻撃対策'));
  for(const term of ['稼働監視・バックアップ・復元','サーバー（5GB）・SSL・ドメイン管理','Googleアナリティクスの導入・基本設定'])assert.ok(basic.includes(term));
  assert.ok(clinic.includes('担当者によるGoogleマップ・AI検索の運用支援は、両プラン共通の追加オプションです。'));
  assert.ok(clinic.includes('何を改善するかの相談から'));
+});
+
+
+test('Growth plan labels and recording consultation stay consistent without changing prices',()=>{
+ const page=fs.readFileSync('site/hp-management/clinic/index.html','utf8');
+ for(const name of ['AI・Googleマップ集患','AI・Googleマップ集患プラス']){
+  const titles=[...page.matchAll(/<h3>([\s\S]*?)<\/h3>/g)].map(m=>m[1].replace(/<[^>]+>/g,''));
+  assert.ok(titles.includes(name));
+  assert.ok(page.includes('<strong>'+name+'</strong>'));
+ }
+ assert.doesNotMatch(page,/<h3>基本保守<\/h3>|<h3>セキュリティ強化<\/h3>|SECURITY PLUS/);
+ const plus=page.match(/<article class="plan plan-plus">[\s\S]*?<\/article>/)[0];
+ assert.ok(plus.includes('診察室の録音を、HPの記事に。'));
+ for(const text of ['同意を得た録音','個人情報を除き','先生の確認・承認後','実施範囲・費用は別途'])assert.ok(plus.includes(text));
+ assert.ok(plus.includes('href="#clinical-content"'));
+ assert.ok(page.includes('id="clinical-content"'));
+ assert.match(page,/name="plan"[^>]*value="19800"/);assert.match(page,/name="plan"[^>]*value="29800"/);
 });
