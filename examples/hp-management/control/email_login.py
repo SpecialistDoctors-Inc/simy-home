@@ -166,7 +166,9 @@ LOGIN_CSS = (
     '.login .or{display:flex;align-items:center;gap:12px;color:#5b6577;font-size:13px;margin:20px 0 4px}'
     '.login .or::before,.login .or::after{content:"";flex:1;border-top:1px solid #e3e6eb}'
     '.login label{margin-top:14px}.login form .btn{margin-top:12px}'
-    '.login .hint{color:#5b6577;font-size:13px;margin:10px 0 0}')
+    '.login .hint{color:#5b6577;font-size:13px;margin:10px 0 0}'
+    '.login .link{background:none;border:0;padding:0;margin-left:4px;font:inherit;color:#0075de;'
+    'font-weight:600;cursor:pointer;text-decoration:underline}')
 
 GOOGLE_MARK = (
     '<svg viewBox="0 0 48 48" aria-hidden="true">'
@@ -246,18 +248,18 @@ def code_page(state, email, notice=None, *, action='/oauth/login/email/verify', 
     # The plugin page must not reveal whether the address may sign in.
     sent = f'{escape(email)} が登録済みの場合、確認コードを送信しました。' if registered_only \
         else f'{escape(email)} に確認コードを送信しました。'
+    email_field = f'<input type="hidden" name="email" value="{escape(email, quote=True)}">'
+    # One card: the code form, then resend as a quiet text button (its own form).
     return page(200, '確認コードを入力', banner + (
-        f'<div class="card"><p>{sent}メールに記載の6桁のコードを入力してください。</p>'
-        '<p class="muted">コードは10分間有効です。届かない場合は、迷惑メールフォルダーもご確認ください。</p>'
-        f'<form method="post" action="{escape(action, quote=True)}">{fields}'
-        f'<input type="hidden" name="email" value="{escape(email, quote=True)}">'
-        '<label for="code">確認コード</label>'
+        f'<div class="card login"><p>{sent}</p>'
+        f'<form method="post" action="{escape(action, quote=True)}">{fields}{email_field}'
+        '<label for="code">6桁の確認コード</label>'
         '<input id="code" class="code" name="code" required inputmode="numeric" autocomplete="one-time-code" '
-        'pattern="[0-9]{6}" maxlength="6">'
-        '<button class="btn" type="submit">ログイン</button></form></div>'
-        f'<div class="card"><form method="post" action="{escape(resend, quote=True)}">{fields}'
-        f'<input type="hidden" name="email" value="{escape(email, quote=True)}">'
-        '<button class="btn secondary" type="submit">コードを再送する</button></form></div>'))
+        'pattern="[0-9]{6}" maxlength="6" autofocus>'
+        '<button class="btn" type="submit">ログイン</button></form>'
+        f'<form class="resend" method="post" action="{escape(resend, quote=True)}">{fields}{email_field}'
+        '<p class="hint">有効期限は10分です。届かない場合は迷惑メールフォルダーもご確認ください。'
+        '<button class="link" type="submit">コードを再送する</button></p></form></div>'))
 
 
 def done_page(redirect):

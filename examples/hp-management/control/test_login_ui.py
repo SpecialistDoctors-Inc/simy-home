@@ -4,7 +4,7 @@ import types
 import unittest
 
 from clinic_onboarding import ClinicOnboarding
-from email_login import choose_page
+from email_login import choose_page, code_page
 
 PURCHASE = {'plan': 'basic', 'email': 'buyer@example.test'}
 VISIT = {'email': 'buyer@example.test'}
@@ -43,6 +43,12 @@ class LoginCardTest(unittest.TestCase):
         self.assertIn('Googleでログイン', card)
         self.assertNotIn('または', card)
         self.assertNotIn('<form', card)
+
+    def test_code_page_is_one_card_with_resend_as_text_button(self):
+        [card] = cards(code_page('st', 'a@example.test')['body'], 'login')
+        self.assertLess(card.index('action="/oauth/login/email/verify"'), card.index('class="resend"'))
+        self.assertIn('<button class="link" type="submit">コードを再送する</button>', card)
+        self.assertEqual(card.count('name="state" value="st"'), 2)
 
 
 class SiteSwitchTest(unittest.TestCase):
