@@ -59,7 +59,7 @@ def header(locale, source, path):
 </header>'''
     # HP service pages keep visitors within the service pricing journey.
     if path == SITE / 'hp-management/index.html':
-        markup = markup.replace(f'<a class="sh-pricing" href="{base}#pricing">Pricing</a>', '<a class="sh-pricing" data-service-pricing href="#pricing">HP管理の料金</a>')
+        markup = markup.replace(f'<a class="sh-pricing" href="{base}#pricing">Pricing</a>', '<a class="sh-pricing" data-service-pricing href="/hp-management/clinic/#pricing">HP管理の料金</a>')
     # The clinic landing page sells HP management, not the separate SIMY app.
     if path == SITE / 'hp-management/clinic/index.html':
         markup = markup.replace(f'<a class="sh-pricing" href="{base}#pricing">Pricing</a>', '<a class="sh-pricing" data-service-pricing href="#pricing">HP管理の料金</a>')
