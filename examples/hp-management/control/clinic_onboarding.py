@@ -34,7 +34,10 @@ from identity import AuthError, sha
 from licensing import LicenseUnavailable
 from service import Rejected
 from site_copy import enqueue as enqueue_copy
-from store import Conflict
+from domain_transfer import enqueue_writes as transfer_writes
+from site_activation import enqueue_writes as activation_writes
+from transfer_intake import TransferInput
+from store import Conflict, Write
 from stripe_billing import ACTIVE, BillingRejected, valid_session_id
 from wordpress_provider import WordPressConnectionError
 
@@ -78,12 +81,14 @@ def cookie_value(raw, name=COOKIE):
 
 
 class ClinicOnboarding:
-    def __init__(self, store, billing, service, identity, intake_key, *, plugin_url=None, wordpress=None,
+    def __init__(self, store, billing, service, identity, intake_key, *, plugin_url=None, wordpress=None, transfer=None, plugin_download=None,
                  google_authorize=GOOGLE_AUTHORIZE, secure_cookie=True, clock=time.time):
         self.store, self.billing, self.service, self.identity = store, billing, service, identity
         # Factory for a WordPressOnboarding whose WordPress.com app returns to
         # WORDPRESS_CALLBACK on this origin; None hides the WordPress option.
         self.wordpress = wordpress
+        self.transfer = transfer
+        self.plugin_download = plugin_download
         self.cipher = Fernet(intake_key.encode() if isinstance(intake_key, str) else intake_key)
         self.plugin_url = plugin_url if isinstance(plugin_url, str) and plugin_url.startswith('https://') else None
         self.google_authorize, self.secure_cookie, self.clock = google_authorize, secure_cookie, clock
@@ -181,7 +186,11 @@ class ClinicOnboarding:
         if existing and existing.get('status') == 'claimed':
             return self.back(session_id)
         if auth_code:
-            sealed = self.cipher.encrypt(auth_code.encode()).decode()
+            # Repeated form submissions keep the same encrypted credential so a
+            # transfer job remains bound to the same immutable intake.
+            previous = existing.get('auth_code') if existing and existing.get('host') == host else None
+            same = previous and self.cipher.decrypt(previous.encode()).decode() == auth_code
+            sealed = previous if same else self.cipher.encrypt(auth_code.encode()).decode()
         elif existing and existing.get('host') == host:
             sealed = existing.get('auth_code')  # keep a code already given for the same domain
         else:
@@ -202,9 +211,42 @@ class ClinicOnboarding:
         else:
             # Known domain but a different owner email (or not claimable now): the operator checks.
             intake.update(status='needs_review', copy_generation=(existing or {}).get('copy_generation', 0))
-        self.store.put(key, intake, existing['_version'] if existing else None)
+        self.store.transact([Write(key, intake, existing['_version'] if existing else None),
+                             *transfer_writes(self.store, intake), *activation_writes(self.store, intake)])
         if intake.get('copy_state') == 'pending':
             enqueue_copy(self.store, purchase['subscription_id'], intake['copy_generation'])
+        return self.back(session_id)
+
+    def download_plugin(self, query, cookie):
+        if self.plugin_download is None:
+            raise Rejected('request_rejected')
+        purchase = self.billing.confirmed_session(query.get('session_id'))
+        visit = self.visit(cookie, purchase)
+        if visit is None or purchase.get('status') not in ACTIVE:
+            raise Rejected('authentication_required')
+        return self.redirect(self.plugin_download(), 303)
+
+    def transfer_quote(self, form, cookie, origin):
+        purchase, visit, session_id = self.authorized_post(form, cookie, origin)
+        if self.transfer is None:
+            raise Rejected('request_rejected')
+        try:
+            quote = self.transfer.quote(purchase, visit)
+            old = self.store.get('transfer-form:' + purchase['subscription_id'])
+            self.store.put('transfer-form:' + purchase['subscription_id'], {'quote_id': quote['quote_id']},
+                           old['_version'] if old else None)
+        except TransferInput as error:
+            return self.back(session_id, str(error))
+        return self.back(session_id)
+
+    def transfer_accept(self, form, cookie, origin):
+        purchase, visit, session_id = self.authorized_post(form, cookie, origin)
+        if self.transfer is None:
+            raise Rejected('request_rejected')
+        try:
+            self.transfer.accept(purchase, visit, form)
+        except (TransferInput, ValueError):
+            return self.back(session_id, 'invalid_contacts')
         return self.back(session_id)
 
     def wordpress_start(self, form, cookie, origin):
@@ -375,7 +417,7 @@ class ClinicOnboarding:
                 '.steps{display:flex;gap:6px;list-style:none;padding:0;margin:0 0 20px;font-size:12px;color:var(--muted)}'
                 '.steps li{flex:1;border-top:3px solid var(--line);padding-top:6px}.steps li.done{border-color:var(--ok);color:var(--ok)}'
                 '.steps li.now{border-color:var(--primary);color:var(--fg);font-weight:600}'
-                'label{display:block;font-weight:600;font-size:14px;margin:14px 0 4px}input[type=text],input[type=url]{width:100%;box-sizing:border-box;font:inherit;padding:10px 12px;border:1px solid #c9ced6;border-radius:8px}'
+                'label{display:block;font-weight:600;font-size:14px;margin:14px 0 4px}input[type=text],input[type=url],select{width:100%;box-sizing:border-box;font:inherit;padding:10px 12px;border:1px solid #c9ced6;border-radius:8px}'
                 '.btn{display:inline-block;background:var(--primary);color:#fff;border:0;border-radius:8px;padding:11px 18px;font:inherit;font-weight:600;text-decoration:none;cursor:pointer}'
                 '.btn.secondary{background:#fff;color:var(--fg);border:1px solid #c9ced6}'
                 '.kv{display:grid;grid-template-columns:120px 1fr;gap:4px 12px;font-size:14px}.kv dt{color:var(--muted)}.kv dd{margin:0;word-break:break-all}'
@@ -414,13 +456,17 @@ class ClinicOnboarding:
         notices = {
             'invalid_url': 'ホームページのURLを確認してください（例: https://www.example-clinic.jp）。',
             'invalid_auth_code': 'AuthCodeは半角英数字・記号6〜64文字で、空白を含めずに入力してください。',
+            'quote_unavailable': '移管費用を確認できませんでした。少し時間をおいて、もう一度お試しください。',
+            'transfer_not_available': '移管先で受付条件の確認が必要です。現在の管理サービスで移管できる状態かご確認ください。',
+            'dns_connection_required': 'ホームページとメールの設定を引き継ぐため、現在の管理サービスに接続してください。',
             **WORDPRESS_NOTICES,
         }
         banner = f'<div class="notice">{escape(notices[notice])}</div>' if notice in notices else ''
         status = (intake or {}).get('status')
         if status == 'claimed':
-            plugin = (f'<p><a class="btn" href="{escape(self.plugin_url, quote=True)}">HPプラグインをダウンロード</a></p>'
-                      if self.plugin_url else '<p class="muted">HPプラグイン（ZIP）は担当者からお送りします。</p>')
+            plugin_url = ('/start/plugin?' + urlencode({'session_id': session_id})) if self.plugin_download else self.plugin_url
+            plugin = (f'<p><a class="btn" href="{escape(plugin_url, quote=True)}">Mac版プラグインをダウンロード</a></p>'
+                      if plugin_url else '<p class="muted">HPプラグインの配布状況を確認しています。</p>')
             return self.layout('HP編集を始める', account + (
                 f'<div class="card"><h2><span class="ok">登録が完了しました</span></h2>'
                 f'<dl class="kv"><dt>ホームページ</dt><dd>{escape(intake["site_url"])}</dd>'
@@ -432,6 +478,9 @@ class ClinicOnboarding:
                 '<li>ホームページが表示されたら「HP編集を始めたい」と伝えます。</li></ol>'
                 f'{plugin}</div>'), step=3)
         if status in ('received', 'needs_review'):
+            transfer = self.transfer.render(purchase, visit, session_id, notice) if self.transfer else None
+            if transfer:
+                return self.layout('ホームページの利用準備', account + banner + transfer, step=2)
             auth = "受け付け済み（表示しません）" if intake.get("auth_code") else "未入力"
             if status == 'needs_review':
                 head, body = ('登録情報を確認します',

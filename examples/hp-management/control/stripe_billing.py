@@ -51,6 +51,17 @@ def subscription_key(subscription_id):
     return 'stripe-subscription:' + subscription_id
 
 
+HP_PLANS = frozenset({'basic', 'security', 'basic_manager', 'security_manager'})
+
+
+def hp_entitlement(row, subject):
+    """Purchased HP plans grant HP-management Pro, never a global SIMY tier."""
+    if (not row or row.get('pending') or row.get('subject') != subject
+            or row.get('status') not in ACTIVE or row.get('plan') not in HP_PLANS):
+        return None
+    return {'category': 'hp_management', 'level': 'Pro', 'plan': row['plan']}
+
+
 class StripeLicenses:
     """License check for sites whose policy names a Stripe subscription."""
 
@@ -61,8 +72,7 @@ class StripeLicenses:
         if not valid_subscription_id(subscription_id) or not valid_google_subject(google_subject):
             raise LicenseUnavailable('hp_license_unavailable')
         row = self.store.get('stripe-subscription:' + subscription_id)
-        return bool(row and not row.get('pending') and row.get('subject') == google_subject
-                    and row.get('status') in ACTIVE)
+        return hp_entitlement(row, google_subject) is not None
 
 
 def verify_signature(payload, header, secret, now, tolerance=SIGNATURE_TOLERANCE):

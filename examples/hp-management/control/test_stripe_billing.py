@@ -5,7 +5,7 @@ import unittest
 
 from licensing import LicenseUnavailable, site_license_allowed
 from store import MemoryStore
-from stripe_billing import BillingRejected, StripeBilling, StripeLicenses, verify_signature
+from stripe_billing import BillingRejected, StripeBilling, StripeLicenses, hp_entitlement, verify_signature
 
 SECRET = 'whsec_' + 'k' * 32
 LINK = 'plink_' + 'A' * 24
@@ -43,6 +43,13 @@ class StripeBillingTest(unittest.TestCase):
         self.store = MemoryStore()
         self.api = FakeSubscriptions()
         self.billing = StripeBilling(self.store, self.api, {LINK: 'basic'}, clock=lambda: 2000)
+
+    def test_hp_purchase_grants_only_hp_management_pro_without_a_simy_org(self):
+        for plan in ('basic', 'security', 'basic_manager', 'security_manager'):
+            entitlement = hp_entitlement({'plan': plan, 'status': 'active', 'subject': 'buyer'}, 'buyer')
+            self.assertEqual((entitlement['category'], entitlement['level']), ('hp_management', 'Pro'))
+        self.assertIsNone(hp_entitlement({'plan': 'unrelated', 'status': 'active', 'subject': 'buyer'}, 'buyer'))
+        self.assertIsNone(hp_entitlement({'plan': 'basic', 'status': 'active', 'subject': 'other'}, 'buyer'))
 
     def test_signature_requires_the_secret_and_a_fresh_timestamp(self):
         payload, header = signed({'id': 'evt_1'})

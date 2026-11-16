@@ -339,16 +339,21 @@ class App:
     def onboarding_request(self, method, path, query, data, headers, cookie):
         if method == 'GET' and path == '/start':
             return self.onboarding_call(lambda: self.onboarding.page(query, cookie))
+        if method == 'GET' and path == '/start/plugin':
+            return self.onboarding_call(lambda: self.onboarding.download_plugin(query, cookie))
         if method == 'GET' and path == '/start/google':
             return self.onboarding_call(lambda: self.onboarding.google_start(query))
-        if method == 'POST' and path == '/start/site':
+        if method == 'POST' and path in ('/start/site', '/start/transfer/quote', '/start/transfer'):
             if headers.get('content-type', '').split(';')[0].strip().lower() != 'application/x-www-form-urlencoded':
                 return self.response(415, {'error': 'unsupported_media_type'})
             try:
                 form = flat_query(data.decode('utf-8'))
             except UnicodeError:
                 raise BadRequest() from None
-            return self.onboarding_call(lambda: self.onboarding.submit_site(form, cookie, headers.get('origin')))
+            action = {'/start/site': self.onboarding.submit_site,
+                      '/start/transfer/quote': self.onboarding.transfer_quote,
+                      '/start/transfer': self.onboarding.transfer_accept}[path]
+            return self.onboarding_call(lambda: action(form, cookie, headers.get('origin')))
         if method == 'POST' and path == '/start/wordpress':
             if headers.get('content-type', '').split(';')[0].strip().lower() != 'application/x-www-form-urlencoded':
                 return self.response(415, {'error': 'unsupported_media_type'})

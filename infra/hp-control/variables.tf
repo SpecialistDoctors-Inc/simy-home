@@ -181,6 +181,31 @@ variable "clinic_copy_enabled" {
   type        = bool
   default     = false
 }
+variable "clinic_transfer_enabled" {
+  description = "Enable the registrar worker after the customer details, DNS continuity and price acceptance integration is verified."
+  type        = bool
+  default     = false
+}
+variable "clinic_transfer_key_secret_arn" {
+  description = "Dedicated hp-control/ secret containing only intake_key (same encryption key as billing intake; no Stripe credentials)."
+  type        = string
+  default     = ""
+}
+variable "clinic_activation_enabled" {
+  description = "Enable automated isolated clinic environment creation after integration acceptance."
+  type        = bool
+  default     = false
+}
+variable "clinic_activation_secret_arn" {
+  description = "Dedicated hp-control/ activation configuration; contains references, not customer input."
+  type        = string
+  default     = ""
+}
+variable "clinic_bootstrap_token_secret_arn" {
+  description = "Dedicated service GitHub repository-creation credential, separate from runtime App permissions."
+  type        = string
+  default     = ""
+}
 variable "wordpress_paid_sites" {
   description = "Let a clinic edit and publish the WordPress.com site it connected from /start after paying, under its own Stripe subscription. Needs wordpress_secret_arn, clinic_billing_secret_arn and publication_enabled."
   type        = bool

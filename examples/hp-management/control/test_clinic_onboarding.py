@@ -167,6 +167,9 @@ class ClinicOnboardingTest(unittest.TestCase):
         self.assertEqual((intake['status'], intake['host'], intake['copy_state']),
                          ('received', 'clinic.example.jp', 'pending'))
         self.assertEqual(self.store.get('clinic-copy-pending')['subscriptions'], [SUB + ':1'])
+        transfer = self.store.get('clinic-transfer:' + SUB)
+        self.assertEqual(transfer['status'], 'awaiting_details')
+        self.assertNotIn(AUTH_CODE, json.dumps(transfer))
         page = self.call('GET', '/start', {'session_id': SESSION})['body']
         self.assertIn('ホームページの準備を進めます', page)
         self.assertNotIn(AUTH_CODE, page)
@@ -176,6 +179,7 @@ class ClinicOnboardingTest(unittest.TestCase):
                                                'auth_code': ''})
         self.assertEqual(self.store.get('clinic-copy-pending')['subscriptions'], [SUB + ':1'])
         self.assertIsNotNone(self.store.get('clinic-intake:' + SUB)['auth_code'])
+        self.assertEqual(self.store.get('clinic-transfer:' + SUB)['intake_identity'], transfer['intake_identity'])
 
         # The operator builds the site and registers it for the clinic's mailbox.
         site = {**self.site, 'prod_url': 'https://clinic.example.jp'}
