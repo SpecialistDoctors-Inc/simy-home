@@ -1,7 +1,7 @@
 {
   "ja": [
     {
-      "title": "困った：スマホ表示でボタンが動かない",
+      "title": "困った：ボタンが動かない",
       "caption": "作った後に、使う場面の確認が残ることもある。",
       "dialogue": [
         {
@@ -11,7 +11,7 @@
       ]
     },
     {
-      "title": "頼む：何を確認したら完了か決める",
+      "title": "頼む：完了の条件を決める",
       "caption": "このCodexの会話で、確認する動きを完了条件にする。",
       "dialogue": [
         {
@@ -25,7 +25,7 @@
       ]
     },
     {
-      "title": "会話の終了時：未確認なら続きを促す",
+      "title": "進める：未確認なら続ける",
       "caption": "Codexが会話を終えるとき、未確認の条件が残っていれば、SIMYが続行を促す。",
       "dialogue": [
         {
@@ -39,7 +39,7 @@
       ]
     },
     {
-      "title": "受け取る：AIの確認結果を見て判断",
+      "title": "受け取る：結果を見て判断",
       "caption": "操作結果を返すのはCodex。公開するか決めるのはあなた。",
       "dialogue": [
         {
@@ -55,7 +55,7 @@
   ],
   "en": [
     {
-      "title": "The problem: the button fails in mobile view.",
+      "title": "The problem: the button fails.",
       "caption": "Checks in the intended view can still remain after the page is built.",
       "dialogue": [
         {
@@ -65,7 +65,7 @@
       ]
     },
     {
-      "title": "The request: agree on what to check.",
+      "title": "The request: agree on the check.",
       "caption": "Set a concrete finish line for this Codex conversation.",
       "dialogue": [
         {
@@ -79,7 +79,7 @@
       ]
     },
     {
-      "title": "At the end of a turn: prompt the missing check.",
+      "title": "Keep going: the check is missing.",
       "caption": "When Codex ends a turn with criteria still unverified, SIMY prompts the same conversation to continue.",
       "dialogue": [
         {
@@ -93,7 +93,7 @@
       ]
     },
     {
-      "title": "The result: review the AI’s check results.",
+      "title": "The result: review, then decide.",
       "caption": "Codex returns the check results. You decide whether to publish.",
       "dialogue": [
         {
