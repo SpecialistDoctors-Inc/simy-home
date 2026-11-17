@@ -6,6 +6,7 @@ const path = require("node:path");
 const test = require("node:test");
 
 const repoRoot = path.resolve(__dirname, "..");
+const publishedAliases = new Map(require('../scripts/hp-management-industries.json').industries.filter(i => i.status === 'published').map(i => [i.url, i.source]));
 const siteRoot = path.join(repoRoot, "site");
 const html = fs.readFileSync(path.join(siteRoot, "guides", "plaud.html"), "utf8");
 
@@ -288,7 +289,7 @@ test("E4 every internal link points to an existing file", () => {
     if (href.startsWith("https://simy.one")) href = href.slice("https://simy.one".length) || "/";
     if (!href.startsWith("/") || href.startsWith("//")) continue;
     const pathname = href.split(/[?#]/)[0];
-    const file = pathname === "/" ? "index.html" : pathname.slice(1);
+    const file = publishedAliases.get(pathname) || (pathname === "/" ? "index.html" : pathname.slice(1));
     if (!fs.existsSync(path.join(siteRoot, file))) broken.push(href);
   }
   assert.deepEqual(broken, []);
@@ -316,7 +317,7 @@ test("F9 images loaded by the page total 50KB or less", () => {
 });
 
 test("F8 no external CSS, JavaScript or web fonts block rendering", () => {
-  assert.doesNotMatch(html.replace(/<link rel="stylesheet" href="\/site-header\.css\?v=[^"]+">/g, ""), /<link[^>]+rel="stylesheet"/);
+  assert.doesNotMatch(html.replace(/<link rel="stylesheet" href="\/(?:site-header|hp-industry-navigation)\.css\?v=[^"]+">/g, ""), /<link[^>]+rel="stylesheet"/);
   // Scripts are allowed only when they cannot block rendering: same-origin and deferred or async.
   const blocking = [...html.matchAll(/<script\b[^>]*\bsrc="([^"]+)"[^>]*>/g)]
     .filter((m) => !/\b(defer|async)\b/.test(m[0]) || /^(https?:)?\/\//.test(m[1]))

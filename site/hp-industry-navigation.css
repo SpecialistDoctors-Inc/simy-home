@@ -1,0 +1,39 @@
+/* Keep product-use journeys separate from industry-specific HP management. */
+.simy-header .sh-solutions-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 16px;
+  width: min(640px, calc(100vw - 40px));
+  padding: 16px;
+}
+.simy-header .sh-solutions-group { min-width: 0; }
+.simy-header .sh-solutions-group + .sh-solutions-group {
+  border-inline-start: 1px solid;
+  border-color: inherit;
+  padding-inline-start: 16px;
+}
+.simy-header .sh-group-title {
+  margin: 0;
+  padding: 8px 12px;
+  font: inherit;
+  font-weight: 600;
+}
+.simy-header .sh-solutions-panel a {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 960px) {
+  .simy-header .sh-navigation .sh-solutions-panel {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    width: auto;
+    padding: 0 0 8px 12px;
+  }
+  .simy-header .sh-solutions-group + .sh-solutions-group {
+    border-inline-start: 0;
+    border-block-start: 1px solid;
+    border-color: inherit;
+    margin-block-start: 8px;
+    padding: 8px 0 0;
+  }
+}

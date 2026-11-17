@@ -1,0 +1,413 @@
+{
+  "version": 1,
+  "url": "https://simy.one/hp-management/",
+  "invalidation_paths": [
+    "/affiliate.html",
+    "/assets/social/cards/hp-management-industries-v1.png",
+    "/clinic-security-sample.html",
+    "/diagnosis-tests-shared-folder.html",
+    "/download.html",
+    "/for/",
+    "/for/engineers/",
+    "/for/engineers/index.html",
+    "/for/financial-planners/",
+    "/for/financial-planners/index.html",
+    "/for/index.html",
+    "/for/pharmaceutical-companies.html",
+    "/for/pharmaceutical-companies/",
+    "/for/pharmaceutical-companies/index.html",
+    "/for/sales/",
+    "/for/sales/index.html",
+    "/founder.html",
+    "/guides/",
+    "/guides/chatgpt.html",
+    "/guides/china-llm.html",
+    "/guides/claude-code.html",
+    "/guides/claude.html",
+    "/guides/codex.html",
+    "/guides/conductor.html",
+    "/guides/cowork.html",
+    "/guides/deepseek.html",
+    "/guides/doubao.html",
+    "/guides/glm.html",
+    "/guides/index.html",
+    "/guides/kimi.html",
+    "/guides/meeting-notes.html",
+    "/guides/minimax.html",
+    "/guides/notta.html",
+    "/guides/plaud.html",
+    "/guides/qwen-local.html",
+    "/guides/qwen.html",
+    "/guides/simy-delivery-loop.html",
+    "/guides/simy-getting-started.html",
+    "/guides/simy-sqm.html",
+    "/hp-industry-navigation.css",
+    "/hp-management",
+    "/hp-management-industries.css",
+    "/hp-management.html",
+    "/hp-management/",
+    "/hp-management/index.html",
+    "/hp-management/law-firm/release-manifest.json",
+    "/ja.html",
+    "/legal.html",
+    "/news/20261005.html",
+    "/seller-info.html"
+  ],
+  "sitemap": {
+    "key": "sitemap.xml",
+    "mode": "live-add-only",
+    "url": "https://simy.one/hp-management/"
+  },
+  "objects": [
+    {
+      "source": "hp-industry-navigation.css",
+      "key": "hp-industry-navigation.css",
+      "phase": "support",
+      "bytes": 1048,
+      "sha256": "a50643726f93e9daae95ac3c73b6e216bd3849a8f582153f4af0de9aeb4990cd"
+    },
+    {
+      "source": "hp-management-industries.css",
+      "key": "hp-management-industries.css",
+      "phase": "support",
+      "bytes": 2663,
+      "sha256": "ee078ced3dfb7bdb50b578f1fd91d0fcd5ed33ac31d7c2a833d0d58c751e0977"
+    },
+    {
+      "source": "assets/social/cards/hp-management-industries-v1.png",
+      "key": "assets/social/cards/hp-management-industries-v1.png",
+      "phase": "support",
+      "bytes": 60035,
+      "sha256": "4fabc1b90ab40450c434c734b712d358a93dc244a6884cc4e6e2e86c0eeeee25"
+    },
+    {
+      "source": "hp-management/law-firm/release-manifest.json",
+      "key": "hp-management/law-firm/release-manifest.json",
+      "phase": "support",
+      "bytes": 7782,
+      "sha256": "75db9c8ca61bfaec4c4a1af7cea7bb36445e666f2fee8409edeef3294a341fc1"
+    },
+    {
+      "source": "hp-management/index.html",
+      "key": "hp-management/index.html",
+      "phase": "hub",
+      "bytes": 10679,
+      "sha256": "cc21945577a0e9801a7e42897ee27185b488b40cd87f46750358296d5d7b0bc9"
+    },
+    {
+      "source": "hp-management/index.html",
+      "key": "hp-management/",
+      "phase": "hub",
+      "bytes": 10679,
+      "sha256": "cc21945577a0e9801a7e42897ee27185b488b40cd87f46750358296d5d7b0bc9"
+    },
+    {
+      "source": "hp-management/index.html",
+      "key": "hp-management.html",
+      "phase": "hub",
+      "bytes": 10679,
+      "sha256": "cc21945577a0e9801a7e42897ee27185b488b40cd87f46750358296d5d7b0bc9"
+    },
+    {
+      "source": "hp-management/index.html",
+      "key": "hp-management",
+      "phase": "hub",
+      "bytes": 10679,
+      "sha256": "cc21945577a0e9801a7e42897ee27185b488b40cd87f46750358296d5d7b0bc9"
+    },
+    {
+      "source": "affiliate.html",
+      "key": "affiliate.html",
+      "phase": "menu",
+      "bytes": 12054,
+      "sha256": "db72a812d0ceb80620c966a41423eb33c73b76fa90c6826f8022958e6261bd63"
+    },
+    {
+      "source": "clinic-security-sample.html",
+      "key": "clinic-security-sample.html",
+      "phase": "menu",
+      "bytes": 12054,
+      "sha256": "d70fc913da7b5d27c8d1d1e975a0dcb3fe7fa7422d1884aaec2e81aa4ed33462"
+    },
+    {
+      "source": "diagnosis-tests-shared-folder.html",
+      "key": "diagnosis-tests-shared-folder.html",
+      "phase": "menu",
+      "bytes": 4944,
+      "sha256": "15bc5b4e508ec4607049db2d5be41457f64ecacf8485b36d29a076586fa2fd9e"
+    },
+    {
+      "source": "download.html",
+      "key": "download.html",
+      "phase": "menu",
+      "bytes": 63702,
+      "sha256": "1c41f0edc58673c80ce51c5271b0cdf63562a26d281902bfb51095e4dd85ac07"
+    },
+    {
+      "source": "for/engineers/index.html",
+      "key": "for/engineers/index.html",
+      "phase": "menu",
+      "bytes": 38347,
+      "sha256": "d434fd221896103d42736204412a0805685ffd47c091570601fe4930e91647ae"
+    },
+    {
+      "source": "for/engineers/index.html",
+      "key": "for/engineers/",
+      "phase": "menu",
+      "bytes": 38347,
+      "sha256": "d434fd221896103d42736204412a0805685ffd47c091570601fe4930e91647ae"
+    },
+    {
+      "source": "for/financial-planners/index.html",
+      "key": "for/financial-planners/index.html",
+      "phase": "menu",
+      "bytes": 29023,
+      "sha256": "6f86c26a82870a010fcdbec7195da6bd921a490298eb5898340ba9fe241638de"
+    },
+    {
+      "source": "for/financial-planners/index.html",
+      "key": "for/financial-planners/",
+      "phase": "menu",
+      "bytes": 29023,
+      "sha256": "6f86c26a82870a010fcdbec7195da6bd921a490298eb5898340ba9fe241638de"
+    },
+    {
+      "source": "for/index.html",
+      "key": "for/index.html",
+      "phase": "menu",
+      "bytes": 16144,
+      "sha256": "18f8c84d4004f6c6ef47075f9ef4447087b9acae490439534e824795621b2c5b"
+    },
+    {
+      "source": "for/index.html",
+      "key": "for/",
+      "phase": "menu",
+      "bytes": 16144,
+      "sha256": "18f8c84d4004f6c6ef47075f9ef4447087b9acae490439534e824795621b2c5b"
+    },
+    {
+      "source": "for/pharmaceutical-companies/index.html",
+      "key": "for/pharmaceutical-companies/index.html",
+      "phase": "menu",
+      "bytes": 27550,
+      "sha256": "8f345b3bbc0af82a75d003d244f4f74e7bd5b33bed23b28ddaedd5bcdee1162f"
+    },
+    {
+      "source": "for/pharmaceutical-companies/index.html",
+      "key": "for/pharmaceutical-companies/",
+      "phase": "menu",
+      "bytes": 27550,
+      "sha256": "8f345b3bbc0af82a75d003d244f4f74e7bd5b33bed23b28ddaedd5bcdee1162f"
+    },
+    {
+      "source": "for/pharmaceutical-companies/index.html",
+      "key": "for/pharmaceutical-companies.html",
+      "phase": "menu",
+      "bytes": 27550,
+      "sha256": "8f345b3bbc0af82a75d003d244f4f74e7bd5b33bed23b28ddaedd5bcdee1162f"
+    },
+    {
+      "source": "for/sales/index.html",
+      "key": "for/sales/index.html",
+      "phase": "menu",
+      "bytes": 17139,
+      "sha256": "fb7c913b6b5d8b3bd09c279979c001c8c2a63db18a765f94ddd58d0ec04e8e53"
+    },
+    {
+      "source": "for/sales/index.html",
+      "key": "for/sales/",
+      "phase": "menu",
+      "bytes": 17139,
+      "sha256": "fb7c913b6b5d8b3bd09c279979c001c8c2a63db18a765f94ddd58d0ec04e8e53"
+    },
+    {
+      "source": "founder.html",
+      "key": "founder.html",
+      "phase": "menu",
+      "bytes": 20342,
+      "sha256": "b4b93cd4a74b832ea9728142617126342317cbfd35b26b61e8c613016957eb3b"
+    },
+    {
+      "source": "guides/chatgpt.html",
+      "key": "guides/chatgpt.html",
+      "phase": "menu",
+      "bytes": 104010,
+      "sha256": "efa0781bb5cebc005447634dcfa60e2603cbb799251f695a2ec9546a2327eef0"
+    },
+    {
+      "source": "guides/china-llm.html",
+      "key": "guides/china-llm.html",
+      "phase": "menu",
+      "bytes": 115014,
+      "sha256": "3e593745c904ba4a723bc8e080d82abde3132906bfcfdc885cc9c56ccca2ef33"
+    },
+    {
+      "source": "guides/claude-code.html",
+      "key": "guides/claude-code.html",
+      "phase": "menu",
+      "bytes": 18102,
+      "sha256": "964158907ff62f671402480228f924c07e93e7779a0e955695d25fd4ca63fbd5"
+    },
+    {
+      "source": "guides/claude.html",
+      "key": "guides/claude.html",
+      "phase": "menu",
+      "bytes": 111212,
+      "sha256": "1b4348ce762dc67ab28ce4b71c32383d9371e67dc04276f7ee2b38e847f3347a"
+    },
+    {
+      "source": "guides/codex.html",
+      "key": "guides/codex.html",
+      "phase": "menu",
+      "bytes": 107996,
+      "sha256": "a38e98fbbd9f86356d11593b3411310b7f47f2e26d211cc9ffa5c97b6aa518d2"
+    },
+    {
+      "source": "guides/conductor.html",
+      "key": "guides/conductor.html",
+      "phase": "menu",
+      "bytes": 17627,
+      "sha256": "d6303c7da519f06fa5982e13f9ed3463491f05328d70d305eb3984cf86ca3fde"
+    },
+    {
+      "source": "guides/cowork.html",
+      "key": "guides/cowork.html",
+      "phase": "menu",
+      "bytes": 105761,
+      "sha256": "0fb76f3a2f1afe667265bb5ef1f818304be428c9fda8f14be80b8cfb91b5fe2a"
+    },
+    {
+      "source": "guides/deepseek.html",
+      "key": "guides/deepseek.html",
+      "phase": "menu",
+      "bytes": 110220,
+      "sha256": "805420860ee152ce17ba818118a6b4491ee3d6d566f1b7cfd7ea7f7051b48286"
+    },
+    {
+      "source": "guides/doubao.html",
+      "key": "guides/doubao.html",
+      "phase": "menu",
+      "bytes": 105736,
+      "sha256": "2d6d6085a5414414d47d9b0a47090bd3718338439d1e6c625b87f3efca48c86b"
+    },
+    {
+      "source": "guides/glm.html",
+      "key": "guides/glm.html",
+      "phase": "menu",
+      "bytes": 107295,
+      "sha256": "7937fe9f2b349fdec3bc731b097d97c7dada345d9051b659dcb726a3a1b4ab49"
+    },
+    {
+      "source": "guides/index.html",
+      "key": "guides/index.html",
+      "phase": "menu",
+      "bytes": 56093,
+      "sha256": "563db5009d338c49be997d2eddc5df62cf6e1d0e4b47989d6d25c217fddea677"
+    },
+    {
+      "source": "guides/index.html",
+      "key": "guides/",
+      "phase": "menu",
+      "bytes": 56093,
+      "sha256": "563db5009d338c49be997d2eddc5df62cf6e1d0e4b47989d6d25c217fddea677"
+    },
+    {
+      "source": "guides/kimi.html",
+      "key": "guides/kimi.html",
+      "phase": "menu",
+      "bytes": 108257,
+      "sha256": "36fe03ff05853d2125cd9da580a95d421373bab137ff40550e2274e9e7de74db"
+    },
+    {
+      "source": "guides/meeting-notes.html",
+      "key": "guides/meeting-notes.html",
+      "phase": "menu",
+      "bytes": 108750,
+      "sha256": "615454e932d9049670d97a0ad34a495a168cb9be094c20e74fe81f498065ad3f"
+    },
+    {
+      "source": "guides/minimax.html",
+      "key": "guides/minimax.html",
+      "phase": "menu",
+      "bytes": 108338,
+      "sha256": "906af35d02b2df61fc67c3a72fa2d71d265beaed52afad33850ddc7fa25fde32"
+    },
+    {
+      "source": "guides/notta.html",
+      "key": "guides/notta.html",
+      "phase": "menu",
+      "bytes": 110362,
+      "sha256": "02533e222e65e18dcc805d313c7b0c5357317296ffa04961edb7dab849046771"
+    },
+    {
+      "source": "guides/plaud.html",
+      "key": "guides/plaud.html",
+      "phase": "menu",
+      "bytes": 96654,
+      "sha256": "5b1655ea9742bfa71b8493bfa256e7c16284b66dd3a5f8089f99c69d79ba74b4"
+    },
+    {
+      "source": "guides/qwen-local.html",
+      "key": "guides/qwen-local.html",
+      "phase": "menu",
+      "bytes": 129150,
+      "sha256": "91bf2aa0e35ff5b5b1c6f17f005b096328c04a081e974ecdfaffb768c8f399cb"
+    },
+    {
+      "source": "guides/qwen.html",
+      "key": "guides/qwen.html",
+      "phase": "menu",
+      "bytes": 108636,
+      "sha256": "d577cdb4f6199cb5b135f365664121bd1b415b605f8d9349488ea931cf43cdd1"
+    },
+    {
+      "source": "guides/simy-delivery-loop.html",
+      "key": "guides/simy-delivery-loop.html",
+      "phase": "menu",
+      "bytes": 18031,
+      "sha256": "75ec963f5d260e59fe2287fa378aab477bca6f30d40d039c102f3eaed71d6d7c"
+    },
+    {
+      "source": "guides/simy-getting-started.html",
+      "key": "guides/simy-getting-started.html",
+      "phase": "menu",
+      "bytes": 17506,
+      "sha256": "f732311526d899190baab580587a82639b5cfcf659592a89a9d184a5980eddff"
+    },
+    {
+      "source": "guides/simy-sqm.html",
+      "key": "guides/simy-sqm.html",
+      "phase": "menu",
+      "bytes": 17760,
+      "sha256": "7044c8574cf322e04edb8a0fbc76718c1d022b2c3455bc7770255acb9f1befdd"
+    },
+    {
+      "source": "ja.html",
+      "key": "ja.html",
+      "phase": "menu",
+      "bytes": 56624,
+      "sha256": "29e69b11dd0a4761236b90851abd10aa319dd983a9222c2ff96880eb09fc17c4"
+    },
+    {
+      "source": "legal.html",
+      "key": "legal.html",
+      "phase": "menu",
+      "bytes": 7287,
+      "sha256": "ad90d2d467a16a6e75dc21e6ecdd629ba2212209814178d88cefc7ed7ca6d51f"
+    },
+    {
+      "source": "news/20261005.html",
+      "key": "news/20261005.html",
+      "phase": "menu",
+      "bytes": 98342,
+      "sha256": "f6cddd942213d1868891e340874d0cc8a81c3cf402a7ec2e19afc5667c90aed9"
+    },
+    {
+      "source": "seller-info.html",
+      "key": "seller-info.html",
+      "phase": "menu",
+      "bytes": 10125,
+      "sha256": "99562af4ec7bb2f64c2bad00187c962be4ac7d0f57cb69ac090c27e0f68f2028"
+    }
+  ]
+}

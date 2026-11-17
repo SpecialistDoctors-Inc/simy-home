@@ -5,6 +5,7 @@ const assert = require("node:assert/strict");
 const fs = require("node:fs");
 const path = require("node:path");
 
+const publishedAliases = new Map(require('../scripts/hp-management-industries.json').industries.filter(i => i.status === 'published').map(i => [i.url, i.source]));
 const siteRoot = path.join(__dirname, "..", "site");
 const LANGS = ["ja", "en", "zh-hans", "es", "fr", "hi"];
 const HTML_LANG = { ja: "ja", en: "en", "zh-hans": "zh-Hans", es: "es", fr: "fr", hi: "hi" };
@@ -98,7 +99,7 @@ for (const lang of LANGS) {
 
     test(`${rel}: internal links resolve`, () => {
       const missing = [...new Set([...html.matchAll(/href="(\/[^"#?]*)/g)].map((m) => m[1]))]
-        .filter((h) => h !== "/" && !fs.existsSync(path.join(siteRoot, h.replace(/^\//, ""))));
+        .filter((h) => h !== "/" && !fs.existsSync(path.join(siteRoot, publishedAliases.get(h) || h.replace(/^\//, ""))));
       assert.deepEqual(missing, []);
     });
 
@@ -143,7 +144,7 @@ for (const lang of LANGS) {
       const blocking = [...html.matchAll(/<script\b[^>]*\bsrc="([^"]+)"[^>]*>/g)]
         .filter((m) => !/\b(defer|async)\b/.test(m[0]) || /^(https?:)?\/\//.test(m[1]));
       assert.deepEqual(blocking.map((m) => m[0]), []);
-      assert.doesNotMatch(html.replace(/<link rel="stylesheet" href="\/site-header\.css\?v=[^"]+">/g, ""), /<link[^>]+rel="stylesheet"/);
+      assert.doesNotMatch(html.replace(/<link rel="stylesheet" href="\/(?:site-header|hp-industry-navigation)\.css\?v=[^"]+">/g, ""), /<link[^>]+rel="stylesheet"/);
     });
   }
 }
