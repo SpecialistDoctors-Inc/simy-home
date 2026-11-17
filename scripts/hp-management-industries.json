@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "industries": [
+    {
+      "id": "clinic",
+      "label": "クリニック",
+      "nav_label": "クリニック向けHP管理",
+      "url": "/hp-management/clinic.html",
+      "source": "hp-management/clinic/index.html",
+      "description": "診療案内や休診のお知らせを伝えるホームページ。医院のURLから、古いプログラムや検索での見つけやすさを確認できます。",
+      "checkout_config": "hp-management/clinic-checkout.json",
+      "status": "published",
+      "featured": true
+    },
+    {
+      "id": "law-firm",
+      "label": "弁護士事務所",
+      "nav_label": "弁護士事務所向けHP管理",
+      "url": "/hp-management/law-firm.html",
+      "source": "hp-management/law-firm.html",
+      "description": "取扱分野や相談の流れを伝えるホームページ。法律事務所のURLから、更新・セキュリティ・検索での見つけやすさを確認できます。",
+      "checkout_config": "hp-management/law-firm/hp-management/clinic-checkout.json",
+      "status": "published",
+      "featured": true
+    }
+  ]
+}

@@ -26,9 +26,6 @@ def header(locale, source, path):
         "Solutions": [("For your work", ("/for/" if locale == "ja" else "/for/en/")), ("For engineers", ("/for/engineers/" if locale == "ja" else f"/for/{locale.lower()}/engineers/")), ("For financial planners", ("/for/financial-planners/" if locale == "ja" else f"/for/{locale.lower()}/financial-planners/")), ("For pharmaceutical companies", "/for/" + ("" if locale == "ja" else locale.lower() + "/") + "pharmaceutical-companies/"), ("Use cases", base + "#use-cases")],
         "Resources": [("Guides", f"/guides/{suffix}index.html"), ("Compare", "/compare.html"), ("News", "/press-release.html"), ("About SIMY", "/about.html"), ("Security", "/security.html"), ("Contact", "/contact.html"), ("Legal & service information", "/legal.html"), ("Seller information", "/seller-info.html")],
     }
-    if path == SITE / 'ja.html':
-        groups['Solutions'].insert(1, ('HP管理・無料診断', '/hp-management/'))
-        groups['Solutions'].insert(2, ('クリニック向けHP管理', '/hp-management/clinic/'))
     def link(label, href):
         if label == "For pharmaceutical companies":
             label = {"ja": "製薬企業向け", "en": "For pharmaceutical companies", "es": "Para farmacéuticas", "fr": "Pour les laboratoires", "hi": "दवा कंपनियों के लिए", "zh-Hans": "面向制药企业"}[locale]
@@ -46,7 +43,21 @@ def header(locale, source, path):
                   .replace('/google-play.png', '/google-play-ja.png')
                   .replace('Download on the App Store', 'App Storeからダウンロード')
                   .replace('Android availability', 'Android版の提供状況'))
-    menus = "".join(f'<details class="sh-dropdown"><summary>{name}<span aria-hidden="true">⌄</span></summary><div class="sh-panel">' + "".join(link(label, href) for label, href in items) + (stores if name == "Product" else "") + '</div></details>' for name, items in groups.items())
+    menus = ''
+    for name, items in groups.items():
+        panel = ''.join(link(label, href) for label, href in items)
+        classes = 'sh-panel'
+        if name == 'Solutions' and locale == 'ja':
+            from hp_management_industries import featured_industries
+            industry_links = link('業種別HP管理・無料診断', '/hp-management/')
+            industry_links += ''.join(link(item['nav_label'], item['url']) for item in featured_industries())
+            panel = ('<div class="sh-solutions-group"><p class="sh-group-title">SIMYの業務活用</p>'
+                     + panel + '</div><div class="sh-solutions-group">'
+                     '<p class="sh-group-title">ホームページ管理</p>' + industry_links + '</div>')
+            classes += ' sh-solutions-panel'
+        if name == 'Product': panel += stores
+        menus += (f'<details class="sh-dropdown"><summary>{name}<span aria-hidden="true">⌄</span></summary>'
+                  f'<div class="{classes}">{panel}</div></details>')
     # Prefer an existing translated counterpart; otherwise use the localized home.
     alternatives = dict(re.findall(r'<link[^>]*hreflang="([^" ]+)"[^>]*href="https://simy.one([^" ]*)"', source))
     if re.search(r'<script[^>]+src="(?:/|(?:\.\./)*)i18n\.js', source):
@@ -68,6 +79,10 @@ def header(locale, source, path):
         markup = markup.replace(f'<a class="sh-pricing" href="{base}#pricing">Pricing</a>', '<a class="sh-pricing" data-service-pricing href="#pricing">HP管理の料金</a>')
         markup = markup.replace('>Log in</a>', '>SIMYアプリ</a>')
         markup = markup.replace(f'<a data-new-account-signup class="sh-signup" href="https://app.simy.one/signup?{params}">Sign up</a>', '<a class="sh-signup" href="#diagnosis">URL入力へ</a>')
+    if path == SITE / 'hp-management/index.html':
+        markup = markup.replace(f'<a class="sh-pricing" href="{base}#pricing">Pricing</a>', '<a class="sh-pricing" data-service-pricing href="#pricing">HP管理の料金</a>')
+        markup = markup.replace('>Log in</a>', '>SIMYアプリ</a>')
+        markup = markup.replace(f'<a data-new-account-signup class="sh-signup" href="https://app.simy.one/signup?{params}">Sign up</a>', '<a class="sh-signup" href="#industries">業種を選ぶ</a>')
     return markup
 
 class HeaderParser(HTMLParser):
@@ -128,7 +143,14 @@ def apply(source, path):
         version = hashlib.sha256((SITE / 'site-header.js').read_bytes()).hexdigest()[:12] if path == SITE / 'hp-management/clinic/index.html' and '.js?' in match[1] else '20261021-pharma-1'
         return match[1] + version
     source = re.sub(r'(/site-header\.(?:css|js)\?v=)[^"\s]+', asset_version, source)
-    if "data-story-scene" in source:
+    if locale == 'ja':
+        source = re.sub(r'\n?<!-- HP industry navigation -->[\s\S]*?<!-- /HP industry navigation -->\n?', '', source)
+        version = hashlib.sha256((SITE / 'hp-industry-navigation.css').read_bytes()).hexdigest()[:12]
+        industry_assets = ('<!-- HP industry navigation -->\n'
+                           f'<link rel="stylesheet" href="/hp-industry-navigation.css?v={version}">\n'
+                           '<!-- /HP industry navigation -->\n')
+        source = re.sub(r'\s*</head>', lambda m: '\n' + industry_assets + '</head>', source, count=1)
+    if locale == 'ja' or "data-story-scene" in source:
         from home_manga_locales import localized_header
         source = localized_header(source, locale, homepage_content())
     return apply_social_preview(source, path)

@@ -1,0 +1,42 @@
+name: Deploy HP Industry Navigation
+on:
+  workflow_dispatch:
+    inputs:
+      expected_manifest_sha256:
+        description: SHA256 of the reviewed HP industry navigation release manifest
+        required: true
+        type: string
+permissions:
+  contents: read
+  id-token: write
+concurrency:
+  group: hp-industry-navigation-production
+  cancel-in-progress: false
+jobs:
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: prod
+    env:
+      EXPECTED_RELEASE_SHA256: ${{ inputs.expected_manifest_sha256 }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify reviewed scoped release
+        run: |
+          test -n "$EXPECTED_RELEASE_SHA256"
+          python3 scripts/hp_industry_release.py
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_SITE_DEPLOY_ROLE_ARN }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      - name: Verify public industry landings and publish reviewed objects
+        env:
+          SITE_S3_BUCKET: ${{ secrets.SITE_S3_BUCKET }}
+          SITE_CF_DISTRIBUTION_ID: ${{ secrets.SITE_CF_DISTRIBUTION_ID }}
+        run: python3 scripts/publish-hp-industry-navigation.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: hp-industry-navigation-deployment
+          path: hp-industry-navigation-deployment.json

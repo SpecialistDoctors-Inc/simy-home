@@ -32,12 +32,12 @@ test('ISMS mark loads before scrolling and stays within the web image budget',()
  assert.ok(fs.statSync('site'+src).size<50000,'Certification mark must stay under 50 KB');
 });
 
-test('obsolete HP entry forwards to the existing latest clinic page',()=>{
+test('HP entry offers published industries and preserves clinic detail pricing',()=>{
  const entry=fs.readFileSync('site/hp-management/index.html','utf8');
  const clinic=fs.readFileSync('site/hp-management/clinic/index.html','utf8');
- assert.ok(entry.includes("location.replace('/hp-management/clinic.html'+location.search+location.hash)"));
- assert.match(entry,/<link rel="canonical" href="https:\/\/simy.one\/hp-management\/clinic.html">/);
- assert.doesNotMatch(entry,/<form\b|hp-price-list|19,800|29,800|49,800/);
+ assert.match(entry,/<link rel="canonical" href="https:\/\/simy.one\/hp-management\/">/);
+ assert.doesNotMatch(entry,/location.replace|http-equiv="refresh"/);
+ for(const url of ['/hp-management/clinic.html','/hp-management/law-firm.html'])assert.ok(entry.includes(`href="${url}#diagnosis"`));
  assert.match(clinic,/class="sp-hero-art"/);
  assert.match(clinic,/clinic-hero-phone.png/);
  assert.match(clinic,/<section[^>]*id="pricing"/);

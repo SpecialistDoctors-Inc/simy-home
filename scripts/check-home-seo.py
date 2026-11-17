@@ -9,6 +9,8 @@ from urllib.parse import urlsplit, unquote
 import xml.etree.ElementTree as ET
 
 sys.dont_write_bytecode = True
+from hp_management_industries import published_aliases
+INDUSTRY_ALIASES = published_aliases()
 
 spec = importlib.util.spec_from_file_location('localized_home', Path(__file__).with_name('build-localized-home.py'))
 home = importlib.util.module_from_spec(spec)
@@ -95,7 +97,7 @@ for locale in home.LOCALES:
             if url.scheme or url.netloc or not attrs.get(attr):
                 continue
             if url.path:
-                target = home.SITE / unquote(url.path).lstrip('/')
+                target = home.SITE / INDUSTRY_ALIASES.get(url.path, unquote(url.path).lstrip('/'))
                 if url.path == '/':
                     target = home.SITE / 'index.html'
                 assert target.exists(), f'{filename}: missing {attrs[attr]}'
@@ -107,6 +109,6 @@ assert len(urls) == len(set(urls)), 'Duplicate sitemap entries'
 for locale in home.LOCALES:
     assert home.BASE + home.home_path(locale) in urls
 for url in urls:
-    target = home.SITE / (urlsplit(url).path.lstrip('/') or 'index.html')
+    target = home.SITE / INDUSTRY_ALIASES.get(urlsplit(url).path, urlsplit(url).path.lstrip('/') or 'index.html')
     assert target.exists(), url
 print('SEO checks passed: 6 raw-HTML locales, metadata, hreflang, schema, FAQ, navigation, local assets and sitemap.')

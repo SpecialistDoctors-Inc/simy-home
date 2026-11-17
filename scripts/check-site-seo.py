@@ -11,6 +11,7 @@ from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urljoin, urlsplit, unquote
 import xml.etree.ElementTree as ET
+from hp_management_industries import published_aliases, published_industries
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / 'site'
@@ -63,6 +64,11 @@ class Page(HTMLParser):
 
 
 def canonical_url(name):
+    for industry in published_industries():
+        if name == industry['source']:
+            return BASE + industry['url']
+    if name == 'hp-management/index.html':
+        return BASE + '/hp-management/'
     if name.startswith('for/') and name.endswith('/index.html'):
         return BASE + '/' + name[:-len('index.html')]
     return BASE + ('/' if name == 'index.html' else '/' + name)
@@ -74,6 +80,7 @@ def main():
     translated = {url.lstrip('/') + ('index.html' if url.endswith('/') else ''): set(p['paths']) | {'x-default'}
                   for p in content['pages'] for url in p['paths'].values()}
     files = {str(p.relative_to(SITE)): p for p in SITE.rglob('*.html')}
+    aliases = published_aliases()
     errors = []
     def check(ok, message):
         if not ok:
@@ -139,6 +146,7 @@ def main():
             path = unquote(url.path).lstrip('/') or 'index.html'
             if path.startswith('downloads/'):
                 continue  # Installers are published by a separate release workflow.
+            path = aliases.get('/' + path, path)
             target_file = SITE / path
             if target_file.is_dir():
                 path = path.rstrip('/') + '/index.html'
