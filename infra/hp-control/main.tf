@@ -18,7 +18,9 @@ locals {
     prod = { bucket = "simy-sample-clinic-prod-209300895845", distribution = "E294F04MBS65GK" }
   }
   publisher_sites = { for env, site in local.sites : env => site if !local.acceptance && (env == "dev" ? var.preview_enabled : var.publication_enabled) }
-  claim_targets   = { for site_id in [var.self_service_site_id] : site_id => local.publisher_sites if site_id != "" }
+  # Acceptance has no publisher roles; its claim targets are placeholders so the
+  # owner-email claim can be exercised without any preview or publish access.
+  claim_targets = { for site_id in [var.self_service_site_id] : site_id => (local.acceptance ? var.acceptance_claim_test_targets : local.publisher_sites) if site_id != "" }
 }
 resource "terraform_data" "guard" {
   lifecycle {
@@ -28,7 +30,8 @@ resource "terraform_data" "guard" {
     }
     precondition {
       condition = !local.acceptance || (
-        !var.preview_enabled && !var.validation_enabled && var.self_service_site_id == "" &&
+        !var.preview_enabled && !var.validation_enabled &&
+        (var.self_service_site_id == "") == (length(var.acceptance_claim_test_targets) == 0) &&
         (var.wordpress_test_origin != "" && var.publication_enabled) && var.alarm_topic_arn == ""
       )
       error_message = "Acceptance permits publication only to its dedicated WordPress.com test site."
@@ -59,7 +62,11 @@ resource "terraform_data" "guard" {
       error_message = "Configure both directions of the HP license bridge together."
     }
     precondition {
-      condition     = var.self_service_site_id == "" || (var.preview_enabled && var.publication_enabled && var.preflight_secret_arn != "")
+      condition     = local.acceptance || length(var.acceptance_claim_test_targets) == 0
+      error_message = "Placeholder claim targets are for acceptance only."
+    }
+    precondition {
+      condition     = var.self_service_site_id == "" || ((local.acceptance || var.preview_enabled) && var.publication_enabled && var.preflight_secret_arn != "")
       error_message = "Self-service registration requires verified preview, publication and license bridge configuration."
     }
     precondition {

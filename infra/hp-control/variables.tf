@@ -65,6 +65,18 @@ variable "self_service_site_id" {
     error_message = "Use a valid managed site ID or leave self-service registration disabled."
   }
 }
+variable "acceptance_claim_test_targets" {
+  description = "Acceptance only: placeholder dev/prod destinations that self_service_site_id may claim. Grants no publisher access; the claimed test site cannot be previewed or published."
+  type        = map(object({ bucket = string, distribution = string }))
+  default     = {}
+  validation {
+    condition = length(var.acceptance_claim_test_targets) == 0 || (
+      toset(keys(var.acceptance_claim_test_targets)) == toset(["dev", "prod"]) &&
+      alltrue([for t in values(var.acceptance_claim_test_targets) : can(regex("^simy-hp-acceptance-claim-test-", t.bucket))])
+    )
+    error_message = "Use both dev and prod placeholders named simy-hp-acceptance-claim-test-*, or leave empty."
+  }
+}
 variable "preview_gate_reference" {
   description = "Evidence that the legacy dev writer is retired and the target preview configuration is verified."
   type        = string
