@@ -6,6 +6,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const publishedAliases = new Map(require('../scripts/hp-management-industries.json').industries.filter(i => i.status === 'published').map(i => [i.url, i.source]));
+publishedAliases.set('/hp-management.html', 'hp-management/index.html');
 const siteRoot = path.join(__dirname, "..", "site");
 const LANGS = ["ja", "en", "zh-hans", "es", "fr", "hi"];
 const HTML_LANG = { ja: "ja", en: "en", "zh-hans": "zh-Hans", es: "es", fr: "fr", hi: "hi" };

@@ -48,8 +48,8 @@ def header(locale, source, path):
         panel = ''.join(link(label, href) for label, href in items)
         classes = 'sh-panel'
         if name == 'Solutions' and locale == 'ja':
-            from hp_management_industries import featured_industries
-            industry_links = link('業種別HP管理・無料診断', '/hp-management/')
+            from hp_management_industries import featured_industries, HUB_URL
+            industry_links = link('業種別HP管理・無料診断', HUB_URL)
             industry_links += ''.join(link(item['nav_label'], item['url']) for item in featured_industries())
             panel = ('<div class="sh-solutions-group"><p class="sh-group-title">SIMYの業務活用</p>'
                      + panel + '</div><div class="sh-solutions-group">'

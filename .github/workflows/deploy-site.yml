@@ -8,6 +8,7 @@ on:
     paths:
       - 'site/**'
       - 'scripts/publish-occupation-pages.sh'
+      - 'scripts/publish-hp-industry-aliases.py'
       - '.github/workflows/deploy-site.yml'
   workflow_dispatch:
     inputs:
@@ -107,6 +108,7 @@ jobs:
             --exclude "for/pharmaceutical-companies.html" \
             --exclude "for/*/pharmaceutical-companies.html" \
             --exclude "hp-management.html" \
+            --exclude "guides.html" \
             --exclude "hp-management/clinic.html" \
             --cache-control "public, max-age=300"
 
@@ -134,8 +136,17 @@ jobs:
             --exclude "for/" \
             --exclude "for/*/" \
             --exclude "hp-management/" \
+            --exclude "hp-management" \
+            --exclude "guides/" \
             --exclude "hp-management/*/" \
             --cache-control "public, max-age=86400"
+
+      # These literal keys have no checked-in alias files; protect them from
+      # sync deletion above and refresh from current generated sources afterward.
+      - name: Refresh HP industry and guide aliases
+        env:
+          SITE_S3_BUCKET: ${{ secrets.SITE_S3_BUCKET }}
+        run: python3 scripts/publish-hp-industry-aliases.py
 
       - name: Publish apple-app-site-association (application/json, no redirect)
         # Extensionless file: set the content type explicitly. It is excluded

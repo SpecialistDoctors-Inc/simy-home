@@ -35,7 +35,7 @@ test('ISMS mark loads before scrolling and stays within the web image budget',()
 test('HP entry offers published industries and preserves clinic detail pricing',()=>{
  const entry=fs.readFileSync('site/hp-management/index.html','utf8');
  const clinic=fs.readFileSync('site/hp-management/clinic/index.html','utf8');
- assert.match(entry,/<link rel="canonical" href="https:\/\/simy.one\/hp-management\/">/);
+ assert.match(entry,/<link rel="canonical" href="https:\/\/simy.one\/hp-management\.html">/);
  assert.doesNotMatch(entry,/location.replace|http-equiv="refresh"/);
  for(const url of ['/hp-management/clinic.html','/hp-management/law-firm.html'])assert.ok(entry.includes(`href="${url}#diagnosis"`));
  assert.match(clinic,/class="sp-hero-art"/);

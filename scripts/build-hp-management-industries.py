@@ -3,10 +3,10 @@
 import argparse
 import html
 import json
-from hp_management_industries import SITE, published_industries
+from hp_management_industries import SITE, HUB_URL, HUB_SOURCE, published_industries
 from site_header import apply
 
-OUTPUT = SITE / 'hp-management/index.html'
+OUTPUT = SITE / HUB_SOURCE
 BASE = 'https://simy.one'
 TITLE = '業種から選ぶホームページ管理・無料診断｜SIMY'
 DESCRIPTION = '業種に合ったホームページ管理のサービス内容と料金を確認できます。今お使いのホームページのURLから、業種別の無料診断を始められます。'
@@ -39,7 +39,7 @@ def render(industries=None):
 <p class="price-number">月額 <strong>{price['monthlyYen']:,}</strong>円〜（税別）<span>税込 {price['taxInclusiveYen']:,}円〜／月</span></p>
 <a href="{url}#pricing">プラン・料金の詳細を見る<span class="sr-only">（{label}）</span></a></article>''')
     schema = {'@context': 'https://schema.org', '@type': 'CollectionPage', 'name': TITLE,
-              'description': DESCRIPTION, 'url': BASE + '/hp-management/', 'inLanguage': 'ja',
+              'description': DESCRIPTION, 'url': BASE + HUB_URL, 'inLanguage': 'ja',
               'mainEntity': {'@type': 'ItemList', 'numberOfItems': len(industries), 'itemListElement': [
                   {'@type': 'ListItem', 'position': n, 'name': item['label'], 'url': BASE + item['url']}
                   for n, item in enumerate(industries, 1)]}}
@@ -48,9 +48,9 @@ def render(industries=None):
 <html lang="ja"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{TITLE}</title><meta name="description" content="{DESCRIPTION}">
-<meta name="robots" content="index,follow"><link rel="canonical" href="{BASE}/hp-management/">
+<meta name="robots" content="index,follow"><link rel="canonical" href="{BASE}{HUB_URL}">
 <meta property="og:type" content="website"><meta property="og:locale" content="ja_JP"><meta property="og:site_name" content="SIMY">
-<meta property="og:url" content="{BASE}/hp-management/"><meta property="og:title" content="{TITLE}">
+<meta property="og:url" content="{BASE}{HUB_URL}"><meta property="og:title" content="{TITLE}">
 <meta property="og:description" content="{DESCRIPTION}"><meta name="twitter:title" content="{TITLE}"><meta name="twitter:description" content="{DESCRIPTION}">
 <link rel="icon" href="/simy-icon-56.png"><link rel="stylesheet" href="/site-theme.css"><link rel="stylesheet" href="/hp-management-industries.css">
 <script type="application/ld+json">{json.dumps(schema, ensure_ascii=False).replace('<', '&lt;')}</script>

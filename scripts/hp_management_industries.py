@@ -7,6 +7,8 @@ from pathlib import Path, PurePosixPath
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG = ROOT / 'scripts/hp-management-industries.json'
 SITE = ROOT / 'site'
+HUB_URL = '/hp-management.html'
+HUB_SOURCE = 'hp-management/index.html'
 
 
 def validate_catalog(data, site=SITE):
@@ -70,5 +72,5 @@ def featured_industries():
 
 
 def published_aliases():
-    return {item['url']: item['source'] for item in published_industries()
-            if item['url'].lstrip('/') != item['source']}
+    return {HUB_URL: HUB_SOURCE, **{item['url']: item['source'] for item in published_industries()
+            if item['url'].lstrip('/') != item['source']}}

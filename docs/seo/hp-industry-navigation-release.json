@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "url": "https://simy.one/hp-management/",
+  "url": "https://simy.one/hp-management.html",
   "invalidation_paths": [
     "/affiliate.html",
     "/assets/social/cards/hp-management-industries-v1.png",
@@ -19,6 +19,7 @@
     "/for/sales/",
     "/for/sales/index.html",
     "/founder.html",
+    "/guides.html",
     "/guides/",
     "/guides/chatgpt.html",
     "/guides/china-llm.html",
@@ -55,8 +56,8 @@
   ],
   "sitemap": {
     "key": "sitemap.xml",
-    "mode": "live-add-only",
-    "url": "https://simy.one/hp-management/"
+    "mode": "live-hub-canonical-only",
+    "url": "https://simy.one/hp-management.html"
   },
   "objects": [
     {
@@ -91,323 +92,330 @@
       "source": "hp-management/index.html",
       "key": "hp-management/index.html",
       "phase": "hub",
-      "bytes": 10679,
-      "sha256": "cc21945577a0e9801a7e42897ee27185b488b40cd87f46750358296d5d7b0bc9"
+      "bytes": 10695,
+      "sha256": "c60eb2a9b664c2916e40899730fdb8c3bbd40a7ef9558fe17718e0054f30703e"
     },
     {
       "source": "hp-management/index.html",
       "key": "hp-management/",
       "phase": "hub",
-      "bytes": 10679,
-      "sha256": "cc21945577a0e9801a7e42897ee27185b488b40cd87f46750358296d5d7b0bc9"
+      "bytes": 10695,
+      "sha256": "c60eb2a9b664c2916e40899730fdb8c3bbd40a7ef9558fe17718e0054f30703e"
     },
     {
       "source": "hp-management/index.html",
       "key": "hp-management.html",
       "phase": "hub",
-      "bytes": 10679,
-      "sha256": "cc21945577a0e9801a7e42897ee27185b488b40cd87f46750358296d5d7b0bc9"
+      "bytes": 10695,
+      "sha256": "c60eb2a9b664c2916e40899730fdb8c3bbd40a7ef9558fe17718e0054f30703e"
     },
     {
       "source": "hp-management/index.html",
       "key": "hp-management",
       "phase": "hub",
-      "bytes": 10679,
-      "sha256": "cc21945577a0e9801a7e42897ee27185b488b40cd87f46750358296d5d7b0bc9"
+      "bytes": 10695,
+      "sha256": "c60eb2a9b664c2916e40899730fdb8c3bbd40a7ef9558fe17718e0054f30703e"
     },
     {
       "source": "affiliate.html",
       "key": "affiliate.html",
       "phase": "menu",
-      "bytes": 12054,
-      "sha256": "db72a812d0ceb80620c966a41423eb33c73b76fa90c6826f8022958e6261bd63"
+      "bytes": 12058,
+      "sha256": "a845c3a85d38afe9ed12d681de4ecce072a426938e4604a5b61c51871e99f492"
     },
     {
       "source": "clinic-security-sample.html",
       "key": "clinic-security-sample.html",
       "phase": "menu",
-      "bytes": 12054,
-      "sha256": "d70fc913da7b5d27c8d1d1e975a0dcb3fe7fa7422d1884aaec2e81aa4ed33462"
+      "bytes": 12058,
+      "sha256": "1e87781cf59849f9180b116740e8d2415d9c5c229a70f654bdfdc9ac1d457a67"
     },
     {
       "source": "diagnosis-tests-shared-folder.html",
       "key": "diagnosis-tests-shared-folder.html",
       "phase": "menu",
-      "bytes": 4944,
-      "sha256": "15bc5b4e508ec4607049db2d5be41457f64ecacf8485b36d29a076586fa2fd9e"
+      "bytes": 4948,
+      "sha256": "e6af84072c06ae0778f9b2dc5e74bfe875eaa2d8dede31831b56fe19226a030d"
     },
     {
       "source": "download.html",
       "key": "download.html",
       "phase": "menu",
-      "bytes": 63702,
-      "sha256": "1c41f0edc58673c80ce51c5271b0cdf63562a26d281902bfb51095e4dd85ac07"
+      "bytes": 63706,
+      "sha256": "89125232f165c38844506fd3580940803d2bb77f43d22fcdfbb77a2455ef47dc"
     },
     {
       "source": "for/engineers/index.html",
       "key": "for/engineers/index.html",
       "phase": "menu",
-      "bytes": 38347,
-      "sha256": "d434fd221896103d42736204412a0805685ffd47c091570601fe4930e91647ae"
+      "bytes": 38351,
+      "sha256": "dcc552e178ac47cfb503ff05b0a9a8d0527a3175b0cc3b5fdc0996ffbd02febd"
     },
     {
       "source": "for/engineers/index.html",
       "key": "for/engineers/",
       "phase": "menu",
-      "bytes": 38347,
-      "sha256": "d434fd221896103d42736204412a0805685ffd47c091570601fe4930e91647ae"
+      "bytes": 38351,
+      "sha256": "dcc552e178ac47cfb503ff05b0a9a8d0527a3175b0cc3b5fdc0996ffbd02febd"
     },
     {
       "source": "for/financial-planners/index.html",
       "key": "for/financial-planners/index.html",
       "phase": "menu",
-      "bytes": 29023,
-      "sha256": "6f86c26a82870a010fcdbec7195da6bd921a490298eb5898340ba9fe241638de"
+      "bytes": 29027,
+      "sha256": "5973c3e5cd90a54003c0b487b005c0dd2aabbac47206bf29570394fe7eba35ef"
     },
     {
       "source": "for/financial-planners/index.html",
       "key": "for/financial-planners/",
       "phase": "menu",
-      "bytes": 29023,
-      "sha256": "6f86c26a82870a010fcdbec7195da6bd921a490298eb5898340ba9fe241638de"
+      "bytes": 29027,
+      "sha256": "5973c3e5cd90a54003c0b487b005c0dd2aabbac47206bf29570394fe7eba35ef"
     },
     {
       "source": "for/index.html",
       "key": "for/index.html",
       "phase": "menu",
-      "bytes": 16144,
-      "sha256": "18f8c84d4004f6c6ef47075f9ef4447087b9acae490439534e824795621b2c5b"
+      "bytes": 16148,
+      "sha256": "c07d5434ff436e71b31981d96d7bb33628870f8bf6bc01ada655e9230398408b"
     },
     {
       "source": "for/index.html",
       "key": "for/",
       "phase": "menu",
-      "bytes": 16144,
-      "sha256": "18f8c84d4004f6c6ef47075f9ef4447087b9acae490439534e824795621b2c5b"
+      "bytes": 16148,
+      "sha256": "c07d5434ff436e71b31981d96d7bb33628870f8bf6bc01ada655e9230398408b"
     },
     {
       "source": "for/pharmaceutical-companies/index.html",
       "key": "for/pharmaceutical-companies/index.html",
       "phase": "menu",
-      "bytes": 27550,
-      "sha256": "8f345b3bbc0af82a75d003d244f4f74e7bd5b33bed23b28ddaedd5bcdee1162f"
+      "bytes": 27554,
+      "sha256": "b6a8a5f11b70fd59c613873722603dbe086f9c7ec569b363c9fade4ec9bfae0d"
     },
     {
       "source": "for/pharmaceutical-companies/index.html",
       "key": "for/pharmaceutical-companies/",
       "phase": "menu",
-      "bytes": 27550,
-      "sha256": "8f345b3bbc0af82a75d003d244f4f74e7bd5b33bed23b28ddaedd5bcdee1162f"
+      "bytes": 27554,
+      "sha256": "b6a8a5f11b70fd59c613873722603dbe086f9c7ec569b363c9fade4ec9bfae0d"
     },
     {
       "source": "for/pharmaceutical-companies/index.html",
       "key": "for/pharmaceutical-companies.html",
       "phase": "menu",
-      "bytes": 27550,
-      "sha256": "8f345b3bbc0af82a75d003d244f4f74e7bd5b33bed23b28ddaedd5bcdee1162f"
+      "bytes": 27554,
+      "sha256": "b6a8a5f11b70fd59c613873722603dbe086f9c7ec569b363c9fade4ec9bfae0d"
     },
     {
       "source": "for/sales/index.html",
       "key": "for/sales/index.html",
       "phase": "menu",
-      "bytes": 17139,
-      "sha256": "fb7c913b6b5d8b3bd09c279979c001c8c2a63db18a765f94ddd58d0ec04e8e53"
+      "bytes": 17143,
+      "sha256": "597819e5b95172412f2947bd342100ec068d9432ba0cc2f587abe9b6d004c86c"
     },
     {
       "source": "for/sales/index.html",
       "key": "for/sales/",
       "phase": "menu",
-      "bytes": 17139,
-      "sha256": "fb7c913b6b5d8b3bd09c279979c001c8c2a63db18a765f94ddd58d0ec04e8e53"
+      "bytes": 17143,
+      "sha256": "597819e5b95172412f2947bd342100ec068d9432ba0cc2f587abe9b6d004c86c"
     },
     {
       "source": "founder.html",
       "key": "founder.html",
       "phase": "menu",
-      "bytes": 20342,
-      "sha256": "b4b93cd4a74b832ea9728142617126342317cbfd35b26b61e8c613016957eb3b"
+      "bytes": 20346,
+      "sha256": "2800bd4c91bff50ef3d466f5e1bce5bf37fcac64fdb8900f7689326f7dc733e7"
     },
     {
       "source": "guides/chatgpt.html",
       "key": "guides/chatgpt.html",
       "phase": "menu",
-      "bytes": 104010,
-      "sha256": "efa0781bb5cebc005447634dcfa60e2603cbb799251f695a2ec9546a2327eef0"
+      "bytes": 104014,
+      "sha256": "682a2f8b93db25afb10674b78187041083fb34b72c12028ca58c97ed8d08fd97"
     },
     {
       "source": "guides/china-llm.html",
       "key": "guides/china-llm.html",
       "phase": "menu",
-      "bytes": 115014,
-      "sha256": "3e593745c904ba4a723bc8e080d82abde3132906bfcfdc885cc9c56ccca2ef33"
+      "bytes": 115018,
+      "sha256": "54d24a83c53749c6aec66968be6e06cb8c9adc8f1eb5ebe9709217e26c1e8adf"
     },
     {
       "source": "guides/claude-code.html",
       "key": "guides/claude-code.html",
       "phase": "menu",
-      "bytes": 18102,
-      "sha256": "964158907ff62f671402480228f924c07e93e7779a0e955695d25fd4ca63fbd5"
+      "bytes": 18106,
+      "sha256": "af1f25bb497149ad12638a02a0cbf66d028bfc3b83de1873fc60fdd3af586e6a"
     },
     {
       "source": "guides/claude.html",
       "key": "guides/claude.html",
       "phase": "menu",
-      "bytes": 111212,
-      "sha256": "1b4348ce762dc67ab28ce4b71c32383d9371e67dc04276f7ee2b38e847f3347a"
+      "bytes": 111216,
+      "sha256": "0f09fda7928728f8e664aa313fdbdf3301cbd05a04ba387fa5a03762560c2c87"
     },
     {
       "source": "guides/codex.html",
       "key": "guides/codex.html",
       "phase": "menu",
-      "bytes": 107996,
-      "sha256": "a38e98fbbd9f86356d11593b3411310b7f47f2e26d211cc9ffa5c97b6aa518d2"
+      "bytes": 108000,
+      "sha256": "820b4c75dc4194960dd6eee341daf656f6627f361b8fc2c7bc3a2a19b5fc3980"
     },
     {
       "source": "guides/conductor.html",
       "key": "guides/conductor.html",
       "phase": "menu",
-      "bytes": 17627,
-      "sha256": "d6303c7da519f06fa5982e13f9ed3463491f05328d70d305eb3984cf86ca3fde"
+      "bytes": 17631,
+      "sha256": "be5ce72c1bb390657a15ecc1d0ea2348908ddd4a7ae8f9aceccf5ee65e32995e"
     },
     {
       "source": "guides/cowork.html",
       "key": "guides/cowork.html",
       "phase": "menu",
-      "bytes": 105761,
-      "sha256": "0fb76f3a2f1afe667265bb5ef1f818304be428c9fda8f14be80b8cfb91b5fe2a"
+      "bytes": 105765,
+      "sha256": "c80b904a109f7c00e434c0adc4712c129d8f43b88c88e9b0bae4428ba81da574"
     },
     {
       "source": "guides/deepseek.html",
       "key": "guides/deepseek.html",
       "phase": "menu",
-      "bytes": 110220,
-      "sha256": "805420860ee152ce17ba818118a6b4491ee3d6d566f1b7cfd7ea7f7051b48286"
+      "bytes": 110224,
+      "sha256": "be2a1f232e8c6cc70aec196991adb86cea041f384066d3842f26fde73dd71253"
     },
     {
       "source": "guides/doubao.html",
       "key": "guides/doubao.html",
       "phase": "menu",
-      "bytes": 105736,
-      "sha256": "2d6d6085a5414414d47d9b0a47090bd3718338439d1e6c625b87f3efca48c86b"
+      "bytes": 105740,
+      "sha256": "d6289803139b34b5726e78ddfa3e476cf9ff234ddef93d19b9e66c2d1dd99e55"
     },
     {
       "source": "guides/glm.html",
       "key": "guides/glm.html",
       "phase": "menu",
-      "bytes": 107295,
-      "sha256": "7937fe9f2b349fdec3bc731b097d97c7dada345d9051b659dcb726a3a1b4ab49"
+      "bytes": 107299,
+      "sha256": "47e5e82257407e3ff4a70e3f34bba931610a940f9495f591ba54fc093a7261e6"
     },
     {
       "source": "guides/index.html",
       "key": "guides/index.html",
       "phase": "menu",
-      "bytes": 56093,
-      "sha256": "563db5009d338c49be997d2eddc5df62cf6e1d0e4b47989d6d25c217fddea677"
+      "bytes": 56097,
+      "sha256": "6d258a0ed512653c19a2da2a197a542b0ad185fc0b5e632e6f64ab1c913693a0"
     },
     {
       "source": "guides/index.html",
       "key": "guides/",
       "phase": "menu",
-      "bytes": 56093,
-      "sha256": "563db5009d338c49be997d2eddc5df62cf6e1d0e4b47989d6d25c217fddea677"
+      "bytes": 56097,
+      "sha256": "6d258a0ed512653c19a2da2a197a542b0ad185fc0b5e632e6f64ab1c913693a0"
+    },
+    {
+      "source": "guides/index.html",
+      "key": "guides.html",
+      "phase": "menu",
+      "bytes": 56097,
+      "sha256": "6d258a0ed512653c19a2da2a197a542b0ad185fc0b5e632e6f64ab1c913693a0"
     },
     {
       "source": "guides/kimi.html",
       "key": "guides/kimi.html",
       "phase": "menu",
-      "bytes": 108257,
-      "sha256": "36fe03ff05853d2125cd9da580a95d421373bab137ff40550e2274e9e7de74db"
+      "bytes": 108261,
+      "sha256": "95df8673453ef1a7a3f09d6972ec6d74864e085f604d6a352088ed095a633082"
     },
     {
       "source": "guides/meeting-notes.html",
       "key": "guides/meeting-notes.html",
       "phase": "menu",
-      "bytes": 108750,
-      "sha256": "615454e932d9049670d97a0ad34a495a168cb9be094c20e74fe81f498065ad3f"
+      "bytes": 108754,
+      "sha256": "d4c64a6adb945fb38b9610ed1b003fab57f7417fd10ea97a388aeae6ea823bd3"
     },
     {
       "source": "guides/minimax.html",
       "key": "guides/minimax.html",
       "phase": "menu",
-      "bytes": 108338,
-      "sha256": "906af35d02b2df61fc67c3a72fa2d71d265beaed52afad33850ddc7fa25fde32"
+      "bytes": 108342,
+      "sha256": "103fb855e4272367607a26d3da45012d693ce2b15d73c722795c3f577d905a1e"
     },
     {
       "source": "guides/notta.html",
       "key": "guides/notta.html",
       "phase": "menu",
-      "bytes": 110362,
-      "sha256": "02533e222e65e18dcc805d313c7b0c5357317296ffa04961edb7dab849046771"
+      "bytes": 110366,
+      "sha256": "4579890f7bcbac30286747009ef75df4d376a6cc1a64a81a7b23384d686653dd"
     },
     {
       "source": "guides/plaud.html",
       "key": "guides/plaud.html",
       "phase": "menu",
-      "bytes": 96654,
-      "sha256": "5b1655ea9742bfa71b8493bfa256e7c16284b66dd3a5f8089f99c69d79ba74b4"
+      "bytes": 96658,
+      "sha256": "8774e15d21ddc2f86e6ad48b75842c3f5d0fa4c44aee49c1c326992935aa478f"
     },
     {
       "source": "guides/qwen-local.html",
       "key": "guides/qwen-local.html",
       "phase": "menu",
-      "bytes": 129150,
-      "sha256": "91bf2aa0e35ff5b5b1c6f17f005b096328c04a081e974ecdfaffb768c8f399cb"
+      "bytes": 129154,
+      "sha256": "60491750ddefe2eddd39933c2120deaca51eaca8afdac772157a0dea8b65a15d"
     },
     {
       "source": "guides/qwen.html",
       "key": "guides/qwen.html",
       "phase": "menu",
-      "bytes": 108636,
-      "sha256": "d577cdb4f6199cb5b135f365664121bd1b415b605f8d9349488ea931cf43cdd1"
+      "bytes": 108640,
+      "sha256": "99407e02e1de1e2c7d7d41a50e3c7c29cc72eb3977d3db93e09ca6ce1d3835be"
     },
     {
       "source": "guides/simy-delivery-loop.html",
       "key": "guides/simy-delivery-loop.html",
       "phase": "menu",
-      "bytes": 18031,
-      "sha256": "75ec963f5d260e59fe2287fa378aab477bca6f30d40d039c102f3eaed71d6d7c"
+      "bytes": 18035,
+      "sha256": "50439b539610cb34eccab65731461af49acb50c16eec792a92a4f0bdb6f4fe84"
     },
     {
       "source": "guides/simy-getting-started.html",
       "key": "guides/simy-getting-started.html",
       "phase": "menu",
-      "bytes": 17506,
-      "sha256": "f732311526d899190baab580587a82639b5cfcf659592a89a9d184a5980eddff"
+      "bytes": 17510,
+      "sha256": "748d225bc9492d640ee08e186ffdd0cfd50f945d5288bc9c3461f093dd576589"
     },
     {
       "source": "guides/simy-sqm.html",
       "key": "guides/simy-sqm.html",
       "phase": "menu",
-      "bytes": 17760,
-      "sha256": "7044c8574cf322e04edb8a0fbc76718c1d022b2c3455bc7770255acb9f1befdd"
+      "bytes": 17764,
+      "sha256": "32593262c210c0d36fa3475fece5ef03779ab8c7e347f87da53053145e707bc4"
     },
     {
       "source": "ja.html",
       "key": "ja.html",
       "phase": "menu",
-      "bytes": 56624,
-      "sha256": "29e69b11dd0a4761236b90851abd10aa319dd983a9222c2ff96880eb09fc17c4"
+      "bytes": 56628,
+      "sha256": "6af14f1ab84dac18c1faf122bdb6290e0d33442443ce9bab70d13737c5db3140"
     },
     {
       "source": "legal.html",
       "key": "legal.html",
       "phase": "menu",
-      "bytes": 7287,
-      "sha256": "ad90d2d467a16a6e75dc21e6ecdd629ba2212209814178d88cefc7ed7ca6d51f"
+      "bytes": 7291,
+      "sha256": "e92cfe90620bb87c394880210704bbcb3d098a6ca20fd4d2c18c4f93a71f05ed"
     },
     {
       "source": "news/20261005.html",
       "key": "news/20261005.html",
       "phase": "menu",
-      "bytes": 98342,
-      "sha256": "f6cddd942213d1868891e340874d0cc8a81c3cf402a7ec2e19afc5667c90aed9"
+      "bytes": 98346,
+      "sha256": "d1fd5d49c11074e99e68bbe38cf1dac4d4676223cee06f2a4b4ddf2ca5c1dcce"
     },
     {
       "source": "seller-info.html",
       "key": "seller-info.html",
       "phase": "menu",
-      "bytes": 10125,
-      "sha256": "99562af4ec7bb2f64c2bad00187c962be4ac7d0f57cb69ac090c27e0f68f2028"
+      "bytes": 10129,
+      "sha256": "47eef192306a1b951c06488ed71570d153ca31ae8a534db27d2f575f9490bbfe"
     }
   ]
 }

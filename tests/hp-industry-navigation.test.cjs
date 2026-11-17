@@ -26,7 +26,7 @@ p=Header();p.feed((Path('site')/sys.argv[1]).read_text());print(json.dumps(p.lin
 }
 
 function runHeader(page){
- const origin='https://simy.one', location={origin,href:origin+'/'+page.replace(/index\.html$/,'')};
+ const origin='https://simy.one', location={origin,href:origin+(page==='hp-management/index.html'?'/hp-management.html':'/'+page.replace(/index\.html$/,''))};
  const element=attrs=>({attrs:{...attrs},get href(){return new URL(this.attrs.href,location.href).href;},set href(value){this.attrs.href=value;},get lang(){return this.attrs.lang;},setAttribute(k,v){this.attrs[k]=v;},removeAttribute(k){delete this.attrs[k];},hasAttribute(k){return k in this.attrs;},addEventListener(){}});
  const links=headerModel(page).map(row=>({...row,element:element(row.attrs)}));
  const byClass=name=>links.find(row=>(row.attrs.class||'').split(' ').includes(name))?.element;
@@ -48,16 +48,16 @@ test('Japanese shared menus group HP industries separately and preserve existing
   assert.ok(html.includes('SIMYの業務活用')&&html.includes('ホームページ管理'));
   const links=runHeader(page);
   for(const item of catalog.industries.filter(item=>item.status==='published'&&item.featured).slice(0,2))assert.ok(links.some(row=>new URL(row.element.href).pathname===item.url),page+': '+item.url);
-  for(const pathname of ['/hp-management/','/for/engineers/','/for/financial-planners/','/for/pharmaceutical-companies/'])assert.ok(links.some(row=>new URL(row.element.href).pathname===pathname),page+': '+pathname);
+  for(const pathname of ['/hp-management.html','/for/engineers/','/for/financial-planners/','/for/pharmaceutical-companies/'])assert.ok(links.some(row=>new URL(row.element.href).pathname===pathname),page+': '+pathname);
  }
 });
 
 test('locale runtime retains the HP hub pricing and start journey while app pages keep app pricing',()=>{
  const links=runHeader('hp-management/index.html');
  const pricing=links.find(row=>row.attrs.class==='sh-pricing').element;
- assert.equal(new URL(pricing.href).pathname,'/hp-management/');assert.equal(new URL(pricing.href).hash,'#pricing');
+ assert.equal(new URL(pricing.href).pathname,'/hp-management.html');assert.equal(new URL(pricing.href).hash,'#pricing');
  const start=links.find(row=>row.attrs.class==='sh-signup').element;
- assert.equal(new URL(start.href).pathname,'/hp-management/');assert.equal(new URL(start.href).hash,'#industries');
+ assert.equal(new URL(start.href).pathname,'/hp-management.html');assert.equal(new URL(start.href).hash,'#industries');
  const appPricing=runHeader('ja.html').find(row=>row.attrs.class==='sh-pricing').element;
  assert.equal(new URL(appPricing.href).pathname,'/ja.html');assert.equal(new URL(appPricing.href).hash,'#pricing');
 });

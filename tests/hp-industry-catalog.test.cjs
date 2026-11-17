@@ -61,7 +61,7 @@ test('hub generation is deterministic and checkout prices are source-backed',()=
   assert.ok(page.includes(min.taxInclusiveYen.toLocaleString('en-US')));
  }
  assert.match(page,/<meta name="robots" content="index,follow">/);
- assert.match(page,/<link rel="canonical" href="https:\/\/simy.one\/hp-management\/">/);
+ assert.match(page,/<link rel="canonical" href="https:\/\/simy.one\/hp-management\.html">/);
  assert.doesNotMatch(page,/location.replace|http-equiv="refresh"/);
  run(setup+`from html.parser import HTMLParser
 class Links(HTMLParser):
@@ -76,7 +76,7 @@ Links().feed(Path('site/hp-management/index.html').read_text())
 test('SEO aliases and canonical helper resolve both hub and production clinic URL',()=>{
  run(setup+`spec=importlib.util.spec_from_file_location('seo','scripts/check-site-seo.py')
 seo=importlib.util.module_from_spec(spec); spec.loader.exec_module(seo)
-assert seo.canonical_url('hp-management/index.html') == 'https://simy.one/hp-management/'
+assert seo.canonical_url('hp-management/index.html') == 'https://simy.one/hp-management.html'
 assert seo.canonical_url('hp-management/clinic/index.html') == 'https://simy.one/hp-management/clinic.html'
 `);
 });

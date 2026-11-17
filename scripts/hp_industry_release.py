@@ -7,18 +7,21 @@ import re
 from pathlib import Path, PurePosixPath
 from html.parser import HTMLParser
 from urllib.parse import urlsplit
+from hp_management_industries import HUB_URL, HUB_SOURCE
 
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / 'docs/seo/hp-industry-navigation-release.json'
-HUB = 'hp-management/index.html'
-URL = 'https://simy.one/hp-management/'
+HUB = HUB_SOURCE
+URL = 'https://simy.one' + HUB_URL
+LEGACY_URL = 'https://simy.one/hp-management/'
 ASSETS = ('hp-industry-navigation.css', 'hp-management-industries.css',
           'assets/social/cards/hp-management-industries-v1.png',
           'hp-management/law-firm/release-manifest.json')
 HUB_KEYS = (HUB, 'hp-management/', 'hp-management.html', 'hp-management')
-# Mirrors existing publish-occupation-pages.sh legacy language aliases. Only
+# Existing occupation aliases plus the verified live guides/ -> guides.html
+# edge redirect. Only
 # folder-index sources own these keys; canonical metadata never assigns writes.
-LEGACY_HTML_DIRECTORIES = {'for/clinic/', 'for/pharmaceutical-companies/'} | {
+LEGACY_HTML_DIRECTORIES = {'for/clinic/', 'for/pharmaceutical-companies/', 'guides/'} | {
     f'for/{locale}/{industry}/'
     for locale in ('en', 'es', 'fr', 'hi', 'zh-hans')
     for industry in ('pharmaceutical-companies', 'engineers', 'financial-planners')
@@ -87,7 +90,7 @@ def plan(root=ROOT):
             invalidation_paths.add('/')
         elif source.endswith('/index.html'):
             invalidation_paths.add('/' + source[:-len('index.html')])
-    return {'version': 1, 'url': URL, 'invalidation_paths': sorted(invalidation_paths), 'sitemap': {'key': 'sitemap.xml', 'mode': 'live-add-only', 'url': URL},
+    return {'version': 1, 'url': URL, 'invalidation_paths': sorted(invalidation_paths), 'sitemap': {'key': 'sitemap.xml', 'mode': 'live-hub-canonical-only', 'url': URL},
             'objects': objects}
 
 

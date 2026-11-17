@@ -13,7 +13,7 @@ root=Path(workspace.name)
 site=root/'site'; site.mkdir()
 for relative in release.ASSETS:
  p=site/relative; p.parent.mkdir(parents=True,exist_ok=True); p.write_text('reviewed support')
-for relative in (release.HUB, 'index.html', 'ja.html', 'for/index.html', 'for/engineers/index.html', 'for/pharmaceutical-companies/index.html'):
+for relative in (release.HUB, 'index.html', 'ja.html', 'for/index.html', 'for/engineers/index.html', 'for/pharmaceutical-companies/index.html', 'guides/index.html'):
  p=site/relative; p.parent.mkdir(parents=True,exist_ok=True); p.write_text('<header class="sh-solutions-panel">menu</header>')
 (site/'foreign.html').write_text('<header>other industry own header</header>')
 (site/'clinic-service-v2.html').write_text('<header class="sh-solutions-panel">menu</header><link rel="canonical" href="https://simy.one/hp-management/clinic.html">')
@@ -79,7 +79,7 @@ assert set(release.HUB_KEYS)<=allowed
 assert 'foreign.html' not in allowed and 'sitemap.xml' not in allowed
 assert 'hp-management/clinic.html' not in allowed
 assert '/hp-management/clinic.html' in json.loads(first)['invalidation_paths']
-for key,source in [('for/','for/index.html'),('for/engineers/','for/engineers/index.html'),('for/pharmaceutical-companies.html','for/pharmaceutical-companies/index.html')]:
+for key,source in [('for/','for/index.html'),('for/engineers/','for/engineers/index.html'),('for/pharmaceutical-companies.html','for/pharmaceutical-companies/index.html'),('guides.html','guides/index.html'),('guides/','guides/index.html')]:
  alias=next(o for o in objects if o['key']==key)
  original=next(o for o in objects if o['key']==source)
  assert alias['source']==source and alias['sha256']==original['sha256'] and alias['bytes']==original['bytes']
@@ -113,13 +113,39 @@ print(json.dumps({'objects':len(expected),'status':receipt['status']}))
 `));
   assert.ok(output.objects>0); assert.equal(output.status,'uploaded_and_invalidated');
 });
-test('existing hub URL skips live sitemap write preserving bytes and metadata', () => {
+test('existing canonical hub URL skips live sitemap write preserving bytes and metadata', () => {
   run(String.raw`
 live=original.replace(b'</urlset>',('<url><loc>'+release.URL+'</loc><lastmod>2020-01-01</lastmod></url></urlset>').encode())
 before=live
 receipt=pub.publish(root,opener,runner)
 assert live==before and 'sitemap.xml' not in keys()
 assert not receipt['sitemap_updated'] and '/sitemap.xml' not in receipt['invalidation_paths']
+`);
+});
+test('legacy hub loc migrates to canonical HTML preserving all remaining XML bytes and metadata', () => {
+  run(String.raw`
+legacy='<url><loc>'+release.LEGACY_URL+'</loc><lastmod>2026-11-17</lastmod><priority>0.8</priority></url>'
+live=original.replace(b'</urlset>',(legacy+'</urlset>').encode())
+before=live
+receipt=pub.publish(root,opener,runner)
+assert live==before.replace(('<loc>'+release.LEGACY_URL+'</loc>').encode(),('<loc>'+release.URL+'</loc>').encode())
+assert live.count(release.URL.encode())==1 and release.LEGACY_URL.encode() not in live
+assert receipt['sitemap_updated'] and keys()[-1]=='sitemap.xml'
+sitemap=puts()[-1]
+assert sitemap[sitemap.index('--if-match')+1]==head['ETag']
+assert json.loads(sitemap[sitemap.index('--metadata')+1])==head['Metadata']
+`);
+});
+test('canonical already present keeps legacy URL untouched and skips writes; ambiguous legacy URLs fail safely', () => {
+  run(String.raw`
+legacy='<url><loc>'+release.LEGACY_URL+'</loc></url>'
+canonical='<url><loc>'+release.URL+'</loc></url>'
+both=original.replace(b'</urlset>',(legacy+canonical+'</urlset>').encode())
+assert pub.extend_sitemap(both,head)==(both,False)
+ambiguous=original.replace(b'</urlset>',(legacy+legacy+'</urlset>').encode())
+try:pub.extend_sitemap(ambiguous,head)
+except ValueError:pass
+else:raise AssertionError('Duplicate legacy URLs accepted')
 `);
 });
 test('If-Match conflict refuses concurrent overwrite and never retries or invalidates', () => {
