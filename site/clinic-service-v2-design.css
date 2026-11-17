@@ -172,3 +172,12 @@
 .sp-main .plan-recording .sp-note{margin:8px 0}
 
 .sp-main .plan-top h3>span{display:inline-block;white-space:nowrap}
+
+/* Pricing separates included AI features from upkeep and expert assistance. */
+.sp-main .plans .plan-feature-title{margin:0 0 12px;font-size:inherit;font-weight:600;line-height:1.8}
+.sp-main .plans ul+.plan-feature-title{padding-top:16px;border-top:1px solid var(--line)}
+
+.sp-main .plans .plan ul{flex:none}
+
+/* Keep the clinic header in document flow and the pricing content unobscured. */
+.clinic-service-page>.header{position:relative;top:auto}
