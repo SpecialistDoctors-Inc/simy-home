@@ -10,7 +10,12 @@ test('every shared header exposes deployable guide and legal destinations', () =
   for (const file of files) {
     const source = fs.readFileSync(path.join(site,file),'utf8');
     const header = source.match(/<header class="simy-header"[\s\S]*?<\/header>/)?.[0];
-    const excluded = file === 'hp-management/clinic/index.html' || file === 'auth-callback.html' || !/<body\b/i.test(source) || /http-equiv=["']refresh/i.test(source);
+    if (file === 'hp-management/law-firm.html') {
+      const serviceHeader = source.match(/<header class="header"[\s\S]*?<\/header>/)?.[0];
+      assert.ok(serviceHeader, 'law-firm landing retains service navigation');
+      for (const target of ['#features','#pricing','#diagnosis']) assert.ok(serviceHeader.includes(`href="${target}"`));
+    }
+    const excluded = ['hp-management/clinic/index.html','hp-management/law-firm.html','auth-callback.html'].includes(file) || !/<body\b/i.test(source) || /http-equiv=["']refresh/i.test(source);
     if (excluded) continue;
     assert.ok(header, `${file}: every rendered public page needs the shared header`);
     assert.equal((source.match(/<header class="simy-header"/g) || []).length, 1, `${file}: one shared header`);
