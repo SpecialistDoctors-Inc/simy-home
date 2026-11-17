@@ -264,8 +264,8 @@ function continuousGrowthSupport(report,growth) {
     box.append(element('p',growth.name+'は、今回のAI回答'+growth.discovery.observed+'件中'+growth.discovery.mentioned+'件に登場しました。','growth-lead'));
   }
   box.append(
-    element('p','事務所を探す質問に対して、どんな法律相談に対応し、どこで相談できるか。先生の専門性や法律相談の根拠が伝わる公式ページを整えます。法律相談での説明は、AIが下書きにし、先生が確認して公開できます。','growth-manga-intro'),
-    element('p','同意を得た音声は端末内で処理します。個人を特定できる情報を取り除き、人が確認した要点だけをAIに渡します。','growth-manga-reassurance'),
+    element('p','事務所を探す質問に対して、どんな法律相談に対応し、どこで相談できるか。先生の専門性や法律相談の根拠が伝わる公式ページを整えます。公開用の一般的な法律解説をAIが下書きにし、先生が確認して公開できます。','growth-manga-intro'),
+    element('p','公開用に同意を得た一般的な法律解説を使い、個別案件の録音や相談内容は使用しません。人が確認した要点だけをAIに渡します。','growth-manga-reassurance'),
     element('p','導入後の活用イメージ','growth-step')
   );
 
@@ -274,7 +274,7 @@ function continuousGrowthSupport(report,growth) {
   panels.forEach(([title,dialogue,caption],index)=>{
     const panel = element('li','','growth-manga-panel');
     const art = element('img','');
-    art.src = '/hp-management/law-firm/assets/clinic-service-v2/clinic-growth-workflow-'+(index+1)+(index===3?'-v2':'')+'.webp';
+    art.src = '/hp-management/law-firm/assets/clinic-service-v2/law-growth-workflow-'+(index+1)+'.png';
     art.alt = dialogue;
     art.width = 508;
     art.height = 508;
