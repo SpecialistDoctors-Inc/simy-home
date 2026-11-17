@@ -93,8 +93,8 @@ class HeaderParser(HTMLParser):
 def needs_header(source, path):
     # The authentication return page has a focused, security-sensitive purpose.
     # Redirect aliases and verification tokens never render site navigation.
-    # The clinic landing page uses its own service navigation.
-    return (path != SITE / "hp-management/clinic/index.html"
+    # Service landing pages retain their own HP-management navigation.
+    return (path not in {SITE / "hp-management/clinic/index.html", SITE / "hp-management/law-firm.html"}
             and path.name != "auth-callback.html"
             and not re.search(r'http-equiv=["\']refresh', source, re.I)
             and "<body" in source.lower())

@@ -1,0 +1,40 @@
+name: Deploy Law Firm Service
+on:
+  workflow_dispatch:
+    inputs:
+      expected_manifest_sha256:
+        description: SHA256 of the reviewed law-firm release manifest
+        required: true
+        type: string
+permissions:
+  contents: read
+  id-token: write
+concurrency:
+  group: law-firm-production
+  cancel-in-progress: false
+jobs:
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: prod
+    env:
+      EXPECTED_RELEASE_SHA256: ${{ inputs.expected_manifest_sha256 }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify reviewed package
+        run: python3 scripts/check-law-firm-release.py
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_SITE_DEPLOY_ROLE_ARN }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      - name: Publish law-firm objects and additive sitemap entry
+        env:
+          SITE_S3_BUCKET: ${{ secrets.SITE_S3_BUCKET }}
+          SITE_CF_DISTRIBUTION_ID: ${{ secrets.SITE_CF_DISTRIBUTION_ID }}
+        run: python3 scripts/publish-law-firm.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: law-firm-deployment
+          path: law-firm-deployment.json
