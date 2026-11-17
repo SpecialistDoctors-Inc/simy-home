@@ -1,0 +1,29 @@
+{
+  "version": "simy-affiliate-home-usd-20261117",
+  "launchState": "prelaunch",
+  "currency": "usd",
+  "rateBps": 1000,
+  "cadence": "initial",
+  "attributionDays": 14,
+  "holdDays": 50,
+  "minimumPayoutMinor": 10000,
+  "refundMode": "void_any",
+  "eligibleContracts": [
+    "home_2026_10_starter_monthly",
+    "home_2026_10_starter_annual",
+    "home_2026_10_quality_monthly",
+    "home_2026_10_quality_annual"
+  ],
+  "excluded": [
+    "renewals",
+    "self_referrals",
+    "same_organization",
+    "existing_customers",
+    "legacy_contracts",
+    "addons"
+  ],
+  "settlement": "manual_verified_recipient",
+  "senderFees": "simy",
+  "recipientBankFees": "recipient",
+  "fxConversion": false
+}

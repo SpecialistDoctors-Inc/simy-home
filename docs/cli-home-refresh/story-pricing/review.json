@@ -2,16 +2,22 @@
   "verdict": "pass_prepublication",
   "blockers": [],
   "findings": [],
-  "assessment": {
-    "causal_story": "日英とも、Codexが実装・操作確認を担当し、SIMYが報告された条件・進捗に基づいて未確認の作業の続行を促す流れが明確です。",
-    "native_agent_capabilities": "FAQでClaude Code・Codex単体でも実装・検証・継続が可能で、Codex Goalsとも機能が重なることを明記しています。誤った独占的主張はありません。",
-    "boundaries": "独立したUI検証能力、修正成功、無期限継続をSIMYに帰属していません。ブラウザのモバイル表示と実機確認を区別し、必要なツール・権限と利用者の判断を説明しています。",
-    "visual_review": "日英のPC・モバイル漫画、役割表、開いたFAQの保存画像を確認。文字は読みやすく、確認範囲に不意の重なり・切れ・横はみ出しはありません。",
-    "evidence": "v1.2.11 READMEの140–191行と公式Claude Code・Codex Goals資料を照合。生成チェックを独立実行して成功。生ログで全1631件、関連16件の成功を確認しました。"
+  "reviewer": "commercial_launch_final_review",
+  "readiness": {
+    "static_publication": "Ready: JA/EN pricing, CLI eligibility, purchase links, private-network quotations, English affiliate assets and prelaunch disclosures are consistent.",
+    "implementation": "Ready for controlled integration acceptance; authentication, owner isolation, acquisition flags, first-invoice eligibility, refunds, verified payee and settlement idempotency reviewed.",
+    "live_affiliate_launch": "Not accepted. Keep acquisition disabled."
   },
-  "sources": [
-    "https://code.claude.com/docs/en/how-claude-code-works",
-    "https://developers.openai.com/cookbook/examples/codex/using_goals_in_codex"
-  ],
-  "publication_status": "公開前の変更として合格。本番デプロイ・公開後確認はこの判定に含みません。"
+  "verification": {
+    "home": "1632 passed",
+    "web": "17 files, 233 passed; typecheck and targeted lint completed successfully",
+    "database": "Isolated PostgreSQL checks passed; not deployed acceptance",
+    "screenshots": "Pricing, signup and English publishing inspected"
+  },
+  "outstanding_acceptance": [
+    "Dedicated dev migration integration, RPC/RLS/existing billing",
+    "Four actual Stripe Prices and complete test-mode flow",
+    "Protected recipient/transfer provider, operator and alternate",
+    "Production configuration and acceptance before acquisition"
+  ]
 }
