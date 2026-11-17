@@ -9,6 +9,16 @@ const {chromium} = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
    await page.setViewportSize({width,height});
    await page.goto(process.env.CLINIC_URL || 'http://127.0.0.1:8899/hp-management/clinic/index.html');
    await page.evaluate(()=>document.fonts.ready);
+   // The support illustration must be ready before scrolling to the offer.
+   await page.waitForFunction(()=>{const image=document.querySelector('.support-scene img');return image.complete&&image.naturalWidth>0});
+   await page.locator('#pricing').evaluate(e=>e.scrollIntoView({block:'start',behavior:'instant'}));
+   const pricingLanding=await page.evaluate(()=>({headerBottom:document.querySelector('body>.header').getBoundingClientRect().bottom,titleTop:document.querySelector('#pricing h2').getBoundingClientRect().top}));
+   assert.ok(pricingLanding.headerBottom<=1,`${width}: header overlays pricing`);
+   assert.ok(pricingLanding.titleTop>=0,`${width}: pricing heading is obscured`);
+   await page.locator('.support-scene img').scrollIntoViewIfNeeded();
+   const supportImage=await page.locator('.support-scene img').evaluate(e=>({width:e.getBoundingClientRect().width,height:e.getBoundingClientRect().height,visibility:getComputedStyle(e).visibility,opacity:getComputedStyle(e).opacity}));
+   assert.ok(supportImage.width>0&&supportImage.height>0&&supportImage.visibility==='visible'&&Number(supportImage.opacity)>0,`${width}: support image is hidden`);
+   await page.evaluate(()=>scrollTo({top:0,behavior:'instant'}));
    const data=await page.evaluate(()=>{
     const box=e=>{const r=e.getBoundingClientRect();return {left:r.left,right:r.right,top:r.top,bottom:r.bottom,width:r.width,height:r.height}};
     return {overflow:document.documentElement.scrollWidth>innerWidth,forms:['diagnosis','rebuild'].map(id=>{const form=document.querySelector('#'+id+'-form');return {id,input:box(form.querySelector('input[type=text]')),button:box(form.querySelector('button[type=submit]'))}}),plans:[...document.querySelectorAll('#pricing .plan')].map(box)};
