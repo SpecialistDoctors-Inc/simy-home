@@ -1,0 +1,8 @@
+# Copy outside the repository as backend.hcl and replace placeholders.
+# One Terraform workspace per clinic site: clinic-site-<site_id>.
+bucket               = "REPLACE_WITH_TERRAFORM_STATE_BUCKET"
+key                  = "clinic-site/terraform.tfstate"
+workspace_key_prefix = "clinic-site/workspaces"
+region               = "ap-northeast-1"
+encrypt              = true
+use_lockfile         = true

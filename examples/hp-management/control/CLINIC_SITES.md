@@ -60,6 +60,31 @@ binding it already validates. Per-site roles would narrow that blast radius
 but need a site-aware `HP_PUBLISHER_ROLES`; left as a follow-up once the number
 of clinic sites justifies it.
 
+### Clinic site origins (`infra/clinic-site`)
+
+One Terraform root, one workspace per site (`clinic-site-<site_id>`), creates
+the dev and prod destinations in the HP Control account: a private, versioned,
+encrypted bucket `simy-hp-site-<site_id>-<env>-<account>` behind its own
+CloudFront distribution with OAC and the single origin `clinic-site-s3`.
+Compared with `infra/sample-clinic` it has no GitHub deploy role (HP Control's
+publisher roles publish) and no SIMY Route53 records:
+
+- Dev previews are served on the distribution's `cloudfront.net` name, which
+  the publisher accepts as the served host, with `X-Robots-Tag: noindex`.
+- Prod serves the clinic's own host. Its ACM certificate is validated through
+  the clinic's DNS, so the root is applied twice: first without the alias
+  (outputs the validation record), then with `prod_domain_attached = true`
+  once ACM issued it. The prod response has no `noindex`.
+- `ignore_changes = [origin]` keeps a later apply from moving a published site
+  back to the bucket root, since the publisher owns the origin path.
+
+The publisher pins each distribution's complete config hash in the site
+binding. `clinic_site_deployment.py` reads both distributions and buckets
+(read-only) after the alias is attached and prints the binding's `deployment`
+block, URLs and the `clinic_sites` entry, refusing anything that is not the
+fresh clinic-site shape. `terraform test` covers the root with mocked AWS; CI
+runs it in `check-hp-control.yml`.
+
 ### Claim and "ready" mail (`clinic_ready.py`)
 
 The operator runs `notify_clinic_ready.py --subscription-id sub_...`. Without
@@ -101,30 +126,69 @@ No new IAM, routes, schedules or tables are added for this.
 
 ## Operator runbook (live)
 
-Do each step for one clinic. Steps 3 and 5 change live; get explicit approval
-for the Terraform apply and for the claim/mail.
+Do each step for one clinic. Steps 2.2, 2.4, 2.5, 3, 4 and 5 change live AWS or
+HP Control data; get explicit approval for each Terraform apply, the upload,
+the registration and the claim/mail.
 
 1. **Find the intake.** The clinic's `clinic-intake:<sub_id>` row holds the URL,
    verified email and copy state; the public homepage copy is at
    `artifacts bucket/intake/…/site.zip` when `copy_state` is `done`.
-2. **Provision the site.** Create the site repository from the site template,
-   its dev and prod origin buckets and CloudFront distributions (same shape as
-   `infra/sample-clinic`: private versioned bucket behind CloudFront OAC; the
-   publisher later switches the origin path to a `releases/` prefix), Drive
-   folders and Sheet. Write the verified binding JSON (fields per
-   `provision_site.validate`, with no `license_policy`) and dry-run it:
+2. **Provision the site.**
+   1. Create the site repository from the site template, Drive folders and
+      Sheet as for any site.
+   2. Create the origins with `infra/clinic-site` (one workspace per site,
+      `clinic-site-<site_id>`; `site_id` is 3-32 characters):
 
-   ```bash
-   python provision_site.py --site site.json --enable-domain-registration --owner-email <clinic email>
-   ```
+      ```bash
+      terraform -chdir=infra/clinic-site init -backend-config=<private backend.hcl>
+      terraform -chdir=infra/clinic-site workspace select -or-create clinic-site-<site_id>
+      terraform -chdir=infra/clinic-site apply -var site_id=<site_id> -var prod_domain=<clinic host>
+      ```
 
-   `prod_url` must be the clinic's URL as entered (same host). `--owner-email`
-   is the clinic's verified sign-in mailbox from the intake.
+      `prod_domain` is the host of the URL the clinic entered (e.g.
+      `www.example-clinic.jp`). This creates a private, versioned bucket and a
+      CloudFront distribution (OAC, single origin `clinic-site-s3`) for dev and
+      prod. Dev is a preview on its `cloudfront.net` name with
+      `X-Robots-Tag: noindex`; prod is indexable. The prod ACM certificate is
+      requested but nothing waits for it yet.
+   3. Send the `prod_certificate_validation` record to the clinic's DNS
+      administrator. Adding it does not affect their current homepage.
+   4. Upload the initial copy to the root of both buckets. From the intake's
+      `site.zip` (when `copy_state` is `done`) upload only the contents of its
+      `site/` directory, with that prefix removed, so `index.html` sits at the
+      bucket root; never upload `manifest.json`. Otherwise upload the rebuilt
+      site. The copy must contain `index.html`, only publishable paths, and
+      nothing under `releases/` (the publisher's prefix). Step 2.6 checks this.
+   5. Once ACM shows the certificate issued, apply again with
+      `-var prod_domain_attached=true`. Prod now serves the clinic host as an
+      alias (the clinic's DNS still points at the old homepage until cutover).
+   6. Pin the reviewed destinations into the binding:
+
+      ```bash
+      terraform -chdir=infra/clinic-site output -json > outputs.json
+      python clinic_site_deployment.py --terraform-output outputs.json
+      ```
+
+      This is read-only. It refuses an unattached prod domain, a distribution
+      or bucket that is not the fresh clinic-site shape, an origin already
+      switched to a release, and an unpublishable initial copy. It prints
+      `dev_url`, `prod_url`, the complete `deployment` block (including the
+      config hash the publisher pins and the initial file list) and
+      `claim_target`. Do not change either distribution after this step; any
+      Terraform change to them invalidates the pinned hash.
+   7. Write the binding JSON (fields per `provision_site.validate`, with no
+      `license_policy`) using those values and dry-run it:
+
+      ```bash
+      python provision_site.py --site site.json --enable-domain-registration --owner-email <clinic email>
+      ```
+
+      `--owner-email` is the clinic's verified sign-in mailbox from the intake.
 3. **Deploy claim targets.** Add the site to `clinic_sites` in the live tfvars
-   (`hp-control` workspace) with the exact buckets and distribution IDs from the
-   binding. Review the plan: only `HP_SITE_CLAIM_TARGETS` on the API Lambda and
-   the two publisher policies may change. Apply after approval.
-4. **Register the site.** Repeat step 2's command with
+   (`hp-control` workspace) as the `claim_target` printed in step 2.6. Review
+   the plan: only `HP_SITE_CLAIM_TARGETS` on the API Lambda and the two
+   publisher policies may change. Apply after approval.
+4. **Register the site.** Repeat step 2.7's command with
    `--table simy-hp-control --apply`. This writes only
    `registration-site:<host>`; nothing is granted yet.
 5. **Claim and notify.**
@@ -144,7 +208,8 @@ mailbox they actually use and rerun step 5.
 
 ## Not covered
 
-- Creating per-clinic buckets/distributions has no generic Terraform root yet
-  (`infra/sample-clinic` is hard-wired to the sample clinic). Generalizing it is
-  the natural next step.
+- Moving the clinic's DNS to `prod_dns_target` (cutover) is arranged with the
+  clinic; until then a production publication's served readback reaches the
+  old homepage and stays pending.
+- Per-site publisher roles (see the trade-off above).
 - Nothing here was applied to live or acceptance.
