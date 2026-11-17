@@ -7,17 +7,16 @@ import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
 STORY = json.loads((ROOT / 'scripts/engineering-cli-story.json').read_text())
-# Bounds of the new lettering-free illustration sheet, 1055 x 1491.
-ROWS = [(0, 394), (396, 347), (745, 357), (1104, 387)]
+# Four equal panels in a lettering-free 1536 x 1024 sheet.
 
 def story_panels(lang='ja'):
     result = []
     for i, panel in enumerate(STORY[lang]):
-        x, w = (0, 527) if i % 2 == 0 else (529, 526)
-        y, h = ROWS[i // 2]
-        style = f'aspect-ratio:{w}/{h};--image-width:{1055/w*100:.6f}%;--image-left:{-x/w*100:.6f}%;--image-top:{-y/h*100:.6f}%'
+        w, h = 768, 512
+        x, y = (i % 2) * w, (i // 2) * h
+        style = f'aspect-ratio:{w}/{h};--image-width:{1536/w*100:.6f}%;--image-left:{-x/w*100:.6f}%;--image-top:{-y/h*100:.6f}%'
         speech = ''.join(f'<div class="cli-speech"><span class="cli-speaker">{escape(d["speaker"])}</span><p>{escape(d["text"])}</p></div>' for d in panel['dialogue'])
-        result.append(f'''<li><p class="cli-comic-label"><span>{i+1:02}</span> {escape(panel['title'])}</p><figure class="cli-comic-frame"><div class="cli-dialogue">{speech}</div><div class="cli-comic-visual" style="{style}"><img src="/assets/cli-ui/comic-art.png" width="1055" height="1491" alt="{escape(panel['caption'])}" loading="lazy" decoding="async"></div></figure><p class="cli-comic-caption">{escape(panel['caption'])}</p></li>''')
+        result.append(f'''<li><p class="cli-comic-label"><span>{i+1:02}</span> {escape(panel['title'])}</p><figure class="cli-comic-frame"><div class="cli-dialogue">{speech}</div><div class="cli-comic-visual" style="{style}"><img src="/assets/cli-ui/booking-story-art.png" width="1536" height="1024" alt="{escape(panel['caption'])}" loading="lazy" decoding="async"></div></figure><p class="cli-comic-caption">{escape(panel['caption'])}</p></li>''')
     return '\n'.join(result)
 
 
