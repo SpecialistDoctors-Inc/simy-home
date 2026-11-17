@@ -209,6 +209,23 @@ test("bilingual comics use real speech text inside the frame and preserve the sa
   }
 });
 
+test("comic credits implementation and checks to Codex, with SIMY prompting the missing check", () => {
+  const story = JSON.parse(fs.readFileSync(path.join(root, "scripts/engineering-cli-story.json"), "utf8"));
+  for (const locale of ["ja", "en"]) {
+    assert.equal(story[locale][2].dialogue[0].speaker, "Codex");
+    assert.equal(story[locale][2].dialogue[1].speaker, "SIMY");
+    assert.equal(story[locale][3].dialogue[0].speaker, "Codex");
+    const route = locale === "ja" ? "for/engineers/index.html" : "for/en/engineers/index.html";
+    const html = fs.readFileSync(path.join(root, "site", route), "utf8");
+    assert.ok(html.includes('id="mechanism"'));
+    assert.ok(html.includes('class="cli-role-map"'));
+    assert.ok(html.includes('class="cli-detail cli-role-faq"'));
+    assert.ok(html.includes('https://code.claude.com/docs/en/how-claude-code-works'));
+    assert.ok(html.includes('https://developers.openai.com/cookbook/examples/codex/using_goals_in_codex'));
+    assert.doesNotMatch(html, /スマホで試しましたが|I tried it on mobile/);
+  }
+});
+
 test("published affiliate information does not send visitors to an unavailable portal", () => {
   for (const file of ["affiliate.html", "affiliate-en.html"]) {
     const html = fs.readFileSync(path.join(root, "site", file), "utf8");

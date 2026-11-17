@@ -46,3 +46,15 @@
 @media(max-width:1000px){.cli-comic-grid{grid-template-columns:1fr;max-width:700px;margin-inline:auto}.cli-dialogue{padding:20px 16px 24px}.cli-speech{max-width:100%;padding:11px 14px}.cli-page .cli-speech p{font-size:20px}.cli-page .cli-speaker{font-size:14px}}
 @media(min-width:1001px){.cli-comic-grid>li{display:flex;flex-direction:column}.cli-comic-frame{display:flex;flex-direction:column;flex:1}.cli-dialogue{flex:1}.cli-comic-visual{flex-shrink:0}}
 html[lang=en] .cli-hero h1{letter-spacing:-.04em}html[lang=en] .cli-comic-label{min-height:2.8em}html[lang=en] .cli-plan-annual strong{display:block}html[lang=en] .cli-enterprise-price{font-size:clamp(24px,3vw,34px)}
+
+/* Clarify who implements the work and what SIMY adds. */
+.cli-page .cli-role-lead{font-size:18px;line-height:1.9;margin-block:22px;max-width:42em}
+.cli-mechanism{margin-block:32px;padding:clamp(20px,3vw,36px);border:1px solid var(--line-soft);border-radius:12px;background:#fff}
+.cli-page .cli-mechanism h3{font-size:clamp(23px,2.4vw,30px);line-height:1.55;margin-block:10px 24px}
+.cli-role-map{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px;margin-block:24px}
+.cli-role-map>div{border-top:1px solid var(--line-soft);padding-top:18px;min-width:0}
+.cli-role-map dt{font-size:20px;font-weight:750;line-height:1.6}.cli-role-map dd{font-size:18px;line-height:1.85;margin:12px 0 0;color:var(--ink-soft)}
+.cli-page .cli-mechanism-example{font-size:18px;line-height:1.9;border-left:4px solid var(--blue);padding:16px 20px;background:#eef4fb;margin-top:26px}
+.cli-page .cli-mechanism-limit,.cli-page .cli-role-faq p{font-size:17px;line-height:1.9}
+.cli-role-faq summary{font-size:20px;line-height:1.6}.cli-page .cli-provider-sources{font-size:15px}
+@media(max-width:900px){.cli-role-map{grid-template-columns:1fr;gap:20px}.cli-page .cli-mechanism-example{padding:14px 16px}.cli-page .cli-role-lead{font-size:18px}}

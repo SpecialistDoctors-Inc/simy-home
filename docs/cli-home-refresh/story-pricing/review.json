@@ -1,30 +1,17 @@
 {
-  "overall": "pass_prepublication",
+  "verdict": "pass_prepublication",
+  "blockers": [],
   "findings": [],
-  "rows": [
-    {
-      "id": "C1",
-      "status": "pending_publication_verification",
-      "evidence": "Local correction passes. Production publication and live asset verification remain pending."
-    },
-    {
-      "id": "C3",
-      "status": "pass",
-      "evidence": "Independently inspected original and revised full artwork, desktop-ja-v2.jpg, desktop-en-v2.jpg and both mobile captures. Panel 3 laptop has opaque plain rear casing with coherent lid/hinge/base. All four phones show coherent front screens and grips. Corrected desktop captures visibly contain panels 3 and 4 without clipping. JA/EN mobile speech remains readable; measurements record seven 20px bubbles and no overflow."
-    },
-    {
-      "id": "C4",
-      "status": "pass",
-      "evidence": "Independently reran the specified engineering generator check and focused tests: generator verified, 15 passed, 0 failed. Supplied full-suite log records 1614 passed, 0 failed."
-    },
-    {
-      "id": "C8",
-      "status": "pass",
-      "evidence": "Verified original and revised SHA-256 against asset.json; revised inventory hash matches. All five rendered-page references per locale use the v2 asset. Source templates, generator, generated pages and focused test differ only by the asset filename. Native screenshots, pricing, private-network content, affiliate scope and localized dialogue are preserved."
-    }
+  "assessment": {
+    "causal_story": "日英とも、Codexが実装・操作確認を担当し、SIMYが報告された条件・進捗に基づいて未確認の作業の続行を促す流れが明確です。",
+    "native_agent_capabilities": "FAQでClaude Code・Codex単体でも実装・検証・継続が可能で、Codex Goalsとも機能が重なることを明記しています。誤った独占的主張はありません。",
+    "boundaries": "独立したUI検証能力、修正成功、無期限継続をSIMYに帰属していません。ブラウザのモバイル表示と実機確認を区別し、必要なツール・権限と利用者の判断を説明しています。",
+    "visual_review": "日英のPC・モバイル漫画、役割表、開いたFAQの保存画像を確認。文字は読みやすく、確認範囲に不意の重なり・切れ・横はみ出しはありません。",
+    "evidence": "v1.2.11 READMEの140–191行と公式Claude Code・Codex Goals資料を照合。生成チェックを独立実行して成功。生ログで全1631件、関連16件の成功を確認しました。"
+  },
+  "sources": [
+    "https://code.claude.com/docs/en/how-claude-code-works",
+    "https://developers.openai.com/cookbook/examples/codex/using_goals_in_codex"
   ],
-  "limitations": [
-    "No live production verification performed.",
-    "Review used retained browser captures and measurements; no new browser session was executed."
-  ]
+  "publication_status": "公開前の変更として合格。本番デプロイ・公開後確認はこの判定に含みません。"
 }

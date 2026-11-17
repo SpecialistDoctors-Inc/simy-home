@@ -85,3 +85,8 @@ SEO checks passed: 6 raw-HTML locales, metadata, hreflang, schema, FAQ, navigati
 
 漫画3コマ目のパソコン背面に描かれていた画面を修正。
 [画像・編集指示・検証記録](device-geometry/verification.md)を参照。
+
+## 2026-11-17 実装・確認・続行の役割説明
+
+SIMYが自ら修正・操作確認するように読めた漫画と説明を修正。
+[公式資料との照合と検証記録](mechanism-clarity/research-and-verification.md)を参照。

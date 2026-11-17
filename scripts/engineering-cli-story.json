@@ -1,50 +1,50 @@
 {
   "ja": [
     {
-      "title": "困った：スマホでボタンが動かない",
-      "caption": "AIに作ってもらっても、確認とやり直しは自分に残っていた。",
+      "title": "困った：スマホ表示でボタンが動かない",
+      "caption": "作った後に、使う場面の確認が残ることもある。",
       "dialogue": [
         {
           "speaker": "あなた",
-          "text": "AIに予約ページを作ってもらったのに、スマホで予約ボタンが動かない…"
+          "text": "Codexに予約ページを作ってもらったけど、スマホ表示でボタンが動かない…"
         }
       ]
     },
     {
-      "title": "頼む：使えるところまで確かめて",
-      "caption": "何をもって完了かを、具体的な動きで揃える。",
+      "title": "頼む：何を確認したら完了か決める",
+      "caption": "このCodexの会話で、確認する動きを完了条件にする。",
       "dialogue": [
         {
           "speaker": "あなた",
-          "text": "SIMY、スマホで予約画面が開くまで、修正と確認を続けて。"
+          "text": "SIMY、Codexに修正と確認を続けてもらって。予約画面が開いたら完了にして。"
         },
         {
           "speaker": "SIMY",
-          "text": "「予約画面が開くこと」を、完了の条件にします。"
+          "text": "「スマホ表示で予約画面が開く」を、完了の条件にします。"
         }
       ]
     },
     {
-      "title": "任せる：修正と確認を続ける",
-      "caption": "確認が残っていれば、SIMYがAIに作業の続きを促す。",
+      "title": "会話の終了時：未確認なら続きを促す",
+      "caption": "Codexが会話を終えるとき、未確認の条件が残っていれば、SIMYが続行を促す。",
       "dialogue": [
         {
-          "speaker": "SIMY",
-          "text": "スマホで試しましたが、まだ開きません。AIにもう一度修正を依頼します。"
+          "speaker": "Codex",
+          "text": "原因を見つけて、コードを直しました。"
         },
         {
-          "speaker": "あなた",
-          "text": "確認が済むまで、続けてくれるんだね。"
+          "speaker": "SIMY",
+          "text": "まだ予約画面が開くか未確認です。操作確認まで続けてください。"
         }
       ]
     },
     {
-      "title": "受け取る：動いた結果を見る",
-      "caption": "何度も催促する手間を減らし、確認結果を見て判断する。",
+      "title": "受け取る：AIの確認結果を見て判断",
+      "caption": "操作結果を返すのはCodex。公開するか決めるのはあなた。",
       "dialogue": [
         {
-          "speaker": "SIMY",
-          "text": "予約画面が開きました。スマホで確かめた結果はこちらです。"
+          "speaker": "Codex",
+          "text": "スマホ表示で予約画面が開くことを確認しました。結果はこちらです。"
         },
         {
           "speaker": "あなた",
@@ -55,50 +55,50 @@
   ],
   "en": [
     {
-      "title": "The problem: the button does nothing.",
-      "caption": "Even after AI built the page, checking and asking for fixes still fell to you.",
+      "title": "The problem: the button fails in mobile view.",
+      "caption": "Checks in the intended view can still remain after the page is built.",
       "dialogue": [
         {
           "speaker": "You",
-          "text": "AI built my booking page, but the button does nothing on my phone…"
+          "text": "Codex built my booking page, but the button does nothing in mobile view…"
         }
       ]
     },
     {
-      "title": "The request: keep going until it works.",
-      "caption": "Agree on a concrete action that defines completion.",
+      "title": "The request: agree on what to check.",
+      "caption": "Set a concrete finish line for this Codex conversation.",
       "dialogue": [
         {
           "speaker": "You",
-          "text": "SIMY, keep fixing and checking until the booking screen opens on my phone."
+          "text": "SIMY, keep Codex fixing and checking until the booking screen opens in mobile view."
         },
         {
           "speaker": "SIMY",
-          "text": "We’ll use “the booking screen opens” as the finish line."
+          "text": "We’ll use “opens in mobile view” as the finish line."
         }
       ]
     },
     {
-      "title": "The work: fix, check, continue.",
-      "caption": "SIMY prompts the AI to continue while the agreed work remains unfinished.",
+      "title": "At the end of a turn: prompt the missing check.",
+      "caption": "When Codex ends a turn with criteria still unverified, SIMY prompts the same conversation to continue.",
       "dialogue": [
         {
-          "speaker": "SIMY",
-          "text": "I tried it on mobile. It still won’t open, so I’m asking the AI to fix it again."
+          "speaker": "Codex",
+          "text": "I found the cause and changed the code."
         },
         {
-          "speaker": "You",
-          "text": "So you keep going until the checks are complete."
+          "speaker": "SIMY",
+          "text": "The booking screen check is still missing. Continue through the interaction check."
         }
       ]
     },
     {
-      "title": "The result: see what was checked.",
-      "caption": "Spend less time chasing progress and review the evidence before deciding.",
+      "title": "The result: review the AI’s check results.",
+      "caption": "Codex returns the check results. You decide whether to publish.",
       "dialogue": [
         {
-          "speaker": "SIMY",
-          "text": "The booking screen now opens on mobile. Here are the check results."
+          "speaker": "Codex",
+          "text": "I checked in mobile view. The booking screen opens. Here are the results."
         },
         {
           "speaker": "You",
