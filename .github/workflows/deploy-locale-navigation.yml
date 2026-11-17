@@ -1,0 +1,42 @@
+name: Deploy Locale Navigation
+on:
+  workflow_dispatch:
+    inputs:
+      expected_manifest_sha256:
+        description: SHA256 of the reviewed locale navigation release manifest
+        required: true
+        type: string
+permissions:
+  contents: read
+  id-token: write
+concurrency:
+  group: locale-navigation-production
+  cancel-in-progress: false
+jobs:
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: prod
+    env:
+      EXPECTED_RELEASE_SHA256: ${{ inputs.expected_manifest_sha256 }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify reviewed scoped locale release
+        run: |
+          test -n "$EXPECTED_RELEASE_SHA256"
+          python3 scripts/locale_navigation_release.py --check
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_SITE_DEPLOY_ROLE_ARN }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      - name: Publish reviewed locale navigation objects
+        env:
+          SITE_S3_BUCKET: ${{ secrets.SITE_S3_BUCKET }}
+          SITE_CF_DISTRIBUTION_ID: ${{ secrets.SITE_CF_DISTRIBUTION_ID }}
+        run: python3 scripts/publish-locale-navigation.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: locale-navigation-deployment
+          path: locale-navigation-deployment.json

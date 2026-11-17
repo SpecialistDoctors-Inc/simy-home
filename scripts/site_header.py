@@ -9,6 +9,7 @@ import argparse
 import json
 import subprocess
 from social_preview import apply as apply_social_preview
+from locale_navigation import apply as apply_locale_navigation, strip as strip_locale_navigation
 from functools import lru_cache
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -16,7 +17,7 @@ SITE = ROOT / "site"
 LOCALES = {"en": "English", "ja": "日本語", "hi": "हिन्दी", "es": "Español", "fr": "Français", "zh-Hans": "简体中文"}
 
 def home(locale):
-    return "/" if locale == "en" else f"/{locale}.html"
+    return "/?locale=en" if locale == "en" else f"/{locale}.html"
 
 def header(locale, source, path):
     base = home(locale)
@@ -63,7 +64,7 @@ def header(locale, source, path):
     if re.search(r'<script[^>]+src="(?:/|(?:\.\./)*)i18n\.js', source):
         page_url = "/" + str(path.relative_to(SITE))
         alternatives = {code: page_url + "?lang=" + code for code in LOCALES}
-    options = "".join(f'<a href="{html.escape(alternatives.get(code, home(code)), quote=True)}" lang="{code}" hreflang="{code}" data-locale-option="{code}"' + (' aria-current="page"' if code == locale else '') + f'>{label}</a>' for code, label in LOCALES.items())
+    options = "".join(f'<a href="{html.escape(("/?locale=en" if code == "en" and alternatives.get(code, home(code)) in ("/", "/index.html") else alternatives.get(code, home(code))), quote=True)}" lang="{code}" hreflang="{code}" data-locale-option="{code}"' + (' aria-current="page"' if code == locale else '') + f'>{label}</a>' for code, label in LOCALES.items())
     region = {"en": "us", "ja": "jp", "hi": "in", "es": "es", "fr": "fr"}.get(locale)
     params = f"lang={locale}&amp;locale={locale}" + (f"&amp;region={region}" if region else "")
     code = "ZH" if locale == "zh-Hans" else locale.upper()
@@ -130,6 +131,7 @@ def apply(source, path):
     locale_match = re.search(r'<html[^>]*lang="([^" ]+)"', source)
     locale = locale_match.group(1) if locale_match else "en"
     if locale not in LOCALES: locale = "en"
+    source = strip_locale_navigation(source)
     parser = HeaderParser(source)
     parser.feed(source)
     markup = header(locale, source, path)
@@ -140,9 +142,12 @@ def apply(source, path):
     if '/site-header.css?' not in source:
         source = source.replace('</head>', assets + '</head>')
     def asset_version(match):
-        version = hashlib.sha256((SITE / 'site-header.js').read_bytes()).hexdigest()[:12] if path == SITE / 'hp-management/clinic/index.html' and '.js?' in match[1] else '20261021-pharma-1'
+        version = hashlib.sha256((SITE / 'site-header.js').read_bytes()).hexdigest()[:12] if '.js?' in match[1] else '20261021-pharma-1'
         return match[1] + version
     source = re.sub(r'(/site-header\.(?:css|js)\?v=)[^"\s]+', asset_version, source)
+    i18n_version = hashlib.sha256((SITE / 'i18n.js').read_bytes()).hexdigest()[:12]
+    source = re.sub(r'((?:src|href)=["\'](?:\.{1,2}/|/)*i18n\.js)(?:\?[^"\']*)?(["\'])',
+                    lambda m: m[1] + '?v=' + i18n_version + m[2], source)
     if locale == 'ja':
         source = re.sub(r'\n?<!-- HP industry navigation -->[\s\S]*?<!-- /HP industry navigation -->\n?', '', source)
         version = hashlib.sha256((SITE / 'hp-industry-navigation.css').read_bytes()).hexdigest()[:12]
@@ -153,7 +158,7 @@ def apply(source, path):
     if locale == 'ja' or "data-story-scene" in source:
         from home_manga_locales import localized_header
         source = localized_header(source, locale, homepage_content())
-    return apply_social_preview(source, path)
+    return apply_locale_navigation(apply_social_preview(source, path))
 
 if __name__ == "__main__":
     cli = argparse.ArgumentParser(description=__doc__)

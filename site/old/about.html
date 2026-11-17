@@ -338,17 +338,117 @@ if(localStorage.getItem('simy-cookies')==='1') loadGA();
 </script>
 <link rel="stylesheet" href="/responsive.css">
 <link rel="stylesheet" href="/site-header.css?v=20261021-pharma-1">
-<script src="/site-header.js?v=20261021-pharma-1" defer></script>
+<script src="/site-header.js?v=2dbaa15d2d05" defer></script>
+<!-- SIMY locale navigation -->
+<script data-simy-locale-navigation>
+/* Shared homepage entry policy. Country hints are optional; timezone is an OS
+   signal, not an IP-location claim. Explicit language URLs remain crawlable. */
+(() => {
+  'use strict';
+  const languages = new Set(['en', 'ja', 'es', 'fr', 'hi', 'zh-Hans']);
+  const normalize = value => {
+    const text = String(value || '').trim().toLowerCase();
+    if (text === 'zh' || /^zh-(?:cn|sg|hans)(?:-|$)/.test(text)) return 'zh-Hans';
+    const base = text.split('-')[0];
+    return languages.has(base) ? base : null;
+  };
+  const countryLanguage = country => ({JP:'ja',FR:'fr',ES:'es',MX:'es',AR:'es',CO:'es',CL:'es',PE:'es',IN:'hi',CN:'zh-Hans',US:'en',GB:'en',AU:'en',NZ:'en'})[String(country || '').toUpperCase()] || null;
+  const timezoneCountry = zone => ({'Asia/Tokyo':'JP','Europe/Paris':'FR','Europe/Madrid':'ES','Atlantic/Canary':'ES','America/Mexico_City':'MX','America/Bogota':'CO','America/Lima':'PE','America/Santiago':'CL','Asia/Kolkata':'IN','Asia/Calcutta':'IN','Asia/Shanghai':'CN','Asia/Chongqing':'CN','Europe/London':'GB','America/New_York':'US','America/Chicago':'US','America/Denver':'US','America/Los_Angeles':'US','Australia/Sydney':'AU','Pacific/Auckland':'NZ'})[zone] || null;
+  const home = locale => locale === 'en' ? '/?locale=en' : '/' + locale + '.html';
+  const savedLanguage = storage => {
+    try {
+      const legacy = normalize(storage.getItem('simy-home-locale'));
+      if (legacy) return legacy;
+      for (const key of ['simy-lang', 'simy-language']) {
+        if (storage.getItem(key + '-source') === 'manual') {
+          const value = normalize(storage.getItem(key));
+          if (value) return value;
+        }
+      }
+      if (storage.getItem('simy-region-source') === 'manual') return countryLanguage(storage.getItem('simy-region'));
+    } catch (_) { /* A blocked store must not block navigation. */ }
+    return null;
+  };
+  const resolve = ({url, storage, country, timezone, browserLanguages = []}) => {
+    const explicit = normalize(url.searchParams.get('lang')) || normalize(url.searchParams.get('locale'));
+    if (explicit) return explicit;
+    const path = /^\/(ja|es|fr|hi|zh-Hans)\.html$/.exec(url.pathname);
+    if (path) return path[1];
+    const saved = savedLanguage(storage);
+    if (saved) return saved;
+    const region = countryLanguage(url.searchParams.get('region'));
+    if (region) return region;
+    const geographic = countryLanguage(country) || countryLanguage(timezoneCountry(timezone));
+    if (geographic) return geographic;
+    for (const value of browserLanguages) {
+      const match = normalize(value);
+      if (match) return match;
+    }
+    return 'en';
+  };
+  const persist = locale => {
+    try {
+      for (const key of ['simy-home-locale', 'simy-lang', 'simy-language']) window.localStorage.setItem(key, locale);
+      window.localStorage.setItem('simy-lang-source', 'manual');
+      window.localStorage.setItem('simy-language-source', 'manual');
+    } catch (_) { /* Explicit hrefs also work without storage. */ }
+  };
+  window.SIMY_LOCALE_NAVIGATION = Object.freeze({normalize, home, resolve});
+  const url = new URL(window.location.href);
+  if (url.pathname === '/' || url.pathname === '/index.html') {
+    let storage, timezone;
+    try { storage = window.localStorage; } catch (_) { storage = null; }
+    try { timezone = Intl.DateTimeFormat().resolvedOptions().timeZone; } catch (_) { timezone = ''; }
+    const locale = resolve({url, storage, timezone, country:document.documentElement.dataset.viewerCountry,
+      browserLanguages:navigator.languages || [navigator.language]});
+    if (locale !== 'en') {
+      const target = new URL(url);
+      target.pathname = '/' + locale + '.html';
+      target.searchParams.delete('lang');
+      window.location.replace(target.href);
+    }
+  }
+  const bindChoices = () => {
+    // Same-site home links on an explicitly English page must also retain the
+    // choice when storage is blocked. Hash-only links already retain the URL.
+    if (document.documentElement.lang === 'en') {
+      for (const link of document.querySelectorAll('a[href]')) {
+        const destination = new URL(link.href, window.location.href);
+        if (destination.origin === window.location.origin && ['/', '/index.html'].includes(destination.pathname)) {
+          destination.pathname = '/';
+          destination.searchParams.set('locale', 'en');
+          link.href = destination.pathname + destination.search + destination.hash;
+        }
+      }
+    }
+    for (const link of document.querySelectorAll('[data-locale-option]')) {
+      const locale = normalize(link.dataset.localeOption);
+      if (!locale) continue;
+      const destination = new URL(link.href, window.location.href);
+      if (locale === 'en' && destination.origin === window.location.origin && ['/', '/index.html'].includes(destination.pathname)) {
+        destination.pathname = '/';
+        destination.searchParams.delete('lang');
+        destination.searchParams.set('locale', 'en');
+        link.href = destination.pathname + destination.search + destination.hash;
+      }
+      link.addEventListener('click', () => persist(locale));
+    }
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bindChoices, {once:true});
+  else bindChoices();
+})();
+</script>
+<!-- /SIMY locale navigation -->
 </head>
 <body>
 
 <header class="simy-header" translate="no" data-simy-no-translate>
   <div class="sh-frame">
-    <a class="sh-brand" href="/" aria-label="SIMY home"><img src="/simy-icon-56.png" width="32" height="32" alt=""><span>SIMY</span></a>
-    <details class="sh-menu"><summary class="sh-menu-toggle" aria-label="Navigation menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></summary><div class="sh-menu-panel"><div class="sh-navigation" role="navigation" aria-label="Primary navigation"><details class="sh-dropdown"><summary>Product<span aria-hidden="true">⌄</span></summary><div class="sh-panel"><a href="/#product">Overview</a><a href="/#how-it-works">How it works</a><a href="/integrations.html?lang=en">Apps & integrations</a><a href="/download/en.html">Download</a><div class="sh-stores" role="group" aria-label="Mobile apps">
+    <a class="sh-brand" href="/?locale=en" aria-label="SIMY home"><img src="/simy-icon-56.png" width="32" height="32" alt=""><span>SIMY</span></a>
+    <details class="sh-menu"><summary class="sh-menu-toggle" aria-label="Navigation menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></summary><div class="sh-menu-panel"><div class="sh-navigation" role="navigation" aria-label="Primary navigation"><details class="sh-dropdown"><summary>Product<span aria-hidden="true">⌄</span></summary><div class="sh-panel"><a href="/?locale=en#product">Overview</a><a href="/?locale=en#how-it-works">How it works</a><a href="/integrations.html?lang=en">Apps & integrations</a><a href="/download/en.html">Download</a><div class="sh-stores" role="group" aria-label="Mobile apps">
       <a class="sh-store" href="https://apps.apple.com/app/id6745385262"><img src="/assets/store-badges/app-store.svg" width="120" height="40" alt="Download on the App Store"></a>
       <a class="sh-store sh-google-play" href="/download/en.html#android" aria-label="Android availability"><img src="/assets/store-badges/google-play.png" width="155" height="60" alt="Google Play"><small>Android availability</small></a>
-    </div></div></details><details class="sh-dropdown"><summary>Solutions<span aria-hidden="true">⌄</span></summary><div class="sh-panel"><a href="/for/en/">For your work</a><a href="/for/en/engineers/">For engineers</a><a href="/for/en/financial-planners/">For financial planners</a><a href="/for/en/pharmaceutical-companies/">For pharmaceutical companies</a><a href="/#use-cases">Use cases</a></div></details><details class="sh-dropdown"><summary>Resources<span aria-hidden="true">⌄</span></summary><div class="sh-panel"><a href="/guides/en/index.html">Guides</a><a href="/compare.html?lang=en">Compare</a><a href="/press-release.html?lang=en">News</a><a href="/about.html?lang=en">About SIMY</a><a href="/security.html?lang=en">Security</a><a href="/contact.html?lang=en">Contact</a><a href="/legal.html">Legal & service information</a><a href="/seller-info.html">Seller information</a></div></details><a class="sh-pricing" href="/#pricing">Pricing</a></div><a class="sh-login" data-existing-account-login href="https://app.simy.one/">Log in</a></div></details>
+    </div></div></details><details class="sh-dropdown"><summary>Solutions<span aria-hidden="true">⌄</span></summary><div class="sh-panel"><a href="/for/en/">For your work</a><a href="/for/en/engineers/">For engineers</a><a href="/for/en/financial-planners/">For financial planners</a><a href="/for/en/pharmaceutical-companies/">For pharmaceutical companies</a><a href="/?locale=en#use-cases">Use cases</a></div></details><details class="sh-dropdown"><summary>Resources<span aria-hidden="true">⌄</span></summary><div class="sh-panel"><a href="/guides/en/index.html">Guides</a><a href="/compare.html?lang=en">Compare</a><a href="/press-release.html?lang=en">News</a><a href="/about.html?lang=en">About SIMY</a><a href="/security.html?lang=en">Security</a><a href="/contact.html?lang=en">Contact</a><a href="/legal.html">Legal & service information</a><a href="/seller-info.html">Seller information</a></div></details><a class="sh-pricing" href="/?locale=en#pricing">Pricing</a></div><a class="sh-login" data-existing-account-login href="https://app.simy.one/">Log in</a></div></details>
     <div class="sh-account"><details class="sh-dropdown sh-language"><summary aria-label="Language: English"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/></svg> EN</summary><div class="sh-panel"><a href="/old/about.html?lang=en" lang="en" hreflang="en" data-locale-option="en" aria-current="page">English</a><a href="/old/about.html?lang=ja" lang="ja" hreflang="ja" data-locale-option="ja">日本語</a><a href="/old/about.html?lang=hi" lang="hi" hreflang="hi" data-locale-option="hi">हिन्दी</a><a href="/old/about.html?lang=es" lang="es" hreflang="es" data-locale-option="es">Español</a><a href="/old/about.html?lang=fr" lang="fr" hreflang="fr" data-locale-option="fr">Français</a><a href="/old/about.html?lang=zh-Hans" lang="zh-Hans" hreflang="zh-Hans" data-locale-option="zh-Hans">简体中文</a></div></details><a data-new-account-signup class="sh-signup" href="https://app.simy.one/signup?lang=en&amp;locale=en&amp;region=us">Sign up</a></div>
   </div>
 </header>
@@ -475,6 +575,6 @@ if(localStorage.getItem('simy-cookies')==='1') loadGA();
 <script>
 document.querySelectorAll('a.eml').forEach(function(el){var e=el.dataset.u+String.fromCharCode(64)+el.dataset.d;el.href='m'+'ailt'+'o:'+e;el.textContent=e;});
 </script>
-<script src="../i18n.js?v=20260712-i18n-keys-7"></script>
+<script src="../i18n.js?v=1ddefc39e93e"></script>
 </body>
 </html>

@@ -76,7 +76,7 @@ for locale in home.LOCALES:
     options = {a['data-locale-option']:a for _,a in page.elements if 'data-locale-option' in a}
     assert set(options) == set(home.LOCALES), filename
     for lang,a in options.items():
-        assert a['href'] == home.home_path(lang), filename
+        assert a['href'] == home.home_path(lang) + ('?locale=en' if lang == 'en' else ''), filename
         assert ('aria-current' in a) == (lang == locale), filename
     # Search crawlers must reach the matching language without a JS rewrite.
     code = {'en':'en', 'hi':'hi', 'es':'es', 'fr':'fr', 'zh-Hans':'zh-hans'}.get(locale)
