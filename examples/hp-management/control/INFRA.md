@@ -180,8 +180,12 @@ its current names and publisher bindings.
   use its matching bridge token. Point the protected Vercel preview at that same
   verification project and the Stripe sandbox. Enable Mac acceptance only on
   that preview after the endpoint, license lookup and Mac download are ready.
-- Keep `self_service_site_id` empty and renderer and static preview flags
-  disabled. Enable publication for the exact dedicated WordPress.com test
+- Keep renderer and static preview flags disabled. Leave `self_service_site_id`
+  empty, except to exercise the owner-email claim of a URL purchase: then set it
+  together with `acceptance_claim_test_targets` (placeholder
+  `simy-hp-acceptance-claim-test-*` dev/prod destinations). These grant no
+  publisher role, so the claimed test site only proves the claim; it cannot be
+  edited, previewed or published. Enable publication for the exact dedicated WordPress.com test
   origin and provide its reviewed publication gate reference. This workspace
   has no publisher roles for the sample-clinic distributions.
 - Connect the Mac acceptance package to the acceptance MCP endpoint. Verify a
