@@ -11,7 +11,7 @@ from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urljoin, urlsplit, unquote
 import xml.etree.ElementTree as ET
-from hp_management_industries import published_aliases, published_industries
+from hp_management_industries import HUB_URL, published_aliases, published_industries
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / 'site'
@@ -68,7 +68,7 @@ def canonical_url(name):
         if name == industry['source']:
             return BASE + industry['url']
     if name == 'hp-management/index.html':
-        return BASE + '/hp-management/'
+        return BASE + HUB_URL
     if name.startswith('for/') and name.endswith('/index.html'):
         return BASE + '/' + name[:-len('index.html')]
     return BASE + ('/' if name == 'index.html' else '/' + name)

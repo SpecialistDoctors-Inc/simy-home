@@ -7,6 +7,7 @@ const test = require("node:test");
 
 const repoRoot = path.resolve(__dirname, "..");
 const publishedAliases = new Map(require('../scripts/hp-management-industries.json').industries.filter(i => i.status === 'published').map(i => [i.url, i.source]));
+publishedAliases.set('/hp-management.html', 'hp-management/index.html');
 const siteRoot = path.join(repoRoot, "site");
 const html = fs.readFileSync(path.join(siteRoot, "guides", "plaud.html"), "utf8");
 

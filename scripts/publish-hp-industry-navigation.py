@@ -12,7 +12,7 @@ from urllib.parse import urlsplit
 from urllib.request import Request, urlopen
 from xml.sax.saxutils import escape
 import xml.etree.ElementTree as ET
-from hp_industry_release import ROOT, URL, check, source_path
+from hp_industry_release import ROOT, URL, LEGACY_URL, check, source_path
 from hp_management_industries import published_industries
 
 
@@ -68,6 +68,21 @@ def extend_sitemap(original, head):
         return original, False
     if not head.get('ETag'):
         raise ValueError('Live sitemap ETag is required')
+    if urls.count(LEGACY_URL) > 1:
+        raise ValueError('Duplicate legacy hub sitemap URL')
+    if LEGACY_URL in urls:
+        # Migrate only the owned hub loc text. Keep its lastmod/priority and
+        # every other byte of the live document intact, including namespaces.
+        loc = re.compile(rb'(<(?:[A-Za-z_][\w.-]*:)?loc\b[^>]*>\s*)'
+                         + re.escape(LEGACY_URL.encode('utf-8'))
+                         + rb'(\s*</(?:[A-Za-z_][\w.-]*:)?loc\s*>)')
+        if len(list(loc.finditer(original))) != 1:
+            raise ValueError('Cannot uniquely identify the legacy hub loc bytes')
+        updated = loc.sub(lambda match: match[1] + URL.encode('utf-8') + match[2], original, count=1)
+        expected = [URL if value == LEGACY_URL else value for value in urls]
+        if [node.findtext('{*}loc') for node in ET.fromstring(updated).findall('{*}url')] != expected:
+            raise ValueError('Sitemap canonical migration validation failed')
+        return updated, True
     closing = list(re.finditer(rb'</(?:[A-Za-z_][\w.-]*:)?urlset\s*>', original))
     if len(closing) != 1:
         raise ValueError('Unexpected sitemap closing element')

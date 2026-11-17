@@ -1,6 +1,6 @@
 # HP管理の業種一覧
 
-`/hp-management/` は公開中の業種を選ぶ入口です。クリニックの公開URLは `/hp-management/clinic.html`、ソースは `site/hp-management/clinic/index.html` です。弁護士の公開URLは `/hp-management/law-firm.html` です。既存の詳細ページ・診断フォーム・料金・申込みは各業種で管理します。
+`/hp-management.html` は公開中の業種を選ぶ入口です。クリニックの公開URLは `/hp-management/clinic.html`、ソースは `site/hp-management/clinic/index.html` です。弁護士の公開URLは `/hp-management/law-firm.html` です。既存の詳細ページ・診断フォーム・料金・申込みは各業種で管理します。
 
 業種一覧の正本は `scripts/hp-management-industries.json`（version 1）です。`scripts/hp_management_industries.py` が共通ヘッダー・一覧生成・SEOチェックに渡します。手動で業種リンクをヘッダーへ追加しません。
 
@@ -18,3 +18,7 @@
 ## 共通ナビゲーションの公開
 
 `docs/seo/hp-industry-navigation-release.json` は一回の公開でレビューするオブジェクトと内容ハッシュを固定したスナップショットです。通常の本文変更や業種単独公開のたびには更新しません。共通ナビゲーションを公開するときに `python3 scripts/hp_industry_release.py --build` で作成し、`--check` と独立レビュー後に、そのSHAを指定して専用ワークフローを実行します。全サイト同期・削除は行いません。
+
+本番CloudFrontの既存ルーティングに合わせ、一覧の正式URL・canonical・ナビゲーション・サイトマップは `/hp-management.html` に統一します。`/hp-management/` などの互換キーには同じ一覧を配信します。`/guides/` は本番で `/guides.html` へ移動するため、ガイド一覧の `site/guides/index.html` を `guides/`・`guides.html` にも同じ内容で配信します。
+
+専用公開処理はS3のサイトマップを取得し、正式URLが既にあれば書き換えません。正式URLがなく旧一覧URL `/hp-management/` が1件ある場合は、その `<loc>` のURL文字列だけを置き換え、既存の更新日・優先度・他URL・XMLの書式・S3メタデータを保持します。どちらもなければ正式URLを1件追加します。いずれの更新も取得時ETagの `If-Match` で保護し、同時更新があれば上書きせず停止します。
