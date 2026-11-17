@@ -1,0 +1,11 @@
+python3 scripts/build-engineering-pages.py --check && node --test tests/engineering-pages.test.cjs tests/site-audit-regressions.test.cjs
+Engineering pages verified.
+✔ clinic header keeps diagnosis and HP management pricing on the current service (1.368959ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4999.836833
