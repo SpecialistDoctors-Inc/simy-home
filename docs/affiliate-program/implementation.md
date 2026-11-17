@@ -64,7 +64,7 @@ Backend: `/Users/t.shiwaku/.codex/worktrees/simy-backend-cli-launch-20261117`。
 
 ## 検証
 
-- Web関連233テスト成功（署名、owner、自己承認拒否、CSRF、価格、通貨、trial後初回・全ページ探索・再試行、返金、コピー失敗、JPY/USD/KWD、課金既存ルート等）。型検査・対象ESLint成功。
+- Web関連234テスト成功（署名、owner、自己承認拒否、CSRF、価格、通貨、trial後初回・全ページ探索・再試行、返金、コピー失敗、JPY/USD/KWD、課金既存ルート等）。型検査・対象ESLint成功。
 - `python3 scripts/test-affiliate-local.py`: 独立したsocket-only PostgreSQL17でmigration、整数台帳、返金、申請最低額、JST月末・閏年、振込中の返金、冪等、RLSを確認。終了後cluster削除。共有DBには接続しない。
 - HP全1632テスト成功。生成整合・SEO・共有header check成功。関連17件成功。
 - Browserで360/390/720/768/1024/1440幅のHP・画面を検査。横はみ出し0。`responsive.json`。審査中・受付停止・取得失敗・英語表示も確認。
@@ -81,3 +81,8 @@ Backend: `/Users/t.shiwaku/.codex/worktrees/simy-backend-cli-launch-20261117`。
 振込先確認を版管理する追加migrationを作成。`verify_payee`では本人・口座所有確認済みの明示と、保護された振込サービスの受取人参照・確認記録参照を必須とする。生の口座情報は受け取らない。`prepare_settlement`が受取人版を固定し、準備中は振込先の差替え・本人確認の取消を禁止。未送金の精算バッチ自体は取消可能。`confirm_settlement`は送金済みの明示に加え、受取人版・通貨・金額・固有送金参照を照合する。API自体は送金しない。
 
 管理されたdev環境とStripeテストモードによる一連の受入は未実施。共有DBへ直接アクセスしていない。具体的な受入と開始条件は `../cli-home-refresh/commercial-launch/release-acceptance.md`。受付フラグはdisabledのままとし、実課金・送金を開始しない。
+
+
+## 2026-11-18 dev限定適用と反映待ち
+
+ユーザーの限定許可後、Backend PR1669の2つのmigrationはrun44101478894でdevへ適用し、9RLSテーブル・16関数・有効プログラム0件を確認。Web PR3017は必須CI成功後もブランチ保護でマージ権限がなく、管理者のdevマージ待ち。実決済・返金・模擬精算の一連の受入は未実施。Stripe管理画面で正しいテスト料金とdevWebhookを照合し、Ops Draft PR3023に再開手順を用意した。全体の状態と証拠は `../cli-home-refresh/commercial-launch/dev-acceptance-status.md` を参照。初期のローカル実装時点の説明より、この最新状態を優先する。
