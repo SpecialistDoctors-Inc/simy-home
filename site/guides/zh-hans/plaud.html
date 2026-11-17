@@ -1029,7 +1029,8 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
   const bindChoices = () => {
     // Same-site home links on an explicitly English page must also retain the
     // choice when storage is blocked. Hash-only links already retain the URL.
-    if (document.documentElement.lang === 'en') {
+    const dynamicLanguage = [...document.querySelectorAll('script[src]')].some(script => /(?:^|\/)i18n\.js(?:\?|$)/.test(script.src || ''));
+    if (!dynamicLanguage && document.documentElement.lang === 'en') {
       for (const link of document.querySelectorAll('a[href]')) {
         const destination = new URL(link.href, window.location.href);
         if (destination.origin === window.location.origin && ['/', '/index.html'].includes(destination.pathname)) {

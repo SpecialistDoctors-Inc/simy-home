@@ -3,10 +3,10 @@ const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const vm=require('node:vm');
 const source=fs.readFileSync('site/locale-navigation.js','utf8');
-function boot({url='https://simy.one/',timezone='Asia/Tokyo',browserLanguages=['en-US'],country,values={},blocked=false,lang='en',links=[]}={}){
+function boot({url='https://simy.one/',timezone='Asia/Tokyo',browserLanguages=['en-US'],country,values={},blocked=false,lang='en',links=[],scripts=[]}={}){
  const replacements=[],callbacks=[];
  const storage={getItem(k){if(blocked)throw Error('blocked');return values[k]??null;},setItem(k,v){if(blocked)throw Error('blocked');values[k]=v;}};
- const context={URL,Set,Object,String,Intl:{DateTimeFormat(){if(timezone===null)throw Error('unavailable');return {resolvedOptions:()=>({timeZone:timezone})};}},navigator:{languages:browserLanguages},document:{documentElement:{dataset:{viewerCountry:country},lang},readyState:'loading',addEventListener(n,f){if(n==='DOMContentLoaded')callbacks.push(f);},querySelectorAll(s){return s==='a[href]'?links:links.filter(l=>l.dataset.localeOption);}},window:{location:{href:url,origin:new URL(url).origin,replace:u=>replacements.push(u)},localStorage:storage}};
+ const context={URL,Set,Object,String,Intl:{DateTimeFormat(){if(timezone===null)throw Error('unavailable');return {resolvedOptions:()=>({timeZone:timezone})};}},navigator:{languages:browserLanguages},document:{documentElement:{dataset:{viewerCountry:country},lang},readyState:'loading',addEventListener(n,f){if(n==='DOMContentLoaded')callbacks.push(f);},querySelectorAll(s){return s==='script[src]'?scripts:s==='a[href]'?links:links.filter(l=>l.dataset.localeOption);}},window:{location:{href:url,origin:new URL(url).origin,replace:u=>replacements.push(u)},localStorage:storage}};
  vm.runInNewContext(source,context);for(const f of callbacks)f();return {replacements,values,api:context.window.SIMY_LOCALE_NAVIGATION};
 }
 function link(locale,href){return {dataset:{localeOption:locale},href,events:{},addEventListener(n,f){this.events[n]=f;}};}
@@ -61,4 +61,11 @@ test('legacy language picker updates the same manual preference and tolerates st
  const c={SUPPORTED:['en','ja'],DEFAULT:'en',safeLangForPage:x=>x,localStorage:{setItem(k,v){values[k]=v;}},load:lang=>loaded.push(lang),apply(){}};
  vm.runInNewContext(legacy.slice(start,end),c);c.setLang('ja',{skipRegionSync:true});assert.equal(values['simy-home-locale'],'ja');assert.equal(new URL(boot({values,timezone:'Europe/Paris'}).replacements[0]).pathname,'/ja.html');
  c.localStorage={setItem(){throw Error('blocked')}};assert.doesNotThrow(()=>c.setLang('en',{skipRegionSync:true}));assert.equal(loaded.at(-1),'en');
+});
+test('pages that translate after loading keep generic home links for the existing language decorator',()=>{
+ const generic=link(undefined,'https://simy.one/#pricing');const english=link('en','https://simy.one/');
+ boot({url:'https://simy.one/about.html',links:[generic,english],scripts:[{src:'https://simy.one/i18n.js?v=reviewed'}]});
+ assert.equal(generic.href,'https://simy.one/#pricing');assert.equal(english.href,'/?locale=en');
+ const legacy=fs.readFileSync('site/i18n.js','utf8');const start=legacy.indexOf('  function decorateSiteUrl('),end=legacy.indexOf('  function decorateAppLinks(',start);
+ const c={URL,location:{href:'https://simy.one/about.html',hostname:'simy.one'},CURRENT_LANG:'ja',document:{documentElement:{lang:'ja'}},isLegalPath:()=>false,currentRegionForApp:()=> 'jp'};vm.runInNewContext(legacy.slice(start,end),c);assert.equal(c.decorateSiteUrl(generic.href),'/ja.html#pricing');
 });
