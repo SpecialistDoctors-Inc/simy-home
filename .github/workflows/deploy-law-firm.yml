@@ -29,7 +29,7 @@ jobs:
         with:
           role-to-assume: ${{ secrets.AWS_SITE_DEPLOY_ROLE_ARN }}
           aws-region: ${{ secrets.AWS_REGION }}
-      - name: Publish only law-firm objects
+      - name: Publish law-firm objects and additive sitemap entry
         env:
           SITE_S3_BUCKET: ${{ secrets.SITE_S3_BUCKET }}
           SITE_CF_DISTRIBUTION_ID: ${{ secrets.SITE_CF_DISTRIBUTION_ID }}

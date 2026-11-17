@@ -3,6 +3,7 @@ from pathlib import Path
 from html.parser import HTMLParser
 from urllib.parse import urlsplit
 import hashlib,json,os,re
+import xml.etree.ElementTree as ET
 
 ROOT=Path(__file__).resolve().parents[1]/'site'
 ENTRY='hp-management/law-firm.html'
@@ -17,15 +18,17 @@ assert manifest['url']=='https://simy.one/'+ENTRY
 paths=set()
 for item in manifest['files']:
     path=item['path']
-    assert path==ENTRY or path.startswith(PREFIX),path
+    assert path in [ENTRY,'sitemap.xml'] or path.startswith(PREFIX),path
     assert '..' not in Path(path).parts and not Path(path).is_absolute(),path
     assert path not in paths,path
     paths.add(path)
     blob=(ROOT/path).read_bytes()
     assert len(blob)==item['bytes'] and hashlib.sha256(blob).hexdigest()==item['sha256'],path
 assert ENTRY in paths
-actual={p.relative_to(ROOT).as_posix() for p in (ROOT/PREFIX).rglob('*') if p.is_file() and p!=MANIFEST}|{ENTRY}
+actual={p.relative_to(ROOT).as_posix() for p in (ROOT/PREFIX).rglob('*') if p.is_file() and p!=MANIFEST}|{ENTRY,'sitemap.xml'}
 assert actual==paths,'Untracked or missing release files'
+urls=[e.text for e in ET.parse(ROOT/'sitemap.xml').findall('.//{*}loc')]
+assert len(urls)==len(set(urls)) and urls.count(manifest['url'])==1
 
 class Page(HTMLParser):
     def __init__(self):super().__init__();self.meta={};self.canonical=None;self.resources=[]
