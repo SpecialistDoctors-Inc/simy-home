@@ -78,15 +78,21 @@ invocations; API Gateway events never reach it.
    `register_by_owner_email` with the subject and verified sign-in email the
    intake recorded — the same check as reopening `/start` — and marks the intake
    `claimed`;
-3. reserves `ready_notified_at` on the intake, then sends one SES mail from the
-   existing sign-in sender (`HP_EMAIL_LOGIN_FROM`, already allowed by IAM) to that
-   verified mailbox with the clinic's own `/start?session_id=…` link. A failed
-   send releases the reservation so a rerun retries; a successful one is never
-   repeated.
+3. marks the intake `ready_mail: sending`, sends one SES mail from the existing
+   sign-in sender (`HP_EMAIL_LOGIN_FROM`, already allowed by IAM) to that
+   verified mailbox with the clinic's own `/start?session_id=…` link, and
+   records `ready_mail: sent` (or `failed`, which a rerun retries). Mail state is
+   merged into the latest intake version, so the background copier updating the
+   same row cannot lose it. A `sending` mark older than five minutes (the API
+   Lambda times out at 29 s) was interrupted and is retried; at worst the clinic
+   receives the same mail twice. If the clinic submitted another URL while the
+   claim ran, the intake is left unclaimed (`intake_changed`) and a rerun
+   evaluates the new URL.
 
 Results are explicit (`site_not_registered`, `owner_mismatch`,
 `site_unavailable` = claim targets not deployed, `subscription_inactive`,
-`mail_failed`, `notified`, `already_notified`, …) so the operator can fix and
+`intake_changed`, `mail_failed`, `mail_in_progress`, `notified`,
+`already_notified`, …) so the operator can fix and
 rerun. A clinic that already claimed by reopening `/start` still gets the mail
 once. With no SES sender configured the site is claimed and the result says
 `mail: not_configured`.

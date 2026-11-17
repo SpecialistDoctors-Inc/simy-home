@@ -11,7 +11,8 @@ its claim targets, ``notify_clinic_ready.py`` invokes the API Lambda directly
 1. claim the site exactly as reopening /start would, with the Google subject and
    verified sign-in email the intake recorded,
 2. mark the intake claimed, and
-3. email that mailbox once, with the clinic's own /start link.
+3. email that mailbox, with the clinic's own /start link, recording the send so
+   reruns do not repeat it.
 
 Every step is idempotent, so the operator can rerun the command after fixing
 whatever it reported.
@@ -27,6 +28,8 @@ from store import Conflict
 from stripe_billing import ACTIVE, BillingRejected, subscription_key
 
 OPEN_INTAKE = ('received', 'needs_review')
+# Well past the API Lambda's 29 s timeout: an older 'sending' mark was interrupted.
+STALE_SENDING_SECONDS = 300
 
 
 class ClinicReady:
@@ -60,24 +63,42 @@ class ClinicReady:
         elif intake.get('status') != 'claimed':
             return {'status': 'intake_not_ready'}
         site = {'site_url': intake['site_url'], 'host': intake['host']}
-        if intake.get('ready_notified_at'):
+        mail = intake.get('ready_mail')
+        if mail == 'sent':
             return {'status': 'already_notified', **site}
         if self.send is None:
             return {'status': 'claimed', 'mail': 'not_configured', **site}
-        # Reserve the notice before sending so a rerun never mails twice.
+        now = int(self.clock())
+        if mail == 'sending' and intake.get('ready_mail_at', 0) > now - STALE_SENDING_SECONDS:
+            return {'status': 'mail_in_progress', **site}
+        # Mark the send before delivering so concurrent reruns do not both mail.
+        # A send interrupted before it is recorded (e.g. a Lambda timeout) goes
+        # stale and is retried: at worst the clinic gets the same mail twice.
         try:
-            reserved = self.store.put(key, {**intake, 'ready_notified_at': int(self.clock())}, intake['_version'])
+            self.store.put(key, {**intake, 'ready_mail': 'sending', 'ready_mail_at': now}, intake['_version'])
         except Conflict:
             return {'status': 'retry'}
         try:
             self.send(intake['email'], *self.message(purchase, intake))
         except Exception:
-            try:
-                self.store.put(key, {**reserved, 'ready_notified_at': None}, reserved['_version'])
-            except Conflict:
-                pass
+            self.record(key, {'ready_mail': 'failed'})
             return {'status': 'mail_failed', **site}
+        if not self.record(key, {'ready_mail': 'sent', 'ready_notified_at': int(self.clock())}):
+            return {'status': 'notified_unrecorded', **site}
         return {'status': 'notified', **site}
+
+    def record(self, key, fields):
+        """Merge mail state into the intake, surviving unrelated concurrent updates."""
+        for _ in range(5):
+            current = self.store.get(key)
+            if not current:
+                return False
+            try:
+                self.store.put(key, {**current, **fields}, current['_version'])
+                return True
+            except Conflict:
+                continue
+        return False
 
     def claim(self, purchase, intake):
         policy = {'mode': 'stripe', 'subscription_id': purchase['subscription_id']}
@@ -95,6 +116,10 @@ class ClinicReady:
         key = 'clinic-intake:' + purchase['subscription_id']
         for _ in range(3):
             current = self.store.get(key)
+            # The clinic may have submitted another URL meanwhile. Never mark that
+            # one claimed with this result; a rerun evaluates the new URL.
+            if not current or current.get('site_url') != intake['site_url']:
+                return {'status': 'intake_changed'}
             if current.get('status') == 'claimed':
                 return {'status': 'claimed', 'intake': current}
             try:
@@ -145,7 +170,7 @@ def readiness(store, subscription_id, claim_targets):
     report = {'subscription': (purchase or {}).get('status', 'not_found'),
               'intake': intake.get('status', 'not_found'),
               'site_url': intake.get('site_url'),
-              'ready_notified': bool(intake.get('ready_notified_at'))}
+              'ready_mail': intake.get('ready_mail')}
     try:
         host = site_host(intake.get('site_url') or '')
     except ValueError:
