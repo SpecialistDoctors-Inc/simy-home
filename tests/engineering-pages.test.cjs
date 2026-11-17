@@ -170,6 +170,8 @@ test("bilingual comics use real speech text inside the frame and preserve the sa
       assert.doesNotMatch(main, /[\u3040-\u30ff\u3400-\u9fff]/u);
       assert.match(main, /Japanese interface/);
       assert.match(main, /Draft pricing/);
+      assert.match(main, /href="\/download\/en\.html"/);
+      assert.doesNotMatch(main, /href="\/download\.html"/);
     }
   }
 });
