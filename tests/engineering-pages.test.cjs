@@ -159,9 +159,9 @@ test("bilingual comics use real speech text inside the frame and preserve the sa
   for (const locale of ["ja", "en"]) {
     const route = locale === "ja" ? "for/engineers/index.html" : "for/en/engineers/index.html";
     const html = fs.readFileSync(path.join(root, "site", route), "utf8");
-    assert.equal((html.match(/class="cli-comic-frame"/g) || []).length, 8);
-    assert.equal((html.match(/class="cli-speech"/g) || []).length, 15);
-    assert.equal((html.match(/src="\/assets\/cli-ui\/comic-art.png"/g) || []).length, 8);
+    assert.equal((html.match(/class="cli-comic-frame"/g) || []).length, 4);
+    assert.equal((html.match(/class="cli-speech"/g) || []).length, 7);
+    assert.equal((html.match(/src="\/assets\/cli-ui\/booking-story-art.png"/g) || []).length, 4);
     for (const panel of story[locale]) for (const line of panel.dialogue) assert.ok(html.includes(line.text));
     assert.ok(html.includes(locale === "ja" ? 'href="/for/en/engineers/"' : 'href="/for/engineers/"'));
     assert.doesNotMatch(html, /release-crew-(?:ja|en)\.webp/);

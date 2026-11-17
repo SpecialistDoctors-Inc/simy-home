@@ -20,7 +20,7 @@
 <meta name="theme-color" content="#f6f5f4">
 <link rel="icon" href="/favicon-32.png" type="image/png">
 <link rel="stylesheet" href="/site-theme.css?v=20261004-theme-1">
-<link rel="stylesheet" href="/cli-home.css?v=20261117-bilingual-comic">
+<link rel="stylesheet" href="/cli-home.css?v=20261117-booking-story">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"SIMY CLI — AIに任せた仕事を、完了まで。","description":"Codex・Claude Codeの開発を、完了条件まで進めるSIMY CLI。","url":"https://simy.one/for/engineers/","inLanguage":"ja","isPartOf":{"@type":"WebSite","name":"SIMY","url":"https://simy.one/"}}</script>
 </head>
 <body class="cli-page">
@@ -41,14 +41,14 @@
     <div class="cli-section-heading"><div><p class="cli-eyebrow">VIBE CODING, WITH CONFIDENCE</p><h2 id="manga-title">作るのは速い。<br>でも、確認に追われていませんか。</h2></div><p>AIに開発を任せた、その後。修正・確認・判断をどう進めるかを、ひとつの不具合の漫画で見てみましょう。</p></div>
     <div class="cli-three cli-pains"><article><h3>直すたび、別の場所が壊れる。</h3><p>変更してよい範囲と、守りたい動きを完了条件に。SQMを依頼すれば、適用できる不具合のルールでも確認します。</p><a href="#quality">SQMの役割を見る ↓</a></article><article><h3>「完了」でも、実際には動かない。</h3><p>完了条件ごとの確認結果を受け取る。Standardでは独立レビューも行い、未確認の操作は区別して判断します。</p><a href="#delivery">確認の進め方を見る ↓</a></article><article><h3>同じ修正で、時間とトークンが減る。</h3><p>進展がない状態が続けば停止して判断を求める。利用状況もアプリで確認できます。費用の自動上限を保証する機能ではありません。</p><a href="#screens">進行と利用状況を見る ↓</a></article></div>
     <details class="cli-detail cli-community"><summary>参考にした開発者の声を見る <span aria-hidden="true">＋</span></summary><p>Redditの個人の体験談から課題を整理しました。市場全体の調査結果やSIMY利用者の口コミではありません。</p><ul><li><a href="https://www.reddit.com/r/vibecoding/comments/1s5whm6/vibe_coding_is_fun_until_your_app_ends_up_in/" target="_blank" rel="noopener">小さな変更で別の機能が壊れ、毎回確認し直す（英語）</a></li><li><a href="https://www.reddit.com/r/ClaudeCode/comments/1xvc77s/i_rewrote_my_claude_code_session_rules_41_times/" target="_blank" rel="noopener">テストは成功しても、実際の利用では動かない（英語）</a></li><li><a href="https://www.reddit.com/r/ClaudeCode/comments/1rw0bn9/the_real_issue_is_wait_actually_heres_the_fix/" target="_blank" rel="noopener">原因の推測と修正を繰り返してしまう（英語）</a></li></ul></details>
-    <div class="cli-story-intro"><p class="cli-eyebrow">漫画でわかる SIMY CLI</p><h3>「二重登録を直して。テストまで続けて。」</h3><p>人が判断するところと、AIに任せるところ。8コマで追ってみましょう。</p></div>
-    <ol class="cli-comic-grid" aria-label="二重登録の修正から確認までの説明漫画">{{cli_story_panels}}</ol>
-    <p class="cli-note">漫画は使い方を伝えるための説明例です。実際のUI・顧客の事例・本番での成果ではありません。公開は権限と承認に従います。<a href="/assets/cli-ui/comic-art.png" target="_blank" rel="noopener">漫画のイラストを大きく見る ↗</a></p>
+    <div class="cli-story-intro"><p class="cli-eyebrow">漫画でわかる SIMY CLI</p><h3>「作った」から、「スマホで使える」まで。</h3><p>何度も「続けて」と催促する代わりに、SIMYがいつものAIに作業の続きを促します。最後は、確認結果を見てあなたが判断します。</p></div>
+    <ol class="cli-comic-grid" aria-label="予約ボタンが動かない状態から、予約画面が開くまでの4コマ漫画">{{cli_story_panels}}</ol>
+    <p class="cli-note">漫画は、AIが操作確認できるツールと権限を使う環境での説明例です。進展がないときや判断が必要なときは、あなたに確認を求めます。実際のUI・顧客の事例・本番での成果ではありません。公開は権限と承認に従います。<a href="/assets/cli-ui/booking-story-art.png" target="_blank" rel="noopener">漫画のイラストを大きく見る ↗</a></p>
   </section>
   <nav id="features" class="cli-feature-index cli-shell" aria-label="3つのできること"><a href="#delivery"><span>01 / DELIVERY LOOP</span><strong>完了まで、進める。</strong><b aria-hidden="true">↘</b></a><a href="#quality"><span>02 / SQM</span><strong>過去の不具合を、次のチェックに。</strong><b aria-hidden="true">↘</b></a><a href="#screens"><span>03 / DESKTOP APP</span><strong>進行と判断を、ひとつの画面で。</strong><b aria-hidden="true">↘</b></a></nav>
   <section id="delivery" class="cli-section cli-shell" aria-labelledby="delivery-title">
     <div class="cli-section-heading"><div><p class="cli-eyebrow">01 / DELIVERY LOOP</p><h2 id="delivery-title">「続けて」を、<br>何度も言わなくていい。</h2></div><p>依頼から完了条件を整理し、まだ残る仕事があれば会話の続きを促します。確認結果を揃え、必要な場面ではあなたに判断を求めます。</p></div>
-    <div class="cli-request"><span>いつものチャットで、たとえば</span><code>@simy このフォームの二重送信を直して。テストまで続けて。</code><p>依頼例です。このページ上で作業は実行されません。</p></div>
+    <div class="cli-request"><span>いつものチャットで、たとえば</span><code>@simy スマホで予約ボタンから予約画面が開くように直して。操作確認まで続けて。</code><p>依頼例です。このページ上で作業は実行されません。</p></div>
     <div class="cli-three"><article><span class="cli-step">01</span><h3>ゴールを揃える。</h3><p>何をもって完了か、何を確認するか。依頼をチェックリストにして、作業の範囲を揃えます。</p></article><article><span class="cli-step">02</span><h3>残る仕事を、進める。</h3><p>未完了の条件が残っていれば続行を促します。Standardでは最後に独立レビュー、Carefulでは着手前の設計確認も行います。</p></article><article><span class="cli-step">03</span><h3>結果を、根拠と受け取る。</h3><p>完了条件ごとの確認結果を記録。変更内容やテストの結果を、元の会話とアプリからたどれます。</p></article></div>
     <figure class="cli-shot cli-shot-mint"><a href="/assets/cli-ui/goal.png" target="_blank" rel="noopener" aria-label="完了条件と質問の画面を原寸で見る"><img src="/assets/cli-ui/goal.png" width="2360" height="1600" loading="lazy" alt="進行中の仕事の詳細。会話、完了条件、SIMYが続行した回数、元のスレッドへの導線が見えるサンプル画面。"></a><figcaption><strong>今の仕事も、残る条件も。</strong> 仕事を開くと、依頼・進行・質問・確認結果をまとめて見られます。</figcaption></figure>
     <div class="cli-control"><span aria-hidden="true">↳</span><p><strong>任せる範囲は、あなたが決める。</strong>プロジェクトをONにすると、その後に始める新しい会話が対象になります。ひとつの会話だけなら <code>@simy 続けて</code>。マージ・公開などは、あなたが許可した範囲と必要な承認に従います。</p></div>
