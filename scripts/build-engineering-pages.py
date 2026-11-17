@@ -3,6 +3,7 @@
 from site_header import apply as apply_header
 from engineering_experience import experience, CONTENT
 from engineering_manga import manga
+from engineering_cli_sections import story_panels, proposed_plans
 from engineering_manga_locales import DATA as MANGA_COPY
 import argparse
 import json
@@ -13,6 +14,9 @@ ROOT = Path(__file__).resolve().parents[1]
 COPY = json.loads((ROOT / 'scripts/engineering-copy.json').read_text())
 
 def render(c, lang):
+    if lang in ['ja', 'en']:
+        alternates = '\n'.join(f'<link rel="alternate" hreflang="{code}" href="https://simy.one/{item["path"]}">' for code, item in COPY.items())
+        return (ROOT / f'scripts/engineering-cli-{lang}.html').read_text().replace('{{alternates}}', alternates).replace('{{cli_story_panels}}', story_panels(lang)).replace('{{cli_proposed_plans}}', proposed_plans(lang)).rstrip('\n')
     prefix = '/guides/' if lang == 'ja' else f'/guides/{lang.lower()}/'
     related = ''
     for slug,label in c['guides']:
@@ -129,4 +133,12 @@ if __name__ == '__main__':
                 raise SystemExit(f'Stale engineering alias: {legacy}')
         else:
             path.write_text(alias)
+    for lang, filename in [('ja', 'affiliate.html'), ('en', 'affiliate-en.html')]:
+        path = ROOT / 'site' / filename
+        output = apply_header((ROOT / f'scripts/cli-affiliate-{lang}.html').read_text(), path)
+        if args.check:
+            if not path.exists() or path.read_text() != output:
+                raise SystemExit(f'Stale affiliate page: {filename}')
+        else:
+            path.write_text(output)
     print('Engineering pages verified.'  if args.check else 'Engineering pages generated.')

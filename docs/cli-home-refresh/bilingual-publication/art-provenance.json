@@ -1,0 +1,8 @@
+{
+  "tool": "built-in image_gen",
+  "image": "site/assets/cli-ui/comic-art.png",
+  "sha256": "a45f4d8e70db8ee97e9f12408fc9fcea133c8bd5744acb16a74184f05399046a",
+  "source_reference": "site/assets/engineer-manga/release-crew-ja.webp",
+  "prompt": "Recreate the referenced engineering manga as lettering-free artwork. Keep the blue-haired engineer with goggles, curly-haired woman with round glasses and friendly blue robot. Eight scenes: duplicate signup; warning; investigation request; duplicate retry cause; human form-input decision; test and review; release decision; next work. No text, letters, numbers, logos or speech balloons anywhere. Japanese and English dialogue is composed as accessible 20px text inside each comic frame.",
+  "geometry": "Eight CSS viewports over the 1055x1491 sheet. Original art pixels are unchanged."
+}
