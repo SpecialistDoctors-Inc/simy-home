@@ -1,0 +1,222 @@
+{
+  "ja": [
+    {
+      "title": "直したはずが、別の不具合。",
+      "caption": "登録が二重になる。見た目だけでは原因はわからない。",
+      "dialogue": [
+        {
+          "speaker": "仲間",
+          "text": "登録が2件入ってる！"
+        },
+        {
+          "speaker": "開発者",
+          "text": "直したはずなのに…。"
+        }
+      ]
+    },
+    {
+      "title": "まず、何が起きたか確かめる。",
+      "caption": "失敗する条件と、守りたい動きを揃える。",
+      "dialogue": [
+        {
+          "speaker": "仲間",
+          "text": "登録できない人もいます。"
+        },
+        {
+          "speaker": "開発者",
+          "text": "再現する条件を確かめよう。"
+        }
+      ]
+    },
+    {
+      "title": "修正とテストまで、ひとつの依頼。",
+      "caption": "SIMYが完了条件を整理し、残る作業の続きを促す。",
+      "dialogue": [
+        {
+          "speaker": "開発者",
+          "text": "原因を調べて、修正とテストまで頼む！"
+        },
+        {
+          "speaker": "SIMY",
+          "text": "まずは再現して確かめます。"
+        }
+      ]
+    },
+    {
+      "title": "原因を確かめて、修正する。",
+      "caption": "この例では、再送処理の重複が二重登録の原因だった。",
+      "dialogue": [
+        {
+          "speaker": "SIMY",
+          "text": "同じリクエストが2回送られています。"
+        },
+        {
+          "speaker": "開発者",
+          "text": "再送が重複しないように直そう。"
+        }
+      ]
+    },
+    {
+      "title": "大事な方針は、あなたが決める。",
+      "caption": "使う人のための判断を確認し、修正に反映する。",
+      "dialogue": [
+        {
+          "speaker": "SIMY",
+          "text": "失敗しても入力を残しますか？"
+        },
+        {
+          "speaker": "開発者",
+          "text": "残そう。もう一度入力させたくない。"
+        }
+      ]
+    },
+    {
+      "title": "テストと、別の目で確かめる。",
+      "caption": "Standardでは独立レビューも実施。未確認のことは区別する。",
+      "dialogue": [
+        {
+          "speaker": "SIMY",
+          "text": "テストとレビューの結果をまとめました。"
+        },
+        {
+          "speaker": "開発者",
+          "text": "まだ確認できていない点も見よう。"
+        }
+      ]
+    },
+    {
+      "title": "根拠を見て、公開を決める。",
+      "caption": "公開は人が判断。許可された範囲で進める。",
+      "dialogue": [
+        {
+          "speaker": "開発者",
+          "text": "変更と確認結果を見てから、公開を決めよう。"
+        }
+      ]
+    },
+    {
+      "title": "次の変更にも、確認を活かす。",
+      "caption": "SQMは依頼時に、適用できる過去の不具合ルールで確認する。",
+      "dialogue": [
+        {
+          "speaker": "開発者",
+          "text": "この失敗を、次の確認にも活かそう。"
+        },
+        {
+          "speaker": "SIMY",
+          "text": "次の変更も、適用ルールで確認します。"
+        }
+      ]
+    }
+  ],
+  "en": [
+    {
+      "title": "A fix creates another problem.",
+      "caption": "Two registrations appear. The screen alone does not explain why.",
+      "dialogue": [
+        {
+          "speaker": "Teammate",
+          "text": "One signup created two records!"
+        },
+        {
+          "speaker": "Developer",
+          "text": "But I thought we fixed it…"
+        }
+      ]
+    },
+    {
+      "title": "First, find out what happened.",
+      "caption": "Agree on how to reproduce the failure and what must keep working.",
+      "dialogue": [
+        {
+          "speaker": "Teammate",
+          "text": "Some people cannot sign up at all."
+        },
+        {
+          "speaker": "Developer",
+          "text": "Let’s find the conditions that trigger it."
+        }
+      ]
+    },
+    {
+      "title": "One request, through fixes and tests.",
+      "caption": "SIMY organizes completion criteria and prompts the AI to continue unfinished work.",
+      "dialogue": [
+        {
+          "speaker": "Developer",
+          "text": "Find the cause, fix it, and run the tests."
+        },
+        {
+          "speaker": "SIMY",
+          "text": "I’ll reproduce the problem first."
+        }
+      ]
+    },
+    {
+      "title": "Fix the cause, with evidence.",
+      "caption": "In this example, duplicate retry handling caused duplicate registrations.",
+      "dialogue": [
+        {
+          "speaker": "SIMY",
+          "text": "The same request is being sent twice."
+        },
+        {
+          "speaker": "Developer",
+          "text": "Let’s prevent duplicate retries."
+        }
+      ]
+    },
+    {
+      "title": "You decide the important choices.",
+      "caption": "Confirm the decisions that affect people using the product.",
+      "dialogue": [
+        {
+          "speaker": "SIMY",
+          "text": "Keep the form input when a request fails?"
+        },
+        {
+          "speaker": "Developer",
+          "text": "Yes. Don’t make people type it all again."
+        }
+      ]
+    },
+    {
+      "title": "Check the tests and a fresh review.",
+      "caption": "Standard includes an independent review. Keep unverified items explicit.",
+      "dialogue": [
+        {
+          "speaker": "SIMY",
+          "text": "Here are the test and review results."
+        },
+        {
+          "speaker": "Developer",
+          "text": "Let’s also look at what remains unverified."
+        }
+      ]
+    },
+    {
+      "title": "Review the evidence before release.",
+      "caption": "A person decides whether to publish. Work stays within authorized scope.",
+      "dialogue": [
+        {
+          "speaker": "Developer",
+          "text": "We’ll decide on release after reviewing the changes and evidence."
+        }
+      ]
+    },
+    {
+      "title": "Use the lesson in the next change.",
+      "caption": "When requested, SQM checks the applicable rules learned from past incidents.",
+      "dialogue": [
+        {
+          "speaker": "Developer",
+          "text": "Use this lesson in our next check, too."
+        },
+        {
+          "speaker": "SIMY",
+          "text": "I’ll check applicable rules for the next change."
+        }
+      ]
+    }
+  ]
+}
