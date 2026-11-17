@@ -269,14 +269,7 @@ function continuousGrowthSupport(report,growth) {
     element('p','導入後の活用イメージ','growth-step')
   );
 
-  const panels = [
-    ['同意を得て相談を録音','相談室で、先生が保護者に「録音してもいいですか？」と確認する','録音の目的を説明し、相談者の方や保護者の同意を得てから、いつもの相談での説明を録音します。'],
-    ['個人情報を除き、確認した要点をAIへ','録音の波形から、名前などを伏せた文章と記事案ができる','端末で文字起こしし、氏名などを伏せる作業を補助します。氏名や連絡先に加え、相談日・病歴などを組み合わせて個人が分からないか人が確認し、確認済みの要点だけをAIに渡します。'],
-    ['先生が確認し、ボタンで公開','先生がタブレットで記事を読み、「公開する」を押す','個人を特定できる記述が残っていないか、内容と根拠は正しいかを先生が確認。承認した内容を公開します。'],
-    ['事務所の専門性や最新の感染症情報が伝わるページに','親子を迎える弁護士のイラストと、感染症情報・専門分野・治療方針の記事が並ぶ事務所のホームページ','専門外来で診る範囲や相談の目安は先生の言葉で伝えます。地域で流行している感染症は、公表データの出典と更新日を添えて掲載します。'],
-    ['AI検索で、事務所の記事にたどり着けるように','自宅で保護者がAI回答の出典を見て「この事務所の記事だ」と気づく','公開後に同じ質問で測り直し、回答に事務所名が出るか、公式ページへのリンクから相談案内にたどり着けるかを確認します。'],
-    ['近隣事務所の更新も見渡せる','受付スタッフが近隣の地図と公開ページの更新前後を見比べる','登録した近隣事務所の公開サイトを定期確認。取扱分野や予約の文言など、変わった箇所を自事務所の改善に生かせます。'],
-  ];
+  const panels = [["公開用の法律解説を録音", "弁護士が事務所スタッフと録音の目的を確認する", "公開用に同意を得た一般的な法律解説を録音します。個別案件の録音や相談内容は使用しません。"], ["個人情報を除き、確認した要点をAIへ", "録音の波形から、個人情報を除いた要点と記事案ができる", "個人を特定できる情報がないか人が確認し、確認済みの要点からAIが記事案を作成します。"], ["先生が確認し、ボタンで公開", "先生がタブレットで法律解説の記事案を確認する", "個人が特定される内容がないか、内容と根拠は正しいかを先生が確認。承認した内容を公開します。"], ["取扱分野や相談の目安が伝わるページに", "相続・離婚・企業法務を紹介する事務所のホームページ", "取扱分野や相談の目安を先生の言葉で伝えます。一般的な法律解説には、参照した法令・公表元・確認日を添えます。"], ["AI検索で、事務所の記事にたどり着けるように", "成人の閲覧者がAI回答の出典から事務所の記事を確認する", "公開後に同じ質問で測り直し、回答に事務所名が出るか、公式ページへのリンクから相談案内にたどり着けるかを確認します。"], ["近隣事務所の変化を確認", "事務所スタッフが地図と近隣事務所のページ更新を確認する", "登録した近隣事務所の公開サイトの変更箇所を確認し、自事務所で見直す情報を判断できます。"]];
   const story = element('ol','','growth-manga-panels');
   panels.forEach(([title,dialogue,caption],index)=>{
     const panel = element('li','','growth-manga-panel');
@@ -298,9 +291,9 @@ function continuousGrowthSupport(report,growth) {
   topics.append(element('h5','事務所を選ぶ判断材料になる、公式サイトのコンテンツ例'));
   const examples = element('ul','','growth-manga-topics-list');
   for (const [kind,iconPath,label,example,description] of [
-    ['trends','M3 4v16h18M6 15l4-5 4 3 6-7m-4 0h4v4','感染症の流行状況','「今、地域でどんな感染症が増えていますか？」','公表データで地域・集計時期を確かめ、更新日と出典を添えます。'],
-    ['specialty','M4 3v5a4 4 0 0 0 8 0V3M8 12v3a5 5 0 0 0 10 0v-2m3-3a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM4 3h2m4 0h2','先生の専門分野','「相続の初回相談では、何を確認できますか？」','取扱分野や、初回相談・受任までの流れを先生の言葉で伝えます。'],
-    ['care','M21 5H3v12h4v4l5-4h9zM12 14l-3-3a1.7 1.7 0 0 1 3-1 1.7 1.7 0 0 1 3 1z','治療で大切にしていること','「治療の選択肢を、どう一緒に決めるのか」','先生が大切にしている考え方や、ご家族と話し合うときの工夫を紹介します。'],
+    ['trends','M3 4v16h18M6 15l4-5 4 3 6-7m-4 0h4v4','法令・制度の公表情報','「制度の見直しで、何を確認すればよいですか？」','法令や公表資料の対象・確認日を確かめ、出典を添えます。'],
+    ['specialty','M12 3v18M5 21h14M4 6h16M6 6l-4 8h8l-4-8m12 0l-4 8h8l-4-8','先生の専門分野','「相続の初回相談では、何を確認できますか？」','取扱分野や、初回相談・受任までの流れを先生の言葉で伝えます。'],
+    ['care','M21 5H3v12h4v4l5-4h9zM12 14l-3-3a1.7 1.7 0 0 1 3-1 1.7 1.7 0 0 1 3 1z','ご相談で大切にしていること','「解決までの進め方を、どう一緒に考えるのか」','先生が大切にしている考え方や、ご相談の進め方を紹介します。'],
   ]) {
     const item = element('li','');
     const heading = element('h6','','growth-manga-topic-heading');
@@ -359,9 +352,9 @@ function renderSearchChecks(report){
   section.append(continuousGrowthSupport(report,growth));
   if(growth.audit){const a=growth.audit;const audit=element('section','','growth-journey');audit.append(element('p','02 / 正しい案内から、予約まで','growth-step'),element('h4','実測で見つかった、優先して直すこと','growth-section-title'));
    const cards=element('div','','growth-journey-findings');
-   for(const item of a.findings){const card=element('article','','growth-journey-finding');card.append(element('span',item.priority,'growth-number'),element('h4',item.title),sourceParagraph(item.observation,item.sources),sourceParagraph('保護者への影響：'+item.impact,item.sources),sourceParagraph('改善案：'+item.change,item.sources));const sources=element('p','','growth-scope');for(const source of item.sources){const link=element('a',source.label+' ↗');link.href=source.url;link.target='_blank';link.rel='noopener';sources.append(link,' ');}card.append(sources);cards.append(card);}audit.append(cards);
+   for(const item of a.findings){const card=element('article','','growth-journey-finding');card.append(element('span',item.priority,'growth-number'),element('h4',item.title),sourceParagraph(item.observation,item.sources),sourceParagraph('相談を検討する方への影響：'+item.impact,item.sources),sourceParagraph('改善案：'+item.change,item.sources));const sources=element('p','','growth-scope');for(const source of item.sources){const link=element('a',source.label+' ↗');link.href=source.url;link.target='_blank';link.rel='noopener';sources.append(link,' ');}card.append(sources);cards.append(card);}audit.append(cards);
    audit.append(element('h4','すでに案内できていること','growth-section-title'));for(const t of a.confirmed)audit.append(sourceParagraph('✓ '+t,a.confirmedSources||[]));
-   const proposal=element('article','','growth-proposal');proposal.append(element('p','成長相談ページの掲載案','growth-proposal-label'),element('h4',a.proposal.heading),element('p',a.proposal.body),element('p','案内文の例：「'+a.proposal.button+'」','growth-proposal-copy'),element('p',a.proposal.note,'growth-scope'));audit.append(proposal,element('p','別途確認日：'+a.checkedOn+'。'+a.scope,'growth-scope'));section.append(audit);
+   const proposal=element('article','','growth-proposal');proposal.append(element('p','取扱分野ページの掲載案','growth-proposal-label'),element('h4',a.proposal.heading),element('p',a.proposal.body),element('p','案内文の例：「'+a.proposal.button+'」','growth-proposal-copy'),element('p',a.proposal.note,'growth-scope'));audit.append(proposal,element('p','別途確認日：'+a.checkedOn+'。'+a.scope,'growth-scope'));section.append(audit);
   }
   if(!growth.contentAvailable){section.append(element('p',growth.scope,'growth-scope'));results.append(section);return;}
   section.append(element('p',(growth.audit?'03':growth.discovery?'02':'01')+' / 診断時に取得した本文のAI分析','growth-step'));

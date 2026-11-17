@@ -47,5 +47,6 @@ for path in paths:
     if not path.endswith(('.js','.css')):continue
     text=(ROOT/path).read_text()
     assert not re.search(r'''["']/(?:assets/|vendor/|simy-icon|hp-management/clinic-checkout)''',text),path
-    assert not re.search(r'医療機関|患者さん|診療|院長|この医院',text),path
+    assert not re.search(r'医療機関|患者さん|診療|院長|この医院|感染症|治療|専門外来|病歴|保護者への影響|成長相談ページ',text),path
+    assert 'https://simy.one/hp-management/clinic.html' not in text,path
 print(json.dumps({'files':len(paths),'bytes':sum(f['bytes'] for f in manifest['files']),'manifest_sha256':digest,'status':'passed'}))

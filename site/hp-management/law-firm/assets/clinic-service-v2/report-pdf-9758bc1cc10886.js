@@ -103,29 +103,30 @@ function contact(){ensure(28);box(left,y,width,24,C.mint);write('この診断結
     grid([['AIウェブ管理 / 月額19,800円','税込21,780円。修正・動作確認、監視・バックアップ、SSL・ドメイン管理。事務所ご契約のChatGPT・Claude Codeへの接続を支援します。'],['AIウェブ管理　安心プラス / 月額29,800円','税込32,780円。標準プランに加え、WAF・海外アクセス制限・DDoSやBot対策・攻撃ログ確認などに対応します。']]);
     paragraph('更新代行は両コース共通で月額49,800円（税別・税込54,780円）を追加。MEO（Googleマップ対策）＋GEO（AI検索対策）を含みます。地図・口コミ対応と、AIにも伝わる事務所情報の整備を支援します。',9);
     paragraph('ドメインの新規取得費用・更新費用は別途です。',8);
-    if(components.length||componentNotices.length){page('COMPONENTS');heading('01 / SOFTWARE COMPONENTS','使用部品の脆弱性・更新リスク','検出した版と公式情報を比較しています。使用箇所や修正の適用状況により、実際の影響は異なります。');
+    let researchShown=false;const reportResearchNote=()=>{if(!researchShown){paragraph(security?.research?.status==='completed'?'診断時に公式情報を検索しました。':security?.research?.status==='partial'?'診断時の検索・一次情報確認は一部のみ完了しました。':'診断時の検索は未実施または取得できませんでした。事前確認の公表事例を含みます。',8);researchShown=true;}};
+    if(components.length||componentNotices.length){page('COMPONENTS');heading('01 / SOFTWARE COMPONENTS','使用部品の脆弱性・更新リスク','検出した版と公式情報を比較しています。使用箇所や修正の適用状況により、実際の影響は異なります。');reportResearchNote();
       for(const c of components){const name=c.name.split('\n'),a=c.current.split('\n'),b=c.latest.split('\n');const detailLines=lines(c.assessment,9,164),details=detailLines.slice(0,24).join('\n');const h=50+Math.max(height(c.current,10,66),height(c.latest,10,66))+height(details,9,164)+12;ensure(h+5);box(left,y,width,h);write(name[0],left+6,y+9,14,164);if(name[1])write(name.slice(1).join(' '),left+6,y+15,8,164,C.muted);const top=y+24;box(left+6,top,76,Math.max(height(c.current,10,66),height(c.latest,10,66))+14,C.pale);box(left+94,top,76,Math.max(height(c.current,10,66),height(c.latest,10,66))+14,C.pale);write('確認したバージョン',left+10,top+6,7,68,C.muted);write('確認時点の最新安定版',left+98,top+6,7,68,C.muted);write(c.current,left+10,top+13,10,66,/サポート終了|脆弱性|旧バージョン/.test(c.assessment)?C.red:C.ink);write(c.latest,left+98,top+13,10,66);const below=top+Math.max(height(c.current,10,66),height(c.latest,10,66))+20;write(details,left+6,below,9,164,C.muted);y=Math.max(y+h+5,below+height(details,9,164)+8);if(detailLines.length>24)card(name[0]+' / 公表情報の続き',detailLines.slice(24).join('\n'));for(const source of c.sources)sourceLink(source.label,source.url);}
     }
     const facts=global.SimyServiceSecurity?.providerFacts?.(report)||(report.providers?.facts||[]).filter(f=>f.role!=='現在の保守・契約担当');
-    if(facts.length||providerNotices.length){page('INFRASTRUCTURE');heading('02 / DOMAIN & SERVER','ドメイン・サーバーについて','公開情報から確認・推定した管理先と、提供元が公表している事故・障害情報です。');paragraph('提供元の過去の公表です。この事務所での被害や、同じ製品・契約であることを示すものではありません。',8);grid(providerNotices.map(n=>[(n.name?n.name+' / ':'')+n.title,'公表 '+n.published+'\n'+n.summary+'\n対象：'+(n.scope||'公表内容をご参照ください。')+'\n'+(n.resolution||''),n.url]),true);table('公開情報から確認した管理先',['項目','提供元','判定'],facts.map(f=>[f.role,f.name||'未特定',f.status||'未確認']),[40,108,28]);}
-    if(externalServices.length||notices.length){page('PUBLIC ADVISORIES');heading('03 / PUBLIC ADVISORIES','外部サービス・接続先の一覧','検出した接続先を全件掲載しています。リンクの記載だけでサービスの利用契約や情報送信を確認したものではありません。');table('外部サービス・接続先',['サービス・接続先','事故・脆弱性の調査結果'],externalServices.map(s=>[s.name+'\n'+(s.category||''),global.SimyServiceSecurity.findingsFor(s,security).map(n=>n.type+'：'+n.title).join('\n')||global.SimyServiceSecurity.inventoryResearchStatus(s,security)]),[58,118]);grid(notices.map(n=>[n.name+' / '+n.title,'公表 '+n.published+'\n'+n.summary+'\n対象：'+(n.scope||'公表内容をご参照ください。')+'\n'+(n.resolution||''),n.url]),true);}
-    paragraph(security?.research?.status==='completed'?'診断時に公式情報を検索しました。':security?.research?.status==='partial'?'診断時の検索・一次情報確認は一部のみ完了しました。':'診断時の検索は未実施または取得できませんでした。事前確認の公表事例を含みます。',8);
+    if(facts.length||providerNotices.length){page('INFRASTRUCTURE');heading('02 / DOMAIN & SERVER','ドメイン・サーバーについて','公開情報から確認・推定した管理先と、提供元が公表している事故・障害情報です。');reportResearchNote();paragraph('提供元の過去の公表です。この事務所での被害や、同じ製品・契約であることを示すものではありません。',8);grid(providerNotices.map(n=>[(n.name?n.name+' / ':'')+n.title,'公表 '+n.published+'\n'+n.summary+'\n対象：'+(n.scope||'公表内容をご参照ください。')+'\n'+(n.resolution||''),n.url]),true);table('公開情報から確認した管理先',['項目','提供元','判定'],facts.map(f=>[f.role,f.name||'未特定',f.status||'未確認']),[40,108,28]);}
+    if(externalServices.length||notices.length){page('PUBLIC ADVISORIES');heading('03 / PUBLIC ADVISORIES','外部サービス・接続先の一覧','検出した接続先を全件掲載しています。リンクの記載だけでサービスの利用契約や情報送信を確認したものではありません。');reportResearchNote();table('外部サービス・接続先',['サービス・接続先','事故・脆弱性の調査結果'],externalServices.map(s=>[s.name+'\n'+(s.category||''),global.SimyServiceSecurity.findingsFor(s,security).map(n=>n.type+'：'+n.title).join('\n')||global.SimyServiceSecurity.inventoryResearchStatus(s,security)]),[58,118]);grid(notices.map(n=>[n.name+' / '+n.title,'公表 '+n.published+'\n'+n.summary+'\n対象：'+(n.scope||'公表内容をご参照ください。')+'\n'+(n.resolution||''),n.url]),true);}
+
     const mainFlow=flow.filter(g=>!g.kinds.every(k=>k==='link')||/予約|相談受付|法律相談|決済|ログイン/.test(g.categories.join(' '))||g.sharing.length);
     if(mainFlow.length){page('EXTERNAL CONNECTIONS');heading('04 / EXTERNAL CONNECTION MAP','ホームページが利用する外部サービス','接続先の記載と、相談者情報の送信は別です。外部サービス内部の保存先・保存期間は、この診断では分かりません。');card('事務所のホームページ → 閲覧者のブラウザー → 外部サービス','公開ページの表示・外部プログラムの読込・予約などの接続関係を整理しています。');
       const grouped=new Map();for(const g of mainFlow){const key=g.category;const item=grouped.get(key)||{domains:[],reason:global.SimyInformationFlow.managementCopy(g).reason};item.domains.push(g.domain);grouped.set(key,item);}grid([...grouped].map(([category,g])=>[category,[...new Set(g.domains)].join('\n')+'\n'+g.reason]),true);const summary=global.SimyInformationFlow.noProblemSummary?.(report);if(summary)paragraph(summary,10);}
     if(findings.length||sharing.length){page('RECOMMENDATIONS');heading('05 / RECOMMENDATIONS','その他おすすめの改善点','診断で見つかった問題・見直しが必要な点だけを記載しています。');for(const f of findings)card(f.title,f.summary);table('共有資料の公開範囲',['資料','確認した内容'],sharing.map(x=>[global.SimyInformationFlow.sharingName(x),global.SimyInformationFlow.sharingCopy(x).reason]),[58,118]);}
     const growth=global.SimyClinicGrowth?.model(report);
     if(growth?.available){
-      page('GROWTH REPORT');heading('GROWTH / CLINIC WEBSITE',growth.headline,growth.name+' / '+growth.intro);
+      page('GROWTH REPORT');heading('GROWTH / OFFICE WEBSITE',growth.headline,growth.name+' / '+growth.intro);
       if(growth.discovery){const d=growth.discovery;
         grid([['AI回答への登場 '+d.ratio,'事務所名を入力しない質問で確認'],['公式サイトへの誘導',d.verified?d.verified+'件の回答から公式サイトへの到達を確認。事務所情報の正確性とは別に評価。':'公式URLへの到達・事務所情報の一致は未検証']]);
         table('01 / AI検索の実測結果',['相談者の方の質問','事務所の紹介','同じ回答に登場した事務所'],d.questions.map(q=>[q.theme,q.status!=='observed'?'取得できず':q.mentioned?'紹介あり':'紹介なし',q.peers.join('、')||'—']),[65,25,86],{didDrawCell(data){if(data.section==='body'&&data.column.index===0){const url=d.questions[data.row.index]?.sourceUrl||d.sourceUrl;if(/^https:\/\//.test(url))doc.link(data.cell.x,data.cell.y,data.cell.width,data.cell.height,{url});}},didParseCell(data){if(data.section==='body'&&data.column.index===0)data.cell.styles.textColor=C.blue;if(data.section==='body'&&data.column.index===1){data.cell.styles.textColor=data.cell.raw==='紹介なし'?C.red:data.cell.raw==='紹介あり'?[36,116,101]:C.muted;}}});
         if(d.different)card('公式サイトへの誘導は、要検証','取得した回答に、公式サイトと異なるドメインのリンクがありました。公式サイトへの到達と、事務所情報の一致は未確認です。\n改善の方向：公式URLの表記を揃え、回答内リンクの到達先と事務所情報を照合します。');
         paragraph(d.provider+' / '+d.measuredLabel+' / 各質問'+d.repetitions+'回。事務所名は入力せず。回答は条件・日時で変わります。',8);sourceLink('取得記録',d.sourceUrl);if(d.captureNote)paragraph(d.captureNote,8);
       }
-      if(growth.audit){const a=growth.audit;page('PATIENT JOURNEY');heading('02 / PATIENT JOURNEY','正しい案内から、予約まで。',a.summary);
-       for(const item of a.findings){card(item.priority+' / '+item.title,item.observation+'\n保護者への影響：'+item.impact+'\n改善案：'+item.change);for(const source of item.sources)sourceLink(source.label,source.url);}
-       card('すでに案内できていること',a.confirmed.join('\n'));for(const source of a.confirmedSources||[])sourceLink(source.label,source.url);card('成長相談ページの掲載案',a.proposal.heading+'\n'+a.proposal.body+'\n案内文の例：「'+a.proposal.button+'」'+'\n'+a.proposal.note);paragraph('別途確認日：'+a.checkedOn+'。'+a.scope,8);
+      if(growth.audit){const a=growth.audit;page('CONSULTATION JOURNEY');heading('02 / CONSULTATION JOURNEY','正しい案内から、予約まで。',a.summary);
+       for(const item of a.findings){card(item.priority+' / '+item.title,item.observation+'\n相談を検討する方への影響：'+item.impact+'\n改善案：'+item.change);for(const source of item.sources)sourceLink(source.label,source.url);}
+       card('すでに案内できていること',a.confirmed.join('\n'));for(const source of a.confirmedSources||[])sourceLink(source.label,source.url);card('取扱分野ページの掲載案',a.proposal.heading+'\n'+a.proposal.body+'\n案内文の例：「'+a.proposal.button+'」'+'\n'+a.proposal.note);paragraph('別途確認日：'+a.checkedOn+'。'+a.scope,8);
       }
       if(growth.contentAvailable){
       if(growth.discovery||growth.audit){page('GROWTH / WEBSITE');heading((growth.audit?'03':'02')+' / WEBSITE','診断時に取得した本文のAI分析',growth.contentSummary);}else{paragraph('診断時に取得した本文のAI分析',12,C.ink);paragraph(growth.contentSummary,9);}
@@ -138,21 +139,21 @@ function contact(){ensure(28);box(left,y,width,24,C.mint);write('この診断結
 
     page('CONTENT & DISCOVERY');
 heading('INTERVIEW TO CONTENT','セキュリティから、集客まで。SIMYに。','Googleマップでも、AI検索でも。事務所を探す相談者の方に、見つけてもらうために。');
-paragraph('専門外来で診る範囲や相談の目安など、事務所を選ぶ判断材料を、先生の説明と根拠を添えて掲載します。',10);
+paragraph('取扱分野や相談の目安など、事務所を選ぶ判断材料を、先生の説明と根拠を添えて掲載します。',10);
 if(illustrations.growth0){
   const gap=3, tile=(width-2*gap)/3;
   ensure(2*(tile+gap)+5);
-  for(let i=0;i<6;i++)doc.addImage(illustrations['growth'+i],'WEBP',left+(i%3)*(tile+gap),y+Math.floor(i/3)*(tile+gap),tile,tile);
+  for(let i=0;i<6;i++)doc.addImage(illustrations['growth'+i],'PNG',left+(i%3)*(tile+gap),y+Math.floor(i/3)*(tile+gap),tile,tile);
   y+=2*(tile+gap)+4;
 }
-paragraph('同意を得て録音 → 個人情報を除く → AIが記事案を作成 → 先生が確認して公開',9,C.ink);
-paragraph('音声と確認前の文字起こしは端末内で処理します。氏名や連絡先に加え、相談日や病歴の組み合わせから個人を特定できないか人が確認し、確認済みの要点だけを記事作成用のAIに渡します。',9);
+paragraph('公開用の法律解説を録音 → 個人情報を除く → AIが記事案を作成 → 先生が確認して公開',9,C.ink);
+paragraph('公開用に同意を得た一般的な法律解説を使用します。個別案件の録音や相談内容は使用せず、個人を特定できる情報がないか人が確認した要点から、AIが記事案を作成します。',9);
 contact();
 page('CONTINUOUS GROWTH');heading('GROWTH, EVERY DAY','AI検索の実測から、次の改善へ。','事務所名の登場、公式ページへのリンク、取扱分野の正確さを確かめ、優先して整える公式ページを決めます。');
-card('専門性が伝わる公式ページを整える','専門外来の対象や担当医、相談の目安、予約方法を分かりやすく掲載します。公開後は同じ質問で測り直し、事務所名と公式ページへのリンクを確認します。');
+card('専門性が伝わる公式ページを整える','取扱分野や担当弁護士、相談の目安、予約方法を分かりやすく掲載します。公開後は同じ質問で測り直し、事務所名と公式ページへのリンクを確認します。');
 card('近隣事務所の変化も、AIが確認。','登録した近隣事務所の公開サイトを定期的に確認します。取扱分野や予約方法の変更箇所を見比べ、自事務所で見直す情報を判断できます。');
-paragraph('地域の感染症情報には、公表元・集計期間・更新日を添えます。先生の専門分野や治療方針も、相談先を選ぶ際の判断材料になります。',8);
-sourceLink('AI検索の改善を相談する','https://simy.one/hp-management/clinic.html#continuous-growth-apply');
+paragraph('一般的な法律解説には、参照した法令・公表元・確認日を添えます。先生の取扱分野や相談の進め方も、相談先を選ぶ際の判断材料になります。',8);
+sourceLink('AI検索の改善を相談する','https://simy.one/hp-management/law-firm.html#continuous-growth-apply');
 page('MIGRATION');heading('DIAGNOSIS TO ACTION','今のホームページを、SIMYへ。','URLも、見慣れたデザインも。事務所には情報の受け取りと内容の確認をお願いします。準備から公開までSIMYが進めます。');
     card('01 / 今の管理会社から、移管情報を受け取ります。','HTML・画像・管理情報を受け取ります。ドメイン登録会社の移管が必要なら「AuthCode（オースコード）」も依頼します。必要な依頼内容はSIMYがご案内します。');
     card('02 / 今の見た目を、最新の技術で作り直します。','既存データを引き継ぐか、同じ見た目・内容を最新技術で無料で再制作します。必要な権利・許諾と対象範囲を確認して着手し、公開前に先生に画面をご確認いただきます。');
