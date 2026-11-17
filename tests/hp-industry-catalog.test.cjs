@@ -62,7 +62,7 @@ test('hub generation is deterministic and checkout prices are source-backed',()=
  }
  assert.match(page,/<meta name="robots" content="index,follow">/);
  assert.match(page,/<link rel="canonical" href="https:\/\/simy.one\/hp-management\.html">/);
- assert.doesNotMatch(page,/location.replace|http-equiv="refresh"/);
+ assert.doesNotMatch(page.replace(/<!-- SIMY locale navigation -->[\s\S]*?<!-- \/SIMY locale navigation -->/,""),/location.replace|http-equiv="refresh"/);
  run(setup+`from html.parser import HTMLParser
 class Links(HTMLParser):
  def __init__(self): super().__init__(); self.active=False

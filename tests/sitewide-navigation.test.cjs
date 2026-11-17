@@ -20,7 +20,7 @@ for (const lang of ['en','ja','hi','es','fr','zh-Hans']) {
       assert.equal(decorate(href), href);
     }
     const home = lang === 'en' ? '/' : `/${lang}.html`;
-    assert.equal(decorate('/?utm_source=guide#pricing'), `${home}?utm_source=guide#pricing`);
+    assert.equal(decorate('/?utm_source=guide#pricing'), `${home}?utm_source=guide${lang === 'en' ? '&locale=en' : ''}#pricing`);
     assert.equal(decorate('/?lang=ja&locale=ja&tag=one&tag=two#pricing'), '/ja.html?tag=one&tag=two#pricing');
     assert.equal(decorate('https://other.example/guides/en/x.html'), 'https://other.example/guides/en/x.html');
     assert.equal(decorate('#pricing'), '#pricing');

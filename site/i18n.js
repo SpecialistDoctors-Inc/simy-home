@@ -278,12 +278,13 @@
           /^\/(?:guides|download)(?:\/|\.html$)/.test(url.pathname) ||
           /^\/news\/20261005(?:-en)?\.html$/.test(url.pathname)) return href;
       if (url.pathname === '/' || url.pathname === '/index.html') {
-        var homeLang = url.searchParams.get('lang') || CURRENT_LANG || document.documentElement.lang;
+        var homeLang = url.searchParams.get('lang') || url.searchParams.get('locale') || CURRENT_LANG || document.documentElement.lang;
         var homePaths = { en: '/', ja: '/ja.html', hi: '/hi.html', es: '/es.html', fr: '/fr.html', 'zh-Hans': '/zh-Hans.html' };
         if (homePaths[homeLang]) {
           url.pathname = homePaths[homeLang];
           url.searchParams.delete('lang');
           url.searchParams.delete('locale');
+          if (homeLang === 'en') url.searchParams.set('locale', 'en');
           return url.pathname + url.search + url.hash;
         }
       }
@@ -1670,10 +1671,12 @@
     // Mirror to BOTH keys so the React bundle's LanguageContext and
     // i18n.js stay in lockstep — whichever side reads localStorage
     // on next mount/reload gets the same answer.
-    localStorage.setItem('simy-lang', lang);
     try {
+      localStorage.setItem('simy-lang', lang);
       localStorage.setItem('simy-language', lang);
+      localStorage.setItem('simy-home-locale', lang);
       localStorage.setItem('simy-lang-source', 'manual');
+      localStorage.setItem('simy-language-source', 'manual');
     } catch (e) {}
     if (!options.skipRegionSync) {
       var region = regionFromLang(lang);
