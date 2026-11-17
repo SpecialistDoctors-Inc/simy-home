@@ -1,0 +1,12 @@
+(1 row)
+
+ assert
+--------
+
+(1 row)
+
+                                     result
+--------------------------------------------------------------------------------
+ PASS: verified-recipient binding, replacement guard, idempotency and isolation
+(1 row)
+PASS: isolated PostgreSQL migration, money ledger, refunds, settlement and RLS checks

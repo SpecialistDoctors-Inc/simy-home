@@ -89,5 +89,23 @@
       "sampleData": true,
       "locale": "en"
     }
+  ],
+  "commercialAssets": [
+    {
+      "file": "ja/affiliate-dashboard-launch.jpg",
+      "locale": "ja",
+      "sampleData": true,
+      "currency": "usd",
+      "sha256": "90517adcf5a89ef585d8974e38aa5b3f5e2fb0a219b37b6da06a7c73d7cdca3c",
+      "renderer": "local implemented affiliate preview; no real transfers"
+    },
+    {
+      "file": "en/affiliate-dashboard-launch.jpg",
+      "locale": "en",
+      "sampleData": true,
+      "currency": "usd",
+      "sha256": "aea2e4adedf4afa425475714f50914dcc01fa3d5ac9662e39c78f8ac5df94b26",
+      "renderer": "local implemented affiliate preview; no real transfers"
+    }
   ]
 }

@@ -58,3 +58,5 @@ html[lang=en] .cli-hero h1{letter-spacing:-.04em}html[lang=en] .cli-comic-label{
 .cli-page .cli-mechanism-limit,.cli-page .cli-role-faq p{font-size:17px;line-height:1.9}
 .cli-role-faq summary{font-size:20px;line-height:1.6}.cli-page .cli-provider-sources{font-size:15px}
 @media(max-width:900px){.cli-role-map{grid-template-columns:1fr;gap:20px}.cli-page .cli-mechanism-example{padding:14px 16px}.cli-page .cli-role-lead{font-size:18px}}
+
+.cli-plan{display:flex;flex-direction:column}.cli-plan-actions{display:flex;flex-direction:column;align-items:flex-start;gap:16px;margin-top:auto;padding-top:20px}.cli-page .cli-plan-draft{font-size:14px;line-height:1.8}.cli-plan .cli-plan-feature-label{font-size:16px}.cli-plan ul{font-size:16px;line-height:1.9}.cli-pricing-notice p{font-size:17px;line-height:1.85}

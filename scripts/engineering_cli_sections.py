@@ -21,24 +21,25 @@ def story_panels(lang='ja'):
 
 
 def proposed_plans(lang='ja'):
-    # Resolve the established catalog at build time; no exchange-rate estimate or
-    # separate copied price table. Japan's displayed reference tax follows SIMY.
+    """Present existing HOME contracts; CLI has no separate purchase flow."""
     catalog = json.loads(subprocess.check_output([
-        'node', '-e', "const p=require('./site/pricing-catalog.js'); process.stdout.write(JSON.stringify({monthly:p.presentation('jp','ja','monthly'),annual:p.presentation('jp','ja','annual')}))"
+        'node', '-e', "const p=require('./site/pricing-catalog.js');process.stdout.write(JSON.stringify({monthly:p.presentation('jp','ja','monthly'),annual:p.presentation('jp','ja','annual')}))"
     ], cwd=ROOT, text=True))
-    plans = [
-        ('starter', 'Starter', '個人の開発を、完了まで。', ['Delivery Loopで作業の続きを促す', 'アプリで進行・質問・利用状況を確認', 'Codex・Claude Codeとの接続']),
-        ('quality', 'Quality', '品質確認を、仕事の流れに。', ['Starterの想定内容', 'SQMによる適用ルールのチェック', '品質の確認結果・指摘をたどる']),
-    ]
+    en = lang == 'en'
     result = []
-    for key, name, lead, features in plans:
+    for key, name, storage in [('quality', 'SIMY by Industry', '50 GB'), ('starter', 'Starter', '10 GB')]:
         monthly, annual = catalog['monthly'], catalog['annual']
-        # All displayed annual figures derive from the same cents as the catalog.
         annual_net = f"${Decimal(annual['baseAmounts'][key].replace('$', '').replace(',', '')) * 12:,.2f}"
-        if lang == 'en':
-            lead = 'Bring personal development to completion.' if key == 'starter' else 'Make quality checks part of the work.'
-            features = ['Prompt unfinished work with Delivery Loop', 'See progress, questions and usage in the app', 'Connect Codex or Claude Code'] if key == 'starter' else ['The proposed Starter features', 'Check applicable rules with SQM', 'Review quality findings and follow-up']
-            result.append(f'''<article class="cli-plan" data-cli-plan="{key}"><p class="cli-eyebrow">CLI PLAN PROPOSAL</p><h3>{name}</h3><p>{lead}</p><p class="cli-plan-price">{monthly['baseAmounts'][key]}<span> / month, before tax</span></p><p class="cli-plan-tax">Monthly billing · {monthly['taxInclusiveAmounts'][key]} including illustrative 10% Japan tax</p><div class="cli-plan-annual"><strong>Annual billing: {annual['baseAmounts'][key]} / month equivalent, before tax</strong><p>One annual payment of {annual_net} before tax ({annual['annualTotals'][key]} with illustrative Japan tax).</p></div><p class="cli-plan-feature-label">Proposed features</p><ul>{''.join(f'<li>{escape(feature)}</li>' for feature in features)}</ul><a class="cli-textlink" href="mailto:sales@simy.one?subject=SIMY%20CLI%20pricing%20enquiry">Ask about this proposal ↗</a><p class="cli-plan-draft">Draft pricing · Not open for purchase</p></article>''')
-            continue
-        result.append(f'''<article class="cli-plan" data-cli-plan="{key}"><p class="cli-eyebrow">CLI PLAN PROPOSAL</p><h3>{name}</h3><p>{lead}</p><p class="cli-plan-price">{monthly['baseAmounts'][key]}<span> / 月・税別</span></p><p class="cli-plan-tax">毎月払い・税込 {monthly['taxInclusiveAmounts'][key]} / 月</p><div class="cli-plan-annual"><strong>年払いなら {annual['baseAmounts'][key]} / 月あたり・税別</strong><p>年額 {annual_net}（税込 {annual['annualTotals'][key]}）を一括払いする案です。</p></div><p class="cli-plan-feature-label">想定する内容</p><ul>{''.join(f'<li>{escape(feature)}</li>' for feature in features)}</ul><a class="cli-textlink" href="mailto:sales@simy.one?subject=SIMY%20CLI%20%E6%96%99%E9%87%91%E6%A1%88%E3%81%AE%E7%9B%B8%E8%AB%87">このプランについて相談する ↗</a><p class="cli-plan-draft">仮料金・受付未開始</p></article>''')
+        def signup(cycle):
+            return 'https://app.simy.one/signup/?' + '&amp;'.join([f'plan={key}', f'interval={cycle}', f'lang={lang}', f'locale={lang}', 'region=' + ('us' if en else 'jp'), 'industry_package_code=' + ('it_engineer' if key == 'quality' else 'general'), 'storage_30gb=0'])
+        if en:
+            actions = (f'<a class="cli-textlink" href="/#pricing">For SIMY Web: view Starter ↗</a>' if key == 'starter' else f'<a class="button button-primary" href="{signup("monthly")}">Start CLI with monthly billing ↗</a><a class="cli-textlink" href="{signup("annual")}">Choose annual billing ↗</a>')
+            lead = 'SIMY Web plan. Not eligible for SIMY CLI.' if key == 'starter' else 'SIMY CLI with the IT Engineer package.'
+            items = (['SIMY CLI is not included', 'For SIMY Web use', '1 user', storage + ' of SIMY storage'] if key == 'starter' else ['SIMY CLI: $0 additional fee', 'IT Engineer package selected at signup', 'Delivery Loop and SQM access, subject to organization permissions', '1 user · ' + storage + ' of SIMY storage'])
+            result.append(f'''<article class="cli-plan" data-cli-plan="{key}"><p class="cli-eyebrow">SIMY PLAN</p><h3>{name}</h3><p>{lead}</p><p class="cli-plan-price">{monthly['baseAmounts'][key]}<span> / month, before tax</span></p><p class="cli-plan-tax">Monthly billing · {monthly['taxInclusiveAmounts'][key]} with illustrative 10% Japan tax</p><div class="cli-plan-annual"><strong>Annual billing: {annual['baseAmounts'][key]} / month equivalent, before tax</strong><p>One annual payment of {annual_net} before tax ({annual['annualTotals'][key]} with illustrative Japan tax).</p></div><p class="cli-plan-feature-label">Included in this SIMY plan</p><ul>{''.join(f'<li>{escape(item)}</li>' for item in items)}</ul><div class="cli-plan-actions">{actions}</div><p class="cli-plan-draft">Base plan: 1 calendar month free, then automatic renewal. Cancel before the trial ends to avoid the plan charge. Checkout shows applicable taxes and the final terms.</p></article>''')
+        else:
+            actions = (f'<a class="cli-textlink" href="/ja.html#pricing">Web用Starterの料金を見る ↗</a>' if key == 'starter' else f'<a class="button button-primary" href="{signup("monthly")}">月払いでCLIを始める ↗</a><a class="cli-textlink" href="{signup("annual")}">年払いを選ぶ ↗</a>')
+            lead = 'SIMY Web向け。CLIは対象外です。' if key == 'starter' else 'CLIを使う方へ。IT Engineer付き。'
+            items = (['SIMY CLIは対象外', 'SIMY Webの利用向け', '1ユーザー', 'SIMYストレージ ' + storage] if key == 'starter' else ['SIMY CLIの追加利用料：$0', '申し込み時にIT Engineerを選択済み', 'Delivery Loop・SQM（組織の利用権限が必要）', '1ユーザー・SIMYストレージ ' + storage])
+            result.append(f'''<article class="cli-plan" data-cli-plan="{key}"><p class="cli-eyebrow">SIMY PLAN</p><h3>{name}</h3><p>{lead}</p><p class="cli-plan-price">{monthly['baseAmounts'][key]}<span> / 月・税別</span></p><p class="cli-plan-tax">毎月払い・税込参考 {monthly['taxInclusiveAmounts'][key]} / 月</p><div class="cli-plan-annual"><strong>年払い：{annual['baseAmounts'][key]} / 月相当・税別</strong><p>年額 {annual_net}（税込参考 {annual['annualTotals'][key]}）を一括でお支払い。</p></div><p class="cli-plan-feature-label">SIMYプランに含まれるもの</p><ul>{''.join(f'<li>{escape(item)}</li>' for item in items)}</ul><div class="cli-plan-actions">{actions}</div><p class="cli-plan-draft">基本プランは1か月無料。その後は選択した周期で自動更新されます。無料期間終了前にキャンセルできます。税額と最終条件は購入画面でご確認ください。</p></article>''')
     return '\n'.join(result)

@@ -114,7 +114,7 @@ test("CLI and affiliate pages use matching locale images including navigation ba
         assert.ok(html.includes(`src="/assets/store-badges/${name}${suffix}.${ext}"`));
       }
       if (route.startsWith("affiliate")) {
-        const url = `/assets/cli-ui/${locale}/affiliate-dashboard.jpg`;
+        const url = `/assets/cli-ui/${locale}/affiliate-dashboard-launch.jpg`;
         assert.ok(html.includes(`src="${url}"`));
         assert.ok(html.includes(`href="${url}" target="_blank"`));
         assert.ok(fs.statSync(path.join(root, "site", url)).size > 10000);
@@ -124,7 +124,7 @@ test("CLI and affiliate pages use matching locale images including navigation ba
   }
 });
 
-test("CLI proposed prices follow the SIMY catalog without starting a new purchase flow", () => {
+test("CLI prices follow existing SIMY contracts and preserve plan, interval and locale at signup", () => {
   const html = fs.readFileSync(path.join(root, "site/for/engineers/index.html"), "utf8");
   const pricing = html.match(/<section id="pricing"[\s\S]*?<\/section>/)?.[0];
   assert.ok(pricing);
@@ -138,8 +138,13 @@ test("CLI proposed prices follow the SIMY catalog without starting a new purchas
       if (cycle === "monthly") assert.ok(card.includes(values.taxInclusiveAmounts[key]), `${key} monthly tax-inclusive`);
       else assert.ok(card.includes(values.annualTotals[key]), `${key} annual payment total`);
     }
-    assert.match(card, /仮料金・受付未開始/);
-    assert.doesNotMatch(card, /https:\/\/app\.simy\.one\/(?:signup|checkout)/);
+    for (const cycle of key === "quality" ? ["monthly", "annual"] : []) {
+      const hrefs=[...card.matchAll(/href="(https:\/\/app\.simy\.one\/signup\/\?[^"]+)"/g)].map(m=>new URL(m[1].replaceAll("&amp;","&")));
+      const target=hrefs.find(url=>url.searchParams.get("interval")===cycle);
+      assert.ok(target); assert.equal(target.searchParams.get("plan"),key); assert.equal(target.searchParams.get("lang"),"ja");
+    }
+    if(key === "quality") {assert.match(card, /追加利用料：\$0/);assert.ok(card.includes("industry_package_code=it_engineer"));} else {assert.match(card,/CLIは対象外/);assert.doesNotMatch(card,/https:\/\/app\.simy\.one\/signup/);}
+
   }
   assert.match(pricing, /AIサービスの利用料金は含みません/);
   for (const destination of ["manga", "pricing", "enterprise", "affiliate"]) {
@@ -202,7 +207,7 @@ test("bilingual comics use real speech text inside the frame and preserve the sa
       const main = html.match(/<main[\s\S]*?<\/main>/)[0].replace(/<a[^>]*lang="ja"[^>]*>日本語<\/a>/g, "");
       assert.doesNotMatch(main, /[\u3040-\u30ff\u3400-\u9fff]/u);
       assert.match(main, /English interface/);
-      assert.match(main, /Draft pricing/);
+      assert.match(main, /SIMY CLI: \$0 additional fee/);
       assert.match(main, /href="\/download\/en\.html"/);
       assert.doesNotMatch(main, /href="\/download\.html"/);
     }
@@ -232,4 +237,14 @@ test("published affiliate information does not send visitors to an unavailable p
     assert.doesNotMatch(html, /href="https:\/\/app\.simy\.one\/affiliate/);
     assert.match(html, /mailto:sales@simy.one/);
   }
+});
+
+test("referral terms match current USD HOME contract policy", () => {
+ const policy=JSON.parse(fs.readFileSync(path.join(root,"scripts/cli-affiliate-policy.json"),"utf8"));
+ assert.equal(policy.currency,"usd"); assert.equal(policy.minimumPayoutMinor,10000); assert.equal(policy.eligibleContracts.length,4);
+ for (const file of ["affiliate.html","affiliate-en.html"]) {
+  const html=fs.readFileSync(path.join(root,"site",file),"utf8");
+  assert.ok(html.includes("$100")); assert.doesNotMatch(html,/JPY10,000|1万円/);
+  assert.ok(html.includes("SIMY by Industry"));
+ }
 });

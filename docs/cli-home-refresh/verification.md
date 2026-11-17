@@ -90,3 +90,7 @@ SEO checks passed: 6 raw-HTML locales, metadata, hreflang, schema, FAQ, navigati
 
 SIMYが自ら修正・操作確認するように読めた漫画と説明を修正。
 [公式資料との照合と検証記録](mechanism-clarity/research-and-verification.md)を参照。
+
+## 2026-11-17 製品・料金・紹介の統合
+
+[料金・提供・紹介条件の決定](commercial-launch/product-decisions.md)と、同ディレクトリの受入手順を参照。
