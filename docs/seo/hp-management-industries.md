@@ -22,3 +22,5 @@
 本番CloudFrontの既存ルーティングに合わせ、一覧の正式URL・canonical・ナビゲーション・サイトマップは `/hp-management.html` に統一します。`/hp-management/` などの互換キーには同じ一覧を配信します。`/guides/` は本番で `/guides.html` へ移動するため、ガイド一覧の `site/guides/index.html` を `guides/`・`guides.html` にも同じ内容で配信します。
 
 専用公開処理はS3のサイトマップを取得し、正式URLが既にあれば書き換えません。正式URLがなく旧一覧URL `/hp-management/` が1件ある場合は、その `<loc>` のURL文字列だけを置き換え、既存の更新日・優先度・他URL・XMLの書式・S3メタデータを保持します。どちらもなければ正式URLを1件追加します。いずれの更新も取得時ETagの `If-Match` で保護し、同時更新があれば上書きせず停止します。
+
+通常の `deploy-site.yml` でも、静的ファイル同期の後に `scripts/publish-hp-industry-aliases.py` を実行します。現在の生成済み一覧ソースからハブの3互換キー（`hp-management.html`・`hp-management/`・`hp-management`）とガイドの2互換キー（`guides.html`・`guides/`）だけを更新します。HTML同期は `guides.html` を、静的同期はディレクトリキーと拡張子なしキーを削除対象から除外します。この処理は過去の公開スナップショットを参照せず、将来の業種追加や一覧本文の更新も互換URLへ反映します。
