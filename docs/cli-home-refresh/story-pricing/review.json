@@ -1,0 +1,56 @@
+{
+  "overall": "pass_prepublication",
+  "findings": [],
+  "rows": [
+    {
+      "id": "C1",
+      "status": "pending_publication_verification",
+      "evidence": "Local implementation and image-language verification pass. Production update and live hashes are not yet established."
+    },
+    {
+      "id": "C2",
+      "status": "pass",
+      "evidence": "Visually inspected all 10 JA/EN native screenshots and both affiliate screenshots. Labels and explanatory text match each page language. Version 1.2.11 appears in native captures. Inventory SHA-256 matches all 21 assets. Full-size links and locale manifests pass tests."
+    },
+    {
+      "id": "C3",
+      "status": "pass",
+      "evidence": "Inspected retained desktop, Japanese badge-menu and both mobile captures. All four illustration panels contain no language-specific text. Browser measurements cover both locales at 320/390/768/1440px with seven 20px speech bubbles and no recorded overflow."
+    },
+    {
+      "id": "C4",
+      "status": "pass",
+      "evidence": "Independently reran python3 scripts/build-engineering-pages.py --check && node --test tests/engineering-pages.test.cjs tests/site-audit-regressions.test.cjs: exit 0, 15 passed. Supplied full-suite log ends with 1592 passed and 0 failed."
+    },
+    {
+      "id": "C5",
+      "status": "pass",
+      "evidence": "Generated locale routes and affiliate/full-size image destinations match source; focused checks preserve availability disclosures."
+    },
+    {
+      "id": "C6",
+      "status": "unchanged",
+      "evidence": "Current change does not modify affiliate backend or payment implementation."
+    },
+    {
+      "id": "C7",
+      "status": "unchanged",
+      "evidence": "No app activation, commission activation or payout activation changes in reviewed diff."
+    },
+    {
+      "id": "C8",
+      "status": "pass",
+      "evidence": "JA/EN social artwork matches page language. Japanese store badges visually show Japanese text. OCR CJK matches in English screenshots are archive/external-link/disclosure icons and separators, confirmed against actual assets."
+    },
+    {
+      "id": "C9",
+      "status": "pass",
+      "evidence": "Both affiliate pages use matching-language dashboard images and retain sample-data and prelaunch disclosures."
+    }
+  ],
+  "limitations": [
+    "No independent live production verification yet.",
+    "Retained browser measurements include unloaded offscreen lazy images; actual asset inspection and hashes pass.",
+    "Physical-device and alternate-browser acceptance were not performed."
+  ]
+}

@@ -40,6 +40,12 @@ def header(locale, source, path):
       <a class="sh-store" href="https://apps.apple.com/app/id6745385262"><img src="/assets/store-badges/app-store.svg" width="120" height="40" alt="Download on the App Store"></a>
       <a class="sh-store sh-google-play" href="{download}#android" aria-label="Android availability"><img src="/assets/store-badges/google-play.png" width="155" height="60" alt="Google Play"><small>Android availability</small></a>
     </div>'''
+    # The bilingual CLI landing pages use badges in their actual page language.
+    if locale == "ja" and re.search(r'<body[^>]*class="[^"]*\bcli-page\b', source):
+        stores = (stores.replace('/app-store.svg', '/app-store-ja.svg')
+                  .replace('/google-play.png', '/google-play-ja.png')
+                  .replace('Download on the App Store', 'App Storeからダウンロード')
+                  .replace('Android availability', 'Android版の提供状況'))
     menus = "".join(f'<details class="sh-dropdown"><summary>{name}<span aria-hidden="true">⌄</span></summary><div class="sh-panel">' + "".join(link(label, href) for label, href in items) + (stores if name == "Product" else "") + '</div></details>' for name, items in groups.items())
     # Prefer an existing translated counterpart; otherwise use the localized home.
     alternatives = dict(re.findall(r'<link[^>]*hreflang="([^" ]+)"[^>]*href="https://simy.one([^" ]*)"', source))

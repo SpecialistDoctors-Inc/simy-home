@@ -75,3 +75,8 @@ SEO checks passed: 6 raw-HTML locales, metadata, hreflang, schema, FAQ, navigati
 `occupation-publishing`, `social-preview`。実行出力は `tests.log`。
 生成済み日本語HTMLは生成元と一致し、他言語の生成HTMLは変更していない。
 既存の無関係な変更や作業中のファイルは保持した。
+
+## 2026-11-17 日英画像の再確認
+
+言語別のv1.2.11ネイティブ画面・紹介画面・公式バッジへ更新。
+[画像の棚卸しと確認記録](image-locales/verification.md)を参照。
