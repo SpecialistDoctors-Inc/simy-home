@@ -157,11 +157,11 @@ function renderEvaluationTable(report) {
   if(!body.children.length&&!componentServices.length)return;
   if(body.children.length){table.append(body);wrap.append(table);section.append(wrap,element('p','公開日は検出した版の配布元の記録です。版や日付が不明なものは未確認と表示します。最新の版は記載日の確認情報です。旧版だけで脆弱性があるとは限りません。','evaluation-note'));}
   if(![...rows.values()].some(row=>row.name.toLowerCase()==='php') && [...rows.values()].some(row=>row.name.toLowerCase()!=='php'&&row.issues.length)){
-    const figure=element('figure','','clinic-manga infrastructure-manga'),img=element('img','');img.src='/hp-management/law-firm/assets/website-check/law-component-risks-v1.png';img.width=1536;img.height=1024;img.loading='lazy';img.alt='PHP以外の部品も攻撃の入口になり得ることを示す架空の漫画。公表された問題と、この事務所の被害は区別します。';figure.append(img);section.append(figure);
+    const figure=element('figure','','clinic-manga infrastructure-manga'),img=element('img','');img.src='/hp-management/law-firm/assets/website-check/law-component-risks-v1.png?v=identity-20261117';img.width=1536;img.height=1024;img.loading='lazy';img.alt='PHP以外の部品も攻撃の入口になり得ることを示す架空の漫画。公表された問題と、この事務所の被害は区別します。';figure.append(img);section.append(figure);
   }
   if([...rows.values()].some(row=>row.name.toLowerCase()==='php')){
     const news=element('aside','','php-news-context');news.append(element('h4','PHPの脆弱性で起きていること。'));
-    const figure=element('figure','','clinic-manga');const image=element('img','');image.src='/hp-management/law-firm/assets/website-check/law-php-news-v1.png';image.width=1536;image.height=1024;image.loading='lazy';image.alt='PHPの脆弱性悪用のニュースを見て驚く弁護士と、使用中の版・修正状況を確認する弁護士の漫画。PHPの利用だけでは被害は判定できません。';const link=element('a','');link.href=image.src;link.target='_blank';link.rel='noopener';link.setAttribute('aria-label','PHPと更新確認の漫画を拡大する');link.append(image);figure.append(link);news.append(figure);
+    const figure=element('figure','','clinic-manga');const image=element('img','');image.src='/hp-management/law-firm/assets/website-check/law-php-news-v1.png?v=identity-20261117';image.width=1536;image.height=1024;image.loading='lazy';image.alt='PHPの脆弱性悪用のニュースを見て驚く弁護士と、使用中の版・修正状況を確認する弁護士の漫画。PHPの利用だけでは被害は判定できません。';const link=element('a','');link.href=image.src;link.target='_blank';link.rel='noopener';link.setAttribute('aria-label','PHPと更新確認の漫画を拡大する');link.append(image);figure.append(link);news.append(figure);
     news.append(element('p','2026年10月公表：PHPの脆弱性2件が、実際に悪用された脆弱性としてCISAに掲載されました。条件がそろうと、外部からサーバーで不正な処理を実行されるおそれがあります。'),element('p','このニュースへの該当性や、この事務所への侵入・漏えいは未確認です。修正済みの版を使っている場合もあるため、上の検出結果と分けて確認します。','evaluation-note'));
     const sources=element('p','公表：2026/10/21 · CISA掲載：2026/10/26 · 情報確認：2026/10/28。');
     for(const [label,url] of [['PHP公式発表①','https://github.com/php/php-src/security/advisories/GHSA-w8hw-w9fx-j79w'],['PHP公式発表②','https://github.com/php/php-src/security/advisories/GHSA-6wmf-4rv5-p3rp'],['CISAの悪用確認一覧','https://www.cisa.gov/known-exploited-vulnerabilities-catalog']]){const a=element('a',label+' ↗ ');a.href=url;a.target='_blank';a.rel='noopener';sources.append(a);}news.append(sources);section.append(news);
@@ -204,7 +204,7 @@ function renderInfrastructure(report) {
   if(facts.length)section.append(wrap);else section.append(element('p','管理・運営基盤の提供元は特定できませんでした。'));
   section.append(element('p','提供元の過去の公表です。この事務所の被害を示すものではありません。','evaluation-note'));
   const figure=element('figure','','clinic-manga infrastructure-manga'),img=element('img','');
-  img.src='/hp-management/law-firm/assets/website-check/law-aws-migration-v1.png';img.width=1536;img.height=1024;img.loading='lazy';img.alt='サーバー管理に悩む弁護士が、AWSの基盤とSIMYの設定・更新・バックアップを組み合わせた移行を検討する漫画。';
+  img.src='/hp-management/law-firm/assets/website-check/law-aws-migration-v1.png?v=identity-20261117';img.width=1536;img.height=1024;img.loading='lazy';img.alt='サーバー管理に悩む弁護士が、AWSの基盤とSIMYの設定・更新・バックアップを組み合わせた移行を検討する漫画。';
   figure.append(img);section.append(figure);results.append(section);
 }
 function renderNoticeTable(info,services,nameLabel){
@@ -274,7 +274,7 @@ function continuousGrowthSupport(report,growth) {
   panels.forEach(([title,dialogue,caption],index)=>{
     const panel = element('li','','growth-manga-panel');
     const art = element('img','');
-    art.src = '/hp-management/law-firm/assets/clinic-service-v2/law-growth-workflow-'+(index+1)+'.png';
+    art.src = '/hp-management/law-firm/assets/clinic-service-v2/law-growth-workflow-'+(index+1)+'.png?v=identity-20261117';
     art.alt = dialogue;
     art.width = 508;
     art.height = 508;
@@ -642,6 +642,6 @@ if(inlineDiagnosisForm){inlineDiagnosisForm.addEventListener('submit',runDiagnos
 
 let reportPdfLoader;
 function loadReportPdf(){
-  if(!reportPdfLoader)reportPdfLoader=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='/hp-management/law-firm/assets/clinic-service-v2/report-pdf-9758bc1cc10886.js?v=7e7f6e36bbdf';script.onload=resolve;script.onerror=()=>{script.remove();reportPdfLoader=null;reject(Error('PDF機能の読込に失敗しました'));};document.head.append(script);});
+  if(!reportPdfLoader)reportPdfLoader=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='/hp-management/law-firm/assets/clinic-service-v2/report-pdf-9758bc1cc10886.js?v=identity-20261117';script.onload=resolve;script.onerror=()=>{script.remove();reportPdfLoader=null;reject(Error('PDF機能の読込に失敗しました'));};document.head.append(script);});
   return reportPdfLoader;
 }
