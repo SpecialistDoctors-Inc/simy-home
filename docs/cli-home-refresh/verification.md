@@ -80,3 +80,8 @@ SEO checks passed: 6 raw-HTML locales, metadata, hreflang, schema, FAQ, navigati
 
 言語別のv1.2.11ネイティブ画面・紹介画面・公式バッジへ更新。
 [画像の棚卸しと確認記録](image-locales/verification.md)を参照。
+
+## 2026-11-17 機器の向きの修正
+
+漫画3コマ目のパソコン背面に描かれていた画面を修正。
+[画像・編集指示・検証記録](device-geometry/verification.md)を参照。

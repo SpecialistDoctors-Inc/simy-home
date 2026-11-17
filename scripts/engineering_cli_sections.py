@@ -16,7 +16,7 @@ def story_panels(lang='ja'):
         x, y = (i % 2) * w, (i // 2) * h
         style = f'aspect-ratio:{w}/{h};--image-width:{1536/w*100:.6f}%;--image-left:{-x/w*100:.6f}%;--image-top:{-y/h*100:.6f}%'
         speech = ''.join(f'<div class="cli-speech"><span class="cli-speaker">{escape(d["speaker"])}</span><p>{escape(d["text"])}</p></div>' for d in panel['dialogue'])
-        result.append(f'''<li><p class="cli-comic-label"><span>{i+1:02}</span> {escape(panel['title'])}</p><figure class="cli-comic-frame"><div class="cli-dialogue">{speech}</div><div class="cli-comic-visual" style="{style}"><img src="/assets/cli-ui/booking-story-art.png" width="1536" height="1024" alt="{escape(panel['caption'])}" loading="lazy" decoding="async"></div></figure><p class="cli-comic-caption">{escape(panel['caption'])}</p></li>''')
+        result.append(f'''<li><p class="cli-comic-label"><span>{i+1:02}</span> {escape(panel['title'])}</p><figure class="cli-comic-frame"><div class="cli-dialogue">{speech}</div><div class="cli-comic-visual" style="{style}"><img src="/assets/cli-ui/booking-story-art-v2.png" width="1536" height="1024" alt="{escape(panel['caption'])}" loading="lazy" decoding="async"></div></figure><p class="cli-comic-caption">{escape(panel['caption'])}</p></li>''')
     return '\n'.join(result)
 
 
