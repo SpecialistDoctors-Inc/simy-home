@@ -4,6 +4,8 @@ import { pathToFileURL } from 'node:url';
 import { readFile } from 'node:fs/promises';
 
 const entry = pathToFileURL(process.argv[2]);
+const locale = process.argv[3] ?? 'ja';
+if (!['ja', 'en'].includes(locale)) throw new Error('Unsupported screenshot locale');
 const { createFixtureBackend } = await import(new URL('./desktop/fixture-backend.js', entry));
 const { createDesktopServer } = await import(new URL('./desktop/server.js', entry));
 const { version } = JSON.parse(await readFile(new URL('../package.json', entry), 'utf8'));
@@ -37,7 +39,7 @@ function localize(value) {
 const backend = {
   ...original,
   current() {
-    const model = localize(original.current());
+    const model = locale === 'ja' ? localize(original.current()) : original.current();
     // The upstream sample pins a 0.7 version. Use the actual release metadata
     // so it cannot be mistaken for the version whose UI is being captured.
     model.system.version = version;

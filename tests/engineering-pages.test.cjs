@@ -64,30 +64,63 @@ test("translated engineering captures and full-size links use the page language"
   }
 });
 
-test("Japanese CLI page uses current native captures and preserves their provenance", () => {
-  const html = fs.readFileSync(path.join(root, "site/for/engineers/index.html"), "utf8");
+test("both CLI locales use current native captures, full-size links and matching provenance", () => {
   const manifest = JSON.parse(fs.readFileSync(path.join(root, "site/assets/cli-ui/manifest.json"), "utf8"));
-  assert.equal(manifest.version, "1.2.8");
-  const images = [...html.matchAll(/<img src="(\/assets\/cli-ui\/(?:overview|goal|sqm|connection|usage)\.png)" width="(\d+)" height="(\d+)"[^>]+alt="([^\"]+)"/g)];
-  assert.equal(images.length, 5);
-  for (const [, url, width, height, alt] of images) {
-    const bytes = fs.readFileSync(path.join(root, "site", url));
-    assert.equal(bytes.readUInt32BE(16), Number(width), url);
-    assert.equal(bytes.readUInt32BE(20), Number(height), url);
-    const record = manifest.images.find(item => item.file === path.basename(url));
-    assert.ok(record?.sampleData, url);
-    assert.equal(require("node:crypto").createHash("sha256").update(bytes).digest("hex"), record.sha256, url);
-    assert.ok(alt.includes("サンプル"));
-    assert.ok(html.includes(`href="${url}" target="_blank" rel="noopener"`));
+  assert.equal(manifest.version, "1.2.11");
+  assert.equal(manifest.sourceCommit, "9146fe2ced9f79571210f087665d7e94795dfdb9");
+  assert.equal(manifest.images.length, 10);
+  for (const locale of ["ja", "en"]) {
+    const route = locale === "ja" ? "for/engineers/index.html" : "for/en/engineers/index.html";
+    const html = fs.readFileSync(path.join(root, "site", route), "utf8");
+    const urls = [...html.matchAll(/<img src="(\/assets\/cli-ui\/(?:ja|en)\/(?:overview|goal|sqm|connection|usage)\.png)" width="(\d+)" height="(\d+)"[^>]+alt="([^\"]+)"/g)];
+    assert.equal(urls.length, 5);
+    const localized = JSON.parse(fs.readFileSync(path.join(root, `site/assets/cli-ui/${locale}/manifest.json`), "utf8"));
+    assert.equal(localized.locale, locale);
+    assert.equal(localized.version, manifest.version);
+    for (const [, url, width, height, alt] of urls) {
+      assert.ok(url.startsWith(`/assets/cli-ui/${locale}/`), url);
+      const bytes = fs.readFileSync(path.join(root, "site", url));
+      assert.equal(bytes.readUInt32BE(16), Number(width), url);
+      assert.equal(bytes.readUInt32BE(20), Number(height), url);
+      const record = manifest.images.find(item => item.file === `${locale}/${path.basename(url)}`);
+      assert.equal(record?.locale, locale);
+      assert.ok(record.sampleData, url);
+      const sha = require("node:crypto").createHash("sha256").update(bytes).digest("hex");
+      assert.equal(sha, record.sha256, url);
+      assert.equal(sha, localized.images.find(item => item.file === path.basename(url))?.sha256, url);
+      assert.ok(alt.includes(locale === "ja" ? "サンプル" : "sample") || alt.includes("illustrative"));
+      assert.ok(html.includes(`href="${url}" target="_blank" rel="noopener"`));
+    }
+    assert.match(html, /v1\.2\.11/);
+    assert.doesNotMatch(html, /v1\.2\.8|Japanese interface|Japanese UI|Japanese illustrative data|sample data in Japanese/);
+    for (const id of ["features", "delivery", "quality", "screens", "start", "screen-notes"]) {
+      assert.ok(html.includes(`id="${id}"`));
+    }
   }
-  assert.match(html, /v1\.2\.8/);
-  assert.match(html, /公式サンプルデータ/);
-  assert.doesNotMatch(html, /Threadsは設計プレビュー|threads-progress\.png/);
-  assert.match(html, /PR作成やpushだけでは実行されません/);
-  assert.match(html, /変更全体の品質を確認したことにはなりません/);
-  assert.match(html, /既存の会話は/);
-  for (const id of ["features", "delivery", "quality", "screens", "start", "screen-notes"]) {
-    assert.match(html, new RegExp(`id="${id}"`));
+  const ja = fs.readFileSync(path.join(root, "site/for/engineers/index.html"), "utf8");
+  assert.match(ja, /公式サンプルデータ/);
+  assert.match(ja, /PR作成やpushだけでは実行されません/);
+  assert.match(ja, /変更全体の品質を確認したことにはなりません/);
+  assert.match(ja, /既存の会話は/);
+});
+
+test("CLI and affiliate pages use matching locale images including navigation badges", () => {
+  for (const locale of ["ja", "en"]) {
+    const routes = locale === "ja" ? ["for/engineers/index.html", "affiliate.html"] : ["for/en/engineers/index.html", "affiliate-en.html"];
+    for (const route of routes) {
+      const html = fs.readFileSync(path.join(root, "site", route), "utf8");
+      const suffix = locale === "ja" ? "-ja" : "";
+      for (const [name, ext] of [["app-store", "svg"], ["google-play", "png"]]) {
+        assert.ok(html.includes(`src="/assets/store-badges/${name}${suffix}.${ext}"`));
+      }
+      if (route.startsWith("affiliate")) {
+        const url = `/assets/cli-ui/${locale}/affiliate-dashboard.jpg`;
+        assert.ok(html.includes(`src="${url}"`));
+        assert.ok(html.includes(`href="${url}" target="_blank"`));
+        assert.ok(fs.statSync(path.join(root, "site", url)).size > 10000);
+        assert.doesNotMatch(html, /shown in Japanese|sample in Japanese/);
+      }
+    }
   }
 });
 
@@ -168,7 +201,7 @@ test("bilingual comics use real speech text inside the frame and preserve the sa
     if (locale === "en") {
       const main = html.match(/<main[\s\S]*?<\/main>/)[0].replace(/<a[^>]*lang="ja"[^>]*>日本語<\/a>/g, "");
       assert.doesNotMatch(main, /[\u3040-\u30ff\u3400-\u9fff]/u);
-      assert.match(main, /Japanese interface/);
+      assert.match(main, /English interface/);
       assert.match(main, /Draft pricing/);
       assert.match(main, /href="\/download\/en\.html"/);
       assert.doesNotMatch(main, /href="\/download\.html"/);

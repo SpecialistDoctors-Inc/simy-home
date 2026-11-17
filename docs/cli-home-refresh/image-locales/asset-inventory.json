@@ -1,0 +1,384 @@
+{
+  "pages": [
+    {
+      "locale": "ja",
+      "page": "/for/engineers/",
+      "references": [
+        {
+          "kind": "og:image",
+          "url": "https://simy.one/assets/social/cards/for-engineers-v1.png",
+          "alt": null
+        },
+        {
+          "kind": "twitter:image",
+          "url": "https://simy.one/assets/social/cards/for-engineers-v1.png",
+          "alt": null
+        },
+        {
+          "kind": "favicon",
+          "url": "/favicon-32.png",
+          "alt": null
+        },
+        {
+          "kind": "body-image",
+          "url": "/simy-icon-56.png",
+          "alt": ""
+        },
+        {
+          "kind": "body-image",
+          "url": "/assets/store-badges/app-store-ja.svg",
+          "alt": "App Storeからダウンロード"
+        },
+        {
+          "kind": "body-image",
+          "url": "/assets/store-badges/google-play-ja.png",
+          "alt": "Google Play"
+        },
+        {
+          "kind": "full-size-link",
+          "url": "/assets/cli-ui/ja/overview.png",
+          "alt": null
+        },
+        {
+          "kind": "body-image",
+          "url": "/assets/cli-ui/ja/overview.png",
+          "alt": "SIMY CLIの実際のUI。左にプロジェクト、中央に仕事の進行状況と完了条件が並ぶサンプル画面。"
+        },
+        {
+          "kind": "body-image",
+          "url": "/assets/cli-ui/booking-story-art.png",
+          "alt": "AIに作ってもらっても、確認とやり直しは自分に残っていた。"
+        },
+        {
+          "kind": "body-image",
+          "url": "/assets/cli-ui/booking-story-art.png",
+          "alt": "何をもって完了かを、具体的な動きで揃える。"
+        },
+        {
+          "kind": "body-image",
+          "url": "/assets/cli-ui/booking-story-art.png",
+          "alt": "確認が残っていれば、SIMYがAIに作業の続きを促す。"
+        },
+        {
+          "kind": "body-image",
+          "url": "/assets/cli-ui/booking-story-art.png",
+          "alt": "何度も催促する手間を減らし、確認結果を見て判断する。"
+        },
+        {
+          "kind": "full-size-link",
+          "url": "/assets/cli-ui/booking-story-art.png",
+          "alt": null
+        },
+        {
+          "kind": "full-size-link",
+          "url": "/assets/cli-ui/ja/goal.png",
+          "alt": null
+        },
+        {
+          "kind": "body-image",
+          "url": "/assets/cli-ui/ja/goal.png",
+          "alt": "進行中の仕事の詳細。会話、完了条件、SIMYが続行した回数、元のスレッドへの導線が見えるサンプル画面。"
+        },
+        {
+          "kind": "full-size-link",
+          "url": "/assets/cli-ui/ja/sqm.png",
+          "alt": null
+        },
+        {
+          "kind": "body-image",
+          "url": "/assets/cli-ui/ja/sqm.png",
+          "alt": "SIMYのSQM記録。チェックの一覧と、検出内容・その後の対応を表示したサンプル画面。"
+        },
+        {
+          "kind": "full-size-link",
+          "url": "/assets/cli-ui/ja/connection.png",
+          "alt": null
+        },
+        {
+          "kind": "body-image",
+          "url": "/assets/cli-ui/ja/connection.png",
+          "alt": "SIMY、Codex、Claude Codeの接続設定。インストール・ログイン・プラグイン・フック承認の確認段階が見えるサンプル画面。"
+        },
+        {
+          "kind": "full-size-link",
+          "url": "/assets/cli-ui/ja/usage.png",
+          "alt": null
+        },
+        {
+          "kind": "body-image",
+          "url": "/assets/cli-ui/ja/usage.png",
+          "alt": "SIMYの利用状況。日別・ツール別のトークン、AIの推定作業時間、完了した仕事などを示すサンプル画面。"
+        }
+      ]
+    },
+    {
+      "locale": "en",
+      "page": "/for/en/engineers/",
+      "references": [
+        {
+          "kind": "og:image",
+          "url": "https://simy.one/assets/social/cards/for-en-engineers-v1.png",
+          "alt": null
+        },
+        {
+          "kind": "twitter:image",
+          "url": "https://simy.one/assets/social/cards/for-en-engineers-v1.png",
+          "alt": null
+        },
+        {
+          "kind": "favicon",
+          "url": "/favicon-32.png",
+          "alt": null
+        },
+        {
+          "kind": "body-image",
+          "url": "/simy-icon-56.png",
+          "alt": ""
+        },
+        {
+          "kind": "body-image",
+          "url": "/assets/store-badges/app-store.svg",
+          "alt": "Download on the App Store"
+        },
+        {
+          "kind": "body-image",
+          "url": "/assets/store-badges/google-play.png",
+          "alt": "Google Play"
+        },
+        {
+          "kind": "full-size-link",
+          "url": "/assets/cli-ui/en/overview.png",
+          "alt": null
+        },
+        {
+          "kind": "body-image",
+          "url": "/assets/cli-ui/en/overview.png",
+          "alt": "Actual SIMY CLI native UI showing projects and completion criteria with sample data in English."
+        },
+        {
+          "kind": "body-image",
+          "url": "/assets/cli-ui/booking-story-art.png",
+          "alt": "Even after AI built the page, checking and asking for fixes still fell to you."
+        },
+        {
+          "kind": "body-image",
+          "url": "/assets/cli-ui/booking-story-art.png",
+          "alt": "Agree on a concrete action that defines completion."
+        },
+        {
+          "kind": "body-image",
+          "url": "/assets/cli-ui/booking-story-art.png",
+          "alt": "SIMY prompts the AI to continue while the agreed work remains unfinished."
+        },
+        {
+          "kind": "body-image",
+          "url": "/assets/cli-ui/booking-story-art.png",
+          "alt": "Spend less time chasing progress and review the evidence before deciding."
+        },
+        {
+          "kind": "full-size-link",
+          "url": "/assets/cli-ui/booking-story-art.png",
+          "alt": null
+        },
+        {
+          "kind": "full-size-link",
+          "url": "/assets/cli-ui/en/goal.png",
+          "alt": null
+        },
+        {
+          "kind": "body-image",
+          "url": "/assets/cli-ui/en/goal.png",
+          "alt": "Native task detail screen with sample completion criteria, questions and a conversation link; English UI."
+        },
+        {
+          "kind": "full-size-link",
+          "url": "/assets/cli-ui/en/sqm.png",
+          "alt": null
+        },
+        {
+          "kind": "body-image",
+          "url": "/assets/cli-ui/en/sqm.png",
+          "alt": "Native SQM history with illustrative findings and follow-up; English UI."
+        },
+        {
+          "kind": "full-size-link",
+          "url": "/assets/cli-ui/en/connection.png",
+          "alt": null
+        },
+        {
+          "kind": "body-image",
+          "url": "/assets/cli-ui/en/connection.png",
+          "alt": "Native connection guide with sample installation and sign-in readiness for Codex and Claude Code; English UI."
+        },
+        {
+          "kind": "full-size-link",
+          "url": "/assets/cli-ui/en/usage.png",
+          "alt": null
+        },
+        {
+          "kind": "body-image",
+          "url": "/assets/cli-ui/en/usage.png",
+          "alt": "Native usage screen with sample tokens, completed tasks and estimated AI work time; English UI."
+        }
+      ]
+    },
+    {
+      "locale": "ja",
+      "page": "/affiliate.html",
+      "references": [
+        {
+          "kind": "favicon",
+          "url": "/favicon-32.png",
+          "alt": null
+        },
+        {
+          "kind": "body-image",
+          "url": "/simy-icon-56.png",
+          "alt": ""
+        },
+        {
+          "kind": "body-image",
+          "url": "/assets/store-badges/app-store-ja.svg",
+          "alt": "App Storeからダウンロード"
+        },
+        {
+          "kind": "body-image",
+          "url": "/assets/store-badges/google-play-ja.png",
+          "alt": "Google Play"
+        },
+        {
+          "kind": "full-size-link",
+          "url": "/assets/cli-ui/ja/affiliate-dashboard.jpg",
+          "alt": null
+        },
+        {
+          "kind": "body-image",
+          "url": "/assets/cli-ui/ja/affiliate-dashboard.jpg",
+          "alt": "紹介者用画面の表示サンプル。制度案、訪問数、有料契約数、報酬の状況を示す。"
+        }
+      ]
+    },
+    {
+      "locale": "en",
+      "page": "/affiliate-en.html",
+      "references": [
+        {
+          "kind": "favicon",
+          "url": "/favicon-32.png",
+          "alt": null
+        },
+        {
+          "kind": "body-image",
+          "url": "/simy-icon-56.png",
+          "alt": ""
+        },
+        {
+          "kind": "body-image",
+          "url": "/assets/store-badges/app-store.svg",
+          "alt": "Download on the App Store"
+        },
+        {
+          "kind": "body-image",
+          "url": "/assets/store-badges/google-play.png",
+          "alt": "Google Play"
+        },
+        {
+          "kind": "full-size-link",
+          "url": "/assets/cli-ui/en/affiliate-dashboard.jpg",
+          "alt": null
+        },
+        {
+          "kind": "body-image",
+          "url": "/assets/cli-ui/en/affiliate-dashboard.jpg",
+          "alt": "Implemented affiliate dashboard sample in English, with illustrative visits, subscriptions and commissions."
+        }
+      ]
+    }
+  ],
+  "assets": {
+    "/assets/social/cards/for-engineers-v1.png": {
+      "bytes": 45705,
+      "sha256": "fece9d48abd77e10d48905801b0d7a1572b175210a71384085c923afe1a36255"
+    },
+    "/favicon-32.png": {
+      "bytes": 1294,
+      "sha256": "fd0f5553396f48e67ec138ab8461edd738ce33bac0df3c31310e04b31e3e9041"
+    },
+    "/simy-icon-56.png": {
+      "bytes": 2846,
+      "sha256": "f8b3e081b4d74e1c40b9159bde886ab745e2d1e6225a4444181993feeec2de78"
+    },
+    "/assets/store-badges/app-store-ja.svg": {
+      "bytes": 9880,
+      "sha256": "988fe0a48015c5a56dac88172487a1f5cda96340b34d80fd94312d02e9f67865"
+    },
+    "/assets/store-badges/google-play-ja.png": {
+      "bytes": 40674,
+      "sha256": "2b1b4ff5b79346bcfc5a78e760e781a5161202adb9884c58f142b457b4bc0a9c"
+    },
+    "/assets/cli-ui/ja/overview.png": {
+      "bytes": 547430,
+      "sha256": "7f5653f7440215c2dc29acca53e566fbeb27338a8c12e760c98fc52e3fda1bdd"
+    },
+    "/assets/cli-ui/booking-story-art.png": {
+      "bytes": 2566695,
+      "sha256": "6fe6261e0b24c011e6fde48710893a72a3445c1b9c71f903e1b52a8e63666740"
+    },
+    "/assets/cli-ui/ja/goal.png": {
+      "bytes": 554451,
+      "sha256": "a07122b2bbd155a8d0a6b1ed0b257e564ae69a90ed9f9a1fba88752a08345313"
+    },
+    "/assets/cli-ui/ja/sqm.png": {
+      "bytes": 372543,
+      "sha256": "aa2a6d68640736659b285d6670a042d5502a291e75761060a39265b60fdca3b2"
+    },
+    "/assets/cli-ui/ja/connection.png": {
+      "bytes": 350065,
+      "sha256": "a43d4ce14973c8629f5063d89b243eebfb3d429413077e4fbb1336d2026ce7f9"
+    },
+    "/assets/cli-ui/ja/usage.png": {
+      "bytes": 314431,
+      "sha256": "8cf9a64c59f33c3f01228435ad153dcf66040bf2266f73fe37dab94bf2d7d934"
+    },
+    "/assets/social/cards/for-en-engineers-v1.png": {
+      "bytes": 39807,
+      "sha256": "a4e100bb9eb5a8b7376fcfd5446bfba0e5f5f035662e25379f84c0532d268b9a"
+    },
+    "/assets/store-badges/app-store.svg": {
+      "bytes": 10804,
+      "sha256": "a26fc5b38380272c92e9019a2eb8b45542a66814b3e2b203772db8904b9fb99f"
+    },
+    "/assets/store-badges/google-play.png": {
+      "bytes": 4904,
+      "sha256": "f72611e2df8e88204009fd896d05d5e8e83c77009c63943bbffa169559934849"
+    },
+    "/assets/cli-ui/en/overview.png": {
+      "bytes": 508447,
+      "sha256": "88631638d0b3ddf94926f24904d3cdc2a1a66728d497f1be88eeab46e7f5b595"
+    },
+    "/assets/cli-ui/en/goal.png": {
+      "bytes": 505903,
+      "sha256": "f35eb511249b35205556efb0536f98790acd03d87f479ddbb5bbc78bfb889966"
+    },
+    "/assets/cli-ui/en/sqm.png": {
+      "bytes": 360351,
+      "sha256": "20d7b9b904d7acd9e080057e83589d3cdacab078bcfadcd2441896d803879599"
+    },
+    "/assets/cli-ui/en/connection.png": {
+      "bytes": 312758,
+      "sha256": "be40d0ef1ed014624929a4645e290b49bc386e65cbe022f595bc8bdc2faa92f9"
+    },
+    "/assets/cli-ui/en/usage.png": {
+      "bytes": 298884,
+      "sha256": "830769ade3953eba9fa4062fd0527df137ddb118fae4dd5c6e81f777ab7b7194"
+    },
+    "/assets/cli-ui/ja/affiliate-dashboard.jpg": {
+      "bytes": 55278,
+      "sha256": "0362914da7c1c6ab7f3c0a8611e06a1b0c986f7bc876b587602634ad34678619"
+    },
+    "/assets/cli-ui/en/affiliate-dashboard.jpg": {
+      "bytes": 57398,
+      "sha256": "e6283f9239c703399b2d26eaea26b94e302e95e8f26a69eced29a7093bfa0141"
+    }
+  }
+}
