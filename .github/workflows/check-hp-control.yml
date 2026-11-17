@@ -45,6 +45,10 @@ jobs:
       - run: terraform -chdir=infra/hp-control fmt -check -recursive
       - run: terraform -chdir=infra/hp-control init -backend=false -input=false
       - run: terraform -chdir=infra/hp-control validate
+      - name: Check clinic site claim targets and publisher scope (mocked AWS, plan only)
+        run: terraform -chdir=infra/hp-control test
+        env:
+          TF_WORKSPACE: hp-control
   renderer:
     runs-on: ubuntu-latest
     steps:
