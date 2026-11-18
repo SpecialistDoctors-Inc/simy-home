@@ -77,6 +77,11 @@ def header(locale, source, path):
     <div class="sh-account"><details class="sh-dropdown sh-language"><summary aria-label="Language: {LOCALES[locale]}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/></svg> {code}</summary><div class="sh-panel">{options}</div></details><a data-new-account-signup class="sh-signup" href="https://app.simy.one/signup?{params}">Sign up</a></div>
   </div>
 </header>'''
+    if 'data-pricing-announcement-only' in source:
+        # An advance notice must not present current checkout as a way to buy
+        # its future prices. Keep navigation explicitly about current prices.
+        label = '現行料金' if locale == 'ja' else 'Current prices'
+        markup = markup.replace(f'<a data-new-account-signup class="sh-signup" href="https://app.simy.one/signup?{params}">Sign up</a>', f'<a class="sh-signup" href="{base}#pricing">{label}</a>')
     # The clinic landing page sells HP management, not the separate SIMY app.
     if path == SITE / 'hp-management/clinic/index.html':
         markup = markup.replace(f'<a class="sh-pricing" href="{base}#pricing">Pricing</a>', '<a class="sh-pricing" data-service-pricing href="#pricing">HP管理の料金</a>')

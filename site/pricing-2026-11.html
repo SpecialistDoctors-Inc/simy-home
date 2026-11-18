@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="ja"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,follow"><title>SIMY 新料金のご案内</title>
+<meta name="description" content="SIMYの新料金の事前案内です。適用日未定・新料金での申込受付前です。現在の申込には現行料金が適用されます。">
+<link rel="canonical" href="https://simy.one/pricing-2026-11.html">
+<style>
+/* Shared SIMY palette, typography and buttons. Page geometry stays in page CSS. */
+:root {
+  --paper: #f6f5f4;
+  --paper-light: #ffffff;
+  --ink: #111111;
+  --ink-soft: #5d5b58;
+  --line: #202020;
+  --line-soft: rgba(17, 17, 17, 0.15);
+  --ui-line: #d9dde2;
+  --blue: #3273d7;
+  --blue-deep: #235db8;
+  --blue-soft: #eef5ff;
+  --lime: #92edce;
+  --coral: #ff865f;
+  --yellow: #ffd166;
+  --sienna: #b85b3f;
+  --mint: #92edce;
+  --mint-soft: #ecfbf6;
+  --radius-sm: 0.5rem;
+  --radius-md: 0.8rem;
+  --radius-lg: 1.1rem;
+  --page-width: 1360px;
+  --section-x: clamp(1.35rem, 4vw, 4.75rem);
+  --section-y: clamp(5rem, 9vw, 9rem);
+  --type-section-heading: clamp(2.7rem, 5.2vw, 5.5rem);
+  --display: "Helvetica Neue", "Arial Nova", Helvetica, Arial, sans-serif;
+  --body: Inter, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+}
+
+
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 1rem/1.65 var(--body), sans-serif; }
+main { max-width: 72rem; margin-inline: auto; padding: 2.5rem var(--section-x) 4rem; }
+main > header { border-bottom: 1px solid var(--line); padding-bottom: 1.5rem; }
+h1 { font-size: clamp(2rem, 5vw, 3.5rem); margin: 0.3rem 0; }
+h2 { font-size: 1.5rem; margin: 0 0 0.6rem; }
+p { margin: 0.35rem 0 0; }
+section { margin-top: 2.5rem; }
+small { font-size: 0.82rem; font-weight: 400; }
+.state { color: var(--ink-soft); }
+.announcement-status { padding: 1rem; margin-top: 1rem; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--paper-light); }
+.pricing-table { overflow: hidden; margin-top: 0.8rem; border: 1px solid var(--line-soft); border-radius: var(--radius-sm); }
+table { width: 100%; border-collapse: collapse; background: var(--paper-light); }
+th, td { text-align: left; vertical-align: top; padding: 0.7rem 0.8rem; border-bottom: 1px solid var(--line-soft); }
+thead { background: var(--mint-soft); }
+tbody tr:last-child td, tbody tr:last-child th { border-bottom: 0; }
+.amount, dd { font-variant-numeric: tabular-nums; white-space: nowrap; font-weight: 700; }
+.amount small { display: block; color: var(--ink-soft); white-space: normal; }
+.mobile-label { display: none; }
+.price-term { white-space: nowrap; }
+@media (max-width: 47.99rem) {
+  table, tbody { display: block; }
+  thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  tbody tr { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 0.9rem; gap: 0.3rem 0.8rem; }
+  tbody tr + tr { border-top: 1px solid var(--line-soft); }
+  tbody th, tbody td { padding: 0; border: 0; }
+  tbody th, tbody td:not(.amount) { grid-column: 1 / -1; }
+  tbody td:last-child, .mobile-label { color: var(--ink-soft); }
+  .mobile-label { display: block; font-size: 0.82rem; font-weight: 400; }
+}
+dl { margin: 0.8rem 0 0; border-top: 1px solid var(--line); }
+dl div { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 1rem; align-items: baseline; padding: 0.7rem 0; border-bottom: 1px solid var(--line-soft); }
+dd { margin: 0; }
+a { color: var(--blue-deep); }
+</style><link rel="stylesheet" href="/site-header.css?v=20261021-pharma-1">
+<script src="/site-header.js?v=59ee9a88c8e3" defer></script>
+<!-- HP industry navigation -->
+<link rel="stylesheet" href="/hp-industry-navigation.css?v=a50643726f93">
+<!-- /HP industry navigation -->
+<!-- SIMY locale navigation -->
+<script data-simy-locale-navigation>
+/* Shared homepage entry policy. Country hints are optional; timezone is an OS
+   signal, not an IP-location claim. Explicit language URLs remain crawlable. */
+(() => {
+  'use strict';
+  const languages = new Set(['en', 'ja', 'es', 'fr', 'hi', 'zh-Hans']);
+  const normalize = value => {
+    const text = String(value || '').trim().toLowerCase();
+    if (text === 'zh' || /^zh-(?:cn|sg|hans)(?:-|$)/.test(text)) return 'zh-Hans';
+    const base = text.split('-')[0];
+    return languages.has(base) ? base : null;
+  };
+  const countryLanguage = country => ({JP:'ja',FR:'fr',ES:'es',MX:'es',AR:'es',CO:'es',CL:'es',PE:'es',IN:'hi',CN:'zh-Hans',US:'en',GB:'en',AU:'en',NZ:'en'})[String(country || '').toUpperCase()] || null;
+  const timezoneCountry = zone => ({'Asia/Tokyo':'JP','Europe/Paris':'FR','Europe/Madrid':'ES','Atlantic/Canary':'ES','America/Mexico_City':'MX','America/Bogota':'CO','America/Lima':'PE','America/Santiago':'CL','Asia/Kolkata':'IN','Asia/Calcutta':'IN','Asia/Shanghai':'CN','Asia/Chongqing':'CN','Europe/London':'GB','America/New_York':'US','America/Chicago':'US','America/Denver':'US','America/Los_Angeles':'US','Australia/Sydney':'AU','Pacific/Auckland':'NZ'})[zone] || null;
+  const home = locale => locale === 'en' ? '/?locale=en' : '/' + locale + '.html';
+  const savedLanguage = storage => {
+    try {
+      const legacy = normalize(storage.getItem('simy-home-locale'));
+      if (legacy) return legacy;
+      for (const key of ['simy-lang', 'simy-language']) {
+        if (storage.getItem(key + '-source') === 'manual') {
+          const value = normalize(storage.getItem(key));
+          if (value) return value;
+        }
+      }
+      if (storage.getItem('simy-region-source') === 'manual') return countryLanguage(storage.getItem('simy-region'));
+    } catch (_) { /* A blocked store must not block navigation. */ }
+    return null;
+  };
+  const resolve = ({url, storage, country, timezone, browserLanguages = []}) => {
+    const explicit = normalize(url.searchParams.get('lang')) || normalize(url.searchParams.get('locale'));
+    if (explicit) return explicit;
+    const path = /^\/(ja|es|fr|hi|zh-Hans)\.html$/.exec(url.pathname);
+    if (path) return path[1];
+    const saved = savedLanguage(storage);
+    if (saved) return saved;
+    const region = countryLanguage(url.searchParams.get('region'));
+    if (region) return region;
+    const geographic = countryLanguage(country) || countryLanguage(timezoneCountry(timezone));
+    if (geographic) return geographic;
+    for (const value of browserLanguages) {
+      const match = normalize(value);
+      if (match) return match;
+    }
+    return 'en';
+  };
+  const persist = locale => {
+    try {
+      for (const key of ['simy-home-locale', 'simy-lang', 'simy-language']) window.localStorage.setItem(key, locale);
+      window.localStorage.setItem('simy-lang-source', 'manual');
+      window.localStorage.setItem('simy-language-source', 'manual');
+    } catch (_) { /* Explicit hrefs also work without storage. */ }
+  };
+  window.SIMY_LOCALE_NAVIGATION = Object.freeze({normalize, home, resolve});
+  const url = new URL(window.location.href);
+  if (url.pathname === '/' || url.pathname === '/index.html') {
+    let storage, timezone;
+    try { storage = window.localStorage; } catch (_) { storage = null; }
+    try { timezone = Intl.DateTimeFormat().resolvedOptions().timeZone; } catch (_) { timezone = ''; }
+    const locale = resolve({url, storage, timezone, country:document.documentElement.dataset.viewerCountry,
+      browserLanguages:navigator.languages || [navigator.language]});
+    if (locale !== 'en') {
+      const target = new URL(url);
+      target.pathname = '/' + locale + '.html';
+      target.searchParams.delete('lang');
+      window.location.replace(target.href);
+    }
+  }
+  const bindChoices = () => {
+    // Same-site home links on an explicitly English page must also retain the
+    // choice when storage is blocked. Hash-only links already retain the URL.
+    const dynamicLanguage = [...document.querySelectorAll('script[src]')].some(script => /(?:^|\/)i18n\.js(?:\?|$)/.test(script.src || ''));
+    if (!dynamicLanguage && document.documentElement.lang === 'en') {
+      for (const link of document.querySelectorAll('a[href]')) {
+        const destination = new URL(link.href, window.location.href);
+        if (destination.origin === window.location.origin && ['/', '/index.html'].includes(destination.pathname)) {
+          destination.pathname = '/';
+          destination.searchParams.set('locale', 'en');
+          link.href = destination.pathname + destination.search + destination.hash;
+        }
+      }
+    }
+    for (const link of document.querySelectorAll('[data-locale-option]')) {
+      const locale = normalize(link.dataset.localeOption);
+      if (!locale) continue;
+      const destination = new URL(link.href, window.location.href);
+      if (locale === 'en' && destination.origin === window.location.origin && ['/', '/index.html'].includes(destination.pathname)) {
+        destination.pathname = '/';
+        destination.searchParams.delete('lang');
+        destination.searchParams.set('locale', 'en');
+        link.href = destination.pathname + destination.search + destination.hash;
+      }
+      link.addEventListener('click', () => persist(locale));
+    }
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bindChoices, {once:true});
+  else bindChoices();
+})();
+</script>
+<!-- /SIMY locale navigation -->
+</head><body data-pricing-announcement-only><header class="simy-header" translate="no" data-simy-no-translate>
+  <div class="sh-frame">
+    <a class="sh-brand" href="/ja.html" aria-label="SIMYホーム"><img src="/simy-icon-56.png" width="32" height="32" alt=""><span>SIMY</span></a>
+    <details class="sh-menu"><summary class="sh-menu-toggle" aria-label="メニュー"><svg width="22" height="22" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"></path></svg></summary><div class="sh-menu-panel"><div class="sh-navigation" role="navigation" aria-label="主なナビゲーション"><details class="sh-dropdown"><summary>プロダクト<span aria-hidden="true">⌄</span></summary><div class="sh-panel"><a href="/ja.html#product">概要</a><a href="/ja.html#how-it-works">仕組み</a><a href="/integrations.html?lang=ja">アプリ連携</a><a href="/download.html">ダウンロード</a><div class="sh-stores" role="group" aria-label="モバイルアプリ">
+      <a class="sh-store" href="https://apps.apple.com/app/id6745385262"><img src="/assets/store-badges/app-store.svg" width="120" height="40" alt="App Storeからダウンロード"></a>
+      <a class="sh-store sh-google-play" href="/download.html#android" aria-label="Android対応状況"><img src="/assets/store-badges/google-play.png" width="155" height="60" alt="Google Play"><small>Android対応状況</small></a>
+    </div></div></details><details class="sh-dropdown"><summary>活用シーン<span aria-hidden="true">⌄</span></summary><div class="sh-panel sh-solutions-panel"><div class="sh-solutions-group"><p class="sh-group-title">SIMYの業務活用</p><a href="/for/">職業別の活用</a><a href="/for/engineers/">エンジニア向け</a><a href="/for/financial-planners/">ファイナンシャルプランナー向け</a><a href="/for/pharmaceutical-companies/">製薬企業向け</a><a href="/ja.html#use-cases">活用例</a></div><div class="sh-solutions-group"><p class="sh-group-title">ホームページ管理</p><a href="/hp-management.html">業種別HP管理・無料診断</a><a href="/hp-management/clinic.html">クリニック向けHP管理</a><a href="/hp-management/law-firm.html">弁護士事務所向けHP管理</a></div></div></details><details class="sh-dropdown"><summary>ガイド・情報<span aria-hidden="true">⌄</span></summary><div class="sh-panel"><a href="/guides/index.html">ガイド</a><a href="/compare.html?lang=ja">比較</a><a href="/press-release.html?lang=ja">ニュース</a><a href="/about.html?lang=ja">SIMYについて</a><a href="/security.html?lang=ja">セキュリティ</a><a href="/contact.html?lang=ja">お問い合わせ</a><a href="/legal.html">法務・サービス情報</a><a href="/seller-info.html">販売者情報</a></div></details><a class="sh-pricing" href="/ja.html#pricing">料金</a></div><a class="sh-login" data-existing-account-login href="https://app.simy.one/">ログイン</a></div></details>
+    <div class="sh-account"><details class="sh-dropdown sh-language"><summary aria-label="言語: 日本語"><svg width="18" height="18" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><ellipse cx="12" cy="12" rx="4" ry="9"></ellipse><path d="M3 12h18"></path></svg> JA</summary><div class="sh-panel"><a href="/?locale=en" lang="en" hreflang="en" data-locale-option="en">English</a><a href="/ja.html" lang="ja" hreflang="ja" data-locale-option="ja" aria-current="page">日本語</a><a href="/hi.html" lang="hi" hreflang="hi" data-locale-option="hi">हिन्दी</a><a href="/es.html" lang="es" hreflang="es" data-locale-option="es">Español</a><a href="/fr.html" lang="fr" hreflang="fr" data-locale-option="fr">Français</a><a href="/zh-Hans.html" lang="zh-Hans" hreflang="zh-Hans" data-locale-option="zh-Hans">简体中文</a></div></details><a class="sh-signup" href="/ja.html#pricing">現行料金</a></div>
+  </div>
+</header><main>
+<header><a href="/ja.html">SIMY 公式ホームへ</a><h1>SIMY 新料金のご案内</h1>
+<p>基本は利用者ごと。業務ライセンスは、使う人やサイトに追加できます。</p>
+<p class="announcement-status"><strong>適用日未定・新料金での申込受付は開始していません。</strong></p>
+<p>このページは新料金の事前案内です。現在の申込には現行料金が適用されます。新料金での申込開始時に、適用日と申込方法を改めてご案内します。</p>
+<p class="state">掲載金額は税別です。日本の請求先は円、日本以外の請求先はドルでのお支払いになります。税額と税込総額は、申込開始後の確定前画面でご案内します。</p>
+<p><a href="#clinic">クリニックのホームページ管理</a></p></header>
+<section aria-labelledby="plans"><h2 id="plans">基本と業務ライセンス</h2>
+<p>新料金の提供開始後は、SIMY 基本のみ1か月無料です。追加ライセンスは購入日から課金されます。</p>
+<p>FP募集品質・営業管理とSIMY 開発支援のAIは、お客様自身のChatGPT／Claudeの契約で動きます。業務ライセンスはSIMY 基本への追加料金です。</p>
+<p>録音の文字起こしは1人につき月2時間込み。利用量は各利用者で個別管理します。込み量は年払いでも契約開始日に合わせて毎月更新し、翌月には繰り越しません。</p>
+<div class="pricing-table">
+<table role="table" aria-label="基本と業務ライセンスの料金"><thead role="rowgroup"><tr role="row">
+<th scope="col" role="columnheader">サービス</th><th scope="col" role="columnheader">単位</th>
+<th scope="col" role="columnheader">日本（JPY）</th><th scope="col" role="columnheader">日本以外（USD）</th>
+<th scope="col" role="columnheader">含まれる内容</th></tr></thead><tbody role="rowgroup"><tr role="row"><th scope="row" role="rowheader">SIMY 基本</th><td role="cell">1人・月</td><td class="amount" role="cell"><span class="mobile-label" aria-hidden="true">日本（JPY）</span>¥2,280<small>年払い ¥22,800 / 年（¥1,900 / 月相当）</small></td><td class="amount" role="cell"><span class="mobile-label" aria-hidden="true">日本以外（USD）</span>$15<small>年払い $150 / 年（$12.50 / 月相当）</small></td><td role="cell">共通機能、Autorun（公平利用）、保存容量 10GB/人、録音の文字起こし 2時間/月</td></tr><tr role="row"><th scope="row" role="rowheader">ヒアリング</th><td role="cell">1人・月</td><td class="amount" role="cell"><span class="mobile-label" aria-hidden="true">日本（JPY）</span>¥3,780</td><td class="amount" role="cell"><span class="mobile-label" aria-hidden="true">日本以外（USD）</span>$25</td><td role="cell">会議中のリアルタイム文字起こし・助言 8時間/月</td></tr><tr role="row"><th scope="row" role="rowheader">ヒアリング <span class="price-term">20時間</span></th><td role="cell">1人・月</td><td class="amount" role="cell"><span class="mobile-label" aria-hidden="true">日本（JPY）</span>¥9,280</td><td class="amount" role="cell"><span class="mobile-label" aria-hidden="true">日本以外（USD）</span>$62</td><td role="cell">同 20時間/月</td></tr><tr role="row"><th scope="row" role="rowheader">FP募集品質・営業管理</th><td role="cell">1人・月</td><td class="amount" role="cell"><span class="mobile-label" aria-hidden="true">日本（JPY）</span>¥4,380</td><td class="amount" role="cell"><span class="mobile-label" aria-hidden="true">日本以外（USD）</span>$29</td><td role="cell">量の上限なし</td></tr><tr role="row"><th scope="row" role="rowheader">SIMY 開発支援</th><td role="cell">1人・月</td><td class="amount" role="cell"><span class="mobile-label" aria-hidden="true">日本（JPY）</span>¥3,780<small>年払い ¥38,160 / 年（¥3,180 / 月相当）</small></td><td class="amount" role="cell"><span class="mobile-label" aria-hidden="true">日本以外（USD）</span>$25<small>年払い $252 / 年（$21 / 月相当）</small></td><td role="cell">Delivery Loop・SQMの両方を利用可。無制限（CLIも含む）</td></tr><tr role="row"><th scope="row" role="rowheader">SIMY ロセンズ<br><small>路線価評価</small></th><td role="cell">1契約・月<span class="price-term">（同時利用1人）</span></td><td class="amount" role="cell"><span class="mobile-label" aria-hidden="true">日本（JPY）</span>¥14,800</td><td class="amount" role="cell"><span class="mobile-label" aria-hidden="true">日本以外（USD）</span>$99</td><td role="cell">60件/月</td></tr><tr role="row"><th scope="row" role="rowheader">ホームページ管理</th><td role="cell">1サイト・月</td><td class="amount" role="cell"><span class="mobile-label" aria-hidden="true">日本（JPY）</span>¥19,800</td><td class="amount" role="cell"><span class="mobile-label" aria-hidden="true">日本以外（USD）</span>$132</td><td role="cell">編集機能、ホスティング・SSL・保守・バックアップ、サイト容量5GB、40万リクエスト/月、転送40GB/月</td></tr><tr role="row"><th scope="row" role="rowheader">ホームページ管理 安心プラス</th><td role="cell">1サイト・月</td><td class="amount" role="cell"><span class="mobile-label" aria-hidden="true">日本（JPY）</span>¥29,800</td><td class="amount" role="cell"><span class="mobile-label" aria-hidden="true">日本以外（USD）</span>$199</td><td role="cell">上記＋WAF・Bot対策（レート制限）・攻撃監視</td></tr><tr role="row"><th scope="row" role="rowheader">AI・HP運用サポート</th><td role="cell">1サイト・月</td><td class="amount" role="cell"><span class="mobile-label" aria-hidden="true">日本（JPY）</span>¥39,800</td><td class="amount" role="cell"><span class="mobile-label" aria-hidden="true">日本以外（USD）</span>$265</td><td role="cell">LINE相談・MEO・GEO、担当者対応 1時間/月</td></tr></tbody></table></div>
+<p>例：基本 ＋ ヒアリング（8時間）は、国内で1人あたり ¥6,060 / 月。</p>
+</section>
+<section id="clinic" aria-labelledby="clinic-title"><h2 id="clinic-title">クリニックのホームページ管理</h2>
+<p>ホームページ管理と運用サポートは1サイト単位です。更新する方ごとにSIMY 基本（月払い ¥2,280）が必要です。</p>
+<h3>1サイトを1人で更新する場合（国内・月払い）</h3><dl><div><dt>ホームページ管理</dt><dd>¥22,080 <small>/ 月</small></dd></div><div><dt>ホームページ管理 安心プラス</dt><dd>¥32,080 <small>/ 月</small></dd></div><div><dt>安心プラス ＋ AI・HP運用サポート</dt><dd>¥71,880 <small>/ 月</small></dd></div></dl>
+<p>ドメイン取得・更新などの実費や、込み量を超える利用には別途費用がかかります。</p>
+<p>AI・HP運用サポートだけでは、ホームページを編集する権限は付きません。編集するサイトにはホームページ管理または安心プラスの契約が必要です。</p>
+</section>
+<section aria-labelledby="usage"><h2 id="usage">利用量に応じた料金</h2>
+<p>会議ボットの利用時間はヒアリングの込み時間とは別に数えます。文字起こしパックは購入から3か月有効です。</p>
+<p>録音の文字起こしは24時間以内の仕上がりを保証し、目標は1時間以内です。24時間を超えた録音の時間は利用量に数えません。</p>
+<div class="pricing-table">
+<table role="table" aria-label="従量料金と文字起こしパック"><thead role="rowgroup"><tr role="row">
+<th scope="col" role="columnheader">サービス</th><th scope="col" role="columnheader">単位</th>
+<th scope="col" role="columnheader">日本（JPY）</th><th scope="col" role="columnheader">日本以外（USD）</th>
+<th scope="col" role="columnheader">含まれる内容</th></tr></thead><tbody role="rowgroup"><tr role="row"><th scope="row" role="rowheader">会議ボット経由のヒアリング</th><td role="cell">時間</td><td class="amount" role="cell"><span class="mobile-label" aria-hidden="true">日本（JPY）</span>¥1,350</td><td class="amount" role="cell"><span class="mobile-label" aria-hidden="true">日本以外（USD）</span>$9</td><td role="cell">込み時間とは別に数える</td></tr><tr role="row"><th scope="row" role="rowheader">ヒアリング超過</th><td role="cell">時間</td><td class="amount" role="cell"><span class="mobile-label" aria-hidden="true">日本（JPY）</span>¥750</td><td class="amount" role="cell"><span class="mobile-label" aria-hidden="true">日本以外（USD）</span>$5</td><td role="cell">—</td></tr><tr role="row"><th scope="row" role="rowheader">録音の文字起こし <span class="price-term">20時間</span></th><td role="cell">パック（買い切り、購入から3か月有効）</td><td class="amount" role="cell"><span class="mobile-label" aria-hidden="true">日本（JPY）</span>¥2,580</td><td class="amount" role="cell"><span class="mobile-label" aria-hidden="true">日本以外（USD）</span>$17</td><td role="cell">20時間</td></tr><tr role="row"><th scope="row" role="rowheader">文字起こし超過</th><td role="cell">時間</td><td class="amount" role="cell"><span class="mobile-label" aria-hidden="true">日本（JPY）</span>¥220</td><td class="amount" role="cell"><span class="mobile-label" aria-hidden="true">日本以外（USD）</span>$1.50</td><td role="cell">—</td></tr><tr role="row"><th scope="row" role="rowheader">SIMY ロセンズの超過</th><td role="cell">件</td><td class="amount" role="cell"><span class="mobile-label" aria-hidden="true">日本（JPY）</span>¥300</td><td class="amount" role="cell"><span class="mobile-label" aria-hidden="true">日本以外（USD）</span>$2</td><td role="cell">—</td></tr><tr role="row"><th scope="row" role="rowheader">転送量の超過</th><td role="cell">GB</td><td class="amount" role="cell"><span class="mobile-label" aria-hidden="true">日本（JPY）</span>¥150</td><td class="amount" role="cell"><span class="mobile-label" aria-hidden="true">日本以外（USD）</span>$1</td><td role="cell">—</td></tr><tr role="row"><th scope="row" role="rowheader">リクエストの超過</th><td role="cell">100万リクエスト</td><td class="amount" role="cell"><span class="mobile-label" aria-hidden="true">日本（JPY）</span>¥1,500</td><td class="amount" role="cell"><span class="mobile-label" aria-hidden="true">日本以外（USD）</span>$10</td><td role="cell">—</td></tr><tr role="row"><th scope="row" role="rowheader">安心プラスのリクエストの超過</th><td role="cell">100万リクエスト</td><td class="amount" role="cell"><span class="mobile-label" aria-hidden="true">日本（JPY）</span>¥2,250</td><td class="amount" role="cell"><span class="mobile-label" aria-hidden="true">日本以外（USD）</span>$15</td><td role="cell">—</td></tr><tr role="row"><th scope="row" role="rowheader">担当者対応の超過</th><td role="cell">時間</td><td class="amount" role="cell"><span class="mobile-label" aria-hidden="true">日本（JPY）</span>¥25,300</td><td class="amount" role="cell"><span class="mobile-label" aria-hidden="true">日本以外（USD）</span>$169</td><td role="cell">—</td></tr></tbody></table></div>
+</section>
+<section aria-labelledby="preparing"><h2 id="preparing">提供準備中の項目</h2>
+<p>図面・見積の込み枚数と超過料金は仮の条件です。ストレージ追加を含め、提供開始と条件の確定後に改めてご案内します。</p>
+<div class="pricing-table">
+<table role="table" aria-label="提供準備中の料金と仮の条件"><thead role="rowgroup"><tr role="row">
+<th scope="col" role="columnheader">サービス</th><th scope="col" role="columnheader">単位</th>
+<th scope="col" role="columnheader">日本（JPY）</th><th scope="col" role="columnheader">日本以外（USD）</th>
+<th scope="col" role="columnheader">含まれる内容</th></tr></thead><tbody role="rowgroup"><tr role="row"><th scope="row" role="rowheader">図面・見積</th><td role="cell">1契約・月<span class="price-term">（同時利用1人）</span></td><td class="amount" role="cell"><span class="mobile-label" aria-hidden="true">日本（JPY）</span>¥19,800</td><td class="amount" role="cell"><span class="mobile-label" aria-hidden="true">日本以外（USD）</span>$132</td><td role="cell">40枚/月</td></tr><tr role="row"><th scope="row" role="rowheader">図面・見積の超過（仮）</th><td role="cell">枚</td><td class="amount" role="cell"><span class="mobile-label" aria-hidden="true">日本（JPY）</span>¥750</td><td class="amount" role="cell"><span class="mobile-label" aria-hidden="true">日本以外（USD）</span>$5</td><td role="cell">—</td></tr><tr role="row"><th scope="row" role="rowheader">ストレージ追加 100GB</th><td role="cell">月</td><td class="amount" role="cell"><span class="mobile-label" aria-hidden="true">日本（JPY）</span>¥1,800</td><td class="amount" role="cell"><span class="mobile-label" aria-hidden="true">日本以外（USD）</span>$12</td><td role="cell">—</td></tr><tr role="row"><th scope="row" role="rowheader">ストレージ追加 1TB</th><td role="cell">月</td><td class="amount" role="cell"><span class="mobile-label" aria-hidden="true">日本（JPY）</span>¥16,500</td><td class="amount" role="cell"><span class="mobile-label" aria-hidden="true">日本以外（USD）</span>$110</td><td role="cell">—</td></tr></tbody></table></div>
+</section>
+<section aria-labelledby="enterprise"><h2 id="enterprise">Enterprise</h2>
+<p>20人からの年契約です。料金は1人あたりの利用料金の1.5倍から個別にお見積もりします。SSO、データの論理分離、導入支援を含みます。</p>
+</section></main></body></html>
