@@ -1,15 +1,34 @@
 // Content-specific, localized editorial cards. No screenshots of product UI.
-// NODE_PATH=<Playwright installation> node scripts/capture-site-social.cjs
+// NODE_PATH=<Playwright installation> node scripts/capture-site-social.cjs [page path]
 const {chromium}=require('playwright');
 const fs=require('node:fs');const path=require('node:path');const assert=require('node:assert/strict');
+const {pathToFileURL}=require('node:url');
 const root=path.resolve(__dirname,'..');const cards=require('./social-preview-pages.json');
+const pagePath=process.argv[2];
+const selected=pagePath?cards.filter(card=>card.page===pagePath):cards;
+assert.ok(selected.length,`No sharing card registered for ${pagePath}`);
 const data=(file,mime)=>`data:${mime};base64,${fs.readFileSync(path.join(root,file)).toString('base64')}`;
 const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
 const icon=data('site/simy-icon-56.png','image/png');const font=data('site/assets/pharmaceutical-companies/noto-sans-devanagari-700.ttf','font/ttf');
 const palettes={guide:['#f3f6fc','#2257b8'],home:['#eef9f5','#146653'],engineer:['#eef3fc','#2459ba'],fp:['#f8f4ee','#8b5530'],download:['#eff8fc','#1c647d'],news:['#fbf3ed','#9d4c24'],sales:['#f1f5fc','#2459ba'],solutions:['#f1f5fc','#2459ba'],company:['#f3f5f5','#344a57']};
 (async()=>{const browser=await chromium.launch({channel:'chrome'});const report=[];try{
  const page=await browser.newPage({viewport:{width:1200,height:630},deviceScaleFactor:1});
- for(const c of cards){const [bg,accent]=palettes[c.kind];
+ for(const c of selected){
+ const output=path.join(root,'site',c.image);fs.mkdirSync(path.dirname(output),{recursive:true});
+ if(c.template){
+   await page.goto(pathToFileURL(path.join(__dirname,c.template)).href);
+   await page.evaluate(()=>document.fonts.ready);
+   await page.locator('img').evaluateAll(images=>Promise.all(images.map(image=>image.decode())));
+   const fits=await page.evaluate(()=>[...document.querySelectorAll('main *')].every(element=>{
+     const bounds=element.getBoundingClientRect();
+     return bounds.left>=0&&bounds.top>=0&&bounds.right<=innerWidth&&bounds.bottom<=innerHeight
+       &&element.scrollWidth<=element.clientWidth;
+   }));
+   assert.ok(fits,`${c.page}: sharing card content overflows`);
+   await page.screenshot({path:output});report.push(c);
+   continue;
+ }
+ const [bg,accent]=palettes[c.kind];
  await page.setContent(`<!doctype html><html lang="${c.lang}"><meta charset="utf-8"><style>
  @font-face{font-family:Devanagari;src:url('${font}');font-weight:700}
  *{box-sizing:border-box}html,body{margin:0;width:1200px;height:630px}body{font-family:Arial,'Hiragino Sans',Meiryo,sans-serif;color:#17233a;background:${bg};border-bottom:12px solid ${accent}}
@@ -24,6 +43,6 @@ const palettes={guide:['#f3f6fc','#2257b8'],home:['#eef9f5','#146653'],engineer:
  await page.evaluate(()=>document.fonts.ready);await page.locator('img').evaluateAll(es=>Promise.all(es.map(e=>e.decode())));
  const fit=await page.evaluate(()=>{const h=document.querySelector('h1');let size=88;while((document.querySelector('.content').scrollHeight>424||h.getBoundingClientRect().bottom>520||h.scrollWidth>h.clientWidth)&&size>42){h.style.fontSize=`${--size}px`}return {size,bottom:h.getBoundingClientRect().bottom,width:h.scrollWidth,client:h.clientWidth,label:document.querySelector('.label').getBoundingClientRect().bottom}});
  assert.ok(fit.bottom<=531&&fit.width<=fit.client&&fit.label<110,`${c.page}: headline overflow ${JSON.stringify(fit)}`);
- const output=path.join(root,'site',c.image);fs.mkdirSync(path.dirname(output),{recursive:true});await page.screenshot({path:output});report.push({...c,...fit});
+ await page.screenshot({path:output});report.push({...c,...fit});
  }fs.mkdirSync(path.join(root,'output/site-social-review'),{recursive:true});fs.writeFileSync(path.join(root,'output/site-social-review/render.json'),JSON.stringify(report,null,2));console.log(`Rendered and checked ${report.length} cards`);
  }finally{await browser.close()}})().catch(e=>{console.error(e);process.exitCode=1});
