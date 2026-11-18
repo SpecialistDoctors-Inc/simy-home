@@ -238,7 +238,15 @@ class App:
             if self.onboarding is not None and self.onboarding.owns_login(query['state']):
                 cookie = headers.get('cookie') or '; '.join(c for c in event.get('cookies') or [] if isinstance(c, str))
                 return self.onboarding_call(lambda: self.onboarding.google_callback(query['state'], query['code'], cookie))
-            redirect = self.identity.callback(query['state'], query['code'])
+            try:
+                redirect = self.identity.callback(query['state'], query['code'])
+            except AuthError as error:
+                # A person signed in with an account that has no site. A raw
+                # JSON error leaves them stranded in the browser; tell them how
+                # to get back to Codex instead.
+                if str(error) == 'site_invitation_required':
+                    return self.unregistered_account_page()
+                raise
             if not Identity.valid_redirect(redirect):
                 raise AuthError('invalid_redirect_uri')
             if urlsplit(redirect).hostname == 'chatgpt.com':
@@ -348,6 +356,16 @@ class App:
         except Exception:
             return self.response(503, {'error': 'hp_license_unavailable'})
 
+    def unregistered_account_page(self):
+        import email_login as pages
+        # Only mention the emailed code where this deployment offers it.
+        accounts = ('運用担当に登録したGoogleアカウント、またはメールアドレス' if self.identity.email_codes is not None
+                    else '運用担当に登録したGoogleアカウント')
+        return pages.error_page('このアカウントには接続できるサイトがありません',
+                                'ログインしたアカウントは、HP編集の利用者として登録されていません。'
+                                f'Codex（ChatGPT）の画面に戻り、HPプラグインの接続をもう一度始めて、{accounts}でログインしてください。'
+                                '分からない場合は、運用担当にお問い合わせください。', 403)
+
     def email_login_request(self, method, path, query, data, headers, event):
         """Sign-in page for the plugin connection: Google or a code sent by email."""
         import email_login as pages
@@ -404,8 +422,7 @@ class App:
                 if str(error) in ('invalid_email_code', 'expired_email_code'):
                     return pages.code_page(state, form['email'], pages.NOTICES[str(error)])
                 if str(error) == 'site_invitation_required':
-                    return pages.error_page('このアカウントには接続できるサイトがありません',
-                                            'ご登録のメールアドレスか、担当者からのご案内をご確認ください。', 403)
+                    return self.unregistered_account_page()
                 raise
         except AuthError:
             return expired()

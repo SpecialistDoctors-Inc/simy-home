@@ -325,6 +325,22 @@ class AdapterTests(unittest.TestCase):
                 response, value = self.http('/oauth/google/callback', query=query)
                 self.assertEqual((response['statusCode'], value), (400, {'error': 'expired_login'}))
 
+    def test_callback_for_unregistered_account_explains_how_to_return_to_codex(self):
+        from identity import AuthError
+        def unregistered(state, code):
+            raise AuthError('site_invitation_required')
+        self.identity.callback = unregistered
+        for email_codes, mentions_email in ((None, False), (object(), True)):
+            with self.subTest(email_login=mentions_email):
+                self.identity.email_codes = email_codes
+                response, html = self.http('/oauth/google/callback', query={'state': 'fake-state', 'code': 'fake-code'})
+                self.assertEqual(response['statusCode'], 403)
+                self.assertTrue(response['headers']['content-type'].startswith('text/html'))
+                self.assertIn('このアカウントには接続できるサイトがありません', html)
+                self.assertIn('Codex（ChatGPT）の画面に戻り', html)
+                self.assertEqual('メールアドレスでログイン' in html, mentions_email)
+                self.assertNotIn('location', response['headers'])
+
     def test_callback_handoff_rejects_external_or_invalid_callback_targets(self):
         for target in ('https://attacker.example.invalid/callback',
                        'https://chatgpt.com.attacker.invalid/connector_platform_oauth_redirect',
