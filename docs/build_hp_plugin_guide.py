@@ -14,7 +14,7 @@ from reportlab.pdfbase.ttfonts import TTFont
 
 ROOT = Path(__file__).resolve().parents[1]
 VERSION = '0.3.12'
-GUIDE_DATE = '2026-11-08'
+GUIDE_DATE = '2026-11-18'
 DISPLAY_DATE = GUIDE_DATE.replace('-', '.')
 W, H = A4
 M = 42
@@ -64,7 +64,7 @@ def build(output):
         c.drawRightString(W-M,23,f'{number} / 4')
 
     page(1,'プラグインを導入する','MacのApple Silicon（M1以降）用')
-    y=text('Codexを使えるデスクトップアプリにログインし、運用担当から配布セットとHP用Googleアカウントの案内を受け取ります。',125)
+    y=text('Codexを使えるデスクトップアプリにログインし、運用担当から配布セットと、HP編集に登録したメールアドレスの案内を受け取ります。Googleアカウントは不要です。',125)
     y=text('1　配布セットを解凍する',y+21,size=13,bold=True)
     y=text('中のプラグインZIPを、Codexの会話へ添付します。',y+6)
     y=text('2　Codexに導入を依頼する',y+18,size=13,bold=True)
@@ -72,14 +72,14 @@ def build(output):
     text('このHPプラグインを導入して、編集を始めたいです。<br/>導入済みなら、作業中の変更を引き継いで更新してください。',y+23,M+15,CW-30,10.5)
     y+=143
     y=text('3　プラグインを追加して接続する',y,size=13,bold=True)
-    y=text('Codexが導入状態を確認します。本人の操作が必要なら「HP ローカル編集」を追加します。今回の版が読み込まれず再起動を案内された場合は、作業を保存して再起動します。その後、Google接続を完了してください。',y+6)
+    y=text('Codexが導入状態を確認します。本人の操作が必要なら「HP ローカル編集」を追加します。今回の版が読み込まれず再起動を案内された場合は、作業を保存して再起動します。その後、登録したメールアドレスに届く6桁の確認コードでログインします（Googleでのログインも可）。',y+6)
     y=text('4　接続後、同じ会話で続ける',y+18,size=13,bold=True)
     y=text('元の会話で「続けて」と送ります。Codexの返信で医院名とURLを確認し、編集画面を開きます。サイトが複数あるときは、Codexの質問に答えて選びます。',y+6)
-    y=text('ChatGPT用とHP用Googleのアカウントは、メールアドレスが異なっていても使えます。パスワードや確認コードはログイン画面に入力します。',y+19,size=10,color=MUTED)
+    y=text('ChatGPT用とHP編集用のメールアドレスは異なっていても使えます。パスワードや確認コードはログイン画面に入力します。',y+19,size=10,color=MUTED)
     text('詳しい依頼文と、ファイルを添付できない場合の手順は、同梱のMarkdown手順書にあります。',y+12,size=9.5,color=MUTED)
     c.showPage()
 
-    page(2,'手元のページを直す','Google接続後、導入の続きを進めると編集画面が開きます')
+    page(2,'手元のページを直す','ログイン後、導入の続きを進めると編集画面が開きます')
     y=text('ブラウザーに確認ページが開きます。右下のマークを押して、チャットで修正を依頼してください。',125)
     text('操作イメージ（図解）',y+18,size=9,color=MUTED)
     top=y+42
@@ -135,7 +135,7 @@ def build(output):
         ('反映や公開の結果を確認中','自動確認を待ちます。長く続く場合は「前回の処理がどこまで完了したか確認して」とCodexへ伝えます。'),
         ('処理状況のボタン','「同じ依頼で再確認」は受付結果を確認します。「処理を再開」は停止した処理を再開します。「公開結果を見る」は前回の変更概要と公開結果を開きます。'),
         ('確認期限が切れた','確認画面を閉じ、チャット下の「公開する」から開き直します。'),
-        ('ログイン・接続で止まる','登録したGoogleアカウントを確認し、画面の案内に従って再接続します。'),
+        ('ログイン・接続で止まる','登録したメールアドレス（またはGoogleアカウント）でログインし直します。「接続できるサイトがありません」と出たら、Codexに戻って接続をやり直します。'),
         ('更新ZIPを受け取った','CodexへZIPを渡し、作業を引き継いで更新するよう依頼します。案内に従って保存・再起動し、新しい会話でHPプラグインを選びます。'),
         ('Macが起動を止める・警告が出る','表示内容を運用担当に伝え、配布物と実行環境を確認してもらいます。'),
     ]:
@@ -155,6 +155,6 @@ def build(output):
 
 if __name__ == '__main__':
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--output',type=Path,default=ROOT/'output/hp-plugin-0.3.12-20261108')
+    parser.add_argument('--output',type=Path,default=ROOT/'output/hp-plugin-0.3.12-20261118')
     args=parser.parse_args()
     print(build(args.output))
