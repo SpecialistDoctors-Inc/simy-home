@@ -1,0 +1,357 @@
+{
+  "offer": "2026-11",
+  "source": "docs/pricing/pricing-2026-11-spec.md",
+  "publication": "prepare_only",
+  "profiles": {
+    "development": {
+      "primary": [
+        "base",
+        "sqm_check"
+      ],
+      "optional": [],
+      "usage": [
+        "transcription_20h",
+        "transcription_overage"
+      ],
+      "examples": [
+        [
+          "sqm_check"
+        ]
+      ]
+    },
+    "rosenz": {
+      "primary": [
+        "base",
+        "land_valuation"
+      ],
+      "optional": [],
+      "usage": [
+        "land_valuation_overage",
+        "transcription_20h",
+        "transcription_overage"
+      ],
+      "examples": [
+        [
+          "land_valuation"
+        ]
+      ]
+    },
+    "hearing": {
+      "primary": [
+        "base"
+      ],
+      "optional": [
+        "hearing_8h",
+        "hearing_20h"
+      ],
+      "usage": [
+        "hearing_bot",
+        "hearing_overage",
+        "transcription_20h",
+        "transcription_overage"
+      ],
+      "examples": [
+        [],
+        [
+          "hearing_8h"
+        ],
+        [
+          "hearing_20h"
+        ]
+      ]
+    },
+    "fp": {
+      "primary": [
+        "base",
+        "fp_quality"
+      ],
+      "optional": [
+        "hearing_8h",
+        "hearing_20h"
+      ],
+      "usage": [
+        "hearing_bot",
+        "hearing_overage",
+        "transcription_20h",
+        "transcription_overage"
+      ],
+      "examples": [
+        [
+          "fp_quality"
+        ],
+        [
+          "fp_quality",
+          "hearing_8h"
+        ]
+      ]
+    },
+    "homepage": {
+      "primary": [
+        "base",
+        "homepage",
+        "homepage_secure"
+      ],
+      "optional": [
+        "homepage_ops"
+      ],
+      "usage": [
+        "homepage_transfer_overage",
+        "homepage_request_overage",
+        "homepage_secure_request_overage",
+        "homepage_ops_overage",
+        "transcription_20h",
+        "transcription_overage"
+      ],
+      "examples": [
+        [
+          "homepage"
+        ],
+        [
+          "homepage_secure"
+        ],
+        [
+          "homepage_secure",
+          "homepage_ops"
+        ]
+      ]
+    }
+  },
+  "routes": [
+    {
+      "path": "for/engineers/index.html",
+      "profile": "development",
+      "locale": "ja",
+      "generator": "scripts/build-engineering-pages.py",
+      "source": "scripts/engineering-cli-{locale}.html (ja/en); scripts/engineering-copy.json (all locales)",
+      "evidence": "Delivery Loop / SQM implementation and quality checks"
+    },
+    {
+      "path": "for/en/engineers/index.html",
+      "profile": "development",
+      "locale": "en",
+      "generator": "scripts/build-engineering-pages.py",
+      "source": "scripts/engineering-cli-{locale}.html (ja/en); scripts/engineering-copy.json (all locales)",
+      "evidence": "Delivery Loop / SQM implementation and quality checks"
+    },
+    {
+      "path": "for/es/engineers/index.html",
+      "profile": "development",
+      "locale": "es",
+      "generator": "scripts/build-engineering-pages.py",
+      "source": "scripts/engineering-cli-{locale}.html (ja/en); scripts/engineering-copy.json (all locales)",
+      "evidence": "Delivery Loop / SQM implementation and quality checks"
+    },
+    {
+      "path": "for/fr/engineers/index.html",
+      "profile": "development",
+      "locale": "fr",
+      "generator": "scripts/build-engineering-pages.py",
+      "source": "scripts/engineering-cli-{locale}.html (ja/en); scripts/engineering-copy.json (all locales)",
+      "evidence": "Delivery Loop / SQM implementation and quality checks"
+    },
+    {
+      "path": "for/hi/engineers/index.html",
+      "profile": "development",
+      "locale": "hi",
+      "generator": "scripts/build-engineering-pages.py",
+      "source": "scripts/engineering-cli-{locale}.html (ja/en); scripts/engineering-copy.json (all locales)",
+      "evidence": "Delivery Loop / SQM implementation and quality checks"
+    },
+    {
+      "path": "for/zh-hans/engineers/index.html",
+      "profile": "development",
+      "locale": "zh-Hans",
+      "generator": "scripts/build-engineering-pages.py",
+      "source": "scripts/engineering-cli-{locale}.html (ja/en); scripts/engineering-copy.json (all locales)",
+      "evidence": "Delivery Loop / SQM implementation and quality checks"
+    },
+    {
+      "path": "for/financial-planners/index.html",
+      "profile": "fp",
+      "locale": "ja",
+      "generator": "scripts/build-financial-planner-pages.py",
+      "source": "scripts/build-financial-planner-pages.py + scripts/financial-planner-locales.json",
+      "evidence": "FP recorded consultation preparation and sales-quality review"
+    },
+    {
+      "path": "for/en/financial-planners/index.html",
+      "profile": "fp",
+      "locale": "en",
+      "generator": "scripts/build-financial-planner-pages.py",
+      "source": "scripts/build-financial-planner-pages.py + scripts/financial-planner-locales.json",
+      "evidence": "FP recorded consultation preparation and sales-quality review"
+    },
+    {
+      "path": "for/es/financial-planners/index.html",
+      "profile": "fp",
+      "locale": "es",
+      "generator": "scripts/build-financial-planner-pages.py",
+      "source": "scripts/build-financial-planner-pages.py + scripts/financial-planner-locales.json",
+      "evidence": "FP recorded consultation preparation and sales-quality review"
+    },
+    {
+      "path": "for/fr/financial-planners/index.html",
+      "profile": "fp",
+      "locale": "fr",
+      "generator": "scripts/build-financial-planner-pages.py",
+      "source": "scripts/build-financial-planner-pages.py + scripts/financial-planner-locales.json",
+      "evidence": "FP recorded consultation preparation and sales-quality review"
+    },
+    {
+      "path": "for/hi/financial-planners/index.html",
+      "profile": "fp",
+      "locale": "hi",
+      "generator": "scripts/build-financial-planner-pages.py",
+      "source": "scripts/build-financial-planner-pages.py + scripts/financial-planner-locales.json",
+      "evidence": "FP recorded consultation preparation and sales-quality review"
+    },
+    {
+      "path": "for/zh-hans/financial-planners/index.html",
+      "profile": "fp",
+      "locale": "zh-Hans",
+      "generator": "scripts/build-financial-planner-pages.py",
+      "source": "scripts/build-financial-planner-pages.py + scripts/financial-planner-locales.json",
+      "evidence": "FP recorded consultation preparation and sales-quality review"
+    },
+    {
+      "path": "for/pharmaceutical-companies/index.html",
+      "profile": "hearing",
+      "locale": "ja",
+      "generator": "scripts/build-pharmaceutical-pages.py",
+      "source": "scripts/pharmaceutical-ja.html + scripts/pharmaceutical-locales.json",
+      "evidence": "MR doctor-specific voice role-play and preparation; live Hearing is optional, not implied by profession"
+    },
+    {
+      "path": "for/en/pharmaceutical-companies/index.html",
+      "profile": "hearing",
+      "locale": "en",
+      "generator": "scripts/build-pharmaceutical-pages.py",
+      "source": "scripts/pharmaceutical-ja.html + scripts/pharmaceutical-locales.json",
+      "evidence": "MR doctor-specific voice role-play and preparation; live Hearing is optional, not implied by profession"
+    },
+    {
+      "path": "for/es/pharmaceutical-companies/index.html",
+      "profile": "hearing",
+      "locale": "es",
+      "generator": "scripts/build-pharmaceutical-pages.py",
+      "source": "scripts/pharmaceutical-ja.html + scripts/pharmaceutical-locales.json",
+      "evidence": "MR doctor-specific voice role-play and preparation; live Hearing is optional, not implied by profession"
+    },
+    {
+      "path": "for/fr/pharmaceutical-companies/index.html",
+      "profile": "hearing",
+      "locale": "fr",
+      "generator": "scripts/build-pharmaceutical-pages.py",
+      "source": "scripts/pharmaceutical-ja.html + scripts/pharmaceutical-locales.json",
+      "evidence": "MR doctor-specific voice role-play and preparation; live Hearing is optional, not implied by profession"
+    },
+    {
+      "path": "for/hi/pharmaceutical-companies/index.html",
+      "profile": "hearing",
+      "locale": "hi",
+      "generator": "scripts/build-pharmaceutical-pages.py",
+      "source": "scripts/pharmaceutical-ja.html + scripts/pharmaceutical-locales.json",
+      "evidence": "MR doctor-specific voice role-play and preparation; live Hearing is optional, not implied by profession"
+    },
+    {
+      "path": "for/zh-hans/pharmaceutical-companies/index.html",
+      "profile": "hearing",
+      "locale": "zh-Hans",
+      "generator": "scripts/build-pharmaceutical-pages.py",
+      "source": "scripts/pharmaceutical-ja.html + scripts/pharmaceutical-locales.json",
+      "evidence": "MR doctor-specific voice role-play and preparation; live Hearing is optional, not implied by profession"
+    },
+    {
+      "path": "for/sales/index.html",
+      "profile": "hearing",
+      "locale": "ja",
+      "generator": "scripts/build-content-pages.py",
+      "source": "scripts/content-pages.json",
+      "evidence": "Existing sales page uses an existing meeting memo to draft follow-up; basic workflow needs base; Hearing applies only to live transcription/advice"
+    },
+    {
+      "path": "for/en/sales/index.html",
+      "profile": "hearing",
+      "locale": "en",
+      "generator": "scripts/build-content-pages.py",
+      "source": "scripts/content-pages.json",
+      "evidence": "Existing sales page uses an existing meeting memo to draft follow-up; basic workflow needs base; Hearing applies only to live transcription/advice"
+    },
+    {
+      "path": "for/rosenz/index.html",
+      "profile": "rosenz",
+      "locale": "ja",
+      "generator": "scripts/site_header.py",
+      "source": "site/for/rosenz/index.html",
+      "placement": "replace-pricing",
+      "evidence": "Existing 導入予定料金 explicitly identifies base2280 + land14800, 60 cases/month, one concurrent user",
+      "existingContact": {
+        "href": "mailto:sales@simy.one?subject=SIMY%20%E3%83%AD%E3%82%BB%E3%83%B3%E3%82%BA%E3%81%AE%E5%B0%8E%E5%85%A5%E7%9B%B8%E8%AB%87",
+        "label": "ロセンズの導入を相談する"
+      }
+    },
+    {
+      "path": "hp-management/index.html",
+      "profile": "homepage",
+      "locale": "ja",
+      "generator": "scripts/build-hp-management-industries.py",
+      "source": "scripts/hp-management-industries.json",
+      "evidence": "Industry selector for published clinic and law-firm HP management"
+    },
+    {
+      "path": "hp-management/clinic/index.html",
+      "profile": "homepage",
+      "locale": "ja",
+      "generator": "scripts/site_header.py",
+      "source": "site/hp-management/clinic/index.html",
+      "evidence": "Website editing, hosting/security and HP operations; recorded explanation-to-article is separate, not a live Hearing service"
+    },
+    {
+      "path": "hp-management/law-firm.html",
+      "profile": "homepage",
+      "locale": "ja",
+      "generator": "scripts/site_header.py",
+      "source": "site/hp-management/law-firm.html",
+      "evidence": "Law firm website editing, security and operational support"
+    }
+  ],
+  "aliases": [
+    {
+      "pattern": "/for/{locale/}engineers.html",
+      "target": "/for/{locale/}engineers/",
+      "type": "generated redirect; no duplicate price content"
+    },
+    {
+      "pattern": "/for/{locale/}financial-planners.html",
+      "target": "/for/{locale/}financial-planners/",
+      "type": "legacy alias; no duplicate price content"
+    },
+    {
+      "pattern": "/for/clinic[/|.html|/index.html]",
+      "target": "/hp-management/clinic/",
+      "type": "CloudFront/HTML legacy HP redirect; not a Hearing product route"
+    },
+    {
+      "pattern": "/hp-management[.html|/index.html]",
+      "target": "/hp-management/",
+      "type": "canonical metadata .html; CloudFront normalizes to slash"
+    },
+    {
+      "pattern": "/hp-management/clinic[.html|/index.html]",
+      "target": "/hp-management/clinic/",
+      "type": "metadata .html; published alias uses clinic/index.html"
+    },
+    {
+      "pattern": "/hp-management/clinic-service[|-v2].html",
+      "target": "/hp-management/clinic.html",
+      "type": "HTML refresh legacy alias"
+    }
+  ],
+  "unmappedPendingProducts": [
+    "drawing_quote",
+    "drawing_overage",
+    "storage_100gb",
+    "storage_1tb"
+  ],
+  "mappingRule": "Function evidence, never profession alone. Sales/MR role-play/basic recording do not automatically require live Hearing. Clinic legacy occupation URL is now HP management."
+}

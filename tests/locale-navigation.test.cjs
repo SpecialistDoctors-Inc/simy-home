@@ -44,7 +44,7 @@ test('English home actions retain explicit language when storage cannot persist 
 });
 test('Japanese HP logo change preserves all other bytes and release hashes',()=>{
  for(const [file,hash] of [['site/hp-management/clinic/index.html','eb70431ef8954765db62a9aa136308edda5998eb12e538ba6d46c640b9a50eb3'],['site/hp-management/law-firm.html','036c39fb6eb06737534d7e6c02b340308d425b969c2dcbbc041b1ef9f0bd559e']]){
-  const text=fs.readFileSync(file,'utf8');const logo=text.match(/<a\b[^>]*aria-label="SIMY公式サイト"[^>]*>/)[0];assert.match(logo,/href="https:\/\/simy.one\/ja.html"/);assert.equal(require('node:crypto').createHash('sha256').update(text.replace(logo,logo.replace('/ja.html','/'))).digest('hex'),hash);
+  const text=fs.readFileSync(file,'utf8').replace(/<!-- service-pricing-2026-11:start -->[\s\S]*?<!-- service-pricing-2026-11:end -->\n/g,'').replace(/<!-- service-pricing-2026-11:notice -->[\s\S]*?<!-- \/service-pricing-2026-11:notice -->/g,'').replace(/<link\b[^>]*data-service-pricing-style[^>]*>/g,'');const logo=text.match(/<a\b[^>]*aria-label="SIMY公式サイト"[^>]*>/)[0];assert.match(logo,/href="https:\/\/simy.one\/ja.html"/);assert.equal(require('node:crypto').createHash('sha256').update(text.replace(logo,logo.replace('/ja.html','/'))).digest('hex'),hash);
  }
 });
 test('legacy click decoration preserves English intent before the root entry policy runs',()=>{

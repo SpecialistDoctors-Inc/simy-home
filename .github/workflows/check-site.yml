@@ -36,6 +36,7 @@ jobs:
         run: |
           python3 scripts/build-localized-home.py --check
           python3 scripts/build-pricing-announcement.py --check
+          python3 scripts/build-service-pricing-pages.py --check
           python3 scripts/build-content-pages.py --check
           python3 scripts/build-hp-management-industries.py --check
           python3 scripts/site_header.py --check
