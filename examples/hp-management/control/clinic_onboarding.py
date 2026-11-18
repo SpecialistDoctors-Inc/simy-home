@@ -18,7 +18,8 @@ the same subscription (see wordpress_onboarding.py).
 Otherwise the URL is kept as an intake: an unknown domain is queued for a copy of
 its public homepage (see site_copy.py); a known domain with another owner email
 waits for the operator. Once the operator registers the site, reopening this page
-completes the claim. AuthCodes are encrypted at rest and never shown again.
+completes the claim; notify_clinic_ready.py also claims it and emails the clinic
+(see clinic_ready.py and CLINIC_SITES.md). AuthCodes are encrypted at rest and never shown again.
 """
 from __future__ import annotations
 

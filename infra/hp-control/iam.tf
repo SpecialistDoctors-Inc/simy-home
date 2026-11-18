@@ -60,21 +60,22 @@ resource "aws_iam_role" "publisher" {
 }
 resource "aws_iam_role_policy" "publisher" {
   for_each = aws_iam_role.publisher
-  name     = "sample-clinic-${each.key}-release-only"
-  role     = each.value.id
+  # Name kept from the sample-clinic-only policy so live changes in place.
+  name = "sample-clinic-${each.key}-release-only"
+  role = each.value.id
   policy = jsonencode({ Version = "2012-10-17", Statement = [
     {
       Sid      = "ListOrigin", Effect = "Allow", Action = ["s3:ListBucket"],
-      Resource = "arn:aws:s3:::${local.sites[each.key].bucket}"
+      Resource = [for target in local.publisher_targets[each.key] : "arn:aws:s3:::${target.bucket}"]
     },
     {
       Sid      = "ImmutableReleaseContent", Effect = "Allow", Action = ["s3:GetObject", "s3:PutObject"],
-      Resource = "arn:aws:s3:::${local.sites[each.key].bucket}/releases/*"
+      Resource = [for target in local.publisher_targets[each.key] : "arn:aws:s3:::${target.bucket}/releases/*"]
     },
     {
       Sid      = "SwitchOnlyVerifiedDistribution", Effect = "Allow",
       Action   = ["cloudfront:GetDistribution", "cloudfront:GetDistributionConfig", "cloudfront:UpdateDistribution", "cloudfront:CreateInvalidation", "cloudfront:ListInvalidations", "cloudfront:GetInvalidation"],
-      Resource = "arn:aws:cloudfront::209300895845:distribution/${local.sites[each.key].distribution}"
+      Resource = [for target in local.publisher_targets[each.key] : "arn:aws:cloudfront::209300895845:distribution/${target.distribution}"]
     }
   ] })
 }

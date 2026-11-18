@@ -184,7 +184,9 @@ its current names and publisher bindings.
   empty, except to exercise the owner-email claim of a URL purchase: then set it
   together with `acceptance_claim_test_targets` (placeholder
   `simy-hp-acceptance-claim-test-*` dev/prod destinations). These grant no
-  publisher role, so the claimed test site only proves the claim; it cannot be
+  publisher role, so the claimed test site only proves the claim (live uses
+  `clinic_sites` with origins from `infra/clinic-site` instead; see
+  `CLINIC_SITES.md`); it cannot be
   edited, previewed or published. Enable publication for the exact dedicated WordPress.com test
   origin and provide its reviewed publication gate reference. This workspace
   has no publisher roles for the sample-clinic distributions.

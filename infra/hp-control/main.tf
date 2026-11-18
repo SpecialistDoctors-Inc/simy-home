@@ -20,7 +20,15 @@ locals {
   publisher_sites = { for env, site in local.sites : env => site if !local.acceptance && (env == "dev" ? var.preview_enabled : var.publication_enabled) }
   # Acceptance has no publisher roles; its claim targets are placeholders so the
   # owner-email claim can be exercised without any preview or publish access.
-  claim_targets = { for site_id in [var.self_service_site_id] : site_id => (local.acceptance ? var.acceptance_claim_test_targets : local.publisher_sites) if site_id != "" }
+  sample_claim_targets = { for site_id in [var.self_service_site_id] : site_id => (local.acceptance ? var.acceptance_claim_test_targets : local.publisher_sites) if site_id != "" }
+  # Each clinic site prepared for a Payment Link purchase claims its own
+  # destinations. Acceptance never receives real clinic destinations.
+  claim_targets = merge(local.sample_claim_targets, local.acceptance ? {} : var.clinic_sites)
+  # A publisher role writes only the destinations of its environment: the
+  # sample clinic plus every registered clinic site.
+  publisher_targets = { for env, site in local.publisher_sites : env => concat([site], [for id in sort(keys(var.clinic_sites)) : var.clinic_sites[id][env]]) }
+  clinic_buckets    = flatten([for site in values(var.clinic_sites) : [site.dev.bucket, site.prod.bucket]])
+  clinic_dists      = flatten([for site in values(var.clinic_sites) : [site.dev.distribution, site.prod.distribution]])
 }
 resource "terraform_data" "guard" {
   lifecycle {
@@ -68,6 +76,20 @@ resource "terraform_data" "guard" {
     precondition {
       condition     = var.self_service_site_id == "" || ((local.acceptance || var.preview_enabled) && var.publication_enabled && var.preflight_secret_arn != "")
       error_message = "Self-service registration requires verified preview, publication and license bridge configuration."
+    }
+    precondition {
+      condition = length(var.clinic_sites) == 0 || (
+        !local.acceptance && var.preview_enabled && var.publication_enabled && var.preflight_secret_arn != ""
+      )
+      error_message = "Clinic sites need live preview, publication and the license bridge."
+    }
+    precondition {
+      condition = (!contains(keys(var.clinic_sites), var.self_service_site_id) &&
+        length(distinct(local.clinic_buckets)) == length(local.clinic_buckets) &&
+        length(distinct(local.clinic_dists)) == length(local.clinic_dists) &&
+        length(setintersection(toset(local.clinic_buckets), toset([for site in values(local.sites) : site.bucket]))) == 0 &&
+      length(setintersection(toset(local.clinic_dists), toset([for site in values(local.sites) : site.distribution]))) == 0)
+      error_message = "Every clinic site needs its own dev and prod bucket and distribution."
     }
     precondition {
       condition     = var.wordpress_test_origin == "" || (var.wordpress_secret_arn != "" && var.preflight_secret_arn != "" && var.publication_enabled)

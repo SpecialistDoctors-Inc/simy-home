@@ -34,11 +34,7 @@ def application():
     identity = Identity(store, issuer, client['client_id'], tokens.sign, GoogleExchange(client),
                         email_codes=email_codes(store))
     wordpress_arn = os.environ.get('HP_WORDPRESS_SECRET_ARN', '')
-    wordpress_origin = os.environ.get('HP_WORDPRESS_TEST_ORIGIN') if wordpress_arn else None
-    service = Service(store, publication_enabled=os.environ.get('HP_PUBLICATION_ENABLED') == 'true',
-        license_resolver=entitlement_resolver(secret),
-        claim_targets=json.loads(os.environ.get('HP_SITE_CLAIM_TARGETS', '{}')), wordpress_test_origin=wordpress_origin,
-        wordpress_paid_sites=wordpress_paid_sites(wordpress_arn))
+    service = api_service(store, secret)
     html = (Path(__file__).parent / 'ui' / 'dist' / 'publish.html').read_text()
     from transfers import Transfers
     preflight_arn = os.environ.get('HP_CONTROL_PREFLIGHT_SECRET_ARN', '')
@@ -52,6 +48,34 @@ def application():
                              if service.wordpress_test_origin or service.wordpress_paid_sites else None),
         transfers=Transfers(service, bucket, s3), onboarding=onboarding, stripe_webhook=stripe_webhook)
     return _app
+
+
+def api_service(store, secret):
+    wordpress_arn = os.environ.get('HP_WORDPRESS_SECRET_ARN', '')
+    return Service(store, publication_enabled=os.environ.get('HP_PUBLICATION_ENABLED') == 'true',
+        license_resolver=entitlement_resolver(secret),
+        claim_targets=json.loads(os.environ.get('HP_SITE_CLAIM_TARGETS', '{}')),
+        wordpress_test_origin=os.environ.get('HP_WORDPRESS_TEST_ORIGIN') if wordpress_arn else None,
+        wordpress_paid_sites=wordpress_paid_sites(wordpress_arn))
+
+
+def operator_task(event, *, store=None, service=None, send=None):
+    """Run one operator task sent by a direct IAM-authorized Lambda invocation.
+
+    API Gateway events always carry requestContext and never reach this path.
+    The only task tells a paid clinic that its prepared site is ready.
+    """
+    from clinic_ready import ClinicReady, SesMail
+    if event.get('hp_operator_task') != 'clinic_ready' or set(event) != {'hp_operator_task', 'subscription_id'}:
+        return {'status': 'invalid_task'}
+    store = store or DynamoStore(os.environ['HP_TABLE_NAME'])
+    service = service or api_service(store, Secrets())
+    sender = os.environ.get('HP_EMAIL_LOGIN_FROM', '')
+    if send is None and sender:
+        send = SesMail(sender)
+    result = ClinicReady(store, service, send, os.environ['HP_PUBLIC_BASE_URL']).notify(event['subscription_id'])
+    print(json.dumps({'event': 'hp_clinic_ready', 'status': result['status']}))
+    return result
 
 
 def email_codes(store):
@@ -111,6 +135,8 @@ def clinic_billing(store, service, identity, secret):
 
 
 def handler(event, context):
+    if 'hp_operator_task' in event and 'requestContext' not in event:
+        return operator_task(event)
     try:
         if event.get('rawPath') == '/.well-known/openai-apps-challenge':
             return domain_verification(event, DynamoStore(os.environ['HP_TABLE_NAME']),

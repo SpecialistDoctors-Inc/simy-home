@@ -65,6 +65,23 @@ variable "self_service_site_id" {
     error_message = "Use a valid managed site ID or leave self-service registration disabled."
   }
 }
+variable "clinic_sites" {
+  description = "Live only: site_id => dev/prod bucket and CloudFront distribution of each operator-prepared clinic site that a Payment Link purchase may claim. Each entry also extends the publisher roles to exactly those destinations."
+  type = map(object({
+    dev  = object({ bucket = string, distribution = string })
+    prod = object({ bucket = string, distribution = string })
+  }))
+  default = {}
+  validation {
+    condition = alltrue([for id, site in var.clinic_sites : can(regex("^[a-z][a-z0-9-]{1,62}$", id)) && alltrue([
+      for target in [site.dev, site.prod] :
+      can(regex("^[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]$", target.bucket)) && !strcontains(target.bucket, "..") &&
+      !startswith(target.bucket, "simy-sample-clinic-") && !startswith(target.bucket, "simy-hp-acceptance-claim-test-") &&
+      can(regex("^[A-Z0-9]{5,32}$", target.distribution))
+    ]) && site.dev.bucket != site.prod.bucket && site.dev.distribution != site.prod.distribution])
+    error_message = "Use valid site IDs and separate dev/prod buckets and CloudFront distribution IDs for each clinic site."
+  }
+}
 variable "acceptance_claim_test_targets" {
   description = "Acceptance only: placeholder dev/prod destinations that self_service_site_id may claim. Grants no publisher access; the claimed test site cannot be previewed or published."
   type        = map(object({ bucket = string, distribution = string }))

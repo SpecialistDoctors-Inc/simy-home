@@ -2,10 +2,10 @@ name: Check standalone HP control
 
 on:
   pull_request:
-    paths: ['examples/hp-management/control/**', 'infra/hp-control/**', '.github/workflows/check-hp-control.yml']
+    paths: ['examples/hp-management/control/**', 'infra/hp-control/**', 'infra/clinic-site/**', '.github/workflows/check-hp-control.yml']
   push:
     branches: [dev]
-    paths: ['examples/hp-management/control/**', 'infra/hp-control/**', '.github/workflows/check-hp-control.yml']
+    paths: ['examples/hp-management/control/**', 'infra/hp-control/**', 'infra/clinic-site/**', '.github/workflows/check-hp-control.yml']
 
 permissions:
   contents: read
@@ -45,6 +45,17 @@ jobs:
       - run: terraform -chdir=infra/hp-control fmt -check -recursive
       - run: terraform -chdir=infra/hp-control init -backend=false -input=false
       - run: terraform -chdir=infra/hp-control validate
+      - name: Check clinic site claim targets and publisher scope (mocked AWS, plan only)
+        run: terraform -chdir=infra/hp-control test
+        env:
+          TF_WORKSPACE: hp-control
+      - run: terraform -chdir=infra/clinic-site fmt -check -recursive
+      - run: terraform -chdir=infra/clinic-site init -backend=false -input=false
+      - run: terraform -chdir=infra/clinic-site validate
+      - name: Check the per-clinic site origins (mocked AWS, plan only)
+        run: terraform -chdir=infra/clinic-site test
+        env:
+          TF_WORKSPACE: clinic-site-clinic-a
   renderer:
     runs-on: ubuntu-latest
     steps:

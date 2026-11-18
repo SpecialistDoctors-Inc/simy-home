@@ -119,7 +119,10 @@ Control assigns the site, its repository and the owner's read, edit and publish
 roles in one transaction. The license check still applies to all operations.
 Retries for the same account and organization are safe while the code is valid.
 Set `self_service_site_id` to the site ID for this stack's verified publisher
-bindings. Registration and subsequent checkout preflight reject a missing or
+bindings. Clinic sites prepared for Payment Link purchases are listed instead in
+the live-only `clinic_sites` map (site ID to dev/prod bucket and distribution),
+which also extends the publisher roles to exactly those destinations; see
+`CLINIC_SITES.md` for the design and operator runbook. Registration and subsequent checkout preflight reject a missing or
 mismatched preview or production destination.
 
 For signups without a setup code, use `provision_site.py --site
