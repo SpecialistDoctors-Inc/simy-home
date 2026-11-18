@@ -26,8 +26,8 @@
   <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "SIMY ロセンズ｜地図からはじめる路線価評価", "description": "会議の整理、資料の確認、下書きを支援するSIMY。ロセンズでは、住所で土地を探し、路線価と評価額の試算を確認できます。", "url": "https://simy.one/for/rosenz/", "inLanguage": "ja", "publisher": {"@type": "Organization", "name": "SIMY", "url": "https://simy.one/"}}</script>
   <link rel="icon" href="/favicon-32.png" type="image/png">
   <link rel="stylesheet" href="/site-theme.css">
-  <link rel="stylesheet" href="./rosenz.css">
-  <script src="./demo.js" defer></script>
+  <link rel="stylesheet" href="./rosenz.css?v=2">
+  <script src="./demo.js?v=2" defer></script>
 <link rel="stylesheet" href="/site-header.css?v=20261021-pharma-1">
 <script src="/site-header.js?v=59ee9a88c8e3" defer></script>
 <!-- HP industry navigation -->
@@ -152,8 +152,8 @@
       <div class="shell hero-grid">
         <div class="hero-copy">
           <p class="hero-label">SIMY ロセンズ</p>
-          <h1 id="hero-title">この土地、いくら？<br>住所から探して、<br>計算の根拠まで。</h1>
-          <p class="intro">ロセンズは、会議の整理・資料の確認・下書きを支援する<a href="/ja.html">SIMY</a>の路線価評価機能です。住所から土地を探し、路線価や地積、補正を見ながら評価額を試算できます。</p>
+          <h1 id="hero-title">路線価を調べ、<br>土地評価額を試算。</h1>
+          <p class="intro">住所で土地を探し、路線価・地積・補正から評価額と計算の内訳を確認できます。会議の整理や資料確認、下書きを支援する<a href="/ja.html">SIMY</a>の路線価評価機能です。</p>
           <div class="hero-actions">
             <a class="button button-primary" href="#demo"><span class="play-icon" aria-hidden="true"></span>実際の操作を見る</a>
             <a class="pricing-link" href="#pricing">料金を見る</a>
@@ -181,7 +181,7 @@
               <source src="./assets/rosenz-walkthrough.mp4" type="video/mp4">
               <a href="./assets/rosenz-walkthrough.mp4">操作動画（MP4）を開く</a>
             </video>
-            <button id="walkthrough-play" class="button button-primary walkthrough-play" type="button" aria-controls="walkthrough-video" hidden><span class="play-icon" aria-hidden="true"></span>動画を再生</button>
+            <button id="walkthrough-play" class="button button-primary walkthrough-play" type="button" aria-controls="walkthrough-video" hidden><span class="play-icon" aria-hidden="true"></span><span id="walkthrough-play-label">動画を再生</span></button>
           </div>
           <p class="walkthrough-fallback" id="walkthrough-fallback" hidden>動画を再生できない場合は、<a href="./assets/rosenz-walkthrough.mp4">MP4ファイルを開く</a>ことができます。</p>
           <figcaption>
@@ -189,23 +189,28 @@
               <p data-start="0"><strong>住所で土地を探す</strong>矢印が指す「検索」を押すと、地図が対象地まで拡大します。</p>
               <p data-start="3.3" hidden><strong>地図で筆を選ぶ</strong>隣り合う筆を選ぶと色が付き、地積の合計が表示されます。</p>
               <p data-start="10.6" hidden><strong>試算の根拠を確認する</strong>正面路線価、地積、奥行や形状に応じた補正を確認します。</p>
-              <div data-start="16.4" hidden>
-                <p><strong>評価額（試算） <span class="tabular-nums">23,611,324,080 円</span></strong></p>
-                <dl class="tabular-nums">
-                  <div><dt>正面路線価 × 奥行補正率</dt><dd>6,660,000 円／㎡ × 0.88</dd></div>
-                  <div><dt>形状補正後の単価</dt><dd>5,802,192 円／㎡</dd></div>
-                  <div><dt>単価 × 地積</dt><dd>5,802,192 円／㎡ × 4,069.38 ㎡</dd></div>
-                </dl>
-              </div>
+              <div data-start="16.4" id="walkthrough-result-caption" hidden></div>
             </div>
             <ol class="walkthrough-steps" id="walkthrough-steps">
               <li><strong>住所で探す</strong><span>検索すると対象の場所に地図が拡大します。</span></li>
               <li><strong>地図で筆を選ぶ</strong><span>隣り合う筆も選び、地積の合計を確認します。</span></li>
               <li><strong>試算の内訳を見る</strong><span>正面路線価や地積、補正率と評価額を確認します。</span></li>
             </ol>
+            <details class="walkthrough-transcript">
+              <summary>動画の試算例を読む</summary>
+              <div class="walkthrough-estimate">
+                <p><strong>試算額（動画の表示） <span class="tabular-nums">23,611,324,080 円</span></strong></p>
+                <dl class="tabular-nums">
+                  <div><dt>正面路線価 × 奥行価格補正率</dt><dd>6,660,000 円／㎡ × 0.88 ＝ 5,860,800 円／㎡</dd></div>
+                  <div><dt>形状を補正した後の単価</dt><dd>5,860,800 円／㎡ × 0.99 ＝ 5,802,192 円／㎡</dd></div>
+                  <div><dt>補正後の単価 × 地積</dt><dd>5,802,192 円／㎡ × 4,069.38 ㎡</dd></div>
+                </dl>
+              </div>
+            </details>
           </figcaption>
         </figure>
-        <p class="demo-note">開発中の操作画面を使用し、地図と筆の選択範囲は説明用に編集しています。金額は試算例です。音声はありません。地図出典 <a href="https://maps.gsi.go.jp/development/ichiran.html">国土地理院「地理院タイル（淡色地図）」</a>。路線価の出典 <a href="https://www.rosenka.nta.go.jp/">国税庁「財産評価基準書」</a>。</p>
+        <p class="demo-note">申告などに用いる前に、対象年分の<a href="https://www.rosenka.nta.go.jp/">国税庁の路線価図・評価倍率表</a>、地積、接道や敷地の形状をご確認ください。</p>
+        <p class="demo-note">開発中の画面による試算例です。地図と筆の選択範囲は説明用に編集しています。音声はありません。地図出典 <a href="https://maps.gsi.go.jp/development/ichiran.html">国土地理院「地理院タイル（淡色地図）」</a>。</p>
       </div>
     </section>
 
@@ -252,7 +257,10 @@
               <div><dt>月60件を超えた分</dt><dd>1件300円（税別）／330円（税込）</dd></div>
             </dl>
           </div>
-          <a class="button button-primary" href="/contact.html?lang=ja">料金・導入について問い合わせる</a>
+          <div class="pricing-contact">
+            <a class="button button-primary" href="mailto:sales@simy.one?subject=SIMY%20%E3%83%AD%E3%82%BB%E3%83%B3%E3%82%BA%E3%81%AE%E5%B0%8E%E5%85%A5%E7%9B%B8%E8%AB%87">ロセンズの導入を相談する</a>
+            <p>sales@simy.one</p>
+          </div>
         </div>
       </div>
     </section>
