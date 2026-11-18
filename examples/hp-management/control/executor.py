@@ -40,8 +40,11 @@ class SafeToResume(ReconciliationRequired):
 class Executor:
     def __init__(self, store, github_factory, drive, artifacts, validator=None,
                  publisher=None, clock=time.time, publication_enabled=False, lease_seconds=300, preview_publisher=None, max_retry_attempts=8, browser_validator=None,
-                 license_resolver=None, wordpress=None, wordpress_test_origin=None, wordpress_paid_sites=False):
+                 license_resolver=None, wordpress=None, wordpress_test_origin=None, wordpress_paid_sites=False,
+                 owner_notices=False):
         self.store, self.github_factory, self.drive, self.artifacts = store, github_factory, drive, artifacts
+        # Only mark owner notices when the consumer can actually send them.
+        self.owner_notices = bool(owner_notices)
         self.validator, self.publisher, self.clock = validator, publisher, clock
         if type(max_retry_attempts) is not int or not 1 <= max_retry_attempts <= 20:
             raise ValueError("invalid_retry_budget")
@@ -622,6 +625,12 @@ class _Run:
             operation['completed_at'] = int(self.executor.clock())
             if self.site.get('reporting_enabled') is True and result.get('kind') not in ('conflicts', 'no_changes'):
                 operation.update(reporting_required=True, reporting_state='pending', queue_state='pending')
+            elif self.executor.owner_notices:
+                from owner_notice import wanted
+                if wanted(self.site, result):
+                    # Self-service sites have no reporting binding; the consumer
+                    # mails their owner once (see owner_notice.py).
+                    operation['owner_notice'] = 'pending'
         site_write = any(w.key == 'site:' + self.op['site_id'] for w in writes)
         checks = [] if status != 'completed' else [Check('principal:' + self.op['subject'], self.member['_version'])]
         if status == 'completed' and not site_write:

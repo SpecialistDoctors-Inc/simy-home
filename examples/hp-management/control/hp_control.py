@@ -272,7 +272,14 @@ def consumer():
     return Executor(store, github, drive, artifacts, workflow, publisher,
         publication_enabled=os.environ.get('HP_PUBLICATION_ENABLED') == 'true', preview_publisher=preview_publisher,
         lease_seconds=960, browser_validator=browser, license_resolver=entitlement_resolver(secret),
-        wordpress=wordpress, wordpress_test_origin=wordpress_origin, wordpress_paid_sites=paid_sites)
+        wordpress=wordpress, wordpress_test_origin=wordpress_origin, wordpress_paid_sites=paid_sites,
+        owner_notices=bool(os.environ.get('HP_OWNER_NOTICE_FROM')))
+
+
+def owner_notifier(store):
+    from clinic_ready import SesMail
+    from owner_notice import OwnerNotifier
+    return OwnerNotifier(store, SesMail(os.environ['HP_OWNER_NOTICE_FROM']))
 
 
 def defer_admission_conflict(executor, row):
@@ -312,8 +319,30 @@ def defer_admission_conflict(executor, row):
     return True
 
 
-def consume_commands(event, context, *, executor=None, reporter=None):
+def consume_commands(event, context, *, executor=None, reporter=None, notifier=None):
     executor = executor or consumer()
+    result = _consume_commands(event, executor, reporter)
+    if getattr(executor, 'owner_notices', False):
+        for record in event.get('Records', []):
+            notifier = _notify_owner(executor, record, notifier)
+    return result
+
+
+def _notify_owner(executor, record, notifier):
+    """Best effort: mail a self-service site owner; never changes the delivery outcome."""
+    try:
+        body = json.loads(record['body'])
+        operation_id = body['operation_id']
+        saved = executor.store.get('operation:' + operation_id) if isinstance(operation_id, str) else None
+        if saved and saved.get('status') == 'completed' and saved.get('owner_notice') == 'pending':
+            notifier = notifier or owner_notifier(executor.store)
+            notifier.notify(operation_id)
+    except Exception:
+        print(json.dumps({'event': 'hp_owner_notice_error'}))
+    return notifier
+
+
+def _consume_commands(event, executor, reporter):
     failures = []
     for record in event.get('Records', []):
         operation_id = None
