@@ -205,7 +205,8 @@ test("bilingual comics use real speech text inside the frame and preserve the sa
     assert.doesNotMatch(html, /release-crew-(?:ja|en)\.webp/);
     if (locale === "en") {
       const main = html.match(/<main[\s\S]*?<\/main>/)[0].replace(/<a[^>]*lang="ja"[^>]*>日本語<\/a>/g, "");
-      assert.doesNotMatch(main, /[\u3040-\u30ff\u3400-\u9fff]/u);
+      // Product brands keep their approved Japanese spelling in every locale.
+      assert.doesNotMatch(main.replaceAll("SIMY 開発支援", "SIMY Development Support").replaceAll("SIMY ロセンズ", "SIMY Rosenz"), /[\u3040-\u30ff\u3400-\u9fff]/u);
       assert.match(main, /English interface/);
       assert.match(main, /SIMY CLI: \$0 additional fee/);
       assert.match(main, /href="\/download\/en\.html"/);

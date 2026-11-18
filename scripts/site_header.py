@@ -134,7 +134,8 @@ def homepage_content():
     return json.loads(subprocess.check_output(["node", str(ROOT / "scripts/home-content.cjs")], text=True))
 
 def apply(source, path):
-    if not needs_header(source, path): return source
+    from service_pricing_2026_11 import apply as apply_service_pricing
+    if not needs_header(source, path): return apply_service_pricing(source, path)
     locale_match = re.search(r'<html[^>]*lang="([^" ]+)"', source)
     locale = locale_match.group(1) if locale_match else "en"
     if locale not in LOCALES: locale = "en"
@@ -165,7 +166,7 @@ def apply(source, path):
     if locale == 'ja' or "data-story-scene" in source:
         from home_manga_locales import localized_header
         source = localized_header(source, locale, homepage_content())
-    return apply_locale_navigation(apply_social_preview(source, path))
+    return apply_service_pricing(apply_locale_navigation(apply_social_preview(source, path)), path)
 
 if __name__ == "__main__":
     cli = argparse.ArgumentParser(description=__doc__)

@@ -1,0 +1,58 @@
+{
+  "scope": "local browser verification; no deployment",
+  "routes": [
+    "for/engineers/index.html",
+    "for/en/engineers/index.html",
+    "for/es/engineers/index.html",
+    "for/fr/engineers/index.html",
+    "for/hi/engineers/index.html",
+    "for/zh-hans/engineers/index.html",
+    "for/financial-planners/index.html",
+    "for/en/financial-planners/index.html",
+    "for/es/financial-planners/index.html",
+    "for/fr/financial-planners/index.html",
+    "for/hi/financial-planners/index.html",
+    "for/zh-hans/financial-planners/index.html",
+    "for/pharmaceutical-companies/index.html",
+    "for/en/pharmaceutical-companies/index.html",
+    "for/es/pharmaceutical-companies/index.html",
+    "for/fr/pharmaceutical-companies/index.html",
+    "for/hi/pharmaceutical-companies/index.html",
+    "for/zh-hans/pharmaceutical-companies/index.html",
+    "for/sales/index.html",
+    "for/en/sales/index.html",
+    "for/rosenz/index.html",
+    "hp-management/index.html",
+    "hp-management/clinic/index.html",
+    "hp-management/law-firm.html"
+  ],
+  "viewportChecks": [
+    {
+      "width": 1280,
+      "height": 900,
+      "pages": 24,
+      "horizontalOverflowFailures": 0,
+      "serviceSectionMissing": 0
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "pages": 24,
+      "horizontalOverflowFailures": 0,
+      "serviceSectionMissing": 0
+    }
+  ],
+  "tests": {
+    "passed": 1645,
+    "failed": 0,
+    "skipped": 0
+  },
+  "baselineCommit": "5b2778c219671a10663efdfde9a9bbd63a7e249e",
+  "preserved": "existing links/actions, checkout configuration/JS, published pricing announcement and 6 localized home files",
+  "limitations": [
+    "tax/gross before-confirmation app UI agreement unverified",
+    "iOS actual purchase/restore to entitlement unverified",
+    "Stripe test key not observed in current process environment"
+  ],
+  "publication": "not authorized for this service-page change"
+}
