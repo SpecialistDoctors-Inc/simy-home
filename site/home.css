@@ -5960,3 +5960,9 @@ html[lang="hi"] .hero-lead {
   border-radius: var(--radius-lg);
   background: #fff;
 }
+
+/* Advance notice is separate from the current-price signup table. */
+.pricing-announcement { margin: 0 0 1.5rem; padding: 1rem 1.25rem; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--paper-light); }
+.pricing-announcement p { margin: 0; }
+.pricing-announcement p + p { margin-top: .5rem; }
+.pricing-announcement a { color: var(--blue-deep); font-weight: 600; text-underline-offset: .2em; }

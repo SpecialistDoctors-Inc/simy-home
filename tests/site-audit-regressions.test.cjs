@@ -28,7 +28,7 @@ test('every shared header exposes deployable guide and legal destinations', () =
     assert.ok(android?.endsWith('#android'), `${file}: Android badge has an explained destination`);
     assert.ok(fs.readFileSync(path.join(site,android.split('#')[0]),'utf8').includes('id="android"'));
   }
-  assert.equal(checked,183); // Includes the SIMY ロセンズ landing page.
+  assert.equal(checked,184); // Includes Rosenz and the advance pricing announcement.
 });
 
 test('seller pricing describes tax separately and uses the verified name', () => {
