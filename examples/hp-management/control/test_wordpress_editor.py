@@ -191,8 +191,11 @@ class WordPressEditorTest(unittest.TestCase):
         pending = sorted((row['result']['kind'], key[len('operation:'):]) for key, row in store.rows.items()
                          if key.startswith('operation:') and row.get('owner_notice') == 'pending')
         self.assertEqual([kind for kind, _ in pending], ['preview', 'published'])
-        member = store.get('principal:' + SUBJECT)
-        store.put('principal:' + SUBJECT, {**member, 'email': 'Owner@Clinic.example'}, member['_version'])
+        # The purchase page binds the subscription to the owner and the address it
+        # verified at sign-in (StripeLicenses.bind); the principal has no email.
+        self.assertNotIn('email', store.get('principal:' + SUBJECT))
+        row = store.get('stripe-subscription:' + sub)
+        store.put('stripe-subscription:' + sub, {**row, 'subject_email': 'Owner@Clinic.example'}, row['_version'])
         sent = []
         notifier = OwnerNotifier(store, lambda to, subject, body: sent.append((to, subject, body)))
         self.assertEqual([notifier.notify(op) for _, op in pending], ['sent', 'sent'])

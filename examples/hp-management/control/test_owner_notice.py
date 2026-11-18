@@ -37,6 +37,16 @@ class OwnerNoticeTest(unittest.TestCase):
         self.assertEqual(store.get('operation:op-1')['owner_notice'], 'failed')
         self.assertIsNone(OwnerNotifier(store, broken).notify('op-1'))
 
+    def test_recipient_is_the_subscription_address_bound_to_the_owner(self):
+        from owner_notice import recipient
+        store = seeded(email=None)
+        site = {**SITE, 'license_policy': {'mode': 'stripe', 'subscription_id': 'sub_' + 'A' * 24}}
+        store.put('stripe-subscription:sub_' + 'A' * 24, {'subject': 'email-abc', 'subject_email': 'Bought@Clinic.example'})
+        self.assertEqual(recipient(store, site), 'bought@clinic.example')
+        # A subscription bound to someone else is never used.
+        store.put('stripe-subscription:sub_' + 'B' * 24, {'subject': 'other', 'subject_email': 'other@clinic.example'})
+        self.assertIsNone(recipient(store, {**site, 'license_policy': {'mode': 'stripe', 'subscription_id': 'sub_' + 'B' * 24}}))
+
     def test_owner_without_a_valid_mailbox_is_skipped(self):
         store = seeded(email='not an address')
         sent = []

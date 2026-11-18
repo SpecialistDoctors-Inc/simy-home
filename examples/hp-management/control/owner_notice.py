@@ -44,6 +44,32 @@ def message(site, result):
     return subject, body + FOOTER
 
 
+def recipient(store, site):
+    """The owner's verified address, or None.
+
+    A self-service owner is created by the purchase page, which records the
+    address it verified at sign-in on the subscription (``subject_email``) bound
+    to the same subject; the principal itself carries no email. Operator-invited
+    principals do carry one, so it is the fallback.
+    """
+    owner = site.get('owner_subject')
+    if not isinstance(owner, str) or not owner:
+        return None
+    policy = site.get('license_policy') or {}
+    subscription_id = policy.get('subscription_id') if policy.get('mode') == 'stripe' else None
+    if isinstance(subscription_id, str) and subscription_id:
+        from stripe_billing import BillingRejected, subscription_key
+        try:
+            purchase = store.get(subscription_key(subscription_id)) or {}
+        except BillingRejected:
+            purchase = {}
+        if purchase.get('subject') == owner:
+            address = normalize_email(purchase.get('subject_email'))
+            if address:
+                return address
+    return normalize_email((store.get('principal:' + owner) or {}).get('email'))
+
+
 class OwnerNotifier:
     def __init__(self, store, send):
         self.store, self.send = store, send
@@ -58,8 +84,7 @@ class OwnerNotifier:
         except Conflict:
             return None  # another delivery reserved it
         site = self.store.get('site:' + op['site_id']) or {}
-        member = self.store.get('principal:' + site.get('owner_subject', '')) if site.get('owner_subject') else None
-        to = normalize_email((member or {}).get('email'))
+        to = recipient(self.store, site)
         state = 'skipped'
         if to and wanted(site, op.get('result')):
             subject, body = message(site, op['result'])
