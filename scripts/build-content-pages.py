@@ -32,6 +32,9 @@ LABELS = {
 
 
 def ref(ident, lang):
+    if ident == 'rosenz':
+        return ('/for/rosenz/', 'SIMY ロセンズ｜路線価評価',
+                '住所で土地を探し、地図で筆を選んで路線価と評価額の試算を確認する。')
     if ident == 'clinic':
         return ('/hp-management/', 'HP管理｜診断・見守り・更新', 'ホームページの診断から、見守り、更新まで。業界に合わせた管理をご案内します。')
     if ident == 'pharmaceutical-companies':
