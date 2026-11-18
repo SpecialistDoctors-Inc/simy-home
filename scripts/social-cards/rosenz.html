@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ja">
+<meta charset="utf-8">
+<title>SIMY ロセンズ</title>
+<link rel="stylesheet" href="../../site/site-theme.css">
+<style>
+  * { box-sizing: border-box; }
+  body {
+    width: 1200px;
+    height: 630px;
+    margin: 0;
+    color: var(--ink);
+    background: var(--paper);
+    font-family: Inter, "Hiragino Sans", Meiryo, sans-serif;
+  }
+  main {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 480px 1fr;
+    align-items: center;
+    gap: 32px;
+    padding: 48px;
+    border-bottom: 10px solid var(--blue-deep);
+  }
+  p, h1, figure { margin: 0; }
+  .brand { display: flex; align-items: center; gap: 12px; font-size: 40px; font-weight: 700; }
+  .brand img { width: 56px; height: 56px; }
+  .simy { margin: 12px 0 24px; font-size: 30px; line-height: 1.38; color: var(--ink-soft); }
+  h1 { font-size: 46px; line-height: 1.38; }
+  .demo { margin-top: 20px; font-size: 26px; font-weight: 600; color: var(--blue-deep); }
+  figure { border: 2px solid var(--ink); box-shadow: 6px 6px var(--ink); }
+  figure img { display: block; width: 100%; height: auto; }
+</style>
+<main>
+  <div>
+    <p class="brand"><img src="../../site/simy-icon-56.png" alt="">SIMY ロセンズ</p>
+    <p class="simy">会議の整理・資料の確認・<br>下書きを支援</p>
+    <h1>地図から、<br>土地評価の根拠まで。</h1>
+    <p class="demo">住所検索・路線価・評価額の試算</p>
+  </div>
+  <figure><img src="../../site/for/rosenz/assets/consultation.webp" width="1448" height="1086" alt="税理士が相談者に土地の地図を見せる3コマ漫画"></figure>
+</main>
+</html>
