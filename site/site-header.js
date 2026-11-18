@@ -35,7 +35,8 @@
       }
       else if (url.pathname.includes('/pharmaceutical-companies/')) url.pathname = locale === 'ja' ? '/for/pharmaceutical-companies/' : `/for/${locale.toLowerCase()}/pharmaceutical-companies/`;
       else if (url.pathname.includes('/financial-planners/')) url.pathname = locale === 'ja' ? '/for/financial-planners/' : `/for/${locale.toLowerCase()}/financial-planners/`;
-      else if (url.pathname.startsWith('/for/')) url.pathname = url.pathname.includes('engineers') ? (locale === 'ja' ? '/for/engineers/' : `/for/${locale.toLowerCase()}/engineers/`) : (locale === 'ja' ? '/for/' : '/for/en/');
+      else if (url.pathname.startsWith('/for/') && url.pathname.includes('engineers')) url.pathname = locale === 'ja' ? '/for/engineers/' : `/for/${locale.toLowerCase()}/engineers/`;
+      else if (['/for/', '/for/en/'].includes(url.pathname)) url.pathname = locale === 'ja' ? '/for/' : '/for/en/';
       else if (url.pathname.startsWith('/guides/')) url.pathname = locale === 'ja' ? '/guides/index.html' : `/guides/${locale.toLowerCase()}/index.html`;
       if (url.searchParams.has('lang')) url.searchParams.set('lang', locale);
       link.href = url.pathname + url.search + url.hash;
