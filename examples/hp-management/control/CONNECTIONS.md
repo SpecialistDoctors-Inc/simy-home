@@ -69,6 +69,16 @@ address with an active principal or an unclaimed invitation, and answers the
 same either way. Unlike Google's immutable subject, a mailbox principal follows
 whoever controls that mailbox; disable the principal when a clinic loses one.
 
+## Owner notices for self-service sites
+
+A site connected from the purchase page (WordPress.com, `owner_subject` set) has
+no request-sheet/Gmail reporting binding. When `email_login_from` is set, the
+consumer also receives it as `HP_OWNER_NOTICE_FROM` and mails the owner's
+verified address once when a preview is ready and once when a publication
+completes (`owner_notice.py`). Delivery is at most once per operation
+(`pending` → `sending` → `sent`/`failed`/`skipped`); a lost send is not retried.
+Sites with `reporting_enabled` keep their existing sheet and Gmail reports.
+
 ## HP plugin connection
 
 Register the HTTPS MCP endpoint `https://hp-control.simy.one/mcp` with Google-backed

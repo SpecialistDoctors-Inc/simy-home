@@ -13,6 +13,7 @@ from bundles import sha256
 from cloud_providers import S3Artifacts
 from executor import Executor
 from mcp_adapter import App
+from owner_notice import OwnerNotifier
 from service import Service, effective_roles
 from store import MemoryStore
 from transfers import Transfers
@@ -133,7 +134,7 @@ class WordPressEditorTest(unittest.TestCase):
         def build(paid_sites):
             service = Service(store, publication_enabled=True, wordpress_paid_sites=paid_sites)
             executor = Executor(store, None, None, artifacts, publication_enabled=True, wordpress=editor,
-                                wordpress_paid_sites=paid_sites)
+                                wordpress_paid_sites=paid_sites, owner_notices=True)
             app = App(None, service, lambda _: claims, None, None, wordpress_transfers=transfers,
                       transfers=Transfers(service, 'fixture', objects))
             return service, executor, app
@@ -184,6 +185,25 @@ class WordPressEditorTest(unittest.TestCase):
         self.assertEqual(published['result']['kind'], 'published')
         current_page = '/wp/v2/sites/123/pages/456?context=edit'
         self.assertEqual(fixture.replies[current_page]['content']['raw'], '<h1>Edited clinic</h1>')
+
+        # The self-service site has no reporting binding: its owner is mailed
+        # once for the ready preview and once for the publication.
+        pending = sorted((row['result']['kind'], key[len('operation:'):]) for key, row in store.rows.items()
+                         if key.startswith('operation:') and row.get('owner_notice') == 'pending')
+        self.assertEqual([kind for kind, _ in pending], ['preview', 'published'])
+        # The purchase page binds the subscription to the owner and the address it
+        # verified at sign-in (StripeLicenses.bind); the principal has no email.
+        self.assertNotIn('email', store.get('principal:' + SUBJECT))
+        row = store.get('stripe-subscription:' + sub)
+        store.put('stripe-subscription:' + sub, {**row, 'subject_email': 'Owner@Clinic.example'}, row['_version'])
+        sent = []
+        notifier = OwnerNotifier(store, lambda to, subject, body: sent.append((to, subject, body)))
+        self.assertEqual([notifier.notify(op) for _, op in pending], ['sent', 'sent'])
+        self.assertEqual([notifier.notify(op) for _, op in pending], [None, None])
+        self.assertEqual([to for to, _, _ in sent], ['owner@clinic.example'] * 2)
+        self.assertIn('確認用の内容ができました', sent[0][1])
+        self.assertIn('ホームページを公開しました', sent[1][1])
+        self.assertIn(ORIGIN, sent[1][2])
 
         # Once the subscription is cancelled, nothing more can be admitted.
         row = store.get('stripe-subscription:' + sub)

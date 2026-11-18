@@ -244,6 +244,7 @@ resource "aws_lambda_function" "runtime" {
       HP_GOOGLE_OPERATOR_SECRET_ARN = var.google_operator_secret_arn
       HP_VALIDATOR_CONFIG           = jsonencode(local.validator_config)
       HP_PUBLISHER_ROLES            = jsonencode({ for env, role in aws_iam_role.publisher : env => role.arn })
+      HP_OWNER_NOTICE_FROM          = var.email_login_from
     } : {})
   }
   depends_on = [aws_cloudwatch_log_group.runtime, aws_iam_role_policy.runtime]

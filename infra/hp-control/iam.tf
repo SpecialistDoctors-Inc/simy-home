@@ -37,9 +37,10 @@ resource "aws_iam_role_policy" "runtime" {
     ] : [], each.key == "dispatcher" ? [{
       Sid      = "QueryPendingOutboxOnly", Effect = "Allow", Action = ["dynamodb:Query"],
       Resource = ["${aws_dynamodb_table.authority.arn}/index/queue-state", "${aws_dynamodb_table.authority.arn}/index/attention-state"]
-      }] : [], each.key == "api" && var.email_login_from != "" ? [{
-      # One-time sign-in codes only: one verified identity, one From address.
-      Sid       = "SignInCodeMailOnly", Effect = "Allow", Action = ["ses:SendEmail"],
+      }] : [], contains(["api", "consumer"], each.key) && var.email_login_from != "" ? [{
+      # api: one-time sign-in codes. consumer: preview/publish notices to the
+      # owner of a self-service site. One verified identity, one From address.
+      Sid       = "ClinicMailFromOnly", Effect = "Allow", Action = ["ses:SendEmail"],
       Resource  = "arn:aws:ses:${var.region}:${data.aws_caller_identity.current.account_id}:identity/simy.one",
       Condition = { StringEquals = { "ses:FromAddress" = var.email_login_from } }
       }] : [], each.key == "consumer" && length(local.publisher_sites) > 0 ? [{
