@@ -26,7 +26,10 @@ test('all 24 canonical service pages are mapped by function and reproducibly gen
   const old=baseline.actions['site/'+route.path];let now=links(current(html));
   for(const form of current(html).matchAll(/<form\b([^>]*)>/g)){const a=form[1].match(/action="([^"]*)"/),m=form[1].match(/method="([^"]*)"/);now.push('FORM:'+(a?.[1]||'')+':'+(m?.[1]||'get'));}
   if(route.existingContact)now.push(route.existingContact.href);
-  assert.deepEqual(now.sort(),old,route.path+' existing links');
+  const expected = route.locale === 'ja' && route.path.startsWith('for/')
+    ? [...old, '/for/rosenz/'].sort()
+    : old;
+  assert.deepEqual(now.sort(),expected,route.path+' existing links and common Japanese work navigation');
  }
 });
 test('prices and Base-inclusive arithmetic follow the approved specification in both currencies',()=>{

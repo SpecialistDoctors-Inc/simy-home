@@ -27,14 +27,16 @@ def header(locale, source, path):
         "Solutions": [("For your work", ("/for/" if locale == "ja" else "/for/en/")), ("For engineers", ("/for/engineers/" if locale == "ja" else f"/for/{locale.lower()}/engineers/")), ("For financial planners", ("/for/financial-planners/" if locale == "ja" else f"/for/{locale.lower()}/financial-planners/")), ("For pharmaceutical companies", "/for/" + ("" if locale == "ja" else locale.lower() + "/") + "pharmaceutical-companies/"), ("Use cases", base + "#use-cases")],
         "Resources": [("Guides", f"/guides/{suffix}index.html"), ("Compare", "/compare.html"), ("News", "/press-release.html"), ("About SIMY", "/about.html"), ("Security", "/security.html"), ("Contact", "/contact.html"), ("Legal & service information", "/legal.html"), ("Seller information", "/seller-info.html")],
     }
-    if path == SITE / 'ja.html':
+    rosenz_path = SITE / 'for/rosenz/index.html'
+    if locale == 'ja' and (path == SITE / 'ja.html' or path.is_relative_to(SITE / 'for')):
         groups['Solutions'].insert(-1, ('ロセンズ（路線価評価）', '/for/rosenz/'))
     def link(label, href):
         if label == "For pharmaceutical companies":
             label = {"ja": "製薬企業向け", "en": "For pharmaceutical companies", "es": "Para farmacéuticas", "fr": "Pour les laboratoires", "hi": "दवा कंपनियों के लिए", "zh-Hans": "面向制药企业"}[locale]
         if href.endswith(".html") and href in ["/integrations.html", "/compare.html", "/press-release.html", "/about.html", "/security.html", "/contact.html"]:
             href += "?lang=" + locale
-        return f'<a href="{html.escape(href, quote=True)}">{label}</a>'
+        current = ' aria-current="page"' if href == '/for/rosenz/' and path == rosenz_path else ''
+        return f'<a href="{html.escape(href, quote=True)}"{current}>{label}</a>'
     download = "/download.html" if locale == "ja" else f"/download/{locale.lower()}.html"
     stores = f'''<div class="sh-stores" role="group" aria-label="Mobile apps">
       <a class="sh-store" href="https://apps.apple.com/app/id6745385262"><img src="/assets/store-badges/app-store.svg" width="120" height="40" alt="Download on the App Store"></a>
