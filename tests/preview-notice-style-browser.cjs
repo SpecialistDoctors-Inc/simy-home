@@ -38,16 +38,26 @@ await browser.close();})().catch(e=>{console.error(e);process.exit(1)});
  assert.equal(await page.locator('.crop').first().evaluate(e=>getComputedStyle(e).overflowX),'auto');
  assert.equal(await page.locator('.deck').last().evaluate(e=>getComputedStyle(e).visibility),'hidden');
  assert.equal(await page.locator('.unrelated').evaluate(e=>getComputedStyle(e).visibility),'hidden');
- await page.setContent('<section aria-label="Field notes"><ol><li><time>2026/10/29</time><span>Short title</span><p>This is an existing description and it is much longer than the title.</p></li></ol></section>');
- await page.addScriptTag({path:path.resolve('site/preview-edit.js')});
- const separated=await page.evaluate(()=>{
-  const source=SimyPreviewEdit.index(document.documentElement.outerHTML);
-  const target=SimyPreviewEdit.inventory(source).find(n=>n.kind==='news').id;
-  const result=SimyPreviewEdit.applyPlan(source,{status:'edit',operations:[{type:'insert_notice',target,title:'New title',body:'New body',date:'2026-11-20'}]});
-  const list=new DOMParser().parseFromString(result.html,'text/html').querySelector('ol');
-  return [list.querySelector('li:first-child span')?.textContent,list.querySelector('li:first-child p')?.textContent];
- });
- assert.deepEqual(separated,['New title','New body']);
+ const time='<time>2026/10/29</time>';
+ const originalBody='<p class="field-b">This is an existing description much longer than the title.</p>';
+ const casesWithFields=[
+  time+'<span class="field-a">Short title</span>'+originalBody,
+  time+'<span>General</span><p class="field-a">The full descriptive news title</p>'+originalBody,
+  time+'<p class="field-a">The full descriptive news title</p>'+originalBody+'<span>More</span>',
+  '<p class="field-a">The full descriptive news title</p>'+time+originalBody,
+ ];
+ for(const fields of casesWithFields){
+  await page.setContent('<section aria-label="Field notes"><ol><li>'+fields+'</li></ol></section>');
+  await page.addScriptTag({path:path.resolve('site/preview-edit.js')});
+  const separated=await page.evaluate(()=>{
+   const source=SimyPreviewEdit.index(document.documentElement.outerHTML);
+   const target=SimyPreviewEdit.inventory(source).find(n=>n.kind==='news').id;
+   const result=SimyPreviewEdit.applyPlan(source,{status:'edit',operations:[{type:'insert_notice',target,title:'New title',body:'New body',date:'2026-11-20'}]});
+   const list=new DOMParser().parseFromString(result.html,'text/html').querySelector('ol');
+   return [list.querySelector('li:first-child .field-a')?.textContent,list.querySelector('li:first-child .field-b')?.textContent];
+  });
+  assert.deepEqual(separated,['New title','New body']);
+ }
  await page.setContent('<style>.q img{width:43%;height:auto}.p1{padding:7px 15px}.c1{font-family:serif}</style><main><h2>Resources</h2><div class="p1"><article class="q"><img width="160" height="90" src="sample.jpg" alt="Reference"><h3>First topic</h3><p>Original copy.</p></article><article class="q"><h3 class="c1">Second topic</h3><p>More information.</p></article></div><section class="box"><h3 class="c1">Original group</h3><p class="p1">Description</p></section></main>');
  await page.addScriptTag({path:path.resolve('site/preview-edit.js')});
  const prepared=await page.evaluate(()=>{
