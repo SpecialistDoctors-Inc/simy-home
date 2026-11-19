@@ -16,17 +16,17 @@
       "kind": "未取得資料",
       "title": "過去スレッドの依頼原文の網羅",
       "scope": "全199 HTML",
-      "before": "現ホスト索引677件のうち本文70件。関連する過去制作スレッド本文が欠けている。既存文書は二次資料。",
+      "before": "初回は現ホストに関連本文がなかった。その後Mac側の履歴一覧に接続し、通常59+archive1323を走査。候補56件と既知2件を取得。",
       "improvement": "保存先から原文を取得し要求・訂正・撤回・対象URL・実装・検証を対応付ける",
       "acceptance": "対象全スレッドの取得範囲と欠落を明示し、各要求を追跡できる",
       "evidence": "docs/sitewide-quality/requirements-coverage.md",
-      "status": "資料待ち",
-      "dependency": "過去Codex履歴の保存先／本文",
+      "status": "部分完了",
+      "dependency": "未取得の4スレッド原文／取得可能な保存先または共有URL",
       "estimatedEffort": "取得範囲による",
       "criterion": "R1",
       "owner": "Codex（実装・自動検証）",
-      "nextAction": "検証結果を記録して判定を更新",
-      "verificationResult": "未実施／必要な原文・資料・実利用データ・認証済み環境が未取得。"
+      "nextAction": "取得制限のある4件と一覧外履歴の範囲を確認し、要求候補・訂正の裁定と全ページへの対応付けを継続。",
+      "verificationResult": "58スレッドからユーザーメッセージ987件を取得。30の重要要件を手動で原文と対応付け。4スレッドの一部は単一ターンのサイズ上限で未取得。24の派生等スレッドではユーザーメッセージ0件で概要と原文を区別。"
     },
     {
       "id": "Q02",
@@ -662,17 +662,17 @@
       "kind": "本番反映",
       "title": "PR・CI・本番マージ・配信確認",
       "scope": "今回の変更",
-      "before": "前ターンの変更はローカルcommitのみ、本番未反映",
+      "before": "ローカル修正をoriginへpushしドラフトPR #494を作成。GitHub checkは成功。本番未マージ。",
       "improvement": "レビュー可能なPRを作り全受入条件を照合後にマージ。配信ジョブと実URLを検証",
-      "acceptance": "全目的の完了は要件網羅・残件解消・本番実URLの確認後",
-      "evidence": "git / GitHub Actions",
-      "status": "未着手",
-      "dependency": "Q01・検証と残件",
+      "acceptance": "検証済みの共通基盤修正を本番mainへマージし配信成功と変更ファイルの実URL一致を確認する。全過去要件の完了認定はQ01/Q28等に残す。",
+      "evidence": "https://github.com/SpecialistDoctors-Inc/simy-home/pull/494",
+      "status": "検証中",
+      "dependency": "今回の公開対象の差分レビュー・Static Site CI・配信検証。未取得履歴/外部効果測定は残件として独立管理。",
       "estimatedEffort": "CI/要件取得後",
       "criterion": "R1/R8",
       "owner": "Codex（実装・自動検証）",
-      "nextAction": "検証結果を記録して判定を更新",
-      "verificationResult": "未実施／必要な原文・資料・実利用データ・認証済み環境が未取得。"
+      "nextAction": "履歴を追加したExcelを確定し、PR #494のCI確認後にマージ・配信を検証。",
+      "verificationResult": "PR #494は差分レビュー済み、Static Site check成功。追加した履歴照合とExcel生成の検証を進めている。"
     },
     {
       "id": "Q36",
@@ -691,7 +691,7 @@
       "criterion": "R1/R8",
       "owner": "Codex（実装・自動検証）",
       "nextAction": "ローカル実装と定義した範囲の検証完了。本番反映はQ35、全要件の網羅はQ01で別管理。",
-      "verificationResult": "38管理項目、199ページ、2388ページ検査、2534schemaフィールド、1114FAQ対応、50専門家、740browserケースをExcelへ統合。保存・読み戻し検証。"
+      "verificationResult": "公開用15シートに38項目、199ページ、2388ページ検査、2534schemaフィールド、1114FAQ対応、50専門家、740browserケース。私用の履歴付き版では取得範囲・987原文・要求候補・訂正・同文集約の5シートを追加。"
     },
     {
       "id": "Q37",

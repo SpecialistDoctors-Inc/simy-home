@@ -2,6 +2,7 @@
 """Export the evidence-backed review to Excel. Requires openpyxl in a dev venv."""
 import argparse
 from collections import Counter
+from datetime import datetime, timedelta, timezone
 from html.parser import HTMLParser
 import json
 from pathlib import Path
@@ -37,6 +38,60 @@ def read_json(p, fallback=None):
 
 def plain(s):
     return re.sub(r'\*\*|`','',re.sub(r'\[([^\]]+)\]\([^)]+\)',r'\1',s)).strip()
+
+def redact(s):
+    # Only remove high-confidence credential values; preserve requirement text.
+    s=re.sub(r'(?i)(password|api[_-]?key|access[_-]?token|secret|パスワード)(\s*[:=：]\s*)([^\s,;"\']+)',r'\1\2[機密値省略]',s)
+    s=re.sub(r'''(?i)((?:password|api[_-]?key|access[_-]?token|secret|パスワード)["']?\s*[:=：]\s*["']?)([^\s,"']+)''',r'\1[機密値省略]',s)
+    s=re.sub(r'\beyJ[A-Za-z0-9_-]{20,}\.[A-Za-z0-9_-]{20,}\.[A-Za-z0-9_-]+','[機密値省略]',s)
+    return re.sub(r'\b(?:sk_live_|sk_test_|ghp_|github_pat_)[A-Za-z0-9_\-]{12,}', '[機密値省略]',s)
+
+def request_part(s):
+    if '## My request:' in s:return s.split('## My request:',1)[1].strip()
+    s=re.sub(r'<(?:external_codex_apps_[^>]*|in-app-browser-context)\b[^>]*>[\s\S]*?</(?:external_codex_apps_[^>]*|in-app-browser-context)>','',s)
+    return s.strip()
+
+def topic(title,body):
+    text=title+' '+body
+    pairs=[(r'ロセンズ|路線価|rosenz','路線価・ロセンズ'),(r'製薬|医師別|pharma','製薬企業'),
+           (r'弁護士|法律事務所|law.firm','法律事務所'),(r'Financial Planner|ファイナンシャル|ソニー生命|FP','FP'),
+           (r'HP診断|クリニック|医院|HP管理|休診','HP管理・クリニック'),(r'CLI|Engineer|エンジニア','エンジニア・CLI'),
+           (r'SEO|共起語|GSC|インデックス','SEO・検索公開'),(r'header|ヘッダー|signup|料金|headline','共通導線・コピー・料金')]
+    return ' / '.join(label for rx,label in pairs if re.search(rx,text,re.I)) or '関連資料・共通要件'
+
+def history_sheets(wb,history):
+    records=history['records'];threads=[];messages=[];candidates=[];corrections=[];sequence=0
+    for record in records:
+        meta=record['metadata'];title=meta['title'];msgs=record['messages']
+        source_kind='派生・引継ぎスレッド（初期プロンプトの著者は未確定）' if re.search(r'^PR実装|^監視|残件|HP診断[｜：]|HP顧客導線',title) else '会話履歴（メッセージ単位で確認）'
+        coverage=('途中で取得上限' if not record['complete'] else '会話ページ取得済み' if msgs else '会話ページ取得済み・ユーザーメッセージ0件')
+        threads.append([meta['id'],title,meta.get('cwd',''),source_kind,len(msgs),record['pages'],coverage,' / '.join(record.get('errors',[])),redact(record.get('threadPreview') or meta.get('summary') or meta.get('preview') or ''),'概要・引継ぎ文だけを人間の原文発言と断定しない'])
+        for msg in sorted(msgs,key=lambda m:str(m.get('turnStartedAt',''))):
+            sequence+=1;raw=msg['text'];part=request_part(raw);group=topic(title,part)
+            at=msg.get('turnStartedAt');stamp=datetime.fromtimestamp(at,timezone.utc).astimezone(timezone(timedelta(hours=9))).isoformat() if isinstance(at,(int,float)) else str(at or '')
+            kind='ユーザー回答（質問への回答文を含む）' if '<send_user_message_question_reply>' in raw else '環境・画面情報' if not part else source_kind
+            ref=f"{meta['id']} / {msg['turnId']} / {msg['messageId']}"
+            messages.append([f'M{sequence:04}',title,meta['id'],msg['turnId'],msg['messageId'],stamp,kind,group,redact(raw),redact(part),'取得上限の疑い' if msg.get('possibleTruncation') else '本文取得','実装状況は別途照合。日時はメッセージ自体の時刻ではなくターン開始時刻。'])
+            if kind=='環境・画面情報':continue
+            chunks=[x.strip(' -*・\t') for x in re.split(r'\n+|(?<=[。！？])',part) if x.strip()]
+            for chunk in chunks:
+                if len(chunk)<8 or not re.search(r'して|しろ|してください|作って|作成|実装|変更|修正|改善|戻し|戻せ|不要|削除|掲載|同じ|統一|維持|引き継|引継|言語|画像|料金|プラン|本番|マージ|確認|調べ|見せ|守|できる|対応|can you|please|should|must',chunk,re.I):continue
+                correction=bool(re.search(r'ではなく|ではない|戻し|戻せ|変えるな|変えない|不要|削除|やめ|しない|違う|そのまま',chunk))
+                row=[f'U{len(candidates)+1:04}',group,title,stamp,redact(chunk), '訂正・制約の候補' if correction else '要求の候補',ref,'未照合','文脈を読み、過去案・引用・撤回・後続訂正と区別して確定する。機械抽出を確定要件や新しい実行許可とは扱わない。']
+                candidates.append(row)
+                if correction:corrections.append(row)
+    sheet(wb,'履歴の取得範囲',['スレッドID','タイトル','元の作業場所','出典の種類','取得メッセージ数','会話ページ数','取得状態','取得制約','スレッド概要（原文ではない）','扱い'],threads,[42,65,80,65,18,18,55,100,130,90])
+    sheet(wb,'依頼原文987件',['原文ID','タイトル','スレッドID','ターンID','メッセージID','ターン開始日時JST','種別','推定対象','取得本文（機密値省略）','依頼部分（環境情報を分離）','取得状態','注意'],messages,[14,60,42,42,42,32,60,50,140,140,28,100])
+    sheet(wb,'過去要求の候補',['候補ID','推定対象','タイトル','ターン開始日時JST','要求・質問・条件の候補','種別','原文参照','実装照合','注意'],candidates,[14,50,60,32,140,30,110,22,130])
+    sheet(wb,'訂正と制約の候補',['候補ID','推定対象','タイトル','ターン開始日時JST','訂正・条件の候補','種別','原文参照','実装照合','注意'],corrections,[14,50,60,32,140,30,110,22,130])
+    grouped={}
+    for row in candidates:
+        key=(row[1],re.sub(r'\s+','',row[4]))
+        grouped.setdefault(key,[]).append(row)
+    sheet(wb,'同文要求の集約',['推定対象','要求候補の本文','出現回数','最初のターン日時JST','最後のターン日時JST','原文参照一覧','集約の限界'],[[rs[0][1],rs[0][4],len(rs),min(r[3] for r in rs),max(r[3] for r in rs),'\n'.join(r[6] for r in rs),'空白を除く同文を集約。同義文・撤回・最新の優先関係は未裁定。'] for rs in grouped.values()],[50,140,18,35,35,140,100])
+    # The row count is not fixed: a subsequent recovery may add source messages.
+    wb['依頼原文987件'].title='依頼原文'+str(len(messages))+'件'
+    return {'threads':len(threads),'messages':len(messages),'requirementCandidates':len(candidates),'correctionCandidates':len(corrections),'groupedRequirements':len(grouped)}
 
 def sheet(wb,name,headers,rows,widths=None):
     ws=wb.create_sheet(name);ws.append(headers)
@@ -92,7 +147,9 @@ def extract_experts():
     return result
 
 def main():
-    cli=argparse.ArgumentParser(description=__doc__);cli.add_argument('--output',type=Path,default=DOCS/'SIMY_全ページレビューと改善計画_20261119.xlsx');args=cli.parse_args()
+    cli=argparse.ArgumentParser(description=__doc__);cli.add_argument('--output',type=Path,default=DOCS/'SIMY_全ページレビューと改善計画_20261119.xlsx');cli.add_argument('--history',type=Path,help='Private, external history JSON. Output must be outside the public repository.');args=cli.parse_args()
+    if args.history and args.output.resolve().is_relative_to(ROOT):
+        raise SystemExit('Export private history outside the public repository with --output.')
     inventory=read_json(ROOT/'docs/seo/sitewide-page-inventory.json')
     generated_content={url.lstrip('/')+('index.html' if url.endswith('/') else ''): 'scripts/content-pages.json → scripts/build-content-pages.py'
                        for p in read_json(ROOT/'scripts/content-pages.json')['pages'] for url in p['paths'].values()}
@@ -185,6 +242,9 @@ def main():
     for line in (DOCS/'quality-standard.md').read_text().splitlines():
         if re.match(r'\| R[1-8] \|',line):quality.append([plain(c.strip()) for c in line.strip('|').split('|')]+['必須。未確認や未達を平均点で相殺しない'])
     sheet(wb,'品質基準',['ID','最低ライン','受入方法','合否方針'],quality,[10,90,110,60])
+    reconciled=read_json(DOCS/'user-requirements-reconciliation.json',{}).get('requirements',[])
+    if reconciled:
+        sheet(wb,'過去依頼との照合',['ID','過去依頼の要点','対象','照合状態','確認内容・残る範囲','改善計画ID','スレッド名','原文スレッドID','原文ターンID','原文メッセージID'],[[r['id'],r['requirement'],r['scope'],r['status'],r['observed'],r['plan'],r['sourceTitle'],r['sourceThread'],r['sourceTurn'],r['sourceMessage']] for r in reconciled],[12,110,45,30,120,35,65,42,42,42])
     sheet(wb,'ブラウザー検査',['ファイル','幅CSS px','main数','先頭Tabのhref','skip表示','Enter後main focus','横はみ出しpx','本文文字数','判定','測定条件'],[[r['file'],r['width'],r['mainCount'],r.get('href'),r['skipVisible'],r['mainFocused'],r['overflow'],r['contentLength'],'合格' if r['mainCount']==1 and r['skipVisible'] and r['mainFocused'] and r['overflow']<=1 and r['contentLength']>0 else '不合格','local Chromium / reduced motion / 外部リクエスト遮断'] for r in browser_rows],[50,14,12,55,16,24,20,18,15,75])
     schema=read_json(DOCS/'evidence/schema-inventory.json',{}).get('results',[])
     if schema:
@@ -196,6 +256,9 @@ def main():
     sheet(wb,'検証証跡と制約',['対象','証跡・参照','内容と限界'],evidence,[35,70,120])
     if (DOCS/'execution-verification.md').exists():
         sheet(wb,'今回の実行記録',['行','検証記録'],[[i,line] for i,line in enumerate((DOCS/'execution-verification.md').read_text().splitlines(),1) if line.strip()],[10,150])
+    history_counts=history_sheets(wb,read_json(args.history)) if args.history else {}
+    if args.history:
+        ws=wb['はじめに'];ws.append(['履歴付きの私用版','このファイルは取得した過去会話の原文を含む私用成果物。公開リポジトリへ掲載しない。機密値は保守的に省略。候補抽出は機械的な整理で、全発言の要件確定や実装充足を意味しない。'])
     args.output.parent.mkdir(parents=True,exist_ok=True);wb.save(args.output)
     check=load_workbook(args.output,data_only=False)
     assert check['全199ページ'].max_row==200
@@ -203,6 +266,6 @@ def main():
     assert check['ページ別検査'].max_row==len(inventory)*12+1
     assert check['指摘一覧'].max_row==len(findings)+1
     assert check['概要']['F2'].value.startswith('=COUNTIF')
-    print(json.dumps({'output':str(args.output),'sheets':len(check.sheetnames),'findings':len(findings),'pages':len(inventory),'checks':len(checks),'experts':50,'browserCases':len(browser_rows),'bytes':args.output.stat().st_size},ensure_ascii=False))
+    print(json.dumps({'output':str(args.output),'sheets':len(check.sheetnames),'findings':len(findings),'pages':len(inventory),'checks':len(checks),'experts':50,'browserCases':len(browser_rows),'bytes':args.output.stat().st_size,**history_counts},ensure_ascii=False))
 
 if __name__=='__main__':main()
