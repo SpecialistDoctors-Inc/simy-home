@@ -48,9 +48,12 @@ async function checkEntry(browser, industry) {
           || (hostname === 'property-next.example' ? sites.at(-1) : null);
         assert.ok(selected);
         assert.equal(payload.rightsConfirmed, true);
+        const noticeHeading = selected.host === 'property.example'
+          ? '<div class="message-header"><span>' + selected.category + '</span></div>'
+          : '<h2>' + selected.category + '</h2>';
         return route.fulfill({json: {mode: 'static-html5-preview', html:
           '<title>' + selected.title + '</title><main><h1>' + selected.title +
-          '</h1><section data-test-notice' + (selected.category === '休診情報' ? '' : ' class="news"') + '><h2>' + selected.category + '</h2><dl><dt>2026/11/18</dt>' +
+          '</h1><section data-test-notice>' + noticeHeading + '<dl><dt>2026/11/18</dt>' +
           '<dd>既存のお知らせです。</dd></dl></section>' +
           '<section><h2>受付枠</h2><dl><dt>2026/11/20</dt><dd>受付時間を選ぶ</dd></dl></section></main>'}});
       }

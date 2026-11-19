@@ -45,7 +45,7 @@
  function label(e){
   let p=e.parentElement;for(let depth=0;p&&depth<4;depth++,p=p.parentElement){
    if(['DL','UL','OL'].includes(p.tagName))continue;
-   const headings=[...p.children].filter(n=>/^H[1-6]$/.test(n.tagName)||/title|heading|caption/i.test(n.className||''));
+   const headings=[...p.children].filter(n=>/^H[1-6]$/.test(n.tagName)||/title|heading|caption|(?:^|[-_])header(?:$|[-_])/i.test(n.className||''));
    const value=headings.map(text).filter(Boolean).join(' / ');if(value)return value.slice(0,300);
   }
   return '';
@@ -54,11 +54,11 @@
  const dateOnly=value=>datePattern.test(value)&&!value.replace(datePattern,'').replace(/[日月火水木金土曜（）()\s]/g,'');
  // Match this list and its enclosing sections, without borrowing a sibling's topic.
  function newsContext(e){
-  const titleSelector=':scope > h2,:scope > h3,:scope > header h2,:scope > header h3,:scope > div[class*=head] h2,:scope > div[class*=head] h3';
+  const titleSelector=':scope > h2,:scope > h3,:scope > header h2,:scope > header h3,:scope > [class*=header i],:scope > div[class*=head] h2,:scope > div[class*=head] h3';
   const newsLabels=/お知らせ|新着情報|告知|更新情報|休診|休業|news|information|topics|notice/i;
   let section=e;
   for(let depth=0;section&&section.tagName!=='BODY'&&depth<5;depth++,section=section.parentElement){
-   const titles=[...section.querySelectorAll(titleSelector)].map(text);
+   const titles=[...section.querySelectorAll(titleSelector)].map(text).filter(title=>title.length<=300);
    const hints=[section.id,section.getAttribute('class'),...titles];
    if(section===e)hints.push(...[...e.children].map(child=>child.getAttribute('class')));
    if(newsLabels.test(hints.join(' ')))return true;
