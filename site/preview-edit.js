@@ -321,7 +321,13 @@
       n!==dateElement&&!n.contains(dateElement)&&!n.closest('[rel=tag]')&&
       ![...n.children].some(c=>text(c))&&text(n)&&!dateOnly(text(n))&&
       !item.contains(n.closest('ul,ol')));
-     if(!heading)heading=contentNodes.sort((a,b)=>text(b).length-text(a).length)[0];
+     if(!heading){
+      const afterDate=dateElement?contentNodes.filter(node=>Boolean(dateElement.compareDocumentPosition(node)&Node.DOCUMENT_POSITION_FOLLOWING)):contentNodes;
+      // A title may be an inline label or link beside the date, while a separate
+      // paragraph below it carries the body. When both are paragraphs, order matters.
+      heading=afterDate.find(node=>node.matches('a,span')&&!node.closest('p'))||
+       afterDate[0]||contentNodes.at(-1);
+     }
      if(!heading){if(dateElement)throw Error('既存のお知らせの見出しを確認できません。');heading=item;}
      body=[...item.querySelectorAll('p,[itemprop=description]')].find(n=>n!==heading&&!heading.contains(n)&&!n.contains(heading)&&
       n!==dateElement&&!n.contains(dateElement)&&Boolean(heading.compareDocumentPosition(n)&Node.DOCUMENT_POSITION_FOLLOWING)&&!n.closest('[rel=tag]'));
