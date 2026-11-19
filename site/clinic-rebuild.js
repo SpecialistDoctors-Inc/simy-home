@@ -61,7 +61,15 @@
  for(const chip of document.querySelectorAll('[data-chat-prompt]'))chip.addEventListener('click',()=>{editInput.value=chip.dataset.chatPrompt;editInput.focus();});
  editInput.addEventListener('keydown',event=>{if(event.key==='Enter'&&!event.shiftKey&&!event.isComposing){event.preventDefault();editForm.requestSubmit();}});
  const mobile=()=>matchMedia('(max-width:700px)').matches;
- const updatePreview=html=>{currentHtml=html;requestAnimationFrame(()=>{if(currentHtml===html)frame.srcdoc=html;});if(objectUrl)URL.revokeObjectURL(objectUrl);objectUrl=URL.createObjectURL(new Blob([html],{type:'text/html;charset=utf-8'}));download.href=objectUrl;undo.disabled=!history.length;};
+ const setDownload=html=>{
+  if(objectUrl)URL.revokeObjectURL(objectUrl);
+  objectUrl=URL.createObjectURL(new Blob([html],{type:'text/html;charset=utf-8'}));
+  download.href=objectUrl;
+ };
+ const updatePreview=html=>{currentHtml=html;requestAnimationFrame(()=>{if(currentHtml===html)frame.srcdoc=html;});setDownload(html);undo.disabled=!history.length;};
+ download.addEventListener('click',()=>{
+  if(currentHtml&&frame.srcdoc===currentHtml)setDownload(window.SimyPreviewEdit.exportStaticLayout(currentHtml,frame.contentDocument));
+ });
  const log=(text,kind='')=>{document.querySelector('.preview-chat').classList.remove('is-empty');const p=document.createElement('p');p.textContent=text;if(kind)p.className=kind;conversation.append(p);conversation.scrollTop=conversation.scrollHeight;};
  const showEditor=()=>{if(!currentHtml)return;editor.showModal();document.body.classList.add('preview-editor-open');(mobile()?closeEditor:editInput).focus({preventScroll:true});};
  openEditor.addEventListener('click',showEditor);closeEditor.addEventListener('click',()=>editor.close());editor.addEventListener('close',()=>{document.body.classList.remove('preview-editor-open');editorReturn.focus({preventScroll:true});});

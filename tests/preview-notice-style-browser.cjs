@@ -103,6 +103,10 @@ async function checkStaticScrollAreas() {
   await page.setContent(updated);
   await page.addScriptTag({path: editorPath});
   await page.evaluate(()=>SimyPreviewEdit.repairStaticLayout(document));
+  const exported=await page.evaluate(html=>SimyPreviewEdit.exportStaticLayout(html,document),updated);
+  assert(!updated.includes('data-simy-static-layout'));
+  assert.match(exported,/data-simy-static-layout/);
+  await page.setContent(exported);
   const list = page.locator('.article-window');
   assert.match(await list.locator('li').first().innerText(), /明日は休診です/);
   assert.equal(await list.locator('dt').count(), 11);

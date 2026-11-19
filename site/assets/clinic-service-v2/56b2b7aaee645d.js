@@ -240,7 +240,20 @@
   }
   style.textContent=[...rules].map(([id,rule])=>'[data-simy-static-layout="'+id+'"]{'+rule+'}').join('\n');
   doc.head.append(style);
-  staticRepairs.set(doc,{remove:()=>{style.remove();for(const node of marked)node.removeAttribute('data-simy-static-layout');}});
+  staticRepairs.set(doc,{style,marked,remove:()=>{style.remove();for(const node of marked)node.removeAttribute('data-simy-static-layout');}});
+ };
+ api.exportStaticLayout=function(html,liveDocument){
+  const repair=staticRepairs.get(liveDocument);
+  if(!repair?.marked.length)return html;
+  const doc=parse(html);
+  for(const [index,node] of repair.marked.entries()){
+   const id=node.dataset.simyEditId;
+   if(/^e\d+$/.test(id||''))doc.querySelector('[data-simy-edit-id="'+id+'"]')?.setAttribute('data-simy-static-layout',index);
+  }
+  const style=doc.createElement('style');
+  style.textContent=repair.style.textContent;
+  doc.head.append(style);
+  return '<!doctype html>\n'+doc.documentElement.outerHTML;
  };
  api.redesign=function(doc,accent,liveDocument){
   doc.body.setAttribute('data-simy-theme','accent');
