@@ -38,16 +38,14 @@ test("pricing call to action opens the signup plan selection page", () => {
   assert.equal((homeHtml.match(/href="https:\/\/app\.simy\.one\/signup\/\?plan=(starter|quality)&amp;interval=annual&amp;lang=en&amp;locale=en&amp;region=us" aria-label="Choose a plan"/g) || []).length, 2);
 });
 
-test("pages loading the demo bundle cache-bust its workflow terminology", () => {
+test("contact pages retain static contact content without the retired demo renderer", () => {
   const pages = ["contact.html"];
   for (const directory of ["site", "site/old"]) {
     for (const page of pages) {
       const source = fs.readFileSync(path.join(repoRoot, directory, page), "utf8");
-      assert.match(
-        source,
-        /\/assets\/index-DnVveaIK\.js\?v=20260915-workflow-terminology-1/,
-        `${directory}/${page} must load the updated workflow terminology bundle`
-      );
+      assert.doesNotMatch(source, /<script type="module"[^>]+\/assets\/index-/, `${directory}/${page}: retired renderer must not clear static content`);
+      assert.match(source, /<main\b/);
+      assert.match(source, /mailto:sales@simy.one/);
     }
   }
 

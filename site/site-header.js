@@ -10,9 +10,26 @@
   mobile.addEventListener('change', syncMenu);
   const labels = {en: 'English', ja: '日本語', hi: 'हिन्दी', es: 'Español', fr: 'Français', 'zh-Hans': '简体中文'};
   const languageLabels = {en: 'Language', ja: '言語', es: 'Idioma', fr: 'Langue', hi: 'भाषा', 'zh-Hans': '语言'};
+  const accountLabels = {
+    en: ['Sign up', 'Log in'], ja: ['新規登録', 'ログイン'],
+    es: ['Registrarse', 'Iniciar sesión'], fr: ["S’inscrire", 'Se connecter'],
+    hi: ['साइन अप', 'लॉग इन'], 'zh-Hans': ['注册', '登录']
+  };
   const syncLocale = () => {
     const locale = document.documentElement.lang;
     if (!labels[locale]) return;
+    const signup = header.querySelector('[data-new-account-signup]');
+    if (signup) {
+      signup.textContent = accountLabels[locale][0];
+      const url = new URL(signup.href);
+      url.searchParams.set('lang', locale);
+      url.searchParams.set('locale', locale);
+      signup.href = url.href;
+    }
+    const login = header.querySelector('.sh-login');
+    if (login && Object.values(accountLabels).some(copy => copy[1] === login.textContent.trim())) {
+      login.textContent = accountLabels[locale][1];
+    }
     const summary = header.querySelector('.sh-language summary');
     summary.setAttribute('aria-label', `${languageLabels[locale]}: ${labels[locale]}`);
     summary.lastChild.textContent = ` ${locale === 'zh-Hans' ? 'ZH' : locale.toUpperCase()}`;

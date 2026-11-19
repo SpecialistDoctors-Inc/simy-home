@@ -1,5 +1,7 @@
 # 公開サイト共通基盤の検証結果
 
+> 初回コミット1a8062a0時点の履歴。追加改善後の現在の結果は [execution-verification.md](execution-verification.md) を参照。
+
 検証日 2026年11月19日。baseは4bdd65b0。これは今回の共通main/skip修正の検証であり、過去全依頼の実装完了報告ではない。
 
 ## 自動検証

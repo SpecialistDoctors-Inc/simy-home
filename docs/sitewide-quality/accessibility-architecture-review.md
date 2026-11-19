@@ -60,6 +60,6 @@ LCP・CLS・INPの良否をソース検査だけで断定しない。画像width
 
 HTML199件を分類した。通常公開文書184、転送12、認証callback1、verification1、legacy application `old/contact.html` 1。共通化前の通常公開文書ではmain不足16、skip不足35。初回の文字列検査で得たskip不足117はclass="skip"を見落とす誤集計だったため採用せず、HTMLParserでリンク・IDを照合して修正した。
 
-`clinic-security-sample.html` は既存skipが #main を参照する一方mainにIDがなかったため、既存リンクを維持してmainへIDを補った。clinic/law-firmは専用ヘッダーと既存 #main を保持した。旧アプリ `old/contact.html` はbundleがmainを生成するため、静的mainで包まない。実行時DOMのmainとskipはブラウザー検証で扱い、静的検査だけでは確認済みとしない。
+`clinic-security-sample.html` は既存skipが #main を参照する一方mainにIDがなかったため、既存リンクを維持してmainへIDを補った。clinic/law-firmは専用ヘッダーと既存 #main を保持した。旧アプリ `old/contact.html` は当初bundleがmainを生成するとの仮説で除外したが、追加の実測では現行contactも含め旧bundleが静的本文を消し、mainが0になることを確認した。後続実装で両ページの不要なbundle起動を外して静的本文を保持した。現在は通常描画185件。詳細はexecution-verification.mdを参照。
 
 横断テストは通常公開文書のmain一意、ID一意、tabindex=-1、skipリンク先一致、共通CSS、再生成の冪等性を検査する。CSSの見た目だけで完了にせず、代表ページで最初のTab、skip表示、Enter後のactiveElement、stickyヘッダーとの位置、軽減設定をブラウザー確認する。本文・価格・リンクの原意を変更する監査とは分離する。

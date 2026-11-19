@@ -976,6 +976,7 @@
       "/es.html",
       "/for/",
       "/for/",
+      "/for/",
       "/for/en/sales/",
       "/for/engineers/",
       "/for/financial-planners/",
@@ -1031,6 +1032,7 @@
       "/download/en.html",
       "/download/en.html#android",
       "/es.html",
+      "/for/en/",
       "/for/en/",
       "/for/en/",
       "/for/en/engineers/",
@@ -1222,12 +1224,12 @@
     "site/clinic-checkout.js": "62888249e3f7601f8e93c114500d554292b577066d1ad7963a90674e93a8470b",
     "site/hp-management/law-firm/clinic-checkout.js": "0e0481467a0b4f9fe0a26c52bce8b7df22c5f24cf31173e3311b217d5ed07c81",
     "site/pricing-catalog.js": "c1b4e8a31b0c0ef200f62282a14ba99b9eb5848600bb76fddab5fad2e48a9c0f",
-    "site/ja.html": "cfb987944c0747f64f5b96a3d217b694c7068427fb79c0e9746a7376f22acbb5",
-    "site/es.html": "826862cf97d714ccc6a2d7fdec9b1e67852340d044cf9d9e730d54f3a648a13b",
-    "site/fr.html": "85d914024febb43ae0a45a58cbcb19ab0ef5e05f40e4790269c2ab3583c3f8f9",
-    "site/hi.html": "954c1f522085e3966d773b4d136f97ca71f993711b58019780964520afd6bde4",
-    "site/index.html": "1ec6d618a357d304c568c78eefa993c427415c0dbef059f0df5a0044197ffd1d",
-    "site/zh-Hans.html": "d0b65ee676ffe995f80489351a1caae98f48a146624821a0e426259998b063e5"
+    "site/ja.html": "51f55acdf8c8a8bd398d8f0e0e0ec67ce02b9b4c8948752687dd56270af32288",
+    "site/es.html": "346060274fb019b16360c13c5d0793bd2dfaa3c8d3de9b867f62d6ed6c26c56f",
+    "site/fr.html": "5b4be9255963d20732b0f0eb21be239df5b3a22ffe22ce7bcd3d39797372255a",
+    "site/hi.html": "31c21bcbde234acf0f179e1fe8a2c804edfae275468b48e295bac8366f313b72",
+    "site/index.html": "3541f36e55c24c14959b01dc03a3607afd5aae134b020947d3d7df322a37bbb5",
+    "site/zh-Hans.html": "ebdc034ccae6111ab5b8c77f1e9b503cac366fd328d8f76a688e8b7db11a7d72"
   },
-  "htmlBaselineReason": "2026-11-19: approved sitewide main/skip accessibility changes; checkout JSON/JS and pricing-catalog hashes remain unchanged."
+  "htmlBaselineReason": "2026-11-19: authorized sitewide accessibility, responsive CTA and shared stylesheet cache-version changes. Existing checkout JSON/JS and pricing-catalog hashes remain unchanged."
 }

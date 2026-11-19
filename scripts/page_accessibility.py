@@ -8,11 +8,6 @@ SKIP_LABELS = {
     'en': 'Skip to content', 'ja': '本文へ移動', 'es': 'Saltar al contenido',
     'fr': 'Aller au contenu', 'hi': 'मुख्य सामग्री पर जाएँ', 'zh-Hans': '跳到正文',
 }
-# This legacy application creates its main landmark in the client bundle. Do not
-# wrap its root in another main; its runtime landmark is audited separately.
-LEGACY_APPLICATIONS = {'old/contact.html'}
-
-
 def classification(source, relative_path):
     if relative_path == 'auth-callback.html':
         return 'authentication-return'
@@ -22,8 +17,6 @@ def classification(source, relative_path):
         return 'redirect'
     if not re.search(r'<body\b', source, re.I):
         return 'non-document'
-    if relative_path in LEGACY_APPLICATIONS:
-        return 'legacy-application'
     return 'public-document'
 
 
@@ -80,6 +73,20 @@ def apply(source, path, site):
         label = SKIP_LABELS.get(locale[1] if locale else 'en', SKIP_LABELS['en'])
         link = f'\n<a class="simy-skip-link" href="#{html.escape(main_id, quote=True)}">{label}</a>'
         source = re.sub(r'(<body\b[^>]*>)', lambda m: m[1] + link, source, count=1)
+    else:
+        # Some generated templates placed their bypass link after navigation.
+        # Preserve its wording/target, but make it the first keyboard stop.
+        fresh = Elements(source)
+        fresh.feed(source)
+        bypass = next((t for t in fresh.tags if t[0] == 'a'
+                       and 'skip' in t[1].get('class', '')
+                       and t[1].get('href') == '#' + main_id), None)
+        header = next((t for t in fresh.tags if t[0] == 'header'), None)
+        if bypass and header and bypass[2] > header[2]:
+            end = source.find('</a>', bypass[3]) + len('</a>')
+            link = source[bypass[2]:end]
+            source = source[:bypass[2]] + source[end:]
+            source = re.sub(r'(<body\b[^>]*>)', lambda m: m[1] + '\n' + link, source, count=1)
     version = hashlib.sha256((site / 'page-accessibility.css').read_bytes()).hexdigest()[:12]
     css_url = '/hp-management/law-firm/page-accessibility.css' if path.relative_to(site).as_posix() == 'hp-management/law-firm.html' else '/page-accessibility.css'
     asset = f'<link rel="stylesheet" href="{css_url}?v={version}">'
