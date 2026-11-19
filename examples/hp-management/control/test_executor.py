@@ -404,6 +404,29 @@ class ExecutorTests(unittest.TestCase):
         self.assertEqual(self.github.branches, {'dev': self.github.base, 'main': self.github.base})
         self.assertFalse(self.drive.created)
 
+    def test_site_scoped_license_is_rechecked_before_provider_effect(self):
+        from licensing import EntitlementResolver
+        class SiteResolver(EntitlementResolver):
+            allowed = True
+            def __init__(self):
+                self.calls = []
+            def for_site(self, org, subject, site):
+                self.calls.append((org, subject, site))
+                return self.allowed
+        org_id = str(uuid4())
+        row = self.store.get('site:' + self.site)
+        self.store.put('site:' + self.site, {**row, 'license_policy': {'mode': 'simy', 'org_id': org_id}}, row['_version'])
+        resolver = SiteResolver()
+        self.service.license_resolver = resolver
+        self.executor.license_resolver = resolver
+        operation = self.admit('open_workspace')
+        self.assertEqual(resolver.calls[-1], (org_id, 'operator', self.site))
+        resolver.allowed = False
+        self.assertEqual(self.execute(operation)['error'], 'hp_license_required')
+        self.assertGreaterEqual(len(resolver.calls), 2)
+        self.assertEqual(self.github.branches, {'dev': self.github.base, 'main': self.github.base})
+        self.assertFalse(self.drive.created)
+
     def test_fenced_site_lease_prevents_parallel_commands(self):
         operation = self.admit('open_workspace')
         self.store.put('lease:site:' + self.site, {'owner': 'other', 'epoch': 5, 'until': 1100})

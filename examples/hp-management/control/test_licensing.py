@@ -88,6 +88,23 @@ class LicenseTests(unittest.TestCase):
                          (200, {'ready': False, 'status': 'site_setup_required'}))
         self.resolve.assert_not_called()
 
+    def test_network_resolver_receives_exact_target_site_and_never_falls_back(self):
+        resolver = EntitlementResolver('https://backend.example.invalid/functions/v1/hp-control-entitlement', lambda: self.token)
+        calls = []
+        class Response:
+            status = 200
+            def __enter__(self): return self
+            def __exit__(self, *args): pass
+            def read(self, limit): return b'{"allowed":false}'
+        def open_request(request, timeout):
+            calls.append(json.loads(request.data))
+            return Response()
+        resolver.opener.open = open_request
+        self.service.license_resolver = resolver
+        with self.assertRaisesRegex(Rejected, 'hp_license_required'):
+            self.service.authorized(self.claims, 'paid-site', 'edit')
+        self.assertEqual(calls, [{'org_id': ORG, 'google_subject': SUBJECT, 'site_id': 'paid-site'}])
+
     def test_resolver_accepts_loopback_http_only_when_explicitly_allowed(self):
         local = 'http://127.0.0.1:54321/functions/v1/hp-control-entitlement'
         with self.assertRaises(LicenseUnavailable):
