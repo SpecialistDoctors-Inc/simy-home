@@ -1,0 +1,7 @@
+/* Static contact content is readable without the retired application renderer. */
+:root { --contact-ink: #111111; --contact-paper: #ffffff; --contact-hover: #333333; }
+.contact-content h1 { margin: 0 0 24px; font-size: 2rem; line-height: 1.35; font-weight: 600; letter-spacing: normal; }
+.contact-content p { max-width: 42rem; margin: 0 0 24px; font-size: 1rem; line-height: 1.8; }
+.contact-content .contact-email { display: inline-flex; align-items: center; min-height: 44px; max-width: 100%; padding: 12px 20px; border-radius: 6px; background: var(--contact-ink); color: var(--contact-paper); font-weight: 600; overflow-wrap: anywhere; text-decoration: underline; text-underline-offset: 3px; }
+.contact-content .contact-email:hover { background: var(--contact-hover); }
+.contact-content .contact-email:focus-visible { outline: 3px solid var(--contact-ink); outline-offset: 4px; }

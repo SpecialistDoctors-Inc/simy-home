@@ -976,6 +976,7 @@
       "/es.html",
       "/for/",
       "/for/",
+      "/for/",
       "/for/en/sales/",
       "/for/engineers/",
       "/for/financial-planners/",
@@ -1031,6 +1032,7 @@
       "/download/en.html",
       "/download/en.html#android",
       "/es.html",
+      "/for/en/",
       "/for/en/",
       "/for/en/",
       "/for/en/engineers/",
@@ -1222,11 +1224,12 @@
     "site/clinic-checkout.js": "62888249e3f7601f8e93c114500d554292b577066d1ad7963a90674e93a8470b",
     "site/hp-management/law-firm/clinic-checkout.js": "0e0481467a0b4f9fe0a26c52bce8b7df22c5f24cf31173e3311b217d5ed07c81",
     "site/pricing-catalog.js": "c1b4e8a31b0c0ef200f62282a14ba99b9eb5848600bb76fddab5fad2e48a9c0f",
-    "site/ja.html": "502fe9cdb0e64cbfc98d07d2db8da1109605da950bd4ee5ba1cc46f4319e5492",
-    "site/es.html": "f70d11e402fc88b0fb9031f700ebf8606ade25314c1b8b327192394242542980",
-    "site/fr.html": "d9196d728cb3491c551fd1554cf7bc8e0ea57366bc9dd6fc2be2f712d2064147",
-    "site/hi.html": "7c9292741a80167a4a3622f116c67cf3488adc7f7c27798714d2a46e8195bf52",
-    "site/index.html": "6ae985c23ce58f50082d3b8327d1dd4bc21a4d50bc8e1009b619547cc0a2809e",
-    "site/zh-Hans.html": "05bef38bed44c58855afdf8804dc17c8dfbf3c9dd57ad1c4eb689461b4c56cf7"
-  }
+    "site/ja.html": "51f55acdf8c8a8bd398d8f0e0e0ec67ce02b9b4c8948752687dd56270af32288",
+    "site/es.html": "346060274fb019b16360c13c5d0793bd2dfaa3c8d3de9b867f62d6ed6c26c56f",
+    "site/fr.html": "5b4be9255963d20732b0f0eb21be239df5b3a22ffe22ce7bcd3d39797372255a",
+    "site/hi.html": "31c21bcbde234acf0f179e1fe8a2c804edfae275468b48e295bac8366f313b72",
+    "site/index.html": "3541f36e55c24c14959b01dc03a3607afd5aae134b020947d3d7df322a37bbb5",
+    "site/zh-Hans.html": "ebdc034ccae6111ab5b8c77f1e9b503cac366fd328d8f76a688e8b7db11a7d72"
+  },
+  "htmlBaselineReason": "2026-11-19: authorized sitewide accessibility, responsive CTA and shared stylesheet cache-version changes. Existing checkout JSON/JS and pricing-catalog hashes remain unchanged."
 }

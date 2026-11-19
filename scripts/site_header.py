@@ -8,6 +8,8 @@ import re
 import argparse
 import json
 import subprocess
+from urllib.parse import urlsplit
+from page_accessibility import apply as apply_page_accessibility
 from social_preview import apply as apply_social_preview
 from locale_navigation import apply as apply_locale_navigation, strip as strip_locale_navigation
 from functools import lru_cache
@@ -35,7 +37,11 @@ def header(locale, source, path):
             label = {"ja": "製薬企業向け", "en": "For pharmaceutical companies", "es": "Para farmacéuticas", "fr": "Pour les laboratoires", "hi": "दवा कंपनियों के लिए", "zh-Hans": "面向制药企业"}[locale]
         if href.endswith(".html") and href in ["/integrations.html", "/compare.html", "/press-release.html", "/about.html", "/security.html", "/contact.html"]:
             href += "?lang=" + locale
-        current = ' aria-current="page"' if href == '/for/rosenz/' and path == rosenz_path else ''
+        page_url = '/' + path.relative_to(SITE).as_posix()
+        if page_url.endswith('/index.html'):
+            page_url = page_url[:-len('index.html')]
+        target = urlsplit(href)
+        current = ' aria-current="page"' if not target.scheme and not target.fragment and target.path == page_url else ''
         return f'<a href="{html.escape(href, quote=True)}"{current}>{label}</a>'
     download = "/download.html" if locale == "ja" else f"/download/{locale.lower()}.html"
     stores = f'''<div class="sh-stores" role="group" aria-label="Mobile apps">
@@ -137,7 +143,10 @@ def homepage_content():
 
 def apply(source, path):
     from service_pricing_2026_11 import apply as apply_service_pricing
-    if not needs_header(source, path): return apply_service_pricing(source, path)
+    # Remove the final-stage asset before earlier publishers normalize head blocks.
+    source = re.sub(r'<link\b[^>]*href="/(?:hp-management/law-firm/)?page-accessibility\.css[^" ]*"[^>]*>\n?', '', source)
+    if not needs_header(source, path):
+        return apply_page_accessibility(apply_service_pricing(source, path), path, SITE)
     locale_match = re.search(r'<html[^>]*lang="([^" ]+)"', source)
     locale = locale_match.group(1) if locale_match else "en"
     if locale not in LOCALES: locale = "en"
@@ -152,12 +161,16 @@ def apply(source, path):
     if '/site-header.css?' not in source:
         source = source.replace('</head>', assets + '</head>')
     def asset_version(match):
-        version = hashlib.sha256((SITE / 'site-header.js').read_bytes()).hexdigest()[:12] if '.js?' in match[1] else '20261021-pharma-1'
+        asset_name = 'site-header.js' if '.js?' in match[1] else 'site-header.css'
+        version = hashlib.sha256((SITE / asset_name).read_bytes()).hexdigest()[:12]
         return match[1] + version
     source = re.sub(r'(/site-header\.(?:css|js)\?v=)[^"\s]+', asset_version, source)
     i18n_version = hashlib.sha256((SITE / 'i18n.js').read_bytes()).hexdigest()[:12]
     source = re.sub(r'((?:src|href)=["\'](?:\.{1,2}/|/)*i18n\.js)(?:\?[^"\']*)?(["\'])',
                     lambda m: m[1] + '?v=' + i18n_version + m[2], source)
+    theme_version = hashlib.sha256((SITE / 'site-theme.css').read_bytes()).hexdigest()[:12]
+    source = re.sub(r'(href=["\'](?:\.{1,2}/|/)*site-theme\.css)(?:\?[^"\']*)?(["\'])',
+                    lambda m: m[1] + '?v=' + theme_version + m[2], source)
     if locale == 'ja':
         source = re.sub(r'\n?<!-- HP industry navigation -->[\s\S]*?<!-- /HP industry navigation -->\n?', '', source)
         version = hashlib.sha256((SITE / 'hp-industry-navigation.css').read_bytes()).hexdigest()[:12]
@@ -168,7 +181,7 @@ def apply(source, path):
     if locale == 'ja' or "data-story-scene" in source:
         from home_manga_locales import localized_header
         source = localized_header(source, locale, homepage_content())
-    return apply_service_pricing(apply_locale_navigation(apply_social_preview(source, path)), path)
+    return apply_page_accessibility(apply_service_pricing(apply_locale_navigation(apply_social_preview(source, path)), path), path, SITE)
 
 if __name__ == "__main__":
     cli = argparse.ArgumentParser(description=__doc__)
