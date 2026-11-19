@@ -160,8 +160,8 @@ def extract_experts():
     return result
 
 def main():
-    cli=argparse.ArgumentParser(description=__doc__);cli.add_argument('--output',type=Path,default=DOCS/'SIMY_全ページレビューと改善計画_20261119.xlsx');cli.add_argument('--history',type=Path,help='Private, external history JSON. Output must be outside the public repository.');args=cli.parse_args()
-    if args.history and args.output.resolve().is_relative_to(ROOT):
+    cli=argparse.ArgumentParser(description=__doc__);cli.add_argument('--output',type=Path,default=DOCS/'SIMY_全ページレビューと改善計画_20261119.xlsx');cli.add_argument('--history',type=Path,help='Private, external history JSON. Output must be outside the public repository.');cli.add_argument('--search-console',type=Path,help='Private authenticated Search Console observations; output must be outside repository.');args=cli.parse_args()
+    if (args.history or args.search_console) and args.output.resolve().is_relative_to(ROOT):
         raise SystemExit('Export private history outside the public repository with --output.')
     inventory=read_json(ROOT/'docs/seo/sitewide-page-inventory.json')
     generated_content={url.lstrip('/')+('index.html' if url.endswith('/') else ''): 'scripts/content-pages.json → scripts/build-content-pages.py'
@@ -265,7 +265,7 @@ def main():
     pairs=read_json(DOCS/'evidence/schema-inventory.json',{}).get('faqPairs',[])
     if pairs:
         sheet(wb,'FAQの対応1114件',['ファイル','質問','schemaの回答','可視FAQとの対応','方法・限界'],[[r['file'],r['question'],r['answer'],'合格' if r['matchingVisiblePair'] else '不合格','同じdetailsのsummaryに質問が一致し、その回答領域にschema回答が存在。回答内容の事実性・最新性は別途確認。'] for r in pairs],[50,80,150,22,110])
-    evidence=[['前ターンの検証','verification.md','1648 testsと代表18ケース。今回追加分の結果はexecution-verification.mdを参照'],['今回のブラウザー','evidence/browser-expanded.json',f'{len(browser_rows)}ケース。未測定条件を測定済みにしない'],['今回のHTTP','evidence/production-http.json',f'{len(live)} URLs。現行本番に対する読み取りのみ'],['原文履歴の取得制約','requirements-coverage.md','過去全Codex依頼は未網羅。保存先または本文の取得が必要'],['専門家の根拠','各review.md','公開原則に基づく仮説。到達性確認と本文精読を区別'],['Excel生成','scripts/export-sitewide-quality-review.py','状態・観測値はJSON/HTMLから生成。ダッシュボード数値は生成時点スナップショット']]
+    evidence=[['前ターンの検証','verification.md','1648 testsと代表18ケース。今回追加分の結果はexecution-verification.mdを参照'],['今回のブラウザー','evidence/browser-expanded.json',f'{len(browser_rows)}ケース。未測定条件を測定済みにしない'],['今回のHTTP','evidence/production-http.json',f'{len(live)} URLs。現行本番に対する読み取りのみ'],['原文履歴の取得と照合','requirements-coverage.md','保存履歴4,185件を走査し206スレッド/1,870メッセージを統合。全候補の確定と本文照合は未完了。削除済み履歴は保証しない'],['専門家の根拠','各review.md','公開原則に基づく仮説。到達性確認と本文精読を区別'],['Excel生成','scripts/export-sitewide-quality-review.py','状態・観測値はJSON/HTMLから生成。ダッシュボード数値は生成時点スナップショット']]
     sheet(wb,'検証証跡と制約',['対象','証跡・参照','内容と限界'],evidence,[35,70,120])
     if (DOCS/'execution-verification.md').exists():
         sheet(wb,'今回の実行記録',['行','検証記録'],[[i,line] for i,line in enumerate((DOCS/'execution-verification.md').read_text().splitlines(),1) if line.strip()],[10,150])
@@ -281,11 +281,36 @@ def main():
     locale_checks=read_json(DOCS/'evidence/axe-home-locales.json',{}).get('results',[])
     if locale_checks:
         sheet(wb,'追加ホーム検査',['ファイル','幅','横はみ出しpx','違反数','違反内容','読み上げ名','画像選択','検査範囲'],[[r['file'],r['width'],r['overflow'],len(r['violations']),json.dumps(r['violations'],ensure_ascii=False),r['languageName'],json.dumps(r['images'],ensure_ascii=False),'axe color-contrast/label-content-name-mismatchのみ。全WCAG適合や実読者評価の代替ではない。'] for r in locale_checks],[45,15,20,15,100,70,140,110])
+    semantic=read_json(DOCS/'evidence/requirements-semantic-followup.json',{}).get('results',[])
+    if semantic:
+        sheet(wb,'原文と現行本文の追加照合',['依頼ID','ファイル','現行本文','照合根拠','裁定と限界'],[[r['requirement'],r['file'],r['observed'],r['evidence'],r['decision']] for r in semantic],[22,70,140,100,140])
     signup=read_json(DOCS/'evidence/signup-browser.json',{}).get('results',[])
     fixed_signup=read_json(DOCS/'evidence/signup-local-browser.json',{}).get('results',[])
     if signup:
         by_locale={r['locale']:r for r in fixed_signup}
         sheet(wb,'申込言語の追加検査',['指定言語','本番HTTP','本番の表示言語','本番の観察','修正版の表示言語','修正版の見出し','修正版の横はみ出しpx','検証の制約'],[[r['locale'],r['status'],r['htmlLang'],'言語一致' if r['locale']==r['htmlLang'] else '指定言語と不一致（修正対象）',by_locale.get(r['locale'],{}).get('locale',''),by_locale.get(r['locale'],{}).get('heading',''),by_locale.get(r['locale'],{}).get('overflow',''),'本番は未認証GET/描画。修正版はlocal、外部通信遮断。実送信・課金未実施。公開後の検証は別。'] for r in signup],[20,15,25,55,25,100,25,125])
+    signup_release=read_json(DOCS/'evidence/signup-ci-release.json',{})
+    if signup_release:
+        sheet(wb,'申込修正のCIと公開状態',['項目','状態・根拠'],[[k,str(v)] for k,v in signup_release.items()],[40,160])
+    lab=read_json(DOCS/'evidence/performance-lab.json',{})
+    if lab:
+        sheet(wb,'性能の追加測定',['取得元','URL','測定日時UTC','Lighthouse版','性能','アクセシビリティ','SEO','LCP ms','TBT ms','CLS','測定条件・制約'],[[r['source'],r['requestedURL'],r['fetchTime'],r['lighthouseVersion'],r['scores'].get('performance'),r['scores'].get('accessibility'),r['scores'].get('seo'),r['metrics']['largest-contentful-paint']['value'],r['metrics']['total-blocking-time']['value'],r['metrics']['cumulative-layout-shift']['value'],r['notes']] for r in lab['reports']],[50,70,35,20,18,23,18,20,20,20,140])
+    flows=read_json(DOCS/'evidence/home-to-signup.json',{}).get('results',[])
+    if flows:
+        sheet(wb,'HOMEから申込24条件',['言語','プラン','請求周期','HOMEリンク','申込HTTP','表示言語','期待合計USD cents','画面表示の合計','金額一致','測定範囲'],[[r['locale'],r['plan'],r['interval'],r['homeLink'],r['status'],r['displayLanguage'],r['expectedTotalUsdCents'],r['formattedTotal'],'合格' if r['totalFound'] else '不合格','Local reviewed HOME → local signup / one Chromium / 外部通信遮断 / 実送信・課金未実施'] for r in flows],[20,25,20,120,20,20,30,35,20,130])
+    production_signup=read_json(DOCS/'evidence/home-to-signup-production.json',{})
+    if production_signup:
+        sheet(wb,'本番HOMEから申込24条件',['言語','プラン','請求周期','HOMEリンク','申込HTTP','表示言語','期待合計USD cents','画面表示の合計','金額一致','測定日時UTC','測定範囲'],[[r['locale'],r['plan'],r['interval'],r['homeLink'],r['status'],r['displayLanguage'],r['expectedTotalUsdCents'],r['formattedTotal'],'合格' if r['totalFound'] else '不合格',production_signup['observedAt'],production_signup['method']] for r in production_signup['results']],[20,25,20,120,20,20,30,35,20,35,130])
+    if args.search_console:
+        gsc=read_json(args.search_console)
+        sheet(wb,'Search Console実データ',['レポート','期間・観測','指標','値','単位','精度','制約','取得日時JST','対象プロパティ'],[[r['report'],r['period'],r['metric'],r['value'],r['unit'],r['precision'],r['limitation'],gsc['observedAtJST'],gsc['property']] for r in gsc['observations']],[40,90,30,100,30,60,140,40,40])
+        sheet(wb,'GSC取得範囲と残件',['項目','記録'],[[k,str(v)] for k,v in gsc.items() if k!='observations'],[40,160])
+        from openpyxl.drawing.image import Image
+        ws=wb.create_sheet('GSC実画面の証跡');ws['A1']='認証済みsimy.oneの実画面。集計日・端末・丸め値・未取得明細はSearch Console実データを参照。私用成果物。'
+        for filename,anchor in [('SearchConsole_検索実績.png','A3'),('SearchConsole_CoreWebVitals.png','A56')]:
+            file=args.output.parent/filename
+            if file.exists():
+                img=Image(file);img.height=img.height*1100/img.width;img.width=1100;ws.add_image(img,anchor)
     history_counts=history_sheets(wb,read_json(args.history)) if args.history else {}
     if args.history:
         ws=wb['はじめに'];ws.append(['履歴付きの私用版','このファイルは取得した過去会話の原文を含む私用成果物。公開リポジトリへ掲載しない。機密値は保守的に省略。候補抽出は機械的な整理で、全発言の要件確定や実装充足を意味しない。'])
