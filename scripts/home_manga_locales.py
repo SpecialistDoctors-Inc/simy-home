@@ -22,6 +22,11 @@ def render(locale, Localize, content):
                 attrs['content']='1672' if attrs['property'].endswith('width') else '941'
             if tag=='img' and '/assets/home-manga-preview/'  in attrs.get('src','') and locale!='ja':
                 attrs['src']=attrs['src'].replace('product-ja-v2','product').replace('.webp',f'-{locale}.webp')
+            if tag == 'img' and '/assets/home-manga-preview/' in attrs.get('src', ''):
+                image = Path(attrs['src'])
+                if image.stem.startswith(('hero', 'product')):
+                    attrs['srcset'] = ', '.join(f'{image.with_stem(image.stem + "-" + str(width)).as_posix()} {width}w' for width in (640, 1024)) + f', {image.as_posix()} 1672w'
+                    attrs['sizes'] = '(max-width: 760px) calc(100vw - 4rem), (max-width: 1100px) 45vw, 640px'
             if tag=='script' and attrs.get('src','').startswith('/home-manga-preview.js'):
                 attrs['src']=f'/home-manga-{locale}.js?v=1'
             # Japanese source links must follow the generated locale.

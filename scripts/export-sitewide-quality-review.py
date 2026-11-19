@@ -20,6 +20,7 @@ from openpyxl.workbook.properties import CalcProperties
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / 'site'
 DOCS = ROOT / 'docs/sitewide-quality'
+LONG_TEXT = []
 
 class Page(HTMLParser):
     def __init__(self, source):
@@ -47,6 +48,7 @@ def redact(s):
     return re.sub(r'\b(?:sk_live_|sk_test_|ghp_|github_pat_)[A-Za-z0-9_\-]{12,}', '[機密値省略]',s)
 
 def request_part(s):
+    if s.lstrip().startswith(('# AGENTS.md instructions', '<environment_context>', '<permissions instructions>', '<recommended_plugins>', 'Side conversation boundary.', '<hook_prompt', 'Message from SIMY,', '<external_codex_apps_open_page>', '<external_codex_apps_selected_page')):return ''
     if '## My request:' in s:return s.split('## My request:',1)[1].strip()
     s=re.sub(r'<(?:external_codex_apps_[^>]*|in-app-browser-context)\b[^>]*>[\s\S]*?</(?:external_codex_apps_[^>]*|in-app-browser-context)>','',s)
     return s.strip()
@@ -63,7 +65,7 @@ def history_sheets(wb,history):
     records=history['records'];threads=[];messages=[];candidates=[];corrections=[];sequence=0
     for record in records:
         meta=record['metadata'];title=meta['title'];msgs=record['messages']
-        source_kind='派生・引継ぎスレッド（初期プロンプトの著者は未確定）' if re.search(r'^PR実装|^監視|残件|HP診断[｜：]|HP顧客導線',title) else '会話履歴（メッセージ単位で確認）'
+        source_kind=meta.get('sourceKind') or ('派生・引継ぎスレッド（初期プロンプトの著者は未確定）' if re.search(r'^PR実装|^監視|残件|HP診断[｜：]|HP顧客導線',title) else '会話履歴（メッセージ単位で確認）')
         coverage=('途中で取得上限' if not record['complete'] else '会話ページ取得済み' if msgs else '会話ページ取得済み・ユーザーメッセージ0件')
         threads.append([meta['id'],title,meta.get('cwd',''),source_kind,len(msgs),record['pages'],coverage,' / '.join(record.get('errors',[])),redact(record.get('threadPreview') or meta.get('summary') or meta.get('preview') or ''),'概要・引継ぎ文だけを人間の原文発言と断定しない'])
         for msg in sorted(msgs,key=lambda m:str(m.get('turnStartedAt',''))):
@@ -81,7 +83,7 @@ def history_sheets(wb,history):
                 candidates.append(row)
                 if correction:corrections.append(row)
     sheet(wb,'履歴の取得範囲',['スレッドID','タイトル','元の作業場所','出典の種類','取得メッセージ数','会話ページ数','取得状態','取得制約','スレッド概要（原文ではない）','扱い'],threads,[42,65,80,65,18,18,55,100,130,90])
-    sheet(wb,'依頼原文987件',['原文ID','タイトル','スレッドID','ターンID','メッセージID','ターン開始日時JST','種別','推定対象','取得本文（機密値省略）','依頼部分（環境情報を分離）','取得状態','注意'],messages,[14,60,42,42,42,32,60,50,140,140,28,100])
+    sheet(wb,'取得原文',['原文ID','タイトル','スレッドID','ターンID','メッセージID','ターン開始日時JST','種別','推定対象','取得本文（機密値省略）','依頼部分（環境情報を分離）','取得状態','注意'],messages,[14,60,42,42,42,32,60,50,140,140,28,100])
     sheet(wb,'過去要求の候補',['候補ID','推定対象','タイトル','ターン開始日時JST','要求・質問・条件の候補','種別','原文参照','実装照合','注意'],candidates,[14,50,60,32,140,30,110,22,130])
     sheet(wb,'訂正と制約の候補',['候補ID','推定対象','タイトル','ターン開始日時JST','訂正・条件の候補','種別','原文参照','実装照合','注意'],corrections,[14,50,60,32,140,30,110,22,130])
     grouped={}
@@ -90,13 +92,24 @@ def history_sheets(wb,history):
         grouped.setdefault(key,[]).append(row)
     sheet(wb,'同文要求の集約',['推定対象','要求候補の本文','出現回数','最初のターン日時JST','最後のターン日時JST','原文参照一覧','集約の限界'],[[rs[0][1],rs[0][4],len(rs),min(r[3] for r in rs),max(r[3] for r in rs),'\n'.join(r[6] for r in rs),'空白を除く同文を集約。同義文・撤回・最新の優先関係は未裁定。'] for rs in grouped.values()],[50,140,18,35,35,140,100])
     # The row count is not fixed: a subsequent recovery may add source messages.
-    wb['依頼原文987件'].title='依頼原文'+str(len(messages))+'件'
+    wb['取得原文'].title='取得原文'+str(len(messages))+'件'
+    for entry in LONG_TEXT:
+        if entry[1]=='取得原文':entry[1]=wb['取得原文'+str(len(messages))+'件'].title
     return {'threads':len(threads),'messages':len(messages),'requirementCandidates':len(candidates),'correctionCandidates':len(corrections),'groupedRequirements':len(grouped)}
 
 def sheet(wb,name,headers,rows,widths=None):
     ws=wb.create_sheet(name);ws.append(headers)
     for row in rows:
-        ws.append([("'"+v if isinstance(v,str) and v.startswith(('=','+','-','@')) else v) for v in row])
+        values=[]
+        for col,value in enumerate(row,1):
+            if isinstance(value,str) and len(value)>30000:
+                reference=f'LT{len(LONG_TEXT)+1:05}'
+                chunks=[value[i:i+28000] for i in range(0,len(value),28000)]
+                for part,chunk in enumerate(chunks,1):
+                    LONG_TEXT.append([reference,name,ws.max_row+1,col,part,len(chunks),chunk])
+                value=f'全文は「長文セルの全文」{reference}（{len(chunks)}分割）を参照。\n'+value[:1500]
+            values.append("'"+value if isinstance(value,str) and value.startswith(('=','+','-','@')) else value)
+        ws.append(values)
     ws.freeze_panes='C2' if len(headers)>5 else 'A2'
     ws.sheet_view.showGridLines=False
     ws.auto_filter.ref=ws.dimensions
@@ -163,7 +176,7 @@ def main():
     wb.properties.title='SIMY 全ページレビューと改善計画';wb.properties.creator='Codex';wb.properties.subject='確認済み事実・適用仮説・未確認を分離した改善管理'
     intro=[
         ['対象','https://simy.one/ の公開静的サイト。実装元simy-home。199 HTML／index159／nonindex40。'],
-        ['作成日',plan['date']+' 日本時間'],
+        ['更新日',plan['date']+' 日本時間（元レビュー作成2026-11-19）'],
         ['このExcelの用途','指摘・根拠・採否・改善手順・対象ページ・実施状況・検証を追跡する。フィルターで分野／優先度／状態を絞り込める。'],
         ['専門家50名の意味','客観的な世界ランキングや本人参加の討論ではない。公開資料を参考に当方が行った仮想レビュー。資料取得の制約を保持。'],
         ['完了の意味','各行で定義したローカル作業と検証の完了。本番反映・過去全要求の充足とは別。'],
@@ -259,9 +272,25 @@ def main():
     release=read_json(DOCS/'evidence/production-release.json',{})
     if release:
         sheet(wb,'本番配信の照合',['ファイル','確認URL','HTTP','配信SHA256','期待SHA256','一致','確認日時UTC','本番コミット','配信ジョブ','範囲・制約'],[[r['file'],r['url'],r.get('status',''),r.get('actualSha256',''),r.get('expectedSha256',''),'合格' if r['matches'] else '不合格',release['observedAt'],release['commit'],release['deploymentRun'],release['scope']] for r in release['results']],[55,85,12,72,72,15,35,50,90,110])
+    progress=read_json(DOCS/'remaining-seven-progress.json',{})
+    if progress:
+        sheet(wb,'残る7項目の追加実行',['ID','項目','状態','今回の実装・検証','必要な人・データ・環境','次の行動'],[[r['id'],r['title'],r['status'],r['verificationResult'],r['dependency'],r['nextAction']] for r in progress['findings']],[12,50,25,150,100,120])
+    sources=read_json(DOCS/'evidence/official-source-fetch.json',{}).get('results',[])
+    if sources:
+        sheet(wb,'公式資料の取得',['URL','参照ページ','HTTP','最終URL','bytes','取得と意味検証の区別'],[[r['url'],', '.join(sorted(set(r['pages']))),r.get('status',r.get('error','')),r.get('finalURL',''),r.get('bytes',0),r['assessment']] for r in sources],[100,55,30,100,18,110])
+    locale_checks=read_json(DOCS/'evidence/axe-home-locales.json',{}).get('results',[])
+    if locale_checks:
+        sheet(wb,'追加ホーム検査',['ファイル','幅','横はみ出しpx','違反数','違反内容','読み上げ名','画像選択','検査範囲'],[[r['file'],r['width'],r['overflow'],len(r['violations']),json.dumps(r['violations'],ensure_ascii=False),r['languageName'],json.dumps(r['images'],ensure_ascii=False),'axe color-contrast/label-content-name-mismatchのみ。全WCAG適合や実読者評価の代替ではない。'] for r in locale_checks],[45,15,20,15,100,70,140,110])
+    signup=read_json(DOCS/'evidence/signup-browser.json',{}).get('results',[])
+    fixed_signup=read_json(DOCS/'evidence/signup-local-browser.json',{}).get('results',[])
+    if signup:
+        by_locale={r['locale']:r for r in fixed_signup}
+        sheet(wb,'申込言語の追加検査',['指定言語','本番HTTP','本番の表示言語','本番の観察','修正版の表示言語','修正版の見出し','修正版の横はみ出しpx','検証の制約'],[[r['locale'],r['status'],r['htmlLang'],'言語一致' if r['locale']==r['htmlLang'] else '指定言語と不一致（修正対象）',by_locale.get(r['locale'],{}).get('locale',''),by_locale.get(r['locale'],{}).get('heading',''),by_locale.get(r['locale'],{}).get('overflow',''),'本番は未認証GET/描画。修正版はlocal、外部通信遮断。実送信・課金未実施。公開後の検証は別。'] for r in signup],[20,15,25,55,25,100,25,125])
     history_counts=history_sheets(wb,read_json(args.history)) if args.history else {}
     if args.history:
         ws=wb['はじめに'];ws.append(['履歴付きの私用版','このファイルは取得した過去会話の原文を含む私用成果物。公開リポジトリへ掲載しない。機密値は保守的に省略。候補抽出は機械的な整理で、全発言の要件確定や実装充足を意味しない。'])
+    if LONG_TEXT:
+        sheet(wb,'長文セルの全文',['参照ID','元シート','元の行','元の列','分割番号','分割総数','全文の分割（順に連結）'],list(LONG_TEXT),[18,35,15,15,15,15,150])
     args.output.parent.mkdir(parents=True,exist_ok=True);wb.save(args.output)
     check=load_workbook(args.output,data_only=False)
     assert check['全199ページ'].max_row==200

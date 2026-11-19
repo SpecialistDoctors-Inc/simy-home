@@ -31,7 +31,8 @@
       login.textContent = accountLabels[locale][1];
     }
     const summary = header.querySelector('.sh-language summary');
-    summary.setAttribute('aria-label', `${languageLabels[locale]}: ${labels[locale]}`);
+    const code = locale === 'zh-Hans' ? 'ZH' : locale.toUpperCase();
+    summary.setAttribute('aria-label', `${code}: ${labels[locale]} (${languageLabels[locale]})`);
     summary.lastChild.textContent = ` ${locale === 'zh-Hans' ? 'ZH' : locale.toUpperCase()}`;
     header.querySelectorAll('.sh-language a').forEach(link => {
       if (link.lang === locale) link.setAttribute('aria-current', 'page');

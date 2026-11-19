@@ -22,7 +22,8 @@ test("mobile navigation closes from blank and outside clicks", () => {
 });
 
 test("homepage cache-busts the current home assets", () => {
-  assert.match(homeHtml, /home\.css\?v=20261118-pricing-notice-1/);
+  const version = require("node:crypto").createHash("sha256").update(homeCss).digest("hex").slice(0, 12);
+  assert.ok(homeHtml.includes(`home.css?v=${version}`));
   assert.match(homeHtml, /home-locales\.js\?v=20261004-url-plan-1/);
   assert.match(homeHtml, /home-i18n\.js\?v=20261006-engineer-locales-1/);
   assert.match(homeHtml, /pricing-catalog\.js\?v=20261017-storage-1tb/);

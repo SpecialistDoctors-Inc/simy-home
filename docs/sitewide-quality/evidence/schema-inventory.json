@@ -341,7 +341,7 @@
     {
       "file": "guides/chatgpt.html",
       "question": "ChatGPT Business は1人でも使えますか？",
-      "answer": "Business は従業員2〜200名のチーム向けのプランで、管理コンソール、SAML／SSO、業務データが既定では学習に使われない設定が最初から含まれます。1人で使う場合は Plus か Pro が基本で、学習に使わせない設定は個人プランでも行えます。",
+      "answer": "Business は2ユーザー以上のチーム向けのプランで、管理コンソール、SAML／SSO、業務データが既定では学習に使われない設定が最初から含まれます。1人で使う場合は Plus か Pro が基本で、学習に使わせない設定は個人プランでも行えます。",
       "matchingVisiblePair": true
     },
     {
@@ -845,7 +845,7 @@
     {
       "file": "guides/en/chatgpt.html",
       "question": "Can I use ChatGPT Business on my own?",
-      "answer": "Business is a plan for teams of 2 to 200 employees, and includes an admin console, SAML/SSO, and business data excluded from training by default. On your own, Plus or Pro is the usual choice, and you can turn off training on personal plans too.",
+      "answer": "Business is a plan for teams with at least two users, and includes an admin console, SAML/SSO, and business data excluded from training by default. On your own, Plus or Pro is the usual choice, and you can turn off training on personal plans too.",
       "matchingVisiblePair": true
     },
     {
@@ -1913,7 +1913,7 @@
     {
       "file": "guides/es/chatgpt.html",
       "question": "¿Puedo usar ChatGPT Business yo solo?",
-      "answer": "Business es un plan para equipos de 2 a 200 personas e incluye consola de administración, SAML/SSO y datos de trabajo que no entrenan el modelo por defecto. Si trabajas solo, lo habitual es Plus o Pro, y en los planes personales también puedes desactivar el entrenamiento.",
+      "answer": "Business es un plan para equipos con al menos dos usuarios e incluye consola de administración, SAML/SSO y datos de trabajo que no entrenan el modelo por defecto. Si trabajas solo, lo habitual es Plus o Pro, y en los planes personales también puedes desactivar el entrenamiento.",
       "matchingVisiblePair": true
     },
     {
@@ -2981,7 +2981,7 @@
     {
       "file": "guides/fr/chatgpt.html",
       "question": "Peut-on utiliser ChatGPT Business seul ?",
-      "answer": "Business vise les équipes de 2 à 200 personnes et inclut d'emblée une console d'administration, le SAML/SSO et des données professionnelles exclues de l'entraînement par défaut. Seul, on choisit plutôt Plus ou Pro ; le réglage d'entraînement se désactive aussi sur les offres individuelles.",
+      "answer": "Business vise les équipes d’au moins deux utilisateurs et inclut d'emblée une console d'administration, le SAML/SSO et des données professionnelles exclues de l'entraînement par défaut. Seul, on choisit plutôt Plus ou Pro ; le réglage d'entraînement se désactive aussi sur les offres individuelles.",
       "matchingVisiblePair": true
     },
     {
@@ -4121,7 +4121,7 @@
     {
       "file": "guides/hi/chatgpt.html",
       "question": "क्या ChatGPT Business अकेले भी इस्तेमाल कर सकते हैं?",
-      "answer": "Business, 2 से 200 कर्मचारियों वाली टीमों का प्लान है, जिसमें एडमिन कंसोल, SAML/SSO, और कामकाजी डेटा के डिफ़ॉल्ट रूप से ट्रेनिंग में न जाने की व्यवस्था शुरू से होती है। अकेले इस्तेमाल के लिए आम तौर पर Plus या Pro ठीक है, और ट्रेनिंग बंद करने की सेटिंग निजी प्लान में भी हो सकती है।",
+      "answer": "Business, कम से कम दो उपयोगकर्ताओं वाली टीमों का प्लान है, जिसमें एडमिन कंसोल, SAML/SSO, और कामकाजी डेटा के डिफ़ॉल्ट रूप से ट्रेनिंग में न जाने की व्यवस्था शुरू से होती है। अकेले इस्तेमाल के लिए आम तौर पर Plus या Pro ठीक है, और ट्रेनिंग बंद करने की सेटिंग निजी प्लान में भी हो सकती है।",
       "matchingVisiblePair": true
     },
     {
@@ -5681,7 +5681,7 @@
     {
       "file": "guides/zh-hans/chatgpt.html",
       "question": "ChatGPT Business一个人能用吗？",
-      "answer": "Business是面向2至200名员工团队的套餐，从一开始就包含管理控制台、SAML/SSO，以及业务数据默认不用于训练的设置。一个人使用时基本选Plus或Pro，个人套餐也可以设置不让数据用于训练。",
+      "answer": "Business是面向至少两名用户的团队的套餐，从一开始就包含管理控制台、SAML/SSO，以及业务数据默认不用于训练的设置。一个人使用时基本选Plus或Pro，个人套餐也可以设置不让数据用于训练。",
       "matchingVisiblePair": true
     },
     {
@@ -7385,7 +7385,7 @@
       "file": "guides/chatgpt.html",
       "type": "Article",
       "field": "dateModified",
-      "value": "2026-10-03",
+      "value": "2026-11-20",
       "present": true,
       "matchingTimeElement": true
     },
@@ -7512,7 +7512,7 @@
       "file": "guides/chatgpt.html",
       "type": "FAQPage",
       "field": "answer",
-      "text": "Business は従業員2〜200名のチーム向けのプランで、管理コンソール、SAML／SSO、業務データが既定では学習に使われない設定が最初から含まれます。1人で使う場合は Plus か Pro が基本で、学習に使わせない設定は個人プランでも行えます。",
+      "text": "Business は2ユーザー以上のチーム向けのプランで、管理コンソール、SAML／SSO、業務データが既定では学習に使われない設定が最初から含まれます。1人で使う場合は Plus か Pro が基本で、学習に使わせない設定は個人プランでも行えます。",
       "visibleTextContains": true
     },
     {
@@ -8813,7 +8813,7 @@
       "file": "guides/en/chatgpt.html",
       "type": "Article",
       "field": "dateModified",
-      "value": "2026-10-03",
+      "value": "2026-11-20",
       "present": true,
       "matchingTimeElement": true
     },
@@ -8940,7 +8940,7 @@
       "file": "guides/en/chatgpt.html",
       "type": "FAQPage",
       "field": "answer",
-      "text": "Business is a plan for teams of 2 to 200 employees, and includes an admin console, SAML/SSO, and business data excluded from training by default. On your own, Plus or Pro is the usual choice, and you can turn off training on personal plans too.",
+      "text": "Business is a plan for teams with at least two users, and includes an admin console, SAML/SSO, and business data excluded from training by default. On your own, Plus or Pro is the usual choice, and you can turn off training on personal plans too.",
       "visibleTextContains": true
     },
     {
@@ -11865,7 +11865,7 @@
       "file": "guides/es/chatgpt.html",
       "type": "Article",
       "field": "dateModified",
-      "value": "2026-10-03",
+      "value": "2026-11-20",
       "present": true,
       "matchingTimeElement": true
     },
@@ -11992,7 +11992,7 @@
       "file": "guides/es/chatgpt.html",
       "type": "FAQPage",
       "field": "answer",
-      "text": "Business es un plan para equipos de 2 a 200 personas e incluye consola de administración, SAML/SSO y datos de trabajo que no entrenan el modelo por defecto. Si trabajas solo, lo habitual es Plus o Pro, y en los planes personales también puedes desactivar el entrenamiento.",
+      "text": "Business es un plan para equipos con al menos dos usuarios e incluye consola de administración, SAML/SSO y datos de trabajo que no entrenan el modelo por defecto. Si trabajas solo, lo habitual es Plus o Pro, y en los planes personales también puedes desactivar el entrenamiento.",
       "visibleTextContains": true
     },
     {
@@ -14777,7 +14777,7 @@
       "file": "guides/fr/chatgpt.html",
       "type": "Article",
       "field": "dateModified",
-      "value": "2026-10-03",
+      "value": "2026-11-20",
       "present": true,
       "matchingTimeElement": true
     },
@@ -14904,7 +14904,7 @@
       "file": "guides/fr/chatgpt.html",
       "type": "FAQPage",
       "field": "answer",
-      "text": "Business vise les équipes de 2 à 200 personnes et inclut d'emblée une console d'administration, le SAML/SSO et des données professionnelles exclues de l'entraînement par défaut. Seul, on choisit plutôt Plus ou Pro ; le réglage d'entraînement se désactive aussi sur les offres individuelles.",
+      "text": "Business vise les équipes d’au moins deux utilisateurs et inclut d'emblée une console d'administration, le SAML/SSO et des données professionnelles exclues de l'entraînement par défaut. Seul, on choisit plutôt Plus ou Pro ; le réglage d'entraînement se désactive aussi sur les offres individuelles.",
       "visibleTextContains": true
     },
     {
@@ -17885,7 +17885,7 @@
       "file": "guides/hi/chatgpt.html",
       "type": "Article",
       "field": "dateModified",
-      "value": "2026-10-03",
+      "value": "2026-11-20",
       "present": true,
       "matchingTimeElement": true
     },
@@ -18012,7 +18012,7 @@
       "file": "guides/hi/chatgpt.html",
       "type": "FAQPage",
       "field": "answer",
-      "text": "Business, 2 से 200 कर्मचारियों वाली टीमों का प्लान है, जिसमें एडमिन कंसोल, SAML/SSO, और कामकाजी डेटा के डिफ़ॉल्ट रूप से ट्रेनिंग में न जाने की व्यवस्था शुरू से होती है। अकेले इस्तेमाल के लिए आम तौर पर Plus या Pro ठीक है, और ट्रेनिंग बंद करने की सेटिंग निजी प्लान में भी हो सकती है।",
+      "text": "Business, कम से कम दो उपयोगकर्ताओं वाली टीमों का प्लान है, जिसमें एडमिन कंसोल, SAML/SSO, और कामकाजी डेटा के डिफ़ॉल्ट रूप से ट्रेनिंग में न जाने की व्यवस्था शुरू से होती है। अकेले इस्तेमाल के लिए आम तौर पर Plus या Pro ठीक है, और ट्रेनिंग बंद करने की सेटिंग निजी प्लान में भी हो सकती है।",
       "visibleTextContains": true
     },
     {
@@ -22225,7 +22225,7 @@
       "file": "guides/zh-hans/chatgpt.html",
       "type": "Article",
       "field": "dateModified",
-      "value": "2026-10-03",
+      "value": "2026-11-20",
       "present": true,
       "matchingTimeElement": true
     },
@@ -22352,7 +22352,7 @@
       "file": "guides/zh-hans/chatgpt.html",
       "type": "FAQPage",
       "field": "answer",
-      "text": "Business是面向2至200名员工团队的套餐，从一开始就包含管理控制台、SAML/SSO，以及业务数据默认不用于训练的设置。一个人使用时基本选Plus或Pro，个人套餐也可以设置不让数据用于训练。",
+      "text": "Business是面向至少两名用户的团队的套餐，从一开始就包含管理控制台、SAML/SSO，以及业务数据默认不用于训练的设置。一个人使用时基本选Plus或Pro，个人套餐也可以设置不让数据用于训练。",
       "visibleTextContains": true
     },
     {

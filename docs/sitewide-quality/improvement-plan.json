@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-19",
+  "date": "2026-11-20",
   "statusLegend": {
     "完了": "定義された範囲の作業と検証が完了。本番反映とは別。",
     "検証中": "実装または検査が進行中。",
@@ -21,12 +21,12 @@
       "acceptance": "対象全スレッドの取得範囲と欠落を明示し、各要求を追跡できる",
       "evidence": "docs/sitewide-quality/requirements-coverage.md",
       "status": "部分完了",
-      "dependency": "未取得の4スレッド原文／取得可能な保存先または共有URL",
+      "dependency": "原文の取得阻害は解消。全候補とページ内容の意味上の裁定が残る。",
       "estimatedEffort": "取得範囲による",
       "criterion": "R1",
       "owner": "Codex（実装・自動検証）",
-      "nextAction": "取得制限のある4件と一覧外履歴の範囲を確認し、要求候補・訂正の裁定と全ページへの対応付けを継続。",
-      "verificationResult": "58スレッドからユーザーメッセージ987件を取得。30の重要要件を手動で原文と対応付け。4スレッドの一部は単一ターンのサイズ上限で未取得。24の派生等スレッドではユーザーメッセージ0件で概要と原文を区別。"
+      "nextAction": "重複・過去案・作業操作指示を区分し、未裁定候補を原文文脈と全ページ本文に照合する。",
+      "verificationResult": "Mac保存履歴4,185ファイルを走査し、206スレッド/1,870メッセージを統合。取得制限の4件すべてを復元。88件の委任エージェント記録と実行用スレッドを区分。重要要件45件を原文に対応付け。全要求候補の撤回/最新版裁定とページ本文の完全な意味照合は未完了。"
     },
     {
       "id": "Q02",
@@ -534,12 +534,12 @@
       "acceptance": "対象全件の一致と対象外理由を記録",
       "evidence": "scripts/check-site-seo.py",
       "status": "部分完了",
-      "dependency": "",
+      "dependency": "SIMYの現在の提供仕様、認証・法務・業務上の実績の一次根拠。",
       "estimatedEffort": "1–2時間（概算）",
       "criterion": "R4",
       "owner": "Codex（実装・自動検証）",
-      "nextAction": "全文の事実性・提供条件・残るschema型の意味レビューは、原文/仕様/一次出典との照合を継続する。ニュースdateModified2件は確実な編集日が未確認のため捏造しない。",
-      "verificationResult": "静的監査：159 indexページ、2534フィールド、FAQ1114組すべてで同じ可視FAQの質問・回答との対応が合格。全文の事実性・最新性・全schema型の意味レビューは未完了。"
+      "nextAction": "確認済みの主張と未確認を一覧化し、一次根拠のない提供条件・実績を確認する。",
+      "verificationResult": "159 index/1,114 FAQの表示とschema一致を再検査。公式参照47 URLを取得し、OpenAI利用上限の旧記載とBusinessの未裏付け上限を6言語で修正。HTTP200でもJS shellだけの資料を精読済みにしない。その他の全事実・提供状態の意味照合は残る。"
     },
     {
       "id": "Q29",
@@ -553,12 +553,12 @@
       "acceptance": "読者の説明・迷い・達成を確認。人数等は設計時に決定",
       "evidence": "docs/sitewide-quality/quality-standard.md",
       "status": "外部確認待ち",
-      "dependency": "対象ユーザー協力",
+      "dependency": "実利用者の回答（価値、AIと人の分担、開始場所）。",
       "estimatedEffort": "調査計画による",
       "criterion": "R2",
       "owner": "Codex（実装・自動検証）",
-      "nextAction": "検証結果を記録して判定を更新",
-      "verificationResult": "未実施／必要な原文・資料・実利用データ・認証済み環境が未取得。"
+      "nextAction": "実回答を記録し、誤解/迷いの原因を修正して再確認。AI採点で代替しない。",
+      "verificationResult": "6言語の主要画面と390/1440pxでコントラスト・表示名・横幅を実ブラウザー検証し12条件の指摘0。実利用者の理解は未検証。ユーザーへ3問の読者テストを依頼済み。"
     },
     {
       "id": "Q30",
@@ -571,13 +571,13 @@
       "improvement": "母語レビューと仕様元照合。検索公開言語とUI翻訳を区別",
       "acceptance": "誤訳/条件の相違を修正し、未翻訳を隠さない",
       "evidence": "docs/sitewide-quality/design-ux-review.md",
-      "status": "外部確認待ち",
-      "dependency": "母語レビューまたは検証可能な資料",
+      "status": "部分完了",
+      "dependency": "母語話者による自然さ・画像内文言の最終確認。",
       "estimatedEffort": "対象範囲による",
       "criterion": "R3/R6",
       "owner": "Codex（実装・自動検証）",
-      "nextAction": "検証結果を記録して判定を更新",
-      "verificationResult": "未実施／必要な原文・資料・実利用データ・認証済み環境が未取得。"
+      "nextAction": "修正の本番反映を確認し、母語話者のレビューで表現を確定する。",
+      "verificationResult": "6言語本文・代替文・固有画像・料金/単位を照合。HOME6言語×2幅のa11y指摘0。申込4言語が日本語になる本番不具合を再現しPR #3047で修正・103テスト/6言語ブラウザー合格。母語話者の最終評価は未実施。"
     },
     {
       "id": "Q31",
@@ -591,12 +591,12 @@
       "acceptance": "期間・クエリ・母数付きの実測。順位保証をしない",
       "evidence": "Google Search Console",
       "status": "外部確認待ち",
-      "dependency": "対象サイトの計測データ",
+      "dependency": "GSCの現在データを読み取れるブラウザー操作時間または検索実績エクスポート。",
       "estimatedEffort": "データ取得後",
       "criterion": "R4",
       "owner": "Codex（実装・自動検証）",
-      "nextAction": "検証結果を記録して判定を更新",
-      "verificationResult": "未実施／必要な原文・資料・実利用データ・認証済み環境が未取得。"
+      "nextAction": "simy.oneプロパティの期間・クリック・表示・CTR・クエリ・ページ・国とインデックス状況を取得。公開翌日の数字を改善効果と断定しない。",
+      "verificationResult": "既存技術SEO199ページ・159 index全件合格。現在の検索実績は未取得。接続検索ツールは利用不可。Mac ChromeにはGSC認証済み画面があるが別タスクの入力中のため、操作可能なタイミングをユーザーへ確認中。"
     },
     {
       "id": "Q32",
@@ -609,13 +609,13 @@
       "improvement": "利用可能なCrUX/RUMでp75を測る。勝手なトラッカーは追加しない",
       "acceptance": "LCP<=2.5s/INP<=200ms/CLS<=0.1を母数・期間とともに記録",
       "evidence": "https://web.dev/articles/vitals",
-      "status": "外部確認待ち",
-      "dependency": "十分な実利用データ",
+      "status": "部分完了",
+      "dependency": "対象サイトのCrUXまたは既存RUMの十分な標本と観測期間。",
       "estimatedEffort": "計測期間による",
       "criterion": "R7",
       "owner": "Codex（実装・自動検証）",
-      "nextAction": "検証結果を記録して判定を更新",
-      "verificationResult": "未実施／必要な原文・資料・実利用データ・認証済み環境が未取得。"
+      "nextAction": "本番の修正版を測定し、GSC CWV/CrUX/RUMの既存データでp75を確認。ラボ指標を実利用p75とみなさない。",
+      "verificationResult": "本番Lighthouse mobileは性能100/SEO100/a11y97、LCP1.1s/TBT0/CLS0。指摘に基づき色/操作名を修正し原画を保持したレスポンシブ画像24件を追加。等しい要求数の総バイトは8.30MB→3.21MB。ローカル性能96/a11y100/SEO100、LCP2.3s/CLS0（環境差あり）。実利用p75は未取得、PSI API429・UI取得失敗を記録。"
     },
     {
       "id": "Q33",
@@ -647,13 +647,13 @@
       "improvement": "遷移URLを確認し、実送信/課金を伴う検証は別途明示された範囲で扱う",
       "acceptance": "実施した条件と未実施を分け、未送信を送信済みにしない",
       "evidence": "docs/sitewide-quality/verification.md",
-      "status": "外部確認待ち",
-      "dependency": "認証済みテスト環境/明示された検証条件",
+      "status": "部分完了",
+      "dependency": "認証済みのテストアカウント・隔離されたStripeテスト環境とメール受信先。既存のsandbox関連PR #3044/#3045は別作業として未マージ。",
       "estimatedEffort": "環境による",
       "criterion": "R2/R8",
       "owner": "Codex（実装・自動検証）",
-      "nextAction": "検証結果を記録して判定を更新",
-      "verificationResult": "未実施／必要な原文・資料・実利用データ・認証済み環境が未取得。"
+      "nextAction": "公開修正のCI・本番反映を確認し、適切なテスト環境で実送信から利用権まで検証する。既存の他タスクのsandbox PRを無断マージしない。",
+      "verificationResult": "本番申込6言語のGET/描画を実測し4言語の誤表示を再現。PR #3047は申込/ログイン/Stripe localeと再試行の言語保持を修正、103単体・契約試験、6言語ローカル実画面が成功。実メール送信/登録/課金/利用権付与の通し確認は未実施。"
     },
     {
       "id": "Q35",

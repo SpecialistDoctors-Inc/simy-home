@@ -1,0 +1,618 @@
+{
+  "observedAt": "2026-11-19T22:26:50.905Z",
+  "method": "Local Chromium, one browser, reduced motion, external requests blocked; axe color contrast and label-in-name rules only.",
+  "results": [
+    {
+      "file": "index.html",
+      "width": 390,
+      "overflow": 0,
+      "languageName": "EN: English (Language)",
+      "images": [
+        {
+          "src": "/assets/home-manga-preview/hero-en.webp",
+          "selected": "http://127.0.0.1:8770/assets/home-manga-preview/hero-en-640.webp",
+          "alt": "A team uses AI but still struggles with prompting and checking.",
+          "width": 316,
+          "naturalWidth": 326
+        },
+        {
+          "src": "/assets/home-manga-preview/product-en.webp",
+          "selected": "http://127.0.0.1:8770/assets/home-manga-preview/product-en-640.webp",
+          "alt": "The team asks SIMY for a customer reply, with fact checks and review before sending.",
+          "width": 330,
+          "naturalWidth": 326
+        },
+        {
+          "src": "/assets/home-manga-preview/method-en.webp",
+          "selected": "",
+          "alt": "SIMY reviews sources and drafts a reply. A person reviews and requests changes.",
+          "width": 330,
+          "naturalWidth": 0
+        },
+        {
+          "src": "/assets/home-manga-preview/apps-en.webp",
+          "selected": "",
+          "alt": "The team connects documents, email and calendars to SIMY.",
+          "width": 330,
+          "naturalWidth": 0
+        },
+        {
+          "src": "/assets/home-manga-preview/learning-v2-en.webp",
+          "selected": "",
+          "alt": "The next customer reply reuses fact checks and review before sending.",
+          "width": 330,
+          "naturalWidth": 0
+        },
+        {
+          "src": "/assets/home-manga-preview/closing-en.webp",
+          "selected": "",
+          "alt": "The team and SIMY move on to the next task together.",
+          "width": 322,
+          "naturalWidth": 0
+        }
+      ],
+      "violations": []
+    },
+    {
+      "file": "ja.html",
+      "width": 390,
+      "overflow": 0,
+      "languageName": "JA: 日本語 (言語)",
+      "images": [
+        {
+          "src": "/assets/home-manga-preview/hero.webp",
+          "selected": "http://127.0.0.1:8770/assets/home-manga-preview/hero-640.webp",
+          "alt": "ゴーグルの主人公と眼鏡の仲間。AIを使っても指示と確認が減らないと悩んでいる。",
+          "width": 316,
+          "naturalWidth": 326
+        },
+        {
+          "src": "/assets/home-manga-preview/product-ja-v2.webp",
+          "selected": "http://127.0.0.1:8770/assets/home-manga-preview/product-ja-v2-640.webp",
+          "alt": "主人公が顧客への返事を頼み、事実確認と送信前の確認という仕事の進め方をSIMYに伝える。",
+          "width": 330,
+          "naturalWidth": 326
+        },
+        {
+          "src": "/assets/home-manga-preview/method.webp",
+          "selected": "",
+          "alt": "SIMYが資料を確認し返信の下書きを準備。主人公が必要な判断を返す。",
+          "width": 330,
+          "naturalWidth": 0
+        },
+        {
+          "src": "/assets/home-manga-preview/apps.webp",
+          "selected": "",
+          "alt": "主人公と仲間がいつもの資料、メール、予定をSIMYとつないで準備を進める。",
+          "width": 330,
+          "naturalWidth": 0
+        },
+        {
+          "src": "/assets/home-manga-preview/learning-v2.webp",
+          "selected": "",
+          "alt": "次の顧客対応にも、事実確認と送信前の確認という進め方を活かす。",
+          "width": 330,
+          "naturalWidth": 0
+        },
+        {
+          "src": "/assets/home-manga-preview/closing.webp",
+          "selected": "",
+          "alt": "同じ主人公、仲間とSIMYが、次の仕事へ一緒に進む。",
+          "width": 322,
+          "naturalWidth": 0
+        }
+      ],
+      "violations": []
+    },
+    {
+      "file": "es.html",
+      "width": 390,
+      "overflow": 0,
+      "languageName": "ES: Español (Idioma)",
+      "images": [
+        {
+          "src": "/assets/home-manga-preview/hero-es.webp",
+          "selected": "http://127.0.0.1:8770/assets/home-manga-preview/hero-es-640.webp",
+          "alt": "Un equipo usa IA, pero sigue teniendo que dar instrucciones y revisar.",
+          "width": 316,
+          "naturalWidth": 326
+        },
+        {
+          "src": "/assets/home-manga-preview/product-es.webp",
+          "selected": "http://127.0.0.1:8770/assets/home-manga-preview/product-es-640.webp",
+          "alt": "El equipo pide a SIMY una respuesta, con verificación y revisión antes de enviarla.",
+          "width": 330,
+          "naturalWidth": 326
+        },
+        {
+          "src": "/assets/home-manga-preview/method-es.webp",
+          "selected": "",
+          "alt": "SIMY revisa fuentes y redacta. Una persona revisa y pide cambios.",
+          "width": 330,
+          "naturalWidth": 0
+        },
+        {
+          "src": "/assets/home-manga-preview/apps-es.webp",
+          "selected": "",
+          "alt": "El equipo conecta documentos, correo y calendarios a SIMY.",
+          "width": 330,
+          "naturalWidth": 0
+        },
+        {
+          "src": "/assets/home-manga-preview/learning-v2-es.webp",
+          "selected": "",
+          "alt": "La siguiente respuesta reutiliza la verificación y revisión antes del envío.",
+          "width": 330,
+          "naturalWidth": 0
+        },
+        {
+          "src": "/assets/home-manga-preview/closing-es.webp",
+          "selected": "",
+          "alt": "El equipo y SIMY avanzan juntos hacia la siguiente tarea.",
+          "width": 322,
+          "naturalWidth": 0
+        }
+      ],
+      "violations": []
+    },
+    {
+      "file": "fr.html",
+      "width": 390,
+      "overflow": 0,
+      "languageName": "FR: Français (Langue)",
+      "images": [
+        {
+          "src": "/assets/home-manga-preview/hero-fr.webp",
+          "selected": "http://127.0.0.1:8770/assets/home-manga-preview/hero-fr-640.webp",
+          "alt": "Une équipe utilise l’IA, mais doit encore tout expliquer et vérifier.",
+          "width": 316,
+          "naturalWidth": 326
+        },
+        {
+          "src": "/assets/home-manga-preview/product-fr.webp",
+          "selected": "http://127.0.0.1:8770/assets/home-manga-preview/product-fr-640.webp",
+          "alt": "L’équipe demande une réponse client à SIMY, avec vérification des faits et validation avant envoi.",
+          "width": 330,
+          "naturalWidth": 326
+        },
+        {
+          "src": "/assets/home-manga-preview/method-fr.webp",
+          "selected": "",
+          "alt": "SIMY vérifie les sources et rédige. Une personne valide et demande des corrections.",
+          "width": 330,
+          "naturalWidth": 0
+        },
+        {
+          "src": "/assets/home-manga-preview/apps-fr.webp",
+          "selected": "",
+          "alt": "L’équipe connecte documents, e-mails et calendriers à SIMY.",
+          "width": 330,
+          "naturalWidth": 0
+        },
+        {
+          "src": "/assets/home-manga-preview/learning-v2-fr.webp",
+          "selected": "",
+          "alt": "La prochaine réponse réutilise la vérification des faits et la validation avant envoi.",
+          "width": 330,
+          "naturalWidth": 0
+        },
+        {
+          "src": "/assets/home-manga-preview/closing-fr.webp",
+          "selected": "",
+          "alt": "L’équipe et SIMY passent ensemble à la prochaine tâche.",
+          "width": 322,
+          "naturalWidth": 0
+        }
+      ],
+      "violations": []
+    },
+    {
+      "file": "hi.html",
+      "width": 390,
+      "overflow": 0,
+      "languageName": "HI: हिन्दी (भाषा)",
+      "images": [
+        {
+          "src": "/assets/home-manga-preview/hero-hi.webp",
+          "selected": "http://127.0.0.1:8770/assets/home-manga-preview/hero-hi-640.webp",
+          "alt": "टीम AI इस्तेमाल करती है, लेकिन निर्देश और जांच का बोझ बना है।",
+          "width": 316,
+          "naturalWidth": 326
+        },
+        {
+          "src": "/assets/home-manga-preview/product-hi.webp",
+          "selected": "http://127.0.0.1:8770/assets/home-manga-preview/product-hi-640.webp",
+          "alt": "टीम SIMY को ग्राहक का जवाब, तथ्य जांच और भेजने से पहले समीक्षा करने को कहती है।",
+          "width": 330,
+          "naturalWidth": 326
+        },
+        {
+          "src": "/assets/home-manga-preview/method-hi.webp",
+          "selected": "",
+          "alt": "SIMY स्रोत जांचकर मसौदा बनाता है। व्यक्ति समीक्षा करके बदलाव बताता है।",
+          "width": 330,
+          "naturalWidth": 0
+        },
+        {
+          "src": "/assets/home-manga-preview/apps-hi.webp",
+          "selected": "",
+          "alt": "टीम दस्तावेज, ईमेल और कैलेंडर SIMY से जोड़ती है।",
+          "width": 330,
+          "naturalWidth": 0
+        },
+        {
+          "src": "/assets/home-manga-preview/learning-v2-hi.webp",
+          "selected": "",
+          "alt": "अगले ग्राहक के जवाब में भी तथ्य जांच और भेजने से पहले समीक्षा होती है।",
+          "width": 330,
+          "naturalWidth": 0
+        },
+        {
+          "src": "/assets/home-manga-preview/closing-hi.webp",
+          "selected": "",
+          "alt": "टीम और SIMY मिलकर अगले काम की ओर बढ़ते हैं।",
+          "width": 322,
+          "naturalWidth": 0
+        }
+      ],
+      "violations": []
+    },
+    {
+      "file": "zh-Hans.html",
+      "width": 390,
+      "overflow": 0,
+      "languageName": "ZH: 简体中文 (语言)",
+      "images": [
+        {
+          "src": "/assets/home-manga-preview/hero-zh-Hans.webp",
+          "selected": "http://127.0.0.1:8770/assets/home-manga-preview/hero-zh-Hans-640.webp",
+          "alt": "团队使用AI，却仍忙于指示和检查。",
+          "width": 316,
+          "naturalWidth": 326
+        },
+        {
+          "src": "/assets/home-manga-preview/product-zh-Hans.webp",
+          "selected": "http://127.0.0.1:8770/assets/home-manga-preview/product-zh-Hans-640.webp",
+          "alt": "团队让SIMY准备客户回复，并要求事实核查和发送前确认。",
+          "width": 330,
+          "naturalWidth": 326
+        },
+        {
+          "src": "/assets/home-manga-preview/method-zh-Hans.webp",
+          "selected": "http://127.0.0.1:8770/assets/home-manga-preview/method-zh-Hans.webp",
+          "alt": "SIMY核对资料并起草回复，由人确认并提出修改。",
+          "width": 330,
+          "naturalWidth": 1672
+        },
+        {
+          "src": "/assets/home-manga-preview/apps-zh-Hans.webp",
+          "selected": "",
+          "alt": "团队将常用资料、邮件和日历连接到SIMY。",
+          "width": 330,
+          "naturalWidth": 0
+        },
+        {
+          "src": "/assets/home-manga-preview/learning-v2-zh-Hans.webp",
+          "selected": "",
+          "alt": "下一个客户回复也沿用事实核查和发送前确认。",
+          "width": 330,
+          "naturalWidth": 0
+        },
+        {
+          "src": "/assets/home-manga-preview/closing-zh-Hans.webp",
+          "selected": "",
+          "alt": "团队与SIMY一起迈向下一个任务。",
+          "width": 322,
+          "naturalWidth": 0
+        }
+      ],
+      "violations": []
+    },
+    {
+      "file": "index.html",
+      "width": 1440,
+      "overflow": 0,
+      "languageName": "EN: English (Language)",
+      "images": [
+        {
+          "src": "/assets/home-manga-preview/hero-en.webp",
+          "selected": "http://127.0.0.1:8770/assets/home-manga-preview/hero-en-640.webp",
+          "alt": "A team uses AI but still struggles with prompting and checking.",
+          "width": 591,
+          "naturalWidth": 640
+        },
+        {
+          "src": "/assets/home-manga-preview/product-en.webp",
+          "selected": "http://127.0.0.1:8770/assets/home-manga-preview/product-en-640.webp",
+          "alt": "The team asks SIMY for a customer reply, with fact checks and review before sending.",
+          "width": 603,
+          "naturalWidth": 640
+        },
+        {
+          "src": "/assets/home-manga-preview/method-en.webp",
+          "selected": "http://127.0.0.1:8770/assets/home-manga-preview/method-en.webp",
+          "alt": "SIMY reviews sources and drafts a reply. A person reviews and requests changes.",
+          "width": 603,
+          "naturalWidth": 1672
+        },
+        {
+          "src": "/assets/home-manga-preview/apps-en.webp",
+          "selected": "",
+          "alt": "The team connects documents, email and calendars to SIMY.",
+          "width": 603,
+          "naturalWidth": 0
+        },
+        {
+          "src": "/assets/home-manga-preview/learning-v2-en.webp",
+          "selected": "",
+          "alt": "The next customer reply reuses fact checks and review before sending.",
+          "width": 603,
+          "naturalWidth": 0
+        },
+        {
+          "src": "/assets/home-manga-preview/closing-en.webp",
+          "selected": "",
+          "alt": "The team and SIMY move on to the next task together.",
+          "width": 582,
+          "naturalWidth": 0
+        }
+      ],
+      "violations": []
+    },
+    {
+      "file": "ja.html",
+      "width": 1440,
+      "overflow": 0,
+      "languageName": "JA: 日本語 (言語)",
+      "images": [
+        {
+          "src": "/assets/home-manga-preview/hero.webp",
+          "selected": "http://127.0.0.1:8770/assets/home-manga-preview/hero-640.webp",
+          "alt": "ゴーグルの主人公と眼鏡の仲間。AIを使っても指示と確認が減らないと悩んでいる。",
+          "width": 591,
+          "naturalWidth": 640
+        },
+        {
+          "src": "/assets/home-manga-preview/product-ja-v2.webp",
+          "selected": "http://127.0.0.1:8770/assets/home-manga-preview/product-ja-v2-640.webp",
+          "alt": "主人公が顧客への返事を頼み、事実確認と送信前の確認という仕事の進め方をSIMYに伝える。",
+          "width": 603,
+          "naturalWidth": 640
+        },
+        {
+          "src": "/assets/home-manga-preview/method.webp",
+          "selected": "http://127.0.0.1:8770/assets/home-manga-preview/method.webp",
+          "alt": "SIMYが資料を確認し返信の下書きを準備。主人公が必要な判断を返す。",
+          "width": 603,
+          "naturalWidth": 1672
+        },
+        {
+          "src": "/assets/home-manga-preview/apps.webp",
+          "selected": "",
+          "alt": "主人公と仲間がいつもの資料、メール、予定をSIMYとつないで準備を進める。",
+          "width": 603,
+          "naturalWidth": 0
+        },
+        {
+          "src": "/assets/home-manga-preview/learning-v2.webp",
+          "selected": "",
+          "alt": "次の顧客対応にも、事実確認と送信前の確認という進め方を活かす。",
+          "width": 603,
+          "naturalWidth": 0
+        },
+        {
+          "src": "/assets/home-manga-preview/closing.webp",
+          "selected": "",
+          "alt": "同じ主人公、仲間とSIMYが、次の仕事へ一緒に進む。",
+          "width": 582,
+          "naturalWidth": 0
+        }
+      ],
+      "violations": []
+    },
+    {
+      "file": "es.html",
+      "width": 1440,
+      "overflow": 0,
+      "languageName": "ES: Español (Idioma)",
+      "images": [
+        {
+          "src": "/assets/home-manga-preview/hero-es.webp",
+          "selected": "http://127.0.0.1:8770/assets/home-manga-preview/hero-es-640.webp",
+          "alt": "Un equipo usa IA, pero sigue teniendo que dar instrucciones y revisar.",
+          "width": 591,
+          "naturalWidth": 640
+        },
+        {
+          "src": "/assets/home-manga-preview/product-es.webp",
+          "selected": "http://127.0.0.1:8770/assets/home-manga-preview/product-es-640.webp",
+          "alt": "El equipo pide a SIMY una respuesta, con verificación y revisión antes de enviarla.",
+          "width": 603,
+          "naturalWidth": 640
+        },
+        {
+          "src": "/assets/home-manga-preview/method-es.webp",
+          "selected": "http://127.0.0.1:8770/assets/home-manga-preview/method-es.webp",
+          "alt": "SIMY revisa fuentes y redacta. Una persona revisa y pide cambios.",
+          "width": 603,
+          "naturalWidth": 1672
+        },
+        {
+          "src": "/assets/home-manga-preview/apps-es.webp",
+          "selected": "",
+          "alt": "El equipo conecta documentos, correo y calendarios a SIMY.",
+          "width": 603,
+          "naturalWidth": 0
+        },
+        {
+          "src": "/assets/home-manga-preview/learning-v2-es.webp",
+          "selected": "",
+          "alt": "La siguiente respuesta reutiliza la verificación y revisión antes del envío.",
+          "width": 603,
+          "naturalWidth": 0
+        },
+        {
+          "src": "/assets/home-manga-preview/closing-es.webp",
+          "selected": "",
+          "alt": "El equipo y SIMY avanzan juntos hacia la siguiente tarea.",
+          "width": 582,
+          "naturalWidth": 0
+        }
+      ],
+      "violations": []
+    },
+    {
+      "file": "fr.html",
+      "width": 1440,
+      "overflow": 0,
+      "languageName": "FR: Français (Langue)",
+      "images": [
+        {
+          "src": "/assets/home-manga-preview/hero-fr.webp",
+          "selected": "http://127.0.0.1:8770/assets/home-manga-preview/hero-fr-640.webp",
+          "alt": "Une équipe utilise l’IA, mais doit encore tout expliquer et vérifier.",
+          "width": 591,
+          "naturalWidth": 640
+        },
+        {
+          "src": "/assets/home-manga-preview/product-fr.webp",
+          "selected": "http://127.0.0.1:8770/assets/home-manga-preview/product-fr-640.webp",
+          "alt": "L’équipe demande une réponse client à SIMY, avec vérification des faits et validation avant envoi.",
+          "width": 603,
+          "naturalWidth": 640
+        },
+        {
+          "src": "/assets/home-manga-preview/method-fr.webp",
+          "selected": "http://127.0.0.1:8770/assets/home-manga-preview/method-fr.webp",
+          "alt": "SIMY vérifie les sources et rédige. Une personne valide et demande des corrections.",
+          "width": 603,
+          "naturalWidth": 1672
+        },
+        {
+          "src": "/assets/home-manga-preview/apps-fr.webp",
+          "selected": "",
+          "alt": "L’équipe connecte documents, e-mails et calendriers à SIMY.",
+          "width": 603,
+          "naturalWidth": 0
+        },
+        {
+          "src": "/assets/home-manga-preview/learning-v2-fr.webp",
+          "selected": "",
+          "alt": "La prochaine réponse réutilise la vérification des faits et la validation avant envoi.",
+          "width": 603,
+          "naturalWidth": 0
+        },
+        {
+          "src": "/assets/home-manga-preview/closing-fr.webp",
+          "selected": "",
+          "alt": "L’équipe et SIMY passent ensemble à la prochaine tâche.",
+          "width": 582,
+          "naturalWidth": 0
+        }
+      ],
+      "violations": []
+    },
+    {
+      "file": "hi.html",
+      "width": 1440,
+      "overflow": 0,
+      "languageName": "HI: हिन्दी (भाषा)",
+      "images": [
+        {
+          "src": "/assets/home-manga-preview/hero-hi.webp",
+          "selected": "http://127.0.0.1:8770/assets/home-manga-preview/hero-hi-640.webp",
+          "alt": "टीम AI इस्तेमाल करती है, लेकिन निर्देश और जांच का बोझ बना है।",
+          "width": 591,
+          "naturalWidth": 640
+        },
+        {
+          "src": "/assets/home-manga-preview/product-hi.webp",
+          "selected": "http://127.0.0.1:8770/assets/home-manga-preview/product-hi-640.webp",
+          "alt": "टीम SIMY को ग्राहक का जवाब, तथ्य जांच और भेजने से पहले समीक्षा करने को कहती है।",
+          "width": 603,
+          "naturalWidth": 640
+        },
+        {
+          "src": "/assets/home-manga-preview/method-hi.webp",
+          "selected": "http://127.0.0.1:8770/assets/home-manga-preview/method-hi.webp",
+          "alt": "SIMY स्रोत जांचकर मसौदा बनाता है। व्यक्ति समीक्षा करके बदलाव बताता है।",
+          "width": 603,
+          "naturalWidth": 1672
+        },
+        {
+          "src": "/assets/home-manga-preview/apps-hi.webp",
+          "selected": "",
+          "alt": "टीम दस्तावेज, ईमेल और कैलेंडर SIMY से जोड़ती है।",
+          "width": 603,
+          "naturalWidth": 0
+        },
+        {
+          "src": "/assets/home-manga-preview/learning-v2-hi.webp",
+          "selected": "",
+          "alt": "अगले ग्राहक के जवाब में भी तथ्य जांच और भेजने से पहले समीक्षा होती है।",
+          "width": 603,
+          "naturalWidth": 0
+        },
+        {
+          "src": "/assets/home-manga-preview/closing-hi.webp",
+          "selected": "",
+          "alt": "टीम और SIMY मिलकर अगले काम की ओर बढ़ते हैं।",
+          "width": 582,
+          "naturalWidth": 0
+        }
+      ],
+      "violations": []
+    },
+    {
+      "file": "zh-Hans.html",
+      "width": 1440,
+      "overflow": 0,
+      "languageName": "ZH: 简体中文 (语言)",
+      "images": [
+        {
+          "src": "/assets/home-manga-preview/hero-zh-Hans.webp",
+          "selected": "http://127.0.0.1:8770/assets/home-manga-preview/hero-zh-Hans-640.webp",
+          "alt": "团队使用AI，却仍忙于指示和检查。",
+          "width": 591,
+          "naturalWidth": 640
+        },
+        {
+          "src": "/assets/home-manga-preview/product-zh-Hans.webp",
+          "selected": "http://127.0.0.1:8770/assets/home-manga-preview/product-zh-Hans-640.webp",
+          "alt": "团队让SIMY准备客户回复，并要求事实核查和发送前确认。",
+          "width": 603,
+          "naturalWidth": 640
+        },
+        {
+          "src": "/assets/home-manga-preview/method-zh-Hans.webp",
+          "selected": "http://127.0.0.1:8770/assets/home-manga-preview/method-zh-Hans.webp",
+          "alt": "SIMY核对资料并起草回复，由人确认并提出修改。",
+          "width": 603,
+          "naturalWidth": 1672
+        },
+        {
+          "src": "/assets/home-manga-preview/apps-zh-Hans.webp",
+          "selected": "",
+          "alt": "团队将常用资料、邮件和日历连接到SIMY。",
+          "width": 603,
+          "naturalWidth": 0
+        },
+        {
+          "src": "/assets/home-manga-preview/learning-v2-zh-Hans.webp",
+          "selected": "",
+          "alt": "下一个客户回复也沿用事实核查和发送前确认。",
+          "width": 603,
+          "naturalWidth": 0
+        },
+        {
+          "src": "/assets/home-manga-preview/closing-zh-Hans.webp",
+          "selected": "",
+          "alt": "团队与SIMY一起迈向下一个任务。",
+          "width": 582,
+          "naturalWidth": 0
+        }
+      ],
+      "violations": []
+    }
+  ]
+}
