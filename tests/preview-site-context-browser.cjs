@@ -55,7 +55,7 @@ async function checkEntry(browser, industry) {
           '<title>' + selected.title + '</title><main><h1>' + selected.title +
           '</h1><section data-test-notice>' + noticeHeading + '<dl><dt>2026/11/18</dt>' +
           '<dd>既存のお知らせです。</dd></dl></section>' +
-          '<section><h2>受付枠</h2><dl><dt>2026/11/20</dt><dd>受付時間を選ぶ</dd></dl></section></main>'}});
+          '<section><h2>受付枠</h2><dl><dt>2026/11/20</dt><dd><button>受付時間を選ぶ</button></dd></dl></section></main>'}});
       }
       if (url.pathname === '/api/preview-edit') {
         const payload = route.request().postDataJSON();
@@ -74,7 +74,20 @@ async function checkEntry(browser, industry) {
         if (!payload.siteUrl) {
           assert.match(payload.nodes.find(node => node.id === 'e0').context, /みらい法律事務所/);
           const findText = text => payload.nodes.find(node => node.kind === 'text' && node.text.startsWith(text));
+          const contextualRequest = 'さっき指定した最初の写真を、案内の本文の下に追加してください。';
+          if(payload.request===contextualRequest&&!payload.followUp){
+            assert.deepEqual(payload.images,[]);
+            assert.deepEqual(payload.assets.map(asset=>asset.name),['entrance.png','another.png','entrance.png']);
+            assert.ok(payload.history.some(turn=>turn.text.includes('[a0]')));
+            return route.fulfill({json:{status:'inspect',question:'a0',context:{goal:'',target:'',decisions:'最初の写真',pending:''}}});
+          }
           const plans = {
+            [contextualRequest]: () => {
+              assert.equal(payload.followUp,'inspection');
+              assert.deepEqual(payload.images.map(image=>image.id),['a0']);
+              const target=payload.nodes.find(node=>node.tag==='article'&&node.text.includes('取扱分野のご案内'));
+              return {type:'insert_image',target:target.id,value:'a0',title:'最初の写真'};
+            },
             '本文を一文にまとめてください。': () => {
               const target = findText('相続・離婚・企業法務について');
               return {type:'replace_text', target:target.id, oldText:target.text, newText:'法律相談の状況を伺い、次の進め方をご案内します。'};
@@ -144,6 +157,13 @@ async function checkEntry(browser, industry) {
       await page.locator('#preview-edit-undo').click();
       await frame.getByAltText('入口の案内写真').waitFor({state:'detached'});
       assert.equal(await frame.locator('h1').evaluate(node=>getComputedStyle(node).color),'rgb(25, 35, 74)');
+      await page.locator('#preview-photo').setInputFiles({name:'entrance.png',mimeType:'image/png',buffer:Buffer.from(photo,'base64')});
+      await page.waitForFunction(()=>!document.querySelector('#preview-photo').disabled);
+      await submit(page,'さっき指定した最初の写真を、案内の本文の下に追加してください。');
+      await frame.getByAltText('最初の写真').waitFor();
+      await page.locator('[popovertarget=preview-tools]').click();
+      await page.locator('#preview-edit-undo').click();
+      await frame.getByAltText('最初の写真').waitFor({state:'detached'});
       await submit(page, '別の場所も変えて');
       await page.getByText('どの箇所を変更しますか？',{exact:true}).waitFor();
       assert.equal(await frame.locator('[data-sample-content] > img').count(),0);
@@ -256,6 +276,8 @@ async function checkEntry(browser, industry) {
       rebuildStatus: document.querySelector('#rebuild-status')?.textContent,
       reportStatus: document.querySelector('[data-report-rebuild] .rebuild-status')?.textContent,
       frameTitle: document.querySelector('#rebuild-preview')?.contentDocument?.title,
+      diagnosisMessage: document.querySelector('#diagnosis-message')?.textContent,
+      diagnosisValidation: document.querySelector('#diagnosis-url')?.validationMessage,
     }));
     console.error(industry.id, state, pageErrors);
     throw error;

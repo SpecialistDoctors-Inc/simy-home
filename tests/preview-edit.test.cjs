@@ -20,4 +20,9 @@ test('preview selects a photo by the request instead of assuming the latest atta
  assert.equal(select([first,second],'どちらかの写真を使って'),undefined);
  assert.equal(select([first,second],'入口.JPGと受付.jpgの写真'),undefined);
  assert.equal(select([second],'添付写真を使って'),second);
+ const sameName={...second,name:first.name};
+ assert.equal(select([first,sameName],'入口.jpgを使ってください'),undefined);
+ assert.equal(select([first,sameName],'最初の写真','a0'),first);
+ assert.equal(select([first,sameName],'最初の写真','a1'),sameName);
+ assert.equal(select([second],'添付写真を使って','a0'),undefined);
 });
