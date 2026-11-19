@@ -71,6 +71,30 @@ async function checkEntry(browser, industry) {
           return;
         }
         if (payload.request === '接続エラーの確認') return route.fulfill({status: 503, json: {error: '変更案を作成できませんでした。'}});
+        if (!payload.siteUrl) {
+          assert.match(payload.nodes.find(node => node.id === 'e0').context, /みらい法律事務所/);
+          const findText = text => payload.nodes.find(node => node.kind === 'text' && node.text.startsWith(text));
+          const plans = {
+            '本文を一文にまとめてください。': () => {
+              const target = findText('相続・離婚・企業法務について');
+              return {type:'replace_text', target:target.id, oldText:target.text, newText:'法律相談の状況を伺い、次の進め方をご案内します。'};
+            },
+            '見出しだけ紺色にしてください。': () => ({
+              type:'set_style', target:findText('取扱分野のご案内').id, property:'color', value:'#19234a',
+            }),
+            '案内の本文の下に entrance.png を追加してください。': () => {
+              const target = payload.nodes.find(node=>node.tag==='article' && node.text.includes('取扱分野のご案内'));
+              const asset = payload.assets.find(asset=>asset.name==='entrance.png');
+              assert.deepEqual(payload.images.map(image=>image.id),[asset.id]);
+              return {type:'insert_image', target:target.id, value:asset.id, title:'入口の案内写真'};
+            },
+          };
+          const create = plans[payload.request];
+          if (!create) return route.fulfill({json:{status:'clarify', question:'どの箇所を変更しますか？'}});
+          const operation=create();
+          return route.fulfill({json:{status:'edit', summary:'編集を適用しました。', operations:[operation],
+            visualInputs:payload.images.map(image=>image.id)}});
+        }
         const news = payload.nodes.filter(node => node.kind === 'news');
         assert.equal(news.length, 1);
         if (payload.request === '明日は休み') {
@@ -97,33 +121,38 @@ async function checkEntry(browser, industry) {
         canvas.getContext('2d').fillRect(0, 0, 64, 64);
         return canvas.toDataURL('image/png').split(',')[1];
       });
-      assert.equal(await input.inputValue(), 'お知らせ：ホームページを更新しました。');
-      await page.locator('#preview-photo').setInputFiles({
-        name: 'sample.png', mimeType: 'image/png', buffer: Buffer.from(photo, 'base64'),
-      });
-      await page.locator('#preview-photo-status').getByText('添付：sample.png').waitFor();
-      assert.equal(await input.inputValue(), '写真を変更');
+      assert.equal(await input.inputValue(), '');
+      await submit(page, '本文を一文にまとめてください。');
+      await frame.getByText('法律相談の状況を伺い、次の進め方をご案内します。',{exact:true}).waitFor();
+      await submit(page, '見出しだけ紺色にしてください。');
+      await frame.locator('h1[style]').waitFor();
+      assert.equal(await frame.locator('h1').evaluate(node=>getComputedStyle(node).color),'rgb(25, 35, 74)');
+      const request = '案内の本文の下に entrance.png を追加してください。';
+      await input.fill(request);
+      for (const name of ['entrance.png','another.png']) {
+        await page.locator('#preview-photo').setInputFiles({
+          name, mimeType: 'image/png', buffer: Buffer.from(photo, 'base64'),
+        });
+        await page.locator('#preview-photo-status').getByText('添付：' + name).waitFor();
+      }
+      assert.equal(await input.inputValue(), request);
+      assert.equal(requests.length,2,'attaching photos does not submit an edit');
       await page.locator('#preview-send').click();
-      await frame.locator('[data-sample-photo] img').waitFor();
-      const content = '写真付きのご案内を更新しました。';
-      await submit(page, 'お知らせ：' + content);
-      await frame.getByText(content, {exact: true}).waitFor();
-      await submit(page, 'この文章をお知らせに追加');
-      await page.getByText(/操作例を選ぶか/).waitFor();
-      assert.equal(await frame.locator('[data-sample-notices] li').count(), 2);
-
-      assert.equal(requests.length, 0);
+      await frame.getByAltText('入口の案内写真').waitFor();
+      assert.equal(await frame.locator('[data-sample-content] > img').count(),1);
+      await page.locator('[popovertarget=preview-tools]').click();
+      await page.locator('#preview-edit-undo').click();
+      await frame.getByAltText('入口の案内写真').waitFor({state:'detached'});
+      assert.equal(await frame.locator('h1').evaluate(node=>getComputedStyle(node).color),'rgb(25, 35, 74)');
+      await submit(page, '別の場所も変えて');
+      await page.getByText('どの箇所を変更しますか？',{exact:true}).waitFor();
+      assert.equal(await frame.locator('[data-sample-content] > img').count(),0);
       await page.locator('#rebuild-editor-close').click();
       await page.locator('#try-article').click();
       await frame.getByRole('heading', {name: '初めて相続をご相談される方へ'}).waitFor();
-      await page.locator('#preview-send').click();
-      await frame.getByText(/初回相談にお持ちいただく資料について/).waitFor();
-      await page.locator('[popovertarget=preview-tools]').click();
-      await page.locator('[data-sample-action=rewrite]').click();
-      await page.locator('#preview-send').click();
-      await frame.getByText(/相続の初回相談では、まず状況を伺います/).waitFor();
-      assert.equal(requests.length, 0);
+      assert.equal(await input.inputValue(), '');
       await page.locator('#rebuild-editor-close').click();
+      console.log(industry.id, 'sample uses API for free-form text, scoped design, named attachment, clarify and undo');
     }
 
     for (const site of sites) {
