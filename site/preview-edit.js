@@ -134,6 +134,26 @@
   all.filter(e=>!['DL','UL','OL','TABLE','TR','TBODY'].includes(e.tagName)&&text(e)&&![...e.children].some(c=>text(c)&&!['SPAN','BR','B','STRONG','EM','I','SMALL'].includes(c.tagName))).forEach(e=>add(e,'text'));
   return out;
  };
+ api.revealChanges=function(doc){
+  const view=doc.defaultView;
+  if(!view)return null;
+  let first=null;
+  for(const target of doc.querySelectorAll('[data-simy-changed]')){
+   const ancestors=[];
+   for(let node=target;node;node=node.parentElement)ancestors.push(node);
+   const chain=ancestors.map(node=>[node,view.getComputedStyle(node)]);
+   // Keep intentionally hidden or breakpoint-specific branches in their original state.
+   if(chain.some(([node,style])=>node.hidden||node.getAttribute('aria-hidden')==='true'||style.display==='none'||style.visibility!=='visible'))continue;
+   for(const [node,style] of chain){
+    if(Number(style.opacity)!==0)continue;
+    // The preview blocks source scripts, including any script that ends a reveal animation.
+    node.style.setProperty('transition-property','none','important');
+    node.style.setProperty('opacity','1','important');
+   }
+   first??=target;
+  }
+  return first;
+ };
  api.redesign=function(doc,theme,accent){
   // A theme changes typography and decoration while the site's responsive colors and layout remain in force.
   const themes={

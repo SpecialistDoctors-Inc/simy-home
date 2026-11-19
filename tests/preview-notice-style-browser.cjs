@@ -56,6 +56,15 @@ await browser.close();})().catch(e=>{console.error(e);process.exit(1)});
  assert.deepEqual(await page.locator('h1').evaluate(node=>[getComputedStyle(node).color,getComputedStyle(node).backgroundColor]),['rgb(255, 255, 255)','rgb(35, 69, 103)']);
  assert.equal(await page.locator('img').getAttribute('src'),'photo.jpg');
  console.log('The requested theme preserves the original media, responsive layout and readable heading colors.');
+ await page.setContent('<style>.waiting-for-script{opacity:0;transition:opacity 1s}</style><section id="edited" class="waiting-for-script"><img data-simy-changed alt="差し替えた写真"></section><section id="untouched" class="waiting-for-script">他の内容</section><section id="hidden" class="waiting-for-script" hidden><p data-simy-changed>非表示</p></section>');
+ await page.addScriptTag({path:path.resolve('site/preview-edit.js')});
+ const visible=await page.evaluate(()=>{
+  const focused=SimyPreviewEdit.revealChanges(document);
+  return {focus:focused?.getAttribute('alt'), edited:getComputedStyle(document.querySelector('#edited')).opacity,
+   untouched:getComputedStyle(document.querySelector('#untouched')).opacity, hidden:getComputedStyle(document.querySelector('#hidden')).opacity};
+ });
+ assert.deepEqual(visible,{focus:'差し替えた写真',edited:'1',untouched:'0',hidden:'0'});
+ console.log('A changed photo behind a script-dependent fade becomes visible without revealing unrelated or hidden sections.');
  await browser.close();
 })().catch(e=>{console.error(e);process.exit(1)});
 

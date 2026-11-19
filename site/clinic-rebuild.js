@@ -80,7 +80,7 @@
   for(const control of doc.querySelectorAll('button,input[type=button],input[type=submit]')){control.disabled=false;control.setAttribute('type','button');}
   doc.addEventListener('click',event=>{if(event.target.closest?.('a,area,button,[role=button],input[type=button],input[type=submit]')){event.preventDefault();event.stopImmediatePropagation();if(!pageOffer.open)pageOffer.showModal();}},true);
   doc.addEventListener('submit',event=>{event.preventDefault();event.stopImmediatePropagation();},true);
-  doc.querySelector('[data-simy-changed]')?.scrollIntoView({block:'center',behavior:'instant'});
+  window.SimyPreviewEdit.revealChanges?.(doc)?.scrollIntoView({block:'center',behavior:'instant'});
  }catch{}});
  editForm.addEventListener('submit',async event=>{
   event.preventDefault();
