@@ -16,11 +16,11 @@ await browser.close();})().catch(e=>{console.error(e);process.exit(1)});
   ['japanese-date-span','<dl><dt><span class="date">2026年10月1日</span><span class="title">以前のタイトル</span></dt><dd>以前の本文</dd></dl>'],
   ['japanese-date-column','<dl><dt>2026年10月1日</dt><dd><a>以前のタイトル</a></dd></dl>'],
   ['date-column','<dl><dt>2026/10/29</dt><dd><h4><a>以前のタイトル</a></h4></dd></dl>'],
-  ['cards','<div class="news-list"><article class="card"><time>2026/10/29</time><h3>以前のタイトル</h3><p>以前の本文</p></article><article class="card"><time>2026/10/28</time><h3>その前のタイトル</h3><p>その前の本文</p></article></div>'],
+  ['cards','<div class="x23"><article class="card"><time>2026/10/29</time><h3>以前のタイトル</h3><p>以前の本文</p></article><article class="card"><time>2026/10/28</time><h3>その前のタイトル</h3><p>その前の本文</p></article></div>'],
   ['wrapped-dl','<div id="topicsIn"><dl><a><dt>2026.10.29</dt><dd>以前のタイトル</dd></a></dl><dl><a><dt>2026.10.28</dt><dd>以前のタイトル2</dd></a></dl></div>'],
-  ['single-card','<div class="news"><div class="inner-news"><p>2026年10月29日</p><p>以前のお知らせ</p></div></div>'],
-  ['undated-dl','<dl><dt class="news_title">休診のお知らせ</dt><dd class="news_body">明日は休診です</dd></dl>'],
-  ['builder','<div class="news-list"><div class="post"><div class="news__wrapper"><div><time>2026/10/29</time><h4>以前のタイトル</h4></div></div></div><div class="post"><div class="news__wrapper"><div><time>2026/10/28</time><h4>以前のタイトル2</h4></div></div></div></div>']
+  ['single-card','<div class="news"><div class="x24"><p>2026年10月29日</p><p>以前のお知らせ</p></div></div>'],
+  ['undated-dl','<dl><dt><h3>来訪のご案内</h3></dt><dd><p>受付方法を更新しました</p></dd></dl>'],
+  ['builder','<div class="x23"><div class="post"><div class="news__wrapper"><div><time>2026/10/29</time><h4>以前のタイトル</h4></div></div></div><div class="post"><div class="news__wrapper"><div><time>2026/10/28</time><h4>以前のタイトル2</h4></div></div></div></div>']
  ];
  for(const[name,markup]of cases){
   await page.setContent('<style>h3,h4,dt{font:700 20px/1.6 serif;color:#53722a}p,dd{font:16px/1.8 serif;border-bottom:1px dashed #ccc}article{padding:12px}</style><section><h2>今週の伝言</h2>'+markup+'</section><section><h2>医院概要</h2><dl><dt>所在地</dt><dd>東京都</dd></dl></section>');
@@ -38,6 +38,35 @@ await browser.close();})().catch(e=>{console.error(e);process.exit(1)});
  assert.equal(await page.locator('.crop').first().evaluate(e=>getComputedStyle(e).overflowX),'auto');
  assert.equal(await page.locator('.deck').last().evaluate(e=>getComputedStyle(e).visibility),'hidden');
  assert.equal(await page.locator('.unrelated').evaluate(e=>getComputedStyle(e).visibility),'hidden');
+ await page.setContent('<style>.q img{width:43%;height:auto}.p1{padding:7px 15px}.c1{font-family:serif}</style><main><h2>Resources</h2><div class="p1"><article class="q"><img width="160" height="90" src="sample.jpg" alt="Reference"><h3>First topic</h3><p>Original copy.</p></article><article class="q"><h3 class="c1">Second topic</h3><p>More information.</p></article></div><section class="box"><h3 class="c1">Original group</h3><p class="p1">Description</p></section></main>');
+ await page.addScriptTag({path:path.resolve('site/preview-edit.js')});
+ const prepared=await page.evaluate(()=>{
+  const html=SimyPreviewEdit.index(document.documentElement.outerHTML);
+  const doc=new DOMParser().parseFromString(html,'text/html');
+  const get=selector=>doc.querySelector(selector).dataset.simyEditId;
+  return SimyPreviewEdit.applyPlan(html,{status:'edit',operations:[
+   {type:'insert_image',target:get('article:nth-child(2) h3'),value:'a0',title:'New photo'},
+   {type:'add_section',target:get('section'),title:'Section set',body:'New paragraph'},
+  ]},[{id:'a0',data:'data:image/png;base64,AA=='}]).html;
+ });
+ await page.setContent(prepared);
+ assert.equal(await page.locator('article:nth-child(2) > :first-child').getAttribute('alt'),'New photo');
+ assert.equal(await page.locator('article:nth-child(2) img').getAttribute('width'),'160');
+ assert.equal(await page.locator('section.box + section.box h3').innerText(),'Section set');
+ assert.equal(await page.locator('section.box + section.box p').evaluate(e=>getComputedStyle(e).paddingTop),'7px');
+ await page.setContent('<html lang="en-US"><body><section aria-label="Field notes"><ol><li><time datetime="2026-10-29">Oct 29, 2026</time><h3>First edition</h3><p>Previous entry</p></li></ol></section><dl><dt class="item-name">Address</dt><dd class="item-detail">Central district</dd></dl></body></html>');
+ await page.addScriptTag({path:path.resolve('site/preview-edit.js')});
+ const languages=await page.evaluate(()=>{
+  const source=SimyPreviewEdit.index(document.documentElement.outerHTML);
+  const nodes=SimyPreviewEdit.inventory(source),news=nodes.filter(n=>n.kind==='news');
+  const result=SimyPreviewEdit.applyPlan(source,{status:'edit',operations:[{type:'insert_notice',target:news[0].id,title:'Next edition',body:'Practical details',date:'2026-11-20'}]});
+  const doc=new DOMParser().parseFromString(result.html,'text/html');
+  return {language:nodes[0].context,context:news[0].context,candidates:news.length,date:doc.querySelector('time').textContent};
+ });
+ assert.match(languages.language,/lang=en-US/);
+ assert.equal(languages.context,'Field notes');
+ assert.equal(languages.candidates,1);
+ assert.equal(languages.date,'Nov 20, 2026');
  await page.setContent('<h2><span>診療案内</span></h2>');await page.addScriptTag({path:path.resolve('site/preview-edit.js')});
  const text=await page.evaluate(()=>{const html=SimyPreviewEdit.index(document.documentElement.outerHTML),doc=new DOMParser().parseFromString(html,'text/html'),targets=[doc.querySelector('h2'),doc.querySelector('span')].map(e=>e.getAttribute('data-simy-edit-id'));return SimyPreviewEdit.applyPlan(html,{status:'edit',operations:targets.map(target=>({type:'replace_text',target,oldText:'診療案内',newText:'診療案内について'}))}).html;});assert(!text.includes('についてについて'));assert(text.includes('診療案内について'));
  await page.setContent('<p><span>診療案内</span><span>診療案内</span></p>');await page.addScriptTag({path:path.resolve('site/preview-edit.js')});

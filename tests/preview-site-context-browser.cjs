@@ -27,6 +27,11 @@ async function checkEntry(browser, industry) {
   let releasePendingEdit;
   const pendingEdit = new Promise(resolve => {releasePendingEdit = resolve;});
   try {
+    const fixturePhoto=await page.evaluate(()=>{
+      const canvas=document.createElement('canvas');canvas.width=canvas.height=8;
+      canvas.getContext('2d').fillRect(0,0,8,8);
+      return canvas.toDataURL('image/png');
+    });
     await page.route('**/*', async route => {
       const url = new URL(route.request().url());
       if (url.origin === base) return route.continue();
@@ -55,7 +60,8 @@ async function checkEntry(browser, industry) {
           '<title>' + selected.title + '</title><main><h1>' + selected.title +
           '</h1><section data-test-notice>' + noticeHeading + '<dl><dt>2026/11/18</dt>' +
           '<dd>既存のお知らせです。</dd></dl></section>' +
-          '<section><h2>受付枠</h2><dl><dt>2026/11/20</dt><dd><button>受付時間を選ぶ</button></dd></dl></section></main>'}});
+          '<section><h2>受付枠</h2><dl><dt>2026/11/20</dt><dd><button>受付時間を選ぶ</button></dd></dl></section>' +
+          '<figure><img src="'+fixturePhoto+'" alt="外観"><img src="'+fixturePhoto+'" alt="入口"></figure></main>'}});
       }
       if (url.pathname === '/api/preview-edit') {
         const payload = route.request().postDataJSON();
@@ -81,6 +87,12 @@ async function checkEntry(browser, industry) {
             assert.ok(payload.history.some(turn=>turn.text.includes('[a0]')));
             return route.fulfill({json:{status:'inspect',interactive:true,question:'a0',context:{goal:'',target:'',decisions:'最初の写真',pending:''}}});
           }
+          const namedRequest='案内の本文の下に entrance.png を追加してください。';
+          if(payload.request===namedRequest&&!payload.followUp){
+            assert.deepEqual(payload.images,[]);
+            assert.deepEqual(payload.assets.map(asset=>asset.name),['entrance.png','another.png']);
+            return route.fulfill({json:{status:'inspect',interactive:true,question:'a0',context:{goal:'',target:'',decisions:'入口の写真',pending:''}}});
+          }
           const plans = {
             [contextualRequest]: () => {
               assert.equal(payload.followUp,'inspection');
@@ -95,7 +107,7 @@ async function checkEntry(browser, industry) {
             '見出しだけ紺色にしてください。': () => ({
               type:'set_style', target:findText('取扱分野のご案内').id, property:'color', value:'#19234a',
             }),
-            '案内の本文の下に entrance.png を追加してください。': () => {
+            [namedRequest]: () => {
               const target = payload.nodes.find(node=>node.tag==='article' && node.text.includes('取扱分野のご案内'));
               const asset = payload.assets.find(asset=>asset.name==='entrance.png');
               assert.deepEqual(payload.images.map(image=>image.id),[asset.id]);
@@ -107,6 +119,16 @@ async function checkEntry(browser, industry) {
           const operation=create();
           return route.fulfill({json:{status:'edit', summary:'編集を適用しました。', operations:[operation],
             visualInputs:payload.images.map(image=>image.id)}});
+        }
+        if(payload.request==='入口の写真の色を確認してください。'){
+          const photo=payload.nodes.find(node=>node.kind==='image'&&node.text==='入口');
+          assert.ok(photo);
+          if(!payload.followUp){
+            assert.deepEqual(payload.images,[]);
+            return route.fulfill({json:{status:'inspect',interactive:true,question:photo.id,context:{goal:'',target:'入口',decisions:'',pending:''}}});
+          }
+          assert.deepEqual(payload.images.map(image=>image.id),[photo.id]);
+          return route.fulfill({json:{status:'answer',summary:'入口の写真は黒です。',visualInputs:[photo.id]}});
         }
         const news = payload.nodes.filter(node => node.kind === 'news');
         assert.equal(news.length, 1);
@@ -217,6 +239,8 @@ async function checkEntry(browser, industry) {
         await page.setViewportSize({width: 1280, height: 900});
       }
 
+      await submit(page,'入口の写真の色を確認してください。');
+      await page.getByText('入口の写真は黒です。',{exact:true}).waitFor();
       await submit(page, '接続エラーの確認');
       await page.getByText('変更案を作成できませんでした。', {exact: true}).waitFor();
       assert.equal(await frame.locator('[data-test-notice] dd').count(), 2);
