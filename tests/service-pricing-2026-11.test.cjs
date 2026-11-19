@@ -19,9 +19,13 @@ test('all 24 canonical service pages are mapped by function and reproducibly gen
  for(const route of map.routes){
   const html=read('site/'+route.path),section=own(html),c=copy[route.locale],profile=map.profiles[route.profile];
   assert.equal(html.split('<!-- service-pricing-2026-11:start -->').length,2,route.path);
-  assert.ok(section.includes(c.status),route.path);assert.ok(section.includes(c.allowance),route.path);
+  const live=route.checkout?.enabled===true;
+  assert.equal(section.includes(c.status),!live,route.path);
+  assert.ok(section.includes(c.allowance),route.path);
   assert.ok(section.includes(c.beforeTax),route.path);assert.ok(section.includes(c.transcriptionSla),route.path);
-  assert.doesNotMatch(section,/<form\b|<button\b|href="[^\"]*(?:signup|checkout|buy)|drawing_quote|storage_100gb|storage_1tb/);
+  assert.doesNotMatch(section,/<form\b|<button\b|drawing_quote|storage_100gb|storage_1tb/);
+  const paymentLinks=links(section).filter(url=>/signup|checkout|buy/.test(url));
+  assert.deepEqual(paymentLinks,live?[route.checkout.href]:[],route.path);
   assert.deepEqual([...section.matchAll(/data-sku="([^"]*)"/g)].map(x=>x[1]),[...profile.primary,...profile.optional,...profile.usage],route.path);
   const old=baseline.actions['site/'+route.path];let now=links(current(html));
   for(const form of current(html).matchAll(/<form\b([^>]*)>/g)){const a=form[1].match(/action="([^"]*)"/),m=form[1].match(/method="([^"]*)"/);now.push('FORM:'+(a?.[1]||'')+':'+(m?.[1]||'get'));}
@@ -59,6 +63,29 @@ test('the general and service rate tables use the same CSS and group prices by c
  }
  const rosenz=own(read('site/for/rosenz/index.html'));
  assert.ok(rosenz.indexOf('data-example="base,land_valuation"') < rosenz.indexOf('data-sku="base"'));
+});
+test('Rosenz direct signup is hidden until the service-specific launch switch is enabled',()=>{
+ const route=map.routes.find(entry=>entry.profile==='rosenz');
+ const page=read('site/'+route.path);
+ assert.equal(/product=rosenz/.test(page),route.checkout.enabled);
+ const script = `from service_pricing_2026_11 import ROUTES, SITE, apply
+route = ROUTES['for/rosenz/index.html']
+path = SITE / route['path']
+source = path.read_text()
+route['checkout']['enabled'] = False
+disabled = apply(source, path)
+assert 'product=rosenz' not in disabled
+assert '適用日未定・新料金での申込受付前' in disabled
+route['checkout']['enabled'] = True
+html = apply(source, path)
+assert html.count('href="https://app.simy.one/signup/2026-11/?product=rosenz&amp;lang=ja"') == 1
+assert 'ロセンズの料金とお申し込み' in html
+assert '適用日未定・新料金での申込受付前' not in html
+assert '¥17,080' in html and '$114' in html and 'mailto:sales@simy.one' in html
+assert apply(html, path) == html
+`;
+ const result=spawnSync('python3',['-c',script],{cwd:path.join(root,'scripts'),encoding:'utf8'});
+ assert.equal(result.status,0,result.stderr);
 });
 test('existing checkout assets stay byte-identical and the law-firm CSS is packaged',()=>{
  for(const [file,expected] of Object.entries(baseline.immutableSha256))assert.equal(crypto.createHash('sha256').update(fs.readFileSync(path.join(root,file))).digest('hex'),expected,file);

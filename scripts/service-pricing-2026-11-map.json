@@ -285,6 +285,14 @@
       "source": "site/for/rosenz/index.html",
       "placement": "replace-pricing",
       "evidence": "Existing 導入予定料金 explicitly identifies base2280 + land14800, 60 cases/month, one concurrent user",
+      "checkout": {
+        "enabled": false,
+        "href": "https://app.simy.one/signup/2026-11/?product=rosenz&lang=ja",
+        "label": "SIMY ロセンズを申し込む",
+        "title": "ロセンズの料金とお申し込み",
+        "intro": "SIMY 基本1人分とロセンズ1契約を選んだ状態でお申し込みに進めます。",
+        "taxNote": "税額と税込総額は、申込を確定する前の画面でご確認ください。"
+      },
       "existingContact": {
         "href": "mailto:sales@simy.one?subject=SIMY%20%E3%83%AD%E3%82%BB%E3%83%B3%E3%82%BA%E3%81%AE%E5%B0%8E%E5%85%A5%E7%9B%B8%E8%AB%87",
         "label": "ロセンズの導入を相談する"
