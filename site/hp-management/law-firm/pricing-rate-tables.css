@@ -1,0 +1,133 @@
+/* Isolated advance-price reading sections; no current checkout selectors. */
+.sp26,.sp26-notice{--sp26-surface:var(--paper-light,Canvas);--sp26-text:var(--ink,CanvasText);--sp26-muted:var(--ink-soft,GrayText);--sp26-line:var(--line-soft,GrayText);--sp26-link:var(--blue-deep,LinkText);box-sizing:border-box;color:var(--sp26-text);line-height:1.75;overflow-wrap:anywhere;font-size:1rem;text-align:left}
+.sp26 *,.sp26-notice *{box-sizing:border-box}
+.sp26{margin:2.5rem 0;padding:2.5rem 0;background:var(--sp26-surface);border-top:1px solid var(--sp26-line);border-bottom:1px solid var(--sp26-line)}
+.sp26-frame{width:min(100% - 2rem,72rem);margin-inline:auto}
+.sp26-notice{width:min(100% - 2rem,72rem);margin:1rem auto;padding:1rem 1.25rem;border:1px solid var(--sp26-line);border-radius:.75rem;background:var(--sp26-surface)}
+.sp26 p,.sp26-notice p{margin:.5rem 0;font-size:1rem;line-height:1.75}
+.sp26 a,.sp26-notice a{color:var(--sp26-link);text-decoration:underline;text-underline-offset:.2em;font-weight:600}
+.sp26 h2{font-size:clamp(1.5rem,3vw,2rem);font-weight:600;line-height:1.4;margin:0 0 1rem;letter-spacing:normal}
+.sp26 h3{font-size:1.25rem;font-weight:600;line-height:1.5;margin:2rem 0 .75rem;letter-spacing:normal}
+.sp26 h4{font-size:1rem;font-weight:600;line-height:1.5;margin:0;letter-spacing:normal}
+.sp26 .sp26-status{padding:1rem;border:1px solid var(--sp26-line);border-radius:.75rem}
+.sp26-number{font-variant-numeric:tabular-nums;white-space:nowrap}
+.sp26-examples{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,18rem),1fr));gap:1rem;margin:1rem 0}
+.sp26-example{border:1px solid var(--sp26-line);border-radius:.75rem;padding:1rem;min-width:0;background:var(--sp26-surface)}
+.sp26-example dl{margin:.75rem 0;border-top:1px solid var(--sp26-line)}
+.sp26-example dl div{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.75rem;padding:.5rem 0;border-bottom:1px solid var(--sp26-line)}
+.sp26-example dt,.sp26-example dd{margin:0;font-size:.875rem;line-height:1.7}
+.sp26-example p{font-size:.875rem}
+.sp26-example dd.sp26-number{font-size:1.125rem;font-weight:700}
+/* The single Rosenz example compares both currencies side by side. */
+.sp26[data-service-pricing-202611="rosenz"] .sp26-example {
+  background: var(--blue-soft, var(--sp26-surface));
+}
+.sp26[data-service-pricing-202611="rosenz"] .sp26-example dl {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  border-top: 0;
+}
+.sp26[data-service-pricing-202611="rosenz"] .sp26-example dl div {
+  display: block;
+  border-top: 1px solid var(--sp26-line);
+}
+.sp26[data-service-pricing-202611="rosenz"] .sp26-example dd.sp26-number {
+  font-size: 1.5rem;
+}
+.sp26-example p.sp26-number{white-space:normal}
+.sp26 .sp26-subtitle{margin-top:1rem;font-weight:600}
+.sp26-notes{padding-left:1.25rem;margin:1.5rem 0}
+.sp26-notes li{margin:.6rem 0;font-size:.875rem;line-height:1.8}
+
+/* Shared by the public advance announcement and service-specific price lists. */
+.pricing-rate-table {
+  box-sizing: border-box;
+  width: 100%;
+  margin: .8rem 0 1rem;
+  border: 1px solid var(--line-soft, rgb(17 17 17 / 15%));
+  border-radius: var(--radius-sm, .5rem);
+  overflow: hidden;
+  background: var(--paper-light, #fff);
+  color: var(--ink, #111);
+}
+.pricing-rate-table > table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  color: inherit;
+  font-size: 1rem;
+  line-height: 1.65;
+  margin: 0;
+}
+.pricing-rate-table caption {
+  text-align: left;
+  padding: .65rem .8rem;
+  color: var(--ink-soft, #5d5b58);
+  font-size: .875rem;
+}
+.pricing-rate-table :is(th, td) {
+  padding: .7rem .8rem;
+  text-align: left;
+  vertical-align: top;
+  border: 0;
+  border-bottom: 1px solid var(--line-soft, rgb(17 17 17 / 15%));
+  font-size: inherit;
+  line-height: inherit;
+  overflow-wrap: anywhere;
+}
+.pricing-rate-table th { font-weight: 600; }
+.pricing-rate-table thead { background: var(--mint-soft, #ecfbf6); }
+.pricing-rate-table tbody tr:last-child > * { border-bottom: 0; }
+.pricing-rate-table :is(small, .rate-period, .rate-mobile-label) {
+  display: block;
+  color: var(--ink-soft, #5d5b58);
+  font-size: .82rem;
+  font-weight: 400;
+}
+.pricing-rate-table .rate-mobile-label { display: none; }
+.pricing-rate-table .rate-currency {
+  font-variant-numeric: tabular-nums;
+}
+.rate-annual {
+  margin-top: .45rem;
+  padding-top: .4rem;
+  border-top: 1px solid var(--line-soft, rgb(17 17 17 / 15%));
+}
+@media (min-width: 48rem) {
+  .pricing-rate-table table:not(.sp26-usage) thead th:nth-child(1) { width: 22%; }
+  .pricing-rate-table table:not(.sp26-usage) thead th:nth-child(2) { width: 16%; }
+  .pricing-rate-table table:not(.sp26-usage) thead th:nth-child(3),
+  .pricing-rate-table table:not(.sp26-usage) thead th:nth-child(4) { width: 17%; }
+}
+@media (max-width: 47.99rem) {
+  .pricing-rate-table :is(table, tbody, caption) { display: block; }
+  .pricing-rate-table caption { box-sizing: border-box; width: 100%; }
+  .pricing-rate-table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .pricing-rate-table tbody tr {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: .9rem;
+    gap: .45rem .8rem;
+  }
+  .pricing-rate-table tbody tr + tr,
+  .pricing-rate-table caption + thead + tbody > tr:first-child {
+    border-top: 1px solid var(--line-soft, rgb(17 17 17 / 15%));
+  }
+  .pricing-rate-table tbody :is(th, td) {
+    padding: 0;
+    border: 0;
+    min-width: 0;
+  }
+  .pricing-rate-table :is(tbody th, tbody td:not(.rate-currency)) {
+    grid-column: 1 / -1;
+  }
+  .pricing-rate-table .rate-mobile-label { display: block; }
+}

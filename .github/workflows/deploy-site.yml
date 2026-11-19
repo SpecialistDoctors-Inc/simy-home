@@ -90,6 +90,11 @@ jobs:
             aws s3 cp "site/$asset" "s3://${{ secrets.SITE_S3_BUCKET }}/$asset" \
               --cache-control "public, max-age=86400"
           done
+          # The public pricing HTML uses a new stylesheet path. Publish it first.
+          for asset in pricing-rate-tables.css hp-management/law-firm/pricing-rate-tables.css; do
+            aws s3 cp "site/$asset" "s3://${{ secrets.SITE_S3_BUCKET }}/$asset" \
+              --cache-control "public, max-age=86400"
+          done
           aws s3 sync site/for/ s3://${{ secrets.SITE_S3_BUCKET }}/for/ \
             --cache-control "public, max-age=300"
           bash scripts/publish-occupation-pages.sh "${{ secrets.SITE_S3_BUCKET }}"
@@ -126,10 +131,13 @@ jobs:
             --cache-control "public, max-age=300"
 
       - name: Sync static assets (long cache)
+        # Keep the former stylesheet available to clients with cached pricing HTML.
         run: |
           aws s3 sync site/ s3://${{ secrets.SITE_S3_BUCKET }}/ \
             --delete \
             --exclude "*.html" \
+            --exclude "service-pricing-2026-11.css" \
+            --exclude "hp-management/law-firm/service-pricing-2026-11.css" \
             --exclude "i18n.js" \
             --exclude "lang/*" \
             --exclude "downloads/*" \

@@ -48,21 +48,49 @@ def price_cell(code, currency, annual, c):
         return f'<strong class="sp26-number">{money(total,currency)}</strong><small>{e(c["yearBill"])}</small><small>{money(total//12,currency)} · {e(c["monthEquivalent"])}</small>'
     return f'<strong class="sp26-number">{money(row[currency],currency)}</strong>'
 
-def price_table(codes,c,usage=False):
-    labels=[c['service'],c['unit'],('JPY · '+c['beforeTax']) if usage else ('JPY · '+c['monthly']),('USD · '+c['beforeTax']) if usage else ('USD · '+c['monthly'])]
-    if not usage:labels += ['JPY · '+c['annual'],'USD · '+c['annual'],c['included']]
-    rows=[]
+def price_table(codes, c, heading_id, usage=False):
+    currencies = ['JPY', 'USD']
+    if usage:
+        currencies = [f"{currency} · {c['beforeTax']}" for currency in currencies]
+    labels = [c['service'], c['unit'], *currencies]
+    if not usage:
+        labels.append(c['included'])
+    rows = []
     for code in codes:
-        r=ROWS[code]
-        cells=[e(unit(code,c))]
-        cells += [price_cell(code,cur,False,c) for cur in ['jpy','usd']]
-        if not usage:cells += [price_cell(code,cur,True,c) for cur in ['jpy','usd']]+[e(included(code,c))]
-        name=e(c['names'][code])
-        if code=='land_valuation':name+='<small>路線価評価</small>'
-        if code=='transcription_20h':name+='<small>'+e(c['packIncluded'])+'</small>'
-        if code=='hearing_bot':name+='<small>'+e(c['botIncluded'])+'</small>'
-        rows.append(f'<tr data-sku="{code}"><th scope="row">{name}</th>'+''.join(f'<td data-label="{e(label)}">{value}</td>' for label,value in zip(labels[1:],cells))+'</tr>')
-    return '<div class="sp26-table-wrap"><table class="sp26-table'+(' sp26-usage' if usage else '')+'"><caption>'+e(c['usage'] if usage else c['beforeTax'])+'</caption><thead><tr>'+''.join('<th scope="col">'+e(x)+'</th>' for x in labels)+'</tr></thead><tbody>'+''.join(rows)+'</tbody></table></div>'
+        amounts = []
+        for currency, label in zip(['jpy', 'usd'], currencies):
+            value = price_cell(code, currency, False, c)
+            if not usage:
+                annual = price_cell(code, currency, True, c)
+                value = (
+                    f'<span class="rate-period">{e(c["monthly"])}</span>{value}'
+                    f'<div class="rate-annual"><span class="rate-period">{e(c["annual"])}</span>{annual}</div>'
+                )
+            amounts.append(
+                f'<td class="rate-currency" role="cell">'
+                f'<span class="rate-mobile-label" aria-hidden="true">{e(label)}</span>{value}</td>'
+            )
+        name = e(c['names'][code])
+        if code == 'land_valuation':
+            name += '<small>路線価評価</small>'
+        if code == 'transcription_20h':
+            name += '<small>' + e(c['packIncluded']) + '</small>'
+        if code == 'hearing_bot':
+            name += '<small>' + e(c['botIncluded']) + '</small>'
+        scope = '' if usage else f'<td role="cell">{e(included(code, c))}</td>'
+        rows.append(
+            f'<tr role="row" data-sku="{code}"><th scope="row" role="rowheader">{name}</th>'
+            f'<td role="cell">{e(unit(code, c))}</td>{"".join(amounts)}{scope}</tr>'
+        )
+    heading = ''.join(f'<th scope="col" role="columnheader">{e(label)}</th>' for label in labels)
+    table_class = 'sp26-table sp26-usage' if usage else 'sp26-table'
+    return (
+        f'<div class="pricing-rate-table"><table class="{table_class}" role="table" '
+        f'aria-labelledby="{heading_id}" aria-describedby="{heading_id}-caption">'
+        f'<caption id="{heading_id}-caption">{e(c["usage"] if usage else c["beforeTax"])}</caption>'
+        f'<thead role="rowgroup"><tr role="row">{heading}</tr></thead>'
+        f'<tbody role="rowgroup">{"".join(rows)}</tbody></table></div>'
+    )
 
 def examples(profile,c):
     result=[]
@@ -86,7 +114,8 @@ def render(route):
     optional=''
     if profile['optional']:
         note=c['hpRule'] if route['profile']=='homepage' else c['optionalNote']
-        optional='<h3>'+e(c['optional'])+'</h3><p>'+e(note)+'</p>'+price_table(profile['optional'],c)
+        optional = (f'<h3 id="sp26-optional-rates">{e(c["optional"])}</h3><p>{e(note)}</p>'
+                    + price_table(profile['optional'], c, 'sp26-optional-rates'))
     rules=[c['allowance'],c['transcriptionSla'],c['taxNote']]
     if route['profile'] in ['development','fp']:rules.append(c['byo'])
     if route['profile']=='homepage':rules.append(c['hpRule'])
@@ -94,12 +123,17 @@ def render(route):
     contact=route.get('existingContact')
     existing_contact=('<p><a href="'+e(contact['href'])+'">'+e(contact['label'])+'</a>（新料金での申込受付前）</p>') if contact else ''
     legacy_anchor='<span id="pricing"></span>' if route.get('placement')=='replace-pricing' else ''
+    rate_breakdown = (f'<h3 id="sp26-primary-rates">{e(c["primary"])}</h3>'
+                      + price_table(profile['primary'], c, 'sp26-primary-rates') + optional)
+    total_examples = f'<h3>{e(c["examples"])}</h3><p>{e(c["exampleNote"])}</p>{examples(profile, c)}'
+    sections = [rate_breakdown, total_examples]
+    if route['profile'] == 'rosenz':
+        sections.reverse()
     return START+f'''\n<section class="sp26" id="new-pricing" data-service-pricing-202611="{route['profile']}" aria-labelledby="sp26-title"><div class="sp26-frame">{legacy_anchor}
 <h2 id="sp26-title">{e(c['title'])}</h2><p class="sp26-status"><strong>{e(c['status'])}</strong></p>
 <p>{e(c['separation'])}</p><p>{e(c['country'])} {e(c['beforeTax'])}</p><p>{e(c['trial'])}</p>
-<h3>{e(c['primary'])}</h3>{price_table(profile['primary'],c)}
-{optional}<h3>{e(c['examples'])}</h3><p>{e(c['exampleNote'])}</p>{examples(profile,c)}
-<h3>{e(c['usage'])}</h3>{price_table(profile['usage'],c,usage=True)}
+{''.join(sections)}
+<h3 id="sp26-usage-rates">{e(c['usage'])}</h3>{price_table(profile['usage'], c, 'sp26-usage-rates', usage=True)}
 <ul class="sp26-notes">{''.join('<li>'+e(x)+'</li>' for x in rules)}</ul>
 {existing_contact}<p><a href="/pricing-2026-11.html">{e(c['overview'])} ↗</a></p>
 </div></section>\n'''+END
@@ -139,8 +173,8 @@ def apply(source,path):
     else:
         source,count=re.subn(r'(<main\b[^>]*>)',lambda m:m[0]+notice,source,count=1)
         if count!=1:raise ValueError('Service main missing: '+key)
-    css=SITE/'service-pricing-2026-11.css'
-    css_url='/hp-management/law-firm/service-pricing-2026-11.css' if key=='hp-management/law-firm.html' else '/service-pricing-2026-11.css'
+    css=SITE/'pricing-rate-tables.css'
+    css_url='/hp-management/law-firm/pricing-rate-tables.css' if key=='hp-management/law-firm.html' else '/pricing-rate-tables.css'
     asset='<link rel="stylesheet" data-service-pricing-style href="'+css_url+'?v='+hashlib.sha256(css.read_bytes()).hexdigest()[:12]+'">'
     source=re.sub(r'<link\b[^>]*data-service-pricing-style[^>]*>','',source)
     return source.replace('</head>',asset+'</head>',1)
