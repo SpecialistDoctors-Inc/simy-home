@@ -19,6 +19,7 @@
   --text-sm: .875rem;
   --text-xs: .75rem;
   --rosenz-frame-radius: 12px;
+  --rosenz-gutter: 32px;
 }
 @media (prefers-color-scheme: dark) {
   :root {
@@ -50,7 +51,10 @@ a { color: var(--accent-text); text-underline-offset: .25em; }
 button { font: inherit; cursor: pointer; }
 [hidden] { display: none !important; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
-.shell { width: min(1200px, calc(100% - 64px)); margin-inline: auto; }
+.shell, .rosenz main :is(.sp26-frame, .sp26-notice) {
+  width: min(1200px, calc(100% - 2 * var(--rosenz-gutter)));
+  margin-inline: auto;
+}
 .skip-link:not(:focus) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
 .skip-link:focus { position: fixed; z-index: 10; inset: 8px auto auto 8px; background: var(--bg); padding: 8px 16px; }
 .tabular-nums { font-variant-numeric: tabular-nums; }
@@ -184,7 +188,7 @@ button { font: inherit; cursor: pointer; }
   .hero-grid { gap: 24px; }
 }
 @media (max-width: 680px) {
-  .shell { width: calc(100% - 32px); }
+  .rosenz { --rosenz-gutter: 16px; }
   .hero-grid, .uses-grid { grid-template-columns: minmax(0, 1fr); }
   .hero-grid, .demo-section, .uses-section, .pricing-section { padding-block: 40px; }
   .hero-copy { padding: 0; }

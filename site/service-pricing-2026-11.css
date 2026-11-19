@@ -15,6 +15,7 @@
 .sp26-table caption{caption-side:top;text-align:left;padding:.65rem 1rem;color:var(--sp26-muted);font-size:.875rem}
 .sp26-table th,.sp26-table td{padding:.75rem;vertical-align:top;text-align:left;border:0;border-top:1px solid var(--sp26-line);font-size:.875rem;line-height:1.7;white-space:normal}
 .sp26-table th{font-weight:600}
+.sp26-table thead{background:var(--mint-soft,Canvas)}
 .sp26-table small{display:block;font-size:.75rem;line-height:1.7;margin-top:.25rem;font-weight:400;color:var(--sp26-muted)}
 .sp26-number{font-variant-numeric:tabular-nums;white-space:nowrap}
 .sp26-examples{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,18rem),1fr));gap:1rem;margin:1rem 0}
@@ -29,6 +30,7 @@
 .sp26-notes li{margin:.6rem 0;font-size:.875rem;line-height:1.8}
 @media(max-width:60rem){
  .sp26-table,.sp26-table tbody{display:block}
+ .sp26-table caption{display:block;width:100%}
  .sp26-table thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
  .sp26-table tr{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.6rem 1rem;padding:1rem;border-top:1px solid var(--sp26-line)}
  .sp26-table th,.sp26-table td{padding:0;border:0;min-width:0}

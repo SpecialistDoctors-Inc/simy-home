@@ -62,12 +62,15 @@ test('locale runtime retains the HP hub pricing and start journey while app page
  assert.equal(new URL(appPricing.href).pathname,'/ja.html');assert.equal(new URL(appPricing.href).hash,'#pricing');
 });
 
-test('the Japanese home menu keeps the direct Rosenz destination after localization',()=>{
- const link = '<a href="/for/rosenz/">ロセンズ（路線価評価）</a>';
- const home = fs.readFileSync('site/ja.html','utf8');
- assert.ok(home.indexOf(link) > home.indexOf('SIMYの業務活用'));
- assert.ok(home.indexOf(link) < home.indexOf('ホームページ管理</p>'));
- assert.equal(runHeader('ja.html').filter(row=>row.navigation && new URL(row.element.href).pathname === '/for/rosenz/').length,1);
+test('Japanese home and work menus expose one direct Rosenz destination after localization',()=>{
+ const rosenzLink = /<a href="\/for\/rosenz\/"(?: aria-current="page")?>ロセンズ（路線価評価）<\/a>/;
+ for (const page of ['ja.html','for/index.html','for/engineers/index.html','for/financial-planners/index.html','for/rosenz/index.html']) {
+  const html = fs.readFileSync('site/'+page,'utf8');
+  const menu = html.match(/<div class="sh-solutions-group">([\s\S]*?)<\/div>/)[1];
+  assert.match(menu,rosenzLink,page);
+  assert.equal(runHeader(page).filter(row=>row.navigation && new URL(row.element.href).pathname === '/for/rosenz/').length,1,page);
+  assert.equal(menu.includes('href="/for/rosenz/" aria-current="page"'),page==='for/rosenz/index.html',page);
+ }
  const englishHeader = fs.readFileSync('site/index.html','utf8').match(/<header class="simy-header"[\s\S]*?<\/header>/)[0];
  assert.ok(!englishHeader.includes('/for/rosenz/'));
 });
