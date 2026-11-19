@@ -134,24 +134,8 @@
   all.filter(e=>!['DL','UL','OL','TABLE','TR','TBODY'].includes(e.tagName)&&text(e)&&![...e.children].some(c=>text(c)&&!['SPAN','BR','B','STRONG','EM','I','SMALL'].includes(c.tagName))).forEach(e=>add(e,'text'));
   return out;
  };
- function luminance(rgb){
-  const linear=rgb.map(value=>{const channel=value/255;return channel<=.04045?channel/12.92:((channel+.055)/1.055)**2.4;});
-  return linear[0]*.2126+linear[1]*.7152+linear[2]*.0722;
- }
- function solidBackground(element){
-  for(let node=element;node;node=node.parentElement){
-   const style=node.ownerDocument.defaultView.getComputedStyle(node);
-   if(style.backgroundImage!=='none')return null;
-   const rgba=style.backgroundColor.match(/^rgba?\(([\d.]+),\s*([\d.]+),\s*([\d.]+)(?:,\s*([\d.]+))?\)$/i);
-   if(!rgba)return null;
-   const alpha=rgba[4]===undefined?1:Number(rgba[4]);
-   if(alpha===1)return rgba.slice(1,4).map(Number);
-   if(alpha!==0)return null;
-  }
-  return [255,255,255];
- }
- api.redesign=function(doc,theme,accent,liveDocument){
-  // Preserve original surfaces, layout and media. Recolor only headings on known solid backgrounds.
+ api.redesign=function(doc,theme,accent){
+  // A theme changes typography and decoration while the site's responsive colors and layout remain in force.
   const themes={
    modern:{face:"'Noto Sans JP', sans-serif",radius:8},
    editorial:{face:"Georgia, 'Yu Mincho', serif",radius:0},
@@ -159,27 +143,13 @@
   };
   const {face,radius}=themes[theme];
   const headings='h1,h2,h3,[role="heading"]';
-  const accentLuminance=luminance(accent.slice(1).match(/../g).map(value=>parseInt(value,16)));
-  for(const node of doc.body.querySelectorAll(headings)){
-   node.removeAttribute('data-simy-accent');
-   const id=node.getAttribute('data-simy-edit-id');
-   if(!/^e\d+$/.test(id))continue;
-   const live=liveDocument?.querySelector('[data-simy-edit-id="'+id+'"]');
-   if(!live)continue;
-   const background=solidBackground(live);
-   if(!background)continue;
-   const backdrop=luminance(background);
-   if((Math.max(accentLuminance,backdrop)+.05)/(Math.min(accentLuminance,backdrop)+.05)>=4.5){
-    node.setAttribute('data-simy-accent','');
-   }
-  }
   doc.body.setAttribute('data-simy-theme',theme);
   doc.querySelector('style[data-simy-preview-theme]')?.remove();
   const style=doc.createElement('style');
   style.dataset.simyPreviewTheme='';
   style.textContent=`
    body[data-simy-theme],body[data-simy-theme] :is(${headings}){font-family:${face}!important}
-   body[data-simy-theme] [data-simy-accent]{color:${accent}!important}
+   body[data-simy-theme] :is(${headings}){text-decoration-line:underline;text-decoration-color:${accent};text-decoration-thickness:.08em;text-underline-offset:.24em}
    body[data-simy-theme] :is(section,article,figure){border-radius:${radius}px}
   `;
   doc.head.append(style);
@@ -273,7 +243,7 @@
     if(e.tagName==='IMG'){e.src=source;if(typeof o.title==='string'&&o.title.trim())e.alt=o.title.trim().slice(0,300);}else{e.style.setProperty('background-image','url("'+source.replace(/["\\\n\r]/g,'')+'")','important');}e.removeAttribute('srcset');e.removeAttribute('sizes');e.removeAttribute('loading');for(const source of e.closest('picture')?.querySelectorAll('source')||[])source.remove();e.setAttribute('data-simy-changed','true');changed.push(o.target);
    }else if(o.type==='redesign'){
     if(e!==doc.body||!['modern','editorial','warm'].includes(o.property)||!/^#[0-9a-f]{6}$/i.test(o.value))throw Error('デザイン指定を確認できません。');
-    api.redesign(doc,o.property,o.value,liveDocument);e.setAttribute('data-simy-changed','true');changed.push(o.target);
+    api.redesign(doc,o.property,o.value);e.setAttribute('data-simy-changed','true');changed.push(o.target);
    }else if(o.type==='add_section'){
     if(e===doc.body||!o.title?.trim()||!o.body?.trim())throw Error('追加先を確認できません。');const section=doc.createElement('section'),h=doc.createElement('h2'),p=doc.createElement('p');h.textContent=o.title;p.textContent=o.body;section.append(h,p);section.style.cssText='padding:32px;max-width:1100px;margin:24px auto;';section.setAttribute('data-simy-changed','true');e.after(section);changed.push(o.target);
    }else if(o.type==='remove_element'){

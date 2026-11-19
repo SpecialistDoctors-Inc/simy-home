@@ -37,28 +37,25 @@ await browser.close();})().catch(e=>{console.error(e);process.exit(1)});
  const text=await page.evaluate(()=>{const html=SimyPreviewEdit.index(document.documentElement.outerHTML),doc=new DOMParser().parseFromString(html,'text/html'),targets=[doc.querySelector('h2'),doc.querySelector('span')].map(e=>e.getAttribute('data-simy-edit-id'));return SimyPreviewEdit.applyPlan(html,{status:'edit',operations:targets.map(target=>({type:'replace_text',target,oldText:'診療案内',newText:'診療案内について'}))}).html;});assert(!text.includes('についてについて'));assert(text.includes('診療案内について'));
  await page.setContent('<p><span>診療案内</span><span>診療案内</span></p>');await page.addScriptTag({path:path.resolve('site/preview-edit.js')});
  const distinct=await page.evaluate(()=>{const html=SimyPreviewEdit.index(document.documentElement.outerHTML),doc=new DOMParser().parseFromString(html,'text/html'),targets=[doc.querySelector('p'),doc.querySelectorAll('span')[1]].map(e=>e.getAttribute('data-simy-edit-id'));const result=SimyPreviewEdit.applyPlan(html,{status:'edit',operations:targets.map(target=>({type:'replace_text',target,oldText:'診療案内',newText:'診療案内について'}))});return new DOMParser().parseFromString(result.html,'text/html').body.textContent;});assert.equal(distinct,'診療案内について診療案内について');
- await page.setContent('<style>.site-columns{display:grid;grid-template-columns:1fr 2fr;background-image:url("https://example.com/hero.png")} @media(max-width:600px){.site-columns{grid-template-columns:1fr}}</style><main class="site-columns"><h1 style="background:white">既存の見出し</h1><section style="padding:12px;background:#234567;color:white"><h2>暗い背景の見出し</h2><p>既存の本文</p><img src="photo.jpg" alt="既存の写真"></section></main>');
+ await page.setViewportSize({width:1000,height:800});
+ await page.setContent('<style>.site-columns{display:grid;grid-template-columns:1fr 2fr;background-image:url("https://example.com/hero.png")} h1{background:white;color:black}@media(max-width:600px){.site-columns{grid-template-columns:1fr}h1{background:#234567;color:white}}</style><main class="site-columns"><h1>既存の見出し</h1><section style="padding:12px;background:#234567;color:white"><h2>暗い背景の見出し</h2><p>既存の本文</p><img src="photo.jpg" alt="既存の写真"></section></main>');
  await page.addScriptTag({path:path.resolve('site/preview-edit.js')});
  const theme=await page.evaluate(()=>{
   const original=SimyPreviewEdit.index(document.documentElement.outerHTML);
-  const indexed=new DOMParser().parseFromString(original,'text/html');
-  const indexedNodes=[indexed.body,...indexed.body.querySelectorAll('*')];
-  [document.body,...document.body.querySelectorAll('*')].forEach((node,index)=>{
-   const id=indexedNodes[index].getAttribute('data-simy-edit-id');
-   if(id)node.setAttribute('data-simy-edit-id',id);
-  });
   return SimyPreviewEdit.applyPlan(original,{status:'edit',operations:[
    {type:'redesign',target:'e0',property:'editorial',value:'#234567'},
-  ]},[],document).html;
+  ]}).html;
  });
  await page.setContent(theme);
  assert.equal(await page.locator('.site-columns').evaluate(node=>getComputedStyle(node).display),'grid');
  assert.match(await page.locator('.site-columns').evaluate(node=>getComputedStyle(node).backgroundImage),/hero\.png/);
  assert.equal(await page.locator('section').evaluate(node=>getComputedStyle(node).paddingTop),'12px');
- assert.equal(await page.locator('h1').evaluate(node=>getComputedStyle(node).color),'rgb(35, 69, 103)');
+ assert.equal(await page.locator('h1').evaluate(node=>getComputedStyle(node).textDecorationColor),'rgb(35, 69, 103)');
  assert.equal(await page.locator('h2').evaluate(node=>getComputedStyle(node).color),'rgb(255, 255, 255)');
+ await page.setViewportSize({width:500,height:800});
+ assert.deepEqual(await page.locator('h1').evaluate(node=>[getComputedStyle(node).color,getComputedStyle(node).backgroundColor]),['rgb(255, 255, 255)','rgb(35, 69, 103)']);
  assert.equal(await page.locator('img').getAttribute('src'),'photo.jpg');
- console.log('The requested theme changes color and typography while keeping the original layout and images.');
+ console.log('The requested theme preserves the original media, responsive layout and readable heading colors.');
  await browser.close();
 })().catch(e=>{console.error(e);process.exit(1)});
 
