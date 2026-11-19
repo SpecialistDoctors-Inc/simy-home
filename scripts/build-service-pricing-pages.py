@@ -23,8 +23,8 @@ def outputs():
     lines += ['| '+a['pattern']+' | '+a['target']+' | '+a['type']+' |' for a in MAP['aliases']]
     lines += ['', '- 24ページにのみ事前案内を追加。既存の料金・申込・ログイン・相談リンクは保持する。ロセンズは既存の「導入予定料金」を更新し、導入相談メールを保持する。', '- 営業・MR向けの既存録音整理、面談準備、ChatGPT音声ロールプレイに、ヒアリング料金を自動的に課さない。リアルタイム文字起こし・助言を使う場合のみ8時間/20時間を任意追加する。', '- 医療機関の旧業種URLはHP管理に遷移する。独立した医療向けヒアリングの販売ページは新設しない。', '- HPは編集者ごとの基本とサイトごとのHP / 安心プラスを組み合わせる。運用サポートのみでは編集できない。', '- 図面見積と追加ストレージは対象サービス未確定のため、サービス別の申込商品にしない。', '- 月払い・実際の年額・月相当額を分ける。年払いのない追加商品は基本の年額と追加商品の月額を別々に示す。', '- 込み量は個人別、契約開始日の月応当日更新。年払いでも毎月更新する。', '- 適用日未定・新料金の申込受付前。既存顧客の自動移行は行わない。税額・税込総額の確定前画面照合とiOS実購入/復元の検証は別途必要。', '- 弁護士HPの独立配信パッケージには同一CSSを同梱し、既存の所有パス・manifest検証を維持する。', '']
     result[ROOT/'docs/pricing/service-pricing-2026-11.md']='\n'.join(lines)
-    css=SITE/'hp-management/law-firm/service-pricing-2026-11.css'
-    result[css]=(SITE/'service-pricing-2026-11.css').read_text()
+    css=SITE/'hp-management/law-firm/pricing-rate-tables.css'
+    result[css]=(SITE/'pricing-rate-tables.css').read_text()
     manifest_path=SITE/'hp-management/law-firm/release-manifest.json'
     manifest=json.loads(manifest_path.read_text())
     paths=sorted({x['path'] for x in manifest['files']}|{css.relative_to(SITE).as_posix()})

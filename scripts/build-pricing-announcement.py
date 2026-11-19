@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Generate the advance pricing announcement; this never enables checkout."""
 import argparse
+import hashlib
 import json
 import re
 from html import escape
@@ -30,11 +31,11 @@ def table(rows, codes, label):
         body.append(
             f'<tr role="row"><th scope="row" role="rowheader">{name}</th>'
             f'<td role="cell">{unit}</td>'
-            f'<td class="amount" role="cell"><span class="mobile-label" aria-hidden="true">日本（JPY）</span>{price_cell(row, "jpy")}</td>'
-            f'<td class="amount" role="cell"><span class="mobile-label" aria-hidden="true">日本以外（USD）</span>{price_cell(row, "usd")}</td>'
+            f'<td class="amount rate-currency" role="cell"><span class="rate-mobile-label" aria-hidden="true">日本（JPY）</span>{price_cell(row, "jpy")}</td>'
+            f'<td class="amount rate-currency" role="cell"><span class="rate-mobile-label" aria-hidden="true">日本以外（USD）</span>{price_cell(row, "usd")}</td>'
             f'<td role="cell">{escape(row["included"])}</td></tr>'
         )
-    return f"""<div class="pricing-table">
+    return f"""<div class="pricing-rate-table">
 <table role="table" aria-label="{label}"><thead role="rowgroup"><tr role="row">
 <th scope="col" role="columnheader">サービス</th><th scope="col" role="columnheader">単位</th>
 <th scope="col" role="columnheader">日本（JPY）</th><th scope="col" role="columnheader">日本以外（USD）</th>
@@ -57,12 +58,15 @@ def preview(rows):
     base = rows["base"]["jpy"]
     hearing_total = base + rows["hearing_8h"]["jpy"]
     css = (REPO / "site/site-theme.css").read_text(encoding="utf-8").split(".button {", 1)[0]
+    shared_css = REPO / "site/pricing-rate-tables.css"
+    shared_version = hashlib.sha256(shared_css.read_bytes()).hexdigest()[:12]
     return f"""<!doctype html>
 <html lang="ja"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,follow"><title>SIMY 新料金のご案内</title>
 <meta name="description" content="SIMYの新料金の事前案内です。適用日未定・新料金での申込受付前です。現在の申込には現行料金が適用されます。">
 <link rel="canonical" href="https://simy.one/pricing-2026-11.html">
+<link rel="stylesheet" href="/pricing-rate-tables.css?v={shared_version}">
 <style>
 {css}
 * {{ box-sizing: border-box; }}
@@ -76,25 +80,9 @@ section {{ margin-top: 2.5rem; }}
 small {{ font-size: 0.82rem; font-weight: 400; }}
 .state {{ color: var(--ink-soft); }}
 .announcement-status {{ padding: 1rem; margin-top: 1rem; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--paper-light); }}
-.pricing-table {{ overflow: hidden; margin-top: 0.8rem; border: 1px solid var(--line-soft); border-radius: var(--radius-sm); }}
-table {{ width: 100%; border-collapse: collapse; background: var(--paper-light); }}
-th, td {{ text-align: left; vertical-align: top; padding: 0.7rem 0.8rem; border-bottom: 1px solid var(--line-soft); }}
-thead {{ background: var(--mint-soft); }}
-tbody tr:last-child td, tbody tr:last-child th {{ border-bottom: 0; }}
-.amount, dd {{ font-variant-numeric: tabular-nums; white-space: nowrap; font-weight: 700; }}
-.amount small {{ display: block; color: var(--ink-soft); white-space: normal; }}
-.mobile-label {{ display: none; }}
+main > section {{ min-width: 0; }}
+.amount, dd {{ font-variant-numeric: tabular-nums; font-weight: 700; }}
 .price-term {{ white-space: nowrap; }}
-@media (max-width: 47.99rem) {{
-  table, tbody {{ display: block; }}
-  thead {{ position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }}
-  tbody tr {{ display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 0.9rem; gap: 0.3rem 0.8rem; }}
-  tbody tr + tr {{ border-top: 1px solid var(--line-soft); }}
-  tbody th, tbody td {{ padding: 0; border: 0; }}
-  tbody th, tbody td:not(.amount) {{ grid-column: 1 / -1; }}
-  tbody td:last-child, .mobile-label {{ color: var(--ink-soft); }}
-  .mobile-label {{ display: block; font-size: 0.82rem; font-weight: 400; }}
-}}
 dl {{ margin: 0.8rem 0 0; border-top: 1px solid var(--line); }}
 dl div {{ display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 1rem; align-items: baseline; padding: 0.7rem 0; border-bottom: 1px solid var(--line-soft); }}
 dd {{ margin: 0; }}

@@ -40,8 +40,28 @@ test('prices and Base-inclusive arithmetic follow the approved specification in 
  assert.ok(rosenz.includes('¥17,080'));assert.ok(rosenz.includes('$114'));assert.ok(rosenz.includes('60件/月・同時利用1人'));
  assert.ok(rosenz.includes('mailto:sales@simy.one'));
 });
-test('existing checkout assets and the published general announcement stay byte-identical',()=>{
+test('the general and service rate tables use the same CSS and group prices by currency',()=>{
+ const overview=read('site/pricing-2026-11.html');
+ const asset=overview.match(/href="(\/pricing-rate-tables\.css\?v=[a-f0-9]+)"/)[1];
+ assert.match(overview, /class="pricing-rate-table"/);
+ for (const route of map.routes) {
+  const page=read('site/'+route.path);
+  if (route.path!=='hp-management/law-firm.html') assert.ok(page.includes(asset),route.path);
+  const tables=[...own(page).matchAll(/<table\b[^>]*>([\s\S]*?)<\/table>/g)];
+  for (const [markup,body] of tables) {
+   const usage=markup.includes('class="sp26-table sp26-usage"');
+   assert.equal([...body.matchAll(/scope="col"/g)].length,usage?4:5,route.path);
+   for (const [,row] of body.matchAll(/<tr role="row" data-sku="[^"]+">([\s\S]*?)<\/tr>/g)) {
+    assert.equal([...row.matchAll(/class="rate-currency"/g)].length,2,route.path);
+    assert.equal([...row.matchAll(/class="rate-annual"/g)].length,usage?0:2,route.path);
+   }
+  }
+ }
+ const rosenz=own(read('site/for/rosenz/index.html'));
+ assert.ok(rosenz.indexOf('data-example="base,land_valuation"') < rosenz.indexOf('data-sku="base"'));
+});
+test('existing checkout assets stay byte-identical and the law-firm CSS is packaged',()=>{
  for(const [file,expected] of Object.entries(baseline.immutableSha256))assert.equal(crypto.createHash('sha256').update(fs.readFileSync(path.join(root,file))).digest('hex'),expected,file);
- assert.equal(read('site/hp-management/law-firm/service-pricing-2026-11.css'),read('site/service-pricing-2026-11.css'));
+ assert.equal(read('site/hp-management/law-firm/pricing-rate-tables.css'),read('site/pricing-rate-tables.css'));
  const result=spawnSync('python3',['scripts/check-law-firm-release.py'],{cwd:root,encoding:'utf8'});assert.equal(result.status,0,result.stdout+result.stderr);
 });
