@@ -36,11 +36,20 @@
  // Encode pixels locally; never send original files, EXIF or remote URLs to the image runner.
  const thumbnail=(source,width,height)=>{try{for(let edge=384;edge>=96;edge=Math.floor(edge*.75)){const canvas=document.createElement('canvas'),scale=Math.min(1,edge/Math.max(width,height));canvas.width=Math.max(1,Math.round(width*scale));canvas.height=Math.max(1,Math.round(height*scale));canvas.getContext('2d').drawImage(source,0,0,canvas.width,canvas.height);for(const quality of [.72,.5,.32]){const data=normalizeCanvasJpeg(canvas.toDataURL('image/jpeg',quality));if(data&&data.length<=16384)return data;}}}catch{}return null;};
  const editPayload=(message,base,{query='',followUp,workingContext=context}={})=>{
-  const attachmentQuery=/^a\d+$/.test(query)?query:'';
-  const nodes=window.SimyPreviewEdit.inventory(base,frame.contentDocument,attachmentQuery?'':query);let images=[];
-  const asset=window.SimyPreviewEdit.selectAttachment(assets,message,attachmentQuery);if(asset?.thumbnail)images=[{id:asset.id,mime:'image/jpeg',data:asset.thumbnail}];
-  // Reuse already decoded browser pixels only. A tainted cross-origin canvas falls back to metadata.
-  if(!assets.length){const candidates=nodes.filter(n=>n.kind==='image'&&n.tag==='img').map(n=>({n,live:frame.contentDocument?.querySelector('[data-simy-edit-id="'+n.id+'"]')})).filter(({live})=>live?.complete&&live.naturalWidth>1).sort((a,b)=>b.live.getBoundingClientRect().width*b.live.getBoundingClientRect().height-a.live.getBoundingClientRect().width*a.live.getBoundingClientRect().height);for(const {n,live} of candidates){const data=thumbnail(live,live.naturalWidth,live.naturalHeight);if(data){images=[{id:n.id,mime:'image/jpeg',data}];break;}}}
+  const assetQuery=/^a\d+$/.test(query)?query:'';
+  const imageQuery=/^e\d+$/.test(query)?query:'';
+  const nodes=window.SimyPreviewEdit.inventory(base,frame.contentDocument,assetQuery||imageQuery?'':query);
+  let images=[];
+  const attachment=imageQuery?undefined:window.SimyPreviewEdit.selectAttachment(assets,assetQuery);
+  if(attachment?.thumbnail)images=[{id:attachment.id,mime:'image/jpeg',data:attachment.thumbnail}];
+  // Never reuse an arbitrary existing photo. Inspect only the requested DOM image.
+  if(imageQuery&&nodes.some(node=>node.id===imageQuery&&node.kind==='image'&&node.tag==='img')){
+   const image=frame.contentDocument?.querySelector('[data-simy-edit-id="'+imageQuery+'"]');
+   if(image?.complete&&image.naturalWidth>1){
+    const data=thumbnail(image,image.naturalWidth,image.naturalHeight);
+    if(data)images=[{id:imageQuery,mime:'image/jpeg',data}];
+   }
+  }
   const payload={request:message,context:workingContext,nodes,history:chat.slice(-6),assets:assets.map(({id,name})=>({id,name})),images,interactive:true,followUp};
   // Preserve request, conversation state and images within the unchanged planner/queue budget.
   const retained=new Set(['e0',...images.map(image=>image.id)]);
@@ -126,7 +135,7 @@
     if(plan.status==='inspect'&&plan.interactive&&!followUp&&typeof plan.question==='string'&&plan.question.trim()&&plan.question.length<=120){
      workingContext=plan.context||workingContext;
      followUp='inspection';query=plan.question.trim();
-     conversation.querySelector('.chat-thinking').textContent=/^a\d+$/.test(query)?'添付写真を確認しています':'ページ内を確認しています';
+     conversation.querySelector('.chat-thinking').textContent=/^[ae]\d+$/.test(query)?'写真を確認しています':'ページ内を確認しています';
      continue;
     }
     if(plan.status==='edit'){

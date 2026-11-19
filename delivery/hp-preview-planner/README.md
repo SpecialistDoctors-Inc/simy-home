@@ -20,3 +20,10 @@ same worker staging and validation steps. The existing one-shot `inspect` respon
 accepts a current attachment ID in its question field. The new editor returns that
 attachment's thumbnail under the existing image limit. A cached editor may return
 no thumbnail, which the worker must treat as an uninspected attachment.
+
+## Remaining site and wording assumptions
+
+Apply `grounded-fields.patch` after `contextual-editing.patch`.
+The starting planner SHA-256 is `c3d894f47d6c1542843afdd2b0a174c78d7003dbb9b0655ee29f36af35597799`.
+The resulting planner SHA-256 is `be0b253d9ea7e85829f0b261658899b04a4e46098f43372b9db9a9b83699e56e`. Release the static editor first.
+Read [the entry-point audit](audit.md) for source and publication coverage.
