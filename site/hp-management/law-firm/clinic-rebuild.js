@@ -207,7 +207,9 @@
   for(const radio of applicationForm.querySelectorAll('[name=plan]'))radio.checked=radio.value===selectedPlan;
   applicationForm.elements.assistance.checked=Boolean(assistance);applicationForm.dispatchEvent(new Event('change'));
   document.querySelector('#application-site').textContent=[applicationSourceUrl?'対象ホームページ：'+applicationSourceUrl:'',applicationIntent?'ご相談内容：'+applicationIntent:''].filter(Boolean).join(' ／ ');
-  document.querySelector('#application-enquiry').href=document.querySelector('#preview-enquiry').href;
+  const enquiry=document.querySelector('#application-enquiry');
+  if(checkoutModes.length){enquiry.hidden=true;enquiry.removeAttribute('href');}
+  else enquiry.href=document.querySelector('#preview-enquiry').href;
   if(editor.open)editor.close();if(!application.open)application.showModal();application.scrollTop=0;
  };
  window.SimyClinicApplication={open:openApplication};
@@ -215,7 +217,26 @@
  document.querySelector('#application-close').addEventListener('click',()=>application.close());
  application.addEventListener('close',()=>{const returnToEditor=applicationReturnToEditor;applicationReturnToEditor=false;if(returnToEditor)showEditor();else applicationTrigger?.focus({preventScroll:true});});
  applicationForm.addEventListener('change',()=>{const data=new FormData(applicationForm),total=Number(data.get('plan'))+(data.has('assistance')?49800:0);document.querySelector('#application-total').textContent=total.toLocaleString('ja-JP')+'円';document.querySelector('#application-tax').textContent='税込'+Math.round(total*1.1).toLocaleString('ja-JP')+'円';});
- applicationForm.addEventListener('submit',async event=>{event.preventDefault();await window.SimyClinicCheckout?.ready;if(!applicationForm.reportValidity())return;if(!applicationIntent&&await window.SimyClinicCheckout?.go(new FormData(applicationForm)))return;const data=new FormData(applicationForm),plan=applicationForm.querySelector('[name=plan]:checked').closest('label').querySelector('strong').textContent.trim();const body=['SIMY ご担当者様',applicationIntent?'HP管理の相談を希望します。':'HP管理の申し込みを希望します。','事務所名：'+data.get('clinic'),'ご担当者名：'+data.get('contact'),'メールアドレス：'+data.get('email'),'対象URL：'+applicationSourceUrl,'プラン：'+plan,'更新代行：'+(data.has('assistance')?'追加する（月額＋49,800円・税別）':'追加しない'),'月額合計（税別）：'+document.querySelector('#application-total').textContent,...(applicationIntent?['ご相談内容：'+applicationIntent]:[]),'移管内容・費用のご案内をお願いします。'].join('\r\n');location.href='mailto:sales@simy.one?subject='+encodeURIComponent(applicationIntent?'SIMY HP管理のご相談':'SIMY HP管理のお申し込み')+'&body='+encodeURIComponent(body);});
+ applicationForm.addEventListener('submit',async event=>{
+ event.preventDefault();
+ const modes=new URLSearchParams(location.search).getAll('checkout_mode');
+ await window.SimyClinicCheckout?.ready;
+ if(modes.length){
+  if(applicationIntent||!applicationForm.reportValidity())return;
+  const data=new FormData(applicationForm);
+  const destination=window.SimyClinicCheckout?.sandboxCheckoutUrl(modes,data.get('plan'),data.has('assistance'));
+  if(destination)location.assign(destination);
+  else applicationForm.querySelector('.application-next').textContent='テスト申込を開始できません。テスト申込リンクとプランを確認してください。';
+  return;
+ }
+ if(!applicationForm.reportValidity())return;
+ if(!applicationIntent&&await window.SimyClinicCheckout?.go(new FormData(applicationForm)))return;const data=new FormData(applicationForm),plan=applicationForm.querySelector('[name=plan]:checked').closest('label').querySelector('strong').textContent.trim();const body=['SIMY ご担当者様',applicationIntent?'HP管理の相談を希望します。':'HP管理の申し込みを希望します。','事務所名：'+data.get('clinic'),'ご担当者名：'+data.get('contact'),'メールアドレス：'+data.get('email'),'対象URL：'+applicationSourceUrl,'プラン：'+plan,'更新代行：'+(data.has('assistance')?'追加する（月額＋49,800円・税別）':'追加しない'),'月額合計（税別）：'+document.querySelector('#application-total').textContent,...(applicationIntent?['ご相談内容：'+applicationIntent]:[]),'移管内容・費用のご案内をお願いします。'].join('\r\n');location.href='mailto:sales@simy.one?subject='+encodeURIComponent(applicationIntent?'SIMY HP管理のご相談':'SIMY HP管理のお申し込み')+'&body='+encodeURIComponent(body);});
+ const applicationSubmit=applicationForm.querySelector('[type=submit]');
+ const checkoutModes=new URLSearchParams(location.search).getAll('checkout_mode');
+ applicationSubmit.disabled=checkoutModes.length>0&&(
+  checkoutModes.length!==1||checkoutModes[0]!=='sandbox'||!window.SimyClinicCheckout?.sandboxCheckoutUrl
+ );
+
  document.querySelector('#preview-show-pricing').addEventListener('click',()=>{editor.close();requestAnimationFrame(()=>document.querySelector('#pricing').scrollIntoView({block:'start',behavior:'instant'}));});
  undo.addEventListener('click',()=>{if(!editBusy&&history.length){restore(history.pop());log('ひとつ前の状態に戻しました。');}});reset.addEventListener('click',()=>{if(!editBusy&&originalHtml){history.push(snapshot());if(history.length>10)history.shift();context={goal:'',target:'',decisions:'',pending:''};chat=[];assets=[];assetSession++;photoInput.disabled=editBusy;photoInput.value='';photoStatus.textContent='';updatePreview(originalHtml);log('最初のプレビューに戻しました。');}});
  document.addEventListener('click',event=>{const link=event.target.closest('[data-rebuild-url]');if(!link)return;event.preventDefault();input.value=link.dataset.rebuildUrl;document.querySelector('#rebuild').scrollIntoView({block:'start',behavior:'instant'});input.focus({preventScroll:true});});

@@ -11,3 +11,26 @@ test('published configuration maps each current monthly total to a distinct live
  assert.equal(new Set(Object.values(links)).size,4,'each plan combination needs its own checkout');
  assert.deepEqual(Object.values(c.plans).map(p=>p.taxInclusiveYen),[21780,32780,76560,87560]);
 });
+
+for (const [product, checkout] of [
+ ['clinic', require('../site/clinic-checkout.js')],
+ ['law-firm', require('../site/hp-management/law-firm/clinic-checkout.js')],
+]) {
+ test(`${product} sends every test plan to the protected test gateway`, () => {
+  for (const [amount, assistance, plan] of [
+   ['19800', false, 'basic'],
+   ['29800', false, 'security'],
+   ['19800', true, 'basic_manager'],
+   ['29800', true, 'security_manager'],
+  ]) {
+   assert.equal(
+    checkout.sandboxCheckoutUrl(['sandbox'], amount, assistance),
+    `https://app.simy.one/signup/sandbox/?product=${product}&plan=${plan}`,
+   );
+  }
+  for (const modes of [[], ['live'], ['sandbox', 'sandbox'], ['sandbox', 'live']]) {
+   assert.equal(checkout.sandboxCheckoutUrl(modes, '19800', false), null);
+  }
+  assert.equal(checkout.sandboxCheckoutUrl(['sandbox'], '1', false), null);
+ });
+}

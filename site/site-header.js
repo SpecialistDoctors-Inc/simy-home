@@ -1,5 +1,38 @@
-/* Native details keep navigation available even without JavaScript. */
+// Preserve the explicit test choice from the live marketing pages through their
+// signup and HP links, including the locale and billing-cycle selections.
 (() => {
+  const modes = new URL(location.href).searchParams.getAll("checkout_mode");
+  const mode = modes.length === 1 && modes[0] === "sandbox" ? "sandbox" : "invalid";
+
+  function preserveMode(link) {
+    const target = new URL(link.href);
+    const webSignup = target.origin === "https://app.simy.one" && /^\/signup\/?$/.test(target.pathname);
+    const homeSignup = target.origin === location.origin &&
+      (target.pathname.endsWith("/") || target.pathname.endsWith(".html")) &&
+      !/^\/(?:api|auth|assets)\/|^\/auth-callback\.html$/.test(target.pathname);
+    if (!webSignup && !homeSignup) return;
+    target.searchParams.set("checkout_mode", mode);
+    if (homeSignup && target.pathname === "/hp-management/clinic.html") target.pathname = "/hp-management/clinic/";
+    if (homeSignup && target.pathname === "/hp-management.html") target.pathname = "/hp-management/";
+    link.href = target.href;
+  }
+
+  const preserveLinks = () => {
+    if (modes.length) document.querySelectorAll("a[href]").forEach(preserveMode);
+  };
+  if (modes.length) {
+    preserveLinks();
+    document.addEventListener("DOMContentLoaded", preserveLinks, { once: true });
+    for (const type of ["click", "auxclick", "contextmenu"]) {
+      document.addEventListener(type, (event) => {
+        const link = event.target.closest?.("a[href]");
+        if (link) preserveMode(link);
+      }, true);
+    }
+  }
+
+  // Native details keep navigation available even without JavaScript.
+
   const header = document.querySelector('.simy-header');
   if (!header) return;
   const menu = header.querySelector('.sh-menu');
@@ -41,6 +74,7 @@
       if (url.searchParams.has('lang')) url.searchParams.set('lang', locale);
       link.href = url.pathname + url.search + url.hash;
     });
+    preserveLinks();
   };
   // Sticky headers wrap as the viewport or text size changes.
   const updateOffset = () => document.documentElement.style.setProperty('--simy-header-offset', `${Math.ceil(header.getBoundingClientRect().height) + 16}px`);
