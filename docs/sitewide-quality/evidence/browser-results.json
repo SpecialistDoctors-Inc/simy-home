@@ -1,0 +1,315 @@
+[
+  {
+    "name": "about.html",
+    "width": 390,
+    "before": {
+      "tag": "A",
+      "cls": "simy-skip-link",
+      "href": "#simy-main",
+      "visible": true,
+      "above": true
+    },
+    "after": {
+      "focused": "MAIN",
+      "id": "simy-main",
+      "mainCount": 1,
+      "overflow": false
+    }
+  },
+  {
+    "name": "careers.html",
+    "width": 390,
+    "before": {
+      "tag": "A",
+      "cls": "simy-skip-link",
+      "href": "#simy-main",
+      "visible": true,
+      "above": true
+    },
+    "after": {
+      "focused": "MAIN",
+      "id": "simy-main",
+      "mainCount": 1,
+      "overflow": false
+    }
+  },
+  {
+    "name": "how-it-works.html",
+    "width": 390,
+    "before": {
+      "tag": "A",
+      "cls": "simy-skip-link",
+      "href": "#simy-main",
+      "visible": true,
+      "above": true
+    },
+    "after": {
+      "focused": "MAIN",
+      "id": "simy-main",
+      "mainCount": 1,
+      "overflow": false
+    }
+  },
+  {
+    "name": "ja.html",
+    "width": 390,
+    "before": {
+      "tag": "A",
+      "cls": "skip-link",
+      "href": "#main",
+      "visible": true,
+      "above": true
+    },
+    "after": {
+      "focused": "MAIN",
+      "id": "main",
+      "mainCount": 1,
+      "overflow": false
+    }
+  },
+  {
+    "name": "?locale=en",
+    "width": 390,
+    "before": {
+      "tag": "A",
+      "cls": "skip-link",
+      "href": "/?locale=en#main",
+      "visible": true,
+      "above": true
+    },
+    "after": {
+      "focused": "MAIN",
+      "id": "main",
+      "mainCount": 1,
+      "overflow": false
+    }
+  },
+  {
+    "name": "guides/claude-code.html",
+    "width": 390,
+    "before": {
+      "tag": "A",
+      "cls": "skip",
+      "href": "#main",
+      "visible": true,
+      "above": true
+    },
+    "after": {
+      "focused": "MAIN",
+      "id": "main",
+      "mainCount": 1,
+      "overflow": false
+    }
+  },
+  {
+    "name": "hp-management/clinic/index.html",
+    "width": 390,
+    "before": {
+      "tag": "A",
+      "cls": "skip",
+      "href": "#main",
+      "visible": true,
+      "above": true
+    },
+    "after": {
+      "focused": "MAIN",
+      "id": "main",
+      "mainCount": 1,
+      "overflow": false
+    }
+  },
+  {
+    "name": "hp-management/law-firm.html",
+    "width": 390,
+    "before": {
+      "tag": "A",
+      "cls": "skip",
+      "href": "#main",
+      "visible": true,
+      "above": true
+    },
+    "after": {
+      "focused": "MAIN",
+      "id": "main",
+      "mainCount": 1,
+      "overflow": false
+    }
+  },
+  {
+    "name": "legal.html",
+    "width": 390,
+    "before": {
+      "tag": "A",
+      "cls": "simy-skip-link",
+      "href": "#simy-main",
+      "visible": true,
+      "above": true
+    },
+    "after": {
+      "focused": "MAIN",
+      "id": "simy-main",
+      "mainCount": 1,
+      "overflow": false
+    }
+  },
+  {
+    "name": "about.html",
+    "width": 1440,
+    "before": {
+      "tag": "A",
+      "cls": "simy-skip-link",
+      "href": "#simy-main",
+      "visible": true,
+      "above": true
+    },
+    "after": {
+      "focused": "MAIN",
+      "id": "simy-main",
+      "mainCount": 1,
+      "overflow": false
+    }
+  },
+  {
+    "name": "careers.html",
+    "width": 1440,
+    "before": {
+      "tag": "A",
+      "cls": "simy-skip-link",
+      "href": "#simy-main",
+      "visible": true,
+      "above": true
+    },
+    "after": {
+      "focused": "MAIN",
+      "id": "simy-main",
+      "mainCount": 1,
+      "overflow": false
+    }
+  },
+  {
+    "name": "how-it-works.html",
+    "width": 1440,
+    "before": {
+      "tag": "A",
+      "cls": "simy-skip-link",
+      "href": "#simy-main",
+      "visible": true,
+      "above": true
+    },
+    "after": {
+      "focused": "MAIN",
+      "id": "simy-main",
+      "mainCount": 1,
+      "overflow": false
+    }
+  },
+  {
+    "name": "ja.html",
+    "width": 1440,
+    "before": {
+      "tag": "A",
+      "cls": "skip-link",
+      "href": "#main",
+      "visible": true,
+      "above": true
+    },
+    "after": {
+      "focused": "MAIN",
+      "id": "main",
+      "mainCount": 1,
+      "overflow": false
+    }
+  },
+  {
+    "name": "?locale=en",
+    "width": 1440,
+    "before": {
+      "tag": "A",
+      "cls": "skip-link",
+      "href": "/?locale=en#main",
+      "visible": true,
+      "above": true
+    },
+    "after": {
+      "focused": "MAIN",
+      "id": "main",
+      "mainCount": 1,
+      "overflow": false
+    }
+  },
+  {
+    "name": "guides/claude-code.html",
+    "width": 1440,
+    "before": {
+      "tag": "A",
+      "cls": "skip",
+      "href": "#main",
+      "visible": true,
+      "above": true
+    },
+    "after": {
+      "focused": "MAIN",
+      "id": "main",
+      "mainCount": 1,
+      "overflow": false
+    }
+  },
+  {
+    "name": "hp-management/clinic/index.html",
+    "width": 1440,
+    "before": {
+      "tag": "A",
+      "cls": "skip",
+      "href": "#main",
+      "visible": true,
+      "above": true
+    },
+    "after": {
+      "focused": "MAIN",
+      "id": "main",
+      "mainCount": 1,
+      "overflow": false
+    }
+  },
+  {
+    "name": "hp-management/law-firm.html",
+    "width": 1440,
+    "before": {
+      "tag": "A",
+      "cls": "skip",
+      "href": "#main",
+      "visible": true,
+      "above": true
+    },
+    "after": {
+      "focused": "MAIN",
+      "id": "main",
+      "mainCount": 1,
+      "overflow": false
+    }
+  },
+  {
+    "name": "legal.html",
+    "width": 1440,
+    "before": {
+      "tag": "A",
+      "cls": "simy-skip-link",
+      "href": "#simy-main",
+      "visible": true,
+      "above": true
+    },
+    "after": {
+      "focused": "MAIN",
+      "id": "simy-main",
+      "mainCount": 1,
+      "overflow": false
+    }
+  },
+  {
+    "name": "old/contact.html",
+    "legacy": {
+      "mainCount": 0,
+      "body": "billing are managed on the web.\nPRODUCT\nHow It Works\nPricing\nCompare\nIntegrations\nSecurity\nCOMPANY\nAbout\nCareers\nPress\nContact\nStatus\nLEGAL\nPrivacy Policy\nTerms of Service\n© 2026 SIMY by AwakApp Inc. All rights reserved."
+    }
+  }
+]

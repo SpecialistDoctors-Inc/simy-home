@@ -381,8 +381,10 @@ if(localStorage.getItem('simy-cookies')==='1') loadGA();
 })();
 </script>
 <!-- /SIMY locale navigation -->
+<link rel="stylesheet" href="/page-accessibility.css?v=468c1bee6d3c">
 </head>
 <body>
+<a class="simy-skip-link" href="#simy-main">Skip to content</a>
     <!-- Force full navigation for static subpages -->
     <script>
     document.addEventListener('click', function(e) {
@@ -411,6 +413,7 @@ if(localStorage.getItem('simy-cookies')==='1') loadGA();
     <div class="sh-account"><details class="sh-dropdown sh-language"><summary aria-label="Language: English"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/></svg> EN</summary><div class="sh-panel"><a href="/status.html?lang=en" lang="en" hreflang="en" data-locale-option="en" aria-current="page">English</a><a href="/status.html?lang=ja" lang="ja" hreflang="ja" data-locale-option="ja">日本語</a><a href="/status.html?lang=hi" lang="hi" hreflang="hi" data-locale-option="hi">हिन्दी</a><a href="/status.html?lang=es" lang="es" hreflang="es" data-locale-option="es">Español</a><a href="/status.html?lang=fr" lang="fr" hreflang="fr" data-locale-option="fr">Français</a><a href="/status.html?lang=zh-Hans" lang="zh-Hans" hreflang="zh-Hans" data-locale-option="zh-Hans">简体中文</a></div></details><a data-new-account-signup class="sh-signup" href="https://app.simy.one/signup?lang=en&amp;locale=en&amp;region=us">Sign up</a></div>
   </div>
 </header>
+<main id="simy-main" tabindex="-1">
 
 
     <!-- Static page content -->
@@ -442,7 +445,9 @@ if(localStorage.getItem('simy-cookies')==='1') loadGA();
 </div>
 
     <!-- Static footer — same code as all other pages -->
-    <footer class="static-footer">
+
+</main>
+<footer class="static-footer">
       <div class="container">
         <div class="footer-grid">
           <div class="footer-brand">

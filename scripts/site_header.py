@@ -8,6 +8,7 @@ import re
 import argparse
 import json
 import subprocess
+from page_accessibility import apply as apply_page_accessibility
 from social_preview import apply as apply_social_preview
 from locale_navigation import apply as apply_locale_navigation, strip as strip_locale_navigation
 from functools import lru_cache
@@ -137,7 +138,10 @@ def homepage_content():
 
 def apply(source, path):
     from service_pricing_2026_11 import apply as apply_service_pricing
-    if not needs_header(source, path): return apply_service_pricing(source, path)
+    # Remove the final-stage asset before earlier publishers normalize head blocks.
+    source = re.sub(r'<link\b[^>]*href="/(?:hp-management/law-firm/)?page-accessibility\.css[^" ]*"[^>]*>\n?', '', source)
+    if not needs_header(source, path):
+        return apply_page_accessibility(apply_service_pricing(source, path), path, SITE)
     locale_match = re.search(r'<html[^>]*lang="([^" ]+)"', source)
     locale = locale_match.group(1) if locale_match else "en"
     if locale not in LOCALES: locale = "en"
@@ -168,7 +172,7 @@ def apply(source, path):
     if locale == 'ja' or "data-story-scene" in source:
         from home_manga_locales import localized_header
         source = localized_header(source, locale, homepage_content())
-    return apply_service_pricing(apply_locale_navigation(apply_social_preview(source, path)), path)
+    return apply_page_accessibility(apply_service_pricing(apply_locale_navigation(apply_social_preview(source, path)), path), path, SITE)
 
 if __name__ == "__main__":
     cli = argparse.ArgumentParser(description=__doc__)
