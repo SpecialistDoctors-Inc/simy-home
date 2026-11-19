@@ -594,6 +594,17 @@
       "bytes": 458423,
       "localEvidence": "be4f1a448d19de92.txt",
       "assessment": "本文未精査。HTTP成功のみで内容の正しさを認定しない。"
+    },
+    {
+      "url": "https://docs.stripe.com/api/checkout/sessions/create.md?query=locale",
+      "pages": [
+        "app/signup→Stripe"
+      ],
+      "status": 200,
+      "finalURL": "https://docs.stripe.com/api/checkout/sessions/create.md?query=locale",
+      "contentType": "text/markdown",
+      "bytes": 3382,
+      "assessment": "locale enumを本文で確認。ja/en/es/fr/zhあり、hiなし。zh-Hans→zh、hi→enの実装を照合。"
     }
   ]
 }
