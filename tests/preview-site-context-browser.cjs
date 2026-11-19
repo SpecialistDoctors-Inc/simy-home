@@ -79,7 +79,7 @@ async function checkEntry(browser, industry) {
             assert.deepEqual(payload.images,[]);
             assert.deepEqual(payload.assets.map(asset=>asset.name),['entrance.png','another.png','entrance.png']);
             assert.ok(payload.history.some(turn=>turn.text.includes('[a0]')));
-            return route.fulfill({json:{status:'inspect',question:'a0',context:{goal:'',target:'',decisions:'最初の写真',pending:''}}});
+            return route.fulfill({json:{status:'inspect',interactive:true,question:'a0',context:{goal:'',target:'',decisions:'最初の写真',pending:''}}});
           }
           const plans = {
             [contextualRequest]: () => {

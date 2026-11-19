@@ -297,7 +297,7 @@
     };
     const writeText=(node,value)=>{const walker=doc.createTreeWalker(node,NodeFilter.SHOW_TEXT),nodes=[];let n;while(n=walker.nextNode())if(n.nodeValue.trim())nodes.push(n);if(nodes.length){nodes[0].nodeValue=value;for(const rest of nodes.slice(1))rest.nodeValue='';}else node.textContent=value;};
     let heading,body,item,dateElement,inserted;
-    const metadata=node=>{for(let p=node;p&&p!==item;p=p.parentElement)if(/(?:^|[-_ ])(?:cat|cate|category|label|badge)(?:[-_ ]|$)/i.test(p.className||''))return true;return false;};
+    const metadata=node=>{for(let p=node;p&&p!==item;p=p.parentElement)if(/(?:^|[-_ ])(?:cat|cate|category|label|badge|tag|tags)(?:[-_ ]|$)/i.test(p.className||''))return true;return false;};
     if(e.tagName==='DL'&&e.querySelector(':scope > dt')){
      const template=noticeRow(e),bodyTemplate=template?.nextElementSibling;
      if(!template||bodyTemplate?.tagName!=='DD')throw Error('既存のお知らせの形式を確認できません。');
@@ -313,6 +313,9 @@
      if(!heading){const candidates=[item,...item.querySelectorAll('a,span,p,div')].filter(n=>n!==dateElement&&!n.contains(dateElement)&&!metadata(n)&&text(n)&&!datePattern.test(text(n)));heading=candidates.find(n=>![...n.children].some(c=>text(c)))||candidates[0];}
      if(!heading){if(dateElement)throw Error('既存のお知らせの見出しを確認できません。');heading=item;}
      body=[...item.querySelectorAll('p,[class*=excerpt],[class*=description],[class*=body]')].find(n=>n!==heading&&!heading.contains(n)&&!n.contains(heading)&&n!==dateElement&&!n.contains(dateElement)&&!metadata(n));
+     for(const node of [...item.querySelectorAll('*')]){
+      if(metadata(node)&&!node.contains(heading)&&!node.contains(dateElement)&&!node.contains(body))node.remove();
+     }
      e.prepend(item);inserted=[item];
     }
     const formatDate=before=>{const source=before.match(datePattern)?.[0]||before,parts=o.date.split('-');return source.includes('年')?parts[0]+'年'+parts[1]+'月'+parts[2]+'日':parts.join(source.includes('/')?'/':source.includes('-')?'-':'.');};
