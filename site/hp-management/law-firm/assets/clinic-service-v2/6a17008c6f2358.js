@@ -329,10 +329,13 @@
       const inline=afterDate.find(node=>node.matches('a,span')&&!node.closest('p')&&
        (!firstParagraph||follows(node,firstParagraph)));
       const beforeDate=dateElement?contentNodes.filter(node=>follows(node,dateElement)).at(-1):null;
+      const linkedLabel=firstParagraph?.childElementCount===1&&firstParagraph.firstElementChild.matches('a')&&
+       text(firstParagraph)===text(firstParagraph.firstElementChild);
+      const linkedTitle=linkedLabel&&afterDate.find(node=>node.matches('a')&&!node.closest('p')&&follows(firstParagraph,node));
       // Paragraphs in order give the clearest title and description pair. A
       // single paragraph may be the description of a separate inline title.
       if(paragraphs.length>=2)heading=firstParagraph;
-      else if(firstParagraph)heading=inline||beforeDate||firstParagraph;
+      else if(firstParagraph)heading=inline||linkedTitle||beforeDate||firstParagraph;
       else heading=inline||afterDate[0]||beforeDate;
      }
      if(!heading){if(dateElement)throw Error('既存のお知らせの見出しを確認できません。');heading=item;}
