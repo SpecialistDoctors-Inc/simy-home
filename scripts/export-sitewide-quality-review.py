@@ -169,7 +169,7 @@ def main():
         ['完了の意味','各行で定義したローカル作業と検証の完了。本番反映・過去全要求の充足とは別。'],
         ['全体の受入','R1〜R8の必須条件。平均点・件数ベース進捗で未達を相殺しない。'],
         ['過去依頼の原文','未取得の関連履歴がある。全Codexスレッドを網羅済みとは扱わない。'],
-        ['公開状況','ローカル実装を検証中。本番反映の状態は実行計画Q35と検証証跡を参照。現行本番のHTTP成功は変更版の公開証拠ではない。'],
+        ['公開状況',next(r for r in findings if r['id']=='Q35')['status']+'：'+next(r for r in findings if r['id']=='Q35').get('verificationResult','実行計画Q35を参照。')],
         ['検査の範囲','静的全件／ブラウザー実施条件／外部計測を分離。外部リクエストを遮断したローカルChromiumでの検査は本番の実利用性能ではない。'],
         ['優先順位','P1=到達性・事実性・要件/公開の阻害、P2=品質改善/リスク低減、P3=成果仮説・継続改善。'],
         ['工数','実行計画の工数は計画時の概算。実績時間、納期、担当者の約束ではない。'],
@@ -256,6 +256,9 @@ def main():
     sheet(wb,'検証証跡と制約',['対象','証跡・参照','内容と限界'],evidence,[35,70,120])
     if (DOCS/'execution-verification.md').exists():
         sheet(wb,'今回の実行記録',['行','検証記録'],[[i,line] for i,line in enumerate((DOCS/'execution-verification.md').read_text().splitlines(),1) if line.strip()],[10,150])
+    release=read_json(DOCS/'evidence/production-release.json',{})
+    if release:
+        sheet(wb,'本番配信の照合',['ファイル','確認URL','HTTP','配信SHA256','期待SHA256','一致','確認日時UTC','本番コミット','配信ジョブ','範囲・制約'],[[r['file'],r['url'],r.get('status',''),r.get('actualSha256',''),r.get('expectedSha256',''),'合格' if r['matches'] else '不合格',release['observedAt'],release['commit'],release['deploymentRun'],release['scope']] for r in release['results']],[55,85,12,72,72,15,35,50,90,110])
     history_counts=history_sheets(wb,read_json(args.history)) if args.history else {}
     if args.history:
         ws=wb['はじめに'];ws.append(['履歴付きの私用版','このファイルは取得した過去会話の原文を含む私用成果物。公開リポジトリへ掲載しない。機密値は保守的に省略。候補抽出は機械的な整理で、全発言の要件確定や実装充足を意味しない。'])

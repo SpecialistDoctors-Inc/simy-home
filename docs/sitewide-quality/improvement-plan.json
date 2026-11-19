@@ -665,14 +665,14 @@
       "before": "ローカル修正をoriginへpushしドラフトPR #494を作成。GitHub checkは成功。本番未マージ。",
       "improvement": "レビュー可能なPRを作り全受入条件を照合後にマージ。配信ジョブと実URLを検証",
       "acceptance": "検証済みの共通基盤修正を本番mainへマージし配信成功と変更ファイルの実URL一致を確認する。全過去要件の完了認定はQ01/Q28等に残す。",
-      "evidence": "https://github.com/SpecialistDoctors-Inc/simy-home/pull/494",
-      "status": "検証中",
-      "dependency": "今回の公開対象の差分レビュー・Static Site CI・配信検証。未取得履歴/外部効果測定は残件として独立管理。",
+      "evidence": "PR #494 / evidence/production-release.json / evidence/production-browser-check.json",
+      "status": "完了",
+      "dependency": "",
       "estimatedEffort": "CI/要件取得後",
       "criterion": "R1/R8",
       "owner": "Codex（実装・自動検証）",
-      "nextAction": "履歴を追加したExcelを確定し、PR #494のCI確認後にマージ・配信を検証。",
-      "verificationResult": "PR #494は差分レビュー済み、Static Site check成功。追加した履歴照合とExcel生成の検証を進めている。"
+      "nextAction": "Q01/Q28/Q29/Q30/Q31/Q32/Q34の残件を別途継続。今回の公開を全過去要件の完了認定としない。",
+      "verificationResult": "PR #494を2026-11-19T15:44:20Zにmainへマージ（d90aa842）。Deploy Static Site #44558192320成功。本番167 URL/資産すべてHTTP200かつSHA256一致。390px本番contactでmain1・横はみ出し0・メール導線・Tab/Enterの本文focusを確認。"
     },
     {
       "id": "Q36",
