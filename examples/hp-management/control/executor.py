@@ -429,7 +429,7 @@ class _Run:
                                        self.op['subject'], self.executor.wordpress_test_origin,
                                        self.executor.wordpress_paid_sites):
             raise Rejected('access_revoked')
-        if not site_license_allowed(self.site, self.op['subject'], self.executor.license_resolver,
+        if not site_license_allowed({**self.site, 'site_id': self.op['site_id']}, self.op['subject'], self.executor.license_resolver,
                                     StripeLicenses(self.executor.store)):
             raise Rejected('hp_license_required')
 

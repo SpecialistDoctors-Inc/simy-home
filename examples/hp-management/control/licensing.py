@@ -72,6 +72,17 @@ def site_license_allowed(site, google_subject, resolver, stripe=None):
         if stripe is None or not valid_google_subject(google_subject):
             raise LicenseUnavailable('hp_license_unavailable')
         return stripe.allowed(policy['subscription_id'], google_subject)
+    # Production transport checks the actual target site as well as the
+    # organization. Legacy in-process resolvers retain their two-argument
+    # interface; no network fallback is made after a site-aware denial.
+    if callable(getattr(type(resolver), 'for_site', None)):
+        site_id = site.get('site_id')
+        if not isinstance(site_id, str) or not re.fullmatch(r'[a-z][a-z0-9-]{1,62}', site_id):
+            raise LicenseUnavailable('hp_license_unavailable')
+        allowed = resolver.for_site(policy['org_id'], google_subject, site_id)
+        if type(allowed) is not bool:
+            raise LicenseUnavailable('hp_license_unavailable')
+        return allowed
     return resolve_license(resolver, policy['org_id'], google_subject)
 
 
@@ -93,13 +104,21 @@ class EntitlementResolver:
         self.endpoint, self.token = endpoint, token
         self.opener = build_opener(NoRedirect())
 
-    def __call__(self, org_id, google_subject):
+    def for_site(self, org_id, google_subject, site_id):
+        return self(org_id, google_subject, site_id)
+
+    def __call__(self, org_id, google_subject, site_id=None):
         try:
             token = self.token()
             if not valid_service_token(token):
                 raise ValueError()
+            body = {'org_id': org_id, 'google_subject': google_subject}
+            if site_id is not None:
+                if not isinstance(site_id, str) or not re.fullmatch(r'[a-z][a-z0-9-]{1,62}', site_id):
+                    raise ValueError()
+                body['site_id'] = site_id
             request = Request(self.endpoint, method='POST',
-                data=json.dumps({'org_id': org_id, 'google_subject': google_subject}).encode(),
+                data=json.dumps(body).encode(),
                 headers={'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json',
                          'Accept': 'application/json'})
             with self.opener.open(request, timeout=3) as response:

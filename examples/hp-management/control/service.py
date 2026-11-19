@@ -127,7 +127,7 @@ class Service:
             raise Rejected('site_unavailable')
         if role not in effective_roles(member, {**site, 'site_id': site_id}, claims['sub'], self.wordpress_test_origin, self.wordpress_paid_sites):
             raise Rejected('site_access_denied')
-        if not site_license_allowed(site, claims['sub'], self.license_resolver, StripeLicenses(self.store)):
+        if not site_license_allowed({**site, 'site_id': site_id}, claims['sub'], self.license_resolver, StripeLicenses(self.store)):
             raise Rejected('hp_license_required')
         return member, site
 
