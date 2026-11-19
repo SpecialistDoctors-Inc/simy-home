@@ -319,14 +319,21 @@
      heading=item.querySelector(headingsSelector+',dd,[itemprop=headline]');
      const contentNodes=[...item.querySelectorAll('a,span,p,div')].filter(n=>
       n!==dateElement&&!n.contains(dateElement)&&!n.closest('[rel=tag]')&&
-      ![...n.children].some(c=>text(c))&&text(n)&&!dateOnly(text(n))&&
+      (n.tagName==='P'||![...n.children].some(c=>text(c)))&&text(n)&&!dateOnly(text(n))&&
       !item.contains(n.closest('ul,ol')));
      if(!heading){
-      const afterDate=dateElement?contentNodes.filter(node=>Boolean(dateElement.compareDocumentPosition(node)&Node.DOCUMENT_POSITION_FOLLOWING)):contentNodes;
-      // A title may be an inline label or link beside the date, while a separate
-      // paragraph below it carries the body. When both are paragraphs, order matters.
-      heading=afterDate.find(node=>node.matches('a,span')&&!node.closest('p'))||
-       afterDate[0]||contentNodes.at(-1);
+      const follows=(a,b)=>Boolean(a.compareDocumentPosition(b)&Node.DOCUMENT_POSITION_FOLLOWING);
+      const afterDate=dateElement?contentNodes.filter(node=>follows(dateElement,node)):contentNodes;
+      const paragraphs=afterDate.filter(node=>node.tagName==='P');
+      const firstParagraph=paragraphs[0];
+      const inline=afterDate.find(node=>node.matches('a,span')&&!node.closest('p')&&
+       (!firstParagraph||follows(node,firstParagraph)));
+      const beforeDate=dateElement?contentNodes.filter(node=>follows(node,dateElement)).at(-1):null;
+      // Paragraphs in order give the clearest title and description pair. A
+      // single paragraph may be the description of a separate inline title.
+      if(paragraphs.length>=2)heading=firstParagraph;
+      else if(firstParagraph)heading=inline||beforeDate||firstParagraph;
+      else heading=inline||afterDate[0]||beforeDate;
      }
      if(!heading){if(dateElement)throw Error('既存のお知らせの見出しを確認できません。');heading=item;}
      body=[...item.querySelectorAll('p,[itemprop=description]')].find(n=>n!==heading&&!heading.contains(n)&&!n.contains(heading)&&
