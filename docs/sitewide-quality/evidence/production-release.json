@@ -1,0 +1,1512 @@
+{
+  "observedAt": "2026-11-19T15:48:09.049081+00:00",
+  "commit": "d90aa8424f3a124921e528cec3b2a8516b53d808",
+  "pullRequest": "https://github.com/SpecialistDoctors-Inc/simy-home/pull/494",
+  "deploymentRun": "https://github.com/SpecialistDoctors-Inc/simy-home/actions/runs/44558192320",
+  "scope": "Read-only HTTP to production; SHA256 compares returned body with reviewed source. No form submission, payment or authentication.",
+  "results": [
+    {
+      "file": "about.html",
+      "url": "https://simy.one/about.html",
+      "status": 200,
+      "finalURL": "https://simy.one/about.html",
+      "expectedSha256": "64ee5cf68bd0b4c79f13ea69f2af14e172a1c705ec148e99d5f8b28d5c3e0882",
+      "actualSha256": "64ee5cf68bd0b4c79f13ea69f2af14e172a1c705ec148e99d5f8b28d5c3e0882",
+      "matches": true
+    },
+    {
+      "file": "careers.html",
+      "url": "https://simy.one/careers.html",
+      "status": 200,
+      "finalURL": "https://simy.one/careers.html",
+      "expectedSha256": "c7c30d51b726502c813ea9a02cd0e1e9f70a7461d8042a7e3504c36d595f5175",
+      "actualSha256": "c7c30d51b726502c813ea9a02cd0e1e9f70a7461d8042a7e3504c36d595f5175",
+      "matches": true
+    },
+    {
+      "file": "compare.html",
+      "url": "https://simy.one/compare.html",
+      "status": 200,
+      "finalURL": "https://simy.one/compare.html",
+      "expectedSha256": "783743513bfe7b62c4e5e8b3bb302f53dc15433b80a511ec53620701bad34e83",
+      "actualSha256": "783743513bfe7b62c4e5e8b3bb302f53dc15433b80a511ec53620701bad34e83",
+      "matches": true
+    },
+    {
+      "file": "contact.html",
+      "url": "https://simy.one/contact.html",
+      "status": 200,
+      "finalURL": "https://simy.one/contact.html",
+      "expectedSha256": "c1b3e7a394a163e9201a2a00ecb28b8ef3549109687903ecdf70b99869763f18",
+      "actualSha256": "c1b3e7a394a163e9201a2a00ecb28b8ef3549109687903ecdf70b99869763f18",
+      "matches": true
+    },
+    {
+      "file": "demo.html",
+      "url": "https://simy.one/demo.html",
+      "status": 200,
+      "finalURL": "https://simy.one/demo.html",
+      "expectedSha256": "a23ecf53a64080d02b908cae4282834efa745681f25a0d82905fc15e2fee1be5",
+      "actualSha256": "a23ecf53a64080d02b908cae4282834efa745681f25a0d82905fc15e2fee1be5",
+      "matches": true
+    },
+    {
+      "file": "download.html",
+      "url": "https://simy.one/download.html",
+      "status": 200,
+      "finalURL": "https://simy.one/download.html",
+      "expectedSha256": "6b68ba8157f23966becf55fcde38e1cd9d2a5d51c8888ea4c332a6aa4aee2f97",
+      "actualSha256": "6b68ba8157f23966becf55fcde38e1cd9d2a5d51c8888ea4c332a6aa4aee2f97",
+      "matches": true
+    },
+    {
+      "file": "download/en.html",
+      "url": "https://simy.one/download/en.html",
+      "status": 200,
+      "finalURL": "https://simy.one/download/en.html",
+      "expectedSha256": "e1c4ad428b51c178952cb609c954d9ff53ff448ff456c2720a8936d55ee2e356",
+      "actualSha256": "e1c4ad428b51c178952cb609c954d9ff53ff448ff456c2720a8936d55ee2e356",
+      "matches": true
+    },
+    {
+      "file": "download/es.html",
+      "url": "https://simy.one/download/es.html",
+      "status": 200,
+      "finalURL": "https://simy.one/download/es.html",
+      "expectedSha256": "c9ddc85b3fda86b8a59b437f6605edd36ac63ecb7faa535d72aa55feeffc115b",
+      "actualSha256": "c9ddc85b3fda86b8a59b437f6605edd36ac63ecb7faa535d72aa55feeffc115b",
+      "matches": true
+    },
+    {
+      "file": "download/fr.html",
+      "url": "https://simy.one/download/fr.html",
+      "status": 200,
+      "finalURL": "https://simy.one/download/fr.html",
+      "expectedSha256": "b22fd6bd598374666f39cdbaf1c287ea2c7786034d5876bca7d59ea9bace1514",
+      "actualSha256": "b22fd6bd598374666f39cdbaf1c287ea2c7786034d5876bca7d59ea9bace1514",
+      "matches": true
+    },
+    {
+      "file": "download/hi.html",
+      "url": "https://simy.one/download/hi.html",
+      "status": 200,
+      "finalURL": "https://simy.one/download/hi.html",
+      "expectedSha256": "8627e6f4eb5bff5f952631c2b66b3ba6a1d5256d8ecfc8aaeff894b209bfb687",
+      "actualSha256": "8627e6f4eb5bff5f952631c2b66b3ba6a1d5256d8ecfc8aaeff894b209bfb687",
+      "matches": true
+    },
+    {
+      "file": "download/zh-hans.html",
+      "url": "https://simy.one/download/zh-hans.html",
+      "status": 200,
+      "finalURL": "https://simy.one/download/zh-hans.html",
+      "expectedSha256": "ee96496009f695242061488315a3d4c2fc0967db399d6843b0370f7732fde597",
+      "actualSha256": "ee96496009f695242061488315a3d4c2fc0967db399d6843b0370f7732fde597",
+      "matches": true
+    },
+    {
+      "file": "es.html",
+      "url": "https://simy.one/es.html",
+      "status": 200,
+      "finalURL": "https://simy.one/es.html",
+      "expectedSha256": "346060274fb019b16360c13c5d0793bd2dfaa3c8d3de9b867f62d6ed6c26c56f",
+      "actualSha256": "346060274fb019b16360c13c5d0793bd2dfaa3c8d3de9b867f62d6ed6c26c56f",
+      "matches": true
+    },
+    {
+      "file": "for/en/engineers/index.html",
+      "url": "https://simy.one/for/en/engineers/",
+      "status": 200,
+      "finalURL": "https://simy.one/for/en/engineers/",
+      "expectedSha256": "5a8214be930b8f63d78035be033e1e16acd7b34e026abdfa1d9083247d34c763",
+      "actualSha256": "5a8214be930b8f63d78035be033e1e16acd7b34e026abdfa1d9083247d34c763",
+      "matches": true
+    },
+    {
+      "file": "for/en/financial-planners/index.html",
+      "url": "https://simy.one/for/en/financial-planners/",
+      "status": 200,
+      "finalURL": "https://simy.one/for/en/financial-planners/",
+      "expectedSha256": "2399c6a84655a48164742f5abb77f7ce17294bddf5a9c2acfc5b205458525971",
+      "actualSha256": "2399c6a84655a48164742f5abb77f7ce17294bddf5a9c2acfc5b205458525971",
+      "matches": true
+    },
+    {
+      "file": "for/en/index.html",
+      "url": "https://simy.one/for/en/",
+      "status": 200,
+      "finalURL": "https://simy.one/for/en/",
+      "expectedSha256": "7d350fbc9c7055a1a7be347edc5771488334bb042378f1ba79516aa7ac2a2822",
+      "actualSha256": "7d350fbc9c7055a1a7be347edc5771488334bb042378f1ba79516aa7ac2a2822",
+      "matches": true
+    },
+    {
+      "file": "for/en/pharmaceutical-companies/index.html",
+      "url": "https://simy.one/for/en/pharmaceutical-companies/",
+      "status": 200,
+      "finalURL": "https://simy.one/for/en/pharmaceutical-companies/",
+      "expectedSha256": "9f5ab443b99bb90792c54dabff598f81df45d6cc3cfa64ab2d94c19e764a990f",
+      "actualSha256": "9f5ab443b99bb90792c54dabff598f81df45d6cc3cfa64ab2d94c19e764a990f",
+      "matches": true
+    },
+    {
+      "file": "for/en/sales/index.html",
+      "url": "https://simy.one/for/en/sales/",
+      "status": 200,
+      "finalURL": "https://simy.one/for/en/sales/",
+      "expectedSha256": "598ff79b169c578eb96837bf36932271e9c4f2a101636f47464cb13f2a5c6bf2",
+      "actualSha256": "598ff79b169c578eb96837bf36932271e9c4f2a101636f47464cb13f2a5c6bf2",
+      "matches": true
+    },
+    {
+      "file": "for/engineers/index.html",
+      "url": "https://simy.one/for/engineers/",
+      "status": 200,
+      "finalURL": "https://simy.one/for/engineers/",
+      "expectedSha256": "5c34b3aaac3c744085a369d5c8eb76a84c7738ce74429802c1e7a20989f5f2e8",
+      "actualSha256": "5c34b3aaac3c744085a369d5c8eb76a84c7738ce74429802c1e7a20989f5f2e8",
+      "matches": true
+    },
+    {
+      "file": "for/es/engineers/index.html",
+      "url": "https://simy.one/for/es/engineers/",
+      "status": 200,
+      "finalURL": "https://simy.one/for/es/engineers.html",
+      "expectedSha256": "aafaccf7912b91a4cd0cd04947174e39e9e386e548f4c18c50b2476251296cbb",
+      "actualSha256": "aafaccf7912b91a4cd0cd04947174e39e9e386e548f4c18c50b2476251296cbb",
+      "matches": true
+    },
+    {
+      "file": "for/es/financial-planners/index.html",
+      "url": "https://simy.one/for/es/financial-planners/",
+      "status": 200,
+      "finalURL": "https://simy.one/for/es/financial-planners.html",
+      "expectedSha256": "598fab157ab7859f28868849c703d3aecd2640bd5ab7d0d002330a3342f8b176",
+      "actualSha256": "598fab157ab7859f28868849c703d3aecd2640bd5ab7d0d002330a3342f8b176",
+      "matches": true
+    },
+    {
+      "file": "for/es/pharmaceutical-companies/index.html",
+      "url": "https://simy.one/for/es/pharmaceutical-companies/",
+      "status": 200,
+      "finalURL": "https://simy.one/for/es/pharmaceutical-companies.html",
+      "expectedSha256": "f22e9ff666aa1c5ba275f3463f7bf6c07851b508dfcf0684ef351d817830ea3b",
+      "actualSha256": "f22e9ff666aa1c5ba275f3463f7bf6c07851b508dfcf0684ef351d817830ea3b",
+      "matches": true
+    },
+    {
+      "file": "for/financial-planners/index.html",
+      "url": "https://simy.one/for/financial-planners/",
+      "status": 200,
+      "finalURL": "https://simy.one/for/financial-planners/",
+      "expectedSha256": "4eb663b5169dedd515a57285762834efcfd0c8c86084821508a14f9b21254a46",
+      "actualSha256": "4eb663b5169dedd515a57285762834efcfd0c8c86084821508a14f9b21254a46",
+      "matches": true
+    },
+    {
+      "file": "for/fr/engineers/index.html",
+      "url": "https://simy.one/for/fr/engineers/",
+      "status": 200,
+      "finalURL": "https://simy.one/for/fr/engineers.html",
+      "expectedSha256": "3f4fcc771ae521569600ec869ee485c9b80061a75bacb36250b16f91a82d95c4",
+      "actualSha256": "3f4fcc771ae521569600ec869ee485c9b80061a75bacb36250b16f91a82d95c4",
+      "matches": true
+    },
+    {
+      "file": "for/fr/financial-planners/index.html",
+      "url": "https://simy.one/for/fr/financial-planners/",
+      "status": 200,
+      "finalURL": "https://simy.one/for/fr/financial-planners.html",
+      "expectedSha256": "f4e391b4247d74dc1b8f8e1c01a6e58b92f10b5d64f58b428016b3b823757aaf",
+      "actualSha256": "f4e391b4247d74dc1b8f8e1c01a6e58b92f10b5d64f58b428016b3b823757aaf",
+      "matches": true
+    },
+    {
+      "file": "for/fr/pharmaceutical-companies/index.html",
+      "url": "https://simy.one/for/fr/pharmaceutical-companies/",
+      "status": 200,
+      "finalURL": "https://simy.one/for/fr/pharmaceutical-companies.html",
+      "expectedSha256": "662c3500106e88432c66ea2c6bd05393b912730d03df3c01c5c54657818dd53c",
+      "actualSha256": "662c3500106e88432c66ea2c6bd05393b912730d03df3c01c5c54657818dd53c",
+      "matches": true
+    },
+    {
+      "file": "for/hi/engineers/index.html",
+      "url": "https://simy.one/for/hi/engineers/",
+      "status": 200,
+      "finalURL": "https://simy.one/for/hi/engineers.html",
+      "expectedSha256": "fb456ab063acfff8c09aa928e850159e6f2c8fd4d407373ed61464a19f90f61d",
+      "actualSha256": "fb456ab063acfff8c09aa928e850159e6f2c8fd4d407373ed61464a19f90f61d",
+      "matches": true
+    },
+    {
+      "file": "for/hi/financial-planners/index.html",
+      "url": "https://simy.one/for/hi/financial-planners/",
+      "status": 200,
+      "finalURL": "https://simy.one/for/hi/financial-planners.html",
+      "expectedSha256": "369f5d730722625f3ede9ad81f2d6c5c364a8f6e8e564451f9b8d43156bd6190",
+      "actualSha256": "369f5d730722625f3ede9ad81f2d6c5c364a8f6e8e564451f9b8d43156bd6190",
+      "matches": true
+    },
+    {
+      "file": "for/hi/pharmaceutical-companies/index.html",
+      "url": "https://simy.one/for/hi/pharmaceutical-companies/",
+      "status": 200,
+      "finalURL": "https://simy.one/for/hi/pharmaceutical-companies.html",
+      "expectedSha256": "8b72afdc3c46a9ceb5a7c19ce17bc9fec50cb282b4de9afaa6ebd8a0ce45765b",
+      "actualSha256": "8b72afdc3c46a9ceb5a7c19ce17bc9fec50cb282b4de9afaa6ebd8a0ce45765b",
+      "matches": true
+    },
+    {
+      "file": "for/index.html",
+      "url": "https://simy.one/for/",
+      "status": 200,
+      "finalURL": "https://simy.one/for/",
+      "expectedSha256": "0365b70690c28716f3fd9364e4726fe284c96784b7eb4b30ecb33f5c2ef91536",
+      "actualSha256": "0365b70690c28716f3fd9364e4726fe284c96784b7eb4b30ecb33f5c2ef91536",
+      "matches": true
+    },
+    {
+      "file": "for/pharmaceutical-companies/index.html",
+      "url": "https://simy.one/for/pharmaceutical-companies/",
+      "status": 200,
+      "finalURL": "https://simy.one/for/pharmaceutical-companies/",
+      "expectedSha256": "b0c37934184550a4016b9f68e0a673780e44bfc00550ecea8b507d10922c667d",
+      "actualSha256": "b0c37934184550a4016b9f68e0a673780e44bfc00550ecea8b507d10922c667d",
+      "matches": true
+    },
+    {
+      "file": "for/rosenz/index.html",
+      "url": "https://simy.one/for/rosenz/",
+      "status": 200,
+      "finalURL": "https://simy.one/for/rosenz/",
+      "expectedSha256": "fd8b74a429c8e8fac87bb8c0f1138396063c14fa941aab6e83a42cd50ee60ac4",
+      "actualSha256": "fd8b74a429c8e8fac87bb8c0f1138396063c14fa941aab6e83a42cd50ee60ac4",
+      "matches": true
+    },
+    {
+      "file": "for/sales/index.html",
+      "url": "https://simy.one/for/sales/",
+      "status": 200,
+      "finalURL": "https://simy.one/for/sales/",
+      "expectedSha256": "c330571627c436a20e5fb679def682a9617a8e81dd6cefb9758e2694d1bbbb18",
+      "actualSha256": "c330571627c436a20e5fb679def682a9617a8e81dd6cefb9758e2694d1bbbb18",
+      "matches": true
+    },
+    {
+      "file": "for/zh-hans/engineers/index.html",
+      "url": "https://simy.one/for/zh-hans/engineers/",
+      "status": 200,
+      "finalURL": "https://simy.one/for/zh-hans/engineers.html",
+      "expectedSha256": "3aa359b18a0a5c2cb982bb39f86c03305f88ceb368ccf12f1c07986990c771c2",
+      "actualSha256": "3aa359b18a0a5c2cb982bb39f86c03305f88ceb368ccf12f1c07986990c771c2",
+      "matches": true
+    },
+    {
+      "file": "for/zh-hans/financial-planners/index.html",
+      "url": "https://simy.one/for/zh-hans/financial-planners/",
+      "status": 200,
+      "finalURL": "https://simy.one/for/zh-hans/financial-planners.html",
+      "expectedSha256": "93e626a1ebbbe6e9fcc26a07d473b3788dbf99c285af1a3e756a69043a1ee617",
+      "actualSha256": "93e626a1ebbbe6e9fcc26a07d473b3788dbf99c285af1a3e756a69043a1ee617",
+      "matches": true
+    },
+    {
+      "file": "for/zh-hans/pharmaceutical-companies/index.html",
+      "url": "https://simy.one/for/zh-hans/pharmaceutical-companies/",
+      "status": 200,
+      "finalURL": "https://simy.one/for/zh-hans/pharmaceutical-companies.html",
+      "expectedSha256": "f034862ffc178c7cf6bdcfc4e4fc991cd50740a89c222ca2c82b03891c95fb99",
+      "actualSha256": "f034862ffc178c7cf6bdcfc4e4fc991cd50740a89c222ca2c82b03891c95fb99",
+      "matches": true
+    },
+    {
+      "file": "founder.html",
+      "url": "https://simy.one/founder.html",
+      "status": 200,
+      "finalURL": "https://simy.one/founder.html",
+      "expectedSha256": "42f83d91ef100e4baf87cf9c4c731e68d623eeaf02fa29d30ee50cfc46f83ec0",
+      "actualSha256": "42f83d91ef100e4baf87cf9c4c731e68d623eeaf02fa29d30ee50cfc46f83ec0",
+      "matches": true
+    },
+    {
+      "file": "fr.html",
+      "url": "https://simy.one/fr.html",
+      "status": 200,
+      "finalURL": "https://simy.one/fr.html",
+      "expectedSha256": "5b4be9255963d20732b0f0eb21be239df5b3a22ffe22ce7bcd3d39797372255a",
+      "actualSha256": "5b4be9255963d20732b0f0eb21be239df5b3a22ffe22ce7bcd3d39797372255a",
+      "matches": true
+    },
+    {
+      "file": "guides/chatgpt.html",
+      "url": "https://simy.one/guides/chatgpt.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/chatgpt.html",
+      "expectedSha256": "8dc9c7e075be96d3a96ea8f7ae1626f1b3b0eb1f3ec47c27aa91aae444cc9007",
+      "actualSha256": "8dc9c7e075be96d3a96ea8f7ae1626f1b3b0eb1f3ec47c27aa91aae444cc9007",
+      "matches": true
+    },
+    {
+      "file": "guides/china-llm.html",
+      "url": "https://simy.one/guides/china-llm.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/china-llm.html",
+      "expectedSha256": "580d0edafba6dee34a91581e541c0a225dac0420f6040e0c2dbda9a1ff0d1ea5",
+      "actualSha256": "580d0edafba6dee34a91581e541c0a225dac0420f6040e0c2dbda9a1ff0d1ea5",
+      "matches": true
+    },
+    {
+      "file": "guides/claude-code.html",
+      "url": "https://simy.one/guides/claude-code.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/claude-code.html",
+      "expectedSha256": "46e2980de83d14c1d96d6a44174b5d3ad62d005bad40c1b835fc41716c3b34e2",
+      "actualSha256": "46e2980de83d14c1d96d6a44174b5d3ad62d005bad40c1b835fc41716c3b34e2",
+      "matches": true
+    },
+    {
+      "file": "guides/claude.html",
+      "url": "https://simy.one/guides/claude.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/claude.html",
+      "expectedSha256": "439eafa49ee59ee05f9c52e79d7db57792a26cc32c3e143464909d0e92a54254",
+      "actualSha256": "439eafa49ee59ee05f9c52e79d7db57792a26cc32c3e143464909d0e92a54254",
+      "matches": true
+    },
+    {
+      "file": "guides/codex.html",
+      "url": "https://simy.one/guides/codex.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/codex.html",
+      "expectedSha256": "79be2abe56dd536ebd8a9a0c8825768a1596d64d2febf75f4f338f80b1e9bd6f",
+      "actualSha256": "79be2abe56dd536ebd8a9a0c8825768a1596d64d2febf75f4f338f80b1e9bd6f",
+      "matches": true
+    },
+    {
+      "file": "guides/conductor.html",
+      "url": "https://simy.one/guides/conductor.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/conductor.html",
+      "expectedSha256": "63abd2e39e2ffb01327aea7f33caeb4a699bf3878a194d959c888f0f17e2c569",
+      "actualSha256": "63abd2e39e2ffb01327aea7f33caeb4a699bf3878a194d959c888f0f17e2c569",
+      "matches": true
+    },
+    {
+      "file": "guides/cowork.html",
+      "url": "https://simy.one/guides/cowork.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/cowork.html",
+      "expectedSha256": "c6669b79e96abfea2e18d7381d1f72552b1a688da8b6e4a2fe83f8b4eea999bf",
+      "actualSha256": "c6669b79e96abfea2e18d7381d1f72552b1a688da8b6e4a2fe83f8b4eea999bf",
+      "matches": true
+    },
+    {
+      "file": "guides/deepseek.html",
+      "url": "https://simy.one/guides/deepseek.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/deepseek.html",
+      "expectedSha256": "ad4747692bbbf958e2b848a6ecbfa3f06a0f1b7155c2fc27d5503c108859dde4",
+      "actualSha256": "ad4747692bbbf958e2b848a6ecbfa3f06a0f1b7155c2fc27d5503c108859dde4",
+      "matches": true
+    },
+    {
+      "file": "guides/doubao.html",
+      "url": "https://simy.one/guides/doubao.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/doubao.html",
+      "expectedSha256": "51e9e0d69ad477f9f474b81bbf0aef0feaa9b9365c32f164d1378eebfba5b01e",
+      "actualSha256": "51e9e0d69ad477f9f474b81bbf0aef0feaa9b9365c32f164d1378eebfba5b01e",
+      "matches": true
+    },
+    {
+      "file": "guides/en/chatgpt.html",
+      "url": "https://simy.one/guides/en/chatgpt.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/en/chatgpt.html",
+      "expectedSha256": "f3e2d11bf51b1aa101c91b0be14792ff4eb87c260d3581030a745832a98b3bb5",
+      "actualSha256": "f3e2d11bf51b1aa101c91b0be14792ff4eb87c260d3581030a745832a98b3bb5",
+      "matches": true
+    },
+    {
+      "file": "guides/en/china-llm.html",
+      "url": "https://simy.one/guides/en/china-llm.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/en/china-llm.html",
+      "expectedSha256": "ea22aa926e786e293f59e60547538971e1b8f966184c6f3f1ea1a0986e29e73c",
+      "actualSha256": "ea22aa926e786e293f59e60547538971e1b8f966184c6f3f1ea1a0986e29e73c",
+      "matches": true
+    },
+    {
+      "file": "guides/en/claude-code.html",
+      "url": "https://simy.one/guides/en/claude-code.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/en/claude-code.html",
+      "expectedSha256": "0d0fe3efc9807a16e15d433a8d04e8def1373b0895d0a38f1eab667e32dc43dd",
+      "actualSha256": "0d0fe3efc9807a16e15d433a8d04e8def1373b0895d0a38f1eab667e32dc43dd",
+      "matches": true
+    },
+    {
+      "file": "guides/en/claude.html",
+      "url": "https://simy.one/guides/en/claude.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/en/claude.html",
+      "expectedSha256": "c2be7063852f2f3beb130a805136124d4c7226eb9cad15537b885f3ebec09bd2",
+      "actualSha256": "c2be7063852f2f3beb130a805136124d4c7226eb9cad15537b885f3ebec09bd2",
+      "matches": true
+    },
+    {
+      "file": "guides/en/codex.html",
+      "url": "https://simy.one/guides/en/codex.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/en/codex.html",
+      "expectedSha256": "ce74911413b88367fb0899f6f488a130c2398211b9fc42d28a472b2c5a86c0fd",
+      "actualSha256": "ce74911413b88367fb0899f6f488a130c2398211b9fc42d28a472b2c5a86c0fd",
+      "matches": true
+    },
+    {
+      "file": "guides/en/conductor.html",
+      "url": "https://simy.one/guides/en/conductor.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/en/conductor.html",
+      "expectedSha256": "f0fe7a76f03b6ef72610993d0022721514ca7d630e6ed039058657fcc2b0ac25",
+      "actualSha256": "f0fe7a76f03b6ef72610993d0022721514ca7d630e6ed039058657fcc2b0ac25",
+      "matches": true
+    },
+    {
+      "file": "guides/en/cowork.html",
+      "url": "https://simy.one/guides/en/cowork.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/en/cowork.html",
+      "expectedSha256": "7711ad81bbe3d78f5021306854e350ea3ce618b51ed54f8699a7d65c9bf59377",
+      "actualSha256": "7711ad81bbe3d78f5021306854e350ea3ce618b51ed54f8699a7d65c9bf59377",
+      "matches": true
+    },
+    {
+      "file": "guides/en/deepseek.html",
+      "url": "https://simy.one/guides/en/deepseek.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/en/deepseek.html",
+      "expectedSha256": "ccf7d3c3ef4efe1ccdb72c379032703314bf2c0b84d5126d31c0bfcfe93f6870",
+      "actualSha256": "ccf7d3c3ef4efe1ccdb72c379032703314bf2c0b84d5126d31c0bfcfe93f6870",
+      "matches": true
+    },
+    {
+      "file": "guides/en/doubao.html",
+      "url": "https://simy.one/guides/en/doubao.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/en/doubao.html",
+      "expectedSha256": "635658c72d3d5bb570a45ab2738d2294903dc6de7312d2dde155acde06737288",
+      "actualSha256": "635658c72d3d5bb570a45ab2738d2294903dc6de7312d2dde155acde06737288",
+      "matches": true
+    },
+    {
+      "file": "guides/en/glm.html",
+      "url": "https://simy.one/guides/en/glm.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/en/glm.html",
+      "expectedSha256": "dc52c3fb4f8889e98c8964cb141e08634d413793b55c15ef5ab5574168f18e3e",
+      "actualSha256": "dc52c3fb4f8889e98c8964cb141e08634d413793b55c15ef5ab5574168f18e3e",
+      "matches": true
+    },
+    {
+      "file": "guides/en/index.html",
+      "url": "https://simy.one/guides/en/index.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/en/index.html",
+      "expectedSha256": "bff58ab9d1fe05450dbdf6ebc55f051ef08de7c436a82d68f4f52a2cfede4cc5",
+      "actualSha256": "bff58ab9d1fe05450dbdf6ebc55f051ef08de7c436a82d68f4f52a2cfede4cc5",
+      "matches": true
+    },
+    {
+      "file": "guides/en/kimi.html",
+      "url": "https://simy.one/guides/en/kimi.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/en/kimi.html",
+      "expectedSha256": "f1fce7377edcd0a1bb3a8aa629c9cb2dd6a43eacd729c9db508ca76885cc7c02",
+      "actualSha256": "f1fce7377edcd0a1bb3a8aa629c9cb2dd6a43eacd729c9db508ca76885cc7c02",
+      "matches": true
+    },
+    {
+      "file": "guides/en/meeting-notes.html",
+      "url": "https://simy.one/guides/en/meeting-notes.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/en/meeting-notes.html",
+      "expectedSha256": "11674f204252670fb1efb57087c7c85ecfc5eb954551d988439b3dacfc2e060e",
+      "actualSha256": "11674f204252670fb1efb57087c7c85ecfc5eb954551d988439b3dacfc2e060e",
+      "matches": true
+    },
+    {
+      "file": "guides/en/minimax.html",
+      "url": "https://simy.one/guides/en/minimax.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/en/minimax.html",
+      "expectedSha256": "15ff8a9000a25193817a2f21f5804bd2267f4cc6014bd6a617cc964dbc4ab987",
+      "actualSha256": "15ff8a9000a25193817a2f21f5804bd2267f4cc6014bd6a617cc964dbc4ab987",
+      "matches": true
+    },
+    {
+      "file": "guides/en/notta.html",
+      "url": "https://simy.one/guides/en/notta.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/en/notta.html",
+      "expectedSha256": "8128d81b479bc0681641491c74270b998e32764d78f2a8085ed27a3374550f61",
+      "actualSha256": "8128d81b479bc0681641491c74270b998e32764d78f2a8085ed27a3374550f61",
+      "matches": true
+    },
+    {
+      "file": "guides/en/plaud.html",
+      "url": "https://simy.one/guides/en/plaud.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/en/plaud.html",
+      "expectedSha256": "627b5d1cc49502728c09354b3d7203cfd20b3c64922da795635069592bd283f9",
+      "actualSha256": "627b5d1cc49502728c09354b3d7203cfd20b3c64922da795635069592bd283f9",
+      "matches": true
+    },
+    {
+      "file": "guides/en/qwen-local.html",
+      "url": "https://simy.one/guides/en/qwen-local.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/en/qwen-local.html",
+      "expectedSha256": "14c3e5477ecb3d46be96f58d65783f60fda2c2276b0802beb814720a1aa728b2",
+      "actualSha256": "14c3e5477ecb3d46be96f58d65783f60fda2c2276b0802beb814720a1aa728b2",
+      "matches": true
+    },
+    {
+      "file": "guides/en/qwen.html",
+      "url": "https://simy.one/guides/en/qwen.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/en/qwen.html",
+      "expectedSha256": "fb841a88430454f1a86129fa08babbfed1064bd5e1a2dd5916dfc9083fb14e35",
+      "actualSha256": "fb841a88430454f1a86129fa08babbfed1064bd5e1a2dd5916dfc9083fb14e35",
+      "matches": true
+    },
+    {
+      "file": "guides/en/simy-delivery-loop.html",
+      "url": "https://simy.one/guides/en/simy-delivery-loop.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/en/simy-delivery-loop.html",
+      "expectedSha256": "763980c9378f098563a836dd244fbaf6f220d062562083f0c73f2c29242d3e68",
+      "actualSha256": "763980c9378f098563a836dd244fbaf6f220d062562083f0c73f2c29242d3e68",
+      "matches": true
+    },
+    {
+      "file": "guides/en/simy-getting-started.html",
+      "url": "https://simy.one/guides/en/simy-getting-started.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/en/simy-getting-started.html",
+      "expectedSha256": "05642d005c75033d82607e80c68c0d808078c403a1333ed5b6e546edcd6c616f",
+      "actualSha256": "05642d005c75033d82607e80c68c0d808078c403a1333ed5b6e546edcd6c616f",
+      "matches": true
+    },
+    {
+      "file": "guides/en/simy-sqm.html",
+      "url": "https://simy.one/guides/en/simy-sqm.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/en/simy-sqm.html",
+      "expectedSha256": "8b031b137b9fef0a914b0d80ad35527ad9ae6779cf79581e999b3a92c435c876",
+      "actualSha256": "8b031b137b9fef0a914b0d80ad35527ad9ae6779cf79581e999b3a92c435c876",
+      "matches": true
+    },
+    {
+      "file": "guides/es/chatgpt.html",
+      "url": "https://simy.one/guides/es/chatgpt.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/es/chatgpt.html",
+      "expectedSha256": "c814d21b5e74f509fd63fefed8e06873e5fef71adcbb91d5631c0b9d9ae00a20",
+      "actualSha256": "c814d21b5e74f509fd63fefed8e06873e5fef71adcbb91d5631c0b9d9ae00a20",
+      "matches": true
+    },
+    {
+      "file": "guides/es/china-llm.html",
+      "url": "https://simy.one/guides/es/china-llm.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/es/china-llm.html",
+      "expectedSha256": "93b58133bc2a86c5ba5dccfe4b17aa66456efbf4c0fc3636a5be232f2ef79820",
+      "actualSha256": "93b58133bc2a86c5ba5dccfe4b17aa66456efbf4c0fc3636a5be232f2ef79820",
+      "matches": true
+    },
+    {
+      "file": "guides/es/claude.html",
+      "url": "https://simy.one/guides/es/claude.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/es/claude.html",
+      "expectedSha256": "6d83999f29e1642cf525a62175e92b431d9ca9fe349ef1b9bebb91b475a31865",
+      "actualSha256": "6d83999f29e1642cf525a62175e92b431d9ca9fe349ef1b9bebb91b475a31865",
+      "matches": true
+    },
+    {
+      "file": "guides/es/codex.html",
+      "url": "https://simy.one/guides/es/codex.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/es/codex.html",
+      "expectedSha256": "a6f572b7509f9839a8fb38057d485a3b06b163674f1cbdf3a50d41a8c5b230c0",
+      "actualSha256": "a6f572b7509f9839a8fb38057d485a3b06b163674f1cbdf3a50d41a8c5b230c0",
+      "matches": true
+    },
+    {
+      "file": "guides/es/cowork.html",
+      "url": "https://simy.one/guides/es/cowork.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/es/cowork.html",
+      "expectedSha256": "700887a6f4057697de0e5fe2b3ad2e375c1bd01ba9d9bcb7ed6a78ae26aa2290",
+      "actualSha256": "700887a6f4057697de0e5fe2b3ad2e375c1bd01ba9d9bcb7ed6a78ae26aa2290",
+      "matches": true
+    },
+    {
+      "file": "guides/es/deepseek.html",
+      "url": "https://simy.one/guides/es/deepseek.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/es/deepseek.html",
+      "expectedSha256": "b05ec93a4c0a21e775f0c8b2e4a3517122c392978c3f6e51cbaf5c84d7c4732d",
+      "actualSha256": "b05ec93a4c0a21e775f0c8b2e4a3517122c392978c3f6e51cbaf5c84d7c4732d",
+      "matches": true
+    },
+    {
+      "file": "guides/es/doubao.html",
+      "url": "https://simy.one/guides/es/doubao.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/es/doubao.html",
+      "expectedSha256": "39191cfdf65b94f23b98d8c5767d873e7d0b1fd934550aa75df0e6b6a0a2d6a9",
+      "actualSha256": "39191cfdf65b94f23b98d8c5767d873e7d0b1fd934550aa75df0e6b6a0a2d6a9",
+      "matches": true
+    },
+    {
+      "file": "guides/es/glm.html",
+      "url": "https://simy.one/guides/es/glm.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/es/glm.html",
+      "expectedSha256": "a5efc8f9414eb146d10b6437fcab70fc3f17cd000e90fc49abed24e784c8718b",
+      "actualSha256": "a5efc8f9414eb146d10b6437fcab70fc3f17cd000e90fc49abed24e784c8718b",
+      "matches": true
+    },
+    {
+      "file": "guides/es/index.html",
+      "url": "https://simy.one/guides/es/index.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/es/index.html",
+      "expectedSha256": "2fce66817b0e9200c5e7934e6720ecb0715b12d35c9a48e2018aab6b33f3c23a",
+      "actualSha256": "2fce66817b0e9200c5e7934e6720ecb0715b12d35c9a48e2018aab6b33f3c23a",
+      "matches": true
+    },
+    {
+      "file": "guides/es/kimi.html",
+      "url": "https://simy.one/guides/es/kimi.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/es/kimi.html",
+      "expectedSha256": "4b3eca04b1d03603255986d436b84393b713eb2ed2539b1b521633d22e3d5913",
+      "actualSha256": "4b3eca04b1d03603255986d436b84393b713eb2ed2539b1b521633d22e3d5913",
+      "matches": true
+    },
+    {
+      "file": "guides/es/meeting-notes.html",
+      "url": "https://simy.one/guides/es/meeting-notes.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/es/meeting-notes.html",
+      "expectedSha256": "2e818271b5883649a84347b2bf15dc89dd81de1a37cb3f9700203e8d77ceebbf",
+      "actualSha256": "2e818271b5883649a84347b2bf15dc89dd81de1a37cb3f9700203e8d77ceebbf",
+      "matches": true
+    },
+    {
+      "file": "guides/es/minimax.html",
+      "url": "https://simy.one/guides/es/minimax.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/es/minimax.html",
+      "expectedSha256": "1e9e8e9052928468b9442247989d5400723a6b43b9dd378cf66dba0df5e2f4e2",
+      "actualSha256": "1e9e8e9052928468b9442247989d5400723a6b43b9dd378cf66dba0df5e2f4e2",
+      "matches": true
+    },
+    {
+      "file": "guides/es/notta.html",
+      "url": "https://simy.one/guides/es/notta.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/es/notta.html",
+      "expectedSha256": "9753f45865242852e783b827f50be752a36aa2a2383f3faffb3815d5fa857a6c",
+      "actualSha256": "9753f45865242852e783b827f50be752a36aa2a2383f3faffb3815d5fa857a6c",
+      "matches": true
+    },
+    {
+      "file": "guides/es/plaud.html",
+      "url": "https://simy.one/guides/es/plaud.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/es/plaud.html",
+      "expectedSha256": "8cd88ace6f33b34a28ca0c427cdcd90c01f97a3e10e72f8c841ebc43752bf9b5",
+      "actualSha256": "8cd88ace6f33b34a28ca0c427cdcd90c01f97a3e10e72f8c841ebc43752bf9b5",
+      "matches": true
+    },
+    {
+      "file": "guides/es/qwen-local.html",
+      "url": "https://simy.one/guides/es/qwen-local.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/es/qwen-local.html",
+      "expectedSha256": "68b6ed65e0a40ba2370a64b0ef9d08704823518237a2bbbce2364298af2e8d51",
+      "actualSha256": "68b6ed65e0a40ba2370a64b0ef9d08704823518237a2bbbce2364298af2e8d51",
+      "matches": true
+    },
+    {
+      "file": "guides/es/qwen.html",
+      "url": "https://simy.one/guides/es/qwen.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/es/qwen.html",
+      "expectedSha256": "87f3fb8b53aca0cfc64627d6cb85ff94664562b95ee65d2b9ce08138f11468b2",
+      "actualSha256": "87f3fb8b53aca0cfc64627d6cb85ff94664562b95ee65d2b9ce08138f11468b2",
+      "matches": true
+    },
+    {
+      "file": "guides/fr/chatgpt.html",
+      "url": "https://simy.one/guides/fr/chatgpt.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/fr/chatgpt.html",
+      "expectedSha256": "f0796234fbef38cdf701ea065f12696ef33cba6547676f0e89aa59e845b66d60",
+      "actualSha256": "f0796234fbef38cdf701ea065f12696ef33cba6547676f0e89aa59e845b66d60",
+      "matches": true
+    },
+    {
+      "file": "guides/fr/china-llm.html",
+      "url": "https://simy.one/guides/fr/china-llm.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/fr/china-llm.html",
+      "expectedSha256": "849d7e8f282597e99d0b2355d8ee76c5b40b34f0875c9889c6bd255b01bae376",
+      "actualSha256": "849d7e8f282597e99d0b2355d8ee76c5b40b34f0875c9889c6bd255b01bae376",
+      "matches": true
+    },
+    {
+      "file": "guides/fr/claude.html",
+      "url": "https://simy.one/guides/fr/claude.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/fr/claude.html",
+      "expectedSha256": "694e7b5844ac0869d61fb7811f1bc743b1fd5bf11c744a72e31692b4471e623f",
+      "actualSha256": "694e7b5844ac0869d61fb7811f1bc743b1fd5bf11c744a72e31692b4471e623f",
+      "matches": true
+    },
+    {
+      "file": "guides/fr/codex.html",
+      "url": "https://simy.one/guides/fr/codex.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/fr/codex.html",
+      "expectedSha256": "e4cc228be722f451ff14ad7791d02a1dd70073f5a7ecbdaff7f6a5315016ead3",
+      "actualSha256": "e4cc228be722f451ff14ad7791d02a1dd70073f5a7ecbdaff7f6a5315016ead3",
+      "matches": true
+    },
+    {
+      "file": "guides/fr/cowork.html",
+      "url": "https://simy.one/guides/fr/cowork.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/fr/cowork.html",
+      "expectedSha256": "6c9582a1e8fd82764859e885cb9c99c5212d77b236af4b26d346887aa9a193cd",
+      "actualSha256": "6c9582a1e8fd82764859e885cb9c99c5212d77b236af4b26d346887aa9a193cd",
+      "matches": true
+    },
+    {
+      "file": "guides/fr/deepseek.html",
+      "url": "https://simy.one/guides/fr/deepseek.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/fr/deepseek.html",
+      "expectedSha256": "b1fe0a3c27ee3ab9cee4ff2aa3b26d2127601b804edaf34cd270289ac8872dd6",
+      "actualSha256": "b1fe0a3c27ee3ab9cee4ff2aa3b26d2127601b804edaf34cd270289ac8872dd6",
+      "matches": true
+    },
+    {
+      "file": "guides/fr/doubao.html",
+      "url": "https://simy.one/guides/fr/doubao.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/fr/doubao.html",
+      "expectedSha256": "fd6d8489af4cad677fdc6ae44f8e6c77cd6efc1eb3571944c5ab75a51786b7b6",
+      "actualSha256": "fd6d8489af4cad677fdc6ae44f8e6c77cd6efc1eb3571944c5ab75a51786b7b6",
+      "matches": true
+    },
+    {
+      "file": "guides/fr/glm.html",
+      "url": "https://simy.one/guides/fr/glm.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/fr/glm.html",
+      "expectedSha256": "809d79b585631ff70df4ae79bb4a48152aec3e85ebf029c95c6eff40fe958bf7",
+      "actualSha256": "809d79b585631ff70df4ae79bb4a48152aec3e85ebf029c95c6eff40fe958bf7",
+      "matches": true
+    },
+    {
+      "file": "guides/fr/index.html",
+      "url": "https://simy.one/guides/fr/index.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/fr/index.html",
+      "expectedSha256": "c2f96039ac88fe387964c38cbaf5a0b4d54eec1b9028510750f43a1ad6355113",
+      "actualSha256": "c2f96039ac88fe387964c38cbaf5a0b4d54eec1b9028510750f43a1ad6355113",
+      "matches": true
+    },
+    {
+      "file": "guides/fr/kimi.html",
+      "url": "https://simy.one/guides/fr/kimi.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/fr/kimi.html",
+      "expectedSha256": "67cc46fb0d647f9f12ad89b16c91bb1583def7cb72ff9793e97e0d056cf57043",
+      "actualSha256": "67cc46fb0d647f9f12ad89b16c91bb1583def7cb72ff9793e97e0d056cf57043",
+      "matches": true
+    },
+    {
+      "file": "guides/fr/meeting-notes.html",
+      "url": "https://simy.one/guides/fr/meeting-notes.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/fr/meeting-notes.html",
+      "expectedSha256": "c9645ece9edf2f3b823a8c75e5d7b564e850c8cc3213da6f772b0daab613c4ed",
+      "actualSha256": "c9645ece9edf2f3b823a8c75e5d7b564e850c8cc3213da6f772b0daab613c4ed",
+      "matches": true
+    },
+    {
+      "file": "guides/fr/minimax.html",
+      "url": "https://simy.one/guides/fr/minimax.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/fr/minimax.html",
+      "expectedSha256": "0ae6c28080f5d55f74d179c0403b7120e3dcd64bfabf13ba6fc2ec0757b2e56f",
+      "actualSha256": "0ae6c28080f5d55f74d179c0403b7120e3dcd64bfabf13ba6fc2ec0757b2e56f",
+      "matches": true
+    },
+    {
+      "file": "guides/fr/notta.html",
+      "url": "https://simy.one/guides/fr/notta.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/fr/notta.html",
+      "expectedSha256": "7beb7ae01cf05935f7ef320581d5fef59f646fa5ea796f27c98d333f2e2f1f30",
+      "actualSha256": "7beb7ae01cf05935f7ef320581d5fef59f646fa5ea796f27c98d333f2e2f1f30",
+      "matches": true
+    },
+    {
+      "file": "guides/fr/plaud.html",
+      "url": "https://simy.one/guides/fr/plaud.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/fr/plaud.html",
+      "expectedSha256": "720b98212f54975d11a25e0ea6f54154cc8728769f8cac224f644d90fe6363ec",
+      "actualSha256": "720b98212f54975d11a25e0ea6f54154cc8728769f8cac224f644d90fe6363ec",
+      "matches": true
+    },
+    {
+      "file": "guides/fr/qwen-local.html",
+      "url": "https://simy.one/guides/fr/qwen-local.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/fr/qwen-local.html",
+      "expectedSha256": "b3f9c7087306df7f6b64c82aba87c40acdceb479207702eed9c1ae25e0cb55b0",
+      "actualSha256": "b3f9c7087306df7f6b64c82aba87c40acdceb479207702eed9c1ae25e0cb55b0",
+      "matches": true
+    },
+    {
+      "file": "guides/fr/qwen.html",
+      "url": "https://simy.one/guides/fr/qwen.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/fr/qwen.html",
+      "expectedSha256": "d12c0d04148230e316824aca7bdc6a4d4b98cea0498aac089c37acc7f52483d8",
+      "actualSha256": "d12c0d04148230e316824aca7bdc6a4d4b98cea0498aac089c37acc7f52483d8",
+      "matches": true
+    },
+    {
+      "file": "guides/glm.html",
+      "url": "https://simy.one/guides/glm.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/glm.html",
+      "expectedSha256": "617a72d9db93b5df3ad9f29437130129149bb4a9133c6c621e6cace69ce53688",
+      "actualSha256": "617a72d9db93b5df3ad9f29437130129149bb4a9133c6c621e6cace69ce53688",
+      "matches": true
+    },
+    {
+      "file": "guides/hi/chatgpt.html",
+      "url": "https://simy.one/guides/hi/chatgpt.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/hi/chatgpt.html",
+      "expectedSha256": "0e1d377c5e0b14852e13d222636c5ec3997a5086ff037be609fae1f12207b6b1",
+      "actualSha256": "0e1d377c5e0b14852e13d222636c5ec3997a5086ff037be609fae1f12207b6b1",
+      "matches": true
+    },
+    {
+      "file": "guides/hi/china-llm.html",
+      "url": "https://simy.one/guides/hi/china-llm.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/hi/china-llm.html",
+      "expectedSha256": "8e0dc7dec9228aaeec9b5da3ec9731860cc7b4c9217ed2a6d63700e358a0a6e3",
+      "actualSha256": "8e0dc7dec9228aaeec9b5da3ec9731860cc7b4c9217ed2a6d63700e358a0a6e3",
+      "matches": true
+    },
+    {
+      "file": "guides/hi/claude.html",
+      "url": "https://simy.one/guides/hi/claude.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/hi/claude.html",
+      "expectedSha256": "eab5cc67e240abdbbc582c436dad138a5462093944f1b6ba210c06e5ee613dc0",
+      "actualSha256": "eab5cc67e240abdbbc582c436dad138a5462093944f1b6ba210c06e5ee613dc0",
+      "matches": true
+    },
+    {
+      "file": "guides/hi/codex.html",
+      "url": "https://simy.one/guides/hi/codex.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/hi/codex.html",
+      "expectedSha256": "610ee8156091663d6a95c122059429f08a2d174349c088176f09061243acb6d9",
+      "actualSha256": "610ee8156091663d6a95c122059429f08a2d174349c088176f09061243acb6d9",
+      "matches": true
+    },
+    {
+      "file": "guides/hi/cowork.html",
+      "url": "https://simy.one/guides/hi/cowork.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/hi/cowork.html",
+      "expectedSha256": "05d48705ed817bf41b9390be370500787cff2a6ec016c90a388e8c8fe5192941",
+      "actualSha256": "05d48705ed817bf41b9390be370500787cff2a6ec016c90a388e8c8fe5192941",
+      "matches": true
+    },
+    {
+      "file": "guides/hi/deepseek.html",
+      "url": "https://simy.one/guides/hi/deepseek.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/hi/deepseek.html",
+      "expectedSha256": "fa3f2fa0b0d36c5b8a66281dc8597eea22ba27d1ababe54a28090c64588c528a",
+      "actualSha256": "fa3f2fa0b0d36c5b8a66281dc8597eea22ba27d1ababe54a28090c64588c528a",
+      "matches": true
+    },
+    {
+      "file": "guides/hi/doubao.html",
+      "url": "https://simy.one/guides/hi/doubao.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/hi/doubao.html",
+      "expectedSha256": "d920314f78ad112d15a448ee4033980b7d9d3cb888de1d53e3ce917c5b90b011",
+      "actualSha256": "d920314f78ad112d15a448ee4033980b7d9d3cb888de1d53e3ce917c5b90b011",
+      "matches": true
+    },
+    {
+      "file": "guides/hi/glm.html",
+      "url": "https://simy.one/guides/hi/glm.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/hi/glm.html",
+      "expectedSha256": "f611fe36d5ab1f364057487a31b876c142a9d6b0de34a3b8e0ace1ffc06aed73",
+      "actualSha256": "f611fe36d5ab1f364057487a31b876c142a9d6b0de34a3b8e0ace1ffc06aed73",
+      "matches": true
+    },
+    {
+      "file": "guides/hi/index.html",
+      "url": "https://simy.one/guides/hi/index.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/hi/index.html",
+      "expectedSha256": "2fc4b40186594d36f09e614d103f700a55c55686b4f52ca4c723f03e98f3ec96",
+      "actualSha256": "2fc4b40186594d36f09e614d103f700a55c55686b4f52ca4c723f03e98f3ec96",
+      "matches": true
+    },
+    {
+      "file": "guides/hi/kimi.html",
+      "url": "https://simy.one/guides/hi/kimi.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/hi/kimi.html",
+      "expectedSha256": "dde8fc0062fbaeb388fc31dc1f149699286258c99b21ea97a998fb897fa8f76f",
+      "actualSha256": "dde8fc0062fbaeb388fc31dc1f149699286258c99b21ea97a998fb897fa8f76f",
+      "matches": true
+    },
+    {
+      "file": "guides/hi/meeting-notes.html",
+      "url": "https://simy.one/guides/hi/meeting-notes.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/hi/meeting-notes.html",
+      "expectedSha256": "5bbb0e1390090012f643b72cbf98d96ff69eae23f168095494a92f11d8263439",
+      "actualSha256": "5bbb0e1390090012f643b72cbf98d96ff69eae23f168095494a92f11d8263439",
+      "matches": true
+    },
+    {
+      "file": "guides/hi/minimax.html",
+      "url": "https://simy.one/guides/hi/minimax.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/hi/minimax.html",
+      "expectedSha256": "bb9c0add7a92177483904d1512ba17b6bcf245f5f605cb55555e4d0681feec2d",
+      "actualSha256": "bb9c0add7a92177483904d1512ba17b6bcf245f5f605cb55555e4d0681feec2d",
+      "matches": true
+    },
+    {
+      "file": "guides/hi/notta.html",
+      "url": "https://simy.one/guides/hi/notta.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/hi/notta.html",
+      "expectedSha256": "f4a9ee74e9cd2e5bd32885ed8659e0c72eb7a701605635fcad97d2f746153657",
+      "actualSha256": "f4a9ee74e9cd2e5bd32885ed8659e0c72eb7a701605635fcad97d2f746153657",
+      "matches": true
+    },
+    {
+      "file": "guides/hi/plaud.html",
+      "url": "https://simy.one/guides/hi/plaud.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/hi/plaud.html",
+      "expectedSha256": "e8ed0d8a0496d865433594cff7ae81024c6c368210c0804e0587562e1cfa0ee3",
+      "actualSha256": "e8ed0d8a0496d865433594cff7ae81024c6c368210c0804e0587562e1cfa0ee3",
+      "matches": true
+    },
+    {
+      "file": "guides/hi/qwen-local.html",
+      "url": "https://simy.one/guides/hi/qwen-local.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/hi/qwen-local.html",
+      "expectedSha256": "e4471413667ad4c90560d7fa7489b9a685f9b33227959dfcab18887746d9efe4",
+      "actualSha256": "e4471413667ad4c90560d7fa7489b9a685f9b33227959dfcab18887746d9efe4",
+      "matches": true
+    },
+    {
+      "file": "guides/hi/qwen.html",
+      "url": "https://simy.one/guides/hi/qwen.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/hi/qwen.html",
+      "expectedSha256": "18438d9610cdc15b6a6747d0dd6bd2cd09d4735be04237753441b8e77e477e7a",
+      "actualSha256": "18438d9610cdc15b6a6747d0dd6bd2cd09d4735be04237753441b8e77e477e7a",
+      "matches": true
+    },
+    {
+      "file": "guides/index.html",
+      "url": "https://simy.one/guides/index.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/index.html",
+      "expectedSha256": "6668219d662432c4acd236e9ea6b8524748e22b13c4b34d9b87cef388952252b",
+      "actualSha256": "6668219d662432c4acd236e9ea6b8524748e22b13c4b34d9b87cef388952252b",
+      "matches": true
+    },
+    {
+      "file": "guides/kimi.html",
+      "url": "https://simy.one/guides/kimi.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/kimi.html",
+      "expectedSha256": "4e1d236fa72e2ecf73639899502b952af7a1ce985bb6017b105067cdbd3b3f26",
+      "actualSha256": "4e1d236fa72e2ecf73639899502b952af7a1ce985bb6017b105067cdbd3b3f26",
+      "matches": true
+    },
+    {
+      "file": "guides/meeting-notes.html",
+      "url": "https://simy.one/guides/meeting-notes.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/meeting-notes.html",
+      "expectedSha256": "b295eaa1f1585905e6aa5fa200b957f0dff5e9d38dfe86610dbf25ee4c01fa44",
+      "actualSha256": "b295eaa1f1585905e6aa5fa200b957f0dff5e9d38dfe86610dbf25ee4c01fa44",
+      "matches": true
+    },
+    {
+      "file": "guides/minimax.html",
+      "url": "https://simy.one/guides/minimax.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/minimax.html",
+      "expectedSha256": "f95eb817b2e5a722721da3e1bb54eb35ed91e810c611e68479ae0d3f484958a8",
+      "actualSha256": "f95eb817b2e5a722721da3e1bb54eb35ed91e810c611e68479ae0d3f484958a8",
+      "matches": true
+    },
+    {
+      "file": "guides/notta.html",
+      "url": "https://simy.one/guides/notta.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/notta.html",
+      "expectedSha256": "8dc838e1dc48dc979863cfed50b2ea03a27a305db12402ac4c5c7dcedabc3de3",
+      "actualSha256": "8dc838e1dc48dc979863cfed50b2ea03a27a305db12402ac4c5c7dcedabc3de3",
+      "matches": true
+    },
+    {
+      "file": "guides/plaud.html",
+      "url": "https://simy.one/guides/plaud.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/plaud.html",
+      "expectedSha256": "a3ebf2e6599641509e285bc8705eb3adfc571f66156fae534ab7c4101857a147",
+      "actualSha256": "a3ebf2e6599641509e285bc8705eb3adfc571f66156fae534ab7c4101857a147",
+      "matches": true
+    },
+    {
+      "file": "guides/qwen-local.html",
+      "url": "https://simy.one/guides/qwen-local.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/qwen-local.html",
+      "expectedSha256": "98429922876e9802a91fc12f7955070a5e028c09848f488a79dadce33bc9020b",
+      "actualSha256": "98429922876e9802a91fc12f7955070a5e028c09848f488a79dadce33bc9020b",
+      "matches": true
+    },
+    {
+      "file": "guides/qwen.html",
+      "url": "https://simy.one/guides/qwen.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/qwen.html",
+      "expectedSha256": "23862d88fba9b13e19c7e0991ea26e786b098b229ef337afc99d97331bd8e304",
+      "actualSha256": "23862d88fba9b13e19c7e0991ea26e786b098b229ef337afc99d97331bd8e304",
+      "matches": true
+    },
+    {
+      "file": "guides/simy-delivery-loop.html",
+      "url": "https://simy.one/guides/simy-delivery-loop.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/simy-delivery-loop.html",
+      "expectedSha256": "5b2a953dfbeb9bc5e9c2b70da532cbc2955fcbd26e46b63ad7b6867ecc5ec50a",
+      "actualSha256": "5b2a953dfbeb9bc5e9c2b70da532cbc2955fcbd26e46b63ad7b6867ecc5ec50a",
+      "matches": true
+    },
+    {
+      "file": "guides/simy-getting-started.html",
+      "url": "https://simy.one/guides/simy-getting-started.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/simy-getting-started.html",
+      "expectedSha256": "b894fa89b1ed6458a25b601cd0083d92c31ed621f4e9138ad834048bc3acb450",
+      "actualSha256": "b894fa89b1ed6458a25b601cd0083d92c31ed621f4e9138ad834048bc3acb450",
+      "matches": true
+    },
+    {
+      "file": "guides/simy-sqm.html",
+      "url": "https://simy.one/guides/simy-sqm.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/simy-sqm.html",
+      "expectedSha256": "a11c6df916e54107669d9ac56a8dcd501c069ac7957d020e812b6eb2bf11e627",
+      "actualSha256": "a11c6df916e54107669d9ac56a8dcd501c069ac7957d020e812b6eb2bf11e627",
+      "matches": true
+    },
+    {
+      "file": "guides/zh-hans/chatgpt.html",
+      "url": "https://simy.one/guides/zh-hans/chatgpt.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/zh-hans/chatgpt.html",
+      "expectedSha256": "d9bd13e3d86ff06743e665697098f2c3f9c84bf508e4d79baf5df99ea7c8cb01",
+      "actualSha256": "d9bd13e3d86ff06743e665697098f2c3f9c84bf508e4d79baf5df99ea7c8cb01",
+      "matches": true
+    },
+    {
+      "file": "guides/zh-hans/china-llm.html",
+      "url": "https://simy.one/guides/zh-hans/china-llm.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/zh-hans/china-llm.html",
+      "expectedSha256": "f62b279a9442976135d8057a57b2a2766d47055d979f0e746841e8f015b487d2",
+      "actualSha256": "f62b279a9442976135d8057a57b2a2766d47055d979f0e746841e8f015b487d2",
+      "matches": true
+    },
+    {
+      "file": "guides/zh-hans/claude.html",
+      "url": "https://simy.one/guides/zh-hans/claude.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/zh-hans/claude.html",
+      "expectedSha256": "f10b8cdbc99ca89cc0456b06b573f1a85c10bcfc8b5893995765c0fbcc7b7c8c",
+      "actualSha256": "f10b8cdbc99ca89cc0456b06b573f1a85c10bcfc8b5893995765c0fbcc7b7c8c",
+      "matches": true
+    },
+    {
+      "file": "guides/zh-hans/codex.html",
+      "url": "https://simy.one/guides/zh-hans/codex.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/zh-hans/codex.html",
+      "expectedSha256": "9fd030f70d0e69f214acb0d0cf380db0753fbf93402d25ae9c113c80dea70c57",
+      "actualSha256": "9fd030f70d0e69f214acb0d0cf380db0753fbf93402d25ae9c113c80dea70c57",
+      "matches": true
+    },
+    {
+      "file": "guides/zh-hans/cowork.html",
+      "url": "https://simy.one/guides/zh-hans/cowork.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/zh-hans/cowork.html",
+      "expectedSha256": "5c818ae245a35ff69c051e2f31e4d55b8dd876e7a3009c724fc9c6d92f30a1c2",
+      "actualSha256": "5c818ae245a35ff69c051e2f31e4d55b8dd876e7a3009c724fc9c6d92f30a1c2",
+      "matches": true
+    },
+    {
+      "file": "guides/zh-hans/deepseek.html",
+      "url": "https://simy.one/guides/zh-hans/deepseek.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/zh-hans/deepseek.html",
+      "expectedSha256": "774c632435676779a0ef44c83005b4744f29980a55b6f1aacaedadd1486f57eb",
+      "actualSha256": "774c632435676779a0ef44c83005b4744f29980a55b6f1aacaedadd1486f57eb",
+      "matches": true
+    },
+    {
+      "file": "guides/zh-hans/doubao.html",
+      "url": "https://simy.one/guides/zh-hans/doubao.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/zh-hans/doubao.html",
+      "expectedSha256": "47d21929ffba87b256ee75644fc61ada7d7223d2db8be95c7944c0089e8bf654",
+      "actualSha256": "47d21929ffba87b256ee75644fc61ada7d7223d2db8be95c7944c0089e8bf654",
+      "matches": true
+    },
+    {
+      "file": "guides/zh-hans/glm.html",
+      "url": "https://simy.one/guides/zh-hans/glm.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/zh-hans/glm.html",
+      "expectedSha256": "5ef7a362048107235f49f1c85cfabb8911f502c8155cbf7bb5530ca2a2de351c",
+      "actualSha256": "5ef7a362048107235f49f1c85cfabb8911f502c8155cbf7bb5530ca2a2de351c",
+      "matches": true
+    },
+    {
+      "file": "guides/zh-hans/index.html",
+      "url": "https://simy.one/guides/zh-hans/index.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/zh-hans/index.html",
+      "expectedSha256": "2be856b17c86eb5c0c418697dffc226437cf0d4e7e88b74a664c48b88788193d",
+      "actualSha256": "2be856b17c86eb5c0c418697dffc226437cf0d4e7e88b74a664c48b88788193d",
+      "matches": true
+    },
+    {
+      "file": "guides/zh-hans/kimi.html",
+      "url": "https://simy.one/guides/zh-hans/kimi.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/zh-hans/kimi.html",
+      "expectedSha256": "2baa7b06717244e9d9eeb87914978e20df9f6697a9e2e00f7172f43981c7d423",
+      "actualSha256": "2baa7b06717244e9d9eeb87914978e20df9f6697a9e2e00f7172f43981c7d423",
+      "matches": true
+    },
+    {
+      "file": "guides/zh-hans/meeting-notes.html",
+      "url": "https://simy.one/guides/zh-hans/meeting-notes.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/zh-hans/meeting-notes.html",
+      "expectedSha256": "321e87c5bf3932b7d927f00cba3feb979d9cdd9e42cbe8829c1fccfd3b4b552c",
+      "actualSha256": "321e87c5bf3932b7d927f00cba3feb979d9cdd9e42cbe8829c1fccfd3b4b552c",
+      "matches": true
+    },
+    {
+      "file": "guides/zh-hans/minimax.html",
+      "url": "https://simy.one/guides/zh-hans/minimax.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/zh-hans/minimax.html",
+      "expectedSha256": "4d1fe97d22db07ffb3e5e9be3df34fa35d49904a4fd65b36037df85bace39cf0",
+      "actualSha256": "4d1fe97d22db07ffb3e5e9be3df34fa35d49904a4fd65b36037df85bace39cf0",
+      "matches": true
+    },
+    {
+      "file": "guides/zh-hans/notta.html",
+      "url": "https://simy.one/guides/zh-hans/notta.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/zh-hans/notta.html",
+      "expectedSha256": "425e52919f2ca2a5fec6e05a76046762273baf7280cff9c0a0fbd7f536b524bf",
+      "actualSha256": "425e52919f2ca2a5fec6e05a76046762273baf7280cff9c0a0fbd7f536b524bf",
+      "matches": true
+    },
+    {
+      "file": "guides/zh-hans/plaud.html",
+      "url": "https://simy.one/guides/zh-hans/plaud.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/zh-hans/plaud.html",
+      "expectedSha256": "3bc95d0283b1eb5034e2fe799aff82964c46e2126f8aa2fd6405b1df26aae118",
+      "actualSha256": "3bc95d0283b1eb5034e2fe799aff82964c46e2126f8aa2fd6405b1df26aae118",
+      "matches": true
+    },
+    {
+      "file": "guides/zh-hans/qwen-local.html",
+      "url": "https://simy.one/guides/zh-hans/qwen-local.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/zh-hans/qwen-local.html",
+      "expectedSha256": "09dca46441f975dd7465a5396685e2d8ecbfafa0aa3697d5ba787b0a421da064",
+      "actualSha256": "09dca46441f975dd7465a5396685e2d8ecbfafa0aa3697d5ba787b0a421da064",
+      "matches": true
+    },
+    {
+      "file": "guides/zh-hans/qwen.html",
+      "url": "https://simy.one/guides/zh-hans/qwen.html",
+      "status": 200,
+      "finalURL": "https://simy.one/guides/zh-hans/qwen.html",
+      "expectedSha256": "f0b49dad13ba698b65565b0757b457b8282b750426b942d46ffee7926ff52551",
+      "actualSha256": "f0b49dad13ba698b65565b0757b457b8282b750426b942d46ffee7926ff52551",
+      "matches": true
+    },
+    {
+      "file": "hi.html",
+      "url": "https://simy.one/hi.html",
+      "status": 200,
+      "finalURL": "https://simy.one/hi.html",
+      "expectedSha256": "31c21bcbde234acf0f179e1fe8a2c804edfae275468b48e295bac8366f313b72",
+      "actualSha256": "31c21bcbde234acf0f179e1fe8a2c804edfae275468b48e295bac8366f313b72",
+      "matches": true
+    },
+    {
+      "file": "how-it-works.html",
+      "url": "https://simy.one/how-it-works.html",
+      "status": 200,
+      "finalURL": "https://simy.one/how-it-works.html",
+      "expectedSha256": "5893ff0e9b81e4a7fe91d30b564688f2fb849ac249a6ee64a2470ac3a797944d",
+      "actualSha256": "5893ff0e9b81e4a7fe91d30b564688f2fb849ac249a6ee64a2470ac3a797944d",
+      "matches": true
+    },
+    {
+      "file": "index.html",
+      "url": "https://simy.one/",
+      "status": 200,
+      "finalURL": "https://simy.one/",
+      "expectedSha256": "3541f36e55c24c14959b01dc03a3607afd5aae134b020947d3d7df322a37bbb5",
+      "actualSha256": "3541f36e55c24c14959b01dc03a3607afd5aae134b020947d3d7df322a37bbb5",
+      "matches": true
+    },
+    {
+      "file": "integrations.html",
+      "url": "https://simy.one/integrations.html",
+      "status": 200,
+      "finalURL": "https://simy.one/integrations.html",
+      "expectedSha256": "e45dfeadaaa5b94e2065547d960150efe4f3e208c9bf1179ca3f5c2e741992b0",
+      "actualSha256": "e45dfeadaaa5b94e2065547d960150efe4f3e208c9bf1179ca3f5c2e741992b0",
+      "matches": true
+    },
+    {
+      "file": "ja.html",
+      "url": "https://simy.one/ja.html",
+      "status": 200,
+      "finalURL": "https://simy.one/ja.html",
+      "expectedSha256": "51f55acdf8c8a8bd398d8f0e0e0ec67ce02b9b4c8948752687dd56270af32288",
+      "actualSha256": "51f55acdf8c8a8bd398d8f0e0e0ec67ce02b9b4c8948752687dd56270af32288",
+      "matches": true
+    },
+    {
+      "file": "legal.html",
+      "url": "https://simy.one/legal.html",
+      "status": 200,
+      "finalURL": "https://simy.one/legal.html",
+      "expectedSha256": "1996891a1eddf1515fd58e5a90fc5466079bdd8b9e6a446a712ebffc759a6953",
+      "actualSha256": "1996891a1eddf1515fd58e5a90fc5466079bdd8b9e6a446a712ebffc759a6953",
+      "matches": true
+    },
+    {
+      "file": "news/20261005-en.html",
+      "url": "https://simy.one/news/20261005-en.html",
+      "status": 200,
+      "finalURL": "https://simy.one/news/20261005-en.html",
+      "expectedSha256": "19b744f5a644ff475e63cf8e91f4c8b303e1f9f51a78d27642414a261d1eb290",
+      "actualSha256": "19b744f5a644ff475e63cf8e91f4c8b303e1f9f51a78d27642414a261d1eb290",
+      "matches": true
+    },
+    {
+      "file": "news/20261005.html",
+      "url": "https://simy.one/news/20261005.html",
+      "status": 200,
+      "finalURL": "https://simy.one/news/20261005.html",
+      "expectedSha256": "736aa4a677e432b876d0c00e56b526eaddc48f479357e8b66ddd19cf2cc6c21d",
+      "actualSha256": "736aa4a677e432b876d0c00e56b526eaddc48f479357e8b66ddd19cf2cc6c21d",
+      "matches": true
+    },
+    {
+      "file": "press-release.html",
+      "url": "https://simy.one/press-release.html",
+      "status": 200,
+      "finalURL": "https://simy.one/press-release.html",
+      "expectedSha256": "4be43e6df32039146b6321d3a3451cc7ebda7b23b844d9dff10d0705eac1938b",
+      "actualSha256": "4be43e6df32039146b6321d3a3451cc7ebda7b23b844d9dff10d0705eac1938b",
+      "matches": true
+    },
+    {
+      "file": "privacy.html",
+      "url": "https://simy.one/privacy.html",
+      "status": 200,
+      "finalURL": "https://simy.one/privacy.html",
+      "expectedSha256": "e084d15b385aa8037e023e0e4bd9f9f43173069009f4445f2c23177eb4422a40",
+      "actualSha256": "e084d15b385aa8037e023e0e4bd9f9f43173069009f4445f2c23177eb4422a40",
+      "matches": true
+    },
+    {
+      "file": "security.html",
+      "url": "https://simy.one/security.html",
+      "status": 200,
+      "finalURL": "https://simy.one/security.html",
+      "expectedSha256": "e18b24079a23edfaeaaa3d051e7e619a9e1b818cb0c2b0efdf9b28252db5a53a",
+      "actualSha256": "e18b24079a23edfaeaaa3d051e7e619a9e1b818cb0c2b0efdf9b28252db5a53a",
+      "matches": true
+    },
+    {
+      "file": "seller-info.html",
+      "url": "https://simy.one/seller-info.html",
+      "status": 200,
+      "finalURL": "https://simy.one/seller-info.html",
+      "expectedSha256": "25635c5608beaef9cd33b1703f47573c6344682cca9ba6223323515e1866efb7",
+      "actualSha256": "25635c5608beaef9cd33b1703f47573c6344682cca9ba6223323515e1866efb7",
+      "matches": true
+    },
+    {
+      "file": "terms.html",
+      "url": "https://simy.one/terms.html",
+      "status": 200,
+      "finalURL": "https://simy.one/terms.html",
+      "expectedSha256": "bab43efca40b0ff1c7763bc428c3874f4b2fd6b907f344255832ab0e6e5aa1cf",
+      "actualSha256": "bab43efca40b0ff1c7763bc428c3874f4b2fd6b907f344255832ab0e6e5aa1cf",
+      "matches": true
+    },
+    {
+      "file": "zh-Hans.html",
+      "url": "https://simy.one/zh-Hans.html",
+      "status": 200,
+      "finalURL": "https://simy.one/zh-Hans.html",
+      "expectedSha256": "ebdc034ccae6111ab5b8c77f1e9b503cac366fd328d8f76a688e8b7db11a7d72",
+      "actualSha256": "ebdc034ccae6111ab5b8c77f1e9b503cac366fd328d8f76a688e8b7db11a7d72",
+      "matches": true
+    },
+    {
+      "file": "hp-management/index.html",
+      "url": "https://simy.one/hp-management.html",
+      "status": 200,
+      "finalURL": "https://simy.one/hp-management.html",
+      "expectedSha256": "60c571ac47f10ae3e1215ebf15e598d3ddd4245730e8ec19aa57fc8f7dd756ee",
+      "actualSha256": "60c571ac47f10ae3e1215ebf15e598d3ddd4245730e8ec19aa57fc8f7dd756ee",
+      "matches": true
+    },
+    {
+      "file": "hp-management/law-firm.html",
+      "url": "https://simy.one/hp-management/law-firm.html",
+      "status": 200,
+      "finalURL": "https://simy.one/hp-management/law-firm.html",
+      "expectedSha256": "a7fcbb2c4726a5a2444834c9e8e1d9b426a970dece99a8c16544a7ebd9607231",
+      "actualSha256": "a7fcbb2c4726a5a2444834c9e8e1d9b426a970dece99a8c16544a7ebd9607231",
+      "matches": true
+    },
+    {
+      "file": "page-accessibility.css",
+      "url": "https://simy.one/page-accessibility.css",
+      "status": 200,
+      "finalURL": "https://simy.one/page-accessibility.css",
+      "expectedSha256": "468c1bee6d3c54f5e95992474d66b836c04d96d1b904ee21a4bcec5f42bf6588",
+      "actualSha256": "468c1bee6d3c54f5e95992474d66b836c04d96d1b904ee21a4bcec5f42bf6588",
+      "matches": true
+    },
+    {
+      "file": "contact-page.css",
+      "url": "https://simy.one/contact-page.css",
+      "status": 200,
+      "finalURL": "https://simy.one/contact-page.css",
+      "expectedSha256": "2ed786db342903223a5ff89cfda24d78bc41498a821eedaff3d623c572749bac",
+      "actualSha256": "2ed786db342903223a5ff89cfda24d78bc41498a821eedaff3d623c572749bac",
+      "matches": true
+    },
+    {
+      "file": "site-header.css",
+      "url": "https://simy.one/site-header.css",
+      "status": 200,
+      "finalURL": "https://simy.one/site-header.css",
+      "expectedSha256": "057b1a60b00ddce870834f64683d1bda4925e77c05a80e5f931aeb6b38dfe966",
+      "actualSha256": "057b1a60b00ddce870834f64683d1bda4925e77c05a80e5f931aeb6b38dfe966",
+      "matches": true
+    },
+    {
+      "file": "site-header.js",
+      "url": "https://simy.one/site-header.js",
+      "status": 200,
+      "finalURL": "https://simy.one/site-header.js",
+      "expectedSha256": "992d237cf7944aa5e9019804844692fb901a0a4cd737acc612e4de2e5ebb955b",
+      "actualSha256": "992d237cf7944aa5e9019804844692fb901a0a4cd737acc612e4de2e5ebb955b",
+      "matches": true
+    },
+    {
+      "file": "site-theme.css",
+      "url": "https://simy.one/site-theme.css",
+      "status": 200,
+      "finalURL": "https://simy.one/site-theme.css",
+      "expectedSha256": "3903376620a8de539ea9bf61637e8ff4f2a76d948e5fd4524d8cc19417fb2411",
+      "actualSha256": "3903376620a8de539ea9bf61637e8ff4f2a76d948e5fd4524d8cc19417fb2411",
+      "matches": true
+    },
+    {
+      "file": "content-pages.css",
+      "url": "https://simy.one/content-pages.css",
+      "status": 200,
+      "finalURL": "https://simy.one/content-pages.css",
+      "expectedSha256": "b610633004c3b40dc4d50b6066cb3d4a025960fea7d6a76e0c3f77dd77242045",
+      "actualSha256": "b610633004c3b40dc4d50b6066cb3d4a025960fea7d6a76e0c3f77dd77242045",
+      "matches": true
+    },
+    {
+      "file": "hp-management/law-firm/page-accessibility.css",
+      "url": "https://simy.one/hp-management/law-firm/page-accessibility.css",
+      "status": 200,
+      "finalURL": "https://simy.one/hp-management/law-firm/page-accessibility.css",
+      "expectedSha256": "468c1bee6d3c54f5e95992474d66b836c04d96d1b904ee21a4bcec5f42bf6588",
+      "actualSha256": "468c1bee6d3c54f5e95992474d66b836c04d96d1b904ee21a4bcec5f42bf6588",
+      "matches": true
+    },
+    {
+      "file": "old/contact.html",
+      "url": "https://simy.one/old/contact.html",
+      "status": 200,
+      "finalURL": "https://simy.one/old/contact.html",
+      "expectedSha256": "40849151de09971a161aa3c24e875d1eeb2e29fb3f24ed7414675baebef7fb42",
+      "actualSha256": "40849151de09971a161aa3c24e875d1eeb2e29fb3f24ed7414675baebef7fb42",
+      "matches": true
+    }
+  ]
+}
