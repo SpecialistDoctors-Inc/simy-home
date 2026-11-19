@@ -37,6 +37,21 @@ await browser.close();})().catch(e=>{console.error(e);process.exit(1)});
  const text=await page.evaluate(()=>{const html=SimyPreviewEdit.index(document.documentElement.outerHTML),doc=new DOMParser().parseFromString(html,'text/html'),targets=[doc.querySelector('h2'),doc.querySelector('span')].map(e=>e.getAttribute('data-simy-edit-id'));return SimyPreviewEdit.applyPlan(html,{status:'edit',operations:targets.map(target=>({type:'replace_text',target,oldText:'診療案内',newText:'診療案内について'}))}).html;});assert(!text.includes('についてについて'));assert(text.includes('診療案内について'));
  await page.setContent('<p><span>診療案内</span><span>診療案内</span></p>');await page.addScriptTag({path:path.resolve('site/preview-edit.js')});
  const distinct=await page.evaluate(()=>{const html=SimyPreviewEdit.index(document.documentElement.outerHTML),doc=new DOMParser().parseFromString(html,'text/html'),targets=[doc.querySelector('p'),doc.querySelectorAll('span')[1]].map(e=>e.getAttribute('data-simy-edit-id'));const result=SimyPreviewEdit.applyPlan(html,{status:'edit',operations:targets.map(target=>({type:'replace_text',target,oldText:'診療案内',newText:'診療案内について'}))});return new DOMParser().parseFromString(result.html,'text/html').body.textContent;});assert.equal(distinct,'診療案内について診療案内について');
+ await page.setContent('<style>.site-columns{display:grid;grid-template-columns:1fr 2fr;background-image:url("https://example.com/hero.png")} @media(max-width:600px){.site-columns{grid-template-columns:1fr}}</style><main class="site-columns"><h1>既存の見出し</h1><section style="padding:12px"><p>既存の本文</p><img src="photo.jpg" alt="既存の写真"></section></main>');
+ await page.addScriptTag({path:path.resolve('site/preview-edit.js')});
+ const theme=await page.evaluate(()=>{
+  const original=SimyPreviewEdit.index(document.documentElement.outerHTML);
+  return SimyPreviewEdit.applyPlan(original,{status:'edit',operations:[
+   {type:'redesign',target:'e0',property:'editorial',value:'#234567'},
+  ]}).html;
+ });
+ await page.setContent(theme);
+ assert.equal(await page.locator('.site-columns').evaluate(node=>getComputedStyle(node).display),'grid');
+ assert.match(await page.locator('.site-columns').evaluate(node=>getComputedStyle(node).backgroundImage),/hero\.png/);
+ assert.equal(await page.locator('section').evaluate(node=>getComputedStyle(node).paddingTop),'12px');
+ assert.equal(await page.locator('h1').evaluate(node=>getComputedStyle(node).color),'rgb(35, 69, 103)');
+ assert.equal(await page.locator('img').getAttribute('src'),'photo.jpg');
+ console.log('The requested theme changes color and typography while keeping the original layout and images.');
  await browser.close();
 })().catch(e=>{console.error(e);process.exit(1)});
 

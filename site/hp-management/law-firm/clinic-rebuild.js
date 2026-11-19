@@ -4,9 +4,6 @@
  const input=form.querySelector('[name="url"]'),button=form.querySelector('button'),status=document.querySelector('#rebuild-status'),result=document.querySelector('#rebuild-result'),frame=document.querySelector('#rebuild-preview'),download=document.querySelector('#rebuild-download');
  const editor=document.querySelector('#rebuild-editor'),openEditor=document.querySelector('#rebuild-editor-open'),closeEditor=document.querySelector('#rebuild-editor-close'),editForm=document.querySelector('#preview-edit-form'),editInput=document.querySelector('#preview-edit-message'),conversation=document.querySelector('#preview-conversation'),undo=document.querySelector('#preview-edit-undo'),reset=document.querySelector('#preview-edit-reset');
  const example=document.querySelector('#preview-edit-example');
- const samplePhotoPrompt='写真を変更';
- const rewriteOption=document.querySelector('[data-sample-action="rewrite"]');
- const defaultRewritePrompt=rewriteOption.dataset.editPrompt;
  const toolsMenu=document.querySelector('#preview-tools');
  document.querySelector('#preview-attach').addEventListener('click',()=>{toolsMenu.hidePopover();document.querySelector('#preview-photo').click();});
  for(const option of toolsMenu.querySelectorAll('[data-edit-prompt]'))option.addEventListener('click',()=>{toolsMenu.hidePopover();editInput.value=option.dataset.editPrompt;editInput.focus();});
@@ -40,9 +37,9 @@
  const thumbnail=(source,width,height)=>{try{for(let edge=384;edge>=96;edge=Math.floor(edge*.75)){const canvas=document.createElement('canvas'),scale=Math.min(1,edge/Math.max(width,height));canvas.width=Math.max(1,Math.round(width*scale));canvas.height=Math.max(1,Math.round(height*scale));canvas.getContext('2d').drawImage(source,0,0,canvas.width,canvas.height);for(const quality of [.72,.5,.32]){const data=normalizeCanvasJpeg(canvas.toDataURL('image/jpeg',quality));if(data&&data.length<=16384)return data;}}}catch{}return null;};
  const editPayload=(message,base,{query='',followUp,workingContext=context}={})=>{
   const nodes=window.SimyPreviewEdit.inventory(base,frame.contentDocument,query);let images=[];
-  const asset=assets.at(-1);if(asset?.thumbnail)images=[{id:asset.id,mime:'image/jpeg',data:asset.thumbnail}];
+  const asset=window.SimyPreviewEdit.selectAttachment(assets,message);if(asset?.thumbnail)images=[{id:asset.id,mime:'image/jpeg',data:asset.thumbnail}];
   // Reuse already decoded browser pixels only. A tainted cross-origin canvas falls back to metadata.
-  if(!asset){const candidates=nodes.filter(n=>n.kind==='image'&&n.tag==='img').map(n=>({n,live:frame.contentDocument?.querySelector('[data-simy-edit-id="'+n.id+'"]')})).filter(({live})=>live?.complete&&live.naturalWidth>1).sort((a,b)=>b.live.getBoundingClientRect().width*b.live.getBoundingClientRect().height-a.live.getBoundingClientRect().width*a.live.getBoundingClientRect().height);for(const {n,live} of candidates){const data=thumbnail(live,live.naturalWidth,live.naturalHeight);if(data){images=[{id:n.id,mime:'image/jpeg',data}];break;}}}
+  if(!assets.length){const candidates=nodes.filter(n=>n.kind==='image'&&n.tag==='img').map(n=>({n,live:frame.contentDocument?.querySelector('[data-simy-edit-id="'+n.id+'"]')})).filter(({live})=>live?.complete&&live.naturalWidth>1).sort((a,b)=>b.live.getBoundingClientRect().width*b.live.getBoundingClientRect().height-a.live.getBoundingClientRect().width*a.live.getBoundingClientRect().height);for(const {n,live} of candidates){const data=thumbnail(live,live.naturalWidth,live.naturalHeight);if(data){images=[{id:n.id,mime:'image/jpeg',data}];break;}}}
   const payload={request:message,context:workingContext,nodes,history:chat.slice(-6),assets:assets.map(({id,name})=>({id,name})),images,interactive:true,followUp};
   // Preserve request, conversation state and images within the unchanged planner/queue budget.
   const retained=new Set(['e0',...images.map(image=>image.id)]);
@@ -54,7 +51,7 @@
  photoInput.addEventListener('change',async()=>{const file=photoInput.files[0];if(!file)return;photoInput.disabled=true;
   try{if(!['image/jpeg','image/png','image/webp'].includes(file.type)||file.size>5*1024*1024)throw Error('写真はJPEG・PNG・WebP、5MB以内で選んでください。');
    const bitmap=await createImageBitmap(file),scale=Math.min(1,1600/Math.max(bitmap.width,bitmap.height));const canvas=document.createElement('canvas');canvas.width=Math.round(bitmap.width*scale);canvas.height=Math.round(bitmap.height*scale);canvas.getContext('2d').drawImage(bitmap,0,0,canvas.width,canvas.height);bitmap.close();
-   assets=[...assets,{id:'a'+assetSequence++,name:file.name.slice(0,120),data:canvas.toDataURL('image/jpeg',.88),thumbnail:thumbnail(canvas,canvas.width,canvas.height)}].slice(-5);photoStatus.textContent='添付：'+file.name;chat.push({role:'user',text:'差し替え用の写真を添付しました：'+file.name.slice(0,120)});chat=chat.slice(-6);log('写真を添付しました。');if(localSample&&(!editInput.value.trim()||editInput.value===initialSamplePrompt))editInput.value=samplePhotoPrompt;if(context.goal&&!editBusy){editInput.value=editInput.value.trim()||'素材を追加しました。会話の内容に沿って続けてください。';editForm.requestSubmit();}
+   assets=[...assets,{id:'a'+assetSequence++,name:file.name.slice(0,120),data:canvas.toDataURL('image/jpeg',.88),thumbnail:thumbnail(canvas,canvas.width,canvas.height)}].slice(-5);photoStatus.textContent='添付：'+file.name;chat.push({role:'user',text:'差し替え用の写真を添付しました：'+file.name.slice(0,120)});chat=chat.slice(-6);log('写真を添付しました。変更したい箇所と使う写真を伝えてください。');
   }catch(e){photoStatus.textContent=e.message;photoInput.value='';}finally{photoInput.disabled=editBusy;}
  });
  for(const chip of document.querySelectorAll('[data-chat-prompt]'))chip.addEventListener('click',()=>{editInput.value=chip.dataset.chatPrompt;editInput.focus();});
@@ -92,14 +89,6 @@
   if(!message)return;
   log(message,'preview-user-message');setEditBusy(true);
   const stopElapsed=startEditElapsed();
-  if(localSample){
-   try{
-    const changed=editLocalSample(base,message,assets);
-    history.push(snapshot());if(history.length>10)history.shift();updatePreview(changed.html);log(changed.summary);editInput.value='';
-   }catch(error){log(error.message,'preview-error');}
-   finally{stopElapsed();setEditBusy(false);}
-   return;
-  }
   const edit={controller:new AbortController(),stopElapsed};
   activeEdit=edit;
   const deadline=performance.now()+125000;
@@ -112,7 +101,7 @@
     const payload=editPayload(message,base,{query,followUp,workingContext});
     const response=await fetch(new URL('/api/preview-edit',form.dataset.endpoint),{
      method:'POST',headers:{'Content-Type':'application/json'},
-     body:JSON.stringify({...payload,siteUrl:previewSourceUrl}),
+     body:JSON.stringify({...payload,...(previewSourceUrl?{siteUrl:previewSourceUrl}:{})}),
      signal:AbortSignal.any([edit.controller.signal,AbortSignal.timeout(Math.min(100000,remaining))]),
     });
     const plan=await response.json();
@@ -142,8 +131,8 @@
     }else throw Error('変更案の形式を確認できませんでした。');
     context=plan.context||workingContext;
     if(assets.length){
-     const latest=assets.at(-1);
-     photoStatus.textContent='添付：'+latest.name+(plan.visualInputs?.includes(latest.id)?'（画像の内容も回答に使用）':'（画像内容は未確認）');
+     const viewed=new Set(plan.visualInputs||[]);
+     photoStatus.textContent='添付：'+assets.map(asset=>asset.name+(viewed.has(asset.id)?'（画像の内容も回答に使用）':'')).join('、');
     }
     chat.push({role:'user',text:message},{role:'assistant',text:(plan.question||plan.summary).slice(0,1500)});
     chat=chat.slice(-6);editInput.value='';
@@ -163,66 +152,26 @@
   }
  });
  example.addEventListener('click',()=>{toolsMenu.hidePopover();document.querySelector('#preview-notice-prompt').click();});
- // Deterministic local examples share the inherited undo/reset machinery.
- const setSamplePresentation=(sample,article=false)=>{
+ // The fixture uses the same planning, application and undo path as a reproduced site.
+ const setSamplePresentation=sample=>{
   document.querySelector('#preview-apply').textContent=sample?'自分の事務所について相談する →':'このホームページで申し込む →';
-  rewriteOption.dataset.editPrompt=sample&&article?'初回相談の記事を、初めて読む方にもわかりやすくしてください。':defaultRewritePrompt;
  };
- const editLocalSample=(base,message,attachments)=>{
-  const doc=new DOMParser().parseFromString(base,'text/html');
-  let summary;
-  if(message===document.querySelector('[data-edit-prompt][data-sample-action="design"]').dataset.editPrompt){
-   let style=doc.querySelector('#sample-design');
-   if(!style){style=doc.createElement('style');style.id='sample-design';doc.head.append(style);}
-   style.textContent=':root{--ink:rgb(31,65,49);--paper:rgb(247,251,247);--subtle:rgb(230,242,233);--line:rgb(185,210,192)}header{padding-block:32px;background:var(--subtle)}';
-   summary='緑を基調にした背景と見出し周りのデザインに変更しました。';
-  }else if(message===rewriteOption.dataset.editPrompt){
-   const intro=doc.querySelector('[data-sample-intro]');
-   if(!intro)throw Error('説明文が見つかりません。最初に戻してお試しください。');
-   intro.textContent=intro.dataset.sampleRewrite;
-   summary='サンプルの説明を、短い文章に変更しました。';
-  }else if(message===samplePhotoPrompt){
-   const asset=attachments.at(-1);
-   if(!asset||!/^data:image\/jpeg;base64,[A-Za-z0-9+/]+=*$/.test(asset.data))throw Error('「＋」から写真を添付して、「写真を変更」と送信してください。');
-   let figure=doc.querySelector('[data-sample-photo]');
-   if(!figure){figure=doc.createElement('figure');figure.setAttribute('data-sample-photo','');figure.style.margin='24px 0';doc.querySelector('main').append(figure);}
-   const image=doc.createElement('img');image.src=asset.data;image.alt='添付した事務所の紹介写真（操作例）';image.style.cssText='display:block;max-width:100%;height:auto;max-height:360px';
-   const caption=doc.createElement('figcaption');caption.textContent='事務所の紹介写真（添付素材を使った操作例）';figure.replaceChildren(image,caption);
-   summary='添付した写真を、事務所の紹介写真として配置しました。';
-  }else{
-   let change;
-   try{change=window.SimyPreviewEdit.normalize(window.SimyPreviewEdit.parse(message));}
-   catch{throw Error('操作例を選ぶか、「お知らせ：掲載する文章」の形式で入力してください。写真を試す場合は、写真を添付して「写真を変更」と送信してください。');}
-   if(change.type==='replace')return window.SimyPreviewEdit.applyChange(base,change);
-   const notices=doc.querySelector('[data-sample-notices]');
-   if([...notices.children].some(item=>item.textContent===change.text))throw Error('同じお知らせがすでにあります。');
-   const item=doc.createElement('li');
-   item.textContent=change.text;
-   item.setAttribute('data-simy-changed','true');
-   notices.prepend(item);
-   summary='入力した文章をお知らせ欄に追加しました。';
-  }
-  return {html:'<!doctype html>'+doc.documentElement.outerHTML,summary};
- };
- // Local preview uses the inherited editor and deterministic examples, without remote AI requests.
- let localSample=false,initialSamplePrompt='';
+ let localSample=false;
  window.SimyLawOfficeExample={open(kind='notice'){
   const ownedProduction=location.origin==='https://simy.one'&&location.pathname==='/hp-management/law-firm.html';
-  if(!ownedProduction&&!['localhost','127.0.0.1'].includes(location.hostname)&&location.protocol!=='file:')return false;
+  if(busy||(!ownedProduction&&!['localhost','127.0.0.1'].includes(location.hostname)&&location.protocol!=='file:'))return false;
   const article=kind==='article';
-  cancelActiveEdit();localSample=true;setSamplePresentation(true,article);history=[];chat=[];assets=[];context={goal:'',target:'',decisions:'',pending:''};
-  previewSourceUrl='';assetSequence=0;document.querySelector('#preview-enquiry').href='mailto:sales@simy.one';photoInput.value='';photoStatus.textContent='';document.querySelector('#preview-source').textContent='架空の法律事務所 · 操作例';conversation.replaceChildren();
+  cancelActiveEdit();localSample=true;setSamplePresentation(true);history=[];chat=[];assets=[];context={goal:'',target:'',decisions:'',pending:''};
+  previewSourceUrl='';assetSequence=0;document.querySelector('#preview-enquiry').href='mailto:sales@simy.one';photoInput.value='';photoStatus.textContent='';document.querySelector('#preview-source').textContent='架空の法律事務所 · 編集体験';conversation.replaceChildren();
   const title=article?'初めて相続をご相談される方へ':'取扱分野のご案内';
   const body=article?'初回相談では、状況を整理することから始めます。相続に関する書類や、確認したいことのメモをご準備ください。個別の法律判断は、事情を伺ったうえでご説明します。':'相続・離婚・企業法務について、状況を丁寧に伺い、今後の進め方をご説明します。';
-  const rewrite=article?'相続の初回相談では、まず状況を伺います。相続の書類や聞きたいことのメモがあれば、お持ちください。':'相続・離婚・企業法務のご相談を受け付けています。まずはお困りのことをお聞きし、次に何をするかをご一緒に整理します。';
-  originalHtml=window.SimyPreviewEdit.prepare('<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>みらい法律事務所｜操作例</title><style>html{font-family:system-ui,sans-serif;color:var(--ink);background:var(--paper)}:root{--ink:rgb(24,45,57);--paper:rgb(255,255,255);--subtle:rgb(242,247,252);--line:rgb(219,226,231)}body{margin:0}header,main,footer{padding:24px;max-width:900px;margin:auto}header{border-bottom:1px solid var(--line);font-size:18px;font-weight:600}.sample-label{font-size:12px;background:var(--subtle);padding:12px 24px}h1{font-size:24px;font-weight:600;line-height:1.6}p{font-size:16px;line-height:1.8}article{border-top:1px solid var(--line);margin-top:32px;padding-top:20px}h2{font-size:18px;font-weight:600}footer{font-size:12px;color:var(--ink)}</style></head><body><div class="sample-label">架空の法律事務所を使った操作サンプルです。AI生成・実際の公開は行いません。</div><header>みらい法律事務所</header><main><h1>'+title+'</h1><p data-sample-intro data-sample-rewrite="'+rewrite+'">'+body+'</p><article id="news"><h2>お知らせ</h2><ul data-sample-notices><li>平日は午前9時から午後6時までご相談を受け付けています。</li></ul></article></main><footer>所在地・相談方法・受付時間を掲載する例</footer></body></html>');
+  originalHtml=window.SimyPreviewEdit.index(window.SimyPreviewEdit.prepare('<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>みらい法律事務所｜操作例</title><style>html{font-family:system-ui,sans-serif;color:var(--ink);background:var(--paper)}:root{--ink:rgb(24,45,57);--paper:rgb(255,255,255);--subtle:rgb(242,247,252);--line:rgb(219,226,231)}body{margin:0}header,main,footer{padding:24px;max-width:900px;margin:auto}header{border-bottom:1px solid var(--line);font-size:18px;font-weight:600}.sample-label{font-size:12px;background:var(--subtle);padding:12px 24px}h1{font-size:24px;font-weight:600;line-height:1.6}p{font-size:16px;line-height:1.8}article{border-top:1px solid var(--line);margin-top:32px;padding-top:20px}h2{font-size:18px;font-weight:600}footer{font-size:12px;color:var(--ink)}</style></head><body><div class="sample-label">架空の法律事務所を使った編集体験です。</div><header>みらい法律事務所</header><main><article data-sample-content><h1>'+title+'</h1><p>'+body+'</p></article><section id="news"><h2>お知らせ</h2><dl data-sample-notices><dt>2026/01/05</dt><dd>平日は午前9時から午後6時までご相談を受け付けています。</dd></dl></section></main><footer>所在地・相談方法・受付時間を掲載する例</footer></body></html>'));
   updatePreview(originalHtml);result.hidden=false;
   status.textContent='架空の事務所サンプルです。公開中のサイトは変更されません。';
-  initialSamplePrompt=article?'お知らせ：初回相談にお持ちいただく資料について、事前に事務所へご確認ください。':document.querySelector('#preview-notice-prompt').dataset.chatPrompt;
-  editInput.value=initialSamplePrompt;
+  editInput.value='';
+  document.querySelector('.preview-chat').classList.add('is-empty');
   editorReturn=document.getElementById(article?'try-article':'jump-update');
   if(!editor.open)showEditor();
-  log('架空のサイトで操作例を試せます。お知らせを追加するときは、「お知らせ：」の後に掲載する文章を入力してください。');
   return true;
  }};
 

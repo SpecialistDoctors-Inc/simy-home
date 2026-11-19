@@ -37,9 +37,9 @@
  const thumbnail=(source,width,height)=>{try{for(let edge=384;edge>=96;edge=Math.floor(edge*.75)){const canvas=document.createElement('canvas'),scale=Math.min(1,edge/Math.max(width,height));canvas.width=Math.max(1,Math.round(width*scale));canvas.height=Math.max(1,Math.round(height*scale));canvas.getContext('2d').drawImage(source,0,0,canvas.width,canvas.height);for(const quality of [.72,.5,.32]){const data=normalizeCanvasJpeg(canvas.toDataURL('image/jpeg',quality));if(data&&data.length<=16384)return data;}}}catch{}return null;};
  const editPayload=(message,base,{query='',followUp,workingContext=context}={})=>{
   const nodes=window.SimyPreviewEdit.inventory(base,frame.contentDocument,query);let images=[];
-  const asset=assets.at(-1);if(asset?.thumbnail)images=[{id:asset.id,mime:'image/jpeg',data:asset.thumbnail}];
+  const asset=window.SimyPreviewEdit.selectAttachment(assets,message);if(asset?.thumbnail)images=[{id:asset.id,mime:'image/jpeg',data:asset.thumbnail}];
   // Reuse already decoded browser pixels only. A tainted cross-origin canvas falls back to metadata.
-  if(!asset){const candidates=nodes.filter(n=>n.kind==='image'&&n.tag==='img').map(n=>({n,live:frame.contentDocument?.querySelector('[data-simy-edit-id="'+n.id+'"]')})).filter(({live})=>live?.complete&&live.naturalWidth>1).sort((a,b)=>b.live.getBoundingClientRect().width*b.live.getBoundingClientRect().height-a.live.getBoundingClientRect().width*a.live.getBoundingClientRect().height);for(const {n,live} of candidates){const data=thumbnail(live,live.naturalWidth,live.naturalHeight);if(data){images=[{id:n.id,mime:'image/jpeg',data}];break;}}}
+  if(!assets.length){const candidates=nodes.filter(n=>n.kind==='image'&&n.tag==='img').map(n=>({n,live:frame.contentDocument?.querySelector('[data-simy-edit-id="'+n.id+'"]')})).filter(({live})=>live?.complete&&live.naturalWidth>1).sort((a,b)=>b.live.getBoundingClientRect().width*b.live.getBoundingClientRect().height-a.live.getBoundingClientRect().width*a.live.getBoundingClientRect().height);for(const {n,live} of candidates){const data=thumbnail(live,live.naturalWidth,live.naturalHeight);if(data){images=[{id:n.id,mime:'image/jpeg',data}];break;}}}
   const payload={request:message,context:workingContext,nodes,history:chat.slice(-6),assets:assets.map(({id,name})=>({id,name})),images,interactive:true,followUp};
   // Preserve request, conversation state and images within the unchanged planner/queue budget.
   const retained=new Set(['e0',...images.map(image=>image.id)]);
@@ -51,7 +51,7 @@
  photoInput.addEventListener('change',async()=>{const file=photoInput.files[0];if(!file)return;photoInput.disabled=true;
   try{if(!['image/jpeg','image/png','image/webp'].includes(file.type)||file.size>5*1024*1024)throw Error('写真はJPEG・PNG・WebP、5MB以内で選んでください。');
    const bitmap=await createImageBitmap(file),scale=Math.min(1,1600/Math.max(bitmap.width,bitmap.height));const canvas=document.createElement('canvas');canvas.width=Math.round(bitmap.width*scale);canvas.height=Math.round(bitmap.height*scale);canvas.getContext('2d').drawImage(bitmap,0,0,canvas.width,canvas.height);bitmap.close();
-   assets=[...assets,{id:'a'+assetSequence++,name:file.name.slice(0,120),data:canvas.toDataURL('image/jpeg',.88),thumbnail:thumbnail(canvas,canvas.width,canvas.height)}].slice(-5);photoStatus.textContent='添付：'+file.name;chat.push({role:'user',text:'差し替え用の写真を添付しました：'+file.name.slice(0,120)});chat=chat.slice(-6);log('写真を添付しました。');if(context.goal&&!editBusy){editInput.value=editInput.value.trim()||'素材を追加しました。会話の内容に沿って続けてください。';editForm.requestSubmit();}
+   assets=[...assets,{id:'a'+assetSequence++,name:file.name.slice(0,120),data:canvas.toDataURL('image/jpeg',.88),thumbnail:thumbnail(canvas,canvas.width,canvas.height)}].slice(-5);photoStatus.textContent='添付：'+file.name;chat.push({role:'user',text:'差し替え用の写真を添付しました：'+file.name.slice(0,120)});chat=chat.slice(-6);log('写真を添付しました。変更したい箇所と使う写真を伝えてください。');
   }catch(e){photoStatus.textContent=e.message;photoInput.value='';}finally{photoInput.disabled=editBusy;}
  });
  for(const chip of document.querySelectorAll('[data-chat-prompt]'))chip.addEventListener('click',()=>{editInput.value=chip.dataset.chatPrompt;editInput.focus();});
@@ -101,7 +101,7 @@
     const payload=editPayload(message,base,{query,followUp,workingContext});
     const response=await fetch(new URL('/api/preview-edit',form.dataset.endpoint),{
      method:'POST',headers:{'Content-Type':'application/json'},
-     body:JSON.stringify({...payload,siteUrl:previewSourceUrl}),
+     body:JSON.stringify({...payload,...(previewSourceUrl?{siteUrl:previewSourceUrl}:{})}),
      signal:AbortSignal.any([edit.controller.signal,AbortSignal.timeout(Math.min(100000,remaining))]),
     });
     const plan=await response.json();
@@ -131,8 +131,8 @@
     }else throw Error('変更案の形式を確認できませんでした。');
     context=plan.context||workingContext;
     if(assets.length){
-     const latest=assets.at(-1);
-     photoStatus.textContent='添付：'+latest.name+(plan.visualInputs?.includes(latest.id)?'（画像の内容も回答に使用）':'（画像内容は未確認）');
+     const viewed=new Set(plan.visualInputs||[]);
+     photoStatus.textContent='添付：'+assets.map(asset=>asset.name+(viewed.has(asset.id)?'（画像の内容も回答に使用）':'')).join('、');
     }
     chat.push({role:'user',text:message},{role:'assistant',text:(plan.question||plan.summary).slice(0,1500)});
     chat=chat.slice(-6);editInput.value='';

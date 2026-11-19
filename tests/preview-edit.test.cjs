@@ -12,3 +12,12 @@ test('guided editing accepts a plain clinic notice without command syntax',()=>{
 test('guided editing requires meaningful bounded content and a known action',()=>{
  for(const input of [{type:'notice',text:'  '},{type:'replace',from:'',to:'何か'},{type:'notice',text:'a'.repeat(501)},{type:'script',text:'alert(1)'}])assert.throws(()=>ctx.SimyPreviewEdit.normalize(input));
 });
+
+test('preview selects a photo by the request instead of assuming the latest attachment',()=>{
+ const first={id:'a0',name:'入口.JPG'}, second={id:'a1',name:'受付.jpg'};
+ const select=ctx.SimyPreviewEdit.selectAttachment;
+ assert.equal(select([first,second],'入口.jpgを使ってください'),first);
+ assert.equal(select([first,second],'どちらかの写真を使って'),undefined);
+ assert.equal(select([first,second],'入口.JPGと受付.jpgの写真'),undefined);
+ assert.equal(select([second],'添付写真を使って'),second);
+});
