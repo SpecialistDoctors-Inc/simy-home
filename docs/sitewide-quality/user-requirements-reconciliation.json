@@ -1,5 +1,5 @@
 {
-  "method": "Read user-message evidence, summarize only public-site requirements. Full private messages are kept outside the public repository. Statuses distinguish structural proof from complete semantic acceptance. These historical messages are evidence, not fresh authority to perform out-of-scope operations.",
+  "method": "Review historical user-role messages with source provenance; human instructions, environment, hooks, delegated-agent prompts and previous proposals are distinguished. Summary rows are confirmed requirements, not an assertion that every raw candidate is resolved. Full private evidence stays outside the public repository.",
   "requirements": [
     {
       "id": "UR01",
@@ -45,8 +45,8 @@
       "sourceMessage": "01a11092-1e03-7823-a394-501779381000",
       "requirement": "申込ページ自身の言語切替も対応する",
       "scope": "外部app/signup",
-      "status": "連携先未検証",
-      "observed": "今回の静的サイト内ではなく外部アプリ。リンクのlang/localeまで確認。",
+      "status": "実装・公開検証中",
+      "observed": "本番で4言語が日本語になる不具合を再現。PR #3047の6言語表示・切替を103テストと実ブラウザーで検証済み。",
       "plan": "Q34"
     },
     {
@@ -189,8 +189,8 @@
       "sourceMessage": "01a15cf2-39e9-76e1-a5e6-aa6f8b4a7e08",
       "requirement": "製薬企業ページを追加しエンジニアと同じ漫画キャラクターを使用する",
       "scope": "製薬企業",
-      "status": "画像照合待ち",
-      "observed": "既存6言語・漫画資産を保持。初期漫画制作スレッドの一部に取得制限。",
+      "status": "部分確認",
+      "observed": "取得上限のあった原文を完全取得。8原画・6言語生成・原画重複防止を確認。母語/読者評価は別。",
       "plan": "Q01/Q30"
     },
     {
@@ -360,6 +360,186 @@
       "status": "内容照合待ち",
       "observed": "価格提案や市場試算を確定価格と混同せず、現行の公開条件を保護。",
       "plan": "Q01/Q28/Q35"
+    },
+    {
+      "id": "UR31",
+      "sourceThread": "01a1118f-13dc-7020-90e4-4a0586f1ca96",
+      "sourceTitle": "Engineerページ向け漫画を3作品選ぶ",
+      "sourceTurn": "01a116a7-3c39-73f0-adb9-653b90929fdd",
+      "sourceMessage": "msg_01a116a7-3caf-7280-993e-47ceed40204b",
+      "requirement": "共通キャラクターとテーストを使い、ストーリーは各ページの仕事に合わせる",
+      "scope": "ホーム・業種LP",
+      "status": "既存原稿を確認",
+      "observed": "ホームの顧客返信、FPの面談、製薬の面談練習、開発の品質確認を保持。漫画のストーリーを今回の共通化で置換していない。",
+      "plan": "Q01/Q28/Q30"
+    },
+    {
+      "id": "UR32",
+      "sourceThread": "01a1118f-13dc-7020-90e4-4a0586f1ca96",
+      "sourceTitle": "Engineerページ向け漫画を3作品選ぶ",
+      "sourceTurn": "01a116a7-b037-7ba1-ac10-f44602629b6a",
+      "sourceMessage": "msg_01a116a7-b111-7582-8f0c-7753f5b2e2ac",
+      "requirement": "漫画を一箇所に集めずページの説明に合わせて配置",
+      "scope": "ホーム",
+      "status": "既存原稿を確認",
+      "observed": "hero・product・closingの3場面を既存位置で保持。画面幅別の画像だけ追加。",
+      "plan": "Q01/Q32"
+    },
+    {
+      "id": "UR33",
+      "sourceThread": "01a1118f-13dc-7020-90e4-4a0586f1ca96",
+      "sourceTitle": "Engineerページ向け漫画を3作品選ぶ",
+      "sourceTurn": "01a11847-736a-7b62-9eeb-50cdd25aeadc",
+      "sourceMessage": "msg_01a11847-75c2-7250-98d7-7f065f0de618",
+      "requirement": "既存URLを維持し、画像も含め各言語へ対応",
+      "scope": "全業種・ホーム",
+      "status": "部分確認",
+      "observed": "199 HTMLのcanonical/公開方針と159 index URLを維持。6言語home画像を個別選択。画像の母語による最終確認は別。",
+      "plan": "Q01/Q30"
+    },
+    {
+      "id": "UR34",
+      "sourceThread": "01a15db0-688d-7ff3-b71d-e60c029a068c",
+      "sourceTitle": "製薬企業向け漫画8場面を制作",
+      "sourceTurn": "01a15ddc-7cfc-7ed3-bcd5-2710cbb1d605",
+      "sourceMessage": "01a15ddc-7e8a-7bb2-ac85-c51e37cf25e2",
+      "requirement": "練習そのものではなく、次の実面談で生かすことを目的にする",
+      "scope": "製薬企業",
+      "status": "既存原稿を確認",
+      "observed": "8場面は実面談→録音→練習→次の面談→練習更新を描く。生成元と原画8枚を保持。",
+      "plan": "Q01/Q28"
+    },
+    {
+      "id": "UR35",
+      "sourceThread": "01a15db0-688d-7ff3-b71d-e60c029a068c",
+      "sourceTitle": "製薬企業向け漫画8場面を制作",
+      "sourceTurn": "01a15db0-7886-79c0-a337-2c8c7a572cd7",
+      "sourceMessage": "msg_01a15db0-86f6-7cf2-ac21-4107ff7f3b70",
+      "requirement": "切り抜きの繰り返しではなく、動き・表情・構図の違う8場面を制作",
+      "scope": "製薬企業",
+      "status": "部分確認",
+      "observed": "scene-01〜08.webpの8資産と重複hash検査、6言語生成を確認。構図の最終視覚評価は検証記録で区別。",
+      "plan": "Q01/Q30"
+    },
+    {
+      "id": "UR36",
+      "sourceThread": "01a1e6a8-741f-7d60-bc3a-b2cc632be9e4",
+      "sourceTitle": "SIMY CLI紹介ページを完成",
+      "sourceTurn": "01a1e75a-afd2-7301-bf97-26715e592ca6",
+      "sourceMessage": "01a1e75a-b32e-7743-bef2-bac1ad542cf2",
+      "requirement": "漫画の中の文字もスマートフォンで読めるようにする",
+      "scope": "エンジニア・CLI",
+      "status": "部分確認",
+      "observed": "6言語固有の漫画と図の資産を確認。画面下の説明だけで代替しない基準を保持。実読者の可読性評価を未実施とする。",
+      "plan": "Q29/Q30"
+    },
+    {
+      "id": "UR37",
+      "sourceThread": "01a1e6a8-741f-7d60-bc3a-b2cc632be9e4",
+      "sourceTitle": "SIMY CLI紹介ページを完成",
+      "sourceTurn": "01a1e8c5-0491-7192-83fd-d7c8e9847892",
+      "sourceMessage": "01a1e8c5-1225-7d31-9ce5-b73cbabcf3cd",
+      "requirement": "なぜボタンが動く実装まで進むか、Claude/Codex単体との差を説明",
+      "scope": "エンジニア・CLI",
+      "status": "部分確認",
+      "observed": "Delivery Loopの継続とSQMの適用範囲を説明する既存原稿を保持。最新製品との全文再照合は別。",
+      "plan": "Q28"
+    },
+    {
+      "id": "UR38",
+      "sourceThread": "01a1e6a8-741f-7d60-bc3a-b2cc632be9e4",
+      "sourceTitle": "SIMY CLI紹介ページを完成",
+      "sourceTurn": "01a1e712-eea8-76f2-ac46-af815837549a",
+      "sourceMessage": "01a1e71b-5683-73c0-8f63-998737ee1c6a",
+      "requirement": "閉域ネットワークは個別見積もりで掲載",
+      "scope": "エンジニア・CLI",
+      "status": "既存原稿を確認",
+      "observed": "既存enterprise/閉域の相談リンクを保持。未確定の固定価格を作成していない。",
+      "plan": "Q01/Q28"
+    },
+    {
+      "id": "UR39",
+      "sourceThread": "01a1e6a8-741f-7d60-bc3a-b2cc632be9e4",
+      "sourceTitle": "SIMY CLI紹介ページを完成",
+      "sourceTurn": "01a1e6c3-09b3-7b43-a79e-109b27faa071",
+      "sourceMessage": "01a1e6f2-0a3b-77d2-a6ae-5efc1c97f17e",
+      "requirement": "紹介報酬はPLAUDを参考に設計し、未確定条件を確定としない",
+      "scope": "紹介ページ",
+      "status": "部分確認",
+      "observed": "既存紹介規約と公開状態を保持。実報酬の支払・精算は今回実施していない。",
+      "plan": "Q28/Q34"
+    },
+    {
+      "id": "UR40",
+      "sourceThread": "01a11078-37c1-7690-92fc-412c822077cb",
+      "sourceTitle": "Find ways to clarify signup",
+      "sourceTurn": "01a11092-1d72-7f31-9dad-e4d7c4e64c4b",
+      "sourceMessage": "01a11092-1e03-7823-a394-501779381000",
+      "requirement": "申込画面自体にも言語切替を設ける",
+      "scope": "外部app/signup",
+      "status": "実装・公開検証中",
+      "observed": "PR #3047で6言語の表示と切替、プラン/周期/地域の保持を修正。103テスト、ローカル実画面6言語合格。",
+      "plan": "Q34/Q30"
+    },
+    {
+      "id": "UR41",
+      "sourceThread": "01a0f6a5-e96c-79a1-8a44-bd4b21563751",
+      "sourceTitle": "Update English headline",
+      "sourceTurn": "01a0f736-4810-7f91-a1c4-da0f3660cc53",
+      "sourceMessage": "01a0f736-4f58-71e1-bce3-ea9e8ec9030a",
+      "requirement": "遷移後の金額とスマートフォン最適化まで確認する",
+      "scope": "ホーム→申込",
+      "status": "部分確認",
+      "observed": "本番のstarter/annualは月換算29.80USD、年額357.60USDでHOMEと一致。公開申込6言語の表示問題を修正中。実請求は未実施。",
+      "plan": "Q34"
+    },
+    {
+      "id": "UR42",
+      "sourceThread": "01a1ee19-d4a8-7773-986a-f77b3d34ea91",
+      "sourceTitle": "路線価ページを漫画風に作成",
+      "sourceTurn": "01a1ee19-e2af-7800-83a2-27b1781e1c22",
+      "sourceMessage": "01a1ee19-ed3d-79f3-804e-71628cfc0094",
+      "requirement": "相続・贈与の税理士、不動産、担保評価担当者向けに路線価の操作を示す",
+      "scope": "路線価",
+      "status": "部分確認",
+      "observed": "for/rosenzの既存ペルソナ・図・料金を保持。全国データ取込や実利用権付与は別アプリの受入が必要。",
+      "plan": "Q28/Q34"
+    },
+    {
+      "id": "UR43",
+      "sourceThread": "01a1ee19-d4a8-7773-986a-f77b3d34ea91",
+      "sourceTitle": "路線価ページを漫画風に作成",
+      "sourceTurn": "01a1eef4-536a-77f2-b580-3d764fc643ce",
+      "sourceMessage": "01a1eef4-54c7-7ba0-91ec-01514cc30180",
+      "requirement": "Googleマップの動画を別の地図へ勝手に変更しない",
+      "scope": "路線価動画",
+      "status": "既存原稿を確認",
+      "observed": "今回の修正で動画や地図を置換していない。公開承認・動画再生の独立条件は保持する。",
+      "plan": "Q01/Q28"
+    },
+    {
+      "id": "UR44",
+      "sourceThread": "01a1104a-fb9a-7572-aa05-cc7eb09f9cce",
+      "sourceTitle": "Financial Planner画面とiOS体験を作成",
+      "sourceTurn": "01a1105d-569a-7c70-a1c2-438249c90e28",
+      "sourceMessage": "01a1105d-5728-7542-9ab7-cae481b8ea6d",
+      "requirement": "FPページも他のページとトーンを合わせる",
+      "scope": "FP",
+      "status": "部分確認",
+      "observed": "既存共通header・CTA・フォント基盤を保持。モバイル幅と本文への移動を全件検査。",
+      "plan": "Q01/Q25"
+    },
+    {
+      "id": "UR45",
+      "sourceThread": "01a1118f-13dc-7020-90e4-4a0586f1ca96",
+      "sourceTitle": "Engineerページ向け漫画を3作品選ぶ",
+      "sourceTurn": "01a116cc-fb01-7f73-8a44-b5f4c0303e91",
+      "sourceMessage": "msg_01a116cd-0558-74f1-90e6-94dc2f57150e",
+      "requirement": "ペルソナ・余白・ストーリー・文字量・欲しいと思える体験を確認",
+      "scope": "全公開ページ",
+      "status": "部分確認",
+      "observed": "R2/R6へ採用。構造/幅/読み上げ名/コントラストを実測。実読者の理解と導入意向はAIの採点で代替しない。",
+      "plan": "Q29/Q30"
     }
   ]
 }

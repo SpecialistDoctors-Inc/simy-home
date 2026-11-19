@@ -7,6 +7,7 @@ sources, never the generated locale HTML files.
 from site_header import apply as apply_header
 from home_manga_locales import render as render_manga, demo as render_demo
 import argparse
+import hashlib
 import json
 import re
 import subprocess
@@ -53,6 +54,8 @@ class Localize(HTMLParser):
         a = dict(attrs)
         if tag == 'html':
             a.update(lang=self.locale, **{'data-rendered-locale': self.locale})
+        if tag == 'link' and a.get('rel') == 'stylesheet' and a.get('href', '').split('?')[0].lstrip('/') == 'home.css':
+            a['href'] = 'home.css?v=' + hashlib.sha256((SITE / 'home.css').read_bytes()).hexdigest()[:12]
         if tag == 'link' and a.get('rel') == 'canonical':
             a['href'] = BASE + home_path(self.locale)
         if tag == 'meta':
