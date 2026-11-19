@@ -1,0 +1,36 @@
+{
+  "reason": "Free-trial FAQ omitted the current one-month HOME trial and incorrectly described monthly billing as the sole option.",
+  "primarySources": [
+    "simy-home scripts/home-ja-manga.html: Starter and SIMY by Industry one-month trial",
+    "simy-web commit 6a7c4944e4e5c5facc70e68a83df095cdd56f89d (#2621), src/lib/billing/home-offer.ts: four HOME contracts and one calendar month UTC clamped trial",
+    "simy-web src/app/api/signup/checkout/route.ts: HOME contract validation and Stripe trial_end"
+  ],
+  "changes": "Six visible trial answers and matching FAQ schema; monthly/annual card terms; card registration wording instead of immediate payment.",
+  "results": [
+    {
+      "file": "download.html",
+      "linksStylesExecutableScriptsUnchanged": true
+    },
+    {
+      "file": "download/en.html",
+      "linksStylesExecutableScriptsUnchanged": true
+    },
+    {
+      "file": "download/es.html",
+      "linksStylesExecutableScriptsUnchanged": true
+    },
+    {
+      "file": "download/fr.html",
+      "linksStylesExecutableScriptsUnchanged": true
+    },
+    {
+      "file": "download/hi.html",
+      "linksStylesExecutableScriptsUnchanged": true
+    },
+    {
+      "file": "download/zh-hans.html",
+      "linksStylesExecutableScriptsUnchanged": true
+    }
+  ],
+  "limitations": "Source/content consistency and browser rendering. No new successful email, authentication, actual checkout, payment or entitlement is asserted. Native-speaker review remains open."
+}

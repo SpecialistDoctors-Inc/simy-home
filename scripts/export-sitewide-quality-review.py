@@ -284,6 +284,12 @@ def main():
     semantic=read_json(DOCS/'evidence/requirements-semantic-followup.json',{}).get('results',[])
     if semantic:
         sheet(wb,'原文と現行本文の追加照合',['依頼ID','ファイル','現行本文','照合根拠','裁定と限界'],[[r['requirement'],r['file'],r['observed'],r['evidence'],r['decision']] for r in semantic],[22,70,140,100,140])
+    trial=read_json(DOCS/'evidence/download-trial-browser.json',{})
+    if trial:
+        sheet(wb,'無料体験の内容修正',['ファイル','言語','幅CSS px','質問','修正後の可視回答','FAQ schema回答','表示とschema一致','横はみ出しpx','申込URL','取得日時UTC','範囲・制約'],[[r['file'],r['language'],r['width'],r['question'],r['answer'],r['schemaAnswer'],'合格' if r['answer']==r['schemaAnswer'] else '不合格',r['overflow'],r['accountURL'],trial['observedAt'],trial['method']] for r in trial['results']],[55,20,18,65,150,150,25,25,120,35,100])
+    visual=read_json(DOCS/'evidence/visual-followup.json',{})
+    if visual:
+        sheet(wb,'既存原画の追加目視',['ファイル','SHA256','確認内容','範囲・制約','方法'],[[r['file'],r['sha256'],r['assessment'],r['limitation'],visual['method']] for r in visual['results']],[95,75,150,140,110])
     signup=read_json(DOCS/'evidence/signup-browser.json',{}).get('results',[])
     fixed_signup=read_json(DOCS/'evidence/signup-local-browser.json',{}).get('results',[])
     if signup:
