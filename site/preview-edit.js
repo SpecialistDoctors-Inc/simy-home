@@ -45,14 +45,27 @@
  function label(e){
   let p=e.parentElement;for(let depth=0;p&&depth<4;depth++,p=p.parentElement){
    if(['DL','UL','OL'].includes(p.tagName))continue;
-   const headings=[...p.children].filter(n=>/^H[1-6]$/.test(n.tagName)||/title|heading|caption/i.test(n.className||''));
+   const headings=[...p.children].filter(n=>/^H[1-6]$/.test(n.tagName)||/title|heading|caption|(?:^|[-_])header(?:$|[-_])/i.test(n.className||''));
    const value=headings.map(text).filter(Boolean).join(' / ');if(value)return value.slice(0,300);
   }
   return '';
  }
  const datePattern=/\d{4}\s*[.\/年-]\s*\d{1,2}\s*[.\/月-]\s*\d{1,2}/;
  const dateOnly=value=>datePattern.test(value)&&!value.replace(datePattern,'').replace(/[日月火水木金土曜（）()\s]/g,'');
- function newsContext(e){let p=e;for(let depth=0;p&&p.tagName!=='BODY'&&depth<5;depth++,p=p.parentElement){const hints=[p.id,p.className,label(p),...[...p.children].map(c=>(c.className||'')+' '+(c.querySelector('[class*=news],[class*=notice]')?.className||'')),...[...p.querySelectorAll(':scope > h2,:scope > h3,:scope > header h2,:scope > header h3,:scope > div[class*=head] h2,:scope > div[class*=head] h3')].map(text)].join(' ');if(/お知らせ|休診|news|information|topics|notice/i.test(hints))return true;}return false;}
+ // Match this list and its enclosing sections, without borrowing a sibling's topic.
+ function newsContext(e){
+  const titleSelector=':scope > h2,:scope > h3,:scope > header h2,:scope > header h3,:scope > [class*=header i],:scope > div[class*=head] h2,:scope > div[class*=head] h3';
+  const newsLabels=/お知らせ|新着情報|告知|更新情報|休診|休業|news|information|topics|notice/i;
+  let section=e;
+  for(let depth=0;section&&section.tagName!=='BODY'&&depth<5;depth++,section=section.parentElement){
+   const titles=[...section.querySelectorAll(titleSelector)].map(text).filter(title=>title.length<=300);
+   const hints=[section.id,section.getAttribute('class'),...titles];
+   if(section===e)hints.push(...[...e.children].map(child=>child.getAttribute('class')));
+   if(newsLabels.test(hints.join(' ')))return true;
+   if(section.tagName==='SECTION'&&titles.some(Boolean))return false;
+  }
+  return false;
+ }
  function noticeRow(e){
   if(e.tagName==='DL'){
    const dt=e.querySelector(':scope > dt');
@@ -70,9 +83,17 @@
  api.index=function(html){const doc=parse(html);let count=0;for(const e of [doc.body,...doc.body.querySelectorAll('*')]){if(!blocked(e))e.setAttribute('data-simy-edit-id','e'+count++);}return '<!doctype html>\n'+doc.documentElement.outerHTML;};
  api.inventory=function(html,liveDocument,query=''){
   const doc=parse(html),all=[doc.body,...doc.body.querySelectorAll('[data-simy-edit-id]')];
+  const siteName=doc.querySelector('meta[property="og:site_name"]')?.content.trim();
+  const heading=doc.querySelector('main h1')||doc.querySelector('body h1');
+  const headings=[...new Set([siteName,doc.title.trim(),heading&&text(heading)].filter(Boolean))];
+  const pageContext=headings.map(value=>value.slice(0,80)).join(' / ');
   const newsCandidates=all.filter(isNews);
   // Prefer the existing article list over an outer section containing several categories.
-  const collections=newsCandidates.filter(e=>!newsCandidates.some(n=>n!==e&&e.contains(n)&&['DL','UL','OL'].includes(n.tagName)));
+  const collections=newsCandidates.filter(e=>{
+   const row=noticeRow(e);
+   const singleDatedRow=[...e.children].filter(child=>datePattern.test(text(child))).length===1;
+   return !newsCandidates.some(n=>n!==e&&e.contains(n)&&((singleDatedRow&&n===row)||['DL','UL','OL'].includes(n.tagName)));
+  });
   const news=collections.filter(e=>!collections.some(n=>n!==e&&n.contains(e)&&[...n.children].filter(c=>datePattern.test(text(c))&&text(c).length<2500).length>=2));
   const out=[],seen=new Set();let size=0;
   const term=query.trim().normalize('NFKC').toLowerCase();
@@ -84,7 +105,7 @@
    return [alt,title,element.id,typeof element.className==='string'?element.className:'',content.length<=1800?content:''].some(value=>value.normalize('NFKC').toLowerCase().includes(term));
   }).sort((a,b)=>text(a).length-text(b).length).slice(0,25):[];
 
-  function add(e,kind){const id=e.getAttribute('data-simy-edit-id');if(seen.has(id)||out.length>=220)return;let t=kind==='image'?(e.getAttribute('alt')||'画像'):(e.tagName==='BODY'?'ページ全体':text(e));if(!t)return;if(kind==='text'&&t.length>1800)return;t=t.slice(0,1800);let context=label(e);if(kind==='image'){context+=' / 用途:'+e.id+' '+e.className+' '+(e.parentElement?.className||'')+' '+(e.parentElement?.parentElement?.className||'')+' / 素材:'+(e.getAttribute('src')||'').split('/').pop();}try{const live=liveDocument?.querySelector('[data-simy-edit-id="'+id+'"]');if(live){if(kind==='image'){const rect=live.getBoundingClientRect();context+=' / 表示寸法:'+Math.round(rect.width)+'x'+Math.round(rect.height)+' / 元寸法:'+(live.naturalWidth||0)+'x'+(live.naturalHeight||0);}const css=liveDocument.defaultView.getComputedStyle(live);context+=' / 現在の文字サイズ:'+css.fontSize+'、文字色:'+css.color+'、背景:'+css.backgroundColor;}}catch{}const n={id,kind,tag:e.tagName.toLowerCase(),text:t,context:context.slice(0,300)};const len=JSON.stringify(n).length;if(size+len>35000)return;size+=len;seen.add(id);out.push(n);}
+  function add(e,kind){const id=e.getAttribute('data-simy-edit-id');if(seen.has(id)||out.length>=220)return;let t=kind==='image'?(e.getAttribute('alt')||'画像'):(e.tagName==='BODY'?'ページ全体':text(e));if(!t)return;if(kind==='text'&&t.length>1800)return;t=t.slice(0,1800);let context=e===doc.body?pageContext:label(e);if(kind==='image'){context+=' / 用途:'+e.id+' '+e.className+' '+(e.parentElement?.className||'')+' '+(e.parentElement?.parentElement?.className||'')+' / 素材:'+(e.getAttribute('src')||'').split('/').pop();}try{const live=liveDocument?.querySelector('[data-simy-edit-id="'+id+'"]');if(live){if(kind==='image'){const rect=live.getBoundingClientRect();context+=' / 表示寸法:'+Math.round(rect.width)+'x'+Math.round(rect.height)+' / 元寸法:'+(live.naturalWidth||0)+'x'+(live.naturalHeight||0);}const css=liveDocument.defaultView.getComputedStyle(live);context+=' / 現在の文字サイズ:'+css.fontSize+'、文字色:'+css.color+'、背景:'+css.backgroundColor;}}catch{}const n={id,kind,tag:e.tagName.toLowerCase(),text:t,context:context.slice(0,300)};const len=JSON.stringify(n).length;if(size+len>35000)return;size+=len;seen.add(id);out.push(n);}
   add(doc.body,'element');
   for(const element of matches){
    const id=element.getAttribute('data-simy-edit-id');
@@ -161,9 +182,9 @@
      const template=noticeRow(e);if(!template)throw Error('既存のお知らせの形式を確認できません。');item=cleanClone(template);
      dateElement=item.querySelector('time')||[...item.querySelectorAll('dt,[class*=date]')].find(n=>datePattern.test(text(n)))||[...item.querySelectorAll('*')].find(n=>dateOnly(text(n)));
      heading=item.querySelector('h2,h3,h4,h5,dd,[class*=title],[class*=ttl]');
-     if(!heading){const candidates=[item,...item.querySelectorAll('a,span,p,div')].filter(n=>n!==dateElement&&!n.contains(dateElement)&&!metadata(n)&&text(n)&&!datePattern.test(text(n))&&!/^(お知らせ|新着|NEWS|NEW|診療時間|休診情報)$/i.test(text(n)));heading=candidates.find(n=>![...n.children].some(c=>text(c)))||candidates[0];}
+     if(!heading){const candidates=[item,...item.querySelectorAll('a,span,p,div')].filter(n=>n!==dateElement&&!n.contains(dateElement)&&!metadata(n)&&text(n)&&!datePattern.test(text(n))&&!/^(お知らせ|新着|NEWS|NEW)$/i.test(text(n)));heading=candidates.find(n=>![...n.children].some(c=>text(c)))||candidates[0];}
      if(!heading){if(dateElement)throw Error('既存のお知らせの見出しを確認できません。');heading=item;}
-     body=[...item.querySelectorAll('p,[class*=excerpt],[class*=description],[class*=body]')].find(n=>n!==heading&&!heading.contains(n)&&!n.contains(heading)&&n!==dateElement&&!n.contains(dateElement)&&!metadata(n)&&!/^(お知らせ|新着|NEWS|NEW|診療案内|休診情報)$/i.test(text(n)));
+     body=[...item.querySelectorAll('p,[class*=excerpt],[class*=description],[class*=body]')].find(n=>n!==heading&&!heading.contains(n)&&!n.contains(heading)&&n!==dateElement&&!n.contains(dateElement)&&!metadata(n)&&!/^(お知らせ|新着|NEWS|NEW)$/i.test(text(n)));
      e.prepend(item);
     }
     const formatDate=before=>{const source=before.match(datePattern)?.[0]||before,parts=o.date.split('-');return source.includes('年')?parts[0]+'年'+parts[1]+'月'+parts[2]+'日':parts.join(source.includes('/')?'/':source.includes('-')?'-':'.');};

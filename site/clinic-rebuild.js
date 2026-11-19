@@ -62,6 +62,14 @@
  const showEditor=()=>{if(!currentHtml)return;editor.showModal();document.body.classList.add('preview-editor-open');(mobile()?closeEditor:editInput).focus({preventScroll:true});};
  openEditor.addEventListener('click',showEditor);closeEditor.addEventListener('click',()=>editor.close());editor.addEventListener('close',()=>{document.body.classList.remove('preview-editor-open');editorReturn.focus({preventScroll:true});});
  const setEditBusy=value=>{editBusy=value;let pending=conversation.querySelector('.chat-thinking');if(value){pending=document.createElement('p');pending.className='chat-thinking';pending.setAttribute('role','status');pending.textContent='依頼内容を確認しています';conversation.append(pending);conversation.scrollTop=conversation.scrollHeight;}else pending?.remove();editForm.querySelector('[type=submit]').disabled=value;editForm.querySelector('[type=submit]').textContent=value?'…':'↑';undo.disabled=value||!history.length;reset.disabled=value;example.disabled=value;editInput.disabled=value;photoInput.disabled=value;editForm.setAttribute('aria-busy',String(value));};
+ let activeEdit;
+ const cancelActiveEdit=()=>{
+  if(!activeEdit)return;
+  activeEdit.controller.abort();
+  activeEdit.stopElapsed();
+  activeEdit=null;
+  setEditBusy(false);
+ };
  const pageOffer=document.querySelector('#preview-page-offer');
  document.querySelector('#page-offer-close').addEventListener('click',()=>pageOffer.close());
  document.querySelector('#page-offer-back').addEventListener('click',()=>pageOffer.close());
@@ -81,6 +89,8 @@
   if(!message)return;
   log(message,'preview-user-message');setEditBusy(true);
   const stopElapsed=startEditElapsed();
+  const edit={controller:new AbortController(),stopElapsed};
+  activeEdit=edit;
   const deadline=performance.now()+125000;
   let workingContext=context;
   let followUp,query='';
@@ -92,9 +102,10 @@
     const response=await fetch(new URL('/api/preview-edit',form.dataset.endpoint),{
      method:'POST',headers:{'Content-Type':'application/json'},
      body:JSON.stringify({...payload,siteUrl:previewSourceUrl}),
-     signal:AbortSignal.timeout(Math.min(100000,remaining)),
+     signal:AbortSignal.any([edit.controller.signal,AbortSignal.timeout(Math.min(100000,remaining))]),
     });
     const plan=await response.json();
+    if(activeEdit!==edit)return;
     if(!response.ok)throw Error(plan.error||'変更案を作成できませんでした。');
     if(currentHtml!==base)throw Error('ページの状態が変わりました。もう一度お試しください。');
     if(plan.status==='inspect'&&plan.interactive&&!followUp&&typeof plan.question==='string'&&plan.question.trim()&&plan.question.length<=120){
@@ -129,14 +140,18 @@
    }
    throw Error('ページを変更できませんでした。変更したい箇所を具体的に伝えてください。');
   }catch(error){
+   if(activeEdit!==edit)return;
    context=workingContext;
    log(error.name==='TimeoutError'?'変更案の作成に時間がかかっています。ページは変更していません。もう一度お試しください。':error.name==='TypeError'?'接続できませんでした。ページは変更していません。時間をおいて再度お試しください。':error.message,'preview-edit-error');
   }finally{
-   stopElapsed();setEditBusy(false);
-   if(!mobile()||editor.dataset.pane==='edit')editInput.focus({preventScroll:true});
+   if(activeEdit===edit){
+    activeEdit=null;
+    stopElapsed();setEditBusy(false);
+    if(!mobile()||editor.dataset.pane==='edit')editInput.focus({preventScroll:true});
+   }
   }
  });
- example.addEventListener('click',()=>{toolsMenu.hidePopover();editInput.value='明日は午後休診です。お知らせに追加してください。';editForm.requestSubmit();});
+ example.addEventListener('click',()=>{toolsMenu.hidePopover();document.querySelector('#preview-notice-prompt').click();});
  const application=document.querySelector('#preview-application'),applicationForm=document.querySelector('#application-form');
  let applicationReturnToEditor=false,applicationTrigger=null,applicationSourceUrl='',applicationIntent='';
  const openApplication=({plan=null,assistance=false,sourceUrl='',returnToEditor=false,trigger=null,intent=''}={})=>{
@@ -163,14 +178,14 @@
   if(!activeForm.reportValidity())return;
   const startElapsed=activeForm===form?startRebuildElapsed:(activeForm._startElapsed||(activeForm._startElapsed=makeElapsed(status)));
   let url;try{url=new URL(/^[a-z][a-z0-9+.-]*:/i.test(input.value.trim())?input.value.trim():'https://'+input.value.trim());if(!['http:','https:'].includes(url.protocol)||url.username||url.password||url.port||url.search)throw Error();url.hash='';url.pathname='/';}catch{input.setCustomValidity('http / https の公開URLを入力してください。認証情報や「?」以降は含めないでください。');input.reportValidity();return;}
-  currentHtml='';originalHtml='';history=[];chat=[];assets=[];context={goal:'',target:'',decisions:'',pending:''};assetSequence=0;conversation.replaceChildren();frame.removeAttribute('srcdoc');if(objectUrl){URL.revokeObjectURL(objectUrl);objectUrl=null;}
+  cancelActiveEdit();currentHtml='';originalHtml='';history=[];chat=[];assets=[];context={goal:'',target:'',decisions:'',pending:''};assetSequence=0;conversation.replaceChildren();frame.removeAttribute('srcdoc');if(objectUrl){URL.revokeObjectURL(objectUrl);objectUrl=null;}
   busy=true;button.disabled=true;button.textContent='作成中…';status.className='rebuild-status is-running';status.textContent='公開ページを読み込み、プレビューを作成しています…';result.hidden=true;const stopElapsed=startElapsed();
   try{
    const response=await fetch(form.dataset.endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url:url.href,rightsConfirmed:activeForm.elements.rights.checked}),signal:AbortSignal.timeout(80000)});
    const data=await response.json();if(!response.ok)throw Error(data.error||'プレビューを作成できませんでした。');
    if(data.mode!=='static-html5-preview'||typeof data.html!=='string'||data.html.length>2000000)throw Error('プレビューの形式を確認できませんでした。');
-   originalHtml=window.SimyPreviewEdit.index(window.SimyPreviewEdit.prepare(data.html));history=[];chat=[];assets=[];context={goal:'',target:'',decisions:'',pending:''};assetSequence=0;photoInput.value='';photoStatus.textContent='';updatePreview(originalHtml);document.querySelector('#preview-source').textContent=url.hostname+' · 公開中のサイトは変更しません';conversation.replaceChildren();document.querySelector('.preview-chat').classList.add('is-empty');
-   const enquiryBody='SIMY ご担当者様\r\n\r\n医療機関名：\r\nご担当者名：\r\nホームページURL：'+url.href+'\r\nご用件：ホームページの再現を体験しました。移管・保守について相談したいです。\r\n';document.querySelector('#preview-enquiry').href='mailto:sales@simy.one?subject='+encodeURIComponent('HP管理・移管の相談')+'&body='+encodeURIComponent(enquiryBody);
+   originalHtml=window.SimyPreviewEdit.index(window.SimyPreviewEdit.prepare(data.html));history=[];chat=[];assets=[];context={goal:'',target:'',decisions:'',pending:''};assetSequence=0;editInput.value='';photoInput.value='';photoStatus.textContent='';updatePreview(originalHtml);document.querySelector('#preview-source').textContent=url.hostname+' · 公開中のサイトは変更しません';conversation.replaceChildren();document.querySelector('.preview-chat').classList.add('is-empty');
+   const enquiryBody='SIMY ご担当者様\r\n\r\n事業者・団体名：\r\nご担当者名：\r\nホームページURL：'+url.href+'\r\nご用件：ホームページの再現を体験しました。移管・保守について相談したいです。\r\n';document.querySelector('#preview-enquiry').href='mailto:sales@simy.one?subject='+encodeURIComponent('HP管理・移管の相談')+'&body='+encodeURIComponent(enquiryBody);
    status.className='rebuild-status';status.textContent='プレビューができました。もう一度開くには「編集画面を開く」を押してください。';previewSourceUrl=url.href;editorReturn=button;result.hidden=false;if(activeForm!==form){button.dataset.previewReady='true';button.dataset.sourceInput=input.value.trim();button.dataset.previewUrl=url.href;}showEditor();
   }catch(error){status.className='rebuild-status is-error';status.textContent=error.name==='TimeoutError'?'時間内に取得できませんでした。もう一度お試しください。':error.name==='TypeError'?'接続できませんでした。時間をおいて、もう一度お試しください。':error.message;}finally{stopElapsed();busy=false;button.disabled=false;button.innerHTML=button.dataset.previewReady?'編集画面を開く →':'作ってみる <span aria-hidden="true">→</span>';}
  };

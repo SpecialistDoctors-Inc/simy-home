@@ -36,3 +36,17 @@ test('clinic entry resolves current deferred PDF assets and exports its displaye
  assert.equal(planNames.length,2);for(const name of planNames)assert.ok(pdfText.includes(name.replace(/\s/gu,'')),'generated PDF preserves displayed plan: '+name);
  assert.ok(doc.output().startsWith('%PDF-'),'the connected renderer generated a real PDF');
 });
+
+test('all published HP editors use the same preview engine and pin the controller',()=>{
+ const engine=fs.readFileSync('site/preview-edit.js');
+ const name=crypto.createHash('sha256').update(engine).digest('hex').slice(0,14)+'.js';
+ for(const entry of require('../scripts/hp-management-industries.json').industries.filter(item=>item.status==='published')){
+  const html=fs.readFileSync('site/'+entry.source,'utf8');
+  const bundle=html.match(new RegExp('<script src="([^"]*/assets/clinic-service-v2/'+name.replace('.','\\.')+')"'))?.[1];
+  assert.ok(bundle,entry.source);
+  assert.deepEqual(fs.readFileSync('site'+bundle),engine,entry.source);
+  const controller=html.match(/<script src="([^"]*\/clinic-rebuild\.js)\?v=([a-f0-9]+)"/);
+  assert.ok(controller,entry.source);
+  assert.equal(controller[2],digest('site'+controller[1]),entry.source);
+ }
+});
