@@ -590,13 +590,13 @@
       "improvement": "利用可能なSearch Consoleデータでクロール・検索流入を確認",
       "acceptance": "期間・クエリ・母数付きの実測。順位保証をしない",
       "evidence": "Google Search Console",
-      "status": "部分完了",
-      "dependency": "GSCの現在データを読み取れるブラウザー操作時間または検索実績エクスポート。",
+      "status": "完了",
+      "dependency": "",
       "estimatedEffort": "データ取得後",
       "criterion": "R4",
       "owner": "Codex（実装・自動検証）",
-      "nextAction": "取得した基準値を起点とし、正確な期間と次元別実績、除外URLの理由を照合。ドメイン全体と現行199HTMLの母集団差を維持。",
-      "verificationResult": "ユーザーのChrome操作許可後、認証済みsimy.oneプロパティの直近3か月のクリック/表示/CTR/順位とインデックス概要を実画面で取得。事業データは私用Excelに保存。正確な期間・クエリ/ページ/国/端末・除外理由の詳細は未取得。Chromeの対象プロセスが途中で終了。"
+      "nextAction": "取得した基準値と変更後の同条件実績を比較する。匿名化・上位1000制限・旧URLを区別し、個別の未登録URL理由は別途確認。",
+      "verificationResult": "認証済みsimy.oneから公式Excelを実ダウンロード。2026-08-18〜2026-11-17の日別92行、上位クエリ1000行、ページ359行、国207行、端末3行、検索での見え方0行とフィルタを取得。私用Excelへ全行を統合し、現行199 HTMLとは母集団を区別。順位・流入改善の効果は保証しない。"
     },
     {
       "id": "Q32",

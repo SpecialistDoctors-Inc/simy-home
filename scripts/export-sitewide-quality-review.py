@@ -160,8 +160,8 @@ def extract_experts():
     return result
 
 def main():
-    cli=argparse.ArgumentParser(description=__doc__);cli.add_argument('--output',type=Path,default=DOCS/'SIMY_全ページレビューと改善計画_20261119.xlsx');cli.add_argument('--history',type=Path,help='Private, external history JSON. Output must be outside the public repository.');cli.add_argument('--search-console',type=Path,help='Private authenticated Search Console observations; output must be outside repository.');cli.add_argument('--ai-review',type=Path,help='Private actual AI responses and conversation URLs; export outside repository.');args=cli.parse_args()
-    if (args.history or args.search_console or args.ai_review) and args.output.resolve().is_relative_to(ROOT):
+    cli=argparse.ArgumentParser(description=__doc__);cli.add_argument('--output',type=Path,default=DOCS/'SIMY_全ページレビューと改善計画_20261119.xlsx');cli.add_argument('--history',type=Path,help='Private, external history JSON. Output must be outside the public repository.');cli.add_argument('--search-console',type=Path,help='Private authenticated Search Console observations; output must be outside repository.');cli.add_argument('--ai-review',type=Path,help='Private actual AI responses and conversation URLs; export outside repository.');cli.add_argument('--gsc-export',type=Path,help='Private official Search Console Excel; export outside repository.');args=cli.parse_args()
+    if (args.history or args.search_console or args.ai_review or args.gsc_export) and args.output.resolve().is_relative_to(ROOT):
         raise SystemExit('Export private history outside the public repository with --output.')
     inventory=read_json(ROOT/'docs/seo/sitewide-page-inventory.json')
     generated_content={url.lstrip('/')+('index.html' if url.endswith('/') else ''): 'scripts/content-pages.json → scripts/build-content-pages.py'
@@ -340,6 +340,26 @@ def main():
             assert len(pieces)==8 and all(t.startswith(c) for t,c in zip(pieces,'①②③④⑤⑥⑦⑧')),(r['service'],len(pieces))
             persona_rows.extend([[r['service'],i+1,t.strip(),'誰の何の仕事か・AI/人の分担・開始場所・迷いを含む実回答。AI仮説であり実読者の理解率ではない。'] for i,t in enumerate(pieces)])
         sheet(wb,'24ペルソナの実回答',['サービス','ペルソナ番号','ペルソナ別の実回答原文','解釈と限界'],persona_rows,[25,25,180,130])
+    production_ai=read_json(DOCS/'evidence/production-three-ai-browser.json',{})
+    if production_ai:
+        sheet(wb,'本番追加改善の36表示条件',['ページ','幅CSS px','言語','横はみ出しpx','Windows提供状態','FPの主CTA','追加ストレージの税注記','測定範囲'],[[r['file'],r['width'],r['locale'],r['overflow'],r.get('windowsNotice',''),r.get('fpHref',''),r.get('storageNote',''),production_ai['method']] for r in production_ai['results']],[65,20,20,20,140,80,140,130])
+    release_ai=read_json(DOCS/'evidence/production-release-three-ai-followup.json',{})
+    if release_ai:
+        sheet(wb,'追加改善の本番192照合',['ファイル','URL','HTTP','最終URL','レビュー済みソースSHA256','本番SHA256','一致','マージPR','配信Run','取得日時UTC','範囲'],[[r['file'],r['url'],r.get('status',''),r.get('finalURL',''),r.get('expectedSha256',''),r.get('actualSha256',''),r['matches'],release_ai['pullRequest'],release_ai['deploymentRun'],release_ai['observedAt'],release_ai['scope']] for r in release_ai['results']],[70,100,15,100,75,75,15,100,100,35,130])
+    win_status=read_json(DOCS/'evidence/windows-distribution-status.json',{})
+    if win_status:
+        sheet(wb,'本番Windows提供の一次情報',['項目','確認内容'],[[k,json.dumps(v,ensure_ascii=False) if isinstance(v,(dict,list)) else v] for k,v in win_status.items()],[45,170])
+    if args.gsc_export:
+        original=load_workbook(args.gsc_export,data_only=True)
+        tabs={'平均読み込み時間のチャート':'GSC公式_日別92日','クエリ':'GSC公式_クエリ1000件','ページ':'GSC公式_ページ359件','国':'GSC公式_国207件','デバイス':'GSC公式_端末3種','検索での見え方':'GSC公式_検索での見え方','フィルタ':'GSC公式_フィルタ'}
+        for source in original:
+            values=list(source.values)
+            sheet(wb,tabs.get(source.title,'GSC公式_'+source.title),list(values[0]),[list(r) for r in values[1:]],[100]+[25]*(source.max_column-1))
+        daily=list(original.worksheets[0].values)[1:]
+        clicks=sum(r[1] for r in daily);impressions=sum(r[2] for r in daily)
+        sheet(wb,'GSC公式_基準値と母集団',['項目','値・制約'],[['期間',str(daily[0][0])+'〜'+str(daily[-1][0])],['日数',len(daily)],['クリック合計',clicks],['表示回数合計',impressions],['CTR（合計から計算・%）',clicks/impressions*100],['対象','sc-domain:simy.one ドメイン全体。現行199 HTML / index159とは母集団が異なる'],['クエリ制約','公式exportの上位1000件。匿名化等による未掲載があり日別合計と単純一致しない'],['日別の元シート名','平均読み込み時間のチャート。元Excelの列は日付/クリック数/表示回数/CTR/掲載順位。速度測定値として扱わない'],['因果','今回の改修前の基準値。成果・順位改善の立証ではない']],[50,170])
+        opportunity=sorted([r for r in list(original['ページ'].values)[1:] if r[2]>=1000 and r[3]<0.01],key=lambda r:-r[2])
+        sheet(wb,'GSC公式_次回の確認候補',['URL','クリック','表示回数','CTR（export値）','掲載順位','抽出条件','次の確認・限界'],[[*r,'表示1000以上かつCTR1%未満。便宜的な調査候補で合否基準ではない','実クエリの意図・言語・検索結果とtitle/descriptionを照合。低CTRだけで誤りや改善効果を断定しない。'] for r in opportunity],[110,20,25,30,25,120,150])
     history_counts=history_sheets(wb,read_json(args.history)) if args.history else {}
     if args.history:
         ws=wb['はじめに'];ws.append(['履歴付きの私用版','このファイルは取得した過去会話の原文を含む私用成果物。公開リポジトリへ掲載しない。機密値は保守的に省略。候補抽出は機械的な整理で、全発言の要件確定や実装充足を意味しない。'])
