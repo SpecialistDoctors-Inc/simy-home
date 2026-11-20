@@ -160,8 +160,8 @@ def extract_experts():
     return result
 
 def main():
-    cli=argparse.ArgumentParser(description=__doc__);cli.add_argument('--output',type=Path,default=DOCS/'SIMY_全ページレビューと改善計画_20261119.xlsx');cli.add_argument('--history',type=Path,help='Private, external history JSON. Output must be outside the public repository.');cli.add_argument('--search-console',type=Path,help='Private authenticated Search Console observations; output must be outside repository.');args=cli.parse_args()
-    if (args.history or args.search_console) and args.output.resolve().is_relative_to(ROOT):
+    cli=argparse.ArgumentParser(description=__doc__);cli.add_argument('--output',type=Path,default=DOCS/'SIMY_全ページレビューと改善計画_20261119.xlsx');cli.add_argument('--history',type=Path,help='Private, external history JSON. Output must be outside the public repository.');cli.add_argument('--search-console',type=Path,help='Private authenticated Search Console observations; output must be outside repository.');cli.add_argument('--ai-review',type=Path,help='Private actual AI responses and conversation URLs; export outside repository.');args=cli.parse_args()
+    if (args.history or args.search_console or args.ai_review) and args.output.resolve().is_relative_to(ROOT):
         raise SystemExit('Export private history outside the public repository with --output.')
     inventory=read_json(ROOT/'docs/seo/sitewide-page-inventory.json')
     generated_content={url.lstrip('/')+('index.html' if url.endswith('/') else ''): 'scripts/content-pages.json → scripts/build-content-pages.py'
@@ -317,6 +317,29 @@ def main():
             file=args.output.parent/filename
             if file.exists():
                 img=Image(file);img.height=img.height*1100/img.width;img.width=1100;ws.add_image(img,anchor)
+    ai=read_json(DOCS/'evidence/three-ai-review.json',{})
+    if ai:
+        sheet(wb,'3サービスの実レビュー',['サービス','画面上のモデル表示','実施ラウンド','ペルソナ数','取得方法・自己申告の範囲','限界'],[[r['service'],r['modelLabel'],r['rounds'],r['personas'],r['method'],r['limitation']] for r in ai['services']],[25,60,20,20,130,130])
+        sheet(wb,'AI指摘への反論と採否',['ID','論点','初回指摘','ソース照合・反論','最終採否','実装対象','検証','残る未確認'],[[r[k] for k in ['id','issue','initial','counterevidence','decision','scope','verification','remaining']] for r in ai['decisions']],[15,45,120,140,140,65,120,110])
+    extra=read_json(DOCS/'evidence/three-ai-browser-followup.json',{})
+    if extra:
+        sheet(wb,'3AI改善の36表示条件',['ページ','幅CSS px','言語','横はみ出しpx','Windows提供状態','FPの主CTA','ストレージの税注記','測定範囲'],[[r['file'],r['width'],r['locale'],r['overflow'],r.get('windowsNotice',''),r.get('fpHref',''),r.get('storageNote',''),extra['method']] for r in extra['results']],[65,20,20,20,140,80,140,130])
+    environment=read_json(DOCS/'evidence/signup-test-environment-discovery.json',{})
+    if environment:
+        sheet(wb,'テスト環境のソース調査',['項目','確認内容'],[[k,json.dumps(v,ensure_ascii=False) if isinstance(v,(dict,list)) else v] for k,v in environment.items()],[45,180])
+    if args.ai_review:
+        actual=read_json(args.ai_review)
+        sheet(wb,'実AI回答6件の原文',['サービス','ラウンド','実会話URL（私用）','実回答原文','方法と限界'],[[r['service'],r['round'],r['conversationURL'],r['text'],actual['method']] for r in actual['rounds']],[25,18,100,170,140])
+        sheet(wb,'実AIへの共通入力',['ラウンド','実際の入力原文'],[[r['round'],r['text']] for r in actual['prompts']],[20,180])
+        persona_rows=[]
+        for r in actual['rounds']:
+            if r['round']!=1:continue
+            text=r['text'];start=text.find('(2)');end=text.find('(3)',start+3)
+            assert start>=0 and end>start,(r['service'],'No persona section')
+            pieces=re.split(r'(?=[①②③④⑤⑥⑦⑧])',text[start:end])[1:9]
+            assert len(pieces)==8 and all(t.startswith(c) for t,c in zip(pieces,'①②③④⑤⑥⑦⑧')),(r['service'],len(pieces))
+            persona_rows.extend([[r['service'],i+1,t.strip(),'誰の何の仕事か・AI/人の分担・開始場所・迷いを含む実回答。AI仮説であり実読者の理解率ではない。'] for i,t in enumerate(pieces)])
+        sheet(wb,'24ペルソナの実回答',['サービス','ペルソナ番号','ペルソナ別の実回答原文','解釈と限界'],persona_rows,[25,25,180,130])
     history_counts=history_sheets(wb,read_json(args.history)) if args.history else {}
     if args.history:
         ws=wb['はじめに'];ws.append(['履歴付きの私用版','このファイルは取得した過去会話の原文を含む私用成果物。公開リポジトリへ掲載しない。機密値は保守的に省略。候補抽出は機械的な整理で、全発言の要件確定や実装充足を意味しない。'])

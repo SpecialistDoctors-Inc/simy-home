@@ -1,0 +1,102 @@
+{
+  "observedAt": "2026-11-20",
+  "method": "ユーザー指定の3サービスを認証済みMac Chromeで実際に使用。Chrome Extension専用操作ツールはなく、Mac Chromeの各サービスUIで送信。共通の公開本文抜粋を提供し、8ペルソナ・5分野の論点と再審査を実施。",
+  "services": [
+    {
+      "service": "ChatGPT",
+      "modelLabel": "画面表示 Medium / 中程度（モデル版未確定）",
+      "rounds": 2,
+      "personas": 8,
+      "method": "回答では指定10 URLの公開HTML取得を申告。ツール内部の取得ログは別途検証していない。",
+      "limitation": "AIによる仮説評価。実読者・母語話者調査・画面操作・実課金の証拠ではない。"
+    },
+    {
+      "service": "Claude",
+      "modelLabel": "画面表示 Opus 5.5 中",
+      "rounds": 2,
+      "personas": 8,
+      "method": "回答ではWebFetchで12ページ全文相当と4言語冒頭取得を申告。WebFetchによる中間抽出と自己申告。",
+      "limitation": "AIによる仮説評価。実読者・母語話者調査・画面操作・実課金の証拠ではない。"
+    },
+    {
+      "service": "Gemini",
+      "modelLabel": "画面表示 4 Hydrogen",
+      "rounds": 2,
+      "personas": 8,
+      "method": "外部Web取得不可と回答。10 URLの共通公開抜粋による評価。",
+      "limitation": "提供抜粋によるAI仮説。未閲覧の6言語全文・画面・実動作を確認済みにしない。"
+    }
+  ],
+  "decisions": [
+    {
+      "id": "AI-A",
+      "issue": "税表記の対象",
+      "initial": "Claudeがメイン料金と追加ストレージの税込注記を矛盾と指摘。",
+      "counterevidence": "ソース上で後者はstorage-dialog内部。メイン料金の税別＋税込参考額とは対象が別。",
+      "decision": "修正採用。6言語で追加ストレージという主語を明記。料金額は変更しない。",
+      "scope": "HOME 6言語、翻訳元辞書",
+      "verification": "36ブラウザー条件、価格カタログ/チェックアウトJSのSHA不変",
+      "remaining": "実決済での税額確定は未確認"
+    },
+    {
+      "id": "AI-B",
+      "issue": "Windows提供状態と手順",
+      "initial": "未署名プレビューの開示がdownloadにない。警告を詳細情報→実行で回避。",
+      "counterevidence": "既存エンジニアページに未署名・実機フロー一部検証中・テストPC推奨の開示がある。",
+      "decision": "採用。6言語downloadでボタン近くへ既存状態を展開。出所と組織ルールを確認してから実行判断。",
+      "scope": "download 6言語",
+      "verification": "36ブラウザー条件、既存バイナリURL不変",
+      "remaining": "実機フロー・署名完了予定日を確認済みにしない"
+    },
+    {
+      "id": "AI-C",
+      "issue": "FPの利用開始導線",
+      "initial": "PCアプリのダウンロードが主導線だとWeb/iOSとの使い分けで迷う。",
+      "counterevidence": "HOME現行価格のSIMY by Industry列にはファイナンシャルプランナーが明記済み。全機能利用可という保証はない。",
+      "decision": "修正採用。主要CTAは言語別HOMEの現行#pricing。iOS、補助downloadは保持。",
+      "scope": "FP 6言語",
+      "verification": "6言語×2幅の主CTA pathname/hash、iOSリンク維持",
+      "remaining": "実アカウントごとのWeb/iOS機能権限は未検証"
+    },
+    {
+      "id": "AI-D",
+      "issue": "未裏付けの無料登録・認証条件",
+      "initial": "Geminiがメールだけ・カード不要・営業電話なしを提案。ClaudeがISO認証範囲外という例を提案。",
+      "counterevidence": "現在の運用・認証適用範囲を断定できる根拠がない。",
+      "decision": "棄却。各AIへ未裏付けを提示し再審査。ClaudeとGeminiは提案を訂正。",
+      "scope": "診断登録・医療/法律・ISO",
+      "verification": "新規の無根拠な保証を追加していない",
+      "remaining": "実登録の必要項目と認証書の適用範囲"
+    },
+    {
+      "id": "AI-E",
+      "issue": "業種別構成と実動画",
+      "initial": "Geminiは医院/法律の類似と236億円の動画例を疑問視。",
+      "counterevidence": "医院から法律への最新構成移植、実動画と値の説明は過去の明示要件。既存本文も想定例と明記。",
+      "decision": "構成・原画・実動画と数値を維持。公開前に広告規程/個人情報/守秘を確認する手順を医院・法律で具体化。",
+      "scope": "clinic/index.html、law-firm.html、rosenz（維持）",
+      "verification": "法律リリースmanifest再生成と全テスト",
+      "remaining": "法務監修を受けた/実務適合保証と表現しない"
+    },
+    {
+      "id": "AI-F",
+      "issue": "AI指摘自体の誤り",
+      "initial": "Geminiは2026年10月を将来と解釈。抜粋外の欠落や全矢印未対応を推論。",
+      "counterevidence": "本日は2026-11-20。全文とDOMを見ずに欠落は確定できない。一部矢印はaria-hidden済み。",
+      "decision": "棄却・訂正。Geminiの実回答で日付誤認等の撤回を回収。",
+      "scope": "レビュー全体",
+      "verification": "2ラウンドの実回答と原文を私用Excelへ記録",
+      "remaining": "全アクセシビリティ適合の証拠にはしない"
+    },
+    {
+      "id": "AI-G",
+      "issue": "現行料金と将来料金の管理",
+      "initial": "Claudeが価格一元化、各AIが現行/新料金の区別を重視。",
+      "counterevidence": "既に現行pricing-catalogと新料金pricing_2026_11_dataの別データ管理。新料金は適用日未定・申込前。",
+      "decision": "統合や現行価格への差替えは棄却。別管理と状態表示を維持。",
+      "scope": "全料金ページ",
+      "verification": "1,650 tests成功。金額・チェックアウト資産不変、変更した文言とFP導線だけbaseline更新。",
+      "remaining": "新料金の販売開始やStripe live変更は行っていない"
+    }
+  ]
+}
