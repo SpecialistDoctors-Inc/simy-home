@@ -760,7 +760,7 @@ thead th.simy { background: var(--blue-deep); }
 }
 .dl-card.is-you .you-badge { display: inline-block; }
 .dl-main { padding: clamp(40px, 6vw, 72px) 0 clamp(56px, 7vw, 96px); }
-.dl-main .wrap > .sec { max-width: 980px; }
+.dl-main > .wrap { max-width: 980px; }
 @media (max-width: 860px) { .dl-grid { grid-template-columns: minmax(0, 1fr); } }
 
 .funnel { list-style: none; margin: 28px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; border: 1px solid var(--ink); border-radius: var(--radius); overflow: hidden; background: var(--paper-light); }
@@ -771,20 +771,35 @@ thead th.simy { background: var(--blue-deep); }
 .funnel li.is-now .fn { background: var(--blue-deep); color: #fff; border-color: var(--blue-deep); }
 .funnel b { display: block; font-size: 1rem; }
 .funnel small { display: block; margin-top: 2px; font-size: 0.8rem; color: var(--ink-soft); }
-.paths { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 16px; margin-top: 16px; align-items: start; }
+.paths { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; margin-top: 16px; }
 .path { padding: 22px 20px; border: 1px solid var(--ui-line); border-radius: var(--radius); background: var(--paper-light); display: flex; flex-direction: column; gap: 10px; }
 .path-new { border-color: var(--ink); box-shadow: 6px 6px 0 var(--blue); }
 .path-h { margin: 0; font-size: 1.3rem; }
 .path p { margin: 0; font-size: 0.92rem; color: #34322f; }
 .need { margin: 0; padding-left: 1.1em; font-size: 0.88rem; line-height: 1.8; }
 .path .btn { justify-content: center; }
-.path .dl-grid { grid-template-columns: minmax(0, 1fr); margin-top: 4px; gap: 10px; }
+.path-new > .btn { align-self: flex-start; }
+.path .dl-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 4px; gap: 10px; }
 .path .dl-card { padding: 14px 16px; gap: 8px; border-color: var(--ui-line); }
 .path .dl-card.is-you { border-color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
 .path .dl-card h3 { font-size: 1.02rem; }
+.path .dl-card .btn { padding-inline: 12px; gap: 6px; text-wrap: balance; }
+/* Shared platform rows keep names, actions and metadata aligned across languages. */
+@media (min-width: 861px) {
+  .path .dl-grid { grid-template-rows: repeat(6, auto); }
+  .path .dl-card { display: grid; grid-template-rows: subgrid; grid-row: span 6; }
+  .path .dl-card .you-badge { grid-row: 1; justify-self: start; }
+  .path .dl-card .os { grid-row: 2; }
+  .path .dl-card h3 { grid-row: 3; }
+  .path .dl-card .btn { grid-row: 4; margin-top: 0; }
+  .path .dl-card .dl-meta { grid-row: 5; }
+  .path .dl-card .note { grid-row: 6; margin: 0; }
+}
+
 .mobile-hint { margin: 4px 0 0; font-size: 0.86rem; color: var(--ink-soft); }
 .linkbtn { background: none; border: 0; padding: 0; font: inherit; color: var(--blue-deep); text-decoration: underline; cursor: pointer; }
 .dl-meta a { color: var(--blue-deep); }
+@media (max-width: 860px) { .path .dl-grid { grid-template-columns: minmax(0, 1fr); } .path-new > .btn { align-self: stretch; } }
 @media (max-width: 860px) { .paths, .funnel { grid-template-columns: minmax(0, 1fr); } .funnel li { border-left: 0; border-top: 1px solid var(--ui-line); } .funnel li:first-child { border-top: 0; } }
 
 .lang-switch { position: relative; }
