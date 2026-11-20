@@ -96,3 +96,13 @@ Chrome UXレポートの最終更新2026-11-16では、PCが良好89 URL・要�
 テスト環境はソースからapp-dev.simy.one / dev Supabase lecrmdebakgoqgnbwuyl / Mailpitを特定。Vercel DevelopmentにはStripe testキーがあるがDB/受信設定が欠け、preview devの必要Secretはenv pullに戻らない。Supabase connectorも利用不可。別環境の認証情報を混ぜて成功としない。PR #3047は全CI成功だが保護ブランチ権限で未マージ。
 
 証跡: evidence/three-ai-review.json、three-ai-browser-followup.json、signup-test-environment-discovery.json。実回答6件・会話URL・24ペルソナ原文・共通入力は私用Excelにのみ収録。
+
+
+### Search Consoleの公式明細取得
+
+認証済みプロパティの公式ExcelをMac Chromeから実ダウンロードし、日別92行（2026-08-18〜2026-11-17）、クエリ上位1000、ページ359、国207、端末3、検索での見え方0、フィルタを取得。私用Excelに全行を統合。正確な合計は私用版に収録し、公開リポジトリへ検索の事業データを転載しない。Q31の受入（期間・クエリ・母数付き実測）は完了。旧URL/全ドメインのデータであり現行199 HTMLと同じ母集団とはしない。検索順位改善の証明とも扱わない。
+
+
+### 追加改善の本番反映
+
+PR #499を2026-11-20にmainへマージ（0e67287a2d859e97dbff84ba81865dd0531421de）。Deploy #44646651587成功。本番192 URL/資産のHTTP 200とSHA256一致を確認。さらに本番6言語×3種別×390/1440pxの36条件が成功。Windows状態表示・FPの主CTA・追加ストレージ注記を配信後に再検証。証跡はevidence/production-release-three-ai-followup.jsonとproduction-three-ai-browser.json。実メール・決済の成功とは区別する。
