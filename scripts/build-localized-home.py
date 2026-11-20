@@ -54,8 +54,9 @@ class Localize(HTMLParser):
         a = dict(attrs)
         if tag == 'html':
             a.update(lang=self.locale, **{'data-rendered-locale': self.locale})
-        if tag == 'link' and a.get('rel') == 'stylesheet' and a.get('href', '').split('?')[0].lstrip('/') == 'home.css':
-            a['href'] = 'home.css?v=' + hashlib.sha256((SITE / 'home.css').read_bytes()).hexdigest()[:12]
+        if tag == 'link' and a.get('rel') == 'stylesheet' and a.get('href', '').split('?')[0].lstrip('/') in ('home.css', 'home-manga-preview.css'):
+            asset = a['href'].split('?')[0]
+            a['href'] = asset + '?v=' + hashlib.sha256((SITE / asset.lstrip('/')).read_bytes()).hexdigest()[:12]
         if tag == 'link' and a.get('rel') == 'canonical':
             a['href'] = BASE + home_path(self.locale)
         if tag == 'meta':
