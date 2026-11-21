@@ -109,6 +109,11 @@ def examples(profile,c):
         result.append('<article class="sp26-example" data-example="'+','.join(codes)+'"><h4>'+e(label)+'</h4><p>'+e(suffix)+' · '+e(c['beforeTax'])+'</p><dl>'+values+'</dl><p class="sp26-subtitle">'+e(c['baseAnnual'])+'</p>'+annual+'</article>')
     return '<div class="sp26-examples">'+''.join(result)+'</div>'
 
+def enabled_checkout(route):
+    checkout = route.get('checkout')
+    return checkout if checkout and checkout['enabled'] else None
+
+
 def render(route):
     c=COPY[route['locale']];profile=MAP['profiles'][route['profile']]
     optional=''
@@ -116,12 +121,24 @@ def render(route):
         note=c['hpRule'] if route['profile']=='homepage' else c['optionalNote']
         optional = (f'<h3 id="sp26-optional-rates">{e(c["optional"])}</h3><p>{e(note)}</p>'
                     + price_table(profile['optional'], c, 'sp26-optional-rates'))
-    rules=[c['allowance'],c['transcriptionSla'],c['taxNote']]
+    checkout = enabled_checkout(route)
+    title = checkout['title'] if checkout else c['title']
+    if checkout:
+        intro = (f'<p>{e(checkout["intro"])}</p>'
+                 f'<p><a class="button button-primary" href="{e(checkout["href"])}">{e(checkout["label"])}</a></p>')
+    else:
+        intro = (f'<p class="sp26-status"><strong>{e(c["status"])}</strong></p>\n'
+                 f'<p>{e(c["separation"])}</p>')
+    rules=[c['allowance'],c['transcriptionSla'],checkout['taxNote'] if checkout else c['taxNote']]
     if route['profile'] in ['development','fp']:rules.append(c['byo'])
     if route['profile']=='homepage':rules.append(c['hpRule'])
     if route['profile'] in ['hearing','fp']:rules.append(c['hearingRule'])
     contact=route.get('existingContact')
-    existing_contact=('<p><a href="'+e(contact['href'])+'">'+e(contact['label'])+'</a>（新料金での申込受付前）</p>') if contact else ''
+    contact_note = '' if checkout else '（新料金での申込受付前）'
+    existing_contact = (
+        f'<p><a href="{e(contact["href"])}">{e(contact["label"])}</a>{contact_note}</p>'
+        if contact else ''
+    )
     legacy_anchor='<span id="pricing"></span>' if route.get('placement')=='replace-pricing' else ''
     rate_breakdown = (f'<h3 id="sp26-primary-rates">{e(c["primary"])}</h3>'
                       + price_table(profile['primary'], c, 'sp26-primary-rates') + optional)
@@ -130,8 +147,7 @@ def render(route):
     if route['profile'] == 'rosenz':
         sections.reverse()
     return START+f'''\n<section class="sp26" id="new-pricing" data-service-pricing-202611="{route['profile']}" aria-labelledby="sp26-title"><div class="sp26-frame">{legacy_anchor}
-<h2 id="sp26-title">{e(c['title'])}</h2><p class="sp26-status"><strong>{e(c['status'])}</strong></p>
-<p>{e(c['separation'])}</p><p>{e(c['country'])} {e(c['beforeTax'])}</p><p>{e(c['trial'])}</p>
+<h2 id="sp26-title">{e(title)}</h2>{intro}<p>{e(c['country'])} {e(c['beforeTax'])}</p><p>{e(c['trial'])}</p>
 {''.join(sections)}
 <h3 id="sp26-usage-rates">{e(c['usage'])}</h3>{price_table(profile['usage'], c, 'sp26-usage-rates', usage=True)}
 <ul class="sp26-notes">{''.join('<li>'+e(x)+'</li>' for x in rules)}</ul>
@@ -168,7 +184,10 @@ def apply(source,path):
     else:
         if source.count('</main>')!=1:raise ValueError('Expected one service main: '+key)
         source=source.replace('</main>',block+'\n</main>',1)
-    notice=NOTICE_START+'<aside class="sp26-notice"><p>'+e(c['currentNotice'])+'</p><a href="#new-pricing">'+e(c['title'])+' ↓</a></aside>'+NOTICE_END
+    checkout = enabled_checkout(route)
+    notice_copy = checkout['intro'] if checkout else c['currentNotice']
+    notice_label = checkout['title'] if checkout else c['title']
+    notice=NOTICE_START+'<aside class="sp26-notice"><p>'+e(notice_copy)+'</p><a href="#new-pricing">'+e(notice_label)+' ↓</a></aside>'+NOTICE_END
     if NOTICE_START in source:source=re.sub(re.escape(NOTICE_START)+r'[\s\S]*?'+re.escape(NOTICE_END),lambda _:notice,source,count=1)
     else:
         source,count=re.subn(r'(<main\b[^>]*>)',lambda m:m[0]+notice,source,count=1)
