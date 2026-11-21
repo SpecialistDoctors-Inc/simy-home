@@ -369,7 +369,7 @@
     "Monthly price": "月額料金",
     "Additional storage": "追加容量",
     "Prices shown in USD.": "価格は米ドル表記です。",
-    "Prices are shown in USD. Japanese prices include 10% consumption tax. Elsewhere, taxes may apply at checkout.": "価格は米ドル表記です。日本語表示の価格は消費税10%込みです。その他の国・地域では、決済時に税が加算される場合があります。",
+    "Additional storage prices are shown in USD. On Japanese pages, these storage prices include 10% consumption tax. Elsewhere, taxes may apply at checkout.": "追加ストレージの価格は米ドル表記です。この表の日本語表示は消費税10%込みです。その他の国・地域では、決済時に税が加算される場合があります。",
     "Codex account connection": "Codexアカウント連携",
     "Included": "利用可",
     "Meeting Autorun": "Meeting Autorun",

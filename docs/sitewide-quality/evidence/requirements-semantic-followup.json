@@ -1,0 +1,61 @@
+{
+  "method": "Original messages and subsequent correction reviewed, compared with implementation commit and current body. Not an exhaustive adjudication of all candidates.",
+  "results": [
+    {
+      "requirement": "UR08",
+      "file": "site/index.html",
+      "observed": "Chats become workflows.\nAI gets it done.",
+      "evidence": "64ef8207f3889174c0c380c39d5c0da1c15a9df8; current hero-lead",
+      "decision": "旧文言からの変更を実コミットと現行で照合。日本語は原文の方向性、他5言語は同コミットの反映を確認。母語話者の承認とはしない。"
+    },
+    {
+      "requirement": "UR08",
+      "file": "site/ja.html",
+      "observed": "チャットや会話を、仕事が進む仕組みに変える。",
+      "evidence": "64ef8207f3889174c0c380c39d5c0da1c15a9df8; current hero-lead",
+      "decision": "旧文言からの変更を実コミットと現行で照合。日本語は原文の方向性、他5言語は同コミットの反映を確認。母語話者の承認とはしない。"
+    },
+    {
+      "requirement": "UR08",
+      "file": "site/es.html",
+      "observed": "Convierte chats y conversaciones en flujos que hacen avanzar el trabajo.",
+      "evidence": "64ef8207f3889174c0c380c39d5c0da1c15a9df8; current hero-lead",
+      "decision": "旧文言からの変更を実コミットと現行で照合。日本語は原文の方向性、他5言語は同コミットの反映を確認。母語話者の承認とはしない。"
+    },
+    {
+      "requirement": "UR08",
+      "file": "site/fr.html",
+      "observed": "Transformez les échanges en workflows qui font réellement avancer le travail.",
+      "evidence": "64ef8207f3889174c0c380c39d5c0da1c15a9df8; current hero-lead",
+      "decision": "旧文言からの変更を実コミットと現行で照合。日本語は原文の方向性、他5言語は同コミットの反映を確認。母語話者の承認とはしない。"
+    },
+    {
+      "requirement": "UR08",
+      "file": "site/hi.html",
+      "observed": "चैट और बातचीत को ऐसे वर्कफ़्लो में बदलें जो काम पूरा करें।",
+      "evidence": "64ef8207f3889174c0c380c39d5c0da1c15a9df8; current hero-lead",
+      "decision": "旧文言からの変更を実コミットと現行で照合。日本語は原文の方向性、他5言語は同コミットの反映を確認。母語話者の承認とはしない。"
+    },
+    {
+      "requirement": "UR08",
+      "file": "site/zh-Hans.html",
+      "observed": "将聊天和对话变成真正推进工作的工作流。",
+      "evidence": "64ef8207f3889174c0c380c39d5c0da1c15a9df8; current hero-lead",
+      "decision": "旧文言からの変更を実コミットと現行で照合。日本語は原文の方向性、他5言語は同コミットの反映を確認。母語話者の承認とはしない。"
+    },
+    {
+      "requirement": "UR17 / UR34",
+      "file": "site/for/pharmaceutical-companies/index.html",
+      "observed": "その先生を知る。練習を、次の面談に活かす。 / 実際の面談から、先生の関心や判断基準を整理。",
+      "evidence": "source messages in user-requirements-reconciliation.json; current H1 and intro",
+      "decision": "後続の実面談での活用を優先。医師別の関心という元の目的を保持。"
+    },
+    {
+      "requirement": "UR18",
+      "file": "site/for/pharmaceutical-companies/index.html",
+      "observed": "会社・施設のルールに沿い、必要な同意を得て実際の面談を録音。 / MRが元の会話と照らし、解釈を確認します。",
+      "evidence": "current story panels 01–03, 08 and disclosure",
+      "decision": "実録音に基づく個別化の説明と提案範囲の明示を確認。実連携の完了は主張しない。"
+    }
+  ]
+}

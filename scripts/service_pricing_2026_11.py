@@ -196,4 +196,9 @@ def apply(source,path):
     css_url='/hp-management/law-firm/pricing-rate-tables.css' if key=='hp-management/law-firm.html' else '/pricing-rate-tables.css'
     asset='<link rel="stylesheet" data-service-pricing-style href="'+css_url+'?v='+hashlib.sha256(css.read_bytes()).hexdigest()[:12]+'">'
     source=re.sub(r'<link\b[^>]*data-service-pricing-style[^>]*>','',source)
+    # Accessibility is the final shared head asset. Preserve that order when
+    # this publisher is run independently after full-page generation.
+    accessibility = re.search(r'<link\b[^>]*href="/(?:hp-management/law-firm/)?page-accessibility\.css[^" ]*"[^>]*>', source)
+    if accessibility:
+        return source[:accessibility.start()] + asset + source[accessibility.start():]
     return source.replace('</head>',asset+'</head>',1)

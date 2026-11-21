@@ -16,6 +16,7 @@
   --sienna: #b85b3f;
   --mint: #92edce;
   --mint-soft: #ecfbf6;
+  --success-ink: #176535;
   --radius-sm: 0.5rem;
   --radius-md: 0.8rem;
   --radius-lg: 1.1rem;
@@ -41,6 +42,9 @@
   font-weight: 850;
   letter-spacing: -0.01em;
   text-decoration: none;
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
   transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
 }
 
@@ -61,13 +65,13 @@
 }
 
 .button-primary {
-  min-width: 12.75rem;
+  min-width: min(12.75rem, 100%);
   background: var(--blue);
   color: #fff;
 }
 
 .button-light {
-  min-width: 15rem;
+  min-width: min(15rem, 100%);
   background: var(--paper-light);
   color: var(--ink);
 }

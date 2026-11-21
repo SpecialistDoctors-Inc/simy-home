@@ -1098,7 +1098,7 @@ html[lang="ja"] .section-intro h2 {
 }
 
 .section-dark .section-intro > div > p {
-  color: rgba(255, 255, 255, 0.66);
+  color: var(--paper-light);
 }
 
 .product-intro h2 {
@@ -1326,7 +1326,7 @@ html[lang="ja"] .section-intro h2 {
 }
 
 .demo-result span + div > span {
-  color: rgba(255, 255, 255, 0.65);
+  color: var(--paper-light);
 }
 
 .demo-result p {
@@ -1688,7 +1688,7 @@ html[lang="ja"] .section-intro h2 {
 
 .shot-sidebar > span.is-selected {
   background: #eaf2fd;
-  color: var(--blue);
+  color: var(--blue-deep);
 }
 
 .shot-sidebar > i {
@@ -1747,12 +1747,12 @@ html[lang="ja"] .section-intro h2 {
   align-items: center;
   gap: 0.22rem;
   margin-top: 0.3rem;
-  color: #269852;
+  color: var(--success-ink);
   font-size: 0.41rem;
 }
 
 .shot-list-card span.is-failed {
-  color: #d15d42;
+  color: var(--sienna);
 }
 
 .shot-list-card span i {
@@ -1777,7 +1777,7 @@ html[lang="ja"] .section-intro h2 {
   padding: 0.15rem;
   border-radius: 99px;
   background: #f3f3f3;
-  color: #777;
+  color: var(--ink-soft);
   text-align: center;
 }
 
@@ -1801,7 +1801,7 @@ html[lang="ja"] .section-intro h2 {
 }
 
 .shot-title > span {
-  color: var(--blue);
+  color: var(--blue-deep);
 }
 
 .shot-title em {
@@ -1809,7 +1809,7 @@ html[lang="ja"] .section-intro h2 {
   padding: 0.16rem 0.34rem;
   border-radius: 99px;
   background: #eaf8ee;
-  color: #269852;
+  color: var(--success-ink);
   font-style: normal;
 }
 
@@ -1828,7 +1828,7 @@ html[lang="ja"] .section-intro h2 {
   place-items: center;
   border-radius: 50%;
   background: var(--blue-soft);
-  color: var(--blue);
+  color: var(--blue-deep);
   font-weight: 800;
 }
 
@@ -1862,7 +1862,7 @@ html[lang="ja"] .section-intro h2 {
 }
 
 .shot-complete > span {
-  color: #269852;
+  color: var(--success-ink);
   font-weight: 900;
 }
 
@@ -1875,7 +1875,7 @@ html[lang="ja"] .section-intro h2 {
   padding: 0.14rem 0.3rem;
   border-radius: 99px;
   background: #dff6e6;
-  color: #269852;
+  color: var(--success-ink);
   font-style: normal;
 }
 
@@ -1891,7 +1891,7 @@ html[lang="ja"] .section-intro h2 {
 }
 
 .shot-file > span {
-  color: var(--blue);
+  color: var(--blue-deep);
 }
 
 .shot-file small,
@@ -1900,7 +1900,7 @@ html[lang="ja"] .section-intro h2 {
 }
 
 .shot-file small {
-  color: #777;
+  color: var(--ink-soft);
   font-size: 0.39rem;
 }
 
@@ -1918,12 +1918,12 @@ html[lang="ja"] .section-intro h2 {
   padding: 0.58rem 0.7rem;
   border: 1px solid var(--ui-line);
   border-radius: 0.5rem;
-  color: #999;
+  color: var(--ink-soft);
   box-shadow: 0 0.3rem 0.7rem rgba(17, 17, 17, 0.06);
 }
 
 .shot-compose span {
-  color: var(--blue);
+  color: var(--blue-deep);
 }
 
 .app-shot-actions {
@@ -1947,13 +1947,13 @@ html[lang="ja"] .section-intro h2 {
 }
 
 .actions-head > span {
-  color: var(--blue);
+  color: var(--blue-deep);
 }
 
 .actions-head em,
 .actions-label em {
   margin-left: auto;
-  color: #777;
+  color: var(--ink-soft);
   font-style: normal;
   font-weight: 700;
 }
@@ -1972,7 +1972,7 @@ html[lang="ja"] .section-intro h2 {
 }
 
 .actions-filters b {
-  border-color: var(--blue);
+  border-color: var(--blue-deep);
   background: var(--blue);
   color: #fff;
 }
@@ -2003,7 +2003,7 @@ html[lang="ja"] .section-intro h2 {
   place-items: center;
   border: 1px solid #a8c9f7;
   border-radius: 0.35rem;
-  color: var(--blue);
+  color: var(--blue-deep);
 }
 
 .actions-cards {
@@ -2027,7 +2027,7 @@ html[lang="ja"] .section-intro h2 {
 }
 
 .actions-cards span {
-  color: var(--blue);
+  color: var(--blue-deep);
   font-size: 0.42rem;
   font-weight: 800;
 }
@@ -2039,7 +2039,7 @@ html[lang="ja"] .section-intro h2 {
 }
 
 .actions-cards small {
-  color: #777;
+  color: var(--ink-soft);
   font-size: 0.4rem;
 }
 
@@ -2064,7 +2064,7 @@ html[lang="ja"] .section-intro h2 {
   height: 0.45rem;
   border-radius: 50%;
   background: var(--blue);
-  color: var(--blue);
+  color: var(--blue-deep);
 }
 
 .actions-work b,
@@ -2073,12 +2073,12 @@ html[lang="ja"] .section-intro h2 {
 }
 
 .actions-work small {
-  color: #777;
+  color: var(--ink-soft);
   font-size: 0.39rem;
 }
 
 .actions-work > em {
-  color: var(--blue);
+  color: var(--blue-deep);
   font-style: normal;
   font-weight: 800;
 }
@@ -2128,9 +2128,9 @@ html[lang="ja"] .section-intro h2 {
 }
 
 .template-filters b {
-  border-color: var(--blue);
+  border-color: var(--blue-deep);
   background: var(--blue-soft);
-  color: var(--blue);
+  color: var(--blue-deep);
 }
 
 .template-cards {
@@ -2149,7 +2149,7 @@ html[lang="ja"] .section-intro h2 {
 }
 
 .template-cards small {
-  color: #777;
+  color: var(--ink-soft);
   font-family: var(--mono);
   font-size: 0.37rem;
 }
@@ -2171,7 +2171,7 @@ html[lang="ja"] .section-intro h2 {
 }
 
 .template-cards em {
-  color: #777;
+  color: var(--ink-soft);
   font-size: 0.4rem;
   font-style: normal;
 }
@@ -2220,7 +2220,7 @@ html[lang="ja"] .section-intro h2 {
 
 .hearing-steps i {
   background: #eee;
-  color: #777;
+  color: var(--ink-soft);
 }
 
 .hearing-steps span {
@@ -2237,12 +2237,12 @@ html[lang="ja"] .section-intro h2 {
 }
 
 .hearing-status span {
-  color: var(--blue);
+  color: var(--blue-deep);
   font-weight: 800;
 }
 
 .hearing-status em {
-  color: #777;
+  color: var(--ink-soft);
   font-style: normal;
 }
 
@@ -2322,7 +2322,7 @@ html[lang="ja"] .section-intro h2 {
 }
 
 .growth-summary small {
-  color: #777;
+  color: var(--ink-soft);
 }
 
 .growth-summary strong {
@@ -2351,7 +2351,7 @@ html[lang="ja"] .section-intro h2 {
   border: 1px solid #bcd5f7;
   border-radius: 0.35rem;
   background: var(--blue-soft);
-  color: var(--blue);
+  color: var(--blue-deep);
 }
 
 .growth-row > div > b {
@@ -2375,7 +2375,7 @@ html[lang="ja"] .section-intro h2 {
 }
 
 .growth-row > strong {
-  color: #777;
+  color: var(--ink-soft);
   font-size: 0.42rem;
 }
 
@@ -2396,7 +2396,7 @@ html[lang="ja"] .section-intro h2 {
 }
 
 .apps-intro > div > p {
-  color: rgba(255, 255, 255, 0.66);
+  color: var(--paper-light);
 }
 
 .apps-system {
@@ -2737,7 +2737,7 @@ html[lang="ja"] .section-intro h2 {
 
 .apps-core > span {
   margin-top: 1rem;
-  color: rgba(255, 255, 255, 0.66);
+  color: var(--paper-light);
 }
 
 .apps-core > strong {

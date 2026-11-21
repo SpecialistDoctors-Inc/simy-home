@@ -760,7 +760,7 @@ thead th.simy { background: var(--blue-deep); }
 }
 .dl-card.is-you .you-badge { display: inline-block; }
 .dl-main { padding: clamp(40px, 6vw, 72px) 0 clamp(56px, 7vw, 96px); }
-.dl-main .wrap > .sec { max-width: 980px; }
+.dl-main > .wrap { max-width: 980px; }
 @media (max-width: 860px) { .dl-grid { grid-template-columns: minmax(0, 1fr); } }
 
 .funnel { list-style: none; margin: 28px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; border: 1px solid var(--ink); border-radius: var(--radius); overflow: hidden; background: var(--paper-light); }
@@ -771,20 +771,35 @@ thead th.simy { background: var(--blue-deep); }
 .funnel li.is-now .fn { background: var(--blue-deep); color: #fff; border-color: var(--blue-deep); }
 .funnel b { display: block; font-size: 1rem; }
 .funnel small { display: block; margin-top: 2px; font-size: 0.8rem; color: var(--ink-soft); }
-.paths { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 16px; margin-top: 16px; align-items: start; }
+.paths { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; margin-top: 16px; }
 .path { padding: 22px 20px; border: 1px solid var(--ui-line); border-radius: var(--radius); background: var(--paper-light); display: flex; flex-direction: column; gap: 10px; }
 .path-new { border-color: var(--ink); box-shadow: 6px 6px 0 var(--blue); }
 .path-h { margin: 0; font-size: 1.3rem; }
 .path p { margin: 0; font-size: 0.92rem; color: #34322f; }
 .need { margin: 0; padding-left: 1.1em; font-size: 0.88rem; line-height: 1.8; }
 .path .btn { justify-content: center; }
-.path .dl-grid { grid-template-columns: minmax(0, 1fr); margin-top: 4px; gap: 10px; }
+.path-new > .btn { align-self: flex-start; }
+.path .dl-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 4px; gap: 10px; }
 .path .dl-card { padding: 14px 16px; gap: 8px; border-color: var(--ui-line); }
 .path .dl-card.is-you { border-color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
 .path .dl-card h3 { font-size: 1.02rem; }
+.path .dl-card .btn { padding-inline: 12px; gap: 6px; text-wrap: balance; }
+/* Shared platform rows keep names, actions and metadata aligned across languages. */
+@media (min-width: 861px) {
+  .path .dl-grid { grid-template-rows: repeat(6, auto); }
+  .path .dl-card { display: grid; grid-template-rows: subgrid; grid-row: span 6; }
+  .path .dl-card .you-badge { grid-row: 1; justify-self: start; }
+  .path .dl-card .os { grid-row: 2; }
+  .path .dl-card h3 { grid-row: 3; }
+  .path .dl-card .btn { grid-row: 4; margin-top: 0; }
+  .path .dl-card .dl-meta { grid-row: 5; }
+  .path .dl-card .note { grid-row: 6; margin: 0; }
+}
+
 .mobile-hint { margin: 4px 0 0; font-size: 0.86rem; color: var(--ink-soft); }
 .linkbtn { background: none; border: 0; padding: 0; font: inherit; color: var(--blue-deep); text-decoration: underline; cursor: pointer; }
 .dl-meta a { color: var(--blue-deep); }
+@media (max-width: 860px) { .path .dl-grid { grid-template-columns: minmax(0, 1fr); } .path-new > .btn { align-self: stretch; } }
 @media (max-width: 860px) { .paths, .funnel { grid-template-columns: minmax(0, 1fr); } .funnel li { border-left: 0; border-top: 1px solid var(--ui-line); } .funnel li:first-child { border-top: 0; } }
 
 .lang-switch { position: relative; }
@@ -844,7 +859,7 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
           "name": "可以免费试用吗？",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "没有免费套餐。选择月付套餐并注册后，应用和网页版都可以使用。费用请查看首页的价格栏目。"
+            "text": "首页列出的基础套餐包含一个月免费试用。注册时可选择按月或按年付款；试用结束后，套餐将按所选条件自动续订。您可以在试用结束前取消。适用套餐、附加费用、税费和最终条件请在注册页面确认。"
           }
         },
         {
@@ -910,8 +925,8 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
 </script>
 <meta name="twitter:title" content="下载SIMY：Mac、Windows、iPhone">
 <meta name="twitter:description" content="SIMY会从电脑上Claude Code和Codex的对话中，找出下一项工作。">
-<link rel="stylesheet" href="/site-header.css?v=20261021-pharma-1">
-<script src="/site-header.js?v=59ee9a88c8e3" defer></script>
+<link rel="stylesheet" href="/site-header.css?v=057b1a60b00d">
+<script src="/site-header.js?v=71355ee0facc" defer></script>
 <!-- SIMY locale navigation -->
 <script data-simy-locale-navigation>
 /* Shared homepage entry policy. Country hints are optional; timezone is an OS
@@ -1013,6 +1028,7 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
 })();
 </script>
 <!-- /SIMY locale navigation -->
+<link rel="stylesheet" href="/page-accessibility.css?v=468c1bee6d3c">
 </head>
 <body>
 <a class="skip" href="#main">跳到正文</a>
@@ -1020,15 +1036,15 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
 <header class="simy-header" translate="no" data-simy-no-translate>
   <div class="sh-frame">
     <a class="sh-brand" href="/zh-Hans.html" aria-label="SIMY home"><img src="/simy-icon-56.png" width="32" height="32" alt=""><span>SIMY</span></a>
-    <details class="sh-menu"><summary class="sh-menu-toggle" aria-label="Navigation menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></summary><div class="sh-menu-panel"><div class="sh-navigation" role="navigation" aria-label="Primary navigation"><details class="sh-dropdown"><summary>Product<span aria-hidden="true">⌄</span></summary><div class="sh-panel"><a href="/zh-Hans.html#product">Overview</a><a href="/zh-Hans.html#how-it-works">How it works</a><a href="/integrations.html?lang=zh-Hans">Apps & integrations</a><a href="/download/zh-hans.html">Download</a><div class="sh-stores" role="group" aria-label="Mobile apps">
+    <details class="sh-menu"><summary class="sh-menu-toggle" aria-label="Navigation menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></summary><div class="sh-menu-panel"><div class="sh-navigation" role="navigation" aria-label="Primary navigation"><details class="sh-dropdown"><summary>Product<span aria-hidden="true">⌄</span></summary><div class="sh-panel"><a href="/zh-Hans.html#product">Overview</a><a href="/zh-Hans.html#how-it-works">How it works</a><a href="/integrations.html?lang=zh-Hans">Apps & integrations</a><a href="/download/zh-hans.html" aria-current="page">Download</a><div class="sh-stores" role="group" aria-label="Mobile apps">
       <a class="sh-store" href="https://apps.apple.com/app/id6745385262"><img src="/assets/store-badges/app-store.svg" width="120" height="40" alt="Download on the App Store"></a>
       <a class="sh-store sh-google-play" href="/download/zh-hans.html#android" aria-label="Android availability"><img src="/assets/store-badges/google-play.png" width="155" height="60" alt="Google Play"><small>Android availability</small></a>
     </div></div></details><details class="sh-dropdown"><summary>Solutions<span aria-hidden="true">⌄</span></summary><div class="sh-panel"><a href="/for/en/">For your work</a><a href="/for/zh-hans/engineers/">For engineers</a><a href="/for/zh-hans/financial-planners/">For financial planners</a><a href="/for/zh-hans/pharmaceutical-companies/">面向制药企业</a><a href="/zh-Hans.html#use-cases">Use cases</a></div></details><details class="sh-dropdown"><summary>Resources<span aria-hidden="true">⌄</span></summary><div class="sh-panel"><a href="/guides/zh-hans/index.html">Guides</a><a href="/compare.html?lang=zh-Hans">Compare</a><a href="/press-release.html?lang=zh-Hans">News</a><a href="/about.html?lang=zh-Hans">About SIMY</a><a href="/security.html?lang=zh-Hans">Security</a><a href="/contact.html?lang=zh-Hans">Contact</a><a href="/legal.html">Legal & service information</a><a href="/seller-info.html">Seller information</a></div></details><a class="sh-pricing" href="/zh-Hans.html#pricing">Pricing</a></div><a class="sh-login" data-existing-account-login href="https://app.simy.one/">Log in</a></div></details>
-    <div class="sh-account"><details class="sh-dropdown sh-language"><summary aria-label="Language: 简体中文"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/></svg> ZH</summary><div class="sh-panel"><a href="/download/en.html" lang="en" hreflang="en" data-locale-option="en">English</a><a href="/download.html" lang="ja" hreflang="ja" data-locale-option="ja">日本語</a><a href="/download/hi.html" lang="hi" hreflang="hi" data-locale-option="hi">हिन्दी</a><a href="/download/es.html" lang="es" hreflang="es" data-locale-option="es">Español</a><a href="/download/fr.html" lang="fr" hreflang="fr" data-locale-option="fr">Français</a><a href="/download/zh-hans.html" lang="zh-Hans" hreflang="zh-Hans" data-locale-option="zh-Hans" aria-current="page">简体中文</a></div></details><a data-new-account-signup class="sh-signup" href="https://app.simy.one/signup?lang=zh-Hans&amp;locale=zh-Hans">Sign up</a></div>
+    <div class="sh-account"><details class="sh-dropdown sh-language"><summary aria-label="ZH: 简体中文 (Language)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/></svg> ZH</summary><div class="sh-panel"><a href="/download/en.html" lang="en" hreflang="en" data-locale-option="en">English</a><a href="/download.html" lang="ja" hreflang="ja" data-locale-option="ja">日本語</a><a href="/download/hi.html" lang="hi" hreflang="hi" data-locale-option="hi">हिन्दी</a><a href="/download/es.html" lang="es" hreflang="es" data-locale-option="es">Español</a><a href="/download/fr.html" lang="fr" hreflang="fr" data-locale-option="fr">Français</a><a href="/download/zh-hans.html" lang="zh-Hans" hreflang="zh-Hans" data-locale-option="zh-Hans" aria-current="page">简体中文</a></div></details><a data-new-account-signup class="sh-signup" href="https://app.simy.one/signup?lang=zh-Hans&amp;locale=zh-Hans">Sign up</a></div>
   </div>
 </header>
 
-<main id="main" class="dl-main">
+<main id="main" class="dl-main" tabindex="-1">
   <div class="wrap">
     <ol class="crumbs" aria-label="面包屑导航">
       <li><a href="/zh-Hans.html">SIMY</a></li>
@@ -1044,7 +1060,7 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
       <p class="lead">只要安装，SIMY就会从你与电脑上AI的对话中找出下一项工作。不需要操作命令行。</p>
 
       <ol class="funnel" aria-label="开始使用的流程">
-        <li class="is-now"><span class="fn">1</span><b>创建账号</b><small>选择套餐 → 邮件验证 → 银行卡付款</small></li>
+        <li class="is-now"><span class="fn">1</span><b>创建账号</b><small>选择套餐 → 邮件验证 → 填写银行卡信息</small></li>
         <li><span class="fn">2</span><b>安装应用</b><small>下载并打开</small></li>
         <li><span class="fn">3</span><b>点击登录</b><small>浏览器打开，自动连接</small></li>
       </ol>
@@ -1056,7 +1072,7 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
           <p>登录应用需要SIMY账号。提前创建好，打开应用就能马上使用。</p>
           <ul class="need">
             <li>邮箱地址（无需密码）</li>
-            <li>信用卡（月付套餐，没有免费套餐）</li>
+            <li>信用卡（试用后按所选的月付或年付方式计费）</li>
           </ul>
           <a class="btn btn-primary" href="https://app.simy.one/signup?lang=zh-Hans&amp;locale=zh-Hans&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=download_zh-hans&amp;utm_content=account_first">选择套餐并创建账号 <span class="arrow" aria-hidden="true">↗</span></a>
           <span class="dl-meta">注册完成后的页面也可以下载应用 ／ <a href="/zh-Hans.html#pricing">查看价格</a></span>
@@ -1078,6 +1094,7 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
               <h3>Windows版</h3>
               <a class="btn btn-primary" data-dl="win" href="https://simy.one/downloads/simy-cli/windows/0.5.45/SIMY-CLI-0.5.45-windows-x64-setup.exe">下载Windows版 <span class="arrow" aria-hidden="true">↓</span></a>
               <span class="dl-meta" data-meta="win">.exe</span>
+              <p class="note" data-windows-preview>Windows 版为未签名的预览版。部分实机操作仍在验证中，请先在测试电脑上试用。</p>
             </div>
             <div class="dl-card" data-os="ios">
               <span class="you-badge">你的设备</span>
@@ -1110,7 +1127,7 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
           <h3>Windows <small>.exe</small></h3>
           <ol class="plain-list">
             <li>打开下载的 .exe</li>
-            <li>出现蓝色保护提示时，点击“更多信息”→“仍要运行”</li>
+            <li>如果出现安全提示，请确认文件来自 SIMY 官方网站，并遵守所在组织的规定。无法确认时请勿运行，并咨询管理员。</li>
             <li>打开 SIMY，点击“登录”</li>
           </ol>
         </div>
@@ -1150,7 +1167,7 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
       <div class="faq">
         <details>
           <summary>可以免费试用吗？</summary>
-          <div class="a"><p>没有免费套餐。选择月付套餐并注册后，应用和网页版都可以使用。费用请查看首页的价格栏目。</p></div>
+          <div class="a"><p>首页列出的基础套餐包含一个月免费试用。注册时可选择按月或按年付款；试用结束后，套餐将按所选条件自动续订。您可以在试用结束前取消。适用套餐、附加费用、税费和最终条件请在注册页面确认。</p></div>
         </details>
         <details>
           <summary>可以先不建账号，只安装应用吗？</summary>

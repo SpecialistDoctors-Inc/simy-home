@@ -1,0 +1,262 @@
+{
+  "observedAt": "2026-11-19T22:27:54.889Z",
+  "method": "Production public signup render, isolated unauthenticated Chromium; all POST/PUT/DELETE/PATCH requests blocked; no email, registration or payment submitted.",
+  "prevented": [
+    {
+      "url": "https://browser-intake-datadoghq.com/api/v2/rum",
+      "method": "POST"
+    },
+    {
+      "url": "https://browser-intake-datadoghq.com/api/v2/rum",
+      "method": "POST"
+    },
+    {
+      "url": "https://browser-intake-datadoghq.com/api/v2/rum",
+      "method": "POST"
+    },
+    {
+      "url": "https://browser-intake-datadoghq.com/api/v2/rum",
+      "method": "POST"
+    },
+    {
+      "url": "https://browser-intake-datadoghq.com/api/v2/rum",
+      "method": "POST"
+    }
+  ],
+  "results": [
+    {
+      "locale": "en",
+      "requestedURL": "https://app.simy.one/signup/?lang=en&locale=en&plan=starter&interval=annual",
+      "finalURL": "https://app.simy.one/signup/?lang=en&locale=en&plan=starter&interval=annual",
+      "status": 200,
+      "htmlLang": "en",
+      "overflow": 0,
+      "inputs": [
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": ""
+        },
+        {
+          "type": "email",
+          "name": "",
+          "placeholder": ""
+        }
+      ],
+      "buttons": [
+        "Annual",
+        "Monthly",
+        "Starter\nSelected\n$29.80/ month, before tax\n\nAnnual total $357.60 before tax\n\nAutorun Unlimited\nStorage 10GB\nUp to 1 users",
+        "SIMY by Industry\n$59.80/ month, before tax\n\nAnnual total $717.60 before tax\n\nAutorun Unlimited\nStorage 50GB\nUp to 1 users",
+        "Send email link"
+      ],
+      "links": [
+        {
+          "text": "SIMY",
+          "url": "https://simy.one/?lang=en#pricing"
+        },
+        {
+          "text": "Log in",
+          "url": "https://app.simy.one/login/?next=%2Fsignup%2F%3Fplan%3Dstarter%26interval%3Dannual%26lang%3Den%26locale%3Den%26region%3Dus%26industry_package_code%3Dgeneral%26storage_30gb%3D0"
+        }
+      ],
+      "text": "SIMY\nLog in\nReview plan → Create account → Payment details\nGet started with your selected plan\n\nConfirm your plan and billing period, then create your account. Connect your ChatGPT account before running work. ChatGPT subscription fees are separate.\n\nTry your base plan free for one month. Cancel before the trial ends.\n\nAnnual\nMonthly\nStarter\nSelected\n$29.80/ month, before tax\n\nAnnual total $357.60 before tax\n\nAutorun Unlimited\nStorage 10GB\nUp to 1 users\nSIMY by Industry\n$59.80/ month, before tax\n\nAnnual total $717.60 before tax\n\nAutorun Unlimited\nStorage 50GB\nUp to 1 users\nPurchase\nStarter\n$357.60 / year\nAnnual total before tax\n$357.60\n\nYour base plan is free for one month, then renews automatically at your selected rate and billing period. You can cancel before the trial ends.\n\nStripe Checkout automatically calculates tax based on your location.\n\nCreate an account or log in using an email link, then return with this plan selection preserved.\n\nName\nEmail address\nSend email link\n\nStripe securely processes payment, and the subscription applies only to the selected organization. Before execution, sign in to ChatGPT from Settings after purchase.",
+      "errors": []
+    },
+    {
+      "locale": "ja",
+      "requestedURL": "https://app.simy.one/signup/?lang=ja&locale=ja&plan=starter&interval=annual",
+      "finalURL": "https://app.simy.one/signup/?lang=ja&locale=ja&plan=starter&interval=annual",
+      "status": 200,
+      "htmlLang": "ja",
+      "overflow": 0,
+      "inputs": [
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": ""
+        },
+        {
+          "type": "email",
+          "name": "",
+          "placeholder": ""
+        }
+      ],
+      "buttons": [
+        "年払い",
+        "月払い",
+        "Starter\n選択中\n$29.80/ 月・税別\n\n年額 $357.60（税別）\n\n月換算・税込目安 $32.78\n\n自動実行 無制限\nストレージ 10GB\n最大 1ユーザー",
+        "SIMY by Industry\n$59.80/ 月・税別\n\n年額 $717.60（税別）\n\n月換算・税込目安 $65.78\n\n自動実行 無制限\nストレージ 50GB\n最大 1ユーザー",
+        "メールリンクを送信"
+      ],
+      "links": [
+        {
+          "text": "SIMY",
+          "url": "https://simy.one/?lang=ja#pricing"
+        },
+        {
+          "text": "ログイン",
+          "url": "https://app.simy.one/login/?next=%2Fsignup%2F%3Fplan%3Dstarter%26interval%3Dannual%26lang%3Dja%26locale%3Dja%26region%3Djp%26industry_package_code%3Dgeneral%26storage_30gb%3D0"
+        }
+      ],
+      "text": "SIMY\nログイン\nプランの確認 → 登録 → お支払い情報\n選んだプランでSIMYを始める\n\nプランと支払周期を確認して、アカウントを登録してください。実行にはChatGPTアカウントの接続が必要です。ChatGPTの利用料金は別途かかります。\n\n基本プランは1か月無料。終了前にキャンセルできます。\n\n年払い\n月払い\nStarter\n選択中\n$29.80/ 月・税別\n\n年額 $357.60（税別）\n\n月換算・税込目安 $32.78\n\n自動実行 無制限\nストレージ 10GB\n最大 1ユーザー\nSIMY by Industry\n$59.80/ 月・税別\n\n年額 $717.60（税別）\n\n月換算・税込目安 $65.78\n\n自動実行 無制限\nストレージ 50GB\n最大 1ユーザー\n購入手続き\nStarter\n$357.60 / 年\n年額合計（税別）\n$357.60\n\n税込目安 $393.36\n\n基本プランは1か月無料です。無料期間終了後、選択した周期の料金が自動更新で請求されます。終了前にキャンセルできます。\n\n税額はStripe Checkoutで所在地に応じて自動計算されます。\n\nメールリンクでアカウントを作成またはログインすると、このプラン選択を保ったまま戻れます。\n\nお名前\nメールアドレス\nメールリンクを送信\n\n決済はStripeで安全に処理され、契約は選択した組織にのみ反映されます。購入後、実行前に設定画面からChatGPTへログインしてください。",
+      "errors": []
+    },
+    {
+      "locale": "es",
+      "requestedURL": "https://app.simy.one/signup/?lang=es&locale=es&plan=starter&interval=annual",
+      "finalURL": "https://app.simy.one/signup/?lang=es&locale=es&plan=starter&interval=annual",
+      "status": 200,
+      "htmlLang": "ja",
+      "overflow": 0,
+      "inputs": [
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": ""
+        },
+        {
+          "type": "email",
+          "name": "",
+          "placeholder": ""
+        }
+      ],
+      "buttons": [
+        "年払い",
+        "月払い",
+        "Starter\n選択中\n$29.80/ 月・税別\n\n年額 $357.60（税別）\n\n月換算・税込目安 $32.78\n\n自動実行 無制限\nストレージ 10GB\n最大 1ユーザー",
+        "SIMY by Industry\n$59.80/ 月・税別\n\n年額 $717.60（税別）\n\n月換算・税込目安 $65.78\n\n自動実行 無制限\nストレージ 50GB\n最大 1ユーザー",
+        "メールリンクを送信"
+      ],
+      "links": [
+        {
+          "text": "SIMY",
+          "url": "https://simy.one/?lang=ja#pricing"
+        },
+        {
+          "text": "ログイン",
+          "url": "https://app.simy.one/login/?next=%2Fsignup%2F%3Fplan%3Dstarter%26interval%3Dannual%26lang%3Dja%26locale%3Des%26region%3Djp%26industry_package_code%3Dgeneral%26storage_30gb%3D0"
+        }
+      ],
+      "text": "SIMY\nログイン\nプランの確認 → 登録 → お支払い情報\n選んだプランでSIMYを始める\n\nプランと支払周期を確認して、アカウントを登録してください。実行にはChatGPTアカウントの接続が必要です。ChatGPTの利用料金は別途かかります。\n\n基本プランは1か月無料。終了前にキャンセルできます。\n\n年払い\n月払い\nStarter\n選択中\n$29.80/ 月・税別\n\n年額 $357.60（税別）\n\n月換算・税込目安 $32.78\n\n自動実行 無制限\nストレージ 10GB\n最大 1ユーザー\nSIMY by Industry\n$59.80/ 月・税別\n\n年額 $717.60（税別）\n\n月換算・税込目安 $65.78\n\n自動実行 無制限\nストレージ 50GB\n最大 1ユーザー\n購入手続き\nStarter\n$357.60 / 年\n年額合計（税別）\n$357.60\n\n税込目安 $393.36\n\n基本プランは1か月無料です。無料期間終了後、選択した周期の料金が自動更新で請求されます。終了前にキャンセルできます。\n\n税額はStripe Checkoutで所在地に応じて自動計算されます。\n\nメールリンクでアカウントを作成またはログインすると、このプラン選択を保ったまま戻れます。\n\nお名前\nメールアドレス\nメールリンクを送信\n\n決済はStripeで安全に処理され、契約は選択した組織にのみ反映されます。購入後、実行前に設定画面からChatGPTへログインしてください。",
+      "errors": []
+    },
+    {
+      "locale": "fr",
+      "requestedURL": "https://app.simy.one/signup/?lang=fr&locale=fr&plan=starter&interval=annual",
+      "finalURL": "https://app.simy.one/signup/?lang=fr&locale=fr&plan=starter&interval=annual",
+      "status": 200,
+      "htmlLang": "ja",
+      "overflow": 0,
+      "inputs": [
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": ""
+        },
+        {
+          "type": "email",
+          "name": "",
+          "placeholder": ""
+        }
+      ],
+      "buttons": [
+        "年払い",
+        "月払い",
+        "Starter\n選択中\n$29.80/ 月・税別\n\n年額 $357.60（税別）\n\n月換算・税込目安 $32.78\n\n自動実行 無制限\nストレージ 10GB\n最大 1ユーザー",
+        "SIMY by Industry\n$59.80/ 月・税別\n\n年額 $717.60（税別）\n\n月換算・税込目安 $65.78\n\n自動実行 無制限\nストレージ 50GB\n最大 1ユーザー",
+        "メールリンクを送信"
+      ],
+      "links": [
+        {
+          "text": "SIMY",
+          "url": "https://simy.one/?lang=ja#pricing"
+        },
+        {
+          "text": "ログイン",
+          "url": "https://app.simy.one/login/?next=%2Fsignup%2F%3Fplan%3Dstarter%26interval%3Dannual%26lang%3Dja%26locale%3Dfr%26region%3Djp%26industry_package_code%3Dgeneral%26storage_30gb%3D0"
+        }
+      ],
+      "text": "SIMY\nログイン\nプランの確認 → 登録 → お支払い情報\n選んだプランでSIMYを始める\n\nプランと支払周期を確認して、アカウントを登録してください。実行にはChatGPTアカウントの接続が必要です。ChatGPTの利用料金は別途かかります。\n\n基本プランは1か月無料。終了前にキャンセルできます。\n\n年払い\n月払い\nStarter\n選択中\n$29.80/ 月・税別\n\n年額 $357.60（税別）\n\n月換算・税込目安 $32.78\n\n自動実行 無制限\nストレージ 10GB\n最大 1ユーザー\nSIMY by Industry\n$59.80/ 月・税別\n\n年額 $717.60（税別）\n\n月換算・税込目安 $65.78\n\n自動実行 無制限\nストレージ 50GB\n最大 1ユーザー\n購入手続き\nStarter\n$357.60 / 年\n年額合計（税別）\n$357.60\n\n税込目安 $393.36\n\n基本プランは1か月無料です。無料期間終了後、選択した周期の料金が自動更新で請求されます。終了前にキャンセルできます。\n\n税額はStripe Checkoutで所在地に応じて自動計算されます。\n\nメールリンクでアカウントを作成またはログインすると、このプラン選択を保ったまま戻れます。\n\nお名前\nメールアドレス\nメールリンクを送信\n\n決済はStripeで安全に処理され、契約は選択した組織にのみ反映されます。購入後、実行前に設定画面からChatGPTへログインしてください。",
+      "errors": []
+    },
+    {
+      "locale": "hi",
+      "requestedURL": "https://app.simy.one/signup/?lang=hi&locale=hi&plan=starter&interval=annual",
+      "finalURL": "https://app.simy.one/signup/?lang=hi&locale=hi&plan=starter&interval=annual",
+      "status": 200,
+      "htmlLang": "ja",
+      "overflow": 0,
+      "inputs": [
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": ""
+        },
+        {
+          "type": "email",
+          "name": "",
+          "placeholder": ""
+        }
+      ],
+      "buttons": [
+        "年払い",
+        "月払い",
+        "Starter\n選択中\n$29.80/ 月・税別\n\n年額 $357.60（税別）\n\n月換算・税込目安 $32.78\n\n自動実行 無制限\nストレージ 10GB\n最大 1ユーザー",
+        "SIMY by Industry\n$59.80/ 月・税別\n\n年額 $717.60（税別）\n\n月換算・税込目安 $65.78\n\n自動実行 無制限\nストレージ 50GB\n最大 1ユーザー",
+        "メールリンクを送信"
+      ],
+      "links": [
+        {
+          "text": "SIMY",
+          "url": "https://simy.one/?lang=ja#pricing"
+        },
+        {
+          "text": "ログイン",
+          "url": "https://app.simy.one/login/?next=%2Fsignup%2F%3Fplan%3Dstarter%26interval%3Dannual%26lang%3Dja%26locale%3Dhi%26region%3Djp%26industry_package_code%3Dgeneral%26storage_30gb%3D0"
+        }
+      ],
+      "text": "SIMY\nログイン\nプランの確認 → 登録 → お支払い情報\n選んだプランでSIMYを始める\n\nプランと支払周期を確認して、アカウントを登録してください。実行にはChatGPTアカウントの接続が必要です。ChatGPTの利用料金は別途かかります。\n\n基本プランは1か月無料。終了前にキャンセルできます。\n\n年払い\n月払い\nStarter\n選択中\n$29.80/ 月・税別\n\n年額 $357.60（税別）\n\n月換算・税込目安 $32.78\n\n自動実行 無制限\nストレージ 10GB\n最大 1ユーザー\nSIMY by Industry\n$59.80/ 月・税別\n\n年額 $717.60（税別）\n\n月換算・税込目安 $65.78\n\n自動実行 無制限\nストレージ 50GB\n最大 1ユーザー\n購入手続き\nStarter\n$357.60 / 年\n年額合計（税別）\n$357.60\n\n税込目安 $393.36\n\n基本プランは1か月無料です。無料期間終了後、選択した周期の料金が自動更新で請求されます。終了前にキャンセルできます。\n\n税額はStripe Checkoutで所在地に応じて自動計算されます。\n\nメールリンクでアカウントを作成またはログインすると、このプラン選択を保ったまま戻れます。\n\nお名前\nメールアドレス\nメールリンクを送信\n\n決済はStripeで安全に処理され、契約は選択した組織にのみ反映されます。購入後、実行前に設定画面からChatGPTへログインしてください。",
+      "errors": []
+    },
+    {
+      "locale": "zh-Hans",
+      "requestedURL": "https://app.simy.one/signup/?lang=zh-Hans&locale=zh-Hans&plan=starter&interval=annual",
+      "finalURL": "https://app.simy.one/signup/?lang=zh-Hans&locale=zh-Hans&plan=starter&interval=annual",
+      "status": 200,
+      "htmlLang": "ja",
+      "overflow": 0,
+      "inputs": [
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": ""
+        },
+        {
+          "type": "email",
+          "name": "",
+          "placeholder": ""
+        }
+      ],
+      "buttons": [
+        "年払い",
+        "月払い",
+        "Starter\n選択中\n$29.80/ 月・税別\n\n年額 $357.60（税別）\n\n月換算・税込目安 $32.78\n\n自動実行 無制限\nストレージ 10GB\n最大 1ユーザー",
+        "SIMY by Industry\n$59.80/ 月・税別\n\n年額 $717.60（税別）\n\n月換算・税込目安 $65.78\n\n自動実行 無制限\nストレージ 50GB\n最大 1ユーザー",
+        "メールリンクを送信"
+      ],
+      "links": [
+        {
+          "text": "SIMY",
+          "url": "https://simy.one/?lang=ja#pricing"
+        },
+        {
+          "text": "ログイン",
+          "url": "https://app.simy.one/login/?next=%2Fsignup%2F%3Fplan%3Dstarter%26interval%3Dannual%26lang%3Dja%26locale%3Dzh-Hans%26region%3Djp%26industry_package_code%3Dgeneral%26storage_30gb%3D0"
+        }
+      ],
+      "text": "SIMY\nログイン\nプランの確認 → 登録 → お支払い情報\n選んだプランでSIMYを始める\n\nプランと支払周期を確認して、アカウントを登録してください。実行にはChatGPTアカウントの接続が必要です。ChatGPTの利用料金は別途かかります。\n\n基本プランは1か月無料。終了前にキャンセルできます。\n\n年払い\n月払い\nStarter\n選択中\n$29.80/ 月・税別\n\n年額 $357.60（税別）\n\n月換算・税込目安 $32.78\n\n自動実行 無制限\nストレージ 10GB\n最大 1ユーザー\nSIMY by Industry\n$59.80/ 月・税別\n\n年額 $717.60（税別）\n\n月換算・税込目安 $65.78\n\n自動実行 無制限\nストレージ 50GB\n最大 1ユーザー\n購入手続き\nStarter\n$357.60 / 年\n年額合計（税別）\n$357.60\n\n税込目安 $393.36\n\n基本プランは1か月無料です。無料期間終了後、選択した周期の料金が自動更新で請求されます。終了前にキャンセルできます。\n\n税額はStripe Checkoutで所在地に応じて自動計算されます。\n\nメールリンクでアカウントを作成またはログインすると、このプラン選択を保ったまま戻れます。\n\nお名前\nメールアドレス\nメールリンクを送信\n\n決済はStripeで安全に処理され、契約は選択した組織にのみ反映されます。購入後、実行前に設定画面からChatGPTへログインしてください。",
+      "errors": []
+    }
+  ]
+}

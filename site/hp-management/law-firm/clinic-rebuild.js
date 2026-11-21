@@ -10,13 +10,13 @@
  toolsMenu.addEventListener('toggle',event=>{if(event.newState==='open'){const trigger=editForm.querySelector('[popovertarget]'),box=trigger.getBoundingClientRect();toolsMenu.style.left=Math.max(8,Math.min(box.left,innerWidth-toolsMenu.offsetWidth-8))+'px';toolsMenu.style.top=Math.max(8,box.top-toolsMenu.offsetHeight-8)+'px';}});
 
  let previewSourceUrl='',editorReturn=openEditor;
- let busy=false,editBusy=false,objectUrl,currentHtml='',originalHtml='',history=[],chat=[],assets=[],context={goal:'',target:'',decisions:'',pending:''},assetSequence=0;
+ let busy=false,editBusy=false,objectUrl,currentHtml='',originalHtml='',history=[],chat=[],assets=[],context={goal:'',target:'',decisions:'',pending:''},assetSequence=0,assetSession=0;
  // Use wall-clock time so background-tab throttling cannot undercount elapsed time.
  const makeElapsed=anchor=>{const output=document.createElement('p');output.className='small operation-elapsed';output.hidden=true;output.setAttribute('role','timer');output.setAttribute('aria-live','off');output.style.fontVariantNumeric='tabular-nums';anchor.after(output);let timer;
   return ()=>{clearInterval(timer);const started=Date.now();output.hidden=false;const tick=()=>{output.textContent='経過 '+Math.floor((Date.now()-started)/1000)+'秒';};tick();timer=setInterval(tick,1000);return ()=>{clearInterval(timer);tick();};};
  };
  const snapshot=()=>({html:currentHtml,context:{...context},chat:chat.map(x=>({...x})),assets:[...assets]});
- const restore=previous=>{context={...previous.context};chat=previous.chat.map(x=>({...x}));assets=[...previous.assets];photoInput.value='';photoStatus.textContent=assets.length?'添付：'+assets.map(a=>a.name).join('、'):'';updatePreview(previous.html);};
+ const restore=previous=>{assetSession++;photoInput.disabled=editBusy;context={...previous.context};chat=previous.chat.map(x=>({...x}));assets=[...previous.assets];photoInput.value='';photoStatus.textContent=assets.length?'添付：'+assets.map(a=>a.name).join('、'):'';updatePreview(previous.html);};
  // Chrome canvas JPEG may contain an ICC APP2 segment. Strip only that identified profile.
  const normalizeCanvasJpeg=dataUrl=>{try{
   const prefix='data:image/jpeg;base64,';if(typeof dataUrl!=='string'||!dataUrl.startsWith(prefix))return null;
@@ -36,10 +36,20 @@
  // Encode pixels locally; never send original files, EXIF or remote URLs to the image runner.
  const thumbnail=(source,width,height)=>{try{for(let edge=384;edge>=96;edge=Math.floor(edge*.75)){const canvas=document.createElement('canvas'),scale=Math.min(1,edge/Math.max(width,height));canvas.width=Math.max(1,Math.round(width*scale));canvas.height=Math.max(1,Math.round(height*scale));canvas.getContext('2d').drawImage(source,0,0,canvas.width,canvas.height);for(const quality of [.72,.5,.32]){const data=normalizeCanvasJpeg(canvas.toDataURL('image/jpeg',quality));if(data&&data.length<=16384)return data;}}}catch{}return null;};
  const editPayload=(message,base,{query='',followUp,workingContext=context}={})=>{
-  const nodes=window.SimyPreviewEdit.inventory(base,frame.contentDocument,query);let images=[];
-  const asset=assets.at(-1);if(asset?.thumbnail)images=[{id:asset.id,mime:'image/jpeg',data:asset.thumbnail}];
-  // Reuse already decoded browser pixels only. A tainted cross-origin canvas falls back to metadata.
-  if(!asset){const candidates=nodes.filter(n=>n.kind==='image'&&n.tag==='img').map(n=>({n,live:frame.contentDocument?.querySelector('[data-simy-edit-id="'+n.id+'"]')})).filter(({live})=>live?.complete&&live.naturalWidth>1).sort((a,b)=>b.live.getBoundingClientRect().width*b.live.getBoundingClientRect().height-a.live.getBoundingClientRect().width*a.live.getBoundingClientRect().height);for(const {n,live} of candidates){const data=thumbnail(live,live.naturalWidth,live.naturalHeight);if(data){images=[{id:n.id,mime:'image/jpeg',data}];break;}}}
+  const assetQuery=/^a\d+$/.test(query)?query:'';
+  const imageQuery=/^e\d+$/.test(query)?query:'';
+  const nodes=window.SimyPreviewEdit.inventory(base,frame.contentDocument,assetQuery||imageQuery?'':query);
+  let images=[];
+  const attachment=imageQuery?undefined:window.SimyPreviewEdit.selectAttachment(assets,assetQuery);
+  if(attachment?.thumbnail)images=[{id:attachment.id,mime:'image/jpeg',data:attachment.thumbnail}];
+  // Never reuse an arbitrary existing photo. Inspect only the requested DOM image.
+  if(imageQuery&&nodes.some(node=>node.id===imageQuery&&node.kind==='image'&&node.tag==='img')){
+   const image=frame.contentDocument?.querySelector('[data-simy-edit-id="'+imageQuery+'"]');
+   if(image?.complete&&image.naturalWidth>1){
+    const data=thumbnail(image,image.naturalWidth,image.naturalHeight);
+    if(data)images=[{id:imageQuery,mime:'image/jpeg',data}];
+   }
+  }
   const payload={request:message,context:workingContext,nodes,history:chat.slice(-6),assets:assets.map(({id,name})=>({id,name})),images,interactive:true,followUp};
   // Preserve request, conversation state and images within the unchanged planner/queue budget.
   const retained=new Set(['e0',...images.map(image=>image.id)]);
@@ -48,20 +58,39 @@
  };
  const startRebuildElapsed=makeElapsed(status),startEditElapsed=makeElapsed(editForm);
  const photoInput=document.querySelector('#preview-photo'),photoStatus=document.querySelector('#preview-photo-status');
- photoInput.addEventListener('change',async()=>{const file=photoInput.files[0];if(!file)return;photoInput.disabled=true;
+ photoInput.addEventListener('change',async()=>{const file=photoInput.files[0];if(!file)return;const session=assetSession;photoInput.disabled=true;
   try{if(!['image/jpeg','image/png','image/webp'].includes(file.type)||file.size>5*1024*1024)throw Error('写真はJPEG・PNG・WebP、5MB以内で選んでください。');
-   const bitmap=await createImageBitmap(file),scale=Math.min(1,1600/Math.max(bitmap.width,bitmap.height));const canvas=document.createElement('canvas');canvas.width=Math.round(bitmap.width*scale);canvas.height=Math.round(bitmap.height*scale);canvas.getContext('2d').drawImage(bitmap,0,0,canvas.width,canvas.height);bitmap.close();
-   assets=[...assets,{id:'a'+assetSequence++,name:file.name.slice(0,120),data:canvas.toDataURL('image/jpeg',.88),thumbnail:thumbnail(canvas,canvas.width,canvas.height)}].slice(-5);photoStatus.textContent='添付：'+file.name;chat.push({role:'user',text:'差し替え用の写真を添付しました：'+file.name.slice(0,120)});chat=chat.slice(-6);log('写真を添付しました。');if(localSample)editInput.value='写真を変更してください。';if(context.goal&&!editBusy){editInput.value=editInput.value.trim()||'素材を追加しました。会話の内容に沿って続けてください。';editForm.requestSubmit();}
-  }catch(e){photoStatus.textContent=e.message;photoInput.value='';}finally{photoInput.disabled=editBusy;}
+   const bitmap=await createImageBitmap(file);
+   if(session!==assetSession){bitmap.close();return;}
+   const scale=Math.min(1,1600/Math.max(bitmap.width,bitmap.height));const canvas=document.createElement('canvas');canvas.width=Math.round(bitmap.width*scale);canvas.height=Math.round(bitmap.height*scale);canvas.getContext('2d').drawImage(bitmap,0,0,canvas.width,canvas.height);bitmap.close();
+   const attachmentId='a'+assetSequence++;
+   assets=[...assets,{id:attachmentId,name:file.name.slice(0,120),data:canvas.toDataURL('image/jpeg',.88),thumbnail:thumbnail(canvas,canvas.width,canvas.height)}].slice(-5);photoStatus.textContent='添付：'+file.name;chat.push({role:'user',text:'写真を添付しました ['+attachmentId+'] '+file.name.slice(0,120)});chat=chat.slice(-6);log('写真を添付しました。変更したい箇所と使う写真を伝えてください。');
+  }catch(e){if(session===assetSession){photoStatus.textContent=e.message;photoInput.value='';}}finally{if(session===assetSession)photoInput.disabled=editBusy;}
  });
  for(const chip of document.querySelectorAll('[data-chat-prompt]'))chip.addEventListener('click',()=>{editInput.value=chip.dataset.chatPrompt;editInput.focus();});
  editInput.addEventListener('keydown',event=>{if(event.key==='Enter'&&!event.shiftKey&&!event.isComposing){event.preventDefault();editForm.requestSubmit();}});
  const mobile=()=>matchMedia('(max-width:700px)').matches;
- const updatePreview=html=>{currentHtml=html;requestAnimationFrame(()=>{if(currentHtml===html)frame.srcdoc=html;});if(objectUrl)URL.revokeObjectURL(objectUrl);objectUrl=URL.createObjectURL(new Blob([html],{type:'text/html;charset=utf-8'}));download.href=objectUrl;undo.disabled=!history.length;};
+ const setDownload=html=>{
+  if(objectUrl)URL.revokeObjectURL(objectUrl);
+  objectUrl=URL.createObjectURL(new Blob([html],{type:'text/html;charset=utf-8'}));
+  download.href=objectUrl;
+ };
+ const updatePreview=html=>{currentHtml=html;requestAnimationFrame(()=>{if(currentHtml===html)frame.srcdoc=html;});setDownload(html);undo.disabled=!history.length;};
+ download.addEventListener('click',()=>{
+  if(currentHtml&&frame.srcdoc===currentHtml)setDownload(window.SimyPreviewEdit.exportStaticLayout(currentHtml,frame.contentDocument));
+ });
  const log=(text,kind='')=>{document.querySelector('.preview-chat').classList.remove('is-empty');const p=document.createElement('p');p.textContent=text;if(kind)p.className=kind;conversation.append(p);conversation.scrollTop=conversation.scrollHeight;};
  const showEditor=()=>{if(!currentHtml)return;editor.showModal();document.body.classList.add('preview-editor-open');(mobile()?closeEditor:editInput).focus({preventScroll:true});};
  openEditor.addEventListener('click',showEditor);closeEditor.addEventListener('click',()=>editor.close());editor.addEventListener('close',()=>{document.body.classList.remove('preview-editor-open');editorReturn.focus({preventScroll:true});});
  const setEditBusy=value=>{editBusy=value;let pending=conversation.querySelector('.chat-thinking');if(value){pending=document.createElement('p');pending.className='chat-thinking';pending.setAttribute('role','status');pending.textContent='依頼内容を確認しています';conversation.append(pending);conversation.scrollTop=conversation.scrollHeight;}else pending?.remove();editForm.querySelector('[type=submit]').disabled=value;editForm.querySelector('[type=submit]').textContent=value?'…':'↑';undo.disabled=value||!history.length;reset.disabled=value;example.disabled=value;editInput.disabled=value;photoInput.disabled=value;editForm.setAttribute('aria-busy',String(value));};
+ let activeEdit;
+ const cancelActiveEdit=()=>{
+  if(!activeEdit)return;
+  activeEdit.controller.abort();
+  activeEdit.stopElapsed();
+  activeEdit=null;
+  setEditBusy(false);
+ };
  const pageOffer=document.querySelector('#preview-page-offer');
  document.querySelector('#page-offer-close').addEventListener('click',()=>pageOffer.close());
  document.querySelector('#page-offer-back').addEventListener('click',()=>pageOffer.close());
@@ -72,7 +101,10 @@
   for(const control of doc.querySelectorAll('button,input[type=button],input[type=submit]')){control.disabled=false;control.setAttribute('type','button');}
   doc.addEventListener('click',event=>{if(event.target.closest?.('a,area,button,[role=button],input[type=button],input[type=submit]')){event.preventDefault();event.stopImmediatePropagation();if(!pageOffer.open)pageOffer.showModal();}},true);
   doc.addEventListener('submit',event=>{event.preventDefault();event.stopImmediatePropagation();},true);
-  doc.querySelector('[data-simy-changed]')?.scrollIntoView({block:'center',behavior:'instant'});
+  const updateLayout=()=>window.SimyPreviewEdit.repairStaticLayout(doc);
+  updateLayout();
+  doc.defaultView.addEventListener('resize',updateLayout);
+  window.SimyPreviewEdit.revealChanges?.(doc)?.scrollIntoView({block:'center',behavior:'instant'});
  }catch{}});
  editForm.addEventListener('submit',async event=>{
   event.preventDefault();
@@ -81,14 +113,8 @@
   if(!message)return;
   log(message,'preview-user-message');setEditBusy(true);
   const stopElapsed=startEditElapsed();
-  if(localSample){
-   try{
-    const changed=editLocalSample(base,message,assets);
-    history.push(snapshot());updatePreview(changed.html);log(changed.summary+'（定型操作例・AI生成や公開は行いません）');editInput.value='';
-   }catch(error){log(error.message,'preview-error');}
-   finally{stopElapsed();setEditBusy(false);}
-   return;
-  }
+  const edit={controller:new AbortController(),stopElapsed};
+  activeEdit=edit;
   const deadline=performance.now()+125000;
   let workingContext=context;
   let followUp,query='';
@@ -99,16 +125,17 @@
     const payload=editPayload(message,base,{query,followUp,workingContext});
     const response=await fetch(new URL('/api/preview-edit',form.dataset.endpoint),{
      method:'POST',headers:{'Content-Type':'application/json'},
-     body:JSON.stringify({...payload,siteUrl:previewSourceUrl}),
-     signal:AbortSignal.timeout(Math.min(100000,remaining)),
+     body:JSON.stringify({...payload,...(previewSourceUrl?{siteUrl:previewSourceUrl}:{})}),
+     signal:AbortSignal.any([edit.controller.signal,AbortSignal.timeout(Math.min(100000,remaining))]),
     });
     const plan=await response.json();
+    if(activeEdit!==edit)return;
     if(!response.ok)throw Error(plan.error||'変更案を作成できませんでした。');
     if(currentHtml!==base)throw Error('ページの状態が変わりました。もう一度お試しください。');
     if(plan.status==='inspect'&&plan.interactive&&!followUp&&typeof plan.question==='string'&&plan.question.trim()&&plan.question.length<=120){
      workingContext=plan.context||workingContext;
-     followUp='inspection';query=plan.question;
-     conversation.querySelector('.chat-thinking').textContent='ページ内を確認しています';
+     followUp='inspection';query=plan.question.trim();
+     conversation.querySelector('.chat-thinking').textContent=/^[ae]\d+$/.test(query)?'写真を確認しています':'ページ内を確認しています';
      continue;
     }
     if(plan.status==='edit'){
@@ -128,8 +155,8 @@
     }else throw Error('変更案の形式を確認できませんでした。');
     context=plan.context||workingContext;
     if(assets.length){
-     const latest=assets.at(-1);
-     photoStatus.textContent='添付：'+latest.name+(plan.visualInputs?.includes(latest.id)?'（画像の内容も回答に使用）':'（画像内容は未確認）');
+     const viewed=new Set(plan.visualInputs||[]);
+     photoStatus.textContent='添付：'+assets.map(asset=>asset.name+(viewed.has(asset.id)?'（画像の内容も回答に使用）':'')).join('、');
     }
     chat.push({role:'user',text:message},{role:'assistant',text:(plan.question||plan.summary).slice(0,1500)});
     chat=chat.slice(-6);editInput.value='';
@@ -137,59 +164,38 @@
    }
    throw Error('ページを変更できませんでした。変更したい箇所を具体的に伝えてください。');
   }catch(error){
+   if(activeEdit!==edit)return;
    context=workingContext;
    log(error.name==='TimeoutError'?'変更案の作成に時間がかかっています。ページは変更していません。もう一度お試しください。':error.name==='TypeError'?'接続できませんでした。ページは変更していません。時間をおいて再度お試しください。':error.message,'preview-edit-error');
   }finally{
-   stopElapsed();setEditBusy(false);
-   if(!mobile()||editor.dataset.pane==='edit')editInput.focus({preventScroll:true});
+   if(activeEdit===edit){
+    activeEdit=null;
+    stopElapsed();setEditBusy(false);
+    if(!mobile()||editor.dataset.pane==='edit')editInput.focus({preventScroll:true});
+   }
   }
  });
- example.addEventListener('click',()=>{toolsMenu.hidePopover();editInput.value='明日は午後休業です。お知らせに追加してください。';editForm.requestSubmit();});
- // Deterministic local examples share the inherited undo/reset machinery.
+ example.addEventListener('click',()=>{toolsMenu.hidePopover();document.querySelector('#preview-notice-prompt').click();});
+ // The fixture uses the same planning, application and undo path as a reproduced site.
  const setSamplePresentation=sample=>{
   document.querySelector('#preview-apply').textContent=sample?'自分の事務所について相談する →':'このホームページで申し込む →';
  };
- const editLocalSample=(base,message,attachments)=>{
-  const doc=new DOMParser().parseFromString(base,'text/html');
-  let summary;
-  if(message.includes('デザイン')){
-   let style=doc.querySelector('#sample-design');
-   if(!style){style=doc.createElement('style');style.id='sample-design';doc.head.append(style);}
-   style.textContent=':root{--ink:rgb(31,65,49);--paper:rgb(247,251,247);--subtle:rgb(230,242,233);--line:rgb(185,210,192)}header{padding-block:32px;background:var(--subtle)}';
-   summary='緑を基調にした背景と見出し周りのデザインに変更しました。';
-  }else if(message.includes('わかりやすく')){
-   const intro=doc.querySelector('[data-sample-intro]');
-   if(!intro)throw Error('説明文が見つかりません。最初に戻してお試しください。');
-   intro.textContent='相続・離婚・企業法務のご相談を受け付けています。まずはお困りのことをお聞きし、次に何をするかをご一緒に整理します。';
-   summary='取扱分野の説明を、短くわかりやすい文章に変更しました。';
-  }else if(/写真|画像/.test(message)){
-   const asset=attachments.at(-1);
-   if(!asset||!/^data:image\/jpeg;base64,[A-Za-z0-9+/]+=*$/.test(asset.data))throw Error('「＋」から写真を添付して、「写真を変更」と送信してください。');
-   let figure=doc.querySelector('[data-sample-photo]');
-   if(!figure){figure=doc.createElement('figure');figure.setAttribute('data-sample-photo','');figure.style.margin='24px 0';doc.querySelector('main').append(figure);}
-   const image=doc.createElement('img');image.src=asset.data;image.alt='添付した事務所の紹介写真（操作例）';image.style.cssText='display:block;max-width:100%;height:auto;max-height:360px';
-   const caption=doc.createElement('figcaption');caption.textContent='事務所の紹介写真（添付素材を使った操作例）';figure.replaceChildren(image,caption);
-   summary='添付した写真を、事務所の紹介写真として配置しました。';
-  }else return window.SimyPreviewEdit.apply(base,message.includes('お知らせに追加')?'お知らせ：明日は午後休業です。':message);
-  return {html:'<!doctype html>'+doc.documentElement.outerHTML,summary};
- };
- // Local preview uses the inherited editor and deterministic examples, without remote AI requests.
  let localSample=false;
  window.SimyLawOfficeExample={open(kind='notice'){
   const ownedProduction=location.origin==='https://simy.one'&&location.pathname==='/hp-management/law-firm.html';
-  if(!ownedProduction&&!['localhost','127.0.0.1'].includes(location.hostname)&&location.protocol!=='file:')return false;
-  localSample=true;setSamplePresentation(true);history=[];chat=[];assets=[];context={goal:'',target:'',decisions:'',pending:''};
-  previewSourceUrl='';photoInput.value='';photoStatus.textContent='';document.querySelector('#preview-source').textContent='架空の法律事務所 · 操作例';conversation.replaceChildren();
+  if(busy||(!ownedProduction&&!['localhost','127.0.0.1'].includes(location.hostname)&&location.protocol!=='file:'))return false;
   const article=kind==='article';
+  cancelActiveEdit();localSample=true;setSamplePresentation(true);history=[];chat=[];assets=[];assetSession++;photoInput.disabled=editBusy;context={goal:'',target:'',decisions:'',pending:''};
+  previewSourceUrl='';assetSequence=0;document.querySelector('#preview-enquiry').href='mailto:sales@simy.one';photoInput.value='';photoStatus.textContent='';document.querySelector('#preview-source').textContent='架空の法律事務所 · 編集体験';conversation.replaceChildren();
   const title=article?'初めて相続をご相談される方へ':'取扱分野のご案内';
   const body=article?'初回相談では、状況を整理することから始めます。相続に関する書類や、確認したいことのメモをご準備ください。個別の法律判断は、事情を伺ったうえでご説明します。':'相続・離婚・企業法務について、状況を丁寧に伺い、今後の進め方をご説明します。';
-  originalHtml=window.SimyPreviewEdit.prepare('<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>みらい法律事務所｜操作例</title><style>html{font-family:system-ui,sans-serif;color:var(--ink);background:var(--paper)}:root{--ink:rgb(24,45,57);--paper:rgb(255,255,255);--subtle:rgb(242,247,252);--line:rgb(219,226,231)}body{margin:0}header,main,footer{padding:24px;max-width:900px;margin:auto}header{border-bottom:1px solid var(--line);font-size:18px;font-weight:600}.sample-label{font-size:12px;background:var(--subtle);padding:12px 24px}h1{font-size:24px;font-weight:600;line-height:1.6}p{font-size:16px;line-height:1.8}article{border-top:1px solid var(--line);margin-top:32px;padding-top:20px}h2{font-size:18px;font-weight:600}footer{font-size:12px;color:var(--ink)}</style></head><body><div class="sample-label">架空の法律事務所を使った操作サンプルです。AI生成・実際の公開は行いません。</div><header>みらい法律事務所</header><main><h1>'+title+'</h1><p data-sample-intro>'+body+'</p><article id="news"><h2>お知らせ</h2><p>平日は午前9時から午後6時までご相談を受け付けています。</p></article></main><footer>所在地・相談方法・受付時間を掲載する例</footer></body></html>');
+  originalHtml=window.SimyPreviewEdit.index(window.SimyPreviewEdit.prepare('<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>みらい法律事務所｜操作例</title><style>html{font-family:system-ui,sans-serif;color:var(--ink);background:var(--paper)}:root{--ink:rgb(24,45,57);--paper:rgb(255,255,255);--subtle:rgb(242,247,252);--line:rgb(219,226,231)}body{margin:0}header,main,footer{padding:24px;max-width:900px;margin:auto}header{border-bottom:1px solid var(--line);font-size:18px;font-weight:600}.sample-label{font-size:12px;background:var(--subtle);padding:12px 24px}h1{font-size:24px;font-weight:600;line-height:1.6}p{font-size:16px;line-height:1.8}article{border-top:1px solid var(--line);margin-top:32px;padding-top:20px}h2{font-size:18px;font-weight:600}footer{font-size:12px;color:var(--ink)}</style></head><body><div class="sample-label">架空の法律事務所を使った編集体験です。</div><header>みらい法律事務所</header><main><article data-sample-content><h1>'+title+'</h1><p>'+body+'</p></article><section id="news"><h2>お知らせ</h2><dl data-sample-notices><dt>2026/01/05</dt><dd>平日は午前9時から午後6時までご相談を受け付けています。</dd></dl></section></main><footer>所在地・相談方法・受付時間を掲載する例</footer></body></html>'));
   updatePreview(originalHtml);result.hidden=false;
   status.textContent='架空の事務所サンプルです。公開中のサイトは変更されません。';
-  editInput.value=article?'お知らせ：初回相談にお持ちいただく資料について、事前に事務所へご確認ください。':'お知らせ：明日は午後休業です。';
+  editInput.value='';
+  document.querySelector('.preview-chat').classList.add('is-empty');
   editorReturn=document.getElementById(article?'try-article':'jump-update');
   if(!editor.open)showEditor();
-  log('お知らせ・文章・写真・デザインの操作例です。');
   return true;
  }};
 
@@ -211,7 +217,7 @@
  applicationForm.addEventListener('change',()=>{const data=new FormData(applicationForm),total=Number(data.get('plan'))+(data.has('assistance')?49800:0);document.querySelector('#application-total').textContent=total.toLocaleString('ja-JP')+'円';document.querySelector('#application-tax').textContent='税込'+Math.round(total*1.1).toLocaleString('ja-JP')+'円';});
  applicationForm.addEventListener('submit',async event=>{event.preventDefault();await window.SimyClinicCheckout?.ready;if(!applicationForm.reportValidity())return;if(!applicationIntent&&await window.SimyClinicCheckout?.go(new FormData(applicationForm)))return;const data=new FormData(applicationForm),plan=applicationForm.querySelector('[name=plan]:checked').closest('label').querySelector('strong').textContent.trim();const body=['SIMY ご担当者様',applicationIntent?'HP管理の相談を希望します。':'HP管理の申し込みを希望します。','事務所名：'+data.get('clinic'),'ご担当者名：'+data.get('contact'),'メールアドレス：'+data.get('email'),'対象URL：'+applicationSourceUrl,'プラン：'+plan,'更新代行：'+(data.has('assistance')?'追加する（月額＋49,800円・税別）':'追加しない'),'月額合計（税別）：'+document.querySelector('#application-total').textContent,...(applicationIntent?['ご相談内容：'+applicationIntent]:[]),'移管内容・費用のご案内をお願いします。'].join('\r\n');location.href='mailto:sales@simy.one?subject='+encodeURIComponent(applicationIntent?'SIMY HP管理のご相談':'SIMY HP管理のお申し込み')+'&body='+encodeURIComponent(body);});
  document.querySelector('#preview-show-pricing').addEventListener('click',()=>{editor.close();requestAnimationFrame(()=>document.querySelector('#pricing').scrollIntoView({block:'start',behavior:'instant'}));});
- undo.addEventListener('click',()=>{if(!editBusy&&history.length){restore(history.pop());log('ひとつ前の状態に戻しました。');}});reset.addEventListener('click',()=>{if(!editBusy&&originalHtml){history.push(snapshot());if(history.length>10)history.shift();context={goal:'',target:'',decisions:'',pending:''};chat=[];assets=[];photoInput.value='';photoStatus.textContent='';updatePreview(originalHtml);log('最初のプレビューに戻しました。');}});
+ undo.addEventListener('click',()=>{if(!editBusy&&history.length){restore(history.pop());log('ひとつ前の状態に戻しました。');}});reset.addEventListener('click',()=>{if(!editBusy&&originalHtml){history.push(snapshot());if(history.length>10)history.shift();context={goal:'',target:'',decisions:'',pending:''};chat=[];assets=[];assetSession++;photoInput.disabled=editBusy;photoInput.value='';photoStatus.textContent='';updatePreview(originalHtml);log('最初のプレビューに戻しました。');}});
  document.addEventListener('click',event=>{const link=event.target.closest('[data-rebuild-url]');if(!link)return;event.preventDefault();input.value=link.dataset.rebuildUrl;document.querySelector('#rebuild').scrollIntoView({block:'start',behavior:'instant'});input.focus({preventScroll:true});});
  input.addEventListener('input',()=>input.setCustomValidity(''));
  const runRebuild=async (activeForm)=>{
@@ -220,14 +226,14 @@
   if(!activeForm.reportValidity())return;
   const startElapsed=activeForm===form?startRebuildElapsed:(activeForm._startElapsed||(activeForm._startElapsed=makeElapsed(status)));
   let url;try{url=new URL(/^[a-z][a-z0-9+.-]*:/i.test(input.value.trim())?input.value.trim():'https://'+input.value.trim());if(!['http:','https:'].includes(url.protocol)||url.username||url.password||url.port||url.search)throw Error();url.hash='';url.pathname='/';}catch{input.setCustomValidity('http / https の公開URLを入力してください。認証情報や「?」以降は含めないでください。');input.reportValidity();return;}
-  localSample=false;setSamplePresentation(false);currentHtml='';originalHtml='';history=[];chat=[];assets=[];context={goal:'',target:'',decisions:'',pending:''};assetSequence=0;conversation.replaceChildren();frame.removeAttribute('srcdoc');if(objectUrl){URL.revokeObjectURL(objectUrl);objectUrl=null;}
+  localSample=false;setSamplePresentation(false);cancelActiveEdit();currentHtml='';originalHtml='';history=[];chat=[];assets=[];assetSession++;photoInput.disabled=editBusy;context={goal:'',target:'',decisions:'',pending:''};assetSequence=0;conversation.replaceChildren();frame.removeAttribute('srcdoc');if(objectUrl){URL.revokeObjectURL(objectUrl);objectUrl=null;}
   busy=true;button.disabled=true;button.textContent='作成中…';status.className='rebuild-status is-running';status.textContent='公開ページを読み込み、プレビューを作成しています…';result.hidden=true;const stopElapsed=startElapsed();
   try{
    const response=await fetch(form.dataset.endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url:url.href,rightsConfirmed:activeForm.elements.rights.checked}),signal:AbortSignal.timeout(80000)});
    const data=await response.json();if(!response.ok)throw Error(data.error||'プレビューを作成できませんでした。');
    if(data.mode!=='static-html5-preview'||typeof data.html!=='string'||data.html.length>2000000)throw Error('プレビューの形式を確認できませんでした。');
-   originalHtml=window.SimyPreviewEdit.index(window.SimyPreviewEdit.prepare(data.html));history=[];chat=[];assets=[];context={goal:'',target:'',decisions:'',pending:''};assetSequence=0;photoInput.value='';photoStatus.textContent='';updatePreview(originalHtml);document.querySelector('#preview-source').textContent=url.hostname+' · 公開中のサイトは変更しません';conversation.replaceChildren();document.querySelector('.preview-chat').classList.add('is-empty');
-   const enquiryBody='SIMY ご担当者様\r\n\r\n事務所名：\r\nご担当者名：\r\nホームページURL：'+url.href+'\r\nご用件：ホームページの再現を体験しました。移管・保守について相談したいです。\r\n';document.querySelector('#preview-enquiry').href='mailto:sales@simy.one?subject='+encodeURIComponent('HP管理・移管の相談')+'&body='+encodeURIComponent(enquiryBody);
+   originalHtml=window.SimyPreviewEdit.index(window.SimyPreviewEdit.prepare(data.html));history=[];chat=[];assets=[];assetSession++;photoInput.disabled=editBusy;context={goal:'',target:'',decisions:'',pending:''};assetSequence=0;editInput.value='';photoInput.value='';photoStatus.textContent='';updatePreview(originalHtml);document.querySelector('#preview-source').textContent=url.hostname+' · 公開中のサイトは変更しません';conversation.replaceChildren();document.querySelector('.preview-chat').classList.add('is-empty');
+   const enquiryBody='SIMY ご担当者様\r\n\r\n事業者・団体名：\r\nご担当者名：\r\nホームページURL：'+url.href+'\r\nご用件：ホームページの再現を体験しました。移管・保守について相談したいです。\r\n';document.querySelector('#preview-enquiry').href='mailto:sales@simy.one?subject='+encodeURIComponent('HP管理・移管の相談')+'&body='+encodeURIComponent(enquiryBody);
    status.className='rebuild-status';status.textContent='プレビューができました。もう一度開くには「編集画面を開く」を押してください。';previewSourceUrl=url.href;editorReturn=button;result.hidden=false;if(activeForm!==form){button.dataset.previewReady='true';button.dataset.sourceInput=input.value.trim();button.dataset.previewUrl=url.href;}showEditor();
   }catch(error){status.className='rebuild-status is-error';status.textContent=error.name==='TimeoutError'?'時間内に取得できませんでした。もう一度お試しください。':error.name==='TypeError'?'接続できませんでした。時間をおいて、もう一度お試しください。':error.message;}finally{stopElapsed();busy=false;button.disabled=false;button.innerHTML=button.dataset.previewReady?'編集画面を開く →':'作ってみる <span aria-hidden="true">→</span>';}
  };

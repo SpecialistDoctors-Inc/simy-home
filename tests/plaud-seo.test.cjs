@@ -318,7 +318,7 @@ test("F9 images loaded by the page total 50KB or less", () => {
 });
 
 test("F8 no external CSS, JavaScript or web fonts block rendering", () => {
-  assert.doesNotMatch(html.replace(/<link rel="stylesheet" href="\/(?:site-header|hp-industry-navigation)\.css\?v=[^"]+">/g, ""), /<link[^>]+rel="stylesheet"/);
+  assert.doesNotMatch(html.replace(/<link rel="stylesheet" href="\/(?:site-header|hp-industry-navigation|page-accessibility)\.css\?v=[^"]+">/g, ""), /<link[^>]+rel="stylesheet"/);
   // Scripts are allowed only when they cannot block rendering: same-origin and deferred or async.
   const blocking = [...html.matchAll(/<script\b[^>]*\bsrc="([^"]+)"[^>]*>/g)]
     .filter((m) => !/\b(defer|async)\b/.test(m[0]) || /^(https?:)?\/\//.test(m[1]))
