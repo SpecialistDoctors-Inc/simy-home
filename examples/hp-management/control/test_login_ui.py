@@ -65,10 +65,9 @@ class SiteSwitchTest(unittest.TestCase):
         self.assertLess(card.index('action="/start/site"'), card.index('action="/start/wordpress"'))
 
     def test_url_errors_keep_the_general_site_form(self):
-        for notice in ('invalid_url', 'invalid_auth_code'):
-            html = onboarding().site_step(PURCHASE, VISIT, None, 'sid', notice)
-            self.assertIn('id="kind-other" checked', html)
-            self.assertNotIn('id="kind-wp" checked', html)
+        html = onboarding().site_step(PURCHASE, VISIT, None, 'sid', 'invalid_url')
+        self.assertIn('id="kind-other" checked', html)
+        self.assertNotIn('id="kind-wp" checked', html)
 
     def test_wordpress_errors_reopen_the_wordpress_form(self):
         html = onboarding().site_step(PURCHASE, VISIT, None, 'sid', 'wordpress_declined')

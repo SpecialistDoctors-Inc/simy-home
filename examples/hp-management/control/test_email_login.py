@@ -389,7 +389,7 @@ class OnboardingEmailLoginTest(unittest.TestCase):
         subject = email_subject('owner@example.test')
         self.assertEqual(self.store.get('stripe-subscription:' + SUB)['subject'], subject)
 
-        self.call('POST', '/start/site', form={'session_id': SESSION, 'site_url': self.site['prod_url'], 'auth_code': ''})
+        self.call('POST', '/start/site', form={'session_id': SESSION, 'site_url': self.site['prod_url']})
         self.assertEqual(self.store.get('clinic-intake:' + SUB)['status'], 'claimed')
         claims = {'sub': subject, 'scope': 'hp:read hp:write'}
         self.assertEqual(self.service.list_sites(claims)[0]['roles'], ['read', 'edit', 'publish'])

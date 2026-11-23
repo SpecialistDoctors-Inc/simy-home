@@ -77,7 +77,7 @@ class ClinicSlotsTest(unittest.TestCase):
 
     def paid_clinic_copied(self, sub=SUB):
         self.sign_in()
-        self.call('POST', '/start/site', form={'session_id': SESSION, 'site_url': CLINIC_URL, 'auth_code': ''})
+        self.call('POST', '/start/site', form={'session_id': SESSION, 'site_url': CLINIC_URL})
         key = 'clinic-intake:' + sub
         intake = self.store.get(key)
         self.store.put(key, {**{k: v for k, v in intake.items() if k != '_version'}, 'copy_state': 'done',
@@ -165,7 +165,7 @@ class ClinicSlotsTest(unittest.TestCase):
     def test_wordpress_and_unfinished_copies_are_not_assigned(self):
         self.add_slots('slot-a')
         self.sign_in()
-        self.call('POST', '/start/site', form={'session_id': SESSION, 'site_url': CLINIC_URL, 'auth_code': ''})
+        self.call('POST', '/start/site', form={'session_id': SESSION, 'site_url': CLINIC_URL})
         enqueue(self.store, SUB)
         self.assertEqual(self.assigner.run_one(), (SUB, 'not_applicable'))  # copy still pending
         self.assertEqual(self.store.get(POOL_KEY)['free'], ['slot-a'])
@@ -182,7 +182,7 @@ class ClinicSlotsTest(unittest.TestCase):
         from site_copy import run_one
         self.add_slots('slot-a')
         self.sign_in()
-        self.call('POST', '/start/site', form={'session_id': SESSION, 'site_url': CLINIC_URL, 'auth_code': ''})
+        self.call('POST', '/start/site', form={'session_id': SESSION, 'site_url': CLINIC_URL})
         queued = []
         run_one(self.store, lambda key, data: None, copier=lambda host: (self.copy, {'files': [1], 'truncated': False}),
                 on_done=queued.append)
@@ -202,7 +202,7 @@ class ClinicSlotsTest(unittest.TestCase):
         self.paid_clinic_copied()
         broken = SlotAssigner(self.store, lambda key: self.copy, self.buckets, lambda sub: {'status': 'retry'})
         self.assertEqual(broken.run_one(), (SUB, 'claim_pending'))
-        self.call('POST', '/start/site', form={'session_id': SESSION, 'site_url': CLINIC_URL, 'auth_code': ''})
+        self.call('POST', '/start/site', form={'session_id': SESSION, 'site_url': CLINIC_URL})
         self.assertEqual(self.store.get('clinic-intake:' + SUB)['slot_site_id'], 'slot-a')
         self.assertEqual(self.assigner.run_one(), (SUB, 'ready'))
         self.assertEqual(self.store.get('clinic-intake:' + SUB)['slot_site_id'], 'slot-a')
@@ -212,8 +212,7 @@ class ClinicSlotsTest(unittest.TestCase):
         self.add_slots('slot-a')
         self.paid_clinic_copied()
         SlotAssigner(self.store, lambda key: self.copy, self.buckets, lambda sub: {'status': 'retry'}).run_one()
-        response = self.call('POST', '/start/site', form={'session_id': SESSION, 'site_url': 'https://other.example.jp',
-                                                          'auth_code': ''})
+        response = self.call('POST', '/start/site', form={'session_id': SESSION, 'site_url': 'https://other.example.jp'})
         self.assertIn('notice=site_locked', response['headers']['location'])
         intake = self.store.get('clinic-intake:' + SUB)
         self.assertEqual((intake['host'], intake['slot_site_id']), ('clinic.example.jp', 'slot-a'))
@@ -234,7 +233,7 @@ class ClinicSlotsTest(unittest.TestCase):
     def test_copy_follow_up_survives_a_run_that_ends_after_the_copy(self):
         from site_copy import run_one
         self.sign_in()
-        self.call('POST', '/start/site', form={'session_id': SESSION, 'site_url': CLINIC_URL, 'auth_code': ''})
+        self.call('POST', '/start/site', form={'session_id': SESSION, 'site_url': CLINIC_URL})
 
         def lost(subscription_id):
             raise TimeoutError('lambda ended')
