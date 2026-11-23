@@ -56,7 +56,7 @@
 @media (max-width: 380px) {
   .simy-header .sh-frame { padding-inline: 12px; gap: 8px; }
   .simy-header .sh-account { gap: 8px; }
-  .simy-header .sh-signup { padding-inline: 12px; }
+  .simy-header .sh-signup { padding-inline: 12px; max-width: 6rem; white-space: normal; overflow-wrap: anywhere; text-align: center; }
 }
 html:root { scroll-padding-top: var(--simy-header-offset, 92px); }
 .mock-head > div { min-width: 0; }

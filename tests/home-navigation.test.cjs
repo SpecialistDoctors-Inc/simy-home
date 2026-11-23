@@ -22,7 +22,8 @@ test("mobile navigation closes from blank and outside clicks", () => {
 });
 
 test("homepage cache-busts the current home assets", () => {
-  assert.match(homeHtml, /home\.css\?v=20261118-pricing-notice-1/);
+  const version = require("node:crypto").createHash("sha256").update(homeCss).digest("hex").slice(0, 12);
+  assert.ok(homeHtml.includes(`home.css?v=${version}`));
   assert.match(homeHtml, /home-locales\.js\?v=20261004-url-plan-1/);
   assert.match(homeHtml, /home-i18n\.js\?v=20261006-engineer-locales-1/);
   assert.match(homeHtml, /pricing-catalog\.js\?v=20261017-storage-1tb/);
@@ -38,16 +39,14 @@ test("pricing call to action opens the signup plan selection page", () => {
   assert.equal((homeHtml.match(/href="https:\/\/app\.simy\.one\/signup\/\?plan=(starter|quality)&amp;interval=annual&amp;lang=en&amp;locale=en&amp;region=us" aria-label="Choose a plan"/g) || []).length, 2);
 });
 
-test("pages loading the demo bundle cache-bust its workflow terminology", () => {
+test("contact pages retain static contact content without the retired demo renderer", () => {
   const pages = ["contact.html"];
   for (const directory of ["site", "site/old"]) {
     for (const page of pages) {
       const source = fs.readFileSync(path.join(repoRoot, directory, page), "utf8");
-      assert.match(
-        source,
-        /\/assets\/index-DnVveaIK\.js\?v=20260915-workflow-terminology-1/,
-        `${directory}/${page} must load the updated workflow terminology bundle`
-      );
+      assert.doesNotMatch(source, /<script type="module"[^>]+\/assets\/index-/, `${directory}/${page}: retired renderer must not clear static content`);
+      assert.match(source, /<main\b/);
+      assert.match(source, /mailto:sales@simy.one/);
     }
   }
 

@@ -6,7 +6,7 @@ const base = process.env.HOME_MANGA_BASE || 'http://127.0.0.1:8771';
 const out = process.env.HOME_MANGA_EVIDENCE || '/tmp/home-manga-locales-evidence';
 fs.mkdirSync(out, { recursive: true });
 (async () => {
-  const browser = await chromium.launch({ channel: 'chrome' });
+  const browser = await chromium.launch(process.env.HOME_MANGA_BROWSER_CHANNEL ? { channel: process.env.HOME_MANGA_BROWSER_CHANNEL } : {});
   const page = await browser.newPage({ reducedMotion: 'reduce' });
   await page.addInitScript(() => localStorage.setItem('simy-cookies', '0'));
   const errors = [], reports = [];
@@ -43,12 +43,30 @@ fs.mkdirSync(out, { recursive: true });
           overflow: document.documentElement.scrollWidth > innerWidth,
           clippedHeadings: [...document.querySelectorAll('main h1, main h2, main h3')].filter(e => e.clientWidth && e.scrollWidth > e.clientWidth + 2).map(e => e.textContent),
           appHeights: [...document.querySelectorAll('.connected-apps .apps-grid:not(.apps-grid-ai) .app-tile')].map(e => e.getBoundingClientRect().height),
-          sceneLanguages: [...document.querySelectorAll('[data-story-scene] img')].map(e => e.getAttribute('src'))
+          sceneLanguages: [...document.querySelectorAll('[data-story-scene] img')].map(e => e.getAttribute('src')),
+          sceneEdges: [...document.querySelectorAll('[data-story-scene]')].map(e => {
+            const r = e.getBoundingClientRect();
+            return { scene: e.dataset.storyScene, left: r.left, right: r.right, width: r.width, height: r.height };
+          }),
+          featureEdges: [...document.querySelectorAll('.method > .surface-grid > .surface-card')].map(e => {
+            const card = e.getBoundingClientRect(), shot = e.querySelector('.app-shot').getBoundingClientRect();
+            return { top: card.top, bottom: card.bottom, shotTop: shot.top, shotBottom: shot.bottom };
+          })
         }));
         assert.equal(geometry.overflow, false, locale + ':' + width + ' overflow');
         assert.deepEqual(geometry.clippedHeadings, [], locale + ':' + width + ' clipped heading');
         assert.ok(geometry.appHeights.length >= 8, locale + ": app tiles measured");
         assert.ok(geometry.appHeights.every(h => h < 150), locale + ':' + width + ' oversized app cell');
+        assert.equal(geometry.sceneEdges.length, 6, locale + ':' + width + ' original scenes');
+        assert.ok(geometry.sceneEdges.every(r => r.width > 0 && r.height > 0), locale + ':' + width + ' hidden artwork');
+        const rights = geometry.sceneEdges.map(r => r.right);
+        assert.ok(Math.max(...rights) - Math.min(...rights) <= 1, locale + ':' + width + ' artwork right edges');
+        if (width > 1100) {
+          assert.equal(geometry.featureEdges.length, 2);
+          for (const edge of ['top', 'bottom', 'shotTop', 'shotBottom']) {
+            assert.ok(Math.abs(geometry.featureEdges[0][edge] - geometry.featureEdges[1][edge]) <= 1, locale + ':' + width + ' feature ' + edge);
+          }
+        }
         reports.push({ locale, width, ...geometry });
         if ([1440, 390].includes(width)) {
           await page.locator('#top').scrollIntoViewIfNeeded();

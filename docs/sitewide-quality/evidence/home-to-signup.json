@@ -1,0 +1,270 @@
+{
+  "observedAt": "2026-11-19T22:54:04.622Z",
+  "method": "Local reviewed HOME → local reviewed unauthenticated app signup; real browser reads URL and displayed amount; external requests blocked; no registration or payment.",
+  "results": [
+    {
+      "locale": "en",
+      "plan": "starter",
+      "interval": "annual",
+      "homeLink": "https://app.simy.one/signup/?plan=starter&interval=annual&lang=en&locale=en&region=us",
+      "status": 200,
+      "displayLanguage": "en",
+      "expectedTotalUsdCents": 35760,
+      "formattedTotal": "$357.60",
+      "totalFound": true
+    },
+    {
+      "locale": "en",
+      "plan": "quality",
+      "interval": "annual",
+      "homeLink": "https://app.simy.one/signup/?plan=quality&interval=annual&lang=en&locale=en&region=us",
+      "status": 200,
+      "displayLanguage": "en",
+      "expectedTotalUsdCents": 71760,
+      "formattedTotal": "$717.60",
+      "totalFound": true
+    },
+    {
+      "locale": "en",
+      "plan": "starter",
+      "interval": "monthly",
+      "homeLink": "https://app.simy.one/signup/?plan=starter&interval=monthly&lang=en&locale=en&region=us",
+      "status": 200,
+      "displayLanguage": "en",
+      "expectedTotalUsdCents": 3580,
+      "formattedTotal": "$35.80",
+      "totalFound": true
+    },
+    {
+      "locale": "en",
+      "plan": "quality",
+      "interval": "monthly",
+      "homeLink": "https://app.simy.one/signup/?plan=quality&interval=monthly&lang=en&locale=en&region=us",
+      "status": 200,
+      "displayLanguage": "en",
+      "expectedTotalUsdCents": 7180,
+      "formattedTotal": "$71.80",
+      "totalFound": true
+    },
+    {
+      "locale": "ja",
+      "plan": "starter",
+      "interval": "annual",
+      "homeLink": "https://app.simy.one/signup/?plan=starter&interval=annual&lang=ja&locale=ja&region=jp",
+      "status": 200,
+      "displayLanguage": "ja",
+      "expectedTotalUsdCents": 35760,
+      "formattedTotal": "$357.60",
+      "totalFound": true
+    },
+    {
+      "locale": "ja",
+      "plan": "quality",
+      "interval": "annual",
+      "homeLink": "https://app.simy.one/signup/?plan=quality&interval=annual&lang=ja&locale=ja&region=jp",
+      "status": 200,
+      "displayLanguage": "ja",
+      "expectedTotalUsdCents": 71760,
+      "formattedTotal": "$717.60",
+      "totalFound": true
+    },
+    {
+      "locale": "ja",
+      "plan": "starter",
+      "interval": "monthly",
+      "homeLink": "https://app.simy.one/signup/?plan=starter&interval=monthly&lang=ja&locale=ja&region=jp",
+      "status": 200,
+      "displayLanguage": "ja",
+      "expectedTotalUsdCents": 3580,
+      "formattedTotal": "$35.80",
+      "totalFound": true
+    },
+    {
+      "locale": "ja",
+      "plan": "quality",
+      "interval": "monthly",
+      "homeLink": "https://app.simy.one/signup/?plan=quality&interval=monthly&lang=ja&locale=ja&region=jp",
+      "status": 200,
+      "displayLanguage": "ja",
+      "expectedTotalUsdCents": 7180,
+      "formattedTotal": "$71.80",
+      "totalFound": true
+    },
+    {
+      "locale": "es",
+      "plan": "starter",
+      "interval": "annual",
+      "homeLink": "https://app.simy.one/signup/?plan=starter&interval=annual&lang=es&locale=es&region=es",
+      "status": 200,
+      "displayLanguage": "es",
+      "expectedTotalUsdCents": 35760,
+      "formattedTotal": "357,60 US$",
+      "totalFound": true
+    },
+    {
+      "locale": "es",
+      "plan": "quality",
+      "interval": "annual",
+      "homeLink": "https://app.simy.one/signup/?plan=quality&interval=annual&lang=es&locale=es&region=es",
+      "status": 200,
+      "displayLanguage": "es",
+      "expectedTotalUsdCents": 71760,
+      "formattedTotal": "717,60 US$",
+      "totalFound": true
+    },
+    {
+      "locale": "es",
+      "plan": "starter",
+      "interval": "monthly",
+      "homeLink": "https://app.simy.one/signup/?plan=starter&interval=monthly&lang=es&locale=es&region=es",
+      "status": 200,
+      "displayLanguage": "es",
+      "expectedTotalUsdCents": 3580,
+      "formattedTotal": "35,80 US$",
+      "totalFound": true
+    },
+    {
+      "locale": "es",
+      "plan": "quality",
+      "interval": "monthly",
+      "homeLink": "https://app.simy.one/signup/?plan=quality&interval=monthly&lang=es&locale=es&region=es",
+      "status": 200,
+      "displayLanguage": "es",
+      "expectedTotalUsdCents": 7180,
+      "formattedTotal": "71,80 US$",
+      "totalFound": true
+    },
+    {
+      "locale": "fr",
+      "plan": "starter",
+      "interval": "annual",
+      "homeLink": "https://app.simy.one/signup/?plan=starter&interval=annual&lang=fr&locale=fr&region=fr",
+      "status": 200,
+      "displayLanguage": "fr",
+      "expectedTotalUsdCents": 35760,
+      "formattedTotal": "357,60 $US",
+      "totalFound": true
+    },
+    {
+      "locale": "fr",
+      "plan": "quality",
+      "interval": "annual",
+      "homeLink": "https://app.simy.one/signup/?plan=quality&interval=annual&lang=fr&locale=fr&region=fr",
+      "status": 200,
+      "displayLanguage": "fr",
+      "expectedTotalUsdCents": 71760,
+      "formattedTotal": "717,60 $US",
+      "totalFound": true
+    },
+    {
+      "locale": "fr",
+      "plan": "starter",
+      "interval": "monthly",
+      "homeLink": "https://app.simy.one/signup/?plan=starter&interval=monthly&lang=fr&locale=fr&region=fr",
+      "status": 200,
+      "displayLanguage": "fr",
+      "expectedTotalUsdCents": 3580,
+      "formattedTotal": "35,80 $US",
+      "totalFound": true
+    },
+    {
+      "locale": "fr",
+      "plan": "quality",
+      "interval": "monthly",
+      "homeLink": "https://app.simy.one/signup/?plan=quality&interval=monthly&lang=fr&locale=fr&region=fr",
+      "status": 200,
+      "displayLanguage": "fr",
+      "expectedTotalUsdCents": 7180,
+      "formattedTotal": "71,80 $US",
+      "totalFound": true
+    },
+    {
+      "locale": "hi",
+      "plan": "starter",
+      "interval": "annual",
+      "homeLink": "https://app.simy.one/signup/?plan=starter&interval=annual&lang=hi&locale=hi&region=in",
+      "status": 200,
+      "displayLanguage": "hi",
+      "expectedTotalUsdCents": 35760,
+      "formattedTotal": "$357.60",
+      "totalFound": true
+    },
+    {
+      "locale": "hi",
+      "plan": "quality",
+      "interval": "annual",
+      "homeLink": "https://app.simy.one/signup/?plan=quality&interval=annual&lang=hi&locale=hi&region=in",
+      "status": 200,
+      "displayLanguage": "hi",
+      "expectedTotalUsdCents": 71760,
+      "formattedTotal": "$717.60",
+      "totalFound": true
+    },
+    {
+      "locale": "hi",
+      "plan": "starter",
+      "interval": "monthly",
+      "homeLink": "https://app.simy.one/signup/?plan=starter&interval=monthly&lang=hi&locale=hi&region=in",
+      "status": 200,
+      "displayLanguage": "hi",
+      "expectedTotalUsdCents": 3580,
+      "formattedTotal": "$35.80",
+      "totalFound": true
+    },
+    {
+      "locale": "hi",
+      "plan": "quality",
+      "interval": "monthly",
+      "homeLink": "https://app.simy.one/signup/?plan=quality&interval=monthly&lang=hi&locale=hi&region=in",
+      "status": 200,
+      "displayLanguage": "hi",
+      "expectedTotalUsdCents": 7180,
+      "formattedTotal": "$71.80",
+      "totalFound": true
+    },
+    {
+      "locale": "zh-Hans",
+      "plan": "starter",
+      "interval": "annual",
+      "homeLink": "https://app.simy.one/signup/?plan=starter&interval=annual&lang=zh-Hans&locale=zh-Hans",
+      "status": 200,
+      "displayLanguage": "zh-Hans",
+      "expectedTotalUsdCents": 35760,
+      "formattedTotal": "US$357.60",
+      "totalFound": true
+    },
+    {
+      "locale": "zh-Hans",
+      "plan": "quality",
+      "interval": "annual",
+      "homeLink": "https://app.simy.one/signup/?plan=quality&interval=annual&lang=zh-Hans&locale=zh-Hans",
+      "status": 200,
+      "displayLanguage": "zh-Hans",
+      "expectedTotalUsdCents": 71760,
+      "formattedTotal": "US$717.60",
+      "totalFound": true
+    },
+    {
+      "locale": "zh-Hans",
+      "plan": "starter",
+      "interval": "monthly",
+      "homeLink": "https://app.simy.one/signup/?plan=starter&interval=monthly&lang=zh-Hans&locale=zh-Hans",
+      "status": 200,
+      "displayLanguage": "zh-Hans",
+      "expectedTotalUsdCents": 3580,
+      "formattedTotal": "US$35.80",
+      "totalFound": true
+    },
+    {
+      "locale": "zh-Hans",
+      "plan": "quality",
+      "interval": "monthly",
+      "homeLink": "https://app.simy.one/signup/?plan=quality&interval=monthly&lang=zh-Hans&locale=zh-Hans",
+      "status": 200,
+      "displayLanguage": "zh-Hans",
+      "expectedTotalUsdCents": 7180,
+      "formattedTotal": "US$71.80",
+      "totalFound": true
+    }
+  ]
+}

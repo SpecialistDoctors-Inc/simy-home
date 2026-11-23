@@ -1,0 +1,25 @@
+{
+  "observedAt": "2026-11-20T00:39:18.643064+00:00",
+  "sourceURL": "https://simy.one/downloads/simy-cli/windows/latest.json",
+  "manifest": {
+    "schemaVersion": 1,
+    "version": "1.2.17",
+    "publishedAt": "2026-11-19T09:54:47.793Z",
+    "artifacts": [
+      {
+        "url": "https://simy.one/downloads/simy-cli/windows/1.2.17/SIMY-CLI-1.2.17-windows-x64-setup.exe",
+        "sha256": "f8bda9fa74808afab134c03cf45247680adb132d60c8f376bcbbd461c3a3f401",
+        "size": 29702933,
+        "platform": "win32",
+        "arch": "x64",
+        "signed": false,
+        "updater": {
+          "url": "https://simy.one/downloads/simy-cli/windows/1.2.17/SIMY-CLI-1.2.17-windows-x64.zip",
+          "sha256": "5eee28d6a594fa8de455443cf75079f1a49d70f879c859def5df5914ea963611",
+          "size": 50237322
+        }
+      }
+    ]
+  },
+  "assessment": "本番の配布manifestでもWindows 1.2.17のsigned=false。未署名表記は過去ページだけでなく現在配布の一次情報で確認。バイナリの実行・安全性・実機フローの確認ではない。"
+}

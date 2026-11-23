@@ -760,7 +760,7 @@ thead th.simy { background: var(--blue-deep); }
 }
 .dl-card.is-you .you-badge { display: inline-block; }
 .dl-main { padding: clamp(40px, 6vw, 72px) 0 clamp(56px, 7vw, 96px); }
-.dl-main .wrap > .sec { max-width: 980px; }
+.dl-main > .wrap { max-width: 980px; }
 @media (max-width: 860px) { .dl-grid { grid-template-columns: minmax(0, 1fr); } }
 
 .funnel { list-style: none; margin: 28px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; border: 1px solid var(--ink); border-radius: var(--radius); overflow: hidden; background: var(--paper-light); }
@@ -771,20 +771,35 @@ thead th.simy { background: var(--blue-deep); }
 .funnel li.is-now .fn { background: var(--blue-deep); color: #fff; border-color: var(--blue-deep); }
 .funnel b { display: block; font-size: 1rem; }
 .funnel small { display: block; margin-top: 2px; font-size: 0.8rem; color: var(--ink-soft); }
-.paths { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 16px; margin-top: 16px; align-items: start; }
+.paths { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; margin-top: 16px; }
 .path { padding: 22px 20px; border: 1px solid var(--ui-line); border-radius: var(--radius); background: var(--paper-light); display: flex; flex-direction: column; gap: 10px; }
 .path-new { border-color: var(--ink); box-shadow: 6px 6px 0 var(--blue); }
 .path-h { margin: 0; font-size: 1.3rem; }
 .path p { margin: 0; font-size: 0.92rem; color: #34322f; }
 .need { margin: 0; padding-left: 1.1em; font-size: 0.88rem; line-height: 1.8; }
 .path .btn { justify-content: center; }
-.path .dl-grid { grid-template-columns: minmax(0, 1fr); margin-top: 4px; gap: 10px; }
+.path-new > .btn { align-self: flex-start; }
+.path .dl-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 4px; gap: 10px; }
 .path .dl-card { padding: 14px 16px; gap: 8px; border-color: var(--ui-line); }
 .path .dl-card.is-you { border-color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
 .path .dl-card h3 { font-size: 1.02rem; }
+.path .dl-card .btn { padding-inline: 12px; gap: 6px; text-wrap: balance; }
+/* Shared platform rows keep names, actions and metadata aligned across languages. */
+@media (min-width: 861px) {
+  .path .dl-grid { grid-template-rows: repeat(6, auto); }
+  .path .dl-card { display: grid; grid-template-rows: subgrid; grid-row: span 6; }
+  .path .dl-card .you-badge { grid-row: 1; justify-self: start; }
+  .path .dl-card .os { grid-row: 2; }
+  .path .dl-card h3 { grid-row: 3; }
+  .path .dl-card .btn { grid-row: 4; margin-top: 0; }
+  .path .dl-card .dl-meta { grid-row: 5; }
+  .path .dl-card .note { grid-row: 6; margin: 0; }
+}
+
 .mobile-hint { margin: 4px 0 0; font-size: 0.86rem; color: var(--ink-soft); }
 .linkbtn { background: none; border: 0; padding: 0; font: inherit; color: var(--blue-deep); text-decoration: underline; cursor: pointer; }
 .dl-meta a { color: var(--blue-deep); }
+@media (max-width: 860px) { .path .dl-grid { grid-template-columns: minmax(0, 1fr); } .path-new > .btn { align-self: stretch; } }
 @media (max-width: 860px) { .paths, .funnel { grid-template-columns: minmax(0, 1fr); } .funnel li { border-left: 0; border-top: 1px solid var(--ui-line); } .funnel li:first-child { border-top: 0; } }
 
 .lang-switch { position: relative; }
@@ -844,7 +859,7 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
           "name": "क्या मुफ़्त में आज़मा सकते हैं?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "कोई फ़्री प्लान नहीं है। मासिक प्लान चुनकर रजिस्टर करने पर ऐप और वेब दोनों इस्तेमाल कर सकते हैं। कीमत होम पेज के प्राइसिंग सेक्शन में देखें।"
+            "text": "होम पेज पर दिए गए मूल प्लान में एक महीने का मुफ़्त ट्रायल शामिल है। रजिस्टर करते समय मासिक या वार्षिक बिलिंग चुनें; ट्रायल के बाद प्लान उन्हीं शर्तों पर अपने-आप रिन्यू होता है। ट्रायल खत्म होने से पहले आप रद्द कर सकते हैं। लागू प्लान, अतिरिक्त शुल्क, टैक्स और अंतिम शर्तें साइनअप स्क्रीन पर जाँचें।"
           }
         },
         {
@@ -910,8 +925,8 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
 </script>
 <meta name="twitter:title" content="SIMY डाउनलोड करें | Mac, Windows, iPhone">
 <meta name="twitter:description" content="PC पर Claude Code या Codex से हुई बातचीत से SIMY आपका अगला काम ढूँढता है।">
-<link rel="stylesheet" href="/site-header.css?v=20261021-pharma-1">
-<script src="/site-header.js?v=c896d04763b8" defer></script>
+<link rel="stylesheet" href="/site-header.css?v=057b1a60b00d">
+<script src="/site-header.js?v=a4a1ff0096eb" defer></script>
 <!-- SIMY locale navigation -->
 <script data-simy-locale-navigation>
 /* Shared homepage entry policy. Country hints are optional; timezone is an OS
@@ -1013,6 +1028,7 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
 })();
 </script>
 <!-- /SIMY locale navigation -->
+<link rel="stylesheet" href="/page-accessibility.css?v=468c1bee6d3c">
 </head>
 <body>
 <a class="skip" href="#main">मुख्य सामग्री पर जाएँ</a>
@@ -1020,15 +1036,15 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
 <header class="simy-header" translate="no" data-simy-no-translate>
   <div class="sh-frame">
     <a class="sh-brand" href="/hi.html" aria-label="SIMY home"><img src="/simy-icon-56.png" width="32" height="32" alt=""><span>SIMY</span></a>
-    <details class="sh-menu"><summary class="sh-menu-toggle" aria-label="Navigation menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></summary><div class="sh-menu-panel"><div class="sh-navigation" role="navigation" aria-label="Primary navigation"><details class="sh-dropdown"><summary>Product<span aria-hidden="true">⌄</span></summary><div class="sh-panel"><a href="/hi.html#product">Overview</a><a href="/hi.html#how-it-works">How it works</a><a href="/integrations.html?lang=hi">Apps & integrations</a><a href="/download/hi.html">Download</a><div class="sh-stores" role="group" aria-label="Mobile apps">
+    <details class="sh-menu"><summary class="sh-menu-toggle" aria-label="Navigation menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></summary><div class="sh-menu-panel"><div class="sh-navigation" role="navigation" aria-label="Primary navigation"><details class="sh-dropdown"><summary>Product<span aria-hidden="true">⌄</span></summary><div class="sh-panel"><a href="/hi.html#product">Overview</a><a href="/hi.html#how-it-works">How it works</a><a href="/integrations.html?lang=hi">Apps & integrations</a><a href="/download/hi.html" aria-current="page">Download</a><div class="sh-stores" role="group" aria-label="Mobile apps">
       <a class="sh-store" href="https://apps.apple.com/app/id6745385262"><img src="/assets/store-badges/app-store.svg" width="120" height="40" alt="Download on the App Store"></a>
       <a class="sh-store sh-google-play" href="/download/hi.html#android" aria-label="Android availability"><img src="/assets/store-badges/google-play.png" width="155" height="60" alt="Google Play"><small>Android availability</small></a>
     </div></div></details><details class="sh-dropdown"><summary>Solutions<span aria-hidden="true">⌄</span></summary><div class="sh-panel"><a href="/for/en/">For your work</a><a href="/for/hi/engineers/">For engineers</a><a href="/for/hi/financial-planners/">For financial planners</a><a href="/for/hi/pharmaceutical-companies/">दवा कंपनियों के लिए</a><a href="/hi.html#use-cases">Use cases</a></div></details><details class="sh-dropdown"><summary>Resources<span aria-hidden="true">⌄</span></summary><div class="sh-panel"><a href="/guides/hi/index.html">Guides</a><a href="/compare.html?lang=hi">Compare</a><a href="/press-release.html?lang=hi">News</a><a href="/about.html?lang=hi">About SIMY</a><a href="/security.html?lang=hi">Security</a><a href="/contact.html?lang=hi">Contact</a><a href="/legal.html">Legal & service information</a><a href="/seller-info.html">Seller information</a></div></details><a class="sh-pricing" href="/hi.html#pricing">Pricing</a></div><a class="sh-login" data-existing-account-login href="https://app.simy.one/">Log in</a></div></details>
-    <div class="sh-account"><details class="sh-dropdown sh-language"><summary aria-label="Language: हिन्दी"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/></svg> HI</summary><div class="sh-panel"><a href="/download/en.html" lang="en" hreflang="en" data-locale-option="en">English</a><a href="/download.html" lang="ja" hreflang="ja" data-locale-option="ja">日本語</a><a href="/download/hi.html" lang="hi" hreflang="hi" data-locale-option="hi" aria-current="page">हिन्दी</a><a href="/download/es.html" lang="es" hreflang="es" data-locale-option="es">Español</a><a href="/download/fr.html" lang="fr" hreflang="fr" data-locale-option="fr">Français</a><a href="/download/zh-hans.html" lang="zh-Hans" hreflang="zh-Hans" data-locale-option="zh-Hans">简体中文</a></div></details><a data-new-account-signup class="sh-signup" href="https://app.simy.one/signup?lang=hi&amp;locale=hi&amp;region=in">Sign up</a></div>
+    <div class="sh-account"><details class="sh-dropdown sh-language"><summary aria-label="HI: हिन्दी (Language)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/></svg> HI</summary><div class="sh-panel"><a href="/download/en.html" lang="en" hreflang="en" data-locale-option="en">English</a><a href="/download.html" lang="ja" hreflang="ja" data-locale-option="ja">日本語</a><a href="/download/hi.html" lang="hi" hreflang="hi" data-locale-option="hi" aria-current="page">हिन्दी</a><a href="/download/es.html" lang="es" hreflang="es" data-locale-option="es">Español</a><a href="/download/fr.html" lang="fr" hreflang="fr" data-locale-option="fr">Français</a><a href="/download/zh-hans.html" lang="zh-Hans" hreflang="zh-Hans" data-locale-option="zh-Hans">简体中文</a></div></details><a data-new-account-signup class="sh-signup" href="https://app.simy.one/signup?lang=hi&amp;locale=hi&amp;region=in">Sign up</a></div>
   </div>
 </header>
 
-<main id="main" class="dl-main">
+<main id="main" class="dl-main" tabindex="-1">
   <div class="wrap">
     <ol class="crumbs" aria-label="ब्रेडक्रंब">
       <li><a href="/hi.html">SIMY</a></li>
@@ -1044,7 +1060,7 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
       <p class="lead">बस इंस्टॉल करें, और PC पर AI से हुई बातचीत से SIMY आपका अगला काम ढूँढेगा। काली स्क्रीन (टर्मिनल) चलाने की ज़रूरत नहीं।</p>
 
       <ol class="funnel" aria-label="शुरू करने तक का क्रम">
-        <li class="is-now"><span class="fn">1</span><b>खाता बनाएँ</b><small>प्लान चुनें → ईमेल की पुष्टि → कार्ड से भुगतान</small></li>
+        <li class="is-now"><span class="fn">1</span><b>खाता बनाएँ</b><small>प्लान चुनें → ईमेल की पुष्टि → कार्ड की जानकारी जोड़ें</small></li>
         <li><span class="fn">2</span><b>ऐप इंस्टॉल करें</b><small>डाउनलोड करके खोलें</small></li>
         <li><span class="fn">3</span><b>लॉग इन दबाएँ</b><small>ब्राउज़र खुलता है और अपने आप जुड़ जाता है</small></li>
       </ol>
@@ -1056,7 +1072,7 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
           <p>ऐप में लॉग इन के लिए SIMY खाता चाहिए। पहले बना लें, तो ऐप खोलते ही इस्तेमाल शुरू कर सकते हैं।</p>
           <ul class="need">
             <li>ईमेल पता (पासवर्ड की ज़रूरत नहीं)</li>
-            <li>क्रेडिट कार्ड (मासिक प्लान। कोई फ़्री प्लान नहीं है)</li>
+            <li>क्रेडिट कार्ड (ट्रायल के बाद चुनी गई मासिक या वार्षिक बिलिंग)</li>
           </ul>
           <a class="btn btn-primary" href="https://app.simy.one/signup?lang=hi&amp;locale=hi&amp;region=in&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=download_hi&amp;utm_content=account_first">प्लान चुनकर खाता बनाएँ <span class="arrow" aria-hidden="true">↗</span></a>
           <span class="dl-meta">रजिस्ट्रेशन पूरा होने वाली स्क्रीन से भी ऐप डाउनलोड कर सकते हैं / <a href="/hi.html#pricing">कीमत देखें</a></span>
@@ -1078,6 +1094,7 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
               <h3>Windows के लिए</h3>
               <a class="btn btn-primary" data-dl="win" href="https://simy.one/downloads/simy-cli/windows/0.5.45/SIMY-CLI-0.5.45-windows-x64-setup.exe">Windows के लिए डाउनलोड करें <span class="arrow" aria-hidden="true">↓</span></a>
               <span class="dl-meta" data-meta="win">.exe</span>
+              <p class="note" data-windows-preview>Windows संस्करण बिना डिजिटल हस्ताक्षर वाला प्रीव्यू है। वास्तविक उपकरणों पर कुछ प्रक्रियाओं की जाँच जारी है; पहले परीक्षण वाले कंप्यूटर पर आज़माएँ।</p>
             </div>
             <div class="dl-card" data-os="ios">
               <span class="you-badge">आपका डिवाइस</span>
@@ -1110,7 +1127,7 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
           <h3>Windows <small>.exe</small></h3>
           <ol class="plain-list">
             <li>डाउनलोड की गई .exe फ़ाइल खोलें</li>
-            <li>नीली सुरक्षा स्क्रीन दिखे, तो "More info" → "Run anyway"</li>
+            <li>सुरक्षा चेतावनी दिखे तो पुष्टि करें कि डाउनलोड SIMY की आधिकारिक साइट से है और अपने संगठन के नियमों का पालन करें। पुष्टि न हो सके तो फ़ाइल न चलाएँ और व्यवस्थापक से पूछें।</li>
             <li>SIMY खोलें और "लॉग इन" दबाएँ</li>
           </ol>
         </div>
@@ -1150,7 +1167,7 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
       <div class="faq">
         <details>
           <summary>क्या मुफ़्त में आज़मा सकते हैं?</summary>
-          <div class="a"><p>कोई फ़्री प्लान नहीं है। मासिक प्लान चुनकर रजिस्टर करने पर ऐप और वेब दोनों इस्तेमाल कर सकते हैं। कीमत होम पेज के प्राइसिंग सेक्शन में देखें।</p></div>
+          <div class="a"><p>होम पेज पर दिए गए मूल प्लान में एक महीने का मुफ़्त ट्रायल शामिल है। रजिस्टर करते समय मासिक या वार्षिक बिलिंग चुनें; ट्रायल के बाद प्लान उन्हीं शर्तों पर अपने-आप रिन्यू होता है। ट्रायल खत्म होने से पहले आप रद्द कर सकते हैं। लागू प्लान, अतिरिक्त शुल्क, टैक्स और अंतिम शर्तें साइनअप स्क्रीन पर जाँचें।</p></div>
         </details>
         <details>
           <summary>क्या खाता बनाने से पहले सिर्फ़ ऐप इंस्टॉल कर सकते हैं?</summary>

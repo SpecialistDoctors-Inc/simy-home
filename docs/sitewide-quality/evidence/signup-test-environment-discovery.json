@@ -1,0 +1,29 @@
+{
+  "observedAt": "2026-11-20",
+  "sourceFiles": [
+    "simy-backend/supabase/config.toml remotes.dev",
+    "simy-web/.env.example Mailpit settings",
+    "simy-web/src/app/api/signup/email-link/route.ts",
+    "simy-web/src/lib/signup/dev-email-environment.ts"
+  ],
+  "identified": {
+    "devApp": "https://app-dev.simy.one",
+    "devSupabase": "lecrmdebakgoqgnbwuyl",
+    "emailSink": "Mailpit / mail-dev.simy.one",
+    "checkoutMode": "Development scope has a test Stripe key; preview branch dev secrets are omitted from env pull."
+  },
+  "readOnlyChecks": [
+    "app-dev signup GET HTTP 200",
+    "Vercel Development env pull inspected privately: Stripe test mode, no matching Supabase URL or Mailpit credentials",
+    "Vercel Preview dev env pull inspected privately: dev Supabase URL, Mailpit names but empty secret values; service role and Stripe unavailable",
+    "Supabase connector get_project returned tool unavailable",
+    "simy-infra repository is not readable via current GitHub identity"
+  ],
+  "outcome": "環境はソースから特定。メール受信・開発DB・Stripe testの同一環境で利用できる認証情報を揃えられず、実メール→test決済→利用権の通し確認は未実施。",
+  "notPerformed": [
+    "production payment",
+    "live-charge creation",
+    "merging unrelated sandbox PRs",
+    "dumping deployed process credentials"
+  ]
+}

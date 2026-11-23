@@ -1,0 +1,266 @@
+{
+  "reports": [
+    {
+      "source": "lighthouse-home-mobile.json",
+      "requestedURL": "https://simy.one/",
+      "finalURL": "https://simy.one/",
+      "fetchTime": "2026-11-19T22:12:02.452Z",
+      "lighthouseVersion": "13.6.0",
+      "scores": {
+        "performance": 1,
+        "accessibility": 0.97,
+        "seo": 1
+      },
+      "metrics": {
+        "largest-contentful-paint": {
+          "value": 1125.651,
+          "display": "1.1 s",
+          "unit": "millisecond"
+        },
+        "cumulative-layout-shift": {
+          "value": 0,
+          "display": "0",
+          "unit": "unitless"
+        },
+        "total-blocking-time": {
+          "value": 0,
+          "display": "0 ms",
+          "unit": "millisecond"
+        }
+      },
+      "environment": {
+        "output": [
+          "json"
+        ],
+        "maxWaitForFcp": 30000,
+        "maxWaitForLoad": 45000,
+        "pauseAfterFcpMs": 1000,
+        "pauseAfterLoadMs": 1000,
+        "networkQuietThresholdMs": 1000,
+        "cpuQuietThresholdMs": 1000,
+        "formFactor": "mobile",
+        "throttling": {
+          "rttMs": 150,
+          "throughputKbps": 1638.4,
+          "requestLatencyMs": 562.5,
+          "downloadThroughputKbps": 1474.5600000000002,
+          "uploadThroughputKbps": 675,
+          "cpuSlowdownMultiplier": 4
+        },
+        "throttlingMethod": "simulate",
+        "screenEmulation": {
+          "mobile": true,
+          "width": 412,
+          "height": 823,
+          "deviceScaleFactor": 1.75,
+          "disabled": false
+        },
+        "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36",
+        "auditMode": false,
+        "gatherMode": false,
+        "clearStorageTypes": [
+          "file_systems",
+          "shader_cache",
+          "service_workers",
+          "cache_storage"
+        ],
+        "disableStorageReset": false,
+        "debugNavigation": false,
+        "channel": "cli",
+        "usePassiveGathering": false,
+        "disableFullPageScreenshot": false,
+        "skipAboutBlank": false,
+        "blankPage": "about:blank",
+        "ignoreStatusCode": false,
+        "locale": "en-US",
+        "blockedUrlPatterns": null,
+        "additionalTraceCategories": null,
+        "extraHeaders": null,
+        "precomputedLanternData": null,
+        "onlyAudits": null,
+        "onlyCategories": [
+          "performance",
+          "accessibility",
+          "seo"
+        ],
+        "skipAudits": null
+      },
+      "notes": "Lab, not field p75. Before is production; after is local, so scores are not a controlled before/after comparison."
+    },
+    {
+      "source": "lighthouse-home-mobile-after.json",
+      "requestedURL": "http://127.0.0.1:8770/",
+      "finalURL": "http://127.0.0.1:8770/",
+      "fetchTime": "2026-11-19T22:21:20.605Z",
+      "lighthouseVersion": "13.6.0",
+      "scores": {
+        "performance": 0.96,
+        "accessibility": 1,
+        "seo": 1
+      },
+      "metrics": {
+        "largest-contentful-paint": {
+          "value": 2251.7929999999997,
+          "display": "2.3 s",
+          "unit": "millisecond"
+        },
+        "cumulative-layout-shift": {
+          "value": 0,
+          "display": "0",
+          "unit": "unitless"
+        },
+        "total-blocking-time": {
+          "value": 0,
+          "display": "0 ms",
+          "unit": "millisecond"
+        }
+      },
+      "environment": {
+        "output": [
+          "json"
+        ],
+        "maxWaitForFcp": 30000,
+        "maxWaitForLoad": 45000,
+        "pauseAfterFcpMs": 1000,
+        "pauseAfterLoadMs": 1000,
+        "networkQuietThresholdMs": 1000,
+        "cpuQuietThresholdMs": 1000,
+        "formFactor": "mobile",
+        "throttling": {
+          "rttMs": 150,
+          "throughputKbps": 1638.4,
+          "requestLatencyMs": 562.5,
+          "downloadThroughputKbps": 1474.5600000000002,
+          "uploadThroughputKbps": 675,
+          "cpuSlowdownMultiplier": 4
+        },
+        "throttlingMethod": "simulate",
+        "screenEmulation": {
+          "mobile": true,
+          "width": 412,
+          "height": 823,
+          "deviceScaleFactor": 1.75,
+          "disabled": false
+        },
+        "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36",
+        "auditMode": false,
+        "gatherMode": false,
+        "clearStorageTypes": [
+          "file_systems",
+          "shader_cache",
+          "service_workers",
+          "cache_storage"
+        ],
+        "disableStorageReset": false,
+        "debugNavigation": false,
+        "channel": "cli",
+        "usePassiveGathering": false,
+        "disableFullPageScreenshot": false,
+        "skipAboutBlank": false,
+        "blankPage": "about:blank",
+        "ignoreStatusCode": false,
+        "locale": "en-US",
+        "blockedUrlPatterns": null,
+        "additionalTraceCategories": null,
+        "extraHeaders": null,
+        "precomputedLanternData": null,
+        "onlyAudits": null,
+        "onlyCategories": [
+          "performance",
+          "accessibility",
+          "seo"
+        ],
+        "skipAudits": null
+      },
+      "notes": "Lab, not field p75. Before is production; after is local, so scores are not a controlled before/after comparison."
+    },
+    {
+      "source": "lighthouse-home-production-after.json",
+      "requestedURL": "https://simy.one/",
+      "finalURL": "https://simy.one/",
+      "fetchTime": "2026-11-19T22:54:17.461Z",
+      "lighthouseVersion": "13.6.0",
+      "scores": {
+        "performance": 1,
+        "accessibility": 1,
+        "seo": 1
+      },
+      "metrics": {
+        "largest-contentful-paint": {
+          "value": 1083.1085,
+          "display": "1.1 s",
+          "unit": "millisecond"
+        },
+        "cumulative-layout-shift": {
+          "value": 0,
+          "display": "0",
+          "unit": "unitless"
+        },
+        "total-blocking-time": {
+          "value": 0,
+          "display": "0 ms",
+          "unit": "millisecond"
+        }
+      },
+      "environment": {
+        "output": [
+          "json"
+        ],
+        "maxWaitForFcp": 30000,
+        "maxWaitForLoad": 45000,
+        "pauseAfterFcpMs": 1000,
+        "pauseAfterLoadMs": 1000,
+        "networkQuietThresholdMs": 1000,
+        "cpuQuietThresholdMs": 1000,
+        "formFactor": "mobile",
+        "throttling": {
+          "rttMs": 150,
+          "throughputKbps": 1638.4,
+          "requestLatencyMs": 562.5,
+          "downloadThroughputKbps": 1474.5600000000002,
+          "uploadThroughputKbps": 675,
+          "cpuSlowdownMultiplier": 4
+        },
+        "throttlingMethod": "simulate",
+        "screenEmulation": {
+          "mobile": true,
+          "width": 412,
+          "height": 823,
+          "deviceScaleFactor": 1.75,
+          "disabled": false
+        },
+        "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36",
+        "auditMode": false,
+        "gatherMode": false,
+        "clearStorageTypes": [
+          "file_systems",
+          "shader_cache",
+          "service_workers",
+          "cache_storage"
+        ],
+        "disableStorageReset": false,
+        "debugNavigation": false,
+        "channel": "cli",
+        "usePassiveGathering": false,
+        "disableFullPageScreenshot": false,
+        "skipAboutBlank": false,
+        "blankPage": "about:blank",
+        "ignoreStatusCode": false,
+        "locale": "en-US",
+        "blockedUrlPatterns": null,
+        "additionalTraceCategories": null,
+        "extraHeaders": null,
+        "precomputedLanternData": null,
+        "onlyAudits": null,
+        "onlyCategories": [
+          "performance",
+          "accessibility",
+          "seo"
+        ],
+        "skipAudits": null
+      },
+      "notes": "Post-release production lab measurement; not field p75 or overall site quality certification."
+    }
+  ],
+  "fieldDataStatus": "PageSpeed API returned 429 quota exceeded; UI returned Unable to resolve URL. Neither proves field pass or absence of CrUX data."
+}

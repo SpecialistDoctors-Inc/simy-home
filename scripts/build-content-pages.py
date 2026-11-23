@@ -21,13 +21,13 @@ LABELS = {
            'related': '次に読む', 'example': '依頼文の例', 'read': '詳しく読む', 'sources': '参照情報',
            'next': '次は、あなたの仕事で試す。', 'start': 'SIMYをダウンロード', 'pricing': '料金を確認する',
            'availability': '利用できる機能はバージョン、プラン、組織設定によって異なります。まずは自分で確認できる小さな仕事から始めてください。',
-           'updated': '更新', 'back': 'SIMYホーム'},
+           'published': '公開', 'updated': '更新', 'back': 'SIMYホーム'},
     'en': {'home': '/', 'guides': '/guides/en/index.html', 'hub': '/for/en/', 'download': '/download/en.html',
            'nav': 'For your work', 'guide': 'Guides', 'skip': 'Skip to content', 'toc': 'On this page',
            'related': 'Keep exploring', 'example': 'Example request', 'read': 'Read more', 'sources': 'Sources',
            'next': 'Try it with your next task.', 'start': 'Download SIMY', 'pricing': 'Check pricing',
            'availability': 'Availability depends on version, plan and organization settings. Start with a small task whose result you can inspect yourself.',
-           'updated': 'Updated', 'back': 'SIMY home'}
+           'published': 'Published', 'updated': 'Updated', 'back': 'SIMY home'}
 }
 
 
@@ -85,14 +85,29 @@ def render(p, lang):
     headline = c.get('headline', title)
     url = BASE + p['paths'][lang]
     is_guide = p['kind'] == 'guide'
+    crumbs = [('SIMY', BASE + labels['home'])]
+    if p['kind'] != 'hub':
+        crumbs.append((labels['guide'] if is_guide else labels['nav'],
+                       BASE + (labels['guides'] if is_guide else labels['hub'])))
+    crumbs.append((title, url))
     schema = {'@context': 'https://schema.org', '@graph': [
         {'@type': 'Article' if is_guide else 'CollectionPage' if p['kind'] == 'hub' else 'WebPage',
          'headline': title, 'name': title, 'description': c['description'], 'url': url,
          'inLanguage': lang, 'dateModified': DATA['updated'],
          'publisher': {'@type': 'Organization', 'name': 'SIMY', 'url': BASE + '/'}},
         {'@type': 'BreadcrumbList', 'itemListElement': [
-            {'@type': 'ListItem', 'position': 1, 'name': 'SIMY', 'item': BASE + labels['home']},
-            {'@type': 'ListItem', 'position': 2, 'name': title, 'item': url}]}]}
+            {'@type': 'ListItem', 'position': i, 'name': name, 'item': href}
+            for i, (name, href) in enumerate(crumbs, 1)]}]}
+    if is_guide:
+        schema['@graph'][0].update({
+            'author': {'@type': 'Organization', 'name': 'SIMY', 'url': BASE + '/'},
+            'datePublished': DATA['published']})
+    breadcrumb_html = ''.join(
+        f'<li><a href="{esc(href.removeprefix(BASE), quote=True)}">{esc(name)}</a></li>' if i < len(crumbs) - 1
+        else f'<li aria-current="page">{esc(name)}</li>'
+        for i, (name, href) in enumerate(crumbs))
+    published_html = (f'{labels["published"]} <time datetime="{DATA["published"]}">{DATA["published"]}</time> · '
+                      if is_guide else '')
     alts = ''.join(f'<link rel="alternate" hreflang="{code}" href="{BASE + path}">\n' for code, path in p['paths'].items())
     alts += f'<link rel="alternate" hreflang="x-default" href="{BASE + p["paths"]["en"]}">'
     sections = list(c['sections']) + [{'id': 'related', 'title': labels['related'], 'cards': p['related']}]
@@ -128,8 +143,8 @@ def render(p, lang):
 <a class="skip" href="#main">{labels['skip']}</a>
 <header class="header"><div class="shell header-inner"><a class="brand" href="{labels['home']}">SIMY</a><nav aria-label="{'ナビゲーション' if lang == 'ja' else 'Navigation'}"><a href="{labels['hub']}">{labels['nav']}</a><a href="{labels['guides']}">{labels['guide']}</a><a href="{p['paths'][other]}" lang="{other}" hreflang="{other}">{'English' if other == 'en' else '日本語'}</a></nav></div></header>
 <main class="shell" id="main">
-<ol class="crumbs"><li><a href="{labels['home']}">SIMY</a></li><li aria-hidden="true">/</li><li>{labels['guide'] if is_guide else labels['nav']}</li></ol>
-<div class="hero"><p class="eyebrow">{'GUIDE' if is_guide else 'SIMY FOR YOUR WORK'}</p><h1>{esc(headline)}</h1><p class="lead">{esc(c['lead'])}</p><p class="byline">SIMY · {labels['updated']} <time datetime="{DATA['updated']}">{DATA['updated']}</time></p></div>
+<ol class="crumbs">{breadcrumb_html}</ol>
+<div class="hero"><p class="eyebrow">{'GUIDE' if is_guide else 'SIMY FOR YOUR WORK'}</p><h1>{esc(headline)}</h1><p class="lead">{esc(c['lead'])}</p><p class="byline">SIMY · {published_html}{labels['updated']} <time datetime="{DATA['updated']}">{DATA['updated']}</time></p></div>
 <div class="layout"><nav class="toc" aria-label="{labels['toc']}"><p>{labels['toc']}</p><ol>{toc}</ol></nav><div class="reading">{''.join(section(s, lang) for s in sections)}</div></div>
 <aside class="next"><h2>{labels['next']}</h2><p>{labels['availability']}</p><div class="actions"><a class="button" href="{labels['download']}">{labels['start']} ↗</a><a href="{labels['home']}#pricing">{labels['pricing']}</a></div></aside>
 </main><footer class="shell footer"><a href="{labels['home']}">{labels['back']}</a><span>© 2026 SIMY</span></footer>

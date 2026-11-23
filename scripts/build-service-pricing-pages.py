@@ -25,9 +25,11 @@ def outputs():
     result[ROOT/'docs/pricing/service-pricing-2026-11.md']='\n'.join(lines)
     css=SITE/'hp-management/law-firm/pricing-rate-tables.css'
     result[css]=(SITE/'pricing-rate-tables.css').read_text()
+    accessibility_css=SITE/'hp-management/law-firm/page-accessibility.css'
+    result[accessibility_css]=(SITE/'page-accessibility.css').read_text()
     manifest_path=SITE/'hp-management/law-firm/release-manifest.json'
     manifest=json.loads(manifest_path.read_text())
-    paths=sorted({x['path'] for x in manifest['files']}|{css.relative_to(SITE).as_posix()})
+    paths=sorted({x['path'] for x in manifest['files']}|{css.relative_to(SITE).as_posix(),accessibility_css.relative_to(SITE).as_posix()})
     manifest['files']=[]
     for key in paths:
         p=SITE/key;blob=result[p].encode() if p in result else p.read_bytes()

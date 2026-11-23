@@ -760,7 +760,7 @@ thead th.simy { background: var(--blue-deep); }
 }
 .dl-card.is-you .you-badge { display: inline-block; }
 .dl-main { padding: clamp(40px, 6vw, 72px) 0 clamp(56px, 7vw, 96px); }
-.dl-main .wrap > .sec { max-width: 980px; }
+.dl-main > .wrap { max-width: 980px; }
 @media (max-width: 860px) { .dl-grid { grid-template-columns: minmax(0, 1fr); } }
 
 .funnel { list-style: none; margin: 28px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; border: 1px solid var(--ink); border-radius: var(--radius); overflow: hidden; background: var(--paper-light); }
@@ -771,20 +771,35 @@ thead th.simy { background: var(--blue-deep); }
 .funnel li.is-now .fn { background: var(--blue-deep); color: #fff; border-color: var(--blue-deep); }
 .funnel b { display: block; font-size: 1rem; }
 .funnel small { display: block; margin-top: 2px; font-size: 0.8rem; color: var(--ink-soft); }
-.paths { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 16px; margin-top: 16px; align-items: start; }
+.paths { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; margin-top: 16px; }
 .path { padding: 22px 20px; border: 1px solid var(--ui-line); border-radius: var(--radius); background: var(--paper-light); display: flex; flex-direction: column; gap: 10px; }
 .path-new { border-color: var(--ink); box-shadow: 6px 6px 0 var(--blue); }
 .path-h { margin: 0; font-size: 1.3rem; }
 .path p { margin: 0; font-size: 0.92rem; color: #34322f; }
 .need { margin: 0; padding-left: 1.1em; font-size: 0.88rem; line-height: 1.8; }
 .path .btn { justify-content: center; }
-.path .dl-grid { grid-template-columns: minmax(0, 1fr); margin-top: 4px; gap: 10px; }
+.path-new > .btn { align-self: flex-start; }
+.path .dl-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 4px; gap: 10px; }
 .path .dl-card { padding: 14px 16px; gap: 8px; border-color: var(--ui-line); }
 .path .dl-card.is-you { border-color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
 .path .dl-card h3 { font-size: 1.02rem; }
+.path .dl-card .btn { padding-inline: 12px; gap: 6px; text-wrap: balance; }
+/* Shared platform rows keep names, actions and metadata aligned across languages. */
+@media (min-width: 861px) {
+  .path .dl-grid { grid-template-rows: repeat(6, auto); }
+  .path .dl-card { display: grid; grid-template-rows: subgrid; grid-row: span 6; }
+  .path .dl-card .you-badge { grid-row: 1; justify-self: start; }
+  .path .dl-card .os { grid-row: 2; }
+  .path .dl-card h3 { grid-row: 3; }
+  .path .dl-card .btn { grid-row: 4; margin-top: 0; }
+  .path .dl-card .dl-meta { grid-row: 5; }
+  .path .dl-card .note { grid-row: 6; margin: 0; }
+}
+
 .mobile-hint { margin: 4px 0 0; font-size: 0.86rem; color: var(--ink-soft); }
 .linkbtn { background: none; border: 0; padding: 0; font: inherit; color: var(--blue-deep); text-decoration: underline; cursor: pointer; }
 .dl-meta a { color: var(--blue-deep); }
+@media (max-width: 860px) { .path .dl-grid { grid-template-columns: minmax(0, 1fr); } .path-new > .btn { align-self: stretch; } }
 @media (max-width: 860px) { .paths, .funnel { grid-template-columns: minmax(0, 1fr); } .funnel li { border-left: 0; border-top: 1px solid var(--ui-line); } .funnel li:first-child { border-top: 0; } }
 
 .lang-switch { position: relative; }
@@ -844,7 +859,7 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
           "name": "Peut-on essayer gratuitement ?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Il n'y a pas d'offre gratuite. En choisissant une offre mensuelle à l'inscription, vous avez accès à l'application et au Web. Les tarifs sont sur la page d'accueil, section Tarifs."
+            "text": "Les offres de base présentées sur la page d'accueil comprennent un mois d'essai gratuit. Choisissez une facturation mensuelle ou annuelle à l'inscription ; l'offre se renouvelle automatiquement selon ces conditions après l'essai. Vous pouvez annuler avant la fin de l'essai. Vérifiez les offres concernées, les suppléments, les taxes et les conditions finales sur l'écran d'inscription."
           }
         },
         {
@@ -910,8 +925,8 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
 </script>
 <meta name="twitter:title" content="Télécharger SIMY : Mac, Windows, iPhone">
 <meta name="twitter:description" content="SIMY trouve la suite du travail dans vos conversations avec Claude Code ou Codex sur votre ordinateur.">
-<link rel="stylesheet" href="/site-header.css?v=20261021-pharma-1">
-<script src="/site-header.js?v=c896d04763b8" defer></script>
+<link rel="stylesheet" href="/site-header.css?v=057b1a60b00d">
+<script src="/site-header.js?v=a4a1ff0096eb" defer></script>
 <!-- SIMY locale navigation -->
 <script data-simy-locale-navigation>
 /* Shared homepage entry policy. Country hints are optional; timezone is an OS
@@ -1013,6 +1028,7 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
 })();
 </script>
 <!-- /SIMY locale navigation -->
+<link rel="stylesheet" href="/page-accessibility.css?v=468c1bee6d3c">
 </head>
 <body>
 <a class="skip" href="#main">Aller au contenu</a>
@@ -1020,15 +1036,15 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
 <header class="simy-header" translate="no" data-simy-no-translate>
   <div class="sh-frame">
     <a class="sh-brand" href="/fr.html" aria-label="SIMY home"><img src="/simy-icon-56.png" width="32" height="32" alt=""><span>SIMY</span></a>
-    <details class="sh-menu"><summary class="sh-menu-toggle" aria-label="Navigation menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></summary><div class="sh-menu-panel"><div class="sh-navigation" role="navigation" aria-label="Primary navigation"><details class="sh-dropdown"><summary>Product<span aria-hidden="true">⌄</span></summary><div class="sh-panel"><a href="/fr.html#product">Overview</a><a href="/fr.html#how-it-works">How it works</a><a href="/integrations.html?lang=fr">Apps & integrations</a><a href="/download/fr.html">Download</a><div class="sh-stores" role="group" aria-label="Mobile apps">
+    <details class="sh-menu"><summary class="sh-menu-toggle" aria-label="Navigation menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></summary><div class="sh-menu-panel"><div class="sh-navigation" role="navigation" aria-label="Primary navigation"><details class="sh-dropdown"><summary>Product<span aria-hidden="true">⌄</span></summary><div class="sh-panel"><a href="/fr.html#product">Overview</a><a href="/fr.html#how-it-works">How it works</a><a href="/integrations.html?lang=fr">Apps & integrations</a><a href="/download/fr.html" aria-current="page">Download</a><div class="sh-stores" role="group" aria-label="Mobile apps">
       <a class="sh-store" href="https://apps.apple.com/app/id6745385262"><img src="/assets/store-badges/app-store.svg" width="120" height="40" alt="Download on the App Store"></a>
       <a class="sh-store sh-google-play" href="/download/fr.html#android" aria-label="Android availability"><img src="/assets/store-badges/google-play.png" width="155" height="60" alt="Google Play"><small>Android availability</small></a>
     </div></div></details><details class="sh-dropdown"><summary>Solutions<span aria-hidden="true">⌄</span></summary><div class="sh-panel"><a href="/for/en/">For your work</a><a href="/for/fr/engineers/">For engineers</a><a href="/for/fr/financial-planners/">For financial planners</a><a href="/for/fr/pharmaceutical-companies/">Pour les laboratoires</a><a href="/fr.html#use-cases">Use cases</a></div></details><details class="sh-dropdown"><summary>Resources<span aria-hidden="true">⌄</span></summary><div class="sh-panel"><a href="/guides/fr/index.html">Guides</a><a href="/compare.html?lang=fr">Compare</a><a href="/press-release.html?lang=fr">News</a><a href="/about.html?lang=fr">About SIMY</a><a href="/security.html?lang=fr">Security</a><a href="/contact.html?lang=fr">Contact</a><a href="/legal.html">Legal & service information</a><a href="/seller-info.html">Seller information</a></div></details><a class="sh-pricing" href="/fr.html#pricing">Pricing</a></div><a class="sh-login" data-existing-account-login href="https://app.simy.one/">Log in</a></div></details>
-    <div class="sh-account"><details class="sh-dropdown sh-language"><summary aria-label="Language: Français"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/></svg> FR</summary><div class="sh-panel"><a href="/download/en.html" lang="en" hreflang="en" data-locale-option="en">English</a><a href="/download.html" lang="ja" hreflang="ja" data-locale-option="ja">日本語</a><a href="/download/hi.html" lang="hi" hreflang="hi" data-locale-option="hi">हिन्दी</a><a href="/download/es.html" lang="es" hreflang="es" data-locale-option="es">Español</a><a href="/download/fr.html" lang="fr" hreflang="fr" data-locale-option="fr" aria-current="page">Français</a><a href="/download/zh-hans.html" lang="zh-Hans" hreflang="zh-Hans" data-locale-option="zh-Hans">简体中文</a></div></details><a data-new-account-signup class="sh-signup" href="https://app.simy.one/signup?lang=fr&amp;locale=fr&amp;region=fr">Sign up</a></div>
+    <div class="sh-account"><details class="sh-dropdown sh-language"><summary aria-label="FR: Français (Language)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/></svg> FR</summary><div class="sh-panel"><a href="/download/en.html" lang="en" hreflang="en" data-locale-option="en">English</a><a href="/download.html" lang="ja" hreflang="ja" data-locale-option="ja">日本語</a><a href="/download/hi.html" lang="hi" hreflang="hi" data-locale-option="hi">हिन्दी</a><a href="/download/es.html" lang="es" hreflang="es" data-locale-option="es">Español</a><a href="/download/fr.html" lang="fr" hreflang="fr" data-locale-option="fr" aria-current="page">Français</a><a href="/download/zh-hans.html" lang="zh-Hans" hreflang="zh-Hans" data-locale-option="zh-Hans">简体中文</a></div></details><a data-new-account-signup class="sh-signup" href="https://app.simy.one/signup?lang=fr&amp;locale=fr&amp;region=fr">Sign up</a></div>
   </div>
 </header>
 
-<main id="main" class="dl-main">
+<main id="main" class="dl-main" tabindex="-1">
   <div class="wrap">
     <ol class="crumbs" aria-label="Fil d'Ariane">
       <li><a href="/fr.html">SIMY</a></li>
@@ -1044,7 +1060,7 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
       <p class="lead">Installez-la, et SIMY trouve la suite du travail dans vos conversations avec l'IA. Aucune ligne de commande à taper.</p>
 
       <ol class="funnel" aria-label="Les étapes pour commencer">
-        <li class="is-now"><span class="fn">1</span><b>Créer un compte</b><small>Choisir une offre → confirmer l'e-mail → payer par carte</small></li>
+        <li class="is-now"><span class="fn">1</span><b>Créer un compte</b><small>Choisir une offre → confirmer l'e-mail → enregistrer les coordonnées de la carte</small></li>
         <li><span class="fn">2</span><b>Installer l'application</b><small>Télécharger, puis ouvrir</small></li>
         <li><span class="fn">3</span><b>Cliquer sur « Connexion »</b><small>Le navigateur s'ouvre et relie tout seul</small></li>
       </ol>
@@ -1056,7 +1072,7 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
           <p>Il faut un compte SIMY pour se connecter à l'application. Créez-le avant : l'application sera prête dès l'ouverture.</p>
           <ul class="need">
             <li>Une adresse e-mail (pas de mot de passe)</li>
-            <li>Une carte bancaire (offre mensuelle, pas d'offre gratuite)</li>
+            <li>Une carte bancaire (facturation mensuelle ou annuelle après l'essai)</li>
           </ul>
           <a class="btn btn-primary" href="https://app.simy.one/signup?lang=fr&amp;locale=fr&amp;region=fr&amp;utm_source=simy.one&amp;utm_medium=organic&amp;utm_campaign=download_fr&amp;utm_content=account_first">Choisir une offre et créer un compte <span class="arrow" aria-hidden="true">↗</span></a>
           <span class="dl-meta">Vous pourrez aussi télécharger l'application depuis l'écran de fin d'inscription ／ <a href="/fr.html#pricing">Voir les tarifs</a></span>
@@ -1078,6 +1094,7 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
               <h3>Version Windows</h3>
               <a class="btn btn-primary" data-dl="win" href="https://simy.one/downloads/simy-cli/windows/0.5.45/SIMY-CLI-0.5.45-windows-x64-setup.exe">Télécharger pour Windows <span class="arrow" aria-hidden="true">↓</span></a>
               <span class="dl-meta" data-meta="win">.exe</span>
+              <p class="note" data-windows-preview>La version Windows est une préversion non signée. Certaines opérations sur des appareils réels sont encore en cours de vérification ; essayez-la d’abord sur un ordinateur de test.</p>
             </div>
             <div class="dl-card" data-os="ios">
               <span class="you-badge">Votre appareil</span>
@@ -1110,7 +1127,7 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
           <h3>Windows <small>.exe</small></h3>
           <ol class="plain-list">
             <li>Ouvrez le fichier .exe téléchargé</li>
-            <li>Si un écran bleu de protection s'affiche : « Informations complémentaires » → « Exécuter quand même »</li>
+            <li>Si un écran de protection apparaît, vérifiez que le téléchargement provient du site officiel de SIMY et respectez les règles de votre organisation. En cas de doute, ne lancez pas le fichier et contactez votre administrateur.</li>
             <li>Ouvrez SIMY et cliquez sur « Connexion »</li>
           </ol>
         </div>
@@ -1150,7 +1167,7 @@ h1 .line, h2, h3, .eyebrow, .scene b, .gcard b, .path-h { text-wrap: balance; }
       <div class="faq">
         <details>
           <summary>Peut-on essayer gratuitement ?</summary>
-          <div class="a"><p>Il n'y a pas d'offre gratuite. En choisissant une offre mensuelle à l'inscription, vous avez accès à l'application et au Web. Les tarifs sont sur la page d'accueil, section Tarifs.</p></div>
+          <div class="a"><p>Les offres de base présentées sur la page d'accueil comprennent un mois d'essai gratuit. Choisissez une facturation mensuelle ou annuelle à l'inscription ; l'offre se renouvelle automatiquement selon ces conditions après l'essai. Vous pouvez annuler avant la fin de l'essai. Vérifiez les offres concernées, les suppléments, les taxes et les conditions finales sur l'écran d'inscription.</p></div>
         </details>
         <details>
           <summary>Peut-on installer l'application avant de créer un compte ?</summary>
