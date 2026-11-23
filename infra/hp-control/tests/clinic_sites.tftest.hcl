@@ -238,3 +238,50 @@ run "no_slots_leave_the_copier_unchanged" {
     error_message = "without slots the copier does not call the API"
   }
 }
+
+run "domain_cutover_is_limited_to_slot_distributions_and_validation_names" {
+  command = plan
+  variables {
+    clinic_copy_enabled       = true
+    clinic_billing_secret_arn = "arn:aws:secretsmanager:ap-northeast-1:209300895845:secret:hp-control/clinic-billing"
+    email_login_from          = "no-reply@simy.one"
+    slot_zone_id              = "Z0008232OGBGLDBHC41G"
+    clinic_sites = {
+      clinic-a = {
+        dev  = { bucket = "simy-hp-site-clinic-a-dev", distribution = "EAAAAADEV" }
+        prod = { bucket = "simy-hp-site-clinic-a-prod", distribution = "EAAAAAPROD" }
+      }
+      slot-a = {
+        dev  = { bucket = "simy-hp-site-slot-a-dev-209300895845", distribution = "ESLOTADEV" }
+        prod = { bucket = "simy-hp-site-slot-a-prod-209300895845", distribution = "ESLOTAPROD" }
+      }
+    }
+    clinic_slot_ids = ["slot-a"]
+  }
+  assert {
+    condition = [for s in jsondecode(aws_iam_role_policy.clinic_copy["copier"].policy).Statement : s.Resource if s.Sid == "AttachClinicDomains"][0] == [
+      "arn:aws:cloudfront::209300895845:distribution/ESLOTAPROD"
+    ]
+    error_message = "the copier may change only slot prod distributions"
+  }
+  assert {
+    condition     = [for s in jsondecode(aws_iam_role_policy.clinic_copy["copier"].policy).Statement : s.Condition if s.Sid == "ValidateSlotNames"][0]["ForAllValues:StringLike"]["route53:ChangeResourceRecordSetsNormalizedRecordNames"] == ["_*.hp.simy.one"]
+    error_message = "the copier may write only ACM validation names under hp.simy.one"
+  }
+  assert {
+    condition     = aws_lambda_function.clinic_copy["copier"].environment[0].variables.HP_SLOT_ZONE_ID == "Z0008232OGBGLDBHC41G"
+    error_message = "the copier needs the zone to run cutovers"
+  }
+  assert {
+    condition     = contains(keys(aws_apigatewayv2_route.api), "POST /start/domain")
+    error_message = "clinics need the cutover form route"
+  }
+}
+
+run "domain_cutover_needs_slots" {
+  command = plan
+  variables {
+    slot_zone_id = "Z0008232OGBGLDBHC41G"
+  }
+  expect_failures = [terraform_data.guard]
+}

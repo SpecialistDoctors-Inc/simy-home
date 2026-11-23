@@ -87,6 +87,15 @@ def aws_clients(role_arn, session_name):
     return {name: session.client(name, config=config) for name in ('sts', 's3', 'cloudfront')}
 
 
+def destination(binding):
+    """The parts of a publisher binding that identify where releases live."""
+    if not isinstance(binding, dict) or not isinstance(binding.get('target'), dict):
+        return None
+    target = binding['target']
+    return (binding.get('site_id'), binding.get('environment'), binding.get('role_arn'),
+            target.get('bucket'), target.get('distribution_id'), target.get('origin_id'))
+
+
 def config_sha256(config, origin_id):
     """Hash the complete config, excluding ONLY the selected origin's OriginPath."""
     value = deepcopy(config)
@@ -246,7 +255,10 @@ class SitePublisher:
             digest = origin_path.rsplit('/', 1)[1]
             pointer = self.store.get(self._artifact_key(binding, digest))
             prior = self.store.get(pointer['intent_key']) if pointer else None
-            if not prior or prior.get('binding') != binding or prior.get('artifact_sha256') != digest or prior.get('prefix') != origin_path[1:]:
+            # The served URL and pinned config hash may change after a release (a
+            # domain cutover re-pins them); the release still belongs to this
+            # exact bucket, distribution and origin.
+            if not prior or destination(prior.get('binding')) != destination(binding) or prior.get('artifact_sha256') != digest or prior.get('prefix') != origin_path[1:]:
                 raise PublicationRejected('previous_release_manifest_required')
             paths = [record['path'] for record in prior.get('files', [])]
         elif origin_path == '':

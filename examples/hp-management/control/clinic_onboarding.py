@@ -499,6 +499,61 @@ class ClinicOnboarding:
         return self.layout('お支払いが完了しました', banner + (
             f'<div class="card"><h2>お申し込み内容</h2>{self.plan_summary(purchase)}{note}</div>{login}'), step=1)
 
+    def domain_card(self, intake, sid):
+        """Moving a slot onto the clinic's own domain (domain_cutover.py)."""
+        from domain_cutover import cutover_key
+        row = self.store.get(cutover_key(intake['slot_site_id'])) or {}
+        state = row.get('state')
+        host = row.get('host') or intake['host']
+        head = '<div class="card"><h2>ご自身のドメインで公開する</h2>'
+        if state == 'live':
+            return head + (f'<p><span class="ok">https://{escape(host)} で公開中です。</span></p>'
+                           '<p class="muted">メールなど、ドメインのほかの設定は変わっていません。</p></div>')
+        if state in ('awaiting_dns', 'attaching', 'attached') and row.get('records'):
+            records = row['records']
+            rows = ''.join(f'<dt>{"証明書の確認" if r["purpose"] == "certificate" else "ホームページ"}</dt>'
+                           f'<dd><code>{escape(r["name"])}</code> {escape(r["type"])} <code>{escape(r["value"])}</code></dd>'
+                           for r in records)
+            message = ('ドメインの管理をご担当の方へ\n\n'
+                       f'{host} のホームページをSIMYで公開するため、次のDNSレコードを2件追加してください。'
+                       'MXなど、ほかのレコードは変更しないでください。\n\n'
+                       + ''.join(f'種類: {r["type"]}\n名前: {r["name"]}\n値: {r["value"]}\n\n' for r in records)
+                       + 'すでに同じ名前のレコードがある場合は、その値を上の値に置き換えてください。')
+            note = {'awaiting_dns': '追加されると自動で確認します。',
+                    'attaching': '1件目を確認できました。切り替えの準備をしています。',
+                    'attached': '準備ができました。2件目（ホームページ）が反映されると自動で切り替わり、メールでお知らせします。'}[state]
+            return head + (
+                '<p>ドメインを管理している会社の画面で、次の2件のレコードを追加してください。'
+                'ご自身で操作しない場合は、下の文面をそのまま管理会社にお送りください。</p>'
+                f'<dl class="kv">{rows}</dl>'
+                f'<label for="dns_message">管理会社に送る文面</label>'
+                f'<textarea id="dns_message" readonly rows="10" style="width:100%;box-sizing:border-box;font:inherit;font-size:13px">{escape(message)}</textarea>'
+                f'<p class="muted" style="margin-top:12px">{escape(note)}メールの設定は変わりません。</p></div>')
+        if state in ('requested', 'awaiting_dns', 'attaching'):
+            return head + '<p class="muted">準備中です。数分後にこのページを開き直すと、追加していただく設定が表示されます。</p></div>'
+        failed = ('<div class="notice">切り替えを完了できませんでした。担当者が確認しますので、SIMYまでご連絡ください。</div>'
+                  if state == 'failed' else '')
+        return head + failed + (
+            f'<form method="post" action="/start/domain"><input type="hidden" name="session_id" value="{sid}">'
+            '<p class="muted">今のホームページの管理会社でDNSのレコードを2件追加すると、このドメインで公開されるように切り替わります。'
+            'ドメインの移管やメールの設定変更は不要です。</p>'
+            '<label for="domain_host">公開するドメイン</label>'
+            f'<input id="domain_host" name="host" type="text" required value="{escape(host, quote=True)}" autocomplete="off" spellcheck="false">'
+            '<button class="btn" type="submit" style="margin-top:14px">このドメインで公開する</button></form></div>')
+
+    def domain_start(self, form, cookie, origin):
+        from domain_cutover import CutoverRejected, request
+        purchase, visit, session_id = self.authorized_post({k: v for k, v in form.items() if k != 'host'}, cookie, origin)
+        intake = self.store.get('clinic-intake:' + purchase['subscription_id'])
+        if not intake or intake.get('subject') != visit['subject']:
+            raise Rejected('authentication_required')
+        try:
+            request(self.store, intake, form.get('host', ''), clock=self.clock)
+        except CutoverRejected as error:
+            notice = str(error) if str(error) in ('invalid_cutover_host', 'cutover_in_progress') else 'invalid_cutover_host'
+            return self.back(session_id, notice)
+        return self.back(session_id)
+
     def site_step(self, purchase, visit, intake, session_id, notice):
         sid = escape(session_id, quote=True)
         account = (f'<div class="card"><h2>お申し込み内容</h2>{self.plan_summary(purchase)}'
@@ -507,6 +562,8 @@ class ClinicOnboarding:
             'invalid_url': 'ホームページのURLを確認してください（例: https://www.example-clinic.jp）。',
             'invalid_auth_code': 'AuthCodeは半角英数字・記号6〜64文字で、空白を含めずに入力してください。',
             'site_locked': 'このホームページで編集の準備を進めているため、URLは変更できません。変更する場合はSIMYの担当者にご連絡ください。',
+            'invalid_cutover_host': '公開に使えるのは、お申し込みのドメイン（www.の有無は問いません）だけです。',
+            'cutover_in_progress': '別のドメインで切り替えを進めています。変更する場合はSIMYの担当者にご連絡ください。',
             **WORDPRESS_NOTICES,
         }
         banner = f'<div class="notice">{escape(notices[notice])}</div>' if notice in notices else ''
@@ -514,13 +571,13 @@ class ClinicOnboarding:
         if status == 'claimed':
             plugin = (f'<p><a class="btn" href="{escape(self.plugin_url, quote=True)}">HPプラグインをダウンロード</a></p>'
                       if self.plugin_url else '<p class="muted">HPプラグイン（ZIP）は担当者からお送りします。</p>')
-            return self.layout('HP編集を始める', account + (
+            return self.layout('HP編集を始める', account + banner + (
                 f'<div class="card"><h2><span class="ok">登録が完了しました</span></h2>'
                 f'<dl class="kv"><dt>ホームページ</dt><dd>{escape(intake["site_url"])}</dd>'
                 f'<dt>AuthCode</dt><dd>{"受け付け済み（表示しません）" if intake.get("auth_code") else "なし"}</dd>'
                 + (f'<dt>公開先</dt><dd>https://{escape(intake["slot_site_id"])}.hp.simy.one</dd></dl>'
-                   '<p class="muted" style="margin-top:12px">編集した内容はまずこのアドレスで公開されます。'
-                   'ご登録のドメインでの公開への切り替えは、担当者からご案内します。</p></div>'
+                   '<p class="muted" style="margin-top:12px">編集した内容はまずこのアドレスで公開されます。</p></div>'
+                   + self.domain_card(intake, sid)
                    if intake.get('slot_site_id') else '</dl></div>')
                 + '<div class="card"><h2>編集の始め方</h2><ol class="guide">'
                 '<li>Codexを開き、ご自身のChatGPTアカウントでログインします。</li>'
