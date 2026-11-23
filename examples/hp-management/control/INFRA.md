@@ -202,7 +202,8 @@ a Stripe **test-mode** key, the test-mode webhook secret for
 `https://hp-control-acceptance.simy.one/stripe/webhook`, the test Payment Links
 (`payment_links {plink_id: plan}`, each redirecting to
 `https://hp-control-acceptance.simy.one/start?session_id={CHECKOUT_SESSION_ID}`)
-and an `intake_key`.
+and an `intake_key` (a Fernet key the config still requires; `/start` no longer
+stores anything with it).
 
 To let a test purchaser connect the dedicated WordPress.com site from `/start`,
 add `wordpress_client {client_id, client_secret}` for a WordPress.com app whose

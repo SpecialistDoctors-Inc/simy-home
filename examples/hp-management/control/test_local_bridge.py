@@ -106,8 +106,7 @@ class ClinicBridgeTest(unittest.TestCase):
         state = parse_qs(urlsplit(google).query)['state'][0]
         self.assertIn('ローカル検証用', dev_google_page({'state': state}, 'o@example.test')['body'])
         call('GET', '/oauth/google/callback', {'state': state, 'code': 'local-google-code'})
-        call('POST', '/start/site', form={'session_id': SESSION, 'site_url': 'https://sakura-clinic.example',
-                                          'auth_code': 'Ab3$xY9!kQ'})
+        call('POST', '/start/site', form={'session_id': SESSION, 'site_url': 'https://sakura-clinic.example'})
         self.assertIn('HP編集を始める', call('GET', '/start', {'session_id': SESSION})['body'])
         result = app({'rawPath': '/mcp', 'requestContext': {'http': {'method': 'POST'}},
                       'headers': {'Authorization': 'Bearer ' + token(), 'Content-Type': 'application/json'},

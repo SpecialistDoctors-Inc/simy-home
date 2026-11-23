@@ -15,7 +15,6 @@ import test_provision_site
 from test_stripe_billing import LINK, SECRET, SESSION, SUB, session, signed
 
 ISSUER = 'https://hp-control.example.test'
-AUTH_CODE = 'Ab3$xY9!kQ'
 
 
 class FakeApi:
@@ -101,17 +100,15 @@ class ClinicOnboardingTest(unittest.TestCase):
         self.assertIn('ホームページを登録します', self.call('GET', '/start', {'session_id': SESSION})['body'])
 
         submitted = self.call('POST', '/start/site', form={
-            'session_id': SESSION, 'site_url': self.site['prod_url'], 'auth_code': AUTH_CODE})
+            'session_id': SESSION, 'site_url': self.site['prod_url']})
         self.assertEqual(submitted['statusCode'], 303)
         # The operator registered Owner@Example.test; the verified sign-in email
         # owner@example.test matches regardless of case, so access is granted at once.
         intake = self.store.get('clinic-intake:' + SUB)
         self.assertEqual(intake['status'], 'claimed')
-        self.assertNotIn(AUTH_CODE, json.dumps(self.store.rows))
-        self.assertEqual(self.onboarding.cipher.decrypt(intake['auth_code'].encode()).decode(), AUTH_CODE)
         page = self.call('GET', '/start', {'session_id': SESSION})['body']
         self.assertIn('HP編集を始める', page)
-        self.assertNotIn(AUTH_CODE, page)
+        self.assertNotIn('AuthCode', page)
         self.assertIsNone(self.store.get('clinic-copy-pending'))
 
         claims = {'sub': 'google-subject', 'scope': 'hp:read hp:write'}
@@ -130,7 +127,7 @@ class ClinicOnboardingTest(unittest.TestCase):
 
     def test_posts_need_our_origin_and_the_bound_account(self):
         self.sign_in()
-        form = {'session_id': SESSION, 'site_url': self.site['prod_url'], 'auth_code': ''}
+        form = {'session_id': SESSION, 'site_url': self.site['prod_url']}
         self.assertEqual(self.call('POST', '/start/site', form=form, origin='https://evil.example')['statusCode'], 403)
         self.assertEqual(self.call('POST', '/start/site', form=form, cookie='')['statusCode'], 403)
         self.assertIsNone(self.store.get('clinic-intake:' + SUB))
@@ -158,24 +155,23 @@ class ClinicOnboardingTest(unittest.TestCase):
 
     def test_unknown_site_is_queued_for_copy_and_claimed_after_the_operator_registers_it(self):
         self.sign_in()
-        bad = self.call('POST', '/start/site', form={'session_id': SESSION, 'site_url': 'https://clinic.example.jp',
-                                                      'auth_code': 'has space'})
-        self.assertIn('notice=invalid_auth_code', bad['headers']['location'])
+        self.assertNotIn('auth_code', self.call('GET', '/start', {'session_id': SESSION})['body'])
+        # A form cached from before the AuthCode field was removed still posts one;
+        # it is ignored, never stored.
         self.call('POST', '/start/site', form={'session_id': SESSION, 'site_url': 'https://clinic.example.jp',
-                                               'auth_code': AUTH_CODE})
+                                               'auth_code': 'Ab3$xY9!kQ'})
         intake = self.store.get('clinic-intake:' + SUB)
         self.assertEqual((intake['status'], intake['host'], intake['copy_state']),
                          ('received', 'clinic.example.jp', 'pending'))
         self.assertEqual(self.store.get('clinic-copy-pending')['subscriptions'], [SUB + ':1'])
         page = self.call('GET', '/start', {'session_id': SESSION})['body']
         self.assertIn('ホームページの準備を進めます', page)
-        self.assertNotIn(AUTH_CODE, page)
+        self.assertNotIn('AuthCode', page)
+        self.assertNotIn('Ab3$xY9!kQ', json.dumps(self.store.rows))
         self.assertIsNone(self.store.get('principal:google-subject'))
         # Resubmitting the same domain does not queue it twice.
-        self.call('POST', '/start/site', form={'session_id': SESSION, 'site_url': 'https://clinic.example.jp',
-                                               'auth_code': ''})
+        self.call('POST', '/start/site', form={'session_id': SESSION, 'site_url': 'https://clinic.example.jp'})
         self.assertEqual(self.store.get('clinic-copy-pending')['subscriptions'], [SUB + ':1'])
-        self.assertIsNotNone(self.store.get('clinic-intake:' + SUB)['auth_code'])
 
         # The operator builds the site and registers it for the clinic's mailbox.
         site = {**self.site, 'prod_url': 'https://clinic.example.jp'}
@@ -188,8 +184,7 @@ class ClinicOnboardingTest(unittest.TestCase):
     def test_known_site_with_another_owner_email_waits_for_review(self):
         self.profile = {'sub': 'google-subject', 'email': 'someone-else@example.test', 'email_verified': True}
         self.sign_in()
-        self.call('POST', '/start/site', form={'session_id': SESSION, 'site_url': self.site['prod_url'],
-                                               'auth_code': ''})
+        self.call('POST', '/start/site', form={'session_id': SESSION, 'site_url': self.site['prod_url']})
         intake = self.store.get('clinic-intake:' + SUB)
         self.assertEqual(intake['status'], 'needs_review')
         self.assertNotIn('copy_state', intake)

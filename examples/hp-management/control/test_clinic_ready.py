@@ -37,7 +37,7 @@ class ClinicReadyTest(unittest.TestCase):
 
     def submit_unknown_url(self):
         self.sign_in()
-        self.call('POST', '/start/site', form={'session_id': SESSION, 'site_url': CLINIC_URL, 'auth_code': ''})
+        self.call('POST', '/start/site', form={'session_id': SESSION, 'site_url': CLINIC_URL})
         self.assertEqual(self.store.get('clinic-intake:' + SUB)['status'], 'received')
 
     def deploy_targets(self):

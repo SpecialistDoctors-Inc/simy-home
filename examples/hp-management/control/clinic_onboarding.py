@@ -7,7 +7,7 @@ The clinic page's Stripe Payment Links redirect to
 2. signs the clinic in with Google, or with a code emailed to any mailbox it
    chooses (when email sign-in is enabled), and binds that account to the
    subscription once,
-3. takes the homepage URL and, optionally, the domain's transfer AuthCode,
+3. takes the homepage URL,
 4. when the operator registered that domain with an owner email equal to the
    signed-in (verified) email, grants read/edit/publish under the subscription.
 
@@ -19,7 +19,8 @@ Otherwise the URL is kept as an intake: an unknown domain is queued for a copy o
 its public homepage (see site_copy.py); a known domain with another owner email
 waits for the operator. Once the operator registers the site, reopening this page
 completes the claim; notify_clinic_ready.py also claims it and emails the clinic
-(see clinic_ready.py and CLINIC_SITES.md). AuthCodes are encrypted at rest and never shown again.
+(see clinic_ready.py and CLINIC_SITES.md).
+Domain transfers are not taken here; the operator handles them individually.
 """
 from __future__ import annotations
 
@@ -29,8 +30,6 @@ import secrets
 import time
 from html import escape
 from urllib.parse import urlencode
-
-from cryptography.fernet import Fernet
 
 from domain_verification import site_host
 from email_login import LOGIN_CSS, login_card
@@ -69,11 +68,6 @@ CSP = ("default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; bas
        "form-action 'self'; frame-ancestors 'none'")
 
 
-def valid_auth_code(value):
-    # Registrar transfer codes are printable ASCII without spaces.
-    return isinstance(value, str) and re.fullmatch(r'[\x21-\x7e]{6,64}', value) is not None
-
-
 def cookie_value(raw, name=COOKIE):
     for part in (raw or '').split(';'):
         key, _, value = part.strip().partition('=')
@@ -89,7 +83,8 @@ class ClinicOnboarding:
         # Factory for a WordPressOnboarding whose WordPress.com app returns to
         # WORDPRESS_CALLBACK on this origin; None hides the WordPress option.
         self.wordpress = wordpress
-        self.cipher = Fernet(intake_key.encode() if isinstance(intake_key, str) else intake_key)
+        # intake_key is still accepted so existing configs and callers stay valid; the
+        # transfer AuthCode it used to encrypt is no longer collected.
         self.plugin_url = plugin_url if isinstance(plugin_url, str) and plugin_url.startswith('https://') else None
         self.google_authorize, self.secure_cookie, self.clock = google_authorize, secure_cookie, clock
         self.origin = identity.issuer
@@ -243,13 +238,11 @@ class ClinicOnboarding:
 
     def submit_site(self, form, cookie, origin):
         purchase, visit, session_id = self.authorized_post(form, cookie, origin)
-        site_url, auth_code = form.get('site_url', '').strip(), form.get('auth_code', '').strip()
+        site_url = form.get('site_url', '').strip()
         try:
             host = site_host(site_url)
         except ValueError:
             return self.back(session_id, 'invalid_url')
-        if auth_code and not valid_auth_code(auth_code):
-            return self.back(session_id, 'invalid_auth_code')
         key = 'clinic-intake:' + purchase['subscription_id']
         existing = self.store.get(key)
         if existing and existing.get('status') == 'claimed':
@@ -259,15 +252,9 @@ class ClinicOnboarding:
             # A prepared site is already being set up for the first URL; changing
             # it now would strand that site. The operator handles a change.
             return self.back(session_id, 'site_locked')
-        if auth_code:
-            sealed = self.cipher.encrypt(auth_code.encode()).decode()
-        elif existing and existing.get('host') == host:
-            sealed = existing.get('auth_code')  # keep a code already given for the same domain
-        else:
-            sealed = None
         intake = {'subscription_id': purchase['subscription_id'], 'subject': visit['subject'],
                   'email': visit['email'], 'plan': purchase['plan'], 'site_url': site_url, 'host': host,
-                  'auth_code': sealed, 'updated_at': int(self.clock())}
+                  'updated_at': int(self.clock())}
         if reserved:
             intake.update({k: existing.get(k) for k in ('slot_site_id', 'slot_state', 'slot_error', 'copy_skipped')})
         status = self.register(purchase, visit, site_url).get('status')
@@ -359,11 +346,11 @@ class ClinicOnboarding:
             intake = {**(existing or {}), 'subscription_id': purchase['subscription_id'], 'subject': visit['subject'],
                       'email': visit['email'], 'plan': purchase['plan'], 'site_url': origin,
                       'host': site_host(origin), 'provider': 'wordpress', 'status': 'claimed',
-                      'auth_code': (existing or {}).get('auth_code') if (existing or {}).get('host') == site_host(origin) else None,
                       'updated_at': int(self.clock())}
             if intake.get('copy_state') == 'pending':
                 intake['copy_state'] = None  # nothing to copy: the site is connected as it is
             intake.pop('_version', None)
+            intake.pop('auth_code', None)  # no longer collected; drop any code kept from before
             try:
                 return self.store.put(key, intake, existing['_version'] if existing else None)
             except Conflict:
@@ -560,7 +547,6 @@ class ClinicOnboarding:
                    f'<dl class="kv"><dt>ログイン中</dt><dd>{escape(visit["email"])}</dd></dl></div>')
         notices = {
             'invalid_url': 'ホームページのURLを確認してください（例: https://www.example-clinic.jp）。',
-            'invalid_auth_code': 'AuthCodeは半角英数字・記号6〜64文字で、空白を含めずに入力してください。',
             'site_locked': 'このホームページで編集の準備を進めているため、URLは変更できません。変更する場合はSIMYの担当者にご連絡ください。',
             'invalid_cutover_host': '公開に使えるのは、お申し込みのドメイン（www.の有無は問いません）だけです。',
             'cutover_in_progress': '別のドメインで切り替えを進めています。変更する場合はSIMYの担当者にご連絡ください。',
@@ -574,7 +560,6 @@ class ClinicOnboarding:
             return self.layout('HP編集を始める', account + banner + (
                 f'<div class="card"><h2><span class="ok">登録が完了しました</span></h2>'
                 f'<dl class="kv"><dt>ホームページ</dt><dd>{escape(intake["site_url"])}</dd>'
-                f'<dt>AuthCode</dt><dd>{"受け付け済み（表示しません）" if intake.get("auth_code") else "なし"}</dd>'
                 + (f'<dt>公開先</dt><dd>https://{escape(intake["slot_site_id"])}.hp.simy.one</dd></dl>'
                    '<p class="muted" style="margin-top:12px">編集した内容はまずこのアドレスで公開されます。</p></div>'
                    + self.domain_card(intake, sid)
@@ -586,7 +571,6 @@ class ClinicOnboarding:
                 '<li>ホームページが表示されたら「HP編集を始めたい」と伝えます。</li></ol>'
                 f'{plugin}</div>'), step=3)
         if status in ('received', 'needs_review'):
-            auth = "受け付け済み（表示しません）" if intake.get("auth_code") else "未入力"
             if status == 'needs_review':
                 head, body = ('登録情報を確認します',
                               'このドメインはSIMYに登録がありますが、ログイン中のメールアドレスと一致しませんでした。'
@@ -601,7 +585,7 @@ class ClinicOnboarding:
                         intake.get('slot_state'), '')
                 head, body = ('ホームページの準備を進めます',
                               'いま公開されているホームページをSIMYにコピーし、編集できる状態に準備します。準備ができましたら、')
-            rows = f'<dt>ホームページ</dt><dd>{escape(intake["site_url"])}</dd><dt>AuthCode</dt><dd>{auth}</dd>'
+            rows = f'<dt>ホームページ</dt><dd>{escape(intake["site_url"])}</dd>'
             if status == 'received' and copy:
                 rows += f'<dt>コピー</dt><dd>{escape(copy)}</dd>'
             return self.layout('お申し込みを受け付けました', account + banner + (
@@ -612,10 +596,6 @@ class ClinicOnboarding:
             f'<form class="pane other" method="post" action="/start/site"><input type="hidden" name="session_id" value="{sid}">'
             '<label for="site_url">ホームページのURL</label>'
             '<input id="site_url" name="site_url" type="url" required placeholder="https://www.example-clinic.jp" autocomplete="url">'
-            '<label for="auth_code">ドメインのAuthCode（移管する場合）</label>'
-            '<input id="auth_code" name="auth_code" type="text" autocomplete="off" spellcheck="false" placeholder="例: Ab3$xY9!kQ">'
-            '<p class="muted">現在のドメイン管理会社が発行する移管用のコードです。ドメインをSIMYへ移す場合に入力してください。'
-            '暗号化して保存し、移管手続き以外には使いません。後から担当者にお伝えいただくこともできます。</p>'
             '<button class="btn" type="submit">登録する</button></form>')
         if self.wordpress is None:
             return self.layout('ホームページを登録します', account + banner + (
