@@ -1224,12 +1224,12 @@
     "site/clinic-checkout.js": "470fb2a33df6a3377b4266ad6c65183258107bc75bbc8ec612ccbe4a19b3e254",
     "site/hp-management/law-firm/clinic-checkout.js": "92d625887092c01856d5c56e3d49152409be97eae62bdd37dcf78024e3590a18",
     "site/pricing-catalog.js": "c1b4e8a31b0c0ef200f62282a14ba99b9eb5848600bb76fddab5fad2e48a9c0f",
-    "site/ja.html": "fa11fcaf9216b695f9b4897df1b703acfac25269ae04639f89619dfe312d4267",
-    "site/es.html": "4cde7efb3037e59dc6ca1ffc7bdddbd7b44ce13ae0a97722b2f3964b3517ffbe",
-    "site/fr.html": "c1df686dc0f375180baf905c81dbfdcb0970a6594ba507843cc18926864ac9b9",
-    "site/hi.html": "975a7bab5a11fc45c07d46791c2d3135c02389c4c4d7a588aaee053f0cfd87e5",
-    "site/index.html": "3e0c0bc2ba0d1e2534b6e4da1b37f3a5d2b1a3e3e1ca5eb510a15976a33a109c",
-    "site/zh-Hans.html": "abcdda7d535c64409a26799fe21494c437ebca967d9426cb1cd5b6a2870fefce"
+    "site/ja.html": "7bab361f9e9efdd46915dac430976a199e0f3c32c6b40e3efaafca7225d42dfc",
+    "site/es.html": "13c9a527215866bd6da8fd0d43a87cb3032db546e667911afb96a1d13e12dc57",
+    "site/fr.html": "e7fd11f21dbe8665f3bd825b0626f6ff2c34312fb93921b8d5f54eea3703719e",
+    "site/hi.html": "e924d8fe8937e668e3795d1c4b8ceacc38a663a43855f780184f30400b92dbb5",
+    "site/index.html": "da280ce501f5ea97f5b07510431fc0f3ee5795a555d5cb309fb215b7fe83f4e0",
+    "site/zh-Hans.html": "ff81c11053233e39036f832452ac038c5c163cd0f0ec37f58f04f65403a9ef96"
   },
-  "htmlBaselineReason": "2026-11-20: authorized homepage artwork-edge/card alignment and stylesheet content-hash version update. Six original image src/alt/srcset lists are unchanged; checkout JSON/JS and pricing-catalog hashes remain unchanged. 2026-11-23: retain current main artwork and refresh shared-header asset hashes for explicit sandbox navigation; original live prices and payment-link JSON remain unchanged."
+  "htmlBaselineReason": "2026-11-20: authorized homepage artwork-edge/card alignment and stylesheet content-hash version update. Six original image src/alt/srcset lists are unchanged; checkout JSON/JS and pricing-catalog hashes remain unchanged. 2026-11-23: retain current main artwork and refresh shared-header asset hashes for explicit sandbox navigation; original live prices and payment-link JSON remain unchanged. 2026-11-23 (review): shared-header asset hash refreshed again so sandbox navigation links to the .html form of redirected directory URLs."
 }

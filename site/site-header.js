@@ -11,6 +11,12 @@
       (target.pathname.endsWith("/") || target.pathname.endsWith(".html")) &&
       !/^\/(?:api|auth|assets)\/|^\/auth-callback\.html$/.test(target.pathname);
     if (!webSignup && !homeSignup) return;
+    // The deployed edge redirects these directory URLs to their .html form
+    // without the query, so link to the .html form directly. The edge in
+    // infra/terraform redirects the .html form back with the query intact.
+    if (homeSignup && /^\/(?:hp-management(?:\/[a-z-]+)?|for\/(?:es|fr|hi|zh-hans)\/[a-z-]+|guides|download)\/$/.test(target.pathname)) {
+      target.pathname = target.pathname.slice(0, -1) + ".html";
+    }
     target.searchParams.set("checkout_mode", mode);
     link.href = target.href;
   }
