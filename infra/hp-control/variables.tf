@@ -224,3 +224,12 @@ variable "email_login_from" {
     error_message = "Use an address on the SES-verified simy.one domain, or leave blank."
   }
 }
+variable "clinic_slot_ids" {
+  description = "Live only: clinic_sites entries that are empty, operator-prepared slots (served on <site_id>.hp.simy.one). The copier may write the initial copy of a paid clinic's homepage into exactly these buckets, then asks the API to claim the slot and email the clinic."
+  type        = list(string)
+  default     = []
+  validation {
+    condition     = length(distinct(var.clinic_slot_ids)) == length(var.clinic_slot_ids) && alltrue([for id in var.clinic_slot_ids : can(regex("^[a-z][a-z0-9-]{1,30}[a-z0-9]$", id))])
+    error_message = "List each slot site_id once."
+  }
+}

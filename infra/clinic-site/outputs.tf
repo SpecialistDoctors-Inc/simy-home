@@ -25,20 +25,21 @@ output "dev_url" {
 }
 
 output "prod_url" {
-  value = "https://${var.prod_domain}"
+  value = "https://${local.prod_host}"
 }
 
 output "prod_domain_attached" {
-  value = var.prod_domain_attached
+  description = "True once prod serves prod_url (always for a slot)."
+  value       = local.slot || var.prod_domain_attached
 }
 
 output "prod_certificate_validation" {
-  description = "DNS record(s) the clinic's DNS administrator adds so ACM can issue the prod certificate."
-  value = [for dvo in aws_acm_certificate.prod.domain_validation_options : {
+  description = "DNS record(s) the clinic's DNS administrator adds so ACM can issue the prod certificate (none for a slot)."
+  value = flatten([for cert in aws_acm_certificate.prod : [for dvo in cert.domain_validation_options : {
     name  = dvo.resource_record_name
     type  = dvo.resource_record_type
     value = dvo.resource_record_value
-  }]
+  }]])
 }
 
 output "prod_dns_target" {

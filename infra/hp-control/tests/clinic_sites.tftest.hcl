@@ -16,6 +16,27 @@ mock_provider "aws" {
       domain_validation_options = [{ domain_name = "hp-control.simy.one", resource_record_name = "_x.hp-control.simy.one.", resource_record_type = "CNAME", resource_record_value = "_y.acm-validations.aws." }]
     }
   }
+  # Known ARNs let the copier policy be inspected at plan time.
+  override_resource {
+    target          = aws_s3_bucket.artifacts
+    override_during = plan
+    values          = { arn = "arn:aws:s3:::simy-hp-control-artifacts", id = "simy-hp-control-artifacts" }
+  }
+  override_resource {
+    target          = aws_dynamodb_table.authority
+    override_during = plan
+    values          = { arn = "arn:aws:dynamodb:ap-northeast-1:209300895845:table/simy-hp-control", name = "simy-hp-control" }
+  }
+  override_resource {
+    target          = aws_lambda_function.runtime
+    override_during = plan
+    values          = { arn = "arn:aws:lambda:ap-northeast-1:209300895845:function:simy-hp-control-api" }
+  }
+  override_resource {
+    target          = aws_cloudwatch_log_group.clinic_copy
+    override_during = plan
+    values          = { arn = "arn:aws:logs:ap-northeast-1:209300895845:log-group:/simy/hp-control/clinic-copy" }
+  }
 }
 
 variables {
@@ -138,4 +159,82 @@ run "clinic_sites_never_share_a_destination" {
     }
   }
   expect_failures = [terraform_data.guard]
+}
+
+run "copier_seeds_only_listed_slots_and_asks_the_api_to_claim" {
+  command = plan
+  variables {
+    clinic_copy_enabled       = true
+    clinic_billing_secret_arn = "arn:aws:secretsmanager:ap-northeast-1:209300895845:secret:hp-control/clinic-billing"
+    email_login_from          = "no-reply@simy.one"
+    clinic_sites = {
+      clinic-a = {
+        dev  = { bucket = "simy-hp-site-clinic-a-dev", distribution = "EAAAAADEV" }
+        prod = { bucket = "simy-hp-site-clinic-a-prod", distribution = "EAAAAAPROD" }
+      }
+      slot-a = {
+        dev  = { bucket = "simy-hp-site-slot-a-dev-209300895845", distribution = "ESLOTADEV" }
+        prod = { bucket = "simy-hp-site-slot-a-prod-209300895845", distribution = "ESLOTAPROD" }
+      }
+    }
+    clinic_slot_ids = ["slot-a"]
+  }
+  assert {
+    condition = toset([for s in jsondecode(aws_iam_role_policy.clinic_copy["copier"].policy).Statement : s.Sid]) == toset([
+      "IntakeRows", "IntakeCopiesOnly", "LogOnly", "ReadIntakeCopies", "ListSlotBuckets", "SeedSlotBuckets", "ClaimAndNotify"
+    ])
+    error_message = "slot assignment adds exactly the read, seed and claim permissions"
+  }
+  assert {
+    condition = [for s in jsondecode(aws_iam_role_policy.clinic_copy["copier"].policy).Statement : s.Resource if s.Sid == "SeedSlotBuckets"][0] == [
+      "arn:aws:s3:::simy-hp-site-slot-a-dev-209300895845/*", "arn:aws:s3:::simy-hp-site-slot-a-prod-209300895845/*"
+    ]
+    error_message = "the copier may write only the listed slot buckets, never another clinic site"
+  }
+  assert {
+    condition     = aws_lambda_function.clinic_copy["copier"].environment[0].variables.HP_AWS_ACCOUNT_ID == "209300895845"
+    error_message = "the copier needs the API function and account to run slot assignment"
+  }
+}
+
+run "slots_must_be_clinic_site_slot_buckets" {
+  command = plan
+  variables {
+    clinic_copy_enabled       = true
+    clinic_billing_secret_arn = "arn:aws:secretsmanager:ap-northeast-1:209300895845:secret:hp-control/clinic-billing"
+    email_login_from          = "no-reply@simy.one"
+    clinic_slot_ids           = ["clinic-a"]
+  }
+  expect_failures = [terraform_data.guard]
+}
+
+run "slots_need_the_copier" {
+  command = plan
+  variables {
+    email_login_from = "no-reply@simy.one"
+    clinic_sites = {
+      slot-a = {
+        dev  = { bucket = "simy-hp-site-slot-a-dev-209300895845", distribution = "ESLOTADEV" }
+        prod = { bucket = "simy-hp-site-slot-a-prod-209300895845", distribution = "ESLOTAPROD" }
+      }
+    }
+    clinic_slot_ids = ["slot-a"]
+  }
+  expect_failures = [terraform_data.guard]
+}
+
+run "no_slots_leave_the_copier_unchanged" {
+  command = plan
+  variables {
+    clinic_copy_enabled       = true
+    clinic_billing_secret_arn = "arn:aws:secretsmanager:ap-northeast-1:209300895845:secret:hp-control/clinic-billing"
+  }
+  assert {
+    condition     = toset([for s in jsondecode(aws_iam_role_policy.clinic_copy["copier"].policy).Statement : s.Sid]) == toset(["IntakeRows", "IntakeCopiesOnly", "LogOnly"])
+    error_message = "without slots the copier keeps only its copy permissions"
+  }
+  assert {
+    condition     = !contains(keys(aws_lambda_function.clinic_copy["copier"].environment[0].variables), "HP_API_FUNCTION_NAME")
+    error_message = "without slots the copier does not call the API"
+  }
 }

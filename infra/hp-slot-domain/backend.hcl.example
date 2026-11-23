@@ -1,0 +1,8 @@
+# Copy outside the repository as backend.hcl and replace placeholders.
+# A single Terraform workspace: hp-slot-domain.
+bucket               = "REPLACE_WITH_TERRAFORM_STATE_BUCKET"
+key                  = "hp-slot-domain/terraform.tfstate"
+workspace_key_prefix = "hp-slot-domain/workspaces"
+region               = "ap-northeast-1"
+encrypt              = true
+use_lockfile         = true

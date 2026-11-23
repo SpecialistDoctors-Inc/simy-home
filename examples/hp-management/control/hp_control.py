@@ -211,15 +211,52 @@ def dispatch_pending(event, context, *, store=None, sqs=None, clock=None):
     return {'enqueued': sent}
 
 
-def copy_clinic_sites(event, context, *, store=None, put_object=None):
-    """Scheduled: copy one pending clinic homepage into the private artifact bucket."""
+def copy_clinic_sites(event, context, *, store=None, put_object=None, assigner=None):
+    """Scheduled: copy one pending clinic homepage into the private artifact bucket,
+    then, when slots are enabled, give one copied clinic a prepared site slot."""
     import boto3
     from site_copy import run_one, s3_put
     store = store or DynamoStore(os.environ['HP_TABLE_NAME'])
     put_object = put_object or s3_put(boto3.client('s3'), os.environ['HP_ARTIFACT_BUCKET'])
-    handled = run_one(store, put_object)
+    slots_enabled = assigner is not None or bool(os.environ.get('HP_API_FUNCTION_NAME'))
+    on_done = None
+    if slots_enabled:
+        from clinic_slots import enqueue
+        on_done = lambda subscription_id: enqueue(store, subscription_id)
+    handled = run_one(store, put_object, on_done=on_done)
     print(json.dumps({'event': 'hp_clinic_copy_completed', 'handled': handled is not None}))
-    return {'handled': handled is not None}
+    slot = None
+    if slots_enabled:
+        slot = (assigner or slot_assigner(store)).run_one()
+    return {'handled': handled is not None, 'slot': slot[1] if slot else None}
+
+
+def slot_assigner(store):
+    """Production wiring: read copies from the artifact bucket, write slot buckets,
+    and let the API Lambda claim the site and email the clinic (clinic_ready)."""
+    import boto3
+    from clinic_slots import S3SlotBuckets, SlotAssigner, SlotError
+    s3 = boto3.client('s3')
+    artifacts = os.environ['HP_ARTIFACT_BUCKET']
+    account = os.environ['HP_AWS_ACCOUNT_ID']
+
+    def read_copy(key):
+        import re
+        if not re.fullmatch(r'intake/[0-9a-f]{64}/[0-9a-f]{64}/site\.zip', key or ''):
+            raise SlotError('invalid_copy_key')
+        return s3.get_object(Bucket=artifacts, Key=key, ExpectedBucketOwner=account)['Body'].read()
+
+    lambda_client = boto3.client('lambda')
+
+    def notify(subscription_id):
+        response = lambda_client.invoke(
+            FunctionName=os.environ['HP_API_FUNCTION_NAME'], InvocationType='RequestResponse',
+            Payload=json.dumps({'hp_operator_task': 'clinic_ready', 'subscription_id': subscription_id}).encode())
+        if response.get('FunctionError'):
+            return {'status': 'retry'}
+        return json.loads(response['Payload'].read() or b'{}')
+
+    return SlotAssigner(store, read_copy, S3SlotBuckets(s3, account), notify)
 
 
 def regional_s3_client(region):
