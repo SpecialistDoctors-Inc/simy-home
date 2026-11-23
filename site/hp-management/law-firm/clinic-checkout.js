@@ -24,6 +24,22 @@ function sandboxCheckoutUrl(modes,plan,assistance){
 if(typeof module!=='undefined'&&module.exports){module.exports={validate,select,sandboxCheckoutUrl};return;}
 let links=null;
 const modes=new URLSearchParams(location.search).getAll('checkout_mode');
+// These pages do not load the shared header, so keep an explicit test mode on
+// their own navigation as site-header.js does elsewhere.
+if(modes.length){
+ const mode=modes.length===1&&modes[0]==='sandbox'?'sandbox':'invalid';
+ const preserve=link=>{
+  let target;try{target=new URL(link.href);}catch{return;}
+  const webSignup=target.origin==='https://app.simy.one'&&/^\/signup\/?$/.test(target.pathname);
+  const homeSignup=target.origin===location.origin&&(target.pathname.endsWith('/')||target.pathname.endsWith('.html'))&&!/^\/(?:api|auth|assets)\/|^\/auth-callback\.html$/.test(target.pathname);
+  if(!webSignup&&!homeSignup)return;
+  if(homeSignup&&target.pathname!==location.pathname&&/^\/(?:hp-management(?:\/[a-z-]+)?|for\/(?:es|fr|hi|zh-hans)\/[a-z-]+|guides|download)\/$/.test(target.pathname))target.pathname=target.pathname.slice(0,-1)+'.html';
+  target.searchParams.set('checkout_mode',mode);link.href=target.href;
+ };
+ const preserveAll=()=>document.querySelectorAll('a[href]').forEach(preserve);
+ preserveAll();document.addEventListener('DOMContentLoaded',preserveAll,{once:true});
+ for(const type of ['click','auxclick','contextmenu'])document.addEventListener(type,event=>{const link=event.target.closest?.('a[href]');if(link)preserve(link);},true);
+}
 const applicationForm=document.querySelector('#application-form');
 const initialCopy={submit:applicationForm.querySelector('[type=submit]').textContent,next:applicationForm.querySelector('.application-next').textContent,note:applicationForm.querySelector('.application-note').textContent};
 function presentation(consultation=false){

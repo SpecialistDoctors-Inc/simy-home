@@ -15,7 +15,8 @@ for (const [path, expected = path] of [
   ['/hp-management/law-firm/', '/hp-management/law-firm.html'],
   ['/for/es/engineers/', '/for/es/engineers.html'],
   ['/guides/', '/guides.html'],
-  // Directory URLs the edge serves directly keep their published form.
+  // Same-page anchors and directory URLs the edge serves directly keep their form.
+  ['/ja.html#pricing'],
   ['/for/rosenz/'],
   ['/'],
 ]) {
@@ -32,4 +33,32 @@ for (const [path, expected = path] of [
     assert.equal(target.pathname + target.hash, expected);
     assert.equal(target.searchParams.get('checkout_mode'), 'sandbox');
   });
+}
+
+// HP checkout pages do not load site-header.js; their checkout script keeps
+// the explicit mode on outbound links so returning never reaches live checkout.
+for (const script of ['site/clinic-checkout.js', 'site/hp-management/law-firm/clinic-checkout.js']) {
+  for (const [query, expectedMode] of [['?checkout_mode=sandbox', 'sandbox'], ['?checkout_mode=live', 'invalid'], ['', null]]) {
+    test(`${script} keeps mode ${expectedMode} on HP page links`, async () => {
+      const links = [
+        { href: 'https://simy.one/pricing-2026-11.html' },
+        { href: 'https://simy.one/hp-management/clinic/#pricing' },
+        { href: 'https://app.simy.one/signup?lang=ja' },
+        { href: 'https://buy.stripe.com/abc' },
+      ];
+      const element = { textContent: '', disabled: false, hidden: false, querySelector: () => element, querySelectorAll: () => [element, element] };
+      const document = { querySelectorAll: () => links, querySelector: () => element, addEventListener: () => {} };
+      const fetch = async () => ({ ok: false });
+      const window = { document, fetch, URL, URLSearchParams, Promise, crypto: globalThis.crypto };
+      vm.runInNewContext(fs.readFileSync(script, 'utf8'), {
+        window, document, fetch, URL, URLSearchParams, Promise,
+        location: new URL(`https://simy.one/hp-management/clinic.html${query}`),
+      });
+      await window.SimyClinicCheckout.ready;
+      const modes = links.map((link) => new URL(link.href).searchParams.get('checkout_mode'));
+      assert.deepEqual(modes, [expectedMode, expectedMode, expectedMode, null]);
+      if (expectedMode) assert.equal(new URL(links[1].href).pathname, '/hp-management/clinic.html');
+      else assert.equal(links[1].href, 'https://simy.one/hp-management/clinic/#pricing');
+    });
+  }
 }

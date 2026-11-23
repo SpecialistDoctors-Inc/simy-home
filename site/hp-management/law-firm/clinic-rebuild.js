@@ -233,6 +233,11 @@
  if(!applicationIntent&&await window.SimyClinicCheckout?.go(new FormData(applicationForm)))return;const data=new FormData(applicationForm),plan=applicationForm.querySelector('[name=plan]:checked').closest('label').querySelector('strong').textContent.trim();const body=['SIMY ご担当者様',applicationIntent?'HP管理の相談を希望します。':'HP管理の申し込みを希望します。','事務所名：'+data.get('clinic'),'ご担当者名：'+data.get('contact'),'メールアドレス：'+data.get('email'),'対象URL：'+applicationSourceUrl,'プラン：'+plan,'更新代行：'+(data.has('assistance')?'追加する（月額＋49,800円・税別）':'追加しない'),'月額合計（税別）：'+document.querySelector('#application-total').textContent,...(applicationIntent?['ご相談内容：'+applicationIntent]:[]),'移管内容・費用のご案内をお願いします。'].join('\r\n');location.href='mailto:sales@simy.one?subject='+encodeURIComponent(applicationIntent?'SIMY HP管理のご相談':'SIMY HP管理のお申し込み')+'&body='+encodeURIComponent(body);});
  const applicationSubmit=applicationForm.querySelector('[type=submit]');
  const checkoutModes=new URLSearchParams(location.search).getAll('checkout_mode');
+ // Test mode never opens the consultation email, from the preview or the form.
+ if(checkoutModes.length){
+  const preview=document.querySelector('#preview-enquiry');preview.hidden=true;
+  document.addEventListener('click',event=>{if(event.target.closest?.('#preview-enquiry,#application-enquiry'))event.preventDefault();},true);
+ }
  applicationSubmit.disabled=checkoutModes.length>0&&(
   checkoutModes.length!==1||checkoutModes[0]!=='sandbox'||!window.SimyClinicCheckout?.sandboxCheckoutUrl
  );
