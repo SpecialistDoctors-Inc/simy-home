@@ -211,7 +211,7 @@ def dispatch_pending(event, context, *, store=None, sqs=None, clock=None):
     return {'enqueued': sent}
 
 
-def copy_clinic_sites(event, context, *, store=None, put_object=None, assigner=None):
+def copy_clinic_sites(event, context, *, store=None, put_object=None, assigner=None, cutovers=None):
     """Scheduled: copy one pending clinic homepage into the private artifact bucket,
     then, when slots are enabled, give one copied clinic a prepared site slot."""
     import boto3
@@ -228,7 +228,25 @@ def copy_clinic_sites(event, context, *, store=None, put_object=None, assigner=N
     slot = None
     if slots_enabled:
         slot = (assigner or slot_assigner(store)).run_one()
-    return {'handled': handled is not None, 'slot': slot[1] if slot else None}
+    cutover = None
+    if cutovers is not None or os.environ.get('HP_SLOT_ZONE_ID'):
+        cutover = (cutovers or domain_cutover(store)).run_one()
+    return {'handled': handled is not None, 'slot': slot[1] if slot else None,
+            'cutover': cutover[1] if cutover else None}
+
+
+def domain_cutover(store):
+    """Production wiring for moving slots onto clinics' own domains."""
+    import boto3
+    from clinic_ready import SesMail
+    from domain_cutover import DomainCutover
+    from site_copy import default_fetch
+    from clinic_slots import S3SlotBuckets
+    sender = os.environ.get('HP_EMAIL_LOGIN_FROM', '')
+    return DomainCutover(store, boto3.client('acm', region_name='us-east-1'), boto3.client('route53'),
+                         boto3.client('cloudfront'), default_fetch, os.environ['HP_SLOT_ZONE_ID'],
+                         mail=SesMail(sender) if sender else None,
+                         put_object=S3SlotBuckets(boto3.client('s3'), os.environ['HP_AWS_ACCOUNT_ID']).put)
 
 
 def slot_assigner(store):

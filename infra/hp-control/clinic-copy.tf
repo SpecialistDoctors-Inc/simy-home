@@ -56,7 +56,37 @@ resource "aws_iam_role_policy" "clinic_copy" {
       Sid      = "ClaimAndNotify", Effect = "Allow", Action = ["lambda:InvokeFunction"],
       Resource = [aws_lambda_function.runtime["api"].arn]
     }
-  ] : []) })
+    ] : [], [for statement in [
+      # Domain cutover (domain_cutover.py): one certificate per slot, our half of
+      # its validation in the simy.one zone, and only the slots' prod distributions.
+      {
+        Sid       = "RequestSlotCertificates", Effect = "Allow", Action = ["acm:RequestCertificate", "acm:AddTagsToCertificate"],
+        Resource  = "*",
+        Condition = { "ForAllValues:StringEquals" = { "aws:TagKeys" = ["simy-hp-site"] }, Null = { "aws:RequestTag/simy-hp-site" = "false" } }
+      },
+      {
+        Sid       = "ReadSlotCertificates", Effect = "Allow", Action = ["acm:DescribeCertificate"],
+        Resource  = "arn:aws:acm:us-east-1:${data.aws_caller_identity.current.account_id}:certificate/*",
+        Condition = { Null = { "aws:ResourceTag/simy-hp-site" = "false" } }
+      },
+      {
+        Sid      = "ValidateSlotNames", Effect = "Allow", Action = ["route53:ChangeResourceRecordSets"],
+        Resource = "arn:aws:route53:::hostedzone/${var.slot_zone_id}",
+        Condition = {
+          "ForAllValues:StringLike"   = { "route53:ChangeResourceRecordSetsNormalizedRecordNames" = ["_*.hp.simy.one"] }
+          "ForAllValues:StringEquals" = { "route53:ChangeResourceRecordSetsRecordTypes" = ["CNAME"], "route53:ChangeResourceRecordSetsActions" = ["UPSERT"] }
+        }
+      },
+      {
+        Sid      = "AttachClinicDomains", Effect = "Allow", Action = ["cloudfront:GetDistribution", "cloudfront:GetDistributionConfig", "cloudfront:UpdateDistribution"],
+        Resource = [for id in local.slot_distributions : "arn:aws:cloudfront::${data.aws_caller_identity.current.account_id}:distribution/${id}"]
+      },
+      {
+        Sid       = "CutoverMailFromOnly", Effect = "Allow", Action = ["ses:SendEmail"],
+        Resource  = "arn:aws:ses:${var.region}:${data.aws_caller_identity.current.account_id}:identity/simy.one",
+        Condition = { StringEquals = { "ses:FromAddress" = var.email_login_from } }
+      }
+  ] : statement if local.domain_cutover]) })
 }
 resource "aws_lambda_function" "clinic_copy" {
   for_each                       = local.clinic_copy
@@ -80,6 +110,10 @@ resource "aws_lambda_function" "clinic_copy" {
       }, local.clinic_slots ? {
       HP_API_FUNCTION_NAME = aws_lambda_function.runtime["api"].function_name
       HP_AWS_ACCOUNT_ID    = data.aws_caller_identity.current.account_id
+      } : {}, local.domain_cutover ? {
+      HP_SLOT_ZONE_ID     = var.slot_zone_id
+      HP_EMAIL_LOGIN_FROM = var.email_login_from
+      HP_PUBLIC_BASE_URL  = "https://${local.hostname}"
     } : {})
   }
   depends_on = [aws_cloudwatch_log_group.clinic_copy, aws_iam_role_policy.clinic_copy]

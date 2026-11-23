@@ -31,6 +31,9 @@ locals {
   clinic_dists      = flatten([for site in values(var.clinic_sites) : [site.dev.distribution, site.prod.distribution]])
   # Buckets the copier may seed with a paid clinic's homepage: only listed slots.
   slot_buckets = flatten([for id in var.clinic_slot_ids : [var.clinic_sites[id].dev.bucket, var.clinic_sites[id].prod.bucket] if contains(keys(var.clinic_sites), id)])
+  # Moving slots onto clinics' own domains (domain_cutover.py) needs the simy.one zone.
+  domain_cutover     = length(var.clinic_slot_ids) > 0 && var.slot_zone_id != ""
+  slot_distributions = [for id in var.clinic_slot_ids : var.clinic_sites[id].prod.distribution if contains(keys(var.clinic_sites), id)]
 }
 resource "terraform_data" "guard" {
   lifecycle {
@@ -109,6 +112,10 @@ resource "terraform_data" "guard" {
         var.clinic_sites[id].prod.bucket == "simy-hp-site-${id}-prod-209300895845"])
       )
       error_message = "Slots are live clinic_sites built by infra/clinic-site (simy-hp-site-<id>-<env>-<account>), and need the copier and the sign-in mail sender."
+    }
+    precondition {
+      condition     = var.slot_zone_id == "" || length(var.clinic_slot_ids) > 0
+      error_message = "Domain cutover applies only to slots: list clinic_slot_ids too."
     }
     precondition {
       condition     = !var.clinic_copy_enabled || var.clinic_billing_secret_arn != ""
@@ -281,7 +288,7 @@ resource "aws_apigatewayv2_integration" "api" {
   payload_format_version = "2.0"
 }
 resource "aws_apigatewayv2_route" "api" {
-  for_each  = toset(concat(["GET /health", "POST /mcp", "POST /github/webhook", "GET /oauth/{proxy+}", "POST /oauth/{proxy+}", "GET /.well-known/{proxy+}"], var.preflight_secret_arn != "" ? ["POST /internal/license/preflight", "POST /internal/site/claim"] : [], var.clinic_billing_secret_arn != "" ? ["GET /start", "GET /start/google", "POST /start/site", "POST /start/wordpress", "GET /start/wordpress/callback", "POST /stripe/webhook"] : [], var.clinic_billing_secret_arn != "" && var.email_login_from != "" ? ["POST /start/email", "POST /start/email/verify"] : []))
+  for_each  = toset(concat(["GET /health", "POST /mcp", "POST /github/webhook", "GET /oauth/{proxy+}", "POST /oauth/{proxy+}", "GET /.well-known/{proxy+}"], var.preflight_secret_arn != "" ? ["POST /internal/license/preflight", "POST /internal/site/claim"] : [], var.clinic_billing_secret_arn != "" ? ["GET /start", "GET /start/google", "POST /start/site", "POST /start/wordpress", "GET /start/wordpress/callback", "POST /stripe/webhook"] : [], var.clinic_billing_secret_arn != "" && var.email_login_from != "" ? ["POST /start/email", "POST /start/email/verify"] : [], local.domain_cutover ? ["POST /start/domain"] : []))
   api_id    = aws_apigatewayv2_api.control.id
   route_key = each.value
   target    = "integrations/${aws_apigatewayv2_integration.api.id}"

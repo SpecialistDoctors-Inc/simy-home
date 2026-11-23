@@ -233,3 +233,12 @@ variable "clinic_slot_ids" {
     error_message = "List each slot site_id once."
   }
 }
+variable "slot_zone_id" {
+  description = "Live only: the simy.one Route53 zone. Set it to let clinics on a slot move to their own domain from /start (domain_cutover.py): the copier requests a certificate, validates the slot's own name in this zone, attaches the clinic's host to the slot's prod distribution and switches it once the clinic's DNS points there."
+  type        = string
+  default     = ""
+  validation {
+    condition     = var.slot_zone_id == "" || can(regex("^Z[A-Z0-9]{5,32}$", var.slot_zone_id))
+    error_message = "Use a Route53 hosted zone ID or leave domain cutover disabled."
+  }
+}

@@ -195,7 +195,7 @@ class ClinicSlotsTest(unittest.TestCase):
         pending = self.store.get('clinic-copy-pending')
         self.store.put('clinic-copy-pending', {'subscriptions': []}, pending['_version'])
         result = copy_clinic_sites({}, None, store=self.store, put_object=lambda *a: None, assigner=self.assigner)
-        self.assertEqual(result, {'handled': False, 'slot': 'ready'})
+        self.assertEqual(result, {'handled': False, 'slot': 'ready', 'cutover': None})
 
     def test_resubmitting_the_same_url_keeps_the_reserved_slot(self):
         self.add_slots('slot-a', 'slot-b')

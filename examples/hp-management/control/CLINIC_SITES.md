@@ -282,12 +282,64 @@ Each step changes live AWS or HP Control data; get explicit approval for each.
 Keep a few slots free. When the pool is empty, clinics see
 「編集用の環境を準備中です」 and are served as soon as a slot is added.
 
+## Moving a slot onto the clinic's own domain (`domain_cutover.py`)
+
+The clinic keeps its registrar, DNS provider and mail. It adds two records and
+SIMY does the rest. Registrar transfers (AuthCode) are not automated: Route 53
+cannot register `.co.jp`/`.or.jp`, and transfers need the registrant's
+approval mail and a careful copy of every DNS record (MX, SPF, DKIM).
+Transfers are handled individually by the operator.
+
+1. On `/start` the clinic presses 「このドメインで公開する」. Only the domain it
+   paid for is accepted, with or without `www.` (`domain-cutover:<site_id>`,
+   state `requested`).
+2. The copier's schedule requests one ACM certificate (us-east-1) for the
+   clinic host plus `<site_id>.hp.simy.one`. It validates the slot name itself
+   in the simy.one zone. `/start` shows the two records, with a message the
+   clinic can forward to its DNS vendor (`awaiting_dns`):
+   - the certificate validation CNAME for the clinic host, and
+   - `<host> CNAME <prod distribution>.cloudfront.net`.
+3. Once ACM issues the certificate, the cutover takes `lease:site:<site_id>`
+   (it waits while an edit or publication holds it). It checks the prod
+   distribution still matches the pinned config hash, records `attaching`, then
+   serves both names with the new certificate. If CloudFront's answer is lost,
+   the next run reads the distribution: an applied update is kept and a missing
+   one is sent again. The lease is held until the new hash is pinned.
+4. When CloudFront reports `Deployed`, the binding's
+   `deployment.prod.expected_config_sha256` is re-pinned and the lease is
+   released (`attached`). Publications keep going to the slot name meanwhile.
+5. A fresh random token is written into the prod bucket under the path
+   CloudFront serves (`.well-known/simy-cutover/<token>.txt`). When
+   `https://<host>/` returns it, the binding's `prod_url` becomes
+   `https://<host>` and the clinic is mailed (`live`). The old homepage cannot
+   pass this by copying pages or headers. The publisher finds earlier releases by bucket and distribution,
+   so the new URL and hash do not hide them.
+
+Enable it with `slot_zone_id` (the simy.one zone) in the live hp-control
+tfvars. The copier role then gains only: ACM request/describe for certificates
+tagged `simy-hp-site`, UPSERT of `_*.hp.simy.one` CNAMEs in that zone,
+Get/Update of the slots' prod distributions, and SES mail from
+`email_login_from`. The API gains the `POST /start/domain` route.
+
+Limits and operator cases:
+- A bare domain (`example.jp`) cannot use a CNAME. The clinic's DNS vendor
+  needs ALIAS/ANAME support or a redirect to `www.`; arrange it individually.
+- If the host is still attached to another CloudFront distribution (often the
+  clinic's current homepage), CloudFront refuses it (`CNAMEAlreadyExists`).
+  The cutover stops as `failed` with that error for the operator.
+- ACM gives up after 72 hours without validation (`failed`). The clinic can
+  start again from `/start`.
+- A distribution changed outside HP Control stops the cutover
+  (`cloudfront_unexpected_config_drift`) before anything is updated.
+- An operation that already ran partway before the re-pin carries the old
+  binding and fails once with config drift. Running it again uses the new one.
+
 ## Not covered
 
-- Moving the clinic's DNS to `prod_dns_target` (cutover) is arranged with the
-  clinic; until then a production publication's served readback reaches the
-  old homepage and stays pending. A slot keeps publishing on
-  `<site_id>.hp.simy.one` until its own cutover, which is not automated.
+- Moving the clinic's DNS to `prod_dns_target` (cutover) for an
+  operator-prepared customer-domain site is arranged with the clinic; until
+  then a production publication's served readback reaches the old homepage and
+  stays pending. Slots use the automated cutover above.
 - Alerting when the slot pool runs low (the `hp_clinic_slot` log event with
   `no_free_slot` is the signal today).
 - Per-site publisher roles (see the trade-off above).

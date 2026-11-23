@@ -443,6 +443,14 @@ class App:
             except UnicodeError:
                 raise BadRequest() from None
             return self.onboarding_call(lambda: self.onboarding.submit_site(form, cookie, headers.get('origin')))
+        if method == 'POST' and path == '/start/domain':
+            if headers.get('content-type', '').split(';')[0].strip().lower() != 'application/x-www-form-urlencoded':
+                return self.response(415, {'error': 'unsupported_media_type'})
+            try:
+                form = flat_query(data.decode('utf-8'))
+            except UnicodeError:
+                raise BadRequest() from None
+            return self.onboarding_call(lambda: self.onboarding.domain_start(form, cookie, headers.get('origin')))
         if method == 'POST' and path == '/start/wordpress':
             if headers.get('content-type', '').split(';')[0].strip().lower() != 'application/x-www-form-urlencoded':
                 return self.response(415, {'error': 'unsupported_media_type'})
