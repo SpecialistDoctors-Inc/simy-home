@@ -1,7 +1,7 @@
 # Clinic sites for Payment Link purchases
 
 How a clinic that bought HP management through a simy.one Payment Link and
-registered "その他のホームページ" (a general URL) gets its site in live HP
+registered "一般的なサイト" (a general URL, formerly "その他のホームページ") gets its site in live HP
 Control, and what the operator does between the purchase and the clinic's first
 edit.
 
@@ -206,10 +206,89 @@ If the clinic signed in with a different mailbox (`needs_review` /
 `owner_mismatch`), confirm the owner out of band, then re-register with the
 mailbox they actually use and rerun step 5.
 
+## Slot pool: no operator step after payment (`clinic_slots.py`)
+
+The runbook above needs the operator for every clinic, and until then the
+clinic waits on "準備ができましたら…ご連絡します" with no mail (seen live on
+2026-11-23). Creating repositories and AWS destinations at payment time would
+need the GitHub App's Administration permission (not allowed, see
+CONNECTIONS.md) and CloudFront/S3 create rights in the API. Instead the operator
+prepares empty sites in advance and the copier hands them out.
+
+### What a slot is
+
+A slot is an ordinary clinic site (repository, Drive folders, Sheet, dev/prod
+origins, binding) that is not assigned yet. Its prod distribution serves
+`<site_id>.hp.simy.one` at once with the shared `*.hp.simy.one` certificate,
+so no clinic DNS is needed before editing and publishing. Its bucket roots hold
+only a placeholder `index.html`. Its claim target is deployed in `clinic_sites`
+and its id is listed in `clinic_slot_ids`.
+
+### What happens after payment
+
+1. `/start` keeps the URL as an intake and queues the homepage copy (unchanged).
+2. The copier stores the copy (now up to 1,000 files / 50 MB, the publisher's
+   own limits) and queues the subscription for a slot (`clinic-slot-pending`).
+3. In the same scheduled run `SlotAssigner.run_one`:
+   - skips WordPress.com intakes and domains the operator registered by hand;
+   - reserves the first free slot in `site-slot-pool` (one transaction over the
+     pool row, the slot row and the intake, so two clinics never share a slot);
+   - uploads the publishable files of the copy to both slot buckets, refusing a
+     bucket that holds anything but the placeholder (or a `releases/` prefix);
+   - writes `registration-site:<clinic host>` with the intake's verified
+     sign-in email as owner and the uploaded files as `initial_file_paths`;
+   - invokes the API Lambda's `clinic_ready` task, which claims the site under
+     the clinic's subscription and sends the "ready" mail once.
+4. The clinic's `/start` page shows the editing guide and the slot's address
+   (`https://<site_id>.hp.simy.one`). Partial copies and "no free slot" are
+   shown on the page; files the editor cannot publish (query-string pages,
+   unsupported types) are counted in `copy_skipped`.
+
+Each step is recorded on the intake (`slot_site_id`, `slot_state` =
+`assigned` / `registered` / `ready` / `waiting` / `failed`, `slot_error`) and is
+safe to repeat after a Lambda timeout. `no_free_slot` and a pending claim stay
+queued and are retried every minute; adding a slot resumes them.
+
+The copier role gains only: read `artifacts/intake/*`, list and put objects in
+the buckets of `clinic_slot_ids`, and invoke the API function. It creates no
+AWS resources and grants nothing itself; the API's existing claim path checks
+the license and the deployed claim targets.
+
+### Operator: prepare slots (live)
+
+Each step changes live AWS or HP Control data; get explicit approval for each.
+
+1. Once: `infra/hp-slot-domain` (workspace `hp-slot-domain`) issues
+   `*.hp.simy.one` in us-east-1, validated in the simy.one zone. Note its
+   `slot_certificate_arn` and `slot_zone_id` outputs.
+2. Per slot (`site_id` such as `slot-001`):
+   1. Repository, Drive folders and Sheet as for any site.
+   2. `infra/clinic-site` in workspace `clinic-site-<site_id>` with
+      `-var site_id=<site_id> -var slot_certificate_arn=… -var slot_zone_id=…`
+      (no `prod_domain`). Prod serves `<site_id>.hp.simy.one` immediately.
+   3. Upload a placeholder `index.html` to the root of both buckets.
+   4. `clinic_site_deployment.py --terraform-output outputs.json` prints the
+      deployment block (initial files: `["index.html"]`) and the claim target.
+   5. Write the binding JSON (no `license_policy`) and dry-run
+      `python provision_slot.py --site slot.json`.
+3. Add every new slot to `clinic_sites` and `clinic_slot_ids` in the live
+   tfvars (`hp-control` workspace) and apply. The plan may change only
+   `HP_SITE_CLAIM_TARGETS`, the publisher policies and the copier policy/env.
+4. `python provision_slot.py --site slot.json --table simy-hp-control --apply`
+   for each slot. The pool now lists it as free.
+5. Intakes copied before slots existed (or after `slot_error`) are queued with
+   `python provision_slot.py --enqueue sub_… --table simy-hp-control --apply`.
+
+Keep a few slots free. When the pool is empty, clinics see
+「編集用の環境を準備中です」 and are served as soon as a slot is added.
+
 ## Not covered
 
 - Moving the clinic's DNS to `prod_dns_target` (cutover) is arranged with the
   clinic; until then a production publication's served readback reaches the
-  old homepage and stays pending.
+  old homepage and stays pending. A slot keeps publishing on
+  `<site_id>.hp.simy.one` until its own cutover, which is not automated.
+- Alerting when the slot pool runs low (the `hp_clinic_slot` log event with
+  `no_free_slot` is the signal today).
 - Per-site publisher roles (see the trade-off above).
 - Nothing here was applied to live or acceptance.

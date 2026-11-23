@@ -52,19 +52,28 @@ class LoginCardTest(unittest.TestCase):
 
 
 class SiteSwitchTest(unittest.TestCase):
-    def test_wordpress_and_other_site_are_alternatives_in_one_card(self):
+    def test_general_site_is_the_default_and_wordpress_the_alternative(self):
         html = onboarding().site_step(PURCHASE, VISIT, None, 'sid', None)
         [card] = cards(html, 'site-pick')
-        self.assertIn('id="kind-wp" checked', card)
+        self.assertIn('id="kind-other" checked', card)
+        self.assertNotIn('id="kind-wp" checked', card)
         self.assertIn('action="/start/wordpress"', card)
         self.assertIn('action="/start/site"', card)
-        self.assertIn('<label for="kind-other">その他のホームページ</label>', card)
+        # The general site comes first, in the switch and in the form order.
+        self.assertLess(card.index('<label for="kind-other">一般的なサイト</label>'),
+                        card.index('<label for="kind-wp">WordPress</label>'))
+        self.assertLess(card.index('action="/start/site"'), card.index('action="/start/wordpress"'))
 
-    def test_url_errors_reopen_the_other_site_form(self):
+    def test_url_errors_keep_the_general_site_form(self):
         for notice in ('invalid_url', 'invalid_auth_code'):
             html = onboarding().site_step(PURCHASE, VISIT, None, 'sid', notice)
             self.assertIn('id="kind-other" checked', html)
             self.assertNotIn('id="kind-wp" checked', html)
+
+    def test_wordpress_errors_reopen_the_wordpress_form(self):
+        html = onboarding().site_step(PURCHASE, VISIT, None, 'sid', 'wordpress_declined')
+        self.assertIn('id="kind-wp" checked', html)
+        self.assertNotIn('id="kind-other" checked', html)
 
     def test_without_wordpress_only_the_site_form_remains(self):
         [card] = cards(onboarding(wordpress=False).site_step(PURCHASE, VISIT, None, 'sid', None), 'site-pick')

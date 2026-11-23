@@ -60,9 +60,9 @@ class SiteCopyTest(unittest.TestCase):
         self.assertEqual(fetch.calls, ['https://clinic.example.jp/'])
 
     def test_limits_truncate_the_copy(self):
-        links = ''.join(f'<a href="/p{i}.html">p</a>' for i in range(300)).encode()
+        links = ''.join(f'<a href="/p{i}.html">p</a>' for i in range(site_copy.MAX_FILES + 100)).encode()
         pages = {'https://clinic.example.jp/': (200, {'Content-Type': HTML}, links)}
-        pages.update({f'https://clinic.example.jp/p{i}.html': (200, {'Content-Type': HTML}, b'x') for i in range(300)})
+        pages.update({f'https://clinic.example.jp/p{i}.html': (200, {'Content-Type': HTML}, b'x') for i in range(site_copy.MAX_FILES + 100)})
         data, manifest = copy_public_site(HOST, fetch=site(pages))
         self.assertTrue(manifest['truncated'])
         self.assertEqual(len(manifest['files']), site_copy.MAX_FILES)

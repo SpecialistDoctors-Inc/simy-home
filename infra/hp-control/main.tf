@@ -29,6 +29,8 @@ locals {
   publisher_targets = { for env, site in local.publisher_sites : env => concat([site], [for id in sort(keys(var.clinic_sites)) : var.clinic_sites[id][env]]) }
   clinic_buckets    = flatten([for site in values(var.clinic_sites) : [site.dev.bucket, site.prod.bucket]])
   clinic_dists      = flatten([for site in values(var.clinic_sites) : [site.dev.distribution, site.prod.distribution]])
+  # Buckets the copier may seed with a paid clinic's homepage: only listed slots.
+  slot_buckets = flatten([for id in var.clinic_slot_ids : [var.clinic_sites[id].dev.bucket, var.clinic_sites[id].prod.bucket] if contains(keys(var.clinic_sites), id)])
 }
 resource "terraform_data" "guard" {
   lifecycle {
@@ -98,6 +100,15 @@ resource "terraform_data" "guard" {
     precondition {
       condition     = !var.wordpress_paid_sites || (var.wordpress_secret_arn != "" && var.clinic_billing_secret_arn != "" && var.publication_enabled)
       error_message = "Paid WordPress sites need the WordPress credential secret, clinic billing and publication authorization."
+    }
+    precondition {
+      condition = length(var.clinic_slot_ids) == 0 || (
+        !local.acceptance && var.clinic_copy_enabled && var.email_login_from != "" &&
+        alltrue([for id in var.clinic_slot_ids : contains(keys(var.clinic_sites), id) &&
+          var.clinic_sites[id].dev.bucket == "simy-hp-site-${id}-dev-209300895845" &&
+        var.clinic_sites[id].prod.bucket == "simy-hp-site-${id}-prod-209300895845"])
+      )
+      error_message = "Slots are live clinic_sites built by infra/clinic-site (simy-hp-site-<id>-<env>-<account>), and need the copier and the sign-in mail sender."
     }
     precondition {
       condition     = !var.clinic_copy_enabled || var.clinic_billing_secret_arn != ""

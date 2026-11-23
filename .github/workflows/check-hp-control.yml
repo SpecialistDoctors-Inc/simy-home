@@ -2,10 +2,10 @@ name: Check standalone HP control
 
 on:
   pull_request:
-    paths: ['examples/hp-management/control/**', 'infra/hp-control/**', 'infra/clinic-site/**', '.github/workflows/check-hp-control.yml']
+    paths: ['examples/hp-management/control/**', 'infra/hp-control/**', 'infra/clinic-site/**', 'infra/hp-slot-domain/**', '.github/workflows/check-hp-control.yml']
   push:
     branches: [dev]
-    paths: ['examples/hp-management/control/**', 'infra/hp-control/**', 'infra/clinic-site/**', '.github/workflows/check-hp-control.yml']
+    paths: ['examples/hp-management/control/**', 'infra/hp-control/**', 'infra/clinic-site/**', 'infra/hp-slot-domain/**', '.github/workflows/check-hp-control.yml']
 
 permissions:
   contents: read
@@ -56,6 +56,13 @@ jobs:
         run: terraform -chdir=infra/clinic-site test
         env:
           TF_WORKSPACE: clinic-site-clinic-a
+      - run: terraform -chdir=infra/hp-slot-domain fmt -check -recursive
+      - run: terraform -chdir=infra/hp-slot-domain init -backend=false -input=false
+      - run: terraform -chdir=infra/hp-slot-domain validate
+      - name: Check the shared slot certificate (mocked AWS, plan only)
+        run: terraform -chdir=infra/hp-slot-domain test
+        env:
+          TF_WORKSPACE: hp-slot-domain
   renderer:
     runs-on: ubuntu-latest
     steps:

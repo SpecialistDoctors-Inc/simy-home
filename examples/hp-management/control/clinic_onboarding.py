@@ -254,6 +254,11 @@ class ClinicOnboarding:
         existing = self.store.get(key)
         if existing and existing.get('status') == 'claimed':
             return self.back(session_id)
+        reserved = existing.get('slot_site_id') if existing else None
+        if reserved and existing.get('host') != host:
+            # A prepared site is already being set up for the first URL; changing
+            # it now would strand that site. The operator handles a change.
+            return self.back(session_id, 'site_locked')
         if auth_code:
             sealed = self.cipher.encrypt(auth_code.encode()).decode()
         elif existing and existing.get('host') == host:
@@ -263,6 +268,8 @@ class ClinicOnboarding:
         intake = {'subscription_id': purchase['subscription_id'], 'subject': visit['subject'],
                   'email': visit['email'], 'plan': purchase['plan'], 'site_url': site_url, 'host': host,
                   'auth_code': sealed, 'updated_at': int(self.clock())}
+        if reserved:
+            intake.update({k: existing.get(k) for k in ('slot_site_id', 'slot_state', 'slot_error', 'copy_skipped')})
         status = self.register(purchase, visit, site_url).get('status')
         if status == 'claimed':
             intake['status'] = 'claimed'
@@ -499,6 +506,7 @@ class ClinicOnboarding:
         notices = {
             'invalid_url': 'ホームページのURLを確認してください（例: https://www.example-clinic.jp）。',
             'invalid_auth_code': 'AuthCodeは半角英数字・記号6〜64文字で、空白を含めずに入力してください。',
+            'site_locked': 'このホームページで編集の準備を進めているため、URLは変更できません。変更する場合はSIMYの担当者にご連絡ください。',
             **WORDPRESS_NOTICES,
         }
         banner = f'<div class="notice">{escape(notices[notice])}</div>' if notice in notices else ''
@@ -509,8 +517,12 @@ class ClinicOnboarding:
             return self.layout('HP編集を始める', account + (
                 f'<div class="card"><h2><span class="ok">登録が完了しました</span></h2>'
                 f'<dl class="kv"><dt>ホームページ</dt><dd>{escape(intake["site_url"])}</dd>'
-                f'<dt>AuthCode</dt><dd>{"受け付け済み（表示しません）" if intake.get("auth_code") else "なし"}</dd></dl></div>'
-                '<div class="card"><h2>編集の始め方</h2><ol class="guide">'
+                f'<dt>AuthCode</dt><dd>{"受け付け済み（表示しません）" if intake.get("auth_code") else "なし"}</dd>'
+                + (f'<dt>公開先</dt><dd>https://{escape(intake["slot_site_id"])}.hp.simy.one</dd></dl>'
+                   '<p class="muted" style="margin-top:12px">編集した内容はまずこのアドレスで公開されます。'
+                   'ご登録のドメインでの公開への切り替えは、担当者からご案内します。</p></div>'
+                   if intake.get('slot_site_id') else '</dl></div>')
+                + '<div class="card"><h2>編集の始め方</h2><ol class="guide">'
                 '<li>Codexを開き、ご自身のChatGPTアカウントでログインします。</li>'
                 '<li>HPプラグインのZIPをCodexに渡し、「このプラグインを導入してください」と伝えます。</li>'
                 f'<li>HPプラグインを選び、{escape(visit["email"])} で接続します。</li>'
@@ -524,6 +536,12 @@ class ClinicOnboarding:
                               '担当者が確認し、')
             else:
                 copy = {'pending': 'コピー中', 'done': 'コピー済み', 'failed': '担当者が確認します'}.get(intake.get('copy_state'), '')
+                if intake.get('copy_state') == 'done' and (intake.get('copy_truncated') or intake.get('copy_skipped')):
+                    # Large sites, or files the editor cannot publish, are copied in part.
+                    copy = 'コピー済み（一部のページ・ファイルのみ。残りは担当者が確認します）'
+                if intake.get('copy_state') == 'done':
+                    copy += {'waiting': '／編集用の環境を準備中です', 'failed': '／担当者が確認します'}.get(
+                        intake.get('slot_state'), '')
                 head, body = ('ホームページの準備を進めます',
                               'いま公開されているホームページをSIMYにコピーし、編集できる状態に準備します。準備ができましたら、')
             rows = f'<dt>ホームページ</dt><dd>{escape(intake["site_url"])}</dd><dt>AuthCode</dt><dd>{auth}</dd>'
@@ -553,12 +571,13 @@ class ClinicOnboarding:
             '<input id="wordpress_url" name="wordpress_url" type="url" required placeholder="https://example-clinic.wordpress.com" autocomplete="url">'
             '<button class="btn" type="submit">WordPress.comで接続する</button></form>')
         # CSS-only switch (the page CSP allows no scripts): the checked radio shows one form.
-        # After a failed submit, reopen the form the notice is about.
-        pick_other = notice in ('invalid_url', 'invalid_auth_code')
+        # A general site is the default; after a failed WordPress.com connection,
+        # reopen the WordPress form the notice is about.
+        pick_wp = notice in WORDPRESS_NOTICES
         return self.layout('ホームページを登録します', account + banner + (
             '<div class="card site-pick"><h2>ホームページの種類</h2>'
-            f'<input type="radio" name="kind" id="kind-wp"{"" if pick_other else " checked"}>'
-            f'<input type="radio" name="kind" id="kind-other"{" checked" if pick_other else ""}>'
-            '<div class="seg"><label for="kind-wp">WordPress.com</label>'
-            '<label for="kind-other">その他のホームページ</label></div>'
-            f'{wordpress}{other}</div>'), step=2)
+            f'<input type="radio" name="kind" id="kind-other"{"" if pick_wp else " checked"}>'
+            f'<input type="radio" name="kind" id="kind-wp"{" checked" if pick_wp else ""}>'
+            '<div class="seg"><label for="kind-other">一般的なサイト</label>'
+            '<label for="kind-wp">WordPress</label></div>'
+            f'{other}{wordpress}</div>'), step=2)

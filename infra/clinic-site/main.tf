@@ -10,9 +10,15 @@ locals {
   environments = toset(["dev", "prod"])
   origin_id    = "clinic-site-s3"
   bucket_name  = { for env in local.environments : env => "simy-hp-site-${var.site_id}-${env}-${data.aws_caller_identity.current.account_id}" }
-  # Only an attached prod domain is served under its own name. Dev always uses
-  # its cloudfront.net name, which the publisher accepts as the served host.
-  aliases = { dev = [], prod = var.prod_domain_attached ? [var.prod_domain] : [] }
+  slot         = var.slot_certificate_arn != ""
+  prod_host    = local.slot ? "${var.site_id}.hp.simy.one" : var.prod_domain
+  # A slot serves prod on its hp.simy.one name at once. A clinic's own domain is
+  # served only once attached. Dev always uses its cloudfront.net name, which
+  # the publisher accepts as the served host.
+  aliases = { dev = [], prod = (local.slot || var.prod_domain_attached) ? [local.prod_host] : [] }
+  prod_certificate_arn = local.slot ? var.slot_certificate_arn : (
+    var.prod_domain_attached ? aws_acm_certificate_validation.prod[0].certificate_arn : null
+  )
 }
 
 resource "terraform_data" "guard" {
@@ -76,6 +82,7 @@ resource "aws_cloudfront_origin_access_control" "site" {
 # Requested at once so the clinic can add the validation record before the
 # homepage moves. Validated by the clinic's DNS, never by a SIMY zone.
 resource "aws_acm_certificate" "prod" {
+  count             = local.slot ? 0 : 1
   provider          = aws.us_east_1
   domain_name       = var.prod_domain
   validation_method = "DNS"
@@ -88,9 +95,9 @@ resource "aws_acm_certificate" "prod" {
 
 # Waits until ACM issued the certificate. Only applied once attached.
 resource "aws_acm_certificate_validation" "prod" {
-  count           = var.prod_domain_attached ? 1 : 0
+  count           = !local.slot && var.prod_domain_attached ? 1 : 0
   provider        = aws.us_east_1
-  certificate_arn = aws_acm_certificate.prod.arn
+  certificate_arn = aws_acm_certificate.prod[0].arn
 
   timeouts {
     create = "10m"
@@ -186,7 +193,7 @@ resource "aws_cloudfront_distribution" "site" {
 
   viewer_certificate {
     cloudfront_default_certificate = length(local.aliases[each.key]) == 0
-    acm_certificate_arn            = length(local.aliases[each.key]) > 0 ? aws_acm_certificate_validation.prod[0].certificate_arn : null
+    acm_certificate_arn            = length(local.aliases[each.key]) > 0 ? local.prod_certificate_arn : null
     ssl_support_method             = length(local.aliases[each.key]) > 0 ? "sni-only" : null
     minimum_protocol_version       = length(local.aliases[each.key]) > 0 ? "TLSv1.2_2021" : "TLSv1"
   }
@@ -213,4 +220,18 @@ resource "aws_s3_bucket_policy" "site" {
       Condition = { StringEquals = { "AWS:SourceArn" = aws_cloudfront_distribution.site[each.key].arn } }
     }]
   })
+}
+
+# Slot mode: <site_id>.hp.simy.one -> the prod distribution.
+resource "aws_route53_record" "slot" {
+  for_each = local.slot ? toset(["A", "AAAA"]) : toset([])
+  zone_id  = var.slot_zone_id
+  name     = local.prod_host
+  type     = each.key
+
+  alias {
+    name                   = aws_cloudfront_distribution.site["prod"].domain_name
+    zone_id                = aws_cloudfront_distribution.site["prod"].hosted_zone_id
+    evaluate_target_health = false
+  }
 }

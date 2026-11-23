@@ -38,10 +38,11 @@ from urllib.request import HTTPRedirectHandler, HTTPSHandler, ProxyHandler, Requ
 
 from store import Conflict, Write
 
-MAX_FILES = 200
-MAX_TOTAL = 30 * 1024 * 1024
+# Match what the publisher accepts (bundles.py), so a full copy is publishable.
+MAX_FILES = 1000
+MAX_TOTAL = 50 * 1024 * 1024
 MAX_FILE = 10 * 1024 * 1024
-MAX_SECONDS = 90
+MAX_SECONDS = 150  # the copier Lambda times out at 180 s
 FETCH_SECONDS = 20  # absolute per-response budget; socket timeouts only bound idle gaps
 MAX_ATTEMPTS = 3
 PENDING_KEY = 'clinic-copy-pending'
@@ -267,8 +268,11 @@ def _rotate(store, entry):
     _update_list(store, lambda jobs: [j for j in jobs if j != entry] + [entry])
 
 
-def run_one(store, put_object, copier=copy_public_site, clock=time.time):
-    """Copy the oldest queued job. Returns the job handled, or None."""
+def run_one(store, put_object, copier=copy_public_site, clock=time.time, on_done=None):
+    """Copy the oldest queued job. Returns the job handled, or None.
+
+    ``on_done(subscription_id)`` runs after a copy is stored (e.g. to queue slot assignment).
+    """
     row = store.get(PENDING_KEY)
     jobs = row.get('subscriptions', []) if row else []
     if not jobs:
@@ -277,6 +281,12 @@ def run_one(store, put_object, copier=copy_public_site, clock=time.time):
     sub, _, generation = entry.rpartition(':')
     key = 'clinic-intake:' + sub
     intake = store.get(key)
+    if (intake and intake.get('copy_state') == 'done' and on_done is not None
+            and str(intake.get('copy_generation')) == generation):
+        # Copied, but the run ended before the follow-up was queued: queue it now.
+        on_done(sub)
+        _dequeue(store, entry)
+        return entry
     if (not intake or intake.get('copy_state') != 'pending'
             or str(intake.get('copy_generation')) != generation):
         _dequeue(store, entry)  # finished or superseded by a newer submission
@@ -311,6 +321,10 @@ def run_one(store, put_object, copier=copy_public_site, clock=time.time):
         store.transact([Write(key, {**intake, **update, 'copied_at': int(clock())}, intake['_version'])])
     except Conflict:
         return entry
+    # Queue the follow-up before dropping the copy job, so a run that ends in
+    # between repeats the (idempotent) follow-up instead of losing it.
+    if update['copy_state'] == 'done' and on_done is not None:
+        on_done(sub)
     if update['copy_state'] != 'pending':
         _dequeue(store, entry)
     return entry
