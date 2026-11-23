@@ -1221,15 +1221,15 @@
   "immutableSha256": {
     "site/hp-management/clinic-checkout.json": "199332d9035db882f232f2b1545ab8814fc373948a311892e9db48f7f9da0223",
     "site/hp-management/law-firm/hp-management/clinic-checkout.json": "199332d9035db882f232f2b1545ab8814fc373948a311892e9db48f7f9da0223",
-    "site/clinic-checkout.js": "62888249e3f7601f8e93c114500d554292b577066d1ad7963a90674e93a8470b",
-    "site/hp-management/law-firm/clinic-checkout.js": "0e0481467a0b4f9fe0a26c52bce8b7df22c5f24cf31173e3311b217d5ed07c81",
+    "site/clinic-checkout.js": "542e05e4a755c321680024e8490f9f7e8cefaa92ae7c2b7c9b77162c137b9995",
+    "site/hp-management/law-firm/clinic-checkout.js": "cb5643da91d2917968a5b500cfa4a0b56b6442680075b67410af7e5c3a6d08dc",
     "site/pricing-catalog.js": "c1b4e8a31b0c0ef200f62282a14ba99b9eb5848600bb76fddab5fad2e48a9c0f",
-    "site/ja.html": "2f737a7bbe482b8dcc8304f0e2449dbcc98bcc5c6e4c3002805953a3776672dd",
-    "site/es.html": "68c5fab7a2a44bb5af72754a91118be74f4f271af099366f8f98dba53a0a0152",
-    "site/fr.html": "d2072fe5f5b4d818fccc4f437cdbc164c9d2dc31470912fadf16ee9fefb0350c",
-    "site/hi.html": "3af746cca72a3583c9150a17d69fcb1dce1f12eccb5fa2e90f377e5796812100",
-    "site/index.html": "7248215f876c1d42b5f73f0205de5386d1e7e1bcb1c9d4362c0350d973508367",
-    "site/zh-Hans.html": "fbb726dff262fa95ffca627d89a4d288284a519a4864f3b3066baa319f3e58eb"
+    "site/ja.html": "790ed3351b29cdd0175482c1dfbfc1f8f025960490d9b9878c06dc6b5a825b0c",
+    "site/es.html": "50de210d56c118770463267be3c90f992e3884844565e29bf46e0364ccf6a146",
+    "site/fr.html": "d5517c9f1ccee137f6fe1e3edf61dae966aeab1e8dab792b1f80dea247cf7dee",
+    "site/hi.html": "cb1f92530264ca8a42c9051cbccd57c10687cf0dbf27b4fa964b2dbe5ee475b0",
+    "site/index.html": "1c6d78e35a0de83a3837724e47cded9c9e8eb2db7fa835dc6f47c69d08cfde23",
+    "site/zh-Hans.html": "33d3242aa8ba7673c5f213086b35b1dfc88c3628d3eeb0f51511f49ecb4ee803"
   },
-  "htmlBaselineReason": "2026-11-20: authorized homepage artwork-edge/card alignment and stylesheet content-hash version update. Six original image src/alt/srcset lists are unchanged; checkout JSON/JS and pricing-catalog hashes remain unchanged."
+  "htmlBaselineReason": "2026-11-20: authorized homepage artwork-edge/card alignment and stylesheet content-hash version update. Six original image src/alt/srcset lists are unchanged; checkout JSON/JS and pricing-catalog hashes remain unchanged. 2026-11-23: retain current main artwork and refresh shared-header asset hashes for explicit sandbox navigation; original live prices and payment-link JSON remain unchanged. 2026-11-23 (review): shared-header asset hash refreshed again so sandbox navigation links to the .html form of redirected directory URLs. Clinic and law-firm checkout scripts now also keep the explicit test mode on their own links (those pages do not load the shared header); live checkout JSON is unchanged."
 }
