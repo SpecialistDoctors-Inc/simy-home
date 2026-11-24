@@ -56,7 +56,9 @@ class LocalBridgeTest(unittest.TestCase):
         self.assertEqual(self.list_sites(), [SITE_ID])
         self.assertEqual({(auth, json.dumps(body, sort_keys=True)) for auth, body in self.seen},
                          {('Bearer ' + ENTITLEMENT_TOKEN,
-                           json.dumps({'org_id': ORG, 'google_subject': SUBJECT}, sort_keys=True))})
+                           json.dumps({'org_id': ORG, 'google_subject': SUBJECT}, sort_keys=True)),
+                          ('Bearer ' + ENTITLEMENT_TOKEN,
+                           json.dumps({'org_id': ORG, 'google_subject': SUBJECT, 'site_id': SITE_ID}, sort_keys=True))})
 
     def test_preflight_rejects_a_different_credential(self):
         status, _ = self.call('/internal/license/preflight', {'org_id': ORG, 'google_subject': SUBJECT},
