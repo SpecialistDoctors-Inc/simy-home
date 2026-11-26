@@ -6,6 +6,7 @@ sources, never the generated locale HTML files.
 """
 from site_header import apply as apply_header
 from home_manga_locales import render as render_manga, demo as render_demo
+from simple_home_pricing import apply as simplify_home_pricing
 import argparse
 import hashlib
 import json
@@ -156,7 +157,7 @@ def generate():
     outputs = {}
     for locale in LOCALES:
         target = SITE / ('index.html' if locale == 'en' else f'{locale}.html')
-        outputs[target] = render_manga(locale, Localize, CONTENT)
+        outputs[target] = simplify_home_pricing(render_manga(locale, Localize, CONTENT), locale, CONTENT['currentMonthlyPrices'])
         outputs[SITE / f'home-manga-{locale}.js'] = render_demo(locale, CONTENT)
     # Keep existing indexed subpages and their historical modification dates.
     namespace = 'http://www.sitemaps.org/schemas/sitemap/0.9'
