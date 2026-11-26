@@ -9,10 +9,7 @@
         "sqm_check"
       ],
       "optional": [],
-      "usage": [
-        "transcription_20h",
-        "transcription_overage"
-      ],
+      "usage": [],
       "examples": [
         [
           "sqm_check"
@@ -26,9 +23,7 @@
       ],
       "optional": [],
       "usage": [
-        "land_valuation_overage",
-        "transcription_20h",
-        "transcription_overage"
+        "land_valuation_overage"
       ],
       "examples": [
         [
@@ -82,6 +77,10 @@
         [
           "fp_quality",
           "hearing_8h"
+        ],
+        [
+          "fp_quality",
+          "hearing_20h"
         ]
       ]
     },
@@ -98,9 +97,7 @@
         "homepage_transfer_overage",
         "homepage_request_overage",
         "homepage_secure_request_overage",
-        "homepage_ops_overage",
-        "transcription_20h",
-        "transcription_overage"
+        "homepage_ops_overage"
       ],
       "examples": [
         [

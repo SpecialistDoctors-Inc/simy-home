@@ -17,6 +17,9 @@ vm.runInNewContext(fs.readFileSync(path.join(site, 'home-locales.js'), 'utf8'), 
 const content = {
   copy: { en: {}, ja: literal('const JA_COPY = Object.freeze(', ');'), ...context.window.SIMY_HOME_LOCALES },
   meta: literal('const PAGE_META = ', ';\n'),
+  currentMonthlyPrices: Object.fromEntries(['starter', 'quality'].map(plan => [
+    plan, require('../site/pricing-catalog.js').priceCents(plan, 'monthly')
+  ])),
 };
 module.exports = content;
 if (require.main === module) process.stdout.write(JSON.stringify(content));

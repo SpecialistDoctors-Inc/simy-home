@@ -184,6 +184,35 @@ button { font: inherit; cursor: pointer; }
 .pricing-terms dd { color: var(--text-secondary); }
 .pricing-contact p { margin-top: 8px; color: var(--text-secondary); font-size: var(--text-sm); }
 .site-footer { border-top: 1px solid var(--border); }
+.rosenz .rosenz-pricing-status { color: var(--text-secondary); font-size: var(--text-sm); margin-bottom: 20px; }
+.rosenz-price-card {
+  max-width: 760px;
+  padding: clamp(20px, 4vw, 36px);
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--accent);
+  border-radius: var(--rosenz-frame-radius);
+  background: var(--bg-alt);
+}
+.rosenz .rosenz-price-label { font-weight: 600; margin: 0; }
+.rosenz .rosenz-price-total { display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px; margin: 8px 0; }
+.rosenz-price-total strong { font-size: clamp(2.6rem, 7vw, 4rem); line-height: 1.25; letter-spacing: -.03em; }
+.rosenz-price-facts { margin: 24px 0 16px; }
+.rosenz-price-facts div { display: flex; justify-content: space-between; gap: 12px; padding: 12px 0; border-top: 1px solid var(--border); }
+.rosenz-price-facts dd { font-weight: 700; text-align: right; }
+.rosenz .rosenz-price-example { padding: 10px 14px; background: var(--bg); border-radius: 6px; }
+.rosenz .rosenz-price-breakdown { margin-top: 16px; font-size: var(--text-sm); color: var(--text-secondary); }
+.rosenz .rosenz-price-trial { margin-top: 16px; max-width: 760px; font-size: var(--text-sm); color: var(--text-secondary); }
+.rosenz .rosenz-price-contact { margin: 20px 0 24px; }
+.rosenz .rosenz-price-contact a { display: inline-block; padding: 12px 20px; border-radius: 6px; color: var(--on-accent); background: var(--accent); text-decoration: none; }
+.rosenz-price-details { max-width: 760px; padding: 16px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.rosenz-price-details summary { cursor: pointer; font-size: var(--text-sm); font-weight: 600; }
+.rosenz-price-details[open] summary { margin-bottom: 20px; }
+.rosenz .rosenz-price-details h3 { font-size: 1rem; margin-top: 20px; }
+.rosenz .rosenz-price-details p { font-size: var(--text-sm); color: var(--text-secondary); }
+@media (max-width: 420px) {
+  .rosenz-price-facts div { flex-direction: column; gap: 2px; }
+  .rosenz-price-facts dd { text-align: left; }
+}
 @media (max-width: 900px) {
   .hero-grid { gap: 24px; }
 }

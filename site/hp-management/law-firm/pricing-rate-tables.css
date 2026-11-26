@@ -1,5 +1,5 @@
 /* Isolated advance-price reading sections; no current checkout selectors. */
-.sp26,.sp26-notice{--sp26-surface:var(--paper-light,Canvas);--sp26-text:var(--ink,CanvasText);--sp26-muted:var(--ink-soft,GrayText);--sp26-line:var(--line-soft,GrayText);--sp26-link:var(--blue-deep,LinkText);box-sizing:border-box;color:var(--sp26-text);line-height:1.75;overflow-wrap:anywhere;font-size:1rem;text-align:left}
+.sp26,.sp26-notice{--sp26-surface:var(--paper-light,Canvas);--sp26-text:var(--ink,CanvasText);--sp26-muted:var(--ink-soft,GrayText);--sp26-line:var(--line-soft,GrayText);--sp26-link:var(--blue-deep,var(--blue,#235db8));box-sizing:border-box;color:var(--sp26-text);line-height:1.75;overflow-wrap:anywhere;font-size:1rem;text-align:left}
 .sp26 *,.sp26-notice *{box-sizing:border-box}
 .sp26{margin:2.5rem 0;padding:2.5rem 0;background:var(--sp26-surface);border-top:1px solid var(--sp26-line);border-bottom:1px solid var(--sp26-line)}
 .sp26-frame{width:min(100% - 2rem,72rem);margin-inline:auto}
@@ -39,6 +39,30 @@
 .sp26 .sp26-subtitle{margin-top:1rem;font-weight:600}
 .sp26-notes{padding-left:1.25rem;margin:1.5rem 0}
 .sp26-notes li{margin:.6rem 0;font-size:.875rem;line-height:1.8}
+
+/* Monthly totals are the entry point; billing details stay expandable. */
+.sp26-current-label { width: fit-content; padding: .35rem .75rem; border: 1px solid currentColor; border-radius: .3rem; font-size: .875rem; font-weight: 600; }
+.sp26 .sp26-status-line, .sp26 .sp26-small { color: var(--sp26-muted); font-size: .875rem; }
+.sp26 .sp26-status-line { margin-bottom: 1.25rem; }
+.sp26-plan-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); gap: 1rem; margin: 1rem 0; }
+.sp26-plan { min-width: 0; padding: clamp(1.25rem, 3vw, 2rem); border: 1px solid var(--sp26-line); border-top: 4px solid var(--sp26-link); border-radius: .75rem; background: var(--sp26-surface); }
+.sp26-plan:only-child { max-width: 48rem; }
+.sp26 .sp26-plan h3 { margin: 0 0 .5rem; font-size: 1.125rem; }
+.sp26 .sp26-plan-scope { font-size: .875rem; color: var(--sp26-muted); }
+.sp26 .sp26-plan-price { display: flex; flex-wrap: wrap; align-items: baseline; gap: .5rem; margin: 1rem 0 .5rem; }
+.sp26-plan-price strong { font-size: clamp(2.25rem, 5vw, 3.5rem); line-height: 1.2; letter-spacing: -.03em; }
+.sp26 .sp26-plan-total { font-size: .875rem; }
+.sp26-plan ul { padding-left: 1.25rem; margin: 1.25rem 0 0; font-size: .9375rem; }
+.sp26-plan li { margin-top: .5rem; }
+.sp26-details { padding: 1rem 0; border-bottom: 1px solid var(--sp26-line); }
+.sp26-details > summary { cursor: pointer; font-weight: 600; line-height: 1.65; }
+.sp26-details[open] > summary { margin-bottom: 1rem; }
+.sp26 .sp26-requirement { margin: 1rem 0; font-size: .875rem; max-width: 60rem; }
+.sp26-usage-list { margin: 1rem 0; }
+.sp26-usage-list div { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem 1.5rem; padding: .8rem 0; border-bottom: 1px solid var(--sp26-line); }
+.sp26-usage-list dt, .sp26-usage-list dd { margin: 0; }
+.sp26-usage-list dd { font-weight: 600; font-variant-numeric: tabular-nums; }
+.sp26-usage-list small { display: block; color: var(--sp26-muted); font-size: .82rem; }
 
 /* Shared by the public advance announcement and service-specific price lists. */
 .pricing-rate-table {

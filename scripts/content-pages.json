@@ -98,8 +98,16 @@
       "ja": {
         "title": "営業向けSIMY｜商談準備とフォローアップ | SIMY",
         "description": "営業の商談準備、顧客メモ、フォローアップメールの下書きをSIMYで進める活用例。渡す情報、依頼のしかた、送信前に人が確認するポイントまで具体的に紹介します。",
-        "lead": "商談の前に知りたいことを整理し、商談の後に約束したことを次の行動へ。顧客との会話に集中するための準備を、SIMYと進める。",
+        "lead": "商談で約束したことを、次の行動へ。資料・担当・期限・結果をひとつの仕事にまとめ、次回も続きから進める。",
         "sections": [
+          {
+            "id": "why-simy",
+            "title": "商談が終わった後も、仕事をつなぐ",
+            "p": [
+              "商談メモから次の行動を確認し、担当と期限を決め、資料や実行結果と一緒に残す。次の商談では、その仕事の進捗を見ながら準備を再開します。SIMYの料金は、この仕事の管理と継続の仕組みに対する料金です。",
+              "仕事の自動実行には、自分のChatGPTアカウントをCodex経由で接続します。ChatGPTの契約料はSIMYの月額に含まれません。使える量は接続先のプランと利用制限にも従います。"
+            ]
+          },
           {
             "id": "reference",
             "title": "次の商談に必要な、一枚をつくる",
@@ -161,8 +169,16 @@
       "en": {
         "title": "SIMY for Sales: Meeting Prep and Follow-up | SIMY",
         "description": "Use SIMY to prepare for sales meetings, organize customer notes and draft follow-up emails. See example inputs, a clear request and what to review before sending.",
-        "lead": "Prepare for the next conversation. Turn the promises from your last meeting into clear follow-up, with a draft you can review before it reaches a customer.",
+        "lead": "Turn meeting commitments into the next action. Keep sources, owners, deadlines and results together, then resume from that progress next time.",
         "sections": [
+          {
+            "id": "why-simy",
+            "title": "Keep work moving after the meeting",
+            "p": [
+              "Review next actions from the meeting notes, assign owners and deadlines, and keep sources and results together. Prepare for the next meeting using the progress already recorded. SIMY charges for this work management and continuity.",
+              "Automated work requires your own ChatGPT account connected through Codex. ChatGPT subscription fees are separate from SIMY, and your connected plan and usage limits also apply."
+            ]
+          },
           {
             "id": "reference",
             "title": "Prepare one useful brief for your next meeting",

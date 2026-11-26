@@ -10,7 +10,7 @@ test('advance announcement is generated from all 23 approved public price rows',
   const result = execFileSync('python3', ['scripts/build-pricing-announcement.py', '--check'], { cwd: root, encoding: 'utf8' });
   assert.match(result, /23 approved pricing rows/);
   const page = read('site/pricing-2026-11.html');
-  for (const value of ['SIMY ロセンズ', '路線価評価', '¥14,800', '$99', '60件/月', '同時利用1人', '¥300', '$2', 'SIMY 開発支援', 'Delivery Loop', 'SQM', 'ChatGPT／Claude', '各利用者で個別管理', '契約開始日に合わせて毎月更新', '提供準備中']) {
+  for (const value of ['SIMY ロセンズ', '路線価評価', '¥14,800', '$99', '60件/月', '同時利用1人', '¥300', '$2', 'SIMY 開発支援', 'Delivery Loop', 'SQM', 'ChatGPTアカウント', 'Codex経由', '見直し中', '同時ヒアリング', '各利用者で個別管理', '契約開始日に合わせて毎月更新', '提供準備中']) {
     assert.ok(page.includes(value), `missing announcement condition: ${value}`);
   }
 });

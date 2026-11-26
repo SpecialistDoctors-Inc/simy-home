@@ -3323,6 +3323,20 @@ html[lang="ja"] .pricing-intro > div > p {
   display: none;
 }
 
+.current-price-heading { margin: 1.5rem 0 1rem; font-weight: 600; }
+.current-price-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.current-price-card { min-width: 0; padding: clamp(1.25rem, 3vw, 2rem); border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--paper-light); }
+.current-price-card h3 { margin: 0; font-size: 1.25rem; }
+.current-price-card p { margin: .75rem 0; font-size: 1rem; }
+.current-price-total strong { font-size: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.2; font-variant-numeric: tabular-nums; }
+.current-price-card a { display: inline-block; margin-top: .75rem; font-weight: 600; text-decoration: underline; text-underline-offset: .2em; }
+.current-price-details { margin-top: 1.5rem; padding-block: 1rem; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.current-price-details > summary { cursor: pointer; font-weight: 600; }
+.current-price-details[open] > summary { margin-bottom: 1.25rem; }
+@media (max-width: 47.99rem) {
+  .current-price-grid { grid-template-columns: minmax(0, 1fr); }
+}
+
 .pricing-table-wrap {
   max-width: 100%;
   min-width: 0;
